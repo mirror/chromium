@@ -25321,14 +25321,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
-<histogram name="Favicons.CandidatesCount">
-  <owner>fhorschig@chromium.org</owner>
-  <summary>
-    Records the number of favicon link tags on a page once the page has finished
-    loading. The count includes the automatically added favicon.ico entry.
-  </summary>
-</histogram>
-
 <histogram name="Favicons.CandidatesWithDefinedSizesCount">
   <owner>fhorschig@chromium.org</owner>
   <summary>
@@ -25352,14 +25344,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
     found or there were no candidates left to check. More than 15 attempts are
     unlikely and will be stored in overflow bucket 16. Less than 1 attempt means
     an error happened; these cases are in bucket 0.
-  </summary>
-</histogram>
-
-<histogram name="Favicons.DownloadOutcome" enum="FaviconDownloadStatus">
-  <owner>fhorschig@chromium.org</owner>
-  <summary>
-    Records whether a download succeeded, failed or was skipped because it has
-    failed previously.
   </summary>
 </histogram>
 

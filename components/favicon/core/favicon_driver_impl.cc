@@ -38,7 +38,6 @@ void RecordCandidateMetrics(const std::vector<FaviconURL>& candidates) {
       with_defined_touch_icons++;
     }
   }
-  UMA_HISTOGRAM_COUNTS_100("Favicons.CandidatesCount", candidates.size());
   UMA_HISTOGRAM_COUNTS_100("Favicons.CandidatesWithDefinedSizesCount",
                            with_defined_sizes);
   UMA_HISTOGRAM_COUNTS_100("Favicons.CandidatesWithTouchIconsCount",

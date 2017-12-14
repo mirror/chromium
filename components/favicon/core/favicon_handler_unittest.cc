@@ -47,7 +47,6 @@ using testing::Not;
 using testing::Return;
 using testing::_;
 
-using DownloadOutcome = FaviconHandler::DownloadOutcome;
 using IntVector = std::vector<int>;
 using URLVector = std::vector<GURL>;
 using BitmapVector = std::vector<SkBitmap>;
@@ -1678,10 +1677,6 @@ TEST_F(FaviconHandlerTest, TestRecordSingleFaviconDownloadAttempt) {
   EXPECT_THAT(
       histogram_tester.GetAllSamples("Favicons.DownloadAttempts.TouchIcons"),
       IsEmpty());
-  EXPECT_THAT(
-      histogram_tester.GetAllSamples("Favicons.DownloadOutcome"),
-      ElementsAre(base::Bucket(static_cast<int>(DownloadOutcome::SUCCEEDED),
-                               /*expected_count=*/1)));
 }
 
 TEST_F(FaviconHandlerTest, TestRecordSingleLargeIconDownloadAttempt) {
@@ -1699,10 +1694,6 @@ TEST_F(FaviconHandlerTest, TestRecordSingleLargeIconDownloadAttempt) {
   EXPECT_THAT(
       histogram_tester.GetAllSamples("Favicons.DownloadAttempts.TouchIcons"),
       IsEmpty());
-  EXPECT_THAT(
-      histogram_tester.GetAllSamples("Favicons.DownloadOutcome"),
-      ElementsAre(base::Bucket(static_cast<int>(DownloadOutcome::SUCCEEDED),
-                               /*expected_count=*/1)));
 }
 
 TEST_F(FaviconHandlerTest, TestRecordSingleTouchIconDownloadAttempt) {
@@ -1720,10 +1711,6 @@ TEST_F(FaviconHandlerTest, TestRecordSingleTouchIconDownloadAttempt) {
   EXPECT_THAT(
       histogram_tester.GetAllSamples("Favicons.DownloadAttempts.TouchIcons"),
       ElementsAre(base::Bucket(/*sample=*/1, /*expected_count=*/1)));
-  EXPECT_THAT(
-      histogram_tester.GetAllSamples("Favicons.DownloadOutcome"),
-      ElementsAre(base::Bucket(static_cast<int>(DownloadOutcome::SUCCEEDED),
-                               /*expected_count=*/1)));
 }
 
 TEST_F(FaviconHandlerTest, TestRecordDownloadAttemptsFinishedByCache) {
@@ -1764,37 +1751,6 @@ TEST_F(FaviconHandlerTest, TestRecordSingleDownloadAttemptForRefreshingIcons) {
   EXPECT_THAT(
       histogram_tester.GetAllSamples("Favicons.DownloadAttempts.Favicons"),
       ElementsAre(base::Bucket(/*sample=*/1, /*expected_count=*/1)));
-}
-
-TEST_F(FaviconHandlerTest, TestRecordFailingDownloadAttempt) {
-  base::HistogramTester histogram_tester;
-  const GURL k404IconURL("http://www.google.com/404.png");
-
-  delegate_.fake_image_downloader().AddError(k404IconURL, 404);
-
-  EXPECT_CALL(favicon_service_, UnableToDownloadFavicon(k404IconURL));
-
-  RunHandlerWithSimpleFaviconCandidates({k404IconURL});
-
-  EXPECT_THAT(
-      histogram_tester.GetAllSamples("Favicons.DownloadOutcome"),
-      ElementsAre(base::Bucket(static_cast<int>(DownloadOutcome::FAILED),
-                               /*expected_count=*/1)));
-}
-
-TEST_F(FaviconHandlerTest, TestRecordSkippedDownloadForKnownFailingUrl) {
-  base::HistogramTester histogram_tester;
-  const GURL k404IconURL("http://www.google.com/404.png");
-
-  ON_CALL(favicon_service_, WasUnableToDownloadFavicon(k404IconURL))
-      .WillByDefault(Return(true));
-
-  RunHandlerWithSimpleFaviconCandidates({k404IconURL});
-
-  EXPECT_THAT(
-      histogram_tester.GetAllSamples("Favicons.DownloadOutcome"),
-      ElementsAre(base::Bucket(static_cast<int>(DownloadOutcome::SKIPPED),
-                               /*expected_count=*/1)));
 }
 
 // Test that if a page URL is followed by another page URL which is not

@@ -161,8 +161,6 @@ TEST_F(ContentFaviconDriverTest, RecordsHistorgramsForCandidates) {
                            content::FaviconURL::IconType::kFavicon,
                            kSizes16x16and32x32)});
 
-  EXPECT_THAT(tester.GetAllSamples("Favicons.CandidatesCount"),
-              ElementsAre(base::Bucket(/*min=*/1, /*count=*/1)));
   EXPECT_THAT(tester.GetAllSamples("Favicons.CandidatesWithDefinedSizesCount"),
               ElementsAre(base::Bucket(/*min=*/1, /*count=*/1)));
   EXPECT_THAT(tester.GetAllSamples("Favicons.CandidatesWithTouchIconsCount"),
@@ -183,9 +181,6 @@ TEST_F(ContentFaviconDriverTest, RecordsHistorgramsForCandidates) {
   TestFetchFaviconForPage(GURL("http://www.google.ca"), favicon_urls);
   TestFetchFaviconForPage(GURL("http://www.google.ca"), favicon_urls);
 
-  EXPECT_THAT(tester.GetAllSamples("Favicons.CandidatesCount"),
-              ElementsAre(base::Bucket(/*min=*/1, /*count=*/1),
-                          base::Bucket(/*min=*/3, /*count=*/2)));
   EXPECT_THAT(tester.GetAllSamples("Favicons.CandidatesWithDefinedSizesCount"),
               ElementsAre(base::Bucket(/*min=*/1, /*count=*/3)));
   EXPECT_THAT(tester.GetAllSamples("Favicons.CandidatesWithTouchIconsCount"),
