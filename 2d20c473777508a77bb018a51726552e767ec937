@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "92d3cc1a_5819efa6",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 699,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-12-14T23:15:39Z",
+      "side": 1,
+      "message": "maybe we can safely remove this if-clause now?",
+      "revId": "2d20c473777508a77bb018a51726552e767ec937",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6064f2a_76d753cb",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 706,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-12-14T23:15:39Z",
+      "side": 1,
+      "message": "It\u0027s not the problem of this CL, but it just came to my mind during review. Maybe we should consider call SetDefaultWallpaper() here as if the user can\u0027t find the path this time, he won\u0027t be able to find the path next time anyway.",
+      "revId": "2d20c473777508a77bb018a51726552e767ec937",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f0dcb71_93c06139",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1338,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-12-14T23:15:39Z",
+      "side": 1,
+      "message": "Since now all the Set/ShowWallpaper calls will go through SetWallpaperImage(), is this possible that move the update of wallpaper_cache_map_ to SetWallpaperImage()?",
+      "revId": "2d20c473777508a77bb018a51726552e767ec937",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "678f7084_7cacb3d9",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1780,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-12-14T23:15:39Z",
+      "side": 1,
+      "message": "Log this error?\nCan this change to SetDefaultWallpaper() instead?",
+      "revId": "2d20c473777508a77bb018a51726552e767ec937",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "585d9a0e_a6e40747",
+        "filename": "ash/wallpaper/wallpaper_controller.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 570,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-12-14T23:15:39Z",
+      "side": 1,
+      "message": "Will it be temporary and be removed later?",
+      "revId": "2d20c473777508a77bb018a51726552e767ec937",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
