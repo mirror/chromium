@@ -66,6 +66,30 @@
     },
     {
       "key": {
+        "uuid": "8e20ca24_6c73ef1c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2017-12-14T18:50:21Z",
+      "side": 1,
+      "message": "Yes, I tried it and it doesn\u0027t pass with this CL. Do you think it would be hard to make it pass? :P",
+      "parentUuid": "e0f92bb1_256291f8",
+      "range": {
+        "startLine": 18,
+        "startChar": 3,
+        "endLine": 18,
+        "endChar": 4
+      },
+      "revId": "a7211c646ce7b65f31c681132541897f7fced5e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ec94833c_a717da6e",
         "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
         "patchSetId": 1
@@ -113,6 +137,24 @@
       "side": 1,
       "message": "Yes. Container from ScrollableEnclosingBoxOrParentFrameForNodeInDirection and its virtual rect(edge of the container) will be used in AdvanceFocusDirectionallyInContainer. Using virtual rect when starting_rect is empty is original intent of implemented algorithm. There are some other cases hit that condition(starting_rect.empty()).",
       "parentUuid": "713dd56e_5b7393c0",
+      "revId": "a7211c646ce7b65f31c681132541897f7fced5e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "110eda50_3255e09b",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1496,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2017-12-14T18:50:21Z",
+      "side": 1,
+      "message": "Ok! Then I understand :)",
+      "parentUuid": "807a6263_c8d24134",
       "revId": "a7211c646ce7b65f31c681132541897f7fced5e0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
