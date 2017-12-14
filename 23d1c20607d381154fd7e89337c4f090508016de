@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "77c783f4_3ce507bb",
+        "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-12-14T18:44:56Z",
+      "side": 1,
+      "message": "Correct, I think the eventual plan is to entirely remove RenderWidgetHostInputEventRouter, and everything it does will be replicated in Viz. My understanding is that this is a shorter term goal to use Viz hit testing for OOPIFs, because OOPIFs are on Stable channel already and this resolves some of the existing bugs that we have from quad-based hit testing.\n\nI think RenderWidgetHostViews can supply a pointer to the ui::Compositor here. Getting the coordinates right might be a bit hacky but I will upload a new CL soon.",
+      "parentUuid": "074f23d1_86535422",
+      "range": {
+        "startLine": 195,
+        "startChar": 40,
+        "endLine": 195,
+        "endChar": 49
+      },
+      "revId": "23d1c20607d381154fd7e89337c4f090508016de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ad29aa16_e7473e9b",
         "filename": "content/browser/renderer_host/render_widget_host_input_event_router.h",
         "patchSetId": 1
@@ -107,6 +131,30 @@
       "writtenOn": "2017-12-09T22:15:19Z",
       "side": 1,
       "message": "This is not needed since we are getting the HTQ from HostFrameSinkManager?",
+      "range": {
+        "startLine": 196,
+        "startChar": 37,
+        "endLine": 196,
+        "endChar": 52
+      },
+      "revId": "23d1c20607d381154fd7e89337c4f090508016de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e680ef98_385e5d5e",
+        "filename": "content/browser/renderer_host/render_widget_host_input_event_router.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-12-14T18:44:56Z",
+      "side": 1,
+      "message": "Yeah that was vestigial from an earlier revision, thanks.",
+      "parentUuid": "ad29aa16_e7473e9b",
       "range": {
         "startLine": 196,
         "startChar": 37,
