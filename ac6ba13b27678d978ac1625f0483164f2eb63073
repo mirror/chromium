@@ -457,6 +457,24 @@
     },
     {
       "key": {
+        "uuid": "4b7539fa_6a1daa5a",
+        "filename": "ash/shelf/shelf_view.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-14T20:14:17Z",
+      "side": 1,
+      "message": "Sometimes it\u0027s best not to mix in the fleeting vernacular of conversation when describing concepts already established in code. It\u0027s nicer when there\u0027s one unambiguous way to describe something, though I understand it\u0027s sometimes awkward to describe being \u0027out of tablet-mode\u0027. Just as importantly, clamshell also implies differentiation from the desktop form factor, which is not the intended meaning.",
+      "parentUuid": "90ad1cc8_122d43ea",
+      "revId": "ac6ba13b27678d978ac1625f0483164f2eb63073",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "91d8f011_6cfb81e8",
         "filename": "ash/shelf/shelf_view.cc",
         "patchSetId": 13

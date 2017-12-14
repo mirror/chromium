@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a64110f0_4abff313",
+        "filename": "chrome/browser/ui/ash/launcher/chrome_launcher_controller.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 976,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-14T20:14:17Z",
+      "side": 1,
+      "message": "nit: s/as/if/",
+      "revId": "0f318d3afe1ce28b944e4e3b5700426a040ac7a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
