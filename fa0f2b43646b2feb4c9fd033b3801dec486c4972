@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2744d3f9_987cf9a9",
+        "filename": "chrome/browser/ui/browser_command_controller.cc",
+        "patchSetId": 32
+      },
+      "lineNbr": 1293,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-12-14T17:30:51Z",
+      "side": 1,
+      "message": "WindowOpenApiTest.OpenLockedFullscreenWindow [1] is crashing here, the active tab index being -1 (this function is called from UpdateCommandsForLockedFullscreenMode). Not sure how to handle this. Will do some more thinking.\n\n[1] https://cs.chromium.org/chromium/src/chrome/browser/extensions/window_open_apitest.cc?type\u003dcs\u0026q\u003dWindowOpenApiTest+OpenLockedFullscreenWindow\u0026sq\u003dpackage:chromium\u0026l\u003d415",
+      "range": {
+        "startLine": 1293,
+        "startChar": 18,
+        "endLine": 1293,
+        "endChar": 60
+      },
+      "revId": "fa0f2b43646b2feb4c9fd033b3801dec486c4972",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
