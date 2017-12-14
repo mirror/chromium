@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1c6ee2a7_67f6db74",
+        "filename": "components/viz/service/display/direct_renderer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-14T23:28:02Z",
+      "side": 1,
+      "message": "I moved this to the base class, since the impl of this method and IsRenderPassResourceAllocated() are the same, so this just calls the latter now. It could be removed and have the latter exposed via a subclass too.",
+      "revId": "1807a21ee52a42d622ca14ba15d040ba1c8ab7c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92cc794f_90c44fbf",
+        "filename": "components/viz/service/display/direct_renderer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-14T23:28:02Z",
+      "side": 1,
+      "message": "Return type changed to a non-reference since the SoftwareRenderer returns a temporary.",
+      "revId": "1807a21ee52a42d622ca14ba15d040ba1c8ab7c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
