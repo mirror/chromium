@@ -74,9 +74,6 @@ component("gin") {
       "$root_out_dir/natives_blob.bin",
       "$root_out_dir/snapshot_blob.bin",
     ]
-    if (use_v8_context_snapshot) {
-      data += [ "$root_out_dir/v8_context_snapshot.bin" ]
-    }
   }
 
   defines = [ "GIN_IMPLEMENTATION" ]
