@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "96f05bf2_98365771",
+        "filename": "third_party/WebKit/Source/platform/HistogramTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-12-14T20:31:40Z",
+      "side": 1,
+      "message": "This is never restored, so it looks like it will affect subsequent tests. (Right?)\n\nWhat about making a test utility that overrides this, with an interface similar to SimpleTestTickClock (and could life in wtf test support)? Something like this:\n\nnamespace WTF {\n\nclass ScopedMockClock {\n public:\n  ScopedMockClock()\n      : next_(top_),\n        next_time_function_(GetTimeFunctionForTesting()) {\n    top_ \u003d this;\n    SetTimeFunctionsForTesting(\u0026Now);\n  }\n  ~ScopedMockClock() {\n    top_ \u003d next_;\n    SetTimeFunctionsForTesting(next_time_function_);\n  }\n\n  // fascinating methods to manipulate the time\n\n  static double Now() { return top_-\u003enow_; }\n\n private:\n  static ScopedClockOverride* top_ \u003d nullptr;\n  ScopedClockOverride* next_;\n  TimeFunction next_time_function_;\n  // or possibly stored internally as a TimeTicks; whatever\n  double now_ \u003d 0.0;\n};\n\n}  // namespace WTF",
+      "revId": "c5170abac56ba6d4ffbdcbf3abda5100232a3d96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
