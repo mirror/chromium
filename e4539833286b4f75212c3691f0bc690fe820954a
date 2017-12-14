@@ -70,6 +70,24 @@
     },
     {
       "key": {
+        "uuid": "757b334c_04dcbc93",
+        "filename": "services/audio/public/cpp/audio_system_to_mojo_adapter.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-12-14T23:41:54Z",
+      "side": 1,
+      "message": "Makes sense, we\u0027ll go for FooCallback in the service.",
+      "parentUuid": "cde96e22_6ce991e3",
+      "revId": "e4539833286b4f75212c3691f0bc690fe820954a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6e906f60_35ca36a1",
         "filename": "services/audio/public/cpp/audio_system_to_mojo_adapter.h",
         "patchSetId": 17
@@ -81,6 +99,24 @@
       "writtenOn": "2017-12-13T22:09:29Z",
       "side": 1,
       "message": "Please construct this over a service_manager::Connector* (or actually, probably a unique_ptr\u003cConnector\u003e so there are no lifetime/ownership concerns) instead of a callback that binds a single interface. It\u0027s then much clearer what the point of the argument is since this is idiomatic design for a service client library.\n\nNote that you can still test the class fairly easily as we provide ways to override connector behavior. The most reasonable option given your current tests would probably be to use the Connector testing API in your test fixture setup:\n\n\n  service_manager::ConnectorRequest ignored_request;\n  auto connector \u003d service_manager::Connector::Create(\u0026ignored_request);\n  service_manager::Connector::TestApi connector_test_api(\n      connector.get());\n  connector_test_api.OverrideBinderForTesting(\n      audio::mojom::kServiceName,\n      audio::mojom::SystemInfo::Name_,\n      base::Bind(.../* the callback you want to use to handle it*/));\n  ...make_unique\u003cAudioSystemToServiceAdaptor\u003e(std::move(connector))...;\n\n\nNow you have an idiomatic client library API and a test fixture which sufficiently hooks into the system.",
+      "revId": "e4539833286b4f75212c3691f0bc690fe820954a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a56aabf0_adcd145e",
+        "filename": "services/audio/public/cpp/audio_system_to_mojo_adapter.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-12-14T23:41:54Z",
+      "side": 1,
+      "message": "Agree that unique_ptr\u003cConnector\u003e should be used to construct it.\nI\u0027m having a problem with \"OverrideBinderForTesting\" though: as soon as I close the binding at services/audio/test/audio_system_to_mojo_adapter_test.cc:243, the connector becomes unusable. Is there a way here to simulate a situation when the client code looses connection to the service and then re-connects?",
+      "parentUuid": "6e906f60_35ca36a1",
       "revId": "e4539833286b4f75212c3691f0bc690fe820954a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +140,24 @@
     },
     {
       "key": {
+        "uuid": "e0f8e0a8_6769be5a",
+        "filename": "services/audio/public/interfaces/system_info.mojom",
+        "patchSetId": 17
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-12-14T23:41:54Z",
+      "side": 1,
+      "message": "device_id and unique_id are different. Unique id of the device is the id assigned to it by the platform, and device id can be either a unique id or a special id like \"default\"/\"loopback\". These are media/audio concepts, so I should probably clarify them here.\n\n\nSystemInfo interface is far from ideal and there is quite a bit of redundancy in it.\nThere are several considerations here:\n\n(1) To obtain each piece of information - such as device id, audio parameters, device association - AudioManager (which is wrapped by AudioService) requires a call/multiple calls into platform audio layer (which may end up as system calls as well). We really don\u0027t want to retrieve information which the caller is not interested in.\n\n(2) On the other hand, we don\u0027t want to make atomic requests such as combining device description out of 3 calls to the service: we\u0027ll end up with enormous amount of IPC calls to just enumerate audio devices, which is caused by (3):\n\n(3) Current media::AudioSystem usage in the browser process is complicated, a large refactoring is needed to optimize it. There is some ongoing work there, but we don\u0027t want to be blocked by it. We have far more work to do with the service and no extra resources.\n\nStrategically, the reason why WebRTC team allocated resources for audio servicification work is to enable running platform audio out of process - for fault isolation, fault tolerance and enabling the move of audio processing code closer to hardware. So we have to balance perfection of the design (which I would love to have!) with reaching our goals in a reasonable amount of time.",
+      "parentUuid": "7718df27_4571d357",
+      "revId": "e4539833286b4f75212c3691f0bc690fe820954a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c3457698_6dc2f63d",
         "filename": "services/audio/public/interfaces/system_info.mojom",
         "patchSetId": 17
@@ -115,6 +169,24 @@
       "writtenOn": "2017-12-13T22:09:29Z",
       "side": 1,
       "message": "In the spirit of minimizing API surface, couldn\u0027t a user just call GetDeviceDescriptions() and look at the response for empty vs non-empty? Or do these Has*Devices methods need to be called at such high frequency that we would be worried about message overhead from too much GetDeviceDescriptions response data?\n\nOr better yet, will anyone realistically ever call Has*Devices without also immediately calling GetDeviceDescriptions if/when the former responds with true?",
+      "revId": "e4539833286b4f75212c3691f0bc690fe820954a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cdd5c15_2e49806e",
+        "filename": "services/audio/public/interfaces/system_info.mojom",
+        "patchSetId": 17
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-12-14T23:41:54Z",
+      "side": 1,
+      "message": "Same as above: the cost to retrieve the data and the cost of refactoring the client code.\n\nHas*Devices is called in a couple of places, and device descriptions are never retrieved by that code :-/.\n\nWe have plans/ideas for improving media::AudioSystem/audio::mojom::SystemInfo, but cannot afford that now. At this point, we just move media::AudioSystem implementation to Mojo: SystemInfo mimics media::AudioSystem.",
+      "parentUuid": "c3457698_6dc2f63d",
       "revId": "e4539833286b4f75212c3691f0bc690fe820954a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -138,6 +210,24 @@
     },
     {
       "key": {
+        "uuid": "58a991a7_7da98021",
+        "filename": "services/audio/public/interfaces/system_info.mojom",
+        "patchSetId": 17
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-12-14T23:41:54Z",
+      "side": 1,
+      "message": "Re:AudioDeviceDescription - see above.\nWe can make it nullable, however for the client code an empty string in this case makes a perfect sense now, and AudioManager returns us an empty string in this case. So we\u0027ll be converting a empty string to nullopt and the client code will map it back to an empty string.\nSo it will give us a conceptual correctness but no real value.\n\nHow strongly do you feel about it?\nI would prefer to avoid spending time on this now (taking into account how non-beautiful this interface already is)",
+      "parentUuid": "dca0c904_6a661d68",
+      "revId": "e4539833286b4f75212c3691f0bc690fe820954a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7532de81_d744391c",
         "filename": "services/audio/service.cc",
         "patchSetId": 17
@@ -155,6 +245,24 @@
     },
     {
       "key": {
+        "uuid": "e6f482e3_f6283316",
+        "filename": "services/audio/service.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-12-14T23:41:54Z",
+      "side": 1,
+      "message": "Yes, it\u0027s a conscious choice for this CL.\nSince it\u0027s in-process now and a pass-through to AudioManager, it\u0027s not a big deal to keep it always running.\nI have tear down logic code in the pipeline, but since it requires another couple of hundreds lines of tests I\u0027ll make a follow-up CL to keep this one smaller. (I have this in a list of TODO items in the CL description)",
+      "parentUuid": "7532de81_d744391c",
+      "revId": "e4539833286b4f75212c3691f0bc690fe820954a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b498e2aa_50c3ab6a",
         "filename": "services/audio/service.cc",
         "patchSetId": 17
@@ -166,6 +274,24 @@
       "writtenOn": "2017-12-13T22:09:29Z",
       "side": 1,
       "message": "optional nit: The thread checking in general is redundant IMHO. The correct behavior is guaranteed by the service manager APIs. Unless you plan on introducing your own explicit direct calls into these methods I might just leave it all out.",
+      "revId": "e4539833286b4f75212c3691f0bc690fe820954a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcd13429_b981a350",
+        "filename": "services/audio/service.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-12-14T23:41:54Z",
+      "side": 1,
+      "message": "Thread checker is actually a part of that service tear-down logic :)\nI prefer to keep DCHECKS here - it helps reading the code and it helps to make sure I write tests correctly.\nAlso, I would argue that DCHECK is meant to verify a guarantee, so if something is guaranteed it does not immediately make a DCHECK excessive :)\n\nBTW, service_manager::Service interface threading guarantee is not documented in the header [https://cs.chromium.org/chromium/src/services/service_manager/public/cpp/service.h?q\u003dservice_manager::Service\u0026sq\u003dpackage:chromium\u0026l\u003d21] - which would be a natural place to look up for someone reading this code. Should we fix this?",
+      "parentUuid": "b498e2aa_50c3ab6a",
       "revId": "e4539833286b4f75212c3691f0bc690fe820954a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
