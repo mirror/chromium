@@ -10,6 +10,10 @@
 #include "base/callback.h"
 #include "base/memory/ref_counted_memory.h"
 
+namespace service_manager {
+class Connector;
+}
+
 namespace printing {
 
 class MetafilePlayer;
@@ -27,6 +31,7 @@ class PdfConverter {
   // Starts conversion of PDF provided as |data|. Calls |start_callback|
   // with positive |page_count|. |page_count| is 0 if initialization failed.
   static std::unique_ptr<PdfConverter> StartPdfConverter(
+      service_manager::Connector* connector,
       const scoped_refptr<base::RefCountedMemory>& data,
       const PdfRenderSettings& conversion_settings,
       const StartCallback& start_callback);
