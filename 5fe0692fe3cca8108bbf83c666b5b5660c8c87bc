@@ -46,6 +46,30 @@
       "revId": "5fe0692fe3cca8108bbf83c666b5b5660c8c87bc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec51c17f_32504c65",
+        "filename": "ui/aura/window_tree_host_platform.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-12-14T03:07:02Z",
+      "side": 1,
+      "message": "Thanks sadrul, X11Window works.  Now there are some test failures to fix though\n\nWindowTreeHostTest.HoldPointerMovesOnChildResizing\nSnapshotAuraTest.RotateAndUIScaleAndScaleFactor\nSnapshotAuraTest.PartialBounds\nSnapshotAuraTest.DeviceScaleFactor\nSnapshotAuraTest.Rotated\nSnapshotAuraTest.UIScale\nSnapshotAuraTest.RotateAndUIScale\nSnapshotAuraTest.FullScreenWindow\nWidgetScrollViewTest.EventLocation\nWidgetScrollViewTest.ScrollTrackScrolling\nViewLayerTest.DontPaintChildrenWithLayers",
+      "parentUuid": "798e6257_45330fda",
+      "range": {
+        "startLine": 35,
+        "startChar": 2,
+        "endLine": 35,
+        "endChar": 44
+      },
+      "revId": "5fe0692fe3cca8108bbf83c666b5b5660c8c87bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
