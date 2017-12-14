@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "73f53d6b_f2df9377",
+        "filename": "ash/public/interfaces/accessibility_controller.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-12-14T17:55:11Z",
+      "side": 1,
+      "message": "can you elaborate on what acceptable values for gesture might be?  Where are they validated, and what happens if something unexpected arrives?",
+      "range": {
+        "startLine": 65,
+        "startChar": 36,
+        "endLine": 65,
+        "endChar": 43
+      },
+      "revId": "e908f16786785ef4c9ff4fd551ad18f5e08873a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
