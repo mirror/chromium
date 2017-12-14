@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f6c50fbe_1dc1cbeb",
+        "filename": "chrome/browser/android/vr_shell/vr_gl_thread.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-12-14T23:16:22Z",
+      "side": 1,
+      "message": "This flag could also become part of UiInitialState since, I assume, the UI needs to set itself up differently in anticipation of assets.",
+      "range": {
+        "startLine": 42,
+        "startChar": 11,
+        "endLine": 42,
+        "endChar": 27
+      },
+      "revId": "a3f40434b21766b8d61be0be360733debb55b334",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
