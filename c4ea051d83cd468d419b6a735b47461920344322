@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2f2abe5b_0be93263",
+        "filename": "third_party/WebKit/Source/core/animation/EffectInput.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-12-14T16:22:40Z",
+      "side": 1,
+      "message": "Could the rest of this function be replaced with NativeValueTraits\u003cStringOrStringSequence\u003e::NativeValue or V8StringOrStringSequence::ToImpl? If not, why not?",
+      "revId": "c4ea051d83cd468d419b6a735b47461920344322",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1dc3d841_01676cf7",
+        "filename": "third_party/WebKit/Source/core/animation/EffectInput.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-12-14T16:22:40Z",
+      "side": 1,
+      "message": "This exception is uncaught. Are you sure all call sites are prepared to handle an uncaught V8 exception? If not, you could catch it and use ExceptionState::RethrowV8Exception.",
+      "revId": "c4ea051d83cd468d419b6a735b47461920344322",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f63c55a_b9bbca46",
+        "filename": "third_party/WebKit/Source/core/animation/EffectInput.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-12-14T16:22:40Z",
+      "side": 1,
+      "message": "There is an overload of Get that just takes a uint32_t; if this remains (see other comments), use it instead.",
+      "revId": "c4ea051d83cd468d419b6a735b47461920344322",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2c75e4b_3263c18f",
+        "filename": "third_party/WebKit/Source/core/animation/EffectInput.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-12-14T16:22:40Z",
+      "side": 1,
+      "message": "similarly, this can throw",
+      "revId": "c4ea051d83cd468d419b6a735b47461920344322",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f074ef7f_00ba80af",
+        "filename": "third_party/WebKit/Source/core/animation/KeyframeEffect.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-12-14T16:22:40Z",
+      "side": 1,
+      "message": "nit: const\u0026 (here and anywhere else I previously missed it); in general a ScriptValue\u0026 looks like an out-parameter but that isn\u0027t intended here",
+      "revId": "c4ea051d83cd468d419b6a735b47461920344322",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9b79e2b_394b65dd",
+        "filename": "third_party/WebKit/Source/core/animation/KeyframeEffectReadOnly.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-12-14T16:22:40Z",
+      "side": 1,
+      "message": "const\u0026",
+      "revId": "c4ea051d83cd468d419b6a735b47461920344322",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
