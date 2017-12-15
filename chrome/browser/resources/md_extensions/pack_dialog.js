@@ -77,6 +77,11 @@ cr.define('extensions', function() {
     },
 
     /** @private */
+    onClosePackDialog_: function() {
+      this.$.dialog.close();
+    },
+
+    /** @private */
     onConfirmTap_: function() {
       this.delegate.packExtension(
           this.packDirectory_, this.keyFile_, 0,
@@ -89,11 +94,7 @@ cr.define('extensions', function() {
      * @private
      */
     onPackResponse_: function(response) {
-      if (response.status === chrome.developerPrivate.PackStatus.SUCCESS) {
-        this.$.dialog.close();
-      } else {
-        this.set('lastResponse_', response);
-      }
+      this.lastResponse_ = response;
     },
 
     /**
@@ -101,13 +102,17 @@ cr.define('extensions', function() {
      * receiving a waring.
      * @private
      */
-    onWarningConfirmed_: function() {
+    onWarningConfirm_: function() {
       this.delegate.packExtension(
           this.lastResponse_.item_path, this.lastResponse_.pem_path,
           this.lastResponse_.override_flags, this.onPackResponse_.bind(this));
     },
 
-    resetResponse_: function() {
+    /**
+     * @private
+     */
+    resetResponse_: function(e) {
+      e.stopPropagation();
       this.lastResponse_ = null;
     },
   });
