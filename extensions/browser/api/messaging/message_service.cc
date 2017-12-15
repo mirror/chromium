@@ -25,6 +25,7 @@
 #include "content/public/browser/render_widget_host.h"
 #include "content/public/browser/render_widget_host_view.h"
 #include "content/public/browser/site_instance.h"
+#include "content/public/browser/storage_partition.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/common/child_process_host.h"
 #include "extensions/browser/api/extensions_api_client.h"
@@ -795,7 +796,8 @@ void MessageService::OnOpenChannelAllowed(
     return;
   }
 
-  BrowserContext* context = source->GetProcess()->GetBrowserContext();
+  content::RenderProcessHost* source_process = source->GetProcess();
+  BrowserContext* context = source_process->GetBrowserContext();
 
   // Note: we use the source's profile here. If the source is an incognito
   // process, we will use the incognito EPM to find the right extension process,
@@ -815,12 +817,13 @@ void MessageService::OnOpenChannelAllowed(
   // loading of lazy background pages continues asynchronously, so enqueue
   // messages awaiting TLS channel ID first.
   if (params->include_tls_channel_id) {
+    LOG(WARNING) << "Getting channel ID!";
     // Transfer pending messages to the next pending channel list.
     pending_tls_channel_id_channels_[channel_id].swap(pending_messages);
     // Capture this reference before params is invalidated by base::Passed().
     const GURL& source_url = params->source_url;
     property_provider_.GetChannelID(
-        context, source_url,
+        source_process->GetStoragePartition(), source_url,
         base::Bind(&MessageService::GotChannelID, weak_factory_.GetWeakPtr(),
                    base::Passed(&params)));
     return;
