@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0ad9ca0d_66a4dde7",
+        "filename": "third_party/WebKit/Source/modules/indexeddb/IDBTestHelper.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-12-15T18:01:19Z",
+      "side": 1,
+      "message": "Nothing actually depends on these number/string values - can you indicate that with a comment?",
+      "revId": "a8dfb1307cf47659a8a4bbc8d7354dee73d000f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
