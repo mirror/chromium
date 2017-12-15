@@ -16,6 +16,7 @@
 #include "gpu/command_buffer/client/context_support.h"
 #include "gpu/command_buffer/client/gles2_interface.h"
 #include "ui/display/types/display_snapshot.h"
+#include "ui/gfx/buffer_format_util.h"
 
 namespace viz {
 
@@ -41,7 +42,7 @@ GLOutputSurfaceOzone::GLOutputSurfaceOzone(
   capabilities_.max_frames_pending = 2;
 
   buffer_queue_.reset(
-      new BufferQueue(context_provider->ContextGL(), target, internalformat,
+      new BufferQueue(context_provider->ContextGL(), target,
                       display::DisplaySnapshot::PrimaryFormat(), &gl_helper_,
                       gpu_memory_buffer_manager, widget));
   buffer_queue_->Initialize();
@@ -89,7 +90,7 @@ void GLOutputSurfaceOzone::SwapBuffers(OutputSurfaceFrame frame) {
 }
 
 uint32_t GLOutputSurfaceOzone::GetFramebufferCopyTextureFormat() {
-  return buffer_queue_->internal_format();
+  return gfx::GLFormatForBufferFormat(buffer_queue_->buffer_format());
 }
 
 bool GLOutputSurfaceOzone::IsDisplayedAsOverlayPlane() const {

@@ -21,6 +21,9 @@ GFX_EXPORT std::vector<BufferFormat> GetBufferFormatsForTesting();
 // Returns the number of planes for |format|.
 GFX_EXPORT size_t NumberOfPlanesForBufferFormat(BufferFormat format);
 
+// Returns the corresponding GL internalformat for |format|.
+GFX_EXPORT unsigned int GLFormatForBufferFormat(BufferFormat format);
+
 // Returns the subsampling factor applied to the given zero-indexed |plane| of
 // |format| both horizontally and vertically.
 GFX_EXPORT size_t SubsamplingFactorForBufferFormat(BufferFormat format,
