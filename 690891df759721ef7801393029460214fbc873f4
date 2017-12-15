@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8fe72823_d1af9afa",
+        "filename": "chrome/browser/resources/md_extensions/pack_dialog.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-15T03:14:17Z",
+      "side": 1,
+      "message": "Nit: Can this just be\nthis.lastResponse_ \u003d response;\n\nI don\u0027t think the setter is necessary for top-level Polymer properties.",
+      "revId": "690891df759721ef7801393029460214fbc873f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52e25b46_6c7bbb3f",
+        "filename": "chrome/browser/resources/md_extensions/pack_dialog_alert.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-15T03:14:17Z",
+      "side": 1,
+      "message": "Can we put everything in one line, and avoid the need for the HTML comment?\n\n\u003cdiv class\u003d\"body slot\u003d\"body\"\u003e[[model.message]]\u003c/div\u003e",
+      "revId": "690891df759721ef7801393029460214fbc873f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ee0a2b8_017a23ee",
+        "filename": "chrome/browser/resources/md_extensions/pack_dialog_alert.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-15T03:14:17Z",
+      "side": 1,
+      "message": "Not for this CL, but it seems that the way we are closing the 2nd dialog is a bit messy. IIUC, the inner dialog fires a \u0027close\u0027 event, which eventually bubbles up to manager.html and triggers the onPackDialogClose_. Is that the case?",
+      "revId": "690891df759721ef7801393029460214fbc873f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
