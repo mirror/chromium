@@ -51,14 +51,14 @@ StorageArea* StorageNamespace::LocalStorageArea(const SecurityOrigin* origin) {
   return StorageArea::Create(
       WTF::WrapUnique(local_storage_namespace->CreateStorageArea(
           WebSecurityOrigin(origin))),
-      kLocalStorage);
+      StorageArea::kLocalStorage);
 }
 
 StorageArea* StorageNamespace::GetStorageArea(const SecurityOrigin* origin) {
   return StorageArea::Create(
       WTF::WrapUnique(
           web_storage_namespace_->CreateStorageArea(WebSecurityOrigin(origin))),
-      kSessionStorage);
+      StorageArea::kSessionStorage);
 }
 
 bool StorageNamespace::IsSameNamespace(
