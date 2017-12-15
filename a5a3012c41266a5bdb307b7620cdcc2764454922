@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "710b6614_b0caabf8",
+        "filename": "build/config/compiler/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 648,
+      "author": {
+        "id": 1117686
+      },
+      "writtenOn": "2017-12-15T14:45:25Z",
+      "side": 1,
+      "message": "I would make this consistent with other arch variants, so:\ncflags +\u003d [\n  \"-march\u003dmipsel\",\n  \"-mcpu\u003dmips32r6\",\n]",
+      "range": {
+        "startLine": 648,
+        "startChar": 30,
+        "endLine": 648,
+        "endChar": 38
+      },
+      "revId": "a5a3012c41266a5bdb307b7620cdcc2764454922",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c23e7cb4_8dea360d",
+        "filename": "build/config/compiler/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 650,
+      "author": {
+        "id": 1117686
+      },
+      "writtenOn": "2017-12-15T14:45:25Z",
+      "side": 1,
+      "message": "I think -Wl option is not needed.\nCan you please double check.",
+      "range": {
+        "startLine": 650,
+        "startChar": 14,
+        "endLine": 650,
+        "endChar": 16
+      },
+      "revId": "a5a3012c41266a5bdb307b7620cdcc2764454922",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "555d040c_3e6134dd",
         "filename": "build/config/compiler/BUILD.gn",
         "patchSetId": 1
@@ -18,6 +64,29 @@
         "startChar": 15,
         "endLine": 666,
         "endChar": 24
+      },
+      "revId": "a5a3012c41266a5bdb307b7620cdcc2764454922",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f9aaf23_872bf92f",
+        "filename": "build/config/compiler/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 679,
+      "author": {
+        "id": 1117686
+      },
+      "writtenOn": "2017-12-15T14:45:25Z",
+      "side": 1,
+      "message": "Not directly part of your change, but can you please put these cflags just under is_clang since they became identical for android and linux. Same for other arch variants.",
+      "range": {
+        "startLine": 679,
+        "startChar": 12,
+        "endLine": 679,
+        "endChar": 18
       },
       "revId": "a5a3012c41266a5bdb307b7620cdcc2764454922",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
