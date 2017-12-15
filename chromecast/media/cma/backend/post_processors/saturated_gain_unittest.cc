@@ -66,6 +66,13 @@ TEST_P(PostProcessorTest, Gain) {
       << "Expected a gain of 20dB";
 }
 
+TEST_P(PostProcessorTest, CpuUsage) {
+  PostProcessorFactory factory;
+  std::string config = MakeConfigString(20.0);
+  auto pp = factory.CreatePostProcessor(kLibraryPath, config, kNumChannels);
+  AudioProcessorBenchmark(pp.get(), sample_rate_);
+}
+
 }  // namespace post_processor_test
 }  // namespace media
 }  // namespace chromecast
