@@ -61,7 +61,7 @@ class MODULES_EXPORT AXNodeObject : public AXObject {
   virtual AccessibilityRole NativeAccessibilityRoleIgnoringAria() const;
   String AccessibilityDescriptionForElements(
       HeapVector<Member<Element>>& elements) const;
-  void AlterSliderValue(bool increase);
+  void AlterSliderOrSpinButtonValue(bool increase);
   AXObject* ActiveDescendant() override;
   String AriaAccessibilityDescription() const;
   String AriaAutoComplete() const;
@@ -115,8 +115,8 @@ class MODULES_EXPORT AXNodeObject : public AXObject {
   bool IsPasswordField() const final;
   bool IsProgressIndicator() const override;
   bool IsRichlyEditable() const override;
-  bool IsSlider() const override;
   bool IsNativeSlider() const override;
+  bool IsNativeSpinButton() const override;
   bool IsMoveableSplitter() const override;
 
   // Check object state.
