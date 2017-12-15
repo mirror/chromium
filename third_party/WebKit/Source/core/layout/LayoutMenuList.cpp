@@ -192,6 +192,7 @@ void LayoutMenuList::UpdateOptionsWidth() const {
 }
 
 void LayoutMenuList::UpdateFromElement() {
+  printf("\n\n[DJKim] LayoutMenuList::UpdateFromElement");
   HTMLSelectElement* select = SelectElement();
   HTMLOptionElement* option = select->OptionToBeShown();
   String text = g_empty_string;
@@ -227,6 +228,7 @@ void LayoutMenuList::UpdateFromElement() {
 
   SetText(text.StripWhiteSpace());
 
+  printf("\n\n[DJKim] LayoutMenuList::UpdateFromElement >> DidUpdateActiveOption");
   DidUpdateActiveOption(option);
 }
 

@@ -57,6 +57,7 @@ HTMLOptionElement::HTMLOptionElement(Document& document)
 HTMLOptionElement::~HTMLOptionElement() {}
 
 HTMLOptionElement* HTMLOptionElement::Create(Document& document) {
+  printf("\n\n[DJKim] HTMLOptionElement::Create");
   HTMLOptionElement* option = new HTMLOptionElement(document);
   option->EnsureUserAgentShadowRoot();
   return option;
@@ -350,6 +351,7 @@ Node::InsertionNotificationRequest HTMLOptionElement::InsertedInto(
 }
 
 void HTMLOptionElement::RemovedFrom(ContainerNode* insertion_point) {
+  printf("\n\n[DJKim] HTMLOptionElement::RemovedFrom");
   if (auto* select = ToHTMLSelectElementOrNull(*insertion_point)) {
     if (!parentNode() || IsHTMLOptGroupElement(*parentNode()))
       select->OptionRemoved(*this);

@@ -98,6 +98,7 @@ HTMLSelectElement::HTMLSelectElement(Document& document)
 }
 
 HTMLSelectElement* HTMLSelectElement::Create(Document& document) {
+  printf("\n\n[DJKim] HTMLOptionElement::Create");
   HTMLSelectElement* select = new HTMLSelectElement(document);
   select->EnsureUserAgentShadowRoot();
   return select;
@@ -786,6 +787,7 @@ void HTMLSelectElement::RecalcListItems() const {
 }
 
 void HTMLSelectElement::ResetToDefaultSelection(ResetReason reason) {
+  printf("\n\n[DJKim] HTMLOptionElement::ResetToDefaultSelection");
   // https://html.spec.whatwg.org/multipage/forms.html#ask-for-a-reset
   if (IsMultiple())
     return;
@@ -936,6 +938,7 @@ void HTMLSelectElement::OptionInserted(HTMLOptionElement& option,
 }
 
 void HTMLSelectElement::OptionRemoved(HTMLOptionElement& option) {
+  printf("\n\n[DJKim] HTMLOptionElement::OptionRemoved");
   SetRecalcListItems();
   if (option.Selected())
     ResetToDefaultSelection(kResetReasonSelectedOptionRemoved);
@@ -973,6 +976,7 @@ void HTMLSelectElement::HrInsertedOrRemoved(HTMLHRElement& hr) {
 // operations. crbug.com/577989.
 void HTMLSelectElement::SelectOption(HTMLOptionElement* element,
                                      SelectOptionFlags flags) {
+  printf("\n\n[DJKim] HTMLOptionElement::SelectOption");
   TRACE_EVENT0("blink", "HTMLSelectElement::selectOption");
 
   bool should_update_popup = false;

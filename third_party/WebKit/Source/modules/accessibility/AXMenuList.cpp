@@ -110,10 +110,12 @@ AccessibilityExpanded AXMenuList::IsExpanded() const {
 }
 
 void AXMenuList::DidUpdateActiveOption(int option_index) {
+  printf("\n\n[DJKim] AXMenuList::DidUpdateActiveOption");
   bool suppress_notifications =
       (GetNode() && !GetNode()->IsFinishedParsingChildren());
 
   if (HasChildren()) {
+    printf("\n\n[DJKim] AXMenuList::DidUpdateActiveOption >> has children_");
     const auto& child_objects = Children();
     if (!child_objects.IsEmpty()) {
       DCHECK_EQ(child_objects.size(), 1ul);
@@ -124,10 +126,16 @@ void AXMenuList::DidUpdateActiveOption(int option_index) {
           popup->DidUpdateActiveOption(option_index, !suppress_notifications);
       }
     }
+    else {
+      printf("\n\n[DJKim] AXMenuList::DidUpdateActiveOption >> no children_");
+    }
   }
 
+  printf("\n\n[DJKim] AXMenuList::DidUpdateActiveOption >> PostNotification before");
   AXObjectCache().PostNotification(this,
                                    AXObjectCacheImpl::kAXMenuListValueChanged);
+
+  printf("\n\n[DJKim] AXMenuList::DidUpdateActiveOption >> PostNotification after");
 }
 
 void AXMenuList::DidShowPopup() {

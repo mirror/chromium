@@ -859,6 +859,7 @@ DocumentFragment* Range::cloneContents(ExceptionState& exception_state) {
 
 // https://dom.spec.whatwg.org/#concept-range-insert
 void Range::insertNode(Node* new_node, ExceptionState& exception_state) {
+  printf("\n\n[DJKim] Range::insertNode");
   if (!new_node) {
     // FIXME: Generated bindings code never calls with null, and neither should
     // other callers!
@@ -942,6 +943,7 @@ void Range::insertNode(Node* new_node, ExceptionState& exception_state) {
 
   // 9. If node's parent is not null, remove node from its parent.
   if (new_node->parentNode()) {
+    printf("\n\n[DJKim] Range::insertNode #9");
     new_node->remove(exception_state);
     if (exception_state.HadException())
       return;
