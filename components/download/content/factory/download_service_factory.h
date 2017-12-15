@@ -16,6 +16,10 @@ namespace content {
 class DownloadManager;
 }  // namespace content
 
+namespace net {
+class URLRequestContextGetter;
+}  // namespace net
+
 namespace download {
 
 class DownloadService;
@@ -34,6 +38,7 @@ class TaskScheduler;
 DownloadService* CreateDownloadService(
     std::unique_ptr<DownloadClientMap> clients,
     content::DownloadManager* download_manager,
+    scoped_refptr<net::URLRequestContextGetter> request_context_getter,
     const base::FilePath& storage_dir,
     const scoped_refptr<base::SequencedTaskRunner>& background_task_runner,
     std::unique_ptr<TaskScheduler> task_scheduler);

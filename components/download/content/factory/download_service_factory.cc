@@ -2,6 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include "components/download/content/factory/download_service_factory.h"
+
 #include "base/files/file_path.h"
 #include "base/memory/ptr_util.h"
 #include "build/build_config.h"
@@ -18,6 +20,7 @@
 #include "components/download/internal/proto/entry.pb.h"
 #include "components/download/internal/scheduler/scheduler_impl.h"
 #include "components/leveldb_proto/proto_database_impl.h"
+#include "net/url_request/url_request_context_getter.h"
 
 #if defined(OS_ANDROID)
 #include "components/download/internal/android/battery_status_listener_android.h"
@@ -33,6 +36,7 @@ const base::FilePath::CharType kFilesStorageDir[] = FILE_PATH_LITERAL("Files");
 DownloadService* CreateDownloadService(
     std::unique_ptr<DownloadClientMap> clients,
     content::DownloadManager* download_manager,
+    scoped_refptr<net::URLRequestContextGetter> request_context_getter,
     const base::FilePath& storage_dir,
     const scoped_refptr<base::SequencedTaskRunner>& background_task_runner,
     std::unique_ptr<TaskScheduler> task_scheduler) {
