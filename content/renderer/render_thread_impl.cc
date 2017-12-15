@@ -1467,7 +1467,7 @@ media::GpuVideoAcceleratorFactories* RenderThreadImpl::GetGpuFactories() {
     scoped_refptr<ui::ContextProviderCommandBuffer> shared_context_provider =
         gpu_factories_.back()->ContextProviderMainThread();
     if (shared_context_provider) {
-      viz::ContextProvider::ScopedContextLock lock(
+      viz::GLContextProvider::ScopedContextLockGL lock(
           shared_context_provider.get());
       if (lock.ContextGL()->GetGraphicsResetStatusKHR() == GL_NO_ERROR) {
         return gpu_factories_.back().get();
@@ -2428,10 +2428,9 @@ RenderThreadImpl::SharedCompositorWorkerContextProvider() {
   // Try to reuse existing shared worker context provider.
   if (shared_worker_context_provider_) {
     // Note: If context is lost, delete reference after releasing the lock.
-    viz::ContextProvider::ScopedContextLock lock(
+    viz::RasterContextProvider::ScopedContextLockRaster lock(
         shared_worker_context_provider_.get());
-    if (shared_worker_context_provider_->RasterContext()
-            ->GetGraphicsResetStatusKHR() == GL_NO_ERROR)
+    if (lock.RasterInterface()->GetGraphicsResetStatusKHR() == GL_NO_ERROR)
       return shared_worker_context_provider_;
   }
 

@@ -70,7 +70,7 @@ void OneCopyRasterBufferProvider::RasterBufferImpl::Playback(
 OneCopyRasterBufferProvider::OneCopyRasterBufferProvider(
     base::SequencedTaskRunner* task_runner,
     viz::ContextProvider* compositor_context_provider,
-    viz::ContextProvider* worker_context_provider,
+    viz::RasterContextProvider* worker_context_provider,
     LayerTreeResourceProvider* resource_provider,
     int max_copy_texture_chromium_size,
     bool use_partial_raster,
@@ -229,9 +229,9 @@ void OneCopyRasterBufferProvider::PlaybackAndCopyOnWorkerThread(
 
 void OneCopyRasterBufferProvider::WaitSyncToken(
     const gpu::SyncToken& sync_token) {
-  viz::ContextProvider::ScopedContextLock scoped_context(
+  viz::RasterContextProvider::ScopedContextLockRaster scoped_context(
       worker_context_provider_);
-  gpu::raster::RasterInterface* ri = scoped_context.RasterContext();
+  gpu::raster::RasterInterface* ri = scoped_context.RasterInterface();
   DCHECK(ri);
   // Synchronize with compositor. Nop if sync token is empty.
   ri->WaitSyncTokenCHROMIUM(sync_token.GetConstData());
@@ -304,9 +304,9 @@ void OneCopyRasterBufferProvider::CopyOnWorkerThread(
     ResourceProvider::ScopedWriteLockRaster* resource_lock,
     const RasterSource* raster_source,
     const gfx::Rect& rect_to_copy) {
-  viz::ContextProvider::ScopedContextLock scoped_context(
+  viz::RasterContextProvider::ScopedContextLockRaster scoped_context(
       worker_context_provider_);
-  gpu::raster::RasterInterface* ri = scoped_context.RasterContext();
+  gpu::raster::RasterInterface* ri = scoped_context.RasterInterface();
   DCHECK(ri);
 
   GLuint texture_id = resource_lock->ConsumeTexture(ri);

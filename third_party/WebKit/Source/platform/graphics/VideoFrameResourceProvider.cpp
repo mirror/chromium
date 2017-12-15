@@ -33,7 +33,7 @@ VideoFrameResourceProvider::VideoFrameResourceProvider(
       weak_ptr_factory_(this) {}
 
 VideoFrameResourceProvider::~VideoFrameResourceProvider() {
-  viz::ContextProvider::ScopedContextLock lock(context_provider_);
+  viz::ContextProvider::ScopedContextLockGL lock(context_provider_);
   resource_updater_ = nullptr;
   resource_provider_ = nullptr;
 }
@@ -50,7 +50,7 @@ void VideoFrameResourceProvider::Initialize(
   CHECK(media_context_provider);
   context_provider_ = media_context_provider;
 
-  viz::ContextProvider::ScopedContextLock lock(context_provider_);
+  viz::ContextProvider::ScopedContextLockGL lock(context_provider_);
   resource_provider_ = std::make_unique<cc::LayerTreeResourceProvider>(
       media_context_provider, shared_bitmap_manager_,
       gpu_memory_buffer_manager_, true, settings_.resource_settings);
@@ -63,7 +63,7 @@ void VideoFrameResourceProvider::Initialize(
 void VideoFrameResourceProvider::AppendQuads(
     viz::RenderPass* render_pass,
     scoped_refptr<media::VideoFrame> frame) {
-  viz::ContextProvider::ScopedContextLock lock(context_provider_);
+  viz::ContextProvider::ScopedContextLockGL lock(context_provider_);
   resource_updater_->ObtainFrameResources(frame);
   // TODO(lethalantidote) : update with true value;
   bool contents_opaque = true;
@@ -84,20 +84,20 @@ void VideoFrameResourceProvider::AppendQuads(
 }
 
 void VideoFrameResourceProvider::ReleaseFrameResources() {
-  viz::ContextProvider::ScopedContextLock lock(context_provider_);
+  viz::ContextProvider::ScopedContextLockGL lock(context_provider_);
   resource_updater_->ReleaseFrameResources();
 }
 
 void VideoFrameResourceProvider::PrepareSendToParent(
     const cc::LayerTreeResourceProvider::ResourceIdArray& resource_ids,
     std::vector<viz::TransferableResource>* transferable_resources) {
-  viz::ContextProvider::ScopedContextLock lock(context_provider_);
+  viz::ContextProvider::ScopedContextLockGL lock(context_provider_);
   resource_provider_->PrepareSendToParent(resource_ids, transferable_resources);
 }
 
 void VideoFrameResourceProvider::ReceiveReturnsFromParent(
     const std::vector<viz::ReturnedResource>& transferable_resources) {
-  viz::ContextProvider::ScopedContextLock lock(context_provider_);
+  viz::ContextProvider::ScopedContextLockGL lock(context_provider_);
   resource_provider_->ReceiveReturnsFromParent(transferable_resources);
 }
 

@@ -38,6 +38,7 @@
 #include "components/viz/common/resources/platform_color.h"
 #include "components/viz/test/test_gpu_memory_buffer_manager.h"
 #include "gpu/GLES2/gl2extchromium.h"
+#include "gpu/command_buffer/client/raster_interface.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/gfx/geometry/axis_transform2d.h"
 
@@ -286,6 +287,15 @@ class RasterBufferProviderTest
     context_provider->ContextGL()->Flush();
   }
 
+  void LoseContext(viz::RasterContextProvider* context_provider) {
+    if (!context_provider)
+      return;
+    viz::RasterContextProvider::ScopedContextLockRaster lock(context_provider);
+    context_provider->RasterInterface()->LoseContextCHROMIUM(
+        GL_GUILTY_CONTEXT_RESET_ARB, GL_INNOCENT_CONTEXT_RESET_ARB);
+    context_provider->RasterInterface()->Flush();
+  }
+
   void OnRasterTaskCompleted(unsigned id, bool was_canceled) override {
     RasterTaskResult result;
     result.id = id;
@@ -317,7 +327,7 @@ class RasterBufferProviderTest
 
  protected:
   scoped_refptr<TestContextProvider> context_provider_;
-  scoped_refptr<TestContextProvider> worker_context_provider_;
+  scoped_refptr<viz::RasterContextProvider> worker_context_provider_;
   std::unique_ptr<LayerTreeResourceProvider> resource_provider_;
   std::unique_ptr<TileTaskManager> tile_task_manager_;
   std::unique_ptr<RasterBufferProvider> raster_buffer_provider_;
