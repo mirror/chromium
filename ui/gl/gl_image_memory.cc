@@ -20,25 +20,6 @@ using gfx::BufferFormat;
 namespace gl {
 namespace {
 
-bool ValidInternalFormat(unsigned internalformat) {
-  switch (internalformat) {
-    case GL_ATC_RGB_AMD:
-    case GL_ATC_RGBA_INTERPOLATED_ALPHA_AMD:
-    case GL_COMPRESSED_RGB_S3TC_DXT1_EXT:
-    case GL_COMPRESSED_RGBA_S3TC_DXT5_EXT:
-    case GL_ETC1_RGB8_OES:
-    case GL_RED:
-    case GL_RG:
-    case GL_RGB:
-    case GL_RGBA:
-    case GL_RGB10_A2_EXT:
-    case GL_BGRA_EXT:
-      return true;
-    default:
-      return false;
-  }
-}
-
 bool ValidFormat(gfx::BufferFormat format) {
   switch (format) {
     case gfx::BufferFormat::ATC:
@@ -100,46 +81,7 @@ bool IsCompressedFormat(gfx::BufferFormat format) {
 }
 
 GLenum TextureFormat(gfx::BufferFormat format) {
-  switch (format) {
-    case gfx::BufferFormat::ATC:
-      return GL_ATC_RGB_AMD;
-    case gfx::BufferFormat::ATCIA:
-      return GL_ATC_RGBA_INTERPOLATED_ALPHA_AMD;
-    case gfx::BufferFormat::DXT1:
-      return GL_COMPRESSED_RGB_S3TC_DXT1_EXT;
-    case gfx::BufferFormat::DXT5:
-      return GL_COMPRESSED_RGBA_S3TC_DXT5_EXT;
-    case gfx::BufferFormat::ETC1:
-      return GL_ETC1_RGB8_OES;
-    case gfx::BufferFormat::R_8:
-      return GL_RED;
-    case gfx::BufferFormat::R_16:
-      return GL_R16_EXT;
-    case gfx::BufferFormat::RG_88:
-      return GL_RG;
-    case gfx::BufferFormat::RGBA_4444:
-    case gfx::BufferFormat::RGBA_8888:
-    case gfx::BufferFormat::RGBA_F16:
-      return GL_RGBA;
-    case gfx::BufferFormat::BGRA_8888:
-      return GL_BGRA_EXT;
-    case gfx::BufferFormat::BGR_565:
-    case gfx::BufferFormat::RGBX_8888:
-    case gfx::BufferFormat::BGRX_8888:
-      return GL_RGB;
-    case gfx::BufferFormat::BGRX_1010102:
-      // Technically speaking we should use an opaque format, but neither
-      // OpenGLES nor OpenGL supports the hypothetical GL_RGB10_EXT.
-      return GL_RGB10_A2_EXT;
-    case gfx::BufferFormat::YVU_420:
-    case gfx::BufferFormat::YUV_420_BIPLANAR:
-    case gfx::BufferFormat::UYVY_422:
-      NOTREACHED();
-      return 0;
-  }
-
-  NOTREACHED();
-  return 0;
+  return gfx::BufferFormatToGLFormat(format);
 }
 
 GLenum DataFormat(gfx::BufferFormat format) {
@@ -162,7 +104,7 @@ GLenum DataFormat(gfx::BufferFormat format) {
     case gfx::BufferFormat::DXT1:
     case gfx::BufferFormat::DXT5:
     case gfx::BufferFormat::ETC1:
-      return TextureFormat(format);
+      return gfx::BufferFormatToGLFormat(format);
     case gfx::BufferFormat::YVU_420:
     case gfx::BufferFormat::YUV_420_BIPLANAR:
     case gfx::BufferFormat::UYVY_422:
@@ -376,9 +318,8 @@ std::unique_ptr<uint8_t[]> GLES2Data(const gfx::Size& size,
 
 }  // namespace
 
-GLImageMemory::GLImageMemory(const gfx::Size& size, unsigned internalformat)
+GLImageMemory::GLImageMemory(const gfx::Size& size)
     : size_(size),
-      internalformat_(internalformat),
       memory_(nullptr),
       format_(gfx::BufferFormat::RGBA_8888),
       stride_(0) {}
@@ -395,12 +336,6 @@ GLImageMemory* GLImageMemory::FromGLImage(GLImage* image) {
 bool GLImageMemory::Initialize(const unsigned char* memory,
                                gfx::BufferFormat format,
                                size_t stride) {
-  if (!ValidInternalFormat(internalformat_)) {
-    LOG(ERROR) << "Invalid internalformat: "
-               << GLEnums::GetStringEnum(internalformat_);
-    return false;
-  }
-
   if (!ValidFormat(format)) {
     LOG(ERROR) << "Invalid format: " << gfx::BufferFormatToString(format);
     return false;
@@ -426,7 +361,7 @@ gfx::Size GLImageMemory::GetSize() {
 }
 
 unsigned GLImageMemory::GetInternalFormat() {
-  return internalformat_;
+  return TextureFormat(format_);
 }
 
 bool GLImageMemory::BindTexImage(unsigned target) {
@@ -531,12 +466,6 @@ bool GLImageMemory::ScheduleOverlayPlane(gfx::AcceleratedWidget widget,
 
 GLImageMemory::Type GLImageMemory::GetType() const {
   return Type::MEMORY;
-}
-
-// static
-unsigned GLImageMemory::GetInternalFormatForTesting(gfx::BufferFormat format) {
-  DCHECK(ValidFormat(format));
-  return TextureFormat(format);
 }
 
 }  // namespace gl

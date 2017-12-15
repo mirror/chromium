@@ -89,7 +89,6 @@ GpuMemoryBufferFactoryIOSurface::CreateImageForGpuMemoryBuffer(
     const gfx::GpuMemoryBufferHandle& handle,
     const gfx::Size& size,
     gfx::BufferFormat format,
-    unsigned internalformat,
     int client_id,
     SurfaceHandle surface_handle) {
   base::AutoLock lock(io_surfaces_lock_);
@@ -103,7 +102,7 @@ GpuMemoryBufferFactoryIOSurface::CreateImageForGpuMemoryBuffer(
   }
 
   scoped_refptr<gl::GLImageIOSurface> image(
-      gl::GLImageIOSurface::Create(size, internalformat));
+      gl::GLImageIOSurface::Create(size));
   if (!image->Initialize(it->second.get(), handle.id, format)) {
     DLOG(ERROR) << "Failed to initialize GLImage for IOSurface.";
     return scoped_refptr<gl::GLImage>();
@@ -116,7 +115,6 @@ scoped_refptr<gl::GLImage>
 GpuMemoryBufferFactoryIOSurface::CreateAnonymousImage(const gfx::Size& size,
                                                       gfx::BufferFormat format,
                                                       gfx::BufferUsage usage,
-                                                      unsigned internalformat,
                                                       bool* is_cleared) {
   // Note that the child id doesn't matter since the texture will never be
   // directly exposed to other processes, only via a mailbox.
@@ -136,7 +134,7 @@ GpuMemoryBufferFactoryIOSurface::CreateAnonymousImage(const gfx::Size& size,
       << "Failed to reconstitute just-created IOSurface from mach port.";
 
   scoped_refptr<gl::GLImageIOSurface> image(
-      gl::GLImageIOSurface::Create(size, internalformat));
+      gl::GLImageIOSurface::Create(size));
   if (!image->Initialize(io_surface.get(), handle.id, format)) {
     DLOG(ERROR) << "Failed to initialize anonymous GLImage.";
     return scoped_refptr<gl::GLImage>();

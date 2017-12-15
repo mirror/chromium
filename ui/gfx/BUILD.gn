@@ -551,6 +551,8 @@ source_set("memory_buffer_sources") {
     "//ui/gfx/geometry",
   ]
 
+  configs += [ "//third_party/khronos:khronos_headers" ]
+
   if (is_linux) {
     sources += [
       "linux/client_native_pixmap_dmabuf.cc",
