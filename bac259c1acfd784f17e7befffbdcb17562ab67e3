@@ -52,6 +52,24 @@
       "revId": "bac259c1acfd784f17e7befffbdcb17562ab67e3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e90ad30_c6c9d255",
+        "filename": "testing/buildbot/chromium.gpu.fyi.json",
+        "patchSetId": 20
+      },
+      "lineNbr": 10777,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-12-15T00:04:41Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "9e7ddc05_cebda947",
+      "revId": "bac259c1acfd784f17e7befffbdcb17562ab67e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
