@@ -55,10 +55,10 @@
 #include "extensions/common/api/app_runtime.h"
 #include "extensions/common/extension_builder.h"
 #include "extensions/common/value_builder.h"
+#include "services/ui/public/cpp/input_devices/input_device_client_test_api.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/aura/window.h"
 #include "ui/events/devices/input_device_manager.h"
-#include "ui/events/test/device_data_manager_test_api.h"
 
 using ash::mojom::CloseLockScreenNoteReason;
 using ash::mojom::LockScreenNoteOrigin;
@@ -495,8 +495,8 @@ class LockScreenAppStateTest : public BrowserWithTestWindowTest {
   void SetStylusEnabled() {
     base::CommandLine::ForCurrentProcess()->AppendSwitch(
         ash::switches::kAshForceEnableStylusTools);
-    ui::test::DeviceDataManagerTestAPI devices_test_api;
-    devices_test_api.NotifyObserversTouchscreenDeviceConfigurationChanged();
+    ui::InputDeviceClientTestApi()
+        .NotifyObserversTouchscreenDeviceConfigurationChanged();
   }
 
   void InitExtensionSystem(Profile* profile) {
@@ -778,8 +778,6 @@ TEST_F(LockScreenAppStateKioskUserTest, SetPrimaryProfile) {
 
 TEST_F(LockScreenAppStateNoStylusInputTest,
        StylusDetectedAfterInitializationAndScreenLock) {
-  ui::test::DeviceDataManagerTestAPI devices_test_api;
-
   ASSERT_TRUE(InitializeNoteTakingApp(TrayActionState::kNotAvailable, true));
   EXPECT_EQ(TestAppManager::State::kStopped, app_manager()->state());
   EXPECT_TRUE(LockScreenItemStorage::GetIfAllowed(profile()));
@@ -804,8 +802,6 @@ TEST_F(LockScreenAppStateNoStylusInputTest,
 }
 
 TEST_F(LockScreenAppStateNoStylusInputTest, StylusDetectedAfterInitialization) {
-  ui::test::DeviceDataManagerTestAPI devices_test_api;
-
   ASSERT_TRUE(InitializeNoteTakingApp(TrayActionState::kNotAvailable, true));
   EXPECT_EQ(TestAppManager::State::kStopped, app_manager()->state());
 
@@ -1203,7 +1199,6 @@ TEST_F(LockScreenAppStateTest, HandleActionWithLaunchFailure) {
 
 TEST_F(LockScreenAppStateWebUiLockTest,
        LaunchActionWhenStylusRemoved_ActionClosedBeforeAnimationDone) {
-  ui::test::DeviceDataManagerTestAPI devices_test_api;
   ASSERT_TRUE(InitializeNoteTakingApp(TrayActionState::kAvailable,
                                       true /* enable_app_launch */));
   tray_action()->SendNewNoteRequest(LockScreenNoteOrigin::kStylusEject);

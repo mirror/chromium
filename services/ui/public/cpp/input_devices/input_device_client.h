@@ -18,6 +18,8 @@
 
 namespace ui {
 
+class InputDeviceClientTestApi;
+
 // Allows in-process client code to register as a InputDeviceEventObserver and
 // get information about input-devices. InputDeviceClient itself acts as an
 // InputDeviceObserverMojo and registers to get updates from InputDeviceServer.
@@ -74,6 +76,12 @@ class InputDeviceClient : public mojom::InputDeviceObserverMojo,
   void OnStylusStateChanged(StylusState state) override;
 
  private:
+  friend class InputDeviceClientTestApi;
+
+  void NotifyObserversDeviceListsComplete();
+  void NotifyObserversKeyboardDeviceConfigurationChanged();
+  void NotifyObserversTouchscreenDeviceConfigurationChanged();
+
   mojo::Binding<mojom::InputDeviceObserverMojo> binding_;
 
   bool is_input_device_manager_;
