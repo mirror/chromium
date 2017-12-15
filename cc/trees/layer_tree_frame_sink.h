@@ -135,6 +135,10 @@ class CC_EXPORT LayerTreeFrameSink : public viz::ContextLostObserver {
   // the client did not lead to a CompositorFrame submission.
   virtual void DidNotProduceFrame(const viz::BeginFrameAck& ack) = 0;
 
+  // Signals that a new LocalSurfaceId must be allocated because the old surface
+  // has been destroyed.
+  virtual void SetNeedsNewSurface() {}
+
  protected:
   class ContextLostForwarder;
 

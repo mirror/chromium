@@ -724,4 +724,9 @@ void RenderFrameProxy::OnMusEmbeddedFrameSinkIdAllocated(
 }
 #endif
 
+void RenderFrameProxy::WasEvicted() {
+  compositing_helper_->WasEvicted();
+  Send(new FrameHostMsg_WasEvicted(routing_id_));
+}
+
 }  // namespace content

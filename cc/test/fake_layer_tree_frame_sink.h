@@ -102,6 +102,10 @@ class FakeLayerTreeFrameSink : public LayerTreeFrameSink {
   void DidNotProduceFrame(const viz::BeginFrameAck& ack) override;
   bool BindToClient(LayerTreeFrameSinkClient* client) override;
   void DetachFromClient() override;
+  void SetNeedsNewSurface() override;
+
+  bool needs_new_surface() { return needs_new_surface_; }
+  void reset_needs_new_surface() { needs_new_surface_ = false; }
 
   viz::CompositorFrame* last_sent_frame() { return last_sent_frame_.get(); }
   size_t num_sent_frames() { return num_sent_frames_; }
@@ -128,6 +132,7 @@ class FakeLayerTreeFrameSink : public LayerTreeFrameSink {
   size_t num_sent_frames_ = 0;
   std::vector<viz::TransferableResource> resources_held_by_parent_;
   gfx::Rect last_swap_rect_;
+  bool needs_new_surface_ = false;
 
  private:
   void DidReceiveCompositorFrameAck();

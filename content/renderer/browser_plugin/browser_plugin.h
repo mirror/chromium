@@ -150,6 +150,8 @@ class CONTENT_EXPORT BrowserPlugin : public blink::WebPlugin,
   void OnMouseLockLost() override;
   bool HandleMouseLockedInputEvent(const blink::WebMouseEvent& event) override;
 
+  void WasEvicted();
+
  private:
   friend class base::DeleteHelper<BrowserPlugin>;
   // Only the manager is allowed to create a BrowserPlugin.

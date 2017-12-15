@@ -2495,4 +2495,8 @@ void RenderWidgetHostViewAura::ScrollFocusedEditableNodeIntoRect(
   }
 }
 
+void RenderWidgetHostViewAura::WasEvicted() {
+  host_->WasEvicted();
+}
+
 }  // namespace content
