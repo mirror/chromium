@@ -1,0 +1,146 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8ccd6b1c_55f54b72",
+        "filename": "chrome/browser/printing/print_view_manager_base.cc",
+        "patchSetId": 41
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-15T02:43:39Z",
+      "side": 1,
+      "message": "Can we put this above CreateQueryWithSettings(), since that\u0027s the relative order in which they are defined? Then readers can just keep scrolling downwards to follow the logic.",
+      "revId": "6bd173d2e4f191b3059a11a6044166e95493a9c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99ed5d71_d8da8f68",
+        "filename": "chrome/browser/printing/print_view_manager_base.cc",
+        "patchSetId": 41
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-15T02:43:39Z",
+      "side": 1,
+      "message": "More opportunities to use DCHECK_CURRENTLY_ON(). Presumably this is UI thread?",
+      "revId": "6bd173d2e4f191b3059a11a6044166e95493a9c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47daf36b_b5bfdc4d",
+        "filename": "chrome/browser/printing/print_view_manager_base.cc",
+        "patchSetId": 41
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-15T02:43:39Z",
+      "side": 1,
+      "message": "Add here, maybe the document and data should come first.",
+      "revId": "6bd173d2e4f191b3059a11a6044166e95493a9c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae93f6ce_415669f6",
+        "filename": "chrome/browser/printing/print_view_manager_base.cc",
+        "patchSetId": 41
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-15T02:43:39Z",
+      "side": 1,
+      "message": "base::MakeRefcounted",
+      "range": {
+        "startLine": 284,
+        "startChar": 47,
+        "endLine": 284,
+        "endChar": 50
+      },
+      "revId": "6bd173d2e4f191b3059a11a6044166e95493a9c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "deb97e6e_590ea1ae",
+        "filename": "chrome/browser/printing/print_view_manager_base.h",
+        "patchSetId": 41
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-15T02:43:39Z",
+      "side": 1,
+      "message": "Can we use PrinterHandler::PrintCallback instead of defining something that needs to be identical?",
+      "revId": "6bd173d2e4f191b3059a11a6044166e95493a9c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d59aca5_f175afcf",
+        "filename": "chrome/browser/printing/print_view_manager_base.h",
+        "patchSetId": 41
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-15T02:43:39Z",
+      "side": 1,
+      "message": "With regards to the parameter ordering in the newly added methods, can we:\n1) try to keep them the same as much as possible? e.g. This is callback/settings/data/rfh, but in CreateQueryWithSettings(), it\u0027s reversed to rfh/settings.\n2) When possible, can we keep callbacks at the end? In some ways they are like an out parameter, in that the methods send their results too it.",
+      "revId": "6bd173d2e4f191b3059a11a6044166e95493a9c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4d5c907_bde06243",
+        "filename": "chrome/browser/ui/webui/print_preview/print_preview_handler.cc",
+        "patchSetId": 41
+      },
+      "lineNbr": 746,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-15T02:43:39Z",
+      "side": 1,
+      "message": "For later - I dislike how some callbacks take an integer and others a string.",
+      "revId": "6bd173d2e4f191b3059a11a6044166e95493a9c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86be4f23_d00dd462",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_capabilities.cc",
+        "patchSetId": 41
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-15T02:43:39Z",
+      "side": 1,
+      "message": "Same here, can you move the callback to the end?",
+      "revId": "6bd173d2e4f191b3059a11a6044166e95493a9c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
