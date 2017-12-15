@@ -107,19 +107,26 @@ TEST(VariationsSeedStoreTest, LoadSeed) {
   // Store good seed data to test if loading from prefs works.
   const VariationsSeed seed = CreateTestSeed();
   const std::string base64_seed = SerializeSeedBase64(seed);
+  const std::string base64_seed_signature = "a test signature, clearly forged.";
 
   TestingPrefServiceSimple prefs;
   VariationsSeedStore::RegisterPrefs(prefs.registry());
   prefs.SetString(prefs::kVariationsCompressedSeed, base64_seed);
+  prefs.SetString(prefs::kVariationsSeedSignature, base64_seed_signature);
 
   TestVariationsSeedStore seed_store(&prefs);
 
   VariationsSeed loaded_seed;
+  std::string loaded_seed_data;
+  std::string loaded_base64_seed_signature;
   // Check that loading a seed works correctly.
-  EXPECT_TRUE(seed_store.LoadSeed(&loaded_seed));
+  EXPECT_TRUE(seed_store.LoadSeed(&loaded_seed, &loaded_seed_data,
+                                  &loaded_base64_seed_signature));
 
   // Check that the loaded data is the same as the original.
   EXPECT_EQ(SerializeSeed(seed), SerializeSeed(loaded_seed));
+  EXPECT_EQ(SerializeSeed(seed), loaded_seed_data);
+  EXPECT_EQ(base64_seed_signature, loaded_base64_seed_signature);
   // Make sure the pref hasn't been changed.
   EXPECT_FALSE(PrefHasDefaultValue(prefs, prefs::kVariationsCompressedSeed));
   EXPECT_EQ(base64_seed, prefs.GetString(prefs::kVariationsCompressedSeed));
@@ -127,14 +134,16 @@ TEST(VariationsSeedStoreTest, LoadSeed) {
   // Check that loading a bad seed returns false and clears the pref.
   prefs.SetString(prefs::kVariationsCompressedSeed, "this should fail");
   EXPECT_FALSE(PrefHasDefaultValue(prefs, prefs::kVariationsCompressedSeed));
-  EXPECT_FALSE(seed_store.LoadSeed(&loaded_seed));
+  EXPECT_FALSE(seed_store.LoadSeed(&loaded_seed, &loaded_seed_data,
+                                   &loaded_base64_seed_signature));
   EXPECT_TRUE(PrefHasDefaultValue(prefs, prefs::kVariationsCompressedSeed));
   EXPECT_TRUE(PrefHasDefaultValue(prefs, prefs::kVariationsSeedDate));
   EXPECT_TRUE(PrefHasDefaultValue(prefs, prefs::kVariationsSeedSignature));
 
   // Check that having no seed in prefs results in a return value of false.
   prefs.ClearPref(prefs::kVariationsCompressedSeed);
-  EXPECT_FALSE(seed_store.LoadSeed(&loaded_seed));
+  EXPECT_FALSE(seed_store.LoadSeed(&loaded_seed, &loaded_seed_data,
+                                   &loaded_base64_seed_signature));
 }
 
 TEST(VariationsSeedStoreTest, StoreSeedData) {
@@ -260,7 +269,9 @@ TEST(VariationsSeedStoreTest, VerifySeedSignature) {
 
     base::HistogramTester histogram_tester;
     VariationsSeed seed;
-    EXPECT_TRUE(seed_store.LoadSeed(&seed));
+    std::string seed_data;
+    std::string base64_seed_signature;
+    EXPECT_TRUE(seed_store.LoadSeed(&seed, &seed_data, &base64_seed_signature));
     histogram_tester.ExpectUniqueSample(
         "Variations.LoadSeedSignature",
         static_cast<base::HistogramBase::Sample>(
@@ -276,7 +287,10 @@ TEST(VariationsSeedStoreTest, VerifySeedSignature) {
 
     base::HistogramTester histogram_tester;
     VariationsSeed seed;
-    EXPECT_FALSE(seed_store.LoadSeed(&seed));
+    std::string seed_data;
+    std::string base64_seed_signature;
+    EXPECT_FALSE(
+        seed_store.LoadSeed(&seed, &seed_data, &base64_seed_signature));
     histogram_tester.ExpectUniqueSample(
         "Variations.LoadSeedSignature",
         static_cast<base::HistogramBase::Sample>(
@@ -292,8 +306,10 @@ TEST(VariationsSeedStoreTest, VerifySeedSignature) {
     SignatureVerifyingVariationsSeedStore seed_store(&prefs);
 
     base::HistogramTester histogram_tester;
-    VariationsSeed seed;
-    EXPECT_FALSE(seed_store.LoadSeed(&seed));
+    std::string seed_data;
+    std::string base64_seed_signature;
+    EXPECT_FALSE(
+        seed_store.LoadSeed(&seed, &seed_data, &base64_seed_signature));
     histogram_tester.ExpectUniqueSample(
         "Variations.LoadSeedSignature",
         static_cast<base::HistogramBase::Sample>(
@@ -311,7 +327,10 @@ TEST(VariationsSeedStoreTest, VerifySeedSignature) {
 
     base::HistogramTester histogram_tester;
     VariationsSeed seed;
-    EXPECT_FALSE(seed_store.LoadSeed(&seed));
+    std::string seed_data;
+    std::string base64_seed_signature;
+    EXPECT_FALSE(
+        seed_store.LoadSeed(&seed, &seed_data, &base64_seed_signature));
     histogram_tester.ExpectUniqueSample(
         "Variations.LoadSeedSignature",
         static_cast<base::HistogramBase::Sample>(
@@ -331,8 +350,10 @@ TEST(VariationsSeedStoreTest, VerifySeedSignature) {
     SignatureVerifyingVariationsSeedStore seed_store(&prefs);
 
     base::HistogramTester histogram_tester;
-    VariationsSeed seed;
-    EXPECT_FALSE(seed_store.LoadSeed(&seed));
+    std::string seed_data;
+    std::string base64_seed_signature;
+    EXPECT_FALSE(
+        seed_store.LoadSeed(&seed, &seed_data, &base64_seed_signature));
     histogram_tester.ExpectUniqueSample(
         "Variations.LoadSeedSignature",
         static_cast<base::HistogramBase::Sample>(

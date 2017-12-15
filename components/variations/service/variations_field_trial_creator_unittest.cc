@@ -14,6 +14,7 @@
 #include "components/variations/platform_field_trials.h"
 #include "components/variations/pref_names.h"
 #include "components/variations/proto/variations_seed.pb.h"
+#include "components/variations/service/safe_seed_manager.h"
 #include "components/variations/service/variations_service.h"
 #include "components/variations/service/variations_service_client.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -105,14 +106,18 @@ class TestVariationsFieldTrialCreator : public VariationsFieldTrialCreator {
   bool SetupFieldTrials() {
     std::vector<std::string> variation_ids;
     TestPlatformFieldTrials platform_field_trials;
+    SafeSeedManager safe_seed_manager(true, local_state());
     return VariationsFieldTrialCreator::SetupFieldTrials(
         "", "", "", std::set<std::string>(), nullptr,
         std::make_unique<base::FeatureList>(), &variation_ids,
-        &platform_field_trials);
+        &platform_field_trials, &safe_seed_manager);
   }
 
  private:
-  bool LoadSeed(VariationsSeed* seed) override {
+  bool LoadSeed(VariationsSeed* seed,
+                std::string* seed_data,
+                std::string* base64_signature) override {
+    // TODO(isherman): Fill seed and seed_data?
     *seed = CreateTestSeed();
     return true;
   }

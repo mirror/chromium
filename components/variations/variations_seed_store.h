@@ -19,6 +19,7 @@ class PrefRegistrySimple;
 
 namespace variations {
 
+struct ClientFilterableState;
 class VariationsSeed;
 
 // VariationsSeedStore is a helper class for reading and writing the variations
@@ -28,10 +29,13 @@ class VariationsSeedStore {
   explicit VariationsSeedStore(PrefService* local_state);
   virtual ~VariationsSeedStore();
 
-  // Loads the variations seed data from local state into |seed|. If there is a
-  // problem with loading, the pref value is cleared and false is returned. If
-  // successful, |seed| will contain the loaded data and true is returned.
-  bool LoadSeed(VariationsSeed* seed) WARN_UNUSED_RESULT;
+  // Loads the variations seed data from local state into |seed|, as well as the
+  // raw pref values into |seed_data| and |base64_signature|. If there is a
+  // problem with loading, clears the seed pref value and returns false. If
+  // successful, fills the the outparams with the loaded data and returns true.
+  bool LoadSeed(VariationsSeed* seed,
+                std::string* seed_data,
+                std::string* base64_seed_signature) WARN_UNUSED_RESULT;
 
   // Stores the given seed |data| (serialized protobuf) to local state, along
   // with a base64-encoded digital signature for seed and the date when it was
@@ -51,6 +55,14 @@ class VariationsSeedStore {
                      bool is_delta_compressed,
                      bool is_gzip_compressed,
                      VariationsSeed* parsed_seed) WARN_UNUSED_RESULT;
+
+  // Stores the given |seed_data| (a serialized protobuf) to local state as a
+  // safe seed, along with a base64-encoded digital signature for seed and any
+  // additional client metadata relevant to the safe seed. Returns true on
+  // success or false on failure; no prefs are updated in case of failure.
+  bool StoreSafeSeed(const std::string& seed_data,
+                     const std::string& base64_seed_signature,
+                     const ClientFilterableState& client_state);
 
   // Updates |kVariationsSeedDate| and logs when previous date was from a
   // different day.
@@ -79,6 +91,11 @@ class VariationsSeedStore {
   FRIEND_TEST_ALL_PREFIXES(VariationsSeedStoreTest, VerifySeedSignature);
   FRIEND_TEST_ALL_PREFIXES(VariationsSeedStoreTest, ApplyDeltaPatch);
 
+  enum class SeedType {
+    LATEST,
+    SAFE,
+  };
+
   // Clears all prefs related to variations seed storage.
   void ClearPrefs();
 
@@ -101,6 +118,19 @@ class VariationsSeedStore {
                             const std::string& country_code,
                             const base::Time& date_fetched,
                             VariationsSeed* parsed_seed) WARN_UNUSED_RESULT;
+
+  // Validates the |seed_data|, comparing it (if enabled) against the provided
+  // cryptographic signature. Returns the result of the operation. On success,
+  // fills |base64_seed_data| with the compressed and base64-encoded seed data;
+  // and if |parsed_seed| is non-null, fills it with the parsed seed data.
+  // |seed_type| specifies whether |seed_data| is for the safe seed (vs. the
+  // regular/normal seed).
+  StoreSeedResult VerifyAndCompressSeedData(
+      const std::string& seed_data,
+      const std::string& base64_seed_signature,
+      SeedType seed_type,
+      std::string* base64_seed_data,
+      VariationsSeed* parsed_seed) WARN_UNUSED_RESULT;
 
   // Applies a delta-compressed |patch| to |existing_data|, producing the result
   // in |output|. Returns whether the operation was successful.
