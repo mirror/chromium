@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bcbdeea5_828d655c",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 1116,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2017-12-15T02:24:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d7ce7c69_db7bc54d",
+      "revId": "658caacc431ee01439523cb1dcb630a2d78f5108",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a2d8474_973040df",
         "filename": "components/viz/service/display/gl_renderer.cc",
         "patchSetId": 31
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "41f17fb5_4bd15083",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 1117,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2017-12-15T02:24:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a2d8474_973040df",
+      "revId": "658caacc431ee01439523cb1dcb630a2d78f5108",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3188e05a_5f291904",
         "filename": "components/viz/service/display/gl_renderer.cc",
         "patchSetId": 31
@@ -50,6 +86,24 @@
       "revId": "658caacc431ee01439523cb1dcb630a2d78f5108",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "896240f2_0797ce9e",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 2918,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2017-12-15T02:24:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3188e05a_5f291904",
+      "revId": "658caacc431ee01439523cb1dcb630a2d78f5108",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +175,24 @@
     },
     {
       "key": {
+        "uuid": "5764adf7_e59d20d8",
+        "filename": "components/viz/service/display/scoped_render_pass_texture.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2017-12-15T02:24:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eddebe46_50dce951",
+      "revId": "658caacc431ee01439523cb1dcb630a2d78f5108",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ab9426ce_a2c140db",
         "filename": "components/viz/service/display/scoped_render_pass_texture.cc",
         "patchSetId": 31
@@ -135,6 +207,24 @@
       "revId": "658caacc431ee01439523cb1dcb630a2d78f5108",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "441d100d_5aead47c",
+        "filename": "components/viz/service/display/scoped_render_pass_texture.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2017-12-15T02:24:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ab9426ce_a2c140db",
+      "revId": "658caacc431ee01439523cb1dcb630a2d78f5108",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -172,6 +262,24 @@
     },
     {
       "key": {
+        "uuid": "c47441f9_3b4ccfc8",
+        "filename": "components/viz/service/display/scoped_render_pass_texture.h",
+        "patchSetId": 31
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2017-12-15T02:24:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dcb64b90_5d0125df",
+      "revId": "658caacc431ee01439523cb1dcb630a2d78f5108",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "80fafc51_ec3400bb",
         "filename": "components/viz/service/display/scoped_render_pass_texture.h",
         "patchSetId": 31
@@ -183,6 +291,24 @@
       "writtenOn": "2017-12-15T00:26:46Z",
       "side": 1,
       "message": "do we need mutators on this? can it be a const object?",
+      "revId": "658caacc431ee01439523cb1dcb630a2d78f5108",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fed4b40_485800de",
+        "filename": "components/viz/service/display/scoped_render_pass_texture.h",
+        "patchSetId": 31
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2017-12-15T02:24:21Z",
+      "side": 1,
+      "message": "For size and hint changed textures, the gl id can be moved from, the size and hint cannot.\nSo I add these two to updated the size and hint. Any ideas to avoid this?",
+      "parentUuid": "80fafc51_ec3400bb",
       "revId": "658caacc431ee01439523cb1dcb630a2d78f5108",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
