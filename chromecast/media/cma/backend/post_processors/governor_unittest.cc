@@ -13,6 +13,7 @@
 #include "base/strings/stringprintf.h"
 #include "chromecast/media/cma/backend/post_processor_factory.h"
 #include "chromecast/media/cma/backend/post_processors/governor.h"
+#include "chromecast/media/cma/backend/post_processors/post_processor_benchmark.h"
 #include "chromecast/media/cma/backend/post_processors/post_processor_unittest.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -130,6 +131,13 @@ TEST_P(PostProcessorTest, GovernorPassthrough) {
   PostProcessorFactory factory;
   auto pp = factory.CreatePostProcessor(kLibraryPath, config, kNumChannels);
   TestPassthrough(pp.get(), sample_rate_);
+}
+
+TEST_P(PostProcessorTest, GovernorCpuUsage) {
+  std::string config = MakeConfigString(1.0, 1.0);
+  PostProcessorFactory factory;
+  auto pp = factory.CreatePostProcessor(kLibraryPath, config, kNumChannels);
+  AudioProcessorBenchmark(pp.get(), sample_rate_);
 }
 
 }  // namespace post_processor_test
