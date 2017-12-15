@@ -568,12 +568,14 @@ MouseEvent::MouseEvent(const base::NativeEvent& native_event)
   latency()->AddLatencyNumber(INPUT_EVENT_LATENCY_UI_COMPONENT, 0, 0);
   if (type() == ET_MOUSE_PRESSED || type() == ET_MOUSE_RELEASED)
     SetClickCount(GetRepeatCount(*this));
+  LOG(ERROR) << "JAMES new MouseEvent1";
 }
 
 MouseEvent::MouseEvent(const PointerEvent& pointer_event)
     : LocatedEvent(pointer_event),
       changed_button_flags_(pointer_event.changed_button_flags()),
       pointer_details_(pointer_event.pointer_details()) {
+  LOG(ERROR) << "JAMES new MouseEvent2";
   DCHECK(pointer_event.IsMousePointerEvent());
   switch (pointer_event.type()) {
     case ET_POINTER_DOWN:
@@ -630,6 +632,7 @@ MouseEvent::MouseEvent(EventType type,
                    flags),
       changed_button_flags_(changed_button_flags),
       pointer_details_(pointer_details) {
+  LOG(ERROR) << "JAMES new MouseEvent3";
   DCHECK_NE(ET_MOUSEWHEEL, type);
   latency()->AddLatencyNumber(INPUT_EVENT_LATENCY_UI_COMPONENT, 0, 0);
   if (this->type() == ET_MOUSE_MOVED && IsAnyButton())
@@ -976,6 +979,7 @@ PointerEvent::PointerEvent(const PointerEvent& pointer_event)
     latency()->set_source_event_type(ui::SourceEventType::WHEEL);
   else
     latency()->set_source_event_type(ui::SourceEventType::OTHER);
+  LOG(ERROR) << "JAMES new PointerEvent";
 }
 
 PointerEvent::PointerEvent(const MouseEvent& mouse_event)
