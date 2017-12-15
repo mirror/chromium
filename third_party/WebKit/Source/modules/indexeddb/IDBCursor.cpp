@@ -82,6 +82,7 @@ void IDBCursor::Trace(blink::Visitor* visitor) {
   visitor->Trace(transaction_);
   visitor->Trace(key_);
   visitor->Trace(primary_key_);
+  visitor->Trace(value_);
   ScriptWrappable::Trace(visitor);
 }
 
@@ -385,18 +386,18 @@ ScriptValue IDBCursor::value(ScriptState* script_state) {
 
   IDBObjectStore* object_store = EffectiveObjectStore();
   IDBAny* value;
-  if (!value_) {
-    value = IDBAny::CreateUndefined();
-  } else if (object_store->autoIncrement() &&
-             !object_store->IdbKeyPath().IsNull()) {
-    scoped_refptr<IDBValue> idb_value = IDBValue::Create(
-        value_.get(), primary_key_, object_store->IdbKeyPath());
+  if (value_) {
+    value = value_;
 #if DCHECK_IS_ON()
-    AssertPrimaryKeyValidOrInjectable(script_state, idb_value.get());
+    if (value_has_injected_primary_key_) {
+      DCHECK(object_store->autoIncrement() &&
+             !object_store->IdbKeyPath().IsNull());
+      AssertPrimaryKeyValidOrInjectable(script_state, value_->Value());
+    }
 #endif  // DCHECK_IS_ON()
-    value = IDBAny::Create(std::move(idb_value));
+
   } else {
-    value = IDBAny::Create(value_);
+    value = IDBAny::CreateUndefined();
   }
 
   value_dirty_ = false;
@@ -410,19 +411,40 @@ ScriptValue IDBCursor::source(ScriptState* script_state) const {
 
 void IDBCursor::SetValueReady(IDBKey* key,
                               IDBKey* primary_key,
-                              scoped_refptr<IDBValue> value) {
+                              std::unique_ptr<IDBValue> value) {
   key_ = key;
   key_dirty_ = true;
 
   primary_key_ = primary_key;
   primary_key_dirty_ = true;
 
-  if (IsCursorWithValue()) {
-    value_ = std::move(value);
-    value_dirty_ = true;
+  got_value_ = true;
+
+  if (!IsCursorWithValue())
+    return;
+
+  value_dirty_ = true;
+
+  if (!value) {
+    value_ = nullptr;
+    return;
   }
 
-  got_value_ = true;
+  IDBObjectStore* object_store = EffectiveObjectStore();
+  if (!object_store->autoIncrement() || object_store->IdbKeyPath().IsNull()) {
+    value_ = IDBAny::Create(std::move(value));
+#if DCHECK_IS_ON()
+    value_has_injected_primary_key_ = true;
+#endif  // DCHECK_IS_ON()
+    return;
+  }
+
+  std::unique_ptr<IDBValue> value_with_injected_primary_key = IDBValue::Create(
+      std::move(value), primary_key_, object_store->IdbKeyPath());
+  value_ = IDBAny::Create(std::move(value_with_injected_primary_key));
+#if DCHECK_IS_ON()
+  value_has_injected_primary_key_ = false;
+#endif  // DCHECK_IS_ON()
 }
 
 IDBObjectStore* IDBCursor::EffectiveObjectStore() const {
