@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "665788f4_08ad8b30",
+        "filename": "services/network/public/interfaces/data_pipe_getter.mojom",
+        "patchSetId": 27
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-15T18:05:35Z",
+      "side": 1,
+      "message": "[falken]:  Could you please documented expected behavior here?  If I clone and two consumers try to read from different instances of the DataPipeGetter at once, what should happen?",
+      "range": {
+        "startLine": 18,
+        "startChar": 15,
+        "endLine": 18,
+        "endChar": 0
+      },
+      "revId": "34eb281538f9e6f5ddf635226d12e8a70b9d29e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
