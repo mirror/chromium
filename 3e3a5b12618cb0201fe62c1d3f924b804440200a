@@ -22,6 +22,30 @@
       "revId": "3e3a5b12618cb0201fe62c1d3f924b804440200a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6797fff_835c5e01",
+        "filename": "components/cronet/android/cronet_library_loader.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1237329
+      },
+      "writtenOn": "2017-12-15T06:21:27Z",
+      "side": 1,
+      "message": "Yes, CronetInitOnInitThread was only called once, currently we want to make a lib which contains both cronet and webview, now both 2 libraries have their own initializer to setup MessageLoop/NetworkChangeNotifier which crash the lib, this cl adds some check to avoid setup these components twice.",
+      "parentUuid": "c9514647_29987c97",
+      "range": {
+        "startLine": 93,
+        "startChar": 7,
+        "endLine": 93,
+        "endChar": 35
+      },
+      "revId": "3e3a5b12618cb0201fe62c1d3f924b804440200a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
