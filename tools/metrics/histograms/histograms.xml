@@ -80928,6 +80928,14 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram base="true" name="SimpleCache.DiskDoomLatency" units="ms">
+  <owner>morlovich@chromium.org</owner>
+  <summary>
+    The time to remove the cache entry on disk. Includes only individually
+    doomed entries, not entries bulk-erased during eviction.
+  </summary>
+</histogram>
+
 <histogram base="true" name="SimpleCache.DiskOpenLatency" units="ms">
   <owner>rdsmith@chromium.org</owner>
   <summary>
