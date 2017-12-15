@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "704d9a21_98788fb8",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-12-15T21:05:39Z",
+      "side": 1,
+      "message": "If I pass either one of selection_for_insertion.AsSelection(), or passed_selection_for_insertion, I get this error:\n[220182:220182:1215/125423.916397:10677052741:FATAL:VisibleSelection.cpp(288)] Check failed: !NeedsLayoutTreeUpdate(passed_selection.Base()). \n#0 0x7f931b5017bd base::debug::StackTrace::StackTrace()\n#1 0x7f931b4ffbfc base::debug::StackTrace::StackTrace()\n#2 0x7f931b586a9a logging::LogMessage::~LogMessage()\n#3 0x7f930e9a4888 blink::ComputeVisibleSelection\u003c\u003e()\n#4 0x7f930e9a674d blink::VisibleSelectionTemplate\u003c\u003e::CreateWithGranularity()\n#5 0x7f930e9a670e blink::VisibleSelectionTemplate\u003c\u003e::Create()\n#6 0x7f930e9a564c blink::CreateVisibleSelection()\n#7 0x7f930ea1da29 blink::TypingCommand::InsertText()\n#8 0x7f930ea1d8e7 blink::TypingCommand::InsertText()",
+      "revId": "756718695841e04baf577f7ea2094dd50892ede9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
