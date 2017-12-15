@@ -165,19 +165,19 @@ NotificationHeaderView::NotificationHeaderView(
     : views::Button(listener) {
   const int kInnerHeaderHeight = kHeaderHeight - kHeaderOuterPadding.height();
 
-  views::BoxLayout* layout =
-      new views::BoxLayout(views::BoxLayout::kHorizontal, kHeaderOuterPadding,
-                           kHeaderHorizontalSpacing);
-  layout->set_cross_axis_alignment(
+  auto layout_temp = std::make_unique<views::BoxLayout>(
+      views::BoxLayout::kHorizontal, kHeaderOuterPadding,
+      kHeaderHorizontalSpacing);
+  layout_temp->set_cross_axis_alignment(
       views::BoxLayout::CROSS_AXIS_ALIGNMENT_START);
-  SetLayoutManager(layout);
+  auto* layout = SetLayoutManager(std::move(layout_temp));
 
   views::View* app_info_container = new views::View();
-  views::BoxLayout* app_info_layout = new views::BoxLayout(
+  auto app_info_layout = std::make_unique<views::BoxLayout>(
       views::BoxLayout::kHorizontal, kHeaderPadding, kHeaderHorizontalSpacing);
   app_info_layout->set_cross_axis_alignment(
       views::BoxLayout::CROSS_AXIS_ALIGNMENT_START);
-  app_info_container->SetLayoutManager(app_info_layout);
+  app_info_container->SetLayoutManager(std::move(app_info_layout));
   AddChildView(app_info_container);
 
   // App icon view
