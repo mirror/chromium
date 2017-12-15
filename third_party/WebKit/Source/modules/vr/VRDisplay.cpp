@@ -39,6 +39,7 @@
 #include "platform/wtf/Time.h"
 #include "public/platform/Platform.h"
 #include "public/platform/TaskType.h"
+#include "ui/gfx/gpu_fence.h"
 
 #include <array>
 #include "core/dom/ExecutionContext.h"
@@ -466,9 +467,13 @@ ScriptPromise VRDisplay::requestPresent(ScriptState* script_state,
     device::mojom::blink::VRSubmitFrameClientPtr submit_frame_client;
     submit_frame_client_binding_.Close();
     submit_frame_client_binding_.Bind(mojo::MakeRequest(&submit_frame_client));
+    device::mojom::blink::VRRequestPresentOptionsPtr options =
+        device::mojom::blink::VRRequestPresentOptions::New();
+    options->preserveDrawingBuffer =
+        rendering_context_->CreationAttributes().preserveDrawingBuffer();
     display_->RequestPresent(
         std::move(submit_frame_client),
-        mojo::MakeRequest(&vr_presentation_provider_),
+        mojo::MakeRequest(&vr_presentation_provider_), std::move(options),
         WTF::Bind(&VRDisplay::OnPresentComplete, WrapPersistent(this)));
     vr_presentation_provider_.set_connection_error_handler(
         WTF::Bind(&VRDisplay::OnPresentationProviderConnectionError,
@@ -483,7 +488,10 @@ ScriptPromise VRDisplay::requestPresent(ScriptState* script_state,
   return promise;
 }
 
-void VRDisplay::OnPresentComplete(bool success) {
+void VRDisplay::OnPresentComplete(
+    bool success,
+    device::mojom::blink::VRDisplayFrameTransportOptionsPtr transport_options) {
+  transport_options_ = std::move(transport_options);
   pending_present_request_ = false;
   if (success) {
     this->BeginPresent();
@@ -527,28 +535,13 @@ ScriptPromise VRDisplay::exitPresent(ScriptState* script_state) {
   return promise;
 }
 
-bool VRDisplay::ConfigurePresentationPathForDisplay() {
-  // TODO(klausw): capabilities_ should provide such information more directly.
-  // Currently, there's only two presentation paths which happen to align with
-  // having an external display (desktop devices such as OpenVR) or not (mobile
-  // VR on Android).
-  if (capabilities_->hasExternalDisplay()) {
-    frame_transport_method_ = FrameTransport::kTextureHandle;
-    wait_for_previous_render_ = WaitPrevStrategy::kNoWait;
-  } else {
-    frame_transport_method_ = FrameTransport::kMailbox;
-    wait_for_previous_render_ = WaitPrevStrategy::kAfterBitmap;
-  }
-  return true;
-}
-
 void VRDisplay::BeginPresent() {
   Document* doc = this->GetDocument();
 
   DOMException* exception = nullptr;
-  if (!ConfigurePresentationPathForDisplay()) {
+  if (!transport_options_) {
     exception = DOMException::Create(
-        kInvalidStateError, "VRDisplay presentation path not implemented.");
+        kInvalidStateError, "VRDisplay presentation path not configured.");
   }
 
   if (layer_.source().IsOffscreenCanvas()) {
@@ -701,17 +694,16 @@ void VRDisplay::submitFrame() {
     UpdateLayerBounds();
   }
 
-  // Ensure that required device selections were made.
-  DCHECK(frame_transport_method_ != FrameTransport::kUninitialized);
-  DCHECK(wait_for_previous_render_ != WaitPrevStrategy::kUninitialized);
-
   WTF::TimeDelta wait_time;
-  // Conditionally wait for the previous render to finish, to avoid losing
-  // frames in the Android Surface / GLConsumer pair. An early wait here is
-  // appropriate when using a GpuFence to separate drawing, the new frame isn't
-  // complete yet at this stage.
-  if (wait_for_previous_render_ == WaitPrevStrategy::kBeforeBitmap)
-    wait_time += WaitForPreviousRenderToFinish();
+  if (transport_options_->waitForGpuFence) {
+    wait_time += WaitForGpuFence();
+    DVLOG(3) << "CreateClientGpuFenceCHROMIUM(prev_frame_fence_)";
+    GLuint id = context_gl_->CreateClientGpuFenceCHROMIUM(
+        prev_frame_fence_->AsClientGpuFence());
+    context_gl_->WaitGpuFenceCHROMIUM(id);
+    context_gl_->DestroyGpuFenceCHROMIUM(id);
+    prev_frame_fence_.reset();
+  }
 
   TRACE_EVENT_BEGIN0("gpu", "VRDisplay::GetStaticBitmapImage");
   scoped_refptr<Image> image_ref = rendering_context_->GetStaticBitmapImage();
@@ -735,11 +727,19 @@ void VRDisplay::submitFrame() {
     }
   }
 
-  if (frame_transport_method_ == FrameTransport::kTextureHandle) {
+  DCHECK(transport_options_);
+
+  if (transport_options_->transportMethod ==
+      device::mojom::blink::VRDisplayFrameTransportMethod::
+          SUBMIT_AS_TEXTURE_HANDLE) {
 #if defined(OS_WIN)
     // Currently, we assume that this transport needs a copy.
     DCHECK(present_image_needs_copy_);
     TRACE_EVENT0("gpu", "VRDisplay::CopyImage");
+    // Update last_transfer_succeeded_ value. This should usually complete
+    // without waiting.
+    if (transport_options_->waitForTransferNotification)
+      WaitForPreviousTransfer();
     if (!frame_copier_ || !last_transfer_succeeded_) {
       frame_copier_ = std::make_unique<GpuMemoryBufferImageCopy>(context_gl_);
     }
@@ -766,7 +766,9 @@ void VRDisplay::submitFrame() {
 #else
     NOTIMPLEMENTED();
 #endif
-  } else if (frame_transport_method_ == FrameTransport::kMailbox) {
+  } else if (transport_options_->transportMethod ==
+             device::mojom::blink::VRDisplayFrameTransportMethod::
+                 SUBMIT_AS_MAILBOX_HOLDER) {
     // Currently, this transport assumes we don't need to make a separate copy
     // of the canvas content.
     DCHECK(!present_image_needs_copy_);
@@ -786,13 +788,14 @@ void VRDisplay::submitFrame() {
     // rendering. This is used if submitting fully rendered frames to GVR, but
     // is susceptible to bad GPU scheduling if the new frame competes with the
     // previous frame's incomplete rendering.
-    if (wait_for_previous_render_ == WaitPrevStrategy::kAfterBitmap)
+    if (transport_options_->waitForRenderNotification)
       wait_time += WaitForPreviousRenderToFinish();
 
     // Save a reference to the image to keep it alive until next frame,
     // but first wait for the transfer to finish before overwriting it.
     // Usually this check is satisfied without waiting.
-    WaitForPreviousTransfer();
+    if (transport_options_->waitForTransferNotification)
+      WaitForPreviousTransfer();
     previous_image_ = std::move(image_ref);
 
     pending_submit_frame_ = true;
@@ -809,7 +812,7 @@ void VRDisplay::submitFrame() {
         wait_time);
     TRACE_EVENT_END0("gpu", "VRDisplay::SubmitFrame");
   } else {
-    NOTREACHED() << "Unimplemented frame_transport_method_";
+    NOTREACHED() << "Unimplemented frame transport method";
   }
 
   pending_previous_frame_render_ = true;
@@ -851,6 +854,22 @@ WTF::TimeDelta VRDisplay::WaitForPreviousRenderToFinish() {
   TRACE_EVENT0("gpu", "waitForPreviousRenderToFinish");
   WTF::TimeTicks start = WTF::TimeTicks::Now();
   while (pending_previous_frame_render_) {
+    if (!submit_frame_client_binding_.WaitForIncomingMethodCall()) {
+      DLOG(ERROR) << "Failed to receive SubmitFrame response";
+      break;
+    }
+  }
+  return WTF::TimeTicks::Now() - start;
+}
+
+void VRDisplay::OnSubmitFrameGpuFence(const gfx::GpuFenceHandle& handle) {
+  prev_frame_fence_ = std::make_unique<gfx::GpuFence>(handle);
+}
+
+WTF::TimeDelta VRDisplay::WaitForGpuFence() {
+  TRACE_EVENT0("gpu", "waitForGpuFence");
+  WTF::TimeTicks start = WTF::TimeTicks::Now();
+  while (!prev_frame_fence_) {
     if (!submit_frame_client_binding_.WaitForIncomingMethodCall()) {
       DLOG(ERROR) << "Failed to receive SubmitFrame response";
       break;
@@ -920,8 +939,7 @@ void VRDisplay::StopPresenting() {
   pending_submit_frame_ = false;
   pending_previous_frame_render_ = false;
   did_submit_this_frame_ = false;
-  frame_transport_method_ = FrameTransport::kUninitialized;
-  wait_for_previous_render_ = WaitPrevStrategy::kUninitialized;
+  transport_options_ = nullptr;
 }
 
 void VRDisplay::OnActivate(device::mojom::blink::VRDisplayEventReason reason,
