@@ -11,6 +11,7 @@
 #include "base/location.h"
 #include "base/logging.h"
 #include "base/memory/ref_counted.h"
+#include "base/values.h"
 #include "content/browser/frame_host/navigation_handle_impl.h"
 #include "content/browser/frame_host/navigator.h"
 #include "content/browser/frame_host/render_frame_host_impl.h"
@@ -19,7 +20,6 @@
 #include "content/browser/loader/resource_loader.h"
 #include "content/browser/loader/resource_request_info_impl.h"
 #include "content/public/browser/browser_thread.h"
-#include "content/public/browser/navigation_data.h"
 #include "content/public/browser/resource_context.h"
 #include "content/public/browser/resource_dispatcher_host_delegate.h"
 #include "content/public/browser/resource_request_info.h"
@@ -151,7 +151,7 @@ void WillProcessResponseOnUIThread(
     bool is_download,
     bool is_stream,
     const base::Closure& transfer_callback,
-    std::unique_ptr<NavigationData> navigation_data) {
+    base::Value navigation_data) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
   if (g_force_transfer) {
@@ -163,8 +163,7 @@ void WillProcessResponseOnUIThread(
   if (!navigation_handle)
     return;
 
-  if (navigation_data)
-    navigation_handle->set_navigation_data(std::move(navigation_data));
+  navigation_handle->set_navigation_data(std::move(navigation_data));
 
   RenderFrameHostImpl* render_frame_host =
       RenderFrameHostImpl::FromID(render_process_id, render_frame_host_id);
@@ -292,15 +291,11 @@ void NavigationResourceThrottle::WillProcessResponse(bool* defer) {
         request_->response_headers()->raw_headers());
   }
 
-  std::unique_ptr<NavigationData> cloned_data;
+  base::Value navigation_data;
   if (resource_dispatcher_host_delegate_) {
     // Ask the embedder for a NavigationData instance.
-    NavigationData* navigation_data =
+    navigation_data =
         resource_dispatcher_host_delegate_->GetNavigationData(request_);
-
-    // Clone the embedder's NavigationData before moving it to the UI thread.
-    if (navigation_data)
-      cloned_data = navigation_data->Clone();
   }
 
   UIChecksPerformedCallback callback =
@@ -319,7 +314,7 @@ void NavigationResourceThrottle::WillProcessResponse(bool* defer) {
                      request_->ssl_info(), info->GetGlobalRequestID(),
                      info->should_replace_current_entry(), info->IsDownload(),
                      info->is_stream(), transfer_callback,
-                     base::Passed(&cloned_data)));
+                     std::move(navigation_data)));
   *defer = true;
 }
 
