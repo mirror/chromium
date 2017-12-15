@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b7ea02ca_0ecab9a0",
+        "filename": "chrome/browser/chromeos/login/supervised/supervised_user_test_base.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-12-15T09:40:07Z",
+      "side": 1,
+      "message": "Can\u0027t we get rid of this member?",
+      "revId": "e1ccba8af82c472fc56c0a4712ba6d0086fe6edf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a4f41b1_29fcb650",
+        "filename": "chromeos/dbus/cryptohome_client.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 525,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-12-15T09:40:07Z",
+      "side": 1,
+      "message": "Could you keep using DBusMethodCallback\u003ccryptohome::BaseReply\u003e to keep CryptohomeClient minimal?\nhttps://chromium.googlesource.com/chromiumos/docs/+/master/dbus_in_chrome.md#Keep-your-class-minimal\n\nI think MapError should be placed in homedir_methods.cc/h as a utility function, and you may add another utility function which converts BaseReply \u0026 hash.",
+      "revId": "e1ccba8af82c472fc56c0a4712ba6d0086fe6edf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f05b9b6_6ee97454",
+        "filename": "chromeos/dbus/fake_cryptohome_client.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-12-15T09:40:07Z",
+      "side": 1,
+      "message": "nit: No blank line needed.",
+      "revId": "e1ccba8af82c472fc56c0a4712ba6d0086fe6edf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "204c6964_0018e729",
+        "filename": "chromeos/dbus/fake_cryptohome_client.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-12-15T09:40:07Z",
+      "side": 1,
+      "message": "nit: How about something like \"//// Test helpers\" or \"/////////// Test helpers /////////////\" to make it clear that this is a section separator?",
+      "revId": "e1ccba8af82c472fc56c0a4712ba6d0086fe6edf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7275c0b_4367e307",
+        "filename": "chromeos/dbus/fake_cryptohome_client.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-12-15T09:40:07Z",
+      "side": 1,
+      "message": "I think just storing MountRequest as last_mount_request_ should be more maintainable than storing each field.",
+      "revId": "e1ccba8af82c472fc56c0a4712ba6d0086fe6edf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a852e831_850685b7",
+        "filename": "chromeos/dbus/fake_cryptohome_client.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-12-15T09:40:07Z",
+      "side": 1,
+      "message": "Could you rename this to something like last_migrate_to_dircrypto_id_ to make it clear what this is?\nThe same goes for others.",
+      "revId": "e1ccba8af82c472fc56c0a4712ba6d0086fe6edf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
