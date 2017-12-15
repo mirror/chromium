@@ -46,6 +46,30 @@
       "revId": "e346274cbc62d3a987facddb7b807c647517eeef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "991f9c65_c7a90d9f",
+        "filename": "third_party/WebKit/Source/core/html/forms/TextControlInnerElements.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1115933
+      },
+      "writtenOn": "2017-12-15T11:25:46Z",
+      "side": 1,
+      "message": "Repro steps for the issue are:\n1. Open https://sebsg.github.io/autofill/suggested-value-test.html\n2. Click on City field to open popup\n3. Click on Springfield from popup\nExpected: Springfield is shown\nActual: Blank field\n\nThis is probably because HTMLInputElement::SetSuggestedValue calls SetNeedsStyleRecalc after calling TextControlElement::SetSuggestedValue, but HTMLInputElement::setValue doesn\u0027t request style recalc after calling TextControlElement::SetSuggestedValue(String()).",
+      "parentUuid": "c8ccc2b8_fb428338",
+      "range": {
+        "startLine": 62,
+        "startChar": 53,
+        "endLine": 62,
+        "endChar": 62
+      },
+      "revId": "e346274cbc62d3a987facddb7b807c647517eeef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
