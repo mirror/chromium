@@ -29,7 +29,7 @@ class GLImageRefCountedMemoryTestDelegate {
         static_cast<int>(RowSizeForBufferFormat(size.width(), format, 0)), 0,
         format, color, &bytes->data().front());
     scoped_refptr<GLImageRefCountedMemory> image(new GLImageRefCountedMemory(
-        size, GLImageMemory::GetInternalFormatForTesting(format)));
+        size));
     bool rv = image->Initialize(bytes.get(), format);
     EXPECT_TRUE(rv);
     return image;

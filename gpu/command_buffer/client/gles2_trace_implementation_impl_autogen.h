@@ -1903,10 +1903,9 @@ void GLES2TraceImplementation::GetUniformsES3CHROMIUM(GLuint program,
 
 GLuint GLES2TraceImplementation::CreateImageCHROMIUM(ClientBuffer buffer,
                                                      GLsizei width,
-                                                     GLsizei height,
-                                                     GLenum internalformat) {
+                                                     GLsizei height) {
   TRACE_EVENT_BINARY_EFFICIENT0("gpu", "GLES2Trace::CreateImageCHROMIUM");
-  return gl_->CreateImageCHROMIUM(buffer, width, height, internalformat);
+  return gl_->CreateImageCHROMIUM(buffer, width, height);
 }
 
 void GLES2TraceImplementation::DestroyImageCHROMIUM(GLuint image_id) {

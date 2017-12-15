@@ -77,8 +77,7 @@ class RasterMockGLES2Interface : public gles2::GLES2InterfaceStub {
   MOCK_METHOD4(CreateImageCHROMIUM,
                GLuint(ClientBuffer buffer,
                       GLsizei width,
-                      GLsizei height,
-                      GLenum internalformat));
+                      GLsizei height));
   MOCK_METHOD2(BindTexImage2DCHROMIUM, void(GLenum target, GLint imageId));
   MOCK_METHOD2(ReleaseTexImage2DCHROMIUM, void(GLenum target, GLint imageId));
   MOCK_METHOD1(DestroyImageCHROMIUM, void(GLuint image_id));
@@ -403,16 +402,14 @@ TEST_F(RasterImplementationGLESTest, CreateAndConsumeTextureCHROMIUM) {
 TEST_F(RasterImplementationGLESTest, CreateImageCHROMIUM) {
   const GLsizei kWidth = 256;
   const GLsizei kHeight = 128;
-  const GLenum kInternalFormat = GL_RGBA;
   const GLint kImageId = 23;
   const ClientBuffer client_buffer = 0;
   GLint image_id = 0;
 
-  EXPECT_CALL(*gl_, CreateImageCHROMIUM(client_buffer, kWidth, kHeight,
-                                        kInternalFormat))
+  EXPECT_CALL(*gl_, CreateImageCHROMIUM(client_buffer, kWidth, kHeight))
       .WillOnce(Return(kImageId));
   image_id =
-      ri_->CreateImageCHROMIUM(client_buffer, kWidth, kHeight, kInternalFormat);
+      ri_->CreateImageCHROMIUM(client_buffer, kWidth, kHeight);
   EXPECT_EQ(kImageId, image_id);
 }
 

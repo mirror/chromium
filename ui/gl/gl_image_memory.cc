@@ -12,30 +12,13 @@
 #include "ui/gfx/buffer_format_util.h"
 #include "ui/gl/gl_bindings.h"
 #include "ui/gl/gl_context.h"
+#include "ui/gl/gl_utils.h"
 #include "ui/gl/gl_version_info.h"
 
 using gfx::BufferFormat;
 
 namespace gl {
 namespace {
-
-bool ValidInternalFormat(unsigned internalformat) {
-  switch (internalformat) {
-    case GL_ATC_RGB_AMD:
-    case GL_ATC_RGBA_INTERPOLATED_ALPHA_AMD:
-    case GL_COMPRESSED_RGB_S3TC_DXT1_EXT:
-    case GL_COMPRESSED_RGBA_S3TC_DXT5_EXT:
-    case GL_ETC1_RGB8_OES:
-    case GL_RED:
-    case GL_RG:
-    case GL_RGB:
-    case GL_RGBA:
-    case GL_BGRA_EXT:
-      return true;
-    default:
-      return false;
-  }
-}
 
 bool ValidFormat(gfx::BufferFormat format) {
   switch (format) {
@@ -99,32 +82,26 @@ bool IsCompressedFormat(gfx::BufferFormat format) {
 
 GLenum TextureFormat(gfx::BufferFormat format) {
   switch (format) {
-    case gfx::BufferFormat::ATC:
-      return GL_ATC_RGB_AMD;
-    case gfx::BufferFormat::ATCIA:
-      return GL_ATC_RGBA_INTERPOLATED_ALPHA_AMD;
-    case gfx::BufferFormat::DXT1:
-      return GL_COMPRESSED_RGB_S3TC_DXT1_EXT;
-    case gfx::BufferFormat::DXT5:
-      return GL_COMPRESSED_RGBA_S3TC_DXT5_EXT;
-    case gfx::BufferFormat::ETC1:
-      return GL_ETC1_RGB8_OES;
-    case gfx::BufferFormat::R_8:
-      return GL_RED;
-    case gfx::BufferFormat::R_16:
-      return GL_R16_EXT;
-    case gfx::BufferFormat::RG_88:
-      return GL_RG;
+    case gfx::BufferFormat::BGRA_8888:
+      // To be able to upload BGRA_8888 without conversion with GLES2
+      // we have to use GL_BGRA_EXT for both TextureFormat and
+      // DataFormat.
+      return GL_BGRA_EXT;
+    case gfx::BufferFormat::RGBX_8888:
+    case gfx::BufferFormat::BGRX_8888:
+    case gfx::BufferFormat::BGR_565:
     case gfx::BufferFormat::RGBA_4444:
     case gfx::BufferFormat::RGBA_8888:
     case gfx::BufferFormat::RGBA_F16:
-      return GL_RGBA;
-    case gfx::BufferFormat::BGRA_8888:
-      return GL_BGRA_EXT;
-    case gfx::BufferFormat::BGR_565:
-    case gfx::BufferFormat::RGBX_8888:
-    case gfx::BufferFormat::BGRX_8888:
-      return GL_RGB;
+    case gfx::BufferFormat::R_8:
+    case gfx::BufferFormat::R_16:
+    case gfx::BufferFormat::RG_88:
+    case gfx::BufferFormat::ATC:
+    case gfx::BufferFormat::ATCIA:
+    case gfx::BufferFormat::DXT1:
+    case gfx::BufferFormat::DXT5:
+    case gfx::BufferFormat::ETC1:
+      return GLFormatForBufferFormat(format);
     case gfx::BufferFormat::BGRX_1010102:
     case gfx::BufferFormat::YVU_420:
     case gfx::BufferFormat::YUV_420_BIPLANAR:
@@ -140,8 +117,14 @@ GLenum TextureFormat(gfx::BufferFormat format) {
 GLenum DataFormat(gfx::BufferFormat format) {
   switch (format) {
     case gfx::BufferFormat::RGBX_8888:
+      // If we're using OpenGL we can use GL_RGB for TextureFormat and
+      // GL_RGBA for DataFormat to avoid conversion - or at least make
+      // the driver do the conversion if necessary.
       return GL_RGBA;
     case gfx::BufferFormat::BGRX_8888:
+      // To be able to upload BGRA_8888 without conversion with GLES2
+      // we have to use GL_BGRA_EXT for both TextureFormat and
+      // DataFormat.
       return GL_BGRA_EXT;
     case gfx::BufferFormat::BGR_565:
     case gfx::BufferFormat::RGBA_4444:
@@ -156,7 +139,7 @@ GLenum DataFormat(gfx::BufferFormat format) {
     case gfx::BufferFormat::DXT1:
     case gfx::BufferFormat::DXT5:
     case gfx::BufferFormat::ETC1:
-      return TextureFormat(format);
+      return GLFormatForBufferFormat(format);
     case gfx::BufferFormat::BGRX_1010102:
     case gfx::BufferFormat::YVU_420:
     case gfx::BufferFormat::YUV_420_BIPLANAR:
@@ -370,9 +353,8 @@ std::unique_ptr<uint8_t[]> GLES2Data(const gfx::Size& size,
 
 }  // namespace
 
-GLImageMemory::GLImageMemory(const gfx::Size& size, unsigned internalformat)
+GLImageMemory::GLImageMemory(const gfx::Size& size)
     : size_(size),
-      internalformat_(internalformat),
       memory_(nullptr),
       format_(gfx::BufferFormat::RGBA_8888),
       stride_(0) {}
@@ -389,11 +371,6 @@ GLImageMemory* GLImageMemory::FromGLImage(GLImage* image) {
 bool GLImageMemory::Initialize(const unsigned char* memory,
                                gfx::BufferFormat format,
                                size_t stride) {
-  if (!ValidInternalFormat(internalformat_)) {
-    LOG(ERROR) << "Invalid internalformat: " << internalformat_;
-    return false;
-  }
-
   if (!ValidFormat(format)) {
     LOG(ERROR) << "Invalid format: " << static_cast<int>(format);
     return false;
@@ -419,7 +396,7 @@ gfx::Size GLImageMemory::GetSize() {
 }
 
 unsigned GLImageMemory::GetInternalFormat() {
-  return internalformat_;
+  return TextureFormat(format_);
 }
 
 bool GLImageMemory::BindTexImage(unsigned target) {
@@ -524,12 +501,6 @@ bool GLImageMemory::ScheduleOverlayPlane(gfx::AcceleratedWidget widget,
 
 GLImageMemory::Type GLImageMemory::GetType() const {
   return Type::MEMORY;
-}
-
-// static
-unsigned GLImageMemory::GetInternalFormatForTesting(gfx::BufferFormat format) {
-  DCHECK(ValidFormat(format));
-  return TextureFormat(format);
 }
 
 }  // namespace gl
