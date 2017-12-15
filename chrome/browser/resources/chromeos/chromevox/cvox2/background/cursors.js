@@ -538,6 +538,17 @@ cursors.WrappingCursor.prototype = {
       if (!endpoint)
         return this;
 
+      // If the author provides focusable nodes, follow that rather than
+      // performing our own wrapping computation. We trust authors do the right
+      // thing.
+      if (endpoint.nextFocus && dir == Dir.FORWARD) {
+        return new cursors.WrappingCursor(
+            endpoint.nextFocus, cursors.NODE_INDEX);
+      } else if (endpoint.previousFocus && dir == Dir.BACKWARD) {
+        return new cursors.WrappingCursor(
+            endpoint.previousFocus, cursors.NODE_INDEX);
+      }
+
       // Case 1: forwards (find the root-like node).
       while (!AutomationPredicate.root(endpoint) && endpoint.parent)
         endpoint = endpoint.parent;
