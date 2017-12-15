@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7ede0920_32807fb4",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_subpage.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-12-15T01:59:40Z",
+      "side": 1,
+      "message": "You\u0027re correct - we need to pad the child elements instead of #networkListDiv itself. The reason for this is that we need the cr-separator-line border to reach the left and right sides of the page, but if the padding exists on the #networkListDiv element, its children can\u0027t extend that far to the left/right.\n\nAdding a new class \".padded\" and applying it to each element doesn\u0027t seem scalable. There are least 9 separate elements that would need the class, and anyone adding a new element to the page would need to remember to add the class to that new element. I think that the way the CSS rule is currently written is the best way to do this.\n\nDo you have any suggestions on how we could potentially improve the readability of the rule?",
+      "parentUuid": "2f8d3731_dcba2d50",
+      "revId": "8b868e931b805a426430e3d097ff615731f8724c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a0a4cc8a_58e125db",
         "filename": "chrome/browser/resources/settings/internet_page/internet_subpage.html",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-15T00:15:09Z",
       "side": 1,
       "message": "Sort the #gmscore CSS to match the html order, it\u0027s easier to follow that way.",
+      "revId": "8b868e931b805a426430e3d097ff615731f8724c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "743ca964_c3a48131",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_subpage.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-12-15T01:59:40Z",
+      "side": 1,
+      "message": "Done, to an extent.\n\nThere are two selectors (this one, and the one above that you stated was a confusing rule) that mention multiple element IDs in the same selector. Is the convention that these selectors should be listed after all of the IDs have been listed? If not, what heuristic should I use to sort the selectors?",
+      "parentUuid": "a0a4cc8a_58e125db",
       "revId": "8b868e931b805a426430e3d097ff615731f8724c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "fdd5be7e_901e583c",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_subpage.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-12-15T01:59:40Z",
+      "side": 1,
+      "message": "I tried that, but it didn\u0027t work. It turns out that class\u003d\"flex\" applies the flex-basis attribute as well as the flex attribute, and the flex-basis attribute messes up the layout of the page such that the network rows are not visible.",
+      "parentUuid": "3f2dc78a_3c8d9bd2",
+      "revId": "8b868e931b805a426430e3d097ff615731f8724c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "562f111f_ce367dfc",
         "filename": "chrome/browser/resources/settings/internet_page/internet_subpage.html",
         "patchSetId": 3
@@ -64,6 +118,24 @@
       "writtenOn": "2017-12-15T00:15:09Z",
       "side": 1,
       "message": "margin + padding here is pretty confusing. Also, it would be better to use vars from shared_vars_css.html or settings_vars_css.html, e.g. --cr-section-padding and --cr-section-indent-width.",
+      "revId": "8b868e931b805a426430e3d097ff615731f8724c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3022462_c41dd4d8",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_subpage.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-12-15T01:59:40Z",
+      "side": 1,
+      "message": "Unfortunately, there are no pre-defined CSS variables that fit what this page requires. Should I create my own variables? IMO, it seems better to define these in this file, since they are not shared with other elements.",
+      "parentUuid": "562f111f_ce367dfc",
       "revId": "8b868e931b805a426430e3d097ff615731f8724c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "ab9ad310_43cb179b",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_subpage.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-12-15T01:59:40Z",
+      "side": 1,
+      "message": "40px is incorrect, since it would indent the instructions too far. Same response as above regarding there being no pre-defined variable to use. What is the correct thing to do?",
+      "parentUuid": "6abe33b7_e4aa3de5",
+      "revId": "8b868e931b805a426430e3d097ff615731f8724c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "99ddb94c_6e63e80e",
         "filename": "chrome/browser/resources/settings/internet_page/internet_subpage.html",
         "patchSetId": 3
@@ -101,6 +191,24 @@
       "revId": "8b868e931b805a426430e3d097ff615731f8724c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c05b6a9f_1377f0b0",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_subpage.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-12-15T01:59:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "99ddb94c_6e63e80e",
+      "revId": "8b868e931b805a426430e3d097ff615731f8724c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
