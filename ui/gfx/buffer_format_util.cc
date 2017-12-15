@@ -2,6 +2,9 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include <GLES2/gl2chromium.h>
+#include <GLES2/gl2extchromium.h>
+
 #include "ui/gfx/buffer_format_util.h"
 
 #include "base/logging.h"
@@ -282,6 +285,50 @@ const char* BufferFormatToString(BufferFormat format) {
       << "Invalid BufferFormat: "
       << static_cast<typename std::underlying_type<BufferFormat>::type>(format);
   return "Invalid Format";
+}
+
+uint32_t BufferFormatToGLFormat(BufferFormat format) {
+  switch (format) {
+    case gfx::BufferFormat::ATC:
+      return GL_ATC_RGB_AMD;
+    case gfx::BufferFormat::ATCIA:
+      return GL_ATC_RGBA_INTERPOLATED_ALPHA_AMD;
+    case gfx::BufferFormat::DXT1:
+      return GL_COMPRESSED_RGB_S3TC_DXT1_EXT;
+    case gfx::BufferFormat::DXT5:
+      return GL_COMPRESSED_RGBA_S3TC_DXT5_EXT;
+    case gfx::BufferFormat::ETC1:
+      return GL_ETC1_RGB8_OES;
+    case gfx::BufferFormat::R_8:
+      return GL_RED_EXT;
+    case gfx::BufferFormat::R_16:
+      return GL_R16_EXT;
+    case gfx::BufferFormat::RG_88:
+      return GL_RG_EXT;
+    case gfx::BufferFormat::BGR_565:
+    case gfx::BufferFormat::RGBX_8888:
+    case gfx::BufferFormat::BGRX_8888:
+      return GL_RGB;
+    case gfx::BufferFormat::BGRX_1010102:
+      // Technically speaking we should use an opaque format, but neither
+      // OpenGLES nor OpenGL supports the hypothetical GL_RGB10_EXT.
+      return GL_RGB10_A2_EXT;
+    case gfx::BufferFormat::RGBA_4444:
+    case gfx::BufferFormat::RGBA_8888:
+    case gfx::BufferFormat::RGBA_F16:
+      return GL_RGBA;
+    case gfx::BufferFormat::BGRA_8888:
+      return GL_BGRA_EXT;
+    case gfx::BufferFormat::YVU_420:
+      return GL_RGB_YCRCB_420_CHROMIUM;
+    case gfx::BufferFormat::YUV_420_BIPLANAR:
+      return GL_RGB_YCBCR_420V_CHROMIUM;
+    case gfx::BufferFormat::UYVY_422:
+      return GL_RGB_YCBCR_422_CHROMIUM;
+    default:
+      NOTREACHED();
+      return GL_NONE;
+  }
 }
 
 }  // namespace gfx

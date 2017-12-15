@@ -1307,10 +1307,8 @@ void GL_APIENTRY GLES2GetUniformsES3CHROMIUM(GLuint program,
 }
 GLuint GL_APIENTRY GLES2CreateImageCHROMIUM(ClientBuffer buffer,
                                             GLsizei width,
-                                            GLsizei height,
-                                            GLenum internalformat) {
-  return gles2::GetGLContext()->CreateImageCHROMIUM(buffer, width, height,
-                                                    internalformat);
+                                            GLsizei height) {
+  return gles2::GetGLContext()->CreateImageCHROMIUM(buffer, width, height);
 }
 void GL_APIENTRY GLES2DestroyImageCHROMIUM(GLuint image_id) {
   gles2::GetGLContext()->DestroyImageCHROMIUM(image_id);

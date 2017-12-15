@@ -475,8 +475,7 @@ const Capabilities& GLManager::GetCapabilities() const {
 
 int32_t GLManager::CreateImage(ClientBuffer buffer,
                                size_t width,
-                               size_t height,
-                               unsigned internalformat) {
+                               size_t height) {
   gfx::Size size(width, height);
   scoped_refptr<gl::GLImage> gl_image;
 
@@ -485,7 +484,7 @@ int32_t GLManager::CreateImage(ClientBuffer buffer,
     IOSurfaceGpuMemoryBuffer* gpu_memory_buffer =
         IOSurfaceGpuMemoryBuffer::FromClientBuffer(buffer);
     scoped_refptr<gl::GLImageIOSurface> image(
-        gl::GLImageIOSurface::Create(size, internalformat));
+        gl::GLImageIOSurface::Create(size));
     if (!image->Initialize(gpu_memory_buffer->iosurface(),
                            gfx::GenericSharedMemoryId(1),
                            gfx::BufferFormat::BGRA_8888)) {
@@ -499,7 +498,7 @@ int32_t GLManager::CreateImage(ClientBuffer buffer,
         GpuMemoryBufferImpl::FromClientBuffer(buffer);
 
     scoped_refptr<gl::GLImageRefCountedMemory> image(
-        new gl::GLImageRefCountedMemory(size, internalformat));
+        new gl::GLImageRefCountedMemory(size));
     if (!image->Initialize(gpu_memory_buffer->bytes(),
                            gpu_memory_buffer->GetFormat())) {
       return -1;
