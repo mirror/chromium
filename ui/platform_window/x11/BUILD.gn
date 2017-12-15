@@ -53,3 +53,24 @@ component("x11") {
     ]
   }
 }
+
+if (ozone_platform_x11) {
+  source_set("x11_unittests") {
+    testonly = true
+
+    sources = [
+      "x11_window_ozone_unittest.cc",
+    ]
+
+    deps = [
+      ":x11",
+      "//testing/gmock",
+      "//testing/gtest",
+      "//ui/events:test_support",
+      "//ui/events/devices/x11",
+      "//ui/events/platform/x11",
+      "//ui/ozone:test_support",
+      "//ui/platform_window",
+    ]
+  }
+}

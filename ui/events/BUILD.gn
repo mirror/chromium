@@ -85,7 +85,7 @@ component("events_base") {
     "//ui/gfx/geometry",
   ]
 
-  if (use_x11) {
+  if (use_x11 || ozone_platform_x11) {
     public_deps += [ "//ui/events/keycodes:x11" ]
   }
 
@@ -341,7 +341,7 @@ static_library("test_support") {
     libs = [ "Carbon.framework" ]
   }
 
-  if (use_x11) {
+  if (use_x11 || ozone_platform_x11) {
     sources += [
       "test/events_test_utils_x11.cc",
       "test/events_test_utils_x11.h",
