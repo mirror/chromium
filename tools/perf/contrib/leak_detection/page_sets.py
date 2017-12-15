@@ -36,9 +36,11 @@ class LeakDetectionStorySet(story.StorySet):
       'https://www.yahoo.com',
       'https://www.reddit.com',
       'http://www.qq.com',
+      'http://www.amazon.com',
+      'http://www.twitter.com',
       # websites which found to be leaking in the past
       'https://www.macys.com',
-      'https://www.citi.com',
+      'https://www.prezi.com',
       'http://www.time.com',
       'http://infomoney.com.br',
       'http://www.cheapoair.com',
