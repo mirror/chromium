@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9854a97c_a0057b80",
+        "filename": "chrome/browser/metrics/tab_stats_data_store.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-12-15T15:10:21Z",
+      "side": 1,
+      "message": "You could keep the interval_maps unchanged, and simply map the new WebContents to the existing WebContentsID in |existing_tabs_|. If you do that, it would be better to rename WebContentsID to TabID (an id that stays constant for a tab, even if its WebContents changes).",
+      "range": {
+        "startLine": 98,
+        "startChar": 2,
+        "endLine": 103,
+        "endChar": 3
+      },
+      "revId": "a44fe97fc38a13e77644bb561649d2687d8b7106",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0438535_9c5bb11d",
+        "filename": "chrome/browser/metrics/tab_stats_data_store.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-12-15T15:10:21Z",
+      "side": 1,
+      "message": "Cache this before the loop.",
+      "range": {
+        "startLine": 136,
+        "startChar": 35,
+        "endLine": 136,
+        "endChar": 65
+      },
+      "revId": "a44fe97fc38a13e77644bb561649d2687d8b7106",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e1f7b60_06533fbc",
+        "filename": "chrome/browser/metrics/tab_stats_data_store.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-12-15T15:10:21Z",
+      "side": 1,
+      "message": "optional:\n\nDCHECK(base::ContainsKey(interval_map, web_contents));\ninterval_map[web_contents].visible_or_audible_during_interval \u003d true;\n\nI think it improves readability, but I\u0027ll let you decide. Since the DCHECK isn\u0027t in release builds, the fact that there are 2 lookups doesn\u0027t hurt performance.",
+      "range": {
+        "startLine": 136,
+        "startChar": 4,
+        "endLine": 138,
+        "endChar": 59
+      },
+      "revId": "a44fe97fc38a13e77644bb561649d2687d8b7106",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0636b24_9e2170b0",
+        "filename": "chrome/browser/metrics/tab_stats_data_store.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-12-15T15:10:21Z",
+      "side": 1,
+      "message": "optional:\nOnTabAudible() and OnTabVisible() could call a helper method OnTabAudibleOrVisible(), since they do the same thing.",
+      "range": {
+        "startLine": 152,
+        "startChar": 0,
+        "endLine": 160,
+        "endChar": 1
+      },
+      "revId": "a44fe97fc38a13e77644bb561649d2687d8b7106",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "617803db_d2691fdb",
+        "filename": "chrome/browser/metrics/tab_stats_data_store.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-12-15T15:10:21Z",
+      "side": 1,
+      "message": "This will not contain more than \"several dozen items\", so I would recommend using base::flat_map.\nhttps://chromium.googlesource.com/chromium/src/+/7e7162befb95f9f279a7b1efb6bba37a51d9e448/base/containers/README.md#base_containers-library-map-and-set-selection-usage-advice",
+      "range": {
+        "startLine": 68,
+        "startChar": 6,
+        "endLine": 68,
+        "endChar": 14
+      },
+      "revId": "a44fe97fc38a13e77644bb561649d2687d8b7106",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "befb02ea_cd6181fd",
+        "filename": "chrome/browser/metrics/tab_stats_data_store.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-12-15T15:10:21Z",
+      "side": 1,
+      "message": "GetWebContentsIDForTesting()\n\nThe presubmit check works with _for_testing() and ForTesting().",
+      "range": {
+        "startLine": 112,
+        "startChar": 16,
+        "endLine": 112,
+        "endChar": 47
+      },
+      "revId": "a44fe97fc38a13e77644bb561649d2687d8b7106",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f3b1f79_1e030c3d",
+        "filename": "chrome/browser/metrics/tab_stats_data_store_unittests.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-12-15T15:10:21Z",
+      "side": 1,
+      "message": "std::unique_ptr\u003ccontent::WebContents\u003e test_web_contents(CreateTestWebContents());\n\nworks to and is shorter to read",
+      "range": {
+        "startLine": 43,
+        "startChar": 4,
+        "endLine": 44,
+        "endChar": 50
+      },
+      "revId": "a44fe97fc38a13e77644bb561649d2687d8b7106",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a152537e_733c1a23",
+        "filename": "chrome/browser/metrics/tab_stats_tracker.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-12-15T15:10:21Z",
+      "side": 1,
+      "message": "usage_interval_timers_for_testing() ?",
+      "range": {
+        "startLine": 107,
+        "startChar": 54,
+        "endLine": 107,
+        "endChar": 75
+      },
+      "revId": "a44fe97fc38a13e77644bb561649d2687d8b7106",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
