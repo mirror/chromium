@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3714d16d_aaf29052",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-display/display-contents-button.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2017-12-15T11:29:25Z",
+      "side": 1,
+      "message": "So the comment here is to avoid kerning between \u0027P\u0027 and \u0027A\u0027. The ref does this between all characters. Perhaps do the same here, instead of assuming that painting \u0027A\u0027, \u0027S\u0027, \u0027S\u0027 separately will always be the same as painting \"ASS\" in one go.",
+      "revId": "64a64ad0f1a1101653e88c676e8849bca58d1b4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
