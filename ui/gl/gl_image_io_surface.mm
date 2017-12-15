@@ -194,16 +194,12 @@ GLenum ConvertRequestedInternalFormat(GLenum internalformat) {
 }  // namespace
 
 // static
-GLImageIOSurface* GLImageIOSurface::Create(const gfx::Size& size,
-                                           unsigned internalformat) {
-  return new GLImageIOSurface(size, internalformat);
+GLImageIOSurface* GLImageIOSurface::Create(const gfx::Size& size) {
+  return new GLImageIOSurface(size);
 }
 
-GLImageIOSurface::GLImageIOSurface(const gfx::Size& size,
-                                   unsigned internalformat)
+GLImageIOSurface::GLImageIOSurface(const gfx::Size& size)
     : size_(size),
-      internalformat_(ConvertRequestedInternalFormat(internalformat)),
-      client_internalformat_(internalformat),
       format_(gfx::BufferFormat::RGBA_8888) {}
 
 GLImageIOSurface::~GLImageIOSurface() {
@@ -215,11 +211,6 @@ bool GLImageIOSurface::Initialize(IOSurfaceRef io_surface,
                                   gfx::BufferFormat format) {
   DCHECK(thread_checker_.CalledOnValidThread());
   DCHECK(!io_surface_);
-
-  if (!ValidInternalFormat(internalformat_)) {
-    LOG(ERROR) << "Invalid internalformat: " << internalformat_;
-    return false;
-  }
 
   if (!ValidFormat(format)) {
     LOG(ERROR) << "Invalid format: " << gfx::BufferFormatToString(format);
@@ -254,7 +245,7 @@ gfx::Size GLImageIOSurface::GetSize() {
 }
 
 unsigned GLImageIOSurface::GetInternalFormat() {
-  return internalformat_;
+  return ConvertRequestedInternalFormat(TextureFormat(format_));
 }
 
 bool GLImageIOSurface::BindTexImage(unsigned target) {
@@ -411,7 +402,7 @@ void GLImageIOSurface::OnMemoryDump(base::trace_event::ProcessMemoryDump* pmd,
 }
 
 bool GLImageIOSurface::EmulatingRGB() const {
-  return client_internalformat_ == GL_RGB;
+  return TextureFormat(format_) == GL_RGB;
 }
 
 bool GLImageIOSurface::CanCheckIOSurfaceIsInUse() const {
