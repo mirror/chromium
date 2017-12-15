@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d5c7772e_89800fab",
+        "filename": "third_party/WebKit/Source/core/exported/WebSharedWorkerImpl.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-12-15T12:03:10Z",
+      "side": 1,
+      "message": "Can you remove this?",
+      "revId": "e1acb6eabd605fbf3ae610974780c8fba1c12ebc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b333d38_6432dc1a",
+        "filename": "third_party/WebKit/Source/core/loader/ThreadableLoader.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-12-15T12:03:10Z",
+      "side": 1,
+      "message": "ditto.",
+      "revId": "e1acb6eabd605fbf3ae610974780c8fba1c12ebc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8f75493_dc994272",
+        "filename": "third_party/WebKit/Source/core/workers/ThreadedMessagingProxyBase.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-12-15T12:03:10Z",
+      "side": 1,
+      "message": "ditto.",
+      "revId": "e1acb6eabd605fbf3ae610974780c8fba1c12ebc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bbf5e8d_370b6a3a",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerOrWorkletGlobalScope.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-12-15T12:03:10Z",
+      "side": 1,
+      "message": "ditto.",
+      "revId": "e1acb6eabd605fbf3ae610974780c8fba1c12ebc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fbbcc2e_58c895fc",
+        "filename": "third_party/WebKit/Source/platform/testing/weburl_loader_mock_factory_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-12-15T12:03:10Z",
+      "side": 1,
+      "message": "Is this a bug fix? If so, how about making a separate CL?",
+      "revId": "e1acb6eabd605fbf3ae610974780c8fba1c12ebc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
