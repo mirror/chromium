@@ -42,6 +42,7 @@ class StubGpuMemoryBufferImpl : public gfx::GpuMemoryBuffer {
   gfx::BufferFormat GetFormat() const override {
     return gfx::BufferFormat::BGRX_8888;
   }
+  uint32_t GetInternalformat(bool supports_bgra_ext) const override { return GL_RGB; }
   int stride(size_t plane) const override { return 0; }
   gfx::GpuMemoryBufferId GetId() const override {
     return gfx::GpuMemoryBufferId(0);
@@ -98,11 +99,9 @@ class MockBufferQueue : public BufferQueue {
  public:
   MockBufferQueue(gpu::gles2::GLES2Interface* gl,
                   gpu::GpuMemoryBufferManager* gpu_memory_buffer_manager,
-                  unsigned int target,
-                  unsigned int internalformat)
+                  unsigned int target)
       : BufferQueue(gl,
                     target,
-                    internalformat,
                     display::DisplaySnapshot::PrimaryFormat(),
                     nullptr,
                     gpu_memory_buffer_manager,
@@ -123,9 +122,9 @@ class BufferQueueTest : public ::testing::Test {
     context_provider_ = cc::TestContextProvider::Create(std::move(context));
     context_provider_->BindToCurrentThread();
     gpu_memory_buffer_manager_.reset(new StubGpuMemoryBufferManager);
-    mock_output_surface_ = new MockBufferQueue(context_provider_->ContextGL(),
-                                               gpu_memory_buffer_manager_.get(),
-                                               GL_TEXTURE_2D, GL_RGB);
+    mock_output_surface_ =
+        new MockBufferQueue(context_provider_->ContextGL(),
+                            gpu_memory_buffer_manager_.get(), GL_TEXTURE_2D);
     output_surface_.reset(mock_output_surface_);
     output_surface_->Initialize();
   }
@@ -226,14 +225,14 @@ GLuint CreateImageDefault() {
 class MockedContext : public cc::TestWebGraphicsContext3D {
  public:
   MockedContext() {
-    ON_CALL(*this, createImageCHROMIUM(_, _, _, _))
+    ON_CALL(*this, createImageCHROMIUM(_, _, _))
         .WillByDefault(testing::InvokeWithoutArgs(&CreateImageDefault));
   }
   MOCK_METHOD2(bindFramebuffer, void(GLenum, GLuint));
   MOCK_METHOD2(bindTexture, void(GLenum, GLuint));
   MOCK_METHOD2(bindTexImage2DCHROMIUM, void(GLenum, GLint));
-  MOCK_METHOD4(createImageCHROMIUM,
-               GLuint(ClientBuffer, GLsizei, GLsizei, GLenum));
+  MOCK_METHOD3(createImageCHROMIUM,
+               GLuint(ClientBuffer, GLsizei, GLsizei));
   MOCK_METHOD1(destroyImageCHROMIUM, void(GLuint));
   MOCK_METHOD5(framebufferTexture2D,
                void(GLenum, GLenum, GLenum, GLuint, GLint));
@@ -265,7 +264,7 @@ std::unique_ptr<BufferQueue> CreateBufferQueue(
     gpu::gles2::GLES2Interface* gl,
     gpu::GpuMemoryBufferManager* gpu_memory_buffer_manager) {
   std::unique_ptr<BufferQueue> buffer_queue(new BufferQueue(
-      gl, target, GL_RGB, display::DisplaySnapshot::PrimaryFormat(), nullptr,
+      gl, target, display::DisplaySnapshot::PrimaryFormat(), nullptr,
       gpu_memory_buffer_manager, kFakeSurfaceHandle));
   buffer_queue->Initialize();
   return buffer_queue;
@@ -304,7 +303,7 @@ TEST(BufferQueueStandaloneTest, FboBinding) {
     EXPECT_CALL(*context, bindTexture(target, Ne(0U)));
     EXPECT_CALL(*context, destroyImageCHROMIUM(1));
     Expectation image =
-        EXPECT_CALL(*context, createImageCHROMIUM(_, 0, 0, GL_RGB))
+        EXPECT_CALL(*context, createImageCHROMIUM(_, 0, 0))
             .WillOnce(Return(1));
     Expectation fb =
         EXPECT_CALL(*context, bindFramebuffer(GL_FRAMEBUFFER, Ne(0U)));
@@ -334,7 +333,7 @@ TEST(BufferQueueStandaloneTest, CheckBoundFramebuffer) {
                                context_provider->ContextSupport()));
 
   output_surface.reset(new BufferQueue(
-      context_provider->ContextGL(), GL_TEXTURE_2D, GL_RGB,
+      context_provider->ContextGL(), GL_TEXTURE_2D,
       display::DisplaySnapshot::PrimaryFormat(), gl_helper.get(),
       gpu_memory_buffer_manager.get(), kFakeSurfaceHandle));
   output_surface->Initialize();
@@ -624,7 +623,7 @@ TEST_F(BufferQueueMockedContextTest, RecreateBuffers) {
   // Expect all 4 images to be destroyed, 3 of the existing textures to be
   // copied from and 3 new images to be created.
   EXPECT_CALL(*context_, createImageCHROMIUM(_, screen_size.width(),
-                                             screen_size.height(), GL_RGB))
+                                             screen_size.height()))
       .Times(3);
   Expectation copy1 = EXPECT_CALL(*mock_output_surface_,
                                   CopyBufferDamage(_, displayed->texture, _, _))

@@ -153,42 +153,6 @@ void SetRow(gfx::BufferFormat format,
   NOTREACHED();
 }
 
-GLenum InternalFormat(gfx::BufferFormat format) {
-  switch (format) {
-    case gfx::BufferFormat::R_8:
-      return GL_RED;
-    case gfx::BufferFormat::R_16:
-      return GL_R16_EXT;
-    case gfx::BufferFormat::RG_88:
-      return GL_RG;
-    case gfx::BufferFormat::BGR_565:
-    case gfx::BufferFormat::BGRX_1010102:
-      return GL_RGB;
-    case gfx::BufferFormat::RGBA_4444:
-    case gfx::BufferFormat::RGBA_8888:
-      return GL_RGBA;
-    case gfx::BufferFormat::BGRA_8888:
-      return GL_BGRA_EXT;
-    case gfx::BufferFormat::RGBA_F16:
-      return GL_RGBA;
-    case gfx::BufferFormat::ATC:
-    case gfx::BufferFormat::ATCIA:
-    case gfx::BufferFormat::BGRX_8888:
-    case gfx::BufferFormat::DXT1:
-    case gfx::BufferFormat::DXT5:
-    case gfx::BufferFormat::ETC1:
-    case gfx::BufferFormat::RGBX_8888:
-    case gfx::BufferFormat::UYVY_422:
-    case gfx::BufferFormat::YVU_420:
-    case gfx::BufferFormat::YUV_420_BIPLANAR:
-      NOTREACHED();
-      return 0;
-  }
-
-  NOTREACHED();
-  return 0;
-}
-
 }  // namespace
 
 // An end to end test that tests the whole GpuMemoryBuffer lifecycle.
@@ -234,9 +198,8 @@ TEST_P(GpuMemoryBufferTest, Lifecycle) {
   buffer->Unmap();
 
   // Create the image. This should add the image ID to the ImageManager.
-  GLuint image_id =
-      glCreateImageCHROMIUM(buffer->AsClientBuffer(), kImageWidth, kImageHeight,
-                            InternalFormat(GetParam()));
+  GLuint image_id = glCreateImageCHROMIUM(buffer->AsClientBuffer(), kImageWidth,
+                                          kImageHeight);
   ASSERT_NE(0u, image_id);
   ASSERT_TRUE(gl_.decoder()->GetImageManagerForTest()->LookupImage(image_id) !=
               NULL);
