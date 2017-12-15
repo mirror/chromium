@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2c8d515d_7da8ae6e",
+        "filename": "ash/ash_touch_exploration_manager_chromeos_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-12-15T01:46:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d3b87522_fded2fb8",
+      "revId": "e908f16786785ef4c9ff4fd551ad18f5e08873a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "73f53d6b_f2df9377",
         "filename": "ash/public/interfaces/accessibility_controller.mojom",
         "patchSetId": 4
@@ -30,6 +48,30 @@
       "writtenOn": "2017-12-14T17:55:11Z",
       "side": 1,
       "message": "can you elaborate on what acceptable values for gesture might be?  Where are they validated, and what happens if something unexpected arrives?",
+      "range": {
+        "startLine": 65,
+        "startChar": 36,
+        "endLine": 65,
+        "endChar": 43
+      },
+      "revId": "e908f16786785ef4c9ff4fd551ad18f5e08873a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad237a27_a81cb5d7",
+        "filename": "ash/public/interfaces/accessibility_controller.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-12-15T01:46:09Z",
+      "side": 1,
+      "message": "The string is converted from ui::AXGesture enum in ax_enums.idl. I added a TODO to replace string with enum once ax_enums.mojom is ready (I contacted nektar@, that would be Q2).\n\nLook at the new method in ash::AccessibilityController, the client\u0027s method is called after the ui::AXGesture is converted to string. So I think it is validated, as far as it is not called in other places?\n\nI added a DCHECK there for a simple sanitizing.",
+      "parentUuid": "73f53d6b_f2df9377",
       "range": {
         "startLine": 65,
         "startChar": 36,
