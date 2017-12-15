@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d6354ac9_e6a3eebd",
+        "filename": "content/network/data_pipe_element_reader_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-12-15T17:08:39Z",
+      "side": 1,
+      "message": "nit: tests",
+      "range": {
+        "startLine": 26,
+        "startChar": 8,
+        "endLine": 26,
+        "endChar": 12
+      },
+      "revId": "0427b3bdb1b2975ef47a72b4a6a1eca64c6c8a7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9e2c90c_425d906d",
+        "filename": "content/network/data_pipe_element_reader_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-12-15T17:08:39Z",
+      "side": 1,
+      "message": "nit: I find it a bit strange to have a create method on a class that by name is the same thing as the method is creating.  Maybe change it to Get*?  Maybe include \"Ptr\" somewhere in the name so that the possible semantic confusion in the reader is dodged?  (Low priority, completely up to you.)",
+      "range": {
+        "startLine": 37,
+        "startChar": 18,
+        "endLine": 37,
+        "endChar": 35
+      },
+      "revId": "0427b3bdb1b2975ef47a72b4a6a1eca64c6c8a7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26a7c39e_f41afae0",
+        "filename": "content/network/url_loader_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-12-15T17:08:39Z",
+      "side": 1,
+      "message": "nit: upload",
+      "range": {
+        "startLine": 220,
+        "startChar": 37,
+        "endLine": 220,
+        "endChar": 43
+      },
+      "revId": "0427b3bdb1b2975ef47a72b4a6a1eca64c6c8a7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f631cb09_a47c963b",
+        "filename": "content/network/url_loader_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-12-15T17:08:39Z",
+      "side": 1,
+      "message": "nit: I think you mean upload_body_pipe_?",
+      "range": {
+        "startLine": 256,
+        "startChar": 20,
+        "endLine": 256,
+        "endChar": 31
+      },
+      "revId": "0427b3bdb1b2975ef47a72b4a6a1eca64c6c8a7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

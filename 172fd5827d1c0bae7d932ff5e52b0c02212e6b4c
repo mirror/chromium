@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "dc8d2eb7_f66e051a",
+        "filename": "content/network/data_pipe_element_reader.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-12-15T17:08:39Z",
+      "side": 1,
+      "message": "Any objection to my raising this with Yuzhu and see if I can get the docs on this issue clarified?  (I don\u0027t really think you\u0027d have any objection, just want to make sure you don\u0027t want to do it.)\n\nAgreed on consistency.",
+      "parentUuid": "f09cd6a5_2f7b686c",
+      "range": {
+        "startLine": 94,
+        "startChar": 18,
+        "endLine": 94,
+        "endChar": 30
+      },
+      "revId": "172fd5827d1c0bae7d932ff5e52b0c02212e6b4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a172f978_3dabec5f",
         "filename": "content/network/data_pipe_element_reader.h",
         "patchSetId": 5
