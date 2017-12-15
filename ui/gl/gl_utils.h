@@ -7,6 +7,7 @@
 #ifndef UI_GL_GL_UTILS_H_
 #define UI_GL_GL_UTILS_H_
 
+#include "ui/gfx/buffer_types.h"
 #include "ui/gl/gl_export.h"
 
 namespace gfx {
@@ -14,7 +15,12 @@ class ColorSpace;
 }  // namespace gfx
 
 namespace gl {
+
 GL_EXPORT int GetGLColorSpace(const gfx::ColorSpace& color_space);
+
+// Returns the corresponding GL internalformat for |format|.
+GL_EXPORT unsigned GLFormatForBufferFormat(gfx::BufferFormat format);
+
 }  // namespace gl
 
 #endif  // UI_GL_GL_UTILS_H_

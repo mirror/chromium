@@ -107,8 +107,7 @@ class TestGLES2Interface : public gpu::gles2::GLES2InterfaceStub {
                             const void* data) override;
   GLuint CreateImageCHROMIUM(ClientBuffer buffer,
                              GLsizei width,
-                             GLsizei height,
-                             GLenum internalformat) override;
+                             GLsizei height) override;
   void DestroyImageCHROMIUM(GLuint image_id) override;
   void BindTexImage2DCHROMIUM(GLenum target, GLint image_id) override;
   void ReleaseTexImage2DCHROMIUM(GLenum target, GLint image_id) override;
