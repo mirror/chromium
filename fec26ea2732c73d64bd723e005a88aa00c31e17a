@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3c47f7af_ecdcc269",
+        "filename": "chrome/browser/chromeos/attestation/enrollment_policy_observer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-12-15T23:37:33Z",
+      "side": 1,
+      "message": "nullptr while you\u0027re in here.",
+      "revId": "fec26ea2732c73d64bd723e005a88aa00c31e17a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b295a7c_8553b24e",
+        "filename": "chrome/browser/chromeos/attestation/enrollment_policy_observer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-12-15T23:37:33Z",
+      "side": 1,
+      "message": "Test DeviceSettingsService::IsInitialized() here so that we do not have to worry about shotdown order.",
+      "revId": "fec26ea2732c73d64bd723e005a88aa00c31e17a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
