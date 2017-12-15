@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6f138a05_cfba0811",
+        "filename": "third_party/WebKit/LayoutTests/accessibility/aom-computed-accessible-node.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-12-15T00:10:09Z",
+      "side": 1,
+      "message": "Less \"overridden\" than \"set via\" I think. There are a range of ways something can get a name: https://www.w3.org/TR/html-aam-1.0/#button-element",
+      "range": {
+        "startLine": 54,
+        "startChar": 32,
+        "endLine": 54,
+        "endChar": 42
+      },
+      "revId": "d36dd213c5e11ddeebdc1ef4896f0082d6702e00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9d3a4d9_811789f4",
+        "filename": "third_party/WebKit/Source/core/frame/LocalDOMWindow.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1113,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-12-15T00:10:09Z",
+      "side": 1,
+      "message": "I realise I suggested this, but I also just realised this means we\u0027ll get two different objects if we call this method twice on the same Element. That seems ... not ideal?\n\nI think instead we might want to follow the pattern used by AccessibleNode and store a reference to the ComputedAccessibleNode in ElementRareData - take a look at Element::accessibleNode to see what I mean.\n\nSo instead of always creating a new ComputedAccessibleNode here, instead we should get/create element.computedAccessibleNode. I think everything else can stay the same.\n\nThen, you should write a test to assert that we always get the same object when we call window.getComputedAccessibleNode() with the same element.",
+      "revId": "d36dd213c5e11ddeebdc1ef4896f0082d6702e00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
