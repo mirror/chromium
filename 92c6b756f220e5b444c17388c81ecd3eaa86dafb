@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "420f641d_7594655e",
+        "filename": "chrome/test/data/extensions/api_test/bindings/listeners_destroy_context/content_script.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-12-15T18:36:22Z",
+      "side": 1,
+      "message": "Can this be turned to:\n\nfunction destructiveListener() {\n  if (closed) ..\n}\n\nand call addListener(destructiveListener) below?",
+      "revId": "92c6b756f220e5b444c17388c81ecd3eaa86dafb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
