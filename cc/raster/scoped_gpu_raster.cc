@@ -4,6 +4,7 @@
 
 #include "cc/raster/scoped_gpu_raster.h"
 #include "gpu/command_buffer/client/gles2_interface.h"
+#include "gpu/command_buffer/client/raster_interface.h"
 #include "third_party/khronos/GLES2/gl2.h"
 #include "third_party/khronos/GLES2/gl2ext.h"
 #include "third_party/skia/include/gpu/GrContext.h"
