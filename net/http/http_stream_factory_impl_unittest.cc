@@ -50,6 +50,7 @@
 #include "net/socket/client_socket_handle.h"
 #include "net/socket/mock_client_socket_pool_manager.h"
 #include "net/socket/next_proto.h"
+#include "net/socket/socket_tag.h"
 #include "net/socket/socket_test_util.h"
 #include "net/spdy/chromium/spdy_session.h"
 #include "net/spdy/chromium/spdy_session_pool.h"
@@ -2056,7 +2057,8 @@ TEST_F(HttpStreamFactoryTest, NewSpdySessionCloseIdleH2Sockets) {
     scoped_refptr<TransportSocketParams> transport_params(
         new TransportSocketParams(
             host_port_pair, false, OnHostResolutionCallback(),
-            TransportSocketParams::COMBINE_CONNECT_AND_WRITE_DEFAULT));
+            TransportSocketParams::COMBINE_CONNECT_AND_WRITE_DEFAULT,
+            SocketTag()));
 
     auto connection = std::make_unique<ClientSocketHandle>();
     TestCompletionCallback callback;

@@ -17,6 +17,7 @@
 #include "net/log/net_log_with_source.h"
 #include "net/socket/client_socket_factory.h"
 #include "net/socket/client_socket_handle.h"
+#include "net/socket/socket_tag.h"
 #include "net/socket/socket_test_util.h"
 #include "net/test/gtest_util.h"
 #include "testing/gmock/include/gmock/gmock.h"
@@ -52,7 +53,7 @@ void TestLoadTimingInfo(const ClientSocketHandle& handle) {
 scoped_refptr<TransportSocketParams> CreateProxyHostParams() {
   return new TransportSocketParams(
       HostPortPair("proxy", 80), false, OnHostResolutionCallback(),
-      TransportSocketParams::COMBINE_CONNECT_AND_WRITE_DEFAULT);
+      TransportSocketParams::COMBINE_CONNECT_AND_WRITE_DEFAULT, SocketTag());
 }
 
 scoped_refptr<SOCKSSocketParams> CreateSOCKSv4Params() {

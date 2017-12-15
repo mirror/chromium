@@ -22,6 +22,7 @@
 #include "net/log/net_log_with_source.h"
 #include "net/socket/client_socket_handle.h"
 #include "net/socket/next_proto.h"
+#include "net/socket/socket_tag.h"
 #include "net/socket/ssl_client_socket.h"
 #include "net/socket/transport_client_socket_pool.h"
 #include "net/spdy/chromium/buffered_spdy_framer.h"
@@ -479,7 +480,7 @@ base::WeakPtr<SpdySession> CreateSpdySessionHelper(
   auto transport_params = base::MakeRefCounted<TransportSocketParams>(
       key.host_port_pair(), /* disable_resolver_cache = */ false,
       OnHostResolutionCallback(),
-      TransportSocketParams::COMBINE_CONNECT_AND_WRITE_DEFAULT);
+      TransportSocketParams::COMBINE_CONNECT_AND_WRITE_DEFAULT, SocketTag());
 
   auto connection = std::make_unique<ClientSocketHandle>();
   TestCompletionCallback callback;
