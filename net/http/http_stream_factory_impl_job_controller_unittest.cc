@@ -1379,7 +1379,6 @@ TEST_F(HttpStreamFactoryImplJobControllerTest, DelayedTCP) {
   base::ScopedMockTimeMessageLoopTaskRunner test_task_runner;
   auto failing_resolver = std::make_unique<MockHostResolver>();
   failing_resolver->set_ondemand_mode(true);
-  failing_resolver->rules()->AddSimulatedFailure("*google.com");
   session_deps_.host_resolver = std::move(failing_resolver);
 
   HttpRequestInfo request_info;
@@ -1387,6 +1386,13 @@ TEST_F(HttpStreamFactoryImplJobControllerTest, DelayedTCP) {
   request_info.url = GURL("https://www.google.com");
 
   Initialize(request_info);
+
+  // handshake will fail asynchronously after mock data is unpaused.
+  MockQuicData quic_data;
+  quic_data.AddRead(ASYNC, ERR_IO_PENDING);  // Pause
+  quic_data.AddRead(ASYNC, ERR_FAILED);
+  quic_data.AddWrite(ASYNC, ERR_FAILED);
+  quic_data.AddSocketDataToFactory(session_deps_.socket_factory.get());
 
   // Enable delayed TCP and set time delay for waiting job.
   QuicStreamFactory* quic_stream_factory = session_->quic_stream_factory();
@@ -1400,35 +1406,50 @@ TEST_F(HttpStreamFactoryImplJobControllerTest, DelayedTCP) {
   AlternativeService alternative_service(kProtoQUIC, server.host(), 443);
   SetAlternativeService(request_info, alternative_service);
 
+  // This prevents handshake from immediately succeeding.
+  crypto_client_stream_factory_.set_handshake_mode(
+      MockCryptoClientStream::COLD_START);
+
   request_ =
       job_controller_->Start(&request_delegate_, nullptr, net_log_.bound(),
                              HttpStreamRequest::HTTP_STREAM, DEFAULT_PRIORITY);
+
   EXPECT_TRUE(job_controller_->main_job());
   EXPECT_TRUE(job_controller_->alternative_job());
-  EXPECT_TRUE(job_controller_->main_job()->is_waiting());
+  EXPECT_TRUE(JobControllerPeer::main_job_is_blocked(job_controller_));
 
-  // The alternative job stalls as host resolution hangs when creating the QUIC
-  // request and controller should resume the main job after delay.
+  // Since the alt job has not finished host resolution, there should be no
+  // delayed task posted to resume the main job.
+  EXPECT_CALL(*job_factory_.main_job(), Resume()).Times(0);
+  test_task_runner->FastForwardBy(base::TimeDelta::FromMicroseconds(20));
+  EXPECT_TRUE(JobControllerPeer::main_job_is_blocked(job_controller_));
+
+  // Allow alt job host resolution to complete.
+  session_deps_.host_resolver->ResolveAllPending();
+
+  // Task to resume main job in 15 microseconds should be posted.
   EXPECT_TRUE(test_task_runner->HasPendingTask());
-  EXPECT_EQ(1u, test_task_runner->GetPendingTaskCount());
+  EXPECT_CALL(*job_factory_.main_job(), Resume()).Times(0);
+  test_task_runner->FastForwardBy(base::TimeDelta::FromMicroseconds(14));
   EXPECT_CALL(*job_factory_.main_job(), Resume()).Times(1);
-  test_task_runner->FastForwardBy(base::TimeDelta::FromMicroseconds(15));
-  EXPECT_FALSE(test_task_runner->HasPendingTask());
+  test_task_runner->FastForwardBy(base::TimeDelta::FromMicroseconds(1));
 
   EXPECT_TRUE(job_controller_->main_job());
   EXPECT_TRUE(job_controller_->alternative_job());
+  EXPECT_FALSE(JobControllerPeer::main_job_is_blocked(job_controller_));
 
-  // |alternative_job| fails but should not report status to Request.
+  // Unpause mock quic data. Should cause |alternative_job| to fail, but its
+  // failure should not report status to Request.
   EXPECT_CALL(request_delegate_, OnStreamFailed(_, _, _)).Times(0);
+  quic_data.GetSequencedSocketData()->Resume();
+  test_task_runner->FastForwardBy(base::TimeDelta());
 
   EXPECT_FALSE(JobControllerPeer::main_job_is_blocked(job_controller_));
   // OnStreamFailed will post a task to resume the main job immediately but
   // won't call Resume() on the main job since it's been resumed already.
   EXPECT_CALL(*job_factory_.main_job(), Resume()).Times(0);
-  // Now unblock Resolver so that alternate job (and QuicStreamFactory::Job) can
-  // be cleaned up.
-  session_deps_.host_resolver->ResolveAllPending();
-  EXPECT_EQ(1u, test_task_runner->GetPendingTaskCount());
+
+  // Run all remaining tasks so alt-job can be cleaned up.
   test_task_runner->FastForwardUntilNoTasksRemain();
   EXPECT_FALSE(job_controller_->alternative_job());
 }
