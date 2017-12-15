@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7e23de0b_6b4ac446",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-12-15T22:23:33Z",
+      "side": 1,
+      "message": "This part is more of a review message than a commit message.",
+      "range": {
+        "startLine": 16,
+        "startChar": 7,
+        "endLine": 17,
+        "endChar": 26
+      },
+      "revId": "29ceae0247a38743fc6d04fb70b769f03d4c4e7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
