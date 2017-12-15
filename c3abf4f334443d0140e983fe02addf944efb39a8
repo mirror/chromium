@@ -16,6 +16,24 @@
       "revId": "c3abf4f334443d0140e983fe02addf944efb39a8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f859c078_4224c1c2",
+        "filename": "ios/chrome/browser/ui/omnibox/clipping_textfield.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-12-15T13:41:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e6d2f99c_a79d9e0d",
+      "revId": "c3abf4f334443d0140e983fe02addf944efb39a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
