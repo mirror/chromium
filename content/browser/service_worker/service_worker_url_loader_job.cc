@@ -87,7 +87,9 @@ ServiceWorkerURLLoaderJob::ServiceWorkerURLLoaderJob(
   response_head_.load_timing.request_start_time = base::Time::Now();
 }
 
-ServiceWorkerURLLoaderJob::~ServiceWorkerURLLoaderJob() {}
+ServiceWorkerURLLoaderJob::~ServiceWorkerURLLoaderJob() {
+  LOG(ERROR) << "SWURLLoaderJob: DTOR";
+}
 
 void ServiceWorkerURLLoaderJob::FallbackToNetwork() {
   response_type_ = ResponseType::FALLBACK_TO_NETWORK;
@@ -137,10 +139,16 @@ void ServiceWorkerURLLoaderJob::Cancel() {
   url_loader_client_->OnComplete(
       network::URLLoaderCompletionStatus(net::ERR_ABORTED));
   url_loader_client_.reset();
+  DeleteIfNeeded();
 }
 
 bool ServiceWorkerURLLoaderJob::WasCanceled() const {
   return status_ == Status::kCancelled;
+}
+
+void ServiceWorkerURLLoaderJob::DetachedFromRequest() {
+  detached_from_request_ = true;
+  DeleteIfNeeded();
 }
 
 void ServiceWorkerURLLoaderJob::StartRequest() {
@@ -416,6 +424,11 @@ void ServiceWorkerURLLoaderJob::OnComplete(
   DCHECK(url_loader_client_.is_bound());
   status_ = Status::kCompleted;
   url_loader_client_->OnComplete(status);
+}
+
+void ServiceWorkerURLLoaderJob::DeleteIfNeeded() {
+  if (!binding_.is_bound() && detached_from_request_)
+    delete this;
 }
 
 }  // namespace content
