@@ -508,6 +508,44 @@ TEST_F(TranslateBubbleViewTest, DenialMenuRespectsBlacklistSite) {
   EXPECT_EQ(-1, bubble_->denial_menu_model_->GetIndexOfCommandId(
                     TranslateBubbleView::NEVER_TRANSLATE_SITE));
   // Verify that the menu is populated so previous check makes sense.
-  EXPECT_GE(0, bubble_->denial_menu_model_->GetIndexOfCommandId(
-                   TranslateBubbleView::NEVER_TRANSLATE_LANGUAGE));
+  EXPECT_GE(bubble_->denial_menu_model_->GetIndexOfCommandId(
+                TranslateBubbleView::NEVER_TRANSLATE_LANGUAGE),
+            0);
+}
+
+TEST_F(TranslateBubbleViewTest, AlwaysTranslateLanguageMenuItem) {
+  CreateAndShowBubble();
+
+  TriggerDenialMenu();
+  const int index = bubble_->denial_menu_model_->GetIndexOfCommandId(
+      TranslateBubbleView::ALWAYS_TRANSLATE_LANGUAGE);
+
+  EXPECT_FALSE(mock_model_->ShouldAlwaysTranslate());
+  EXPECT_FALSE(bubble_->denial_menu_model_->IsItemCheckedAt(index));
+  EXPECT_FALSE(mock_model_->translate_called_);
+  bubble_->denial_menu_model_->ActivatedAt(index);
+  EXPECT_TRUE(mock_model_->ShouldAlwaysTranslate());
+  EXPECT_TRUE(mock_model_->translate_called_);
+
+  // Go back to untranslated page, since the *language* should still always
+  // be translated (and this "untranslate" is temporary) the option should now
+  // be checked and it should be possible to disable it from the menu.
+  bubble_->HandleButtonPressed(TranslateBubbleView::BUTTON_ID_SHOW_ORIGINAL);
+  EXPECT_TRUE(mock_model_->revert_translation_called_);
+
+  TriggerDenialMenu();
+  EXPECT_TRUE(mock_model_->ShouldAlwaysTranslate());
+  EXPECT_TRUE(bubble_->denial_menu_model_->IsItemCheckedAt(index));
+
+  // Translate should not be called when disabling always-translate. The page is
+  // not currently in a translated state and nothing needs to be reverted.
+  // translate_called_ is set back to false just to make sure it's not being
+  // called again.
+  mock_model_->translate_called_ = false;
+  bubble_->denial_menu_model_->ActivatedAt(index);
+  EXPECT_FALSE(mock_model_->ShouldAlwaysTranslate());
+  EXPECT_FALSE(mock_model_->translate_called_);
+
+  TriggerDenialMenu();
+  EXPECT_FALSE(bubble_->denial_menu_model_->IsItemCheckedAt(index));
 }

@@ -303,6 +303,12 @@ void TranslateBubbleView::OnMenuButtonClicked(views::MenuButton* source,
   if (!denial_menu_runner_) {
     denial_menu_model_.reset(new ui::SimpleMenuModel(this));
 
+    denial_menu_model_->AddCheckItem(
+        DenialMenuItem::ALWAYS_TRANSLATE_LANGUAGE,
+        l10n_util::GetStringFUTF16(
+            IDS_TRANSLATE_BUBBLE_ALWAYS_TRANSLATE_LANG,
+            model_->GetLanguageNameAt(model_->GetOriginalLanguageIndex())));
+
     denial_menu_model_->AddItem(
         DenialMenuItem::NEVER_TRANSLATE_LANGUAGE,
         l10n_util::GetStringFUTF16(
@@ -323,7 +329,8 @@ void TranslateBubbleView::OnMenuButtonClicked(views::MenuButton* source,
 
     if (!Use2016Q2UI()) {
       denial_menu_model_->AddItemWithStringId(
-          DenialMenuItem::MORE_OPTIONS, IDS_TRANSLATE_BUBBLE_ADVANCED_BUTTON);
+          DenialMenuItem::MORE_OPTIONS,
+          IDS_TRANSLATE_BUBBLE_ADVANCED_MENU_BUTTON);
     }
 
     denial_menu_runner_.reset(
@@ -336,6 +343,9 @@ void TranslateBubbleView::OnMenuButtonClicked(views::MenuButton* source,
 }
 
 bool TranslateBubbleView::IsCommandIdChecked(int command_id) const {
+  if (command_id == DenialMenuItem::ALWAYS_TRANSLATE_LANGUAGE) {
+    return should_always_translate_;
+  }
   return false;
 }
 
@@ -345,6 +355,16 @@ bool TranslateBubbleView::IsCommandIdEnabled(int command_id) const {
 
 void TranslateBubbleView::ExecuteCommand(int command_id, int event_flags) {
   switch (command_id) {
+    case DenialMenuItem::ALWAYS_TRANSLATE_LANGUAGE:
+      should_always_translate_ = !should_always_translate_;
+      model_->SetAlwaysTranslate(should_always_translate_);
+
+      if (should_always_translate_) {
+        model_->Translate();
+        SwitchView(TranslateBubbleModel::VIEW_STATE_TRANSLATING);
+      }
+      break;
+
     case DenialMenuItem::NEVER_TRANSLATE_LANGUAGE:
       translate::ReportUiAction(
           translate::NEVER_TRANSLATE_LANGUAGE_MENU_CLICKED);

@@ -47,6 +47,7 @@ class TranslateBubbleView : public LocationBarBubbleDelegateView,
  public:
   // Item IDs for the denial button's menu.
   enum DenialMenuItem {
+    ALWAYS_TRANSLATE_LANGUAGE,
     NEVER_TRANSLATE_LANGUAGE,
     NEVER_TRANSLATE_SITE,
     MORE_OPTIONS
@@ -177,6 +178,8 @@ class TranslateBubbleView : public LocationBarBubbleDelegateView,
                            DenialMenuRespectsBlacklistSite);
   FRIEND_TEST_ALL_PREFIXES(TranslateBubbleViewTest,
                            DenialMenuNeverTranslateSite);
+  FRIEND_TEST_ALL_PREFIXES(TranslateBubbleViewTest,
+                           AlwaysTranslateLanguageMenuItem);
   FRIEND_TEST_ALL_PREFIXES(TranslateLanguageBrowserTest, TranslateAndRevert);
   FRIEND_TEST_ALL_PREFIXES(TranslateBubbleViewBrowserTest,
                            CheckNeverTranslateThisSiteBlacklist);
