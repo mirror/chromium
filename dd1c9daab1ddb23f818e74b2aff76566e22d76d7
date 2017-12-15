@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6ab5c7fd_f076c843",
+        "filename": "third_party/WebKit/Source/modules/exported/WebEmbeddedWorkerImpl.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-15T02:08:14Z",
+      "side": 1,
+      "message": "Override... not sure you need this comment though because the whole function is ForTesting().",
+      "revId": "dd1c9daab1ddb23f818e74b2aff76566e22d76d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81164350_839d3982",
+        "filename": "third_party/WebKit/Source/modules/exported/WebEmbeddedWorkerImpl.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-15T02:08:14Z",
+      "side": 1,
+      "message": "As this function is in WebEmbeddedWorkerImpl only, it\u0027s not exposed to outside Blink, so we don\u0027t need to use the abstract ScopedMessagePipeHandle type, right?\n\nAlso all the callsites seem to just use nullptr, so maybe we can just remove them?",
+      "revId": "dd1c9daab1ddb23f818e74b2aff76566e22d76d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "602937e2_a0b5908d",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerInstalledScriptsManager.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-15T02:08:14Z",
+      "side": 1,
+      "message": "Ditto",
+      "revId": "dd1c9daab1ddb23f818e74b2aff76566e22d76d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2e6aa83_c44febd4",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/WebEmbeddedWorkerImplTest.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-15T02:08:14Z",
+      "side": 1,
+      "message": "I don\u0027t understand what\u0027s going on here with these handle0 and handle1. What is the diferrence between handle0 and handle1? They are from different temporary MessagePipe() objects. Could we just pass a ScopedMessagePipeHandle() instead?",
+      "revId": "dd1c9daab1ddb23f818e74b2aff76566e22d76d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a256bff4_8ed21b88",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/WebEmbeddedWorkerImplTest.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-15T02:08:14Z",
+      "side": 1,
+      "message": "Does this contradict all the \"Chrome doesn\u0027t use interface versioning\" comments we have in the codebase?",
+      "revId": "dd1c9daab1ddb23f818e74b2aff76566e22d76d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4436ac09_62ed062b",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/WebEmbeddedWorkerImplTest.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-15T02:08:14Z",
+      "side": 1,
+      "message": "to be able to succeed \u003d\u003e succeeds",
+      "revId": "dd1c9daab1ddb23f818e74b2aff76566e22d76d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae30fe76_94ca05cf",
+        "filename": "third_party/WebKit/public/web/WebEmbeddedWorker.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-15T02:08:14Z",
+      "side": 1,
+      "message": "You don\u0027t need to put the name in a comment. The presubmit warning only complains if the name doesn\u0027t add more info than the type.",
+      "revId": "dd1c9daab1ddb23f818e74b2aff76566e22d76d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
