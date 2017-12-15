@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "44eced4f_0ae204f6",
+        "filename": "third_party/WebKit/Source/modules/exported/WebEmbeddedWorkerImpl.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-15T08:17:20Z",
+      "side": 1,
+      "message": "prefer to see the param names here like nullptr /* host_info */",
+      "revId": "4a2ce6857de0941453a2c16b1e1c1028906f5f16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "321765bd_681da0e4",
+        "filename": "third_party/WebKit/public/web/WebEmbeddedWorker.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-15T08:17:20Z",
+      "side": 1,
+      "message": "optional: maybe Info -\u003e Params? \"Info\" is starting to feel like a Mojo type for me...",
+      "revId": "4a2ce6857de0941453a2c16b1e1c1028906f5f16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

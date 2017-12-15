@@ -142,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "0d5f38c6_c049891b",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerInstalledScriptsManager.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-15T08:17:20Z",
+      "side": 1,
+      "message": "It\u0027s worth keeping some of the names. You  can write these like this:\n\n  WebVector\u003cWebURL\u003e installed_urls,\n  mojom::blink::ServiceWorkerInstalledScriptsManagerRequest,\n  mojom::blink::ServiceWorkerInstalledScriptsManagerHostPtrInfo,\n  scoped_refptr\u003cbase::SingleThreadTaskRunner\u003e io_task_runner);\n\nYou shouldn\u0027t need the names in /* comments */ since they are adding info beyond the param types.",
+      "parentUuid": "493cf06d_56cb23fd",
+      "revId": "dd1c9daab1ddb23f818e74b2aff76566e22d76d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8aba0d93_d230f85b",
         "filename": "third_party/WebKit/Source/modules/serviceworkers/ThreadSafeScriptContainer.h",
         "patchSetId": 11
@@ -206,6 +224,24 @@
       "side": 1,
       "message": "For these two parameters, ServiceWorkerInstalledScriptsManager ctor expects non-null request/ptrinfo to bind, otherwise crash would happen. In production code path, they are always guaranteed as non-null values.\nAs for the handle0 and handle1, I\u0027m using handle0 for ptrinfo side and handle1 for request side ;-) Although there is no such a rule, either one is OK.",
       "parentUuid": "a2e6aa83_c44febd4",
+      "revId": "dd1c9daab1ddb23f818e74b2aff76566e22d76d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cee4332_1ab71931",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/WebEmbeddedWorkerImplTest.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-15T08:17:20Z",
+      "side": 1,
+      "message": "Hm, OK.",
+      "parentUuid": "cafac49b_2925412d",
       "revId": "dd1c9daab1ddb23f818e74b2aff76566e22d76d7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
