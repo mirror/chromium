@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87331ed7_a47d8f35",
+        "filename": "chrome/browser/browser_process.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-15T19:36:20Z",
+      "side": 1,
+      "message": "GpuDriverInfoManager needs to come before GpuModeManager now.",
+      "revId": "7b82833bd16623f55d976259a24a2499c8081783",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
