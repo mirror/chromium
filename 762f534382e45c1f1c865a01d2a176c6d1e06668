@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f7b4fde0_2b2d97f0",
+        "filename": "gpu/command_buffer/client/gles2_implementation.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3333,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-12-15T01:35:48Z",
+      "side": 1,
+      "message": "I think this could come out as 0 if kMaxBytesPerTexSubImage is too small.",
+      "revId": "762f534382e45c1f1c865a01d2a176c6d1e06668",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
