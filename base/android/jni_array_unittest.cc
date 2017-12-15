@@ -10,6 +10,7 @@
 #include <limits>
 
 #include "base/android/jni_android.h"
+#include "base/android/jni_string.h"
 #include "base/android/scoped_java_ref.h"
 #include "base/macros.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -383,6 +384,105 @@ TEST(JniArray, JavaArrayOfIntArrayToIntVector) {
   CheckIntArrayConversion(env, int_array1, out[1], kLen1);
   CheckIntArrayConversion(env, int_array2, out[2], kLen2);
   CheckIntArrayConversion(env, int_array3, out[3], kLen3);
+}
+
+TEST(JniArray, JavaArrayOfStringByteArrayPairsToStringVectorMap) {
+  const uint8_t kNumItems = 2;
+  JNIEnv* env = AttachCurrentThread();
+
+  ScopedJavaLocalRef<jclass> pair_clazz(env,
+                                        env->FindClass("android/util/Pair"));
+  ASSERT_TRUE(pair_clazz.obj());
+
+  ScopedJavaLocalRef<jobjectArray> array(
+      env, env->NewObjectArray(kNumItems, pair_clazz.obj(), nullptr));
+  ASSERT_TRUE(array.obj());
+
+  jmethodID create_method = env->GetStaticMethodID(
+      pair_clazz.obj(), "create",
+      "(Ljava/lang/Object;Ljava/lang/Object;)Landroid/util/Pair;");
+  ASSERT_TRUE(create_method);
+
+  char text[16];
+  for (uint8_t i = 0; i < kNumItems; ++i) {
+    snprintf(text, sizeof text, "%d", i);
+    ScopedJavaLocalRef<jstring> key = ConvertUTF8ToJavaString(env, text);
+    ASSERT_TRUE(key.obj());
+
+    uint8_t test_bytes[] = {i};
+    ScopedJavaLocalRef<jbyteArray> byte_array =
+        ToJavaByteArray(env, test_bytes, 1);
+    ASSERT_TRUE(byte_array.obj());
+
+    ScopedJavaLocalRef<jobject> pair(
+        env, env->CallStaticObjectMethod(pair_clazz.obj(), create_method,
+                                         key.obj(), byte_array.obj()));
+    ASSERT_TRUE(pair.obj());
+    ASSERT_FALSE(HasException(env));
+
+    env->SetObjectArrayElement(array.obj(), i, pair.obj());
+    ASSERT_FALSE(HasException(env));
+  }
+
+  std::unordered_map<std::string, std::vector<uint8_t>> out;
+  JavaArrayOfStringByteArrayPairsToStringVectorMap(env, array.obj(), &out);
+  EXPECT_EQ(kNumItems, out.size());
+  EXPECT_EQ(0, out["0"][0]);
+  EXPECT_EQ(1, out["1"][0]);
+}
+
+TEST(JniArray, JavaArrayOfIntegerByteArrayPairsToIntVectorMap) {
+  const uint8_t kNumItems = 2;
+  JNIEnv* env = AttachCurrentThread();
+
+  ScopedJavaLocalRef<jclass> int_clazz(env,
+                                       env->FindClass("java/lang/Integer"));
+  ASSERT_TRUE(int_clazz.obj());
+
+  ScopedJavaLocalRef<jclass> pair_clazz(env,
+                                        env->FindClass("android/util/Pair"));
+  ASSERT_TRUE(pair_clazz.obj());
+
+  ScopedJavaLocalRef<jobjectArray> array(
+      env, env->NewObjectArray(kNumItems, pair_clazz.obj(), nullptr));
+  ASSERT_TRUE(array.obj());
+
+  jmethodID value_of_method = env->GetStaticMethodID(int_clazz.obj(), "valueOf",
+                                                     "(I)Ljava/lang/Integer;");
+
+  jmethodID create_method = env->GetStaticMethodID(
+      pair_clazz.obj(), "create",
+      "(Ljava/lang/Object;Ljava/lang/Object;)Landroid/util/Pair;");
+  ASSERT_TRUE(create_method);
+
+  char text[16];
+  for (uint8_t i = 0; i < kNumItems; ++i) {
+    snprintf(text, sizeof text, "%d", i);
+    ScopedJavaLocalRef<jobject> key(
+        env, env->CallStaticObjectMethod(int_clazz.obj(), value_of_method,
+                                         static_cast<jint>(i)));
+    ASSERT_TRUE(key.obj());
+
+    uint8_t test_bytes[] = {i};
+    ScopedJavaLocalRef<jbyteArray> byte_array =
+        ToJavaByteArray(env, test_bytes, 1);
+    ASSERT_TRUE(byte_array.obj());
+
+    ScopedJavaLocalRef<jobject> pair(
+        env, env->CallStaticObjectMethod(pair_clazz.obj(), create_method,
+                                         key.obj(), byte_array.obj()));
+    ASSERT_TRUE(pair.obj());
+    ASSERT_FALSE(HasException(env));
+
+    env->SetObjectArrayElement(array.obj(), i, pair.obj());
+    ASSERT_FALSE(HasException(env));
+  }
+
+  std::unordered_map<uint16_t, std::vector<uint8_t>> out;
+  JavaArrayOfIntegerByteArrayPairsToIntVectorMap(env, array.obj(), &out);
+  EXPECT_EQ(kNumItems, out.size());
+  EXPECT_EQ(0, out[0][0]);
+  EXPECT_EQ(1, out[1][0]);
 }
 
 }  // namespace android

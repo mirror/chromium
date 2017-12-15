@@ -9,6 +9,7 @@
 #include <stddef.h>
 #include <stdint.h>
 #include <string>
+#include <unordered_map>
 #include <vector>
 
 #include "base/android/scoped_java_ref.h"
@@ -127,6 +128,22 @@ BASE_EXPORT void JavaArrayOfIntArrayToIntVector(
     JNIEnv* env,
     jobjectArray array,
     std::vector<std::vector<int>>* out);
+
+// Assuming |array| is an android.util.Pair<String, byte[]>[]
+// (array of string=>byte array pairs), replaces the
+// contents of |out| with the corresponding key/values.
+BASE_EXPORT void JavaArrayOfStringByteArrayPairsToStringVectorMap(
+    JNIEnv* env,
+    jobjectArray array,
+    std::unordered_map<std::string, std::vector<uint8_t>>* out);
+
+// Assuming |array| is an android.util.Pair<Integer, byte[]>[]
+// (array of int=>byte array pairs), replaces the
+// contents of |out| with the corresponding key/values.
+BASE_EXPORT void JavaArrayOfIntegerByteArrayPairsToIntVectorMap(
+    JNIEnv* env,
+    jobjectArray array,
+    std::unordered_map<uint16_t, std::vector<uint8_t>>* out);
 
 }  // namespace android
 }  // namespace base

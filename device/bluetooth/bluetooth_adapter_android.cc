@@ -16,6 +16,7 @@
 #include "base/threading/thread_task_runner_handle.h"
 #include "device/bluetooth/android/wrappers.h"
 #include "device/bluetooth/bluetooth_advertisement.h"
+#include "device/bluetooth/bluetooth_device.h"
 #include "device/bluetooth/bluetooth_device_android.h"
 #include "device/bluetooth/bluetooth_discovery_session_outcome.h"
 #include "jni/ChromeBluetoothAdapter_jni.h"
@@ -25,6 +26,7 @@ using base::android::ConvertJavaStringToUTF8;
 using base::android::AppendJavaStringArrayToStringVector;
 using base::android::JavaParamRef;
 using base::android::JavaRef;
+using base::android::JavaByteArrayToByteVector;
 
 namespace {
 // The poll interval in ms when there is no active discovery. This
@@ -176,7 +178,12 @@ void BluetoothAdapterAndroid::CreateOrUpdateDeviceOnScan(
         bluetooth_device_wrapper,  // Java Type: bluetoothDeviceWrapper
     int32_t rssi,
     const JavaParamRef<jobjectArray>& advertised_uuids,  // Java Type: String[]
-    int32_t tx_power) {
+    int32_t tx_power,
+    const JavaParamRef<jobjectArray>&
+        service_data,  // Java Type: Pair<String, byte[]>[]
+    const JavaParamRef<jobjectArray>&
+        manufacturer_data  // Java Type: Pair<Integer, byte[]>[]
+    ) {
   std::string device_address = ConvertJavaStringToUTF8(env, address);
   auto iter = devices_.find(device_address);
 
@@ -204,11 +211,26 @@ void BluetoothAdapterAndroid::CreateOrUpdateDeviceOnScan(
     advertised_bluetooth_uuids.push_back(BluetoothUUID(std::move(uuid)));
   }
 
+  BluetoothDeviceAndroid::ServiceDataMap service_data_map;
+  // To avoid putting dependency in jni_array.h on BluetoothUUID
+  // we need to copy data to intermediate map.
+  std::unordered_map<std::string, std::vector<uint8_t>> intermediate_map;
+  JavaArrayOfStringByteArrayPairsToStringVectorMap(env, service_data,
+                                                   &intermediate_map);
+  for (auto item : intermediate_map) {
+    service_data_map.insert(
+        {BluetoothUUID(item.first), std::move(item.second)});
+  }
+
+  BluetoothDeviceAndroid::ManufacturerDataMap manufacturer_data_map;
+  JavaArrayOfIntegerByteArrayPairsToIntVectorMap(env, manufacturer_data,
+                                                 &manufacturer_data_map);
+
   int8_t clamped_tx_power = BluetoothDevice::ClampPower(tx_power);
 
   device_android->UpdateAdvertisementData(
       BluetoothDevice::ClampPower(rssi), std::move(advertised_bluetooth_uuids),
-      {} /* service_data */,
+      service_data_map, manufacturer_data_map,
       // Android uses INT32_MIN to indicate no Advertised Tx Power.
       // https://developer.android.com/reference/android/bluetooth/le/ScanRecord.html#getTxPowerLevel()
       tx_power == INT32_MIN ? nullptr : &clamped_tx_power);

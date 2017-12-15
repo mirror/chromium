@@ -12,6 +12,8 @@ namespace base {
 namespace android {
 namespace {
 
+const char* kObjectSignature = "Ljava/lang/Object;";
+
 // As |GetArrayLength| makes no guarantees about the returned value (e.g., it
 // may be -1 if |array| is not a valid Java array), provide a safe wrapper
 // that always returns a valid, non-negative size.
@@ -304,6 +306,61 @@ void JavaArrayOfIntArrayToIntVector(
     ScopedJavaLocalRef<jintArray> int_array(
         env, static_cast<jintArray>(env->GetObjectArrayElement(array, i)));
     JavaIntArrayToIntVector(env, int_array.obj(), &out->at(i));
+  }
+}
+
+void JavaArrayOfStringByteArrayPairsToStringVectorMap(
+    JNIEnv* env,
+    jobjectArray array,
+    std::unordered_map<std::string, std::vector<uint8_t>>* out) {
+  DCHECK(out);
+  size_t array_len = env->GetArrayLength(array);
+  for (size_t i = 0; i < array_len; i++) {
+    ScopedJavaLocalRef<jobject> pair(env, env->GetObjectArrayElement(array, i));
+    if (pair.obj()) {
+      ScopedJavaLocalRef<jclass> pair_class(env,
+                                            env->GetObjectClass(pair.obj()));
+      jfieldID first_id =
+          env->GetFieldID(pair_class.obj(), "first", kObjectSignature);
+      jfieldID second_id =
+          env->GetFieldID(pair_class.obj(), "second", kObjectSignature);
+      jstring first =
+          static_cast<jstring>(env->GetObjectField(pair.obj(), first_id));
+      jbyteArray second =
+          static_cast<jbyteArray>(env->GetObjectField(pair.obj(), second_id));
+      auto key = ConvertJavaStringToUTF8(env, first);
+      std::vector<uint8_t> value;
+      JavaByteArrayToByteVector(env, second, &value);
+      out->insert({key, std::move(value)});
+    }
+  }
+}
+
+void JavaArrayOfIntegerByteArrayPairsToIntVectorMap(
+    JNIEnv* env,
+    jobjectArray array,
+    std::unordered_map<uint16_t, std::vector<uint8_t>>* out) {
+  DCHECK(out);
+  size_t array_len = env->GetArrayLength(array);
+  for (size_t i = 0; i < array_len; i++) {
+    ScopedJavaLocalRef<jobject> pair(env, env->GetObjectArrayElement(array, i));
+    if (pair.obj()) {
+      ScopedJavaLocalRef<jclass> pair_class(env,
+                                            env->GetObjectClass(pair.obj()));
+      jfieldID first_id =
+          env->GetFieldID(pair_class.obj(), "first", kObjectSignature);
+      jfieldID second_id =
+          env->GetFieldID(pair_class.obj(), "second", kObjectSignature);
+      jobject first = env->GetObjectField(pair.obj(), first_id);
+      jbyteArray second =
+          static_cast<jbyteArray>(env->GetObjectField(pair.obj(), second_id));
+      ScopedJavaLocalRef<jclass> value_class(env, env->GetObjectClass(first));
+      jfieldID value_id = env->GetFieldID(value_class.obj(), "value", "I");
+      uint16_t key = env->GetIntField(first, value_id);
+      std::vector<uint8_t> value;
+      JavaByteArrayToByteVector(env, second, &value);
+      out->insert({key, std::move(value)});
+    }
   }
 }
 
