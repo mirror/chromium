@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "06c4500d_6c056917",
+        "filename": "components/download/downloader/in_progress/download_entry.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-12-15T20:57:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "641cc6f5_5c912cd8",
+      "range": {
+        "startLine": 41,
+        "startChar": 6,
+        "endLine": 41,
+        "endChar": 12
+      },
+      "revId": "5583cbcee99fa6fda31e953517224b749c7c2838",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1c786192_5cd2a0a9",
         "filename": "content/browser/download/download_resource_handler.cc",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "c5ee3c7d_1217b092",
+        "filename": "content/browser/download/download_resource_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-12-15T20:57:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1c786192_5cd2a0a9",
+      "range": {
+        "startLine": 104,
+        "startChar": 32,
+        "endLine": 104,
+        "endChar": 46
+      },
+      "revId": "5583cbcee99fa6fda31e953517224b749c7c2838",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "34a33e59_44f9a469",
         "filename": "content/browser/download/download_resource_handler.cc",
         "patchSetId": 3
@@ -68,6 +116,30 @@
       "revId": "5583cbcee99fa6fda31e953517224b749c7c2838",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f30f27f_b1887f86",
+        "filename": "content/browser/download/download_resource_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-12-15T20:57:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "34a33e59_44f9a469",
+      "range": {
+        "startLine": 105,
+        "startChar": 6,
+        "endLine": 106,
+        "endChar": 73
+      },
+      "revId": "5583cbcee99fa6fda31e953517224b749c7c2838",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
