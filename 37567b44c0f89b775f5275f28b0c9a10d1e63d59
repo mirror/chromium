@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0bb0ebea_756908a4",
+        "filename": "chrome/browser/notifications/platform_notification_service_interactive_uitest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-12-15T16:31:35Z",
+      "side": 1,
+      "message": "I just copied this comment from the persistent notification test but I don\u0027t actually know why we don\u0027t test this - peter? (Is this comment saying \u0027we don\u0027t currently test this but we probably should\u0027, or \u0027there are no guarantees about notification direction/language so we deliberately aren\u0027t testing that here\u0027?)",
+      "revId": "37567b44c0f89b775f5275f28b0c9a10d1e63d59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01d68049_00c89d96",
+        "filename": "chrome/browser/notifications/platform_notification_service_interactive_uitest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 981,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-12-15T16:31:35Z",
+      "side": 1,
+      "message": "I guess this stuff could do with a comment. Not sure what it should say though ? (\"This closure ensures the display service [?] stays alive until the notification is added\u0027?)",
+      "range": {
+        "startLine": 981,
+        "startChar": 0,
+        "endLine": 981,
+        "endChar": 28
+      },
+      "revId": "37567b44c0f89b775f5275f28b0c9a10d1e63d59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
