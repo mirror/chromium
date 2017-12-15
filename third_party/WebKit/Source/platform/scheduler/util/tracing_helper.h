@@ -137,6 +137,17 @@ class TraceableCounter {
     Trace();
   }
 
+  TraceableCounter(T initial_value,
+                   const char* name,
+                   const void* object)
+      : name_(name),
+        object_(object),
+        converter_([](const T& value) { return static_cast<double>(value); }),
+        value_(initial_value) {
+    internal::ValidateTracingCategory(category);
+    Trace();
+  }
+
   TraceableCounter& operator =(const T& value) {
     value_ = value;
     Trace();
@@ -198,6 +209,26 @@ template <typename T, const char* category>
 constexpr bool operator >(
     const TraceableCounter<T, category>& lhs, const T& rhs) {
   return lhs.value() > rhs;
+}
+
+template <typename T, const char* category>
+constexpr bool operator <(
+    const TraceableCounter<T, category>& lhs, const T& rhs) {
+  return lhs.value() < rhs;
+}
+
+template <typename T, const char* category>
+constexpr T operator ++(TraceableCounter<T, category>& counter, int) {
+  T value = counter.value();
+  counter = value + 1;
+  return value;
+}
+
+template <typename T, const char* category>
+constexpr T operator --(TraceableCounter<T, category>& counter, int) {
+  T value = counter.value();
+  counter = value - 1;
+  return value;
 }
 
 }  // namespace scheduler
