@@ -16,6 +16,24 @@
       "revId": "25445bf365bc1cefb2b0811a979b798d3d31a096",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8578259a_db5cf64d",
+        "filename": "cc/trees/proxy_main.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 574,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2017-12-15T23:32:48Z",
+      "side": 1,
+      "message": "Good question. This CL only addresses the non surface sync case. With surface sync the setneedsnewsurface probably blocks any further draw until a new surface id arrives from the main thread.",
+      "parentUuid": "a7af7f71_5ad195d9",
+      "revId": "25445bf365bc1cefb2b0811a979b798d3d31a096",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
