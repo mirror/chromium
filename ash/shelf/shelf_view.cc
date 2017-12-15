@@ -1803,7 +1803,8 @@ void ShelfView::ShowMenu(std::unique_ptr<ui::MenuModel> menu_model,
   // Only selected shelf items with context menu opened can be dragged.
   const ShelfItem* item = ShelfItemForView(source);
   if (context_menu && item && item->type != TYPE_APP_LIST &&
-      source_type == ui::MenuSourceType::MENU_SOURCE_TOUCH) {
+      source_type == ui::MenuSourceType::MENU_SOURCE_TOUCH &&
+      ShelfButtonIsInDrag(item->type, source)) {
     run_types |= views::MenuRunner::SEND_GESTURE_EVENTS_TO_OWNER;
   }
 
@@ -1935,6 +1936,23 @@ bool ShelfView::CanPrepareForDrag(Pointer pointer,
   }
 
   return true;
+}
+
+bool ShelfView::ShelfButtonIsInDrag(const ShelfItemType item_type,
+                                    const views::View* item_view) const {
+  switch (item_type) {
+    case TYPE_PINNED_APP:
+    case TYPE_BROWSER_SHORTCUT:
+    case TYPE_APP:
+      return static_cast<const ShelfButton*>(item_view)->state() &
+             ShelfButton::STATE_DRAGGING;
+    case TYPE_DIALOG:
+    case TYPE_APP_PANEL:
+    case TYPE_BACK_BUTTON:
+    case TYPE_APP_LIST:
+    case TYPE_UNDEFINED:
+      return false;
+  }
 }
 
 }  // namespace ash
