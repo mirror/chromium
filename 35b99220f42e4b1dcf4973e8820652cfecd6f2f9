@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "62370aed_99b73588",
+        "filename": "content/public/common/network_common_param.typemap",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-12-15T02:13:51Z",
+      "side": 1,
+      "message": "ditto, can we combine this with other typemap for ssl traits in content/network?",
+      "revId": "35b99220f42e4b1dcf4973e8820652cfecd6f2f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6262310c_4758bbab",
+        "filename": "services/network/public/cpp/common_param_ipc_traits.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-12-15T02:13:51Z",
+      "side": 1,
+      "message": "let\u0027s combine this file and ssl_info_ipc_traits.h, and call it network_param_ipc_traits",
+      "revId": "35b99220f42e4b1dcf4973e8820652cfecd6f2f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
