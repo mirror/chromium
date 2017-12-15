@@ -32,5 +32,5 @@ interface LockManager {
     NO_WAIT
   };
 
-  RequestLock(url.mojom.Origin origin, array<string> scope, LockMode mode, WaitMode wait, LockRequest request);
+  RequestLock(url.mojom.Origin origin, string name, LockMode mode, WaitMode wait, LockRequest request);
 };

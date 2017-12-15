@@ -28,7 +28,7 @@ promise_test(async t => {
   const res = 'shared resource 1';
 
   const data = await postAndWait(
-    worker, {op: 'request', lock_id: 1, scope: res, mode: 'shared'})
+    worker, {op: 'request', lock_id: 1, name: res, mode: 'shared'})
 
   assert_equals(data.ack, 'request');
   assert_equals(data.id, 1);
@@ -47,7 +47,7 @@ promise_test(async t => {
   const res = 'exclusive resource 1';
 
   const data = await postAndWait(
-    worker, {op: 'request', lock_id: 1, scope: res})
+    worker, {op: 'request', lock_id: 1, name: res})
 
   // worker has the lock.
   assert_equals(data.ack, 'request');
@@ -86,7 +86,7 @@ promise_test(async t => {
   const res = 'exclusive resource 2';
 
   const data = await postAndWait(
-    worker1, {op: 'request', lock_id: 1, scope: res})
+    worker1, {op: 'request', lock_id: 1, name: res})
 
   // worker1 has the lock.
   assert_equals(data.ack, 'request');
@@ -95,12 +95,12 @@ promise_test(async t => {
   // This request should be blocked.
   let lock_granted = false;
   const blocked = postAndWait(
-    worker2, {op: 'request', lock_id: 1, scope: res});
+    worker2, {op: 'request', lock_id: 1, name: res});
   blocked.then(f => { lock_granted = true; });
 
   // Verify worker2 can't get it.
   assert_true((await postAndWait(worker2, {
-    op: 'request', scope: res, lock_id: 2, ifAvailable: true
+    op: 'request', name: res, lock_id: 2, ifAvailable: true
   })).failed, 'Lock request should have failed');
   assert_false(lock_granted);
 
@@ -123,7 +123,7 @@ promise_test(async t => {
   const res = 'exclusive resource 3';
 
   const data = await postAndWait(
-    worker, {op: 'request', lock_id: 1, scope: res})
+    worker, {op: 'request', lock_id: 1, name: res})
 
   // Worker has the lock.
   assert_equals(data.ack, 'request');
