@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4eaf6b85_9f57fe03",
+        "filename": "components/assist_ranker/binary_classifier_predictor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-12-15T23:19:25Z",
+      "side": 1,
+      "message": "one too many closing parens",
+      "range": {
+        "startLine": 86,
+        "startChar": 53,
+        "endLine": 86,
+        "endChar": 54
+      },
+      "revId": "ad322e39bc229882aa9b848eb923fe5387fdcb5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
