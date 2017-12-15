@@ -174,6 +174,24 @@
     },
     {
       "key": {
+        "uuid": "54e2af02_07c31d5d",
+        "filename": "components/arc/arc_session_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1228980
+      },
+      "writtenOn": "2017-12-15T03:43:12Z",
+      "side": 1,
+      "message": "I wouldn\u0027t have structured the code as I did if I was taking this strategy. I made the changes and uploaded them. I consider it worse that the previous revision, and all the changes that are different between this patch and the previous are new changes, not differences in the diff, so I don\u0027t see the benefit of churning the codebase when we haven\u0027t come to a conclusion. I\u0027ll await your email which addresses my points. Thanks!",
+      "parentUuid": "20edcac5_ac958beb",
+      "revId": "556da616e58c21a934d6bc1a17e989648276527d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7ff67a02_a7a089d2",
         "filename": "components/arc/arc_session_impl.cc",
         "patchSetId": 3

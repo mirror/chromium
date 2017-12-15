@@ -16,6 +16,24 @@
       "revId": "312ada4ff55364cbe7723e44a0bca985de3a180d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5553b24a_ce0f273f",
+        "filename": "components/arc/arc_session_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1228980
+      },
+      "writtenOn": "2017-12-15T03:43:12Z",
+      "side": 1,
+      "message": "I was worried about compiler warnings for unused variables, but it looks like we don\u0027t have those warnings turned on.",
+      "parentUuid": "919f44de_1eb8bb19",
+      "revId": "312ada4ff55364cbe7723e44a0bca985de3a180d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
