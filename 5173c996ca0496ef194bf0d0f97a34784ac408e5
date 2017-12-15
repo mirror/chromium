@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1713e057_3085de81",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/png/PNGImageDecoder.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1247893
+      },
+      "writtenOn": "2017-12-15T14:08:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a198d736_3d37bbf6",
+      "revId": "5173c996ca0496ef194bf0d0f97a34784ac408e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d35ead9f_0bb1bb80",
         "filename": "third_party/WebKit/Source/platform/image-decoders/png/PNGImageDecoder.cpp",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "5173c996ca0496ef194bf0d0f97a34784ac408e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "127af2c9_73553e26",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/png/PNGImageDecoder.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1247893
+      },
+      "writtenOn": "2017-12-15T14:08:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d35ead9f_0bb1bb80",
+      "revId": "5173c996ca0496ef194bf0d0f97a34784ac408e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "18a02474_f24456b6",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/png/PNGImageDecoder.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1247893
+      },
+      "writtenOn": "2017-12-15T14:08:17Z",
+      "side": 1,
+      "message": "Yes, done.",
+      "parentUuid": "556045bf_9960ea9a",
+      "revId": "5173c996ca0496ef194bf0d0f97a34784ac408e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d7dd51e2_a3f6a612",
         "filename": "third_party/WebKit/Source/platform/image-decoders/png/PNGImageDecoder.cpp",
         "patchSetId": 1
@@ -67,6 +121,24 @@
       "revId": "5173c996ca0496ef194bf0d0f97a34784ac408e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6df2957c_fa02a01f",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/png/PNGImageDecoder.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1247893
+      },
+      "writtenOn": "2017-12-15T14:08:17Z",
+      "side": 1,
+      "message": "The style guide suggests this would be \"unusual\" (http://google.github.io/styleguide/cppguide.html#Pointer_and_Reference_Expressions) and I don\u0027t think it adds to readability here.",
+      "parentUuid": "d7dd51e2_a3f6a612",
+      "revId": "5173c996ca0496ef194bf0d0f97a34784ac408e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "41ccb1e0_b93b7bb0",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/png/PNGImageDecoder.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1247893
+      },
+      "writtenOn": "2017-12-15T14:08:17Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "48188928_6e8d2478",
+      "revId": "5173c996ca0496ef194bf0d0f97a34784ac408e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a934e99e_eb5a0970",
         "filename": "third_party/WebKit/Source/platform/image-decoders/png/PNGImageDecoder.cpp",
         "patchSetId": 1
@@ -101,6 +191,24 @@
       "revId": "5173c996ca0496ef194bf0d0f97a34784ac408e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78714080_7b231494",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/png/PNGImageDecoder.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1247893
+      },
+      "writtenOn": "2017-12-15T14:08:17Z",
+      "side": 1,
+      "message": "Could you suggest some names? The ones I come up with would make the code even less readable.",
+      "parentUuid": "a934e99e_eb5a0970",
+      "revId": "5173c996ca0496ef194bf0d0f97a34784ac408e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "d49d0da2_f96757fc",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/png/PNGImageDecoder.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1247893
+      },
+      "writtenOn": "2017-12-15T14:08:17Z",
+      "side": 1,
+      "message": "See above reply to same comment.",
+      "parentUuid": "85e2ce66_5df74543",
+      "revId": "5173c996ca0496ef194bf0d0f97a34784ac408e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c8d4db35_96bbebc0",
         "filename": "third_party/WebKit/Source/platform/image-decoders/png/PNGImageDecoder.cpp",
         "patchSetId": 1
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "9564ad94_e1866d39",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/png/PNGImageDecoder.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 503,
+      "author": {
+        "id": 1247893
+      },
+      "writtenOn": "2017-12-15T14:08:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c8d4db35_96bbebc0",
+      "revId": "5173c996ca0496ef194bf0d0f97a34784ac408e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2dbf4a0c_072bdea7",
         "filename": "third_party/WebKit/Source/platform/image-decoders/png/PNGImageDecoder.cpp",
         "patchSetId": 1
@@ -152,6 +296,24 @@
       "revId": "5173c996ca0496ef194bf0d0f97a34784ac408e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f501aac_339d15b2",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/png/PNGImageDecoder.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 540,
+      "author": {
+        "id": 1247893
+      },
+      "writtenOn": "2017-12-15T14:08:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2dbf4a0c_072bdea7",
+      "revId": "5173c996ca0496ef194bf0d0f97a34784ac408e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
