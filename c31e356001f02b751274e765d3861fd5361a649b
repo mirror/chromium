@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2221cec0_10329474",
+        "filename": "chrome/browser/chromeos/display/display_preferences_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 1313,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-12-15T23:26:32Z",
+      "side": 1,
+      "message": "move this to void SetUp() like\n\nvoid SetUp() override {\n   setup command line\n   DisplayPreferencesTest::SetUp();\n}",
+      "revId": "c31e356001f02b751274e765d3861fd5361a649b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26f291a7_6aa5170a",
+        "filename": "chrome/browser/chromeos/display/display_preferences_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 1316,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-12-15T23:26:32Z",
+      "side": 1,
+      "message": "nit: disallow_copy_and_assign",
+      "revId": "c31e356001f02b751274e765d3861fd5361a649b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
