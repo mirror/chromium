@@ -29,6 +29,8 @@ class MockGpuMemoryBuffer : public gfx::GpuMemoryBuffer {
 
   MOCK_CONST_METHOD0(GetFormat, gfx::BufferFormat());
 
+  MOCK_CONST_METHOD1(GetInternalformat, uint32_t(bool supports_bgra_ext));
+
   MOCK_CONST_METHOD1(stride, int(size_t plane));
 
   MOCK_METHOD1(SetColorSpace, void(const gfx::ColorSpace& color_space));
