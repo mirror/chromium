@@ -25,6 +25,7 @@
 #include "build/build_config.h"
 #include "chrome/browser/chrome_notification_types.h"
 #include "chrome/browser/extensions/api/messaging/incognito_connectability.h"
+#include "chrome/browser/extensions/browsertest_util.h"
 #include "chrome/browser/extensions/extension_apitest.h"
 #include "chrome/browser/extensions/extension_util.h"
 #include "chrome/browser/extensions/test_extension_dir.h"
@@ -38,8 +39,11 @@
 #include "chrome/test/base/ui_test_utils.h"
 #include "content/public/browser/notification_registrar.h"
 #include "content/public/browser/notification_service.h"
+#include "content/public/browser/render_process_host.h"
+#include "content/public/browser/storage_partition.h"
 #include "content/public/test/browser_test_utils.h"
 #include "content/public/test/test_utils.h"
+#include "extensions/browser/api/messaging/message_property_provider.h"
 #include "extensions/browser/event_router.h"
 #include "extensions/browser/extension_prefs.h"
 #include "extensions/browser/extension_registry.h"
@@ -1071,75 +1075,76 @@ IN_PROC_BROWSER_TEST_P(ExternallyConnectableMessagingTest, FromPopup) {
   EXPECT_FALSE(AreAnyNonWebApisDefinedForFrame(popup_frame));
 }
 
+namespace {
+
+void GotDomainBoundCert(base::WaitableEvent* waitable_event, int status) {
+  ASSERT_EQ(net::OK, status);
+  waitable_event->Signal();
+}
+
+void CreateDomainBoundCertOnIOThread(
+    base::WaitableEvent* waitable_event,
+    std::unique_ptr<crypto::ECPrivateKey>* channel_id_key,
+    net::ChannelIDService::Request* request,
+    const GURL& url,
+    scoped_refptr<net::URLRequestContextGetter> request_context_getter) {
+  DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
+  net::ChannelIDService* channel_id_service =
+      request_context_getter->GetURLRequestContext()->
+          channel_id_service();
+  int status = channel_id_service->GetOrCreateChannelID(
+        url.host(),
+        channel_id_key,
+        base::Bind(&GotDomainBoundCert, waitable_event),
+        request);
+  if (status == net::ERR_IO_PENDING)
+    return;
+  GotDomainBoundCert(waitable_event, status);
+}
+
+std::string CreateTlsChannelId(
+    scoped_refptr<net::URLRequestContextGetter> request_context_getter,
+    const GURL& url) {
+  std::unique_ptr<crypto::ECPrivateKey> channel_id_key;
+  net::ChannelIDService::Request request;
+  base::WaitableEvent waitable_event(
+            base::WaitableEvent::ResetPolicy::AUTOMATIC,
+            base::WaitableEvent::InitialState::NOT_SIGNALED);
+  content::BrowserThread::PostTask(
+      content::BrowserThread::IO, FROM_HERE,
+      base::BindOnce(&CreateDomainBoundCertOnIOThread,
+                     &waitable_event,
+                     &channel_id_key,
+                     &request,
+                     url,
+                     request_context_getter));
+  waitable_event.Wait();
+  // Create the expected value.
+  std::vector<uint8_t> spki_vector;
+  if (!channel_id_key->ExportPublicKey(&spki_vector))
+    return std::string();
+  base::StringPiece spki(reinterpret_cast<char*>(spki_vector.data()),
+                         spki_vector.size());
+  base::DictionaryValue jwk_value;
+  net::JwkSerializer::ConvertSpkiFromDerToJwk(spki, &jwk_value);
+  std::string tls_channel_id_value;
+  base::JSONWriter::Write(jwk_value, &tls_channel_id_value);
+  return tls_channel_id_value;
+}
+
+}  // namespace
+
 // Tests externally_connectable between a web page and an extension with a
 // TLS channel ID created for the origin.
 class ExternallyConnectableMessagingWithTlsChannelIdTest :
   public ExternallyConnectableMessagingTest {
- public:
-  ExternallyConnectableMessagingWithTlsChannelIdTest()
-      : tls_channel_id_created_(
-            base::WaitableEvent::ResetPolicy::AUTOMATIC,
-            base::WaitableEvent::InitialState::NOT_SIGNALED) {}
-
-  std::string CreateTlsChannelId() {
-    scoped_refptr<net::URLRequestContextGetter> request_context_getter(
-        profile()->GetRequestContext());
-    std::unique_ptr<crypto::ECPrivateKey> channel_id_key;
-    net::ChannelIDService::Request request;
-    content::BrowserThread::PostTask(
-        content::BrowserThread::IO, FROM_HERE,
-        base::BindOnce(&ExternallyConnectableMessagingWithTlsChannelIdTest::
-                           CreateDomainBoundCertOnIOThread,
-                       base::Unretained(this),
-                       base::Unretained(&channel_id_key),
-                       base::Unretained(&request), request_context_getter));
-    tls_channel_id_created_.Wait();
-    // Create the expected value.
-    std::vector<uint8_t> spki_vector;
-    if (!channel_id_key->ExportPublicKey(&spki_vector))
-      return std::string();
-    base::StringPiece spki(reinterpret_cast<char*>(spki_vector.data()),
-                           spki_vector.size());
-    base::DictionaryValue jwk_value;
-    net::JwkSerializer::ConvertSpkiFromDerToJwk(spki, &jwk_value);
-    std::string tls_channel_id_value;
-    base::JSONWriter::Write(jwk_value, &tls_channel_id_value);
-    return tls_channel_id_value;
-  }
-
- private:
-  void CreateDomainBoundCertOnIOThread(
-      std::unique_ptr<crypto::ECPrivateKey>* channel_id_key,
-      net::ChannelIDService::Request* request,
-      scoped_refptr<net::URLRequestContextGetter> request_context_getter) {
-    DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
-    net::ChannelIDService* channel_id_service =
-        request_context_getter->GetURLRequestContext()->
-            channel_id_service();
-    int status = channel_id_service->GetOrCreateChannelID(
-        chromium_org_url().host(), channel_id_key,
-        base::Bind(&ExternallyConnectableMessagingWithTlsChannelIdTest::
-                       GotDomainBoundCert,
-                   base::Unretained(this)),
-        request);
-    if (status == net::ERR_IO_PENDING)
-      return;
-    GotDomainBoundCert(status);
-  }
-
-  void GotDomainBoundCert(int status) {
-    ASSERT_TRUE(status == net::OK);
-    tls_channel_id_created_.Signal();
-  }
-
-  base::WaitableEvent tls_channel_id_created_;
 };
 
 // Tests a web connectable extension that receives TLS channel id on a site
 // that can connect to it, with a TLS channel ID having been generated.
 IN_PROC_BROWSER_TEST_P(ExternallyConnectableMessagingWithTlsChannelIdTest,
                        WebConnectableWithNonEmptyTlsChannelId) {
-  std::string expected_tls_channel_id_value = CreateTlsChannelId();
+  std::string expected_tls_channel_id_value = CreateTlsChannelId(profile()->GetRequestContext(), chromium_org_url());
 
   scoped_refptr<const Extension> chromium_connectable =
       LoadChromiumConnectableExtensionWithTlsChannelId();
@@ -1196,7 +1201,7 @@ IN_PROC_BROWSER_TEST_P(ExternallyConnectableMessagingWithTlsChannelIdTest,
 IN_PROC_BROWSER_TEST_P(
     ExternallyConnectableMessagingWithTlsChannelIdTest,
     DISABLED_WebConnectableWithNonEmptyTlsChannelIdAndClosedBackgroundPage) {
-  std::string expected_tls_channel_id_value = CreateTlsChannelId();
+  std::string expected_tls_channel_id_value = CreateTlsChannelId(profile()->GetRequestContext(), chromium_org_url());
 
   scoped_refptr<const Extension> chromium_connectable =
       LoadChromiumConnectableExtensionWithTlsChannelId();
@@ -1360,6 +1365,111 @@ IN_PROC_BROWSER_TEST_P(MessagingApiTest, MessagingOnUnload) {
 // https://crbug.com/766713.
 IN_PROC_BROWSER_TEST_P(MessagingApiTest, LargeMessages) {
   ASSERT_TRUE(RunExtensionTest("messaging/large_messages"));
+}
+
+IN_PROC_BROWSER_TEST_P(MessagingApiTest, PlatformAppTlsChannelId) {
+  TestExtensionDir platform_app_dir;
+  platform_app_dir.WriteManifest(
+      R"({
+           "name": "Messaging App",
+           "manifest_version": 2,
+           "version": "0.1",
+           "description": "Sends messages!",
+           "app": {
+             "background": { "scripts": ["background.js"] }
+           }
+         })");
+  platform_app_dir.WriteFile(
+       FILE_PATH_LITERAL("background.js"),
+       R"(chrome.test.sendMessage('app ready', function(targetId) {
+            chrome.runtime.sendMessage(
+                targetId, 'message from app', {includeTlsChannelId: true});
+          });)");
+
+  ExtensionTestMessageListener app_ready_listener("app ready", true);
+  const Extension* platform_app =
+      LoadExtension(platform_app_dir.UnpackedPath());
+  LOG(WARNING) << "Load platform app";
+  ASSERT_TRUE(platform_app);
+  EXPECT_TRUE(app_ready_listener.WaitUntilSatisfied());
+
+  ExtensionHost* app_background_host =
+      ProcessManager::Get(profile())->GetBackgroundHostForExtension(platform_app->id());
+  ASSERT_TRUE(app_background_host);
+  content::RenderProcessHost* app_process =
+      app_background_host->render_process_host();
+  content::StoragePartition* default_storage_partition =
+      content::BrowserContext::GetDefaultStoragePartition(profile());
+  content::StoragePartition* app_storage_partition = app_process->GetStoragePartition();
+  EXPECT_NE(default_storage_partition, app_storage_partition);
+  std::string tls_channel_id =
+      CreateTlsChannelId(app_process->GetStoragePartition()->GetURLRequestContext(), platform_app->GetResourceURL("background.js"));
+  ASSERT_FALSE(tls_channel_id.empty());
+
+  LOG(WARNING) << "Loaded";
+  TestExtensionDir extension_dir;
+  extension_dir.WriteManifest(
+      base::StringPrintf(
+          R"({
+               "name": "Connectable Extension",
+               "manifest_version": 2,
+               "version": "0.1",
+               "description": "connections ahead!",
+               "externally_connectable": {
+                 "ids": ["%s"],
+                 "accepts_tls_channel_id": true
+               },
+               "background": {"scripts": ["background.js"]}
+             })",
+           platform_app->id().c_str()));
+
+  extension_dir.WriteFile(
+      FILE_PATH_LITERAL("background.js"),
+      R"(chrome.runtime.onMessageExternal.addListener(function(message, sender) {
+           console.log('Message Sender: ' + JSON.stringify(sender));
+           window.receivedChannelId = sender.tlsChannelId;
+           chrome.test.sendMessage('received message');
+         });
+         chrome.test.sendMessage('extension ready');)");
+
+  ExtensionTestMessageListener extension_ready_listener(
+      "extension ready", false);
+  const Extension* extension = LoadExtension(extension_dir.UnpackedPath());
+  ASSERT_TRUE(extension);
+  EXPECT_TRUE(extension_ready_listener.WaitUntilSatisfied());
+  LOG(WARNING) << "Extension loaded";
+  ExtensionTestMessageListener received_message_listener(
+      "received message", false);
+  app_ready_listener.Reply(extension->id());
+  EXPECT_TRUE(received_message_listener.WaitUntilSatisfied());
+  LOG(WARNING) << "Received message";
+  std::string received_id =
+      browsertest_util::ExecuteScriptInBackgroundPage(
+          profile(), extension->id(),
+          "domAutomationController.send("
+          "    window.receivedChannelId || 'undefined');");
+  EXPECT_NE("undefined", received_id);
+  LOG(WARNING) << "ID: " << received_id;
+
+  std::string browser_context_channel_id;
+  auto set_browser_context_channel_id = [](std::string* id_out,
+                                           const base::Closure& quit_closure,
+                                           const std::string& id) {
+    *id_out = id;
+    quit_closure.Run();
+  };
+  base::RunLoop run_loop;
+  MessagePropertyProvider().GetChannelID(
+      content::BrowserContext::GetDefaultStoragePartition(
+          profile()),
+      platform_app->GetResourceURL("background.js"),
+      base::BindRepeating(set_browser_context_channel_id,
+                          &browser_context_channel_id,
+                          run_loop.QuitClosure()));
+  run_loop.Run();
+  LOG(WARNING) << "Done";
+  EXPECT_TRUE(browser_context_channel_id.empty());
+  EXPECT_NE(received_id, browser_context_channel_id);
 }
 
 INSTANTIATE_TEST_CASE_P(NativeBindings,

@@ -11,7 +11,6 @@
 #include "base/strings/string_piece.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/values.h"
-#include "content/public/browser/browser_context.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/storage_partition.h"
 #include "crypto/ec_private_key.h"
@@ -29,19 +28,20 @@ namespace extensions {
 MessagePropertyProvider::MessagePropertyProvider() {}
 
 void MessagePropertyProvider::GetChannelID(
-    content::BrowserContext* browser_context,
+    content::StoragePartition* storage_partition,
     const GURL& source_url,
     const ChannelIDCallback& reply) {
+  LOG(WARNING) << "Getting channel id: " << source_url;
   if (!source_url.is_valid()) {
+    LOG(WARNING) << "Bail";
     // This isn't a real URL, so there's no sense in looking for a channel ID
     // for it. Dispatch with an empty tls channel ID.
     reply.Run(std::string());
     return;
   }
 
-  scoped_refptr<net::URLRequestContextGetter> request_context_getter(
-      content::BrowserContext::GetDefaultStoragePartition(browser_context)
-          ->GetURLRequestContext());
+  scoped_refptr<net::URLRequestContextGetter> request_context_getter =
+      storage_partition->GetURLRequestContext();
   content::BrowserThread::PostTask(
       content::BrowserThread::IO, FROM_HERE,
       base::BindOnce(&MessagePropertyProvider::GetChannelIDOnIOThread,
@@ -63,6 +63,7 @@ void MessagePropertyProvider::GetChannelIDOnIOThread(
     scoped_refptr<net::URLRequestContextGetter> request_context_getter,
     const std::string& host,
     const ChannelIDCallback& reply) {
+  LOG(WARNING) << "Getting on IO: " << host;
   DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
   net::ChannelIDService* channel_id_service =
       request_context_getter->GetURLRequestContext()->channel_id_service();
@@ -72,8 +73,10 @@ void MessagePropertyProvider::GetChannelIDOnIOThread(
                  base::Owned(output), reply);
   int status = channel_id_service->GetChannelID(
       host, &output->channel_id_key, net_completion_callback, &output->request);
+  LOG(WARNING) << "requested";
   if (status == net::ERR_IO_PENDING)
     return;
+  LOG(WARNING) << "Got it.";
   GotChannelID(original_task_runner, output, reply, status);
 }
 
@@ -83,13 +86,16 @@ void MessagePropertyProvider::GotChannelID(
     struct GetChannelIDOutput* output,
     const ChannelIDCallback& reply,
     int status) {
+  LOG(WARNING) << "Got channel id";
   base::Closure no_tls_channel_id_closure = base::Bind(reply, "");
   if (status != net::OK) {
+    LOG(WARNING) << "Not okay: " << status;
     original_task_runner->PostTask(FROM_HERE, no_tls_channel_id_closure);
     return;
   }
   std::vector<uint8_t> spki_vector;
   if (!output->channel_id_key->ExportPublicKey(&spki_vector)) {
+    LOG(WARNING) << "No public key";
     original_task_runner->PostTask(FROM_HERE, no_tls_channel_id_closure);
     return;
   }
@@ -97,11 +103,13 @@ void MessagePropertyProvider::GotChannelID(
                          spki_vector.size());
   base::DictionaryValue jwk_value;
   if (!net::JwkSerializer::ConvertSpkiFromDerToJwk(spki, &jwk_value)) {
+    LOG(WARNING) << "Can't convert";
     original_task_runner->PostTask(FROM_HERE, no_tls_channel_id_closure);
     return;
   }
   std::string jwk_str;
   base::JSONWriter::Write(jwk_value, &jwk_str);
+  LOG(WARNING) << "Wrote and replying: " << jwk_str;
   original_task_runner->PostTask(FROM_HERE, base::BindOnce(reply, jwk_str));
 }
 
