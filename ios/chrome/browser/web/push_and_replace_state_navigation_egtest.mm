@@ -228,6 +228,7 @@ const char* kReplaceStateRootPathSpaceURL = "http://ios/rep lace";
 
 // Tests calling pushState with unicode characters.
 - (void)testHtml5HistoryPushUnicodeCharacters {
+  // Just some comment change.
   const GURL pushStateUnicodeURLEncoded = web::test::HttpServer::MakeUrl(
       "http://ios/testing/data/http_server_files/"
       "history.html#unicode%E1%84%91");
