@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "35416ef4_df28635d",
+        "filename": "media/audio/audio_debug_file_writer_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-12-15T08:09:27Z",
+      "side": 0,
+      "message": "Looks like this test isn\u0027t working as intended after the CL you linked. The debug writer operations are supposed to be blocked until after the debug writer is destructed. Could you fix the test?",
+      "revId": "f7f5e61f680b1741b1a0804983bb78416e76253c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
