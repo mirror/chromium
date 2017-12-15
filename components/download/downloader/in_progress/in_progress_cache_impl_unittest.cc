@@ -67,7 +67,7 @@ TEST_F(InProgressCacheImplTest, AddAndRetrieveAndReplaceAndRemove) {
 
   // Add entry.
   std::string guid1("guid");
-  DownloadEntry entry1(guid1, "request origin", DownloadSource::UNKNOWN);
+  DownloadEntry entry1(guid1, "request origin", DownloadSource::UNKNOWN, 999);
   cache_->AddOrReplaceEntry(entry1);
 
   base::Optional<DownloadEntry> retrieved_entry1 = cache_->RetrieveEntry(guid1);
@@ -86,7 +86,8 @@ TEST_F(InProgressCacheImplTest, AddAndRetrieveAndReplaceAndRemove) {
 
   // Add another entry.
   std::string guid2("guid2");
-  DownloadEntry entry2(guid2, "other request origin", DownloadSource::UNKNOWN);
+  DownloadEntry entry2(guid2, "other request origin", DownloadSource::UNKNOWN,
+                       888);
   cache_->AddOrReplaceEntry(entry2);
 
   base::Optional<DownloadEntry> retrieved_entry2 = cache_->RetrieveEntry(guid2);
@@ -102,6 +103,41 @@ TEST_F(InProgressCacheImplTest, AddAndRetrieveAndReplaceAndRemove) {
   cache_->RemoveEntry(guid2);
   base::Optional<DownloadEntry> removed_entry2 = cache_->RetrieveEntry(guid2);
   EXPECT_FALSE(removed_entry2.has_value());
+}
+
+TEST_F(InProgressCacheImplTest, DoNotReplaceUkmIds) {
+  // Initialize cache.
+  InitializeCache();
+  while (!cache_initialized_) {
+    base::RunLoop().RunUntilIdle();
+  }
+  EXPECT_TRUE(cache_initialized_);
+
+  // Add entry.
+  std::string guid1("guid");
+  int ukm_download_id = 123;
+  int ukm_source_id = 456;
+  DownloadEntry entry1(guid1, ukm_download_id, ukm_source_id);
+  cache_->AddOrReplaceEntry(entry1);
+
+  base::Optional<DownloadEntry> retrieved_entry1 = cache_->RetrieveEntry(guid1);
+  EXPECT_TRUE(retrieved_entry1.has_value());
+  EXPECT_EQ(entry1, retrieved_entry1.value());
+
+  // Change the ukm_download_id and ukm_source_id.
+  int new_download_id = 135;
+  int new_source_id = 246;
+  entry1.ukm_download_id = new_download_id;
+  entry1.ukm_source_id = new_source_id;
+
+  cache_->AddOrReplaceEntry(entry1);
+
+  // Make sure that the entry keeps the original ids.
+  base::Optional<DownloadEntry> replaced_entry1 = cache_->RetrieveEntry(guid1);
+  EXPECT_TRUE(replaced_entry1.has_value());
+  EXPECT_TRUE(entry1 != replaced_entry1.value());
+  EXPECT_EQ(ukm_download_id, replaced_entry1.value().ukm_download_id);
+  EXPECT_EQ(ukm_source_id, replaced_entry1.value().ukm_source_id);
 }
 
 }  // namespace download

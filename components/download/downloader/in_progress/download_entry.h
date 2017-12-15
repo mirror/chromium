@@ -8,6 +8,7 @@
 #include <string>
 
 #include "components/download/downloader/in_progress/download_source.h"
+#include "services/metrics/public/cpp/ukm_source_id.h"
 
 namespace download {
 
@@ -17,11 +18,17 @@ struct DownloadEntry {
   DownloadEntry();
   DownloadEntry(const DownloadEntry& other);
   DownloadEntry(const std::string& guid,
+                int ukm_id,
+                ukm::SourceId ukm_source_id);
+  DownloadEntry(const std::string& guid,
                 const std::string& request_origin,
-                DownloadSource download_source);
+                DownloadSource download_source,
+                int ukm_id);
   ~DownloadEntry();
 
   bool operator==(const DownloadEntry& other) const;
+
+  bool operator!=(const DownloadEntry& other) const;
 
   // A unique GUID that represents this download.
   std::string guid;
@@ -31,6 +38,12 @@ struct DownloadEntry {
 
   // The source that triggered the download.
   DownloadSource download_source = DownloadSource::UNKNOWN;
+
+  // Unique ID that tracks the download UKM entry.
+  int ukm_download_id = -1;
+
+  // Source ID generated for UKM.
+  ukm::SourceId ukm_source_id = ukm::kInvalidSourceId;
 };
 
 }  // namespace download

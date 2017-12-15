@@ -16,6 +16,7 @@
 #include "base/memory/weak_ptr.h"
 #include "base/message_loop/message_loop.h"
 #include "base/metrics/histogram_macros.h"
+#include "base/rand_util.h"
 #include "base/stl_util.h"
 #include "base/strings/stringprintf.h"
 #include "base/strings/sys_string_conversions.h"
@@ -60,6 +61,7 @@
 #include "net/base/request_priority.h"
 #include "net/base/upload_bytes_element_reader.h"
 #include "net/url_request/url_request_context.h"
+#include "services/metrics/public/cpp/ukm_source_id.h"
 #include "storage/browser/blob/blob_url_request_job_factory.h"
 #include "url/origin.h"
 
@@ -547,6 +549,13 @@ void DownloadManagerImpl::StartDownloadWithId(
 #endif
 
   if (delegate_) {
+    download::InProgressCache* in_progress_cache =
+        delegate_->GetInProgressCache();
+    if (in_progress_cache) {
+      in_progress_cache->AddOrReplaceEntry(download::DownloadEntry(
+          download->GetGuid(), base::RandUint64(), info->ukm_source_id));
+    }
+
     if (!in_progress_download_observer_) {
       in_progress_download_observer_.reset(
           new InProgressDownloadObserver(delegate_->GetInProgressCache()));
@@ -1031,9 +1040,9 @@ void DownloadManagerImpl::BeginDownloadInternal(
   download::InProgressCache* in_progress_cache =
       GetBrowserContext()->GetDownloadManagerDelegate()->GetInProgressCache();
   if (in_progress_cache) {
-    in_progress_cache->AddOrReplaceEntry(
-        download::DownloadEntry(params->guid(), params->request_origin(),
-                                ToDownloadSource(params->download_source())));
+    in_progress_cache->AddOrReplaceEntry(download::DownloadEntry(
+        params->guid(), params->request_origin(),
+        ToDownloadSource(params->download_source()), base::RandUint64()));
   }
 
   if (base::FeatureList::IsEnabled(features::kNetworkService)) {
