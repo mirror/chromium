@@ -15,6 +15,7 @@
 #include "base/files/scoped_temp_dir.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
+#include "base/memory/weak_ptr.h"
 #include "base/process/process.h"
 #include "base/run_loop.h"
 #include "base/strings/string16.h"
@@ -75,6 +76,7 @@ class NavigationHandle;
 class RenderViewHost;
 class RenderWidgetHost;
 class RenderWidgetHostView;
+class UtilityProcessHost;
 class WebContents;
 
 // Navigate a frame with ID |iframe_id| to |url|, blocking until the navigation
@@ -1073,6 +1075,9 @@ void SimulateNetworkServiceCrash();
 
 // Load the given |url| with |network_context| and return the |net::Error| code.
 int LoadBasicRequest(mojom::NetworkContext* network_context, const GURL& url);
+
+std::map<std::string, base::WeakPtr<UtilityProcessHost>>*
+GetServiceManagerProcessGroups();
 
 }  // namespace content
 
