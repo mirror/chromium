@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1905e524_d5aef5d3",
+        "filename": "content/browser/renderer_host/media/media_stream_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1372,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-12-15T12:29:28Z",
+      "side": 1,
+      "message": "I think we didn\u0027t realize that it\u0027s possible for AudioInputDeviceManager::Open via GetInputDeviceInfo to return empty(nullop) AudioParameters. In that case, |input| can be nullop and this DCHECK will fail which is what has caused the current browser test failure. So, this DCHECK also should be removed.\n\nShould we add a check here for opened_device-\u003einput or assign some dummy audio params to device.input?",
+      "revId": "f4e9aec4771c28a11827f25a47f142873176b1e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

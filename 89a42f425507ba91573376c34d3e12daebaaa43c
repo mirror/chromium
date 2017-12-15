@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "040d87dc_950815d5",
+        "filename": "content/browser/renderer_host/media/media_stream_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1216,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-12-15T12:29:28Z",
+      "side": 1,
+      "message": "Sorry, I think I misunderstood. It\u0027s possible for AudioInputDeviceManager::Open via GetInputDeviceInfo to return empty(nullop) AudioParameters. In that case, |input| can be nullop. So, DCHECK at l.1373 should also be removed.",
+      "parentUuid": "a1d36b58_5058f6e7",
+      "revId": "89a42f425507ba91573376c34d3e12daebaaa43c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "65c0bf95_31e9f41e",
         "filename": "content/browser/renderer_host/media/media_stream_manager.cc",
         "patchSetId": 6
