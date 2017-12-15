@@ -45,6 +45,9 @@ interface HTMLElement : Element {
     [ImplementedAs=isContentEditableForBinding] readonly attribute boolean isContentEditable;
     [RuntimeEnabled=InputModeAttribute, CEReactions, Reflect] attribute DOMString inputMode;
 
+    // HTML autocapitalize proposal
+    [Measure] attribute DOMString autocapitalize;
+
     // CSSOM View Module
     // https://drafts.csswg.org/cssom-view/#extensions-to-the-htmlelement-interface
     [PerWorldBindings, ImplementedAs=unclosedOffsetParent] readonly attribute Element? offsetParent;
