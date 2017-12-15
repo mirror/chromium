@@ -7,6 +7,7 @@ package org.chromium.chrome.browser.infobar;
 import android.text.method.LinkMovementMethod;
 import android.view.Gravity;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.TextView;
 
 import org.chromium.base.ApiCompatibilityUtils;
@@ -15,6 +16,7 @@ import org.chromium.chrome.R;
 import org.chromium.chrome.browser.survey.SurveyController;
 import org.chromium.chrome.browser.tab.EmptyTabObserver;
 import org.chromium.chrome.browser.tab.Tab;
+import org.chromium.chrome.browser.util.AccessibilityUtil;
 import org.chromium.content_public.browser.WebContents;
 import org.chromium.ui.text.NoUnderlineClickableSpan;
 import org.chromium.ui.text.SpanApplier;
@@ -114,6 +116,7 @@ public class SurveyInfoBar extends InfoBar {
         prompt.setMovementMethod(LinkMovementMethod.getInstance());
         prompt.setGravity(Gravity.CENTER_VERTICAL);
         ApiCompatibilityUtils.setTextAppearance(prompt, R.style.BlackTitle1);
+        if (AccessibilityUtil.isAccessibilityEnabled()) addOnClickListener(prompt, tab);
         layout.addContent(prompt, 1f);
     }
 
@@ -137,6 +140,29 @@ public class SurveyInfoBar extends InfoBar {
             int displayLogoResId, SurveyInfoBarDelegate surveyInfoBarDelegate) {
         return new SurveyInfoBar(
                 siteId, showAsBottomSheet, displayLogoResId, surveyInfoBarDelegate);
+    }
+
+    /**
+     * Allows the survey infobar to be triggered when talkback is enabled.
+     * @param view The view to attach the listener.
+     * @param tab The tab to attach the infobar.
+     */
+    private void addOnClickListener(TextView view, Tab tab) {
+        view.setOnClickListener(new OnClickListener() {
+            /** Prevent double clicking on the text span. */
+            private boolean mClicked;
+
+            @Override
+            public void onClick(View v) {
+                if (mClicked) return;
+                mDelegate.onSurveyTriggered();
+
+                SurveyController.getInstance().showSurveyIfAvailable(
+                        tab.getActivity(), mSiteId, mShowAsBottomSheet, mDisplayLogoResId);
+                closeInfoBar();
+                mClicked = true;
+            }
+        });
     }
 
     private static native void nativeCreate(WebContents webContents, String siteId,
