@@ -91,6 +91,15 @@ cr.define('extensions', function() {
     },
 
     /**
+     * @return {string}
+     * @private
+     */
+    getContextUrl_: function(error, unknown) {
+      return error.contextUrl ? getRelativeUrl(error.contextUrl, error) :
+                                unknown;
+    },
+
+    /**
      * Watches for changes to |data| in order to fetch the corresponding
      * file source.
      * @private
