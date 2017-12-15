@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "33edfc51_1be2deae",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/test_voice_interaction_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-12-15T15:41:53Z",
+      "side": 1,
+      "message": "nit: s/Test/Fake/ for consistency with ARC test implementation?",
+      "revId": "e5462d626ad1f884b293175333d422fd6df7b1be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f12e908f_e854afad",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/voice_interaction_controller_client.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-12-15T15:41:53Z",
+      "side": 1,
+      "message": "Unneeded.",
+      "revId": "e5462d626ad1f884b293175333d422fd6df7b1be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b83ffa35_1a2a6c5b",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/voice_interaction_controller_client.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-12-15T15:41:53Z",
+      "side": 1,
+      "message": "How about using base::Singleton?",
+      "revId": "e5462d626ad1f884b293175333d422fd6df7b1be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8c9bd34_a1a9470f",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/voice_interaction_controller_client.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-12-15T15:41:53Z",
+      "side": 1,
+      "message": "nit: let\u0027s use the consistent format.\n\n// ArcSessionManager::Observer overrides:",
+      "revId": "e5462d626ad1f884b293175333d422fd6df7b1be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8281924c_985d3b08",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/voice_interaction_controller_client.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-12-15T15:41:53Z",
+      "side": 1,
+      "message": "Ditto.\n\n// content::NotificationObserver overrides:",
+      "revId": "e5462d626ad1f884b293175333d422fd6df7b1be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
