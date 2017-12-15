@@ -22,6 +22,30 @@
       "revId": "89b38c94ab98e6e06b58877ae4d77c02251ff90e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d0dec4b_d5ad4fcb",
+        "filename": "build/linux/sysroot_scripts/sysroots.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1208920
+      },
+      "writtenOn": "2017-12-15T21:33:24Z",
+      "side": 1,
+      "message": "Done.\n\nI noticed a lot of new packages in the packagelist files which I\u0027m a bit confused about, but if the current sysroots work, you\u0027re right that there is no point in updating them.",
+      "parentUuid": "ab8bc5a5_6e2384c6",
+      "range": {
+        "startLine": 1,
+        "startChar": 1,
+        "endLine": 1,
+        "endChar": 0
+      },
+      "revId": "89b38c94ab98e6e06b58877ae4d77c02251ff90e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
