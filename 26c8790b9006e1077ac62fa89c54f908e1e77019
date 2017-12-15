@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c48e1417_f5690e80",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/TabModalLifetimeHandler.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-15T00:44:32Z",
+      "side": 1,
+      "message": "nit: JavaDoc here and below",
+      "revId": "26c8790b9006e1077ac62fa89c54f908e1e77019",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02de3ff9_db5a2535",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/Tab.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 804,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-15T00:44:32Z",
+      "side": 1,
+      "message": "nit: JavaDoc on this public method",
+      "range": {
+        "startLine": 804,
+        "startChar": 19,
+        "endLine": 804,
+        "endChar": 42
+      },
+      "revId": "26c8790b9006e1077ac62fa89c54f908e1e77019",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9f37ea5_edc00c8f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/Tab.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 3347,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-15T00:44:32Z",
+      "side": 1,
+      "message": "nit: JavaDoc for this new param",
+      "range": {
+        "startLine": 3347,
+        "startChar": 53,
+        "endLine": 3347,
+        "endChar": 62
+      },
+      "revId": "26c8790b9006e1077ac62fa89c54f908e1e77019",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
