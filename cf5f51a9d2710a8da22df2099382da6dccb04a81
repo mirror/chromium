@@ -81,6 +81,30 @@
       "revId": "cf5f51a9d2710a8da22df2099382da6dccb04a81",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91009b0f_00f472cb",
+        "filename": "content/renderer/render_frame_impl.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 1597,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-15T20:35:52Z",
+      "side": 1,
+      "message": "InputTargetClientImpl should be the class that forward declares RenderFrameImpl, which will fix this dependency cycle.",
+      "parentUuid": "df0465eb_52031d1e",
+      "range": {
+        "startLine": 1597,
+        "startChar": 23,
+        "endLine": 1597,
+        "endChar": 24
+      },
+      "revId": "cf5f51a9d2710a8da22df2099382da6dccb04a81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
