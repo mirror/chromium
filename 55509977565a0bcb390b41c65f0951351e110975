@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4d222cce_1ea39d60",
+        "filename": "content/renderer/history_serialization.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-15T01:13:08Z",
+      "side": 1,
+      "message": "Done. I don\u0027t remember the precedence rules so tend to just put parens everywhere... but I see that can be bad for readability.",
+      "parentUuid": "bdfe6cc2_fa302930",
+      "range": {
+        "startLine": 114,
+        "startChar": 38,
+        "endLine": 114,
+        "endChar": 39
+      },
+      "revId": "55509977565a0bcb390b41c65f0951351e110975",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ac12ef82_c8504707",
         "filename": "third_party/WebKit/Source/modules/fetch/FormDataBytesConsumer.cpp",
         "patchSetId": 24
@@ -36,6 +60,30 @@
       "writtenOn": "2017-12-14T12:58:25Z",
       "side": 1,
       "message": "Nit: usually, when ownership isn\u0027t transferred, it\u0027s preferred to pass by const scoped_refptr\u003cT\u003e\u0026 or even T*.\n\n(It\u0027s also not 100% clear why this comment only applies to the data pipe consumer and not any of the other ones?)",
+      "range": {
+        "startLine": 130,
+        "startChar": 31,
+        "endLine": 130,
+        "endChar": 71
+      },
+      "revId": "55509977565a0bcb390b41c65f0951351e110975",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d75bfe06_c598fccc",
+        "filename": "third_party/WebKit/Source/modules/fetch/FormDataBytesConsumer.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-15T01:13:08Z",
+      "side": 1,
+      "message": "ah yes I was copying the others. I\u0027ll fix this one and leave the others as the patch is big.\n\nI believe today\u0027s style guide discourages const scoped_refptr\u0026, so if you think it\u0027s still preferred it should be changed.",
+      "parentUuid": "ac12ef82_c8504707",
       "range": {
         "startLine": 130,
         "startChar": 31,
@@ -62,6 +110,24 @@
       "revId": "55509977565a0bcb390b41c65f0951351e110975",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d44114d_c511cedb",
+        "filename": "third_party/WebKit/public/platform/WebHTTPBody.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-15T01:13:08Z",
+      "side": 1,
+      "message": "Acknowledged.",
+      "parentUuid": "abaa719c_78720892",
+      "revId": "55509977565a0bcb390b41c65f0951351e110975",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
