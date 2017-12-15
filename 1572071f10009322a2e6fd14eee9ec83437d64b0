@@ -16,6 +16,24 @@
       "revId": "1572071f10009322a2e6fd14eee9ec83437d64b0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e505d624_cb624eee",
+        "filename": "tools/perf/chromium.perf.fyi.extras.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1149089
+      },
+      "writtenOn": "2017-12-15T10:48:47Z",
+      "side": 1,
+      "message": "Thanks! .native is quite slow ~3-5 mins so moved all these benchmarks to device2.",
+      "parentUuid": "db6db18d_0a2ca0eb",
+      "revId": "1572071f10009322a2e6fd14eee9ec83437d64b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
