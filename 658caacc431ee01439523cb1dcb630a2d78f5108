@@ -1,0 +1,191 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d7ce7c69_db7bc54d",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 1116,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-15T00:26:46Z",
+      "side": 1,
+      "message": "This DCHECK doesn\u0027t do anything for us, we can remove it. It\u0027s checking the address of a variable, which will always be non-0.",
+      "revId": "658caacc431ee01439523cb1dcb630a2d78f5108",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a2d8474_973040df",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 1117,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-15T00:26:46Z",
+      "side": 1,
+      "message": "DCHECK(contents_texture_it-\u003esecond.id()); is a more concise way to write this",
+      "revId": "658caacc431ee01439523cb1dcb630a2d78f5108",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3188e05a_5f291904",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 2918,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-15T00:26:46Z",
+      "side": 1,
+      "message": "this is also a DCHECK of something that can\u0027t be 0",
+      "revId": "658caacc431ee01439523cb1dcb630a2d78f5108",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da16835a_a9e2a760",
+        "filename": "components/viz/service/display/scoped_render_pass_texture.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-15T00:26:46Z",
+      "side": 1,
+      "message": "I don\u0027t think we need to store these creation args as state on the object?",
+      "revId": "658caacc431ee01439523cb1dcb630a2d78f5108",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "717b8c75_15015a15",
+        "filename": "components/viz/service/display/scoped_render_pass_texture.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-15T00:26:46Z",
+      "side": 1,
+      "message": "We could do the delete stuff inline here, this would be the only place that does it?",
+      "revId": "658caacc431ee01439523cb1dcb630a2d78f5108",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "930f3e8b_766a3948",
+        "filename": "components/viz/service/display/scoped_render_pass_texture.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-15T00:26:46Z",
+      "side": 1,
+      "message": "Doesn\u0027t this delete the GL texture when you assign it to another object?",
+      "revId": "658caacc431ee01439523cb1dcb630a2d78f5108",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eddebe46_50dce951",
+        "filename": "components/viz/service/display/scoped_render_pass_texture.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-15T00:26:46Z",
+      "side": 1,
+      "message": "Move this into Allocate, so we just have one method?\n\nIt would actually save a bunch of plumbing, and lines of code, I think if all the texture allocation moved to GLRenderer, and we just gave the texture Id to this class to hold it?",
+      "revId": "658caacc431ee01439523cb1dcb630a2d78f5108",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab9426ce_a2c140db",
+        "filename": "components/viz/service/display/scoped_render_pass_texture.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-15T00:26:46Z",
+      "side": 1,
+      "message": "We don\u0027t need 2 Allocate methods.",
+      "revId": "658caacc431ee01439523cb1dcb630a2d78f5108",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ef57944_98cee037",
+        "filename": "components/viz/service/display/scoped_render_pass_texture.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-15T00:26:46Z",
+      "side": 1,
+      "message": "Can we specify the mipmap stuff when we create the texture, and do all this when we first allocate it, instead of storing state on the class to allow us to do it later when we go to use it?",
+      "revId": "658caacc431ee01439523cb1dcb630a2d78f5108",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcb64b90_5d0125df",
+        "filename": "components/viz/service/display/scoped_render_pass_texture.h",
+        "patchSetId": 31
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-15T00:26:46Z",
+      "side": 1,
+      "message": "don\u0027t need const for non-references",
+      "revId": "658caacc431ee01439523cb1dcb630a2d78f5108",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80fafc51_ec3400bb",
+        "filename": "components/viz/service/display/scoped_render_pass_texture.h",
+        "patchSetId": 31
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-15T00:26:46Z",
+      "side": 1,
+      "message": "do we need mutators on this? can it be a const object?",
+      "revId": "658caacc431ee01439523cb1dcb630a2d78f5108",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

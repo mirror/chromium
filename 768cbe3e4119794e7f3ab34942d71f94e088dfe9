@@ -370,6 +370,24 @@
     },
     {
       "key": {
+        "uuid": "e2794108_fcd51b9f",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 3604,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-15T00:26:46Z",
+      "side": 1,
+      "message": "The size/hint is passed to AllocateRenderPassResourceIfNeeded() also right, so we should be able to get that info there?",
+      "parentUuid": "37a6a230_6846e228",
+      "revId": "768cbe3e4119794e7f3ab34942d71f94e088dfe9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f046ac99_3bc3236f",
         "filename": "components/viz/service/display/gl_renderer.cc",
         "patchSetId": 29
@@ -435,6 +453,24 @@
       "side": 1,
       "message": "I will investigate this. How about add a todo for this?",
       "parentUuid": "bc174b6c_e0cc83ce",
+      "revId": "768cbe3e4119794e7f3ab34942d71f94e088dfe9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5470113_68135ef1",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 3653,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-15T00:26:46Z",
+      "side": 1,
+      "message": "ok sure",
+      "parentUuid": "c1ea6358_a9735b29",
       "revId": "768cbe3e4119794e7f3ab34942d71f94e088dfe9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
