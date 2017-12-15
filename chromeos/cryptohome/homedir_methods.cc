@@ -118,16 +118,6 @@ class HomedirMethodsImpl : public HomedirMethods {
                        weak_ptr_factory_.GetWeakPtr(), callback));
   }
 
-  void MountEx(const Identification& id,
-               const AuthorizationRequest& auth,
-               const MountRequest& request,
-               const MountCallback& callback) override {
-    DBusThreadManager::Get()->GetCryptohomeClient()->MountEx(
-        id, auth, request,
-        base::BindOnce(&HomedirMethodsImpl::OnMountExCallback,
-                       weak_ptr_factory_.GetWeakPtr(), callback));
-  }
-
   void AddKeyEx(const Identification& id,
                 const AuthorizationRequest& auth,
                 const AddKeyRequest& request,
@@ -154,15 +144,6 @@ class HomedirMethodsImpl : public HomedirMethods {
                    const Callback& callback) override {
     DBusThreadManager::Get()->GetCryptohomeClient()->UpdateKeyEx(
         id, auth, request,
-        base::BindOnce(&HomedirMethodsImpl::OnBaseReplyCallback,
-                       weak_ptr_factory_.GetWeakPtr(), callback));
-  }
-
-  void RenameCryptohome(const Identification& id_from,
-                        const Identification& id_to,
-                        const Callback& callback) override {
-    DBusThreadManager::Get()->GetCryptohomeClient()->RenameCryptohome(
-        id_from, id_to,
         base::BindOnce(&HomedirMethodsImpl::OnBaseReplyCallback,
                        weak_ptr_factory_.GetWeakPtr(), callback));
   }
@@ -262,28 +243,6 @@ class HomedirMethodsImpl : public HomedirMethods {
     }
 
     callback.Run(true, MOUNT_ERROR_NONE, key_definitions);
-  }
-
-  void OnMountExCallback(const MountCallback& callback,
-                         base::Optional<BaseReply> reply) {
-    if (!reply.has_value()) {
-      callback.Run(false, MOUNT_ERROR_FATAL, std::string());
-      return;
-    }
-    if (reply->has_error() && reply->error() != CRYPTOHOME_ERROR_NOT_SET) {
-      LOGIN_LOG(ERROR) << "HomedirMethods MountEx error (CryptohomeErrorCode): "
-                       << reply->error();
-      callback.Run(false, MapError(reply->error()), std::string());
-      return;
-    }
-    if (!reply->HasExtension(MountReply::reply)) {
-      callback.Run(false, MOUNT_ERROR_FATAL, std::string());
-      return;
-    }
-
-    std::string mount_hash;
-    mount_hash = reply->GetExtension(MountReply::reply).sanitized_username();
-    callback.Run(true, MOUNT_ERROR_NONE, mount_hash);
   }
 
   void OnGetAccountDiskUsageCallback(

@@ -38,9 +38,6 @@ class CHROMEOS_EXPORT HomedirMethods {
       bool success,
       MountError return_code,
       const std::vector<KeyDefinition>& key_definitions)> GetKeyDataCallback;
-  typedef base::Callback<
-      void(bool success, MountError return_code, const std::string& mount_hash)>
-      MountCallback;
   typedef base::Callback<void(bool success, int64_t size)>
       GetAccountDiskUsageCallback;
 
@@ -61,17 +58,6 @@ class CHROMEOS_EXPORT HomedirMethods {
                           const AuthorizationRequest& auth,
                           const CheckKeyRequest& request,
                           const Callback& callback) = 0;
-
-  // Asks cryptohomed to find the cryptohome for user identified by |id| and
-  // then mount it using |auth| to unlock the key.
-  // If the |create_keys| are not given and no cryptohome exists for |id|,
-  // the expected result is
-  // callback.Run(false, kCryptohomeMountErrorUserDoesNotExist, string()).
-  // Otherwise, the normal range of return codes is expected.
-  virtual void MountEx(const Identification& id,
-                       const AuthorizationRequest& auth,
-                       const MountRequest& request,
-                       const MountCallback& callback) = 0;
 
   // Asks cryptohomed to try to add another key for the user identified by |id|
   // using |auth| to unlock the key.
@@ -97,12 +83,6 @@ class CHROMEOS_EXPORT HomedirMethods {
                            const AuthorizationRequest& auth,
                            const RemoveKeyRequest& request,
                            const Callback& callback) = 0;
-
-  // Asks cryptohomed to change cryptohome identification |id_from| to |id_to|,
-  // which results in cryptohome directory renaming.
-  virtual void RenameCryptohome(const Identification& id_from,
-                                const Identification& id_to,
-                                const Callback& callback) = 0;
 
   // Asks cryptohomed to compute the size of cryptohome for user identified by
   // |id|.

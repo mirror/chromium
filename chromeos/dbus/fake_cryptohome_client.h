@@ -28,6 +28,8 @@ class CHROMEOS_EXPORT FakeCryptohomeClient : public CryptohomeClient {
   FakeCryptohomeClient();
   ~FakeCryptohomeClient() override;
 
+  // CryptohomeClient overrides
+
   void Init(dbus::Bus* bus) override;
   void AddObserver(Observer* observer) override;
   void RemoveObserver(Observer* observer) override;
@@ -44,10 +46,9 @@ class CHROMEOS_EXPORT FakeCryptohomeClient : public CryptohomeClient {
                        AsyncMethodCallback callback) override;
   void AsyncRemove(const cryptohome::Identification& cryptohome_id,
                    AsyncMethodCallback callback) override;
-  void RenameCryptohome(
-      const cryptohome::Identification& cryptohome_id_from,
-      const cryptohome::Identification& cryptohome_id_to,
-      DBusMethodCallback<cryptohome::BaseReply> callback) override;
+  void RenameCryptohome(const cryptohome::Identification& cryptohome_id_from,
+                        const cryptohome::Identification& cryptohome_id_to,
+                        Callback callback) override;
   void GetAccountDiskUsage(
       const cryptohome::Identification& account_id,
       DBusMethodCallback<cryptohome::BaseReply> callback) override;
@@ -176,7 +177,7 @@ class CHROMEOS_EXPORT FakeCryptohomeClient : public CryptohomeClient {
   void MountEx(const cryptohome::Identification& cryptohome_id,
                const cryptohome::AuthorizationRequest& auth,
                const cryptohome::MountRequest& request,
-               DBusMethodCallback<cryptohome::BaseReply> callback) override;
+               MountCallback callback) override;
   void AddKeyEx(const cryptohome::Identification& cryptohome_id,
                 const cryptohome::AuthorizationRequest& auth,
                 const cryptohome::AddKeyRequest& request,
@@ -210,6 +211,8 @@ class CHROMEOS_EXPORT FakeCryptohomeClient : public CryptohomeClient {
   void NeedsDircryptoMigration(const cryptohome::Identification& cryptohome_id,
                                DBusMethodCallback<bool> callback) override;
 
+  // Test helpers
+
   // Changes the behavior of WaitForServiceToBeAvailable(). This method runs
   // pending callbacks if is_available is true.
   void SetServiceIsAvailable(bool is_available);
@@ -234,6 +237,9 @@ class CHROMEOS_EXPORT FakeCryptohomeClient : public CryptohomeClient {
   void set_needs_dircrypto_migration(bool needs_migration) {
     needs_dircrypto_migration_ = needs_migration;
   }
+
+  // Sets the MountError value to return.
+  void set_mount_error(cryptohome::MountError error) { mount_error_ = error; }
 
   void set_tpm_attestation_is_enrolled(bool enrolled) {
     tpm_attestation_is_enrolled_ = enrolled;
@@ -266,6 +272,29 @@ class CHROMEOS_EXPORT FakeCryptohomeClient : public CryptohomeClient {
       cryptohome::DircryptoMigrationStatus status,
       uint64_t current,
       uint64_t total);
+
+  // MountEx getters.
+  bool get_hidden_mount() const { return hidden_mount_; }
+  bool get_public_mount() const { return public_mount_; }
+  bool get_to_migrate_from_ecryptfs() const {
+    return to_migrate_from_ecryptfs_;
+  }
+  const std::string& get_create_request_auth_secret() const {
+    return create_request_auth_secret_;
+  }
+  const std::string& get_create_request_auth_label() const {
+    return create_request_auth_label_;
+  }
+  const std::string& get_mount_auth_secret() const {
+    return mount_auth_secret_;
+  }
+  const cryptohome::Identification& get_mount_id() const { return mount_id_; }
+
+  // MigrateToDircrypto getters.
+  const cryptohome::Identification& get_dircrypto_id() const {
+    return dircrypto_id_;
+  }
+  bool get_minimal_migration() const { return minimal_migration_; }
 
  private:
   void ReturnProtobufMethodCallback(
@@ -338,6 +367,20 @@ class CHROMEOS_EXPORT FakeCryptohomeClient : public CryptohomeClient {
   bool tpm_attestation_is_enrolled_ = true;
   bool tpm_attestation_is_prepared_ = true;
   bool tpm_attestation_does_key_exist_should_succeed_ = true;
+
+  // MountEx fields.
+  bool hidden_mount_ = false;
+  cryptohome::MountError mount_error_ = cryptohome::MOUNT_ERROR_NONE;
+  bool public_mount_ = false;
+  bool to_migrate_from_ecryptfs_ = false;
+  std::string create_request_auth_secret_;
+  std::string create_request_auth_label_;
+  std::string mount_auth_secret_;
+  cryptohome::Identification mount_id_;
+
+  // MigrateToDircrypto fields.
+  cryptohome::Identification dircrypto_id_;
+  bool minimal_migration_ = false;
 
   base::WeakPtrFactory<FakeCryptohomeClient> weak_ptr_factory_;
 
