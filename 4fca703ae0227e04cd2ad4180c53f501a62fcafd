@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "c6ed648f_7d16628b",
+        "filename": "build/config/android/internal_rules.gni",
+        "patchSetId": 3
+      },
+      "lineNbr": 2491,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-12-15T13:57:19Z",
+      "side": 1,
+      "message": "Oh I overlooked most of this. I didn\u0027t know about interface jars. I\u0027ll look into in tomorrow. Thanks a lot!",
+      "parentUuid": "fbf2d8fd_0781c185",
+      "range": {
+        "startLine": 2491,
+        "startChar": 6,
+        "endLine": 2491,
+        "endChar": 21
+      },
+      "revId": "4fca703ae0227e04cd2ad4180c53f501a62fcafd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7fa82acb_0c2c91d4",
         "filename": "chrome/android/BUILD.gn",
         "patchSetId": 3
