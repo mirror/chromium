@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "511df546_c4fd136f",
+        "filename": "chrome/browser/extensions/extension_system_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-12-15T21:40:54Z",
+      "side": 1,
+      "message": "Good point.  This is especially tricky, since TRACE_EVENT0 relies on scoping, which means I can\u0027t just wrap it in an if(!incognito).  I ... don\u0027t think I have the expertise to do this efficiently; I\u0027d need to figure out how TRACE_EVENTs are used, and what\u0027s run-time configurable (i.e. could we just turn this into a TRACE_EVENT1(\"incognito\", incognito)).",
+      "parentUuid": "29e998f1_5df28935",
+      "revId": "bdd5731469cd254c8dfa9e88b72c836a43a05143",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4ade9342_a15cfa46",
         "filename": "chrome/browser/profiles/off_the_record_profile_impl.cc",
         "patchSetId": 9
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-14T23:11:24Z",
       "side": 1,
       "message": "I think sending |false| here is misleading.  In many cases, extensions *aren\u0027t* disabled.  The only real cases where this is true is when this is for a specific type of profile, such as a guest session, login screen, etc (rather than just an incognito profile).\n\nI\u0027m not sure if there\u0027s a good way to detect that here - maybe Matt knows?",
+      "revId": "bdd5731469cd254c8dfa9e88b72c836a43a05143",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a83a7c27_ebee2489",
+        "filename": "chrome/browser/profiles/off_the_record_profile_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-12-15T21:40:54Z",
+      "side": 1,
+      "message": "The real issue here is that whether extensions are disabled or not is in the shared portion of the init, which will already have been done for incognito profiles when the source non-incognito profile was initialized.  So as the extension system is currently written, the second boolean *has* to be ignored for incognito initialization.\n\nIf I were going to try to solve this, I\u0027d probably make the argument enum be \"kNonIncognitoExtensionsEnabled\", \"kNonIncognitoExtensionsDisabled\", and \"kIncognito\", with documentation that the incognito enabling was taken from the corresponding non-incognito profile.",
+      "parentUuid": "4ade9342_a15cfa46",
       "revId": "bdd5731469cd254c8dfa9e88b72c836a43a05143",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "0511554c_fcdbd53c",
+        "filename": "extensions/browser/extension_system.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-12-15T21:40:54Z",
+      "side": 1,
+      "message": "Sounds good; I just wanted your input before I put a stake down.",
+      "parentUuid": "c5153b36_14a60dbd",
+      "revId": "bdd5731469cd254c8dfa9e88b72c836a43a05143",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "99446c57_035bf272",
         "filename": "extensions/shell/browser/shell_extension_system.cc",
         "patchSetId": 9
@@ -67,6 +121,24 @@
       "revId": "bdd5731469cd254c8dfa9e88b72c836a43a05143",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a978134_db0e5525",
+        "filename": "extensions/shell/browser/shell_extension_system.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-12-15T21:40:54Z",
+      "side": 1,
+      "message": "Will do.",
+      "parentUuid": "99446c57_035bf272",
+      "revId": "bdd5731469cd254c8dfa9e88b72c836a43a05143",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
