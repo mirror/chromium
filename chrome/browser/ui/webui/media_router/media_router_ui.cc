@@ -61,6 +61,11 @@
 #include "ui/web_dialogs/web_dialog_delegate.h"
 #include "url/origin.h"
 
+#include "ui/aura/window.h"
+#include "ui/aura/window_observer.h"
+#include "ui/aura/window_tree_host.h"
+#include "ui/aura/window_tree_host_observer.h"
+
 namespace media_router {
 
 namespace {
@@ -179,6 +184,44 @@ class MediaRouterUI::UIIssuesObserver : public IssuesObserver {
   DISALLOW_COPY_AND_ASSIGN(UIIssuesObserver);
 };
 
+class MediaRouterUI::DialogWindowObserver : public aura::WindowObserver {
+ public:
+  DialogWindowObserver() = default;
+  ~DialogWindowObserver() override = default;
+  void OnWindowHierarchyChanged(const HierarchyChangeParams& params) override {
+    LOG(ERROR) << "hierarchy changed";
+  }
+
+  void OnWindowParentChanged(aura::Window* window, aura::Window* parent) override {
+    LOG(ERROR) << "parent changed";
+  }
+
+  void OnWindowBoundsChanged(aura::Window* window,
+                                     const gfx::Rect& old_bounds,
+                                     const gfx::Rect& new_bounds,
+                                     ui::PropertyChangeReason reason) override {
+    LOG(ERROR) << "bounds changed";
+  }
+
+  void OnWindowTransformed(aura::Window* window,
+                           ui::PropertyChangeReason reason) override {
+    LOG(ERROR) << "transformed";
+  }
+
+  void OnWindowPropertyChanged(aura::Window* window,
+                                       const void* key,
+                                       intptr_t old) override {
+    LOG(ERROR) << "property changed";
+  }
+};
+
+class MediaRouterUI::DialogHostObserver : public aura::WindowTreeHostObserver {
+  void OnHostMovedInPixels(aura::WindowTreeHost* host,
+                           const gfx::Point& new_origin_in_pixels) override {
+    LOG(ERROR) << "moved in pixels";
+  }
+};
+
 MediaRouterUI::UIMediaRoutesObserver::UIMediaRoutesObserver(
     MediaRouter* router,
     const MediaSource::Id& source_id,
@@ -279,6 +322,7 @@ MediaRouterUI::~MediaRouterUI() {
               "No screens found."));
     }
   }
+  // initiator_->GetTopLevelNativeWindow()->RemoveObserver(window_observer_.get());
 }
 
 void MediaRouterUI::InitWithDefaultMediaSource(
@@ -377,6 +421,10 @@ void MediaRouterUI::InitCommon(content::WebContents* initiator) {
   // Get the current list of media routes, so that the WebUI will have routes
   // information at initialization.
   OnRoutesUpdated(router_->GetCurrentRoutes(), std::vector<MediaRoute::Id>());
+  window_observer_ = std::make_unique<DialogWindowObserver>();
+  host_observer_ = std::make_unique<DialogHostObserver>();
+  // initiator_->GetTopLevelNativeWindow()->AddObserver(window_observer_.get());
+  initiator_->GetTopLevelNativeWindow()->GetHost()->AddObserver(host_observer_.get());
 }
 
 void MediaRouterUI::InitForTest(
@@ -517,7 +565,15 @@ bool MediaRouterUI::CreateRoute(const MediaSink::Id& sink_id,
   GetIssueManager()->ClearNonBlockingIssues();
   router_->CreateRoute(source_id, sink_id, origin, tab_contents,
                        std::move(route_response_callbacks), timeout, incognito);
+
+  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(FROM_HERE,
+      base::BindOnce(&MediaRouterUI::Focus, base::Unretained(this)),
+      base::TimeDelta::FromSeconds(5));
   return true;
+}
+
+void MediaRouterUI::Focus() {
+  // initiator_->GetTopLevelNativeWindow()->Focus();
 }
 
 bool MediaRouterUI::SetRouteParameters(
