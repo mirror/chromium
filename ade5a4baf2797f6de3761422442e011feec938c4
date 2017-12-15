@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dca60d2c_16a500f6",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-12-15T22:43:21Z",
+      "side": 1,
+      "message": "nit: provider_id.or(MediaRouteProviderId::UNKNOWN)",
+      "revId": "ade5a4baf2797f6de3761422442e011feec938c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98f14a59_53161518",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-12-15T22:43:21Z",
+      "side": 1,
+      "message": "nit: s/terminateRoute/TerminateRoute. Also maybe rephrase the documentation on parameters:\n\n|route_id|: ID of MediaRoute passed to the TerminateRoute request.\n|provider_id|: ID of MediaRouteProvider that handled the request.\n|error_text|: Error message if an error occurred.\n|result_code|: The result of the request.",
+      "revId": "ade5a4baf2797f6de3761422442e011feec938c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "963639e3_a4768930",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_metrics.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-12-15T22:43:21Z",
+      "side": 1,
+      "message": "constexpr",
+      "revId": "ade5a4baf2797f6de3761422442e011feec938c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ba04dce_5eb3787a",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_metrics.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-12-15T22:43:21Z",
+      "side": 1,
+      "message": "Slightly prefer listing out the UNKNOWN case explicitly (no default) so if we add a new provider we will also remember to add metrics.",
+      "revId": "ade5a4baf2797f6de3761422442e011feec938c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "835b3b22_93f8e780",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_metrics.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-12-15T22:43:21Z",
+      "side": 1,
+      "message": "It doesn\u0027t look like we need to expose all of these? (Or just means we don\u0027t have test coverage for them)",
+      "revId": "ade5a4baf2797f6de3761422442e011feec938c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09335ebf_bef77d55",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_metrics.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-12-15T22:43:21Z",
+      "side": 1,
+      "message": "Instead of repeating this comment, maybe just something like: the following methods are recorded per-provider.",
+      "revId": "ade5a4baf2797f6de3761422442e011feec938c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
