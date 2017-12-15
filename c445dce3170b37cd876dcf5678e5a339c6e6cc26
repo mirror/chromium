@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d7b8762e_2391a896",
+        "filename": "chrome/browser/banners/app_banner_manager_desktop.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-15T03:56:46Z",
+      "side": 1,
+      "message": "Shouldn\u0027t |install_source| be correct, based on how it\u0027s set in AppBannerManager::ShowBanner()?",
+      "range": {
+        "startLine": 92,
+        "startChar": 2,
+        "endLine": 94,
+        "endChar": 75
+      },
+      "revId": "c445dce3170b37cd876dcf5678e5a339c6e6cc26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "832ee905_a9888b05",
+        "filename": "chrome/browser/extensions/tab_helper.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-15T03:56:46Z",
+      "side": 1,
+      "message": "Nit: may as well pass WebAppInstallSource::MENU directly to the BookmarkAppHelper constructor and remove the temporary.",
+      "range": {
+        "startLine": 368,
+        "startChar": 26,
+        "endLine": 368,
+        "endChar": 32
+      },
+      "revId": "c445dce3170b37cd876dcf5678e5a339c6e6cc26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2605599b_58959280",
+        "filename": "chrome/browser/installable/installable_metrics.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-15T03:56:46Z",
+      "side": 1,
+      "message": "For safety, I\u0027d prefer this the other way round (so when new enum values are added they must be explicitly added to this method as being Reportable, rather than being implicitly regarded as Reportable):\n\nreturn source \u003d\u003d WebAppInstallSource::AUTOMATIC_PROMPT || source \u003d\u003d WebAppInstallSource::MENU || source \u003d\u003d WebAppInstallSource::API;",
+      "range": {
+        "startLine": 19,
+        "startChar": 9,
+        "endLine": 20,
+        "endChar": 55
+      },
+      "revId": "c445dce3170b37cd876dcf5678e5a339c6e6cc26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3f59b1e_8e4c9b0f",
+        "filename": "chrome/browser/installable/installable_metrics.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-15T03:56:46Z",
+      "side": 1,
+      "message": "Nit: Add a comment\n\n// Extensions management API (not reported).",
+      "range": {
+        "startLine": 40,
+        "startChar": 21,
+        "endLine": 40,
+        "endChar": 0
+      },
+      "revId": "c445dce3170b37cd876dcf5678e5a339c6e6cc26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
