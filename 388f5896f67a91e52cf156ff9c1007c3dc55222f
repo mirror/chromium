@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b02ee8d2_e5b8bb59",
+        "filename": "third_party/WebKit/Source/core/paint/ng/ng_fragment_painter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-12-15T05:11:11Z",
+      "side": 1,
+      "message": "In legacy painter\u0027s definition, within an inline formatting context, paint_offset is always the offset of the block, and it needs to be passed down if the child is legacy. You shouldn\u0027t accumulate |line_box_fragment.Offset()|.\n\nFor NG, each fragment only knows offset from its parent, so we need to know accumulated paint_offset too.\n\nThe current code stores |block_paint_offset| to the member, I guess making it as an argument was easier to understand, sorry.\n\nWe need to eliminate this distinction since it\u0027s confusing. I think, when traversing inline children:\n\nA. Pass both |block_paint_offset| and |paint_offset| and use either one appropriately (current).\nB. Pass |block_paint_offset| only and come up with how to compute NG\u0027s |paint_offset| from it.\nC. Pass |paint_offset| only. When we find legacy child, compute |block_paint_offset|.\n\nIf we want to follow the same convention as other painters for this one too, probably B?",
+      "revId": "388f5896f67a91e52cf156ff9c1007c3dc55222f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c35bd4b2_cdad7ccb",
+        "filename": "third_party/WebKit/Source/core/paint/ng/ng_fragment_painter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-12-15T05:11:11Z",
+      "side": 1,
+      "message": "Yeah, I think we need this to be |block_paint_offset|.",
+      "revId": "388f5896f67a91e52cf156ff9c1007c3dc55222f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
