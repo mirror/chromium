@@ -49,6 +49,9 @@ class ASH_EXPORT LockScreen : public TrayActionObserver,
   // Returns the active data dispatcher.
   LoginDataDispatcher* data_dispatcher();
 
+  // Returns lock screen window if exists.
+  LockWindow* window() { return window_; };
+
   // TrayActionObserver:
   void OnLockScreenNoteStateChanged(mojom::TrayActionState state) override;
 
