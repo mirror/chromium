@@ -16,10 +16,13 @@ mojom("interfaces") {
     "network_change_manager.mojom",
     "request_context_frame_type.mojom",
     "restricted_cookie_manager.mojom",
+    "udp_socket.mojom",
   ]
 
   public_deps = [
     "//mojo/common:common_custom_types",
+    "//mojo/common:read_only_buffer",
+    "//net/interfaces:interfaces",
     "//url/mojo:url_mojom_gurl",
   ]
 
