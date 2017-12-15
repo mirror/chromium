@@ -27,7 +27,6 @@
 #include "components/viz/service/display/texture_deleter.h"
 #include "components/viz/service/frame_sinks/compositor_frame_sink_support.h"
 #include "components/viz/service/frame_sinks/frame_sink_manager_impl.h"
-#include "content/common/input/sync_compositor_messages.h"
 #include "content/common/view_messages.h"
 #include "content/renderer/android/synchronous_compositor_filter.h"
 #include "content/renderer/android/synchronous_compositor_registry.h"
@@ -114,6 +113,7 @@ SynchronousLayerTreeFrameSink::SynchronousLayerTreeFrameSink(
     scoped_refptr<viz::ContextProvider> worker_context_provider,
     scoped_refptr<base::SingleThreadTaskRunner> compositor_task_runner,
     gpu::GpuMemoryBufferManager* gpu_memory_buffer_manager,
+    IPC::Sender* sender,
     int routing_id,
     uint32_t layer_tree_frame_sink_id,
     std::unique_ptr<viz::BeginFrameSource> begin_frame_source,
@@ -127,13 +127,12 @@ SynchronousLayerTreeFrameSink::SynchronousLayerTreeFrameSink(
       routing_id_(routing_id),
       layer_tree_frame_sink_id_(layer_tree_frame_sink_id),
       registry_(registry),
-      sender_(RenderThreadImpl::current()->sync_compositor_message_filter()),
+      sender_(sender),
       memory_policy_(0u),
       frame_swap_message_queue_(frame_swap_message_queue),
       parent_local_surface_id_allocator_(
           new viz::ParentLocalSurfaceIdAllocator),
       begin_frame_source_(std::move(begin_frame_source)) {
-  DCHECK(registry_);
   DCHECK(sender_);
   DCHECK(begin_frame_source_);
   thread_checker_.DetachFromThread();
@@ -145,21 +144,7 @@ SynchronousLayerTreeFrameSink::~SynchronousLayerTreeFrameSink() = default;
 
 void SynchronousLayerTreeFrameSink::SetSyncClient(
     SynchronousLayerTreeFrameSinkClient* compositor) {
-  DCHECK(CalledOnValidThread());
   sync_client_ = compositor;
-  if (sync_client_)
-    Send(new SyncCompositorHostMsg_LayerTreeFrameSinkCreated(routing_id_));
-}
-
-bool SynchronousLayerTreeFrameSink::OnMessageReceived(
-    const IPC::Message& message) {
-  bool handled = true;
-  IPC_BEGIN_MESSAGE_MAP(SynchronousLayerTreeFrameSink, message)
-    IPC_MESSAGE_HANDLER(SyncCompositorMsg_SetMemoryPolicy, SetMemoryPolicy)
-    IPC_MESSAGE_HANDLER(SyncCompositorMsg_ReclaimResources, OnReclaimResources)
-    IPC_MESSAGE_UNHANDLED(handled = false)
-  IPC_END_MESSAGE_MAP()
-  return handled;
 }
 
 bool SynchronousLayerTreeFrameSink::BindToClient(
@@ -177,7 +162,8 @@ bool SynchronousLayerTreeFrameSink::BindToClient(
   client_->SetTreeActivationCallback(
       base::Bind(&SynchronousLayerTreeFrameSink::DidActivatePendingTree,
                  base::Unretained(this)));
-  registry_->RegisterLayerTreeFrameSink(routing_id_, this);
+  if (registry_)
+    registry_->RegisterLayerTreeFrameSink(routing_id_, this);
 
   constexpr bool root_support_is_root = true;
   constexpr bool child_support_is_root = false;
@@ -217,7 +203,10 @@ void SynchronousLayerTreeFrameSink::DetachFromClient() {
   client_->SetBeginFrameSource(nullptr);
   // Destroy the begin frame source on the same thread it was bound on.
   begin_frame_source_ = nullptr;
-  registry_->UnregisterLayerTreeFrameSink(routing_id_, this);
+  if (sync_client_)
+    sync_client_->SinkDestroyed();
+  if (registry_)
+    registry_->UnregisterLayerTreeFrameSink(routing_id_, this);
   client_->SetTreeActivationCallback(base::Closure());
   root_support_.reset();
   child_support_.reset();
@@ -340,7 +329,8 @@ void SynchronousLayerTreeFrameSink::DidNotProduceFrame(
     const viz::BeginFrameAck& ack) {
   DCHECK(!ack.has_damage);
   DCHECK_LE(viz::BeginFrameArgs::kStartingFrameNumber, ack.sequence_number);
-  Send(new ViewHostMsg_DidNotProduceFrame(routing_id_, ack));
+  DCHECK(sync_client_);
+  //  Send(new ViewHostMsg_DidNotProduceFrame(routing_id_, ack));
 }
 
 void SynchronousLayerTreeFrameSink::CancelFallbackTick() {
@@ -436,7 +426,7 @@ void SynchronousLayerTreeFrameSink::InvokeComposite(
   }
 }
 
-void SynchronousLayerTreeFrameSink::OnReclaimResources(
+void SynchronousLayerTreeFrameSink::ReclaimResources(
     uint32_t layer_tree_frame_sink_id,
     const std::vector<viz::ReturnedResource>& resources) {
   // Ignore message if it's a stale one coming from a different output surface

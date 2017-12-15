@@ -51,6 +51,7 @@ class SynchronousLayerTreeFrameSinkClient {
   virtual void Invalidate() = 0;
   virtual void SubmitCompositorFrame(uint32_t layer_tree_frame_sink_id,
                                      viz::CompositorFrame frame) = 0;
+  virtual void SinkDestroyed() = 0;
 
  protected:
   virtual ~SynchronousLayerTreeFrameSinkClient() {}
@@ -73,6 +74,7 @@ class SynchronousLayerTreeFrameSink
       scoped_refptr<viz::ContextProvider> worker_context_provider,
       scoped_refptr<base::SingleThreadTaskRunner> compositor_task_runner,
       gpu::GpuMemoryBufferManager* gpu_memory_buffer_manager,
+      IPC::Sender* sender,
       int routing_id,
       uint32_t layer_tree_frame_sink_id,
       std::unique_ptr<viz::BeginFrameSource> begin_frame_source,
@@ -81,7 +83,6 @@ class SynchronousLayerTreeFrameSink
   ~SynchronousLayerTreeFrameSink() override;
 
   void SetSyncClient(SynchronousLayerTreeFrameSinkClient* compositor);
-  bool OnMessageReceived(const IPC::Message& message);
 
   // cc::LayerTreeFrameSink implementation.
   bool BindToClient(cc::LayerTreeFrameSinkClient* sink_client) override;
@@ -109,6 +110,10 @@ class SynchronousLayerTreeFrameSink
       const std::vector<viz::ReturnedResource>& resources) override;
   void OnBeginFramePausedChanged(bool paused) override;
 
+  void SetMemoryPolicy(size_t bytes_limit);
+  void ReclaimResources(uint32_t layer_tree_frame_sink_id,
+                        const std::vector<viz::ReturnedResource>& resources);
+
  private:
   class SoftwareOutputSurface;
 
@@ -121,11 +126,6 @@ class SynchronousLayerTreeFrameSink
 
   void CancelFallbackTick();
   void FallbackTickFired();
-
-  // IPC handlers.
-  void SetMemoryPolicy(size_t bytes_limit);
-  void OnReclaimResources(uint32_t layer_tree_frame_sink_id,
-                          const std::vector<viz::ReturnedResource>& resources);
 
   const int routing_id_;
   const uint32_t layer_tree_frame_sink_id_;

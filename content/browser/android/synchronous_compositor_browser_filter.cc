@@ -16,6 +16,7 @@
 #include "content/browser/bad_message.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/render_process_host.h"
+#include "content/public/common/content_features.h"
 #include "ui/android/window_android.h"
 
 namespace content {
@@ -23,7 +24,9 @@ namespace content {
 SynchronousCompositorBrowserFilter::SynchronousCompositorBrowserFilter(
     int process_id)
     : BrowserMessageFilter(SyncCompositorMsgStart),
-      render_process_host_(RenderProcessHost::FromID(process_id)) {
+      render_process_host_(RenderProcessHost::FromID(process_id)),
+      use_mojo_(base::FeatureList::IsEnabled(features::kMojoInputMessages)),
+      sync_condition_(&sync_lock_) {
   DCHECK(render_process_host_);
 }
 
@@ -51,6 +54,9 @@ void SynchronousCompositorBrowserFilter::SyncStateAfterVSync(
 
 bool SynchronousCompositorBrowserFilter::OnMessageReceived(
     const IPC::Message& message) {
+  if (use_mojo_)
+    return false;
+
   bool handled = true;
   IPC_BEGIN_MESSAGE_MAP(SynchronousCompositorBrowserFilter, message)
     IPC_MESSAGE_HANDLER_GENERIC(SyncCompositorHostMsg_ReturnFrame,
@@ -67,36 +73,13 @@ bool SynchronousCompositorBrowserFilter::ReceiveFrame(
     return false;
 
   int routing_id = message.routing_id();
-  scoped_refptr<SynchronousCompositor::FrameFuture> future;
-  {
-    base::AutoLock lock(future_map_lock_);
-    auto itr = future_map_.find(routing_id);
-    if (itr == future_map_.end() || itr->second.empty()) {
-      bad_message::ReceivedBadMessage(render_process_host_,
-                                      bad_message::SCO_INVALID_ARGUMENT);
-      return true;
-    }
-    future = std::move(itr->second.front());
-    DCHECK(future);
-    itr->second.pop_front();
-    if (itr->second.empty())
-      future_map_.erase(itr);
-  }
-
-  auto frame_ptr = std::make_unique<SynchronousCompositor::Frame>();
-  frame_ptr->layer_tree_frame_sink_id = std::get<0>(param);
+  uint32_t layer_tree_frame_sink_id = std::get<0>(param);
   base::Optional<viz::CompositorFrame>& compositor_frame = std::get<1>(param);
-  if (compositor_frame) {
-    BrowserThread::PostTask(
-        BrowserThread::UI, FROM_HERE,
-        base::Bind(
-            &SynchronousCompositorBrowserFilter::ProcessFrameMetadataOnUIThread,
-            this, routing_id,
-            base::Passed(compositor_frame->metadata.Clone())));
-    frame_ptr->frame.reset(new viz::CompositorFrame);
-    *frame_ptr->frame = std::move(*compositor_frame);
+  if (!ReturnFrame(routing_id, layer_tree_frame_sink_id,
+                   std::move(compositor_frame))) {
+    bad_message::ReceivedBadMessage(render_process_host_,
+                                    bad_message::SCO_INVALID_ARGUMENT);
   }
-  future->SetFrame(std::move(frame_ptr));
   return true;
 }
 
@@ -154,6 +137,49 @@ void SynchronousCompositorBrowserFilter::SetFrameFuture(
   itr->second.emplace_back(std::move(frame_future));
 }
 
+bool SynchronousCompositorBrowserFilter::ReturnFrame(
+    int routing_id,
+    uint32_t layer_tree_frame_sink_id,
+    base::Optional<viz::CompositorFrame> compositor_frame) {
+  scoped_refptr<SynchronousCompositor::FrameFuture> future;
+  {
+    base::AutoLock lock(future_map_lock_);
+    auto itr = future_map_.find(routing_id);
+    if (itr == future_map_.end() || itr->second.empty()) {
+      return false;
+    }
+    future = std::move(itr->second.front());
+    DCHECK(future);
+    itr->second.pop_front();
+    if (itr->second.empty())
+      future_map_.erase(itr);
+  }
+
+  auto frame_ptr = std::make_unique<SynchronousCompositor::Frame>();
+  frame_ptr->layer_tree_frame_sink_id = layer_tree_frame_sink_id;
+  if (compositor_frame) {
+    BrowserThread::PostTask(
+        BrowserThread::UI, FROM_HERE,
+        base::BindOnce(
+            &SynchronousCompositorBrowserFilter::ProcessFrameMetadataOnUIThread,
+            this, routing_id,
+            base::Passed(compositor_frame->metadata.Clone())));
+    frame_ptr->frame.reset(new viz::CompositorFrame);
+    *frame_ptr->frame = std::move(*compositor_frame);
+  }
+  future->SetFrame(std::move(frame_ptr));
+  return true;
+}
+
+void SynchronousCompositorBrowserFilter::SynchronizeStateResponse(
+    int routing_id,
+    const content::SyncCompositorCommonRendererParams& params) {
+  base::AutoLock lock(sync_lock_);
+  --pending_sync_count_;
+  pending_sync_params_[routing_id] = params;
+  sync_condition_.Signal();
+}
+
 void SynchronousCompositorBrowserFilter::OnFilterAdded(IPC::Channel* channel) {
   base::AutoLock lock(future_map_lock_);
   filter_ready_ = true;
@@ -182,34 +208,65 @@ void SynchronousCompositorBrowserFilter::VSyncComplete() {
   DCHECK(window_android_in_vsync_);
   window_android_in_vsync_ = nullptr;
 
-  std::vector<int> routing_ids;
-  routing_ids.reserve(compositor_host_pending_renderer_state_.size());
-  for (const auto* host : compositor_host_pending_renderer_state_)
-    routing_ids.push_back(host->routing_id());
+  if (use_mojo_) {
+    {
+      base::AutoLock lock(sync_lock_);
+      pending_sync_count_ = compositor_host_pending_renderer_state_.size();
+    }
 
-  std::vector<SyncCompositorCommonRendererParams> params;
-  params.reserve(compositor_host_pending_renderer_state_.size());
+    for (auto* host : compositor_host_pending_renderer_state_) {
+      host->SynchronizeState();
+    }
 
-  {
-    base::ThreadRestrictions::ScopedAllowWait wait;
-    if (!render_process_host_->Send(
-            new SyncCompositorMsg_SynchronizeRendererState(routing_ids,
-                                                           &params))) {
+    {
+      base::ScopedAllowBaseSyncPrimitivesOutsideBlockingScope
+          allow_base_sync_primitives;
+      base::AutoLock lock(sync_lock_);
+      while (pending_sync_count_ != 0) {
+        sync_condition_.Wait();
+      }
+    }
+
+    for (size_t i = 0; i < compositor_host_pending_renderer_state_.size();
+         ++i) {
+      auto itr = pending_sync_params_.find(
+          compositor_host_pending_renderer_state_[i]->routing_id());
+      if (itr == pending_sync_params_.end())
+        continue;
+      compositor_host_pending_renderer_state_[i]->UpdateState(itr->second);
+    }
+  } else {
+    std::vector<SyncCompositorCommonRendererParams> params;
+    params.reserve(compositor_host_pending_renderer_state_.size());
+
+    std::vector<int> routing_ids;
+    routing_ids.reserve(compositor_host_pending_renderer_state_.size());
+    for (const auto* host : compositor_host_pending_renderer_state_)
+      routing_ids.push_back(host->routing_id());
+
+    {
+      base::ScopedAllowBaseSyncPrimitivesOutsideBlockingScope
+          allow_base_sync_primitives;
+      if (!render_process_host_->Send(
+              new SyncCompositorMsg_SynchronizeRendererState(routing_ids,
+                                                             &params))) {
+        compositor_host_pending_renderer_state_.clear();
+        return;
+      }
+    }
+
+    if (compositor_host_pending_renderer_state_.size() != params.size()) {
+      bad_message::ReceivedBadMessage(render_process_host_,
+                                      bad_message::SCO_INVALID_ARGUMENT);
       compositor_host_pending_renderer_state_.clear();
       return;
     }
+    for (size_t i = 0; i < compositor_host_pending_renderer_state_.size();
+         ++i) {
+      compositor_host_pending_renderer_state_[i]->UpdateState(params[i]);
+    }
   }
 
-  if (compositor_host_pending_renderer_state_.size() != params.size()) {
-    bad_message::ReceivedBadMessage(render_process_host_,
-                                    bad_message::SCO_INVALID_ARGUMENT);
-    compositor_host_pending_renderer_state_.clear();
-    return;
-  }
-
-  for (size_t i = 0; i < compositor_host_pending_renderer_state_.size(); ++i) {
-    compositor_host_pending_renderer_state_[i]->ProcessCommonParams(params[i]);
-  }
   compositor_host_pending_renderer_state_.clear();
 }
 
