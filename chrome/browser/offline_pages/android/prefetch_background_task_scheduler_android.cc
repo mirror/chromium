@@ -11,10 +11,11 @@
 namespace offline_pages {
 
 // static
-void PrefetchBackgroundTaskScheduler::Schedule(int additional_delay_seconds) {
+void PrefetchBackgroundTaskScheduler::Schedule(int additional_delay_seconds,
+                                               bool limitlessPrefetching) {
   JNIEnv* env = base::android::AttachCurrentThread();
   prefetch::Java_PrefetchBackgroundTaskScheduler_scheduleTask(
-      env, additional_delay_seconds);
+      env, additional_delay_seconds, limitlessPrefetching);
 }
 
 // static

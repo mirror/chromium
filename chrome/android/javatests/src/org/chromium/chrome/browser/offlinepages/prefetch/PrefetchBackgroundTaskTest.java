@@ -207,7 +207,7 @@ public class PrefetchBackgroundTaskTest {
         ThreadUtils.runOnUiThreadBlocking(new Runnable() {
             @Override
             public void run() {
-                PrefetchBackgroundTaskScheduler.scheduleTask(additionalDelaySeconds);
+                PrefetchBackgroundTaskScheduler.scheduleTask(additionalDelaySeconds, false);
             }
         });
     }

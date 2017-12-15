@@ -13,8 +13,6 @@ import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.eq;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 import android.content.Context;
 
@@ -138,7 +136,7 @@ public class PrefetchBackgroundTaskUnitTest {
     @Test
     public void scheduleTask() {
         final int additionalDelaySeconds = 15;
-        PrefetchBackgroundTaskScheduler.scheduleTask(additionalDelaySeconds);
+        PrefetchBackgroundTaskScheduler.scheduleTask(additionalDelaySeconds, false);
         TaskInfo scheduledTask =
                 mFakeTaskScheduler.getTaskInfo(TaskIds.OFFLINE_PAGES_PREFETCH_JOB_ID);
         assertNotNull(scheduledTask);
@@ -156,7 +154,7 @@ public class PrefetchBackgroundTaskUnitTest {
                 mFakeTaskScheduler.getTaskInfo(TaskIds.OFFLINE_PAGES_PREFETCH_JOB_ID);
         assertNull(scheduledTask);
 
-        PrefetchBackgroundTaskScheduler.scheduleTask(0);
+        PrefetchBackgroundTaskScheduler.scheduleTask(0, false);
         scheduledTask = mFakeTaskScheduler.getTaskInfo(TaskIds.OFFLINE_PAGES_PREFETCH_JOB_ID);
         assertNotNull(scheduledTask);
         assertEquals(TimeUnit.SECONDS.toMillis(
@@ -171,8 +169,8 @@ public class PrefetchBackgroundTaskUnitTest {
     @Test
     public void createNativeTask() {
         final ArrayList<Boolean> reschedules = new ArrayList<>();
-        TaskParameters params = mock(TaskParameters.class);
-        when(params.getTaskId()).thenReturn(TaskIds.OFFLINE_PAGES_PREFETCH_JOB_ID);
+        TaskParameters params =
+                TaskParameters.create(TaskIds.OFFLINE_PAGES_PREFETCH_JOB_ID).build();
 
         // Setup battery conditions with no power connected.
         DeviceConditions deviceConditions = new DeviceConditions(!POWER_CONNECTED,
@@ -347,8 +345,8 @@ public class PrefetchBackgroundTaskUnitTest {
     @Test
     public void testOnStopAfterCallback() throws Exception {
         final ArrayList<Boolean> reschedules = new ArrayList<>();
-        TaskParameters params = mock(TaskParameters.class);
-        when(params.getTaskId()).thenReturn(TaskIds.OFFLINE_PAGES_PREFETCH_JOB_ID);
+        TaskParameters params =
+                TaskParameters.create(TaskIds.OFFLINE_PAGES_PREFETCH_JOB_ID).build();
 
         // Conditions should be appropriate for running the task.
         DeviceConditions deviceConditions = new DeviceConditions(POWER_CONNECTED,
