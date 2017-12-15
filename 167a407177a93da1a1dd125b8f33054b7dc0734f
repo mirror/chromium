@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6bd16055_f627e094",
+        "filename": "tools/perf/page_sets/maps.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1123519
+      },
+      "writtenOn": "2017-12-15T21:23:32Z",
+      "side": 1,
+      "message": "Can this also wait for window.testDone, like maps_integration_test.py?",
+      "revId": "167a407177a93da1a1dd125b8f33054b7dc0734f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
