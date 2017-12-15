@@ -800,6 +800,7 @@ void RenderWidgetCompositor::SetDeviceScaleFactor(float device_scale) {
 
 void RenderWidgetCompositor::SetBackgroundColor(blink::WebColor color) {
   layer_tree_host_->set_background_color(color);
+  delegate_->DidChangeBackgroundColor(color);
 }
 
 void RenderWidgetCompositor::SetVisible(bool visible) {

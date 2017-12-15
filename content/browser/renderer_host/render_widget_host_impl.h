@@ -706,6 +706,7 @@ class CONTENT_EXPORT RenderWidgetHostImpl
   void OnRequestMove(const gfx::Rect& pos);
   void OnSetTooltipText(const base::string16& tooltip_text,
                         blink::WebTextDirection text_direction_hint);
+  void OnDidChangeBackgroundColor(SkColor color);
   void OnResizeOrRepaintACK(
       const ViewHostMsg_ResizeOrRepaint_ACK_Params& params);
   void OnSetCursor(const WebCursor& cursor);

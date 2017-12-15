@@ -56,6 +56,7 @@ class StubRenderWidgetCompositorDelegate
       const LayerTreeFrameSinkCallback& callback) override {
     callback.Run(nullptr);
   }
+  void DidChangeBackgroundColor(SkColor color) override {}
   void DidCommitAndDrawCompositorFrame() override {}
   void DidCommitCompositorFrame() override {}
   void DidCompletePageScaleAnimation() override {}
@@ -92,6 +93,8 @@ class FakeRenderWidgetCompositorDelegate
     callback.Run(
         cc::FakeLayerTreeFrameSink::Create3d(std::move(context_provider)));
   }
+
+  void DidChangeBackgroundColor(SkColor color) override {}
 
   void Reset() {
     num_requests_ = 0;

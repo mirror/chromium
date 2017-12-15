@@ -661,6 +661,9 @@ IPC_MESSAGE_ROUTED1(ViewHostMsg_GoToEntryAtOffset,
 IPC_MESSAGE_ROUTED0(ViewHostMsg_RouteCloseEvent)
 
 // Notifies that the preferred size of the content changed.
+IPC_MESSAGE_ROUTED1(ViewHostMsg_DidChangeBackgroundColor, SkColor /* color */)
+
+// Notifies that the preferred size of the content changed.
 IPC_MESSAGE_ROUTED1(ViewHostMsg_DidContentsPreferredSizeChange,
                     gfx::Size /* pref_size */)
 

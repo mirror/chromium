@@ -51,6 +51,8 @@ class CC_EXPORT SurfaceLayer : public Layer {
     return fallback_surface_id_;
   }
 
+  SkColor default_background_color() const { return default_background_color_; }
+
  protected:
   explicit SurfaceLayer(
       scoped_refptr<viz::SurfaceReferenceFactory> ref_factory);
