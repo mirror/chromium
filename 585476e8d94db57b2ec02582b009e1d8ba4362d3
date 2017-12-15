@@ -1,0 +1,234 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fad7b3f4_32896968",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 3713,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-15T20:31:44Z",
+      "side": 1,
+      "message": "remote_interfaces_ ?",
+      "range": {
+        "startLine": 3713,
+        "startChar": 2,
+        "endLine": 3713,
+        "endChar": 23
+      },
+      "revId": "585476e8d94db57b2ec02582b009e1d8ba4362d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aae1d198_293aa6dc",
+        "filename": "content/browser/frame_host/render_frame_host_impl.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-15T20:31:44Z",
+      "side": 1,
+      "message": "Generally we inline functions of this sort. That is,\nviz::mojom::InputTargetClient* input_target_client() {\n  return ...\n}",
+      "range": {
+        "startLine": 266,
+        "startChar": 33,
+        "endLine": 266,
+        "endChar": 53
+      },
+      "revId": "585476e8d94db57b2ec02582b009e1d8ba4362d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e025be7_a11e578a",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-15T20:31:44Z",
+      "side": 1,
+      "message": "What coordinates is child_event in? Pixels or DIP?",
+      "range": {
+        "startLine": 356,
+        "startChar": 0,
+        "endLine": 356,
+        "endChar": 74
+      },
+      "revId": "585476e8d94db57b2ec02582b009e1d8ba4362d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2914d05_550cd4e4",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-15T20:31:44Z",
+      "side": 1,
+      "message": "You should assert the inputtargetclient is non-null.",
+      "range": {
+        "startLine": 357,
+        "startChar": 2,
+        "endLine": 357,
+        "endChar": 52
+      },
+      "revId": "585476e8d94db57b2ec02582b009e1d8ba4362d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d938736f_578eebce",
+        "filename": "content/renderer/input/input_target_client_impl.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-15T20:31:44Z",
+      "side": 1,
+      "message": "remove",
+      "range": {
+        "startLine": 8,
+        "startChar": 21,
+        "endLine": 8,
+        "endChar": 32
+      },
+      "revId": "585476e8d94db57b2ec02582b009e1d8ba4362d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "994ab10f_ed55738c",
+        "filename": "content/renderer/input/input_target_client_impl.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-15T20:31:44Z",
+      "side": 1,
+      "message": "Is this needed?",
+      "range": {
+        "startLine": 11,
+        "startChar": 35,
+        "endLine": 11,
+        "endChar": 49
+      },
+      "revId": "585476e8d94db57b2ec02582b009e1d8ba4362d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0756bef7_f6e87a09",
+        "filename": "content/renderer/input/input_target_client_impl.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-15T20:31:44Z",
+      "side": 1,
+      "message": "Might this be called multiple times?",
+      "range": {
+        "startLine": 22,
+        "startChar": 2,
+        "endLine": 22,
+        "endChar": 10
+      },
+      "revId": "585476e8d94db57b2ec02582b009e1d8ba4362d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "431d8d20_0d644ba4",
+        "filename": "content/renderer/input/input_target_client_impl.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-15T20:31:44Z",
+      "side": 1,
+      "message": "Under what conditions is this null?",
+      "range": {
+        "startLine": 27,
+        "startChar": 7,
+        "endLine": 27,
+        "endChar": 20
+      },
+      "revId": "585476e8d94db57b2ec02582b009e1d8ba4362d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ea40a6d_37967f4e",
+        "filename": "content/renderer/input/input_target_client_impl.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-15T20:31:44Z",
+      "side": 1,
+      "message": "Do you need this?",
+      "range": {
+        "startLine": 8,
+        "startChar": 8,
+        "endLine": 8,
+        "endChar": 35
+      },
+      "revId": "585476e8d94db57b2ec02582b009e1d8ba4362d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1477c51b_f90865e1",
+        "filename": "content/renderer/input/render_widget_input_handler.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-15T20:31:44Z",
+      "side": 1,
+      "message": "point_in_pixel?\nThis this always a bug that it wasn\u0027t querying in pixels?",
+      "range": {
+        "startLine": 163,
+        "startChar": 14,
+        "endLine": 163,
+        "endChar": 32
+      },
+      "revId": "585476e8d94db57b2ec02582b009e1d8ba4362d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
