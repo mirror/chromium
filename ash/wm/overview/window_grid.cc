@@ -496,6 +496,18 @@ bool WindowGrid::Contains(const aura::Window* window) const {
   return false;
 }
 
+void WindowGrid::AddItem(aura::Window* window) {
+  DCHECK(!Contains(window));
+
+  window_observer_.Add(window);
+  window_state_observer_.Add(wm::GetWindowState(window));
+  window_list_.push_back(
+      std::make_unique<WindowSelectorItem>(window, window_selector_, this));
+  window_list_.back()->PrepareForOverview();
+
+  PositionWindows(/*animate=*/true);
+}
+
 void WindowGrid::RemoveItem(WindowSelectorItem* selector_item) {
   auto iter =
       std::find_if(window_list_.begin(), window_list_.end(),
