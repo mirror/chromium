@@ -77,11 +77,12 @@ class HeaderRewritingURLLoaderClient : public mojom::URLLoaderClient {
   void OnReceiveResponse(
       const ResourceResponseHead& response_head,
       const base::Optional<net::SSLInfo>& ssl_info,
-      mojom::DownloadedTempFilePtr downloaded_file) override {
+      mojom::DownloadedTempFilePtr downloaded_file,
+      mojom::URLLoaderNavigationDataPtr navigation_data) override {
     DCHECK(url_loader_client_.is_bound());
     url_loader_client_->OnReceiveResponse(
         rewrite_header_callback_.Run(response_head), ssl_info,
-        std::move(downloaded_file));
+        std::move(downloaded_file), mojom::URLLoaderNavigationDataPtr());
   }
 
   void OnReceiveRedirect(const net::RedirectInfo& redirect_info,
@@ -431,9 +432,9 @@ void ServiceWorkerSubresourceLoader::CommitResponseHeaders() {
   DCHECK(url_loader_client_.is_bound());
   status_ = Status::kSentHeader;
   // TODO(kinuko): Fill the ssl_info.
-  url_loader_client_->OnReceiveResponse(response_head_,
-                                        base::nullopt /* ssl_info_ */,
-                                        nullptr /* downloaded_file */);
+  url_loader_client_->OnReceiveResponse(
+      response_head_, base::nullopt /* ssl_info_ */,
+      nullptr /* downloaded_file */, mojom::URLLoaderNavigationDataPtr());
 }
 
 void ServiceWorkerSubresourceLoader::CommitCompleted(int error_code) {
@@ -489,7 +490,8 @@ void ServiceWorkerSubresourceLoader::ResumeReadingBodyFromNet() {}
 void ServiceWorkerSubresourceLoader::OnReceiveResponse(
     const ResourceResponseHead& response_head,
     const base::Optional<net::SSLInfo>& ssl_info,
-    mojom::DownloadedTempFilePtr downloaded_file) {
+    mojom::DownloadedTempFilePtr downloaded_file,
+    mojom::URLLoaderNavigationDataPtr navigation_data) {
   DCHECK_EQ(Status::kStarted, status_);
   DCHECK(url_loader_client_.is_bound());
   status_ = Status::kSentHeader;
@@ -499,7 +501,8 @@ void ServiceWorkerSubresourceLoader::OnReceiveResponse(
     response_head_.headers = response_head.headers;
   }
   url_loader_client_->OnReceiveResponse(response_head_, ssl_info,
-                                        std::move(downloaded_file));
+                                        std::move(downloaded_file),
+                                        mojom::URLLoaderNavigationDataPtr());
 }
 
 void ServiceWorkerSubresourceLoader::OnReceiveRedirect(
