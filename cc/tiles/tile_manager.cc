@@ -1217,7 +1217,7 @@ scoped_refptr<TileTask> TileManager::CreateRasterTask(
           resource, resource_content_id, tile->invalidated_id());
 
   base::Optional<PlaybackImageProvider> image_provider;
-  const bool has_sync_decoded_images = !sync_decoded_images.empty();
+  const bool has_sync_decoded_images = true;  // sync_decoded_images.empty();
   const bool has_at_raster_images = !at_raster_images.empty();
   if (skip_images || has_checker_images || has_sync_decoded_images ||
       has_at_raster_images) {
