@@ -251,6 +251,24 @@
     },
     {
       "key": {
+        "uuid": "473864fb_5a556308",
+        "filename": "chrome/browser/ui/ash/wallpaper_policy_handler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-12-15T02:03:55Z",
+      "side": 1,
+      "message": "The latter idea sounds good. I filed a bug to track it as part of the refactoring. Thank you!",
+      "parentUuid": "3dab3f80_e70d8954",
+      "revId": "3ec88e8254923ceb5f856952e1ea4ceab29b398e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "78f2222d_b317d268",
         "filename": "chrome/browser/ui/ash/wallpaper_policy_handler.cc",
         "patchSetId": 9
