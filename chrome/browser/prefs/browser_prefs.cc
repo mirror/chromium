@@ -354,7 +354,9 @@ void RegisterLocalState(PrefRegistrySimple* registry) {
   ExternalProtocolHandler::RegisterPrefs(registry);
   flags_ui::PrefServiceFlagsStorage::RegisterPrefs(registry);
   GpuModeManager::RegisterPrefs(registry);
+#if defined(OS_ANDROID)
   GpuProfileCache::RegisterPrefs(registry);
+#endif
   IntranetRedirectDetector::RegisterPrefs(registry);
   IOThread::RegisterPrefs(registry);
   network_time::NetworkTimeTracker::RegisterPrefs(registry);
