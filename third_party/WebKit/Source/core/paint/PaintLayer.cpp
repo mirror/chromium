@@ -392,8 +392,23 @@ bool PaintLayer::ScrollsWithRespectTo(const PaintLayer* other) const {
 }
 
 void PaintLayer::UpdateLayerPositionsAfterOverflowScroll() {
-  ClearClipRects();
-  UpdateLayerPositionRecursive();
+  if (!IsRootLayer() || !GetLayoutObject().GetFrame()->IsLocalRoot())
+    ClearClipRects();
+  for (PaintLayer* child = FirstChild(); child; child = child->NextSibling())
+    child->UpdateLayerPosition();
+
+  if (LayoutBox* box = GetLayoutBox()) {
+    if (box->IsLayoutBlock()) {
+      if (auto positioned_descendants =
+              ToLayoutBlock(box)->PositionedObjects()) {
+        for (LayoutBox* descendant : *positioned_descendants) {
+          if (descendant->HasLayer() && descendant->Layer()->Parent() != this) {
+            descendant->Layer()->UpdateLayerPosition();
+          }
+        }
+      }
+    }
+  }
 }
 
 void PaintLayer::UpdateTransformationMatrix() {
@@ -2176,9 +2191,11 @@ PaintLayer* PaintLayer::HitTestLayer(
         PaintLayer::kDoNotUseGeometryMapper,
         kExcludeOverlayScrollbarSizeForHitTesting);
   } else {
-    CollectFragments(layer_fragments, root_layer, hit_test_rect,
-                     clip_rects_cache_slot, PaintLayer::kDoNotUseGeometryMapper,
-                     kExcludeOverlayScrollbarSizeForHitTesting);
+    CollectFragments(
+        layer_fragments, root_layer, hit_test_rect, clip_rects_cache_slot,
+        PaintLayer::kDoNotUseGeometryMapper,
+        kExcludeOverlayScrollbarSizeForHitTesting,
+        IsRootLayer() ? kIgnoreOverflowClip : kRespectOverflowClip);
   }
 
   if (scrollable_area_ && scrollable_area_->HitTestResizerInFragments(

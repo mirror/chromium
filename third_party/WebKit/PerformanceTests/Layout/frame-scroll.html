@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<style>
+#log {
+  height: 500px;
+}
+#top {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-around;
+  overflow: hidden;
+}
+#top > .div {
+  flex: 0;
+}
+#spacer {
+  height: 2000px;
+}
+.container {
+  padding: 2px;
+  border: 1px solid black;
+  overflow: hidden;
+}
+.leaf {
+  width: 10px;
+  height: 10px;
+  background-color: green;
+  overflow: hidden;
+}
+</style>
+
+<button onclick='run(50001)'>run</button>
+<pre id='log'></pre>
+<div id='top'></div>
+<div id='spacer'></div>
+
+<script src='../resources/runner.js'></script>
+
+<script>
+function populate_container(parent, depth) {
+  for (let i = 0; i < depth; i++) {
+    let child = document.createElement('div');
+    child.className = 'container';
+    parent.appendChild(child);
+    parent = child;
+  }
+  let leaf = document.createElement('div');
+  leaf.className = 'leaf';
+  parent.appendChild(leaf);
+}
+
+function populate_page(num, depth) {
+  let top = document.getElementById('top');
+  top.innerHTML = '';
+  for (let i = 0; i < num; i++) {
+    populate_container(top, depth);
+  }
+}
+
+function run(count) {
+  let scroller = document.scrollingElement;
+  for (let i = 0; i < count; i++) {
+    document.scrollingElement.scrollTop = i % 1000;
+  }
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+  populate_page(10, 100);
+  document.body.offsetHeight;
+  PerfTestRunner.measureTime({
+    description: "Measure overhead of scrolling the frame.",
+    run: run.bind(null, 10001)
+  });
+});
+</script>
