@@ -58,7 +58,7 @@ void
 // Implementation of {{interface_name}} that forwards calls to C functions implemented by the app.
 class {{interface_name}}Stub : public {{interface_name}} {
  public:
-  {{interface_name}}Stub(
+  explicit {{interface_name}}Stub(
 {%- for method in interface.methods -%}
   {{interface_name}}_{{method.name}}Func {{method.name}}Func
 {%- if not loop.last %}, {% endif %}
