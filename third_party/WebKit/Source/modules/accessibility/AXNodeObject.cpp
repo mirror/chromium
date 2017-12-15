@@ -93,8 +93,8 @@ AXNodeObject::~AXNodeObject() {
   DCHECK(!node_);
 }
 
-void AXNodeObject::AlterSliderValue(bool increase) {
-  if (RoleValue() != kSliderRole)
+void AXNodeObject::AlterSliderOrSpinButtonValue(bool increase) {
+  if (!IsSlider() && !IsSpinButton())
     return;
 
   float value;
@@ -953,9 +953,19 @@ bool AXNodeObject::IsSlider() const {
   return RoleValue() == kSliderRole;
 }
 
+bool AXNodeObject::IsSpinButton() const {
+  return RoleValue() == kSpinButtonRole;
+}
+
 bool AXNodeObject::IsNativeSlider() const {
   if (auto* input = ToHTMLInputElementOrNull(GetNode()))
     return input->type() == InputTypeNames::range;
+  return false;
+}
+
+bool AXNodeObject::IsNativeSpinButton() const {
+  if (auto* input = ToHTMLInputElementOrNull(GetNode()))
+    return input->type() == InputTypeNames::number;
   return false;
 }
 
@@ -1535,7 +1545,7 @@ bool AXNodeObject::ValueForRange(float* out_value) const {
     return true;
   }
 
-  if (IsNativeSlider()) {
+  if (IsNativeSlider() || IsNativeSpinButton()) {
     *out_value = ToHTMLInputElement(*GetNode()).valueAsNumber();
     return true;
   }
@@ -1580,7 +1590,7 @@ bool AXNodeObject::MaxValueForRange(float* out_value) const {
     return true;
   }
 
-  if (IsNativeSlider()) {
+  if (IsNativeSlider() || IsNativeSpinButton()) {
     *out_value = ToHTMLInputElement(*GetNode()).Maximum();
     return true;
   }
@@ -1613,7 +1623,7 @@ bool AXNodeObject::MinValueForRange(float* out_value) const {
     return true;
   }
 
-  if (IsNativeSlider()) {
+  if (IsNativeSlider() || IsNativeSpinButton()) {
     *out_value = ToHTMLInputElement(*GetNode()).Minimum();
     return true;
   }
@@ -1640,7 +1650,7 @@ bool AXNodeObject::MinValueForRange(float* out_value) const {
 }
 
 bool AXNodeObject::StepValueForRange(float* out_value) const {
-  if (IsNativeSlider()) {
+  if (IsNativeSlider() || IsNativeSpinButton()) {
     Decimal step =
         ToHTMLInputElement(*GetNode()).CreateStepRange(kRejectAny).Step();
     *out_value = step.ToString().ToFloat();
@@ -2334,7 +2344,7 @@ bool AXNodeObject::OnNativeIncrementAction() {
   LocalFrame* frame = GetDocument() ? GetDocument()->GetFrame() : nullptr;
   std::unique_ptr<UserGestureIndicator> gesture_indicator =
       Frame::NotifyUserActivation(frame, UserGestureToken::kNewGesture);
-  AlterSliderValue(true);
+  AlterSliderOrSpinButtonValue(true);
   return true;
 }
 
@@ -2342,7 +2352,7 @@ bool AXNodeObject::OnNativeDecrementAction() {
   LocalFrame* frame = GetDocument() ? GetDocument()->GetFrame() : nullptr;
   std::unique_ptr<UserGestureIndicator> gesture_indicator =
       Frame::NotifyUserActivation(frame, UserGestureToken::kNewGesture);
-  AlterSliderValue(false);
+  AlterSliderOrSpinButtonValue(false);
   return true;
 }
 
