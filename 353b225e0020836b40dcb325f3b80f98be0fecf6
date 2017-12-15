@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e3c1ef96_6f3d04e2",
+        "filename": "chrome/browser/android/vr_shell/autocomplete_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-12-15T14:52:09Z",
+      "side": 1,
+      "message": "So in the worst case, the user may have to wait for \u003c 0.5s to see suggestion after typing right? That seems reasonable to me and should probably never happen in practice.",
+      "range": {
+        "startLine": 81,
+        "startChar": 41,
+        "endLine": 81,
+        "endChar": 56
+      },
+      "revId": "353b225e0020836b40dcb325f3b80f98be0fecf6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1418de0_73c3ad27",
+        "filename": "chrome/browser/android/vr_shell/autocomplete_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-12-15T14:52:09Z",
+      "side": 1,
+      "message": "nit: make constant?",
+      "range": {
+        "startLine": 83,
+        "startChar": 42,
+        "endLine": 83,
+        "endChar": 45
+      },
+      "revId": "353b225e0020836b40dcb325f3b80f98be0fecf6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
