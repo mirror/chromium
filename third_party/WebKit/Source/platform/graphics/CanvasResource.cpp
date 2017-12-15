@@ -200,8 +200,7 @@ CanvasResource_GpuMemoryBuffer::CanvasResource_GpuMemoryBuffer(
     return;
   }
   image_id_ = gl->CreateImageCHROMIUM(gpu_memory_buffer_->AsClientBuffer(),
-                                      size.Width(), size.Height(),
-                                      color_params_.GLInternalFormat());
+                                      size.Width(), size.Height());
   if (!image_id_) {
     gpu_memory_buffer_ = nullptr;
     return;

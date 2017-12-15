@@ -30,8 +30,7 @@ class GLImageSharedMemoryTestDelegate : public GLImageTestDelegateBase {
         size.width(), size.height(),
         static_cast<int>(RowSizeForBufferFormat(size.width(), format, 0)), 0,
         format, color, reinterpret_cast<uint8_t*>(shared_memory.memory()));
-    scoped_refptr<GLImageSharedMemory> image(new GLImageSharedMemory(
-        size, GLImageMemory::GetInternalFormatForTesting(format)));
+    scoped_refptr<GLImageSharedMemory> image(new GLImageSharedMemory(size));
     rv = image->Initialize(
         base::SharedMemory::DuplicateHandle(shared_memory.handle()),
         gfx::GenericSharedMemoryId(0), format, 0,
