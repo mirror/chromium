@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d1095ed6_13560323",
+        "filename": "ui/android/event_forwarder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-12-15T21:54:15Z",
+      "side": 1,
+      "message": "hmm, it would be nice if native never sees the other scale. how weird/expensive would it be if java side scaled the inputs from one scale to the other, so native never is never aware of the difference?\n\ncan just skip the whole thing if the two scales are the same of course, so shouldn\u0027t be expensive",
+      "revId": "80b34f711848660b10dbb13533974f2b3baee1ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0d8a73c_ea62eb61",
+        "filename": "ui/android/java/src/org/chromium/ui/display/DisplayAndroid.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-12-15T21:54:15Z",
+      "side": 1,
+      "message": "also make a note this value isn\u0027t available in the native display::Display",
+      "revId": "80b34f711848660b10dbb13533974f2b3baee1ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
