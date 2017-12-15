@@ -2443,25 +2443,6 @@ bool WebViewImpl::ScrollFocusedEditableElementIntoView() {
   if (!element || !IsElementEditable(element))
     return false;
 
-  if (frame->IsRemoteFrame()) {
-    // The rest of the logic here is not implemented for OOPIFs. For now instead
-    // of implementing the logic below (which involves finding the scale and
-    // scrolling point), editable elements inside OOPIFs are scrolled into view
-    // instead. However, a common logic should be implemented for both OOPIFs
-    // and in-process frames to assure a consistent behavior across all frame
-    // types (https://crbug.com/784982).
-    LayoutObject* layout_object = element->GetLayoutObject();
-    if (!layout_object)
-      return false;
-    layout_object->ScrollRectToVisible(element->BoundingBox());
-    return true;
-  }
-
-  if (!frame->View())
-    return false;
-
-  element->GetDocument().UpdateStyleAndLayoutIgnorePendingStylesheets();
-
   bool zoom_in_to_legible_scale =
       web_settings_->AutoZoomFocusedNodeToLegibleScale() &&
       !GetPage()->GetVisualViewport().ShouldDisableDesktopWorkarounds();
@@ -2476,6 +2457,26 @@ bool WebViewImpl::ScrollFocusedEditableElementIntoView() {
       zoom_in_to_legible_scale = false;
   }
 
+  if (frame->IsRemoteFrame()) {
+    // TODO(ekaramad): Unify the codepaths for local and remote frames
+    // (https://crbug.com/784982).
+    LayoutObject* layout_object = element->GetLayoutObject();
+    if (!layout_object)
+      return false;
+    element->GetDocument().GetFrame()->View()->SetZoomForRecursiveScroll(
+        zoom_in_to_legible_scale);
+    layout_object->ScrollRectToVisible(element->BoundingBox());
+    // Reset the flag in case the recursion didn't actually make it to local
+    // root's view.
+    element->GetDocument().GetFrame()->View()->SetZoomForRecursiveScroll(false);
+    return true;
+  }
+
+  if (!frame->View())
+    return false;
+
+  element->GetDocument().UpdateStyleAndLayoutIgnorePendingStylesheets();
+
   float scale;
   IntPoint scroll;
   bool need_animation;
@@ -2485,7 +2486,6 @@ bool WebViewImpl::ScrollFocusedEditableElementIntoView() {
     StartPageScaleAnimation(scroll, false, scale,
                             scrollAndScaleAnimationDurationInSeconds);
   }
-
   return true;
 }
 
@@ -3252,6 +3252,19 @@ WebInputMethodController* WebViewImpl::GetActiveWebInputMethodController()
 void WebViewImpl::RequestDecode(const PaintImage& image,
                                 base::OnceCallback<void(bool)> callback) {
   layer_tree_view_->RequestDecode(image, std::move(callback));
+}
+
+void WebViewImpl::ZoomToRect(const WebRect& rect) {
+  WebPoint scroll;
+  float scale;
+  // TODO(ekaramad): See if we need to use better values here. Specifically for
+  // hit point and default scale. What if the user has already pinched and
+  // zoomed in, or what if caret position is noticeable off from the top-left of
+  // the rect ( https://crbug.com/784982)?
+  ComputeScaleAndScrollForBlockRect({rect.x, rect.y}, rect, caretPadding,
+                                    PageScaleFactor(), scale, scroll);
+  StartPageScaleAnimation(scroll, false, scale,
+                          scrollAndScaleAnimationDurationInSeconds);
 }
 
 Color WebViewImpl::BaseBackgroundColor() const {

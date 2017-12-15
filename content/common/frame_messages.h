@@ -148,6 +148,7 @@ IPC_STRUCT_TRAITS_BEGIN(blink::WebRemoteScrollProperties)
   IPC_STRUCT_TRAITS_MEMBER(make_visible_in_visual_viewport)
   IPC_STRUCT_TRAITS_MEMBER(behavior)
   IPC_STRUCT_TRAITS_MEMBER(is_for_scroll_sequence)
+  IPC_STRUCT_TRAITS_MEMBER(zoom_to_final_rect)
 IPC_STRUCT_TRAITS_END()
 
 IPC_STRUCT_TRAITS_BEGIN(content::ContextMenuParams)

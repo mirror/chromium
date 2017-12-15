@@ -933,6 +933,9 @@ class CORE_EXPORT LocalFrameView final
                                          bool,
                                          ScrollBehavior,
                                          bool);
+  // When the recusive scroll needs to be zoomed in the top-most frame |do_zoom|
+  // is set to true.
+  void SetZoomForRecursiveScroll(bool do_zoom);
 
   PaintArtifactCompositor* GetPaintArtifactCompositorForTesting() {
     DCHECK(RuntimeEnabledFeatures::SlimmingPaintV2Enabled());
@@ -1351,6 +1354,8 @@ class CORE_EXPORT LocalFrameView final
   size_t paint_frame_count_;
 
   UniqueObjectId unique_id_;
+
+  bool zoom_to_final_rect_in_recursive_scroll_ = false;
 
   FRIEND_TEST_ALL_PREFIXES(WebViewTest, DeviceEmulationResetScrollbars);
 };

@@ -57,6 +57,7 @@ struct WebRemoteScrollProperties {
   bool make_visible_in_visual_viewport = false;
   Behavior behavior = kAuto;
   bool is_for_scroll_sequence;
+  bool zoom_to_final_rect = false;
 
   WebRemoteScrollProperties() {}
 #if INSIDE_BLINK

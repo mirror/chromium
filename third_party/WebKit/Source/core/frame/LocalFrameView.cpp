@@ -169,6 +169,8 @@ WebRemoteScrollAlignment ToWebRemoteScrollAlignment(
     return WebRemoteScrollAlignment::kCenterIfNeeded;
   if (alignment == ScrollAlignment::kAlignToEdgeIfNeeded)
     return WebRemoteScrollAlignment::kToEdgeIfNeeded;
+  if (alignment == ScrollAlignment::kAlignCenterAlways)
+    return WebRemoteScrollAlignment::kCenterAlways;
   if (alignment == ScrollAlignment::kAlignTopAlways)
     return WebRemoteScrollAlignment::kTopAlways;
   if (alignment == ScrollAlignment::kAlignBottomAlways)
@@ -4610,8 +4612,13 @@ void LocalFrameView::ScrollRectToVisibleInRemoteParent(
     bool make_visible_in_visual_viewport,
     ScrollBehavior scroll_behavior,
     bool is_for_scroll_sequence) {
-  DCHECK(GetFrame().IsLocalRoot() && !GetFrame().IsMainFrame() &&
-         safe_to_propagate_scroll_to_parent_);
+  DCHECK(GetFrame().IsLocalRoot() && safe_to_propagate_scroll_to_parent_);
+  if (GetFrame().IsMainFrame() && !zoom_to_final_rect_in_recursive_scroll_) {
+    // Recursive scrolling has ended prior to this call. The only reason for
+    // plumbing this call to LocalFrameClient would be zooming into the rect.
+    return;
+  }
+
   // Find the coordinates of the |rect_to_scroll| after removing all transforms
   // on this LayoutObject. |new_rect| will be in the coordinate space of this
   // frame; which is a local root. In the parent frame process, a similar
@@ -4619,17 +4626,26 @@ void LocalFrameView::ScrollRectToVisibleInRemoteParent(
   // of the parent frame. The combination of the two transforms should act as a
   // call to LocalToAncestorQuad when frame and its parent are in the same
   // process (which is done in LayoutBox::ScrollRectIntoVisibleRecusive).
-  LayoutRect new_rect = EnclosingLayoutRect(
-      GetLayoutView()
-          ->LocalToAbsoluteQuad(FloatRect(rect_to_scroll), 0)
-          .BoundingBox());
+  LayoutRect new_rect =
+      (zoom_to_final_rect_in_recursive_scroll_ && GetFrame().IsMainFrame())
+          ? rect_to_scroll
+          : EnclosingLayoutRect(
+                GetLayoutView()
+                    ->LocalToAbsoluteQuad(FloatRect(rect_to_scroll), 0)
+                    .BoundingBox());
+  WebRemoteScrollProperties properties(
+      ToWebRemoteScrollAlignment(align_x), ToWebRemoteScrollAlignment(align_y),
+      scroll_type, make_visible_in_visual_viewport, scroll_behavior,
+      is_for_scroll_sequence);
+  properties.zoom_to_final_rect = zoom_to_final_rect_in_recursive_scroll_;
   GetFrame().Client()->ScrollRectToVisibleInParentFrame(
       WebRect(new_rect.X().ToInt(), new_rect.Y().ToInt(),
               new_rect.Width().ToInt(), new_rect.Height().ToInt()),
-      WebRemoteScrollProperties(ToWebRemoteScrollAlignment(align_x),
-                                ToWebRemoteScrollAlignment(align_y),
-                                scroll_type, make_visible_in_visual_viewport,
-                                scroll_behavior, is_for_scroll_sequence));
+      properties);
+}
+
+void LocalFrameView::SetZoomForRecursiveScroll(bool do_zoom) {
+  zoom_to_final_rect_in_recursive_scroll_ = do_zoom;
 }
 
 void LocalFrameView::ScrollContentsIfNeeded() {

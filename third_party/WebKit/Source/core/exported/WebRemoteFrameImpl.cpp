@@ -46,6 +46,8 @@ ScrollAlignment ToScrollAlignment(WebRemoteScrollAlignment alignment) {
       return ScrollAlignment::kAlignCenterIfNeeded;
     case WebRemoteScrollAlignment::kToEdgeIfNeeded:
       return ScrollAlignment::kAlignToEdgeIfNeeded;
+    case WebRemoteScrollAlignment::kCenterAlways:
+      return ScrollAlignment::kAlignCenterAlways;
     case WebRemoteScrollAlignment::kTopAlways:
       return ScrollAlignment::kAlignTopAlways;
     case WebRemoteScrollAlignment::kBottomAlways:
@@ -353,6 +355,11 @@ void WebRemoteFrameImpl::ScrollRectToVisible(
   }
 
   // Schedule the scroll.
+  owner_element->GetDocument()
+      .GetFrame()
+      ->LocalFrameRoot()
+      .View()
+      ->SetZoomForRecursiveScroll(properties.zoom_to_final_rect);
   auto* scroll_sequencer =
       owner_element->GetDocument().GetPage()->GetSmoothScrollSequencer();
   scroll_sequencer->AbortAnimations();
@@ -367,6 +374,11 @@ void WebRemoteFrameImpl::ScrollRectToVisible(
       properties.make_visible_in_visual_viewport,
       properties.GetScrollBehavior(), properties.is_for_scroll_sequence);
   scroll_sequencer->RunQueuedAnimations();
+  owner_element->GetDocument()
+      .GetFrame()
+      ->LocalFrameRoot()
+      .View()
+      ->SetZoomForRecursiveScroll(false);
 }
 
 void WebRemoteFrameImpl::SetHasReceivedUserGestureBeforeNavigation(bool value) {
