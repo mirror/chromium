@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "333b8391_755b9510",
+        "filename": "base/android/jni_array.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-12-15T15:43:24Z",
+      "side": 1,
+      "message": "I think the odds of anyone else needing a Pair\u003cString, byte[]\u003e, or Pair\u003cInteger, byte[]\u003e are quite low. \n\nOne option would be to move this out of base/, but...\n\nI think a better option would be to pass each of the pair elements as separate args and use the existing methods: AppendJavaStringArrayToStringVector, JavaArrayOfByteArrayToStringVector, JavaIntArrayToIntVector",
+      "revId": "1e27a0043c9b56e1bd2a1c69735f88625284f7d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
