@@ -47,6 +47,7 @@ class TranslateBubbleView : public LocationBarBubbleDelegateView,
  public:
   // Item IDs for the denial button's menu.
   enum DenialMenuItem {
+    ALWAYS_TRANSLATE_LANGUAGE,
     NEVER_TRANSLATE_LANGUAGE,
     NEVER_TRANSLATE_SITE,
     MORE_OPTIONS
