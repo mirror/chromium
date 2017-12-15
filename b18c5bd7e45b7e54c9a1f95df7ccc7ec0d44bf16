@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d27f508f_8dcfccd0",
+        "filename": "testing/buildbot/test_suite_exceptions.pyl",
+        "patchSetId": 2
+      },
+      "lineNbr": 4357,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-12-15T17:28:12Z",
+      "side": 0,
+      "message": "Why are the Mac bots the only ones of the Out of Process Profiling bots to run chromium_isolated_scripts...",
+      "revId": "b18c5bd7e45b7e54c9a1f95df7ccc7ec0d44bf16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
