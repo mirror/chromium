@@ -44,6 +44,7 @@
 #include "content/browser/renderer_host/render_widget_host_impl.h"
 #include "content/browser/renderer_host/render_widget_host_input_event_router.h"
 #include "content/browser/renderer_host/render_widget_host_view_child_frame.h"
+#include "content/browser/service_manager/service_manager_context.h"
 #include "content/browser/web_contents/web_contents_impl.h"
 #include "content/browser/web_contents/web_contents_view.h"
 #include "content/common/fileapi/file_system_messages.h"
@@ -2398,6 +2399,11 @@ int LoadBasicRequest(mojom::NetworkContext* network_context, const GURL& url) {
   simple_loader_helper.WaitForCallback();
 
   return simple_loader->NetError();
+}
+
+std::map<std::string, base::WeakPtr<UtilityProcessHost>>*
+GetServiceManagerProcessGroups() {
+  return ServiceManagerContext::GetProcessGroupsForTesting();
 }
 
 }  // namespace content
