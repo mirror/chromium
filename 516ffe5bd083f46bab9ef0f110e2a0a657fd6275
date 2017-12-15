@@ -22,6 +22,30 @@
       "revId": "516ffe5bd083f46bab9ef0f110e2a0a657fd6275",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c73927d1_35891768",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 498,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-12-15T15:31:48Z",
+      "side": 0,
+      "message": "Right, I think there may be some dependencies to this trace event in the Catapult mappers. How about adding the benchmark category to TRACE_TASK_EXECUTION?",
+      "parentUuid": "ce77580f_16986c8b",
+      "range": {
+        "startLine": 498,
+        "startChar": 2,
+        "endLine": 498,
+        "endChar": 22
+      },
+      "revId": "516ffe5bd083f46bab9ef0f110e2a0a657fd6275",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
