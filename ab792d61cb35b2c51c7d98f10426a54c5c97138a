@@ -1,0 +1,707 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3f3801cb_12733814",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-15T23:28:33Z",
+      "side": 1,
+      "message": "795450",
+      "revId": "ab792d61cb35b2c51c7d98f10426a54c5c97138a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4096b472_e6c63ec5",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-15T23:28:33Z",
+      "side": 1,
+      "message": "Let\u0027s drop the \"copied from\" and rename to DependentIOBuffer (?), explaining that it\u0027s for continuing to read into an existing buffer at a given offset.",
+      "revId": "ab792d61cb35b2c51c7d98f10426a54c5c97138a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e37870b3_f68d7ab5",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-15T23:28:33Z",
+      "side": 1,
+      "message": "// Helper for the text/plain case.",
+      "revId": "ab792d61cb35b2c51c7d98f10426a54c5c97138a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "884fcd8d_6b83036c",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-15T23:28:33Z",
+      "side": 1,
+      "message": "nit: s/success/resume/",
+      "range": {
+        "startLine": 73,
+        "startChar": 45,
+        "endLine": 73,
+        "endChar": 52
+      },
+      "revId": "ab792d61cb35b2c51c7d98f10426a54c5c97138a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7a068fc_11b5c059",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-15T23:28:33Z",
+      "side": 1,
+      "message": "Add a comment about lifetime.",
+      "revId": "ab792d61cb35b2c51c7d98f10426a54c5c97138a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1cd3488_79f6afbb",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-15T23:28:33Z",
+      "side": 1,
+      "message": "Maybe allocate a weak_ptr for the next handler instead?  (Your idea.)",
+      "revId": "ab792d61cb35b2c51c7d98f10426a54c5c97138a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "279e53da_c6742eed",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-15T23:28:33Z",
+      "side": 1,
+      "message": "Add comment.",
+      "revId": "ab792d61cb35b2c51c7d98f10426a54c5c97138a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "803dc1ba_a8eacf2a",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-15T23:28:33Z",
+      "side": 1,
+      "message": "Add: \"This is sufficient to make the result deterministic.\"",
+      "revId": "ab792d61cb35b2c51c7d98f10426a54c5c97138a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5180ac32_02facf4f",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-15T23:28:33Z",
+      "side": 1,
+      "message": "// If bytes_read \u003d\u003d 0 and we haven\u0027t confirmed it yet, it\u0027s not confirmed blockable.",
+      "revId": "ab792d61cb35b2c51c7d98f10426a54c5c97138a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "865e81bb_4f126173",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-15T23:28:33Z",
+      "side": 1,
+      "message": "Makes sense to check the size of the buffer here as well, to be safe (in case downstream handler unexpectedly gives us a smaller buffer).",
+      "revId": "ab792d61cb35b2c51c7d98f10426a54c5c97138a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ff3f501_6ef7a481",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-15T23:28:33Z",
+      "side": 1,
+      "message": "nit: rewrap",
+      "revId": "ab792d61cb35b2c51c7d98f10426a54c5c97138a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d03c260f_af5ca922",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-15T23:28:33Z",
+      "side": 1,
+      "message": "Whew!  I think I get this now, but let\u0027s say a little bit more about the structure of the code below to help others know how to read it.",
+      "revId": "ab792d61cb35b2c51c7d98f10426a54c5c97138a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4cbb922_48a3d0ff",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-15T23:28:33Z",
+      "side": 1,
+      "message": "Good point-- this might work.  (Let\u0027s file a bug for it.)",
+      "revId": "ab792d61cb35b2c51c7d98f10426a54c5c97138a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23df8eb0_a9528822",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-15T23:28:33Z",
+      "side": 1,
+      "message": "Update comment.",
+      "revId": "ab792d61cb35b2c51c7d98f10426a54c5c97138a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88348047_14ab4b9b",
+        "filename": "content/browser/loader/cross_site_document_resource_handler_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-15T23:28:33Z",
+      "side": 1,
+      "message": "Maybe show where the packet breaks were?",
+      "revId": "ab792d61cb35b2c51c7d98f10426a54c5c97138a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2bfbe03_e38a295c",
+        "filename": "content/browser/loader/cross_site_document_resource_handler_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-15T23:28:33Z",
+      "side": 1,
+      "message": "... without sniffing",
+      "revId": "ab792d61cb35b2c51c7d98f10426a54c5c97138a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f06eca2_15290c94",
+        "filename": "content/browser/loader/cross_site_document_resource_handler_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-15T23:28:33Z",
+      "side": 1,
+      "message": "nit: Move the \"without sniffing\" cases together.",
+      "revId": "ab792d61cb35b2c51c7d98f10426a54c5c97138a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67922d6f_5161e9ae",
+        "filename": "content/browser/loader/cross_site_document_resource_handler_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-15T23:28:33Z",
+      "side": 1,
+      "message": "Let\u0027s add some multi-packet allow cases.",
+      "revId": "ab792d61cb35b2c51c7d98f10426a54c5c97138a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68cf458e_a9e1fbf9",
+        "filename": "content/browser/loader/cross_site_document_resource_handler_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 448,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-15T23:28:33Z",
+      "side": 1,
+      "message": "...after sniffing",
+      "revId": "ab792d61cb35b2c51c7d98f10426a54c5c97138a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b9c35f1_66c13594",
+        "filename": "content/browser/loader/cross_site_document_resource_handler_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 571,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-15T23:28:33Z",
+      "side": 1,
+      "message": "// Blocked without sniffing.\n(maybe?  maybe reorder?)",
+      "revId": "ab792d61cb35b2c51c7d98f10426a54c5c97138a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e41d8984_a94f1dde",
+        "filename": "content/browser/loader/cross_site_document_resource_handler_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 830,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-15T23:28:33Z",
+      "side": 1,
+      "message": "Update comment.",
+      "revId": "ab792d61cb35b2c51c7d98f10426a54c5c97138a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "825563cc_a5295b20",
+        "filename": "content/browser/loader/cross_site_document_resource_handler_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 838,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-15T23:28:33Z",
+      "side": 1,
+      "message": "nit: Add blank line after.",
+      "revId": "ab792d61cb35b2c51c7d98f10426a54c5c97138a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da930db3_8224f76d",
+        "filename": "content/browser/loader/cross_site_document_resource_handler_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 839,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-15T23:28:33Z",
+      "side": 1,
+      "message": "Add loop comment (especially noting the num+1 behavior which gets \"\").  And/or push a \"\" entry to the vector.",
+      "revId": "ab792d61cb35b2c51c7d98f10426a54c5c97138a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b70daec_4f004216",
+        "filename": "content/browser/loader/cross_site_document_resource_handler_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 847,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-15T23:28:33Z",
+      "side": 1,
+      "message": "Maybe rename expected_sniff_bytes, or clarify?",
+      "revId": "ab792d61cb35b2c51c7d98f10426a54c5c97138a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "952b81eb_24ddf047",
+        "filename": "content/browser/loader/cross_site_document_resource_handler_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 855,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-15T23:28:33Z",
+      "side": 1,
+      "message": "Comment why it\u0027s +1 (i.e., that this is the followup OnWillRead where we cancel).",
+      "revId": "ab792d61cb35b2c51c7d98f10426a54c5c97138a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0970538_8cb5d24e",
+        "filename": "content/browser/loader/cross_site_document_resource_handler_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 867,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-15T23:28:33Z",
+      "side": 1,
+      "message": "This message should probably be on a stream_sink_-\u003eio_buffer() !\u003d local_buffer_ check?  (Worth having both.)",
+      "revId": "ab792d61cb35b2c51c7d98f10426a54c5c97138a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acf8d2b9_6f0a0972",
+        "filename": "content/browser/loader/cross_site_document_resource_handler_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 869,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-15T23:28:33Z",
+      "side": 1,
+      "message": "Add comment:\nThe number of OnWillReads is...",
+      "revId": "ab792d61cb35b2c51c7d98f10426a54c5c97138a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ea8c17c_6c1047a4",
+        "filename": "content/browser/loader/cross_site_document_resource_handler_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 876,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-15T23:28:33Z",
+      "side": 1,
+      "message": "Move below comment.",
+      "revId": "ab792d61cb35b2c51c7d98f10426a54c5c97138a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f677763_903978d1",
+        "filename": "content/browser/loader/cross_site_document_resource_handler_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 888,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-15T23:28:33Z",
+      "side": 1,
+      "message": "// Wait for CSDRH::Resume",
+      "revId": "ab792d61cb35b2c51c7d98f10426a54c5c97138a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c686f15_22840292",
+        "filename": "content/browser/loader/cross_site_document_resource_handler_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 907,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-15T23:28:33Z",
+      "side": 1,
+      "message": "Don\u0027t check against Verdict.",
+      "revId": "ab792d61cb35b2c51c7d98f10426a54c5c97138a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7305350_f5f82f53",
+        "filename": "content/browser/loader/cross_site_document_resource_handler_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 914,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-15T23:28:33Z",
+      "side": 1,
+      "message": "Mention that we\u0027re out of the loop now.",
+      "revId": "ab792d61cb35b2c51c7d98f10426a54c5c97138a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f921fc1b_eb5b4fcd",
+        "filename": "content/browser/loader/cross_site_document_resource_handler_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 936,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-15T23:28:33Z",
+      "side": 1,
+      "message": "Helper function with comments for some of this?  (It\u0027s tricky to follow.)",
+      "revId": "ab792d61cb35b2c51c7d98f10426a54c5c97138a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7aa4099b_759c92fb",
+        "filename": "content/browser/loader/cross_site_document_resource_handler_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1071,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-15T23:28:33Z",
+      "side": 1,
+      "message": "Maybe call second part is_streaming?",
+      "revId": "ab792d61cb35b2c51c7d98f10426a54c5c97138a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aaf9bf68_ce8441b9",
+        "filename": "content/browser/loader/cross_site_document_resource_handler_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1085,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-15T23:28:33Z",
+      "side": 1,
+      "message": "// Buffering more data, or after we\u0027ve decided to block.  The downstream handler won\u0027t defer because it doesn\u0027t hear about it.",
+      "revId": "ab792d61cb35b2c51c7d98f10426a54c5c97138a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d69299c5_9384b0a4",
+        "filename": "content/browser/loader/cross_site_document_resource_handler_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1115,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-15T23:28:33Z",
+      "side": 1,
+      "message": "EXPECT_EQ?",
+      "revId": "ab792d61cb35b2c51c7d98f10426a54c5c97138a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13445f11_a8d4e805",
+        "filename": "content/browser/loader/cross_site_document_resource_handler_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1122,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-15T23:28:33Z",
+      "side": 1,
+      "message": "Mention this is for the final read.",
+      "revId": "ab792d61cb35b2c51c7d98f10426a54c5c97138a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a211c6a4_9ed71261",
+        "filename": "content/browser/loader/mime_sniffing_resource_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-15T23:28:33Z",
+      "side": 1,
+      "message": "Stale?",
+      "revId": "ab792d61cb35b2c51c7d98f10426a54c5c97138a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f01a5375_1da0e2f6",
+        "filename": "content/common/cross_site_document_classifier.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-15T23:28:33Z",
+      "side": 1,
+      "message": "Just to be parallel with the case below, let\u0027s say \"When |signatures[i]| is a prefix of |data|, a match...\"",
+      "revId": "ab792d61cb35b2c51c7d98f10426a54c5c97138a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4b9953b_503a60b7",
+        "filename": "content/common/cross_site_document_classifier.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-15T23:28:33Z",
+      "side": 1,
+      "message": "Probably fine to remove, with a comment in the declaration above that this list shouldn\u0027t have values that are prefixes of each other.  (Maybe also mention above MatchesSignature.)",
+      "revId": "ab792d61cb35b2c51c7d98f10426a54c5c97138a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3057d3d7_e76fe660",
+        "filename": "content/common/cross_site_document_classifier.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-15T23:28:33Z",
+      "side": 1,
+      "message": "Sounds like we don\u0027t think this is likely to block real JS in practice, but it might be nice to protect other types of JSON (like arrays).  Let\u0027s file a bug to cite in the TODO.",
+      "revId": "ab792d61cb35b2c51c7d98f10426a54c5c97138a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47f3aa9a_66c3d9fa",
+        "filename": "content/common/cross_site_document_classifier.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-15T23:28:33Z",
+      "side": 1,
+      "message": "Add comment, especially explaining that \"maybe\" means keep reading and try again.",
+      "revId": "ab792d61cb35b2c51c7d98f10426a54c5c97138a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
