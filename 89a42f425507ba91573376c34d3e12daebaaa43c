@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a1d36b58_5058f6e7",
+        "filename": "content/browser/renderer_host/media/media_stream_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1216,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-12-15T11:16:43Z",
+      "side": 1,
+      "message": "I have removed the two DCHECKs(one here and another at l.1548 in the next patchset(ps8).\n\nThe one at l.1373 is required to ensure that |input| is not nullop after the device has been opened. AudioInputDeviceManager::Open guarantees that |input| is never nullop.",
+      "parentUuid": "a42cd281_c8b57922",
+      "revId": "89a42f425507ba91573376c34d3e12daebaaa43c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "65c0bf95_31e9f41e",
         "filename": "content/browser/renderer_host/media/media_stream_manager.cc",
         "patchSetId": 6
