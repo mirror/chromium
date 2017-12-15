@@ -274,7 +274,7 @@ GL_APICALL void         GL_APIENTRY glGetProgramInfoCHROMIUM (GLidProgram progra
 GL_APICALL void         GL_APIENTRY glGetUniformBlocksCHROMIUM (GLidProgram program, GLsizeiNotNegative bufsize, GLsizei* size, void* info);
 GL_APICALL void         GL_APIENTRY glGetTransformFeedbackVaryingsCHROMIUM (GLidProgram program, GLsizeiNotNegative bufsize, GLsizei* size, void* info);
 GL_APICALL void         GL_APIENTRY glGetUniformsES3CHROMIUM (GLidProgram program, GLsizeiNotNegative bufsize, GLsizei* size, void* info);
-GL_APICALL GLuint       GL_APIENTRY glCreateImageCHROMIUM (ClientBuffer buffer, GLsizei width, GLsizei height, GLenum internalformat);
+GL_APICALL GLuint       GL_APIENTRY glCreateImageCHROMIUM (ClientBuffer buffer, GLsizei width, GLsizei height);
 GL_APICALL void         GL_APIENTRY glDestroyImageCHROMIUM (GLuint image_id);
 GL_APICALL void         GL_APIENTRY glDescheduleUntilFinishedCHROMIUM (void);
 GL_APICALL void         GL_APIENTRY glGetTranslatedShaderSourceANGLE (GLidShader shader, GLsizeiNotNegative bufsize, GLsizeiOptional* length, char* source);
