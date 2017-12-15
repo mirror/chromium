@@ -176,6 +176,29 @@
       "revId": "1129b0a676991d835847ac1170996026bc11945a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba3fa34c_0be275ec",
+        "filename": "third_party/WebKit/common/service_worker/service_worker_client.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-12-15T07:10:58Z",
+      "side": 1,
+      "message": "Adding this \u0027import\u0027 means we need to add a dependency on \u0027services/network/public/interfaces/\u0027 for building this mojom. Thus the trybot failure will disappear.",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 77
+      },
+      "revId": "1129b0a676991d835847ac1170996026bc11945a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
