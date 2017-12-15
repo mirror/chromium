@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6674da38_132d9ff6",
+        "filename": "components/crash/core/common/crash_key_breakpad_ios.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-12-15T05:20:22Z",
+      "side": 1,
+      "message": "I see.",
+      "revId": "a7020081d3c45da6635453bd9295c5d0a2f715e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
