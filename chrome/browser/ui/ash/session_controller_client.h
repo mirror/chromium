@@ -13,6 +13,7 @@
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "chrome/browser/chromeos/policy/off_hours/device_off_hours_controller.h"
+#include "chrome/browser/chromeos/settings/device_settings_service.h"
 #include "chrome/browser/supervised_user/supervised_user_service_observer.h"
 #include "components/session_manager/core/session_manager_observer.h"
 #include "components/user_manager/user_manager.h"
@@ -41,6 +42,7 @@ class SessionControllerClient
       public session_manager::SessionManagerObserver,
       public SupervisedUserServiceObserver,
       public content::NotificationObserver,
+      public chromeos::DeviceSettingsService::Observer,
       public policy::off_hours::DeviceOffHoursController::Observer {
  public:
   SessionControllerClient();
@@ -99,6 +101,9 @@ class SessionControllerClient
   void Observe(int type,
                const content::NotificationSource& source,
                const content::NotificationDetails& details) override;
+
+  // chromeos::DeviceSettingsService::Observer:
+  void DeviceSettingsUpdated() override;
 
   // DeviceOffHoursController::Observer:
   void OnOffHoursEndTimeChanged() override;
@@ -175,6 +180,10 @@ class SessionControllerClient
   // Used to suppress duplicate IPCs to ash.
   ash::mojom::SessionInfoPtr last_sent_session_info_;
   ash::mojom::UserSessionPtr last_sent_user_session_;
+
+  // This class observes DeviceSettingService and manages off hours policy.
+  std::unique_ptr<policy::off_hours::DeviceOffHoursController>
+      device_off_hours_controller_;
 
   base::WeakPtrFactory<SessionControllerClient> weak_ptr_factory_;
 

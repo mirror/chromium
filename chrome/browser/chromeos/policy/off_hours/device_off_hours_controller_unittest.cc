@@ -111,11 +111,8 @@ class DeviceOffHoursControllerSimpleTest
     power_manager_client_ = new chromeos::FakePowerManagerClient();
     dbus_setter_->SetPowerManagerClient(
         base::WrapUnique(power_manager_client_));
-
-    device_settings_service_.SetDeviceOffHoursControllerForTesting(
-        base::MakeUnique<policy::off_hours::DeviceOffHoursController>());
     device_off_hours_controller_ =
-        device_settings_service_.device_off_hours_controller();
+        base::MakeUnique<policy::off_hours::DeviceOffHoursController>();
   }
 
   void UpdateDeviceSettings() {
@@ -147,7 +144,7 @@ class DeviceOffHoursControllerSimpleTest
   }
 
   policy::off_hours::DeviceOffHoursController* device_off_hours_controller() {
-    return device_off_hours_controller_;
+    return device_off_hours_controller_.get();
   }
 
  private:
@@ -157,8 +154,8 @@ class DeviceOffHoursControllerSimpleTest
   // The object is owned by DeviceSettingsTestBase class.
   chromeos::FakePowerManagerClient* power_manager_client_;
 
-  // The object is owned by DeviceSettingsService class.
-  policy::off_hours::DeviceOffHoursController* device_off_hours_controller_;
+  std::unique_ptr<policy::off_hours::DeviceOffHoursController>
+      device_off_hours_controller_;
 
   DISALLOW_COPY_AND_ASSIGN(DeviceOffHoursControllerSimpleTest);
 };

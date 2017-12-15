@@ -29,12 +29,6 @@ class OwnerKeyUtil;
 class PublicKey;
 }
 
-namespace policy {
-namespace off_hours {
-class DeviceOffHoursController;
-}  // namespace off_hours
-}  // namespace policy
-
 namespace chromeos {
 
 class SessionManagerOperation;
@@ -126,6 +120,12 @@ class DeviceSettingsService : public SessionManagerClient::Observer {
     return device_settings_.get();
   }
 
+  void set_device_settings(
+      std::unique_ptr<enterprise_management::ChromeDeviceSettingsProto>
+          device_settings) {
+    device_settings_ = std::move(device_settings);
+  }
+
   // Returns the currently used owner key.
   scoped_refptr<ownership::PublicKey> GetPublicKey();
 
@@ -135,16 +135,6 @@ class DeviceSettingsService : public SessionManagerClient::Observer {
   // that question, simply check whether device_settings() is different from
   // nullptr.
   Status status() const { return store_status_; }
-
-  // Returns the currently device off hours controller. The returned pointer is
-  // guaranteed to be non-null.
-  policy::off_hours::DeviceOffHoursController* device_off_hours_controller()
-      const {
-    return device_off_hours_controller_.get();
-  }
-
-  void SetDeviceOffHoursControllerForTesting(
-      std::unique_ptr<policy::off_hours::DeviceOffHoursController> controller);
 
   // Triggers an attempt to pull the public half of the owner key from disk and
   // load the device settings.
@@ -269,9 +259,6 @@ class DeviceSettingsService : public SessionManagerClient::Observer {
 
   // Whether the device will be establishing consumer ownership.
   bool will_establish_consumer_ownership_ = false;
-
-  std::unique_ptr<policy::off_hours::DeviceOffHoursController>
-      device_off_hours_controller_;
 
   base::WeakPtrFactory<DeviceSettingsService> weak_factory_{this};
 
