@@ -282,6 +282,7 @@ class CC_EXPORT LayerTreeHostImpl
   // add impl-side invalidations to it.
   // virtual for testing.
   virtual void InvalidateContentOnImplSide();
+  virtual void InvalidateLayerTreeFrameSink();
 
   void SetTreeLayerScrollOffsetMutated(ElementId element_id,
                                        LayerTreeImpl* tree,
@@ -452,7 +453,7 @@ class CC_EXPORT LayerTreeHostImpl
     return &image_animation_controller_.value();
   }
 
-  virtual void WillBeginImplFrame(const viz::BeginFrameArgs& args);
+  virtual bool WillBeginImplFrame(const viz::BeginFrameArgs& args);
   virtual void DidFinishImplFrame();
   void DidNotProduceFrame(const viz::BeginFrameAck& ack);
   void DidModifyTilePriorities();
