@@ -46,6 +46,30 @@
       "revId": "efd59ded51d79260f207417c820a9fa161fb4213",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "646177b7_671e4356",
+        "filename": "ui/ozone/platform/drm/gpu/gbm_buffer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1108829
+      },
+      "writtenOn": "2017-12-15T21:14:17Z",
+      "side": 1,
+      "message": "I would prefer to leave it as is for now. I am trying to submit this to unblock the chromium roll to our internal repo.\n\nThere are also other code in this file that uses %u, so it might be better to do that conversion in a future CL, to keep it consistent.",
+      "parentUuid": "f04fbde3_f32d4327",
+      "range": {
+        "startLine": 84,
+        "startChar": 60,
+        "endLine": 84,
+        "endChar": 63
+      },
+      "revId": "efd59ded51d79260f207417c820a9fa161fb4213",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
