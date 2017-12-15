@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2a63ad1f_d5413b27",
+        "filename": "third_party/WebKit/Source/devtools/front_end/persistence/NetworkPersistenceManager.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2017-12-15T22:23:08Z",
+      "side": 1,
+      "message": "Oops",
+      "revId": "fd33fe875e1fd2105b8d330f47008e5c058817ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
