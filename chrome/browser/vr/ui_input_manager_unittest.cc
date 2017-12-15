@@ -270,9 +270,11 @@ TEST_F(UiInputManagerTest, HoverClick) {
   Mock::VerifyAndClearExpectations(p_element);
 
   // Press while not on the element, move over the element, move away, then
-  // release. The element should receive no input.
+  // release. The element should receive hover events.
   HandleInput(kBackwardVector, kDown);
+  EXPECT_CALL(*p_element, OnHoverEnter(_));
   HandleInput(kForwardVector, kDown);
+  EXPECT_CALL(*p_element, OnHoverLeave());
   HandleInput(kBackwardVector, kUp);
   Mock::VerifyAndClearExpectations(p_element);
 
@@ -280,12 +282,10 @@ TEST_F(UiInputManagerTest, HoverClick) {
   EXPECT_CALL(*p_element, OnHoverEnter(_));
   EXPECT_CALL(*p_element, OnButtonDown(_));
   HandleInput(kForwardVector, kDown);
-  EXPECT_CALL(*p_element, OnMove(_));
+  EXPECT_CALL(*p_element, OnHoverLeave());
   HandleInput(kBackwardVector, kDown);
   Mock::VerifyAndClearExpectations(p_element);
-  EXPECT_CALL(*p_element, OnMove(_));
   EXPECT_CALL(*p_element, OnButtonUp(_));
-  EXPECT_CALL(*p_element, OnHoverLeave());
   HandleInput(kBackwardVector, kUp);
   Mock::VerifyAndClearExpectations(p_element);
 }
@@ -297,17 +297,22 @@ TEST_F(UiInputManagerTest, ReleaseButtonOnAnotherElement) {
   StrictMock<MockRect>* p_front_element = CreateAndAddMockElement(-5.f);
   StrictMock<MockRect>* p_back_element = CreateAndAddMockElement(5.f);
 
+  // TODO(ymalik): We should test verify that the functions called on the
+  // element are in the element's local coordinate space, but that would require
+  // writing a matcher for gfx::Point3F.
   // Press on an element, move away, then release.
   EXPECT_CALL(*p_front_element, OnHoverEnter(_));
   EXPECT_CALL(*p_front_element, OnButtonDown(_));
-  EXPECT_CALL(*p_front_element, OnMove(_));
-  EXPECT_CALL(*p_front_element, OnMove(_));
-  EXPECT_CALL(*p_front_element, OnButtonUp(_));
+  HandleInput(kForwardVector, kDown);
   EXPECT_CALL(*p_front_element, OnHoverLeave());
   EXPECT_CALL(*p_back_element, OnHoverEnter(_));
-  HandleInput(kForwardVector, kDown);
   HandleInput(kBackwardVector, kDown);
+  EXPECT_CALL(*p_back_element, OnMove(_));
+  EXPECT_CALL(*p_front_element, OnButtonUp(_));
   HandleInput(kBackwardVector, kUp);
+  EXPECT_CALL(*p_back_element, OnHoverLeave());
+  EXPECT_CALL(*p_front_element, OnHoverEnter(_));
+  HandleInput(kForwardVector, kUp);
 }
 
 // Test that input is tolerant of disappearing elements.
