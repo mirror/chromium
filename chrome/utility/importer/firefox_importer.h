@@ -19,6 +19,7 @@
 #include "base/gtest_prod_util.h"
 #include "base/macros.h"
 #include "build/build_config.h"
+#include "chrome/common/importer/imported_bookmark_entry.h"
 #include "chrome/utility/importer/importer.h"
 #include "components/favicon_base/favicon_usage_data.h"
 
@@ -41,6 +42,16 @@ class FirefoxImporter : public Importer {
                    ImporterBridge* bridge) override;
 
  private:
+  // Location of favicons in Firefox profile. It may vary depending on Firefox
+  // version.
+  enum class FaviconsLocation {
+    // Favicons are stored in places.sqlite database (older Firefox versions).
+    kPlacesDatabase,
+
+    // Favicons are stored in favicons.sqlite (Firefox 55 and never).
+    kFaviconsDatabase
+  };
+
   using FaviconMap = std::map<int64_t, std::set<GURL>>;
 
   ~FirefoxImporter() override;
@@ -76,13 +87,25 @@ class FirefoxImporter : public Importer {
                             BookmarkList* list);
 
   // Loads all children of the given folder, and appends them to the |list|.
-  void GetWholeBookmarkFolder(sql::Connection* db, BookmarkList* list,
-                              size_t position, bool* empty_folder);
+  // |favicons_location| is the location detected for Firefox profile that we
+  // are importing from.
+  void GetWholeBookmarkFolder(sql::Connection* db,
+                              BookmarkList* list,
+                              size_t position,
+                              FaviconsLocation favicons_location,
+                              bool* empty_folder);
 
-  // Loads the favicons given in the map from the database, loads the data,
-  // and converts it into FaviconUsage structures.
+  // Loads the favicons given in the map from places.sqlite database, loads the
+  // data, and converts it into FaviconUsageData structures.
+  // This function supports older Firefox profiles.
   void LoadFavicons(sql::Connection* db,
                     const FaviconMap& favicon_map,
+                    favicon_base::FaviconUsageDataList* favicons);
+
+  // Loads the favicons for |bookmarks| from favicons.sqlite database, loads the
+  // data, and converts it into FaviconUsageData structures.
+  // This function supports never Firefox profiles (Firefox 55 and later).
+  void LoadFavicons(const std::vector<ImportedBookmarkEntry>& bookmarks,
                     favicon_base::FaviconUsageDataList* favicons);
 
   base::FilePath source_path_;
