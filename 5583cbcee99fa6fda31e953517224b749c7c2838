@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "641cc6f5_5c912cd8",
+        "filename": "components/download/downloader/in_progress/download_entry.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-12-15T18:32:16Z",
+      "side": 1,
+      "message": "Maybe ukm_download_id to distinguish?",
+      "range": {
+        "startLine": 41,
+        "startChar": 6,
+        "endLine": 41,
+        "endChar": 12
+      },
+      "revId": "5583cbcee99fa6fda31e953517224b749c7c2838",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c786192_5cd2a0a9",
+        "filename": "content/browser/download/download_resource_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-12-15T18:32:16Z",
+      "side": 1,
+      "message": "This is a static method so prefer:\nukm::UkmRecorder::GetNewSourceID();",
+      "range": {
+        "startLine": 104,
+        "startChar": 32,
+        "endLine": 104,
+        "endChar": 46
+      },
+      "revId": "5583cbcee99fa6fda31e953517224b749c7c2838",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34a33e59_44f9a469",
+        "filename": "content/browser/download/download_resource_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-12-15T18:32:16Z",
+      "side": 1,
+      "message": "Maybe move this to a static method that can be whitelisted in https://chromium-review.googlesource.com/c/chromium/src/+/820683",
+      "range": {
+        "startLine": 105,
+        "startChar": 6,
+        "endLine": 106,
+        "endChar": 73
+      },
+      "revId": "5583cbcee99fa6fda31e953517224b749c7c2838",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
