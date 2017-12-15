@@ -17,13 +17,13 @@ ChromeComponentUpdaterServiceProviderDelegate::
 void ChromeComponentUpdaterServiceProviderDelegate::LoadComponent(
     const std::string& name,
     base::OnceCallback<void(const std::string&)> load_callback) {
-  component_updater::CrOSComponent::LoadComponent(name,
-                                                  std::move(load_callback));
+  g_browser_process->platform_part()->cros_component()->Load(
+      name, std::move(load_callback));
 }
 
 bool ChromeComponentUpdaterServiceProviderDelegate::UnloadComponent(
     const std::string& name) {
-  return component_updater::CrOSComponent::UnloadComponent(name);
+  return g_browser_process->platform_part()->cros_component()->Unload(name);
 }
 
 }  // namespace chromeos
