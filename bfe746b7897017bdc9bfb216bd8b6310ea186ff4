@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b0965387_19255e9d",
+        "filename": "third_party/WebKit/Source/core/css/resolver/StyleAdjuster.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 576,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-12-15T16:20:19Z",
+      "side": 1,
+      "message": "Maybe this condition (or, well, rather the old one before the De Morgan) could be factored out and reused? (I believe it\u0027s used in one more place in this file - search for is_svg_root.)",
+      "range": {
+        "startLine": 575,
+        "startChar": 8,
+        "endLine": 576,
+        "endChar": 45
+      },
+      "revId": "bfe746b7897017bdc9bfb216bd8b6310ea186ff4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "652cbe0f_de858c6d",
+        "filename": "third_party/WebKit/Source/core/css/resolver/StyleAdjuster.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 585,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-12-15T16:20:19Z",
+      "side": 1,
+      "message": "I find it a bit odd that \u003ctspan\u003e gets this treatment, but not \u003ctextpath\u003e, since they are both \"inline level\" text content elements - that\u0027s a spec issue though...",
+      "range": {
+        "startLine": 585,
+        "startChar": 20,
+        "endLine": 585,
+        "endChar": 27
+      },
+      "revId": "bfe746b7897017bdc9bfb216bd8b6310ea186ff4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9384f9a_1fade567",
+        "filename": "third_party/WebKit/Source/core/svg/SVGGElement.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-12-15T16:20:19Z",
+      "side": 1,
+      "message": "I suspect this should get that same treatment as \u0027none\u0027 for the reason stated in the comment, i.e something like:\n\n\u003csvg\u003e\n  \u003cg style\u003d\"display: contents\"\u003e\n    \u003clinearGradient id\u003d\"l\"\u003e\u003cstop stop-color\u003d\"green\"/\u003e\u003c/linearGradient\u003e\n  \u003c/g\u003e\n  \u003crect width\u003d\"100\" height\u003d\"100\" fill\u003d\"url(#l) red\"/\u003e\n\u003c/svg\u003e",
+      "range": {
+        "startLine": 43,
+        "startChar": 6,
+        "endLine": 43,
+        "endChar": 44
+      },
+      "revId": "bfe746b7897017bdc9bfb216bd8b6310ea186ff4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90ff5f7b_fe7988d7",
+        "filename": "third_party/WebKit/Source/core/svg/SVGUseElement.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-12-15T16:20:19Z",
+      "side": 1,
+      "message": "When do we get non-style adjusted ComputedStyles here?",
+      "range": {
+        "startLine": 486,
+        "startChar": 6,
+        "endLine": 486,
+        "endChar": 44
+      },
+      "revId": "bfe746b7897017bdc9bfb216bd8b6310ea186ff4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
