@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "e295bb98_e62449d3",
+        "filename": "base/files/file_util_posix.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1117055
+      },
+      "writtenOn": "2017-12-15T00:48:41Z",
+      "side": 1,
+      "message": "I think this would make more of a difference if we were dealing with non-regular files, since e.g. sockets and pipes can return EAGAIN instead of blocking waiting for data in nonblocking mode. However, this shouldn\u0027t affect regular files.\n\nI can leave the flag, if you think it makes it more clear.",
+      "parentUuid": "8fce7eb4_dc7dae34",
+      "revId": "f24cad68f532d66fe956e8fe4e79e9c7efe2a2de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "93972c62_a71255ca",
         "filename": "base/files/file_util_unittest.cc",
         "patchSetId": 3
@@ -149,6 +167,30 @@
       "side": 1,
       "message": "Sure, but I can fix that in a separate future CL.",
       "parentUuid": "b840e348_36a7ab63",
+      "range": {
+        "startLine": 1057,
+        "startChar": 33,
+        "endLine": 1057,
+        "endChar": 50
+      },
+      "revId": "f24cad68f532d66fe956e8fe4e79e9c7efe2a2de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e683cffc_3d3ec33d",
+        "filename": "base/files/file_util_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1057,
+      "author": {
+        "id": 1117055
+      },
+      "writtenOn": "2017-12-15T00:48:41Z",
+      "side": 1,
+      "message": "OK, I\u0027ll put up a CL later to fix these.",
+      "parentUuid": "96bac26f_60c0e55e",
       "range": {
         "startLine": 1057,
         "startChar": 33,
