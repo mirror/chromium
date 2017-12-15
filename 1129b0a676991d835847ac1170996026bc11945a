@@ -179,6 +179,30 @@
     },
     {
       "key": {
+        "uuid": "f942dd5a_87b8ffc0",
+        "filename": "content/common/service_worker/service_worker_utils.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-15T08:53:56Z",
+      "side": 1,
+      "message": "using kLast in switches/ifs seems like an antipattern. I know this function is going away but it seems we could just consider client_info.url is empty to mean the Client info is empty? Or uuid?",
+      "parentUuid": "290a0797_7e052413",
+      "range": {
+        "startLine": 176,
+        "startChar": 13,
+        "endLine": 176,
+        "endChar": 63
+      },
+      "revId": "1129b0a676991d835847ac1170996026bc11945a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba3fa34c_0be275ec",
         "filename": "third_party/WebKit/common/service_worker/service_worker_client.mojom",
         "patchSetId": 3
