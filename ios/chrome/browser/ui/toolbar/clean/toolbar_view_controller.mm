@@ -720,6 +720,10 @@
   self.buttonUpdater.forwardButton = self.forwardButton;
   self.buttonUpdater.voiceSearchButton = self.voiceSearchButton;
 
+  for (NSLayoutConstraint* c in buttonConstraints) {
+    c.priority = 999;
+  }
+
   [NSLayoutConstraint activateConstraints:buttonConstraints];
 }
 
@@ -752,9 +756,10 @@
       ToolbarComponentVisibilityRegularWidth;
   self.locationBarLeadingButton.alpha = 0;
   self.locationBarLeadingButton.hidden = YES;
-  [self.locationBarLeadingButton.widthAnchor
-      constraintEqualToConstant:kLeadingLocationBarButtonWidth]
-      .active = YES;
+  NSLayoutConstraint* c = [self.locationBarLeadingButton.widthAnchor
+      constraintEqualToConstant:kLeadingLocationBarButtonWidth];
+  c.active = YES;
+  c.priority = 999;
   self.locationBarLeadingButton.imageEdgeInsets =
       UIEdgeInsetsMakeDirected(0, kLeadingLocationBarButtonImageInset, 0, 0);
 }
