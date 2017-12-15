@@ -108,6 +108,30 @@
     },
     {
       "key": {
+        "uuid": "bcbe54bb_31acb033",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBottomSheetContent.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-15T00:57:08Z",
+      "side": 1,
+      "message": "They are recording suggestions visibility. I want to make sure we\u0027re recording half or full visible when the suggestions are loaded after native initialization while the sheet is open.. perhaps that\u0027s already happening somewhere else?",
+      "parentUuid": "10b21512_c00ceb87",
+      "range": {
+        "startLine": 162,
+        "startChar": 39,
+        "endLine": 162,
+        "endChar": 63
+      },
+      "revId": "01b43095077fccef2422c5306d2e0905d39208d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ea326176_ff380fc6",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBottomSheetContent.java",
         "patchSetId": 2
@@ -364,6 +388,24 @@
       "revId": "01b43095077fccef2422c5306d2e0905d39208d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3011ab43_61a2ccf3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1075,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-15T00:57:08Z",
+      "side": 1,
+      "message": "Great!",
+      "parentUuid": "d92c76f6_5eb0a12a",
+      "revId": "01b43095077fccef2422c5306d2e0905d39208d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
