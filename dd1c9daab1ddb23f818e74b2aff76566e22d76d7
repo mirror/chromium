@@ -36,6 +36,23 @@
     },
     {
       "key": {
+        "uuid": "dadbae0d_7a1e82b8",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/BUILD.gn",
+        "patchSetId": 11
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-12-15T02:24:05Z",
+      "side": 1,
+      "message": "How about adding specific files instead of whole //base?\nAlso, we may be able to limit base/run_loop.h only to tests by this file.\n// I\u0027m not quite familiar with DEPS so I\u0027d like to ask others too;)",
+      "revId": "dd1c9daab1ddb23f818e74b2aff76566e22d76d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "602937e2_a0b5908d",
         "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerInstalledScriptsManager.h",
         "patchSetId": 11
@@ -47,6 +64,23 @@
       "writtenOn": "2017-12-15T02:08:14Z",
       "side": 1,
       "message": "Ditto",
+      "revId": "dd1c9daab1ddb23f818e74b2aff76566e22d76d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8aba0d93_d230f85b",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/ThreadSafeScriptContainer.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-12-15T02:24:05Z",
+      "side": 1,
+      "message": "nit: could you have a blank line after this?",
       "revId": "dd1c9daab1ddb23f818e74b2aff76566e22d76d7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -115,6 +149,29 @@
       "writtenOn": "2017-12-15T02:08:14Z",
       "side": 1,
       "message": "You don\u0027t need to put the name in a comment. The presubmit warning only complains if the name doesn\u0027t add more info than the type.",
+      "revId": "dd1c9daab1ddb23f818e74b2aff76566e22d76d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bbc2823_3b90fba7",
+        "filename": "third_party/WebKit/public/web/WebEmbeddedWorker.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-12-15T02:24:05Z",
+      "side": 1,
+      "message": "I slightly prefer packing them into a struct instead of having comments into the params. Struct can have names for each params when passing so it\u0027s less error-prone, and the num of args can be reduced. \nWhat do you think?",
+      "range": {
+        "startLine": 61,
+        "startChar": 6,
+        "endLine": 65,
+        "endChar": 69
+      },
       "revId": "dd1c9daab1ddb23f818e74b2aff76566e22d76d7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
