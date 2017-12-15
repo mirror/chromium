@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "632f9f7e_c3185f51",
+        "filename": "ios/chrome/browser/ui/download/pass_kit_coordinator.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-15T22:21:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f8a60d05_16cd10d3",
+      "revId": "ad39798a50a2bfbff20471ffe2ad45a6db634195",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "65909c0e_a5029cc3",
         "filename": "ios/chrome/browser/ui/download/pass_kit_coordinator.h",
         "patchSetId": 6
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "f4e3dd0b_919a9583",
+        "filename": "ios/chrome/browser/ui/download/pass_kit_coordinator.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-15T22:21:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "65909c0e_a5029cc3",
+      "revId": "ad39798a50a2bfbff20471ffe2ad45a6db634195",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "799724e1_048c6b9f",
         "filename": "ios/chrome/browser/ui/download/pass_kit_coordinator.h",
         "patchSetId": 6
@@ -50,6 +86,24 @@
       "revId": "ad39798a50a2bfbff20471ffe2ad45a6db634195",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ecca1a7_ee3d1b33",
+        "filename": "ios/chrome/browser/ui/download/pass_kit_coordinator.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-15T22:21:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "799724e1_048c6b9f",
+      "revId": "ad39798a50a2bfbff20471ffe2ad45a6db634195",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "e66eebd2_72950c13",
+        "filename": "ios/chrome/browser/ui/download/pass_kit_coordinator.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-15T22:21:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d7e1b19a_c068690e",
+      "range": {
+        "startLine": 30,
+        "startChar": 17,
+        "endLine": 30,
+        "endChar": 0
+      },
+      "revId": "ad39798a50a2bfbff20471ffe2ad45a6db634195",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f4c7c1f3_7f057bb1",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 6
@@ -96,6 +174,30 @@
       "revId": "ad39798a50a2bfbff20471ffe2ad45a6db634195",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "918f8d01_64261a11",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 34413,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-15T22:21:53Z",
+      "side": 1,
+      "message": "It was #3 (Put the wrong name in your new histogram in histograms.xml). Fixed.",
+      "parentUuid": "f4c7c1f3_7f057bb1",
+      "range": {
+        "startLine": 34413,
+        "startChar": 0,
+        "endLine": 34413,
+        "endChar": 42
+      },
+      "revId": "ad39798a50a2bfbff20471ffe2ad45a6db634195",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -122,6 +224,30 @@
     },
     {
       "key": {
+        "uuid": "342cecdc_68a034a1",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 34417,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-15T22:21:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d23e462f_30dc7609",
+      "range": {
+        "startLine": 34417,
+        "startChar": 18,
+        "endLine": 34417,
+        "endChar": 24
+      },
+      "revId": "ad39798a50a2bfbff20471ffe2ad45a6db634195",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f8259159_8ded8c3f",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 6
@@ -142,6 +268,30 @@
       "revId": "ad39798a50a2bfbff20471ffe2ad45a6db634195",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a828aa65_d53349ad",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 34418,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-15T22:21:53Z",
+      "side": 1,
+      "message": "I guess I was not good at documenting the purpose of this histogram. Currently Chrome drops PassKit downloads if Add PK Pass dialog is shown. That\u0027s a bug, but probably can be ignored because the number of unsuccessful presentation is presumably low. Updated the comment.",
+      "parentUuid": "f8259159_8ded8c3f",
+      "range": {
+        "startLine": 34418,
+        "startChar": 18,
+        "endLine": 34418,
+        "endChar": 23
+      },
+      "revId": "ad39798a50a2bfbff20471ffe2ad45a6db634195",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -168,6 +318,30 @@
     },
     {
       "key": {
+        "uuid": "106cd272_066b3894",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 34419,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-15T22:21:53Z",
+      "side": 1,
+      "message": "pkpass is a known iOS file extension, but I added more info in parenthesis.",
+      "parentUuid": "f0f8dd32_7f3697c7",
+      "range": {
+        "startLine": 34419,
+        "startChar": 15,
+        "endLine": 34419,
+        "endChar": 21
+      },
+      "revId": "ad39798a50a2bfbff20471ffe2ad45a6db634195",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c19a3b22_bea52a2a",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 6
@@ -182,6 +356,24 @@
       "revId": "ad39798a50a2bfbff20471ffe2ad45a6db634195",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04549e4a_51f47d15",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 34430,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-15T22:21:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c19a3b22_bea52a2a",
+      "revId": "ad39798a50a2bfbff20471ffe2ad45a6db634195",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
