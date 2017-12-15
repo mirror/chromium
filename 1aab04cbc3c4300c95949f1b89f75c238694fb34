@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "17368e40_ba183c22",
+        "filename": "third_party/android_deps/README.chromium",
+        "patchSetId": 8
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-12-15T17:34:07Z",
+      "side": 1,
+      "message": "If it\u0027s going to live there, why is it listed in .gitignore?",
+      "range": {
+        "startLine": 13,
+        "startChar": 1,
+        "endLine": 13,
+        "endChar": 11
+      },
+      "revId": "1aab04cbc3c4300c95949f1b89f75c238694fb34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4125b776_baaa6b12",
+        "filename": "third_party/android_deps/README.chromium",
+        "patchSetId": 8
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-12-15T17:34:07Z",
+      "side": 1,
+      "message": "nit: Might be more clear to say:\n\nInstructions for adding/updating deps is in:\n  //tools/android/roll/android_deps/README.md",
+      "revId": "1aab04cbc3c4300c95949f1b89f75c238694fb34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34a30c70_578ca7f4",
+        "filename": "tools/android/roll/android_deps/README.md",
+        "patchSetId": 8
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-12-15T17:34:07Z",
+      "side": 1,
+      "message": "I think it\u0027d be good to list steps for adding a new library. E.g.:\n\n## Adding a new Library\n1. Add dependency to build.gradle\n2. Run fetch_all.sh\n3. Create a commit \u0026 follow [//docs/adding_to_third_party.md] for the review.\n\nMight also be a good idea to add a link from docs/adding_to_third_party.md to here?",
+      "revId": "1aab04cbc3c4300c95949f1b89f75c238694fb34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d42c0c8_feac54d7",
+        "filename": "tools/android/roll/android_deps/fetch_all.sh",
+        "patchSetId": 8
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-12-15T17:34:07Z",
+      "side": 1,
+      "message": "You\u0027re not passing $1 here, so might make more sense to do:\n\nif [[ $# \u003e 0 ]];\n  show help\n  exit 1\nfi",
+      "revId": "1aab04cbc3c4300c95949f1b89f75c238694fb34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
