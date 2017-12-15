@@ -231,18 +231,18 @@ class PrintJob::PdfConversionState {
                                                  std::move(start_callback));
   }
 
-  void GetMorePages(const PdfConverter::GetPageCallback& get_page_callback) {
+  void GetMorePages(PdfConverter::GetPageCallback get_page_callback) {
     const int kMaxNumberOfTempFilesPerDocument = 3;
     while (pages_in_progress_ < kMaxNumberOfTempFilesPerDocument &&
            current_page_ < page_count_) {
       ++pages_in_progress_;
-      converter_->GetPage(current_page_++, get_page_callback);
+      converter_->GetPage(current_page_++, std::move(get_page_callback));
     }
   }
 
-  void OnPageProcessed(const PdfConverter::GetPageCallback& get_page_callback) {
+  void OnPageProcessed(PdfConverter::GetPageCallback get_page_callback) {
     --pages_in_progress_;
-    GetMorePages(get_page_callback);
+    GetMorePages(std::move(get_page_callback));
     // Release converter if we don't need this any more.
     if (!pages_in_progress_ && current_page_ >= page_count_)
       converter_.reset();
@@ -275,7 +275,7 @@ void PrintJob::StartPdfToEmfConversion(
       print_text_with_gdi ? PdfRenderSettings::Mode::GDI_TEXT
                           : PdfRenderSettings::Mode::NORMAL);
   pdf_conversion_state_->Start(
-      bytes, settings, base::Bind(&PrintJob::OnPdfConversionStarted, this));
+      bytes, settings, base::BindOnce(&PrintJob::OnPdfConversionStarted, this));
 }
 
 void PrintJob::OnPdfConversionStarted(int page_count) {
@@ -321,7 +321,7 @@ void PrintJob::StartPdfToTextConversion(
                              /*autorotate=*/true,
                              PdfRenderSettings::Mode::TEXTONLY);
   pdf_conversion_state_->Start(
-      bytes, settings, base::Bind(&PrintJob::OnPdfConversionStarted, this));
+      bytes, settings, base::BindOnce(&PrintJob::OnPdfConversionStarted, this));
 }
 
 void PrintJob::StartPdfToPostScriptConversion(
@@ -338,7 +338,7 @@ void PrintJob::StartPdfToPostScriptConversion(
       ps_level2 ? PdfRenderSettings::Mode::POSTSCRIPT_LEVEL2
                 : PdfRenderSettings::Mode::POSTSCRIPT_LEVEL3);
   pdf_conversion_state_->Start(
-      bytes, settings, base::Bind(&PrintJob::OnPdfConversionStarted, this));
+      bytes, settings, base::BindOnce(&PrintJob::OnPdfConversionStarted, this));
 }
 #endif  // defined(OS_WIN)
 
