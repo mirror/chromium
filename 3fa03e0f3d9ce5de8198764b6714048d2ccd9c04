@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4ef0b37b_eeb8db24",
+        "filename": "third_party/zlib/contrib/optimizations/arm/armv8_crc32.c",
+        "patchSetId": 5
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-12-15T15:25:22Z",
+      "side": 1,
+      "message": "Thinking some more, I\u0027d expect this to crash.  Leave it as is, but add an exit(0) somewhere in the routine to make it crash if called.  Send that change up to the bots and let\u0027s see what happens. I\u0027d expect it to be called on our bots, unless I\u0027m missing something ...",
+      "parentUuid": "52902ccb_eed9d815",
+      "revId": "3fa03e0f3d9ce5de8198764b6714048d2ccd9c04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ff6d9d74_3e70b7ca",
         "filename": "third_party/zlib/crc32.c",
         "patchSetId": 5
