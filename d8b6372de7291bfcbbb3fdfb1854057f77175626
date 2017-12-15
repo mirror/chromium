@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a1b87127_b230ba0f",
+        "filename": "tools/licenses.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-12-15T15:40:25Z",
+      "side": 1,
+      "message": "Can you use string .format() instead of concatenation?",
+      "range": {
+        "startLine": 400,
+        "startChar": 27,
+        "endLine": 400,
+        "endChar": 55
+      },
+      "revId": "d8b6372de7291bfcbbb3fdfb1854057f77175626",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7024665_32f1b15a",
+        "filename": "tools/licenses.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-12-15T15:40:25Z",
+      "side": 1,
+      "message": "Should this maybe result in an exception?",
+      "range": {
+        "startLine": 445,
+        "startChar": 19,
+        "endLine": 445,
+        "endChar": 56
+      },
+      "revId": "d8b6372de7291bfcbbb3fdfb1854057f77175626",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "277ced35_3ebdf11d",
+        "filename": "tools/licenses.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 608,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-12-15T15:40:25Z",
+      "side": 1,
+      "message": "Maybe write to stderr (or is there some other logging mechanism)? I wouldn\u0027t want the error message to show up where a caller would expect the license itself...",
+      "range": {
+        "startLine": 608,
+        "startChar": 18,
+        "endLine": 608,
+        "endChar": 27
+      },
+      "revId": "d8b6372de7291bfcbbb3fdfb1854057f77175626",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
