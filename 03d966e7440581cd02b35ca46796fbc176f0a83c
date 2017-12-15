@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "c8325d34_732f81f3",
+        "filename": "ui/views/test/views_pixel_test.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-15T03:57:53Z",
+      "side": 1,
+      "message": "\u003e I\u0027m not sure I understand the point of trying fallbacks (besides \u0027common\u0027 and unversioned same-platform). ie. Why bother even comparing windows output against the linux reference image if tests are then going to allow that comparison to fail? Does this follow a pattern from other pixel tests?\n\nI think it\u0027s a new pattern..\n\nThe problem I encountered with string_faded.png is that it is (quite likely..) going to be different on *every* macOS version. Apple are constantly tweaking their fonts. That creates an frustrating maintenance burden. \n\nThe approach here allows acceptable failures to be encoded in the test. If a test _provides_ a reference image for a platform+version, then it MUST pass on that configuration. A test can chose to be comprehensive if it\u0027s important enough by just providing all the reference images. It can also ignore the |used_fallback| result to require ALL current and future waterfall bots to match.\n\n\nAlso allowing comparison against a reference image from some other platform gives nice error output (a data: url), which you can just save from the tryjob output and commit :).\n\nFor some tests, providing a \"common\" reference image might not be meaningful if every platform differs.\n\n\n\u003e \n\u003e My alternative thought is: Fail anytime a comparable reference image isn\u0027t found  or doesn\u0027t pass (ie. Platform tries p\u003cv\u003e, tries p*, tries common, fails), and tests are expected to fail if there\u0027s no comparable fallback (it\u0027s pretty easy to disable a test on a specific platform/version until a reference image is updated or made available, though I suppose some sheriffs/devs might just disable the fixture everywhere...).\n\nYeah - the maintenance cost, and burden of gathering sufficient reference images, is my main worry here. Without an autorebaseline bot and TestExpectations, landing changes may be very difficult.\n\nBut, for a test that treats used_fallback as success, removing the reference image for that platform+version has the same effect as disabling the test in that configuration. So this gets something of what TestExpectations provides.\n\nA test can also first land with a minimal set of reference images, then do a follow-up that adds more (possibly removing the used_fallback check). Whereas treating a missing reference image as failure, or failing on one that\u0027s found, would be a blocker for the initial landing.\n\n\u003e \n\u003e Perhaps someone more familiar with pixel testing patterns should take a look. Feel free to split this test update out from the removal of DrawFadedText; you can leave that specific test as-is (with a comment explaining that it\u0027s useless) or remove it.\n\nhehe - the test won\u0027t compile if I delete DrawFadedText :). Removing it isn\u0027t urgent (it\u0027s unused, after all..). I\u0027d feel bad removing the test, but it\u0027s easy just to add a new test first :). Done.",
+      "parentUuid": "fcdfa2c7_62cb4b8b",
+      "revId": "03d966e7440581cd02b35ca46796fbc176f0a83c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7cab0dec_a7d0c3d2",
         "filename": "ui/views/test/views_pixel_test.cc",
         "patchSetId": 16
@@ -50,6 +68,24 @@
       "revId": "03d966e7440581cd02b35ca46796fbc176f0a83c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de743d91_17797f82",
+        "filename": "ui/views/test/views_pixel_test.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-15T03:57:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7cab0dec_a7d0c3d2",
+      "revId": "03d966e7440581cd02b35ca46796fbc176f0a83c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +112,30 @@
     },
     {
       "key": {
+        "uuid": "f462a0a0_82e94734",
+        "filename": "ui/views/test/views_pixel_test.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-15T03:57:53Z",
+      "side": 1,
+      "message": "\u003e This bit is a little confusing... I\u0027m not sure why tests should ever be allowed to fail this check on certain platforms. Shouldn\u0027t that just mean that we need a new reference image for that platform, or the test isn\u0027t applicable and should be disabled on that platform?\n\nI\u0027m trying to avoid one of the main pain points of pixel tests. That\u0027s cases where the result has some tiny difference in subpixel AA or shading. This may be due to OS version or some other configuration -- not just platform. These discrepancies doesn\u0027t get picked up by trybots, but can upset the waterfall.\n\nFor Blink, this pain is reduced in a few ways\n - autorebaseline - a bot comes along and updates the reference images for you\n - TestExpectations - it\u0027s easy to selectively disable a test on specific platforms\n\nThere\u0027s also cc::FuzzyPixelComparator, but that makes things hard to document and troubleshoot, requires some arbitrary parameters, and can hide real regressions.\n\nSo the goal with this is *just* to test the appearance on configurations known to run on the default set of CQ trybots: win10, win7, mac 10.9, mac 10.12, linux. Other bot configurations are allowed to not care about the test -- the assumption is that we get sufficient coverage already and the rest is just extra maintenance burden.\n\n\nBut there may also be tests that don\u0027t vary by small amounts by platform. Mostly things that don\u0027t involve text should fall into this category. In this case, the `|| used_fallback` part of the EXPECT goes away.\n\nMaybe in future we also allow some fuzziness with cc::FuzzyPixelComparator\n\nBut in that case, we can also document the platform where the reference image was first generated, and just allow other platforms to use it.\n\n(something put in \"common\" would be to say \"this should match exactly on all platforms\").",
+      "parentUuid": "d07db09f_17cfc6fa",
+      "range": {
+        "startLine": 24,
+        "startChar": 10,
+        "endLine": 24,
+        "endChar": 28
+      },
+      "revId": "03d966e7440581cd02b35ca46796fbc176f0a83c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b9fd2ab5_5fc52059",
         "filename": "ui/views/test/views_pixel_test.h",
         "patchSetId": 16
@@ -90,6 +150,24 @@
       "revId": "03d966e7440581cd02b35ca46796fbc176f0a83c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a307002a_dc4d5679",
+        "filename": "ui/views/test/views_pixel_test.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-15T03:57:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b9fd2ab5_5fc52059",
+      "revId": "03d966e7440581cd02b35ca46796fbc176f0a83c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
