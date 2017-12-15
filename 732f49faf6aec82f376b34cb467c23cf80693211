@@ -1,0 +1,152 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9e80b27e_b97380a5",
+        "filename": "net/socket/ssl_server_socket_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-12-15T00:28:49Z",
+      "side": 1,
+      "message": "Unless preferences have changed, I believe Chromium usually prefers using a WeakPtrFactor\u003c..\u003e member, so the AsWeakPtr method isn\u0027t exposed? (Not that it matters here.)",
+      "range": {
+        "startLine": 39,
+        "startChar": 13,
+        "endLine": 39,
+        "endChar": 68
+      },
+      "revId": "732f49faf6aec82f376b34cb467c23cf80693211",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51edf1e9_6dd9fa0b",
+        "filename": "net/socket/ssl_server_socket_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-12-15T00:28:49Z",
+      "side": 1,
+      "message": "This seems to be left uninitialized.",
+      "revId": "732f49faf6aec82f376b34cb467c23cf80693211",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3971864_fbc5d34c",
+        "filename": "net/socket/ssl_server_socket_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-12-15T00:28:49Z",
+      "side": 1,
+      "message": "Handshaker\u0027s sort of an odd name. It\u0027s really just some ball of methods that you\u0027re trying to keep out of the public header, combined with a tiny piece of global state for the ssl_socket_data_index_. Why not put those into SocketImpl instead?\n\nHonestly, there\u0027s not really much benefit to keeping things out of this public header since it\u0027s already only included by only one file anyway. :-)\n\nAs for the ssl_socket_data_index_, I\u0027d just stash a little LazyInstance that allocates the index in some public field and does nothing else.",
+      "revId": "732f49faf6aec82f376b34cb467c23cf80693211",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6cc1793_4af226c7",
+        "filename": "net/socket/ssl_server_socket_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 710,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-12-15T00:28:49Z",
+      "side": 1,
+      "message": "Though it\u0027s not needed I suppose, I\u0027d attach this unconditionally. It seems simpler for other callbacks we may want.",
+      "revId": "732f49faf6aec82f376b34cb467c23cf80693211",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3140edfa_c31bd20f",
+        "filename": "net/socket/ssl_server_socket_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 789,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-12-15T00:28:49Z",
+      "side": 1,
+      "message": "Does std::make_unique\u003cSSLServerContextImpl\u003e(certificate, key, ssl_config) work? I don\u0027t know if going from derived to base works right or not.",
+      "revId": "732f49faf6aec82f376b34cb467c23cf80693211",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0aff5ef4_f5791f05",
+        "filename": "net/socket/ssl_server_socket_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 866,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-12-15T00:28:49Z",
+      "side": 1,
+      "message": "Mind adding a short comment for what the second check is for? Something like\n\n// SSLPrivateKey only supports ECDHE-based ciphers.",
+      "revId": "732f49faf6aec82f376b34cb467c23cf80693211",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "675077fb_a3583b72",
+        "filename": "net/socket/ssl_server_socket_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-12-15T00:28:49Z",
+      "side": 1,
+      "message": "Handshaker\u0027s sort of an odd name. It\u0027s really just some ball of methods that you\u0027re trying to keep out of the public header. Why not put those into SocketImpl instead?\n\nHonestly, there\u0027s not really much benefit to keeping things out of this public header since it\u0027s already only included by only one file anyway. :-)",
+      "range": {
+        "startLine": 35,
+        "startChar": 8,
+        "endLine": 35,
+        "endChar": 18
+      },
+      "revId": "732f49faf6aec82f376b34cb467c23cf80693211",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08e8c13b_d3aaa07f",
+        "filename": "net/socket/ssl_server_socket_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1175,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-12-15T00:28:49Z",
+      "side": 1,
+      "message": "Could you also add:\n\n  client_ssl_config_.version_max \u003d SSL_PROTOCOL_VERSION_TLS1_2;\n\nJust one less thing to fix when we get around to turning TLS 1.3 on by default. :-) TLS 1.3 always works with SSLPrivateKey, so you\u0027ll want to turn it off too for this test.",
+      "revId": "732f49faf6aec82f376b34cb467c23cf80693211",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
