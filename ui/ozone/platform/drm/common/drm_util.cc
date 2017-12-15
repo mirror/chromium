@@ -355,6 +355,10 @@ std::unique_ptr<display::DisplaySnapshot> CreateDisplaySnapshot(
   bool has_overscan = false;
   gfx::ColorSpace display_color_space;
 
+  // This is the size of the active pixels from the first detailed timing
+  // descritor in the EDID.
+  gfx::Size active_pixel_size;
+
   ScopedDrmPropertyBlobPtr edid_blob(
       GetDrmPropertyBlob(fd, info->connector(), "EDID"));
   if (edid_blob) {
@@ -364,7 +368,7 @@ std::unique_ptr<display::DisplaySnapshot> CreateDisplaySnapshot(
     display::GetDisplayIdFromEDID(edid, display_id, &display_id, &product_id);
 
     display::ParseOutputDeviceData(edid, nullptr, nullptr, &display_name,
-                                   nullptr, nullptr);
+                                   &active_pixel_size, nullptr);
     display::ParseOutputOverscanFlag(edid, &has_overscan);
 
     display_color_space = GetColorSpaceFromEdid(edid);
@@ -387,8 +391,19 @@ std::unique_ptr<display::DisplaySnapshot> CreateDisplaySnapshot(
       native_mode = modes.back().get();
   }
 
-  // If no preferred mode is found then use the first one. Using the first one
-  // since it should be the best mode.
+  // If we couldn't find a preferred mode, then try to find a mode that has the
+  // same size as the first detailed timing descriptor in the EDID.
+  if (!native_mode && edid_blob) {
+    for (const auto& mode : modes) {
+      if (mode->size() == active_pixel_size) {
+        native_mode = mode.get();
+        break;
+      }
+    }
+  }
+
+  // If we still have no preferred mode, then use the first one since it should
+  // be the best mode.
   if (!native_mode && !modes.empty())
     native_mode = modes.front().get();
 
