@@ -10,35 +10,42 @@
 #error "This file requires ARC support."
 #endif
 
-@interface ChromeCoordinator () {
-  __weak UIViewController* _baseViewController;
-  MutableCoordinatorArray* _childCoordinators;
-}
+@interface ChromeCoordinator ()
+
+// Helper function used in initializers.
+- (void)commonInitForBaseViewController:(UIViewController*)baseViewController
+                           browserState:(ios::ChromeBrowserState*)browserState;
+
 @end
 
 @implementation ChromeCoordinator
+@synthesize childCoordinators = _childCoordinators;
+@synthesize baseViewController = _baseViewController;
+@synthesize browserState = _browserState;
 
 - (nullable instancetype)initWithBaseViewController:
     (UIViewController*)viewController {
   if (self = [super init]) {
-    _baseViewController = viewController;
-    _childCoordinators = [MutableCoordinatorArray array];
+    [self commonInitForBaseViewController:viewController browserState:nullptr];
   }
   return self;
 }
 
-- (nullable instancetype)init {
-  NOTREACHED();
-  return nil;
+- (nullable instancetype)
+initWithBaseViewController:(UIViewController*)viewController
+              browserState:(ios::ChromeBrowserState*)browserState {
+  if (self = [super init]) {
+    [self commonInitForBaseViewController:viewController
+                             browserState:browserState];
+  }
+  return self;
 }
 
 - (void)dealloc {
   [self stop];
 }
 
-- (MutableCoordinatorArray*)childCoordinators {
-  return _childCoordinators;
-}
+#pragma mark - Accessors
 
 - (ChromeCoordinator*)activeChildCoordinator {
   // By default the active child is the one most recently added to the child
@@ -46,9 +53,7 @@
   return self.childCoordinators.lastObject;
 }
 
-- (nullable UIViewController*)baseViewController {
-  return _baseViewController;
-}
+#pragma mark - Public
 
 - (void)start {
   // Default implementation does nothing.
@@ -56,6 +61,15 @@
 
 - (void)stop {
   // Default implementation does nothing.
+}
+
+#pragma mark - Private
+
+- (void)commonInitForBaseViewController:(UIViewController*)baseViewController
+                           browserState:(ios::ChromeBrowserState*)browserState {
+  _baseViewController = baseViewController;
+  _childCoordinators = [MutableCoordinatorArray array];
+  _browserState = browserState;
 }
 
 @end
