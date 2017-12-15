@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c182d4a7_75f2f439",
+        "filename": "chrome/browser/vr/ui_scene_creator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1135,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-12-15T15:05:40Z",
+      "side": 1,
+      "message": "nit: constant here and above?",
+      "range": {
+        "startLine": 1135,
+        "startChar": 28,
+        "endLine": 1135,
+        "endChar": 33
+      },
+      "revId": "673eb070baf3b1c494a4ac29e2599d5a2676f51a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3664b939_b4e9f617",
+        "filename": "chrome/browser/vr/ui_scene_creator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1151,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-12-15T15:05:40Z",
+      "side": 1,
+      "message": "Should this also depend on v and toggle between kOmniboxHeightDMM and kUrlBarHeightDMM? Currently they\u0027re the same which is probably why we don\u0027t see a difference.",
+      "range": {
+        "startLine": 1151,
+        "startChar": 30,
+        "endLine": 1151,
+        "endChar": 47
+      },
+      "revId": "673eb070baf3b1c494a4ac29e2599d5a2676f51a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b8a1704_61b20e9d",
+        "filename": "chrome/browser/vr/ui_scene_creator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1286,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-12-15T15:05:40Z",
+      "side": 1,
+      "message": "this is the same binding as the spacer above. I wonder if it makes sense to refactor.",
+      "range": {
+        "startLine": 1286,
+        "startChar": 16,
+        "endLine": 1286,
+        "endChar": 26
+      },
+      "revId": "673eb070baf3b1c494a4ac29e2599d5a2676f51a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
