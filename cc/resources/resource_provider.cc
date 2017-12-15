@@ -994,7 +994,7 @@ void ResourceProvider::CreateAndBindImage(viz::internal::Resource* resource) {
   if (!resource->image_id) {
     resource->image_id = gl->CreateImageCHROMIUM(
         resource->gpu_memory_buffer->AsClientBuffer(), resource->size.width(),
-        resource->size.height(), GLInternalFormat(resource->format));
+        resource->size.height());
 
     DCHECK(resource->image_id ||
            gl->GetGraphicsResetStatusKHR() != GL_NO_ERROR);

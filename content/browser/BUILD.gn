@@ -2299,6 +2299,7 @@ jumbo_source_set("browser") {
     deps += [
       "//components/viz/service",
       "//ui/compositor",
+      "//ui/gl",
     ]
   }
 

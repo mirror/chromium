@@ -727,8 +727,7 @@ const GpuFeatureInfo& InProcessCommandBuffer::GetGpuFeatureInfo() const {
 
 int32_t InProcessCommandBuffer::CreateImage(ClientBuffer buffer,
                                             size_t width,
-                                            size_t height,
-                                            unsigned internalformat) {
+                                            size_t height) {
   CheckSequencedThread();
 
   DCHECK(gpu_memory_buffer_manager_);
@@ -740,8 +739,6 @@ int32_t InProcessCommandBuffer::CreateImage(ClientBuffer buffer,
 
   DCHECK(IsImageFromGpuMemoryBufferFormatSupported(
       gpu_memory_buffer->GetFormat(), capabilities_));
-  DCHECK(IsImageFormatCompatibleWithGpuMemoryBufferFormat(
-      internalformat, gpu_memory_buffer->GetFormat()));
 
   // This handle is owned by the GPU thread and must be passed to it or it
   // will leak. In otherwords, do not early out on error between here and the
@@ -763,7 +760,6 @@ int32_t InProcessCommandBuffer::CreateImage(ClientBuffer buffer,
                               gfx::Size(base::checked_cast<int>(width),
                                         base::checked_cast<int>(height)),
                               gpu_memory_buffer->GetFormat(),
-                              base::checked_cast<uint32_t>(internalformat),
                               fence_sync));
 
   if (fence_sync) {
@@ -782,7 +778,6 @@ void InProcessCommandBuffer::CreateImageOnGpuThread(
     const gfx::GpuMemoryBufferHandle& handle,
     const gfx::Size& size,
     gfx::BufferFormat format,
-    uint32_t internalformat,
     uint64_t fence_sync) {
   gles2::ImageManager* image_manager = service_->image_manager();
   DCHECK(image_manager);
@@ -798,7 +793,7 @@ void InProcessCommandBuffer::CreateImageOnGpuThread(
         return;
       }
       scoped_refptr<gl::GLImageSharedMemory> image(
-          new gl::GLImageSharedMemory(size, internalformat));
+          new gl::GLImageSharedMemory(size));
       if (!image->Initialize(handle.handle, handle.id, format, handle.offset,
                              handle.stride)) {
         LOG(ERROR) << "Failed to initialize image.";
@@ -819,8 +814,7 @@ void InProcessCommandBuffer::CreateImageOnGpuThread(
 
       scoped_refptr<gl::GLImage> image =
           image_factory_->CreateImageForGpuMemoryBuffer(
-              handle, size, format, internalformat, kClientId,
-              kNullSurfaceHandle);
+              handle, size, format, kClientId, kNullSurfaceHandle);
       if (!image.get()) {
         LOG(ERROR) << "Failed to create image for buffer.";
         return;
