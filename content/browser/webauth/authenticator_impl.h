@@ -14,8 +14,9 @@
 #include "base/callback_forward.h"
 #include "base/macros.h"
 #include "base/timer/timer.h"
-#include "content/browser/webauth/register_response_data.h"
+#include "content/browser/webauth/collected_client_data.h"
 #include "content/common/content_export.h"
+#include "device/u2f/register_response_data.h"
 #include "mojo/public/cpp/bindings/binding_set.h"
 #include "mojo/public/cpp/bindings/interface_request.h"
 #include "third_party/WebKit/public/platform/modules/webauth/authenticator.mojom.h"
@@ -57,12 +58,13 @@ class CONTENT_EXPORT AuthenticatorImpl : public webauth::mojom::Authenticator {
                       MakeCredentialCallback callback) override;
 
   // Callback to handle the async response from a U2fDevice.
-  void OnDeviceResponse(device::U2fReturnCode status_code,
-                        const std::vector<uint8_t>& data,
-                        const std::vector<uint8_t>& key_handle);
+  void OnRegisterResponse(
+      device::U2fReturnCode status_code,
+      std::unique_ptr<device::RegisterResponseData> response_data);
 
   // Runs when timer expires and cancels all issued requests to a U2fDevice.
   void OnTimeout();
+  void Cleanup();
 
   // Owns pipes to this Authenticator from |render_frame_host_|.
   mojo::BindingSet<webauth::mojom::Authenticator> bindings_;

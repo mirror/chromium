@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CONTENT_BROWSER_WEBAUTH_PUBLIC_KEY_H_
-#define CONTENT_BROWSER_WEBAUTH_PUBLIC_KEY_H_
+#ifndef DEVICE_U2F_PUBLIC_KEY_H_
+#define DEVICE_U2F_PUBLIC_KEY_H_
 
 #include <stdint.h>
 #include <string>
@@ -11,7 +11,7 @@
 
 #include "base/macros.h"
 
-namespace content {
+namespace device {
 
 // https://www.w3.org/TR/2017/WD-webauthn-20170505/#sec-attestation-data.
 class PublicKey {
@@ -30,6 +30,6 @@ class PublicKey {
   DISALLOW_COPY_AND_ASSIGN(PublicKey);
 };
 
-}  // namespace content
+}  // namespace device
 
-#endif  // CONTENT_BROWSER_WEBAUTH_PUBLIC_KEY_H_
+#endif  // DEVICE_U2F_PUBLIC_KEY_H_
