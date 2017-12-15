@@ -61,6 +61,7 @@ PositionIteratorAlgorithm<Strategy>::PositionIteratorAlgorithm(
       offset_in_anchor_(node_after_position_in_anchor_ ? 0 : offset_in_anchor),
       depth_to_anchor_node_(0),
       dom_tree_version_(anchor_node->GetDocument().DomTreeVersion()) {
+  DCHECK(anchor_node);
   for (Node* node = SelectableParentOf<Strategy>(*anchor_node); node;
        node = SelectableParentOf<Strategy>(*node)) {
     // Each m_offsetsInAnchorNode[offset] should be an index of node in

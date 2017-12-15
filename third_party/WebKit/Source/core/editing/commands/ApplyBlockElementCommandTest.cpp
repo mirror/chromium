@@ -109,4 +109,23 @@ TEST_F(ApplyBlockElementCommandTest, IndentHeadingIntoBlockquote) {
       GetDocument().body()->InnerHTMLAsString());
 }
 
+// crbug.com/793087
+// This tests that executing the 'FormatBlock' command with specific HTML and
+// CSS will not crash on null dereference.
+TEST_F(ApplyBlockElementCommandTest, FormatRangeWithDisconnectedPosition) {
+  GetDocument().head()->insertAdjacentHTML(
+      "afterbegin",
+      "<style>.c8:nth-of-type(2n+1) { visibility: collapse; } </style>",
+      ASSERT_NO_EXCEPTION);
+  SetBodyContent("<input><input class=c8 style=\"position:absolute;\">");
+  GetDocument().setDesignMode("on");
+  Selection().SelectAll(SetSelectionBy::kUser);
+
+  FormatBlockCommand* command =
+      FormatBlockCommand::Create(GetDocument(), HTMLNames::preTag);
+  command->Apply();
+
+  EXPECT_TRUE(command->DidApply());
+}
+
 }  // namespace blink

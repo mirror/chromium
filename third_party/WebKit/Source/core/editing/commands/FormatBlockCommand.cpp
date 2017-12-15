@@ -120,6 +120,8 @@ void FormatBlockCommand::FormatRange(const Position& start,
       block_element->lastChild()
           ? Position::AfterNode(*block_element->lastChild())
           : Position();
+  ABORT_EDITING_COMMAND_IF(
+      !last_paragraph_in_block_node.IsValidFor(GetDocument()));
   bool was_end_of_paragraph =
       IsEndOfParagraph(CreateVisiblePosition(last_paragraph_in_block_node));
 
@@ -128,6 +130,13 @@ void FormatBlockCommand::FormatRange(const Position& start,
                           outer_block, editing_state);
   if (editing_state->IsAborted())
     return;
+
+  // We have to re-check this after MoveParagraphWithClones call.
+  // Sometimes |last_paragraph_in_block_node| becomes disconnected and that can
+  // lead to crashes in Release configuration.
+  // See crbug.com/793087
+  ABORT_EDITING_COMMAND_IF(
+      !last_paragraph_in_block_node.IsValidFor(GetDocument()));
 
   // Copy the inline style of the original block element to the newly created
   // block-style element.
