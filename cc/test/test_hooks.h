@@ -130,7 +130,7 @@ class TestHooks : public AnimationDelegate {
   virtual void RequestNewLayerTreeFrameSink() = 0;
   virtual std::unique_ptr<viz::OutputSurface>
   CreateDisplayOutputSurfaceOnThread(
-      scoped_refptr<viz::ContextProvider> compositor_context_provider) = 0;
+      scoped_refptr<viz::GLContextProvider> compositor_context_provider) = 0;
 };
 
 }  // namespace cc

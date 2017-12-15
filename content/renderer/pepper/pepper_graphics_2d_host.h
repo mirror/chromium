@@ -31,7 +31,7 @@ struct SyncToken;
 }
 
 namespace viz {
-class ContextProvider;
+class GLContextProvider;
 class SharedBitmap;
 class SingleReleaseCallback;
 struct TransferableResource;
@@ -182,7 +182,7 @@ class CONTENT_EXPORT PepperGraphics2DHost
   // has been destroyed.
   static void ReleaseTextureCallback(
       base::WeakPtr<PepperGraphics2DHost> host,
-      scoped_refptr<viz::ContextProvider> context,
+      scoped_refptr<viz::GLContextProvider> context,
       uint32_t id,
       const gpu::SyncToken& sync_token,
       bool lost);
@@ -230,7 +230,7 @@ class CONTENT_EXPORT PepperGraphics2DHost
   bool is_gpu_compositing_disabled_ = false;
   // The shared main thread context provider, used to upload 2d pepper frames
   // if the compositor is expecting gpu content.
-  scoped_refptr<viz::ContextProvider> main_thread_context_;
+  scoped_refptr<viz::GLContextProvider> main_thread_context_;
   struct TextureInfo {
     uint32_t id;
     gpu::Mailbox mailbox;

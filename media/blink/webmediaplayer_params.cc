@@ -31,7 +31,7 @@ WebMediaPlayerParams::WebMediaPlayerParams(
     mojom::MediaMetricsProviderPtr metrics_provider,
     base::Callback<std::unique_ptr<blink::WebSurfaceLayerBridge>(
         blink::WebSurfaceLayerBridgeObserver*)> create_bridge_callback,
-    scoped_refptr<viz::ContextProvider> context_provider)
+    scoped_refptr<viz::GLContextProvider> context_provider)
     : defer_load_cb_(defer_load_cb),
       audio_renderer_sink_(audio_renderer_sink),
       media_log_(std::move(media_log)),

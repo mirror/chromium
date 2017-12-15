@@ -135,7 +135,7 @@ class LayerTreeHostCopyRequestTestMultipleRequests
   void AfterTest() override { EXPECT_EQ(4u, callbacks_.size()); }
 
   std::unique_ptr<viz::OutputSurface> CreateDisplayOutputSurfaceOnThread(
-      scoped_refptr<viz::ContextProvider> compositor_context_provider)
+      scoped_refptr<viz::GLContextProvider> compositor_context_provider)
       override {
     if (!use_gl_renderer_) {
       return FakeOutputSurface::CreateSoftware(
@@ -480,8 +480,9 @@ class LayerTreeHostTestHiddenSurfaceNotAllocatedForSubtreeCopyRequest
   std::unique_ptr<viz::TestLayerTreeFrameSink> CreateLayerTreeFrameSink(
       const viz::RendererSettings& renderer_settings,
       double refresh_rate,
-      scoped_refptr<viz::ContextProvider> compositor_context_provider,
-      scoped_refptr<viz::ContextProvider> worker_context_provider) override {
+      scoped_refptr<viz::GLContextProvider> compositor_context_provider,
+      scoped_refptr<viz::RasterContextProvider> worker_context_provider)
+      override {
     auto frame_sink = LayerTreeHostCopyRequestTest::CreateLayerTreeFrameSink(
         renderer_settings, refresh_rate, std::move(compositor_context_provider),
         std::move(worker_context_provider));
@@ -759,7 +760,7 @@ class LayerTreeHostCopyRequestTestDeleteTexture
     : public LayerTreeHostCopyRequestTest {
  protected:
   std::unique_ptr<viz::OutputSurface> CreateDisplayOutputSurfaceOnThread(
-      scoped_refptr<viz::ContextProvider> compositor_context_provider)
+      scoped_refptr<viz::GLContextProvider> compositor_context_provider)
       override {
     display_context_provider_ = TestContextProvider::Create();
     display_context_provider_->BindToCurrentThread();
@@ -888,7 +889,7 @@ class LayerTreeHostCopyRequestTestCountTextures
   }
 
   std::unique_ptr<viz::OutputSurface> CreateDisplayOutputSurfaceOnThread(
-      scoped_refptr<viz::ContextProvider> compositor_context_provider)
+      scoped_refptr<viz::GLContextProvider> compositor_context_provider)
       override {
     // These tests expect the LayerTreeHostImpl to share a context with
     // the Display so that sync points are not needed and the texture counts

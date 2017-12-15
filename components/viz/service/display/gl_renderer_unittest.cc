@@ -1826,7 +1826,7 @@ class OutputSurfaceMockContext : public cc::TestWebGraphicsContext3D {
 
 class MockOutputSurface : public OutputSurface {
  public:
-  explicit MockOutputSurface(scoped_refptr<ContextProvider> provider)
+  explicit MockOutputSurface(scoped_refptr<GLContextProvider> provider)
       : OutputSurface(std::move(provider)) {}
   virtual ~MockOutputSurface() {}
 

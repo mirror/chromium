@@ -136,7 +136,7 @@ gpu::gles2::GLES2Interface* InProcessContextProvider::ContextGL() {
   return context_->GetImplementation();
 }
 
-gpu::raster::RasterInterface* InProcessContextProvider::RasterContext() {
+gpu::raster::RasterInterface* InProcessContextProvider::RasterInterface() {
   CheckValidThreadOrLockAcquired();
 
   return raster_context_.get();

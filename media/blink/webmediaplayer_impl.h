@@ -654,7 +654,7 @@ class MEDIA_BLINK_EXPORT WebMediaPlayerImpl
 
   BufferedDataSourceHostImpl buffered_data_source_host_;
   UrlIndex* url_index_;
-  scoped_refptr<viz::ContextProvider> context_provider_;
+  scoped_refptr<viz::GLContextProvider> context_provider_;
 
   // Video rendering members.
   // The |compositor_| runs on the compositor thread, or if

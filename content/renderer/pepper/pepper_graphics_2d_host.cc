@@ -596,7 +596,7 @@ void PepperGraphics2DHost::ReleaseSoftwareCallback(
 // static
 void PepperGraphics2DHost::ReleaseTextureCallback(
     base::WeakPtr<PepperGraphics2DHost> host,
-    scoped_refptr<viz::ContextProvider> context,
+    scoped_refptr<viz::GLContextProvider> context,
     uint32_t id,
     const gpu::SyncToken& sync_token,
     bool lost) {

@@ -35,14 +35,14 @@ std::unique_ptr<gpu::GLInProcessContext> CreateTestInProcessContext(
     gpu::GLInProcessContext* shared_context,
     scoped_refptr<base::SingleThreadTaskRunner> task_runner);
 
-class TestInProcessContextProvider : public viz::ContextProvider {
+class TestInProcessContextProvider : public viz::MultiContextProvider {
  public:
   explicit TestInProcessContextProvider(
       TestInProcessContextProvider* shared_context);
 
   gpu::ContextResult BindToCurrentThread() override;
   gpu::gles2::GLES2Interface* ContextGL() override;
-  gpu::raster::RasterInterface* RasterContext() override;
+  gpu::raster::RasterInterface* RasterInterface() override;
   gpu::ContextSupport* ContextSupport() override;
   class GrContext* GrContext() override;
   viz::ContextCacheController* CacheController() override;

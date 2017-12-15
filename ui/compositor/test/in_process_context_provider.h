@@ -30,7 +30,7 @@ class GrContextForGLES2Interface;
 
 namespace ui {
 
-class InProcessContextProvider : public viz::ContextProvider {
+class InProcessContextProvider : public viz::MultiContextProvider {
  public:
   static scoped_refptr<InProcessContextProvider> Create(
       const gpu::gles2::ContextCreationAttribHelper& attribs,
@@ -48,12 +48,12 @@ class InProcessContextProvider : public viz::ContextProvider {
       InProcessContextProvider* shared_context,
       bool support_locking);
 
-  // cc::ContextProvider implementation.
+  // cc::GLContextProvider implementation.
   gpu::ContextResult BindToCurrentThread() override;
   const gpu::Capabilities& ContextCapabilities() const override;
   const gpu::GpuFeatureInfo& GetGpuFeatureInfo() const override;
   gpu::gles2::GLES2Interface* ContextGL() override;
-  gpu::raster::RasterInterface* RasterContext() override;
+  gpu::raster::RasterInterface* RasterInterface() override;
   gpu::ContextSupport* ContextSupport() override;
   class GrContext* GrContext() override;
   viz::ContextCacheController* CacheController() override;

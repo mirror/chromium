@@ -288,7 +288,7 @@ std::unique_ptr<Reflector> InProcessContextFactory::CreateReflector(
 void InProcessContextFactory::RemoveReflector(Reflector* reflector) {
 }
 
-scoped_refptr<viz::ContextProvider>
+scoped_refptr<viz::GLContextProvider>
 InProcessContextFactory::SharedMainThreadContextProvider() {
   if (shared_main_thread_contexts_ &&
       shared_main_thread_contexts_->ContextGL()->GetGraphicsResetStatusKHR() ==

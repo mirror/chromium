@@ -121,7 +121,7 @@ gpu::gles2::GLES2Interface* AwRenderThreadContextProvider::ContextGL() {
   return context_->GetImplementation();
 }
 
-gpu::raster::RasterInterface* AwRenderThreadContextProvider::RasterContext() {
+gpu::raster::RasterInterface* AwRenderThreadContextProvider::RasterInterface() {
   NOTIMPLEMENTED();
   return nullptr;
 }

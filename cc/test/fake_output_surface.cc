@@ -16,7 +16,7 @@
 namespace cc {
 
 FakeOutputSurface::FakeOutputSurface(
-    scoped_refptr<viz::ContextProvider> context_provider)
+    scoped_refptr<viz::GLContextProvider> context_provider)
     : OutputSurface(std::move(context_provider)), weak_ptr_factory_(this) {
   DCHECK(OutputSurface::context_provider());
 }

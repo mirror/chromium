@@ -20,7 +20,7 @@ class GLES2Interface;
 }
 
 namespace viz {
-class ContextProvider;
+class GLContextProvider;
 }
 
 namespace vr_shell {
@@ -41,12 +41,12 @@ class MailboxToSurfaceBridge {
 
  private:
   void OnContextAvailable(std::unique_ptr<gl::ScopedJavaSurface> surface,
-                          scoped_refptr<viz::ContextProvider>);
+                          scoped_refptr<viz::GLContextProvider>);
   void InitializeRenderer();
   void DestroyContext();
   void DrawQuad(unsigned int textureHandle);
 
-  scoped_refptr<viz::ContextProvider> context_provider_;
+  scoped_refptr<viz::GLContextProvider> context_provider_;
   gpu::gles2::GLES2Interface* gl_ = nullptr;
   int surface_handle_ = 0;
 

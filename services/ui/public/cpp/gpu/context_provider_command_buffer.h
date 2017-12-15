@@ -46,10 +46,10 @@ class GrContextForGLES2Interface;
 
 namespace ui {
 
-// Implementation of viz::ContextProvider that provides a GL implementation over
-// command buffer to the GPU process.
+// Implementation of viz::GLContextProvider that provides a GL implementation
+// over command buffer to the GPU process.
 class ContextProviderCommandBuffer
-    : public viz::ContextProvider,
+    : public viz::MultiContextProvider,
       public base::trace_event::MemoryDumpProvider {
  public:
   ContextProviderCommandBuffer(
@@ -70,10 +70,10 @@ class ContextProviderCommandBuffer
   // on the default framebuffer.
   uint32_t GetCopyTextureInternalFormat();
 
-  // viz::ContextProvider implementation.
+  // viz::GLContextProvider implementation.
   gpu::ContextResult BindToCurrentThread() override;
   gpu::gles2::GLES2Interface* ContextGL() override;
-  gpu::raster::RasterInterface* RasterContext() override;
+  gpu::raster::RasterInterface* RasterInterface() override;
   gpu::ContextSupport* ContextSupport() override;
   class GrContext* GrContext() override;
   viz::ContextCacheController* CacheController() override;

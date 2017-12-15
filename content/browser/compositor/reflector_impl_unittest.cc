@@ -79,7 +79,7 @@ CreateTestValidatorOzone() {
 
 class TestOutputSurface : public BrowserCompositorOutputSurface {
  public:
-  TestOutputSurface(scoped_refptr<viz::ContextProvider> context_provider)
+  TestOutputSurface(scoped_refptr<viz::GLContextProvider> context_provider)
       : BrowserCompositorOutputSurface(std::move(context_provider),
                                        UpdateVSyncParametersCallback(),
                                        CreateTestValidatorOzone()) {}

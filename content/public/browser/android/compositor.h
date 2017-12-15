@@ -32,7 +32,7 @@ class UIResourceProvider;
 }
 
 namespace viz {
-class ContextProvider;
+class GLContextProvider;
 }
 
 namespace content {
@@ -50,7 +50,7 @@ class CONTENT_EXPORT Compositor {
   // Creates a GL context for the provided |handle|. If a null handle is passed,
   // an offscreen context is created. This must be called on the UI thread.
   using ContextProviderCallback =
-      base::Callback<void(scoped_refptr<viz::ContextProvider>)>;
+      base::Callback<void(scoped_refptr<viz::GLContextProvider>)>;
   static void CreateContextProvider(
       gpu::SurfaceHandle handle,
       gpu::gles2::ContextCreationAttribHelper attributes,

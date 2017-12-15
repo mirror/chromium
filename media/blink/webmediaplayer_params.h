@@ -46,11 +46,11 @@ class MEDIA_BLINK_EXPORT WebMediaPlayerParams {
   typedef base::Callback<void(const base::Closure&)> DeferLoadCB;
   typedef base::Callback<Context3D()> Context3DCB;
 
-  // Callback to obtain the media ContextProvider.
+  // Callback to obtain the media GLContextProvider.
   // Requires being called on the media thread.
   // The argument callback is also called on the media thread as a reply.
   using ContextProviderCB =
-      base::Callback<void(base::Callback<void(viz::ContextProvider*)>)>;
+      base::Callback<void(base::Callback<void(viz::GLContextProvider*)>)>;
 
   // Callback to tell V8 about the amount of memory used by the WebMediaPlayer
   // instance.  The input parameter is the delta in bytes since the last call to
@@ -82,7 +82,7 @@ class MEDIA_BLINK_EXPORT WebMediaPlayerParams {
       mojom::MediaMetricsProviderPtr metrics_provider,
       base::Callback<std::unique_ptr<blink::WebSurfaceLayerBridge>(
           blink::WebSurfaceLayerBridgeObserver*)> bridge_callback,
-      scoped_refptr<viz::ContextProvider> context_provider);
+      scoped_refptr<viz::GLContextProvider> context_provider);
 
   ~WebMediaPlayerParams();
 
@@ -157,7 +157,7 @@ class MEDIA_BLINK_EXPORT WebMediaPlayerParams {
     return create_bridge_callback_;
   }
 
-  scoped_refptr<viz::ContextProvider> context_provider() {
+  scoped_refptr<viz::GLContextProvider> context_provider() {
     return context_provider_;
   }
 
@@ -184,7 +184,7 @@ class MEDIA_BLINK_EXPORT WebMediaPlayerParams {
   base::Callback<std::unique_ptr<blink::WebSurfaceLayerBridge>(
       blink::WebSurfaceLayerBridgeObserver*)>
       create_bridge_callback_;
-  scoped_refptr<viz::ContextProvider> context_provider_;
+  scoped_refptr<viz::GLContextProvider> context_provider_;
 
   DISALLOW_IMPLICIT_CONSTRUCTORS(WebMediaPlayerParams);
 };

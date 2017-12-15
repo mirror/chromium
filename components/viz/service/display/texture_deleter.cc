@@ -18,7 +18,7 @@
 namespace viz {
 
 static void DeleteTextureOnImplThread(
-    const scoped_refptr<ContextProvider>& context_provider,
+    const scoped_refptr<GLContextProvider>& context_provider,
     unsigned texture_id,
     const gpu::SyncToken& sync_token,
     bool is_lost) {
@@ -50,7 +50,7 @@ TextureDeleter::~TextureDeleter() {
 }
 
 std::unique_ptr<SingleReleaseCallback> TextureDeleter::GetReleaseCallback(
-    scoped_refptr<ContextProvider> context_provider,
+    scoped_refptr<GLContextProvider> context_provider,
     unsigned texture_id) {
   // This callback owns the |context_provider|. It must be destroyed on the impl
   // thread. Upon destruction of this class, the callback must immediately be

@@ -150,14 +150,14 @@ MailboxToSurfaceBridge::~MailboxToSurfaceBridge() {
 
 void MailboxToSurfaceBridge::OnContextAvailable(
     std::unique_ptr<gl::ScopedJavaSurface> surface,
-    scoped_refptr<viz::ContextProvider> provider) {
-  // Must save a reference to the viz::ContextProvider to keep it alive,
+    scoped_refptr<viz::GLContextProvider> provider) {
+  // Must save a reference to the viz::GLContextProvider to keep it alive,
   // otherwise the GL context created from it becomes invalid.
   context_provider_ = std::move(provider);
 
   auto result = context_provider_->BindToCurrentThread();
   if (result != gpu::ContextResult::kSuccess) {
-    DLOG(ERROR) << "Failed to init viz::ContextProvider";
+    DLOG(ERROR) << "Failed to init viz::GLContextProvider";
     return;
   }
 
@@ -194,7 +194,7 @@ void MailboxToSurfaceBridge::CreateSurface(
   auto relay_callback = base::Bind(
       [](scoped_refptr<base::SequencedTaskRunner> runner,
          const content::Compositor::ContextProviderCallback& callback,
-         scoped_refptr<viz::ContextProvider> provider) {
+         scoped_refptr<viz::GLContextProvider> provider) {
         runner->PostTask(FROM_HERE, base::Bind(callback, std::move(provider)));
 
       },

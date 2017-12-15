@@ -368,7 +368,7 @@ gpu::gles2::GLES2Interface* ContextProviderCommandBuffer::ContextGL() {
   return gles2_impl_.get();
 }
 
-gpu::raster::RasterInterface* ContextProviderCommandBuffer::RasterContext() {
+gpu::raster::RasterInterface* ContextProviderCommandBuffer::RasterInterface() {
   DCHECK(bind_tried_);
   DCHECK_EQ(bind_result_, gpu::ContextResult::kSuccess);
   CheckValidThreadOrLockAcquired();
@@ -377,7 +377,7 @@ gpu::raster::RasterInterface* ContextProviderCommandBuffer::RasterContext() {
     return raster_impl_.get();
 
   if (!attributes_.enable_raster_interface) {
-    DLOG(ERROR) << "Unexpected access to RasterContext()";
+    DLOG(ERROR) << "Unexpected access to RasterInterface()";
     return nullptr;
   }
 

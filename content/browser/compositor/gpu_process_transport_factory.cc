@@ -111,7 +111,7 @@
 #include "content/browser/compositor/vulkan_browser_compositor_output_surface.h"
 #endif
 
-using viz::ContextProvider;
+using viz::GLContextProvider;
 using gpu::gles2::GLES2Interface;
 
 namespace {
@@ -406,9 +406,10 @@ void GpuProcessTransportFactory::EstablishedGpuChannel(
       {
         // Note: If context is lost, we delete reference after releasing the
         // lock.
-        viz::ContextProvider::ScopedContextLock lock(
+        viz::RasterContextProvider::ScopedContextLockRaster lock(
             shared_worker_context_provider_.get());
-        lost = lock.RasterContext()->GetGraphicsResetStatusKHR() != GL_NO_ERROR;
+        lost =
+            lock.RasterInterface()->GetGraphicsResetStatusKHR() != GL_NO_ERROR;
       }
       if (lost)
         shared_worker_context_provider_ = nullptr;
@@ -647,7 +648,10 @@ void GpuProcessTransportFactory::EstablishedGpuChannel(
 
   // The |delegated_output_surface| is given back to the compositor, it
   // delegates to the Display as its root surface. Importantly, it shares the
-  // same ContextProvider as the Display's output surface.
+  // same GLContextProvider as the Display's output surface.
+  scoped_refptr<viz::RasterContextProvider> worker_context_provider;
+  if (shared_worker_context_provider_)
+    worker_context_provider = shared_worker_context_provider_;
   auto layer_tree_frame_sink =
       vulkan_context_provider
           ? std::make_unique<viz::DirectLayerTreeFrameSink>(
@@ -660,7 +664,7 @@ void GpuProcessTransportFactory::EstablishedGpuChannel(
                 compositor->frame_sink_id(), GetHostFrameSinkManager(),
                 GetFrameSinkManager(), data->display.get(),
                 data->display_client.get(), context_provider,
-                shared_worker_context_provider_, compositor->task_runner(),
+                worker_context_provider, compositor->task_runner(),
                 GetGpuMemoryBufferManager(),
                 viz::ServerSharedBitmapManager::current());
   data->display->Resize(compositor->size());
@@ -955,7 +959,8 @@ viz::FrameSinkManagerImpl* GpuProcessTransportFactory::GetFrameSinkManager() {
 
 viz::GLHelper* GpuProcessTransportFactory::GetGLHelper() {
   if (!gl_helper_ && !per_compositor_data_.empty()) {
-    scoped_refptr<ContextProvider> provider = SharedMainThreadContextProvider();
+    scoped_refptr<GLContextProvider> provider =
+        SharedMainThreadContextProvider();
     if (provider.get())
       gl_helper_.reset(
           new viz::GLHelper(provider->ContextGL(), provider->ContextSupport()));
@@ -977,7 +982,7 @@ void GpuProcessTransportFactory::SetCompositorSuspendedForRecycle(
 }
 #endif
 
-scoped_refptr<ContextProvider>
+scoped_refptr<GLContextProvider>
 GpuProcessTransportFactory::SharedMainThreadContextProvider() {
   if (is_gpu_compositing_disabled_)
     return nullptr;
@@ -1051,7 +1056,7 @@ void GpuProcessTransportFactory::OnLostMainThreadSharedContext() {
   // the same share group.
   if (shared_main_thread_contexts_)
     shared_main_thread_contexts_->RemoveObserver(this);
-  scoped_refptr<ContextProvider> lost_shared_main_thread_contexts =
+  scoped_refptr<GLContextProvider> lost_shared_main_thread_contexts =
       shared_main_thread_contexts_;
   shared_main_thread_contexts_ = nullptr;
 

@@ -63,7 +63,7 @@ class GpuMemoryBufferManager;
 
 namespace viz {
 class FrameSinkManagerImpl;
-class ContextProvider;
+class GLContextProvider;
 class HostFrameSinkManager;
 class LocalSurfaceId;
 class ResourceSettings;
@@ -85,7 +85,7 @@ class COMPOSITOR_EXPORT ContextFactoryObserver {
  public:
   virtual ~ContextFactoryObserver() {}
 
-  // Notifies that the viz::ContextProvider returned from
+  // Notifies that the viz::GLContextProvider returned from
   // ui::ContextFactory::SharedMainThreadContextProvider was lost.  When this
   // is called, the old resources (e.g. shared context, GL helper) still
   // exist, but are about to be destroyed. Getting a reference to those
@@ -163,7 +163,7 @@ class COMPOSITOR_EXPORT ContextFactory {
 
   // Return a reference to a shared offscreen context provider usable from the
   // main thread.
-  virtual scoped_refptr<viz::ContextProvider>
+  virtual scoped_refptr<viz::GLContextProvider>
   SharedMainThreadContextProvider() = 0;
 
   // Destroys per-compositor data.
