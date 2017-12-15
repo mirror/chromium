@@ -14,6 +14,7 @@
 #include "base/strings/utf_string_conversions.h"
 #include "base/test/histogram_tester.h"
 #include "base/threading/thread_restrictions.h"
+#include "build/build_config.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/chrome_notification_types.h"
 #include "chrome/browser/extensions/extension_browsertest.h"
@@ -180,18 +181,27 @@ class ProfileChooserViewExtensionsTest
 
  protected:
   void OpenProfileChooserView(Browser* browser) {
+#if defined(OS_MACOSX) && !BUILDFLAG(MAC_VIEWS_BROWSER)
+    // Show the avatar bubble via API on macOS until |mac_views_browser| is
+    // enabled.
+    ProfileChooserView::close_on_deactivate_for_testing_ = false;
+    browser->window()->ShowAvatarBubbleFromAvatarButton(
+        BrowserWindow::AVATAR_BUBBLE_MODE_DEFAULT,
+        signin::ManageAccountsParams(),
+        signin_metrics::AccessPoint::ACCESS_POINT_UNKNOWN, true);
+#else
     BrowserView* browser_view = BrowserView::GetBrowserViewForBrowser(browser);
     views::View* button = browser_view->frame()->GetNewAvatarMenuButton();
     if (!button)
       NOTREACHED() << "NewAvatarButton not found.";
 
-    ProfileChooserView::close_on_deactivate_for_testing_ = false;
-
     ui::MouseEvent e(ui::ET_MOUSE_PRESSED, gfx::Point(), gfx::Point(),
                      ui::EventTimeForNow(), ui::EF_LEFT_MOUSE_BUTTON, 0);
     button->OnMousePressed(e);
+#endif  // defined(OS_MACOSX) && !BUILDFLAG(MAC_VIEWS_BROWSER)
+
     base::RunLoop().RunUntilIdle();
-    EXPECT_TRUE(ProfileChooserView::IsShowing());
+    ASSERT_TRUE(ProfileChooserView::IsShowing());
 
     // Create this observer before lock is pressed to avoid a race condition.
     window_close_observer_.reset(new content::WindowedNotificationObserver(
@@ -242,8 +252,17 @@ class ProfileChooserViewExtensionsTest
   DISALLOW_COPY_AND_ASSIGN(ProfileChooserViewExtensionsTest);
 };
 
+#if !defined(OS_MACOSX) || BUILDFLAG(MAC_VIEWS_BROWSER)
+#define MAYBE_NoProfileChooserOnOutsideUserDataDirProfiles \
+  NoProfileChooserOnOutsideUserDataDirProfiles
+#else
+// Test fails on macOS as |ProfileImpl::GetSSLConfigService| is not yet
+// initialized when creating te browser.
+#define MAYBE_NoProfileChooserOnOutsideUserDataDirProfiles \
+  DISABLED_NoProfileChooserOnOutsideUserDataDirProfiles
+#endif
 IN_PROC_BROWSER_TEST_F(ProfileChooserViewExtensionsTest,
-    NoProfileChooserOnOutsideUserDataDirProfiles) {
+                       MAYBE_NoProfileChooserOnOutsideUserDataDirProfiles) {
   // Test that the profile chooser view does not show when avatar menu is not
   // available. This can be repro'ed with a profile path outside user_data_dir.
   // crbug.com/527505
