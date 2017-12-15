@@ -24,6 +24,9 @@
 #include "gpu/ipc/client/gpu_memory_buffer_impl_android_hardware_buffer.h"
 #endif
 
+#include <GLES2/gl2.h>
+#include <GLES2/gl2extchromium.h>
+
 namespace gpu {
 
 GpuMemoryBufferImpl::GpuMemoryBufferImpl(gfx::GpuMemoryBufferId id,
@@ -94,5 +97,46 @@ gfx::GpuMemoryBufferId GpuMemoryBufferImpl::GetId() const {
 ClientBuffer GpuMemoryBufferImpl::AsClientBuffer() {
   return reinterpret_cast<ClientBuffer>(this);
 }
+
+uint32_t GpuMemoryBufferImpl::GetInternalformat(bool supports_bgra_ext) const {
+  switch (format_) {
+    case gfx::BufferFormat::ATC:
+      return GL_ATC_RGB_AMD;
+    case gfx::BufferFormat::ATCIA:
+      return GL_ATC_RGBA_INTERPOLATED_ALPHA_AMD;
+    case gfx::BufferFormat::DXT1:
+      return GL_COMPRESSED_RGB_S3TC_DXT1_EXT;
+    case gfx::BufferFormat::DXT5:
+      return GL_COMPRESSED_RGBA_S3TC_DXT5_EXT;
+    case gfx::BufferFormat::ETC1:
+      return GL_ETC1_RGB8_OES;
+    case gfx::BufferFormat::R_8:
+      return GL_RED_EXT;
+    case gfx::BufferFormat::R_16:
+      return GL_R16_EXT;
+    case gfx::BufferFormat::RG_88:
+      return GL_RG_EXT;
+    case gfx::BufferFormat::BGR_565:
+    case gfx::BufferFormat::RGBX_8888:
+    case gfx::BufferFormat::BGRX_8888:
+    case gfx::BufferFormat::BGRX_1010102:
+      return GL_RGB;
+    case gfx::BufferFormat::RGBA_4444:
+    case gfx::BufferFormat::RGBA_8888:
+    case gfx::BufferFormat::RGBA_F16:
+    case gfx::BufferFormat::BGRA_8888:
+      return GL_RGBA;
+    case gfx::BufferFormat::YVU_420:
+      return GL_RGB_YCRCB_420_CHROMIUM;
+    case gfx::BufferFormat::YUV_420_BIPLANAR:
+      return GL_RGB_YCBCR_420V_CHROMIUM;
+    case gfx::BufferFormat::UYVY_422:
+      return GL_RGB_YCBCR_422_CHROMIUM;
+    default:
+      NOTREACHED();
+      return GL_NONE;
+  }
+}
+
 
 }  // namespace gpu

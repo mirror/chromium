@@ -88,6 +88,7 @@ class GpuMemoryBufferImpl : public gfx::GpuMemoryBuffer {
   }
   gfx::Size GetSize() const override { return size_; }
   gfx::BufferFormat GetFormat() const override { return format_; }
+  uint32_t GetInternalformat(bool supports_bgra_ext) const override { return 0; }
   int stride(size_t plane) const override {
     DCHECK_LT(plane, gfx::NumberOfPlanesForBufferFormat(format_));
     return gfx::RowSizeForBufferFormat(size_.width(), format_, plane);
@@ -146,6 +147,7 @@ class IOSurfaceGpuMemoryBuffer : public gfx::GpuMemoryBuffer {
   }
   gfx::Size GetSize() const override { return size_; }
   gfx::BufferFormat GetFormat() const override { return format_; }
+  uint32_t GetInternalformat(bool supports_bgra_ext) const override { return 0; }
   int stride(size_t plane) const override {
     DCHECK_LT(plane, gfx::NumberOfPlanesForBufferFormat(format_));
     return IOSurfaceGetWidthOfPlane(iosurface_, plane);
@@ -475,8 +477,7 @@ const Capabilities& GLManager::GetCapabilities() const {
 
 int32_t GLManager::CreateImage(ClientBuffer buffer,
                                size_t width,
-                               size_t height,
-                               unsigned internalformat) {
+                               size_t height) {
   gfx::Size size(width, height);
   scoped_refptr<gl::GLImage> gl_image;
 
@@ -485,7 +486,7 @@ int32_t GLManager::CreateImage(ClientBuffer buffer,
     IOSurfaceGpuMemoryBuffer* gpu_memory_buffer =
         IOSurfaceGpuMemoryBuffer::FromClientBuffer(buffer);
     scoped_refptr<gl::GLImageIOSurface> image(
-        gl::GLImageIOSurface::Create(size, internalformat));
+        gl::GLImageIOSurface::Create(size));
     if (!image->Initialize(gpu_memory_buffer->iosurface(),
                            gfx::GenericSharedMemoryId(1),
                            gfx::BufferFormat::BGRA_8888)) {
@@ -499,7 +500,7 @@ int32_t GLManager::CreateImage(ClientBuffer buffer,
         GpuMemoryBufferImpl::FromClientBuffer(buffer);
 
     scoped_refptr<gl::GLImageRefCountedMemory> image(
-        new gl::GLImageRefCountedMemory(size, internalformat));
+        new gl::GLImageRefCountedMemory(size));
     if (!image->Initialize(gpu_memory_buffer->bytes(),
                            gpu_memory_buffer->GetFormat())) {
       return -1;
