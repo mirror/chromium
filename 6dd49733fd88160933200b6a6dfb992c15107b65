@@ -22,6 +22,30 @@
       "revId": "6dd49733fd88160933200b6a6dfb992c15107b65",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddf1947a_9475aa7a",
+        "filename": "chrome/browser/extensions/api/autotest_private/autotest_private_api.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 1245973
+      },
+      "writtenOn": "2017-12-15T22:39:00Z",
+      "side": 1,
+      "message": "Good catch!  Thanks!",
+      "parentUuid": "7487bb98_5082cddc",
+      "range": {
+        "startLine": 446,
+        "startChar": 19,
+        "endLine": 446,
+        "endChar": 24
+      },
+      "revId": "6dd49733fd88160933200b6a6dfb992c15107b65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
