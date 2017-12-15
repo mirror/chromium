@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3933424c_4daf2f9e",
+        "filename": "third_party/WebKit/Source/core/css/resolver/StyleAdjuster.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 576,
+      "author": {
+        "id": 1210854
+      },
+      "writtenOn": "2017-12-15T18:32:50Z",
+      "side": 1,
+      "message": "Used again as a necessary condition on the block below. So the block below could be inside this block.",
+      "parentUuid": "b0965387_19255e9d",
+      "range": {
+        "startLine": 575,
+        "startChar": 8,
+        "endLine": 576,
+        "endChar": 45
+      },
+      "revId": "bfe746b7897017bdc9bfb216bd8b6310ea186ff4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "652cbe0f_de858c6d",
         "filename": "third_party/WebKit/Source/core/css/resolver/StyleAdjuster.cpp",
         "patchSetId": 2
@@ -41,6 +65,29 @@
         "startChar": 20,
         "endLine": 585,
         "endChar": 27
+      },
+      "revId": "bfe746b7897017bdc9bfb216bd8b6310ea186ff4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f227037_db7b1675",
+        "filename": "third_party/WebKit/Source/core/svg/SVGGElement.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1210854
+      },
+      "writtenOn": "2017-12-15T18:32:50Z",
+      "side": 1,
+      "message": "\"explicitly\"",
+      "range": {
+        "startLine": 36,
+        "startChar": 23,
+        "endLine": 36,
+        "endChar": 34
       },
       "revId": "bfe746b7897017bdc9bfb216bd8b6310ea186ff4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
