@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e2dd378b_e964f11d",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/locks/frames.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-12-15T03:18:41Z",
+      "side": 0,
+      "message": "Given the test description, I think it still makes sense with a single-resource Lock API. So, I think the test should be modified so all 3 frames request \u0027r1\u0027, instead of deleting it.",
+      "revId": "4adc0f5c0c3eef4265d039cfe6afc28d7037cc63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d128d3a_add41dbc",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/locks/frames.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-12-15T03:18:41Z",
+      "side": 0,
+      "message": "I think we should keep this test (same as above).",
+      "revId": "4adc0f5c0c3eef4265d039cfe6afc28d7037cc63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

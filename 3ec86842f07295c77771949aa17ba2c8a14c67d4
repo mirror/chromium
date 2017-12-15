@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cfbea883_cf15a667",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/locks/interfaces.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-12-15T03:18:41Z",
+      "side": 1,
+      "message": "nit: Not a problem introduced in this CL, but I think \"async\" can be removed from this callback.",
+      "revId": "3ec86842f07295c77771949aa17ba2c8a14c67d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35410d9f_45f65b21",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/locks/mode-shared.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-12-15T03:18:41Z",
+      "side": 1,
+      "message": "nit: \"if the locks were not all shared\" (or, if you prefer, \"if any lock was exclusive\")",
+      "revId": "3ec86842f07295c77771949aa17ba2c8a14c67d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
