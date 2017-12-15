@@ -139,6 +139,10 @@ class BufferViewBase {
   // Returns a BufferRegion describing the full view.
   BufferRegion region() const { return BufferRegion{0, size()}; }
 
+  bool equals(BufferViewBase other) const {
+    return size() == other.size() && std::equal(begin(), end(), other.begin());
+  }
+
   // Modifiers
 
   void shrink(size_type new_size) {
