@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "84d8ed17_18f5b1a7",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialsContainer.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-15T12:38:52Z",
+      "side": 1,
+      "message": "Kind of independent from this CL, but now that y\u0027all are already here, I would like to get this line sanity checked for good measure.\n\nWe are skipping the security check if |frame| is nullptr. My understanding is that this is okay because:\n\n 1) A ScriptState instance is associated with the same ExecutionContext/v8::Context for its entire lifetime.\n\n 2) The ExecutionContext here must be of Document type otherwise the IsSameOriginWithAncestors() check in CredentialsContainer::get() would never have succeeded in the first place.\n\n 3) That Document and must have been the active document in the frame at some point (i.e., was not DOMImpl::CreateDocument), otherwise the IsSameOriginWithAncestors() check in CredentialsContainer::get() would never have succeeded in the first place.\n\n 4.1) So the document is either still attached, in which |frame| is non-null and the SECURITY_CHECK is performed.\n\n 4.2) Or the document is (in the process of being) detached, in which case\n|frame_ \u003d\u003d nullptr| implies that resolver_-\u003eResolve() is a no-op. According to go/pnfkc, this seems to follow from the ordering of events *today*, I just wanted to make sure it remains the case in the future.",
+      "revId": "c7a76b46f96058e7e32efd43a3841fc1c45ce5b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
