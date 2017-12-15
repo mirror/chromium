@@ -673,11 +673,12 @@ void NotificationViewMD::CreateOrUpdateContextTitleView(
   // If |origin_url| and |display_source| are both empty, assume it is
   // system notification, and use default |display_source| and
   // |accent_color| for system notification.
-  // TODO(tetsui): Remove this after all system notification transition is
-  // completed.
-  // All system notification should use Notification::CreateSystemNotification()
+  // TODO(tetsui): Remove this. All system notifications should explicitly set
+  // the display source.
   if (notification.display_source().empty() &&
-      notification.origin_url().is_empty()) {
+      notification.origin_url().is_empty() &&
+      notification.notifier_id().type == NotifierId::SYSTEM_COMPONENT &&
+      MessageCenter::Get()) {
     header_row_->SetAppName(l10n_util::GetStringFUTF16(
         IDS_MESSAGE_CENTER_NOTIFICATION_CHROMEOS_SYSTEM,
         MessageCenter::Get()->GetProductOSName()));

@@ -186,6 +186,8 @@ class MESSAGE_CENTER_EXPORT MessageCenter {
 
   // "Chromium OS" or "Chrome OS" in the current locale.
   // Return empty string if not on these platforms.
+  // TODO(tetsui): remove. This should be explicitly set on Notifications that
+  // are passed to the MessageCenter.
   virtual const base::string16& GetProductOSName() const = 0;
   virtual void SetProductOSName(const base::string16& product_os_name) = 0;
 
