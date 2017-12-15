@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "8fce7eb4_dc7dae34",
+        "filename": "base/files/file_util_posix.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-15T00:20:18Z",
+      "side": 1,
+      "message": "My local man open(2) says:\n\nWhen  possible, the file is opened in nonblocking mode.  Neither\nthe open() nor any subsequent operations on the file  descriptor\nwhich  is  returned will cause the calling process to wait.\n\nWould the \"subsequent operations\" part make a diffence, such that we would always want the flag?",
+      "parentUuid": "f332223f_309db33a",
+      "revId": "f24cad68f532d66fe956e8fe4e79e9c7efe2a2de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "93972c62_a71255ca",
         "filename": "base/files/file_util_unittest.cc",
         "patchSetId": 3
@@ -107,6 +125,30 @@
       "side": 1,
       "message": "The surrounding code isn\u0027t very consistent about this...",
       "parentUuid": "93972c62_a71255ca",
+      "range": {
+        "startLine": 1057,
+        "startChar": 33,
+        "endLine": 1057,
+        "endChar": 50
+      },
+      "revId": "f24cad68f532d66fe956e8fe4e79e9c7efe2a2de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96bac26f_60c0e55e",
+        "filename": "base/files/file_util_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1057,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-15T00:20:18Z",
+      "side": 1,
+      "message": "Sure, but I can fix that in a separate future CL.",
+      "parentUuid": "b840e348_36a7ab63",
       "range": {
         "startLine": 1057,
         "startChar": 33,
