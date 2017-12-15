@@ -22,6 +22,30 @@
       "revId": "41ef9f3fb143363ee46509afb140534be65b0479",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c63dd313_22502bab",
+        "filename": "ui/views/layout/grid_layout_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-12-15T21:46:14Z",
+      "side": 1,
+      "message": "I just get nervous with it depending on the other members being initialized in the class. I would normally put an explicit initializer in for host_ in this case (even though the implicit one is fine) so it\u0027s obvious things are run in the correct order. But since this was only a pointer, it seemed clearer to me to just set it in the constructor body.",
+      "parentUuid": "2ab63f95_75b0a2ec",
+      "range": {
+        "startLine": 104,
+        "startChar": 8,
+        "endLine": 104,
+        "endChar": 31
+      },
+      "revId": "41ef9f3fb143363ee46509afb140534be65b0479",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
