@@ -225,11 +225,37 @@ void ResourceMultiBufferDataProvider::DidReceiveResponse(
 
   scoped_refptr<UrlData> destination_url_data(url_data_);
 
-  if (!redirects_to_.is_empty()) {
+  // If the response came from a service worker, set |destination_url_data| to
+  // the actual response URL. For example, if the request URL was
+  // http://origin.example.com, and a service worker provided a response using
+  // respondWith(fetch('http://another-origin.example.com')), set
+  // |destination_url_data| to OriginalURLViaServiceWorker(), which will be
+  // http://another-origin.example.com or the final URL after redirects from
+  // that.
+  if (response.WasFetchedViaServiceWorker()) {
+    const GURL& request_url = response.Url();
+    const GURL& response_url = response.OriginalURLViaServiceWorker();
+    // Only change |destination_url_data| if the origin changed,
+    // otherwise the UrlData gets uncorrectly considered cross-origin because
+    // |cors_mode_| may be CORS_UNSPECIFIED so
+    // MultibufferDataSource::DidPassCORSAccessCheck() returns false. The URL
+    // may be empty if the service worker manually constructed a response, e.g.,
+    // respondWith(new Response('hello world')). In this case we consider the
+    // response URL the same as the request URL.
+    if (!response_url.is_empty() &&
+        request_url.GetOrigin() != response_url.GetOrigin()) {
+      destination_url_data =
+          url_data_->url_index()->GetByUrl(response_url, cors_mode_);
+    }
+  }
+  // If redirects occurred, we also must set |destination_url_data|. If the
+  // service worker provided a response, OriginalURLViaServiceWorker()
+  // already returns the final URL after redirects, so we are done.
+  else if (!redirects_to_.is_empty()) {
     destination_url_data =
         url_data_->url_index()->GetByUrl(redirects_to_, cors_mode_);
-    redirects_to_ = GURL();
   }
+  redirects_to_ = GURL();
 
   base::Time last_modified;
   if (base::Time::FromString(
