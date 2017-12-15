@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "810021b7_48c6084e",
+        "filename": "third_party/WebKit/LayoutTests/fast/harness/results.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-12-15T02:09:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f17cea6e_df55e8a7",
+      "revId": "44eb61290f5d305b39aed8a3d673aabcd54fd602",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e177843d_df25d9d8",
         "filename": "third_party/WebKit/LayoutTests/fast/harness/results.html",
         "patchSetId": 9
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "0947bb4e_b6985120",
+        "filename": "third_party/WebKit/LayoutTests/fast/harness/results.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-12-15T02:09:55Z",
+      "side": 1,
+      "message": "I think the titles just add a little cost to parsing which is fast, and the main cost of generateReport is in layout and painting, so the titles should not affect the performance much.\n\nI added some measurements with console.time() and console.timeEnd() in several time-consuming functions. I tested two versions of code several times but found that the results were quite arbitrary, so I added some script in the code to measure the times in the same page by repeating genereateReport() 10 times with interlaced with-title and without-title configurations. The results are: \n\n        with title   without title\n9641 results\n        1773ms       1668ms\n        2234         2225\n        2271         1986\n        1487         2106\n        2093         1731\n73037 results:\n       18821         20490\n       23573         26742\n       25442         21920\n       24838         22681\n       22824         21718\n\nI will leave the time() and timeEnd() calls in the code.",
+      "parentUuid": "e177843d_df25d9d8",
+      "revId": "44eb61290f5d305b39aed8a3d673aabcd54fd602",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "503069cb_f68948fa",
         "filename": "third_party/WebKit/LayoutTests/fast/harness/results.html",
         "patchSetId": 9
@@ -47,6 +83,24 @@
       "writtenOn": "2017-12-14T22:59:18Z",
       "side": 1,
       "message": "Does this get rid of that \"copy path also shows result\" ? Awesome!",
+      "revId": "44eb61290f5d305b39aed8a3d673aabcd54fd602",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c132595_d2d023b5",
+        "filename": "third_party/WebKit/LayoutTests/fast/harness/results.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 1054,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-12-15T02:09:55Z",
+      "side": 1,
+      "message": "Yes :)",
+      "parentUuid": "503069cb_f68948fa",
       "revId": "44eb61290f5d305b39aed8a3d673aabcd54fd602",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
