@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "a42cd281_c8b57922",
+        "filename": "content/browser/renderer_host/media/media_stream_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1216,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-12-15T08:38:45Z",
+      "side": 1,
+      "message": "Why we DCHECK() input parameters everywhere?\nWhich parts of code guarantee that nullop won\u0027t leak in here (and other places)? Could you elaborate in each case?\n\nThey used to be UnavailableParameters if a device is not found, so we would silently fallback to a fake device in some situations. I\u0027m not sure the code is fully prepared to deal with an absence of parameters.",
+      "revId": "89a42f425507ba91573376c34d3e12daebaaa43c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "65c0bf95_31e9f41e",
         "filename": "content/browser/renderer_host/media/media_stream_manager.cc",
         "patchSetId": 6
