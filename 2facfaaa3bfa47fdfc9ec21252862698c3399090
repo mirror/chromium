@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "8aeee030_f71b57c7",
+        "filename": "third_party/WebKit/LayoutTests/performance/performance-observer-crash.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1247538
+      },
+      "writtenOn": "2017-12-15T06:02:13Z",
+      "side": 1,
+      "message": "Updated CL description to describe the situation leading to crash.",
+      "parentUuid": "14214c57_d8197c87",
+      "revId": "2facfaaa3bfa47fdfc9ec21252862698c3399090",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f944a0a7_30b7867d",
         "filename": "third_party/WebKit/LayoutTests/performance/performance-observer-crash.html",
         "patchSetId": 1
