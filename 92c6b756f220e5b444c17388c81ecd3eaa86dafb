@@ -16,6 +16,24 @@
       "revId": "92c6b756f220e5b444c17388c81ecd3eaa86dafb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ed541a0_f7f28c69",
+        "filename": "chrome/test/data/extensions/api_test/bindings/listeners_destroy_context/content_script.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-15T20:15:01Z",
+      "side": 1,
+      "message": "No, because listeners need to be unique (i.e., different JS function objects).  If you have\nfunction listener() {}\nevent.addListener(listener);\nevent.addListener(listener);\n|listener| is only added once, and will only be notified once.  Since this test requires that there be more listeners to notify after the context is destroyed, that wouldn\u0027t be sufficient.",
+      "parentUuid": "420f641d_7594655e",
+      "revId": "92c6b756f220e5b444c17388c81ecd3eaa86dafb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
