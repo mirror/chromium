@@ -14,9 +14,9 @@
 #include "base/threading/thread.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "net/base/host_port_pair.h"
-#include "net/cert/cert_verifier.h"
 #include "net/cert/ct_policy_enforcer.h"
-#include "net/cert/multi_log_ct_verifier.h"
+#include "net/cert/do_nothing_ct_verifier.h"
+#include "net/cert/mock_cert_verifier.h"
 #include "net/dns/mock_host_resolver.h"
 #include "net/http/http_network_session.h"
 #include "net/http/http_response_headers.h"
@@ -75,14 +75,14 @@ void TestURLRequestContext::Init() {
   if (!proxy_service())
     context_storage_.set_proxy_service(ProxyService::CreateDirect());
   if (!cert_verifier())
-    context_storage_.set_cert_verifier(CertVerifier::CreateDefault());
+    context_storage_.set_cert_verifier(std::make_unique<MockCertVerifier>());
   if (!transport_security_state()) {
     context_storage_.set_transport_security_state(
         std::make_unique<TransportSecurityState>());
   }
   if (!cert_transparency_verifier()) {
     context_storage_.set_cert_transparency_verifier(
-        std::make_unique<MultiLogCTVerifier>());
+        std::make_unique<DoNothingCTVerifier>());
   }
   if (!ct_policy_enforcer()) {
     context_storage_.set_ct_policy_enforcer(
