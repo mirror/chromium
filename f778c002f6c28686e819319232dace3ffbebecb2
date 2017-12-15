@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a2eb8adb_5dad7ffd",
+        "filename": "ash/login/ui/lock_screen.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1248360
+      },
+      "writtenOn": "2017-12-15T03:10:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1b6b6fd9_a8eecebd",
+      "revId": "f778c002f6c28686e819319232dace3ffbebecb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0099fc65_bf28c84f",
         "filename": "ash/login/ui/lock_window_unittest.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "f778c002f6c28686e819319232dace3ffbebecb2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf6ed8e8_d4478474",
+        "filename": "ash/login/ui/lock_window_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1248360
+      },
+      "writtenOn": "2017-12-15T03:10:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0099fc65_bf28c84f",
+      "revId": "f778c002f6c28686e819319232dace3ffbebecb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
