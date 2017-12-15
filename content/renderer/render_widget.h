@@ -249,6 +249,7 @@ class CONTENT_EXPORT RenderWidget
   void BeginMainFrame(double frame_time_sec) override;
   void RequestNewLayerTreeFrameSink(
       const LayerTreeFrameSinkCallback& callback) override;
+  void DidChangeBackgroundColor(SkColor color) override;
   void DidCommitAndDrawCompositorFrame() override;
   void DidCommitCompositorFrame() override;
   void DidCompletePageScaleAnimation() override;

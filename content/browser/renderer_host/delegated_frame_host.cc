@@ -54,7 +54,6 @@ DelegatedFrameHost::DelegatedFrameHost(const viz::FrameSinkId& frame_sink_id,
       enable_surface_synchronization_(enable_surface_synchronization),
       enable_viz_(enable_viz),
       tick_clock_(base::DefaultTickClock::GetInstance()),
-      background_color_(SK_ColorRED),
       frame_evictor_(std::make_unique<viz::FrameEvictor>(this)),
       weak_ptr_factory_(this) {
   ImageTransportFactory* factory = ImageTransportFactory::GetInstance();
@@ -335,7 +334,7 @@ SkColor DelegatedFrameHost::GetGutterColor() const {
   // In fullscreen mode resizing is uncommon, so it makes more sense to
   // make the initial switch to fullscreen mode look better by using black as
   // the gutter color.
-  return client_->DelegatedFrameHostGetGutterColor(background_color_);
+  return client_->DelegatedFrameHostGetGutterColor();
 }
 
 void DelegatedFrameHost::UpdateGutters() {
@@ -507,8 +506,6 @@ void DelegatedFrameHost::SubmitCompositorFrame(
     viz::RenderPass* root_pass = frame.render_pass_list.back().get();
     root_pass->damage_rect = gfx::Rect(frame_size);
   }
-
-  background_color_ = frame.metadata.root_background_color;
 
   if (frame_size.IsEmpty()) {
     DCHECK(frame.resource_list.empty());

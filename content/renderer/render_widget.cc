@@ -1003,6 +1003,10 @@ void RenderWidget::RequestNewLayerTreeFrameSink(
       callback);
 }
 
+void RenderWidget::DidChangeBackgroundColor(SkColor color) {
+  Send(new ViewHostMsg_DidChangeBackgroundColor(routing_id(), color));
+}
+
 void RenderWidget::DidCommitAndDrawCompositorFrame() {
   // NOTE: Tests may break if this event is renamed or moved. See
   // tab_capture_performancetest.cc.
