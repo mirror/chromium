@@ -132,6 +132,30 @@
     },
     {
       "key": {
+        "uuid": "9bce0d22_1549d8b6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBottomSheetContent.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-12-15T01:37:57Z",
+      "side": 1,
+      "message": "It\u0027s not happening somewhere else. Half visible and full visible are recorded after suggestion is loaded here. As I mentioned in the above comment, SuggestionSheetVisibilityChangeObserver#BrowserStarupController#onSuccess() will change the suggestion visibility after native is loaded. The metrics will be recorded at that time. Before native is loaded, even if sheet is opened, the suggestion visibility will be false. I can show you some logs at my desk if you want to double check.",
+      "parentUuid": "bcbe54bb_31acb033",
+      "range": {
+        "startLine": 162,
+        "startChar": 39,
+        "endLine": 162,
+        "endChar": 63
+      },
+      "revId": "01b43095077fccef2422c5306d2e0905d39208d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ea326176_ff380fc6",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBottomSheetContent.java",
         "patchSetId": 2

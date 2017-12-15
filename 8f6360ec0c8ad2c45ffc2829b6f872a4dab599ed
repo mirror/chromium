@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5f14f639_6a72bb61",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/BottomToolbarPhone.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-12-15T01:37:57Z",
+      "side": 1,
+      "message": "Good catch. Done.",
+      "parentUuid": "e56832cb_032bcc41",
+      "range": {
+        "startLine": 71,
+        "startChar": 12,
+        "endLine": 71,
+        "endChar": 39
+      },
+      "revId": "8f6360ec0c8ad2c45ffc2829b6f872a4dab599ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6659c859_3936dcb0",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetMetrics.java",
         "patchSetId": 5
@@ -36,6 +60,24 @@
       "writtenOn": "2017-12-15T00:57:08Z",
       "side": 1,
       "message": "In my quick code search, it looks like CachedMetrics may only be committed once, during onResumeWithNative(). I think the idea is that CachedMetrics are used until native is loaded, and then regular metrics are used.",
+      "revId": "8f6360ec0c8ad2c45ffc2829b6f872a4dab599ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68e2ed74_07c167ce",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetMetrics.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-12-15T01:37:57Z",
+      "side": 1,
+      "message": "Do you mean that we should use RecordUserAction#record after native is initialized? I think this is already done in CachedMetric#ActionEvent that if native is loaded, it will just call RecordUserAction#record.\n\nhttps://cs.chromium.org/chromium/src/base/android/java/src/org/chromium/base/metrics/CachedMetrics.java?q\u003drecordWithNative\u0026l\u003d71",
+      "parentUuid": "6659c859_3936dcb0",
       "revId": "8f6360ec0c8ad2c45ffc2829b6f872a4dab599ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
