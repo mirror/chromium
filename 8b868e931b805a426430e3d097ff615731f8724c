@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2f8d3731_dcba2d50",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_subpage.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-12-15T00:15:09Z",
+      "side": 1,
+      "message": "This is kind of a confusing rule. I\u0027m not entirely clear how this differs from the current rule? If we need to pad the child divs instead of #networkListDiv, make this a class, e.g. .padded and apply the class where we need it, that should make things more clear.",
+      "revId": "8b868e931b805a426430e3d097ff615731f8724c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0a4cc8a_58e125db",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_subpage.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-12-15T00:15:09Z",
+      "side": 1,
+      "message": "Sort the #gmscore CSS to match the html order, it\u0027s easier to follow that way.",
+      "revId": "8b868e931b805a426430e3d097ff615731f8724c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f2dc78a_3c8d9bd2",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_subpage.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-12-15T00:15:09Z",
+      "side": 1,
+      "message": "This is leftover from pre iron-flex days; replace it with \u003ccr-network-list class\u003d\"flex\"\u003e which will make the layout more readable.",
+      "revId": "8b868e931b805a426430e3d097ff615731f8724c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "562f111f_ce367dfc",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_subpage.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-12-15T00:15:09Z",
+      "side": 1,
+      "message": "margin + padding here is pretty confusing. Also, it would be better to use vars from shared_vars_css.html or settings_vars_css.html, e.g. --cr-section-padding and --cr-section-indent-width.",
+      "revId": "8b868e931b805a426430e3d097ff615731f8724c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6abe33b7_e4aa3de5",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_subpage.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-12-15T00:15:09Z",
+      "side": 1,
+      "message": "See above comment; maybe use --cr-section-indent-width \u003d 40px?",
+      "revId": "8b868e931b805a426430e3d097ff615731f8724c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99ddb94c_6e63e80e",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_subpage.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-12-15T00:15:09Z",
+      "side": 1,
+      "message": "I try to avoid class$\u003d where possible since it places layout in the JS. In this case I would do:\n\nno-networks$\u003d\"[[!networkStateList.length]]\" then use the [no-networks] selector in CSS.",
+      "revId": "8b868e931b805a426430e3d097ff615731f8724c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
