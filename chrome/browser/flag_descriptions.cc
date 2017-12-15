@@ -2914,6 +2914,10 @@ const char kExperimentalTabControllerName[] = "Experimental tab controller.";
 const char kExperimentalTabControllerDescription[] =
     "Enable controller for highly experimental tab policies.";
 
+const char kDebugNavTreeName[] = "Debug NavTree.";
+const char kDebugNavTreeDescription[] =
+    "Show debug information for NavTree experiment.";
+
 #endif  // defined(TOOLKIT_VIEWS)
 
 #if defined(TOOLKIT_VIEWS) || defined(OS_ANDROID)
