@@ -141,7 +141,7 @@ void CanvasResource_Bitmap::TearDown() {
 IntSize CanvasResource_Bitmap::Size() const {
   if (!image_)
     return IntSize(0, 0);
-  return IntSize(image_->width(), image_->height());
+  return image_->Size();
 }
 
 GLenum CanvasResource_Bitmap::TextureTarget() const {

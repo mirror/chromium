@@ -32,7 +32,7 @@ class PLATFORM_EXPORT OffscreenCanvasFrameDispatcher {
   virtual bool NeedsBeginFrame() const = 0;
   virtual bool IsAnimationSuspended() const = 0;
 
-  virtual void Reshape(int width, int height) = 0;
+  virtual void Reshape(const IntSize&) = 0;
 
   base::WeakPtr<OffscreenCanvasFrameDispatcher> GetWeakPtr() {
     return weak_ptr_factory_.GetWeakPtr();
