@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f8ec548d_8b5ef14b",
+        "filename": "ash/public/cpp/app_list_item_metadata.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-15T23:59:27Z",
+      "side": 1,
+      "message": "I am wondering whether we should have this as a mojom struct and use that directly.",
+      "revId": "3ce312e33430645f9879164f722cda655cc3bbcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c3bfb61_21cf7a92",
+        "filename": "ash/public/cpp/app_list_item_metadata.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-15T23:59:27Z",
+      "side": 1,
+      "message": "remove this?",
+      "revId": "3ce312e33430645f9879164f722cda655cc3bbcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03f8c86b_a07617d0",
+        "filename": "ash/public/cpp/app_list_item_metadata.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-15T23:59:27Z",
+      "side": 1,
+      "message": "Would the default one sufficient?",
+      "revId": "3ce312e33430645f9879164f722cda655cc3bbcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
