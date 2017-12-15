@@ -88,6 +88,8 @@ class CORE_EXPORT NGInlineItem {
 
   bool HasStartEdge() const;
   bool HasEndEdge() const;
+  bool HasLineLeftEdge() const;
+  bool HasLineRightEdge() const;
 
   static void Split(Vector<NGInlineItem>&, unsigned index, unsigned offset);
   static unsigned SetBidiLevel(Vector<NGInlineItem>&,
