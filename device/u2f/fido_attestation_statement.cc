@@ -2,15 +2,15 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "content/browser/webauth/fido_attestation_statement.h"
+#include "device/u2f/fido_attestation_statement.h"
 
 #include <utility>
 
 #include "base/numerics/safe_conversions.h"
 #include "components/cbor/cbor_writer.h"
-#include "content/browser/webauth/authenticator_utils.h"
+#include "device/u2f/u2f_parsing_utils.h"
 
-namespace content {
+namespace device {
 
 namespace {
 constexpr char kFidoFormatName[] = "fido-u2f";
@@ -29,9 +29,9 @@ FidoAttestationStatement::CreateFromU2fRegisterResponse(
   // handle). Length is big endian and is located at position 66 in the data.
   // Note that U2F responses only use one byte for length.
   std::vector<uint8_t> id_length(2, 0);
-  CHECK_GE(u2f_data.size(), authenticator_utils::kU2fResponseLengthPos + 1);
-  id_length[1] = u2f_data[authenticator_utils::kU2fResponseLengthPos];
-  size_t id_end_byte = authenticator_utils::kU2fResponseKeyHandleStartPos +
+  CHECK_GE(u2f_data.size(), u2f_parsing_utils::kU2fResponseLengthPos + 1);
+  id_length[1] = u2f_data[u2f_parsing_utils::kU2fResponseLengthPos];
+  size_t id_end_byte = u2f_parsing_utils::kU2fResponseKeyHandleStartPos +
                        ((base::strict_cast<uint32_t>(id_length[0]) << 8) |
                         (base::strict_cast<uint32_t>(id_length[1])));
 
@@ -62,18 +62,18 @@ FidoAttestationStatement::CreateFromU2fRegisterResponse(
   size_t x509_length = 1 /* tag byte */ + 1 /* first length byte */
                        + num_bytes /* # bytes of length */ + cert_length;
 
-  authenticator_utils::Append(
+  u2f_parsing_utils::Append(
       &x509_cert,
-      authenticator_utils::Extract(u2f_data, id_end_byte, x509_length));
+      u2f_parsing_utils::Extract(u2f_data, id_end_byte, x509_length));
   x509_certificates.push_back(x509_cert);
 
   // The remaining bytes are the signature.
   std::vector<uint8_t> signature;
   size_t signature_start_byte = id_end_byte + x509_length;
-  authenticator_utils::Append(
+  u2f_parsing_utils::Append(
       &signature,
-      authenticator_utils::Extract(u2f_data, signature_start_byte,
-                                   u2f_data.size() - signature_start_byte));
+      u2f_parsing_utils::Extract(u2f_data, signature_start_byte,
+                                 u2f_data.size() - signature_start_byte));
   return std::make_unique<FidoAttestationStatement>(signature,
                                                     x509_certificates);
 }
@@ -99,4 +99,4 @@ cbor::CBORValue::MapValue FidoAttestationStatement::GetAsCBORMap() {
 
 FidoAttestationStatement::~FidoAttestationStatement() {}
 
-}  // namespace content
+}  // namespace device

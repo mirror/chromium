@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CONTENT_BROWSER_WEBAUTH_FIDO_ATTESTATION_STATEMENT_H_
-#define CONTENT_BROWSER_WEBAUTH_FIDO_ATTESTATION_STATEMENT_H_
+#ifndef DEVICE_U2F_FIDO_ATTESTATION_STATEMENT_H_
+#define DEVICE_U2F_FIDO_ATTESTATION_STATEMENT_H_
 
 #include <stdint.h>
 #include <memory>
@@ -11,13 +11,12 @@
 
 #include "base/macros.h"
 #include "components/cbor/cbor_values.h"
-#include "content/browser/webauth/attestation_statement.h"
-#include "content/common/content_export.h"
+#include "device/u2f/attestation_statement.h"
 
-namespace content {
+namespace device {
 
 // https://www.w3.org/TR/2017/WD-webauthn-20170505/#fido-u2f-attestation
-class CONTENT_EXPORT FidoAttestationStatement : public AttestationStatement {
+class FidoAttestationStatement : public AttestationStatement {
  public:
   FidoAttestationStatement(std::vector<uint8_t> signature,
                            std::vector<std::vector<uint8_t>> x509_certificates);
@@ -39,6 +38,6 @@ class CONTENT_EXPORT FidoAttestationStatement : public AttestationStatement {
   DISALLOW_COPY_AND_ASSIGN(FidoAttestationStatement);
 };
 
-}  // namespace content
+}  // namespace device
 
-#endif  // CONTENT_BROWSER_WEBAUTH_FIDO_ATTESTATION_STATEMENT_H_
+#endif  // DEVICE_U2F_FIDO_ATTESTATION_STATEMENT_H_

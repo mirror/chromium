@@ -15,8 +15,15 @@
 
 namespace content {
 
-namespace authenticator_utils {
+namespace client_data {
 constexpr char kCreateType[] = "webauthn.create";
+
+// JSON key values
+constexpr char kTypeKey[] = "type";
+constexpr char kChallengeKey[] = "challenge";
+constexpr char kOriginKey[] = "origin";
+constexpr char kHashAlgorithm[] = "hashAlgorithm";
+constexpr char kTokenBindingKey[] = "tokenBinding";
 }
 
 // Represents the contextual bindings of both the Relying Party and the

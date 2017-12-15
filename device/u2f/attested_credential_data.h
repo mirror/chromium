@@ -2,22 +2,21 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CONTENT_BROWSER_WEBAUTH_ATTESTED_CREDENTIAL_DATA_H_
-#define CONTENT_BROWSER_WEBAUTH_ATTESTED_CREDENTIAL_DATA_H_
+#ifndef DEVICE_U2F_ATTESTED_CREDENTIAL_DATA_H_
+#define DEVICE_U2F_ATTESTED_CREDENTIAL_DATA_H_
 
-#include "content/browser/webauth/public_key.h"
+#include "device/u2f/public_key.h"
 
 #include <stdint.h>
 #include <memory>
 #include <vector>
 
 #include "base/macros.h"
-#include "content/common/content_export.h"
 
-namespace content {
+namespace device {
 
 // https://www.w3.org/TR/2017/WD-webauthn-20170505/#sec-attestation-data
-class CONTENT_EXPORT AttestedCredentialData {
+class AttestedCredentialData {
  public:
   AttestedCredentialData(std::vector<uint8_t> aaguid,
                          std::vector<uint8_t> length,
@@ -51,6 +50,6 @@ class CONTENT_EXPORT AttestedCredentialData {
   DISALLOW_COPY_AND_ASSIGN(AttestedCredentialData);
 };
 
-}  // namespace content
+}  // namespace device
 
-#endif  // CONTENT_BROWSER_WEBAUTH_ATTESTED_CREDENTIAL_DATA_H_
+#endif  // DEVICE_U2F_ATTESTED_CREDENTIAL_DATA_H_
