@@ -3193,52 +3193,64 @@ void ChromeContentBrowserClient::RegisterInProcessServices(
 
 void ChromeContentBrowserClient::RegisterOutOfProcessServices(
     OutOfProcessServiceMap* services) {
+  // Make process info initializers more readable.
+  constexpr base::nullopt_t kNoProcessGroup = base::nullopt;
+
 #if BUILDFLAG(ENABLE_PRINTING)
-  (*services)[printing::mojom::kServiceName] =
-      base::ASCIIToUTF16("PDF Compositor Service");
+  (*services)[printing::mojom::kServiceName] = {
+      base::ASCIIToUTF16("PDF Compositor Service"), kNoProcessGroup};
 #endif
 
 #if BUILDFLAG(ENABLE_PRINT_PREVIEW)
-  (*services)[printing::mojom::kChromePrintingServiceName] =
-      l10n_util::GetStringUTF16(IDS_UTILITY_PROCESS_PRINTING_SERVICE_NAME);
+  (*services)[printing::mojom::kChromePrintingServiceName] = {
+      l10n_util::GetStringUTF16(IDS_UTILITY_PROCESS_PRINTING_SERVICE_NAME),
+      kNoProcessGroup};
 #endif
 
-  (*services)[profiling::mojom::kServiceName] =
-      base::ASCIIToUTF16("Profiling Service");
+  (*services)[profiling::mojom::kServiceName] = {
+      base::ASCIIToUTF16("Profiling Service"), kNoProcessGroup};
 
 #if BUILDFLAG(ENABLE_EXTENSIONS)
-  (*services)[chrome::mojom::kMediaGalleryUtilServiceName] =
-      l10n_util::GetStringUTF16(IDS_UTILITY_PROCESS_MEDIA_GALLERY_UTILITY_NAME);
-  (*services)[chrome::mojom::kRemovableStorageWriterServiceName] =
-      l10n_util::GetStringUTF16(IDS_UTILITY_PROCESS_IMAGE_WRITER_NAME);
+  (*services)[chrome::mojom::kMediaGalleryUtilServiceName] = {
+      l10n_util::GetStringUTF16(IDS_UTILITY_PROCESS_MEDIA_GALLERY_UTILITY_NAME),
+      kNoProcessGroup};
+  (*services)[chrome::mojom::kRemovableStorageWriterServiceName] = {
+      l10n_util::GetStringUTF16(IDS_UTILITY_PROCESS_IMAGE_WRITER_NAME),
+      kNoProcessGroup};
 #endif
 
 #if defined(OS_WIN)
-  (*services)[chrome::mojom::kUtilWinServiceName] =
-      l10n_util::GetStringUTF16(IDS_UTILITY_PROCESS_UTILITY_WIN_NAME);
+  (*services)[chrome::mojom::kUtilWinServiceName] = {
+      l10n_util::GetStringUTF16(IDS_UTILITY_PROCESS_UTILITY_WIN_NAME),
+      kNoProcessGroup};
 #endif
 
 #if defined(OS_WIN) && BUILDFLAG(ENABLE_EXTENSIONS)
-  (*services)[chrome::mojom::kWifiUtilWinServiceName] =
+  (*services)[chrome::mojom::kWifiUtilWinServiceName] = {
       l10n_util::GetStringUTF16(
-          IDS_UTILITY_PROCESS_WIFI_CREDENTIALS_GETTER_NAME);
+          IDS_UTILITY_PROCESS_WIFI_CREDENTIALS_GETTER_NAME),
+      kNoProcessGroup};
 #endif
 
 #if !defined(OS_ANDROID)
-  (*services)[chrome::mojom::kProfileImportServiceName] =
-      l10n_util::GetStringUTF16(IDS_UTILITY_PROCESS_PROFILE_IMPORTER_NAME);
+  (*services)[chrome::mojom::kProfileImportServiceName] = {
+      l10n_util::GetStringUTF16(IDS_UTILITY_PROCESS_PROFILE_IMPORTER_NAME),
+      kNoProcessGroup};
 
-  (*services)[proxy_resolver::mojom::kProxyResolverServiceName] =
-      l10n_util::GetStringUTF16(IDS_UTILITY_PROCESS_PROXY_RESOLVER_NAME);
+  (*services)[proxy_resolver::mojom::kProxyResolverServiceName] = {
+      l10n_util::GetStringUTF16(IDS_UTILITY_PROCESS_PROXY_RESOLVER_NAME),
+      kNoProcessGroup};
 #endif
 
 #if defined(FULL_SAFE_BROWSING) || defined(OS_CHROMEOS)
-  (*services)[chrome::mojom::kFileUtilServiceName] =
-      l10n_util::GetStringUTF16(IDS_UTILITY_PROCESS_FILE_UTILITY_NAME);
+  (*services)[chrome::mojom::kFileUtilServiceName] = {
+      l10n_util::GetStringUTF16(IDS_UTILITY_PROCESS_FILE_UTILITY_NAME),
+      kNoProcessGroup};
 #endif
 
-  (*services)[patch::mojom::kServiceName] =
-      l10n_util::GetStringUTF16(IDS_UTILITY_PROCESS_PATCH_NAME);
+  (*services)[patch::mojom::kServiceName] = {
+      l10n_util::GetStringUTF16(IDS_UTILITY_PROCESS_PATCH_NAME),
+      kNoProcessGroup};
 
 #if defined(OS_CHROMEOS)
   if (base::CommandLine::ForCurrentProcess()->HasSwitch(switches::kMash))
