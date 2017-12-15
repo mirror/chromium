@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "58738855_fa89b6eb",
+        "filename": "build/fuchsia/update_sdk.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-12-15T19:41:17Z",
+      "side": 1,
+      "message": "nit: It looks like gsutil.py will unlink the file, so mkstemp() doesn\u0027t really make much difference compared to mktemp() - the file that\u0027s created here is not the one that we will passed to tar. A better solution might be to create a temp dir. But I don\u0027t think it\u0027s worth worrying about it.",
+      "range": {
+        "startLine": 50,
+        "startChar": 2,
+        "endLine": 50,
+        "endChar": 14
+      },
+      "revId": "3ae2ff9370a43da057180fee847f564b8a02bfac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
