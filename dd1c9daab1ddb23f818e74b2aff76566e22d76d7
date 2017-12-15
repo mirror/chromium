@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b2f37264_b265fdcd",
+        "filename": "third_party/WebKit/Source/modules/exported/WebEmbeddedWorkerImpl.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-12-15T06:09:23Z",
+      "side": 1,
+      "message": "Done. Removed the unnecessary comment.",
+      "parentUuid": "6ab5c7fd_f076c843",
+      "revId": "dd1c9daab1ddb23f818e74b2aff76566e22d76d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "81164350_839d3982",
         "filename": "third_party/WebKit/Source/modules/exported/WebEmbeddedWorkerImpl.h",
         "patchSetId": 11
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "6b13cbed_9ccce087",
+        "filename": "third_party/WebKit/Source/modules/exported/WebEmbeddedWorkerImpl.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-12-15T06:09:23Z",
+      "side": 1,
+      "message": "Done. Yeah, removed them as we always use nullptr for them. Thanks!",
+      "parentUuid": "81164350_839d3982",
+      "revId": "dd1c9daab1ddb23f818e74b2aff76566e22d76d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dadbae0d_7a1e82b8",
         "filename": "third_party/WebKit/Source/modules/serviceworkers/BUILD.gn",
         "patchSetId": 11
@@ -47,6 +83,24 @@
       "writtenOn": "2017-12-15T02:24:05Z",
       "side": 1,
       "message": "How about adding specific files instead of whole //base?\nAlso, we may be able to limit base/run_loop.h only to tests by this file.\n// I\u0027m not quite familiar with DEPS so I\u0027d like to ask others too;)",
+      "revId": "dd1c9daab1ddb23f818e74b2aff76566e22d76d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88f0b4e6_d0b9c5a8",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/BUILD.gn",
+        "patchSetId": 11
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-12-15T06:09:23Z",
+      "side": 1,
+      "message": "This deps on //base is because we\u0027re using\n  \"+base/barrier_closure.h\",\n  \"+base/threading/thread_checker.h\",\nand seems all base impls are contained in the root target \u0027//base\u0027 rather than several sub targets.",
+      "parentUuid": "dadbae0d_7a1e82b8",
       "revId": "dd1c9daab1ddb23f818e74b2aff76566e22d76d7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "493cf06d_56cb23fd",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerInstalledScriptsManager.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-12-15T06:09:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "602937e2_a0b5908d",
+      "revId": "dd1c9daab1ddb23f818e74b2aff76566e22d76d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8aba0d93_d230f85b",
         "filename": "third_party/WebKit/Source/modules/serviceworkers/ThreadSafeScriptContainer.h",
         "patchSetId": 11
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "6170d036_90d22996",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/ThreadSafeScriptContainer.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-12-15T06:09:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8aba0d93_d230f85b",
+      "revId": "dd1c9daab1ddb23f818e74b2aff76566e22d76d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a2e6aa83_c44febd4",
         "filename": "third_party/WebKit/Source/modules/serviceworkers/WebEmbeddedWorkerImplTest.cpp",
         "patchSetId": 11
@@ -98,6 +188,24 @@
       "writtenOn": "2017-12-15T02:08:14Z",
       "side": 1,
       "message": "I don\u0027t understand what\u0027s going on here with these handle0 and handle1. What is the diferrence between handle0 and handle1? They are from different temporary MessagePipe() objects. Could we just pass a ScopedMessagePipeHandle() instead?",
+      "revId": "dd1c9daab1ddb23f818e74b2aff76566e22d76d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cafac49b_2925412d",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/WebEmbeddedWorkerImplTest.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-12-15T06:09:23Z",
+      "side": 1,
+      "message": "For these two parameters, ServiceWorkerInstalledScriptsManager ctor expects non-null request/ptrinfo to bind, otherwise crash would happen. In production code path, they are always guaranteed as non-null values.\nAs for the handle0 and handle1, I\u0027m using handle0 for ptrinfo side and handle1 for request side ;-) Although there is no such a rule, either one is OK.",
+      "parentUuid": "a2e6aa83_c44febd4",
       "revId": "dd1c9daab1ddb23f818e74b2aff76566e22d76d7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "f8f39773_342ba98b",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/WebEmbeddedWorkerImplTest.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-12-15T06:09:23Z",
+      "side": 1,
+      "message": "I think this comment means that Mojo in Chrome codebase does not support interface versioning, so we can just use 0L as the version anywhere. It\u0027s fine, but I also noticed that many codes are using mojom::XXX::Version_ rather than the hard code 0L, and actually now Mojo in Chrome is generating mojom::XXX::Version_ as 0L for all mojom interfaces.",
+      "parentUuid": "a256bff4_8ed21b88",
+      "revId": "dd1c9daab1ddb23f818e74b2aff76566e22d76d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4436ac09_62ed062b",
         "filename": "third_party/WebKit/Source/modules/serviceworkers/WebEmbeddedWorkerImplTest.cpp",
         "patchSetId": 11
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "6f6db073_c42a57da",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/WebEmbeddedWorkerImplTest.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-12-15T06:09:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4436ac09_62ed062b",
+      "revId": "dd1c9daab1ddb23f818e74b2aff76566e22d76d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ae30fe76_94ca05cf",
         "filename": "third_party/WebKit/public/web/WebEmbeddedWorker.h",
         "patchSetId": 11
@@ -152,6 +296,24 @@
       "revId": "dd1c9daab1ddb23f818e74b2aff76566e22d76d7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e63fdeff_13810b34",
+        "filename": "third_party/WebKit/public/web/WebEmbeddedWorker.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-12-15T06:09:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ae30fe76_94ca05cf",
+      "revId": "dd1c9daab1ddb23f818e74b2aff76566e22d76d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -175,6 +337,30 @@
       "revId": "dd1c9daab1ddb23f818e74b2aff76566e22d76d7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9abf312f_fd697893",
+        "filename": "third_party/WebKit/public/web/WebEmbeddedWorker.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-12-15T06:09:23Z",
+      "side": 1,
+      "message": "Done. Agreed and combined the 3 parameters into a struct at ps13.",
+      "parentUuid": "7bbc2823_3b90fba7",
+      "range": {
+        "startLine": 61,
+        "startChar": 6,
+        "endLine": 65,
+        "endChar": 69
+      },
+      "revId": "dd1c9daab1ddb23f818e74b2aff76566e22d76d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
