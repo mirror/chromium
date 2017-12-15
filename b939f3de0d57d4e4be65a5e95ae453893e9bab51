@@ -19,6 +19,69 @@
     },
     {
       "key": {
+        "uuid": "039dcb17_9f59da86",
+        "filename": "chrome/installer/zucchini/buffer_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-12-15T15:30:54Z",
+      "side": 1,
+      "message": "nit: \"FooBase\" sounds like a base class. in keeping with the stl, i think it would be better to call this template BasicFoo. just something to consider for a separate CL if you wish.",
+      "range": {
+        "startLine": 162,
+        "startChar": 14,
+        "endLine": 162,
+        "endChar": 28
+      },
+      "revId": "b939f3de0d57d4e4be65a5e95ae453893e9bab51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d230201_05ec54b4",
+        "filename": "chrome/installer/zucchini/buffer_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-12-15T15:30:54Z",
+      "side": 1,
+      "message": "#include \u003calgorithm\u003e",
+      "range": {
+        "startLine": 163,
+        "startChar": 37,
+        "endLine": 163,
+        "endChar": 47
+      },
+      "revId": "b939f3de0d57d4e4be65a5e95ae453893e9bab51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9eb3a61_912a5ef0",
+        "filename": "chrome/installer/zucchini/ensemble_matcher.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-12-15T15:30:54Z",
+      "side": 1,
+      "message": "nit: unused?",
+      "revId": "b939f3de0d57d4e4be65a5e95ae453893e9bab51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "622c386f_a56ed2e7",
         "filename": "chrome/installer/zucchini/ensemble_matcher.h",
         "patchSetId": 2
@@ -65,6 +128,29 @@
     },
     {
       "key": {
+        "uuid": "1b8fcd35_83749144",
+        "filename": "chrome/installer/zucchini/ensemble_matcher.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-12-15T15:30:54Z",
+      "side": 1,
+      "message": "M",
+      "range": {
+        "startLine": 38,
+        "startChar": 21,
+        "endLine": 38,
+        "endChar": 22
+      },
+      "revId": "b939f3de0d57d4e4be65a5e95ae453893e9bab51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ac553a21_9a71adbc",
         "filename": "chrome/installer/zucchini/ensemble_matcher.h",
         "patchSetId": 2
@@ -76,6 +162,29 @@
       "writtenOn": "2017-12-14T18:03:31Z",
       "side": 1,
       "message": "I think this interface requires a lot of work from the caller side when iterating over element matches/separators. The number of separators vs matches varies, hence the caller must check for size of both with conditions on |i \u003c num_sep| and |i \u003c num_elements| while looping.\nAlternatives:\n1-Iterate over elements in |new|, and have a mean to query it\u0027s associated element in |old| (where None or Identical are possible responses). It also becomes more obvious that |new| elements are ordered in patch, whether there is a match or not.\n2-Represent everything as an ElementMatch in the same vector. A separator is represented as an ElementMatch where |old| element is the entire image and exe_type is kExeTypeNoOp. Not sure how to represent Identical matches then.",
+      "revId": "b939f3de0d57d4e4be65a5e95ae453893e9bab51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85241ffc_5951649b",
+        "filename": "chrome/installer/zucchini/ensemble_matcher.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-12-15T15:30:54Z",
+      "side": 1,
+      "message": "nit: simple accessors like this should be just matches(), separators(), and num_identical(); see the note about accessors in https://google.github.io/styleguide/cppguide.html#Function_Names. while the style guide doesn\u0027t strongly recommend it, i see it often enough that we may as well do it here, too. feel free to ignore if doing so would be inconsistent with the rest of zucchini at this point.",
+      "range": {
+        "startLine": 39,
+        "startChar": 35,
+        "endLine": 39,
+        "endChar": 45
+      },
       "revId": "b939f3de0d57d4e4be65a5e95ae453893e9bab51",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -98,6 +207,115 @@
         "startChar": 48,
         "endLine": 55,
         "endChar": 54
+      },
+      "revId": "b939f3de0d57d4e4be65a5e95ae453893e9bab51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d23f4871_bf97c9e4",
+        "filename": "chrome/installer/zucchini/heuristic_ensemble_matcher.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-12-15T15:30:54Z",
+      "side": 1,
+      "message": "nit: omit \"static\" in namespace scope.",
+      "range": {
+        "startLine": 28,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 6
+      },
+      "revId": "b939f3de0d57d4e4be65a5e95ae453893e9bab51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de6d2e4b_f7e71c74",
+        "filename": "chrome/installer/zucchini/heuristic_ensemble_matcher.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-12-15T15:30:54Z",
+      "side": 1,
+      "message": "i\u0027m not sure if base::Optional changes things, but we generally don\u0027t std::move a return. it\u0027s my understanding that it\u0027s better to just return the local and let the compiler decide what the best way to return it is.",
+      "revId": "b939f3de0d57d4e4be65a5e95ae453893e9bab51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf9e3a5d_b55f8dc1",
+        "filename": "chrome/installer/zucchini/heuristic_ensemble_matcher.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-12-15T15:30:54Z",
+      "side": 1,
+      "message": "is there a reason not to make this part of the statement above? i think it\u0027s more common to have:\n    some_stream \u003c\u003c \"foo \" \u003c\u003c bar \u003c\u003c \" and \"\n                \u003c\u003c \"blah \" \u003c\u003c blech \u003c\u003c std::endl;",
+      "range": {
+        "startLine": 93,
+        "startChar": 6,
+        "endLine": 93,
+        "endChar": 14
+      },
+      "revId": "b939f3de0d57d4e4be65a5e95ae453893e9bab51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab2c92f3_88bb93d1",
+        "filename": "chrome/installer/zucchini/heuristic_ensemble_matcher.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-12-15T15:30:54Z",
+      "side": 1,
+      "message": "nit: avoid personal pronouns",
+      "range": {
+        "startLine": 96,
+        "startChar": 13,
+        "endLine": 96,
+        "endChar": 15
+      },
+      "revId": "b939f3de0d57d4e4be65a5e95ae453893e9bab51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7d39717_9baa8d50",
+        "filename": "chrome/installer/zucchini/heuristic_ensemble_matcher.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-12-15T15:30:54Z",
+      "side": 1,
+      "message": "is the intention here to make the full vector contain the given string, or only any elements added above the current size to make it |new_size| in total? if the former, use .assign() rather than .resize() to be explicit that you\u0027re filling the whole vector, not just adding to some existing vector.",
+      "range": {
+        "startLine": 97,
+        "startChar": 15,
+        "endLine": 97,
+        "endChar": 21
       },
       "revId": "b939f3de0d57d4e4be65a5e95ae453893e9bab51",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
