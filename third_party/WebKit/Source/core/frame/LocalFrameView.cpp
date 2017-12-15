@@ -4791,10 +4791,13 @@ IntRect LocalFrameView::ContentsToScreen(const IntRect& rect) const {
 
 IntPoint LocalFrameView::SoonToBeRemovedUnscaledViewportToContents(
     const IntPoint& point_in_viewport) const {
-  IntPoint point_in_root_frame = FlooredIntPoint(
+  FloatPoint point_in_root_frame =
       frame_->GetPage()->GetVisualViewport().ViewportCSSPixelsToRootFrame(
-          point_in_viewport));
-  IntPoint point_in_this_frame = ConvertFromRootFrame(point_in_root_frame);
+          point_in_viewport);
+  float x = GetChromeClient()->WindowToViewportScalar(point_in_root_frame.X());
+  float y = GetChromeClient()->WindowToViewportScalar(point_in_root_frame.Y());
+  IntPoint point_in_this_frame =
+      ConvertFromRootFrame(FlooredIntPoint(FloatPoint(x, y)));
   return FrameToContents(point_in_this_frame);
 }
 
