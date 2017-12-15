@@ -155,6 +155,24 @@
     },
     {
       "key": {
+        "uuid": "f756ffb3_4226d655",
+        "filename": "content/browser/frame_host/render_frame_host_impl.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 1440,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-12-15T22:57:13Z",
+      "side": 1,
+      "message": "Input injection is in both places; there is a FrameInputHandler and WidgetInputHandler. Most input is managed on the widget, but we had to keep IME and edit commands associated with frames.",
+      "parentUuid": "aaa0fecb_d3d1d378",
+      "revId": "585476e8d94db57b2ec02582b009e1d8ba4362d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5e025be7_a11e578a",
         "filename": "content/browser/site_per_process_browsertest.cc",
         "patchSetId": 22
