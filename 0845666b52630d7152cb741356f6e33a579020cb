@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "df9ca7b0_c1b92c11",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-12-15T19:41:07Z",
+      "side": 1,
+      "message": "nit:\nCan you add the following line to the CL description:\nCq-Include-Trybots: master.tryserver.chromium.android:android_cronet_tester;master.tryserver.chromium.mac:ios-simulator-cronet\n\nThis is similar to https://chromium-review.googlesource.com/c/chromium/src/+/777855. It ensures that Cronet bot is also run against the CL. Sometimes NQE changes break the downstream Cronet bot, and we want to avoid that by proactively running the Cronet bot against the CL.",
+      "revId": "0845666b52630d7152cb741356f6e33a579020cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "756f7374_e63ccb3d",
+        "filename": "net/nqe/network_quality_estimator_params.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-12-15T19:41:07Z",
+      "side": 1,
+      "message": "very minor nit: reverse the order to avoid computing |forced_value| when it is not needed:\nif (GetForcedEffectiveConnectionTypeOnCellularOnly(params)) {\n    return base::nullopt;\n  }\nstd::string forced_value \u003d GetForcedEffectiveConnectionTypeString(params);",
+      "range": {
+        "startLine": 372,
+        "startChar": 2,
+        "endLine": 375,
+        "endChar": 3
+      },
+      "revId": "0845666b52630d7152cb741356f6e33a579020cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da87b058_e02088e3",
+        "filename": "net/nqe/network_quality_estimator_params.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-12-15T19:41:07Z",
+      "side": 1,
+      "message": "nit: can this be a const variable?",
+      "range": {
+        "startLine": 274,
+        "startChar": 2,
+        "endLine": 274,
+        "endChar": 6
+      },
+      "revId": "0845666b52630d7152cb741356f6e33a579020cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
