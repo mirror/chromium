@@ -111,17 +111,14 @@ void FakeSpeechRecognitionManager::StopAudioCaptureForSession(int session_id) {
   // Nothing to do here since we aren't really recording.
 }
 
-void FakeSpeechRecognitionManager::AbortAllSessionsForRenderProcess(
-    int render_process_id) {
+void FakeSpeechRecognitionManager::AbortAllSessionsForRenderView(
+    int render_process_id,
+    int render_view_id) {
   VLOG(1) << "CancelAllRequestsWithDelegate invoked.";
   EXPECT_TRUE(should_send_fake_response_ ||
-              session_ctx_.render_process_id == render_process_id);
+              (session_ctx_.render_process_id == render_process_id &&
+               session_ctx_.render_view_id == render_view_id));
   did_cancel_all_ = true;
-}
-
-void FakeSpeechRecognitionManager::AbortAllSessionsForRenderView(
-    int render_process_id, int render_view_id) {
-  DCHECK(delegate_);  // We only expect this to be called via |delegate_|.
 }
 
 int FakeSpeechRecognitionManager::GetSession(int render_process_id,

@@ -51,7 +51,6 @@ class FakeSpeechRecognitionManager : public SpeechRecognitionManager,
   void StartSession(int session_id) override;
   void AbortSession(int session_id) override;
   void StopAudioCaptureForSession(int session_id) override;
-  void AbortAllSessionsForRenderProcess(int render_process_id) override;
   void AbortAllSessionsForRenderView(int render_process_id,
                                      int render_view_id) override;
   int GetSession(int render_process_id,
