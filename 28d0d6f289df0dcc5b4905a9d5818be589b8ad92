@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "78563396_1feb9d7b",
+        "filename": "ios/chrome/browser/ui/location_bar/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-12-15T18:51:20Z",
+      "side": 1,
+      "message": "needs more bass.",
+      "revId": "28d0d6f289df0dcc5b4905a9d5818be589b8ad92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "725d9a37_5ab20d62",
+        "filename": "ios/chrome/browser/ui/location_bar/location_bar_coordinator.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-12-15T18:51:20Z",
+      "side": 1,
+      "message": "s/\\.\\./\\.",
+      "revId": "28d0d6f289df0dcc5b4905a9d5818be589b8ad92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b41b577a_9f601685",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_coordinator.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-12-15T18:51:20Z",
+      "side": 1,
+      "message": "Is this TODO still accurate?",
+      "revId": "28d0d6f289df0dcc5b4905a9d5818be589b8ad92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
