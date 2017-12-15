@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c84aff1c_bfd853bb",
+        "filename": "chrome/browser/banners/app_banner_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-12-15T03:52:29Z",
+      "side": 1,
+      "message": "Nit: I\u0027m not sure if this is a common pattern or not. If it isn\u0027t it might be worth adding a comment explaining why the seemingly unused |controller| argument is passed in.",
+      "revId": "3b9efa9bd55eac1a182c53ac416123bee06aada1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
