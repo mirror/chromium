@@ -22,6 +22,98 @@
       "revId": "4395b7737fa295fd9a03bd866d86958996fc6907",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3aaac07b_e4496a28",
+        "filename": "sandbox/win/src/target_process.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1160859
+      },
+      "writtenOn": "2017-12-15T18:53:17Z",
+      "side": 1,
+      "message": "this goes out of scope. in previous code, initial_token_ did not. Does closing this after calling SetThreadToken mean something bad might happen? (just checking).",
+      "range": {
+        "startLine": 189,
+        "startChar": 28,
+        "endLine": 189,
+        "endChar": 47
+      },
+      "revId": "4395b7737fa295fd9a03bd866d86958996fc6907",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "535f2dff_57d98c07",
+        "filename": "sandbox/win/tests/common/test_utils.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1160859
+      },
+      "writtenOn": "2017-12-15T18:53:17Z",
+      "side": 1,
+      "message": "nit: same order as declaration order in .h file (apparently this is a standard, don\u0027t blame me)",
+      "range": {
+        "startLine": 77,
+        "startChar": 5,
+        "endLine": 77,
+        "endChar": 32
+      },
+      "revId": "4395b7737fa295fd9a03bd866d86958996fc6907",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5db2c7dd_55017e11",
+        "filename": "sandbox/win/tests/common/test_utils.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1160859
+      },
+      "writtenOn": "2017-12-15T18:53:17Z",
+      "side": 1,
+      "message": "will this ever fail?",
+      "range": {
+        "startLine": 112,
+        "startChar": 10,
+        "endLine": 112,
+        "endChar": 35
+      },
+      "revId": "4395b7737fa295fd9a03bd866d86958996fc6907",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5dac1ce6_e012e8bc",
+        "filename": "sandbox/win/tests/common/test_utils.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1160859
+      },
+      "writtenOn": "2017-12-15T18:53:17Z",
+      "side": 1,
+      "message": "prefer std::make_uniq here",
+      "range": {
+        "startLine": 123,
+        "startChar": 36,
+        "endLine": 123,
+        "endChar": 39
+      },
+      "revId": "4395b7737fa295fd9a03bd866d86958996fc6907",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
