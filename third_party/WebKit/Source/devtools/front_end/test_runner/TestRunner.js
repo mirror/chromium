@@ -657,8 +657,18 @@ TestRunner._pendingInits = 0;
  * @param {string} code
  */
 TestRunner.deprecatedInitAsync = async function(code) {
-  TestRunner._pendingInits++;
+  TestRunner.deprecatedWaitForInitAsyncTask();
   await TestRunner.RuntimeAgent.invoke_evaluate({expression: code, objectGroup: 'console'});
+  TestRunner.deprecatedFinishedInitAsyncTask();
+};
+
+// In addition to deprecatedInitAsync(...), it's used by ResourcesTestRunner.js to wait
+// for clearDataForOrigin(...) to finish.
+TestRunner.deprecatedWaitForInitAsyncTask = function() {
+  TestRunner._pendingInits++;
+};
+
+TestRunner.deprecatedFinishedInitAsyncTask = function() {
   TestRunner._pendingInits--;
   if (!TestRunner._pendingInits)
     TestRunner._resolveOnFinishInits();
