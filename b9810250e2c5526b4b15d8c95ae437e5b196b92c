@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8bd18b56_09ca61e8",
+        "filename": "chrome/browser/chromeos/arc/accessibility/arc_accessibility_helper_bridge.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-12-15T23:14:59Z",
+      "side": 1,
+      "message": "I\u0027m just curious why this works? What I take this to mean is that the total count of accessibility window state changes should equal the count of calls to OnNotificationSurfaceRemoved?",
+      "revId": "b9810250e2c5526b4b15d8c95ae437e5b196b92c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "864f9d2d_b7425d39",
+        "filename": "chrome/browser/chromeos/arc/accessibility/arc_accessibility_helper_bridge.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-12-15T23:14:59Z",
+      "side": 1,
+      "message": "nit: the second pair might be more readable as a struct",
+      "revId": "b9810250e2c5526b4b15d8c95ae437e5b196b92c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4dc87d78_da529e37",
+        "filename": "chrome/browser/chromeos/arc/accessibility/arc_accessibility_helper_bridge.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 504,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-12-15T23:14:59Z",
+      "side": 1,
+      "message": "Maybe CHECK(it-\u003esecond.first \u003e\u003d 0) ?",
+      "revId": "b9810250e2c5526b4b15d8c95ae437e5b196b92c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
