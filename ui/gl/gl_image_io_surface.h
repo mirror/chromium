@@ -28,8 +28,7 @@ namespace gl {
 
 class GL_EXPORT GLImageIOSurface : public GLImage {
  public:
-  static GLImageIOSurface* Create(const gfx::Size& size,
-                                  unsigned internalformat);
+  static GLImageIOSurface* Create(const gfx::Size& size);
 
   bool Initialize(IOSurfaceRef io_surface,
                   gfx::GenericSharedMemoryId io_surface_id,
@@ -79,8 +78,6 @@ class GL_EXPORT GLImageIOSurface : public GLImage {
   // RGB transformation.
   void SetColorSpaceForYUVToRGBConversion(const gfx::ColorSpace& color_space);
 
-  static unsigned GetInternalFormatForTesting(gfx::BufferFormat format);
-
   // Downcasts from |image|. Returns |nullptr| on failure.
   static GLImageIOSurface* FromGLImage(GLImage* image);
 
@@ -88,19 +85,12 @@ class GL_EXPORT GLImageIOSurface : public GLImage {
   ~GLImageIOSurface() override;
 
  private:
-  GLImageIOSurface(const gfx::Size& size, unsigned internalformat);
+  GLImageIOSurface(const gfx::Size& size);
 
   Type GetType() const override;
   class RGBConverter;
 
   const gfx::Size size_;
-
-  // The "internalformat" exposed to the command buffer, which may not be
-  // "internalformat" requested by the client.
-  const unsigned internalformat_;
-
-  // The "internalformat" requested by the client.
-  const unsigned client_internalformat_;
 
   gfx::BufferFormat format_;
   base::ScopedCFTypeRef<IOSurfaceRef> io_surface_;

@@ -79,7 +79,6 @@ GpuMemoryBufferFactoryNativePixmap::CreateImageForGpuMemoryBuffer(
     const gfx::GpuMemoryBufferHandle& handle,
     const gfx::Size& size,
     gfx::BufferFormat format,
-    unsigned internalformat,
     int client_id,
     SurfaceHandle surface_handle) {
   DCHECK_EQ(handle.type, gfx::NATIVE_PIXMAP);
@@ -121,7 +120,7 @@ GpuMemoryBufferFactoryNativePixmap::CreateImageForGpuMemoryBuffer(
   }
 
   scoped_refptr<gl::GLImageNativePixmap> image(
-      new gl::GLImageNativePixmap(size, internalformat));
+      new gl::GLImageNativePixmap(size));
   if (!image->Initialize(pixmap.get(), format)) {
     LOG(ERROR) << "Failed to create GLImage " << size.ToString() << ", "
                << gfx::BufferFormatToString(format);
@@ -135,7 +134,6 @@ GpuMemoryBufferFactoryNativePixmap::CreateAnonymousImage(
     const gfx::Size& size,
     gfx::BufferFormat format,
     gfx::BufferUsage usage,
-    unsigned internalformat,
     bool* is_cleared) {
   scoped_refptr<gfx::NativePixmap> pixmap;
 #if defined(USE_OZONE)
@@ -152,7 +150,7 @@ GpuMemoryBufferFactoryNativePixmap::CreateAnonymousImage(
     return nullptr;
   }
   scoped_refptr<gl::GLImageNativePixmap> image(
-      new gl::GLImageNativePixmap(size, internalformat));
+      new gl::GLImageNativePixmap(size));
   if (!image->Initialize(pixmap.get(), format)) {
     LOG(ERROR) << "Failed to create GLImage " << size.ToString() << ", "
                << gfx::BufferFormatToString(format);
