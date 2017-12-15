@@ -44,6 +44,7 @@ if (is_chromeos) {
       "rotation_lock.mojom",
       "scale_factor.mojom",
       "storage_manager.mojom",
+      "timer.mojom",
       "tracing.mojom",
       "tts.mojom",
       "usb_host.mojom",
