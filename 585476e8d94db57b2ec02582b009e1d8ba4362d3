@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "500e8ad7_7833e5ca",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 3713,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-15T22:15:10Z",
+      "side": 1,
+      "message": "To me it seemed weird that you call GetRemoteInterfaces() when 7 lines above you create the object. I would also change line 3709, but I lave that decision to you.",
+      "parentUuid": "3b63c066_010fdfcb",
+      "range": {
+        "startLine": 3713,
+        "startChar": 2,
+        "endLine": 3713,
+        "endChar": 23
+      },
+      "revId": "585476e8d94db57b2ec02582b009e1d8ba4362d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aae1d198_293aa6dc",
         "filename": "content/browser/frame_host/render_frame_host_impl.h",
         "patchSetId": 22
@@ -366,6 +390,30 @@
     },
     {
       "key": {
+        "uuid": "3d4adfb4_a35a9f33",
+        "filename": "content/renderer/input/input_target_client_impl.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-15T22:15:10Z",
+      "side": 1,
+      "message": "If you\u0027re assuming that this is only called once, then please DCHECK to that effect. binding_ will also DCHECK, but adding a DCHECK here helps document your assumption.",
+      "parentUuid": "3197c0e4_0296830d",
+      "range": {
+        "startLine": 22,
+        "startChar": 2,
+        "endLine": 22,
+        "endChar": 10
+      },
+      "revId": "585476e8d94db57b2ec02582b009e1d8ba4362d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "431d8d20_0d644ba4",
         "filename": "content/renderer/input/input_target_client_impl.cc",
         "patchSetId": 22
@@ -495,6 +543,30 @@
       "side": 1,
       "message": "I changed the name. But didn\u0027t quite understand the other part. Can you elaborate a little more.",
       "parentUuid": "1477c51b_f90865e1",
+      "range": {
+        "startLine": 163,
+        "startChar": 14,
+        "endLine": 163,
+        "endChar": 32
+      },
+      "revId": "585476e8d94db57b2ec02582b009e1d8ba4362d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4821d032_6b9fbfe0",
+        "filename": "content/renderer/input/render_widget_input_handler.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-15T22:15:10Z",
+      "side": 1,
+      "message": "Sorry for not being clear. My understanding is your changing point to be in terms of dips where previously it was pixels. I don\u0027t see any other changes to callers. I would assume given the change in meaning of the argument type callers need to be updated. If not, can you elaborate on why?",
+      "parentUuid": "1e47d6f8_c73c6888",
       "range": {
         "startLine": 163,
         "startChar": 14,
