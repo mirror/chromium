@@ -570,23 +570,24 @@ void StyleAdjuster::AdjustComputedStyle(StyleResolverState& state,
 
   bool is_svg_element = element && element->IsSVGElement();
   if (is_svg_element) {
-    // display: contents computes to inline for replaced elements and form
-    // controls, and isn't specified for other kinds of SVG content[1], so let's
-    // just do the same here for all other SVG elements.
-    //
-    // If we wouldn't do this, then we'd need to ensure that display: contents
-    // doesn't prevent SVG elements from generating a LayoutObject in
-    // SVGElement::LayoutObjectIsNeeded.
-    //
-    // [1]: https://www.w3.org/TR/SVG/painting.html#DisplayProperty
-    if (style.Display() == EDisplay::kContents)
-      style.SetDisplay(EDisplay::kInline);
-
     // Only the root <svg> element in an SVG document fragment tree honors css
     // position.
-    if (!(IsSVGSVGElement(*element) && element->parentNode() &&
-          !element->parentNode()->IsSVGElement()))
+    if (!IsSVGSVGElement(*element) || !element->parentNode() ||
+        element->parentNode()->IsSVGElement()) {
       style.SetPosition(ComputedStyleInitialValues::InitialPosition());
+    }
+
+    if (style.Display() == EDisplay::kContents && !IsSVGGElement(element) &&
+        !IsSVGUseElement(element) && !IsSVGTSpanElement(element) &&
+        (!IsSVGSVGElement(*element) || !element->parentNode() ||
+         !element->parentNode()->IsSVGElement())) {
+      // According to the CSS Display spec[1], nested <svg> elements, <g>,
+      // <use>, and <tspan> elements are not rendered and their children are
+      // "hoisted". For other elements display:contents behaves as display:none.
+      //
+      // [1] https://drafts.csswg.org/css-display/#unbox-svg
+      style.SetDisplay(EDisplay::kNone);
+    }
 
     // SVG text layout code expects us to be a block-level style element.
     if ((IsSVGForeignObjectElement(*element) || IsSVGTextElement(*element)) &&

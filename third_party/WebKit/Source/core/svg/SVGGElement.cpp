@@ -40,7 +40,8 @@ LayoutObject* SVGGElement::CreateLayoutObject(const ComputedStyle& style) {
   // layoutObjects to exist so they can be referenced from somewhere else.
   if (style.Display() == EDisplay::kNone)
     return new LayoutSVGHiddenContainer(this);
-
+  if (style.Display() == EDisplay::kContents)
+    return nullptr;
   return new LayoutSVGTransformableContainer(this);
 }
 
