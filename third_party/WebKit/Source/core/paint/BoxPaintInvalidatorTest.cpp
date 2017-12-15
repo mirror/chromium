@@ -66,7 +66,7 @@ class BoxPaintInvalidatorTest : public PaintControllerPaintTest {
     target.setAttribute(
         HTMLNames::styleAttr,
         target.getAttribute(HTMLNames::styleAttr) + "; width: 200px");
-    GetDocument().View()->UpdateLifecycleToLayoutClean();
+    GetDocument().View()->UpdateLifecycleToCompositingInputsClean();
     // Simulate that PaintInvalidator updates visual rect.
     box.GetMutableForPainting().SetVisualRect(
         LayoutRect(visual_rect.Location(), box.Size()));
@@ -177,7 +177,7 @@ TEST_P(BoxPaintInvalidatorTest, ComputePaintInvalidationReasonPaintingNothing) {
   // Visual rect size change.
   LayoutRect old_visual_rect = visual_rect;
   target.setAttribute(HTMLNames::styleAttr, "width: 200px");
-  GetDocument().View()->UpdateLifecycleToLayoutClean();
+  GetDocument().View()->UpdateLifecycleToCompositingInputsClean();
   // Simulate that PaintInvalidator updates visual rect.
   box.GetMutableForPainting().SetVisualRect(
       LayoutRect(visual_rect.Location(), box.Size()));
@@ -214,7 +214,7 @@ TEST_P(BoxPaintInvalidatorTest, ComputePaintInvalidationReasonBasic) {
   // Visual rect size change.
   LayoutRect old_visual_rect = visual_rect;
   target.setAttribute(HTMLNames::styleAttr, "background: blue; width: 200px");
-  GetDocument().View()->UpdateLifecycleToLayoutClean();
+  GetDocument().View()->UpdateLifecycleToCompositingInputsClean();
   // Simulate that PaintInvalidator updates visual rect.
   box.GetMutableForPainting().SetVisualRect(
       LayoutRect(visual_rect.Location(), box.Size()));

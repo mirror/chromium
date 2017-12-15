@@ -353,9 +353,8 @@ void PaintLayerCompositor::ApplyOverlayFullscreenVideoAdjustmentIfNeeded() {
 void PaintLayerCompositor::UpdateWithoutAcceleratedCompositing(
     CompositingUpdateType update_type) {
   DCHECK(!HasAcceleratedCompositing());
-
-  if (update_type >= kCompositingUpdateAfterCompositingInputChange)
-    CompositingInputsUpdater(RootLayer()).Update();
+  if (update_type >= kCompositingUpdateAfterGeometryChange)
+    CompositingInputsUpdater(RootLayer()).Update(update_type);
 
 #if DCHECK_IS_ON()
   CompositingInputsUpdater::AssertNeedsCompositingInputsUpdateBitsCleared(
@@ -408,15 +407,6 @@ void PaintLayerCompositor::UpdateIfNeeded(
 
   Lifecycle().AdvanceTo(DocumentLifecycle::kInCompositingUpdate);
 
-  if (pending_update_type_ < kCompositingUpdateAfterCompositingInputChange &&
-      target_state == DocumentLifecycle::kCompositingInputsClean) {
-    // The compositing inputs are already clean and that is our target state.
-    // Early-exit here without clearing the pending update type since we haven't
-    // handled e.g. geometry updates.
-    Lifecycle().AdvanceTo(DocumentLifecycle::kCompositingInputsClean);
-    return;
-  }
-
   CompositingUpdateType update_type = pending_update_type_;
   pending_update_type_ = kCompositingUpdateNone;
 
@@ -437,8 +427,8 @@ void PaintLayerCompositor::UpdateIfNeeded(
 
   Vector<PaintLayer*> layers_needing_paint_invalidation;
 
-  if (update_type >= kCompositingUpdateAfterCompositingInputChange) {
-    CompositingInputsUpdater(update_root).Update();
+  if (update_type >= kCompositingUpdateAfterGeometryChange) {
+    CompositingInputsUpdater(update_root).Update(update_type);
 
 #if DCHECK_IS_ON()
     // FIXME: Move this check to the end of the compositing update.
