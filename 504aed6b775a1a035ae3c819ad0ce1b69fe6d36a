@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2b89590b_d1850250",
+        "filename": "chrome/utility/importer/firefox_importer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-12-15T19:46:30Z",
+      "side": 1,
+      "message": "nit: \"newer\", and please mention a concrete version number where this switch happened.",
+      "range": {
+        "startLine": 228,
+        "startChar": 46,
+        "endLine": 228,
+        "endChar": 51
+      },
+      "revId": "504aed6b775a1a035ae3c819ad0ce1b69fe6d36a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f5a85e8_4971b6f7",
+        "filename": "chrome/utility/importer/firefox_importer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-12-15T19:46:30Z",
+      "side": 1,
+      "message": "nit: Please include a trailing comma.",
+      "range": {
+        "startLine": 52,
+        "startChar": 4,
+        "endLine": 52,
+        "endChar": 21
+      },
+      "revId": "504aed6b775a1a035ae3c819ad0ce1b69fe6d36a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b7b1586_bd1293ef",
+        "filename": "chrome/utility/importer/firefox_importer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-12-15T19:46:30Z",
+      "side": 1,
+      "message": "Optional: I think that with the enum, this is now clear enough even without the comment.  It\u0027s fine with me to leave the comment, though, if you still think it\u0027s worthwhile.",
+      "range": {
+        "startLine": 90,
+        "startChar": 0,
+        "endLine": 91,
+        "endChar": 24
+      },
+      "revId": "504aed6b775a1a035ae3c819ad0ce1b69fe6d36a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcff4e3b_318162e8",
+        "filename": "chrome/utility/importer/firefox_importer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-12-15T19:46:30Z",
+      "side": 1,
+      "message": "nit: Please mention a specific version number, e.g. \"up to version 54\".",
+      "range": {
+        "startLine": 100,
+        "startChar": 42,
+        "endLine": 100,
+        "endChar": 50
+      },
+      "revId": "504aed6b775a1a035ae3c819ad0ce1b69fe6d36a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e59b209e_1d0c07a7",
+        "filename": "chrome/utility/importer/firefox_importer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-12-15T19:46:30Z",
+      "side": 1,
+      "message": "nit: \"newer\"",
+      "range": {
+        "startLine": 107,
+        "startChar": 28,
+        "endLine": 107,
+        "endChar": 33
+      },
+      "revId": "504aed6b775a1a035ae3c819ad0ce1b69fe6d36a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
