@@ -160,6 +160,14 @@ bool NGInlineItem::HasEndEdge() const {
          !ToLayoutInline(GetLayoutObject())->Continuation();
 }
 
+bool NGInlineItem::HasLineLeftEdge() const {
+  return Style()->IsLeftToRightDirection() ? HasStartEdge() : HasEndEdge();
+}
+
+bool NGInlineItem::HasLineRightEdge() const {
+  return Style()->IsLeftToRightDirection() ? HasEndEdge() : HasStartEdge();
+}
+
 NGInlineItemRange::NGInlineItemRange(Vector<NGInlineItem>* items,
                                      unsigned start_index,
                                      unsigned end_index)
