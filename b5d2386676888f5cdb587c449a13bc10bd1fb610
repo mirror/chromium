@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "421e7db0_0d134eca",
+        "filename": "components/offline_pages/core/model/get_pages_task.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-12-15T01:23:34Z",
+      "side": 1,
+      "message": "It took me a while to realize that this is the code that selects items that are already marked to be upgraded. I was initially incorrectly assuming this was what selected items that would then be marked to be upgraded. Its name and comment could be updated to make this clearer.\n\nAs such, I don\u0027t think this method should do much more than select items that have remaining upgrade attempts \u003e 0. There should be no namespace filtering and possibly not even the directory filtering (it would be moved to the caller code). It should though already order them properly (as described in the design doc). At this point a better name would be CreateTaskSelectingItemsMarkedForUpgrading. This could even be reused in potential future upgrades.\n\nAll remaining filtering should be taken care by the logic that have previously set their upgrade attempts.",
+      "range": {
+        "startLine": 101,
+        "startChar": 39,
+        "endLine": 101,
+        "endChar": 73
+      },
+      "revId": "b5d2386676888f5cdb587c449a13bc10bd1fb610",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c536c606_c94939e0",
+        "filename": "components/offline_pages/core/model/get_pages_task_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-12-15T01:23:34Z",
+      "side": 1,
+      "message": "I think this item deserves a better name. Maybe |not_selected_item|?",
+      "range": {
+        "startLine": 314,
+        "startChar": 18,
+        "endLine": 314,
+        "endChar": 22
+      },
+      "revId": "b5d2386676888f5cdb587c449a13bc10bd1fb610",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf0a5c3b_2a0d2ed5",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-12-15T01:23:34Z",
+      "side": 1,
+      "message": "IIUC the design doc seems to set 45 seconds for this delay.",
+      "range": {
+        "startLine": 44,
+        "startChar": 33,
+        "endLine": 44,
+        "endChar": 35
+      },
+      "revId": "b5d2386676888f5cdb587c449a13bc10bd1fb610",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e8d9dc6_f40a016a",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 489,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-12-15T01:23:34Z",
+      "side": 1,
+      "message": "I\u0027m confused here.... Why not simply always schedule SelectItemsForUpgrade with the delay? What\u0027s the need of this delayed recursive call?",
+      "range": {
+        "startLine": 479,
+        "startChar": 0,
+        "endLine": 489,
+        "endChar": 26
+      },
+      "revId": "b5d2386676888f5cdb587c449a13bc10bd1fb610",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd9c7df6_9714a1a5",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 505,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-12-15T01:23:34Z",
+      "side": 1,
+      "message": "Shouldn\u0027t we do something with the result?",
+      "range": {
+        "startLine": 505,
+        "startChar": 60,
+        "endLine": 505,
+        "endChar": 62
+      },
+      "revId": "b5d2386676888f5cdb587c449a13bc10bd1fb610",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
