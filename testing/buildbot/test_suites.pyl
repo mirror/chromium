@@ -983,6 +983,29 @@
     },
   },
 
+  'linux_viz_isolated_scripts': {
+    'telemetry_perf_unittests': {
+      'args': [
+        '--extra-browser-args=--enable-viz',
+      ],
+      'swarming': {
+        'hard_timeout': 960,
+        'shards': 12,
+      },
+    },
+    'telemetry_unittests': {
+      'args': [
+        '--extra-browser-args=--enable-viz',
+        '--skip=telemetry.internal.backends.chrome_inspector.inspector_page_unittest.InspectorPageTest.testCaptureScreenshot',
+        '--skip=telemetry.internal.browser.tab_unittest.GpuTabTest.testScreenshot',
+        '--skip=telemetry.internal.actions.scroll_unittest.ScrollActionTest.testWheelScrollDistanceWhileZoomed',
+      ],
+      'swarming': {
+        'shards': 4,
+      },
+    },
+  },
+
   'mash_chromium_gtests': {
     'ash_unittests-mash': {
       'test': 'ash_unittests',
@@ -1935,6 +1958,7 @@
   'chromium_linux_isolated_scripts': [
     'desktop_chromium_isolated_scripts',
     'linux_specific_chromium_isolated_scripts',
+    'linux_viz_isolated_scripts',
     'telemetry_perf_unittests_isolated_scripts',
   ],
 

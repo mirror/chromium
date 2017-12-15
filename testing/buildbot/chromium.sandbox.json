@@ -571,7 +571,11 @@
       },
       {
         "args": [
-          "--jobs=1"
+          "--extra-browser-args=--enable-viz",
+          "--jobs=1",
+          "--skip=telemetry.internal.actions.scroll_unittest.ScrollActionTest.testWheelScrollDistanceWhileZoomed",
+          "--skip=telemetry.internal.backends.chrome_inspector.inspector_page_unittest.InspectorPageTest.testCaptureScreenshot",
+          "--skip=telemetry.internal.browser.tab_unittest.GpuTabTest.testScreenshot"
         ],
         "isolate_name": "telemetry_unittests",
         "name": "telemetry_unittests",
