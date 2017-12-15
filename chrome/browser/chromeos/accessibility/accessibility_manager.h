@@ -279,7 +279,7 @@ class AccessibilityManager
 
   // Forward an accessibility gesture from the touch exploration controller
   // to ChromeVox.
-  void HandleAccessibilityGesture(ui::AXGesture gesture);
+  void HandleAccessibilityGesture(const std::string& gesture);
 
   // Update the touch exploration controller so that synthesized
   // touch events are anchored at this point.

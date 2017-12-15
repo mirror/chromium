@@ -59,4 +59,8 @@ interface AccessibilityControllerClient {
   // Initiates play of shutdown sound and returns sound duration. This method
   // exists because the browser owns all media playback.
   PlayShutdownSound() => (mojo.common.mojom.TimeDelta sound_duration);
+
+  // Forwards an accessibility gesture from the touch exploration controller to
+  // ChromeVox.
+  HandleAccessibilityGesture(string gesture);
 };
