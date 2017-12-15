@@ -23,25 +23,35 @@
 #include "base/task_scheduler/post_task.h"
 #include "base/task_scheduler/task_traits.h"
 #include "base/threading/sequenced_task_runner_handle.h"
+#include "build/build_config.h"
 #include "content/public/common/resource_request.h"
 #include "content/public/common/resource_response.h"
 #include "content/public/common/url_loader.mojom.h"
 #include "content/public/common/url_loader_factory.mojom.h"
 #include "mojo/public/cpp/bindings/binding.h"
+#include "mojo/public/cpp/bindings/binding_set.h"
 #include "mojo/public/cpp/system/data_pipe.h"
 #include "mojo/public/cpp/system/simple_watcher.h"
 #include "net/base/net_errors.h"
 #include "net/base/request_priority.h"
 #include "net/http/http_request_headers.h"
 #include "net/traffic_annotation/network_traffic_annotation.h"
+#include "services/network/public/interfaces/data_pipe_getter.mojom.h"
 #include "storage/common/data_element.h"
 
+#if defined(OS_ANDROID)
+#include "base/android/content_uri_utils.h" "
+#endif  // defined(OS_ANDROID)
+
 namespace content {
+
+const size_t SimpleURLLoader::kMaxBoundedStringDownloadSize = 1024 * 1024;
+const size_t SimpleURLLoader::kMaxUploadStringSizeToCopy = 256 * 1024;
 
 namespace {
 
 // This file contains SimpleURLLoaderImpl, several BodyHandler implementations,
-// and BodyReader.
+// BodyReader, and StringUploadDataPipeGetter.
 //
 // SimpleURLLoaderImpl implements URLLoaderClient and drives the URLLoader.
 //
@@ -54,6 +64,191 @@ namespace {
 // the BodyPipe. This isn't handled by the SimpleURLLoader as some BodyHandlers
 // consume data off thread, so having it as a separate class allows the data
 // pipe to be used off thread, reducing use of the main thread.
+//
+// StringUploadDataPipeGetter is a class to stream a string upload body to the
+// network service, rather than to copy it all at once.
+
+class StringUploadDataPipeGetter : public network::mojom::DataPipeGetter {
+ public:
+  explicit StringUploadDataPipeGetter(const std::string& upload_string)
+      : upload_string_(upload_string) {}
+
+  ~StringUploadDataPipeGetter() override = default;
+
+  // network::mojom::DataPipeGetter implementation:
+  void Clone(network::mojom::DataPipeGetterRequest request) override {
+    binding_set_.AddBinding(this, std::move(request));
+  }
+
+  void Read(mojo::ScopedDataPipeProducerHandle pipe,
+            ReadCallback callback) override {
+    std::move(callback).Run(net::OK, upload_string_.length());
+    readers_.push_back(
+        std::make_unique<UploadBodyReader>(this, std::move(pipe)));
+    readers_.back()->ReadData();
+  }
+
+ private:
+  // Each UploadBodyReader tries to send the entire string through a Mojo pipe.
+  // Multiple UploadBodyReaders may be needed in the case of redirects. The
+  // StringUploadDataPipeGetter owns all |UploadBodyReader| and deletes ones
+  // that report they are no longer actice.
+  class UploadBodyReader {
+   public:
+    UploadBodyReader(StringUploadDataPipeGetter* pipe_getter,
+                     mojo::ScopedDataPipeProducerHandle upload_body_pipe)
+        : pipe_getter_(pipe_getter),
+          upload_body_pipe_(std::move(upload_body_pipe)),
+          handle_watcher_(FROM_HERE,
+                          mojo::SimpleWatcher::ArmingPolicy::MANUAL) {
+      handle_watcher_.Watch(
+          upload_body_pipe_.get(),
+          MOJO_HANDLE_SIGNAL_WRITABLE | MOJO_HANDLE_SIGNAL_PEER_CLOSED,
+          MOJO_WATCH_CONDITION_SATISFIED,
+          base::BindRepeating(&UploadBodyReader::MojoReadyCallback,
+                              base::Unretained(this)));
+    }
+
+    ~UploadBodyReader() = default;
+
+    // Pushes as much data as possible to |upload_body_pipe_|, and starts
+    // watching the pipe for when it becomes readable again, if not all data was
+    // written. Informs the StringUploadDataPipeGetter if all data is sent, or a
+    // write error occurs.
+    void ReadData() {
+      DCHECK_LE(read_position_, pipe_getter_->upload_string_.length());
+
+      while (true) {
+        uint32_t read_size = static_cast<uint32_t>(
+            std::min(static_cast<size_t>(32 * 1024),
+                     pipe_getter_->upload_string_.length() - read_position_));
+        if (read_size == 0) {
+          // Upload is done.
+          pipe_getter_->RemoveReader(this);
+          return;
+        }
+
+        int result = upload_body_pipe_->WriteData(
+            pipe_getter_->upload_string_.data() + read_position_, &read_size,
+            MOJO_WRITE_DATA_FLAG_NONE);
+        if (result == MOJO_RESULT_SHOULD_WAIT) {
+          handle_watcher_.ArmOrNotify();
+          return;
+        }
+
+        if (result != MOJO_RESULT_OK) {
+          // One read pipe was closed, but the consumer may open another.
+          pipe_getter_->RemoveReader(this);
+          return;
+        }
+
+        read_position_ += read_size;
+        DCHECK_LE(read_position_, pipe_getter_->upload_string_.length());
+      }
+    }
+
+   private:
+    void MojoReadyCallback(MojoResult result,
+                           const mojo::HandleSignalsState& state) {
+      ReadData();
+    }
+
+    StringUploadDataPipeGetter* pipe_getter_;
+
+    mojo::ScopedDataPipeProducerHandle upload_body_pipe_;
+    // Must be below |write_pipe_|, so it's deleted first.
+    mojo::SimpleWatcher handle_watcher_;
+    size_t read_position_ = 0;
+
+    DISALLOW_COPY_AND_ASSIGN(UploadBodyReader);
+  };
+
+  // Called when a reader is done reading, or encounters an error. Could just
+  // wait until the upload is complete, but this does potentially free up some
+  // Mojo resources.
+  void RemoveReader(UploadBodyReader* reader) {
+    auto it = std::find_if(
+        readers_.begin(), readers_.end(),
+        [reader](const std::unique_ptr<UploadBodyReader>& reader_search) {
+          return reader_search.get() == reader;
+        });
+    DCHECK(it != readers_.end());
+    readers_.erase(it);
+  }
+
+  mojo::BindingSet<network::mojom::DataPipeGetter> binding_set_;
+  std::vector<std::unique_ptr<UploadBodyReader>> readers_;
+
+  const std::string upload_string_;
+
+  DISALLOW_COPY_AND_ASSIGN(StringUploadDataPipeGetter);
+};
+
+// Cleans up a ResourceRequest. If the ResourceRequest contains a base::File,
+// destroys it off-thread. Otherwise, destroys it immediately.
+void DestroyRequest(content::ResourceRequest* request) {
+  if (request->request_body) {
+    for (const auto& element : *request->request_body->elements()) {
+      if (element.type() == storage::DataElement::TYPE_RAW_FILE) {
+        base::PostTaskWithTraits(
+            FROM_HERE, {base::MayBlock()},
+            base::BindOnce(
+                [](content::ResourceRequest* request) { delete request; },
+                request));
+        return;
+      }
+    }
+  }
+
+  delete request;
+}
+
+// Holds a ResourceRequest and ensures that if it has a base::File, it's not
+// destroyed on the SimpleURLLoader's main thread.
+using ResourceRequestSafeDeletionPtr =
+    std::unique_ptr<ResourceRequest, decltype(&DestroyRequest)>;
+
+// Attempts to open the file at |upload_file_path| for reading, and attach it to
+// |request_request| (Which must have a non-null |request_body|).
+void OpenFileAndAttachForUpload(
+    ResourceRequestSafeDeletionPtr resource_request,
+    const base::FilePath& upload_file_path,
+    scoped_refptr<base::SequencedTaskRunner> origin_task_runner,
+    base::OnceCallback<void(net::Error, ResourceRequestSafeDeletionPtr)>
+        on_open_complete_callback) {
+  DCHECK(resource_request->request_body);
+
+  base::File file;
+#if defined(OS_ANDROID)
+  if (path.IsContentUri()) {
+    file = base::OpenContentUriForRead(path);
+  } else {
+#endif  //  defined(OS_ANDROID)
+    file.Initialize(upload_file_path,
+#if defined(OS_WIN)
+                    // On Windows, storage::DataElements must be opened for
+                    // asynchronous reading.
+                    base::File::FLAG_ASYNC |
+#endif  // defined(OS_WIN)
+                        base::File::FLAG_OPEN | base::File::FLAG_READ |
+                        base::File::FLAG_SHARE_DELETE);
+#if defined(OS_ANDROID)
+  }
+#endif  // defined(OS_ANDROID)
+
+  net::Error result = net::OK;
+  if (file.IsValid()) {
+    resource_request->request_body->AppendRawFileRange(
+        std::move(file), upload_file_path, 0,
+        std::numeric_limits<uint64_t>::max(), base::Time());
+  } else {
+    result = net::MapSystemError(logging::GetLastSystemErrorCode());
+  }
+
+  origin_task_runner->PostTask(
+      FROM_HERE, base::BindOnce(std::move(on_open_complete_callback), result,
+                                base::Passed(std::move(resource_request))));
+}
 
 class BodyHandler;
 
@@ -84,6 +279,8 @@ class SimpleURLLoaderImpl : public SimpleURLLoader,
       const OnRedirectCallback& on_redirect_callback) override;
   void SetAllowPartialResults(bool allow_partial_results) override;
   void SetAllowHttpErrorResults(bool allow_http_error_results) override;
+  void AttachStringForUpload(const std::string& upload_data,
+                             const std::string& upload_content_type) override;
   void AttachFileForUpload(const base::FilePath& upload_file_path,
                            const std::string& upload_content_type) override;
   void SetRetryOptions(int max_retries, int retry_mode) override;
@@ -135,6 +332,11 @@ class SimpleURLLoaderImpl : public SimpleURLLoader,
   // Only used for the initial request (Not retries).
   void Start(mojom::URLLoaderFactory* url_loader_factory);
 
+  // Sets |resource_request_| to |request| and starts the request. Used after
+  // opening a file to be uploaded and adding it to |resource_request|.
+  void SetRequestAndStart(net::Error result,
+                          ResourceRequestSafeDeletionPtr resource_request);
+
   // Starts a request. Used for both the initial request and retries, if any.
   void StartRequest(mojom::URLLoaderFactory* url_loader_factory);
 
@@ -185,6 +387,10 @@ class SimpleURLLoaderImpl : public SimpleURLLoader,
   bool allow_partial_results_ = false;
   bool allow_http_error_results_ = false;
 
+  // Path of file to be uploaded. Deleted once the task to open the file is
+  // started.
+  base::FilePath upload_file_path_;
+
   // Information related to retrying.
   int remaining_retries_ = 0;
   int retry_mode_ = RETRY_NEVER;
@@ -194,7 +400,7 @@ class SimpleURLLoaderImpl : public SimpleURLLoader,
 
   // Populated in the constructor, and cleared once no longer needed, when no
   // more retries are possible.
-  std::unique_ptr<ResourceRequest> resource_request_;
+  ResourceRequestSafeDeletionPtr resource_request_;
   const net::NetworkTrafficAnnotationTag annotation_tag_;
   // Cloned from the input URLLoaderFactory if it may be needed to follow
   // redirects.
@@ -203,6 +409,8 @@ class SimpleURLLoaderImpl : public SimpleURLLoader,
 
   mojo::Binding<mojom::URLLoaderClient> client_binding_;
   mojom::URLLoaderPtr url_loader_;
+
+  std::unique_ptr<StringUploadDataPipeGetter> string_upload_data_pipe_getter_;
 
   // Per-request state. Always non-null, but re-created on redirect.
   std::unique_ptr<RequestState> request_state_;
@@ -757,7 +965,7 @@ class SaveToFileBodyHandler : public BodyHandler {
 SimpleURLLoaderImpl::SimpleURLLoaderImpl(
     std::unique_ptr<ResourceRequest> resource_request,
     const net::NetworkTrafficAnnotationTag& annotation_tag)
-    : resource_request_(std::move(resource_request)),
+    : resource_request_(resource_request.release(), DestroyRequest),
       annotation_tag_(annotation_tag),
       client_binding_(this),
       request_state_(std::make_unique<RequestState>()),
@@ -843,10 +1051,37 @@ void SimpleURLLoaderImpl::SetAllowHttpErrorResults(
   allow_http_error_results_ = allow_http_error_results;
 }
 
+void SimpleURLLoaderImpl::AttachStringForUpload(
+    const std::string& upload_data,
+    const std::string& upload_content_type) {
+  // Currently only allow a single string to be attached.
+  DCHECK(!resource_request_->request_body);
+  DCHECK(resource_request_->method != "GET" &&
+         resource_request_->method != "HEAD");
+
+  resource_request_->request_body = new ResourceRequestBody();
+
+  if (upload_data.length() <= kMaxUploadStringSizeToCopy) {
+    int copy_length = static_cast<int>(upload_data.length());
+    DCHECK_EQ(static_cast<size_t>(copy_length), upload_data.length());
+    resource_request_->request_body->AppendBytes(upload_data.c_str(),
+                                                 copy_length);
+  } else {
+    // Don't attach the upload body here.  A new pipe will need to be created
+    // each time the request is tried.
+    string_upload_data_pipe_getter_ =
+        std::make_unique<StringUploadDataPipeGetter>(upload_data);
+  }
+
+  resource_request_->headers.SetHeader(net::HttpRequestHeaders::kContentType,
+                                       upload_content_type);
+}
+
 void SimpleURLLoaderImpl::AttachFileForUpload(
     const base::FilePath& upload_file_path,
     const std::string& upload_content_type) {
   DCHECK(!upload_file_path.empty());
+
   // Currently only allow a single file to be attached.
   DCHECK(!resource_request_->request_body);
   DCHECK(resource_request_->method != "GET" &&
@@ -855,10 +1090,8 @@ void SimpleURLLoaderImpl::AttachFileForUpload(
   // Create an empty body to make DCHECKing that there's no upload body yet
   // simpler.
   resource_request_->request_body = new ResourceRequestBody();
-  // TODO(mmenke): Open the file in the current process and append the file
-  // handle instead of the file path.
-  resource_request_->request_body->AppendFileRange(
-      upload_file_path, 0, std::numeric_limits<uint64_t>::max(), base::Time());
+
+  upload_file_path_ = upload_file_path;
 
   resource_request_->headers.SetHeader(net::HttpRequestHeaders::kContentType,
                                        upload_content_type);
@@ -873,6 +1106,17 @@ void SimpleURLLoaderImpl::SetRetryOptions(int max_retries, int retry_mode) {
 
   remaining_retries_ = max_retries;
   retry_mode_ = retry_mode;
+
+#if DCHECK_IS_ON()
+  if (max_retries > 0 && resource_request_->request_body) {
+    for (const storage::DataElement& element :
+         *resource_request_->request_body->elements()) {
+      // Data pipes are single-used, so can't retry uploads when there's a data
+      // pipe.
+      DCHECK(element.type() != storage::DataElement::TYPE_DATA_PIPE);
+    }
+  }
+#endif  // DCHECK_IS_ON()
 }
 
 int SimpleURLLoaderImpl::NetError() const {
@@ -924,21 +1168,52 @@ void SimpleURLLoaderImpl::FinishWithResult(int net_error) {
 
 void SimpleURLLoaderImpl::Start(mojom::URLLoaderFactory* url_loader_factory) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  // This will happen if started twice, and a file is currently being opened
+  // off-thread.
   DCHECK(resource_request_);
   // It's illegal to use a single SimpleURLLoaderImpl to make multiple requests.
   DCHECK(!request_state_->finished);
   DCHECK(!url_loader_);
   DCHECK(!request_state_->body_started);
 
-  // If retries are enabled, stash the information needed to retry a request.
-  if (remaining_retries_ > 0) {
-    // Clone the URLLoaderFactory, to avoid any dependencies on its lifetime.
-    // Results in an easier to use API, with no shutdown ordering requirements,
-    // at the cost of some resources.
+  // If retries are enabled, or the request can't be started immediately due to
+  // needing to open a file, Clone the URLLoaderFactory, to avoid any
+  // dependencies on its lifetime. Results in an easier to use API, with no
+  // shutdown ordering requirements, at the cost of some resources.
+  if (remaining_retries_ > 0 || !upload_file_path_.empty())
     url_loader_factory->Clone(mojo::MakeRequest(&url_loader_factory_ptr_));
+
+  // Delay starting the request to open a file, if necessary.
+  if (!upload_file_path_.empty()) {
+    base::TaskPriority priority = GetTaskPriority();
+    base::PostTaskWithTraits(
+        FROM_HERE, {base::MayBlock(), priority},
+        base::BindOnce(&OpenFileAndAttachForUpload,
+                       base::Passed(std::move(resource_request_)),
+                       upload_file_path_,
+                       base::SequencedTaskRunnerHandle::Get(),
+                       base::BindOnce(&SimpleURLLoaderImpl::SetRequestAndStart,
+                                      weak_ptr_factory_.GetWeakPtr())));
+    return;
   }
 
   StartRequest(url_loader_factory);
+}
+
+void SimpleURLLoaderImpl::SetRequestAndStart(
+    net::Error result,
+    ResourceRequestSafeDeletionPtr resource_request) {
+  DCHECK(resource_request);
+  DCHECK(!resource_request_);
+  DCHECK(url_loader_factory_ptr_);
+
+  if (result != net::OK) {
+    FinishWithResult(result);
+    return;
+  }
+
+  resource_request_ = std::move(resource_request);
+  StartRequest(url_loader_factory_ptr_.get());
 }
 
 void SimpleURLLoaderImpl::StartRequest(
@@ -950,6 +1225,16 @@ void SimpleURLLoaderImpl::StartRequest(
   client_binding_.Bind(mojo::MakeRequest(&client_ptr));
   client_binding_.set_connection_error_handler(base::BindOnce(
       &SimpleURLLoaderImpl::OnConnectionError, base::Unretained(this)));
+  // Data pipes aren't reuseable, so need to create another one, if uploading a
+  // string via a data pipe.
+  if (string_upload_data_pipe_getter_) {
+    resource_request_->request_body = new ResourceRequestBody();
+    network::mojom::DataPipeGetterPtr data_pipe_getter;
+    string_upload_data_pipe_getter_->Clone(
+        mojo::MakeRequest(&data_pipe_getter));
+    resource_request_->request_body->AppendDataPipe(
+        std::move(data_pipe_getter));
+  }
   url_loader_factory->CreateLoaderAndStart(
       mojo::MakeRequest(&url_loader_), 0 /* routing_id */, 0 /* request_id */,
       0 /* options */, *resource_request_, std::move(client_ptr),
