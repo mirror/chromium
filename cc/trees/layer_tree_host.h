@@ -520,6 +520,8 @@ class CC_EXPORT LayerTreeHost : public viz::SurfaceReferenceOwner,
 
   void SetURLForUkm(const GURL& url);
 
+  void SetNeedsRedrawIntoNewSurface();
+
  protected:
   LayerTreeHost(InitParams* params, CompositorMode mode);
 

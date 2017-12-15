@@ -502,6 +502,7 @@ class CONTENT_EXPORT RenderWidgetHostViewMac
   void BrowserCompositorMacOnBeginFrame() override;
   viz::LocalSurfaceId GetLocalSurfaceId() const override;
   void OnFrameTokenChanged(uint32_t frame_token) override;
+  void WasEvicted() override;
 
   // AcceleratedWidgetMacNSView implementation.
   NSView* AcceleratedWidgetGetNSView() const override;

@@ -651,6 +651,8 @@ class CC_EXPORT LayerTreeHostImpl
 
   void RenewTreePriorityForTesting() { client_->RenewTreePriority(); }
 
+  void SetNeedsRedrawIntoNewSurface();
+
  protected:
   LayerTreeHostImpl(
       const LayerTreeSettings& settings,
