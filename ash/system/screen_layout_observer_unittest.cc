@@ -523,10 +523,15 @@ TEST_F(ScreenLayoutObserverTest, RotationNotification) {
 // Test ScreenLayoutObserver with multi-mirroring enabled.
 class ScreenLayoutObserverMultiMirroringTest : public ScreenLayoutObserverTest {
  public:
-  ScreenLayoutObserverMultiMirroringTest() {
+  ScreenLayoutObserverMultiMirroringTest() {}
+
+  // ScreenLayoutObserverTest:
+  void SetUp() override {
     base::CommandLine::ForCurrentProcess()->AppendSwitch(
         ::switches::kEnableMultiMirroring);
+    ScreenLayoutObserverTest::SetUp();
   }
+
   ~ScreenLayoutObserverMultiMirroringTest() override = default;
 };
 

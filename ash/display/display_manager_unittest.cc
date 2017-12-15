@@ -3813,9 +3813,13 @@ TEST_F(DisplayManagerOrientationTest, DisplayChangeShouldNotSaveUserRotation) {
 
 class MultiMirroringTest : public DisplayManagerTest {
  public:
-  MultiMirroringTest() {
+  MultiMirroringTest() {}
+
+  // DisplayManagerTest:
+  void SetUp() override {
     base::CommandLine::ForCurrentProcess()->AppendSwitch(
         ::switches::kEnableMultiMirroring);
+    DisplayManagerTest::SetUp();
   }
   ~MultiMirroringTest() override = default;
 
