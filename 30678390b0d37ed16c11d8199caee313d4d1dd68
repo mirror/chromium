@@ -16,6 +16,24 @@
       "revId": "30678390b0d37ed16c11d8199caee313d4d1dd68",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79f1456d_18bb1c3c",
+        "filename": "cc/paint/transfer_cache_serialize_helper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-12-15T01:33:00Z",
+      "side": 1,
+      "message": "I think a vector (or even a base::span?) in the API makes sense.\nOne possibility is to make added_entries_ a flat_set, which could in theory be passed as the underlying vector (although I don\u0027t think we expose an accessor to the underlying container).\nIt\u0027s a bit of an abuse, but I think we can construct a base::span out of the flat_set.",
+      "parentUuid": "37427681_d4340bd5",
+      "revId": "30678390b0d37ed16c11d8199caee313d4d1dd68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
