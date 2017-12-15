@@ -1802,8 +1802,14 @@ void ShelfView::ShowMenu(std::unique_ptr<ui::MenuModel> menu_model,
 
   // Only selected shelf items with context menu opened can be dragged.
   const ShelfItem* item = ShelfItemForView(source);
-  if (context_menu && item && item->type != TYPE_APP_LIST &&
-      source_type == ui::MenuSourceType::MENU_SOURCE_TOUCH) {
+
+  const bool is_shelf_button_dragging =
+      item ? static_cast<ShelfButton*>(source)->state() &
+                 ShelfButton::State::STATE_DRAGGING
+           : false;
+  if ((context_menu && item && item->type != TYPE_APP_LIST &&
+       source_type == ui::MenuSourceType::MENU_SOURCE_TOUCH) &&
+      is_shelf_button_dragging) {
     run_types |= views::MenuRunner::SEND_GESTURE_EVENTS_TO_OWNER;
   }
 
