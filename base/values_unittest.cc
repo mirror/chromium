@@ -574,6 +574,27 @@ TEST(ValuesTest, FindKeyOfTypeConst) {
   EXPECT_NE(nullptr, dict.FindKeyOfType("dict", Value::Type::DICTIONARY));
 }
 
+TEST(ValuesTest, FindOrCreateKeyOfType) {
+  Value dict(Value::Type::DICTIONARY);
+  dict.SetKey("foo", base::Value(1.0));
+  dict.SetKey("bar", base::Value("bar"));
+
+  // Existing values of the correct type should be left untouched.
+  Value& foo = dict.FindOrCreateKeyOfType("foo", Value::Type::DOUBLE);
+  EXPECT_TRUE(foo.is_double());
+  EXPECT_EQ(1.0, foo.GetDouble());
+
+  // Existing values of a different type should be replaced.
+  Value& bar = dict.FindOrCreateKeyOfType("bar", Value::Type::BOOLEAN);
+  EXPECT_TRUE(bar.is_bool());
+  EXPECT_FALSE(bar.GetBool());
+
+  // Missing values should be created from scratch.
+  Value& baz = dict.FindOrCreateKeyOfType("baz", Value::Type::LIST);
+  EXPECT_TRUE(baz.is_list());
+  EXPECT_TRUE(baz.GetList().empty());
+}
+
 TEST(ValuesTest, SetKey) {
   Value::DictStorage storage;
   storage.emplace("null", std::make_unique<Value>(Value::Type::NONE));
@@ -621,32 +642,83 @@ TEST(ValuesTest, FindPath) {
   EXPECT_EQ(123, found->GetInt());
 }
 
+TEST(ValuesTest, FindOrCreatePathOfType) {
+  Value dict(Value::Type::DICTIONARY);
+  dict.SetPath({"root", "foo"}, base::Value(1.0));
+  dict.SetPath({"root", "bar"}, base::Value("bar"));
+
+  // Existing values of the correct type should be left untouched.
+  Value& foo =
+      dict.FindOrCreatePathOfType({"root", "foo"}, Value::Type::DOUBLE);
+  EXPECT_TRUE(foo.is_double());
+  EXPECT_EQ(1.0, foo.GetDouble());
+
+  // Existing values of a different type should be replaced.
+  Value& bar =
+      dict.FindOrCreatePathOfType({"root", "bar"}, Value::Type::BOOLEAN);
+  EXPECT_TRUE(bar.is_bool());
+  EXPECT_FALSE(bar.GetBool());
+
+  // Missing values should be created from scratch.
+  Value& baz = dict.FindOrCreatePathOfType({"root", "baz"}, Value::Type::LIST);
+  EXPECT_TRUE(baz.is_list());
+  EXPECT_TRUE(baz.GetList().empty());
+
+  // Intermediate existing values should be turned into dictionaries.
+  EXPECT_FALSE(dict.FindPathOfType({"root", "baz"}, Value::Type::DICTIONARY));
+  Value& qux =
+      dict.FindOrCreatePathOfType({"root", "baz", "qux"}, Value::Type::INTEGER);
+  EXPECT_TRUE(qux.is_int());
+  EXPECT_EQ(0, qux.GetInt());
+  EXPECT_TRUE(dict.FindPathOfType({"root", "baz"}, Value::Type::DICTIONARY));
+
+  // Intermediate missing values should be created into dictionaries.
+  EXPECT_FALSE(dict.FindKey("bla"));
+  Value& bla = dict.FindOrCreatePathOfType({"bla", "bla"}, Value::Type::BINARY);
+  EXPECT_TRUE(bla.is_blob());
+  EXPECT_TRUE(bla.GetBlob().empty());
+  EXPECT_TRUE(dict.FindKeyOfType("bla", Value::Type::DICTIONARY));
+}
+
 TEST(ValuesTest, SetPath) {
   Value root(Value::Type::DICTIONARY);
 
-  Value* inserted = root.SetPath({"one", "two"}, Value(123));
-  Value* found = root.FindPathOfType({"one", "two"}, Value::Type::INTEGER);
-  ASSERT_TRUE(found);
-  EXPECT_EQ(inserted, found);
-  EXPECT_EQ(123, found->GetInt());
+  {
+    Value& inserted = root.SetPath({"one", "two"}, Value(123));
+    Value* found = root.FindPathOfType({"one", "two"}, Value::Type::INTEGER);
+    ASSERT_TRUE(found);
+    EXPECT_EQ(&inserted, found);
+    EXPECT_EQ(123, found->GetInt());
+  }
 
-  inserted = root.SetPath(std::vector<StringPiece>{"foo", "bar"}, Value(123));
-  found = root.FindPathOfType({"foo", "bar"}, Value::Type::INTEGER);
-  ASSERT_TRUE(found);
-  EXPECT_EQ(inserted, found);
-  EXPECT_EQ(123, found->GetInt());
+  {
+    Value& inserted =
+        root.SetPath(std::vector<StringPiece>{"foo", "bar"}, Value(123));
+    Value* found = root.FindPathOfType({"foo", "bar"}, Value::Type::INTEGER);
+    ASSERT_TRUE(found);
+    EXPECT_EQ(inserted, *found);
+    EXPECT_EQ(123, found->GetInt());
+  }
 
-  // Overwrite with a different value.
-  root.SetPath({"foo", "bar"}, Value("hello"));
-  found = root.FindPathOfType(std::vector<StringPiece>{"foo", "bar"},
-                              Value::Type::STRING);
-  ASSERT_TRUE(found);
-  EXPECT_EQ("hello", found->GetString());
+  {
+    // Overwrite with a different value.
+    root.SetPath({"foo", "bar"}, Value("hello"));
+    root.SetPath({"foo", "bar"}, Value("world"));
+    Value* found = root.FindPathOfType(std::vector<StringPiece>{"foo", "bar"},
+                                       Value::Type::STRING);
+    ASSERT_TRUE(found);
+    EXPECT_EQ("world", found->GetString());
+  }
 
-  // Can't change existing non-dictionary keys to dictionaries.
-  found =
-      root.SetPath(std::vector<StringPiece>{"foo", "bar", "baz"}, Value(123));
-  EXPECT_FALSE(found);
+  {
+    // Can't change existing non-dictionary keys to dictionaries.
+    root.SetPath(std::vector<StringPiece>{"foo", "bar"}, Value(123));
+    root.SetPath(std::vector<StringPiece>{"foo", "bar", "baz"}, Value(123));
+    Value* found =
+        root.FindPathOfType({"foo", "bar", "baz"}, Value::Type::INTEGER);
+    ASSERT_TRUE(found);
+    EXPECT_EQ(123, found->GetInt());
+  }
 }
 
 TEST(ValuesTest, RemoveKey) {
@@ -1342,42 +1414,42 @@ TEST(ValuesTest, Comparisons) {
   }
 }
 
-TEST(ValuesTest, DeepCopyCovariantReturnTypes) {
+TEST(ValuesTest, CloneCovariantReturnTypes) {
   DictionaryValue original_dict;
-  Value* null_weak = original_dict.SetKey("null", Value());
-  Value* bool_weak = original_dict.SetKey("bool", Value(true));
-  Value* int_weak = original_dict.SetKey("int", Value(42));
-  Value* double_weak = original_dict.SetKey("double", Value(3.14));
-  Value* string_weak = original_dict.SetKey("string", Value("hello"));
-  Value* string16_weak =
+  Value& null_ref = original_dict.SetKey("null", Value());
+  Value& bool_ref = original_dict.SetKey("bool", Value(true));
+  Value& int_ref = original_dict.SetKey("int", Value(42));
+  Value& double_ref = original_dict.SetKey("double", Value(3.14));
+  Value& string_ref = original_dict.SetKey("string", Value("hello"));
+  Value& string16_ref =
       original_dict.SetKey("string16", Value(ASCIIToUTF16("hello16")));
-  Value* binary_weak =
+  Value& binary_ref =
       original_dict.SetKey("binary", Value(Value::BlobStorage(42, '!')));
 
   Value::ListStorage storage;
   storage.emplace_back(0);
   storage.emplace_back(1);
-  Value* list_weak = original_dict.SetKey("list", Value(std::move(storage)));
+  Value& list_ref = original_dict.SetKey("list", Value(std::move(storage)));
 
-  auto copy_dict = std::make_unique<Value>(original_dict.Clone());
-  auto copy_null = std::make_unique<Value>(null_weak->Clone());
-  auto copy_bool = std::make_unique<Value>(bool_weak->Clone());
-  auto copy_int = std::make_unique<Value>(int_weak->Clone());
-  auto copy_double = std::make_unique<Value>(double_weak->Clone());
-  auto copy_string = std::make_unique<Value>(string_weak->Clone());
-  auto copy_string16 = std::make_unique<Value>(string16_weak->Clone());
-  auto copy_binary = std::make_unique<Value>(binary_weak->Clone());
-  auto copy_list = std::make_unique<Value>(list_weak->Clone());
+  Value copy_dict = original_dict.Clone();
+  Value copy_null = null_ref.Clone();
+  Value copy_bool = bool_ref.Clone();
+  Value copy_int = int_ref.Clone();
+  Value copy_double = double_ref.Clone();
+  Value copy_string = string_ref.Clone();
+  Value copy_string16 = string16_ref.Clone();
+  Value copy_binary = binary_ref.Clone();
+  Value copy_list = list_ref.Clone();
 
-  EXPECT_EQ(original_dict, *copy_dict);
-  EXPECT_EQ(*null_weak, *copy_null);
-  EXPECT_EQ(*bool_weak, *copy_bool);
-  EXPECT_EQ(*int_weak, *copy_int);
-  EXPECT_EQ(*double_weak, *copy_double);
-  EXPECT_EQ(*string_weak, *copy_string);
-  EXPECT_EQ(*string16_weak, *copy_string16);
-  EXPECT_EQ(*binary_weak, *copy_binary);
-  EXPECT_EQ(*list_weak, *copy_list);
+  EXPECT_EQ(original_dict, copy_dict);
+  EXPECT_EQ(null_ref, copy_null);
+  EXPECT_EQ(bool_ref, copy_bool);
+  EXPECT_EQ(int_ref, copy_int);
+  EXPECT_EQ(double_ref, copy_double);
+  EXPECT_EQ(string_ref, copy_string);
+  EXPECT_EQ(string16_ref, copy_string16);
+  EXPECT_EQ(binary_ref, copy_binary);
+  EXPECT_EQ(list_ref, copy_list);
 }
 
 TEST(ValuesTest, RemoveEmptyChildren) {
