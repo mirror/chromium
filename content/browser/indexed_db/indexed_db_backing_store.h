@@ -66,6 +66,11 @@ class IndexedDBBackingStoreTest;
 FORWARD_DECLARE_TEST(IndexedDBBackingStoreTest, ReadCorruptionInfo);
 }  // namespace indexed_db_backing_store_unittest
 
+namespace indexed_db_backing_store_unittest {
+class IndexedDBBackingStoreTest;
+FORWARD_DECLARE_TEST(IndexedDBBackingStoreTest, ReadCorruptionInfo);
+}  // namespace indexed_db_backing_store_unittest
+
 class CONTENT_EXPORT IndexedDBBackingStore
     : public base::RefCounted<IndexedDBBackingStore> {
  public:

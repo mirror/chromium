@@ -90,7 +90,6 @@ namespace content {
 
 class BrowserAccessibilityManager;
 class InputRouter;
-class MockRenderWidgetHost;
 class RenderWidgetHostOwnerDelegate;
 class SyntheticGestureController;
 class TimeoutMonitor;
@@ -100,6 +99,19 @@ struct EditCommand;
 struct ResizeParams;
 struct ScreenInfo;
 struct TextInputState;
+
+namespace render_widget_host_unittest {
+class MockRenderWidgetHost;
+FORWARD_DECLARE_TEST(RenderWidgetHostTest, DontPostponeHangMonitorTimeout);
+FORWARD_DECLARE_TEST(RenderWidgetHostTest, RendererExitedNoDrag);
+FORWARD_DECLARE_TEST(RenderWidgetHostTest, StopAndStartHangMonitorTimeout);
+FORWARD_DECLARE_TEST(RenderWidgetHostTest, ShorterDelayHangMonitorTimeout);
+}  // namespace render_widget_host_unittest
+
+namespace render_widget_host_view_aura_unittest {
+class RenderWidgetHostViewAuraTest;
+FORWARD_DECLARE_TEST(RenderWidgetHostViewAuraTest, AutoResizeWithScale);
+}  // namespace render_widget_host_view_aura_unittest
 
 // This implements the RenderWidgetHost interface that is exposed to
 // embedders of content, and adds things only visible to content.
@@ -670,17 +682,20 @@ class CONTENT_EXPORT RenderWidgetHostImpl
   base::WeakPtr<RenderWidgetHostViewBase> view_;
 
  private:
-  FRIEND_TEST_ALL_PREFIXES(RenderWidgetHostTest,
+  FRIEND_TEST_ALL_PREFIXES(render_widget_host_unittest::RenderWidgetHostTest,
                            DontPostponeHangMonitorTimeout);
-  FRIEND_TEST_ALL_PREFIXES(RenderWidgetHostTest, RendererExitedNoDrag);
-  FRIEND_TEST_ALL_PREFIXES(RenderWidgetHostTest,
+  FRIEND_TEST_ALL_PREFIXES(render_widget_host_unittest::RenderWidgetHostTest,
+                           RendererExitedNoDrag);
+  FRIEND_TEST_ALL_PREFIXES(render_widget_host_unittest::RenderWidgetHostTest,
                            StopAndStartHangMonitorTimeout);
-  FRIEND_TEST_ALL_PREFIXES(RenderWidgetHostTest,
+  FRIEND_TEST_ALL_PREFIXES(render_widget_host_unittest::RenderWidgetHostTest,
                            ShorterDelayHangMonitorTimeout);
-  FRIEND_TEST_ALL_PREFIXES(RenderWidgetHostViewAuraTest, AutoResizeWithScale);
+  FRIEND_TEST_ALL_PREFIXES(
+      render_widget_host_view_aura_unittest::RenderWidgetHostViewAuraTest,
+      AutoResizeWithScale);
   FRIEND_TEST_ALL_PREFIXES(DevToolsManagerTest,
                            NoUnresponsiveDialogInInspectedContents);
-  friend class MockRenderWidgetHost;
+  friend class render_widget_host_unittest::MockRenderWidgetHost;
   friend class TestRenderViewHost;
 
   // Tell this object to destroy itself. If |also_delete| is specified, the

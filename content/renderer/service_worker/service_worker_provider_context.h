@@ -36,6 +36,10 @@ namespace service_worker_provider_context_unittest {
 class ServiceWorkerProviderContextTest;
 }  // namespace service_worker_provider_context_unittest
 
+namespace service_worker_provider_context_unittest {
+class ServiceWorkerProviderContextTest;
+}
+
 class ServiceWorkerHandleReference;
 class WebServiceWorkerRegistrationImpl;
 struct ServiceWorkerProviderContextDeleter;
