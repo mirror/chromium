@@ -19,6 +19,63 @@
     },
     {
       "key": {
+        "uuid": "d69b0ae5_7e484df6",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/voice_interaction_controller_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-15T17:32:36Z",
+      "side": 1,
+      "message": "nit: wrap with {} and use \"\u003d std::make_unique\u003c...\u003e(this)\" instead of reset()",
+      "revId": "e5462d626ad1f884b293175333d422fd6df7b1be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e74eef1f_9c5be802",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/voice_interaction_controller_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-15T17:32:36Z",
+      "side": 1,
+      "message": "I don\u0027t think we really need this as profile is only destroyed on shutdown after stopping main thread.",
+      "revId": "e5462d626ad1f884b293175333d422fd6df7b1be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f17ad062_2c9e679e",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/voice_interaction_controller_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-15T17:32:36Z",
+      "side": 1,
+      "message": "nit: if we keep the code, NULL -\u003e nullptr",
+      "range": {
+        "startLine": 178,
+        "startChar": 19,
+        "endLine": 178,
+        "endChar": 23
+      },
+      "revId": "e5462d626ad1f884b293175333d422fd6df7b1be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f12e908f_e854afad",
         "filename": "chrome/browser/chromeos/arc/voice_interaction/voice_interaction_controller_client.h",
         "patchSetId": 2
@@ -81,6 +138,40 @@
       "writtenOn": "2017-12-15T15:41:53Z",
       "side": 1,
       "message": "Ditto.\n\n// content::NotificationObserver overrides:",
+      "revId": "e5462d626ad1f884b293175333d422fd6df7b1be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67647bdc_059faff5",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/voice_interaction_controller_client.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-15T17:32:36Z",
+      "side": 1,
+      "message": "nit: move to cc file and get rid of SetInstance. We should be good with just a static Get() method in header.",
+      "revId": "e5462d626ad1f884b293175333d422fd6df7b1be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef13e9cf_e38bba59",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/voice_interaction_controller_client_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-15T17:32:36Z",
+      "side": 1,
+      "message": "nit: sort, or insert an empty line after it",
       "revId": "e5462d626ad1f884b293175333d422fd6df7b1be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
