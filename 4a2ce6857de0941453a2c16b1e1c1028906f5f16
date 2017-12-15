@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "a1608ce8_415c7a78",
+        "filename": "third_party/WebKit/Source/modules/exported/WebEmbeddedWorkerImpl.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-15T08:41:29Z",
+      "side": 1,
+      "message": "Not needed here?",
+      "revId": "4a2ce6857de0941453a2c16b1e1c1028906f5f16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "321765bd_681da0e4",
         "filename": "third_party/WebKit/public/web/WebEmbeddedWorker.h",
         "patchSetId": 14
@@ -30,6 +47,23 @@
       "writtenOn": "2017-12-15T08:17:20Z",
       "side": 1,
       "message": "optional: maybe Info -\u003e Params? \"Info\" is starting to feel like a Mojo type for me...",
+      "revId": "4a2ce6857de0941453a2c16b1e1c1028906f5f16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65bc8e9e_c8ed2388",
+        "filename": "third_party/WebKit/public/web/WebEmbeddedWorker.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-15T08:41:29Z",
+      "side": 1,
+      "message": "nit: it\u0027s slightly hard to interpret this comment style (e.g. it\u0027s not too obvious if line 69 is annotating line 68 or line 70). Could we use the comma \u0027,\u0027 as a separator (i.e. put comma after the comment if the comment is for the previous line)?  Also would the lines look better if we use argument names instead of types in the comment?  I.e.\n\n      ...\n      mojo::ScopedMessagePipeHandle /* content_settings_handle */,\n      mojo::ScopedMessagePipeHandle /* interface_provider */);\n\nOtherwise I think following style would be slightly more common:\n\n      ...\n      // A handle for mojom::blink::WorkerContentSettingsProxyPtrInfo.\n      mojo::ScopedMessagePipeHandle,\n      // A handle for service_manager::mojom::blink::InterfaceProviderPtrInfo.\n      mojo::ScopedMessagePipeHandle);",
       "revId": "4a2ce6857de0941453a2c16b1e1c1028906f5f16",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
