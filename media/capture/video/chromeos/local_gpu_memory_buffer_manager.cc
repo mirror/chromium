@@ -141,6 +141,8 @@ class GpuMemoryBufferImplGbm : public gfx::GpuMemoryBuffer {
 
   gfx::BufferFormat GetFormat() const override { return format_; }
 
+  uint32_t GetInternalformat(bool supports_bgra_ext) const override { return 0; }
+
   int stride(size_t plane) const override {
     return gbm_bo_get_plane_stride(buffer_object_, plane);
   }
