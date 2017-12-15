@@ -1,0 +1,268 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6b50d938_ca5ad6dd",
+        "filename": "components/offline_pages/core/offline_page_metadata_store_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-12-15T00:24:56Z",
+      "side": 1,
+      "message": "comment: I noticed that in-disk stores are used here -- instead of in-memory -- to allow for testing specific schema versions. In the prefetching store as the upgrade logic is isolated from store initialization we were able to still do it in-memory (see prefetch_store_schema_unittest.cc). This could be changed in upcoming work in these tests.",
+      "range": {
+        "startLine": 400,
+        "startChar": 6,
+        "endLine": 400,
+        "endChar": 72
+      },
+      "revId": "1776361ded7bece3b11673fc1413518b1099778e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e499d189_35c7a429",
+        "filename": "components/offline_pages/core/offline_page_metadata_store_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-12-15T00:24:56Z",
+      "side": 1,
+      "message": "nit: it doesn\u0027t seem this check is needed.",
+      "revId": "1776361ded7bece3b11673fc1413518b1099778e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfa1e4ed_2fcb6d3d",
+        "filename": "components/offline_pages/core/offline_page_metadata_store_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 424,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-12-15T00:24:56Z",
+      "side": 1,
+      "message": "nit: newline to separate table creation from row insertion.",
+      "revId": "1776361ded7bece3b11673fc1413518b1099778e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59b1ee34_b249fa06",
+        "filename": "components/offline_pages/core/offline_page_metadata_store_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-12-15T00:24:56Z",
+      "side": 1,
+      "message": "nit: BuildTestStoreWithSchemaVersion1, so to match the patter from the previous similar method?",
+      "range": {
+        "startLine": 436,
+        "startChar": 5,
+        "endLine": 436,
+        "endChar": 31
+      },
+      "revId": "1776361ded7bece3b11673fc1413518b1099778e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "beac72af_16957cf4",
+        "filename": "components/offline_pages/core/offline_page_metadata_store_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 437,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-12-15T00:24:56Z",
+      "side": 1,
+      "message": "comment: I really like this reuse/dependency. As here we are settling things in stone as for what schema each version represent we can just reuse previous versions\u0027 code while the structure is unchanged.",
+      "range": {
+        "startLine": 437,
+        "startChar": 2,
+        "endLine": 437,
+        "endChar": 33
+      },
+      "revId": "1776361ded7bece3b11673fc1413518b1099778e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8dce0f63_68317078",
+        "filename": "components/offline_pages/core/offline_page_metadata_store_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 671,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-12-15T00:24:56Z",
+      "side": 1,
+      "message": "Let\u0027s add a TODO here to replace this with an upcoming helper method.",
+      "range": {
+        "startLine": 671,
+        "startChar": 24,
+        "endLine": 671,
+        "endChar": 46
+      },
+      "revId": "1776361ded7bece3b11673fc1413518b1099778e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97ddeb08_a3daf6ab",
+        "filename": "components/offline_pages/core/offline_page_metadata_store_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 852,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-12-15T00:24:56Z",
+      "side": 1,
+      "message": "nit: why not keep the UI/IO related methods using the same name pattern and just add the \"Sync\" suffix as we do elsewhere?",
+      "range": {
+        "startLine": 852,
+        "startChar": 30,
+        "endLine": 852,
+        "endChar": 57
+      },
+      "revId": "1776361ded7bece3b11673fc1413518b1099778e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4e3ad40_1daabe79",
+        "filename": "components/offline_pages/core/offline_page_metadata_store_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 868,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-12-15T00:24:56Z",
+      "side": 1,
+      "message": "This and all/many of the previous method are the same with the exception of the store creation method they call. Can we consolidate these into a single call that receives a callback for store creation?",
+      "range": {
+        "startLine": 868,
+        "startChar": 30,
+        "endLine": 868,
+        "endChar": 58
+      },
+      "revId": "1776361ded7bece3b11673fc1413518b1099778e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "792686e2_a9c88cfe",
+        "filename": "components/offline_pages/core/offline_page_metadata_store_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 883,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-12-15T00:24:56Z",
+      "side": 1,
+      "message": "nit: VerifyMetaVersions",
+      "range": {
+        "startLine": 883,
+        "startChar": 35,
+        "endLine": 883,
+        "endChar": 52
+      },
+      "revId": "1776361ded7bece3b11673fc1413518b1099778e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42d74b56_1570e5bf",
+        "filename": "components/offline_pages/core/offline_page_metadata_store_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1067,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-12-15T00:24:56Z",
+      "side": 1,
+      "message": "nit: repeating the exact same comment everywhere doesn\u0027t help much.",
+      "range": {
+        "startLine": 1066,
+        "startChar": 0,
+        "endLine": 1067,
+        "endChar": 22
+      },
+      "revId": "1776361ded7bece3b11673fc1413518b1099778e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30de795c_b049846e",
+        "filename": "components/offline_pages/core/offline_page_metadata_store_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1074,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-12-15T00:24:56Z",
+      "side": 1,
+      "message": "comment: when we refactor these tests to better suit the current upgrade schema let\u0027s try to move some of the logic currently hidden in the helper methods into the tests. It\u0027s currently very hard to understand what each test is actually testing as they don\u0027t contain any useful code. For instance, a logic that could easily be moved into the individual test code is the population (or the call to populate) items of interest for the specific version migration we\u0027re looking at.\n\nWe should still avoid excessive code duplication but some would be OK in this case.",
+      "range": {
+        "startLine": 1069,
+        "startChar": 0,
+        "endLine": 1074,
+        "endChar": 26
+      },
+      "revId": "1776361ded7bece3b11673fc1413518b1099778e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a5b56ca_99119cc6",
+        "filename": "components/offline_pages/core/offline_page_metadata_store_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1077,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-12-15T00:24:56Z",
+      "side": 1,
+      "message": "schema version 1",
+      "range": {
+        "startLine": 1077,
+        "startChar": 23,
+        "endLine": 1077,
+        "endChar": 38
+      },
+      "revId": "1776361ded7bece3b11673fc1413518b1099778e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

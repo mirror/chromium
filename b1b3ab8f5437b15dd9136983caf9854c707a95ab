@@ -284,6 +284,30 @@
     },
     {
       "key": {
+        "uuid": "b9d1832f_49002297",
+        "filename": "components/offline_pages/core/offline_page_metadata_store_sql.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-12-15T00:24:56Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "60b4a9cd_521d2855",
+      "range": {
+        "startLine": 240,
+        "startChar": 35,
+        "endLine": 240,
+        "endChar": 50
+      },
+      "revId": "b1b3ab8f5437b15dd9136983caf9854c707a95ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eb944868_5d76c024",
         "filename": "components/offline_pages/core/offline_page_metadata_store_sql.cc",
         "patchSetId": 1
@@ -319,6 +343,30 @@
       "side": 1,
       "message": "No. Why? And how would your recommend that be done in this step?",
       "parentUuid": "eb944868_5d76c024",
+      "range": {
+        "startLine": 241,
+        "startChar": 31,
+        "endLine": 241,
+        "endChar": 36
+      },
+      "revId": "b1b3ab8f5437b15dd9136983caf9854c707a95ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e1b21be8_35b4feb9",
+        "filename": "components/offline_pages/core/offline_page_metadata_store_sql.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-12-15T00:24:56Z",
+      "side": 1,
+      "message": "You are right, this verification should be done in the item-by-item phase.",
+      "parentUuid": "88ad03f6_0cd4d75a",
       "range": {
         "startLine": 241,
         "startChar": 31,
