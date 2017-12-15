@@ -22,6 +22,10 @@ class AppContextMenuDelegate;
 class AppContextMenu : public ui::SimpleMenuModel::Delegate {
  public:
   // Defines command ids, used in context menu of all types.
+  // These are used in histograms, do not remove/reorder entries. Only add at
+  // the end just before USE_LAUNCH_TYPE_COMMAND_END or after INSTALL and before
+  // USE_LAUNCH_TYPE_COMMAND_START. Also remember to update the CommandId enum
+  // listing in tools/metrics/histograms/enums.xml.
   enum CommandId {
     LAUNCH_NEW = 100,
     TOGGLE_PIN,

@@ -291,4 +291,19 @@ TEST_F(LauncherContextMenuTest, ArcDeferredLauncherContextMenuItemCheck) {
   EXPECT_TRUE(IsItemPresentInMenu(menu.get(), LauncherContextMenu::MENU_CLOSE));
 }
 
+TEST_F(LauncherContextMenuTest, CommandIdsMatchEnumsForHistograms) {
+  // Tests that CommandId enums are not accidentally changed without updating
+  // the CommandId enum in tools/metrics/histograms/enums.xml.
+  EXPECT_EQ(LauncherContextMenu::MENU_OPEN_NEW, 0);
+  EXPECT_EQ(LauncherContextMenu::MENU_CLOSE, 1);
+  EXPECT_EQ(LauncherContextMenu::MENU_PIN, 2);
+  EXPECT_EQ(LauncherContextMenu::LAUNCH_TYPE_PINNED_TAB, 3);
+  EXPECT_EQ(LauncherContextMenu::LAUNCH_TYPE_REGULAR_TAB, 4);
+  EXPECT_EQ(LauncherContextMenu::LAUNCH_TYPE_FULLSCREEN, 5);
+  EXPECT_EQ(LauncherContextMenu::LAUNCH_TYPE_WINDOW, 6);
+  EXPECT_EQ(LauncherContextMenu::MENU_NEW_WINDOW, 7);
+  EXPECT_EQ(LauncherContextMenu::MENU_NEW_INCOGNITO_WINDOW, 8);
+  EXPECT_EQ(LauncherContextMenu::MENU_ITEM_COUNT, 9);
+}
+
 }  // namespace

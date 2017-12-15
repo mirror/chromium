@@ -470,3 +470,23 @@ TEST_F(AppContextMenuTest, ArcMenuStickyItem) {
         menu, 4, MenuState(app_list::AppContextMenu::SHOW_APP_INFO));
   }
 }
+
+TEST_F(AppContextMenuTest, CommandIdsMatchEnumsForHistograms) {
+  // Tests that CommandId enums are not accidentally changed without updating
+  // the CommandId enum in tools/metrics/histograms/enums.xml.
+  EXPECT_EQ(app_list::AppContextMenu::LAUNCH_NEW, 100);
+  EXPECT_EQ(app_list::AppContextMenu::TOGGLE_PIN, 101);
+  EXPECT_EQ(app_list::AppContextMenu::SHOW_APP_INFO, 102);
+  EXPECT_EQ(app_list::AppContextMenu::OPTIONS, 103);
+  EXPECT_EQ(app_list::AppContextMenu::UNINSTALL, 104);
+  EXPECT_EQ(app_list::AppContextMenu::REMOVE_FROM_FOLDER, 105);
+  EXPECT_EQ(app_list::AppContextMenu::MENU_NEW_WINDOW, 106);
+  EXPECT_EQ(app_list::AppContextMenu::MENU_NEW_INCOGNITO_WINDOW, 107);
+  EXPECT_EQ(app_list::AppContextMenu::INSTALL, 108);
+  EXPECT_EQ(app_list::AppContextMenu::USE_LAUNCH_TYPE_COMMAND_START, 200);
+  EXPECT_EQ(app_list::AppContextMenu::USE_LAUNCH_TYPE_PINNED, 200);
+  EXPECT_EQ(app_list::AppContextMenu::USE_LAUNCH_TYPE_REGULAR, 201);
+  EXPECT_EQ(app_list::AppContextMenu::USE_LAUNCH_TYPE_FULLSCREEN, 202);
+  EXPECT_EQ(app_list::AppContextMenu::USE_LAUNCH_TYPE_WINDOW, 203);
+  EXPECT_EQ(app_list::AppContextMenu::USE_LAUNCH_TYPE_COMMAND_END, 204);
+}

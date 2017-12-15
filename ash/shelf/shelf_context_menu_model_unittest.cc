@@ -295,5 +295,18 @@ TEST_F(ShelfContextMenuModelTest, DisableAlignmentMenuOnTabletMode) {
   EXPECT_TRUE(menu2.IsVisibleAt(1));
 }
 
+TEST_F(ShelfContextMenuModelTest, CommandIdsMatchEnumsForHistograms) {
+  // Tests that CommandId enums are not accidentally changed without updating
+  // the CommandId enum in tools/metrics/histograms/enums.xml.
+  EXPECT_EQ(ShelfContextMenuModel::MENU_LOCAL_START, 500);
+  EXPECT_EQ(ShelfContextMenuModel::MENU_AUTO_HIDE, 500);
+  EXPECT_EQ(ShelfContextMenuModel::MENU_ALIGNMENT_MENU, 501);
+  EXPECT_EQ(ShelfContextMenuModel::MENU_ALIGNMENT_LEFT, 502);
+  EXPECT_EQ(ShelfContextMenuModel::MENU_ALIGNMENT_RIGHT, 503);
+  EXPECT_EQ(ShelfContextMenuModel::MENU_ALIGNMENT_BOTTOM, 504);
+  EXPECT_EQ(ShelfContextMenuModel::MENU_CHANGE_WALLPAPER, 505);
+  EXPECT_EQ(ShelfContextMenuModel::MENU_LOCAL_END, 506);
+}
+
 }  // namespace
 }  // namespace ash
