@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "145a9c11_4d38473a",
+        "filename": "ios/chrome/browser/passwords/password_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 492,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-15T23:40:44Z",
+      "side": 1,
+      "message": "Can we rename the method then?",
+      "parentUuid": "d96c7866_d4d7afd8",
+      "range": {
+        "startLine": 492,
+        "startChar": 36,
+        "endLine": 492,
+        "endChar": 54
+      },
+      "revId": "2795e19e0d3e48154fe2a68d4a68e6e03045b23c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2a58e2fe_ff9e7392",
         "filename": "ios/chrome/browser/passwords/resources/password_controller.js",
         "patchSetId": 5
@@ -93,6 +117,30 @@
       "revId": "2795e19e0d3e48154fe2a68d4a68e6e03045b23c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "90e4b495_f8bc5634",
+        "filename": "ios/chrome/browser/passwords/resources/password_controller.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-15T23:40:44Z",
+      "side": 1,
+      "message": "So maybe name this function getPasswordFormDataAsString() ? Otherwise it\u0027s hard to say the difference.",
+      "parentUuid": "49116fe3_40e5a50e",
+      "range": {
+        "startLine": 160,
+        "startChar": 26,
+        "endLine": 160,
+        "endChar": 30
+      },
+      "revId": "2795e19e0d3e48154fe2a68d4a68e6e03045b23c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
