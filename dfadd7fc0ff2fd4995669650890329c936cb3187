@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5827abec_8cd6707c",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-12-15T15:38:48Z",
+      "side": 1,
+      "message": "Let\u0027s add a comment here explaining that this check is defensive and we\u0027re not really expecting to hit it in practice.",
+      "range": {
+        "startLine": 480,
+        "startChar": 7,
+        "endLine": 480,
+        "endChar": 19
+      },
+      "revId": "dfadd7fc0ff2fd4995669650890329c936cb3187",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
