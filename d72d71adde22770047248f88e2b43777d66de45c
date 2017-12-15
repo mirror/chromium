@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "71d05380_98dd0a43",
+        "filename": "third_party/WebKit/LayoutTests/fast/spatial-navigation/snav-iframe-no-scrollable-content.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1243466
+      },
+      "writtenOn": "2017-12-15T13:24:08Z",
+      "side": 1,
+      "message": "Yes. Done. :)",
+      "parentUuid": "e05b60f3_23c18deb",
+      "revId": "d72d71adde22770047248f88e2b43777d66de45c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5bb5110e_e72b9676",
         "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
         "patchSetId": 2
@@ -110,6 +128,24 @@
       "writtenOn": "2017-12-14T18:53:18Z",
       "side": 1,
       "message": "What is the scenario here? FindFocusCandidateInContainer finds an iframe but the iframe does not have any focusable elements so we need to _backtrack_ and ask FindFocusCandidateInContainer to find us another candidate? \n\nSay |container| has n non-navigable \u003ciframe\u003es followed by one \u003ca\u003e. Say all n \u003ciframe\u003es are closer, spatially, to the current focus. We would then do n calls into FindFocusCandidateInContainer to go find that \u003ca\u003e? The last call will walk through all n element \u003d\u003e total time to find the \u003ca\u003e is O(n²)?\n\nHmm. How to avoid O(n²) and visit the container\u0027s children only once?\n\nCould we have FindFocusCandidateInContainer not return any such \"bad\" (\u003dnon-navigable) containers? In FindFocusCandidateInContainer I imagine:\n\n  if (!NonNavigableContainer(element))\n    continue;\n\nAnd here:\n \n  // We know from the contract of FindFocusCandidateInContainer that\n  // a navigable container will have something that we can focus:\n  return AdvanceFocusDirectionallyInDiscoveredContainer(next_closest, type);\n\nBut I think we better avoid recursions to save us some stack space and get better readability.",
+      "revId": "d72d71adde22770047248f88e2b43777d66de45c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01898d7f_ac2c56ed",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1461,
+      "author": {
+        "id": 1243466
+      },
+      "writtenOn": "2017-12-15T13:24:08Z",
+      "side": 1,
+      "message": "\u003e What is the scenario here? FindFocusCandidateInContainer finds an iframe but the iframe does not have any focusable elements so we need to _backtrack_ and ask FindFocusCandidateInContainer to find us another candidate?\n\nCorrect.\n\n\u003e Say |container| has n non-navigable \u003ciframe\u003es followed by one \u003ca\u003e. Say all n \u003ciframe\u003es are  closer, spatially, to the current focus. We would then do n calls into FindFocusCandidateInContainer to go find that \u003ca\u003e? The last call will walk through all n element \u003d\u003e total time to find the \u003ca\u003e is O(n²)?\n\nYes. I think this is worst case. But O(N^2 * LogN) because searching time in skipped_list is O(LogN).\n\n\u003e Hmm. How to avoid O(n²) and visit the container\u0027s children only once?\n\nWe can reduce complexity as O(N * LogN) by using sorted candidate list. But this change requires additional O(N) space. I think we should improve correctness first and think about optimization later. This CL is fast and not consumes space too much in practice. Also I expect that this can cover hundreds of \"bad\" containers in reasonable time(few seconds).\n\n\u003e Could we have FindFocusCandidateInContainer not return any such \"bad\" (\u003dnon-navigable) containers? In FindFocusCandidateInContainer I imagine:\n\nWe should traverse all child of a container for decision whether the container is bad or not. But FindFocusCandidateInContainer never traverses a child element of a container. So your idea requires additional time for each FindFocusCandidateInContainer.",
+      "parentUuid": "278fd53c_85c422eb",
       "revId": "d72d71adde22770047248f88e2b43777d66de45c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
