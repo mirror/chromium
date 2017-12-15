@@ -198,6 +198,30 @@
       "revId": "9d4b2aad32eef98a07c7b42fe3db78ab4d268b65",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9823b8be_3ee87e7c",
+        "filename": "chrome/services/printing/public/interfaces/pdf_to_emf_converter.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-12-15T22:28:16Z",
+      "side": 1,
+      "message": "The service manifest is the place that indicates in which process a service\u0027s interfaces run.\nI don\u0027t think it would the right place to document that here, an interface could potentially be run in different modes (for instance in-proces/OOP depending on the platform).\nHopefully as servicification becomes more prevalent this will become more obvious.",
+      "parentUuid": "ff3e679e_e8c95978",
+      "range": {
+        "startLine": 10,
+        "startChar": 37,
+        "endLine": 10,
+        "endChar": 61
+      },
+      "revId": "9d4b2aad32eef98a07c7b42fe3db78ab4d268b65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
