@@ -99,7 +99,6 @@ class PassKitFetcherDelegate : public URLFetcherDelegate {
 
 - (instancetype)initWithContextGetter:(net::URLRequestContextGetter*)getter
                     completionHandler:(web::PassKitCompletionHandler)handler {
-  DCHECK(!base::FeatureList::IsEnabled(web::features::kNewPassKitDownload));
   self = [super init];
   if (self) {
     DCHECK(getter);
