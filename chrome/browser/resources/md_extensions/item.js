@@ -58,6 +58,12 @@ cr.define('extensions', function() {
 
     /** @param {string} id */
     showInFolder(id) {}
+
+    /**
+     * @param {string} id
+     * @return {!Promise<string>}
+     */
+    getExtensionSize(id) {}
   }
 
   const Item = Polymer({
