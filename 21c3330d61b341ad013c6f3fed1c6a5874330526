@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bfd39a2d_f0c72cd6",
+        "filename": "tools/memory/asan/blacklist_win.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1177549
+      },
+      "writtenOn": "2017-12-15T18:22:30Z",
+      "side": 1,
+      "message": "This is looks like extern \"C\" __stddecl function naming/mangling - @20 would be 20 bytes of arguments.\n\nReid - do you happen to know how this works?",
+      "parentUuid": "14413dec_e31e1895",
+      "range": {
+        "startLine": 12,
+        "startChar": 33,
+        "endLine": 12,
+        "endChar": 36
+      },
+      "revId": "21c3330d61b341ad013c6f3fed1c6a5874330526",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d841bee0_ea09ae54",
         "filename": "tools/memory/asan/blacklist_win.txt",
         "patchSetId": 4
@@ -39,6 +63,24 @@
       "revId": "21c3330d61b341ad013c6f3fed1c6a5874330526",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d63b001_89416672",
+        "filename": "tools/memory/asan/blacklist_win.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1177549
+      },
+      "writtenOn": "2017-12-15T18:22:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d841bee0_ea09ae54",
+      "revId": "21c3330d61b341ad013c6f3fed1c6a5874330526",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
