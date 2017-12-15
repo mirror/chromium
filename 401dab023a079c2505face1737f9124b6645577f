@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e9bff45a_6b42512e",
+        "filename": "third_party/WebKit/PerformanceTests/Layout/frame-scroll.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-12-15T00:58:29Z",
+      "side": 1,
+      "message": "Add a file-level comment describing the function of the test.",
+      "range": {
+        "startLine": 1,
+        "startChar": 10,
+        "endLine": 1,
+        "endChar": 14
+      },
+      "revId": "401dab023a079c2505face1737f9124b6645577f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "250901f2_eaf07ebc",
+        "filename": "third_party/WebKit/PerformanceTests/Layout/frame-scroll.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-12-15T00:58:29Z",
+      "side": 1,
+      "message": "It would be interesting to see if the results are similar without forced compositing.",
+      "range": {
+        "startLine": 14,
+        "startChar": 13,
+        "endLine": 14,
+        "endChar": 23
+      },
+      "revId": "401dab023a079c2505face1737f9124b6645577f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
