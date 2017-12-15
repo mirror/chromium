@@ -16,6 +16,24 @@
       "revId": "1a62e0b2cde4699743c61e860376dc6c16e0d3d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "096a6dbc_307a099a",
+        "filename": "content/browser/renderer_host/browser_compositor_view_mac.mm",
+        "patchSetId": 21
+      },
+      "lineNbr": 463,
+      "author": {
+        "id": 1213209
+      },
+      "writtenOn": "2017-12-15T18:34:46Z",
+      "side": 1,
+      "message": "We don\u0027t have any Fling events on mac, we keep getting wheel events from the driver when the user has lifted their fingers to do the inertial scrolling.",
+      "parentUuid": "142574f1_f9cb721b",
+      "revId": "1a62e0b2cde4699743c61e860376dc6c16e0d3d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
