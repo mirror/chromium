@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3fe11e55_a9b19092",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-12-15T20:23:40Z",
+      "side": 1,
+      "message": "{?string} since it\u0027s nullable.\n\n(The Closure compiler considers primitives to be non-nullable unless explicitly marked as nullable)",
+      "range": {
+        "startLine": 247,
+        "startChar": 16,
+        "endLine": 247,
+        "endChar": 22
+      },
+      "revId": "60c2e76ef3ac041e3eefa15781164abfcf06afbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "210eddc8_8858a82f",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-12-15T20:23:40Z",
+      "side": 1,
+      "message": "I\u0027m not sure why this works. I would have expected logsPermissionExplanation_ to be a Polymer property.\n\nMaybe it accidentally works because the toggle-button is not initially displayed. This causes the sub-label value to only be evaluated after attached() is called. Since it\u0027s not a Polymer property, I don\u0027t think it would listen to updates to logsPermissionExpalantion_.\n\nJust to be safe, could you move this definition up into the properties dictionary?",
+      "revId": "60c2e76ef3ac041e3eefa15781164abfcf06afbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
