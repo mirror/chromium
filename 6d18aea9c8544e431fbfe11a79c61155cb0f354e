@@ -16,6 +16,24 @@
       "revId": "6d18aea9c8544e431fbfe11a79c61155cb0f354e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78b97147_38da2952",
+        "filename": "chrome/browser/chromeos/accessibility/select_to_speak_event_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2017-12-15T20:56:08Z",
+      "side": 1,
+      "message": "I ended up doing it like your #2 example (void FixMouseEvent(ui::Event* event)). It was the one that seemed most clear to me.",
+      "parentUuid": "b21aed8f_8d1b27f2",
+      "revId": "6d18aea9c8544e431fbfe11a79c61155cb0f354e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
