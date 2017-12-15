@@ -16,6 +16,24 @@
       "revId": "600f3c3529b1ed57813d08747aeef357869cca6b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ebc5b28_2a22351a",
+        "filename": "ios/chrome/browser/ui/omnibox/BUILD.gn",
+        "patchSetId": 16
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-12-15T17:30:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "843a650a_2c1835d9",
+      "revId": "600f3c3529b1ed57813d08747aeef357869cca6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
