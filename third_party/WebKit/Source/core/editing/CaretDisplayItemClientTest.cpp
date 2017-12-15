@@ -69,10 +69,10 @@ class CaretDisplayItemClientTest : public RenderingTest {
 
   void UpdateAllLifecyclePhases() {
     // Partial lifecycle updates should not affect caret paint invalidation.
-    GetDocument().View()->UpdateLifecycleToLayoutClean();
+    GetDocument().View()->UpdateLifecycleToCompositingInputsClean();
     GetDocument().View()->UpdateAllLifecyclePhases();
     // Partial lifecycle updates should not affect caret paint invalidation.
-    GetDocument().View()->UpdateLifecycleToLayoutClean();
+    GetDocument().View()->UpdateLifecycleToCompositingInputsClean();
   }
 };
 
@@ -258,7 +258,7 @@ TEST_F(CaretDisplayItemClientTest, UpdatePreviousLayoutBlock) {
   Selection().SetSelection(SelectionInDOMTree::Builder()
                                .Collapse(Position(block_element2, 0))
                                .Build());
-  GetDocument().View()->UpdateLifecycleToLayoutClean();
+  GetDocument().View()->UpdateLifecycleToCompositingInputsClean();
   EXPECT_TRUE(block2->ShouldPaintCursorCaret());
   EXPECT_EQ(block2, CaretLayoutBlock());
   EXPECT_FALSE(block1->ShouldPaintCursorCaret());
@@ -268,7 +268,7 @@ TEST_F(CaretDisplayItemClientTest, UpdatePreviousLayoutBlock) {
   Selection().SetSelection(SelectionInDOMTree::Builder()
                                .Collapse(Position(block_element1, 0))
                                .Build());
-  GetDocument().View()->UpdateLifecycleToLayoutClean();
+  GetDocument().View()->UpdateLifecycleToCompositingInputsClean();
   EXPECT_TRUE(block1->ShouldPaintCursorCaret());
   EXPECT_EQ(block1, CaretLayoutBlock());
   EXPECT_FALSE(block2->ShouldPaintCursorCaret());
@@ -279,7 +279,7 @@ TEST_F(CaretDisplayItemClientTest, UpdatePreviousLayoutBlock) {
   Selection().SetSelection(SelectionInDOMTree::Builder()
                                .Collapse(Position(block_element2, 0))
                                .Build());
-  GetDocument().View()->UpdateLifecycleToLayoutClean();
+  GetDocument().View()->UpdateLifecycleToCompositingInputsClean();
   EXPECT_TRUE(block2->ShouldPaintCursorCaret());
   EXPECT_EQ(block2, CaretLayoutBlock());
   EXPECT_FALSE(block1->ShouldPaintCursorCaret());
@@ -297,7 +297,7 @@ TEST_F(CaretDisplayItemClientTest, UpdatePreviousLayoutBlock) {
   UpdateAllLifecyclePhases();
   // Remove selection.
   Selection().SetSelection(SelectionInDOMTree());
-  GetDocument().View()->UpdateLifecycleToLayoutClean();
+  GetDocument().View()->UpdateLifecycleToCompositingInputsClean();
   EXPECT_EQ(block1, PreviousCaretLayoutBlock());
 }
 

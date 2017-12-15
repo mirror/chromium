@@ -325,7 +325,7 @@ TEST_F(LayoutBoxModelObjectTest, StickyPositionConstraintInvalidation) {
                 .Location()
                 .X());
   ToHTMLElement(target->GetNode())->classList().Add("hide");
-  GetDocument().View()->UpdateLifecycleToLayoutClean();
+  GetDocument().View()->UpdateLifecycleToCompositingInputsClean();
   // Layout should invalidate the sticky constraints of the sticky element and
   // mark it as needing a compositing inputs update.
   EXPECT_FALSE(
@@ -993,7 +993,7 @@ TEST_F(LayoutBoxModelObjectTest, InvalidatePaintLayerOnStackedChange) {
   EXPECT_NE(parent, original_compositing_container->GetLayoutObject());
 
   target_element->setAttribute(HTMLNames::classAttr, "non-stacked");
-  GetDocument().View()->UpdateLifecycleToLayoutClean();
+  GetDocument().View()->UpdateLifecycleToCompositingInputsClean();
 
   EXPECT_FALSE(target->StyleRef().IsStacked());
   EXPECT_TRUE(target->Layer()->NeedsRepaint());
@@ -1003,7 +1003,7 @@ TEST_F(LayoutBoxModelObjectTest, InvalidatePaintLayerOnStackedChange) {
 
   GetDocument().View()->UpdateAllLifecyclePhases();
   target_element->setAttribute(HTMLNames::classAttr, "stacked");
-  GetDocument().View()->UpdateLifecycleToLayoutClean();
+  GetDocument().View()->UpdateLifecycleToCompositingInputsClean();
 
   EXPECT_TRUE(target->StyleRef().IsStacked());
   EXPECT_TRUE(target->Layer()->NeedsRepaint());

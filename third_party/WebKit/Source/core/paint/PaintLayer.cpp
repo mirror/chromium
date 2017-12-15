@@ -312,6 +312,14 @@ void PaintLayer::UpdateLayerPositionRecursive() {
     child->UpdateLayerPositionRecursive();
 }
 
+#if DCHECK_IS_ON
+void PaintLayer::SetNeedsPositionUpdateRecursive() {
+  needs_position_update_ = true;
+  for (PaintLayer* child = FirstChild(); child; child = child->NextSibling())
+    child->SetNeedsPositionUpdateRecursive();
+}
+#endif
+
 void PaintLayer::UpdateHasSelfPaintingLayerDescendant() const {
   DCHECK(has_self_painting_layer_descendant_dirty_);
 
@@ -546,7 +554,7 @@ void PaintLayer::ConvertFromFlowThreadToVisualBoundingBoxInAncestor(
   rect.MoveBy(-ancestor_layer->VisualOffsetFromAncestor(pagination_layer));
 }
 
-void PaintLayer::UpdatePaginationRecursive(bool needs_pagination_update) {
+void PaintLayer::UpdatePagination(bool& needs_pagination_update) {
   if (rare_data_)
     rare_data_->enclosing_pagination_layer = nullptr;
 
@@ -565,6 +573,10 @@ void PaintLayer::UpdatePaginationRecursive(bool needs_pagination_update) {
       EnsureRareData().enclosing_pagination_layer =
           containing_flow_thread->Layer();
   }
+}
+
+void PaintLayer::UpdatePaginationRecursive(bool needs_pagination_update) {
+  UpdatePagination(needs_pagination_update);
 
   for (PaintLayer* child = FirstChild(); child; child = child->NextSibling())
     child->UpdatePaginationRecursive(needs_pagination_update);

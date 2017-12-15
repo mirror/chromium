@@ -297,6 +297,7 @@ class CORE_EXPORT PaintLayer : public DisplayItemClient {
   }
 #if DCHECK_IS_ON()
   bool NeedsPositionUpdate() const { return needs_position_update_; }
+  void SetNeedsPositionUpdateRecursive();
 #endif
 
   bool IsRootLayer() const { return is_root_layer_; }
@@ -312,6 +313,8 @@ class CORE_EXPORT PaintLayer : public DisplayItemClient {
   void UpdateSizeAndScrollingAfterLayout();
 
   void UpdateLayerPosition();
+  void UpdatePagination(bool& needs_pagination_update);
+
   void UpdateLayerPositionsAfterLayout();
   void UpdateLayerPositionsAfterOverflowScroll();
 
@@ -324,6 +327,9 @@ class CORE_EXPORT PaintLayer : public DisplayItemClient {
   const PaintLayer* RenderingContextRoot() const;
 
   LayoutSize OffsetForInFlowPosition() const {
+#if DCHECK_IS_ON()
+    DCHECK(!needs_position_update_);
+#endif
     return rare_data_ ? rare_data_->offset_for_in_flow_position : LayoutSize();
   }
 
