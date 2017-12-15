@@ -53,6 +53,7 @@ class SmbProviderClientImpl : public SmbProviderClient {
 
   void Mount(const base::FilePath& share_path,
              MountCallback callback) override {
+    LOG(ERROR) << "~~~ SmbProviderClient Mount Called";
     dbus::MethodCall method_call(smbprovider::kSmbProviderInterface,
                                  smbprovider::kMountMethod);
     dbus::MessageWriter writer(&method_call);
@@ -127,6 +128,7 @@ class SmbProviderClientImpl : public SmbProviderClient {
   // Handles D-Bus callback for mount.
   void HandleMountCallback(MountCallback callback, dbus::Response* response) {
     if (!response) {
+      LOG(ERROR) << "~~~ Mount: failed to call smbprovider";
       DLOG(ERROR) << "Mount: failed to call smbprovider";
       std::move(callback).Run(smbprovider::ERROR_DBUS_PARSE_FAILED, -1);
       return;

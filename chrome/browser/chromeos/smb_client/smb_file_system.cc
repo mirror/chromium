@@ -100,6 +100,7 @@ AbortCallback SmbFileSystem::GetMetadata(
     const base::FilePath& entry_path,
     ProvidedFileSystemInterface::MetadataFieldMask fields,
     const ProvidedFileSystemInterface::GetMetadataCallback& callback) {
+  LOG(ERROR) << "~~~GetActions called";
   NOTIMPLEMENTED();
   return AbortCallback();
 }
@@ -107,6 +108,7 @@ AbortCallback SmbFileSystem::GetMetadata(
 AbortCallback SmbFileSystem::GetActions(
     const std::vector<base::FilePath>& entry_paths,
     const GetActionsCallback& callback) {
+  LOG(ERROR) << "~~~GetActions called";
   NOTIMPLEMENTED();
   return AbortCallback();
 }
@@ -122,6 +124,7 @@ AbortCallback SmbFileSystem::ExecuteAction(
 AbortCallback SmbFileSystem::ReadDirectory(
     const base::FilePath& directory_path,
     const storage::AsyncFileUtil::ReadDirectoryCallback& callback) {
+  LOG(ERROR) << "~~~ReadDirectory called";
   NOTIMPLEMENTED();
   return AbortCallback();
 }
