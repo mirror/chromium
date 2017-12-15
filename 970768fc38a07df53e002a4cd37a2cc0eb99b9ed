@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "b5866977_e9d5fba2",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-12-15T00:57:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2c2fa436_25ed5f33",
+      "revId": "970768fc38a07df53e002a4cd37a2cc0eb99b9ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ad78872f_2274fb97",
         "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
         "patchSetId": 9
@@ -50,6 +68,24 @@
       "revId": "970768fc38a07df53e002a4cd37a2cc0eb99b9ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fefbf48_f34847e9",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-12-15T00:57:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ad78872f_2274fb97",
+      "revId": "970768fc38a07df53e002a4cd37a2cc0eb99b9ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -70,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "c5b11780_610895e9",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-12-15T00:57:40Z",
+      "side": 1,
+      "message": "Done.\n\nApparently there is a bug in git cl format for this scenario (something about inline classes maybe?) as I run that each time before uploading and it forces it back to having no space...\n\nI\u0027ve manually adjusted it to have a space for now, but cl format complains to me now and may have to put it back before submitting.",
+      "parentUuid": "72ff700c_d4acfff5",
+      "revId": "970768fc38a07df53e002a4cd37a2cc0eb99b9ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8e8cc68d_584aa62a",
         "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
         "patchSetId": 9
@@ -87,6 +141,24 @@
     },
     {
       "key": {
+        "uuid": "2ae11145_8c06c125",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-12-15T00:57:40Z",
+      "side": 1,
+      "message": "Route creation (and the response for it) happens before capture starts.\n\nWe could probably do a lower timeout, because I have yet to see one that takes longer than a second and it\u0027s only the first time, but without it there is a race condition where the route creation replies and we start checking for capture before it has had a chance to update the capturer count in the WebContentsObserver.\n\nThis is possibly related to having to go to the extension to start the mirror service before coming back to the browser to start capture, but capture itself is started asynchronously as well.",
+      "parentUuid": "8e8cc68d_584aa62a",
+      "revId": "970768fc38a07df53e002a4cd37a2cc0eb99b9ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f077337a_e649f54c",
         "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
         "patchSetId": 9
@@ -101,6 +173,24 @@
       "revId": "970768fc38a07df53e002a4cd37a2cc0eb99b9ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c16ee9b2_06fe8afc",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-12-15T00:57:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f077337a_e649f54c",
+      "revId": "970768fc38a07df53e002a4cd37a2cc0eb99b9ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -144,6 +234,48 @@
     },
     {
       "key": {
+        "uuid": "2979cdd0_8730d6b0",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-12-15T00:57:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0aabf703_9aab5afc",
+      "range": {
+        "startLine": 252,
+        "startChar": 10,
+        "endLine": 252,
+        "endChar": 25
+      },
+      "revId": "970768fc38a07df53e002a4cd37a2cc0eb99b9ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "09f6997d_9811a065",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-12-15T00:57:40Z",
+      "side": 1,
+      "message": "Done.  Oops, missed a digit.  It should be 540965.",
+      "parentUuid": "e17b152c_48c8e7f1",
+      "revId": "970768fc38a07df53e002a4cd37a2cc0eb99b9ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aa98bde5_aaabe8f8",
         "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
         "patchSetId": 9
@@ -158,6 +290,24 @@
       "revId": "970768fc38a07df53e002a4cd37a2cc0eb99b9ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "080d7d58_2a112330",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-12-15T00:57:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aa98bde5_aaabe8f8",
+      "revId": "970768fc38a07df53e002a4cd37a2cc0eb99b9ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -195,6 +345,24 @@
     },
     {
       "key": {
+        "uuid": "b78d5e8d_27d8bf1d",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-12-15T00:57:40Z",
+      "side": 1,
+      "message": "Yea I\u0027m not sure of the best way to do this.\n\nThe reason I went this way is because this method can be called from the constructor (if loading is already finished).  Is it ok to call \u0027delete this\u0027 even if we are still constructing (see line 213 above)?\n\nPreviously the constructor had this DeleteSoon call right after the call to fullscreen, but since I had to move things into a timer I couldn\u0027t leave the Delete in the constructor or it would delete before the timer fired.\n\nI guess I need to clean up the timer before deleting in the other cases as well (which is what I\u0027ll do for now), but I\u0027m open to other suggestions for handling \u0027delete this\u0027 better.",
+      "parentUuid": "ff5a7b4c_2a77b72c",
+      "revId": "970768fc38a07df53e002a4cd37a2cc0eb99b9ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a8f65c6f_1f3f6340",
         "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
         "patchSetId": 9
@@ -209,6 +377,24 @@
       "revId": "970768fc38a07df53e002a4cd37a2cc0eb99b9ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b8537bb_253edb33",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-12-15T00:57:40Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a8f65c6f_1f3f6340",
+      "revId": "970768fc38a07df53e002a4cd37a2cc0eb99b9ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -229,6 +415,24 @@
     },
     {
       "key": {
+        "uuid": "2915d6ae_72451617",
+        "filename": "chrome/test/media_router/media_router_e2e_ui_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-12-15T00:57:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0d8067cd_341a6a77",
+      "revId": "970768fc38a07df53e002a4cd37a2cc0eb99b9ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "10fc5714_ccd8c3e4",
         "filename": "chrome/test/media_router/media_router_e2e_ui_browsertest.cc",
         "patchSetId": 9
@@ -240,6 +444,24 @@
       "writtenOn": "2017-12-14T01:05:54Z",
       "side": 1,
       "message": "Relying on timeouts for the MR to change state leads to flaky tests.  Directly observing the state of the media route should lead to more reliable and faster tests.",
+      "revId": "970768fc38a07df53e002a4cd37a2cc0eb99b9ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93fd4a53_b9d6db97",
+        "filename": "chrome/test/media_router/media_router_e2e_ui_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-12-15T00:57:40Z",
+      "side": 1,
+      "message": "I was mostly just copying form the html5 video test above which also waits 10 seconds.\n\nThere are unfortunately a lot of waits in our tests.  I\u0027ll try to play around and see if I can get an observer working here in the tests, but I haven\u0027t had a lot of success yet (see note on integration tests).",
+      "parentUuid": "10fc5714_ccd8c3e4",
       "revId": "970768fc38a07df53e002a4cd37a2cc0eb99b9ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -293,6 +515,30 @@
     },
     {
       "key": {
+        "uuid": "02b7c01f_93040bc6",
+        "filename": "chrome/test/media_router/media_router_e2e_ui_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-12-15T00:57:40Z",
+      "side": 1,
+      "message": "I\u0027ve removed these checks.  All I need to know is that the tab is on the correct file url, and that fullscreen kicked in.\n\nIf those worked then we know that a route was created and we don\u0027t need to check anything in the dialog.",
+      "parentUuid": "922d5a6d_f1a0b034",
+      "range": {
+        "startLine": 89,
+        "startChar": 0,
+        "endLine": 91,
+        "endChar": 0
+      },
+      "revId": "970768fc38a07df53e002a4cd37a2cc0eb99b9ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5c15d9bc_62d87ae6",
         "filename": "chrome/test/media_router/media_router_integration_browsertest.cc",
         "patchSetId": 9
@@ -304,6 +550,24 @@
       "writtenOn": "2017-12-14T01:05:54Z",
       "side": 1,
       "message": "Is there some way we can observe this state change without hard coding a timeout?",
+      "revId": "970768fc38a07df53e002a4cd37a2cc0eb99b9ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27f0a4cd_a23ba74a",
+        "filename": "chrome/test/media_router/media_router_integration_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 768,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-12-15T00:57:40Z",
+      "side": 1,
+      "message": "I tried using an observer using a mocked out DidToggleFullscreenModeForTab method as I had seen some other tests do, but I wasn\u0027t able to get it to work.  I think a notification isn\u0027t fired in the case of fullscreen-in-tab which drives the observer.\n\nI\u0027m open to other suggestions to try.",
+      "parentUuid": "5c15d9bc_62d87ae6",
       "revId": "970768fc38a07df53e002a4cd37a2cc0eb99b9ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -327,6 +591,24 @@
     },
     {
       "key": {
+        "uuid": "c4d3fac4_35e00ab3",
+        "filename": "chrome/test/media_router/media_router_integration_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 787,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-12-15T00:57:40Z",
+      "side": 1,
+      "message": "Yes very possible.  I\u0027m not sure of the best way to test this.  Mostly I just want to make sure if we start a video in a new tab but capture doesn\u0027t kick in, that it doesn\u0027t go fullscreen (because it wouldn\u0027t be fullscreen-in-tab and will likely cause confusion).\n\nAny suggestions?",
+      "parentUuid": "2c13ff90_09f1bc4d",
+      "revId": "970768fc38a07df53e002a4cd37a2cc0eb99b9ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "de3249a9_78018722",
         "filename": "content/renderer/render_frame_impl.cc",
         "patchSetId": 9
@@ -344,6 +626,24 @@
     },
     {
       "key": {
+        "uuid": "4a0e45da_9c4553f2",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 7093,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-12-15T00:57:40Z",
+      "side": 1,
+      "message": "If I move the method into the Frame interface, do I still need to bind things here, or should it already be bound elsewhere?  (I couldn\u0027t figure out how or where the Frame interface was bound).",
+      "parentUuid": "de3249a9_78018722",
+      "revId": "970768fc38a07df53e002a4cd37a2cc0eb99b9ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "63638918_f86af067",
         "filename": "third_party/WebKit/public/platform/fullscreen_video_element.mojom",
         "patchSetId": 9
@@ -355,6 +655,24 @@
       "writtenOn": "2017-12-14T11:05:04Z",
       "side": 1,
       "message": "Let\u0027s add this to the frame interface in frame.mojom for now instead of creating a new interface. We haven\u0027t quite figured out the right granularity for these sort of things yet, but if we\u0027re routing via RF anyway, we may as well put it there for now.",
+      "revId": "970768fc38a07df53e002a4cd37a2cc0eb99b9ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f32b2847_a4360d72",
+        "filename": "third_party/WebKit/public/platform/fullscreen_video_element.mojom",
+        "patchSetId": 9
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-12-15T00:57:40Z",
+      "side": 1,
+      "message": "I tried to move this into the Frame interface, but I wasn\u0027t able to get it working.\n\nIt didn\u0027t look like there was a simple way to get the Frame client as I do with the FullscreenVideoElementHandler in this patchset.\n\nI\u0027m not very familiar with mojo though, so perhaps I was missing something obvious.  Is there an example of using the Frame interface directly and how that would be different?",
+      "parentUuid": "63638918_f86af067",
       "revId": "970768fc38a07df53e002a4cd37a2cc0eb99b9ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
