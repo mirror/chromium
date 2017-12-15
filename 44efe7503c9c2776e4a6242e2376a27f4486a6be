@@ -45,6 +45,29 @@
       "revId": "44efe7503c9c2776e4a6242e2376a27f4486a6be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25e3c9fe_df081cbe",
+        "filename": "device/media_transfer_protocol/media_transfer_protocol_daemon_client.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-12-15T00:07:22Z",
+      "side": 1,
+      "message": "do we need to validate that this is in range for the enum?",
+      "range": {
+        "startLine": 35,
+        "startChar": 5,
+        "endLine": 36,
+        "endChar": 1
+      },
+      "revId": "44efe7503c9c2776e4a6242e2376a27f4486a6be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
