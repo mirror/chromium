@@ -34,6 +34,24 @@
       "revId": "762f534382e45c1f1c865a01d2a176c6d1e06668",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c70bb0a_5d7ed39f",
+        "filename": "gpu/command_buffer/client/gles2_implementation.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3333,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-12-15T19:51:43Z",
+      "side": 1,
+      "message": "I don\u0027t know that it\u0027s really useful to do partial rows. I suggest doing at least 1 row.\n\nEven then actually, I suspect some drivers would behave much slower below a few rows, because of swizzling/tiling. E.g. on Intel, 32 rows would be recommended (that\u0027s the vertical size of a \"Y\" tile). This will likely require some tuning to get right.",
+      "parentUuid": "ad0a29df_4979da20",
+      "revId": "762f534382e45c1f1c865a01d2a176c6d1e06668",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
