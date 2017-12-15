@@ -1,42 +1,58 @@
-// Copyright 2016 The Chromium Authors. All rights reserved.
+// Copyright 2017 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CHROME_BROWSER_CHROMEOS_ACCESSIBILITY_SELECT_TO_SPEAK_EVENT_HANDLER_H_
-#define CHROME_BROWSER_CHROMEOS_ACCESSIBILITY_SELECT_TO_SPEAK_EVENT_HANDLER_H_
+// DO NOT SUBMIT: Rename to select_to_speak_event_rewriter!
+#ifndef CHROME_BROWSER_CHROMEOS_ACCESSIBILITY_SELECT_TO_SPEAK_EVENT_REWRITER_H_
+#define CHROME_BROWSER_CHROMEOS_ACCESSIBILITY_SELECT_TO_SPEAK_EVENT_REWRITER_H_
 
-#include <set>
+#include <memory>
 
 #include "base/macros.h"
-#include "ui/events/event_handler.h"
-#include "ui/events/keycodes/keyboard_codes.h"
+#include "ui/aura/window.h"
+#include "ui/events/event_rewriter.h"
 
-namespace chromeos {
+namespace ui {
+class KeyEvent;
+class MouseEvent;
+}  // namespace ui
 
-class SelectToSpeakForwardedEventDelegateForTesting {
+class SelectToSpeakEventDelegateForTesting {
  public:
+  virtual ~SelectToSpeakEventDelegateForTesting() = default;
+
   virtual void OnForwardEventToSelectToSpeakExtension(
       const ui::MouseEvent& event) = 0;
 };
 
-// Intercepts mouse events while the Search key is held down, and sends
-// accessibility events to the Select-to-speak extension instead.
-class SelectToSpeakEventHandler : public ui::EventHandler {
+class SelectToSpeakEventRewriter : public ui::EventRewriter {
  public:
-  SelectToSpeakEventHandler();
-  ~SelectToSpeakEventHandler() override;
+  explicit SelectToSpeakEventRewriter(aura::Window* root_window);
+  ~SelectToSpeakEventRewriter() override;
 
-  // For testing, call the provided callback with any events that would have
-  // been forwarded to the Select-to-speak extension instead.
   void CaptureForwardedEventsForTesting(
-      SelectToSpeakForwardedEventDelegateForTesting* delegate);
+      SelectToSpeakEventDelegateForTesting* delegate);
 
  private:
-  // EventHandler:
-  void OnKeyEvent(ui::KeyEvent* event) override;
-  void OnMouseEvent(ui::MouseEvent* event) override;
+  // Returns true if Select to Speak is enabled.
+  bool IsSelectToSpeakEnabled();
 
-  void CancelEvent(ui::Event* event);
+  // Returns true if the event was consumed and should be canceled.
+  bool OnKeyEvent(const ui::KeyEvent* event);
+
+  // Returns true if the event was consumed and should be canceled.
+  bool OnMouseEvent(const ui::MouseEvent* event);
+
+  // Converts an event in pixels to the same event in DIPs.
+  ui::MouseEvent GetMouseEventInDIPs(const ui::Event* event);
+
+  // EventRewriter:
+  ui::EventRewriteStatus RewriteEvent(
+      const ui::Event& event,
+      std::unique_ptr<ui::Event>* new_event) override;
+  ui::EventRewriteStatus NextDispatchEvent(
+      const ui::Event& last_event,
+      std::unique_ptr<ui::Event>* new_event) override;
 
   enum State {
     // Neither the Search key nor the mouse button are down.
@@ -64,13 +80,11 @@ class SelectToSpeakEventHandler : public ui::EventHandler {
   };
 
   State state_ = INACTIVE;
+  aura::Window* root_window_;
 
-  SelectToSpeakForwardedEventDelegateForTesting* event_delegate_for_testing_ =
-      nullptr;
+  SelectToSpeakEventDelegateForTesting* event_delegate_for_testing_ = nullptr;
 
-  DISALLOW_COPY_AND_ASSIGN(SelectToSpeakEventHandler);
+  DISALLOW_COPY_AND_ASSIGN(SelectToSpeakEventRewriter);
 };
 
-}  // namespace chromeos
-
-#endif  // CHROME_BROWSER_CHROMEOS_ACCESSIBILITY_SELECT_TO_SPEAK_EVENT_HANDLER_H_
+#endif  // CHROME_BROWSER_CHROMEOS_ACCESSIBILITY_SELECT_TO_SPEAK_EVENT_REWRITER_H_
