@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f5c95f3e_2e73c662",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialsContainer.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-12-15T10:31:45Z",
+      "side": 1,
+      "message": "It seems like you accidentally dropped \"private:\".",
+      "revId": "db1c400565d5b57a967168d06260f3abe85da565",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
