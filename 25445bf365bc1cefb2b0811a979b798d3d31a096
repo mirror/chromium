@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7af7f71_5ad195d9",
+        "filename": "cc/trees/proxy_main.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 574,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-12-15T22:06:55Z",
+      "side": 1,
+      "message": "Is this something that should flow with the commit instead?\n\nThe argument is that otherwise the new surface id might be out of sync with other things that the main thread would have done in response to the eviction.",
+      "revId": "25445bf365bc1cefb2b0811a979b798d3d31a096",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
