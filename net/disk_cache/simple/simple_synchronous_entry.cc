@@ -1311,6 +1311,7 @@ int SimpleSynchronousEntry::ReadAndValidateStream0AndMaybe1(
   if (file_size > GetSimpleCachePrefetchSize()) {
     RecordWhetherOpenDidPrefetch(cache_type_, false);
   } else {
+    LOG(ERROR) << "Did prefetch with file_size:" << file_size;
     RecordWhetherOpenDidPrefetch(cache_type_, true);
     prefetch_buf = std::make_unique<char[]>(file_size);
     if (file->Read(0, prefetch_buf.get(), file_size) != file_size)
@@ -1371,6 +1372,7 @@ int SimpleSynchronousEntry::ReadAndValidateStream0AndMaybe1(
                               /* stream_index = */ 1,
                               /* extra_size = */ 0, *out_entry_stat,
                               stream_1_eof, &stream_prefetch_data[1]);
+    LOG(ERROR) << "Did prefetch with str1_size:" << stream1_size;
     if (rv != net::OK)
       return rv;
   }
