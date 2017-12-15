@@ -5,12 +5,12 @@
 
 """The frontend for the Mojo bindings system."""
 
-
 import argparse
 import hashlib
 import imp
 import json
 import os
+import pickle
 import pprint
 import re
 import struct
@@ -43,14 +43,13 @@ from mojom.generate import translate
 from mojom.generate import template_expander
 from mojom.generate.generator import AddComputedData
 from mojom.parse.parser import Parse
-
+from mojom.parse.conditional_features import RemoveDisabledDefinitions
 
 _BUILTIN_GENERATORS = {
   "c++": "mojom_cpp_generator.py",
   "javascript": "mojom_js_generator.py",
   "java": "mojom_java_generator.py",
 }
-
 
 def LoadGenerators(generators_string):
   if not generators_string:
@@ -71,14 +70,12 @@ def LoadGenerators(generators_string):
     generators[language] = generator_module
   return generators
 
-
 def MakeImportStackMessage(imported_filename_stack):
   """Make a (human-readable) message listing a chain of imports. (Returned
   string begins with a newline (if nonempty) and does not end with one.)"""
   return ''.join(
       reversed(["\n  %s was imported by %s" % (a, b) for (a, b) in \
                     zip(imported_filename_stack[1:], imported_filename_stack)]))
-
 
 class RelativePath(object):
   """Represents a path relative to the source tree."""
@@ -139,7 +136,6 @@ def ReadFileContents(filename):
   with open(filename, 'rb') as f:
     return f.read()
 
-
 class MojomProcessor(object):
   """Parses mojom files and creates ASTs for them.
 
@@ -166,19 +162,21 @@ class MojomProcessor(object):
           language_map.update(typemap)
           self._typemap[language] = language_map
 
-  def ProcessFile(self, args, remaining_args, generator_modules, filename):
-    self._ParseFileAndImports(RelativePath(filename, args.depth),
-                              args.import_directories, [])
-
-    return self._GenerateModule(args, remaining_args, generator_modules,
-        RelativePath(filename, args.depth))
-
   def _GenerateModule(self, args, remaining_args, generator_modules,
                       rel_filename):
     # Return the already-generated module.
     if rel_filename.path in self._processed_files:
       return self._processed_files[rel_filename.path]
-    tree = self._parsed_files[rel_filename.path]
+
+    # TODO(evem): this should match whatever you decide in _Parse
+    pickle_path = 'preprocessed-{}.pickle'.format(
+      os.path.basename(rel_filename.path))
+    try:
+      with open(pickle_path, 'rb') as f:
+        tree = pickle.load(f)
+    except IOError as e:
+      print "%s: Error: %s" % (rel_filename.path, e.strerror)
+      sys.exit(1)
 
     dirname = os.path.dirname(rel_filename.path)
 
@@ -228,43 +226,6 @@ class MojomProcessor(object):
     self._processed_files[rel_filename.path] = module
     return module
 
-  def _ParseFileAndImports(self, rel_filename, import_directories,
-      imported_filename_stack):
-    # Ignore already-parsed files.
-    if rel_filename.path in self._parsed_files:
-      return
-
-    if rel_filename.path in imported_filename_stack:
-      print "%s: Error: Circular dependency" % rel_filename.path + \
-          MakeImportStackMessage(imported_filename_stack + [rel_filename.path])
-      sys.exit(1)
-
-    try:
-      with open(rel_filename.path) as f:
-        source = f.read()
-    except IOError as e:
-      print "%s: Error: %s" % (rel_filename.path, e.strerror) + \
-          MakeImportStackMessage(imported_filename_stack + [rel_filename.path])
-      sys.exit(1)
-
-    try:
-      tree = Parse(source, rel_filename.path)
-    except Error as e:
-      full_stack = imported_filename_stack + [rel_filename.path]
-      print str(e) + MakeImportStackMessage(full_stack)
-      sys.exit(1)
-
-    dirname = os.path.split(rel_filename.path)[0]
-    for imp_entry in tree.import_list:
-      import_file_entry = FindImportFile(
-          RelativePath(dirname, rel_filename.source_root),
-          imp_entry.import_filename, import_directories)
-      self._ParseFileAndImports(import_file_entry, import_directories,
-          imported_filename_stack + [rel_filename.path])
-
-    self._parsed_files[rel_filename.path] = tree
-
-
 def _Generate(args, remaining_args):
   if args.variant == "none":
     args.variant = None
@@ -278,28 +239,55 @@ def _Generate(args, remaining_args):
   generator_modules = LoadGenerators(args.generators_string)
 
   fileutil.EnsureDirectoryExists(args.output_dir)
-
   processor = MojomProcessor(lambda filename: filename in args.filename)
   processor.LoadTypemaps(set(args.typemaps))
   for filename in args.filename:
-    processor.ProcessFile(args, remaining_args, generator_modules, filename)
+    processor._GenerateModule(args, remaining_args, generator_modules,
+      RelativePath(filename, args.depth))
   if args.depfile:
     assert args.depfile_target
     with open(args.depfile, 'w') as f:
       f.write('%s: %s' % (
           args.depfile_target,
           ' '.join(processor._parsed_files.keys())))
-
   return 0
 
+def _ParseFile(args, rel_filename):
+    try:
+      with open(rel_filename.path) as f:
+        source = f.read()
+    except IOError as e:
+      print "%s: Error: %s" % (rel_filename.path, e.strerror) + \
+          MakeImportStackMessage([rel_filename.path])
+      sys.exit(1)
+
+    try:
+      tree = Parse(source, rel_filename.path)
+      RemoveDisabledDefinitions(tree, args.enabled_flag)
+    except Error as e:
+      # TODO(evem): Should this be a more verbose error?
+      print str(e)
+      sys.exit(1)
+
+    # TODO(evem): what path should this be saved into?
+    # know it's somewhere in gen/
+    pickle_path = 'preprocessed-{}.pickle'.format(
+      os.path.basename(rel_filename.path))
+    with open(pickle_path, 'wb') as handle:
+      pickle.dump(tree, handle)
+
+def _Preprocess(args, _):
+  fileutil.EnsureDirectoryExists(args.output_dir)
+  for filename in args.filename:
+    _ParseFile(args, RelativePath(filename, args.depth))
+  return 0
 
 def _Precompile(args, _):
   generator_modules = LoadGenerators(",".join(_BUILTIN_GENERATORS.keys()))
 
+
   template_expander.PrecompileTemplates(generator_modules, args.output_dir)
   return 0
-
-
 
 def main():
   parser = argparse.ArgumentParser(
@@ -308,6 +296,21 @@ def main():
                       help="use Python modules bundled in the SDK")
 
   subparsers = parser.add_subparsers()
+
+  preprocess_parser = subparsers.add_parser("preprocess",
+    description="Preprocess mojom, removing disabled definitions.")
+  preprocess_parser.add_argument("-d", "--depth", dest="depth", default=".",
+                               help="depth from source root")
+  preprocess_parser.add_argument("--enabled_flag",  action="append", default=[],
+                  help="enable definitions guarded by EnableIf attributes "
+                  "corresponding to this value")
+  preprocess_parser.add_argument("filename", nargs="+",
+                               help="mojom input file")
+  preprocess_parser.add_argument("-o", "--output_dir", dest="output_dir",
+                               default=".",
+                               help="output directory for generated files")
+  preprocess_parser.set_defaults(func=_Preprocess)
+
   generate_parser = subparsers.add_parser(
       "generate", description="Generate bindings from mojom files.")
   generate_parser.add_argument("filename", nargs="+",
