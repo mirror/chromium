@@ -205,7 +205,8 @@ class ProxyResolverFromPacString : public ProxyResolver {
                      const CompletionCallback& callback,
                      std::unique_ptr<Request>* request,
                      const NetLogWithSource& net_log) override {
-    results->UsePacString(pac_string_);
+    // TODO(THIS CL): Add proper annotation tunneling.
+    results->UsePacString(pac_string_, NO_TRAFFIC_ANNOTATION_BUG_656607);
     return OK;
   }
 

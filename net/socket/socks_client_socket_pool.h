@@ -17,6 +17,7 @@
 #include "net/dns/host_resolver.h"
 #include "net/socket/client_socket_pool.h"
 #include "net/socket/client_socket_pool_base.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 
 namespace net {
 
@@ -28,14 +29,23 @@ class TransportSocketParams;
 class NET_EXPORT_PRIVATE SOCKSSocketParams
     : public base::RefCounted<SOCKSSocketParams> {
  public:
+  // TODO(BEFORE LANDING THIS CL): Remove default value and add test annotation
+  // to unittests.
   SOCKSSocketParams(const scoped_refptr<TransportSocketParams>& proxy_server,
-                    bool socks_v5, const HostPortPair& host_port_pair);
+                    bool socks_v5,
+                    const HostPortPair& host_port_pair,
+                    const NetworkTrafficAnnotationTag& traffic_annotation =
+                        NO_TRAFFIC_ANNOTATION_BUG_656607);
 
   const scoped_refptr<TransportSocketParams>& transport_params() const {
     return transport_params_;
   }
   const HostResolver::RequestInfo& destination() const { return destination_; }
   bool is_socks_v5() const { return socks_v5_; }
+
+  const NetworkTrafficAnnotationTag traffic_annotation() {
+    return traffic_annotation_;
+  }
 
  private:
   friend class base::RefCounted<SOCKSSocketParams>;
@@ -46,6 +56,8 @@ class NET_EXPORT_PRIVATE SOCKSSocketParams
   // This is the HTTP destination.
   HostResolver::RequestInfo destination_;
   const bool socks_v5_;
+
+  NetworkTrafficAnnotationTag traffic_annotation_;
 
   DISALLOW_COPY_AND_ASSIGN(SOCKSSocketParams);
 };

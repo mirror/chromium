@@ -117,7 +117,8 @@ bool StructTraits<proxy_resolver::mojom::ProxyInfoDataView, net::ProxyInfo>::
   for (const auto& server : proxy_servers)
     proxy_list.AddProxyServer(server);
 
-  out->UseProxyList(proxy_list);
+  // TODO(THIS CL): Pass traffic annotation through mojo interface.
+  out->UseProxyList(proxy_list, NO_TRAFFIC_ANNOTATION_BUG_656607);
   return true;
 }
 

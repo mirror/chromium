@@ -490,8 +490,9 @@ class ProxyResolverV8::Context {
       js_bindings()->OnError(-1, error_message);
       return ERR_PAC_SCRIPT_FAILED;
     }
-
-    results->UsePacString(base::UTF16ToASCII(ret_str));
+    // TODO(THIS CL): Add proper annotation tunneling.
+    results->UsePacString(base::UTF16ToASCII(ret_str),
+                          NO_TRAFFIC_ANNOTATION_BUG_656607);
     return OK;
   }
 

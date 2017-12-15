@@ -58,7 +58,8 @@ void MarkProxiesAsBadUntil(
   proxy_list.AddProxyServer(net::ProxyServer::Direct());
 
   net::ProxyInfo proxy_info;
-  proxy_info.UseProxyList(proxy_list);
+  // TODO(crbug.com/656607): Add proper annotation.
+  proxy_info.UseProxyList(proxy_list, NO_TRAFFIC_ANNOTATION_BUG_656607);
   DCHECK(request->context());
   net::ProxyService* proxy_service = request->context()->proxy_service();
   DCHECK(proxy_service);

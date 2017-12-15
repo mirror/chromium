@@ -54,8 +54,10 @@ void OnResolveProxyHandler(
   net::ProxyInfo data_reduction_proxy_info;
   bool data_saver_proxy_used = util::ApplyProxyConfigToProxyInfo(
       proxy_config, proxy_retry_info, url, &data_reduction_proxy_info);
+  // TODO(crbug.com/656607): Add proper annotation.
   if (data_saver_proxy_used)
-    result->OverrideProxyList(data_reduction_proxy_info.proxy_list());
+    result->OverrideProxyList(data_reduction_proxy_info.proxy_list(),
+                              NO_TRAFFIC_ANNOTATION_BUG_656607);
 
   if (io_data && io_data->resource_type_provider()) {
     ResourceTypeProvider::ContentType content_type =
