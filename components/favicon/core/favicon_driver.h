@@ -57,6 +57,10 @@ class FaviconDriver {
     bool icon_url_changed,
     const gfx::Image& image);
 
+  // Notifies FaviconDriverObservers that all the favicon handlers have finished
+  // fetching data.
+  void NotifyFaviconLoadingCompletedObservers();
+
  private:
   base::ObserverList<FaviconDriverObserver> observer_list_;
 
