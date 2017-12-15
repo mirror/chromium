@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5d330af1_c2bf2f4d",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_view_views.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-12-15T15:27:29Z",
+      "side": 1,
+      "message": "We need access to the native accessible from the view, in order to set the accessible \"controls\" relation between the 2 objects. Holding onto the class instead of the interface makes this much simpler.",
+      "range": {
+        "startLine": 228,
+        "startChar": 7,
+        "endLine": 228,
+        "endChar": 17
+      },
+      "revId": "29b5e15431233f948441f9d2fb626c8cc412c9c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42eb6719_d7c95116",
+        "filename": "components/omnibox/browser/autocomplete_match_type.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-12-15T15:27:29Z",
+      "side": 1,
+      "message": "We need both of these to be exposed now, as the result view will set the positional info semantically and not include it in the accessible name.",
+      "revId": "29b5e15431233f948441f9d2fb626c8cc412c9c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "290f7cc6_d6bc4aae",
+        "filename": "ui/views/accessibility/native_view_accessibility_base.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-12-15T15:27:29Z",
+      "side": 1,
+      "message": "A unique id that is generated so that accessible relationships can be described.",
+      "revId": "29b5e15431233f948441f9d2fb626c8cc412c9c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46f81273_f9f55995",
+        "filename": "ui/views/view.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 1091,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-12-15T15:27:29Z",
+      "side": 1,
+      "message": "They sound similar, but we need them both. Dominic and I discussed this and we\u0027d like to rename NativeViewAccessibility to just ViewAccessibility or AXView. Doing it in a later CL keeps this one simple.",
+      "revId": "29b5e15431233f948441f9d2fb626c8cc412c9c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
