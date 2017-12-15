@@ -22,6 +22,75 @@
       "revId": "88bf44703da298db5dd222077897491ed59fd05a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d47e900f_584bea19",
+        "filename": "chrome/browser/ui/browser_command_controller.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 1195,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-15T18:29:01Z",
+      "side": 1,
+      "message": "Add description and wrap this whole thing (and the call to it) in \n#if DCHECK_IS_ON()\n#endif",
+      "range": {
+        "startLine": 1195,
+        "startChar": 5,
+        "endLine": 1195,
+        "endChar": 38
+      },
+      "revId": "88bf44703da298db5dd222077897491ed59fd05a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc96f358_7cbfe76f",
+        "filename": "chrome/browser/ui/browser_command_controller.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 1204,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-15T18:29:01Z",
+      "side": 1,
+      "message": "How about adding a function to return the set of known ids in CommandUpdater so you don\u0027t need to hard code this, and iterate over such a huge set?",
+      "range": {
+        "startLine": 1201,
+        "startChar": 2,
+        "endLine": 1204,
+        "endChar": 44
+      },
+      "revId": "88bf44703da298db5dd222077897491ed59fd05a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "102af9a1_cfa5271b",
+        "filename": "chrome/browser/ui/browser_command_controller.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 1228,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-15T18:29:01Z",
+      "side": 1,
+      "message": "Are you sure this is only called when the state changes? If so, DCHECK that, other early out if the same. (I\u0027m particularly concerned about clearing the clipboard).",
+      "range": {
+        "startLine": 1228,
+        "startChar": 2,
+        "endLine": 1228,
+        "endChar": 24
+      },
+      "revId": "88bf44703da298db5dd222077897491ed59fd05a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
