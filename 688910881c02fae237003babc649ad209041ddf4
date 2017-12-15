@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7442b1e1_372efc03",
+        "filename": "chrome/browser/extensions/api/autotest_private/autotest_private_api.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-12-15T00:58:39Z",
+      "side": 1,
+      "message": "Needed?",
+      "revId": "688910881c02fae237003babc649ad209041ddf4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afa4b0dd_a809ed86",
+        "filename": "chrome/browser/extensions/api/autotest_private/autotest_private_api.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 440,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-12-15T00:58:39Z",
+      "side": 1,
+      "message": "auto values \u003d std:make_unique...",
+      "revId": "688910881c02fae237003babc649ad209041ddf4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86972c2d_1d543479",
+        "filename": "chrome/browser/extensions/api/autotest_private/autotest_private_api.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-12-15T00:58:39Z",
+      "side": 1,
+      "message": "Should this be guarded w/ OS_CHROMEOS?",
+      "revId": "688910881c02fae237003babc649ad209041ddf4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59513340_5849787a",
+        "filename": "chrome/browser/extensions/api/autotest_private/autotest_private_api.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-12-15T00:58:39Z",
+      "side": 1,
+      "message": "Guard this with OS_CHROMEOS as well.",
+      "revId": "688910881c02fae237003babc649ad209041ddf4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85e7a796_2b01c932",
+        "filename": "chrome/browser/extensions/api/autotest_private/autotest_private_api.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-12-15T00:58:39Z",
+      "side": 1,
+      "message": "DISALLOW_COPY_AND_ASSIGN(AutotestPrivateGet...)",
+      "revId": "688910881c02fae237003babc649ad209041ddf4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
