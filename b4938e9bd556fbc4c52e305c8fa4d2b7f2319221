@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "58c7e3d0_17765955",
+        "filename": "media/audio/mac/audio_manager_mac.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 1159974
+      },
+      "writtenOn": "2017-12-15T16:05:47Z",
+      "side": 1,
+      "message": "If that\u0027s the case, I think you\u0027re probably right. Falling back to channel count, rather than just using it directly, would just lead to a number of error messages about unsupported properties for no good reason.\n\nKeep this!",
+      "parentUuid": "56d85000_7a8c6c2f",
+      "revId": "b4938e9bd556fbc4c52e305c8fa4d2b7f2319221",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9acf93db_6f80be30",
         "filename": "media/audio/mac/scoped_audio_unit.cc",
         "patchSetId": 3
