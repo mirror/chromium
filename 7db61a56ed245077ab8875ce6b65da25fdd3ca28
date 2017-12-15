@@ -22,6 +22,30 @@
       "revId": "7db61a56ed245077ab8875ce6b65da25fdd3ca28",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6a261ca_9545ec2e",
+        "filename": "components/ntp_snippets/user_classifier.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-12-15T11:42:58Z",
+      "side": 1,
+      "message": "I find this comment non-critical so I decided to land the CL it as it is (as I am working from train)",
+      "parentUuid": "05f7a96b_909b8767",
+      "range": {
+        "startLine": 49,
+        "startChar": 22,
+        "endLine": 49,
+        "endChar": 35
+      },
+      "revId": "7db61a56ed245077ab8875ce6b65da25fdd3ca28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
