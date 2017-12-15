@@ -46,6 +46,30 @@
       "revId": "89b38c94ab98e6e06b58877ae4d77c02251ff90e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4177201a_aeeac692",
+        "filename": "build/linux/sysroot_scripts/sysroots.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-12-15T21:40:48Z",
+      "side": 1,
+      "message": "Oh yeah, that was from when I was fixing an issue on arm64 but I didn\u0027t need to roll the sysroot for the other arches\nhttps://chromium.googlesource.com/chromium/src/+/ea2ad20b708c3946995000dd4d0fa0f8ca2e2e0e%5E%21/#F1",
+      "parentUuid": "4d0dec4b_d5ad4fcb",
+      "range": {
+        "startLine": 1,
+        "startChar": 1,
+        "endLine": 1,
+        "endChar": 0
+      },
+      "revId": "89b38c94ab98e6e06b58877ae4d77c02251ff90e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
