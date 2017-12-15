@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3e846af1_84223112",
+        "filename": "net/socket/ssl_server_socket_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1229024
+      },
+      "writtenOn": "2017-12-15T18:41:50Z",
+      "side": 1,
+      "message": "Done. Switched to LazyInstance and removed the singleton.h include.",
+      "parentUuid": "0ac79e3a_5dcc8dee",
+      "revId": "9d1c7934fb199cd60591d036d5e9d4b6b5720539",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d9c42c28_ab21f6d4",
         "filename": "net/socket/ssl_server_socket_impl.cc",
         "patchSetId": 2
