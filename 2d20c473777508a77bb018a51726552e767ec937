@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "692cee98_1b179c7d",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 699,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-12-15T03:53:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "92d3cc1a_5819efa6",
+      "revId": "2d20c473777508a77bb018a51726552e767ec937",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d6064f2a_76d753cb",
         "filename": "ash/wallpaper/wallpaper_controller.cc",
         "patchSetId": 10
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-14T23:15:39Z",
       "side": 1,
       "message": "It\u0027s not the problem of this CL, but it just came to my mind during review. Maybe we should consider call SetDefaultWallpaper() here as if the user can\u0027t find the path this time, he won\u0027t be able to find the path next time anyway.",
+      "revId": "2d20c473777508a77bb018a51726552e767ec937",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24db7074_b7330421",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 706,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-12-15T03:53:38Z",
+      "side": 1,
+      "message": "There may be a corner case: neither the correct (for example small) nor the original resolution exist, but the large resolution still exists, so we don\u0027t want SetDefaultWallpaper to erase it.",
+      "parentUuid": "d6064f2a_76d753cb",
       "revId": "2d20c473777508a77bb018a51726552e767ec937",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "4c404eb5_0a7488b9",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1338,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-12-15T03:53:38Z",
+      "side": 1,
+      "message": "It seems that the three values: 1) info.location, 2) the path for decoding, 3) the path for caching, can often be different. So SetWallpaperImage() can\u0027t handle all the cases.. But I think we need to revisit this part. Not sure it\u0027s intended or bug.",
+      "parentUuid": "7f0dcb71_93c06139",
+      "revId": "2d20c473777508a77bb018a51726552e767ec937",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "678f7084_7cacb3d9",
         "filename": "ash/wallpaper/wallpaper_controller.cc",
         "patchSetId": 10
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "6a12e7a4_2fa1eab1",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1780,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-12-15T03:53:38Z",
+      "side": 1,
+      "message": "The log is added. I changed this to SetDefaultWallpaperImpl().. I think the original code should be improved: we\u0027d better not to remove the user wallpaper here, because it\u0027s just a one-time decode failure. Users may feel that their custom wallpaper is lost.",
+      "parentUuid": "678f7084_7cacb3d9",
+      "revId": "2d20c473777508a77bb018a51726552e767ec937",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "585d9a0e_a6e40747",
         "filename": "ash/wallpaper/wallpaper_controller.h",
         "patchSetId": 10
@@ -81,6 +153,24 @@
       "writtenOn": "2017-12-14T23:15:39Z",
       "side": 1,
       "message": "Will it be temporary and be removed later?",
+      "revId": "2d20c473777508a77bb018a51726552e767ec937",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9654a3c_5ca3aafe",
+        "filename": "ash/wallpaper/wallpaper_controller.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 570,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-12-15T03:53:38Z",
+      "side": 1,
+      "message": "I think it will be permanent, used in the same way with WallpaperManager::last_selected_user_ (it\u0027s useful in UpdateWallpaper())",
+      "parentUuid": "585d9a0e_a6e40747",
       "revId": "2d20c473777508a77bb018a51726552e767ec937",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
