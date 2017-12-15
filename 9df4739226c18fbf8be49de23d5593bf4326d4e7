@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "20a8c6f2_3d83a59a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/bookmarks/BookmarkManager.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-12-15T21:27:19Z",
+      "side": 1,
+      "message": "I\u0027ve moved the call to clear the favicon into onUpdateFavicon and implemented the observer to refresh.",
+      "parentUuid": "c3d03e54_23301e74",
+      "range": {
+        "startLine": 113,
+        "startChar": 20,
+        "endLine": 113,
+        "endChar": 36
+      },
+      "revId": "9df4739226c18fbf8be49de23d5593bf4326d4e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0d4f726f_1ff97a2a",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/favicon/LargeIconBridge.java",
         "patchSetId": 11
@@ -45,6 +69,30 @@
       "revId": "9df4739226c18fbf8be49de23d5593bf4326d4e7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3aad97b_81bca610",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/favicon/LargeIconBridge.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-12-15T21:27:19Z",
+      "side": 1,
+      "message": "Oops, this was strictly for debugging the GURL string bug, I\u0027ve removed it now.",
+      "parentUuid": "0d4f726f_1ff97a2a",
+      "range": {
+        "startLine": 44,
+        "startChar": 15,
+        "endLine": 44,
+        "endChar": 21
+      },
+      "revId": "9df4739226c18fbf8be49de23d5593bf4326d4e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "a3656fd5_3b2a70db",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/favicon/LargeIconBridge.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-12-15T21:27:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "88324aa4_9f035088",
+      "range": {
+        "startLine": 160,
+        "startChar": 32,
+        "endLine": 160,
+        "endChar": 0
+      },
+      "revId": "9df4739226c18fbf8be49de23d5593bf4326d4e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "31ae04d3_f88aa7fc",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/partnerbookmarks/PartnerBookmarksReader.java",
         "patchSetId": 11
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "80c44d48_6f5b6886",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/partnerbookmarks/PartnerBookmarksReader.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-12-15T21:27:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "31ae04d3_f88aa7fc",
+      "range": {
+        "startLine": 57,
+        "startChar": 29,
+        "endLine": 57,
+        "endChar": 37
+      },
+      "revId": "9df4739226c18fbf8be49de23d5593bf4326d4e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "69100d30_35c2a488",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/partnerbookmarks/PartnerBookmarksReader.java",
         "patchSetId": 11
@@ -114,6 +210,30 @@
       "revId": "9df4739226c18fbf8be49de23d5593bf4326d4e7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a71fdce9_f57a97e7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/partnerbookmarks/PartnerBookmarksReader.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-12-15T21:27:19Z",
+      "side": 1,
+      "message": "100% we can do that now, this used to make more sense when we didn\u0027t have access to the static observer list. I\u0027ll add a new event to the observer.",
+      "parentUuid": "69100d30_35c2a488",
+      "range": {
+        "startLine": 202,
+        "startChar": 16,
+        "endLine": 202,
+        "endChar": 51
+      },
+      "revId": "9df4739226c18fbf8be49de23d5593bf4326d4e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
