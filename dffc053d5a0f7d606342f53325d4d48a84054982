@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f4d93e72_bce3f11f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-12-15T16:07:40Z",
+      "side": 1,
+      "message": "nit: could you please remove 1.txt file from this change? It makes gerrit rather slow.",
+      "range": {
+        "startLine": 7,
+        "startChar": 1,
+        "endLine": 7,
+        "endChar": 15
+      },
+      "revId": "dffc053d5a0f7d606342f53325d4d48a84054982",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fd9cc38_7edf8797",
+        "filename": "third_party/WebKit/Source/platform/scheduler/util/tracing_helper.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-12-15T16:07:40Z",
+      "side": 1,
+      "message": "One high-level comment: I strongly prefer to avoid having double declaration (in RendererSchedulerImpl and here). We want to remove boilerplate instead of adding more. Let\u0027s have general infrastructure support here and have declarations in RendererSchedulerImpl.\n\nI would advocate for a simpler solution: have a helper class responsible for registering and unregistering individual TraceableStates.\n\nSomething like:\n\nclass TraceableStateController {\n  void OnTracingStarted(); // notify all registered states\n  void AddTraceableState(TraceableStateBase* state);\n  void RemoveTraceableState(TraceableStateBase* state);\n}\n\nclass TraceableState\u003cT\u003e : TraceableStateBase {\n  TraceableState(..., TracingStateController* controller) { controller-\u003eAddTraceableState(this); }\n  ~TraceableState() { controller-\u003eRemoveTraceableState(this); }  \n}\n\nThen we\u0027d just pass a traceable state controller to constructor and everything will follow.\n\nWDYT?",
+      "range": {
+        "startLine": 119,
+        "startChar": 13,
+        "endLine": 119,
+        "endChar": 25
+      },
+      "revId": "dffc053d5a0f7d606342f53325d4d48a84054982",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
