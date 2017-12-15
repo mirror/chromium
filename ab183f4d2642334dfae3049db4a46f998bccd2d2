@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b5c364ee_124ef983",
+        "filename": "tools/mb/mb.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1000487
+      },
+      "writtenOn": "2017-12-15T23:59:55Z",
+      "side": 1,
+      "message": "Side note; eventually we\u0027ll want to make this configurable for chrome tests (?)",
+      "range": {
+        "startLine": 359,
+        "startChar": 17,
+        "endLine": 359,
+        "endChar": 43
+      },
+      "revId": "ab183f4d2642334dfae3049db4a46f998bccd2d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4592ae81_60d24ae9",
+        "filename": "tools/mb/mb.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1000487
+      },
+      "writtenOn": "2017-12-15T23:59:55Z",
+      "side": 1,
+      "message": "FYI, ] is inconsistently aligned on the lines above, sometimes at +0, sometimes at +2. Choose one.",
+      "revId": "ab183f4d2642334dfae3049db4a46f998bccd2d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa95a980_6cd97053",
+        "filename": "tools/mb/mb.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1000487
+      },
+      "writtenOn": "2017-12-15T23:59:55Z",
+      "side": 1,
+      "message": "that\u0027s incorrect, you want \u0027Windows-10\u0027\n\nYou can see the valid list at:\nhttps://chromium-swarm.appspot.com/botlist?c\u003did\u0026c\u003dos\u0026c\u003dtask\u0026c\u003dstatus\u0026l\u003d100\u0026q\u003dos\u0026s\u003did%3Aasc",
+      "revId": "ab183f4d2642334dfae3049db4a46f998bccd2d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47542031_2061230f",
+        "filename": "tools/mb/mb.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 1000487
+      },
+      "writtenOn": "2017-12-15T23:59:55Z",
+      "side": 1,
+      "message": "No ARM love? :)  kidding, it can happen eventually.",
+      "range": {
+        "startLine": 394,
+        "startChar": 21,
+        "endLine": 394,
+        "endChar": 27
+      },
+      "revId": "ab183f4d2642334dfae3049db4a46f998bccd2d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
