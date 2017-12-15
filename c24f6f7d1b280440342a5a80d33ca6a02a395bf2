@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "53c9d13c_d064e2d5",
+        "filename": "third_party/WebKit/LayoutTests/typedcssom/inlinestyle/properties/transform.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-12-15T05:12:15Z",
+      "side": 0,
+      "message": "Did you move these tests somewhere else? Shouldn\u0027t we continue to test this?",
+      "revId": "c24f6f7d1b280440342a5a80d33ca6a02a395bf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
