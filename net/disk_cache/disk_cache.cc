@@ -102,7 +102,7 @@ int CacheCreator::Run() {
 #else
   static const bool kSimpleBackendIsDefault = false;
 #endif
-  if (backend_type_ == net::CACHE_BACKEND_SIMPLE ||
+  if (true || backend_type_ == net::CACHE_BACKEND_SIMPLE ||
       (backend_type_ == net::CACHE_BACKEND_DEFAULT &&
        kSimpleBackendIsDefault)) {
     disk_cache::SimpleBackendImpl* simple_cache =
