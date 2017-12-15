@@ -18,12 +18,16 @@ namespace {
 struct Service {
   const char* name;
   const char* description;
+  const char* process_group = nullptr;
 };
+
+// The ash service and the ui service run in the same process.
+constexpr char kAshAndUiGroup[] = "ash_and_ui";
 
 constexpr Service kServices[] = {
     {mash::quick_launch::mojom::kServiceName, "Quick Launch"},
-    {ui::mojom::kServiceName, "UI Service"},
-    {ash::mojom::kServiceName, "Ash Window Manager and Shell"},
+    {ui::mojom::kServiceName, "UI Service", kAshAndUiGroup},
+    {ash::mojom::kServiceName, "Ash Window Manager and Shell", kAshAndUiGroup},
     {"accessibility_autoclick", "Ash Accessibility Autoclick"},
     {"touch_hud", "Ash Touch Hud"},
     {font_service::mojom::kServiceName, "Font Service"},
@@ -33,9 +37,12 @@ constexpr Service kServices[] = {
 
 void RegisterOutOfProcessServices(
     content::ContentBrowserClient::OutOfProcessServiceMap* services) {
-  for (size_t i = 0; i < arraysize(kServices); ++i) {
-    (*services)[kServices[i].name] =
-        base::ASCIIToUTF16(kServices[i].description);
+  for (const auto& service : kServices) {
+    base::Optional<std::string> process_group;
+    if (service.process_group)
+      process_group.emplace(service.process_group);
+    (*services)[service.name] = {base::ASCIIToUTF16(service.description),
+                                 process_group};
   }
 }
 

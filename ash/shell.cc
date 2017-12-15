@@ -611,6 +611,7 @@ Shell::Shell(std::unique_ptr<ShellDelegate> shell_delegate,
       weak_factory_(this) {
   // TODO(sky): better refactor cash/mash dependencies. Perhaps put all cash
   // state on ShellPortClassic. http://crbug.com/671246.
+  LOG(ERROR) << "JAMES ash pid = " << getpid();
 
   display_manager_.reset(ScreenAsh::CreateDisplayManager());
   window_tree_host_manager_ = std::make_unique<WindowTreeHostManager>();
