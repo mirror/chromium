@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "37427681_d4340bd5",
+        "filename": "cc/paint/transfer_cache_serialize_helper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-12-15T01:13:43Z",
+      "side": 1,
+      "message": "I kind of think that the actual API should take a vector since it\u0027s ref counting the locks. However, for this particular implementation it\u0027s really convenient to use a set instead, and check if an entry was already locked. This results in this copy here.\n\nWe could either make this a vector or the API a set, but it feels kind of not the best. I\u0027m happy to hear other suggestions!",
+      "revId": "30678390b0d37ed16c11d8199caee313d4d1dd68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
