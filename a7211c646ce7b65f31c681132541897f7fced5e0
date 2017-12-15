@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3e2d911f_a7b70098",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1243466
+      },
+      "writtenOn": "2017-12-15T10:10:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "26e31bf9_2a924919",
+      "revId": "a7211c646ce7b65f31c681132541897f7fced5e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bda92123_a5c437d3",
         "filename": "/COMMIT_MSG",
         "patchSetId": 1
@@ -78,6 +96,30 @@
       "side": 1,
       "message": "Yes, I tried it and it doesn\u0027t pass with this CL. Do you think it would be hard to make it pass? :P",
       "parentUuid": "e0f92bb1_256291f8",
+      "range": {
+        "startLine": 18,
+        "startChar": 3,
+        "endLine": 18,
+        "endChar": 4
+      },
+      "revId": "a7211c646ce7b65f31c681132541897f7fced5e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27184f57_e2e0758a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1243466
+      },
+      "writtenOn": "2017-12-15T10:10:14Z",
+      "side": 1,
+      "message": "I have no idea for now, but it seems more complex than I think. I\u0027ll debug it after resolving CLs in progress.",
+      "parentUuid": "8e20ca24_6c73ef1c",
       "range": {
         "startLine": 18,
         "startChar": 3,
