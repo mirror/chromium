@@ -178,8 +178,8 @@ class WebState : public base::SupportsUserData {
   // Returns true if the current page is a web view with HTML.
   virtual bool ContentIsHTML() const = 0;
 
-  // Returns the current navigation title. This could be the title of the page
-  // if it is available or the URL.
+  // Returns the title of the visible NavigationItem. This could be the title of
+  // the page if it is available or the URL.
   virtual const base::string16& GetTitle() const = 0;
 
   // Returns true if the current page is loading.
