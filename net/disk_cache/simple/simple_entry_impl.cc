@@ -630,6 +630,7 @@ void SimpleEntryImpl::PostClientCallback(const CompletionCallback& callback,
 
 void SimpleEntryImpl::MakeUninitialized() {
   state_ = STATE_UNINITIALIZED;
+  doomed_ = false;
   std::memset(crc32s_end_offset_, 0, sizeof(crc32s_end_offset_));
   std::memset(crc32s_, 0, sizeof(crc32s_));
   std::memset(have_written_, 0, sizeof(have_written_));
