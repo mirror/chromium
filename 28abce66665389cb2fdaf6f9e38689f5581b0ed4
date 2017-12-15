@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9b5df3ec_74f44076",
+        "filename": "net/tools/quic/quic_simple_dispatcher.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1118144
+      },
+      "writtenOn": "2017-12-15T23:45:58Z",
+      "side": 0,
+      "message": "Please undelete this empty line.",
+      "revId": "28abce66665389cb2fdaf6f9e38689f5581b0ed4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41bb9982_2c24475a",
+        "filename": "net/tools/quic/quic_simple_server_session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1118144
+      },
+      "writtenOn": "2017-12-15T23:45:58Z",
+      "side": 0,
+      "message": "Don\u0027t delete this empty line",
+      "revId": "28abce66665389cb2fdaf6f9e38689f5581b0ed4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
