@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "549dc779_fa0157c7",
+        "filename": "chrome/browser/ui/views/frame/hosted_app_frame_header_ash.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-15T02:50:08Z",
+      "side": 1,
+      "message": "I don\u0027t know enough about surrogates to know if this is safe.. can we just iterate over surrogates properly? See below.",
+      "revId": "38371bc4004ce284a2c70870355ffc29ad83222b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5b876d1_0671ab51",
+        "filename": "chrome/browser/ui/views/frame/hosted_app_frame_header_ash.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-15T02:50:08Z",
+      "side": 1,
+      "message": "This list seems like a maintenance burden -- would u_isalnum work?\n\nI guess it would go something like\n\n    size_t trim_index \u003d str.size();\n    while (trim_index !\u003d 0) {\n      UChar32 character;\n      size_t prev \u003d trim_index;\n      U16_PREV(str.data(), 0, prev, character);\n      if (u_isalnum(character))\n        break;\n      trim_index \u003d prev;\n    }\n\nmaybe add this to base/i18n/char_iterator.h so it supports reverse iteration?\n\nor if not u_isalnum, then u_iscntrl u_isspace u_ispunct...?\n\nor if this list must exist, should it belong in base/i18n ?",
+      "revId": "38371bc4004ce284a2c70870355ffc29ad83222b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fefbb8c_22b01140",
+        "filename": "chrome/browser/ui/views/frame/hosted_app_frame_header_ash.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-15T02:50:08Z",
+      "side": 1,
+      "message": "is there a benefit to using StringPiece? It seems to complicate things :/\n\nPerformance-wise I don\u0027t see much advantage, and maybe a downside that CopyToString would break COW if strings still did that",
+      "revId": "38371bc4004ce284a2c70870355ffc29ad83222b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3187170_e5cd106f",
+        "filename": "chrome/browser/ui/views/frame/hosted_app_frame_header_ash.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-15T02:50:08Z",
+      "side": 1,
+      "message": "can we friend the entire HostedAppFrameHeaderAshTest class? ... These ALL_PREFIXES things tend to proliferate and cause a maintenance burden, or get forgotten about when tests are deleted.\n\nOf course that class doesn\u0027t exist. You\u0027d have to add it, and a `GetRenderTexts` helper that calls HostedAppFrameHeaderAsh::GetRenderTexts. wdyt?",
+      "revId": "38371bc4004ce284a2c70870355ffc29ad83222b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50f8791b_b2728ad2",
+        "filename": "chrome/browser/ui/views/frame/hosted_app_frame_header_ash_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-15T02:50:08Z",
+      "side": 1,
+      "message": "There\u0027s a bit of cognitive load to grok all of these. Maybe factor out common parts? E.g. it\u0027s always |${app_name} by example.com|, so there are only 2 inputs, not 3. And if the `|` is never in an input, it\u0027s fine for testing the output too.\n\nE.g.\n\n  // Generate yada yada assuming the domain is example.com.\n  base::string16 GenerateTitle(const char* page_title, const char* app_name) {\n    base::string16 app_name16 \u003d base::UTF8ToUTF16(app_name);\n    base::string16 app_and_domain \u003d app_name16 + base::UTF8ToUTF16(\" by example.com\")\n    base::string16 title_label_text;\n    base::string16 app_and_domain_label_text;\n    HostedAppFrameHeaderAsh::GetRenderTexts(base::UTF8ToUTF16(page_title), app_name16, app_and_domain, \u0026title_label_text, \u0026app_And_domain_label_text);\n    return title_label_text + app_and_domain_label_text;\n  }\n\n  EXPECT_EQ(base::UTF8ToUTF16(\"My App by example.com\"),\n            GenerateTitle(\"My App\", \"My App\"));\n\n  EXPECT_EQ(base::UTF8ToUTF16(\"My Document | My App by example.com\"),\n            GenerateTitle(\"My Document - My App\", \"My App\"));\n\n  EXPECT_EQ(base::UTF8ToUTF16(\"My Document - My App | My App, My Life by example.com\"),\n            GenerateTitle(\"My Document - My App\", \"My App, My Life\"));\n\n  etc.\n\nYou might not like the idea of relying on `|`, and would rather check both strings separately (fine either way by me :). But the inputs are currently hard to map to the \"real\" test cases right now.",
+      "revId": "38371bc4004ce284a2c70870355ffc29ad83222b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "644295bc_6777fada",
+        "filename": "chrome/browser/ui/views/frame/hosted_app_frame_header_ash_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-15T02:50:08Z",
+      "side": 1,
+      "message": "test a surrogate pair? 🇬🇧?",
+      "revId": "38371bc4004ce284a2c70870355ffc29ad83222b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
