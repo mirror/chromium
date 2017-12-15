@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2ce4e2c9_9406311e",
+        "filename": "third_party/android_deps/README.chromium",
+        "patchSetId": 8
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-12-15T20:23:50Z",
+      "side": 1,
+      "message": "The content is generated and will be downloaded via DEPS or CIPD... But I\u0027ll add an OWNERS file there anyway, I can figure out gitignore later when adding a dependency.",
+      "parentUuid": "17368e40_ba183c22",
+      "range": {
+        "startLine": 13,
+        "startChar": 1,
+        "endLine": 13,
+        "endChar": 11
+      },
+      "revId": "1aab04cbc3c4300c95949f1b89f75c238694fb34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4125b776_baaa6b12",
         "filename": "third_party/android_deps/README.chromium",
         "patchSetId": 8
@@ -39,6 +63,24 @@
       "revId": "1aab04cbc3c4300c95949f1b89f75c238694fb34",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8af72dc_ee0b1d17",
+        "filename": "third_party/android_deps/README.chromium",
+        "patchSetId": 8
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-12-15T20:23:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4125b776_baaa6b12",
+      "revId": "1aab04cbc3c4300c95949f1b89f75c238694fb34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "339a1805_760d146d",
+        "filename": "tools/android/roll/android_deps/README.md",
+        "patchSetId": 8
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-12-15T20:23:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "34a30c70_578ca7f4",
+      "revId": "1aab04cbc3c4300c95949f1b89f75c238694fb34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7d42c0c8_feac54d7",
         "filename": "tools/android/roll/android_deps/fetch_all.sh",
         "patchSetId": 8
@@ -73,6 +133,24 @@
       "revId": "1aab04cbc3c4300c95949f1b89f75c238694fb34",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef58e930_2ba8e534",
+        "filename": "tools/android/roll/android_deps/fetch_all.sh",
+        "patchSetId": 8
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-12-15T20:23:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7d42c0c8_feac54d7",
+      "revId": "1aab04cbc3c4300c95949f1b89f75c238694fb34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
