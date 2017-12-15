@@ -613,6 +613,11 @@ void WebDevToolsAgentImpl::LayoutOverlay() {
     it.value->LayoutOverlay();
 }
 
+void WebDevToolsAgentImpl::DispatchPendingTouchEvents() {
+  for (auto& it : overlay_agents_)
+    it.value->DispatchPendingTouchEvents();
+}
+
 bool WebDevToolsAgentImpl::HandleInputEvent(const WebInputEvent& event) {
   for (auto& it : overlay_agents_) {
     if (it.value->HandleInputEvent(event))

@@ -473,6 +473,8 @@ class CORE_EXPORT WebViewImpl final
   void RequestDecode(const PaintImage&, base::OnceCallback<void(bool)>);
 
  private:
+  WebInputEventResult DispatchPendingTouchEvents();
+  WebInputEventResult HandleInputEventInternal(const WebCoalescedInputEvent&);
   void SetPageScaleFactorAndLocation(float, const FloatPoint&);
   void PropagateZoomFactorToLocalFrameRoots(Frame*, float);
 

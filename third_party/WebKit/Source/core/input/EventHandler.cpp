@@ -120,22 +120,6 @@ bool ShouldRefetchEventTarget(const MouseEventWithHitTestResults& mev) {
          IsHTMLInputElement(ToShadowRoot(target_node)->host());
 }
 
-Vector<WebPointerEvent> GetCoalescedWebPointerEventsWithNoTransformation(
-    const Vector<WebTouchEvent>& coalesced_events,
-    int id) {
-  Vector<WebPointerEvent> related_pointer_events;
-  for (const auto& touch_event : coalesced_events) {
-    for (unsigned i = 0; i < touch_event.touches_length; ++i) {
-      if (touch_event.touches[i].id == id &&
-          touch_event.touches[i].state != WebTouchPoint::kStateStationary) {
-        related_pointer_events.push_back(
-            WebPointerEvent(touch_event, touch_event.touches[i]));
-      }
-    }
-  }
-  return related_pointer_events;
-}
-
 }  // namespace
 
 using namespace HTMLNames;
@@ -563,6 +547,10 @@ EventHandler::OptionalCursor EventHandler::SelectAutoCursor(
     return i_beam;
 
   return PointerCursor();
+}
+
+WebInputEventResult EventHandler::DispatchPendingTouchEvents() {
+  return pointer_event_manager_->FlushEvents();
 }
 
 WebInputEventResult EventHandler::HandlePointerEvent(
@@ -2073,7 +2061,7 @@ void EventHandler::UpdateLastScrollbarUnderMouse(Scrollbar* scrollbar,
     last_scrollbar_under_mouse_ = set_last ? scrollbar : nullptr;
   }
 }
-
+/*
 WebInputEventResult EventHandler::HandleTouchEvent(
     const WebTouchEvent& event,
     const Vector<WebTouchEvent>& coalesced_events) {
@@ -2106,7 +2094,7 @@ WebInputEventResult EventHandler::HandleTouchEvent(
   // mode as mentioned in crbug.com/728250.
   return pointer_event_manager_->FlushEvents();
 }
-
+*/
 WebInputEventResult EventHandler::PassMousePressEventToSubframe(
     MouseEventWithHitTestResults& mev,
     LocalFrame* subframe) {
