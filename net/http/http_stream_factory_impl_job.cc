@@ -963,6 +963,8 @@ int HttpStreamFactoryImpl::Job::DoInitConnectionImpl() {
 
   if (job_type_ == PRECONNECT) {
     DCHECK(!delegate_->for_websockets());
+    if (request_info_.socket_tag != SocketTag())
+      return ERR_NOT_IMPLEMENTED;
     return PreconnectSocketsForHttpRequest(
         GetSocketGroup(), destination_, request_info_.extra_headers,
         request_info_.load_flags, priority_, session_, proxy_info_,
@@ -979,6 +981,8 @@ int HttpStreamFactoryImpl::Job::DoInitConnectionImpl() {
                        spdy_session_key_, enable_ip_based_pooling_)
           : OnHostResolutionCallback();
   if (delegate_->for_websockets()) {
+    if (request_info_.socket_tag != SocketTag())
+      return ERR_NOT_IMPLEMENTED;
     SSLConfig websocket_server_ssl_config = server_ssl_config_;
     websocket_server_ssl_config.alpn_protos.clear();
     return InitSocketHandleForWebSocketRequest(
@@ -993,8 +997,8 @@ int HttpStreamFactoryImpl::Job::DoInitConnectionImpl() {
       GetSocketGroup(), destination_, request_info_.extra_headers,
       request_info_.load_flags, priority_, session_, proxy_info_, expect_spdy_,
       quic_version_, server_ssl_config_, proxy_ssl_config_,
-      request_info_.privacy_mode, net_log_, connection_.get(),
-      resolution_callback, io_callback_);
+      request_info_.privacy_mode, request_info_.socket_tag, net_log_,
+      connection_.get(), resolution_callback, io_callback_);
 }
 
 int HttpStreamFactoryImpl::Job::DoInitConnectionComplete(int result) {
