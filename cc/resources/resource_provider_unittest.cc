@@ -3142,8 +3142,8 @@ class AllocationTrackingContext3D : public TextureStateTrackingContext {
                     GLsizei image_size,
                     const void* data));
   MOCK_METHOD1(waitAsyncTexImage2DCHROMIUM, void(GLenum));
-  MOCK_METHOD4(createImageCHROMIUM,
-               GLuint(ClientBuffer, GLsizei, GLsizei, GLenum));
+  MOCK_METHOD3(createImageCHROMIUM,
+               GLuint(ClientBuffer, GLsizei, GLsizei));
   MOCK_METHOD1(destroyImageCHROMIUM, void(GLuint));
   MOCK_METHOD2(bindTexImage2DCHROMIUM, void(GLenum, GLint));
   MOCK_METHOD2(releaseTexImage2DCHROMIUM, void(GLenum, GLint));
@@ -3270,7 +3270,7 @@ TEST_P(ResourceProviderTest, ScopedWriteLockGpuMemoryBuffer) {
   EXPECT_CALL(*context, bindTexture(GL_TEXTURE_2D, kTextureId));
   EXPECT_CALL(*context, texParameteri(_, _, _)).Times(AnyNumber());
   EXPECT_CALL(*context, bindTexture(GL_TEXTURE_2D, kTextureId));
-  EXPECT_CALL(*context, createImageCHROMIUM(_, kWidth, kHeight, GL_RGBA))
+  EXPECT_CALL(*context, createImageCHROMIUM(_, kWidth, kHeight))
       .WillOnce(Return(kImageId));
   EXPECT_CALL(*context, bindTexImage2DCHROMIUM(GL_TEXTURE_2D, kImageId));
 
