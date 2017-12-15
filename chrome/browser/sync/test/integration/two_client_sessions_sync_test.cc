@@ -14,6 +14,7 @@
 #include "chrome/browser/sync/test/integration/sessions_helper.h"
 #include "chrome/browser/sync/test/integration/sync_test.h"
 #include "components/sync/engine/cycle/sync_cycle_snapshot.h"
+#include "components/sync_sessions/sessions_sync_manager.h"
 
 using sessions_helper::CheckInitialState;
 using sessions_helper::DeleteForeignSession;
@@ -215,4 +216,38 @@ IN_PROC_BROWSER_TEST_F(TwoClientSessionsSyncTest, MultipleWindowsMultipleTabs) {
   EXPECT_TRUE(OpenTabAtIndex(2, 1, GURL(kURL4)));
 
   WaitForForeignSessionsToSync(0, 1);
+}
+
+IN_PROC_BROWSER_TEST_F(TwoClientSessionsSyncTest, DoNotSyncTabsOnBrowserClose) {
+  ASSERT_TRUE(SetupSync()) << "SetupSync() failed.";
+
+  ASSERT_TRUE(CheckInitialState(0));
+  ASSERT_TRUE(CheckInitialState(1));
+
+  std::vector<GURL> urls;
+  urls.push_back(GURL(kURL1));
+  urls.push_back(GURL(kURL2));
+  ASSERT_TRUE(sessions_helper::OpenMultipleTabs(0, urls));
+
+  // Retain the window information on client 0.
+  ScopedWindowMap client0_windows;
+  ASSERT_TRUE(GetLocalWindows(0, &client0_windows));
+  std::vector<ScopedWindowMap> expected_windows(1);
+  expected_windows[0] = std::move(client0_windows);
+
+  // Check the foreign windows on client 1.
+  ASSERT_TRUE(ForeignSessionsMatchChecker(1, expected_windows).Wait());
+
+  sync_sessions::SessionsSyncManager* sessions_sync_manager =
+      static_cast<sync_sessions::SessionsSyncManager*>(
+          GetSyncService(0)->GetSessionsSyncableService());
+  EXPECT_FALSE(sessions_sync_manager->GetAllBrowsersClosingForTesting());
+  // Close browser window on client 0.
+  CloseBrowserWindowAtIndex(0);
+  EXPECT_TRUE(sessions_sync_manager->GetAllBrowsersClosingForTesting());
+
+  ASSERT_TRUE(GetClient(0)->AwaitMutualSyncCycleCompletion(GetClient(1)));
+
+  // Foreign windows on client 1 shouldn't be changed.
+  ASSERT_TRUE(ForeignSessionsMatchChecker(1, expected_windows).Wait());
 }

@@ -8,6 +8,8 @@
 #include "chrome/browser/sync/sessions/sync_sessions_web_contents_router.h"
 #include "chrome/browser/ui/browser_list_observer.h"
 #include "chrome/browser/ui/tabs/tab_strip_model_observer.h"
+#include "content/public/browser/notification_observer.h"
+#include "content/public/browser/notification_registrar.h"
 
 namespace sync_sessions {
 
@@ -16,6 +18,7 @@ namespace sync_sessions {
 // have a BrowserList or TabStrip, so it doesn't compile the needed
 // dependencies, nor would it benefit from the added tracking.
 class BrowserListRouterHelper : public BrowserListObserver,
+                                public content::NotificationObserver,
                                 public TabStripModelObserver {
  public:
   explicit BrowserListRouterHelper(SyncSessionsWebContentsRouter* router,
@@ -26,11 +29,17 @@ class BrowserListRouterHelper : public BrowserListObserver,
   // BrowserListObserver implementation.
   void OnBrowserAdded(Browser* browser) override;
   void OnBrowserRemoved(Browser* browser) override;
+  void OnBrowserClosing(Browser* browser) override;
   // TabStripModelObserver implementation.
   void TabInsertedAt(TabStripModel* model,
                      content::WebContents* web_contents,
                      int index,
                      bool foreground) override;
+
+  // content::NotificationObserver implementation.
+  void Observe(int type,
+               const content::NotificationSource& source,
+               const content::NotificationDetails& details) override;
 
   // |router_| owns |this|.
   SyncSessionsWebContentsRouter* router_;
@@ -38,6 +47,8 @@ class BrowserListRouterHelper : public BrowserListObserver,
   Profile* profile_;
 
   std::set<Browser*> attached_browsers_;
+
+  content::NotificationRegistrar registrar_;
 
   DISALLOW_COPY_AND_ASSIGN(BrowserListRouterHelper);
 };

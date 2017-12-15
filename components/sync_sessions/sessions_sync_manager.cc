@@ -604,6 +604,11 @@ void SessionsSyncManager::OnLocalTabModified(SyncedTabDelegate* modified_tab) {
     return;
   }
 
+  if (all_browsers_closing_) {
+    // Do not sync tabs closing during browser shutdown.
+    return;
+  }
+
   syncer::SyncChangeList changes;
   AssociateTab(modified_tab, &changes);
   // Note, we always associate windows because it's possible a tab became
@@ -620,6 +625,14 @@ void SessionsSyncManager::OnFaviconsChanged(const std::set<GURL>& page_urls,
     if (page_url.is_valid())
       favicon_cache_.OnPageFaviconUpdated(page_url);
   }
+}
+
+void SessionsSyncManager::SetAllBrowsersClosing(bool browsers_closing) {
+  all_browsers_closing_ = browsers_closing;
+}
+
+bool SessionsSyncManager::GetAllBrowsersClosingForTesting() {
+  return all_browsers_closing_;
 }
 
 void SessionsSyncManager::StopSyncing(syncer::ModelType type) {

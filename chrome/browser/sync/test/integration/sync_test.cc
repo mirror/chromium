@@ -756,7 +756,8 @@ bool SyncTest::SetupAndClearClient(size_t index) {
 
 void SyncTest::TearDownOnMainThread() {
   for (size_t i = 0; i < clients_.size(); ++i) {
-    clients_[i]->service()->RequestStop(ProfileSyncService::CLEAR_DATA);
+    if (closed_browsers_indicies_.count(i) == 0)
+      clients_[i]->service()->RequestStop(ProfileSyncService::CLEAR_DATA);
   }
 
   // Closing all browsers created by this test. The calls here block until
@@ -764,10 +765,12 @@ void SyncTest::TearDownOnMainThread() {
   // closed by the creator of that browser.
   size_t init_browser_count = chrome::GetTotalBrowserCount();
   for (size_t i = 0; i < browsers_.size(); ++i) {
-    CloseBrowserSynchronously(browsers_[i]);
+    if (closed_browsers_indicies_.count(i) == 0)
+      CloseBrowserSynchronously(browsers_[i]);
   }
-  ASSERT_EQ(chrome::GetTotalBrowserCount(),
-            init_browser_count - browsers_.size());
+  ASSERT_EQ(
+      chrome::GetTotalBrowserCount(),
+      init_browser_count - browsers_.size() + closed_browsers_indicies_.size());
 
   if (fake_server_.get()) {
     std::vector<fake_server::FakeServerInvalidationService*>::const_iterator it;
@@ -1226,6 +1229,13 @@ arc::SyncArcPackageHelper* SyncTest::sync_arc_helper() {
 void SyncTest::SetPreexistingPreferencesFileContents(
     const std::string& contents) {
   preexisting_preferences_file_contents_ = contents;
+}
+
+void SyncTest::CloseBrowserWindowAtIndex(size_t index) {
+  size_t init_browser_count = chrome::GetTotalBrowserCount();
+  CloseBrowserSynchronously(browsers_[index]);
+  closed_browsers_indicies_.insert(index);
+  CHECK_EQ(chrome::GetTotalBrowserCount(), init_browser_count - 1);
 }
 
 bool SyncTest::ClearServerData(ProfileSyncServiceHarness* harness) {

@@ -105,6 +105,9 @@ class SessionsSyncManager : public syncer::SyncableService,
   void OnLocalTabModified(SyncedTabDelegate* modified_tab) override;
   void OnFaviconsChanged(const std::set<GURL>& page_urls,
                          const GURL& icon_url) override;
+  void SetAllBrowsersClosing(bool browsers_closing) override;
+
+  bool GetAllBrowsersClosingForTesting();
 
   // Returns the tag used to uniquely identify this machine's session in the
   // sync model.
@@ -306,6 +309,10 @@ class SessionsSyncManager : public syncer::SyncableService,
   // of the doubt and hold off until another local navigation occurs, which
   // proves that we are still relevant.
   bool local_tab_pool_out_of_sync_;
+
+  // Indicates that browsers are closing, so we shouldn't sync tabs closing
+  // events.
+  bool all_browsers_closing_ = false;
 
   syncer::SyncPrefs* sync_prefs_;
 
