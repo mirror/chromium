@@ -178,6 +178,24 @@
     },
     {
       "key": {
+        "uuid": "9b820038_13dbcb8a",
+        "filename": "chrome/browser/chromeos/accessibility/select_to_speak_event_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2017-12-15T18:56:34Z",
+      "side": 1,
+      "message": "The latest version uses your code lines but returns *mouse_event from the helper function. That seems to work properly. What do you think?",
+      "parentUuid": "10ac2bec_318f1714",
+      "revId": "9fca569de3e5c089b819a27df82484ada9b03264",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c05f3e07_c39fa3be",
         "filename": "chrome/browser/chromeos/accessibility/select_to_speak_event_handler.cc",
         "patchSetId": 3
