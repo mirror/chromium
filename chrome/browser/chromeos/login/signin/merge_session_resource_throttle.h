@@ -9,6 +9,8 @@
 #include "base/memory/weak_ptr.h"
 #include "content/public/browser/resource_throttle.h"
 
+class GURL;
+
 namespace net {
 class URLRequest;
 }
@@ -19,8 +21,13 @@ class MergeSessionResourceThrottle : public content::ResourceThrottle {
   ~MergeSessionResourceThrottle() override;
 
  private:
+  // Checks whether to defer the resource loading for the given url.
+  void MaybeDeferLoading(const GURL& url, bool* defer);
+
   // content::ResourceThrottle implementation:
   void WillStartRequest(bool* defer) override;
+  void WillRedirectRequest(const net::RedirectInfo& redirect_info,
+                           bool* defer) override;
   const char* GetNameForLogging() const override;
 
   // MergeSessionXHRRequestWaiter callback.
