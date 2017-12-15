@@ -22,6 +22,30 @@
       "revId": "d30c6c6fa042e2f97b866b8eebc90e8ee7591bdc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81f48602_1589fd25",
+        "filename": "content/browser/service_worker/service_worker_process_manager_unittest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-15T04:13:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e38a296_248668e9",
+      "range": {
+        "startLine": 395,
+        "startChar": 8,
+        "endLine": 395,
+        "endChar": 25
+      },
+      "revId": "d30c6c6fa042e2f97b866b8eebc90e8ee7591bdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
