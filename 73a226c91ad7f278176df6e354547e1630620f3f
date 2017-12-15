@@ -22,6 +22,30 @@
       "revId": "73a226c91ad7f278176df6e354547e1630620f3f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82272d58_bfd0671e",
+        "filename": "chrome/browser/renderer_host/chrome_render_widget_host_view_mac_delegate.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-12-15T14:55:48Z",
+      "side": 1,
+      "message": "A webContents-\u003eGetFocusedFrame() begins this process, sending a request for spell checking into OSX.  Sometime later, OSX async replies with the result and we process it here.  What could possibly go wrong?\n\nConjecture: the user got bored waiting for OSX (which could have got held up for any number of reasons) and had enough time to de-focus the requesting frame, or maybe navigate to a different frame that has no focus. By the time OSX replies, there\u0027s no focussed frame anymore ... and we crash.\n\nLooks like a race to me, at least that\u0027s what I think the crash bots are trying to tell us. That looks to be the underlying problem, raciness, if my conjecture is correct.\n\nIs early-out the right answer?  Maybe not, but it seems better than crashing, or picking some frame at random and sending the result there.  The later might expose PII to an  unrelated third party frame, worst case.  Perhaps navigation, while waiting for OSX to return a reply, could potentially do the same.\n\nGiven there is more that meets the eye in this problem, I\u0027m going to abandon, unassign myself from the bug, and leave it to a spellcheck OWNER to fix.",
+      "parentUuid": "72d2121d_2a1b0ea7",
+      "range": {
+        "startLine": 183,
+        "startChar": 36,
+        "endLine": 183,
+        "endChar": 51
+      },
+      "revId": "73a226c91ad7f278176df6e354547e1630620f3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
