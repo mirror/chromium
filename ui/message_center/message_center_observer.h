@@ -14,6 +14,9 @@ namespace message_center {
 class NotificationBlocker;
 
 // An observer class for the change of notifications in the MessageCenter.
+// DEPRECATED: do not use this class. Existing users of this class should not
+// modify the message center from within these callbacks.
+// TODO(estade): remove. crbug.com/795331
 class MESSAGE_CENTER_EXPORT MessageCenterObserver {
  public:
   virtual ~MessageCenterObserver() {}
