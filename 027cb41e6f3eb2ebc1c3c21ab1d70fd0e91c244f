@@ -69,6 +69,24 @@
       "revId": "027cb41e6f3eb2ebc1c3c21ab1d70fd0e91c244f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ee570fe_0883a8b4",
+        "filename": "third_party/WebKit/Source/core/animation/PropertyHandle.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-12-15T00:51:48Z",
+      "side": 0,
+      "message": "It does, but in this case the PropertyID() method is so simple that it\u0027s probably inlined by the compiler. Like I said, this is a cheap comparison, so it doesn\u0027t make much difference in this case, but something to keep in mind :)",
+      "parentUuid": "fa66bd34_20e8ef4c",
+      "revId": "027cb41e6f3eb2ebc1c3c21ab1d70fd0e91c244f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
