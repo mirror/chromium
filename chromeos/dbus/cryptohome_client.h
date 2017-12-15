@@ -61,6 +61,14 @@ class CHROMEOS_EXPORT CryptohomeClient : public DBusClient {
                                          bool return_status,
                                          const std::string& data) {}
 
+    // Called when AsyncCallStatusForPrivacyCA signal is received,
+    // similar to AsyncCallStatusWithData, but with a different
+    // |return_status|.
+    virtual void AsyncCallStatusForPrivacyCA(
+        int async_id,
+        attestation::AttestationStatus return_status,
+        const std::string& data) {}
+
     // Called when LowDiskSpace signal is received, when the cryptohome
     // partition is running out of disk space.
     virtual void LowDiskSpace(uint64_t disk_free_bytes) {}
