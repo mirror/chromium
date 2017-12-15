@@ -47,8 +47,7 @@ class GPU_EXPORT GpuControl {
   // format. Returns its ID or -1 on error.
   virtual int32_t CreateImage(ClientBuffer buffer,
                               size_t width,
-                              size_t height,
-                              unsigned internalformat) = 0;
+                              size_t height) = 0;
 
   // Destroy an image. The ID must be positive.
   virtual void DestroyImage(int32_t id) = 0;

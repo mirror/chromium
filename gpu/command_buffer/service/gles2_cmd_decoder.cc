@@ -2935,7 +2935,7 @@ bool BackTexture::AllocateNativeGpuMemoryBuffer(const gfx::Size& size,
               gfx::BufferFormat::RGBX_8888
 #endif
               : gfx::BufferFormat::RGBA_8888,
-          gfx::BufferUsage::SCANOUT, format, &is_cleared);
+          gfx::BufferUsage::SCANOUT, &is_cleared);
   if (!image || !image->BindTexImage(Target()))
     return false;
 
@@ -18059,23 +18059,18 @@ void GLES2DecoderImpl::DoTexStorage2DImageCHROMIUM(GLenum target,
   }
 
   gfx::BufferFormat buffer_format;
-  GLint untyped_format;
   switch (internal_format) {
     case GL_RGBA8_OES:
       buffer_format = gfx::BufferFormat::RGBA_8888;
-      untyped_format = GL_RGBA;
       break;
     case GL_BGRA8_EXT:
       buffer_format = gfx::BufferFormat::BGRA_8888;
-      untyped_format = GL_BGRA_EXT;
       break;
     case GL_RGBA16F_EXT:
       buffer_format = gfx::BufferFormat::RGBA_F16;
-      untyped_format = GL_RGBA;
       break;
     case GL_R8_EXT:
       buffer_format = gfx::BufferFormat::R_8;
-      untyped_format = GL_RED_EXT;
       break;
     default:
       LOCAL_SET_GL_ERROR(GL_INVALID_ENUM, "glTexStorage2DImageCHROMIUM",
@@ -18095,7 +18090,7 @@ void GLES2DecoderImpl::DoTexStorage2DImageCHROMIUM(GLenum target,
   scoped_refptr<gl::GLImage> image =
       GetContextGroup()->image_factory()->CreateAnonymousImage(
           gfx::Size(width, height), buffer_format, gfx::BufferUsage::SCANOUT,
-          untyped_format, &is_cleared);
+          &is_cleared);
   if (!image || !image->BindTexImage(target)) {
     LOCAL_SET_GL_ERROR(GL_INVALID_OPERATION, "glTexStorage2DImageCHROMIUM",
                        "Failed to create or bind GL Image");
