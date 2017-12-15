@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c4143a69_957f7289",
+        "filename": "chrome/browser/resources/settings/site_settings/site_details_permission.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-12-15T22:08:46Z",
+      "side": 1,
+      "message": "Consider making a new function that works with hasPermissionInfoString_() and permissionInfoString_(). I\u0027ll call it permissionInfoStringIndex_ but feel free to call it something else.\n\npermissionInfoStringIndex_(source, category, setting) will have most of the guts of permissionInfoString_(), but it will not take any of the i18n values as args and it will return a {number}. The number will be which i18n string to use, N for the this.i18nAdvanced() value, or -1 (or null if you prefer) to signal that no string applies.\n\nLine 134 would turn into something like:\nreturn this.permissionInfoStringIndex_(source, category, setting) \u003e\u003d 0;\n\nThe permissionInfoString_() function would get much smaller, it would call permissionInfoStringIndex_() to get the index for the string to use and return that string (or make the his.i18nAdvanced() call) or return \u0027\u0027 if the index is invalid.\n\n(It may also help to pass in the i18n strings as an array in one parameter than separate parameters for each string, but that\u0027s entirely optional).\n\nThere are other ways to arrange this code. The above is just an idea, feel free to suggest something else.",
+      "revId": "47839b3b465bd9e699c424263cef35d632648cc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
