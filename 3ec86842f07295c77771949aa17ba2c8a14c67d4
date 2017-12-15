@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ff08cdea_edb58ed3",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/locks/interfaces.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-12-15T20:57:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cfbea883_cf15a667",
+      "revId": "3ec86842f07295c77771949aa17ba2c8a14c67d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "35410d9f_45f65b21",
         "filename": "third_party/WebKit/LayoutTests/http/tests/locks/mode-shared.html",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "3ec86842f07295c77771949aa17ba2c8a14c67d4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1a9356c_fb8c0636",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/locks/mode-shared.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-12-15T20:57:46Z",
+      "side": 1,
+      "message": "Bleah, I just rewrote the comment completely. Must have been asleep. Now reads:\n\nSince lock is held, this request would be blocked if the\nlock was not \u0027shared\u0027, causing this test to time out.",
+      "parentUuid": "35410d9f_45f65b21",
+      "revId": "3ec86842f07295c77771949aa17ba2c8a14c67d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

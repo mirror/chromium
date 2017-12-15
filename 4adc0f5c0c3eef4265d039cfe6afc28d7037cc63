@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "16073fb8_53d2ef06",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/locks/frames.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-12-15T20:57:46Z",
+      "side": 0,
+      "message": "Since 3 will still be blocked until 1 releases the lock, I wasn\u0027t sure this was actually testing anything differently than the previous tests.\n\nBut I guess this turns into a test that the navigated frame with pending request doesn\u0027t end up somehow getting the lock or wedging the scheduler. So adding it back in.",
+      "parentUuid": "e2dd378b_e964f11d",
+      "revId": "4adc0f5c0c3eef4265d039cfe6afc28d7037cc63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4d128d3a_add41dbc",
         "filename": "third_party/WebKit/LayoutTests/http/tests/locks/frames.html",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "4adc0f5c0c3eef4265d039cfe6afc28d7037cc63",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2bbea29_6689c047",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/locks/frames.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-12-15T20:57:46Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "4d128d3a_add41dbc",
+      "revId": "4adc0f5c0c3eef4265d039cfe6afc28d7037cc63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
