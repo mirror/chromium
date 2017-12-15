@@ -2679,9 +2679,7 @@ _FUNCTION_INFO = {
   },
   'CreateImageCHROMIUM': {
     'type': 'NoCommand',
-    'cmd_args':
-        'ClientBuffer buffer, GLsizei width, GLsizei height, '
-        'GLenum internalformat',
+    'cmd_args': 'ClientBuffer buffer, GLsizei width, GLsizei height',
     'result': ['GLuint'],
     'extension': "CHROMIUM_image",
     'trace_level': 1,
