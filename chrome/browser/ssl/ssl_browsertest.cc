@@ -2651,8 +2651,7 @@ IN_PROC_BROWSER_TEST_P(SSLUITest, TestCloseTabWithUnsafePopup) {
 }
 
 // Visit a page over bad https that is a redirect to a page with good https.
-// TODO(estark): switch to SSLUITest when https://crbug.com/792221 is fixed.
-IN_PROC_BROWSER_TEST_F(SSLUITestBase, TestRedirectBadToGoodHTTPS) {
+IN_PROC_BROWSER_TEST_P(SSLUITest, TestRedirectBadToGoodHTTPS) {
   ASSERT_TRUE(https_server_.Start());
   ASSERT_TRUE(https_server_expired_.Start());
 
@@ -3074,16 +3073,16 @@ IN_PROC_BROWSER_TEST_P(SSLUITest, TestUnauthenticatedFrameNavigation) {
 enum class OffMainThreadFetchMode { kEnabled, kDisabled };
 enum class SSLUIWorkerFetchTestType { kUseFetch, kUseImportScripts };
 
-// TODO(estark): adapt this test class to work with committed interstitials.
-// https://crbug.com/752327
 class SSLUIWorkerFetchTest
     : public testing::WithParamInterface<
-          std::pair<OffMainThreadFetchMode, SSLUIWorkerFetchTestType>>,
+          std::tuple<OffMainThreadFetchMode,
+                     SSLUIWorkerFetchTestType,
+                     bool /* committed interstitials */>>,
       public SSLUITestBase {
  public:
   SSLUIWorkerFetchTest() {
     EXPECT_TRUE(tmp_dir_.CreateUniqueTempDir());
-    if (GetParam().first == OffMainThreadFetchMode::kEnabled) {
+    if (std::get<0>(GetParam()) == OffMainThreadFetchMode::kEnabled) {
       scoped_feature_list_.InitAndEnableFeature(features::kOffMainThreadFetch);
     } else {
       scoped_feature_list_.InitAndDisableFeature(features::kOffMainThreadFetch);
@@ -3091,6 +3090,12 @@ class SSLUIWorkerFetchTest
   }
 
   ~SSLUIWorkerFetchTest() override {}
+
+  void SetUpCommandLine(base::CommandLine* command_line) override {
+    if (std::get<2>(GetParam())) {
+      command_line->AppendSwitch(switches::kCommittedInterstitials);
+    }
+  }
 
  protected:
   void WriteFile(const base::FilePath::StringType& filename,
@@ -3110,7 +3115,7 @@ class SSLUIWorkerFetchTest
               "    'message',"
               "    event => { document.title = event.data; });"
               "</script>");
-    switch (GetParam().second) {
+    switch (std::get<1>(GetParam())) {
       case SSLUIWorkerFetchTestType::kUseFetch:
         WriteFile(FILE_PATH_LITERAL("worker_test_data.txt.mock-http-headers"),
                   "HTTP/1.1 200 OK\n"
@@ -3297,7 +3302,15 @@ IN_PROC_BROWSER_TEST_P(SSLUIWorkerFetchTest,
   WebContents* tab = browser()->tab_strip_model()->GetActiveWebContents();
   CheckAuthenticationBrokenState(tab, net::CERT_STATUS_COMMON_NAME_INVALID,
                                  AuthState::SHOWING_INTERSTITIAL);
-  ProceedThroughInterstitial(tab);
+  if (AreCommittedInterstitialsEnabled()) {
+    SSLErrorTabHelper* helper = SSLErrorTabHelper::FromWebContents(tab);
+    helper->GetBlockingPageForCurrentlyCommittedNavigationForTesting()
+        ->CommandReceived(
+            base::IntToString(security_interstitials::CMD_PROCEED));
+    return;
+  } else {
+    ProceedThroughInterstitial(tab);
+  }
   CheckAuthenticationBrokenState(tab, net::CERT_STATUS_COMMON_NAME_INVALID,
                                  AuthState::NONE);
 
@@ -3518,18 +3531,24 @@ IN_PROC_BROWSER_TEST_P(SSLUIWorkerFetchTest, MAYBE_MixedContentSubFrame) {
   content::SetBrowserClientForTesting(old_browser_client);
 }
 
+// Committed interstitials don't affect most aspects of these tests, so it's not
+// necessary to run every permutation of parameters.
 INSTANTIATE_TEST_CASE_P(
     /* no prefix */,
     SSLUIWorkerFetchTest,
     ::testing::Values(
-        std::make_pair(OffMainThreadFetchMode::kDisabled,
-                       SSLUIWorkerFetchTestType::kUseFetch),
-        std::make_pair(OffMainThreadFetchMode::kDisabled,
-                       SSLUIWorkerFetchTestType::kUseImportScripts),
-        std::make_pair(OffMainThreadFetchMode::kEnabled,
-                       SSLUIWorkerFetchTestType::kUseFetch),
-        std::make_pair(OffMainThreadFetchMode::kEnabled,
-                       SSLUIWorkerFetchTestType::kUseImportScripts)));
+        std::make_tuple(OffMainThreadFetchMode::kDisabled,
+                        SSLUIWorkerFetchTestType::kUseFetch,
+                        false /* committed interstitials */),
+        std::make_tuple(OffMainThreadFetchMode::kDisabled,
+                        SSLUIWorkerFetchTestType::kUseImportScripts,
+                        true /* committed interstitials */),
+        std::make_tuple(OffMainThreadFetchMode::kEnabled,
+                        SSLUIWorkerFetchTestType::kUseFetch,
+                        false /* committed interstitials */),
+        std::make_tuple(OffMainThreadFetchMode::kEnabled,
+                        SSLUIWorkerFetchTestType::kUseImportScripts,
+                        true /* committed interstititals */)));
 
 // Visits a page with unsafe content and makes sure that if a user exception
 // to the certificate error is present, the image is loaded and script
