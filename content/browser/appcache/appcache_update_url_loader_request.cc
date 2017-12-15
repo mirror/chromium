@@ -97,7 +97,8 @@ int AppCacheUpdateJob::UpdateURLLoaderRequest::Cancel() {
 void AppCacheUpdateJob::UpdateURLLoaderRequest::OnReceiveResponse(
     const ResourceResponseHead& response_head,
     const base::Optional<net::SSLInfo>& ssl_info,
-    mojom::DownloadedTempFilePtr downloaded_file) {
+    mojom::DownloadedTempFilePtr downloaded_file,
+    mojom::URLLoaderNavigationDataPtr navigation_data) {
   response_ = response_head;
 
   // TODO(ananta/michaeln)

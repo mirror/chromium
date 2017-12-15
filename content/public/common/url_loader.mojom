@@ -4,6 +4,8 @@
 
 module content.mojom;
 
+import "mojo/common/values.mojom";
+
 [Native]
 struct URLRequest;
 
@@ -21,6 +23,13 @@ struct CORSErrorStatus;
 
 [Native]
 struct URLLoaderCompletionStatus;
+
+struct URLLoaderNavigationData {
+  bool is_stream;
+  bool is_download;
+  int32 request_id;
+  mojo.common.mojom.Value embedder_navigation_data;
+};
 
 // This enum corresponds to net::RequestPriority. See its comments for details.
 enum RequestPriority {
@@ -67,9 +76,11 @@ interface URLLoaderClient {
   // |downloaded_file| is non-null in the 'download_to_file' case.
   // |ssl_info| is non-null if |kURLLoadOptionsSendSSLInfoWithResponse|
   // was specified to CreateLoaderAndStart.
+  // |navigation_data| is non null when fetching a main resource request.
   OnReceiveResponse(URLResponseHead head,
                     SSLInfo? ssl_info,
-                    DownloadedTempFile? downloaded_file);
+                    DownloadedTempFile? downloaded_file,
+                    URLLoaderNavigationData? navigation_data);
 
   // Called when the request has been redirected. The receiver is expected to
   // call FollowRedirect or cancel the request.
