@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4ff2fac3_f6cc45db",
+        "filename": "chrome/browser/extensions/api/tabs/tabs_api.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 640,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-12-15T17:55:00Z",
+      "side": 1,
+      "message": "Turns out I messed up this tabstrip thing, it\u0027s fixed now.",
+      "range": {
+        "startLine": 639,
+        "startChar": 0,
+        "endLine": 640,
+        "endChar": 39
+      },
+      "revId": "88bf44703da298db5dd222077897491ed59fd05a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
