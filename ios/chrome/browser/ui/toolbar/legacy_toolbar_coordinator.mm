@@ -40,10 +40,14 @@
 - (instancetype)initWithBaseViewController:(UIViewController*)viewController
             toolsMenuConfigurationProvider:
                 (id<ToolsMenuConfigurationProvider>)configurationProvider
-                                dispatcher:(CommandDispatcher*)dispatcher {
-  if (self = [super initWithBaseViewController:viewController]) {
+                                dispatcher:(CommandDispatcher*)dispatcher
+                              browserState:
+                                  (ios::ChromeBrowserState*)browserState {
+  if (self = [super initWithBaseViewController:viewController
+                                  browserState:browserState]) {
     _toolsMenuCoordinator = [[ToolsMenuCoordinator alloc]
-        initWithBaseViewController:viewController];
+        initWithBaseViewController:viewController
+                      browserState:self.browserState];
     _toolsMenuCoordinator.dispatcher = dispatcher;
     _toolsMenuCoordinator.configurationProvider = configurationProvider;
 
