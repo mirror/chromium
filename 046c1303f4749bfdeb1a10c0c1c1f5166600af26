@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "d64fe002_5e2f19ce",
+        "filename": "chrome/browser/extensions/api/developer_private/developer_private_api.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 680,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-15T20:28:22Z",
+      "side": 1,
+      "message": "Ok. Trying to move this line to a shared location (specifically extensions/browser/path_util.cc).\n\nNeed a bit of help understanding though your initial suggestion. Were you suggesting to put lines 679-684 to a re-usable method, and keep having separate callbacks, for the AppINfoSummaryPanel and here? If so, would DeveloperPrivateGetExtensionSizeFunction::OnSizeCalculated and AppInfoSummaryPanel::OnAppSizeCalculated be passed as a parameter to the new utility method?\n\nHaving said that, could we punt this for a follow up CL, to increase the chances of getting this CL landed and merged to M64?",
+      "parentUuid": "8886f1a8_4c18e411",
+      "revId": "046c1303f4749bfdeb1a10c0c1c1f5166600af26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "da4fbded_4f21e181",
         "filename": "chrome/browser/resources/md_extensions/detail_view.html",
         "patchSetId": 4
@@ -120,6 +138,24 @@
       "side": 1,
       "message": "The old UI did show a loading label:\n\nhttps://chromium.googlesource.com/chromium/src/+/9d325a95db69918d2ee248758bee677a5d470ae8/chrome/browser/ui/views/apps/app_info_dialog/app_info_summary_panel.cc#214\n\nIf it\u0027s not too much effort, I\u0027d rather prefer that.  We have simple UI elements for spinners, right?  WDYT?",
       "parentUuid": "242a03c2_090bfd2f",
+      "revId": "046c1303f4749bfdeb1a10c0c1c1f5166600af26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "244e947d_396c6556",
+        "filename": "chrome/browser/resources/md_extensions/detail_view.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-15T20:28:22Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "20a211b0_17557a0e",
       "revId": "046c1303f4749bfdeb1a10c0c1c1f5166600af26",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
