@@ -34,6 +34,24 @@
       "revId": "afa5ac852bfc44f90035ad4f7a1069e9cce1c8df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cca48cc_a8d134f6",
+        "filename": "chrome/browser/ui/webui/offline/offline_internals_ui_message_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-12-15T23:28:13Z",
+      "side": 1,
+      "message": "Hey, thanks for explaining how this string is used. Seems fine to me thanks!",
+      "parentUuid": "2e7c4234_e1d8cc8d",
+      "revId": "afa5ac852bfc44f90035ad4f7a1069e9cce1c8df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
