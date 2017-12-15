@@ -20,8 +20,18 @@ cr.define('extensions', function() {
       /** @private */
       cancelLabel_: String,
 
-      /** @private */
-      confirmLabel_: String,
+      /**
+       * This needs to be initialized to trigger data-binding.
+       * @private
+       */
+      confirmLabel_: {
+        type: String,
+        value: '',
+      }
+    },
+
+    get returnValue() {
+      return this.$.dialog.returnValue;
     },
 
     /** @override */
@@ -41,8 +51,10 @@ cr.define('extensions', function() {
           this.title_ = loadTimeData.getString('packDialogErrorTitle');
           this.cancelLabel_ = loadTimeData.getString('ok');
           break;
-        // If status were success, this dialog should not be attached at all.
         case chrome.developerPrivate.PackStatus.SUCCESS:
+          this.title_ = loadTimeData.getString('packDialogTitle');
+          this.cancelLabel_ = loadTimeData.getString('ok');
+          break;
         default:
           assertNotReached();
           return;
@@ -54,6 +66,14 @@ cr.define('extensions', function() {
       this.$.dialog.showModal();
     },
 
+    /**
+     * @return {string}
+     * @private
+     */
+    getCancelButtonClass_: function() {
+      return this.confirmLabel_ ? 'cancel-button' : 'action-button';
+    },
+
     /** @private */
     onCancelTap_: function() {
       this.$.dialog.cancel();
@@ -63,7 +83,6 @@ cr.define('extensions', function() {
     onConfirmTap_: function() {
       // The confirm button should only be available in WARNING state.
       assert(this.model.status === chrome.developerPrivate.PackStatus.WARNING);
-      this.fire('warning-confirmed');
       this.$.dialog.close();
     }
   });
