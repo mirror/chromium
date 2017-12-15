@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c4ca532d_0570a5db",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 13
+      },
+      "lineNbr": 7534,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2017-12-15T18:31:53Z",
+      "side": 1,
+      "message": "I\u0027m doing this in a follow up CL because I need to change all of the other button titles as well.",
+      "parentUuid": "ae684e5a_88b9e246",
+      "revId": "5288b583723a027e778dacc54fa09638d8ce9e40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e8761e51_13478506",
         "filename": "chrome/app/generated_resources.grd",
         "patchSetId": 13
@@ -71,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "c36190ec_1c7c35bc",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2017-12-15T18:31:53Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "0a50a776_1c6821e7",
+      "revId": "5288b583723a027e778dacc54fa09638d8ce9e40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2fa39471_0f135ae4",
         "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
         "patchSetId": 13
@@ -88,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "ec15052a_15eaaf6e",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 685,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2017-12-15T18:31:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2fa39471_0f135ae4",
+      "revId": "5288b583723a027e778dacc54fa09638d8ce9e40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f2622909_f2a9d8f2",
         "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
         "patchSetId": 13
@@ -99,6 +153,24 @@
       "writtenOn": "2017-12-13T23:40:58Z",
       "side": 1,
       "message": "There may be some tricky lifetime implications by taking a raw weak pointer to Profile* and Browser*. What if the window closes before this object is destroyed?\n\nCan you take a SessionID instead of a Browser*? And not take a Profile* at all, since there\u0027s always one on a Browser*",
+      "revId": "5288b583723a027e778dacc54fa09638d8ce9e40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1600fe6_e1a05663",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 686,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2017-12-15T18:31:53Z",
+      "side": 1,
+      "message": "Mihai will reply to this comment.",
+      "parentUuid": "f2622909_f2a9d8f2",
       "revId": "5288b583723a027e778dacc54fa09638d8ce9e40",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -140,6 +212,24 @@
     },
     {
       "key": {
+        "uuid": "72c6d3ac_81f6145a",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1066,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2017-12-15T18:31:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4394390c_be3f09dc",
+      "revId": "5288b583723a027e778dacc54fa09638d8ce9e40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "28461dda_deeabd0f",
         "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
         "patchSetId": 13
@@ -154,6 +244,24 @@
       "revId": "5288b583723a027e778dacc54fa09638d8ce9e40",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "321172ad_da820e87",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1067,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2017-12-15T18:31:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "28461dda_deeabd0f",
+      "revId": "5288b583723a027e778dacc54fa09638d8ce9e40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -174,6 +282,24 @@
     },
     {
       "key": {
+        "uuid": "7a7ce450_84dbea91",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1078,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2017-12-15T18:31:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d79d0006_cd80c1c2",
+      "revId": "5288b583723a027e778dacc54fa09638d8ce9e40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0b3e9a64_367d3569",
         "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
         "patchSetId": 13
@@ -188,6 +314,24 @@
       "revId": "5288b583723a027e778dacc54fa09638d8ce9e40",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f892729_9b93deb8",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1105,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2017-12-15T18:31:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b3e9a64_367d3569",
+      "revId": "5288b583723a027e778dacc54fa09638d8ce9e40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -208,6 +352,24 @@
     },
     {
       "key": {
+        "uuid": "c38684b0_b35d46ea",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1116,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2017-12-15T18:31:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cd6392e6_7d8546d9",
+      "revId": "5288b583723a027e778dacc54fa09638d8ce9e40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8790b5cc_9cd9295e",
         "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
         "patchSetId": 13
@@ -222,6 +384,24 @@
       "revId": "5288b583723a027e778dacc54fa09638d8ce9e40",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e14724be_8ad0de81",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1117,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2017-12-15T18:31:53Z",
+      "side": 1,
+      "message": "After talking to Mihai, I moved all this into a new method HoverButton::SetStyle. The code in profile_chooser_view is getting quite complex.\nPlus we need to set the background and the text color not only for the turn-on-sync button but also for the sync-error button, so I think this makes sense.",
+      "parentUuid": "8790b5cc_9cd9295e",
+      "revId": "5288b583723a027e778dacc54fa09638d8ce9e40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -242,6 +422,24 @@
     },
     {
       "key": {
+        "uuid": "fba58e3f_18d26e21",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1123,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2017-12-15T18:31:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5f926acb_7d4277ac",
+      "revId": "5288b583723a027e778dacc54fa09638d8ce9e40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1548f123_085fa6ba",
         "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
         "patchSetId": 13
@@ -256,6 +454,24 @@
       "revId": "5288b583723a027e778dacc54fa09638d8ce9e40",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f880b52_4b20a177",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1134,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2017-12-15T18:31:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1548f123_085fa6ba",
+      "revId": "5288b583723a027e778dacc54fa09638d8ce9e40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
