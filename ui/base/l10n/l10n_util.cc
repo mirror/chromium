@@ -210,6 +210,7 @@ static const char* const kAcceptLanguageList[] = {
 // Returns true if |locale_name| has an alias in the ICU data file.
 bool IsDuplicateName(const std::string& locale_name) {
   static const char* const kDuplicateNames[] = {
+    "ar_001",
     "en",
     "en_001",
     "pt", // pt-BR and pt-PT are used.
