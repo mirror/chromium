@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "213f00e0_ee57c3aa",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-15T06:46:10Z",
+      "side": 1,
+      "message": "probably worth mentioning in the CL description that Mac\u0027s BaseBubbleController closes all UI inheriting from it by observing active tab changes from its TabStripModelObserverBridge.",
+      "revId": "be692d8a3bc669662bbe4c52c152a5c336011d9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c278192_b128b3d2",
+        "filename": "chrome/browser/ui/views/close_bubble_on_tab_activation_helper.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-15T06:46:10Z",
+      "side": 1,
+      "message": "nit: blank line before",
+      "revId": "be692d8a3bc669662bbe4c52c152a5c336011d9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25aebbbc_dd3e7891",
+        "filename": "chrome/browser/ui/views/close_bubble_on_tab_activation_helper.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-15T06:46:10Z",
+      "side": 1,
+      "message": "no need for this member to be retained",
+      "revId": "be692d8a3bc669662bbe4c52c152a5c336011d9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f12caf99_d0b95558",
+        "filename": "chrome/browser/ui/views/close_bubble_on_tab_activation_helper.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-15T06:46:10Z",
+      "side": 1,
+      "message": "nit: DISALLOW_COPY_AND_ASSIGN",
+      "revId": "be692d8a3bc669662bbe4c52c152a5c336011d9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "188f79b1_4c81d1e9",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-15T06:46:10Z",
+      "side": 1,
+      "message": "neat - ExtensionPopup could probably use this too, to replace what it currently does.. (but in case of merge, that\u0027s probably better left for a follow-up).",
+      "revId": "be692d8a3bc669662bbe4c52c152a5c336011d9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
