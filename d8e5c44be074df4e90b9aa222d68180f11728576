@@ -16,6 +16,176 @@
       "revId": "d8e5c44be074df4e90b9aa222d68180f11728576",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8c5dffd_70dee1cf",
+        "filename": "chrome/browser/resources/media_router/extension/compile.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-12-15T00:18:24Z",
+      "side": 1,
+      "message": "Please do the former before landing.\n\nPlease file a bug to do the latter.  What is missing from the current version of compile2.py?",
+      "revId": "d8e5c44be074df4e90b9aa222d68180f11728576",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd0ff42d_ded5a35e",
+        "filename": "chrome/browser/resources/media_router/extension/manifest.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-12-15T00:18:24Z",
+      "side": 1,
+      "message": "s/Chrome/Chromium/ here and below (for consistency with version_info::ProductName())",
+      "revId": "d8e5c44be074df4e90b9aa222d68180f11728576",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6d5e663_eaa7d8b6",
+        "filename": "chrome/browser/resources/media_router/extension/manifest.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-12-15T00:18:24Z",
+      "side": 1,
+      "message": "I don\u0027t believe this or the one below are necessary for the Chromium extension.",
+      "revId": "d8e5c44be074df4e90b9aa222d68180f11728576",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db2f26cf_200fd2ea",
+        "filename": "chrome/browser/resources/media_router/extension/manifest.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-12-15T00:18:24Z",
+      "side": 1,
+      "message": "Remove",
+      "revId": "d8e5c44be074df4e90b9aa222d68180f11728576",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e75e4791_fcc99abb",
+        "filename": "chrome/browser/resources/media_router/extension/manifest.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-12-15T00:18:24Z",
+      "side": 1,
+      "message": "I would remove this comment as neither really applies.",
+      "revId": "d8e5c44be074df4e90b9aa222d68180f11728576",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bfbb41f_86a3622e",
+        "filename": "chrome/browser/resources/media_router/extension/manifest.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-12-15T00:18:24Z",
+      "side": 1,
+      "message": "Remove identity to mdns",
+      "revId": "d8e5c44be074df4e90b9aa222d68180f11728576",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "642e1bfb_f9858157",
+        "filename": "chrome/browser/resources/media_router/extension/manifest.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-12-15T00:18:24Z",
+      "side": 1,
+      "message": "Remove this and processes",
+      "revId": "d8e5c44be074df4e90b9aa222d68180f11728576",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c29d879_3da618e7",
+        "filename": "chrome/browser/resources/media_router/extension/manifest.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-12-15T00:18:24Z",
+      "side": 1,
+      "message": "Remove this",
+      "revId": "d8e5c44be074df4e90b9aa222d68180f11728576",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23426655_924fd72f",
+        "filename": "chrome/browser/resources/media_router/extension/manifest.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-12-15T00:18:24Z",
+      "side": 1,
+      "message": "Remove from here on down",
+      "revId": "d8e5c44be074df4e90b9aa222d68180f11728576",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f85449a9_8f5f3fdb",
+        "filename": "chrome/browser/resources/media_router/extension/manifest.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-12-15T00:18:24Z",
+      "side": 1,
+      "message": "Only the DIAL MRP should be making requests correct?",
+      "revId": "d8e5c44be074df4e90b9aa222d68180f11728576",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
