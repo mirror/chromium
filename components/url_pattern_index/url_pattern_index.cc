@@ -14,6 +14,7 @@
 #include "base/numerics/safe_conversions.h"
 #include "base/strings/string_piece.h"
 #include "base/strings/string_util.h"
+#include "base/trace_event/trace_event.h"
 #include "components/url_pattern_index/ngram_extractor.h"
 #include "components/url_pattern_index/url_pattern.h"
 #include "url/gurl.h"
@@ -721,9 +722,17 @@ const flat::UrlRule* UrlPatternIndexMatcher::FindMatch(
     return nullptr;
   }
 
-  return FindMatchInFlatUrlPatternIndex(
+  const flat::UrlRule* rule = FindMatchInFlatUrlPatternIndex(
       *flat_index_, url, first_party_origin, element_type, activation_type,
       is_third_party, disable_generic_rules, strategy);
+  if (rule) {
+    std::ostringstream rule_str;
+    rule_str << UrlPattern(*rule);
+    TRACE_EVENT1("loading",
+                 "UrlPatternIndexMatcher::FindMatch", "matching_rule",
+                 rule_str.str());
+  }
+  return rule;
 }
 
 }  // namespace url_pattern_index
