@@ -1,0 +1,297 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "84dd30a1_227da1ba",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-15T09:57:10Z",
+      "side": 1,
+      "message": "Is the cleanup not needed here anymore?",
+      "revId": "6c24693bca1d330bcbaccbb13ac200f6c1b7b698",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0307258d_29dba666",
+        "filename": "content/browser/webauth/collected_client_data.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-15T09:57:10Z",
+      "side": 1,
+      "message": "I have seen (and used) `static constexpr const char foo[] \u003d ....` for constant strings in the past. However, if I understand https://stackoverflow.com/a/14117121 and http://en.cppreference.com/w/cpp/language/storage_duration#Storage_duration correctly, both the `static` and `const` are actually not needed here. I am actually not sure what they style-guide dictates here, do you happen to know this?",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 28
+      },
+      "revId": "6c24693bca1d330bcbaccbb13ac200f6c1b7b698",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25450864_a6f93fa7",
+        "filename": "device/u2f/attestation_object.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-15T09:57:10Z",
+      "side": 1,
+      "message": "Can be simplified to `return cbor.value_or(std::vector\u003cuint8_t\u003e());`, at which point you could inline `cbor`.",
+      "range": {
+        "startLine": 36,
+        "startChar": 2,
+        "endLine": 39,
+        "endChar": 32
+      },
+      "revId": "6c24693bca1d330bcbaccbb13ac200f6c1b7b698",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "149cb1e6_3eafde41",
+        "filename": "device/u2f/attested_credential_data.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-15T09:57:10Z",
+      "side": 1,
+      "message": "What is the reason that the destructor is virtual and the Create method returns a unique_ptr instead of simply an instance of the object? Are there currently derived classes of this or do we plan to have them in the future?",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 48
+      },
+      "revId": "6c24693bca1d330bcbaccbb13ac200f6c1b7b698",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc30f252_ed34aaf3",
+        "filename": "device/u2f/u2f_register.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-15T09:57:10Z",
+      "side": 1,
+      "message": "not necessary, `response` is initialized to nullptr",
+      "range": {
+        "startLine": 128,
+        "startChar": 0,
+        "endLine": 128,
+        "endChar": 27
+      },
+      "revId": "6c24693bca1d330bcbaccbb13ac200f6c1b7b698",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef72f3af_72112388",
+        "filename": "device/u2f/u2f_register_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-15T09:57:10Z",
+      "side": 1,
+      "message": "Can be made static const as well by using a lambda:\n\nstatic const std::vector\u003cuint8_t\u003e test_attested_data \u003d []() {\n  std::vector\u003cuint8_t\u003e data(std::begin(kTestAttestedCredentialDataPrefix),\n                            std::end(kTestAttestedCredentialDataPrefix));\n  data.insert(data.end(), std::begin(kTestECPublicKeyCBOR),\n              std::end(kTestECPublicKeyCBOR));\n  return data;\n}();",
+      "range": {
+        "startLine": 59,
+        "startChar": 0,
+        "endLine": 64,
+        "endChar": 60
+      },
+      "revId": "6c24693bca1d330bcbaccbb13ac200f6c1b7b698",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1274ff4c_5205f85c",
+        "filename": "device/u2f/u2f_register_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-15T09:57:10Z",
+      "side": 1,
+      "message": "Same here.",
+      "range": {
+        "startLine": 69,
+        "startChar": 0,
+        "endLine": 77,
+        "endChar": 59
+      },
+      "revId": "6c24693bca1d330bcbaccbb13ac200f6c1b7b698",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcae745d_c4f8b844",
+        "filename": "device/u2f/u2f_register_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-15T09:57:10Z",
+      "side": 1,
+      "message": "And here.",
+      "range": {
+        "startLine": 82,
+        "startChar": 0,
+        "endLine": 97,
+        "endChar": 66
+      },
+      "revId": "6c24693bca1d330bcbaccbb13ac200f6c1b7b698",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "844cac5c_2f9e88d4",
+        "filename": "device/u2f/u2f_register_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-15T09:57:10Z",
+      "side": 1,
+      "message": "Is there a reason why this is not a const reference?",
+      "range": {
+        "startLine": 125,
+        "startChar": 2,
+        "endLine": 125,
+        "endChar": 11
+      },
+      "revId": "6c24693bca1d330bcbaccbb13ac200f6c1b7b698",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ef7f512_8ce954a0",
+        "filename": "device/u2f/u2f_register_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-15T09:57:10Z",
+      "side": 1,
+      "message": "Call to get() is not necessary, also applies below.",
+      "range": {
+        "startLine": 166,
+        "startChar": 34,
+        "endLine": 166,
+        "endChar": 37
+      },
+      "revId": "6c24693bca1d330bcbaccbb13ac200f6c1b7b698",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0325d59d_90bb0b7d",
+        "filename": "device/u2f/u2f_request.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-15T09:57:10Z",
+      "side": 1,
+      "message": "Either make this a `base::StringPiece` or take a `std::string` by value. Taking a `std::string` by value is likely better.",
+      "range": {
+        "startLine": 31,
+        "startChar": 13,
+        "endLine": 31,
+        "endChar": 31
+      },
+      "revId": "6c24693bca1d330bcbaccbb13ac200f6c1b7b698",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a8e97be_afd4f0ee",
+        "filename": "device/u2f/u2f_request_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-15T09:57:10Z",
+      "side": 1,
+      "message": "Same here, make this a `std::string`, and then move it to the U2fRequest constructor.",
+      "range": {
+        "startLine": 25,
+        "startChar": 17,
+        "endLine": 25,
+        "endChar": 52
+      },
+      "revId": "6c24693bca1d330bcbaccbb13ac200f6c1b7b698",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "847232b3_8e0eee53",
+        "filename": "device/u2f/u2f_sign_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-15T09:57:10Z",
+      "side": 1,
+      "message": "uncomment or remove.",
+      "range": {
+        "startLine": 267,
+        "startChar": 1,
+        "endLine": 269,
+        "endChar": 40
+      },
+      "revId": "6c24693bca1d330bcbaccbb13ac200f6c1b7b698",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
