@@ -64,6 +64,7 @@ class GpuMemoryBufferImpl : public gfx::GpuMemoryBuffer {
     return base::checked_cast<int>(gfx::RowSizeForBufferFormat(
         size_.width(), format_, static_cast<int>(plane)));
   }
+  uint32_t GetInternalformat(bool supports_bgra_ext) const override { return 0; }
   gfx::GpuMemoryBufferId GetId() const override { return id_; }
   gfx::GpuMemoryBufferHandle GetHandle() const override {
     gfx::GpuMemoryBufferHandle handle;
@@ -106,6 +107,10 @@ class GpuMemoryBufferFromClient : public gfx::GpuMemoryBuffer {
   gfx::BufferFormat GetFormat() const override {
     return client_buffer_->GetFormat();
   }
+  uint32_t GetInternalformat(bool supports_bgra_ext) const override {
+    return client_buffer_->GetInternalformat(supports_bgra_ext);
+  }
+
   int stride(size_t plane) const override {
     return client_buffer_->stride(plane);
   }

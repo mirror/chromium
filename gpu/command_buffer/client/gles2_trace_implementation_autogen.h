@@ -652,8 +652,7 @@ void GetUniformsES3CHROMIUM(GLuint program,
                             void* info) override;
 GLuint CreateImageCHROMIUM(ClientBuffer buffer,
                            GLsizei width,
-                           GLsizei height,
-                           GLenum internalformat) override;
+                           GLsizei height) override;
 void DestroyImageCHROMIUM(GLuint image_id) override;
 void DescheduleUntilFinishedCHROMIUM() override;
 void GetTranslatedShaderSourceANGLE(GLuint shader,
