@@ -218,6 +218,8 @@ void Service::AddUserIfNecessary(
 }
 
 void Service::OnStart() {
+  LOG(ERROR) << "JAMES ui service pid = " << getpid();
+
   base::PlatformThread::SetName("mus");
   TRACE_EVENT0("mus", "Service::Initialize started");
 
