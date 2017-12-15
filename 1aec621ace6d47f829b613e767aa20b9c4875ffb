@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dccbcae3_828e6a86",
+        "filename": "ui/aura/mus/system_input_injector_mus.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-15T00:20:23Z",
+      "side": 1,
+      "message": "Is this what the old code was doing? By old code I mean classic. I ask as locations with multiple displays and grab is confusing. See comments in services/ui/ws/event_location.h.",
+      "range": {
+        "startLine": 131,
+        "startChar": 29,
+        "endLine": 131,
+        "endChar": 70
+      },
+      "revId": "1aec621ace6d47f829b613e767aa20b9c4875ffb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
