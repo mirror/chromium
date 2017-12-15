@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b369531f_0368879a",
+        "filename": "content/browser/service_worker/service_worker_url_job_wrapper.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-15T09:23:39Z",
+      "side": 1,
+      "message": "Is release() needed? The member will be destroyed anyway after the dtor.",
+      "revId": "056949a538c8112a2f1ae8c76c76ca339c2406e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14c3ecbe_f20ec472",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-15T09:23:39Z",
+      "side": 1,
+      "message": "Rm",
+      "revId": "056949a538c8112a2f1ae8c76c76ca339c2406e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87748e4f_6e7d036f",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-15T09:23:39Z",
+      "side": 1,
+      "message": "Is self-destructive \u003e self-destructive\n\nNot sure I understand the \"after it\u0027s bound to a client\" part.",
+      "revId": "056949a538c8112a2f1ae8c76c76ca339c2406e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
