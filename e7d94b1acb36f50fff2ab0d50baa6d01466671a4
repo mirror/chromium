@@ -94,6 +94,30 @@
       "revId": "e7d94b1acb36f50fff2ab0d50baa6d01466671a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c032a66_b3de1497",
+        "filename": "content/browser/renderer_host/p2p/socket_dispatcher_host.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-12-15T15:19:43Z",
+      "side": 0,
+      "message": "\u003e I see. That seems suboptimal as the offline signal is emitted even when system is not actually offline, so some observers would disconnect even when it\u0027s not necessary.\n\nObservers are only meant to take action when type is either \u003d\u003d CONNECTION_NON or !\u003d CONNECTION_NONE.  See original design doc from 5 years ago: https://docs.google.com/document/d/1ch22_dRHPQJ9QArFMmWl_UyVpl-EDXA0PdljGh2kDF0/edit?usp\u003dsharing\n\n\u003e Just to make sure I understand the expected behavior, what\u0027s expected sequence of signals in the following 3 scenarios:\n\u003e  1. WiFi and Etherenet connected, then user disconnects WiFi.\n\u003e  2. WiFi is connected, then user connects Ethernet.\n\u003e  3. There are two active Ethernet connections, user disconnects one of them.\n\u003e  3. There is one active Ethernet connection, user connects second one.\n\u003e \n\u003e Do we expected CONNECTION_NONE followed by CONNECTION_ETHERNET in all 3 scenarios?\n\nYes.",
+      "parentUuid": "49850c07_a3850546",
+      "range": {
+        "startLine": 165,
+        "startChar": 11,
+        "endLine": 165,
+        "endChar": 0
+      },
+      "revId": "e7d94b1acb36f50fff2ab0d50baa6d01466671a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
