@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d9b29aea_dc7b1e2b",
+        "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1975,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2017-12-15T17:08:53Z",
+      "side": 1,
+      "message": "WebViewImpl doesn\u0027t manage events so \"pending\" seems confusing.  \"DispatchBuffered...\"?  \"DispatchPendingTEsAtEventHandler\"?",
+      "range": {
+        "startLine": 1975,
+        "startChar": 33,
+        "endLine": 1975,
+        "endChar": 59
+      },
+      "revId": "d9eab7e6b24cb0cf9c20ab989f0f3f9a219b5df4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85a9f7b5_1218a3e6",
+        "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1976,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2017-12-15T17:08:53Z",
+      "side": 1,
+      "message": "Avoid repeating this check: move it (along with the TODO) to HandleInputEvent and drop all dups.",
+      "revId": "d9eab7e6b24cb0cf9c20ab989f0f3f9a219b5df4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab3edcda_a92271dc",
+        "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1991,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2017-12-15T17:08:53Z",
+      "side": 1,
+      "message": "type \u003d kPointerCausedUaAction",
+      "revId": "d9eab7e6b24cb0cf9c20ab989f0f3f9a219b5df4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd13cf2b_df6b8e23",
+        "filename": "third_party/WebKit/public/platform/WebPointerEvent.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2017-12-15T17:08:53Z",
+      "side": 1,
+      "message": "Please also pass on a type, to avoid the ability to create a \"filled\" instance with automatic \"kUndefined\".\n\nHopefully some tests will catch this.  If not, we need more DCHECKs.",
+      "revId": "d9eab7e6b24cb0cf9c20ab989f0f3f9a219b5df4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
