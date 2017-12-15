@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4ce0652b_56bdfa04",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 33309,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-12-15T20:09:47Z",
+      "side": 0,
+      "message": "Don\u0027t remove histograms from here, just mark them obsolete, since we still have data for them from old version of chrome.",
+      "revId": "92c16a76d98e3926866746dcf85864fd145a53be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
