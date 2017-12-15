@@ -1094,4 +1094,6 @@ bool QuicSession::RetransmitLostStreamData() {
   return streams_with_pending_retransmission_.empty();
 }
 
+#undef ENDPOINT
+
 }  // namespace net

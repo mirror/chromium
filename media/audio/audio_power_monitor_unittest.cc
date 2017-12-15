@@ -13,13 +13,12 @@
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace media {
+namespace audio_power_monitor_unittest {
 
 static const int kSampleRate = 48000;
 static const int kFramesPerBuffer = 128;
 
 static const int kTimeConstantMillis = 5;
-
-namespace {
 
 // Container for each parameterized test's data (input and expected results).
 class TestScenario {
@@ -149,8 +148,6 @@ class MeasurementObserver {
 
   DISALLOW_COPY_AND_ASSIGN(MeasurementObserver);
 };
-
-}  // namespace
 
 class AudioPowerMonitorTest : public ::testing::TestWithParam<TestScenario> {
  public:
@@ -302,4 +299,5 @@ INSTANTIATE_TEST_CASE_P(
          TestScenario(kStereoMixed, 2, 4, -2, false),
          TestScenario(kStereoMixed2, 2, 8, -3, false)));
 
+}  // namespace audio_power_monitor_unittest
 }  // namespace media

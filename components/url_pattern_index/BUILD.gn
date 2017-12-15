@@ -2,7 +2,9 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
-static_library("url_pattern_index") {
+import("//build/config/jumbo.gni")
+
+jumbo_static_library("url_pattern_index") {
   sources = [
     "closed_hash_map.h",
     "copying_file_stream.cc",

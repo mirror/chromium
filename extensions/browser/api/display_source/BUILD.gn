@@ -3,12 +3,14 @@
 # found in the LICENSE file.
 
 import("//build/config/features.gni")
+import("//build/config/jumbo.gni")
 import("//extensions/features/features.gni")
 
 assert(enable_extensions,
        "Cannot depend on extensions because enable_extensions=false.")
 
-source_set("display_source") {
+# TODO: Merge all api/* BUILD files?
+jumbo_source_set("display_source") {
   sources = [
     "display_source_api.cc",
     "display_source_api.h",

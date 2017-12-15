@@ -50,6 +50,7 @@ template("service") {
     output_name = base_target_name
     output_extension = executable_extension
 
+    # TODO: replace all this code with a call to forward_variables_from
     if (defined(invoker.cflags)) {
       cflags = invoker.cflags
     }

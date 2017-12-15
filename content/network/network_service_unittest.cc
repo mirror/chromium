@@ -26,7 +26,7 @@
 
 namespace content {
 
-namespace {
+namespace network_service_unittest {
 
 mojom::NetworkContextParamsPtr CreateContextParams() {
   mojom::NetworkContextParamsPtr params = mojom::NetworkContextParams::New();
@@ -462,6 +462,6 @@ TEST_F(NetworkServiceNetworkChangeTest, MAYBE_NetworkChangeManagerRequest) {
       network::mojom::ConnectionType::CONNECTION_3G);
 }
 
-}  // namespace
+}  // namespace network_service_unittest
 
 }  // namespace content
