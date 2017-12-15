@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a0dab8ce_2b5d2baf",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/VideoRotateToFullscreenTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-12-15T16:26:23Z",
+      "side": 0,
+      "message": "I re-enabled without changes because it did not fail after 20 runs on my phone and it\u0027s been so long that there is no logs so I will re-investigate if it appears to still fail.",
+      "revId": "90a9b1a33ff4056792f6c3d3100b97ba5d52f080",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
