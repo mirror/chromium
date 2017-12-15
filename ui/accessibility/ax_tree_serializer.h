@@ -11,6 +11,7 @@
 #include <vector>
 
 #include "base/containers/hash_tables.h"
+#include "base/debug/stack_trace.h"
 #include "base/logging.h"
 #include "ui/accessibility/ax_export.h"
 #include "ui/accessibility/ax_tree_source.h"
@@ -419,6 +420,8 @@ bool AXTreeSerializer<AXSourceNode, AXNodeData, AXTreeData>::
   // about. If we don't find it, then this must be the new root of the
   // accessibility tree.
   int id = tree_->GetId(node);
+  LOG(ERROR) << "!! SerializeChangedNodes node id=" << id;
+
   ClientTreeNode* client_node = ClientTreeNodeById(id);
   if (!client_node) {
     Reset();
@@ -456,7 +459,12 @@ bool AXTreeSerializer<AXSourceNode, AXNodeData, AXTreeData>::
     // above. If this happens, reset and return an error.
     ClientTreeNode* client_child = client_id_map_[new_child_id];
     if (client_child && client_child->parent != client_node) {
+      LOG(ERROR) << "!! failing; new_child_id=" << new_child_id
+                 << ", client_child->parent=" << client_child->parent
+                 << ", client_node=" << client_node
+                 << ", client_child=" << client_child;
       Reset();
+      base::debug::StackTrace().Print();
       return false;
     }
   }

@@ -16,4 +16,7 @@ DEFINE_UI_CLASS_PROPERTY_KEY(AXTreeIDRegistry::AXTreeID,
 
 DEFINE_UI_CLASS_PROPERTY_KEY(AXRole, kAXRoleOverride, ui::AX_ROLE_NONE);
 
+DEFINE_UI_CLASS_PROPERTY_KEY(aura::Window*, kAXAriaOwns, nullptr);
+DEFINE_UI_CLASS_PROPERTY_KEY(aura::Window*, kAXAriaParent, nullptr);
+
 }  // namespace ui

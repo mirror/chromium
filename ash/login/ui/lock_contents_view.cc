@@ -26,6 +26,7 @@
 #include "ash/system/tray/system_tray_notifier.h"
 #include "base/strings/string16.h"
 #include "base/strings/utf_string_conversions.h"
+#include "ui/accessibility/platform/aura_window_properties.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/display/display.h"
 #include "ui/display/manager/display_manager.h"
@@ -238,6 +239,7 @@ LockContentsView::LockContentsView(
       data_dispatcher_(data_dispatcher),
       display_observer_(this),
       session_observer_(this) {
+  LOG(ERROR) << "!!!! LockContentsView";
   data_dispatcher_->AddObserver(this);
   display_observer_.Add(display::Screen::GetScreen());
   Shell::Get()->login_screen_controller()->AddLockScreenAppsFocusObserver(this);
@@ -307,6 +309,14 @@ void LockContentsView::AddedToWidget() {
   // Focus the primary user when showing the UI. This will focus the password.
   if (primary_auth_)
     primary_auth_->RequestFocus();
+
+  // Allow ChromeVox to navigate to shelf using arrow keys.
+  ash::ShelfWidget* shelf_widget =
+      Shelf::ForWindow(GetWidget()->GetNativeWindow())->shelf_widget();
+  GetWidget()->GetNativeWindow()->SetProperty(ui::kAXAriaOwns,
+                                              shelf_widget->GetNativeWindow());
+  shelf_widget->GetNativeWindow()->SetProperty(ui::kAXAriaParent,
+                                               GetWidget()->GetNativeWindow());
 }
 
 void LockContentsView::OnFocus() {

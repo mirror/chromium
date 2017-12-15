@@ -17,6 +17,9 @@ AX_EXPORT extern const aura::WindowProperty<AXTreeIDRegistry::AXTreeID>* const
 
 AX_EXPORT extern const aura::WindowProperty<AXRole>* const kAXRoleOverride;
 
+AX_EXPORT extern const aura::WindowProperty<aura::Window*>* const kAXAriaOwns;
+AX_EXPORT extern const aura::WindowProperty<aura::Window*>* const kAXAriaParent;
+
 }  // namespace ui
 
 #endif  // UI_ACCESSIBILITY_PLATFORM_AURA_WINDOW_PROPERTIES_H_
