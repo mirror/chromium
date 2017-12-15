@@ -266,7 +266,10 @@ if (ozone_platform_x11) {
       ":test_support",
     ]
 
-    deps += [ "platform/x11:x11_unittests" ]
+    deps += [
+      "platform/x11:x11_unittests",
+      "//ui/platform_window/x11:x11_unittests",
+    ]
 
     # Platform tests link ozone statically. Make sure we're not getting a
     # 2nd copy of any code via the component.
