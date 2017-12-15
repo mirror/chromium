@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fb061f6d_0ba006a1",
+        "filename": "cc/tiles/gpu_image_decode_cache.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-12-15T23:42:00Z",
+      "side": 1,
+      "message": "typo",
+      "range": {
+        "startLine": 231,
+        "startChar": 17,
+        "endLine": 231,
+        "endChar": 24
+      },
+      "revId": "77e048ccbc9b3a5ea0ea2b098c2ddc1efe3682e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d2366f9_e31b6cbb",
+        "filename": "cc/tiles/gpu_image_decode_cache.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-12-15T23:42:00Z",
+      "side": 1,
+      "message": "I assume it\u0027s safe to do this here, and not put this in the pending deletions list?",
+      "range": {
+        "startLine": 242,
+        "startChar": 2,
+        "endLine": 242,
+        "endChar": 59
+      },
+      "revId": "77e048ccbc9b3a5ea0ea2b098c2ddc1efe3682e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
