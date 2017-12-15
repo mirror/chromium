@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cd9a84d0_a8081414",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-12-15T17:28:36Z",
+      "side": 1,
+      "message": "Note that in blink scroll offset and scroll position are in two different coordinate system.\nThe former depends on writing mode and direction but the later does not. see [1]\n\nCC layers use scroll positions. So I think it makes more sense to use scroll position\nfor all snap related calculation and thus data structure should keep that.\nConfusingly gfx::ScrollOffset actually holds what blink considers scroll position. Sigh.\n\nThis means here for example you should not use {Min,Max}imumScrollOffset but\nmin max positions. This may have other implication as well. I think it is fine to\ndo this offset change as part of this patch. This also suggests we are missing \nsome tests around ltr content.\n\nAlso please make sure  is documented in scroll_snap_data.h. \n\n[1] https://codesearch.chromium.org/chromium/src/third_party/WebKit/Source/core/layout/doc/rtl-bt-scroll.png?dr",
+      "range": {
+        "startLine": 94,
+        "startChar": 0,
+        "endLine": 97,
+        "endChar": 65
+      },
+      "revId": "ab435cc78e3196a215b3bac2c1a3fdad49a0d5a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
