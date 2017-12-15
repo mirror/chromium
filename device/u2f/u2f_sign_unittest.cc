@@ -11,17 +11,16 @@
 #include "base/run_loop.h"
 #include "base/test/scoped_task_environment.h"
 #include "base/test/test_io_thread.h"
+#include "device/u2f/authenticator_data.h"
 #include "device/u2f/mock_u2f_device.h"
 #include "device/u2f/mock_u2f_discovery.h"
+#include "device/u2f/sign_response_data.h"
+#include "device/u2f/u2f_response_test_data.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 using ::testing::_;
 
 namespace device {
-
-namespace {
-constexpr char kTestRelyingPartyId[] = "google.com";
-}
 
 class U2fSignTest : public testing::Test {
  public:
@@ -265,6 +264,28 @@ TEST_F(U2fSignTest, TestFakeEnroll) {
 
   // Verify that we get a blank key handle for the key that was registered.
   EXPECT_TRUE(std::get<2>(response).empty());
+}
+
+TEST_F(U2fSignTest, TestAuthenticatorDataForSign) {
+  std::vector<uint8_t> counter(4, 0);
+  counter[3] = 0x25;
+  AuthenticatorData::Flags flags = static_cast<AuthenticatorData::Flags>(
+      AuthenticatorData::Flag::TEST_OF_USER_PRESENCE);
+  std::unique_ptr<AuthenticatorData> authenticator_data =
+      AuthenticatorData::Create(kTestRelyingPartyId, flags, counter, nullptr);
+
+  EXPECT_EQ(kTestSignAuthenticatorData,
+            authenticator_data->SerializeToByteArray());
+}
+
+TEST_F(U2fSignTest, TestSignResponseData) {
+  std::unique_ptr<SignResponseData> response =
+      SignResponseData::CreateFromU2fSignResponse(
+          kTestRelyingPartyId, std::move(kTestU2fSignResponse),
+          kTestCredentialRawIdBytes);
+  EXPECT_EQ(kTestCredentialRawIdBytes, response->raw_id());
+  EXPECT_EQ(kTestSignAuthenticatorData, response->GetAuthenticatorDataBytes());
+  EXPECT_EQ(kTestAssertionSignature, response->signature());
 }
 
 }  // namespace device

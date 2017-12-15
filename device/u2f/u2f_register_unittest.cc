@@ -41,12 +41,6 @@ const std::vector<uint8_t>& GetTestRegisterResponse() {
   return data;
 }
 
-const std::vector<uint8_t>& GetTestCredentialRawIdBytes() {
-  static const std::vector<uint8_t> data(std::begin(kTestCredentialRawIdBytes),
-                                         std::end(kTestCredentialRawIdBytes));
-  return data;
-}
-
 const std::vector<uint8_t>& GetU2fAttestationStatementCBOR() {
   static const std::vector<uint8_t> data(
       std::begin(kU2fAttestationStatementCBOR),
@@ -158,7 +152,7 @@ TEST_F(U2fRegisterTest, TestRegisterSuccess) {
   const std::pair<U2fReturnCode, std::unique_ptr<RegisterResponseData>>&
       response = cb.WaitForCallback();
   EXPECT_EQ(U2fReturnCode::SUCCESS, std::get<0>(response));
-  EXPECT_EQ(GetTestCredentialRawIdBytes(), std::get<1>(response)->raw_id());
+  EXPECT_EQ(kTestCredentialRawIdBytes, std::get<1>(response)->raw_id());
 }
 
 TEST_F(U2fRegisterTest, TestDelayedSuccess) {
@@ -188,7 +182,7 @@ TEST_F(U2fRegisterTest, TestDelayedSuccess) {
   const std::pair<U2fReturnCode, std::unique_ptr<RegisterResponseData>>&
       response = cb.WaitForCallback();
   EXPECT_EQ(U2fReturnCode::SUCCESS, std::get<0>(response));
-  EXPECT_EQ(GetTestCredentialRawIdBytes(), std::get<1>(response)->raw_id());
+  EXPECT_EQ(kTestCredentialRawIdBytes, std::get<1>(response)->raw_id());
 }
 
 TEST_F(U2fRegisterTest, TestMultipleDevices) {
@@ -226,8 +220,7 @@ TEST_F(U2fRegisterTest, TestMultipleDevices) {
       response = cb.WaitForCallback();
 
   EXPECT_EQ(U2fReturnCode::SUCCESS, std::get<0>(response));
-  EXPECT_EQ(GetTestCredentialRawIdBytes(),
-            std::get<1>(response).get()->raw_id());
+  EXPECT_EQ(kTestCredentialRawIdBytes, std::get<1>(response).get()->raw_id());
 }
 
 // Tests a scenario where a single device is connected and registration call
@@ -275,7 +268,7 @@ TEST_F(U2fRegisterTest, TestSingleDeviceRegistrationWithExclusionList) {
       response = cb.WaitForCallback();
 
   EXPECT_EQ(U2fReturnCode::SUCCESS, std::get<0>(response));
-  EXPECT_EQ(GetTestCredentialRawIdBytes(), std::get<1>(response)->raw_id());
+  EXPECT_EQ(kTestCredentialRawIdBytes, std::get<1>(response)->raw_id());
 }
 
 // Tests a scenario where two devices are connected and registration call is
@@ -338,7 +331,7 @@ TEST_F(U2fRegisterTest, TestMultipleDeviceRegistrationWithExclusionList) {
       response = cb.WaitForCallback();
 
   EXPECT_EQ(U2fReturnCode::SUCCESS, std::get<0>(response));
-  EXPECT_EQ(GetTestCredentialRawIdBytes(), std::get<1>(response)->raw_id());
+  EXPECT_EQ(kTestCredentialRawIdBytes, std::get<1>(response)->raw_id());
 }
 
 // Tests a scenario where single device is connected and registration is called
@@ -551,7 +544,7 @@ TEST_F(U2fRegisterTest, TestRegisterResponseData) {
   std::unique_ptr<RegisterResponseData> response =
       RegisterResponseData::CreateFromU2fRegisterResponse(
           kTestRelyingPartyId, GetTestRegisterResponse());
-  EXPECT_EQ(GetTestCredentialRawIdBytes(), response->raw_id());
+  EXPECT_EQ(kTestCredentialRawIdBytes, response->raw_id());
   EXPECT_EQ(kTestAttestationObject,
             response->GetCBOREncodedAttestationObject());
 }
