@@ -3320,14 +3320,35 @@ void GLES2Implementation::TexSubImage2DImpl(GLenum target,
     GLint num_rows = ComputeNumRowsThatFitInBuffer(
         buffer_padded_row_size, unpadded_row_size, buffer->size(), height);
     num_rows = std::min(num_rows, height);
+
     CopyRectToBuffer(
         source, num_rows, unpadded_row_size, pixels_padded_row_size,
         buffer->address(), buffer_padded_row_size);
-    helper_->TexSubImage2D(
-        target, level, xoffset, yoffset, width, num_rows, format, type,
-        buffer->shm_id(), buffer->offset(), internal);
+
+    uint32_t offset = buffer->offset();
+    GLint num_rows_remaining = num_rows;
+
+    while (num_rows_remaining) {
+      static const int kMaxBytesPerTexSubImage = 64 * 64 * 4;
+      GLint num_rows_to_copy = ComputeNumRowsThatFitInBuffer(
+          buffer_padded_row_size, unpadded_row_size, kMaxBytesPerTexSubImage,
+          num_rows_remaining);
+      num_rows_to_copy = std::min(num_rows_to_copy, num_rows_remaining);
+
+      helper_->TexSubImage2D(target, level, xoffset, yoffset, width,
+                             num_rows_to_copy, format, type, buffer->shm_id(),
+                             offset, internal);
+
+      // The yoffset increments will add up to num_rows.
+      yoffset += num_rows_to_copy;
+      // We use buffer_padded_row_size instead of pixels_padded_row_size here
+      // because this is an offset into the transfer buffer.
+      offset += num_rows_to_copy * buffer_padded_row_size;
+      num_rows_remaining -= num_rows_to_copy;
+    }
+
+    // yoffset will be the correct value (incremented by num_rows).
     buffer->Release();
-    yoffset += num_rows;
     source += num_rows * pixels_padded_row_size;
     height -= num_rows;
   }
