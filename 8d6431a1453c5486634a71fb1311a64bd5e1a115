@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "febac79d_f5aace8f",
+        "filename": "third_party/WebKit/Source/core/editing/Editor.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 1191,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2017-12-15T15:20:21Z",
+      "side": 1,
+      "message": "I will move this change into its own CL.",
+      "range": {
+        "startLine": 1187,
+        "startChar": 0,
+        "endLine": 1191,
+        "endChar": 11
+      },
+      "revId": "8d6431a1453c5486634a71fb1311a64bd5e1a115",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
