@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c5349f89_34a806c2",
+        "filename": "ios/chrome/browser/web/push_and_replace_state_navigation_egtest.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-15T22:05:34Z",
+      "side": 1,
+      "message": "Optional nit: Not related to your CL, but could you please s/NULL/nil",
+      "range": {
+        "startLine": 89,
+        "startChar": 8,
+        "endLine": 89,
+        "endChar": 29
+      },
+      "revId": "8b99409d0678b427b8d4ffd6c1932aaed082cf5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "963d79f0_f86c105f",
+        "filename": "ios/chrome/browser/web/push_and_replace_state_navigation_egtest.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-15T22:05:34Z",
+      "side": 1,
+      "message": "nit: s/omnibox/omniboxText",
+      "range": {
+        "startLine": 341,
+        "startChar": 38,
+        "endLine": 341,
+        "endChar": 45
+      },
+      "revId": "8b99409d0678b427b8d4ffd6c1932aaed082cf5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1edb277_69b094e8",
+        "filename": "ios/chrome/browser/web/push_and_replace_state_navigation_egtest.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-15T22:05:34Z",
+      "side": 1,
+      "message": "s/std::string/const std::string\u0026",
+      "revId": "8b99409d0678b427b8d4ffd6c1932aaed082cf5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
