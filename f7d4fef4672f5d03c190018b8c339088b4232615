@@ -87,6 +87,24 @@
     },
     {
       "key": {
+        "uuid": "c8b3c91b_10d3f63a",
+        "filename": "DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 1340,
+      "author": {
+        "id": 1158719
+      },
+      "writtenOn": "2017-12-15T00:55:19Z",
+      "side": 1,
+      "message": "Didn\u0027t realize that target_os was an option. I like that much more.",
+      "parentUuid": "62d1fe2d_7c80d91a",
+      "revId": "f7d4fef4672f5d03c190018b8c339088b4232615",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1d71cc23_655be5fb",
         "filename": "DEPS",
         "patchSetId": 2
@@ -121,6 +139,24 @@
     },
     {
       "key": {
+        "uuid": "60bf7bea_3cf97c13",
+        "filename": "build/config/compiler/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1158719
+      },
+      "writtenOn": "2017-12-15T00:55:19Z",
+      "side": 1,
+      "message": "config(\"afdo\") on line 1892.\n\nThere was a bug in GCC\u0027s AFDO that apparently caused tcmalloc to break. IIRC, when I asked about that config, I was told that a few downstream users got upset when we tried to remove it.\n\nMade an attempt at clarifying in the comment.",
+      "parentUuid": "f46a5b94_6fe8cec5",
+      "revId": "f7d4fef4672f5d03c190018b8c339088b4232615",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ad203c1b_10b651ba",
         "filename": "build/config/compiler/BUILD.gn",
         "patchSetId": 2
@@ -138,6 +174,24 @@
     },
     {
       "key": {
+        "uuid": "785d88d3_369ea837",
+        "filename": "build/config/compiler/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1158719
+      },
+      "writtenOn": "2017-12-15T00:55:19Z",
+      "side": 1,
+      "message": "Yeah, that sounds like a better idea to me.",
+      "parentUuid": "ad203c1b_10b651ba",
+      "revId": "f7d4fef4672f5d03c190018b8c339088b4232615",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "300a9ad0_75f53835",
         "filename": "build/config/compiler/BUILD.gn",
         "patchSetId": 2
@@ -149,6 +203,24 @@
       "writtenOn": "2017-12-13T17:39:51Z",
       "side": 1,
       "message": "I think this needs to be fixed before landing. Maybe look at how the Windows order files are hooked up.",
+      "revId": "f7d4fef4672f5d03c190018b8c339088b4232615",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4fb165b_583f4428",
+        "filename": "build/config/compiler/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1158719
+      },
+      "writtenOn": "2017-12-15T00:55:19Z",
+      "side": 1,
+      "message": "It uses `inputs`, but those don\u0027t seem to \"bubble up\" from configs like cflags and such do. :(\n\nNever touched gn before, but I took a stab at this in CL:827560. If we can get something like that in, then this should be a trivial fix.",
+      "parentUuid": "300a9ad0_75f53835",
       "revId": "f7d4fef4672f5d03c190018b8c339088b4232615",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -172,6 +244,24 @@
     },
     {
       "key": {
+        "uuid": "f057079e_eae031b8",
+        "filename": "build/secondary/third_party/android_platform/development/scripts/stack.pydeps",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1158719
+      },
+      "writtenOn": "2017-12-15T00:55:19Z",
+      "side": 1,
+      "message": "I had a comment for this, but apparently forgot to submit it. :)\n\nA presubmit check yelled at me when I tried to upload my change, saying \"please apply this diff to this file.\" The diff was adding this line.",
+      "parentUuid": "cd693dfb_0b1b8a8e",
+      "revId": "f7d4fef4672f5d03c190018b8c339088b4232615",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "007df1b4_1efc30b0",
         "filename": "profiles/android/update_profile.py",
         "patchSetId": 2
@@ -189,6 +279,24 @@
     },
     {
       "key": {
+        "uuid": "8496c6f5_b02f55ae",
+        "filename": "profiles/android/update_profile.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1158719
+      },
+      "writtenOn": "2017-12-15T00:55:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "007df1b4_1efc30b0",
+      "revId": "f7d4fef4672f5d03c190018b8c339088b4232615",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2629f8bf_d281ae8b",
         "filename": "profiles/android/update_profile.py",
         "patchSetId": 2
@@ -203,6 +311,24 @@
       "revId": "f7d4fef4672f5d03c190018b8c339088b4232615",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f36c77fe_ce3bccce",
+        "filename": "profiles/android/update_profile.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1158719
+      },
+      "writtenOn": "2017-12-15T00:55:19Z",
+      "side": 1,
+      "message": "I remember being told it was. Double checking, gsutil from my personal laptop says otherwise. Pinging our infra friends, it looks like the answer is \"no\".\n\nWe may be able to shuffle everything around to a world-readable bucket, but the path of less resistance seems to be making this internal. If we like how the experiments go and want to open source those, I\u0027m happy to migrate everything back to this repo.",
+      "parentUuid": "2629f8bf_d281ae8b",
+      "revId": "f7d4fef4672f5d03c190018b8c339088b4232615",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
