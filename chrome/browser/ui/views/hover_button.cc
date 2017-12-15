@@ -9,6 +9,7 @@
 #include "chrome/browser/ui/views/harmony/chrome_layout_provider.h"
 #include "chrome/browser/ui/views/harmony/chrome_typography.h"
 #include "ui/base/material_design/material_design_controller.h"
+#include "ui/gfx/color_palette.h"
 #include "ui/views/animation/ink_drop_highlight.h"
 #include "ui/views/animation/ink_drop_ripple.h"
 #include "ui/views/background.h"
@@ -270,6 +271,32 @@ void HoverButton::OnBoundsChanged(const gfx::Rect& previous_bounds) {
   if (title_) {
     SetTooltipAndAccessibleName(this, title_, subtitle_, GetLocalBounds(),
                                 taken_width_);
+  }
+}
+
+void HoverButton::SetStyle(HoverButtonStyle style) {
+  SkColor bg_color, text_color;
+  switch (style) {
+    case HOVER_BUTTON_STYLE_BLUEBUTTON:
+      // White text on |gfx::kGoogleBlue500| would be adjusted by
+      // AutoColorRedability. However, this specific combination has an
+      // exception (http://go/mdcontrast). So, disable AutoColorReadability.
+      title_->set_auto_color_readability_enabled(false);
+      bg_color = GetNativeTheme()->GetSystemColor(
+          ui::NativeTheme::kColorId_ProminentButtonColor);
+      text_color = SK_ColorWHITE;
+      break;
+    case HOVER_BUTTON_STYLE_ERROR:
+      bg_color = gfx::kGoogleRed700;
+      text_color = SK_ColorWHITE;
+      break;
+    case HOVER_BUTTON_STYLE_NONE:
+      break;
+  }
+  if (style != HOVER_BUTTON_STYLE_NONE) {
+    SetBackground(views::CreateSolidBackground(bg_color));
+    SetTitleTextStyle(views::style::STYLE_DIALOG_BUTTON_DEFAULT, bg_color);
+    SetSubtitleColor(text_color);
   }
 }
 
