@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "8db9d491_33d2624e",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3655,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-12-15T14:48:01Z",
+      "side": 1,
+      "message": "Good point about processing the traces, I\u0027ve added the address in the most recent PS. Thanks!",
+      "parentUuid": "17c10e24_d1e07c36",
+      "revId": "069959fe08c6bb0e2ccb862c9aba5f75f018cdb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "09440fc7_8b8790f4",
         "filename": "content/browser/web_contents/web_contents_impl.cc",
         "patchSetId": 1
