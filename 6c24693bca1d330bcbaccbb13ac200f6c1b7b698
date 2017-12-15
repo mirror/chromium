@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "40e43162_fc61775a",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-12-15T22:18:29Z",
+      "side": 1,
+      "message": "Woops, thank you.",
+      "parentUuid": "84dd30a1_227da1ba",
+      "revId": "6c24693bca1d330bcbaccbb13ac200f6c1b7b698",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0307258d_29dba666",
         "filename": "content/browser/webauth/collected_client_data.h",
         "patchSetId": 1
@@ -66,6 +84,30 @@
     },
     {
       "key": {
+        "uuid": "a484dda0_a0bc5ad4",
+        "filename": "content/browser/webauth/collected_client_data.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-12-15T22:18:29Z",
+      "side": 1,
+      "message": "I feel like this changes every time I try to declare a constant :-) Thanks for doing the research!",
+      "parentUuid": "c9790e44_b896e7ed",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 28
+      },
+      "revId": "6c24693bca1d330bcbaccbb13ac200f6c1b7b698",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "25450864_a6f93fa7",
         "filename": "device/u2f/attestation_object.cc",
         "patchSetId": 1
@@ -89,6 +131,30 @@
     },
     {
       "key": {
+        "uuid": "da2b0f8b_be9af3e0",
+        "filename": "device/u2f/attestation_object.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-12-15T22:18:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "25450864_a6f93fa7",
+      "range": {
+        "startLine": 36,
+        "startChar": 2,
+        "endLine": 39,
+        "endChar": 32
+      },
+      "revId": "6c24693bca1d330bcbaccbb13ac200f6c1b7b698",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "149cb1e6_3eafde41",
         "filename": "device/u2f/attested_credential_data.h",
         "patchSetId": 1
@@ -100,6 +166,30 @@
       "writtenOn": "2017-12-15T09:57:10Z",
       "side": 1,
       "message": "What is the reason that the destructor is virtual and the Create method returns a unique_ptr instead of simply an instance of the object? Are there currently derived classes of this or do we plan to have them in the future?",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 48
+      },
+      "revId": "6c24693bca1d330bcbaccbb13ac200f6c1b7b698",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "922bfb53_08ebb082",
+        "filename": "device/u2f/attested_credential_data.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-12-15T22:18:29Z",
+      "side": 1,
+      "message": "Hm. No, there won\u0027t be any derived classes. It was a unique_ptr simply to avoid copies. Should it just be an instance and passed by const ref? The other thing is it holds unique_ptr\u003cPublicKey\u003e.",
+      "parentUuid": "149cb1e6_3eafde41",
       "range": {
         "startLine": 25,
         "startChar": 0,
@@ -132,6 +222,30 @@
       "revId": "6c24693bca1d330bcbaccbb13ac200f6c1b7b698",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be74d471_63dcd57c",
+        "filename": "device/u2f/u2f_register.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-12-15T22:18:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cc30f252_ed34aaf3",
+      "range": {
+        "startLine": 128,
+        "startChar": 0,
+        "endLine": 128,
+        "endChar": 27
+      },
+      "revId": "6c24693bca1d330bcbaccbb13ac200f6c1b7b698",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -227,6 +341,30 @@
     },
     {
       "key": {
+        "uuid": "14687d69_f67bef2b",
+        "filename": "device/u2f/u2f_register_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-12-15T22:18:29Z",
+      "side": 1,
+      "message": "Nope, no reason. I made it a const.",
+      "parentUuid": "844cac5c_2f9e88d4",
+      "range": {
+        "startLine": 125,
+        "startChar": 2,
+        "endLine": 125,
+        "endChar": 11
+      },
+      "revId": "6c24693bca1d330bcbaccbb13ac200f6c1b7b698",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8ef7f512_8ce954a0",
         "filename": "device/u2f/u2f_register_unittest.cc",
         "patchSetId": 1
@@ -316,6 +454,30 @@
       "revId": "6c24693bca1d330bcbaccbb13ac200f6c1b7b698",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15f5853d_4b14b306",
+        "filename": "device/u2f/u2f_sign_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-12-15T22:18:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "847232b3_8e0eee53",
+      "range": {
+        "startLine": 267,
+        "startChar": 1,
+        "endLine": 269,
+        "endChar": 40
+      },
+      "revId": "6c24693bca1d330bcbaccbb13ac200f6c1b7b698",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
