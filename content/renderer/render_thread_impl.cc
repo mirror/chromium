@@ -427,21 +427,26 @@ void CreateSingleSampleMetricsProvider(
 
 class RendererLocalSurfaceIdProvider : public viz::LocalSurfaceIdProvider {
  public:
+  // viz::LocalSurfaceIdProvider implementation.
   const viz::LocalSurfaceId& GetLocalSurfaceIdForFrame(
       const viz::CompositorFrame& frame) override {
     auto new_surface_properties =
         RenderWidgetSurfaceProperties::FromCompositorFrame(frame);
-    if (!local_surface_id_.is_valid() ||
+    if (!local_surface_id_.is_valid() || needs_new_surface_ ||
         new_surface_properties != surface_properties_) {
       local_surface_id_ = parent_local_surface_id_allocator_.GenerateId();
       surface_properties_ = new_surface_properties;
+      needs_new_surface_ = false;
     }
     return local_surface_id_;
   }
 
+  void SetNeedsNewSurface() override { needs_new_surface_ = true; }
+
  private:
   viz::ParentLocalSurfaceIdAllocator parent_local_surface_id_allocator_;
   viz::LocalSurfaceId local_surface_id_;
+  bool needs_new_surface_ = false;
   RenderWidgetSurfaceProperties surface_properties_;
 };
 

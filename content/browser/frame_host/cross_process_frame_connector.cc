@@ -55,6 +55,7 @@ bool CrossProcessFrameConnector::OnMessageReceived(const IPC::Message& msg) {
                         OnUpdateRenderThrottlingStatus)
     IPC_MESSAGE_HANDLER(FrameHostMsg_SatisfySequence, OnSatisfySequence)
     IPC_MESSAGE_HANDLER(FrameHostMsg_RequireSequence, OnRequireSequence)
+    IPC_MESSAGE_HANDLER(FrameHostMsg_WasEvicted, OnWasEvicted);
     IPC_MESSAGE_UNHANDLED(handled = false)
   IPC_END_MESSAGE_MAP()
 
@@ -474,6 +475,10 @@ bool CrossProcessFrameConnector::IsThrottled() const {
 
 bool CrossProcessFrameConnector::IsSubtreeThrottled() const {
   return subtree_throttled_;
+}
+
+void CrossProcessFrameConnector::OnWasEvicted() {
+  view_->WasEvicted();
 }
 
 }  // namespace content

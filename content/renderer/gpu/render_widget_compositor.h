@@ -224,6 +224,8 @@ class CONTENT_EXPORT RenderWidgetCompositor
     return layer_tree_host_->GetSettings();
   }
 
+  void SetNeedsRedrawIntoNewSurface();
+
  protected:
   friend class RenderViewImplScaleFactorTest;
 

@@ -513,6 +513,8 @@ class CONTENT_EXPORT RenderWidgetHostViewAura
   // opaqueness changes.
   void UpdateBackgroundColorFromRenderer(SkColor color);
 
+  void WasEvicted();
+
   // The model object.
   RenderWidgetHostImpl* const host_;
 
