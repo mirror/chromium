@@ -1,0 +1,187 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f8a60d05_16cd10d3",
+        "filename": "ios/chrome/browser/ui/download/pass_kit_coordinator.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-12-15T19:23:24Z",
+      "side": 1,
+      "message": "If this stuff (here and below) is only exposed for testing, please say so.",
+      "revId": "ad39798a50a2bfbff20471ffe2ad45a6db634195",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65909c0e_a5029cc3",
+        "filename": "ios/chrome/browser/ui/download/pass_kit_coordinator.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-12-15T19:23:24Z",
+      "side": 1,
+      "message": "ditto same comments in enums.xml",
+      "revId": "ad39798a50a2bfbff20471ffe2ad45a6db634195",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "799724e1_048c6b9f",
+        "filename": "ios/chrome/browser/ui/download/pass_kit_coordinator.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-12-15T19:23:24Z",
+      "side": 1,
+      "message": "nit: Please follow best practices (e.g., about numbering).\nhttps://chromium.googlesource.com/chromium/src.git/+/HEAD/tools/metrics/histograms/README.md#Enum-Histograms",
+      "revId": "ad39798a50a2bfbff20471ffe2ad45a6db634195",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7e1b19a_c068690e",
+        "filename": "ios/chrome/browser/ui/download/pass_kit_coordinator.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-12-15T19:23:24Z",
+      "side": 1,
+      "message": "nit: Enums should either be MACRO names or kConstant named.\nhttps://google.github.io/styleguide/cppguide.html#Enumerator_Names",
+      "range": {
+        "startLine": 30,
+        "startChar": 17,
+        "endLine": 30,
+        "endChar": 0
+      },
+      "revId": "ad39798a50a2bfbff20471ffe2ad45a6db634195",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4c7c1f3_7f057bb1",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 34413,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-12-15T19:23:24Z",
+      "side": 1,
+      "message": "This enum isn\u0027t used in histograms.xml.  Did you misname it?  Add it by mistake?  Put the wrong name in your new histogram in histograms.xml?  ...?",
+      "range": {
+        "startLine": 34413,
+        "startChar": 0,
+        "endLine": 34413,
+        "endChar": 42
+      },
+      "revId": "ad39798a50a2bfbff20471ffe2ad45a6db634195",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d23e462f_30dc7609",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 34417,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-12-15T19:23:24Z",
+      "side": 1,
+      "message": "nit: the number",
+      "range": {
+        "startLine": 34417,
+        "startChar": 18,
+        "endLine": 34417,
+        "endChar": 24
+      },
+      "revId": "ad39798a50a2bfbff20471ffe2ad45a6db634195",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8259159_8ded8c3f",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 34418,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-12-15T19:23:24Z",
+      "side": 1,
+      "message": "nit: add word frequently before \"queue\"\n\n(Otherwise the sentence is incorrect.  The number of unsuccessful presentations can be low, yet Chrome still has to queue dialogs sometimes.",
+      "range": {
+        "startLine": 34418,
+        "startChar": 18,
+        "endLine": 34418,
+        "endChar": 23
+      },
+      "revId": "ad39798a50a2bfbff20471ffe2ad45a6db634195",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0f8dd32_7f3697c7",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 34419,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-12-15T19:23:24Z",
+      "side": 1,
+      "message": "nit: undefined abbreviation",
+      "range": {
+        "startLine": 34419,
+        "startChar": 15,
+        "endLine": 34419,
+        "endChar": 21
+      },
+      "revId": "ad39798a50a2bfbff20471ffe2ad45a6db634195",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c19a3b22_bea52a2a",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 34430,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-12-15T19:23:24Z",
+      "side": 1,
+      "message": "nit: either\nmention that this does not include items already counted in the more specific bucket\nor\nmentioned explicitly that this include items already counted in the more specific bucket",
+      "revId": "ad39798a50a2bfbff20471ffe2ad45a6db634195",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
