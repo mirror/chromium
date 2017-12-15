@@ -164,6 +164,30 @@
       "revId": "5583cbcee99fa6fda31e953517224b749c7c2838",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a090b716_e83cba72",
+        "filename": "content/browser/download/download_resource_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-12-15T22:10:53Z",
+      "side": 1,
+      "message": "Also, please make that function take web_contents, and do at least:\n\nukm_recorder-\u003eUpdateSourceURL(source_id, web_contents-\u003eGetLastCommittedURL());\n\nso that it can\u0027t be used to record some other, non-main frame URL.",
+      "parentUuid": "923d17db_4cf75a15",
+      "range": {
+        "startLine": 105,
+        "startChar": 6,
+        "endLine": 106,
+        "endChar": 73
+      },
+      "revId": "5583cbcee99fa6fda31e953517224b749c7c2838",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
