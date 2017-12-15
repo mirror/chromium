@@ -290,12 +290,14 @@ ChromeCryptAuthService::CreateCryptAuthClientFactory() {
 void ChromeCryptAuthService::OnEnrollmentStarted() {}
 
 void ChromeCryptAuthService::OnEnrollmentFinished(bool success) {
-  if (success)
+  if (success) {
     device_manager_->Start();
-  else
-    PA_LOG(ERROR) << "CryptAuth enrollment failed. Device manager was not "
-                  << " started.";
-
+  } else {
+    if (base::SysInfo::IsRunningOnChromeOS()) {
+      PA_LOG(ERROR)
+          << "CryptAuth enrollment failed. Device manager was not started.";
+    }
+  }
   enrollment_manager_->RemoveObserver(this);
 }
 
