@@ -15,7 +15,7 @@ class AskGoogleForSuggestionsDialogTest : public DialogBrowserTest {
   AskGoogleForSuggestionsDialogTest() {}
 
   // DialogBrowserTest:
-  void ShowDialog(const std::string& name) override {
+  void ShowUI(const std::string& name) override {
     std::unique_ptr<SpellingBubbleModel> model =
         base::MakeUnique<SpellingBubbleModel>(
             browser()->profile(),
@@ -33,15 +33,13 @@ class AskGoogleForSuggestionsDialogTest : public DialogBrowserTest {
 
 #if !defined(OS_MACOSX)
 // Initially disabled except on Mac due to http://crbug.com/683808.
-#define MAYBE_InvokeDialog_default DISABLED_InvokeDialog_default
+#define MAYBE_InvokeUI_default DISABLED_InvokeUI_default
 #else
-#define MAYBE_InvokeDialog_default InvokeDialog_default
+#define MAYBE_InvokeUI_default InvokeUI_default
 #endif
 
-// Test that calls ShowDialog("default"). Interactive when run via
-// browser_tests --gtest_filter=BrowserDialogTest.Invoke --interactive
-// --dialog=AskGoogleForSuggestionsDialogTest.InvokeDialog_default
+// Test that calls ShowUI("default").
 IN_PROC_BROWSER_TEST_F(AskGoogleForSuggestionsDialogTest,
-                       MAYBE_InvokeDialog_default) {
-  RunDialog();
+                       MAYBE_InvokeUI_default) {
+  ShowAndVerifyUI();
 }

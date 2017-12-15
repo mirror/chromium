@@ -3518,23 +3518,20 @@ IN_PROC_BROWSER_TEST_F(PasswordManagerBrowserTestWarning,
   histograms.ExpectTotalCount(kHistogram, 0);
 }
 
-// Harness for showing dialogs as part of the DialogBrowserTest suite. Allows
-// the dialogs to be shown interactively when invoked with, e.g.,
-//   browser_tests --gtest_filter=BrowserDialogTest.Invoke --interactive
-//       --dialog=PasswordManagerDialogBrowserTest.InvokeDialog_normal.
+// Harness for showing dialogs as part of the DialogBrowserTest suite.
 class PasswordManagerDialogBrowserTest
     : public SupportsTestDialog<PasswordManagerBrowserTestBase> {
  public:
   PasswordManagerDialogBrowserTest() = default;
 
-  // SupportsTestDialog:
+  // SupportsTestUI:
   void SetUp() override {
-    // Secondary UI needs to be enabled before ShowDialog for the test to work.
+    // Secondary UI needs to be enabled before ShowUI for the test to work.
     UseMdOnly();
-    SupportsTestDialog::SetUp();
+    SupportsTestUI::SetUp();
   }
 
-  void ShowDialog(const std::string& name) override {
+  void ShowUI(const std::string& name) override {
     // Note regarding flakiness: LocationBarBubbleDelegateView::ShowForReason()
     // uses ShowInactive() unless the bubble is invoked with reason ==
     // USER_GESTURE. This means that, so long as these dialogs are not triggered
@@ -3561,8 +3558,8 @@ class PasswordManagerDialogBrowserTest
   DISALLOW_COPY_AND_ASSIGN(PasswordManagerDialogBrowserTest);
 };
 
-IN_PROC_BROWSER_TEST_F(PasswordManagerDialogBrowserTest, InvokeDialog_normal) {
-  RunDialog();
+IN_PROC_BROWSER_TEST_F(PasswordManagerDialogBrowserTest, InvokeUI_normal) {
+  ShowAndVerifyUI();
 }
 
 // Verify that password manager ignores passwords on forms injected into

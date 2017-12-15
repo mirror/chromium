@@ -37,7 +37,7 @@ class ExtensionInstalledBubbleBrowserTest
       std::unique_ptr<base::DictionaryValue> extra_keys = nullptr);
 
   // DialogBrowserTest:
-  void ShowDialog(const std::string& name) override;
+  void ShowUI(const std::string& name) override;
 
   BubbleController* GetExtensionBubbleControllerFromManager(
       BubbleManager* manager) const {
@@ -81,7 +81,7 @@ ExtensionInstalledBubbleBrowserTest::MakeBubble(
   return bubble;
 }
 
-void ExtensionInstalledBubbleBrowserTest::ShowDialog(const std::string& name) {
+void ExtensionInstalledBubbleBrowserTest::ShowUI(const std::string& name) {
   // Default to Manifest::COMPONENT to test all anchoring locations. Without
   // this, a page action is added automatically, which will always be the
   // preferred anchor.
@@ -107,38 +107,36 @@ void ExtensionInstalledBubbleBrowserTest::ShowDialog(const std::string& name) {
 }
 
 IN_PROC_BROWSER_TEST_F(ExtensionInstalledBubbleBrowserTest,
-                       InvokeDialog_BrowserAction) {
-  RunDialog();
+                       InvokeUI_BrowserAction) {
+  ShowAndVerifyUI();
 }
 
 IN_PROC_BROWSER_TEST_F(ExtensionInstalledBubbleBrowserTest,
-                       InvokeDialog_PageAction) {
-  RunDialog();
+                       InvokeUI_PageAction) {
+  ShowAndVerifyUI();
 }
 
 // Test anchoring to the app menu.
 IN_PROC_BROWSER_TEST_F(ExtensionInstalledBubbleBrowserTest,
-                       InvokeDialog_InstalledByDefault) {
-  RunDialog();
+                       InvokeUI_InstalledByDefault) {
+  ShowAndVerifyUI();
 }
 
 // Test anchoring to the omnibox.
-IN_PROC_BROWSER_TEST_F(ExtensionInstalledBubbleBrowserTest,
-                       InvokeDialog_Omnibox) {
-  RunDialog();
+IN_PROC_BROWSER_TEST_F(ExtensionInstalledBubbleBrowserTest, InvokeUI_Omnibox) {
+  ShowAndVerifyUI();
 }
 
 IN_PROC_BROWSER_TEST_F(ExtensionInstalledBubbleBrowserTest,
-                       InvokeDialog_SignInPromo) {
-  RunDialog();
+                       InvokeUI_SignInPromo) {
+  ShowAndVerifyUI();
 }
 
-IN_PROC_BROWSER_TEST_F(ExtensionInstalledBubbleBrowserTest,
-                       InvokeDialog_NoAction) {
+IN_PROC_BROWSER_TEST_F(ExtensionInstalledBubbleBrowserTest, InvokeUI_NoAction) {
   // Sign in to supppress the signin promo.
   SigninManagerFactory::GetForProfile(browser()->profile())
       ->SetAuthenticatedAccountInfo("test", "test@example.com");
-  RunDialog();
+  ShowAndVerifyUI();
 }
 
 IN_PROC_BROWSER_TEST_F(ExtensionInstalledBubbleBrowserTest,
