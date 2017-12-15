@@ -22,6 +22,30 @@
       "revId": "96eb231288f19a0174f7a8ac1de80ddf2818761b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98060608_6895238a",
+        "filename": "chrome/browser/media/webrtc/webrtc_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1125049
+      },
+      "writtenOn": "2017-12-15T13:54:07Z",
+      "side": 1,
+      "message": "Done. Have a look if it\u0027s what you intended.\nNot sure if it\u0027s necessary, but I also made sure to explicitly set audio: false, since the regression we originally wanted to capture would only trigger for video-only.",
+      "parentUuid": "3957b240_a55f4f21",
+      "range": {
+        "startLine": 52,
+        "startChar": 4,
+        "endLine": 55,
+        "endChar": 74
+      },
+      "revId": "96eb231288f19a0174f7a8ac1de80ddf2818761b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
