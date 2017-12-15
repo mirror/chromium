@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aca23f27_bd7ee38f",
+        "filename": "extensions/common/manifest_url_handlers.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-15T02:27:47Z",
+      "side": 1,
+      "message": "nit: Let\u0027s elaborate here a bit:\n// Returns the homepage specified by the extension in its manifest, if it\n// specifies a homepage. Otherwise, returns an empty url.",
+      "revId": "dcfd7fe073059c448ee41840842732df6fa5345c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fa3fe00_ffeb8523",
+        "filename": "extensions/common/manifest_url_handlers.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-15T02:27:47Z",
+      "side": 1,
+      "message": "elaborate here too:\n// Returns the Chrome Web Store URL for this extension if it is hosted in the\nwebstore; otherwise returns an empty url.",
+      "revId": "dcfd7fe073059c448ee41840842732df6fa5345c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
