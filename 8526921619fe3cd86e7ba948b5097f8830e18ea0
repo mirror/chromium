@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a9f04763_8ff53901",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerThread.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-15T06:06:43Z",
+      "side": 1,
+      "message": "I\u0027m not really sure about the wording RequestTo. I guess PostTaskToX is too long?\n\nI suggest the comment say \"Posts a task to evaluate a top-level classic script on the worker thread.\"\n\n(\"on the worker thread\" also seems a bit more clear than \"on the global scope\".)",
+      "revId": "8526921619fe3cd86e7ba948b5097f8830e18ea0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
