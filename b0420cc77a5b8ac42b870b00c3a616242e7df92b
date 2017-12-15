@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7bec891_886ed4d7",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-15T03:26:44Z",
+      "side": 1,
+      "message": "I think we should move line 345-355 to the top of the if (body_as_blob)",
+      "revId": "b0420cc77a5b8ac42b870b00c3a616242e7df92b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5081bd52_577a48ea",
+        "filename": "content/common/service_worker/service_worker_utils.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-15T03:26:44Z",
+      "side": 1,
+      "message": "Shouldn\u0027t length be last_byte_position - first_byte_position?",
+      "revId": "b0420cc77a5b8ac42b870b00c3a616242e7df92b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc479d30_d7d9f7f3",
+        "filename": "content/renderer/service_worker/service_worker_subresource_loader.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-15T03:26:44Z",
+      "side": 1,
+      "message": "Sent -\u003e Send",
+      "revId": "b0420cc77a5b8ac42b870b00c3a616242e7df92b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5dd69dd4_42d3cd27",
+        "filename": "content/renderer/service_worker/service_worker_subresource_loader.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-15T03:26:44Z",
+      "side": 1,
+      "message": "Since this is identical to the code block in service_worker_url_loader_job.cc is it possible to factor some of this out into a function in ServiceWorkerLoaderHelpers?",
+      "revId": "b0420cc77a5b8ac42b870b00c3a616242e7df92b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91f780fd_889752f3",
+        "filename": "content/renderer/service_worker/service_worker_subresource_loader.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-15T03:26:44Z",
+      "side": 1,
+      "message": "let\u0027s put this at line 112, it fits with \"handling FetchEvent response\"",
+      "revId": "b0420cc77a5b8ac42b870b00c3a616242e7df92b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b81fe4b7_788d2479",
+        "filename": "content/renderer/service_worker/service_worker_subresource_loader.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-15T03:26:44Z",
+      "side": 1,
+      "message": "we can remove some parts of this comment about loading Blob/Blob URL",
+      "revId": "b0420cc77a5b8ac42b870b00c3a616242e7df92b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "813a65e0_8c841efb",
+        "filename": "third_party/WebKit/LayoutTests/FlagExpectations/enable-features\u003dNetworkService",
+        "patchSetId": 8
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-15T03:26:44Z",
+      "side": 1,
+      "message": "nit: don\u0027t need an empty blank line here",
+      "revId": "b0420cc77a5b8ac42b870b00c3a616242e7df92b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

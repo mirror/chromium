@@ -2,6 +2,74 @@
   "comments": [
     {
       "key": {
+        "uuid": "2bdfc9c0_8f8d2d10",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-15T03:26:44Z",
+      "side": 1,
+      "message": "Let\u0027s just remove the TODO to keep the code smaller as we\u0027ve had a similar one for years. I think it\u0027d be something testable in WPT tests anyway so it might be a spec issue: \"should the response have Content-Length if the SW didn\u0027t add one itself\"?",
+      "revId": "f57fb467ac134b867c3bb5cc510b8e09ad3147c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94b0bb06_7b518acf",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-15T03:26:44Z",
+      "side": 1,
+      "message": "return; here\n\nand probably we should move this whole block up to line 335, as we\u0027d early return on error?",
+      "revId": "f57fb467ac134b867c3bb5cc510b8e09ad3147c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93ec7981_cffaf8d0",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-15T03:26:44Z",
+      "side": 1,
+      "message": "I think this fits better next under |stream_waiter_| below. It\u0027s a similar functionality.",
+      "revId": "f57fb467ac134b867c3bb5cc510b8e09ad3147c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19b329f5_de18810e",
+        "filename": "content/common/service_worker/service_worker_utils.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-15T03:26:44Z",
+      "side": 1,
+      "message": "I\u0027m not sure I understand the meaning/significance of this comment... what other headers might we care about?",
+      "revId": "f57fb467ac134b867c3bb5cc510b8e09ad3147c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "df1505ec_e0d04ffe",
         "filename": "content/common/service_worker/service_worker_utils.cc",
         "patchSetId": 6
@@ -34,6 +102,40 @@
       "revId": "f57fb467ac134b867c3bb5cc510b8e09ad3147c7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5031b758_14c8be57",
+        "filename": "content/common/service_worker/service_worker_utils.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-15T03:26:44Z",
+      "side": 1,
+      "message": "Maybe also explain the outputs: \"Otherwise, sets |has_range| if there was one range, and |offset| and |size| to the range if so.\"",
+      "revId": "f57fb467ac134b867c3bb5cc510b8e09ad3147c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7afc6d0b_c7f4c1c3",
+        "filename": "content/common/service_worker/service_worker_utils.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-15T03:26:44Z",
+      "side": 1,
+      "message": "offset_out, size_out, and has_range_out?",
+      "revId": "f57fb467ac134b867c3bb5cc510b8e09ad3147c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
