@@ -76,19 +76,28 @@ void BlinkNotificationServiceImpl::OnConnectionError() {
 void BlinkNotificationServiceImpl::DisplayNonPersistentNotification(
     const base::string16& title) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
+  // TODO(https://crbug.com/595685): Generate a GUID here instead.
+  static int unique_notification_id = 0;
+  unique_notification_id++;
   if (!Service())
     return;
   PlatformNotificationData platform_notification_data;
   platform_notification_data.title = title;
+  std::string notification_id =
+      notification_context_->notification_id_generator()
+          ->GenerateForNonPersistentNotification(
+              origin_.GetURL(), platform_notification_data.tag,
+              0 /* non_persistent_notification_id (obsolete) */,
+              render_process_id_);
   // TODO(crbug.com/595685): Plumb through the rest of the notification data and
   // the notification resources from blink.
   // Using base::Unretained is safe because Service() returns a singleton.
   BrowserThread::PostTask(
       BrowserThread::UI, FROM_HERE,
       base::BindOnce(&PlatformNotificationService::DisplayNotification,
-                     base::Unretained(Service()), browser_context_, "",
-                     origin_.GetURL(), platform_notification_data,
-                     NotificationResources()));
+                     base::Unretained(Service()), browser_context_,
+                     notification_id, origin_.GetURL(),
+                     platform_notification_data, NotificationResources()));
 }
 
 }  // namespace content
