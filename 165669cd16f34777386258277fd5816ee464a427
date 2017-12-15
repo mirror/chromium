@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "acf0626c_31a0e0cb",
+        "filename": "ui/aura/mus/system_input_injector_mus_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-15T23:19:47Z",
+      "side": 1,
+      "message": "DISALLOW...",
+      "range": {
+        "startLine": 75,
+        "startChar": 0,
+        "endLine": 75,
+        "endChar": 2
+      },
+      "revId": "165669cd16f34777386258277fd5816ee464a427",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a12d5faf_4629389d",
+        "filename": "ui/aura/mus/system_input_injector_mus_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-15T23:19:47Z",
+      "side": 1,
+      "message": "DISSALLOW...",
+      "range": {
+        "startLine": 99,
+        "startChar": 0,
+        "endLine": 99,
+        "endChar": 2
+      },
+      "revId": "165669cd16f34777386258277fd5816ee464a427",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
