@@ -36,6 +36,29 @@
     },
     {
       "key": {
+        "uuid": "5c653b2c_ab4b7508",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/DebuggerModel.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 999,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-12-15T19:45:59Z",
+      "side": 1,
+      "message": "If you go with dgozman@\u0027s popover approach, can we get the full async stack?",
+      "range": {
+        "startLine": 999,
+        "startChar": 21,
+        "endLine": 999,
+        "endChar": 31
+      },
+      "revId": "5f36fe1afacbbcaaaef6eac1154b1857a25b8114",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6d2bd2a5_1b54e543",
         "filename": "third_party/WebKit/Source/devtools/front_end/sources/JavaScriptSourceFrame.js",
         "patchSetId": 1
@@ -47,6 +70,29 @@
       "writtenOn": "2017-10-26T16:21:16Z",
       "side": 1,
       "message": "I am afraid this will produce a lot of linkifiers, with each of them listening to targets at least. Can we have one per, say, SourcesView instead?",
+      "revId": "5f36fe1afacbbcaaaef6eac1154b1857a25b8114",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef83f694_985205e5",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sources/JavaScriptSourceFrame.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-12-15T19:45:59Z",
+      "side": 1,
+      "message": "We can use the new \"ls\" (formerly common.uistring)!",
+      "range": {
+        "startLine": 120,
+        "startChar": 29,
+        "endLine": 120,
+        "endChar": 41
+      },
       "revId": "5f36fe1afacbbcaaaef6eac1154b1857a25b8114",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
