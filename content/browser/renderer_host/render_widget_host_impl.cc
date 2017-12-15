@@ -610,6 +610,8 @@ bool RenderWidgetHostImpl::OnMessageReceived(const IPC::Message &msg) {
     IPC_MESSAGE_HANDLER(ViewHostMsg_RequestMove, OnRequestMove)
     IPC_MESSAGE_HANDLER(ViewHostMsg_SetTooltipText, OnSetTooltipText)
     IPC_MESSAGE_HANDLER(ViewHostMsg_DidNotProduceFrame, DidNotProduceFrame)
+    IPC_MESSAGE_HANDLER(ViewHostMsg_DidChangeBackgroundColor,
+                        OnDidChangeBackgroundColor)
     IPC_MESSAGE_HANDLER(ViewHostMsg_ResizeOrRepaint_ACK, OnResizeOrRepaintACK)
     IPC_MESSAGE_HANDLER(ViewHostMsg_SetCursor, OnSetCursor)
     IPC_MESSAGE_HANDLER(ViewHostMsg_AutoscrollStart, OnAutoscrollStart)
@@ -1972,6 +1974,12 @@ void RenderWidgetHostImpl::OnSetTooltipText(
     }
   }
   view_->SetTooltipText(wrapped_tooltip_text);
+}
+
+void RenderWidgetHostImpl::OnDidChangeBackgroundColor(SkColor color) {
+  if (!view_)
+    return;
+  view_->SetBackgroundColor(color);
 }
 
 void RenderWidgetHostImpl::OnUpdateScreenRectsAck() {

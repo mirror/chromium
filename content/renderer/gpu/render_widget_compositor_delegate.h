@@ -55,6 +55,9 @@ class CONTENT_EXPORT RenderWidgetCompositorDelegate {
   virtual void RequestNewLayerTreeFrameSink(
       const LayerTreeFrameSinkCallback& callback) = 0;
 
+  // Indicates that the background color of the LayerTreeHost has changed.
+  virtual void DidChangeBackgroundColor(SkColor color) = 0;
+
   // Notifies that the draw commands for a committed frame have been issued.
   virtual void DidCommitAndDrawCompositorFrame() = 0;
 
