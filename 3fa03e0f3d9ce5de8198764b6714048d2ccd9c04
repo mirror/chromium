@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "692e93d3_a4af15a9",
+        "filename": "third_party/zlib/contrib/optimizations/arm/armv8_crc32.c",
+        "patchSetId": 5
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2017-12-15T23:39:51Z",
+      "side": 1,
+      "message": "I noticed that in pngs is quite common to have compressed data segments that are multiples of 2 (e.g. 512, 1024, 8K, etc).\n\nIn such scenario, would the tail handling be executed at all?\n\nIt may be the case that the current tests the bots perform don\u0027t have content that stresses the tail code?",
+      "parentUuid": "fc37aebc_79c20fc4",
+      "revId": "3fa03e0f3d9ce5de8198764b6714048d2ccd9c04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ff6d9d74_3e70b7ca",
         "filename": "third_party/zlib/crc32.c",
         "patchSetId": 5
