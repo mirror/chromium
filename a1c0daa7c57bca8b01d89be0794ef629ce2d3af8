@@ -149,6 +149,24 @@
     },
     {
       "key": {
+        "uuid": "32382a4f_7cc0b5a9",
+        "filename": "chrome/browser/chromeos/login/webview_login_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 667,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-12-15T11:05:33Z",
+      "side": 1,
+      "message": "Thanks for explaining! I have a few follow-up questions.\nI\u0027ve decided to continue on this CL so the actual behavior lands before M-65 feature freeze and will trust in the test runner spawning separate processes for now ;-).\nI\u0027ve filed crbug.com/795231 so we can discuss the approach \u0026 implementation there.",
+      "parentUuid": "05e14758_b4f6c614",
+      "revId": "a1c0daa7c57bca8b01d89be0794ef629ce2d3af8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "100500c9_485b4742",
         "filename": "chrome/browser/chromeos/policy/device_network_configuration_updater.cc",
         "patchSetId": 5
@@ -396,6 +414,24 @@
     },
     {
       "key": {
+        "uuid": "6ad20a62_9624ff78",
+        "filename": "chrome/browser/chromeos/policy/device_network_configuration_updater.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-12-15T11:05:33Z",
+      "side": 1,
+      "message": "Decided to leaving this in for now.",
+      "parentUuid": "80382432_6be2b976",
+      "revId": "a1c0daa7c57bca8b01d89be0794ef629ce2d3af8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8a20e735_a6540847",
         "filename": "chrome/browser/chromeos/policy/device_network_configuration_updater.h",
         "patchSetId": 5
@@ -510,6 +546,24 @@
       "revId": "a1c0daa7c57bca8b01d89be0794ef629ce2d3af8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eed11155_3afb4c16",
+        "filename": "chrome/browser/chromeos/policy/network_configuration_updater.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-12-15T11:05:33Z",
+      "side": 1,
+      "message": "Though I agree that this is spammy - removing.\nThe actual policy application will log again in ManagedNetworkConfigurationHandlerImpl::SetPolicy. We don\u0027t need two of these.",
+      "parentUuid": "eb0c91be_dd7cb472",
+      "revId": "a1c0daa7c57bca8b01d89be0794ef629ce2d3af8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

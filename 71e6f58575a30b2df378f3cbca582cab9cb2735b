@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "41d49e75_590eb6cd",
+        "filename": "chrome/browser/chromeos/policy/device_network_configuration_updater.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-12-15T11:05:33Z",
+      "side": 1,
+      "message": "Done.\n(don\u0027t be sorry - I should\u0027ve spotted it especially since it\u0027s 3 lines away from the other occurence ;) )",
+      "parentUuid": "80d35c56_d8e334eb",
+      "range": {
+        "startLine": 76,
+        "startChar": 24,
+        "endLine": 76,
+        "endChar": 53
+      },
+      "revId": "71e6f58575a30b2df378f3cbca582cab9cb2735b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b42a6a91_90268d77",
         "filename": "chrome/browser/chromeos/policy/untrusted_authority_certs_cache.h",
         "patchSetId": 6
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "66ca1bba_079e518c",
+        "filename": "chrome/browser/chromeos/policy/untrusted_authority_certs_cache.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-12-15T11:05:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b42a6a91_90268d77",
+      "range": {
+        "startLine": 30,
+        "startChar": 25,
+        "endLine": 30,
+        "endChar": 30
+      },
+      "revId": "71e6f58575a30b2df378f3cbca582cab9cb2735b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d74d3cb7_6aad5c75",
         "filename": "chrome/browser/chromeos/policy/untrusted_authority_certs_cache.h",
         "patchSetId": 6
@@ -62,6 +110,24 @@
       "revId": "71e6f58575a30b2df378f3cbca582cab9cb2735b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66834d2b_461ff785",
+        "filename": "chrome/browser/chromeos/policy/untrusted_authority_certs_cache.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-12-15T11:05:33Z",
+      "side": 1,
+      "message": "Done - thanks for the thread reference :-)",
+      "parentUuid": "d74d3cb7_6aad5c75",
+      "revId": "71e6f58575a30b2df378f3cbca582cab9cb2735b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
