@@ -140,6 +140,30 @@
       "revId": "5583cbcee99fa6fda31e953517224b749c7c2838",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "923d17db_4cf75a15",
+        "filename": "content/browser/download/download_resource_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-12-15T22:07:02Z",
+      "side": 1,
+      "message": "I meant a static member function like: DownloadResourceHandler::UpdateSourceURL,\n\nso UkmRecorder would have\nfriend content::DownloadResourceHandler\n\nif this in an anonymous namespace, it can\u0027t be forward declared in elsewhere.",
+      "parentUuid": "0f30f27f_b1887f86",
+      "range": {
+        "startLine": 105,
+        "startChar": 6,
+        "endLine": 106,
+        "endChar": 73
+      },
+      "revId": "5583cbcee99fa6fda31e953517224b749c7c2838",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
