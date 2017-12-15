@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aac11056_bb7a3659",
+        "filename": "sandbox/win/src/sandbox.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1160859
+      },
+      "writtenOn": "2017-12-15T18:41:55Z",
+      "side": 1,
+      "message": "why does this have to be passed in the constructor, can\u0027t it be like all other policy configuration and be a method on TargetPolicy e.g. setAppContainerProfile() or something? We can still DCHECK if stuff is done in the wrong order, no?",
+      "range": {
+        "startLine": 71,
+        "startChar": 6,
+        "endLine": 71,
+        "endChar": 34
+      },
+      "revId": "4395b7737fa295fd9a03bd866d86958996fc6907",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
