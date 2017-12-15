@@ -1493,6 +1493,9 @@ bool FocusController::AdvanceFocusDirectionally(WebFocusType type) {
             type, area->ImageElement());
         starting_rect = VirtualRectForAreaElementAndDirection(*area, type);
       }
+    } else {
+      container = ScrollableEnclosingBoxOrParentFrameForNodeInDirection(
+          type, focused_element);
     }
   }
 
