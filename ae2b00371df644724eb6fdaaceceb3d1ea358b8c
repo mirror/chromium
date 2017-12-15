@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9d6f1697_80636373",
+        "filename": "components/viz/common/gpu/context_provider.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-15T22:53:37Z",
+      "side": 1,
+      "message": "Why is this common?",
+      "revId": "ae2b00371df644724eb6fdaaceceb3d1ea358b8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11c0dd78_809f5bce",
+        "filename": "components/viz/common/gpu/context_provider.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-15T22:53:37Z",
+      "side": 1,
+      "message": "Why is this common?",
+      "revId": "ae2b00371df644724eb6fdaaceceb3d1ea358b8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f94d00bb_923712dc",
+        "filename": "components/viz/common/gpu/context_provider.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-15T22:53:37Z",
+      "side": 1,
+      "message": "It\u0027d be a lot less churn to just keep this name as ContextProvider. Blink has names that match this too.  The new one could be RasterInterfaceProvider? Or just RasterProvider?",
+      "revId": "ae2b00371df644724eb6fdaaceceb3d1ea358b8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5da6988f_3e2e40d0",
+        "filename": "components/viz/common/gpu/context_provider.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-15T22:53:37Z",
+      "side": 1,
+      "message": "I think it\u0027d be nicer to do this without inheritance personally, and split this into separate header files - one class per file",
+      "revId": "ae2b00371df644724eb6fdaaceceb3d1ea358b8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96f018a7_c1fca5a1",
+        "filename": "components/viz/common/gpu/context_provider.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-15T22:53:37Z",
+      "side": 1,
+      "message": "Making a subclass the is both of these is a bit odd to me, and now we have a scoped lock for both levels of provider, making 3 locks in the hierarchy for this class?\n\nWould code be more clear by just having a GLContextProvider and a RasterContextProvider where it wants both?",
+      "revId": "ae2b00371df644724eb6fdaaceceb3d1ea358b8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
