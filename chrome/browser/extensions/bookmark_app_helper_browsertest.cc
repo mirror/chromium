@@ -36,8 +36,9 @@ class TestBookmarkAppHelper : public BookmarkAppHelper {
   TestBookmarkAppHelper(Profile* profile,
                         WebApplicationInfo web_app_info,
                         content::WebContents* contents,
-                        base::Closure on_icons_downloaded_closure)
-      : BookmarkAppHelper(profile, web_app_info, contents),
+                        base::Closure on_icons_downloaded_closure,
+                        WebAppInstallSource install_source)
+      : BookmarkAppHelper(profile, web_app_info, contents, install_source),
         on_icons_downloaded_closure_(on_icons_downloaded_closure) {}
 
   // TestBookmarkAppHelper:
@@ -77,7 +78,8 @@ class WebAppReadyMsgWatcher : public content::BrowserMessageFilter {
       info.title = base::UTF8ToUTF16(info.app_url.spec());
 
     bookmark_app_helper_ = base::MakeUnique<TestBookmarkAppHelper>(
-        browser_->profile(), info, web_contents(), quit_closure_);
+        browser_->profile(), info, web_contents(), quit_closure_,
+        WebAppInstallSource::MENU);
     bookmark_app_helper_->Create(
         base::Bind(&WebAppReadyMsgWatcher::FinishCreateBookmarkApp, this));
   }
