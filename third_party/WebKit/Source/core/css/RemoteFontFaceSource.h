@@ -15,15 +15,6 @@ class CSSFontFace;
 class FontSelector;
 class FontCustomPlatformData;
 
-enum FontDisplay {
-  kFontDisplayAuto,
-  kFontDisplayBlock,
-  kFontDisplaySwap,
-  kFontDisplayFallback,
-  kFontDisplayOptional,
-  kFontDisplayEnumMax
-};
-
 class RemoteFontFaceSource final : public CSSFontFaceSource,
                                    public FontResourceClient {
   USING_PRE_FINALIZER(RemoteFontFaceSource, Dispose);
@@ -32,7 +23,7 @@ class RemoteFontFaceSource final : public CSSFontFaceSource,
  public:
   enum DisplayPeriod { kBlockPeriod, kSwapPeriod, kFailurePeriod };
 
-  RemoteFontFaceSource(CSSFontFace*, FontResource*, FontSelector*, FontDisplay);
+  RemoteFontFaceSource(CSSFontFace*, FontResource*, FontSelector*);
   ~RemoteFontFaceSource() override;
   void Dispose();
 
@@ -120,7 +111,6 @@ class RemoteFontFaceSource final : public CSSFontFaceSource,
   // |nullptr| if font is not loaded or failed to decode.
   scoped_refptr<FontCustomPlatformData> custom_font_data_;
 
-  const FontDisplay display_;
   DisplayPeriod period_;
   FontLoadHistograms histograms_;
   bool is_intervention_triggered_;

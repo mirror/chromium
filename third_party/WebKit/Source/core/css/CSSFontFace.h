@@ -71,6 +71,8 @@ class CORE_EXPORT CSSFontFace final
   bool FontLoaded(RemoteFontFaceSource*);
   bool DidBecomeVisibleFallback(RemoteFontFaceSource*);
 
+  FontDisplay GetFontDisplay() { return font_face_->GetFontDisplay(); }
+
   scoped_refptr<SimpleFontData> GetFontData(const FontDescription&);
 
   FontFace::LoadStatusType LoadStatus() const {

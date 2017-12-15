@@ -729,8 +729,7 @@ void FontFace::InitCSSFontFace(ExecutionContext* context, const CSSValue* src) {
             NOTREACHED();
           }
           source =
-              new RemoteFontFaceSource(css_font_face_, fetched, font_selector,
-                                       CSSValueToFontDisplay(display_.Get()));
+              new RemoteFontFaceSource(css_font_face_, fetched, font_selector);
         }
       }
     } else {
@@ -763,6 +762,10 @@ void FontFace::InitCSSFontFace(const unsigned char* data, size_t size) {
     SetError(DOMException::Create(kSyntaxError,
                                   "Invalid font data in ArrayBuffer."));
   css_font_face_->AddSource(source);
+}
+
+FontDisplay FontFace::GetFontDisplay() const {
+  return CSSValueToFontDisplay(display_.Get());
 }
 
 void FontFace::Trace(blink::Visitor* visitor) {

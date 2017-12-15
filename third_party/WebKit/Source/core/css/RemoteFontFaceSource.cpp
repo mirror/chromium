@@ -27,22 +27,16 @@ namespace blink {
 
 RemoteFontFaceSource::RemoteFontFaceSource(CSSFontFace* css_font_face,
                                            FontResource* font,
-                                           FontSelector* font_selector,
-                                           FontDisplay display)
+                                           FontSelector* font_selector)
     : face_(css_font_face),
       font_selector_(font_selector),
-      display_(display),
-      period_(display == kFontDisplaySwap ? kSwapPeriod : kBlockPeriod),
+      period_(kBlockPeriod),
       histograms_(font->Url().ProtocolIsData()
                       ? FontLoadHistograms::kFromDataURL
                       : font->IsLoaded() ? FontLoadHistograms::kFromMemoryCache
                                          : FontLoadHistograms::kFromUnknown),
       is_intervention_triggered_(false) {
   DCHECK(face_);
-  if (ShouldTriggerWebFontsIntervention()) {
-    is_intervention_triggered_ = true;
-    period_ = kSwapPeriod;
-  }
   // Note: this may call NotifyFinished() and ClearResource().
   SetResource(font);
 }
@@ -101,9 +95,9 @@ void RemoteFontFaceSource::FontLoadShortLimitExceeded(FontResource*) {
   if (IsLoaded())
     return;
 
-  if (display_ == kFontDisplayFallback)
+  if (face_->GetFontDisplay() == kFontDisplayFallback)
     SwitchToSwapPeriod();
-  else if (display_ == kFontDisplayOptional)
+  else if (face_->GetFontDisplay() == kFontDisplayOptional)
     SwitchToFailurePeriod();
 }
 
@@ -111,10 +105,11 @@ void RemoteFontFaceSource::FontLoadLongLimitExceeded(FontResource*) {
   if (IsLoaded())
     return;
 
-  if (display_ == kFontDisplayBlock ||
-      (!is_intervention_triggered_ && display_ == kFontDisplayAuto))
+  if (face_->GetFontDisplay() == kFontDisplayBlock ||
+      (!is_intervention_triggered_ &&
+       face_->GetFontDisplay() == kFontDisplayAuto))
     SwitchToSwapPeriod();
-  else if (display_ == kFontDisplayFallback)
+  else if (face_->GetFontDisplay() == kFontDisplayFallback)
     SwitchToFailurePeriod();
 
   histograms_.LongLimitExceeded();
@@ -156,7 +151,7 @@ bool RemoteFontFaceSource::ShouldTriggerWebFontsIntervention() {
       WebEffectiveConnectionType::kTypeOffline <= connection_type &&
       connection_type <= WebEffectiveConnectionType::kType3G;
 
-  return network_is_slow && display_ == kFontDisplayAuto;
+  return network_is_slow && face_->GetFontDisplay() == kFontDisplayAuto;
 }
 
 bool RemoteFontFaceSource::IsLowPriorityLoadingAllowedForRemoteFont() const {
@@ -197,9 +192,8 @@ RemoteFontFaceSource::CreateLoadingFallbackFontData(
     NOTREACHED();
     return nullptr;
   }
-  scoped_refptr<CSSCustomFontData> css_font_data = CSSCustomFontData::Create(
-      this, period_ == kBlockPeriod ? CSSCustomFontData::kInvisibleFallback
-                                    : CSSCustomFontData::kVisibleFallback);
+  scoped_refptr<CSSCustomFontData> css_font_data =
+      CSSCustomFontData::Create(this);
   return SimpleFontData::Create(temporary_font->PlatformData(), css_font_data);
 }
 
@@ -208,9 +202,16 @@ void RemoteFontFaceSource::BeginLoadIfNeeded() {
     return;
   DCHECK(GetResource());
 
+  if (period_ == kBlockPeriod && face_->GetFontDisplay() == kFontDisplaySwap)
+    period_ = kSwapPeriod;
+
   FontResource* font = ToFontResource(GetResource());
   if (font->StillNeedsLoad()) {
-    if (is_intervention_triggered_) {
+    if (ShouldTriggerWebFontsIntervention()) {
+      is_intervention_triggered_ = true;
+      DCHECK_EQ(period_, kBlockPeriod);
+      period_ = kSwapPeriod;
+
       font_selector_->GetExecutionContext()->AddConsoleMessage(
           ConsoleMessage::Create(
               kOtherMessageSource, kInfoMessageLevel,

@@ -56,6 +56,15 @@ class StringOrArrayBufferOrArrayBufferView;
 class CSSPropertyValueSet;
 class StyleRuleFontFace;
 
+enum FontDisplay {
+  kFontDisplayAuto,
+  kFontDisplayBlock,
+  kFontDisplaySwap,
+  kFontDisplayFallback,
+  kFontDisplayOptional,
+  kFontDisplayEnumMax
+};
+
 class CORE_EXPORT FontFace : public ScriptWrappable,
                              public ActiveScriptWrappable<FontFace>,
                              public ContextClient {
@@ -107,6 +116,7 @@ class CORE_EXPORT FontFace : public ScriptWrappable,
   DOMException* GetError() const { return error_; }
   FontSelectionCapabilities GetFontSelectionCapabilities() const;
   CSSFontFace* CssFontFace() { return css_font_face_.Get(); }
+  FontDisplay GetFontDisplay() const;
   size_t ApproximateBlankCharacterCount() const;
 
   virtual void Trace(blink::Visitor*);
