@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "de41a676_6dfaeb47",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_subpage.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-12-15T22:07:06Z",
+      "side": 1,
+      "message": "That wouldn\u0027t work, since the separator div also would not be able to span the width of the page if its parent div also did not span the width of the page.\n\nI added some comments to clarify the CSS - let me know what you think.",
+      "parentUuid": "95622f75_54e839ed",
+      "revId": "8b868e931b805a426430e3d097ff615731f8724c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a0a4cc8a_58e125db",
         "filename": "chrome/browser/resources/settings/internet_page/internet_subpage.html",
         "patchSetId": 3
@@ -172,6 +190,24 @@
       "side": 1,
       "message": "Don\u0027t create extra variables, but if there are existing vars that are close, push back to UX to use them. Feel free to escalate to bettes@. We should try to be consistent within Settings as much as possible.\n\nIf it\u0027s truly unique, i.e. doesn\u0027t fit the pattern of anywhere else, sure that\u0027s fine. I\u0027m just making sure that is really the case.",
       "parentUuid": "a3022462_c41dd4d8",
+      "revId": "8b868e931b805a426430e3d097ff615731f8724c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3f0a5bf_29f1c62a",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_subpage.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-12-15T22:07:06Z",
+      "side": 1,
+      "message": "I\u0027ve consolidated most of the values into shared CSS variables. There are two margin values that are specific to the page, but it looks better for the most part.",
+      "parentUuid": "fa031408_20e14659",
       "revId": "8b868e931b805a426430e3d097ff615731f8724c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
