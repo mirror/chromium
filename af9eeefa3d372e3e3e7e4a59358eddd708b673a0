@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "86c5c49e_08e2c0bb",
+        "filename": "third_party/WebKit/Source/core/css/cssom/CSSMatrixComponent.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-12-15T01:36:45Z",
+      "side": 1,
+      "message": "nit: IMO the ternary operator reads better here:\n\n    CSSMatrixComponent(matrix, options.is2D() ? options.is2D() : matrix-\u003eis2D());",
+      "revId": "af9eeefa3d372e3e3e7e4a59358eddd708b673a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
