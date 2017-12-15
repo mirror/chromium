@@ -81,7 +81,7 @@ class TreeNode : public TreeModelNode {
 
   // Adds |node| as a child of this node, at |index|. Returns a raw pointer to
   // the node.
-  NodeType* Add(std::unique_ptr<NodeType> node, int index) {
+  virtual NodeType* Add(std::unique_ptr<NodeType> node, int index) {
     DCHECK(node);
     DCHECK_GE(index, 0);
     DCHECK_LE(index, child_count());
@@ -93,7 +93,7 @@ class TreeNode : public TreeModelNode {
   }
 
   // Removes the node at the given index. Returns the removed node.
-  std::unique_ptr<NodeType> Remove(int index) {
+  virtual std::unique_ptr<NodeType> Remove(int index) {
     DCHECK(index >= 0 && index < child_count());
     children_[index]->parent_ = nullptr;
     std::unique_ptr<NodeType> ptr = std::move(children_[index]);
@@ -103,7 +103,7 @@ class TreeNode : public TreeModelNode {
 
   // Removes the given node. Prefer to remove by index if you know it to avoid
   // the search for the node to remove.
-  std::unique_ptr<NodeType> Remove(NodeType* node) {
+  virtual std::unique_ptr<NodeType> Remove(NodeType* node) {
     auto i = std::find_if(children_.begin(), children_.end(),
                           [node](const std::unique_ptr<NodeType>& ptr) {
                             return ptr.get() == node;
@@ -113,7 +113,7 @@ class TreeNode : public TreeModelNode {
   }
 
   // Removes all the children from this node.
-  void DeleteAll() { children_.clear(); }
+  virtual void DeleteAll() { children_.clear(); }
 
   // Returns the parent node, or nullptr if this is the root node.
   const NodeType* parent() const { return parent_; }

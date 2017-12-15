@@ -102,6 +102,11 @@ class BookmarkBridge : public bookmarks::BaseBookmarkModelObserver,
                      jlong id,
                      jint type);
 
+  jint GetTotalBookmarkCount(JNIEnv* env,
+                             const base::android::JavaParamRef<jobject>& obj,
+                             jlong id,
+                             jint type);
+
   base::android::ScopedJavaLocalRef<jobject> GetChildAt(
       JNIEnv* env,
       const base::android::JavaParamRef<jobject>& obj,

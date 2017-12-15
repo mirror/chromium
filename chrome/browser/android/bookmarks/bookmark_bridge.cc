@@ -386,6 +386,15 @@ jint BookmarkBridge::GetChildCount(JNIEnv* env,
   return node->child_count();
 }
 
+jint BookmarkBridge::GetTotalBookmarkCount(JNIEnv* env,
+                                           const JavaParamRef<jobject>& obj,
+                                           jlong id,
+                                           jint type) {
+  DCHECK(IsLoaded());
+  const BookmarkNode* node = GetNodeByID(id, type);
+  return node->total_bookmark_count();
+}
+
 void BookmarkBridge::GetChildIDs(JNIEnv* env,
                                   const JavaParamRef<jobject>& obj,
                                   jlong id,

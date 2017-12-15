@@ -40,6 +40,31 @@ BookmarkNode::BookmarkNode(int64_t id, const GURL& url) : url_(url) {
 BookmarkNode::~BookmarkNode() {
 }
 
+BookmarkNode* BookmarkNode::Add(std::unique_ptr<BookmarkNode> node, int index) {
+  LOG(ERROR) << "Add Node: " << node->GetTitle() << " To " << GetTitle();
+  UpdateTotalBookmarkCount(node->total_bookmark_count_);
+  return ui::TreeNode<BookmarkNode>::Add(std::move(node), index);
+}
+
+std::unique_ptr<BookmarkNode> BookmarkNode::Remove(int index) {
+  BookmarkNode* node = GetChild(index);
+  LOG(ERROR) << "Remove Index: " << index << " (Node " << node->GetTitle()
+             << ") From " << GetTitle();
+  UpdateTotalBookmarkCount(-node->total_bookmark_count_);
+  return ui::TreeNode<BookmarkNode>::Remove(index);
+}
+
+std::unique_ptr<BookmarkNode> BookmarkNode::Remove(BookmarkNode* node) {
+  LOG(ERROR) << "Remove Node: " << node->GetTitle() << " From " << GetTitle();
+  return ui::TreeNode<BookmarkNode>::Remove(node);
+}
+
+void BookmarkNode::DeleteAll() {
+  UpdateTotalBookmarkCount(is_url() ? 1 - total_bookmark_count_
+                                    : -total_bookmark_count_);
+  ui::TreeNode<BookmarkNode>::DeleteAll();
+}
+
 void BookmarkNode::SetTitle(const base::string16& title) {
   // Replace newlines and other problematic whitespace characters in
   // folder/bookmark names with spaces.
@@ -120,6 +145,7 @@ void BookmarkNode::Initialize(int64_t id) {
   favicon_load_task_id_ = base::CancelableTaskTracker::kBadTaskId;
   meta_info_map_.reset();
   sync_transaction_version_ = kInvalidSyncTransactionVersion;
+  total_bookmark_count_ = is_url() ? 1 : 0;
 }
 
 void BookmarkNode::InvalidateFavicon() {
@@ -127,6 +153,17 @@ void BookmarkNode::InvalidateFavicon() {
   favicon_ = gfx::Image();
   favicon_type_ = favicon_base::IconType::kInvalid;
   favicon_state_ = INVALID_FAVICON;
+}
+
+void BookmarkNode::UpdateTotalBookmarkCount(int delta) {
+  BookmarkNode* node = this;
+  while (node) {
+    LOG(ERROR) << "Node: " << node->GetTitle();
+    LOG(ERROR) << "-- old count: " << node->total_bookmark_count_;
+    node->total_bookmark_count_ += delta;
+    LOG(ERROR) << "-- new count: " << node->total_bookmark_count_;
+    node = node->parent();
+  }
 }
 
 // BookmarkPermanentNode -------------------------------------------------------

@@ -460,6 +460,14 @@ public class BookmarkBridge {
     }
 
     /**
+     * @return The number of bookmarks in the sub tree that the given node has.
+     */
+    public int getTotalBookmarkCount(BookmarkId id) {
+        assert mIsNativeBookmarkModelLoaded;
+        return nativeGetTotalBookmarkCount(mNativeBookmarkBridge, id.getId(), id.getType());
+    }
+
+    /**
      * Reads sub-folder IDs, sub-bookmark IDs, or both of the given folder.
      *
      * @param getFolders   Whether sub-folders should be returned.
@@ -886,6 +894,7 @@ public class BookmarkBridge {
     private native BookmarkId nativeGetOtherFolderId(long nativeBookmarkBridge);
     private native BookmarkId nativeGetDesktopFolderId(long nativeBookmarkBridge);
     private native int nativeGetChildCount(long nativeBookmarkBridge, long id, int type);
+    private native int nativeGetTotalBookmarkCount(long nativeBookmarkBridge, long id, int type);
     private native void nativeGetChildIDs(long nativeBookmarkBridge, long id, int type,
             boolean getFolders, boolean getBookmarks, List<BookmarkId> bookmarksList);
     private native BookmarkId nativeGetChildAt(long nativeBookmarkBridge, long id, int type,

@@ -54,9 +54,15 @@ class BookmarkNode : public ui::TreeNode<BookmarkNode>, public TitledUrlNode {
 
   ~BookmarkNode() override;
 
-  // Set the node's internal title. Note that this neither invokes observers
-  // nor updates any bookmark model this node may be in. For that functionality,
-  // BookmarkModel::SetTitle(..) should be used instead.
+  // Override Add/Remove/Delete to update the total bookmark count.
+  BookmarkNode* Add(std::unique_ptr<BookmarkNode> node, int index) override;
+
+  std::unique_ptr<BookmarkNode> Remove(int index) override;
+
+  std::unique_ptr<BookmarkNode> Remove(BookmarkNode* node) override;
+
+  void DeleteAll() override;
+
   void SetTitle(const base::string16& title) override;
 
   // Returns an unique id for this node.
@@ -117,6 +123,8 @@ class BookmarkNode : public ui::TreeNode<BookmarkNode>, public TitledUrlNode {
   }
   int64_t sync_transaction_version() const { return sync_transaction_version_; }
 
+  int total_bookmark_count() const { return total_bookmark_count_; };
+
   // TitledUrlNode interface methods.
   const base::string16& GetTitledUrlNodeTitle() const override;
   const GURL& GetTitledUrlNodeUrl() const override;
@@ -132,6 +140,10 @@ class BookmarkNode : public ui::TreeNode<BookmarkNode>, public TitledUrlNode {
 
   // Called when the favicon becomes invalid.
   void InvalidateFavicon();
+
+  // A helper function to update the total bookmark count ot itself and all
+  // its ancestors.
+  void UpdateTotalBookmarkCount(int delta);
 
   // Sets the favicon's URL.
   void set_icon_url(const GURL& icon_url) {
@@ -195,6 +207,9 @@ class BookmarkNode : public ui::TreeNode<BookmarkNode>, public TitledUrlNode {
 
   // The sync transaction version. Defaults to kInvalidSyncTransactionVersion.
   int64_t sync_transaction_version_;
+
+  // Number of bookmarks in the subtree of this node.
+  int total_bookmark_count_;
 
   DISALLOW_COPY_AND_ASSIGN(BookmarkNode);
 };
