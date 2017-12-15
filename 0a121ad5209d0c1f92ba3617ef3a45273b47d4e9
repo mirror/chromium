@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dc51eef1_ffd0ad01",
+        "filename": "docs/speed/perf_bot_sheriffing.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-12-15T20:11:24Z",
+      "side": 1,
+      "message": "What to do when there are many bugs?",
+      "revId": "0a121ad5209d0c1f92ba3617ef3a45273b47d4e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1a6bb47_ca676e6d",
+        "filename": "docs/speed/perf_bot_sheriffing.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-12-15T20:11:24Z",
+      "side": 1,
+      "message": "Style nit: can you move \"A list of supported conditions\" to a new line?\n\nFor conditions, I would tell them to look at the tags.\n\nAlso can you mention how should multiple conditions should be combined?",
+      "revId": "0a121ad5209d0c1f92ba3617ef3a45273b47d4e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67480f17_4806e5b3",
+        "filename": "docs/speed/perf_bot_sheriffing.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-12-15T20:11:24Z",
+      "side": 1,
+      "message": "Let make this example more interesting by making it failing on Win platforms \u0026 Mac 10.11",
+      "revId": "0a121ad5209d0c1f92ba3617ef3a45273b47d4e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbf37a8b_f06dd8d7",
+        "filename": "docs/speed/perf_bot_sheriffing.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-12-15T20:11:24Z",
+      "side": 1,
+      "message": "Interestingly, the buildbot output does use the \"/\" between benchmark name \u0026 story name (https://ci.chromium.org/buildbot/chromium.perf/Android%20One%20Perf/853)\n\nSo this should be:\nmemory\\_benchmark/google\\_story",
+      "revId": "0a121ad5209d0c1f92ba3617ef3a45273b47d4e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2ff4d6e_136a457c",
+        "filename": "docs/speed/perf_bot_sheriffing.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-12-15T20:11:24Z",
+      "side": 1,
+      "message": "Same here",
+      "revId": "0a121ad5209d0c1f92ba3617ef3a45273b47d4e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0016375c_2fa06434",
+        "filename": "docs/speed/perf_bot_sheriffing.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-12-15T20:11:24Z",
+      "side": 1,
+      "message": "I will just mention this earlier",
+      "revId": "0a121ad5209d0c1f92ba3617ef3a45273b47d4e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc646691_531d44e5",
+        "filename": "docs/speed/perf_bot_sheriffing.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-12-15T20:11:24Z",
+      "side": 1,
+      "message": "hmhh, this is at benchmark level and not for \"a particular story\"",
+      "revId": "0a121ad5209d0c1f92ba3617ef3a45273b47d4e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
