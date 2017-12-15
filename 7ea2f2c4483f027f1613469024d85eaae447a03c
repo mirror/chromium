@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "fdaff733_749e486f",
+        "filename": "third_party/WebKit/LayoutTests/LeakExpectations",
+        "patchSetId": 33
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-12-15T17:08:13Z",
+      "side": 1,
+      "message": "Ah, ok, I missed the context here.",
+      "parentUuid": "6d32f8fd_05e8f5a5",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 131
+      },
+      "revId": "7ea2f2c4483f027f1613469024d85eaae447a03c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7d5d44c4_fc2aaa2d",
         "filename": "third_party/WebKit/LayoutTests/TestExpectations",
         "patchSetId": 33
@@ -187,6 +211,30 @@
       "revId": "7ea2f2c4483f027f1613469024d85eaae447a03c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "372e521c_7d95671f",
+        "filename": "third_party/WebKit/LayoutTests/TestExpectations",
+        "patchSetId": 33
+      },
+      "lineNbr": 650,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-12-15T17:08:13Z",
+      "side": 1,
+      "message": "But it fails without the flag? If that\u0027s the case the tests should live in LayoutTests/virtual/scroll_customization so they only run with the flag. Could you find out why these are all here and if the reason is just because of the flag behavior we can move them in a separate patch. Otherwise, please add a comment above explaining why all scroll-customization tests are allowed to be flaky.",
+      "parentUuid": "9498c862_17cc8f21",
+      "range": {
+        "startLine": 650,
+        "startChar": 0,
+        "endLine": 650,
+        "endChar": 110
+      },
+      "revId": "7ea2f2c4483f027f1613469024d85eaae447a03c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -331,6 +379,30 @@
     },
     {
       "key": {
+        "uuid": "7cb7c883_b03f42ef",
+        "filename": "third_party/WebKit/LayoutTests/fast/scroll-behavior/scroll-customization/scroll-customization-property.html",
+        "patchSetId": 33
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-12-15T17:08:13Z",
+      "side": 1,
+      "message": "No, we usually like that layout tests can be open and run in a live browser. In cases where you need internals, at the least we just don\u0027t want JS errors.",
+      "parentUuid": "4c033b9c_8e21c782",
+      "range": {
+        "startLine": 42,
+        "startChar": 2,
+        "endLine": 42,
+        "endChar": 11
+      },
+      "revId": "7ea2f2c4483f027f1613469024d85eaae447a03c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2fe6d68c_60be4203",
         "filename": "third_party/WebKit/LayoutTests/fast/scroll-behavior/scroll-customization/scroll-customization-property.html",
         "patchSetId": 33
@@ -425,6 +497,30 @@
     },
     {
       "key": {
+        "uuid": "ee2f493b_66a70d15",
+        "filename": "third_party/WebKit/LayoutTests/fast/scroll-behavior/scroll-customization/scroll-customization-property.html",
+        "patchSetId": 33
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-12-15T17:08:13Z",
+      "side": 1,
+      "message": "I replied on the new patch.",
+      "parentUuid": "13cdd707_a44797e9",
+      "range": {
+        "startLine": 206,
+        "startChar": 2,
+        "endLine": 206,
+        "endChar": 33
+      },
+      "revId": "7ea2f2c4483f027f1613469024d85eaae447a03c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a93fac7_de30bcfc",
         "filename": "third_party/WebKit/Source/core/dom/Element.cpp",
         "patchSetId": 33
@@ -469,6 +565,30 @@
       "revId": "7ea2f2c4483f027f1613469024d85eaae447a03c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb343613_d67f17e6",
+        "filename": "third_party/WebKit/Source/core/dom/Element.cpp",
+        "patchSetId": 33
+      },
+      "lineNbr": 648,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-12-15T17:08:13Z",
+      "side": 1,
+      "message": "sgtm.",
+      "parentUuid": "14c31766_a004754e",
+      "range": {
+        "startLine": 648,
+        "startChar": 6,
+        "endLine": 648,
+        "endChar": 59
+      },
+      "revId": "7ea2f2c4483f027f1613469024d85eaae447a03c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

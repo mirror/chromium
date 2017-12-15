@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "37e65d66_e5fc4734",
+        "filename": "cc/input/scroll_customization.h",
+        "patchSetId": 44
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-12-15T17:08:13Z",
+      "side": 1,
+      "message": "I don\u0027t necessarily have a strong opinion here, but IMO, if you\u0027re going to be using values as a bit field it makes more sense to just make them const int values rather than an enum. e.g. kPanRight | kPanDown isn\u0027t a valid value in your enum so it\u0027s somewhat awkward.",
+      "range": {
+        "startLine": 13,
+        "startChar": 5,
+        "endLine": 13,
+        "endChar": 40
+      },
+      "revId": "6d47eef81fc331132ab9e7a5d488be44c5ee7c2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f253459f_5c0ac2a3",
+        "filename": "third_party/WebKit/LayoutTests/fast/scroll-behavior/scroll-customization/scroll-customization-property.html",
+        "patchSetId": 44
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-12-15T17:08:13Z",
+      "side": 1,
+      "message": "Lets add asserts here for internals and gpuBenchmarking that output a message to make it clear that this test only works in content shell with these enabled. You can then remove the checks below I think (a failing assert throws IIRC).",
+      "range": {
+        "startLine": 29,
+        "startChar": 2,
+        "endLine": 31,
+        "endChar": 64
+      },
+      "revId": "6d47eef81fc331132ab9e7a5d488be44c5ee7c2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97d1205d_5a55aff9",
+        "filename": "third_party/WebKit/LayoutTests/fast/scroll-behavior/scroll-customization/scroll-customization-property.html",
+        "patchSetId": 44
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-12-15T17:08:13Z",
+      "side": 1,
+      "message": "You can shorten the distance between columns to make this comment fit in 80 cols",
+      "range": {
+        "startLine": 56,
+        "startChar": 2,
+        "endLine": 56,
+        "endChar": 99
+      },
+      "revId": "6d47eef81fc331132ab9e7a5d488be44c5ee7c2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce2c8bf0_94014f4f",
+        "filename": "third_party/WebKit/LayoutTests/fast/scroll-behavior/scroll-customization/scroll-customization-property.html",
+        "patchSetId": 44
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-12-15T17:08:13Z",
+      "side": 1,
+      "message": "Is this realistic? Does an Up also include some delta that isn\u0027t represented in a Move? Would it hurt to just have pointerUp at (deltaX, deltaY)?",
+      "range": {
+        "startLine": 180,
+        "startChar": 42,
+        "endLine": 180,
+        "endChar": 71
+      },
+      "revId": "6d47eef81fc331132ab9e7a5d488be44c5ee7c2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76675bc3_eb4737a8",
+        "filename": "third_party/WebKit/LayoutTests/fast/scroll-behavior/scroll-customization/scroll-customization-property.html",
+        "patchSetId": 44
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-12-15T17:08:13Z",
+      "side": 1,
+      "message": "shouldn\u0027t this be `element.style.scrollCustomization`?",
+      "range": {
+        "startLine": 191,
+        "startChar": 6,
+        "endLine": 191,
+        "endChar": 33
+      },
+      "revId": "6d47eef81fc331132ab9e7a5d488be44c5ee7c2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "677eeed8_e549e856",
+        "filename": "third_party/WebKit/LayoutTests/fast/scroll-behavior/scroll-customization/scroll-customization-property.html",
+        "patchSetId": 44
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-12-15T17:08:13Z",
+      "side": 1,
+      "message": "You already specify testCase[0] and testCase[1] in the test()\u0027s description. This should probably state whether the case expected customization callbacks to be called and whether they were or not.",
+      "range": {
+        "startLine": 196,
+        "startChar": 13,
+        "endLine": 196,
+        "endChar": 105
+      },
+      "revId": "6d47eef81fc331132ab9e7a5d488be44c5ee7c2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a606c23_ffffb334",
+        "filename": "third_party/WebKit/Source/core/dom/Element.cpp",
+        "patchSetId": 44
+      },
+      "lineNbr": 620,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-12-15T17:08:13Z",
+      "side": 1,
+      "message": "This \"in scroll phase\" state is new. What is the consequence of not having it? It seems that we flip this bit on everything in the scroll chain at scroll begin - how can we get here if we\u0027re not in the scroll chain and thus have the bit flipped?",
+      "range": {
+        "startLine": 620,
+        "startChar": 6,
+        "endLine": 620,
+        "endChar": 61
+      },
+      "revId": "6d47eef81fc331132ab9e7a5d488be44c5ee7c2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e8a7320_8c88307f",
+        "filename": "third_party/WebKit/Source/core/dom/Element.cpp",
+        "patchSetId": 44
+      },
+      "lineNbr": 3255,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-12-15T17:08:13Z",
+      "side": 1,
+      "message": "You shouldn\u0027t need to separate the None case explicitly here - it\u0027ll be handled correctly by the bitfield check.\n\nAuto would as well except for the case where deltaX and deltaY are both \u003c the epsilon. Do we really want to start a scroll phase if the delta hint has no direction?",
+      "range": {
+        "startLine": 3254,
+        "startChar": 6,
+        "endLine": 3255,
+        "endChar": 75
+      },
+      "revId": "6d47eef81fc331132ab9e7a5d488be44c5ee7c2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ac63ce1_6af488a0",
+        "filename": "third_party/WebKit/Source/core/input/ScrollManager.cpp",
+        "patchSetId": 44
+      },
+      "lineNbr": 724,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-12-15T17:08:13Z",
+      "side": 1,
+      "message": "use ToElement()",
+      "range": {
+        "startLine": 724,
+        "startChar": 25,
+        "endLine": 724,
+        "endChar": 46
+      },
+      "revId": "6d47eef81fc331132ab9e7a5d488be44c5ee7c2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
