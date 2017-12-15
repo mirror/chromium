@@ -2716,6 +2716,38 @@ TEST_F(DiskCacheEntryTest, SimpleCacheErrorThenDoom) {
   entry->Doom();  // Should not crash.
 }
 
+TEST_F(DiskCacheEntryTest, SimpleCacheDoomErrorRace) {
+  // Code coverage for a doom racing with a doom induced by a failure.
+  SetSimpleCacheMode();
+  // Disable optimistic ops so we can block on CreateEntry and start
+  // WriteData off with an empty op queue.
+  SetCacheType(net::APP_CACHE);
+  InitCache();
+
+  const char key[] = "the first key";
+  const int kSize1 = 10;
+  scoped_refptr<net::IOBuffer> buffer1(new net::IOBuffer(kSize1));
+  CacheTestFillBuffer(buffer1->data(), kSize1, false);
+
+  disk_cache::Entry* entry = nullptr;
+  ASSERT_EQ(net::OK, CreateEntry(key, &entry));
+  ASSERT_TRUE(entry != nullptr);
+
+  // Now an empty _1 file, to cause a stream 2 write to fail.
+  base::FilePath entry_file1_path = cache_path_.AppendASCII(
+      disk_cache::simple_util::GetFilenameFromKeyAndFileIndex(key, 1));
+  base::File entry_file1(entry_file1_path,
+                         base::File::FLAG_WRITE | base::File::FLAG_CREATE);
+  ASSERT_TRUE(entry_file1.IsValid());
+
+  entry->WriteData(2, 0, buffer1.get(), kSize1, net::CompletionCallback(), /* truncate= */ true);
+
+  net::TestCompletionCallback cb;
+  cache_->DoomEntry(key, cb.callback());
+  entry->Close();
+  EXPECT_EQ(0, cb.WaitForResult());
+}
+
 bool TruncatePath(const base::FilePath& file_path, int64_t length) {
   base::File file(file_path, base::File::FLAG_WRITE | base::File::FLAG_OPEN);
   if (!file.IsValid())
