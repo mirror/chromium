@@ -12,6 +12,10 @@
 #include "extensions/browser/browser_context_keyed_api_factory.h"
 #include "ui/message_center/notification_types.h"
 
+#if defined(OS_CHROMEOS)
+#include "chrome/browser/chromeos/printing/cups_printers_manager.h"
+#endif
+
 namespace extensions {
 
 class AutotestPrivateLogoutFunction : public UIThreadExtensionFunction {
@@ -206,6 +210,20 @@ class AutotestPrivateSetPlayStoreEnabledFunction
 
  private:
   ~AutotestPrivateSetPlayStoreEnabledFunction() override {}
+  ResponseAction Run() override;
+};
+
+class AutotestPrivateGetPrinterListFunction : public UIThreadExtensionFunction {
+ public:
+  DECLARE_EXTENSION_FUNCTION("autotestPrivate.getPrinterList",
+                             AUTOTESTPRIVATE_GETPRINTERLIST)
+
+ private:
+#if defined(OS_CHROMEOS)
+  static std::string GetPrinterType(
+      chromeos::CupsPrintersManager::PrinterClass type);
+#endif
+  ~AutotestPrivateGetPrinterListFunction() override = default;
   ResponseAction Run() override;
 };
 
