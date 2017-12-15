@@ -383,6 +383,10 @@ class ASH_EXPORT ShelfView : public views::View,
 
   bool CanPrepareForDrag(Pointer pointer, const ui::LocatedEvent& event);
 
+  // Whether |item_view| is a ShelfButton and it's state is STATE_DRAGGING.
+  bool ShelfButtonIsInDrag(const ShelfItemType item_type,
+                           const views::View* item_view) const;
+
   // The model; owned by Launcher.
   ShelfModel* model_;
 
