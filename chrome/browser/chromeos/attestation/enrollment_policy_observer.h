@@ -12,6 +12,7 @@
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "chrome/browser/chromeos/settings/cros_settings.h"
+#include "chromeos/attestation/attestation_constants.h"
 
 namespace policy {
 class CloudPolicyClient;
@@ -64,10 +65,8 @@ class EnrollmentPolicyObserver {
   // will be true.
   void OnUploadComplete(bool status);
 
-  // Reschedules a policy check (i.e. a call to Start) for a later time.
-  // TODO(crbug.com/256845): A better solution would be to wait for a DBUS
-  // signal which indicates the system is ready to process this task.
-  void Reschedule();
+  // Handles a failure to get a certificate.
+  void HandleGetCertificateFailure(AttestationStatus status);
 
   CrosSettings* cros_settings_;
   policy::CloudPolicyClient* policy_client_;
