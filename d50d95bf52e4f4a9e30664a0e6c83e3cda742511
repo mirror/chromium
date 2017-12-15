@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3d2c516c_2609886a",
+        "filename": "gin/v8_platform.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-12-15T16:05:52Z",
+      "side": 1,
+      "message": "This seems like fairly specialized logic which should probably be left for the embedder to define. Should we just have an optionally settable opaque function pointer here?",
+      "range": {
+        "startLine": 236,
+        "startChar": 8,
+        "endLine": 236,
+        "endChar": 31
+      },
+      "revId": "d50d95bf52e4f4a9e30664a0e6c83e3cda742511",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
