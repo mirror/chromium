@@ -42,9 +42,16 @@ _icon_names = [
 
 source_set("material_components_ios") {
   sources = [
+    "src/components/ActivityIndicator/src/ColorThemer/MDCActivityIndicatorColorThemer.h",
+    "src/components/ActivityIndicator/src/ColorThemer/MDCActivityIndicatorColorThemer.m",
     "src/components/ActivityIndicator/src/MDCActivityIndicator.h",
     "src/components/ActivityIndicator/src/MDCActivityIndicator.m",
     "src/components/ActivityIndicator/src/MaterialActivityIndicator.h",
+    "src/components/ActivityIndicator/src/private/MDCActivityIndicator+Private.h",
+    "src/components/ActivityIndicator/src/private/MDCActivityIndicatorMotionSpec.h",
+    "src/components/ActivityIndicator/src/private/MDCActivityIndicatorMotionSpec.m",
+    "src/components/ActivityIndicator/src/private/MaterialActivityIndicatorStrings.h",
+    "src/components/ActivityIndicator/src/private/MaterialActivityIndicatorStrings_table.h",
     "src/components/AnimationTiming/src/CAMediaTimingFunction+MDCAnimationTiming.h",
     "src/components/AnimationTiming/src/CAMediaTimingFunction+MDCAnimationTiming.m",
     "src/components/AnimationTiming/src/MaterialAnimationTiming.h",
@@ -59,14 +66,17 @@ source_set("material_components_ios") {
     "src/components/BottomSheet/src/MDCBottomSheetController.m",
     "src/components/BottomSheet/src/MDCBottomSheetPresentationController.h",
     "src/components/BottomSheet/src/MDCBottomSheetPresentationController.m",
+    "src/components/BottomSheet/src/MDCBottomSheetTransition.h",
+    "src/components/BottomSheet/src/MDCBottomSheetTransition.m",
     "src/components/BottomSheet/src/MDCBottomSheetTransitionController.h",
     "src/components/BottomSheet/src/MDCBottomSheetTransitionController.m",
+    "src/components/BottomSheet/src/MaterialBottomSheet.h",
     "src/components/BottomSheet/src/UIViewController+MaterialBottomSheet.h",
     "src/components/BottomSheet/src/UIViewController+MaterialBottomSheet.m",
+    "src/components/BottomSheet/src/private/MDCBottomSheetMotionSpec.h",
+    "src/components/BottomSheet/src/private/MDCBottomSheetMotionSpec.m",
     "src/components/BottomSheet/src/private/MDCDraggableView.h",
     "src/components/BottomSheet/src/private/MDCDraggableView.m",
-    "src/components/BottomSheet/src/private/MDCSheetBehavior.h",
-    "src/components/BottomSheet/src/private/MDCSheetBehavior.m",
     "src/components/BottomSheet/src/private/MDCSheetContainerView.h",
     "src/components/BottomSheet/src/private/MDCSheetContainerView.m",
     "src/components/ButtonBar/src/MDCButtonBar.h",
@@ -270,10 +280,16 @@ source_set("material_components_ios") {
     ":material_component_ic_arrow_back_bundle",
     "//ios/third_party/material_internationalization_ios:material_internationalization_ios+link",
     "//ios/third_party/material_text_accessibility_ios",
+    "//ios/third_party/motion_animator_objc:motion_animator_objc+link",
+    "//ios/third_party/motion_transitioning_objc:motion_transitioning_objc+link",
   ]
 
   if (current_toolchain == default_toolchain) {
-    deps += [ "//ios/third_party/material_internationalization_ios:material_internationalization_ios+bundle" ]
+    deps += [
+      "//ios/third_party/material_internationalization_ios:material_internationalization_ios+bundle",
+      "//ios/third_party/motion_animator_objc:motion_animator_objc+bundle",
+      "//ios/third_party/motion_transitioning_objc:motion_transitioning_objc+bundle",
+    ]
   }
 
   foreach(icon_name, _icon_names) {
