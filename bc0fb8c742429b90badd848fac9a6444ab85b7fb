@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f9d4c52d_6d554003",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_subpage.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-12-15T22:34:32Z",
+      "side": 1,
+      "message": "This much commentary in CSS suggests we should figure out how to simplify the rules :)",
+      "revId": "bc0fb8c742429b90badd848fac9a6444ab85b7fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f8ad5ec_2dd241cf",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_subpage.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-12-15T22:34:32Z",
+      "side": 1,
+      "message": "Instead of using --cr-separator-line in these divs, we can do something like:\n\n.separator {\n  -webkit-padding-end: 0px;\n  -webkit-padding-start: 0px;\n  border-bottom: var(--cr-separator-line);\n}\n\nThen use it like:\n\n\u003ctemplate dom-if\u003d\"showGmsCoreNotificationsSection_\"\u003e\n  \u003cdiv class\u003d\"separator\"\u003e\u003c/div\u003e\n  \u003cdiv id\u003d\"gmscore-notifications-container\"\u003e ...\n  \u003cdiv class\u003d\"separator\" hidden$\u003d\"[[!haveContentBelowGmsCoreNotifications(..)\"]]\u003e\u003c/div\u003e\n\u003c/template\u003e",
+      "revId": "bc0fb8c742429b90badd848fac9a6444ab85b7fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4deeac0_c63897aa",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_subpage.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-12-15T22:34:32Z",
+      "side": 1,
+      "message": "It seems a little weird to me that this toggle is down at the bottom but the instructions are above \u0027no networks\u0027. (I realize third party VPNs will not be visible with either, but it would be nice if we could group the tether section).",
+      "revId": "bc0fb8c742429b90badd848fac9a6444ab85b7fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
