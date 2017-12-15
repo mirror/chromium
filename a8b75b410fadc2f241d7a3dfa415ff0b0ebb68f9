@@ -16,6 +16,24 @@
       "revId": "a8b75b410fadc2f241d7a3dfa415ff0b0ebb68f9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19989dc4_681fb28c",
+        "filename": "chrome/browser/chromeos/status/data_promo_notification.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-15T00:00:26Z",
+      "side": 1,
+      "message": "without that switch, you\u0027ll see at most one notification. Now, with that switch the same is true. I thought it better to be able to test actual behavior. This move was necessary because I was removing the check for whether the data saver promo notification was still visible (information that is no longer available synchronously from the MC), but was actually unnecessary anyway since we only show at most one notification per session (enforced by |notifications_shown_|).",
+      "parentUuid": "049c5da9_041c499e",
+      "revId": "a8b75b410fadc2f241d7a3dfa415ff0b0ebb68f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
