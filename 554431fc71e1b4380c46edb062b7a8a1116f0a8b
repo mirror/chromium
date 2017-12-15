@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9fa5dd5f_f2e0da1d",
+        "filename": "content/browser/payments/payment_app_info_fetcher.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1114659
+      },
+      "writtenOn": "2017-12-15T17:38:05Z",
+      "side": 1,
+      "message": "You\u0027re right, but the problem exists in previous code and this patch is just fixing TSAN flaky test. I didn\u0027t want to change existing logic in this CL. If you don\u0027t mind, I left a FIXME comment and then I\u0027ll write a follow-up CL to fix the problem.\nBut if you think the problem has to be fixed in this patch, I\u0027ll try it in this CL.",
+      "parentUuid": "2c40b427_c662bebd",
+      "range": {
+        "startLine": 122,
+        "startChar": 2,
+        "endLine": 122,
+        "endChar": 56
+      },
+      "revId": "554431fc71e1b4380c46edb062b7a8a1116f0a8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1b5a3219_0313f679",
         "filename": "content/browser/payments/payment_app_info_fetcher.h",
         "patchSetId": 4
