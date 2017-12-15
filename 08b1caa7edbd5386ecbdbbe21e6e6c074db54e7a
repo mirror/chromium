@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "aae73df2_a3c70d4a",
+        "filename": "chrome/browser/ui/omnibox/omnibox_view_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-12-15T21:46:04Z",
+      "side": 1,
+      "message": "I think that is likely true, but I\u0027m trying to confine my changes to the minimal possible in this CL to get these tests enabled again.\n\nI\u0027m not confident enough to start changing lots of things.",
+      "parentUuid": "1d01db2d_6ddf2752",
+      "revId": "08b1caa7edbd5386ecbdbbe21e6e6c074db54e7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6a4b3e87_b7e21b8b",
         "filename": "chrome/browser/ui/omnibox/omnibox_view_browsertest.cc",
         "patchSetId": 5
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "2964c428_07c87447",
+        "filename": "chrome/browser/ui/omnibox/omnibox_view_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-12-15T21:46:04Z",
+      "side": 1,
+      "message": "Yeah that\u0027s kind of where I\u0027m at too -- just re-enabling the minimum right now and working from there.",
+      "parentUuid": "6a4b3e87_b7e21b8b",
+      "revId": "08b1caa7edbd5386ecbdbbe21e6e6c074db54e7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "23beffd9_ff89473c",
         "filename": "chrome/browser/ui/omnibox/omnibox_view_browsertest.cc",
         "patchSetId": 5
@@ -47,6 +83,24 @@
       "writtenOn": "2017-12-15T21:03:54Z",
       "side": 1,
       "message": "This is the bug this CL is supposed to fix.  Are you saying the fix doesn\u0027t work on Mac?",
+      "revId": "08b1caa7edbd5386ecbdbbe21e6e6c074db54e7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d02c8dd_0ed1f744",
+        "filename": "chrome/browser/ui/omnibox/omnibox_view_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1250,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-12-15T21:46:04Z",
+      "side": 1,
+      "message": "This test seems to fail reliably on the Mac trybot per PS4. The failure seems to be different from the assertion tripped that disabled this test in the first place though.\n\nI\u0027d guess it\u0027s somewhat related but will require a different fix.",
+      "parentUuid": "23beffd9_ff89473c",
       "revId": "08b1caa7edbd5386ecbdbbe21e6e6c074db54e7a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
