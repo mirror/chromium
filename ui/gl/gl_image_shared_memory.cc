@@ -16,9 +16,8 @@
 
 namespace gl {
 
-GLImageSharedMemory::GLImageSharedMemory(const gfx::Size& size,
-                                         unsigned internalformat)
-    : GLImageMemory(size, internalformat) {}
+GLImageSharedMemory::GLImageSharedMemory(const gfx::Size& size)
+    : GLImageMemory(size) {}
 
 GLImageSharedMemory::~GLImageSharedMemory() {}
 
