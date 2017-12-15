@@ -67,6 +67,12 @@ class ServiceWorkerUtils {
 
   static std::string ClientTypeToString(
       blink::mojom::ServiceWorkerClientType type);
+
+  static bool IsEmptyClientInfo(
+      const blink::mojom::ServiceWorkerClientInfo& client_info);
+
+  static bool IsValidClientInfo(
+      const blink::mojom::ServiceWorkerClientInfo& client_info);
 };
 
 class CONTENT_EXPORT LongestScopeMatcher {

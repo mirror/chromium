@@ -15,6 +15,8 @@
 #include "content/public/common/content_features.h"
 #include "content/public/common/content_switches.h"
 #include "content/public/common/origin_util.h"
+#include "services/network/public/interfaces/request_context_frame_type.mojom.h"
+#include "third_party/WebKit/common/service_worker/service_worker_client.mojom.h"
 
 namespace content {
 
@@ -162,6 +164,24 @@ std::string ServiceWorkerUtils::ClientTypeToString(
   std::ostringstream oss;
   oss << type;
   return oss.str();
+}
+
+// static
+bool ServiceWorkerUtils::IsEmptyClientInfo(
+    const blink::mojom::ServiceWorkerClientInfo& client_info) {
+  return client_info.page_visibility_state ==
+             blink::mojom::PageVisibilityState::kLast &&
+         client_info.is_focused == false && client_info.url.is_empty() &&
+         client_info.frame_type ==
+             network::mojom::RequestContextFrameType::kLast &&
+         client_info.client_type ==
+             blink::mojom::ServiceWorkerClientType::kLast;
+}
+
+// static
+bool ServiceWorkerUtils::IsValidClientInfo(
+    const blink::mojom::ServiceWorkerClientInfo& client_info) {
+  return !IsEmptyClientInfo(client_info) && !client_info.client_uuid.empty();
 }
 
 bool LongestScopeMatcher::MatchLongest(const GURL& scope) {
