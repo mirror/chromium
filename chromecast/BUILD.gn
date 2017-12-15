@@ -50,6 +50,9 @@ group("all") {
 # This is a config which is applied on all cast_* targets (which should be all
 # code under chromecast/).
 config("cast_config") {
+  if (is_cast_desktop_build) {
+    defines = [ "CAST_DESKTOP_BUILD" ]
+  }
 }
 
 # A list of all public test() binaries. This is an organizational target that
