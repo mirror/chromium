@@ -111,12 +111,14 @@ class MediaEngagementServiceTest : public ChromeRenderViewHostTestHarness {
         profile(), &BuildTestHistoryService);
 
     test_clock_.SetNow(GetReferenceTime());
-    service_ =
-        base::WrapUnique(new MediaEngagementService(profile(), &test_clock_));
+    service_ = base::WrapUnique(StartNewMediaEngagementService());
   }
 
   MediaEngagementService* StartNewMediaEngagementService() {
-    return MediaEngagementService::Get(profile());
+    MediaEngagementService* service =
+        new MediaEngagementService(profile(), &test_clock_);
+    base::RunLoop().RunUntilIdle();
+    return service;
   }
 
   void RecordVisitAndPlaybackAndAdvanceClock(GURL url) {
@@ -502,7 +504,10 @@ TEST_F(MediaEngagementServiceTest, LogScoresOnStartupToHistogram) {
   ExpectScores(url3, 0.0, 1, 1, Now());
 
   base::HistogramTester histogram_tester;
-  StartNewMediaEngagementService();
+  std::unique_ptr<MediaEngagementService> new_service =
+      base::WrapUnique<MediaEngagementService>(
+          StartNewMediaEngagementService());
+  new_service->Shutdown();
 
   histogram_tester.ExpectTotalCount(
       MediaEngagementService::kHistogramScoreAtStartupName, 3);
