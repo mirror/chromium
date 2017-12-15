@@ -16,6 +16,24 @@
       "revId": "3d54411f1adccb400bed8374c5f2d05441b12b8e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03e1efd7_f8137e8b",
+        "filename": "third_party/WebKit/Source/core/css/RemoteFontFaceSource.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1115941
+      },
+      "writtenOn": "2017-12-15T08:18:26Z",
+      "side": 0,
+      "message": "I\u0027m considering deferring the start of web font intervention until BeginLoadIfNeeded(), as part of the fix of crbug.com/762957.\n\nSo I\u0027m fine with landing this as-is.",
+      "parentUuid": "6b920825_1747dbbc",
+      "revId": "3d54411f1adccb400bed8374c5f2d05441b12b8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
