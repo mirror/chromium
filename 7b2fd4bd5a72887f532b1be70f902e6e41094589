@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e338e69f_f1a47c60",
+        "filename": "media/audio/audio_debug_file_writer_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-12-15T14:16:01Z",
+      "side": 1,
+      "message": "Explicit constructor (\"git cl lint\" should warn about this). Also, maybe the parameter should be a base::test::ScopedTaskEnvironment::ExecutionMode instead of bool, since it\u0027s just converted to that type anyways.",
+      "revId": "7b2fd4bd5a72887f532b1be70f902e6e41094589",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
