@@ -7,6 +7,24 @@
  * @suppress {accessControls}
  */
 
+/**
+ * Many application panel tests are flaky because storage state (e.g. IndexedDB)
+ * doesn't get reset between tests.
+ */
+(async function resetState() {
+  // TODO(chenwilliam): Clean up state before the start of startup test. It can't be done the
+  // usual way because there's no DevTools session at the start of startup tests and by the time
+  // the session starts, certain tests may rely on certain storage state being preset.
+  if (Host.isStartupTest())
+    return;
+  var securityOrigin = new Common.ParsedURL(TestRunner.url()).securityOrigin();
+  var storageTypes =
+      ['appcache', 'cache_storage', 'cookies', 'indexeddb', 'local_storage', 'service_workers', 'websql'];
+  TestRunner.deprecatedWaitForInitAsyncTask();
+  await TestRunner.mainTarget.storageAgent().clearDataForOrigin(securityOrigin, storageTypes.join(','));
+  TestRunner.deprecatedFinishedInitAsyncTask();
+})();
+
 ApplicationTestRunner.createWebSQLDatabase = function(name) {
   return TestRunner.evaluateInPageAsync(`_openWebSQLDatabase("${name}")`);
 };

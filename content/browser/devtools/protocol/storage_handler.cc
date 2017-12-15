@@ -92,6 +92,11 @@ void GetUsageAndQuotaOnIOThread(
       base::Bind(&GotUsageAndQuotaDataCallback,
                  base::Passed(std::move(callback))));
 }
+
+void ClearedDataForOrigin(
+    std::unique_ptr<StorageHandler::ClearDataForOriginCallback> callback) {
+  callback->sendSuccess();
+}
 }  // namespace
 
 // Observer that listens on the IO thread for cache storage notifications and
@@ -270,11 +275,12 @@ Response StorageHandler::Disable() {
   return Response::OK();
 }
 
-Response StorageHandler::ClearDataForOrigin(
+void StorageHandler::ClearDataForOrigin(
     const std::string& origin,
-    const std::string& storage_types) {
+    const std::string& storage_types,
+    std::unique_ptr<ClearDataForOriginCallback> callback) {
   if (!process_)
-    return Response::InternalError();
+    return callback->sendFailure(Response::InternalError());
 
   StoragePartition* partition = process_->GetStoragePartition();
   std::vector<std::string> types = base::SplitString(
@@ -302,13 +308,16 @@ Response StorageHandler::ClearDataForOrigin(
   if (set.count(Storage::StorageTypeEnum::All))
     remove_mask |= StoragePartition::REMOVE_DATA_MASK_ALL;
 
-  if (!remove_mask)
-    return Response::InvalidParams("No valid storage type specified");
+  if (!remove_mask) {
+    return callback->sendFailure(
+        Response::InvalidParams("No valid storage type specified"));
+  }
 
-  partition->ClearDataForOrigin(
+  partition->ClearData(
       remove_mask, StoragePartition::QUOTA_MANAGED_STORAGE_MASK_ALL,
-      GURL(origin));
-  return Response::OK();
+      GURL(origin), StoragePartition::OriginMatcherFunction(), base::Time(),
+      base::Time::Max(),
+      base::BindOnce(&ClearedDataForOrigin, base::Passed(std::move(callback))));
 }
 
 void StorageHandler::GetUsageAndQuota(
