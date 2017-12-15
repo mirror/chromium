@@ -208,6 +208,23 @@
     },
     {
       "key": {
+        "uuid": "8790b5cc_9cd9295e",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1117,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-15T04:16:20Z",
+      "side": 1,
+      "message": "to close the loop on the chrome-harmony thread, I would say something like\n\n  // White text on |gfx::kGoogleBlue500| would be adjusted by AutoColorRedability.\n  // However, this specific combination has an exception (http://go/mdcontrast).\n  // So, disable AutoColorReadability.\n\nBut, if it works out neatly, I would put that comment in something like\n\nvoid HoverButton::SetProminent() {\n  // White text on |gfx::kGoogleBlue500| would be adjusted by AutoColorRedability.\n  // However, this specific combination has an exception (http://go/mdcontrast).\n  // So, disable AutoColorReadability.\n  ...\n}",
+      "revId": "5288b583723a027e778dacc54fa09638d8ce9e40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5f926acb_7d4277ac",
         "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
         "patchSetId": 13
