@@ -22,6 +22,30 @@
       "revId": "6761ffb30843c58411b0c93fab1552bc27770732",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68cb7edf_b36fb05f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1247538
+      },
+      "writtenOn": "2017-12-15T11:24:04Z",
+      "side": 1,
+      "message": "Yes, you\u0027re right. But this is the API call from JS promise\u0027s .catch(). \nUpper stack frames are:\n\nv8::internal::FunctionCallbackArguments::Call(void (*)(v8::FunctionCallbackInfo\u003cv8::Value\u003e const\u0026))\nv8::internal::MaybeHandle\u003cv8::internal::Object\u003e v8::internal::(anonymous namespace)::HandleApiCallHelper\u003cfalse\u003e(v8::internal::Isolate*, v8::internal::Handle\u003cv8::internal::HeapObject\u003e, v8::internal::Handle\u003cv8::internal::HeapObject\u003e, v8::internal::Handle\u003cv8::internal::FunctionTemplateInfo\u003e, v8::internal::Handle\u003cv8::internal::Object\u003e, v8::internal::BuiltinArguments)\nv8::internal::Builtin_Impl_HandleApiCall(v8::internal::BuiltinArguments, v8::internal::Isolate*)\n... some complied JS addresses ...\nv8::internal::(anonymous namespace)::Invoke(v8::internal::Isolate*, bool, v8::internal::Handle\u003cv8::internal::Object\u003e, v8::internal::Handle\u003cv8::internal::Object\u003e, int, v8::internal::Handle\u003cv8::internal::Object\u003e*, v8::internal::Handle\u003cv8::internal::Object\u003e, v8::internal::Execution::MessageHandling)\nv8::internal::Execution::TryCall(v8::internal::Isolate*, v8::internal::Handle\u003cv8::internal::Object\u003e, v8::internal::Handle\u003cv8::internal::Object\u003e, int, v8::internal::Handle\u003cv8::internal::Object\u003e*, v8::internal::Execution::MessageHandling, v8::internal::MaybeHandle\u003cv8::internal::Object\u003e*)\nv8::internal::Isolate::PromiseReactionJob(v8::internal::Handle\u003cv8::internal::PromiseReactionJobInfo\u003e, v8::internal::MaybeHandle\u003cv8::internal::Object\u003e*, v8::internal::MaybeHandle\u003cv8::internal::Object\u003e*)\nv8::internal::Isolate::RunMicrotasksInternal()\nv8::internal::Isolate::RunMicrotasks()\nblink::(anonymous namespace)::EndOfTaskRunner::DidProcessTask()\n\nNot sure the things getting clearer seeing that. Maybe it\u0027s good idea to write this way?\n\nblink::(anonymous namespace)::EndOfTaskRunner::DidProcessTask()\n  v8::internal::Isolate::RunMicrotasks()\n    v8::internal::Isolate::RunMicrotasksInternal()\n      v8::internal::Isolate::PromiseReactionJob()\n        ... some V8 magic to call browser API from JS ...\n          blink::PerformanceObserver::disconnect()\n            // and all the way as written now",
+      "parentUuid": "7d474878_e422c272",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 40
+      },
+      "revId": "6761ffb30843c58411b0c93fab1552bc27770732",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
