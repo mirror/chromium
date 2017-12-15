@@ -61,6 +61,12 @@ void TestWallpaperController::SetCustomizedDefaultWallpaper(
   NOTIMPLEMENTED();
 }
 
+void TestWallpaperController::UpdateCustomWallpaperLayout(
+    ash::mojom::WallpaperUserInfoPtr user_info,
+    wallpaper::WallpaperLayout layout) {
+  NOTIMPLEMENTED();
+}
+
 void TestWallpaperController::ShowUserWallpaper(
     ash::mojom::WallpaperUserInfoPtr user_info) {
   NOTIMPLEMENTED();
