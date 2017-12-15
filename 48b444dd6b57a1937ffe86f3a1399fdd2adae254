@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e1173bea_1f8725cf",
+        "filename": "chrome/browser/ui/ash/chrome_screenshot_grabber.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 603,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-12-15T03:36:14Z",
+      "side": 0,
+      "message": "FYI: IDR_SCREENSHOT_NOTIFICATION_ICON is still used in chrome/browser/chromeos/login/quick_unlock/quick_unlock_notification_controller.cc",
+      "revId": "48b444dd6b57a1937ffe86f3a1399fdd2adae254",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
