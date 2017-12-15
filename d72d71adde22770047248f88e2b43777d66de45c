@@ -149,6 +149,24 @@
       "revId": "d72d71adde22770047248f88e2b43777d66de45c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47ae8aec_a3e83b53",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1461,
+      "author": {
+        "id": 1243466
+      },
+      "writtenOn": "2017-12-15T15:29:00Z",
+      "side": 1,
+      "message": "\u003e Yes. I think this is worst case. But O(N^2 * LogN) because searching time in skipped_list is O(LogN).\n\nCorrection: O(N^2 * alpha) where alpha is searching time in hashset.",
+      "parentUuid": "01898d7f_ac2c56ed",
+      "revId": "d72d71adde22770047248f88e2b43777d66de45c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
