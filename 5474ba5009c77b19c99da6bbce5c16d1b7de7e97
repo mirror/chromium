@@ -16,6 +16,24 @@
       "revId": "5474ba5009c77b19c99da6bbce5c16d1b7de7e97",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "118e5d92_31fd38d2",
+        "filename": "content/browser/renderer_host/browser_compositor_view_mac.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-12-15T21:45:57Z",
+      "side": 1,
+      "message": "Oops, yes!",
+      "parentUuid": "f0ab29f4_dd0ced0b",
+      "revId": "5474ba5009c77b19c99da6bbce5c16d1b7de7e97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
