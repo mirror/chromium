@@ -576,6 +576,30 @@
       "revId": "585476e8d94db57b2ec02582b009e1d8ba4362d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4fe68db_cd6a7e94",
+        "filename": "content/renderer/input/render_widget_input_handler.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2017-12-15T22:27:58Z",
+      "side": 1,
+      "message": "I was following the same pattern as the route event function (you can see it is used in the content/browser/site_per_process_browsertest.cc). Basically it expects something and do some transformation underneath to route the event to the correct frame. There if you follow it does the device scale factor underneath. So I followed the same pattern here as well. Although aside from the device scale factor there is also another factor called page_scale_factor which again in both paths I see that is being applied. But it is not very clear to me that why that causes some of the tests to fail on Android. So I filed the bug to further investigate that case separately.",
+      "parentUuid": "4821d032_6b9fbfe0",
+      "range": {
+        "startLine": 163,
+        "startChar": 14,
+        "endLine": 163,
+        "endChar": 32
+      },
+      "revId": "585476e8d94db57b2ec02582b009e1d8ba4362d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
