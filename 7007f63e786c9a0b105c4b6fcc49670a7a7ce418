@@ -1,0 +1,146 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "97249adb_8f53a75c",
+        "filename": "ash/shelf/shelf_context_menu_model_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-12-15T21:53:45Z",
+      "side": 1,
+      "message": "Actually, this should be testing that they\u0027re not changed, period, as the values are written to logs.  It has nothing to do with updating other files / keeping files in sync.\n\nditto in other two files",
+      "revId": "7007f63e786c9a0b105c4b6fcc49670a7a7ce418",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f383cfbf_a7c0fa4a",
+        "filename": "ash/shelf/shelf_context_menu_model_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-12-15T21:53:45Z",
+      "side": 1,
+      "message": "Why are two enum values both 500?  Also, should enums.xml reflect them both?",
+      "revId": "7007f63e786c9a0b105c4b6fcc49670a7a7ce418",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ce2b061_df55c382",
+        "filename": "ash/shelf/shelf_context_menu_model_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-12-15T21:53:45Z",
+      "side": 1,
+      "message": "I don\u0027t think this item is necessary.  Do you?",
+      "revId": "7007f63e786c9a0b105c4b6fcc49670a7a7ce418",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4350ebfd_72c3cf24",
+        "filename": "chrome/browser/ui/app_list/app_context_menu.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-12-15T21:53:45Z",
+      "side": 1,
+      "message": "nit: /renumber",
+      "range": {
+        "startLine": 25,
+        "startChar": 49,
+        "endLine": 25,
+        "endChar": 56
+      },
+      "revId": "7007f63e786c9a0b105c4b6fcc49670a7a7ce418",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "180cd4e4_22b5d845",
+        "filename": "chrome/browser/ui/app_list/app_context_menu.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-12-15T21:53:45Z",
+      "side": 1,
+      "message": "Following best practices, please explicitly number all values (except END).\nhttps://chromium.googlesource.com/chromium/src.git/+/HEAD/tools/metrics/histograms/README.md#Enum-Histograms",
+      "revId": "7007f63e786c9a0b105c4b6fcc49670a7a7ce418",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a63258ef_6d0522c0",
+        "filename": "chrome/browser/ui/app_list/app_context_menu_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 491,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-12-15T21:53:45Z",
+      "side": 1,
+      "message": "I don\u0027t think this item is necessary.  Do you?",
+      "revId": "7007f63e786c9a0b105c4b6fcc49670a7a7ce418",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d025e5b_4bbe1355",
+        "filename": "chrome/browser/ui/ash/launcher/launcher_context_menu_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-12-15T21:53:45Z",
+      "side": 1,
+      "message": "I don\u0027t think this item is necessary.  Do you?",
+      "revId": "7007f63e786c9a0b105c4b6fcc49670a7a7ce418",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97ab27ec_7b65d8e7",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 12
+      },
+      "lineNbr": 5961,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-12-15T21:53:45Z",
+      "side": 1,
+      "message": "nit: use a more specific name.  There are a lot of commands running out the code base.  \"UICommands\"?  \"ChromeOSUICommands\"?",
+      "revId": "7007f63e786c9a0b105c4b6fcc49670a7a7ce418",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

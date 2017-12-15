@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "461d278d_e4232944",
+        "filename": "ash/shelf/shelf_view.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1881,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-12-15T21:53:45Z",
+      "side": 1,
+      "message": "It sounds like this a restriction that isn\u0027t expressed in the histogram description.  Please add it.",
+      "parentUuid": "380ad948_d7f1591d",
+      "revId": "1680f892a00e528bed9c99c52c6600f6ba6d6a3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "04827b65_fdce1a49",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 10
@@ -81,6 +99,30 @@
       "revId": "1680f892a00e528bed9c99c52c6600f6ba6d6a3f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "411cefba_84262b81",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 10
+      },
+      "lineNbr": 2135,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-12-15T21:53:45Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "5152eae2_101af019",
+      "range": {
+        "startLine": 2135,
+        "startChar": 42,
+        "endLine": 2135,
+        "endChar": 54
+      },
+      "revId": "1680f892a00e528bed9c99c52c6600f6ba6d6a3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -131,6 +173,30 @@
     },
     {
       "key": {
+        "uuid": "ec499f00_f247a73c",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 10
+      },
+      "lineNbr": 98648,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-12-15T21:53:45Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ecfbab87_f91bcd80",
+      "range": {
+        "startLine": 98648,
+        "startChar": 57,
+        "endLine": 98648,
+        "endChar": 0
+      },
+      "revId": "1680f892a00e528bed9c99c52c6600f6ba6d6a3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "25738820_fc516f1b",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 10
@@ -178,6 +244,30 @@
     },
     {
       "key": {
+        "uuid": "44fc0e69_dcae88c8",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 10
+      },
+      "lineNbr": 98649,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-12-15T21:53:45Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "85f0bc38_fac05d50",
+      "range": {
+        "startLine": 98649,
+        "startChar": 62,
+        "endLine": 98649,
+        "endChar": 0
+      },
+      "revId": "1680f892a00e528bed9c99c52c6600f6ba6d6a3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ae81d065_31498a72",
         "filename": "ui/base/models/simple_menu_model.cc",
         "patchSetId": 10
@@ -213,6 +303,30 @@
       "side": 1,
       "message": "This happens when someone creates a SimpleMenuModel and does not set the histogram name, which will be the vast majority of the time.",
       "parentUuid": "ae81d065_31498a72",
+      "range": {
+        "startLine": 466,
+        "startChar": 30,
+        "endLine": 466,
+        "endChar": 0
+      },
+      "revId": "1680f892a00e528bed9c99c52c6600f6ba6d6a3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdb8a29a_39127a00",
+        "filename": "ui/base/models/simple_menu_model.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 466,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-12-15T21:53:45Z",
+      "side": 1,
+      "message": "I don\u0027t understand the flow around here.  It sounds like this kind of restriction should be expressed in histograms.xml.\n\"Will not be logged if ...\"\nand please make that \"...\" actually reflect something about user behavior / features.  Histogram descriptions should be understandable to everyone, no deep knowledge of code structure required.\nhttps://chromium.googlesource.com/chromium/src.git/+/HEAD/tools/metrics/histograms/README.md#Understandable-to-Everyone",
+      "parentUuid": "efeb77f0_278cc5aa",
       "range": {
         "startLine": 466,
         "startChar": 30,
