@@ -70,6 +70,30 @@
       "revId": "efd59ded51d79260f207417c820a9fa161fb4213",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0863cd4_4f1678af",
+        "filename": "ui/ozone/platform/drm/gpu/gbm_buffer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1108829
+      },
+      "writtenOn": "2017-12-15T21:46:38Z",
+      "side": 1,
+      "message": "Oops, this doesn\u0027t seem to be a good fix. Broken on 64bit platform:\n\n../../ui/ozone/platform/drm/gpu/gbm_buffer.cc:85:37: error: format specifies type \u0027unsigned long long\u0027 but the argument has type \u0027uint64_t\u0027 (aka \u0027unsigned long\u0027) [-Werror,-Wformat]\n            strides[i], offsets[i], modifiers[i]);\n\nWill use \u003c\u003c instead.",
+      "parentUuid": "646177b7_671e4356",
+      "range": {
+        "startLine": 84,
+        "startChar": 60,
+        "endLine": 84,
+        "endChar": 63
+      },
+      "revId": "efd59ded51d79260f207417c820a9fa161fb4213",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
