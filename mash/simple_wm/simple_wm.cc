@@ -516,7 +516,7 @@ void SimpleWM::OnWmNewDisplay(
   window_list_widget->Init(params);
   window_list_widget->Show();
 
-  display_root_->SetLayoutManager(new DisplayLayoutManager(
+  display_root_->SetLayoutManager(std::make_unique<DisplayLayoutManager>(
       display_root_, window_root_, window_list_view));
 
   DCHECK(window_manager_client_);

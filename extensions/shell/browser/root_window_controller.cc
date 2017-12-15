@@ -79,7 +79,8 @@ RootWindowController::RootWindowController(
   aura::client::SetWindowParentingClient(host_->window(), this);
 
   // Ensure the window fills the display.
-  host_->window()->SetLayoutManager(new FillLayout(host_->window()));
+  host_->window()->SetLayoutManager(
+      std::make_unique<FillLayout>(host_->window()));
 
   host_->AddObserver(this);
   host_->Show();

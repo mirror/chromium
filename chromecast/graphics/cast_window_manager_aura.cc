@@ -190,7 +190,8 @@ void CastWindowManagerAura::Setup() {
   window_tree_host_.reset(
       new CastWindowTreeHost(enable_input_, gfx::Rect(display_size)));
   window_tree_host_->InitHost();
-  window_tree_host_->window()->SetLayoutManager(new CastLayoutManager());
+  window_tree_host_->window()->SetLayoutManager(
+      std::make_unique<CastLayoutManager>());
 
   // Allow seeing through to the hardware video plane:
   window_tree_host_->compositor()->SetBackgroundColor(SK_ColorTRANSPARENT);
