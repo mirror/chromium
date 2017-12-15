@@ -623,6 +623,8 @@ void ResourceLoader::DidReceiveTransferSizeUpdate(int transfer_size_diff) {
 void ResourceLoader::DidFinishLoadingFirstPartInMultipart() {
   network_instrumentation::EndResourceLoad(
       resource_->Identifier(),
+      (char *)Resource::ResourceTypeToString(resource_->GetType(),
+                                     resource_->Options().initiator_info.name),
       network_instrumentation::RequestOutcome::kSuccess);
 
   fetcher_->HandleLoaderFinish(resource_.Get(), 0,
@@ -644,6 +646,8 @@ void ResourceLoader::DidFinishLoading(double finish_time,
 
   network_instrumentation::EndResourceLoad(
       resource_->Identifier(),
+      (char *)Resource::ResourceTypeToString(resource_->GetType(),
+                                     resource_->Options().initiator_info.name),
       network_instrumentation::RequestOutcome::kSuccess);
 
   fetcher_->HandleLoaderFinish(resource_.Get(), finish_time,
@@ -674,7 +678,10 @@ void ResourceLoader::HandleError(const ResourceError& error) {
   loader_.reset();
 
   network_instrumentation::EndResourceLoad(
-      resource_->Identifier(), network_instrumentation::RequestOutcome::kFail);
+      resource_->Identifier(),
+      (char *)Resource::ResourceTypeToString(resource_->GetType(),
+                                     resource_->Options().initiator_info.name),
+      network_instrumentation::RequestOutcome::kFail);
 
   fetcher_->HandleLoaderError(resource_.Get(), error);
 }
