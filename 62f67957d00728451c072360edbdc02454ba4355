@@ -70,6 +70,30 @@
       "revId": "62f67957d00728451c072360edbdc02454ba4355",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5392b26e_6bc5c3ab",
+        "filename": "chrome/browser/chromeos/arc/wallpaper/arc_wallpaper_service.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-12-15T18:37:52Z",
+      "side": 1,
+      "message": "Yes WallpaperControllerClient works with MASH, and making GetWallpaper() work with MASH is a TODO.",
+      "parentUuid": "dc25d137_9cfe877a",
+      "range": {
+        "startLine": 239,
+        "startChar": 0,
+        "endLine": 240,
+        "endChar": 11
+      },
+      "revId": "62f67957d00728451c072360edbdc02454ba4355",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
