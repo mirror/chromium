@@ -253,9 +253,11 @@ SystemURLRequestContextGetter::~SystemURLRequestContextGetter() {}
 
 net::URLRequestContext* SystemURLRequestContextGetter::GetURLRequestContext() {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
-  DCHECK(io_thread_->globals()->system_request_context);
+  DCHECK(
+      io_thread_->globals()->system_request_context_owner.url_request_context);
 
-  return io_thread_->globals()->system_request_context;
+  return io_thread_->globals()
+      ->system_request_context_owner.url_request_context.get();
 }
 
 scoped_refptr<base::SingleThreadTaskRunner>
@@ -272,12 +274,11 @@ SystemRequestContextLeakChecker::SystemRequestContextLeakChecker(
 
 IOThread::Globals::
 SystemRequestContextLeakChecker::~SystemRequestContextLeakChecker() {
-  globals_->system_request_context->AssertNoURLRequests();
+  globals_->system_request_context_owner.url_request_context
+      ->AssertNoURLRequests();
 }
 
-IOThread::Globals::Globals()
-    : system_request_context(nullptr),
-      system_request_context_leak_checker(this) {}
+IOThread::Globals::Globals() : system_request_context_leak_checker(this) {}
 
 IOThread::Globals::~Globals() {}
 
@@ -295,7 +296,6 @@ IOThread::IOThread(
 #endif
       globals_(nullptr),
       is_quic_allowed_on_init_(true),
-      network_service_request_(mojo::MakeRequest(&ui_thread_network_service_)),
       weak_factory_(this) {
   scoped_refptr<base::SingleThreadTaskRunner> io_thread_proxy =
       BrowserThread::GetTaskRunnerForThread(BrowserThread::IO);
@@ -377,8 +377,7 @@ IOThread::IOThread(
 
   BrowserThread::SetIOThreadDelegate(this);
 
-  system_network_context_manager->SetUp(&network_context_request_,
-                                        &network_context_params_,
+  system_network_context_manager->SetUp(&network_context_params_,
                                         &is_quic_allowed_on_init_);
 }
 
@@ -542,13 +541,16 @@ void IOThread::Init() {
 
   ct_tree_tracker_ =
       std::make_unique<certificate_transparency::TreeStateTracker>(
-          globals_->ct_logs, globals_->system_request_context->host_resolver(),
+          globals_->ct_logs,
+          globals_->system_request_context_owner.url_request_context
+              ->host_resolver(),
           net_log_);
   // Register the ct_tree_tracker_ as observer for new STHs.
   RegisterSTHObserver(ct_tree_tracker_.get());
   // Register the ct_tree_tracker_ as observer for verified SCTs.
-  globals_->system_request_context->cert_transparency_verifier()->SetObserver(
-      ct_tree_tracker_.get());
+  globals_->system_request_context_owner.url_request_context
+      ->cert_transparency_verifier()
+      ->SetObserver(ct_tree_tracker_.get());
 }
 
 void IOThread::CleanUp() {
@@ -563,12 +565,15 @@ void IOThread::CleanUp() {
   // Unlink the ct_tree_tracker_ from the global cert_transparency_verifier
   // and unregister it from new STH notifications so it will take no actions
   // on anything observed during CleanUp process.
-  globals()->system_request_context->cert_transparency_verifier()->SetObserver(
-      nullptr);
+  globals()
+      ->system_request_context_owner.url_request_context
+      ->cert_transparency_verifier()
+      ->SetObserver(nullptr);
   UnregisterSTHObserver(ct_tree_tracker_.get());
   ct_tree_tracker_.reset();
 
-  globals_->system_request_context->proxy_service()->OnShutdown();
+  globals_->system_request_context_owner.url_request_context->proxy_service()
+      ->OnShutdown();
 
 #if defined(USE_NSS_CERTS)
   net::SetURLRequestContextForNSSHttpIO(nullptr);
@@ -682,14 +687,14 @@ void IOThread::ClearHostCache(
     const base::Callback<bool(const std::string&)>& host_filter) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
 
-  globals_->system_request_context->host_resolver()
+  globals_->system_request_context_owner.url_request_context->host_resolver()
       ->GetHostCache()
       ->ClearForHosts(host_filter);
 }
 
 void IOThread::DisableQuic() {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
-  globals_->network_service->DisableQuic();
+  globals_->quic_disabled = true;
 }
 
 net::SSLConfigService* IOThread::GetSSLConfigService() {
@@ -705,8 +710,9 @@ void IOThread::ChangedToOnTheRecordOnIOThread() {
 }
 
 void IOThread::UpdateDnsClientEnabled() {
-  globals()->system_request_context->host_resolver()->SetDnsClientEnabled(
-      *dns_client_enabled_);
+  globals()
+      ->system_request_context_owner.url_request_context->host_resolver()
+      ->SetDnsClientEnabled(*dns_client_enabled_);
 }
 
 void IOThread::RegisterSTHObserver(net::ct::STHObserver* observer) {
@@ -739,21 +745,11 @@ void IOThread::SetUpProxyService(
           : net::ProxyService::SanitizeUrlPolicy::UNSAFE);
 }
 
-content::mojom::NetworkService* IOThread::GetNetworkServiceOnUIThread() {
-  if (base::FeatureList::IsEnabled(features::kNetworkService)) {
-    return content::GetNetworkService();
-  } else {
-    return ui_thread_network_service_.get();
-  }
-}
-
 certificate_transparency::TreeStateTracker* IOThread::ct_tree_tracker() const {
   return ct_tree_tracker_.get();
 }
 
 void IOThread::ConstructSystemRequestContext() {
-  DCHECK(network_service_request_.is_pending());
-
   std::unique_ptr<content::URLRequestContextBuilderMojo> builder =
       base::MakeUnique<content::URLRequestContextBuilderMojo>();
 
@@ -807,23 +803,20 @@ void IOThread::ConstructSystemRequestContext() {
 
   SetUpProxyService(builder.get());
 
-  globals_->network_service = content::NetworkService::Create(
-      std::move(network_service_request_), net_log_);
   if (!is_quic_allowed_on_init_)
-    globals_->network_service->DisableQuic();
+    globals_->quic_disabled = true;
 
-  globals_->system_network_context =
-      globals_->network_service->CreateNetworkContextWithBuilder(
-          std::move(network_context_request_),
-          std::move(network_context_params_), std::move(builder),
-          &globals_->system_request_context);
+  globals_->system_request_context_owner =
+      std::move(builder)->Create(std::move(network_context_params_).get(),
+                                 !is_quic_allowed_on_init_, net_log_);
 
 #if defined(USE_NSS_CERTS)
-  net::SetURLRequestContextForNSSHttpIO(globals_->system_request_context);
+  net::SetURLRequestContextForNSSHttpIO(
+      globals_->system_request_context_owner.url_request_context.get());
 #endif
 #if defined(OS_ANDROID)
-  net::SetGlobalCertNetFetcher(
-      net::CreateCertNetFetcher(globals_->system_request_context));
+  net::SetGlobalCertNetFetcher(net::CreateCertNetFetcher(
+      globals_->system_request_context_owner.url_request_context.get()));
 #endif
 }
 
