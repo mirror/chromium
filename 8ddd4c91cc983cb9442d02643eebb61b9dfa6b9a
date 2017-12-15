@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0ff0f69e_a1f851d0",
+        "filename": "chrome/browser/ui/views/page_info/permission_selector_row.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-12-15T02:30:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2f0549ee_f04ccc65",
+      "revId": "8ddd4c91cc983cb9442d02643eebb61b9dfa6b9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ce6442c8_43dcd005",
         "filename": "chrome/browser/ui/views/page_info/permission_selector_row.cc",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "ec69932b_1340e342",
+        "filename": "chrome/browser/ui/views/page_info/permission_selector_row.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-12-15T02:30:31Z",
+      "side": 1,
+      "message": "Yup, just non-Harmony. Done!",
+      "parentUuid": "ce6442c8_43dcd005",
+      "revId": "8ddd4c91cc983cb9442d02643eebb61b9dfa6b9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9507c4a1_2bc0d7b2",
         "filename": "chrome/browser/ui/views/page_info/permission_selector_row.cc",
         "patchSetId": 1
@@ -50,6 +86,24 @@
       "revId": "8ddd4c91cc983cb9442d02643eebb61b9dfa6b9a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49176ff1_b0f63317",
+        "filename": "chrome/browser/ui/views/page_info/permission_selector_row.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 450,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-12-15T02:30:31Z",
+      "side": 1,
+      "message": "No, it doesn\u0027t :( I think only max widths of \u003e 0 count, plus afterwards it doesn\u0027t bother using the new maximum width because the current width doesn\u0027t exceed the max width that is given afterwards.\n\nI found something that I think we can use instead which is better (set_collapse_when_hidden(true)), but see the updated CL description (I think supporting that case will be a bit more difficult and is probably not worth it, especially since the bubble will always expand but never shrink (see PageInfoBubbleView::CalculatePreferredSize()), but LMK if you disagree).",
+      "parentUuid": "9507c4a1_2bc0d7b2",
+      "revId": "8ddd4c91cc983cb9442d02643eebb61b9dfa6b9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
