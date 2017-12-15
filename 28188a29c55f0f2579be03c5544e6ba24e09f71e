@@ -49,6 +49,97 @@
     },
     {
       "key": {
+        "uuid": "70cdb32c_74f0c074",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebApkInstaller.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-12-15T16:47:26Z",
+      "side": 1,
+      "message": "This method should be grouped with nativeOnInstallFinished() below",
+      "revId": "28188a29c55f0f2579be03c5544e6ba24e09f71e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b37b0fc_f156c18e",
+        "filename": "chrome/browser/android/webapk/webapk_installer.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-12-15T16:47:26Z",
+      "side": 1,
+      "message": "Nit: DISALLOW_COPY_AND_ASSIGN(CacheClearer);",
+      "range": {
+        "startLine": 93,
+        "startChar": 38,
+        "endLine": 93,
+        "endChar": 0
+      },
+      "revId": "28188a29c55f0f2579be03c5544e6ba24e09f71e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27b95501_ba34f92f",
+        "filename": "chrome/browser/android/webapk/webapk_installer.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 477,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-12-15T16:47:26Z",
+      "side": 1,
+      "message": "Nit: OnGetSpaceStatus() -\u003e OnGotSpaceStatus()",
+      "revId": "28188a29c55f0f2579be03c5544e6ba24e09f71e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1764e171_2e19270b",
+        "filename": "chrome/browser/android/webapk/webapk_installer.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 495,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-12-15T16:47:26Z",
+      "side": 1,
+      "message": "I think that it would be cleaner if you added a new function:\n\nWebApkInstaller::OnHaveSufficientSpaceForInstall() {\n  // Comments ...\n  WebApkIconHasher::DownloadAndComputeMurmur2Hash(\n      request_context_getter_, install_shortcut_info_-\u003ebest_primary_icon_url,\n      base::Bind(\u0026WebApkInstaller::OnGotPrimaryIconMurmur2Hash,\n                 weak_ptr_factory_.GetWeakPtr()));\n}\n\nand do here:\nCacheClearer::FreeCacheAsync(\n    content::BrowserContext::GetBrowsingDataRemover(browser_context_),\n    base::Bind(\u0026WebApkInstaller::OnHaveSufficientSpaceForInstall,\n               weak_ptr_factory_.GetWeakPtr()));",
+      "revId": "28188a29c55f0f2579be03c5544e6ba24e09f71e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a6c0b77_45672f29",
+        "filename": "chrome/browser/android/webapk/webapk_installer.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-12-15T16:47:26Z",
+      "side": 1,
+      "message": "Given that the space status is not cached by this class, can we remove the UNDETERMINED space status?",
+      "revId": "28188a29c55f0f2579be03c5544e6ba24e09f71e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6dd6e91b_0b1a88a0",
         "filename": "chrome/browser/android/webapk/webapk_installer.h",
         "patchSetId": 14
@@ -93,6 +184,23 @@
       "revId": "28188a29c55f0f2579be03c5544e6ba24e09f71e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a6fa1cd8_6766cef0",
+        "filename": "chrome/browser/android/webapk/webapk_installer.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-12-15T16:47:26Z",
+      "side": 1,
+      "message": "How about: \"Called once whether the device has enough space to install a WebAPK is known. Proceeds with install if there is sufficient space.\"\n\nThe fact that the method clears Chrome\u0027s cache is an implementation detail in my opinion.",
+      "revId": "28188a29c55f0f2579be03c5544e6ba24e09f71e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
