@@ -36,8 +36,6 @@ class ContextualSearchPolicy {
     private static final int REMAINING_NOT_APPLICABLE = -1;
     private static final int ONE_DAY_IN_MILLIS = 24 * 60 * 60 * 1000;
     private static final int TAP_TRIGGERED_PROMO_LIMIT = 50;
-    private static final int TAP_RESOLVE_PREFETCH_LIMIT_FOR_DECIDED = 50;
-    private static final int TAP_RESOLVE_PREFETCH_LIMIT_FOR_UNDECIDED = 20;
 
     private static final HashSet<String> PREDOMINENTLY_ENGLISH_SPEAKING_COUNTRIES =
             CollectionUtil.newHashSet("GB", "US");
@@ -51,8 +49,6 @@ class ContextualSearchPolicy {
     private boolean mDidOverrideDecidedStateForTesting;
     private boolean mDecidedStateForTesting;
     private Integer mTapTriggeredPromoLimitForTesting;
-    private Integer mTapLimitForDecided;
-    private Integer mTapLimitForUndecided;
 
     /**
      * ContextualSearchPolicy constructor.
@@ -114,6 +110,9 @@ class ContextualSearchPolicy {
      */
     boolean isTapSupported() {
         if (!isUserUndecided()) return true;
+
+        if (ContextualSearchFieldTrial.isContextualSearchTapDisableOverrideEnabled()) return true;
+
         return getPromoTapsRemaining() != 0;
     }
 
@@ -126,9 +125,6 @@ class ContextualSearchPolicy {
 
         if (!PrefServiceBridge.getInstance().getNetworkPredictionEnabled()) return false;
 
-        // We may not be prefetching due to the resolve/prefetch limit.
-        if (isTapBeyondTheLimit()) return false;
-
         // We never preload on long-press so users can cut & paste without hitting the servers.
         return mSelectionController.getSelectionType() == SelectionType.TAP;
     }
@@ -140,10 +136,7 @@ class ContextualSearchPolicy {
     boolean shouldPreviousTapResolve() {
         if (isMandatoryPromoAvailable()) return false;
 
-        if (!ContextualSearchFieldTrial.isSearchTermResolutionEnabled()) return false;
-
-        // We may not be resolving the tap due to the resolve/prefetch limit.
-        if (isTapBeyondTheLimit()) return false;
+        if (ContextualSearchFieldTrial.isSearchTermResolutionDisabled()) return false;
 
         if (isPromoAvailable()) return isBasePageHTTP(mNetworkCommunicator.getBasePageUrl());
 
@@ -184,15 +177,7 @@ class ContextualSearchPolicy {
      * Registers that a tap has taken place by incrementing tap-tracking counters.
      */
     void registerTap() {
-        if (isPromoAvailable()) {
-            DisableablePromoTapCounter promoTapCounter = getPromoTapCounter();
-            // Bump the counter only when it is still enabled.
-            if (promoTapCounter.isEnabled()) {
-                promoTapCounter.increment();
-            }
-        }
-        int tapsSinceOpen = mPreferenceManager.getContextualSearchTapCount();
-        mPreferenceManager.setContextualSearchTapCount(++tapsSinceOpen);
+        int tapsSinceOpen = mPreferenceManager.getContextualSearchTapCount() + 1;
         if (isUserUndecided()) {
             ContextualSearchUma.logTapsSinceOpenForUndecided(tapsSinceOpen);
         } else {
@@ -373,14 +358,6 @@ class ContextualSearchPolicy {
         return mPreferenceManager.getContextualSearchPromoOpenCount();
     }
 
-    /**
-     * @return The number of times the user has tapped since the last panel open.
-     */
-    @VisibleForTesting
-    int getTapCount() {
-        return mPreferenceManager.getContextualSearchTapCount();
-    }
-
     // --------------------------------------------------------------------------------------------
     // Translation support.
     // --------------------------------------------------------------------------------------------
@@ -459,24 +436,6 @@ class ContextualSearchPolicy {
         return simCountryIso;
     }
 
-    /**
-     * Sets the limit for the tap triggered promo.
-     */
-    @VisibleForTesting
-    void setPromoTapTriggeredLimitForTesting(int limit) {
-        mTapTriggeredPromoLimitForTesting = limit;
-    }
-
-    @VisibleForTesting
-    void setTapLimitForDecidedForTesting(int limit) {
-        mTapLimitForDecided = limit;
-    }
-
-    @VisibleForTesting
-    void setTapLimitForUndecidedForTesting(int limit) {
-        mTapLimitForUndecided = limit;
-    }
-
     // --------------------------------------------------------------------------------------------
     // Private helpers.
     // --------------------------------------------------------------------------------------------
@@ -498,38 +457,6 @@ class ContextualSearchPolicy {
      */
     private boolean isBasePageHTTP(@Nullable URL url) {
         return url != null && "http".equals(url.getProtocol());
-    }
-
-    /**
-     * @return Whether the tap resolve/prefetch limit has been exceeded.
-     */
-    private boolean isTapBeyondTheLimit() {
-        // Discount taps that caused a Quick Answer since the tap may not have been totally ignored.
-        return getTapCount() - mPreferenceManager.getContextualSearchTapQuickAnswerCount()
-                > getTapLimit();
-    }
-
-    /**
-     * @return The limit of the number of taps to resolve or prefetch.
-     */
-    private int getTapLimit() {
-        return isUserUndecided() ? getTapLimitForUndecided() : getTapLimitForDecided();
-    }
-
-    private int getTapLimitForDecided() {
-        if (mTapLimitForDecided != null) {
-            return mTapLimitForDecided.intValue();
-        } else {
-            return TAP_RESOLVE_PREFETCH_LIMIT_FOR_DECIDED;
-        }
-    }
-
-    private int getTapLimitForUndecided() {
-        if (mTapLimitForUndecided != null) {
-            return mTapLimitForUndecided.intValue();
-        } else {
-            return TAP_RESOLVE_PREFETCH_LIMIT_FOR_UNDECIDED;
-        }
     }
 
     // --------------------------------------------------------------------------------------------
