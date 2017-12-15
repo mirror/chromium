@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "50da85fd_2a50d826",
+        "filename": "gpu/command_buffer/client/client_transfer_cache.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-12-15T01:35:31Z",
+      "side": 1,
+      "message": "I wonder if we should change the command buffer API to take a vector, sort of like glDeleteTextures(count, pointer) - might avoid some overhead as well. We can do this as a follow up though, this CL is already better as it avoids locking multiple times.",
+      "range": {
+        "startLine": 65,
+        "startChar": 12,
+        "endLine": 65,
+        "endChar": 44
+      },
+      "revId": "099d205afbbeeca6d5c0e75c431504fcdff0785d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
