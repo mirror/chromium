@@ -606,8 +606,8 @@ scoped_refptr<NGLayoutResult> NGInlineLayoutAlgorithm::Layout() {
     // If this fragment will be larger than the inline-size of the opportunity,
     // *and* the opportunity is smaller than the available inline-size,
     // continue to the next opportunity.
-    if (line_info.Width() > opportunity.InlineSize() &&
-        opportunity.InlineSize() !=
+    if (line_info.Width() > opportunity.rect.InlineSize() &&
+        opportunity.rect.InlineSize() !=
             ConstraintSpace().AvailableSize().inline_size)
       continue;
 
@@ -616,7 +616,7 @@ scoped_refptr<NGLayoutResult> NGInlineLayoutAlgorithm::Layout() {
     // We now can check the block-size of the fragment, and it fits within the
     // opportunity.
     LayoutUnit block_size = container_builder_.ComputeBlockSize();
-    if (block_size > opportunity.BlockSize())
+    if (block_size > opportunity.rect.BlockSize())
       continue;
 
     LayoutUnit line_height =
