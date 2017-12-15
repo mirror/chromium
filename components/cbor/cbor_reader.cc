@@ -2,25 +2,26 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "content/browser/webauth/cbor/cbor_reader.h"
+#include "components/cbor/cbor_reader.h"
 
 #include <math.h>
 #include "base/numerics/safe_conversions.h"
 #include "base/stl_util.h"
 #include "base/strings/string_util.h"
-#include "content/browser/webauth/cbor/cbor_binary.h"
+#include "components/cbor/cbor_binary.h"
 
-namespace content {
+namespace cbor {
 
 namespace {
 
 CBORValue::Type GetMajorType(uint8_t initial_data_byte) {
   return static_cast<CBORValue::Type>(
-      (initial_data_byte & impl::kMajorTypeMask) >> impl::kMajorTypeBitShift);
+      (initial_data_byte & constants::kMajorTypeMask) >>
+      constants::kMajorTypeBitShift);
 }
 
 uint8_t GetAdditionalInfo(uint8_t initial_data_byte) {
-  return initial_data_byte & impl::kAdditionalInformationMask;
+  return initial_data_byte & constants::kAdditionalInformationMask;
 }
 
 // Error messages that correspond to each of the error codes.
@@ -284,4 +285,4 @@ const char* CBORReader::ErrorCodeToString(DecoderError error) {
   }
 }
 
-}  // namespace content
+}  // namespace cbor

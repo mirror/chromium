@@ -2,14 +2,14 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "content/browser/webauth/cbor/cbor_values.h"
+#include "components/cbor/cbor_values.h"
 
 #include <new>
 #include <utility>
 
 #include "base/strings/string_util.h"
 
-namespace content {
+namespace cbor {
 
 CBORValue::CBORValue() noexcept : type_(Type::NONE) {}
 
@@ -183,4 +183,4 @@ void CBORValue::InternalCleanup() {
   type_ = Type::NONE;
 }
 
-}  // namespace content
+}  // namespace cbor

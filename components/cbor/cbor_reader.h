@@ -2,16 +2,15 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CONTENT_BROWSER_WEBAUTH_CBOR_CBOR_READER_H_
-#define CONTENT_BROWSER_WEBAUTH_CBOR_CBOR_READER_H_
+#ifndef COMPONENTS_CBOR_CBOR_READER_H_
+#define COMPONENTS_CBOR_CBOR_READER_H_
 
 #include <stddef.h>
 #include <string>
 #include <vector>
 
 #include "base/optional.h"
-#include "content/browser/webauth/cbor/cbor_values.h"
-#include "content/common/content_export.h"
+#include "components/cbor/cbor_values.h"
 
 // Concise Binary Object Representation (CBOR) decoder as defined by
 // https://tools.ietf.org/html/rfc7049. This decoder only accepts canonical
@@ -42,9 +41,9 @@
 //  - Only CBOR maps with integer or string type keys are supported due to the
 //    cost of serialization when sorting map keys.
 
-namespace content {
+namespace cbor {
 
-class CONTENT_EXPORT CBORReader {
+class CBORReader {
  public:
   using Bytes = std::vector<uint8_t>;
 
@@ -104,6 +103,6 @@ class CONTENT_EXPORT CBORReader {
   DISALLOW_COPY_AND_ASSIGN(CBORReader);
 };
 
-}  // namespace content
+}  // namespace cbor
 
-#endif  // CONTENT_BROWSER_WEBAUTH_CBOR_CBOR_READER_H_
+#endif  // COMPONENTS_CBOR_CBOR_READER_H_
