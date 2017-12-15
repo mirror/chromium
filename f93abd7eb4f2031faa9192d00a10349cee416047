@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3d9afca2_74b2d9ad",
+        "filename": "content/public/browser/content_browser_client.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 803,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-12-15T23:53:26Z",
+      "side": 1,
+      "message": "Are you guys OK with this as-is? I could drop the base::Optional and use the convention that an empty string is no-process-group. I could also extract this into a new public header if you prefer.",
+      "revId": "f93abd7eb4f2031faa9192d00a10349cee416047",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
