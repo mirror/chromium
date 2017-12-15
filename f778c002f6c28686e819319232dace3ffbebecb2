@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1b6b6fd9_a8eecebd",
+        "filename": "ash/login/ui/lock_screen.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-12-15T02:05:07Z",
+      "side": 1,
+      "message": "nit: screen",
+      "revId": "f778c002f6c28686e819319232dace3ffbebecb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0099fc65_bf28c84f",
+        "filename": "ash/login/ui/lock_window_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-12-15T02:05:07Z",
+      "side": 1,
+      "message": "Please use LoginTestBase, it has a lot of this code for you.",
+      "revId": "f778c002f6c28686e819319232dace3ffbebecb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
