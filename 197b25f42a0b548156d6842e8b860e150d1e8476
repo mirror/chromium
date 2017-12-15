@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ca782c1d_cf4a482e",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 613,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-12-15T16:50:38Z",
+      "side": 1,
+      "message": "Should we log for long press too?",
+      "range": {
+        "startLine": 613,
+        "startChar": 35,
+        "endLine": 613,
+        "endChar": 50
+      },
+      "revId": "197b25f42a0b548156d6842e8b860e150d1e8476",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36cc603b_a1cbe947",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 729,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-12-15T16:50:38Z",
+      "side": 1,
+      "message": "it is unfair that contractButton has no event.",
+      "range": {
+        "startLine": 729,
+        "startChar": 24,
+        "endLine": 729,
+        "endChar": 25
+      },
+      "revId": "197b25f42a0b548156d6842e8b860e150d1e8476",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9d15fa9_2a857537",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 1160,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-12-15T16:50:38Z",
+      "side": 1,
+      "message": "I think the order of the actions is not specified. Is it a problem?",
+      "revId": "197b25f42a0b548156d6842e8b860e150d1e8476",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
