@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "38dcc769_414bd295",
+        "filename": "components/viz/common/gpu/context_provider.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1116061
+      },
+      "writtenOn": "2017-12-15T23:28:37Z",
+      "side": 1,
+      "message": "It\u0027s common stuff currently, like FlushPendingWork(), SignalSyncToken().\n\nIt also has things that should be split up like Swap() \u0026 co. for GL use only, TransferCache things that should become Raster only.  I would like to keep cleaning this up, in follow-ups.",
+      "parentUuid": "9d6f1697_80636373",
+      "revId": "ae2b00371df644724eb6fdaaceceb3d1ea358b8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "11c0dd78_809f5bce",
         "filename": "components/viz/common/gpu/context_provider.h",
         "patchSetId": 11
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-15T22:53:37Z",
       "side": 1,
       "message": "Why is this common?",
+      "revId": "ae2b00371df644724eb6fdaaceceb3d1ea358b8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5258484_35669963",
+        "filename": "components/viz/common/gpu/context_provider.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1116061
+      },
+      "writtenOn": "2017-12-15T23:28:37Z",
+      "side": 1,
+      "message": "They\u0027re common for now.  As above.",
+      "parentUuid": "11c0dd78_809f5bce",
       "revId": "ae2b00371df644724eb6fdaaceceb3d1ea358b8c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "b738fb20_7288f7bf",
+        "filename": "components/viz/common/gpu/context_provider.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1116061
+      },
+      "writtenOn": "2017-12-15T23:28:37Z",
+      "side": 1,
+      "message": "I don\u0027t think these interfaces should be thought of as entirely different things.  They\u0027re GPU context providers, with associated GL Contexts.\n\nMost of the same files are churned for RasterContextProvider changes too, so I don\u0027t think churn is a good reason to not do this change.",
+      "parentUuid": "f94d00bb_923712dc",
+      "revId": "ae2b00371df644724eb6fdaaceceb3d1ea358b8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5da6988f_3e2e40d0",
         "filename": "components/viz/common/gpu/context_provider.h",
         "patchSetId": 11
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "8a0acd13_03b15cfe",
+        "filename": "components/viz/common/gpu/context_provider.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1116061
+      },
+      "writtenOn": "2017-12-15T23:28:37Z",
+      "side": 1,
+      "message": "I can split the header files, but I don\u0027t think we should duplicate code and have overlaps in inheritance below.",
+      "parentUuid": "5da6988f_3e2e40d0",
+      "revId": "ae2b00371df644724eb6fdaaceceb3d1ea358b8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "96f018a7_c1fca5a1",
         "filename": "components/viz/common/gpu/context_provider.h",
         "patchSetId": 11
@@ -81,6 +153,24 @@
       "writtenOn": "2017-12-15T22:53:37Z",
       "side": 1,
       "message": "Making a subclass the is both of these is a bit odd to me, and now we have a scoped lock for both levels of provider, making 3 locks in the hierarchy for this class?\n\nWould code be more clear by just having a GLContextProvider and a RasterContextProvider where it wants both?",
+      "revId": "ae2b00371df644724eb6fdaaceceb3d1ea358b8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "441df305_26f99cf5",
+        "filename": "components/viz/common/gpu/context_provider.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1116061
+      },
+      "writtenOn": "2017-12-15T23:28:37Z",
+      "side": 1,
+      "message": "There isn\u0027t any code that wants both types of interface to the same context.  As this clean-up progresses I want to make that impossible.\n\nMutliContextProvider is the base of the (6) implementations of context providers that currently provide both interfaces.  I can look at splitting them, but I think that will be a significant chunk of work with less clear value than this clean-up.",
+      "parentUuid": "96f018a7_c1fca5a1",
       "revId": "ae2b00371df644724eb6fdaaceceb3d1ea358b8c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
