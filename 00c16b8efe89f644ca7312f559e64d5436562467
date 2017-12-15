@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cbf7ead0_3bdf9995",
+        "filename": "tools/grit/grit/tool/build.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-15T01:50:28Z",
+      "side": 1,
+      "message": "Alphabetical order?",
+      "revId": "00c16b8efe89f644ca7312f559e64d5436562467",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
