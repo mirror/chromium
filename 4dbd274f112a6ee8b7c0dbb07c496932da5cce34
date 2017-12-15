@@ -22,6 +22,23 @@
       "revId": "4dbd274f112a6ee8b7c0dbb07c496932da5cce34",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d800224f_7f39e8fe",
+        "filename": "third_party/WebKit/Source/core/workers/RequestCredentials.idl",
+        "patchSetId": 10
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-15T01:26:48Z",
+      "side": 1,
+      "message": "Oh, ok this is the one that raised the core/ and modules/fetch question... I think we\u0027ll be probably moving these in core/.",
+      "revId": "4dbd274f112a6ee8b7c0dbb07c496932da5cce34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
