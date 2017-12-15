@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "21475543_c50d47c5",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8ScriptRunner.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1145189
+      },
+      "writtenOn": "2017-12-15T12:04:31Z",
+      "side": 0,
+      "message": "This has moved to ProduceCodeCache.",
+      "revId": "145f1616678a1fae7918ef8910c1026c2a0833e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ebe55f8_ad579fa4",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8ScriptRunner.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1145189
+      },
+      "writtenOn": "2017-12-15T12:04:31Z",
+      "side": 0,
+      "message": "I am not sure we need these restrictions now. Since we request the cache later may be these are not required. If we still need to enforce these restrictions I will update the GetCompileOptions function.",
+      "revId": "145f1616678a1fae7918ef8910c1026c2a0833e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
