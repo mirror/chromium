@@ -105,12 +105,10 @@ class CORE_EXPORT ShadowRoot final : public DocumentFragment, public TreeScope {
   void SetNeedsAssignmentRecalc();
 
   // For V0
-  ShadowRoot* YoungerShadowRoot() const;
-  ShadowRoot* OlderShadowRoot() const;
-  void SetYoungerShadowRoot(ShadowRoot&);
-  void SetOlderShadowRoot(ShadowRoot&);
-  bool IsYoungest() const { return !YoungerShadowRoot(); }
-  bool IsOldest() const { return !OlderShadowRoot(); }
+  ShadowRoot* YoungerShadowRoot() const { return nullptr; }
+  ShadowRoot* OlderShadowRoot() const { return nullptr; }
+  bool IsYoungest() const { return true; }
+  bool IsOldest() const { return true; }
   bool ContainsShadowElements() const;
   bool ContainsContentElements() const;
   bool ContainsInsertionPoints() const {
@@ -118,7 +116,6 @@ class CORE_EXPORT ShadowRoot final : public DocumentFragment, public TreeScope {
   }
   unsigned DescendantShadowElementCount() const;
   HTMLShadowElement* ShadowInsertionPointOfYoungerShadowRoot() const;
-  void SetShadowInsertionPointOfYoungerShadowRoot(HTMLShadowElement*);
   void DidAddInsertionPoint(V0InsertionPoint*);
   void DidRemoveInsertionPoint(V0InsertionPoint*);
   const HeapVector<Member<V0InsertionPoint>>& DescendantInsertionPoints();
