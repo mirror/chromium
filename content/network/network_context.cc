@@ -62,8 +62,8 @@ NetworkContext::NetworkContext(NetworkServiceImpl* network_service,
     : network_service_(network_service),
       params_(std::move(params)),
       binding_(this, std::move(request)) {
-  owned_url_request_context_ = MakeURLRequestContext(params_.get());
-  url_request_context_ = owned_url_request_context_.get();
+  url_request_context_owner_ = MakeURLRequestContext(params_.get());
+  url_request_context_ = url_request_context_owner_.url_request_context.get();
   cookie_manager_ =
       std::make_unique<CookieManager>(url_request_context_->cookie_store());
   network_service_->RegisterNetworkContext(this);
@@ -71,36 +71,16 @@ NetworkContext::NetworkContext(NetworkServiceImpl* network_service,
       &NetworkContext::OnConnectionError, base::Unretained(this)));
 }
 
-// TODO(mmenke): Share URLRequestContextBulder configuration between two
-// constructors. Can only share them once consumer code is ready for its
-// corresponding options to be overwritten.
-NetworkContext::NetworkContext(
-    NetworkServiceImpl* network_service,
-    mojom::NetworkContextRequest request,
-    mojom::NetworkContextParamsPtr params,
-    std::unique_ptr<URLRequestContextBuilderMojo> builder)
-    : network_service_(network_service),
-      params_(std::move(params)),
-      binding_(this, std::move(request)) {
-  if (params_ && params_->http_cache_path) {
-    // Only sample 0.1% of NetworkContexts that get created.
-    if (base::RandUint64() % 1000 == 0)
-      disk_checker_ = std::make_unique<DiskChecker>(*params_->http_cache_path);
-  }
-  network_service_->RegisterNetworkContext(this);
-  ApplyContextParamsToBuilder(builder.get(), params_.get());
-  owned_url_request_context_ = builder->Build();
-  url_request_context_ = owned_url_request_context_.get();
-  cookie_manager_ =
-      std::make_unique<CookieManager>(url_request_context_->cookie_store());
-}
-
-NetworkContext::NetworkContext(mojom::NetworkContextRequest request,
+NetworkContext::NetworkContext(NetworkServiceImpl* network_service,
+                               mojom::NetworkContextRequest request,
                                net::URLRequestContext* url_request_context)
-    : network_service_(nullptr),
+    : network_service_(network_service),
       binding_(this, std::move(request)),
       cookie_manager_(std::make_unique<CookieManager>(
           url_request_context->cookie_store())) {
+  // May be nullptr in tests.
+  if (network_service_)
+    network_service_->RegisterNetworkContext(this);
   url_request_context_ = url_request_context;
 }
 
@@ -175,8 +155,8 @@ void NetworkContext::Cleanup() {
 
 NetworkContext::NetworkContext(mojom::NetworkContextParamsPtr params)
     : network_service_(nullptr), params_(std::move(params)), binding_(this) {
-  owned_url_request_context_ = MakeURLRequestContext(params_.get());
-  url_request_context_ = owned_url_request_context_.get();
+  url_request_context_owner_ = MakeURLRequestContext(params_.get());
+  url_request_context_ = url_request_context_owner_.url_request_context.get();
 }
 
 void NetworkContext::OnConnectionError() {
@@ -186,31 +166,7 @@ void NetworkContext::OnConnectionError() {
     delete this;
 }
 
-NetworkContext::DiskChecker::DiskChecker(const base::FilePath& cache_path)
-    : cache_path_(cache_path) {
-  timer_.Start(FROM_HERE, base::TimeDelta::FromHours(24),
-               base::Bind(&DiskChecker::CheckDiskSize, base::Unretained(this)));
-
-  // Check disk size at startup, hopefully before the HTTPCache has been cleared
-  // from the previous run.
-  CheckDiskSize();
-}
-
-void NetworkContext::DiskChecker::CheckDiskSize() {
-  base::PostTaskWithTraits(
-      FROM_HERE, {base::MayBlock(), base::TaskPriority::BACKGROUND},
-      base::Bind(&DiskChecker::CheckDiskSizeOnBackgroundThread, cache_path_));
-}
-
-void NetworkContext::DiskChecker::CheckDiskSizeOnBackgroundThread(
-    const base::FilePath& cache_path) {
-  int64_t size = base::ComputeDirectorySize(cache_path);
-  UMA_HISTOGRAM_MEMORY_LARGE_MB("Net.DiskCache.Size", size / 1024 / 1024);
-}
-
-NetworkContext::DiskChecker::~DiskChecker() = default;
-
-std::unique_ptr<net::URLRequestContext> NetworkContext::MakeURLRequestContext(
+URLRequestContextOwner NetworkContext::MakeURLRequestContext(
     mojom::NetworkContextParams* network_context_params) {
   URLRequestContextBuilderMojo builder;
   const base::CommandLine* command_line =
@@ -280,17 +236,21 @@ std::unique_ptr<net::URLRequestContext> NetworkContext::MakeURLRequestContext(
       content::IgnoreErrorsCertVerifier::MaybeWrapCertVerifier(
           *command_line, nullptr, std::move(cert_verifier)));
 
-  ApplyContextParamsToBuilder(&builder, network_context_params);
-
-  return builder.Build();
+  // |network_service_| may be nullptr in tests.
+  return ApplyContextParamsToBuilder(
+      &builder, network_context_params,
+      network_service_ ? network_service_->quic_disabled() : false,
+      network_service_ ? network_service_->net_log() : nullptr);
 }
 
-void NetworkContext::ApplyContextParamsToBuilder(
+URLRequestContextOwner NetworkContext::ApplyContextParamsToBuilder(
     URLRequestContextBuilderMojo* builder,
-    mojom::NetworkContextParams* network_context_params) {
-  // |network_service_| may be nullptr in tests.
-  if (network_service_)
-    builder->set_net_log(network_service_->net_log());
+    mojom::NetworkContextParams* network_context_params,
+    bool quic_disabled,
+    net::NetLog* net_log) {
+  URLRequestContextOwner url_request_owner;
+  if (net_log)
+    builder->set_net_log(net_log);
 
   builder->set_enable_brotli(network_context_params->enable_brotli);
   if (network_context_params->context_name)
@@ -340,13 +300,14 @@ void NetworkContext::ApplyContextParamsToBuilder(
     pref_service_factory.set_async(true);
     scoped_refptr<PrefRegistrySimple> pref_registry(new PrefRegistrySimple());
     HttpServerPropertiesPrefDelegate::RegisterPrefs(pref_registry.get());
-    pref_service_ = pref_service_factory.Create(pref_registry.get());
+    url_request_owner.pref_service =
+        pref_service_factory.Create(pref_registry.get());
 
     builder->SetHttpServerProperties(
         std::make_unique<net::HttpServerPropertiesManager>(
             std::make_unique<HttpServerPropertiesPrefDelegate>(
-                pref_service_.get()),
-            network_service_->net_log()));
+                url_request_owner.pref_service.get()),
+            net_log));
   }
 
   builder->set_data_enabled(network_context_params->enable_data_url_support);
@@ -363,7 +324,7 @@ void NetworkContext::ApplyContextParamsToBuilder(
 
   net::HttpNetworkSession::Params session_params;
   bool is_quic_force_disabled = false;
-  if (network_service_ && network_service_->quic_disabled())
+  if (quic_disabled)
     is_quic_force_disabled = true;
 
   network_session_configurator::ParseCommandLineAndFieldTrials(
@@ -380,6 +341,8 @@ void NetworkContext::ApplyContextParamsToBuilder(
                          -> std::unique_ptr<net::HttpTransactionFactory> {
         return std::make_unique<ThrottlingNetworkTransactionFactory>(session);
       }));
+  url_request_owner.url_request_context = builder->Build();
+  return url_request_owner;
 }
 
 void NetworkContext::ClearNetworkingHistorySince(
