@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fadbc720_2c2bbdd5",
+        "filename": "ui/message_center/views/notification_view_md.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1000,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-15T14:15:36Z",
+      "side": 1,
+      "message": "I don\u0027t think this is something that can actually change, can it? At least as the code now stands. Meaning the deletion stuff below is dead code. Thus I\u0027d rather see:\n\nif (settings_row_)\n  DCHECK_EQ(TRAY, [...].settings_button_handler);\n  return;",
+      "range": {
+        "startLine": 998,
+        "startChar": 1,
+        "endLine": 1000,
+        "endChar": 34
+      },
+      "revId": "fcfc9f214414a24afa9172e4d4d1ca15218390ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f03d1168_d7e29f77",
+        "filename": "ui/message_center/views/notification_view_md.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-15T14:15:36Z",
+      "side": 1,
+      "message": "necessary? Can we just use the value of settings_row_?",
+      "range": {
+        "startLine": 262,
+        "startChar": 7,
+        "endLine": 262,
+        "endChar": 27
+      },
+      "revId": "fcfc9f214414a24afa9172e4d4d1ca15218390ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c377296_d4c39338",
+        "filename": "ui/message_center/views/notification_view_md.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-15T14:15:36Z",
+      "side": 1,
+      "message": "necessary? can we use settings_row_ \u0026\u0026 settings_row_-\u003eis_visible()?",
+      "range": {
+        "startLine": 265,
+        "startChar": 7,
+        "endLine": 265,
+        "endChar": 31
+      },
+      "revId": "fcfc9f214414a24afa9172e4d4d1ca15218390ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40fa800f_d30ccafe",
+        "filename": "ui/message_center/views/notification_view_md_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-15T14:15:36Z",
+      "side": 1,
+      "message": "still necessary?",
+      "range": {
+        "startLine": 16,
+        "startChar": 9,
+        "endLine": 16,
+        "endChar": 50
+      },
+      "revId": "fcfc9f214414a24afa9172e4d4d1ca15218390ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
