@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3b63c066_010fdfcb",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 3713,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2017-12-15T21:17:00Z",
+      "side": 1,
+      "message": "In no other place in this file the variable was used directly. But I have changed this as you suggested anyway.",
+      "parentUuid": "fad7b3f4_32896968",
+      "range": {
+        "startLine": 3713,
+        "startChar": 2,
+        "endLine": 3713,
+        "endChar": 23
+      },
+      "revId": "585476e8d94db57b2ec02582b009e1d8ba4362d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aae1d198_293aa6dc",
         "filename": "content/browser/frame_host/render_frame_host_impl.h",
         "patchSetId": 22
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "985aad0e_b6cfbca5",
+        "filename": "content/browser/frame_host/render_frame_host_impl.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2017-12-15T21:17:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aae1d198_293aa6dc",
+      "range": {
+        "startLine": 266,
+        "startChar": 33,
+        "endLine": 266,
+        "endChar": 53
+      },
+      "revId": "585476e8d94db57b2ec02582b009e1d8ba4362d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f25f7ca8_d6de3d1c",
         "filename": "content/browser/frame_host/render_frame_host_impl.h",
         "patchSetId": 22
@@ -65,6 +113,24 @@
     },
     {
       "key": {
+        "uuid": "aaa0fecb_d3d1d378",
+        "filename": "content/browser/frame_host/render_frame_host_impl.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 1440,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2017-12-15T21:17:00Z",
+      "side": 1,
+      "message": "I tried to keep it along the input injection methods. Presumably if we want to move we would move them both?",
+      "parentUuid": "f25f7ca8_d6de3d1c",
+      "revId": "585476e8d94db57b2ec02582b009e1d8ba4362d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5e025be7_a11e578a",
         "filename": "content/browser/site_per_process_browsertest.cc",
         "patchSetId": 22
@@ -76,6 +142,30 @@
       "writtenOn": "2017-12-15T20:31:44Z",
       "side": 1,
       "message": "What coordinates is child_event in? Pixels or DIP?",
+      "range": {
+        "startLine": 356,
+        "startChar": 0,
+        "endLine": 356,
+        "endChar": 74
+      },
+      "revId": "585476e8d94db57b2ec02582b009e1d8ba4362d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69a628da_5656194b",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2017-12-15T21:17:00Z",
+      "side": 1,
+      "message": "Presumably it is in Pixels as I cast it to dip later. What about it?",
+      "parentUuid": "5e025be7_a11e578a",
       "range": {
         "startLine": 356,
         "startChar": 0,
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "52b8e1f4_df13012f",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2017-12-15T21:17:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a2914d05_550cd4e4",
+      "range": {
+        "startLine": 357,
+        "startChar": 2,
+        "endLine": 357,
+        "endChar": 52
+      },
+      "revId": "585476e8d94db57b2ec02582b009e1d8ba4362d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d938736f_578eebce",
         "filename": "content/renderer/input/input_target_client_impl.cc",
         "patchSetId": 22
@@ -134,6 +248,30 @@
     },
     {
       "key": {
+        "uuid": "84a12b1f_c25490e8",
+        "filename": "content/renderer/input/input_target_client_impl.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2017-12-15T21:17:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d938736f_578eebce",
+      "range": {
+        "startLine": 8,
+        "startChar": 21,
+        "endLine": 8,
+        "endChar": 32
+      },
+      "revId": "585476e8d94db57b2ec02582b009e1d8ba4362d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "994ab10f_ed55738c",
         "filename": "content/renderer/input/input_target_client_impl.cc",
         "patchSetId": 22
@@ -145,6 +283,30 @@
       "writtenOn": "2017-12-15T20:31:44Z",
       "side": 1,
       "message": "Is this needed?",
+      "range": {
+        "startLine": 11,
+        "startChar": 35,
+        "endLine": 11,
+        "endChar": 49
+      },
+      "revId": "585476e8d94db57b2ec02582b009e1d8ba4362d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa880874_026ae195",
+        "filename": "content/renderer/input/input_target_client_impl.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2017-12-15T21:17:00Z",
+      "side": 1,
+      "message": "Nope. Sorry. Left over from the previous patches.",
+      "parentUuid": "994ab10f_ed55738c",
       "range": {
         "startLine": 11,
         "startChar": 35,
@@ -180,6 +342,30 @@
     },
     {
       "key": {
+        "uuid": "3197c0e4_0296830d",
+        "filename": "content/renderer/input/input_target_client_impl.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2017-12-15T21:17:00Z",
+      "side": 1,
+      "message": "This was discussed in the previous patches. It used to be a strong binding that we create new version of this class in each bind. Then I changed it to store the instance of the class in RenderFrameImpl and kept a BindingSet in this class to handle multiple connections. Then People suggested that Viz should be smart enough not to bind multiple times. So I changed BindingSet to normal binding without considering multiple connection.",
+      "parentUuid": "0756bef7_f6e87a09",
+      "range": {
+        "startLine": 22,
+        "startChar": 2,
+        "endLine": 22,
+        "endChar": 10
+      },
+      "revId": "585476e8d94db57b2ec02582b009e1d8ba4362d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "431d8d20_0d644ba4",
         "filename": "content/renderer/input/input_target_client_impl.cc",
         "patchSetId": 22
@@ -200,6 +386,30 @@
       "revId": "585476e8d94db57b2ec02582b009e1d8ba4362d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3922259a_98e5de7a",
+        "filename": "content/renderer/input/input_target_client_impl.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2017-12-15T21:17:00Z",
+      "side": 1,
+      "message": "Yeah. This can also be removed as well I guess as I now store the instance of this class permanently in the RenderFrameImpl.",
+      "parentUuid": "431d8d20_0d644ba4",
+      "range": {
+        "startLine": 27,
+        "startChar": 7,
+        "endLine": 27,
+        "endChar": 20
+      },
+      "revId": "585476e8d94db57b2ec02582b009e1d8ba4362d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -226,6 +436,30 @@
     },
     {
       "key": {
+        "uuid": "8d626596_ae4dd4c8",
+        "filename": "content/renderer/input/input_target_client_impl.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2017-12-15T21:17:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6ea40a6d_37967f4e",
+      "range": {
+        "startLine": 8,
+        "startChar": 8,
+        "endLine": 8,
+        "endChar": 35
+      },
+      "revId": "585476e8d94db57b2ec02582b009e1d8ba4362d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1477c51b_f90865e1",
         "filename": "content/renderer/input/render_widget_input_handler.cc",
         "patchSetId": 22
@@ -237,6 +471,30 @@
       "writtenOn": "2017-12-15T20:31:44Z",
       "side": 1,
       "message": "point_in_pixel?\nThis this always a bug that it wasn\u0027t querying in pixels?",
+      "range": {
+        "startLine": 163,
+        "startChar": 14,
+        "endLine": 163,
+        "endChar": 32
+      },
+      "revId": "585476e8d94db57b2ec02582b009e1d8ba4362d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e47d6f8_c73c6888",
+        "filename": "content/renderer/input/render_widget_input_handler.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2017-12-15T21:17:00Z",
+      "side": 1,
+      "message": "I changed the name. But didn\u0027t quite understand the other part. Can you elaborate a little more.",
+      "parentUuid": "1477c51b_f90865e1",
       "range": {
         "startLine": 163,
         "startChar": 14,
