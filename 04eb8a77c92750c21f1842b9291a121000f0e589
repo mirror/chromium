@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "25c21595_47a8cb83",
+        "filename": "chrome/browser/resources/settings/device_page/display.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-12-15T00:47:20Z",
+      "side": 1,
+      "message": "Can these be combined with an empty label indicating hide the sublabel? Strings can be treated as bools in the HTML, e.g. hidden$\u003d\"[[!nightLightScheduleSubLabel_]]\"",
+      "revId": "04eb8a77c92750c21f1842b9291a121000f0e589",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
