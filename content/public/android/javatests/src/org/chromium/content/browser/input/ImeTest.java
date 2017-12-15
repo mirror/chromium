@@ -54,13 +54,14 @@ public class ImeTest {
 
     @Before
     public void setUp() throws Exception {
-        mRule.setUp();
+        mRule.setUpForUrl(ImeActivityTestRule.INPUT_FORM_HTML);
     }
 
     @Test
     @MediumTest
     @Feature({"TextInput", "Main"})
     public void testKeyboardDismissedWhenNavigating() throws Throwable {
+        mRule.setUpForUrl(ImeActivityTestRule.INPUT_FORM_HTML);
         mRule.assertWaitForKeyboardStatus(true);
 
         // Hide keyboard when loading a new Url.
