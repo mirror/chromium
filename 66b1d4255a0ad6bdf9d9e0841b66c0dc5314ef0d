@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b1e5eba6_06fbe9cc",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/SurveyInfoBar.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-15T19:14:38Z",
+      "side": 1,
+      "message": "nit: Pull this into a common method to share with the clickableSpan onClick method.",
+      "range": {
+        "startLine": 158,
+        "startChar": 16,
+        "endLine": 163,
+        "endChar": 32
+      },
+      "revId": "66b1d4255a0ad6bdf9d9e0841b66c0dc5314ef0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
