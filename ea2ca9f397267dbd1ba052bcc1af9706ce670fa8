@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "a7f042a2_af7f1413",
+        "filename": "ios/chrome/browser/ui/qr_scanner/qr_scanner_transitioning_delegate.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-12-15T13:27:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0d575f98_4d90d92a",
+      "range": {
+        "startLine": 64,
+        "startChar": 38,
+        "endLine": 64,
+        "endChar": 0
+      },
+      "revId": "ea2ca9f397267dbd1ba052bcc1af9706ce670fa8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "68c7124a_24d089de",
         "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.mm",
         "patchSetId": 3
@@ -62,6 +86,24 @@
       "revId": "ea2ca9f397267dbd1ba052bcc1af9706ce670fa8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a415c1b_541055c7",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 723,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-12-15T13:27:43Z",
+      "side": 1,
+      "message": "Yes, but it is a well known issue https://useyourloaf.com/blog/stack-view-constraint-conflicts-when-hiding-views/",
+      "parentUuid": "68c7124a_24d089de",
+      "revId": "ea2ca9f397267dbd1ba052bcc1af9706ce670fa8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -88,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "b5b203f5_2fca1c56",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 724,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-12-15T13:27:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9c213b22_c44b171f",
+      "range": {
+        "startLine": 724,
+        "startChar": 67,
+        "endLine": 724,
+        "endChar": 75
+      },
+      "revId": "ea2ca9f397267dbd1ba052bcc1af9706ce670fa8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e37eabfa_83bd4bc8",
         "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.mm",
         "patchSetId": 3
@@ -102,6 +168,24 @@
       "revId": "ea2ca9f397267dbd1ba052bcc1af9706ce670fa8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a0b8df2_3bedf315",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 727,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-12-15T13:27:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e37eabfa_83bd4bc8",
+      "revId": "ea2ca9f397267dbd1ba052bcc1af9706ce670fa8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
