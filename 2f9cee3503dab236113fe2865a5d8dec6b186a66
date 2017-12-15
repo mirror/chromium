@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "461e184b_76ef9465",
+        "filename": "chrome/browser/browser_process_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 683,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-15T01:42:13Z",
+      "side": 1,
+      "message": "Why not just make gpu_profile_cache() Android-only? There are only 2 callers right next to each other in chrome/browser/chrome_browser_main.cc.",
+      "revId": "2f9cee3503dab236113fe2865a5d8dec6b186a66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78ed1c23_02e320b5",
+        "filename": "chrome/browser/prefs/browser_prefs.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-15T01:42:13Z",
+      "side": 1,
+      "message": "Can you move this down to the existing OS_ANDROID section below around line 393?",
+      "revId": "2f9cee3503dab236113fe2865a5d8dec6b186a66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
