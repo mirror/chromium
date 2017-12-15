@@ -270,6 +270,11 @@ cr.define('cr.login', function() {
         PostMessageChannel.init(this.webview_.contentWindow);
       else
         console.error('SamlHandler.onContentLoad_: contentWindow is null.');
+
+      chrome.send('metricsHandler:recordBooleanHistogram', [
+        'ChromeOS.GAIA.SAMLContentWindowNull',
+        Boolean(this.webview_.contentWindow)
+      ]);
     },
 
     /**
