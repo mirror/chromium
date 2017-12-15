@@ -14,6 +14,7 @@
 #include "base/files/scoped_temp_dir.h"
 #include "chrome/browser/chromeos/arc/arc_session_manager.h"
 #include "chrome/browser/chromeos/arc/voice_interaction/highlighter_controller_client.h"
+#include "chrome/browser/chromeos/arc/voice_interaction/test_voice_interaction_controller.h"
 #include "chrome/browser/chromeos/arc/voice_interaction/voice_interaction_controller_client.h"
 #include "chrome/test/base/testing_profile.h"
 #include "chromeos/dbus/dbus_thread_manager.h"
@@ -92,65 +93,6 @@ class TestHighlighterController : public ash::mojom::HighlighterController,
   DISALLOW_COPY_AND_ASSIGN(TestHighlighterController);
 };
 
-class TestVoiceInteractionController
-    : public ash::mojom::VoiceInteractionController {
- public:
-  TestVoiceInteractionController() : binding_(this) {}
-  ~TestVoiceInteractionController() override = default;
-
-  ash::mojom::VoiceInteractionControllerPtr CreateInterfacePtrAndBind() {
-    ash::mojom::VoiceInteractionControllerPtr ptr;
-    binding_.Bind(mojo::MakeRequest(&ptr));
-    return ptr;
-  }
-
-  // ash::mojom::VoiceInteractionController:
-  void NotifyStatusChanged(ash::mojom::VoiceInteractionState state) override {
-    voice_interaction_state_ = state;
-  }
-  void NotifySettingsEnabled(bool enabled) override {
-    voice_interaction_settings_enabled_ = enabled;
-  }
-  void NotifyContextEnabled(bool enabled) override {
-    voice_interaction_context_enabled_ = enabled;
-  }
-  void NotifySetupCompleted(bool completed) override {
-    voice_interaction_setup_completed_ = completed;
-  }
-  void NotifyFeatureAllowed(ash::mojom::AssistantAllowedState state) override {
-    assistant_allowed_state_ = state;
-  }
-
-  ash::mojom::VoiceInteractionState voice_interaction_state() const {
-    return voice_interaction_state_;
-  }
-  bool voice_interaction_settings_enabled() const {
-    return voice_interaction_settings_enabled_;
-  }
-  bool voice_interaction_context_enabled() const {
-    return voice_interaction_context_enabled_;
-  }
-  bool voice_interaction_setup_completed() const {
-    return voice_interaction_setup_completed_;
-  }
-  ash::mojom::AssistantAllowedState assistant_allowed_state() const {
-    return assistant_allowed_state_;
-  }
-
- private:
-  ash::mojom::VoiceInteractionState voice_interaction_state_ =
-      ash::mojom::VoiceInteractionState::STOPPED;
-  bool voice_interaction_settings_enabled_ = false;
-  bool voice_interaction_context_enabled_ = false;
-  bool voice_interaction_setup_completed_ = false;
-  ash::mojom::AssistantAllowedState assistant_allowed_state_ =
-      ash::mojom::AssistantAllowedState::ALLOWED;
-
-  mojo::Binding<ash::mojom::VoiceInteractionController> binding_;
-
-  DISALLOW_COPY_AND_ASSIGN(TestVoiceInteractionController);
-};
-
 }  // namespace
 
 class ArcVoiceInteractionFrameworkServiceTest : public ash::AshTestBase {
@@ -178,6 +120,8 @@ class ArcVoiceInteractionFrameworkServiceTest : public ash::AshTestBase {
     highlighter_controller_ = highlighter_controller_ptr.get();
     voice_interaction_controller_ =
         std::make_unique<TestVoiceInteractionController>();
+    voice_interaction_controller_client_ =
+        std::make_unique<VoiceInteractionControllerClient>();
     connector_factory_ =
         std::make_unique<service_manager::TestConnectorFactory>(
             std::move(highlighter_controller_ptr));
@@ -206,6 +150,8 @@ class ArcVoiceInteractionFrameworkServiceTest : public ash::AshTestBase {
   void TearDown() override {
     arc_bridge_service_->voice_interaction_framework()->CloseInstance(
         framework_instance_.get());
+    voice_interaction_controller_.reset();
+    voice_interaction_controller_client_.reset();
     framework_instance_.reset();
     framework_service_.reset();
     arc_bridge_service_.reset();
@@ -237,7 +183,7 @@ class ArcVoiceInteractionFrameworkServiceTest : public ash::AshTestBase {
   }
 
   VoiceInteractionControllerClient* voice_interaction_controller_client() {
-    return framework_service_->GetVoiceInteractionControllerClientForTesting();
+    return voice_interaction_controller_client_.get();
   }
 
   void FlushHighlighterControllerMojo() {
@@ -261,6 +207,8 @@ class ArcVoiceInteractionFrameworkServiceTest : public ash::AshTestBase {
   std::unique_ptr<TestVoiceInteractionController> voice_interaction_controller_;
   std::unique_ptr<ArcVoiceInteractionFrameworkService> framework_service_;
   std::unique_ptr<FakeVoiceInteractionFrameworkInstance> framework_instance_;
+  std::unique_ptr<VoiceInteractionControllerClient>
+      voice_interaction_controller_client_;
 
   DISALLOW_COPY_AND_ASSIGN(ArcVoiceInteractionFrameworkServiceTest);
 };
@@ -421,26 +369,8 @@ TEST_F(ArcVoiceInteractionFrameworkServiceTest,
   VoiceInteractionControllerClient* controller_client =
       voice_interaction_controller_client();
   // The voice interaction flags should be set after the initial setup.
-  EXPECT_TRUE(controller->voice_interaction_settings_enabled());
-  EXPECT_TRUE(controller->voice_interaction_context_enabled());
-  EXPECT_TRUE(controller->voice_interaction_setup_completed());
   EXPECT_EQ(controller->voice_interaction_state(),
             ash::mojom::VoiceInteractionState::STOPPED);
-
-  // Send the signal to disable voice interaction settings.
-  controller_client->NotifySettingsEnabled(false);
-  FlushVoiceInteractionControllerMojo();
-  EXPECT_FALSE(controller->voice_interaction_settings_enabled());
-
-  // Send the signal to disable voice interaction context.
-  controller_client->NotifyContextEnabled(false);
-  FlushVoiceInteractionControllerMojo();
-  EXPECT_FALSE(controller->voice_interaction_context_enabled());
-
-  // Send the signal to disable the voice interaction setup completed flag.
-  controller_client->NotifySetupCompleted(false);
-  FlushVoiceInteractionControllerMojo();
-  EXPECT_FALSE(controller->voice_interaction_setup_completed());
 
   // Send the signal to set the voice interaction state.
   controller_client->NotifyStatusChanged(
@@ -448,13 +378,6 @@ TEST_F(ArcVoiceInteractionFrameworkServiceTest,
   FlushVoiceInteractionControllerMojo();
   EXPECT_EQ(controller->voice_interaction_state(),
             ash::mojom::VoiceInteractionState::RUNNING);
-
-  // Send the signal to set the assistant allowed state.
-  controller_client->NotifyFeatureAllowed(
-      ash::mojom::AssistantAllowedState::DISALLOWED_BY_ARC_POLICY);
-  FlushVoiceInteractionControllerMojo();
-  EXPECT_EQ(controller->assistant_allowed_state(),
-            ash::mojom::AssistantAllowedState::DISALLOWED_BY_ARC_POLICY);
 }
 
 }  // namespace arc
