@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "403a66ce_67418941",
+        "filename": "chrome/browser/extensions/api/developer_private/developer_private_api.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 700,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-15T23:01:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3fdd4544_8dc1af4b",
+      "revId": "851376eb526eb650e93468c6d5cf9c85e08257ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4a60a3f9_e216364a",
         "filename": "chrome/browser/extensions/api/developer_private/developer_private_api.h",
         "patchSetId": 8
@@ -33,6 +51,24 @@
       "revId": "851376eb526eb650e93468c6d5cf9c85e08257ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b88bd2c0_e1860cab",
+        "filename": "chrome/browser/extensions/api/developer_private/developer_private_api.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-15T23:01:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4a60a3f9_e216364a",
+      "revId": "851376eb526eb650e93468c6d5cf9c85e08257ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "80df1d64_f61d8378",
+        "filename": "chrome/browser/resources/md_extensions/detail_view.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-15T23:01:29Z",
+      "side": 1,
+      "message": "Not needed for Polymer elements (there is a hidden Polymer property which has \"reflectToAttribute: true\", which makes it work). The \"$\u003d\" is only necessary for native HTML elements.",
+      "parentUuid": "42bc19d8_a09d2d1f",
+      "range": {
+        "startLine": 282,
+        "startChar": 52,
+        "endLine": 282,
+        "endChar": 58
+      },
+      "revId": "851376eb526eb650e93468c6d5cf9c85e08257ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f94ad1ad_1ad1f94c",
         "filename": "third_party/closure_compiler/externs/developer_private.js",
         "patchSetId": 8
@@ -73,6 +133,24 @@
       "revId": "851376eb526eb650e93468c6d5cf9c85e08257ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "374f77c6_2ce64e75",
+        "filename": "third_party/closure_compiler/externs/developer_private.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 613,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-15T23:01:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f94ad1ad_1ad1f94c",
+      "revId": "851376eb526eb650e93468c6d5cf9c85e08257ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

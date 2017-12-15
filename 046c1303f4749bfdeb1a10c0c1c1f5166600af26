@@ -91,6 +91,24 @@
     },
     {
       "key": {
+        "uuid": "f28b0f20_fdd0ce68",
+        "filename": "chrome/browser/extensions/api/developer_private/developer_private_api.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 680,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-15T23:01:29Z",
+      "side": 1,
+      "message": "Ok. Thanks. I\u0027ll give it a shot as a follow up (added a TODO for now).",
+      "parentUuid": "98317084_f1762818",
+      "revId": "046c1303f4749bfdeb1a10c0c1c1f5166600af26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "da4fbded_4f21e181",
         "filename": "chrome/browser/resources/md_extensions/detail_view.html",
         "patchSetId": 4
