@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "56d85000_7a8c6c2f",
+        "filename": "media/audio/mac/audio_manager_mac.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-12-15T15:55:20Z",
+      "side": 1,
+      "message": "Sure, we could do that. However, I\u0027ve searched with torch and flashlight after evidence that it should be possible to use kAudioUnitProperty_AudioChannelLayout on the input element; can\u0027t find anything. I think we should use the StreamFormat property on the audio unit to get the number of channels if input element. Wdyt?",
+      "parentUuid": "344af29b_eec2ee5f",
+      "revId": "b4938e9bd556fbc4c52e305c8fa4d2b7f2319221",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9acf93db_6f80be30",
         "filename": "media/audio/mac/scoped_audio_unit.cc",
         "patchSetId": 3
@@ -122,6 +140,24 @@
       "revId": "b4938e9bd556fbc4c52e305c8fa4d2b7f2319221",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa36946f_0b319e7a",
+        "filename": "media/audio/mac/scoped_audio_unit.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-12-15T15:55:20Z",
+      "side": 1,
+      "message": "OK, the votes are in. !enable_io it is. Other suggestions sg, done.",
+      "parentUuid": "6bb1dceb_7052dbc6",
+      "revId": "b4938e9bd556fbc4c52e305c8fa4d2b7f2319221",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
