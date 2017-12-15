@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e4f91759_75223050",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1500,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2017-12-15T12:05:45Z",
+      "side": 1,
+      "message": "We now got 3 calls into ScrollableEnclo....\n\nThis can be avoided if you restructure this into:\n\n  // Figure out the starting rect.\n  LayoutRect starting_rect;\n  if (focused_element) {\n    if (!HasOffscreenRect(focused_element)) {\n      starting_rect \u003d NodeRectInAbsoluteCoordinates(focused_element,\n                                                    true /* ignore border */);\n    } else if (auto* area \u003d ToHTMLAreaElementOrNull(*focused_element)) {\n      if (area-\u003eImageElement()) {\n        focused_element \u003d area-\u003eImageElement();\n        starting_rect \u003d VirtualRectForAreaElementAndDirection(*area, type);\n      }\n    }\n    container \u003d ScrollableEnclosingBoxOrParentFrameForNodeInDirection(\n        type, focused_element);\n  }",
+      "range": {
+        "startLine": 1484,
+        "startChar": 0,
+        "endLine": 1500,
+        "endChar": 3
+      },
+      "revId": "fbe08d6d8eae671b3f8e87defe2e6d754759eb86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e65b9909_05b39879",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1512,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2017-12-15T12:05:45Z",
+      "side": 1,
+      "message": "While here, let\u0027s make this into a regular while-loop? I think that\u0027s easier to read? That also gives us the extra null-check on |container|.",
+      "revId": "fbe08d6d8eae671b3f8e87defe2e6d754759eb86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
