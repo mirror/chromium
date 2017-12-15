@@ -91,6 +91,24 @@
     },
     {
       "key": {
+        "uuid": "12b59c68_302a1b40",
+        "filename": "chrome/browser/ui/views/location_bar/star_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-12-15T20:58:46Z",
+      "side": 1,
+      "message": "That was sort of my point; The current CommandUpdater numeric commands don\u0027t have a general-purpose mechanism for state change notifications. I was also less enthusiastic about pushing this into the BubbleIconView. I was proposing that a better, eventual, solution would be to use a more abstract model separate from any of the UI elements.",
+      "parentUuid": "96e78161_e416ca5f",
+      "revId": "2f89744b5d5135ac2c796e995485b9357a7a28be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "116fc920_b84bc100",
         "filename": "chrome/browser/ui/views/location_bar/star_view.h",
         "patchSetId": 2
