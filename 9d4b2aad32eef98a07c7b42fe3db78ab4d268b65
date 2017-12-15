@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "323cf9dd_bd41f337",
+        "filename": "chrome/services/printing/BUILD.gn",
+        "patchSetId": 7
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-12-15T22:04:09Z",
+      "side": 1,
+      "message": "Moved to the end.",
+      "parentUuid": "9e8617a7_30f03375",
+      "revId": "9d4b2aad32eef98a07c7b42fe3db78ab4d268b65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5854d98c_821a7324",
         "filename": "chrome/services/printing/pdf_to_emf_converter_factory.h",
         "patchSetId": 7
@@ -77,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "52faac46_2a226778",
+        "filename": "chrome/services/printing/pdf_to_emf_converter_factory.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-12-15T22:04:09Z",
+      "side": 1,
+      "message": "Good point, removed.",
+      "parentUuid": "5854d98c_821a7324",
+      "range": {
+        "startLine": 23,
+        "startChar": 29,
+        "endLine": 23,
+        "endChar": 39
+      },
+      "revId": "9d4b2aad32eef98a07c7b42fe3db78ab4d268b65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4c49d745_a9624410",
         "filename": "chrome/services/printing/printing_service.cc",
         "patchSetId": 7
@@ -91,6 +133,24 @@
       "revId": "9d4b2aad32eef98a07c7b42fe3db78ab4d268b65",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec93be43_1285f923",
+        "filename": "chrome/services/printing/printing_service.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-12-15T22:04:09Z",
+      "side": 1,
+      "message": "Oh, you\u0027re right. I erroneously added it for defined(OS_WIN).\nRemoved.",
+      "parentUuid": "4c49d745_a9624410",
+      "revId": "9d4b2aad32eef98a07c7b42fe3db78ab4d268b65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
