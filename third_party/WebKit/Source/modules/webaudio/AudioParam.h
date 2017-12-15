@@ -147,7 +147,15 @@ class AudioParamHandler final : public ThreadSafeRefCounted<AudioParamHandler>,
   void ResetSmoothedValue() { timeline_.SetSmoothedValue(IntrinsicValue()); }
 
   bool HasSampleAccurateValues() {
-    return timeline_.HasValues() || NumberOfRenderingConnections();
+    fprintf(stderr, "%s HasValues(%zu, %g):", param_name_.Ascii().data(),
+            destination_handler_->CurrentSampleFrame(),
+            destination_handler_->SampleRate());
+    bool has_values =
+        timeline_.HasValues(destination_handler_->CurrentSampleFrame(),
+                            destination_handler_->SampleRate());
+
+    fprintf(stderr, " = %d\n", has_values);
+    return has_values || NumberOfRenderingConnections();
   }
 
   // Calculates numberOfValues parameter values starting at the context's
