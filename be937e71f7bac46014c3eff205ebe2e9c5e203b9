@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87584156_022f6e16",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/PrefServiceBridge.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 952,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-15T01:08:04Z",
+      "side": 1,
+      "message": "Typo on accept",
+      "range": {
+        "startLine": 952,
+        "startChar": 58,
+        "endLine": 952,
+        "endChar": 64
+      },
+      "revId": "be937e71f7bac46014c3eff205ebe2e9c5e203b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f0ab53f_4bb8b55c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageListBaseAdapter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-15T01:08:04Z",
+      "side": 1,
+      "message": "We\u0027re setting these to GONE each time the view is bound?",
+      "range": {
+        "startLine": 82,
+        "startChar": 12,
+        "endLine": 84,
+        "endChar": 49
+      },
+      "revId": "be937e71f7bac46014c3eff205ebe2e9c5e203b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "722f718e_e7620f53",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageListBaseAdapter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-15T01:08:04Z",
+      "side": 1,
+      "message": "This treats any touch on the start icon as a drag?",
+      "range": {
+        "startLine": 146,
+        "startChar": 12,
+        "endLine": 153,
+        "endChar": 15
+      },
+      "revId": "be937e71f7bac46014c3eff205ebe2e9c5e203b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c71d81d_360747ff",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageListBaseAdapter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-15T01:08:04Z",
+      "side": 1,
+      "message": "Should this only be on the sub-class used for the list displaying in LanguageListPreference since the AddLanguagepreference doesn\u0027t support dragging.\n\nIf this is moved, then the sub-class can listen #onAttachedToRecyclerView(RecyclerView recyclerView) to get it\u0027s RecyclerView rather than exposing a new method.",
+      "range": {
+        "startLine": 176,
+        "startChar": 4,
+        "endLine": 176,
+        "endChar": 53
+      },
+      "revId": "be937e71f7bac46014c3eff205ebe2e9c5e203b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "140ca652_c98d5fd7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageListBaseAdapter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-15T01:08:04Z",
+      "side": 1,
+      "message": "I didn\u0027t know this class existed. This definitely make drag-and-drop easier!\n\n\nCan this be made into a widget so that it\u0027s easier for others in Chrome that want to add drag-and-drop support to do so?",
+      "revId": "be937e71f7bac46014c3eff205ebe2e9c5e203b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
