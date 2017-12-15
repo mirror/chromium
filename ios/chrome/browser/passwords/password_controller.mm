@@ -471,10 +471,6 @@ bool GetPageURLAndCheckTrustLevel(web::WebState* web_state, GURL* page_url) {
     didSubmitDocumentWithFormNamed:(const std::string&)formName
                      userInitiated:(BOOL)userInitiated
                        isMainFrame:(BOOL)isMainFrame {
-  if (!isMainFrame) {
-    // Saving from iframes is not implemented.
-    return;
-  }
   DCHECK_EQ(webState_, webState);
   __weak PasswordController* weakSelf = self;
   // This code is racing against the new page loading and will not get the
@@ -485,8 +481,17 @@ bool GetPageURLAndCheckTrustLevel(web::WebState* web_state, GURL* page_url) {
     PasswordController* strongSelf = weakSelf;
     if (strongSelf && ![strongSelf isWebStateDestroyed] &&
         strongSelf.passwordManager) {
-      strongSelf.passwordManager->OnPasswordFormSubmitted(
-          strongSelf.passwordManagerDriver, form);
+      if (isMainFrame) {
+        strongSelf.passwordManager->OnPasswordFormSubmitted(
+            strongSelf.passwordManagerDriver, form);
+      } else {
+        // PasswordManager::OnInPageNavigation skips checking correctness of
+        // submission.
+        // Show a save prompt immediately because for iframes it is very hard to
+        // figure out correctness of password forms submission.
+        strongSelf.passwordManager->OnInPageNavigation(
+            strongSelf.passwordManagerDriver, form);
+      }
     }
   };
   [self extractSubmittedPasswordForm:formName
