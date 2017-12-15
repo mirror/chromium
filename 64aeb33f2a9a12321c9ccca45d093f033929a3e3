@@ -22,6 +22,30 @@
       "revId": "64aeb33f2a9a12321c9ccca45d093f033929a3e3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b0f257c_76a965a4",
+        "filename": "third_party/WebKit/Source/devtools/front_end/ui/XLink.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-12-15T19:53:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5f8cf106_40e9f312",
+      "range": {
+        "startLine": 79,
+        "startChar": 11,
+        "endLine": 79,
+        "endChar": 20
+      },
+      "revId": "64aeb33f2a9a12321c9ccca45d093f033929a3e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
