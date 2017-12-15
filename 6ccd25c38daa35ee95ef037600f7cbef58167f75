@@ -16,6 +16,24 @@
       "revId": "6ccd25c38daa35ee95ef037600f7cbef58167f75",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3aa5fc12_c47fe1cc",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsRotateToFullscreenDelegate.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1002763
+      },
+      "writtenOn": "2017-12-15T16:31:01Z",
+      "side": 1,
+      "message": "Is this needed for removing the event handlers too?",
+      "parentUuid": "1bcc5381_c677aa95",
+      "revId": "6ccd25c38daa35ee95ef037600f7cbef58167f75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
