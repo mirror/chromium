@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "40ad56c8_3d910a10",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1174915
+      },
+      "writtenOn": "2017-12-15T03:43:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc0dc0e9_3d7f891e",
+      "range": {
+        "startLine": 7,
+        "startChar": 4,
+        "endLine": 7,
+        "endChar": 11
+      },
+      "revId": "37662725d57c55a3921ed9f176f14ce7a61b640a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a8933dda_5bfbe48f",
         "filename": "chrome/browser/extensions/tab_helper.cc",
         "patchSetId": 3
@@ -165,6 +189,30 @@
       "revId": "37662725d57c55a3921ed9f176f14ce7a61b640a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c49a6406_f2632aaa",
+        "filename": "chrome/browser/extensions/tab_helper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1174915
+      },
+      "writtenOn": "2017-12-15T03:43:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "30e6a1d0_05738962",
+      "range": {
+        "startLine": 372,
+        "startChar": 5,
+        "endLine": 372,
+        "endChar": 72
+      },
+      "revId": "37662725d57c55a3921ed9f176f14ce7a61b640a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
