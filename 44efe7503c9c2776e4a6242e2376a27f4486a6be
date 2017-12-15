@@ -68,6 +68,30 @@
       "revId": "44efe7503c9c2776e4a6242e2376a27f4486a6be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "485f7270_20ceed47",
+        "filename": "device/media_transfer_protocol/media_transfer_protocol_daemon_client.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-15T00:17:19Z",
+      "side": 1,
+      "message": "Well, we didn\u0027t before...\n\nThe data is coming from mtpd, which is a ChromeOS system daemon I wrote a while back. It runs in minijail, so I suppose it is not to be 100% trusted?\n\nOTOH, if the value is not in the enum, I don\u0027t think the browser MTP code cares. It really just wants to know if a given file is FILE_TYPE_FOLDER or not. If it\u0027s not a folder, then it\u0027s a file.",
+      "parentUuid": "25e3c9fe_df081cbe",
+      "range": {
+        "startLine": 35,
+        "startChar": 5,
+        "endLine": 36,
+        "endChar": 1
+      },
+      "revId": "44efe7503c9c2776e4a6242e2376a27f4486a6be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
