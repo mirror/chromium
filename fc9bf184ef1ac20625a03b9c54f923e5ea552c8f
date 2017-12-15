@@ -94,6 +94,30 @@
     },
     {
       "key": {
+        "uuid": "5f4a4158_8cf01d4d",
+        "filename": "components/arc/common/timer.mojom",
+        "patchSetId": 20
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-12-15T12:52:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b4688eb6_827eeaee",
+      "range": {
+        "startLine": 47,
+        "startChar": 40,
+        "endLine": 47,
+        "endChar": 44
+      },
+      "revId": "fc9bf184ef1ac20625a03b9c54f923e5ea552c8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bc0669a6_a264304c",
         "filename": "components/arc/common/timer.mojom",
         "patchSetId": 20
@@ -140,6 +164,30 @@
     },
     {
       "key": {
+        "uuid": "edd73a5c_40c1ad28",
+        "filename": "components/arc/test/fake_timer_instance.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-12-15T12:52:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "667305ce_7b44e935",
+      "range": {
+        "startLine": 25,
+        "startChar": 33,
+        "endLine": 25,
+        "endChar": 46
+      },
+      "revId": "fc9bf184ef1ac20625a03b9c54f923e5ea552c8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7bfeb78d_9819e093",
         "filename": "components/arc/test/fake_timer_instance.cc",
         "patchSetId": 20
@@ -151,6 +199,30 @@
       "writtenOn": "2017-12-06T20:37:01Z",
       "side": 1,
       "message": "A std::move()d variable is left in an unspecified state. You are filling it up afterwards, but I\u0027d rather avoid that wrinkle in the standard: just move this to within the loop.",
+      "range": {
+        "startLine": 50,
+        "startChar": 2,
+        "endLine": 50,
+        "endChar": 31
+      },
+      "revId": "fc9bf184ef1ac20625a03b9c54f923e5ea552c8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff4e4219_059915b1",
+        "filename": "components/arc/test/fake_timer_instance.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-12-15T12:52:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7bfeb78d_9819e093",
       "range": {
         "startLine": 50,
         "startChar": 2,
@@ -186,6 +258,30 @@
     },
     {
       "key": {
+        "uuid": "9d752523_d46cb2a3",
+        "filename": "components/arc/test/fake_timer_instance.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-12-15T12:52:23Z",
+      "side": 1,
+      "message": "Do you mean emplace_back(request); and that calls the move constructor implicitly ?\n\nIf yes, I\u0027d rather have this explicity std::move version. Do you have a strong preference.",
+      "parentUuid": "39942297_74c32ef7",
+      "range": {
+        "startLine": 75,
+        "startChar": 23,
+        "endLine": 75,
+        "endChar": 32
+      },
+      "revId": "fc9bf184ef1ac20625a03b9c54f923e5ea552c8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0d9b7b5f_962df45b",
         "filename": "components/arc/test/fake_timer_instance.cc",
         "patchSetId": 20
@@ -197,6 +293,30 @@
       "writtenOn": "2017-12-06T20:37:01Z",
       "side": 1,
       "message": "You\u0027re calling loop-\u003eQuit() in every path in CreateTimersCallback. Why don\u0027t you just pass loop.QuitClosure() and run that here instead given that you have a lambda? Otherwise you can do\n\n host_ptr_-\u003eCreateTimers(\n   std::move(arc_timer_requests),\n   base::BindOnce(\u0026FakeTimerInstance::CreateTimersCallback,\n                  base::Unretained(this),\n                  std::move(arc_clocks),\n                  loop.QuitClosure())); // Send the QuitClosure instead of the full RunLoop.",
+      "range": {
+        "startLine": 86,
+        "startChar": 55,
+        "endLine": 86,
+        "endChar": 59
+      },
+      "revId": "fc9bf184ef1ac20625a03b9c54f923e5ea552c8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17c9fdda_06517d6c",
+        "filename": "components/arc/test/fake_timer_instance.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-12-15T12:52:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0d9b7b5f_962df45b",
       "range": {
         "startLine": 86,
         "startChar": 55,
@@ -232,6 +352,30 @@
     },
     {
       "key": {
+        "uuid": "177754e2_ebf47324",
+        "filename": "components/arc/test/fake_timer_instance.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-12-15T12:52:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f96f0009_845457a7",
+      "range": {
+        "startLine": 103,
+        "startChar": 7,
+        "endLine": 103,
+        "endChar": 13
+      },
+      "revId": "fc9bf184ef1ac20625a03b9c54f923e5ea552c8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "798c134e_3663eb8d",
         "filename": "components/arc/test/fake_timer_instance.cc",
         "patchSetId": 20
@@ -243,6 +387,30 @@
       "writtenOn": "2017-12-06T20:37:01Z",
       "side": 1,
       "message": "nit:\n\n *status \u003d (result \u003d\u003d mojom::ArcTimerResult::FAILURE);",
+      "range": {
+        "startLine": 115,
+        "startChar": 12,
+        "endLine": 119,
+        "endChar": 13
+      },
+      "revId": "fc9bf184ef1ac20625a03b9c54f923e5ea552c8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c82e0dc_07598423",
+        "filename": "components/arc/test/fake_timer_instance.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-12-15T12:52:23Z",
+      "side": 1,
+      "message": "Done.  I think you meant *status \u003d (result \u003d\u003d mojom::ArcTimerResult::SUCCESS);",
+      "parentUuid": "798c134e_3663eb8d",
       "range": {
         "startLine": 115,
         "startChar": 12,
@@ -278,6 +446,30 @@
     },
     {
       "key": {
+        "uuid": "48a6a7e5_3e1f83db",
+        "filename": "components/arc/test/fake_timer_instance.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-12-15T12:52:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ebe4e8d3_df6eaea0",
+      "range": {
+        "startLine": 135,
+        "startChar": 10,
+        "endLine": 136,
+        "endChar": 39
+      },
+      "revId": "fc9bf184ef1ac20625a03b9c54f923e5ea552c8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "126e6666_36b17a06",
         "filename": "components/arc/test/fake_timer_instance.cc",
         "patchSetId": 20
@@ -301,6 +493,30 @@
     },
     {
       "key": {
+        "uuid": "44b38aa9_cba48a2a",
+        "filename": "components/arc/test/fake_timer_instance.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-12-15T12:52:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "126e6666_36b17a06",
+      "range": {
+        "startLine": 147,
+        "startChar": 61,
+        "endLine": 147,
+        "endChar": 75
+      },
+      "revId": "fc9bf184ef1ac20625a03b9c54f923e5ea552c8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f6d4d3b3_bd4141bf",
         "filename": "components/arc/test/fake_timer_instance.cc",
         "patchSetId": 20
@@ -312,6 +528,30 @@
       "writtenOn": "2017-12-06T20:37:01Z",
       "side": 1,
       "message": "It would be more readable if the assignment were its own statement.",
+      "range": {
+        "startLine": 148,
+        "startChar": 16,
+        "endLine": 148,
+        "endChar": 17
+      },
+      "revId": "fc9bf184ef1ac20625a03b9c54f923e5ea552c8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87b1e39c_905dac01",
+        "filename": "components/arc/test/fake_timer_instance.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-12-15T12:52:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f6d4d3b3_bd4141bf",
       "range": {
         "startLine": 148,
         "startChar": 16,
@@ -370,6 +610,30 @@
     },
     {
       "key": {
+        "uuid": "7c11484d_73d2223e",
+        "filename": "components/arc/test/fake_timer_instance.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-12-15T12:52:23Z",
+      "side": 1,
+      "message": "Done. Bumping it up to 200ms.",
+      "parentUuid": "6da1578b_cdfc1195",
+      "range": {
+        "startLine": 155,
+        "startChar": 20,
+        "endLine": 155,
+        "endChar": 43
+      },
+      "revId": "fc9bf184ef1ac20625a03b9c54f923e5ea552c8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dcdd4199_494796b1",
         "filename": "components/arc/test/fake_timer_instance.cc",
         "patchSetId": 20
@@ -381,6 +645,30 @@
       "writtenOn": "2017-12-06T20:37:01Z",
       "side": 1,
       "message": "nit:\n\n !(a \u003c b) ⇔ a \u003e\u003d b\n\n(and the latter is much simpler to understand).",
+      "range": {
+        "startLine": 156,
+        "startChar": 6,
+        "endLine": 156,
+        "endChar": 7
+      },
+      "revId": "fc9bf184ef1ac20625a03b9c54f923e5ea552c8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3965af8d_402dd310",
+        "filename": "components/arc/test/fake_timer_instance.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-12-15T12:52:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dcdd4199_494796b1",
       "range": {
         "startLine": 156,
         "startChar": 6,
@@ -416,6 +704,30 @@
     },
     {
       "key": {
+        "uuid": "b8c454ed_72f0c922",
+        "filename": "components/arc/test/fake_timer_instance.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-12-15T12:52:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "03d44696_333ef334",
+      "range": {
+        "startLine": 164,
+        "startChar": 1,
+        "endLine": 164,
+        "endChar": 19
+      },
+      "revId": "fc9bf184ef1ac20625a03b9c54f923e5ea552c8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "15307d54_d680044a",
         "filename": "components/arc/test/fake_timer_instance.cc",
         "patchSetId": 20
@@ -427,6 +739,30 @@
       "writtenOn": "2017-12-06T20:37:01Z",
       "side": 1,
       "message": "no pointer here. Pass this parameter by value, using std::move(...) to avoid the copy.",
+      "range": {
+        "startLine": 173,
+        "startChar": 48,
+        "endLine": 173,
+        "endChar": 49
+      },
+      "revId": "fc9bf184ef1ac20625a03b9c54f923e5ea552c8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85decd95_d6d1636b",
+        "filename": "components/arc/test/fake_timer_instance.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-12-15T12:52:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "15307d54_d680044a",
       "range": {
         "startLine": 173,
         "startChar": 48,
@@ -462,6 +798,30 @@
     },
     {
       "key": {
+        "uuid": "bb856e6c_cb066345",
+        "filename": "components/arc/test/fake_timer_instance.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-12-15T12:52:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9c454035_7969cd28",
+      "range": {
+        "startLine": 181,
+        "startChar": 0,
+        "endLine": 185,
+        "endChar": 0
+      },
+      "revId": "fc9bf184ef1ac20625a03b9c54f923e5ea552c8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "46feaa0a_a27d6c90",
         "filename": "components/arc/test/fake_timer_instance.h",
         "patchSetId": 20
@@ -473,6 +833,30 @@
       "writtenOn": "2017-12-06T20:37:01Z",
       "side": 1,
       "message": "Timer",
+      "range": {
+        "startLine": 24,
+        "startChar": 12,
+        "endLine": 24,
+        "endChar": 17
+      },
+      "revId": "fc9bf184ef1ac20625a03b9c54f923e5ea552c8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3074b41e_8e1874d6",
+        "filename": "components/arc/test/fake_timer_instance.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-12-15T12:52:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "46feaa0a_a27d6c90",
       "range": {
         "startLine": 24,
         "startChar": 12,
@@ -508,6 +892,30 @@
     },
     {
       "key": {
+        "uuid": "93fe381c_f0f741b0",
+        "filename": "components/arc/test/fake_timer_instance.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-12-15T12:52:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "68e01598_6a30b29f",
+      "range": {
+        "startLine": 27,
+        "startChar": 18,
+        "endLine": 27,
+        "endChar": 23
+      },
+      "revId": "fc9bf184ef1ac20625a03b9c54f923e5ea552c8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7c3f44ec_8b5d9a1d",
         "filename": "components/arc/timer/arc_timer.cc",
         "patchSetId": 20
@@ -519,6 +927,24 @@
       "writtenOn": "2017-12-06T21:34:55Z",
       "side": 1,
       "message": "nit: can you add a blank line between L32 and 33?",
+      "revId": "fc9bf184ef1ac20625a03b9c54f923e5ea552c8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "912e8270_b5e52226",
+        "filename": "components/arc/timer/arc_timer.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-12-15T12:52:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7c3f44ec_8b5d9a1d",
       "revId": "fc9bf184ef1ac20625a03b9c54f923e5ea552c8f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -571,6 +997,30 @@
     },
     {
       "key": {
+        "uuid": "5eaed07b_110629d4",
+        "filename": "components/arc/timer/arc_timer.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-12-15T12:52:23Z",
+      "side": 1,
+      "message": "Can\u0027t use that with a private constructor.",
+      "parentUuid": "1f38aa35_08701585",
+      "range": {
+        "startLine": 68,
+        "startChar": 9,
+        "endLine": 68,
+        "endChar": 69
+      },
+      "revId": "fc9bf184ef1ac20625a03b9c54f923e5ea552c8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "19a72dfc_bf27fde6",
         "filename": "components/arc/timer/arc_timer.cc",
         "patchSetId": 20
@@ -582,6 +1032,30 @@
       "writtenOn": "2017-12-06T20:37:01Z",
       "side": 1,
       "message": "What happened with using the Timer\u0027s ability to schedule stuff on another thread?",
+      "range": {
+        "startLine": 96,
+        "startChar": 15,
+        "endLine": 96,
+        "endChar": 27
+      },
+      "revId": "fc9bf184ef1ac20625a03b9c54f923e5ea552c8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "894e19d0_8319ebfc",
+        "filename": "components/arc/timer/arc_timer.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-12-15T12:52:23Z",
+      "side": 1,
+      "message": "After chatting with hidehiko, we agreed that if I use a TaskRunner then the Start and Stop methods should also be on that TaskRunner i.e I\"ll have to post a task twice. The timer class has checks (currently disabled) to ensure that Start , Stop and other methods happen on the same thread. I opted for the simpler design of Start / Stop on UI thread and I/O on a separate task runner.",
+      "parentUuid": "19a72dfc_bf27fde6",
       "range": {
         "startLine": 96,
         "startChar": 15,
@@ -710,6 +1184,30 @@
     },
     {
       "key": {
+        "uuid": "2d36cac6_a51bb6fb",
+        "filename": "components/arc/timer/arc_timer_bridge.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-12-15T12:52:23Z",
+      "side": 1,
+      "message": "I am moving some members from it. So can\u0027t be const.",
+      "parentUuid": "94a76be3_b71585d2",
+      "range": {
+        "startLine": 94,
+        "startChar": 7,
+        "endLine": 94,
+        "endChar": 11
+      },
+      "revId": "fc9bf184ef1ac20625a03b9c54f923e5ea552c8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b49a8863_c6537d7f",
         "filename": "components/arc/timer/arc_timer_bridge.h",
         "patchSetId": 20
@@ -756,6 +1254,30 @@
     },
     {
       "key": {
+        "uuid": "cff9c02b_506cdac6",
+        "filename": "components/arc/timer/arc_timer_request.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-12-15T12:52:23Z",
+      "side": 1,
+      "message": "Needed to resolve this error,\n\nerror: [chromium-style] Complex class/struct needs an explicit out-of-line constructor.",
+      "parentUuid": "23c83d21_4ece8d85",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 21
+      },
+      "revId": "fc9bf184ef1ac20625a03b9c54f923e5ea552c8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "430b95a4_bc7fc3e4",
         "filename": "components/arc/timer/arc_timer_traits.cc",
         "patchSetId": 20
@@ -767,6 +1289,30 @@
       "writtenOn": "2017-12-06T20:37:01Z",
       "side": 1,
       "message": "You don\u0027t need it here, so how about inlining |scoped_fd.release()| into L33?",
+      "range": {
+        "startLine": 30,
+        "startChar": 2,
+        "endLine": 30,
+        "endChar": 31
+      },
+      "revId": "fc9bf184ef1ac20625a03b9c54f923e5ea552c8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "574731b6_ab0c9783",
+        "filename": "components/arc/timer/arc_timer_traits.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-12-15T12:52:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "430b95a4_bc7fc3e4",
       "range": {
         "startLine": 30,
         "startChar": 2,
@@ -802,6 +1348,30 @@
     },
     {
       "key": {
+        "uuid": "806a5da1_93e61a42",
+        "filename": "components/arc/timer/arc_timer_traits.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-12-15T12:52:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "75ead5eb_e5fe3ae1",
+      "range": {
+        "startLine": 37,
+        "startChar": 30,
+        "endLine": 37,
+        "endChar": 44
+      },
+      "revId": "fc9bf184ef1ac20625a03b9c54f923e5ea552c8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1672a89f_a701d459",
         "filename": "components/arc/timer/arc_timer_unittest.cc",
         "patchSetId": 20
@@ -819,6 +1389,24 @@
     },
     {
       "key": {
+        "uuid": "80584ab3_4fba3884",
+        "filename": "components/arc/timer/arc_timer_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-12-15T12:52:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1672a89f_a701d459",
+      "revId": "fc9bf184ef1ac20625a03b9c54f923e5ea552c8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1c197011_6281990d",
         "filename": "components/arc/timer/arc_timer_unittest.cc",
         "patchSetId": 20
@@ -830,6 +1418,30 @@
       "writtenOn": "2017-12-06T21:34:55Z",
       "side": 1,
       "message": "Please match the file name with this.\n\narc_timer_bridge_unittest.cc",
+      "range": {
+        "startLine": 15,
+        "startChar": 6,
+        "endLine": 15,
+        "endChar": 24
+      },
+      "revId": "fc9bf184ef1ac20625a03b9c54f923e5ea552c8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "206c202a_8d9cfdda",
+        "filename": "components/arc/timer/arc_timer_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-12-15T12:52:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1c197011_6281990d",
       "range": {
         "startLine": 15,
         "startChar": 6,
@@ -865,6 +1477,30 @@
     },
     {
       "key": {
+        "uuid": "fbd5bcab_dac03dce",
+        "filename": "components/arc/timer/arc_timer_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-12-15T12:52:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8098271b_e63be164",
+      "range": {
+        "startLine": 21,
+        "startChar": 22,
+        "endLine": 22,
+        "endChar": 77
+      },
+      "revId": "fc9bf184ef1ac20625a03b9c54f923e5ea552c8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f99f94ec_5ac29d88",
         "filename": "components/arc/timer/arc_timer_unittest.cc",
         "patchSetId": 20
@@ -876,6 +1512,24 @@
       "writtenOn": "2017-12-06T21:34:55Z",
       "side": 1,
       "message": "This is automatically done. Please remove.",
+      "revId": "fc9bf184ef1ac20625a03b9c54f923e5ea552c8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "320f3e3c_53b119ac",
+        "filename": "components/arc/timer/arc_timer_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-12-15T12:52:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f99f94ec_5ac29d88",
       "revId": "fc9bf184ef1ac20625a03b9c54f923e5ea552c8f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -905,6 +1559,30 @@
     },
     {
       "key": {
+        "uuid": "205451d5_afea2f49",
+        "filename": "components/arc/timer/arc_timer_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-12-15T12:52:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "59864538_ed5ab10e",
+      "range": {
+        "startLine": 34,
+        "startChar": 7,
+        "endLine": 34,
+        "endChar": 26
+      },
+      "revId": "fc9bf184ef1ac20625a03b9c54f923e5ea552c8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "99e4b9ee_1cd6ed32",
         "filename": "components/arc/timer/arc_timer_unittest.cc",
         "patchSetId": 20
@@ -916,6 +1594,30 @@
       "writtenOn": "2017-12-06T20:37:01Z",
       "side": 1,
       "message": "nit:\n\n arc::WaitForInstanceReady(bridge_service_-\u003etimer());",
+      "range": {
+        "startLine": 36,
+        "startChar": 30,
+        "endLine": 36,
+        "endChar": 41
+      },
+      "revId": "fc9bf184ef1ac20625a03b9c54f923e5ea552c8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a517f5cc_0bdaf84a",
+        "filename": "components/arc/timer/arc_timer_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-12-15T12:52:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "99e4b9ee_1cd6ed32",
       "range": {
         "startLine": 36,
         "startChar": 30,
@@ -951,6 +1653,30 @@
     },
     {
       "key": {
+        "uuid": "a1af5019_06086f60",
+        "filename": "components/arc/timer/arc_timer_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-12-15T12:52:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "46ae6837_48d13819",
+      "range": {
+        "startLine": 37,
+        "startChar": 42,
+        "endLine": 37,
+        "endChar": 72
+      },
+      "revId": "fc9bf184ef1ac20625a03b9c54f923e5ea552c8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8fbe5467_30506ec4",
         "filename": "components/arc/timer/arc_timer_unittest.cc",
         "patchSetId": 20
@@ -962,6 +1688,30 @@
       "writtenOn": "2017-12-06T20:37:01Z",
       "side": 1,
       "message": "Same here.",
+      "range": {
+        "startLine": 42,
+        "startChar": 7,
+        "endLine": 42,
+        "endChar": 27
+      },
+      "revId": "fc9bf184ef1ac20625a03b9c54f923e5ea552c8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2370bd76_1a9d587a",
+        "filename": "components/arc/timer/arc_timer_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-12-15T12:52:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8fbe5467_30506ec4",
       "range": {
         "startLine": 42,
         "startChar": 7,
@@ -997,6 +1747,30 @@
     },
     {
       "key": {
+        "uuid": "e698302c_b54a8b8f",
+        "filename": "components/arc/timer/arc_timer_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-12-15T12:52:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d1fe9eaa_9835dbc0",
+      "range": {
+        "startLine": 43,
+        "startChar": 30,
+        "endLine": 43,
+        "endChar": 54
+      },
+      "revId": "fc9bf184ef1ac20625a03b9c54f923e5ea552c8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ada0992a_c0e3b776",
         "filename": "components/arc/timer/arc_timer_unittest.cc",
         "patchSetId": 20
@@ -1008,6 +1782,24 @@
       "writtenOn": "2017-12-06T21:34:55Z",
       "side": 1,
       "message": "same, remove",
+      "revId": "fc9bf184ef1ac20625a03b9c54f923e5ea552c8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c5bbf8a_76299163",
+        "filename": "components/arc/timer/arc_timer_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-12-15T12:52:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ada0992a_c0e3b776",
       "revId": "fc9bf184ef1ac20625a03b9c54f923e5ea552c8f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -1031,6 +1823,24 @@
     },
     {
       "key": {
+        "uuid": "c7d4fa45_75df6502",
+        "filename": "components/arc/timer/arc_timer_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-12-15T12:52:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "372ab28e_8082cd69",
+      "revId": "fc9bf184ef1ac20625a03b9c54f923e5ea552c8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "409bd3af_9f1febe6",
         "filename": "components/arc/timer/arc_timer_unittest.cc",
         "patchSetId": 20
@@ -1042,6 +1852,30 @@
       "writtenOn": "2017-12-06T21:34:55Z",
       "side": 1,
       "message": "I\u0027d make all the member variables private: and add a protected getter only for timer_instance_.",
+      "range": {
+        "startLine": 47,
+        "startChar": 0,
+        "endLine": 51,
+        "endChar": 48
+      },
+      "revId": "fc9bf184ef1ac20625a03b9c54f923e5ea552c8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cac5b202_9b6e5f47",
+        "filename": "components/arc/timer/arc_timer_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-12-15T12:52:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "409bd3af_9f1febe6",
       "range": {
         "startLine": 47,
         "startChar": 0,
@@ -1077,6 +1911,30 @@
     },
     {
       "key": {
+        "uuid": "81b0a519_92cab05a",
+        "filename": "components/arc/timer/arc_timer_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-12-15T12:52:23Z",
+      "side": 1,
+      "message": "Is this necessary ? I like to be consistent, for me one line loops are also loops :). Style guide says they are optional.",
+      "parentUuid": "6e05033f_ecc09a95",
+      "range": {
+        "startLine": 64,
+        "startChar": 38,
+        "endLine": 64,
+        "endChar": 40
+      },
+      "revId": "fc9bf184ef1ac20625a03b9c54f923e5ea552c8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "62b4ef16_b1332001",
         "filename": "components/arc/timer/arc_timer_unittest.cc",
         "patchSetId": 20
@@ -1088,6 +1946,30 @@
       "writtenOn": "2017-12-06T20:37:01Z",
       "side": 1,
       "message": "This method is way too long. Any chance you can split it into several methods? Maybe even move part of the logic there to this file.",
+      "range": {
+        "startLine": 67,
+        "startChar": 31,
+        "endLine": 67,
+        "endChar": 65
+      },
+      "revId": "fc9bf184ef1ac20625a03b9c54f923e5ea552c8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44806d24_595b4692",
+        "filename": "components/arc/timer/arc_timer_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-12-15T12:52:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "62b4ef16_b1332001",
       "range": {
         "startLine": 67,
         "startChar": 31,
@@ -1120,6 +2002,30 @@
       "revId": "fc9bf184ef1ac20625a03b9c54f923e5ea552c8f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da04f0f0_77e4d26a",
+        "filename": "components/arc/timer/arc_timer_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-12-15T12:52:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6d9927a0_a0ff80ef",
+      "range": {
+        "startLine": 68,
+        "startChar": 28,
+        "endLine": 68,
+        "endChar": 39
+      },
+      "revId": "fc9bf184ef1ac20625a03b9c54f923e5ea552c8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
