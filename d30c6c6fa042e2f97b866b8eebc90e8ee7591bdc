@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "af15c845_f9d8377f",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 1261,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-15T04:22:42Z",
+      "side": 1,
+      "message": "Thanks for the detailed documentation with examples...",
+      "revId": "d30c6c6fa042e2f97b866b8eebc90e8ee7591bdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1e38a296_248668e9",
         "filename": "content/browser/service_worker/service_worker_process_manager_unittest.cc",
         "patchSetId": 22
@@ -46,6 +63,23 @@
       "revId": "d30c6c6fa042e2f97b866b8eebc90e8ee7591bdc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "218ac241_a4131f04",
+        "filename": "content/public/test/mock_render_process_host.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-15T04:22:42Z",
+      "side": 1,
+      "message": "Wondered if we could just store this (or DefaultStoragePartition when it\u0027s null) and return it when GetStoragePartition is called?  I\u0027m fine with not bothering it in this CL too though.",
+      "revId": "d30c6c6fa042e2f97b866b8eebc90e8ee7591bdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
