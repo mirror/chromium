@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a126e7cb_d3ad96c2",
+        "filename": "chrome/browser/extensions/api/autotest_private/autotest_private_api.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 440,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-12-15T22:19:20Z",
+      "side": 1,
+      "message": "printers_manager, also change other variables to use hacker_case instead of camelCase (pType, printerType, printerList)\n\n(cpp uses camel case)",
+      "range": {
+        "startLine": 440,
+        "startChar": 49,
+        "endLine": 440,
+        "endChar": 64
+      },
+      "revId": "f88bf2a1e04ef8b27b0083b97b2942cba702343e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "397ee101_faf6a094",
+        "filename": "chrome/browser/extensions/api/autotest_private/autotest_private_api.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-12-15T22:19:20Z",
+      "side": 1,
+      "message": "const auto\u0026",
+      "range": {
+        "startLine": 446,
+        "startChar": 7,
+        "endLine": 446,
+        "endChar": 12
+      },
+      "revId": "f88bf2a1e04ef8b27b0083b97b2942cba702343e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdbf6851_6a002ca6",
+        "filename": "chrome/browser/extensions/api/autotest_private/autotest_private_api.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 449,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-12-15T22:19:20Z",
+      "side": 1,
+      "message": "const auto\u0026",
+      "range": {
+        "startLine": 449,
+        "startChar": 9,
+        "endLine": 449,
+        "endChar": 13
+      },
+      "revId": "f88bf2a1e04ef8b27b0083b97b2942cba702343e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
