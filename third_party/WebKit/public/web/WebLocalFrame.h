@@ -47,6 +47,7 @@ class WebPerformance;
 class WebRange;
 class WebSecurityOrigin;
 class WebScriptExecutionCallback;
+class WebScriptNotPausedCallback;
 class WebSharedWorkerRepositoryClient;
 class WebSpellCheckPanelHostClient;
 class WebString;
@@ -428,6 +429,13 @@ class WebLocalFrame : public WebFrame {
                                         int argc,
                                         v8::Local<v8::Value> argv[],
                                         WebScriptExecutionCallback*) = 0;
+
+  // Notifies the passed callback when script is not paused in the main document
+  // context (which is commonly immediately), or when the context is invalidated
+  // or destroyed. This asserts that the context is valid at the time of this
+  // call.
+  virtual void NotifyWhenNotPaused(
+      std::unique_ptr<WebScriptNotPausedCallback>) = 0;
 
   enum ScriptExecutionType {
     // Execute script synchronously, unless the page is suspended.
