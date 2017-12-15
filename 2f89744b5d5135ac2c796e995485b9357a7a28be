@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "2efa2895_35c7d290",
+        "filename": "chrome/browser/ui/views/location_bar/star_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-12-15T00:09:52Z",
+      "side": 1,
+      "message": "I don\u0027t know if I\u0027m following what you\u0027re saying.  We do have IDC_BOOKMARK_PAGE which should be the CommandUpdater-driven way that bookmark functionality is invoked?  Are you saying we should do this there?",
+      "parentUuid": "a2f3f47a_4fd4d13c",
+      "revId": "2f89744b5d5135ac2c796e995485b9357a7a28be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "116fc920_b84bc100",
         "filename": "chrome/browser/ui/views/location_bar/star_view.h",
         "patchSetId": 2
