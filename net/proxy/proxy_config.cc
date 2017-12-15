@@ -63,13 +63,13 @@ void ProxyConfig::ProxyRules::Apply(const GURL& url, ProxyInfo* result) const {
 
   switch (type) {
     case ProxyRules::TYPE_SINGLE_PROXY: {
-      result->UseProxyList(single_proxies);
+      result->UseProxyList(single_proxies, NO_TRAFFIC_ANNOTATION_BUG_656607);
       return;
     }
     case ProxyRules::TYPE_PROXY_PER_SCHEME: {
       const ProxyList* entry = MapUrlSchemeToProxyList(url.scheme());
       if (entry) {
-        result->UseProxyList(*entry);
+        result->UseProxyList(*entry, NO_TRAFFIC_ANNOTATION_BUG_656607);
       } else {
         // We failed to find a matching proxy server for the current URL
         // scheme. Default to direct.

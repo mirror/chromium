@@ -491,7 +491,8 @@ class ProxyResolverV8::Context {
       return ERR_PAC_SCRIPT_FAILED;
     }
 
-    results->UsePacString(base::UTF16ToASCII(ret_str));
+    results->UsePacString(base::UTF16ToASCII(ret_str),
+                          NO_TRAFFIC_ANNOTATION_BUG_656607);
     return OK;
   }
 

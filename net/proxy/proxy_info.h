@@ -14,6 +14,7 @@
 #include "net/proxy/proxy_list.h"
 #include "net/proxy/proxy_retry_info.h"
 #include "net/proxy/proxy_server.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 
 namespace net {
 
@@ -50,7 +51,10 @@ class NET_EXPORT ProxyInfo {
   // It is OK to have LWS between entries.
   //
   // See also the note for UseDirect().
-  void UseNamedProxy(const std::string& proxy_uri_list);
+  // TODO(THIS CL): Remove default after updating unittests.
+  void UseNamedProxy(const std::string& proxy_uri_list,
+                     const NetworkTrafficAnnotationTag& traffic_annotation =
+                         NO_TRAFFIC_ANNOTATION_BUG_656607);
 
   // Sets the proxy list to a single entry, |proxy_server|.
   //
@@ -60,16 +64,25 @@ class NET_EXPORT ProxyInfo {
   // Parses from the given PAC result.
   //
   // See also the note for UseDirect().
-  void UsePacString(const std::string& pac_string);
+  // TODO(THIS CL): Remove default after updating unittests.
+  void UsePacString(const std::string& pac_string,
+                    const NetworkTrafficAnnotationTag& traffic_annotation =
+                        NO_TRAFFIC_ANNOTATION_BUG_656607);
 
   // Uses the proxies from the given list.
   //
   // See also the note for UseDirect().
-  void UseProxyList(const ProxyList& proxy_list);
+  // TODO(THIS CL): Remove default after updating unittests.
+  void UseProxyList(const ProxyList& proxy_list,
+                    const NetworkTrafficAnnotationTag& traffic_annotation =
+                        NO_TRAFFIC_ANNOTATION_BUG_656607);
 
   // Uses the proxies from the given list, but does not otherwise reset the
   // proxy configuration.
-  void OverrideProxyList(const ProxyList& proxy_list);
+  // TODO(THIS CL): Remove default after updating unittests.
+  void OverrideProxyList(const ProxyList& proxy_list,
+                         const NetworkTrafficAnnotationTag& traffic_annotation =
+                             NO_TRAFFIC_ANNOTATION_BUG_656607);
 
   // Sets the alternative service to try when connecting to the first valid
   // proxy server, but does not otherwise reset the proxy configuration.
@@ -173,6 +186,11 @@ class NET_EXPORT ProxyInfo {
     return proxy_resolve_end_time_;
   }
 
+  // Returns network traffic annotation for proxy control.
+  const NetworkTrafficAnnotationTag traffic_annotation() const {
+    return NetworkTrafficAnnotationTag(traffic_annotation_);
+  }
+
  private:
   friend class ProxyService;
   FRIEND_TEST_ALL_PREFIXES(ProxyInfoTest, UseVsOverrideProxyList);
@@ -211,6 +229,9 @@ class NET_EXPORT ProxyInfo {
   // determined synchronously without running a PAC.
   base::TimeTicks proxy_resolve_start_time_;
   base::TimeTicks proxy_resolve_end_time_;
+
+  // Traffic annotation for proxy control.
+  MutableNetworkTrafficAnnotationTag traffic_annotation_;
 };
 
 }  // namespace net
