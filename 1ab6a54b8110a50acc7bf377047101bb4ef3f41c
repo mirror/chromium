@@ -22,6 +22,30 @@
       "revId": "1ab6a54b8110a50acc7bf377047101bb4ef3f41c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc4e92a1_17866082",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/media/router/cast/ChromeCastSessionManagerTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1150472
+      },
+      "writtenOn": "2017-12-15T02:40:27Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d7d09db2_b75f7a37",
+      "range": {
+        "startLine": 133,
+        "startChar": 16,
+        "endLine": 133,
+        "endChar": 42
+      },
+      "revId": "1ab6a54b8110a50acc7bf377047101bb4ef3f41c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

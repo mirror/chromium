@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "0dfa03be_275ae181",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/cast/ChromeCastSessionManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1150472
+      },
+      "writtenOn": "2017-12-15T02:40:27Z",
+      "side": 1,
+      "message": "I have renamed the methods that were obvious candidates for renaming. I left \"onSessionStopAction\" in case there was a difference semantically with \"onSessionEnding\".",
+      "parentUuid": "e179bd26_3660c759",
+      "range": {
+        "startLine": 29,
+        "startChar": 20,
+        "endLine": 29,
+        "endChar": 38
+      },
+      "revId": "94214d4361c89175999a4c64b5efd7ef7366f508",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "35dc7d71_5c19efde",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/cast/ChromeCastSessionManager.java",
         "patchSetId": 6
@@ -235,6 +259,30 @@
       "revId": "94214d4361c89175999a4c64b5efd7ef7366f508",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffa4b225_f20173f5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/cast/ChromeCastSessionManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1150472
+      },
+      "writtenOn": "2017-12-15T02:40:27Z",
+      "side": 1,
+      "message": "Ok, leaving it as a singleton.",
+      "parentUuid": "29e966e9_87743ea2",
+      "range": {
+        "startLine": 122,
+        "startChar": 43,
+        "endLine": 122,
+        "endChar": 46
+      },
+      "revId": "94214d4361c89175999a4c64b5efd7ef7366f508",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -377,6 +425,30 @@
       "revId": "94214d4361c89175999a4c64b5efd7ef7366f508",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ccb25dc_6ae89306",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/cast/CreateRouteRequest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1150472
+      },
+      "writtenOn": "2017-12-15T02:40:27Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d6a2da5e_e967cfa4",
+      "range": {
+        "startLine": 170,
+        "startChar": 12,
+        "endLine": 170,
+        "endChar": 19
+      },
+      "revId": "94214d4361c89175999a4c64b5efd7ef7366f508",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
