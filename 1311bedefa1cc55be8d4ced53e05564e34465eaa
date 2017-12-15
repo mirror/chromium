@@ -16,6 +16,24 @@
       "revId": "1311bedefa1cc55be8d4ced53e05564e34465eaa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7060efe3_c274ece6",
+        "filename": "net/spdy/chromium/http2_push_promise_index.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-12-15T00:32:08Z",
+      "side": 1,
+      "message": "I think the statement here is still correct.  If there are k entries with the given URL, then there is exactly one \"first entry with a given URL\", and finding that entry is O(log n) according to both [1] and [2].  This is what CompareByUrl offers via an entry with |delegate \u003d\u003d nullptr|.\n\nOf course if one needs to iterate through multiple entries, like in FindSession, then the total runtime of that method can be a lot worse.  I think the appropriate place to document that would be at the declaration of FindSession.  I don\u0027t quite think it\u0027s necessary, because in net code there are usually no comments regarding runtime.\n\n[1] http://www.cplusplus.com/reference/set/set/lower_bound/\n[2] http://en.cppreference.com/w/cpp/container/set/lower_bound",
+      "parentUuid": "cd0c932e_42c66ca3",
+      "revId": "1311bedefa1cc55be8d4ced53e05564e34465eaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
