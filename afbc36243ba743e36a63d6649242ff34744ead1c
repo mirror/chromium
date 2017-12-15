@@ -213,6 +213,24 @@
       "revId": "afbc36243ba743e36a63d6649242ff34744ead1c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1589384f_6057b09a",
+        "filename": "base/android/java/templates/NativeLibraries.template",
+        "patchSetId": 3
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-12-15T02:31:03Z",
+      "side": 1,
+      "message": "\u003e monochrome_apk can be used as the system webview; i\u0027m not sure what you mean.\n\u003e system_webview_google_apk is the corresponding standalone webview build; you\n\u003e can just install that on a pre-N device (that\u0027s how all the pre-N devices\n\u003e work).\n\nNot sure what I was thinking. For some reason I thought system webview apk is\nexclusively monochrome based (but after your comment above it seems we do update\nsystem webview for pre-N and occasionally some OEMs pick it up and do OTA\nupdates with those binaries. Impressive!). There is just a bit of moving parts\nin how webview/chrome can be compiled and shipped, and I did not fully\nappreciate all possibilities yet. And it\u0027s evening :)\n\nSo thanks!\n\n\u003e In practise that directory will probably always exist and probably always be\n\u003e consistently named (though they\u0027re named mostly by the generic arch names and\n\u003e not the full ABI names, so we\u0027d need a mapping table).\n\u003e \n\u003e In theory this is an internal implementation detail that can\u0027t be relied on at\n\u003e all.\n\u003e \n\u003e Sooo *shrug* :p\n\nAha, so let me try to deduce .. in Andrew\u0027s example \"/lib/arm\" actually tells\nthat we have \"armeabi-v7a\" (or \"armeabi\"?) and we could make a mapping entry for\nthis in the form:\n\n\"/lib/arm\" maps to \"armeabi-v7a\"\n\nIf we ship that impl detail I will lose the rest of my sleep for 3 months at\nleast :)\n\nSo lemme try to rephrase the problem:\n    The same Java/dex code needs to be able to determine which\n    platform-abi-string (or whatever it is called) to use for looking up the DSO\n    path, and it depends (roughly) on whether the webview process is 32bit or\n    64bit. And this is only a problem for pre-N APKs (which, as we know may be\n    used on N in the list of rare occasions like just after OTA from M).\nIs this correct?\n\nHmm, I did not realize this in full before.\n\nAnother possible hack: determine whether we are 32bit via /proc/self/maps and\nseeing the names of the system DSOs .. which ... looks even more brittle.\n\nDo we want this webview support for fat APK on mips64/x86-64 or it\u0027s only ARM that we ship the fat apk to?",
+      "parentUuid": "aa881181_7ce1df3d",
+      "revId": "afbc36243ba743e36a63d6649242ff34744ead1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
