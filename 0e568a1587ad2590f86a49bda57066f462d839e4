@@ -34,6 +34,24 @@
       "revId": "0e568a1587ad2590f86a49bda57066f462d839e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2dc84c95_6afef07f",
+        "filename": "third_party/WebKit/Source/core/exported/WebFrameTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 689,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-15T18:54:53Z",
+      "side": 1,
+      "message": "Okay, that sounds reasonable.  Since we\u0027re going that route, I\u0027ve changed the WebLocalFrameImpl implementation to DCHECK that the context is valid at the time of the call, and updated the comment.  (And removed this test.)",
+      "parentUuid": "1776537c_67e27987",
+      "revId": "0e568a1587ad2590f86a49bda57066f462d839e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
