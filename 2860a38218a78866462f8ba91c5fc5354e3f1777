@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d3c61212_a56c80d0",
+        "filename": "chrome/browser/ui/views/hover_button.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-12-15T17:34:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ca6a0665_bada88e3",
+      "revId": "2860a38218a78866462f8ba91c5fc5354e3f1777",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "52dffc4f_9e65288c",
         "filename": "ui/views/controls/button/button.cc",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "eec575b4_f4063b01",
+        "filename": "ui/views/controls/button/button.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-12-15T17:34:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "52dffc4f_9e65288c",
+      "revId": "2860a38218a78866462f8ba91c5fc5354e3f1777",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "65dab9a2_6f439c22",
         "filename": "ui/views/controls/button/button.cc",
         "patchSetId": 3
@@ -50,6 +86,24 @@
       "revId": "2860a38218a78866462f8ba91c5fc5354e3f1777",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b89db187_6959b94a",
+        "filename": "ui/views/controls/button/button.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 489,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-12-15T17:34:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "65dab9a2_6f439c22",
+      "revId": "2860a38218a78866462f8ba91c5fc5354e3f1777",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
