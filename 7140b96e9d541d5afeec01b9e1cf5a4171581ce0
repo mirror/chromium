@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c129c739_b24c8799",
+        "filename": "chromecast/media/cma/backend/post_processors/post_processor_benchmark.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1207509
+      },
+      "writtenOn": "2017-12-15T02:01:59Z",
+      "side": 1,
+      "message": "Why only half nyquist?",
+      "range": {
+        "startLine": 65,
+        "startChar": 44,
+        "endLine": 65,
+        "endChar": 47
+      },
+      "revId": "7140b96e9d541d5afeec01b9e1cf5a4171581ce0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e614da1_430f83c6",
+        "filename": "chromecast/media/cma/backend/post_processors/post_processor_benchmark.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1207509
+      },
+      "writtenOn": "2017-12-15T02:01:59Z",
+      "side": 1,
+      "message": "Nit: use \u0027frames per second\u0027 here, as Hz also can refer to CPU clock speed.",
+      "range": {
+        "startLine": 70,
+        "startChar": 40,
+        "endLine": 70,
+        "endChar": 42
+      },
+      "revId": "7140b96e9d541d5afeec01b9e1cf5a4171581ce0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cecb7f77_8593788a",
+        "filename": "chromecast/media/cma/backend/post_processors/post_processor_benchmark.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1207509
+      },
+      "writtenOn": "2017-12-15T02:01:59Z",
+      "side": 1,
+      "message": "// Measure amount of CPU time |pp| takes to run [x] seconds of stereo audio at |sample_rate|.",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 26
+      },
+      "revId": "7140b96e9d541d5afeec01b9e1cf5a4171581ce0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
