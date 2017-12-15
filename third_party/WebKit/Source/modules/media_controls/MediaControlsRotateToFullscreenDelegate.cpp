@@ -4,6 +4,7 @@
 
 #include "modules/media_controls/MediaControlsRotateToFullscreenDelegate.h"
 
+#include "bindings/core/v8/V8BindingForCore.h"
 #include "core/dom/ElementVisibilityObserver.h"
 #include "core/dom/UserGestureIndicator.h"
 #include "core/dom/events/Event.h"
@@ -40,6 +41,10 @@ void MediaControlsRotateToFullscreenDelegate::Attach() {
   if (!dom_window)
     return;
 
+  // TODO(795286): device orientation now requires a v8::Context in the stack.
+  ScriptState::Scope scope(
+      ToScriptStateForMainWorld(video_element_->GetDocument().GetFrame()));
+
   video_element_->addEventListener(EventTypeNames::play, this, true);
   video_element_->addEventListener(EventTypeNames::pause, this, true);
 
@@ -66,6 +71,10 @@ void MediaControlsRotateToFullscreenDelegate::Detach() {
     visibility_observer_ = nullptr;
     is_visible_ = false;
   }
+
+  // TODO(795286): device orientation now requires a v8::Context in the stack.
+  ScriptState::Scope scope(
+      ToScriptStateForMainWorld(video_element_->GetDocument().GetFrame()));
 
   video_element_->removeEventListener(EventTypeNames::play, this, true);
   video_element_->removeEventListener(EventTypeNames::pause, this, true);
