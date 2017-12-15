@@ -672,7 +672,6 @@ ProfileIOData::ProfileIOData(Profile::ProfileType profile_type)
 #if defined(OS_CHROMEOS)
       system_key_slot_use_type_(SystemKeySlotUseType::kNone),
 #endif
-      main_request_context_(nullptr),
       resource_context_(new ResourceContext(this)),
       domain_reliability_monitor_unowned_(nullptr),
       profile_type_(profile_type) {
@@ -728,23 +727,24 @@ ProfileIOData::~ProfileIOData() {
   if (domain_reliability_monitor_unowned_)
     domain_reliability_monitor_unowned_->Shutdown();
 
-  if (main_request_context_) {
+  if (main_request_context()) {
     // Prevent the TreeStateTracker from getting any more notifications by
     // severing the link between it and the CTVerifier and unregistering it from
     // new STH notifications.
-    main_request_context_->cert_transparency_verifier()->SetObserver(nullptr);
+    main_request_context()->cert_transparency_verifier()->SetObserver(nullptr);
     ct_tree_tracker_unregistration_.Run();
 
-    // Destroy certificate_report_sender_ before main_request_context_,
+    // Destroy certificate_report_sender_ before main_request_context(),
     // since the former has a reference to the latter.
-    main_request_context_->transport_security_state()->SetReportSender(nullptr);
+    main_request_context()->transport_security_state()->SetReportSender(
+        nullptr);
     certificate_report_sender_.reset();
 
-    main_request_context_->transport_security_state()->SetExpectCTReporter(
+    main_request_context()->transport_security_state()->SetExpectCTReporter(
         nullptr);
     expect_ct_reporter_.reset();
 
-    main_request_context_->transport_security_state()->SetRequireCTDelegate(
+    main_request_context()->transport_security_state()->SetRequireCTDelegate(
         nullptr);
   }
 
@@ -869,7 +869,7 @@ content::ResourceContext* ProfileIOData::GetResourceContext() const {
 
 net::URLRequestContext* ProfileIOData::GetMainRequestContext() const {
   DCHECK(initialized_);
-  return main_request_context_;
+  return main_request_context();
 }
 
 net::URLRequestContext* ProfileIOData::GetMediaRequestContext() const {
@@ -1117,10 +1117,12 @@ void ProfileIOData::Init(
                                std::move(chrome_network_delegate));
 
   builder->set_shared_host_resolver(
-      io_thread_globals->system_request_context->host_resolver());
+      io_thread_globals->system_request_context_owner.url_request_context
+          ->host_resolver());
 
   builder->set_shared_http_auth_handler_factory(
-      io_thread_globals->system_request_context->http_auth_handler_factory());
+      io_thread_globals->system_request_context_owner.url_request_context
+          ->http_auth_handler_factory());
 
   io_thread->SetUpProxyService(builder.get());
 
@@ -1199,7 +1201,8 @@ void ProfileIOData::Init(
 
   ct_tree_tracker_.reset(new certificate_transparency::TreeStateTracker(
       io_thread_globals->ct_logs,
-      io_thread_globals->system_request_context->host_resolver(),
+      io_thread_globals->system_request_context_owner.url_request_context
+          ->host_resolver(),
       io_thread->net_log()));
   ct_verifier->SetObserver(ct_tree_tracker_.get());
 
@@ -1221,11 +1224,9 @@ void ProfileIOData::Init(
   builder->SetCreateHttpTransactionFactoryCallback(
       base::BindOnce(&content::CreateDevToolsNetworkTransactionFactory));
 
-  main_network_context_ =
-      io_thread_globals->network_service->CreateNetworkContextWithBuilder(
-          std::move(profile_params_->main_network_context_request),
-          std::move(profile_params_->main_network_context_params),
-          std::move(builder), &main_request_context_);
+  main_request_context_ = std::move(builder)->Create(
+      std::move(profile_params_->main_network_context_params).get(),
+      io_thread_globals->quic_disabled, io_thread->net_log());
 
   if (chrome_network_delegate_unowned->domain_reliability_monitor()) {
     // Save a pointer to shut down Domain Reliability cleanly before the
@@ -1234,7 +1235,7 @@ void ProfileIOData::Init(
         chrome_network_delegate_unowned->domain_reliability_monitor();
 
     domain_reliability_monitor_unowned_->InitURLRequestContext(
-        main_request_context_);
+        main_request_context());
     domain_reliability_monitor_unowned_->AddBakedInConfigs();
     domain_reliability_monitor_unowned_->SetDiscardUploads(
         !GetMetricsEnabledStateOnIOThread());
@@ -1245,7 +1246,7 @@ void ProfileIOData::Init(
       std::move(profile_params_->extension_cookie_notifier);
   // Cookie store will outlive notifier by order of declaration in
   // profile_io_data.h.
-  extension_cookie_notifier_->AddStore(main_request_context_->cookie_store());
+  extension_cookie_notifier_->AddStore(main_request_context()->cookie_store());
 #endif
 
   // Attach some things to the URLRequestContextBuilder's
@@ -1281,21 +1282,23 @@ void ProfileIOData::Init(
             "thus there is no Chrome-wide policy to disable it."
         })");
   certificate_report_sender_.reset(
-      new net::ReportSender(main_request_context_, traffic_annotation));
-  main_request_context_->transport_security_state()->SetReportSender(
+      new net::ReportSender(main_request_context(), traffic_annotation));
+  main_request_context()->transport_security_state()->SetReportSender(
       certificate_report_sender_.get());
 
   expect_ct_reporter_.reset(new ChromeExpectCTReporter(
-      main_request_context_, base::Closure(), base::Closure()));
-  main_request_context_->transport_security_state()->SetExpectCTReporter(
+      main_request_context(), base::RepeatingClosure(),
+      base::RepeatingClosure()));
+  main_request_context()->transport_security_state()->SetExpectCTReporter(
       expect_ct_reporter_.get());
 
-  main_request_context_->transport_security_state()->SetRequireCTDelegate(
+  main_request_context()->transport_security_state()->SetRequireCTDelegate(
       ct_policy_manager_->GetDelegate());
 
   resource_context_->host_resolver_ =
-      io_thread_globals->system_request_context->host_resolver();
-  resource_context_->request_context_ = main_request_context_;
+      io_thread_globals->system_request_context_owner.url_request_context
+          ->host_resolver();
+  resource_context_->request_context_ = main_request_context();
 
   OnMainRequestContextCreated(profile_params_.get());
 

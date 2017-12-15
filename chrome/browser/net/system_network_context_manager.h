@@ -36,18 +36,12 @@ class SystemNetworkContextManager {
   ~SystemNetworkContextManager();
 
   // Initializes |network_context_params| as needed to set up a system
-  // NetworkContext. If the network service is disabled,
-  // |network_context_request| will be for the NetworkContext used by the
-  // SystemNetworkContextManager. Otherwise, this method can still be used to
-  // help set up the IOThread's in-process URLRequestContext, and
-  // |network_context_request| will still be populated, but the associated
-  // NetworkContext will not be used by the SystemNetworkContextManager.
+  // NetworkContext.
   //
   // Must be called before the system NetworkContext is first used.
   //
   // |is_quic_allowed| is set to true if policy allows QUIC to be enabled.
-  void SetUp(content::mojom::NetworkContextRequest* network_context_request,
-             content::mojom::NetworkContextParamsPtr* network_context_params,
+  void SetUp(content::mojom::NetworkContextParamsPtr* network_context_params,
              bool* is_quic_allowed);
 
   // Returns the System NetworkContext. May only be called after SetUp(). Does
