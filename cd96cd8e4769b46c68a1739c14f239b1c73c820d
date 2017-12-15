@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d768f993_d99a555e",
+        "filename": "tools/gn/header_checker.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-12-15T18:28:27Z",
+      "side": 1,
+      "message": "The crash in debug is from here. The \"range\" references a SourceFile that was on the stack. You\u0027ll want to restructure this so the range isn\u0027t passed in, but created here as needed via CreatePersistentRange().",
+      "revId": "cd96cd8e4769b46c68a1739c14f239b1c73c820d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
