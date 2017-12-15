@@ -22,6 +22,30 @@
       "revId": "1ee04d9801aaeb73011f4bb84b5ad811bdd52e3f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66c7d935_8eb38cc2",
+        "filename": "net/der/tag.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-12-15T21:17:34Z",
+      "side": 1,
+      "message": "Both of those should be fine. The thing you don\u0027t get to assume is that kTagContextSpecific | kTagConstructed | 30 may be cast to a uint8_t to get the DER serialization.\n\nThe issue with high tag numbers is that putting the metadata bits in 0x20, 0x40, and 0x80 collides with tag numbers that want those bits. So we\u0027re shifting those bits to the top of the unsigned (really should have been uint32_t... ah well) and converting to and from in CBS and CBB functions.",
+      "parentUuid": "5b69a453_0c55a622",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 50
+      },
+      "revId": "1ee04d9801aaeb73011f4bb84b5ad811bdd52e3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
