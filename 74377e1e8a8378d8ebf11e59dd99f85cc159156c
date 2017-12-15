@@ -282,6 +282,24 @@
     },
     {
       "key": {
+        "uuid": "8e380d60_42d64e0d",
+        "filename": "chrome/browser/chromeos/arc/notification/arc_provision_notification_service_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-12-15T15:24:01Z",
+      "side": 1,
+      "message": "Note: Otherwise ASM will keep dangling pointer between Profile is deleted and ASM is deleted.",
+      "parentUuid": "25863b3b_1a627362",
+      "revId": "74377e1e8a8378d8ebf11e59dd99f85cc159156c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "41fb489e_de6b5263",
         "filename": "chrome/browser/chromeos/arc/notification/arc_provision_notification_service_unittest.cc",
         "patchSetId": 2
@@ -311,6 +329,24 @@
       "side": 1,
       "message": "why do you say that? It seems that in prod ArcServiceLauncher owns both ASMs, but there\u0027s no ASL here.",
       "parentUuid": "41fb489e_de6b5263",
+      "revId": "74377e1e8a8378d8ebf11e59dd99f85cc159156c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe1c9deb_a357694e",
+        "filename": "chrome/browser/chromeos/arc/notification/arc_provision_notification_service_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-12-15T15:24:01Z",
+      "side": 1,
+      "message": "As you said, ASL does not exist, and instead this test fixture emulates it.\nArcServiceManager is destroyed after ArcSessionManager, so for proper emulation I\u0027d recommend to delete ArcSessionManager before ArcServiceManager.",
+      "parentUuid": "a7ccbcf1_61d6b6da",
       "revId": "74377e1e8a8378d8ebf11e59dd99f85cc159156c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -352,6 +388,24 @@
     },
     {
       "key": {
+        "uuid": "8396437e_4f993d44",
+        "filename": "chrome/browser/chromeos/arc/notification/arc_provision_notification_service_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-12-15T15:24:01Z",
+      "side": 1,
+      "message": "Good to know, but I couldn\u0027t find the style guide so could you share it?",
+      "parentUuid": "9e99ac28_0271dac1",
+      "revId": "74377e1e8a8378d8ebf11e59dd99f85cc159156c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c0cea48d_c6cea5b8",
         "filename": "chrome/browser/chromeos/arc/notification/arc_provision_notification_service_unittest.cc",
         "patchSetId": 2
@@ -381,6 +435,24 @@
       "side": 1,
       "message": "Do you mean in this test file or in the production code? To what advantage is a constant in this case?",
       "parentUuid": "c0cea48d_c6cea5b8",
+      "revId": "74377e1e8a8378d8ebf11e59dd99f85cc159156c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78807fbd_aa772c66",
+        "filename": "chrome/browser/chromeos/arc/notification/arc_provision_notification_service_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-12-15T15:24:01Z",
+      "side": 1,
+      "message": "I meant sharing the constant defined in production to make it easy to catch up constant change.",
+      "parentUuid": "8742ab28_00058663",
       "revId": "74377e1e8a8378d8ebf11e59dd99f85cc159156c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
