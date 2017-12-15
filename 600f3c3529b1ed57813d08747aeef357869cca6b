@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "843a650a_2c1835d9",
+        "filename": "ios/chrome/browser/ui/omnibox/BUILD.gn",
+        "patchSetId": 16
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-12-15T15:05:01Z",
+      "side": 1,
+      "message": "lol",
+      "revId": "600f3c3529b1ed57813d08747aeef357869cca6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
