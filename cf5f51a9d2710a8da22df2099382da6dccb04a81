@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "038788be_70beaeec",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2017-12-15T16:27:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "446e7f96_4dd83c23",
+      "revId": "cf5f51a9d2710a8da22df2099382da6dccb04a81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a6cf561b_79896bd2",
         "filename": "content/renderer/render_frame_impl.h",
         "patchSetId": 21
@@ -30,6 +48,30 @@
       "writtenOn": "2017-12-14T23:34:38Z",
       "side": 1,
       "message": "Sorry for being unclear: this should just be an inline member, i.e. InputTargetClientImpl input_target_client_impl_;\n\nThen we don\u0027t have to allocate it out of line or delete it.",
+      "range": {
+        "startLine": 1597,
+        "startChar": 23,
+        "endLine": 1597,
+        "endChar": 24
+      },
+      "revId": "cf5f51a9d2710a8da22df2099382da6dccb04a81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df0465eb_52031d1e",
+        "filename": "content/renderer/render_frame_impl.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 1597,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2017-12-15T16:27:34Z",
+      "side": 1,
+      "message": "It cannot be. Because then I have to include the header instead of just declaring it and it causes a circular header include. I used the unique pointer again. Let\u0027s call it good enough.",
+      "parentUuid": "a6cf561b_79896bd2",
       "range": {
         "startLine": 1597,
         "startChar": 23,
