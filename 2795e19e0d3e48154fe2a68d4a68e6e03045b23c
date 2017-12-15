@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "f482f5fb_707bd3e4",
+        "filename": "ios/chrome/browser/passwords/password_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 492,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-12-15T23:51:04Z",
+      "side": 1,
+      "message": "Sure we will do it. But it\u0027s not scope of this CL. It would require renaming in many places and rewriting many comments. For IOS code it\u0027s only one place, so it looks that proper comment should be enough for understanding.",
+      "parentUuid": "145a9c11_4d38473a",
+      "range": {
+        "startLine": 492,
+        "startChar": 36,
+        "endLine": 492,
+        "endChar": 54
+      },
+      "revId": "2795e19e0d3e48154fe2a68d4a68e6e03045b23c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2a58e2fe_ff9e7392",
         "filename": "ios/chrome/browser/passwords/resources/password_controller.js",
         "patchSetId": 5
@@ -141,6 +165,54 @@
       "revId": "2795e19e0d3e48154fe2a68d4a68e6e03045b23c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5823521c_5160281b",
+        "filename": "ios/chrome/browser/passwords/resources/password_controller.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-12-15T23:51:04Z",
+      "side": 1,
+      "message": "Yeah, it makes sense. Done",
+      "parentUuid": "90e4b495_f8bc5634",
+      "range": {
+        "startLine": 160,
+        "startChar": 26,
+        "endLine": 160,
+        "endChar": 30
+      },
+      "revId": "2795e19e0d3e48154fe2a68d4a68e6e03045b23c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "04cafec6_04e83f9f",
+        "filename": "ios/chrome/browser/passwords/resources/password_controller.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-12-15T23:51:04Z",
+      "side": 1,
+      "message": "Yeah, it makes sense. Done",
+      "parentUuid": "90e4b495_f8bc5634",
+      "range": {
+        "startLine": 160,
+        "startChar": 26,
+        "endLine": 160,
+        "endChar": 30
+      },
+      "revId": "2795e19e0d3e48154fe2a68d4a68e6e03045b23c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
