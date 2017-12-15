@@ -10,9 +10,11 @@
 #include "base/pickle.h"
 #include "ipc/ipc_param_traits.h"
 #include "ipc/param_traits_macros.h"
+#include "net/base/host_port_pair.h"
 #include "net/cert/ct_policy_status.h"
 #include "net/cert/signed_certificate_timestamp.h"
 #include "net/cert/signed_certificate_timestamp_and_status.h"
+#include "net/http/http_request_headers.h"
 #include "net/ssl/ssl_info.h"
 
 #ifndef INTERNAL_SERVICES_NETWORK_PUBLIC_CPP_SSL_INFO_IPC_TRAITS_H_
@@ -30,6 +32,26 @@ namespace IPC {
 template <>
 struct ParamTraits<net::HashValue> {
   typedef net::HashValue param_type;
+  static void Write(base::Pickle* m, const param_type& p);
+  static bool Read(const base::Pickle* m,
+                   base::PickleIterator* iter,
+                   param_type* r);
+  static void Log(const param_type& p, std::string* l);
+};
+
+template <>
+struct ParamTraits<net::HostPortPair> {
+  typedef net::HostPortPair param_type;
+  static void Write(base::Pickle* m, const param_type& p);
+  static bool Read(const base::Pickle* m,
+                   base::PickleIterator* iter,
+                   param_type* r);
+  static void Log(const param_type& p, std::string* l);
+};
+
+template <>
+struct ParamTraits<net::HttpRequestHeaders> {
+  typedef net::HttpRequestHeaders param_type;
   static void Write(base::Pickle* m, const param_type& p);
   static bool Read(const base::Pickle* m,
                    base::PickleIterator* iter,
@@ -74,6 +96,11 @@ IPC_ENUM_TRAITS_MAX_VALUE(net::ct::SCTVerifyStatus, net::ct::SCT_STATUS_MAX)
 IPC_ENUM_TRAITS_MAX_VALUE(net::SSLInfo::HandshakeType,
                           net::SSLInfo::HANDSHAKE_FULL)
 IPC_ENUM_TRAITS_MAX_VALUE(net::TokenBindingParam, net::TB_PARAM_ECDSAP256)
+
+IPC_STRUCT_TRAITS_BEGIN(net::HttpRequestHeaders::HeaderKeyValuePair)
+  IPC_STRUCT_TRAITS_MEMBER(key)
+  IPC_STRUCT_TRAITS_MEMBER(value)
+IPC_STRUCT_TRAITS_END()
 
 IPC_STRUCT_TRAITS_BEGIN(net::SignedCertificateTimestampAndStatus)
   IPC_STRUCT_TRAITS_MEMBER(sct)
