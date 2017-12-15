@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "6689ae41_4e8f616d",
+        "filename": "chrome/installer/linux/common/installer.include",
+        "patchSetId": 7
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-15T22:32:45Z",
+      "side": 1,
+      "message": "As written, this is still a little confusing. What I would like it to say is as follows. Assuming that is the long term plan.\n\n# Use v8_context_snapshot.bin instead of snapshot_blob.bin if it is available.\n# TODO(some bug number): Deprecated snapshot_blob.bin support.",
+      "revId": "a355fd226198d89be4aa2926cbceecf1ea987167",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "83f3ac3f_cbc7511f",
         "filename": "extensions/shell/installer/linux/common/installer.include",
         "patchSetId": 7
