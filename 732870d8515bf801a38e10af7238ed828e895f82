@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cc82c965_c1460d8d",
+        "filename": "PRESUBMIT.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-15T21:46:26Z",
+      "side": 1,
+      "message": "Oh hey, I gave useful advise. Maybe merge with the case below? Need dcheng@ for OWNERS.",
+      "revId": "732870d8515bf801a38e10af7238ed828e895f82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
