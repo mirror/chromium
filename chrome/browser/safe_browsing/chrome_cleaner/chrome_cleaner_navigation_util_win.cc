@@ -4,6 +4,7 @@
 
 #include "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_navigation_util_win.h"
 
+#include "chrome/browser/safe_browsing/chrome_cleaner/srt_field_trial_win.h"
 #include "chrome/browser/ui/browser_list.h"
 #include "chrome/browser/ui/browser_window.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
@@ -13,6 +14,15 @@
 #include "url/gurl.h"
 
 namespace chrome_cleaner_util {
+
+namespace {
+const char* GetCleanupPageURL() {
+  if (safe_browsing::UserInitiatedCleanupsEnabled())
+    return chrome::kChromeUICleanupPageURL;
+  else
+    return chrome::kChromeUISettingsURL;
+}
+}  // namespace
 
 Browser* FindBrowser() {
   BrowserList* browser_list = BrowserList::GetInstance();
@@ -30,20 +40,20 @@ Browser* FindBrowser() {
   return nullptr;
 }
 
-bool SettingsPageIsActiveTab(Browser* browser) {
+bool CleanupPageIsActiveTab(Browser* browser) {
   DCHECK(browser);
 
   content::WebContents* web_contents =
       browser->tab_strip_model()->GetActiveWebContents();
   return web_contents &&
-         web_contents->GetLastCommittedURL() == chrome::kChromeUISettingsURL;
+         web_contents->GetLastCommittedURL() == GetCleanupPageURL();
 }
 
-void OpenSettingsPage(Browser* browser, WindowOpenDisposition disposition) {
+void OpenCleanupPage(Browser* browser, WindowOpenDisposition disposition) {
   DCHECK(browser);
 
   browser->OpenURL(content::OpenURLParams(
-      GURL(chrome::kChromeUISettingsURL), content::Referrer(), disposition,
+      GURL(GetCleanupPageURL()), content::Referrer(), disposition,
       ui::PAGE_TRANSITION_AUTO_TOPLEVEL, /*is_renderer_initiated=*/false));
 }
 

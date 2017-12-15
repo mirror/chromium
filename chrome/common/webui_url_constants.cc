@@ -217,6 +217,7 @@ const char kChromeUIUserImageURL[] = "chrome://userimage/";
 #endif  // defined(OS_CHROMEOS)
 
 #if defined(OS_WIN)
+const char kChromeUICleanupPageURL[] = "chrome://settings/cleanup";
 const char kChromeUIMetroFlowHost[] = "make-metro";
 const char kChromeUIMetroFlowURL[] = "chrome://make-metro/";
 #endif
