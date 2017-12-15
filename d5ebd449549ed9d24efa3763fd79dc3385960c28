@@ -281,6 +281,30 @@
       "revId": "d5ebd449549ed9d24efa3763fd79dc3385960c28",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "11ed66be_25c8240b",
+        "filename": "chrome/browser/component_updater/cros_component_installer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-15T20:41:40Z",
+      "side": 1,
+      "message": "Sorry if I wasn\u0027t clear. The approach you took still ends up rather awkward because CrOSCOmponent isn\u0027t intended for subclassing. What I\u0027m suggesting is that CrOSComponent owns a pure virtual interface that contains the functions you want to mock. Test code injects the mock interface.",
+      "parentUuid": "d6d3105d_752a148e",
+      "range": {
+        "startLine": 129,
+        "startChar": 2,
+        "endLine": 129,
+        "endChar": 10
+      },
+      "revId": "d5ebd449549ed9d24efa3763fd79dc3385960c28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
