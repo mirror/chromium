@@ -7,22 +7,47 @@ from telemetry import story
 
 from page_sets import top_pages
 
+class TopSmoothScrollLogic(object):
 
-def _IssueMarkerAndScroll(action_runner):
-  with action_runner.CreateGestureInteraction('ScrollAction'):
-    action_runner.ScrollPage()
+  """Define extra arguments to pass to ScrollPage or ScrollElement"""
+  _scroll_element_args = {}
+  _scroll_page_args = {}
+
+  def RunPageInteractions(self, action_runner):
+    self.InitializePageInteractions(action_runner)
+    self.ScrollPageInteractions(action_runner)
+
+  def InitializePageInteractions(self, action_runner):
+    """Override this to define e.g. login actions"""
+    pass
+
+  def ScrollPageInteractions(self, action_runner):
+    action_runner.Wait(1)
+    with action_runner.CreateGestureInteraction('ScrollAction'):
+      self.Scroll(action_runner, 'down')
+      if self.story_set.scroll_forever:
+        while True:
+          self.Scroll(action_runner, 'up')
+          self.Scroll(action_runner, 'down')
+
+  def Scroll(self, action_runner, direction):
+    if self._scroll_element_args:
+      action_runner.ScrollElement(direction=direction,
+                                  **self._scroll_element_args)
+    else:
+      action_runner.ScrollPage(direction=direction, **self._scroll_page_args)
 
 
-def _CreatePageClassWithSmoothInteractions(page_cls):
-  class DerivedSmoothPage(page_cls):  # pylint: disable=no-init
+def _CreatePageClassWithSmoothInteractions(page_cls=None):
 
-    def RunPageInteractions(self, action_runner):
-      action_runner.Wait(1)
-      _IssueMarkerAndScroll(action_runner)
+  class DerivedSmoothPage(TopSmoothScrollLogic,
+                          page_cls):  # pylint: disable=no-init
+    pass
+
   return DerivedSmoothPage
 
 
-class TopSmoothPage(page_module.Page):
+class TopSmoothPage(TopSmoothScrollLogic, page_module.Page):
 
   def __init__(self, url, page_set, name=''):
     if name == '':
@@ -31,14 +56,13 @@ class TopSmoothPage(page_module.Page):
         url=url, page_set=page_set, name=name,
         shared_page_state_class=shared_page_state.SharedDesktopPageState)
 
-  def RunPageInteractions(self, action_runner):
-    action_runner.Wait(1)
-    _IssueMarkerAndScroll(action_runner)
 
-
-class GmailSmoothPage(top_pages.GmailPage):
+class GmailSmoothPage(TopSmoothScrollLogic, top_pages.GmailPage):
 
   """ Why: productivity, top google properties """
+
+  _scroll_element_args = { 'element_function':
+                           'window.__scrollableElementForTelemetry' }
 
   def __init__(self, page_set,
                shared_page_state_class=shared_page_state.SharedPageState):
@@ -46,58 +70,44 @@ class GmailSmoothPage(top_pages.GmailPage):
         page_set=page_set,
         shared_page_state_class=shared_page_state_class)
 
-  def RunPageInteractions(self, action_runner):
+  def InitializePageInteractions(self, action_runner):
     action_runner.ExecuteJavaScript('''
         gmonkey.load('2.0', function(api) {
           window.__scrollableElementForTelemetry = api.getScrollableElement();
         });''')
     action_runner.WaitForJavaScriptCondition(
         'window.__scrollableElementForTelemetry != null')
-    action_runner.Wait(1)
-    with action_runner.CreateGestureInteraction('ScrollAction'):
-      action_runner.ScrollElement(
-          element_function='window.__scrollableElementForTelemetry')
 
 
-class GoogleCalendarSmoothPage(top_pages.GoogleCalendarPage):
+class GoogleCalendarSmoothPage(TopSmoothScrollLogic,
+                               top_pages.GoogleCalendarPage):
 
   """ Why: productivity, top google properties """
-
-  def RunPageInteractions(self, action_runner):
-    action_runner.Wait(1)
-    with action_runner.CreateGestureInteraction('ScrollAction'):
-      action_runner.ScrollElement(selector='#scrolltimedeventswk')
+  _scroll_element_args = { 'selector': '#scrolltimedeventswk' }
 
 
-class GoogleDocSmoothPage(top_pages.GoogleDocPage):
+class GoogleDocSmoothPage(TopSmoothScrollLogic, top_pages.GoogleDocPage):
 
   """ Why: productivity, top google properties; Sample doc in the link """
-
-  def RunPageInteractions(self, action_runner):
-    action_runner.Wait(1)
-    with action_runner.CreateGestureInteraction('ScrollAction'):
-      action_runner.ScrollElement(selector='.kix-appview-editor')
+  _scroll_element_args = { 'selector': '.kix-appview-editor' }
 
 
-class ESPNSmoothPage(top_pages.ESPNPage):
+class ESPNSmoothPage(TopSmoothScrollLogic, top_pages.ESPNPage):
 
   """ Why: #1 sports """
-
-  def RunPageInteractions(self, action_runner):
-    action_runner.Wait(1)
-    with action_runner.CreateGestureInteraction('ScrollAction'):
-      action_runner.ScrollPage(left_start_ratio=0.1)
+  _scroll_page_args = { 'left_start_ratio': 0.1 }
 
 
 class Top25SmoothPageSet(story.StorySet):
 
   """ Pages hand-picked for 2012 CrOS scrolling tuning efforts. """
 
-  def __init__(self, techcrunch=True):
+  def __init__(self, techcrunch=True, scroll_forever=False):
     super(Top25SmoothPageSet, self).__init__(
         archive_data_file='data/top_25_smooth.json',
         cloud_storage_bucket=story.PARTNER_BUCKET)
 
+    self.scroll_forever = scroll_forever
     desktop_state_class = shared_page_state.SharedDesktopPageState
 
     self.AddStory(_CreatePageClassWithSmoothInteractions(
