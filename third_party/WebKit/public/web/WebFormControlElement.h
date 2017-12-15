@@ -57,6 +57,10 @@ class BLINK_EXPORT WebFormControlElement : public WebElement {
   WebString FormControlName() const;
   WebString FormControlType() const;
 
+  // This function returns the type "password" for text fields that have been a
+  // password in the past.
+  WebString FormControlTypeForAutofill() const;
+
   bool IsAutofilled() const;
   void SetAutofilled(bool);
 
