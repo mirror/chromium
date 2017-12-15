@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "114b568e_52fbed08",
+        "filename": "chrome/browser/ui/browser_command_controller_browsertest.cc",
+        "patchSetId": 35
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-12-15T19:38:54Z",
+      "side": 1,
+      "message": "Had to put the test inside of namespace chrome, otherwise the FRIEND_TEST_ALL_PREFIXES wouldn\u0027t work.",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 39,
+        "endChar": 18
+      },
+      "revId": "720efbce6bfff646bbbb598b9e763d379cb8b995",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
