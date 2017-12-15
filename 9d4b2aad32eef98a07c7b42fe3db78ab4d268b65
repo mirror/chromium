@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d0d839f5_e3470662",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-15T20:37:03Z",
+      "side": 1,
+      "message": "Yay!",
+      "revId": "9d4b2aad32eef98a07c7b42fe3db78ab4d268b65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9e8617a7_30f03375",
+        "filename": "chrome/services/printing/BUILD.gn",
+        "patchSetId": 7
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-15T20:37:03Z",
+      "side": 1,
+      "message": "nit: I really like having the conditionals at the end in GN files.",
+      "revId": "9d4b2aad32eef98a07c7b42fe3db78ab4d268b65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5854d98c_821a7324",
+        "filename": "chrome/services/printing/pdf_to_emf_converter_factory.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-15T20:37:03Z",
+      "side": 1,
+      "message": "Probably don\u0027t need this inside namespace printing. Same for .cpp file.",
+      "range": {
+        "startLine": 23,
+        "startChar": 29,
+        "endLine": 23,
+        "endChar": 39
+      },
+      "revId": "9d4b2aad32eef98a07c7b42fe3db78ab4d268b65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c49d745_a9624410",
+        "filename": "chrome/services/printing/printing_service.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-15T20:37:03Z",
+      "side": 1,
+      "message": "Which macro are we adding? \"defined(OS_WIN)\" should be covered by build/build_config.h.",
+      "revId": "9d4b2aad32eef98a07c7b42fe3db78ab4d268b65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
