@@ -54,6 +54,11 @@ UI.TextEditor.prototype = {
   setText(text) {},
 
   /**
+   * @return {{top: number, bottom: number, left: number, right: number}}
+   */
+  cursorPosition() {},
+
+  /**
    * @param {number} lineNumber
    * @return {string}
    */

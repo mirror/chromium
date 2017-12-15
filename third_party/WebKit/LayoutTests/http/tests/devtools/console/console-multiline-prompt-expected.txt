@@ -1,0 +1,16 @@
+Tests scrolling behavior in console prompt with multiline content.
+
+
+Running: testPreserveScrollWhenTyping
+ScrollTop is zero
+
+Running: testScrollWhenTypingWithCursorOffscreen
+ScrollTop is not zero
+
+Running: testPreserveScrollWhenTypingWithMessages
+Message count: 1
+ScrollTop is zero
+
+Running: testScrollWhenTypingWithCursorOffscreenWithMessages
+ScrollTop is not zero
+

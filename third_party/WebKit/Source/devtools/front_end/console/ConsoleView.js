@@ -1155,11 +1155,23 @@ Console.ConsoleView = class extends UI.VBox {
   }
 
   _promptTextChanged() {
-    // Scroll to the bottom, except when the prompt is the only visible item.
-    if (this.itemCount() !== 0 && this._viewport.firstVisibleIndex() !== this.itemCount())
+    var hasVisibleMessages = this.itemCount() !== 0 && this._viewport.firstVisibleIndex() !== this.itemCount();
+    if (hasVisibleMessages && !this._isCursorVisible())
       this._immediatelyScrollToBottom();
-
     this._promptTextChangedForTest();
+  }
+
+  /**
+   * @return {boolean}
+   */
+  _isCursorVisible() {
+    var cursorPosition = this._prompt.cursorPosition();
+    if (cursorPosition) {
+      var visibleRect = this._messagesElement.getBoundingClientRect();
+      if (visibleRect.top <= cursorPosition.top && visibleRect.bottom >= cursorPosition.bottom)
+        return true;
+    }
+    return false;
   }
 
   _promptTextChangedForTest() {

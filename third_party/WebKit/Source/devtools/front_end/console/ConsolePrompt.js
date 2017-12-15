@@ -91,6 +91,13 @@ Console.ConsolePrompt = class extends UI.Widget {
   }
 
   /**
+   * @return {?{top: number, bottom: number, left: number, right: number}}
+   */
+  cursorPosition() {
+    return this._editor ? this._editor.cursorPosition() : null;
+  }
+
+  /**
    * @param {boolean} value
    */
   setAddCompletionsFromHistory(value) {

@@ -606,6 +606,14 @@ TextEditor.CodeMirrorTextEditor = class extends UI.VBox {
   }
 
   /**
+   * @override
+   * @return {{top: number, bottom: number, left: number, right: number}}
+   */
+  cursorPosition() {
+    return this._codeMirror.cursorCoords(null);
+  }
+
+  /**
    * @param {number} lineNumber
    * @param {number} column
    * @return {?{x: number, y: number, height: number}}
