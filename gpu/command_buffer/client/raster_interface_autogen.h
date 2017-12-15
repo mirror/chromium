@@ -28,8 +28,7 @@ virtual void EndQueryEXT(GLenum target) = 0;
 virtual void GetQueryObjectuivEXT(GLuint id, GLenum pname, GLuint* params) = 0;
 virtual GLuint CreateImageCHROMIUM(ClientBuffer buffer,
                                    GLsizei width,
-                                   GLsizei height,
-                                   GLenum internalformat) = 0;
+                                   GLsizei height) = 0;
 virtual void DestroyImageCHROMIUM(GLuint image_id) = 0;
 virtual void CompressedCopyTextureCHROMIUM(GLuint source_id,
                                            GLuint dest_id) = 0;

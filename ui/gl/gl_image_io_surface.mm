@@ -32,23 +32,6 @@ using gfx::BufferFormat;
 namespace gl {
 namespace {
 
-bool ValidInternalFormat(unsigned internalformat) {
-  switch (internalformat) {
-    case GL_RED:
-    case GL_R16_EXT:
-    case GL_RG:
-    case GL_BGRA_EXT:
-    case GL_RGB:
-    case GL_RGB10_A2_EXT:
-    case GL_RGB_YCBCR_420V_CHROMIUM:
-    case GL_RGB_YCBCR_422_CHROMIUM:
-    case GL_RGBA:
-      return true;
-    default:
-      return false;
-  }
-}
-
 bool ValidFormat(gfx::BufferFormat format) {
   switch (format) {
     case gfx::BufferFormat::R_8:
@@ -186,29 +169,15 @@ GLenum DataType(gfx::BufferFormat format) {
   return 0;
 }
 
-// When an IOSurface is bound to a texture with internalformat "GL_RGB", many
-// OpenGL operations are broken. Therefore, don't allow an IOSurface to be bound
-// with GL_RGB unless overridden via BindTexImageWithInternalformat.
-// https://crbug.com/595948, https://crbug.com/699566.
-GLenum ConvertRequestedInternalFormat(GLenum internalformat) {
-  if (internalformat == GL_RGB)
-    return GL_RGBA;
-  return internalformat;
-}
-
 }  // namespace
 
 // static
-GLImageIOSurface* GLImageIOSurface::Create(const gfx::Size& size,
-                                           unsigned internalformat) {
-  return new GLImageIOSurface(size, internalformat);
+GLImageIOSurface* GLImageIOSurface::Create(const gfx::Size& size) {
+  return new GLImageIOSurface(size);
 }
 
-GLImageIOSurface::GLImageIOSurface(const gfx::Size& size,
-                                   unsigned internalformat)
+GLImageIOSurface::GLImageIOSurface(const gfx::Size& size)
     : size_(size),
-      internalformat_(ConvertRequestedInternalFormat(internalformat)),
-      client_internalformat_(internalformat),
       format_(gfx::BufferFormat::RGBA_8888) {}
 
 GLImageIOSurface::~GLImageIOSurface() {
@@ -222,12 +191,6 @@ bool GLImageIOSurface::Initialize(IOSurfaceRef io_surface,
   DCHECK(!io_surface_);
   if (!io_surface) {
     LOG(ERROR) << "Invalid IOSurface";
-    return false;
-  }
-
-  if (!ValidInternalFormat(internalformat_)) {
-    LOG(ERROR) << "Invalid internalformat: "
-               << GLEnums::GetStringEnum(internalformat_);
     return false;
   }
 
@@ -264,7 +227,23 @@ gfx::Size GLImageIOSurface::GetSize() {
 }
 
 unsigned GLImageIOSurface::GetInternalFormat() {
-  return internalformat_;
+  // When an IOSurface is bound to a texture with internalformat
+  // "GL_RGB", many OpenGL operations are broken. Therefore, don't
+  // allow an IOSurface to be bound with GL_RGB unless overridden via
+  // BindTexImageWithInternalformat.
+  //
+  // This maps gfx::BufferFormat::BGRX_8888 to GL_RGBA, but
+  // EmulatingRGB() below will indicate to the command buffer that
+  // we're using it to emulate GL_RGB.
+  //
+  // crbug.com/595948, crbug.com/699566.
+
+  // Map BGRA_8888 to GL_BGRA since that's what the client expects.
+
+  if (format_ == gfx::BufferFormat::BGRA_8888)
+    return GL_BGRA;
+  else
+    return TextureFormat(format_);
 }
 
 bool GLImageIOSurface::BindTexImage(unsigned target) {
@@ -303,6 +282,12 @@ bool GLImageIOSurface::BindTexImageWithInternalformat(unsigned target,
   if (cgl_error != kCGLNoError) {
     LOG(ERROR) << "Error in CGLTexImageIOSurface2D: "
                << CGLErrorString(cgl_error);
+    LOG(ERROR)
+	<< "internalformat: " << GLEnums::GetStringEnum(internalformat)
+	<< "texture_format: " << GLEnums::GetStringEnum(texture_format)
+	<< "DataFormat(format_): " << GLEnums::GetStringEnum(DataFormat(format_))
+	<< "format_: " << gfx::BufferFormatToString(format);
+
     return false;
   }
 
@@ -421,7 +406,7 @@ void GLImageIOSurface::OnMemoryDump(base::trace_event::ProcessMemoryDump* pmd,
 }
 
 bool GLImageIOSurface::EmulatingRGB() const {
-  return client_internalformat_ == GL_RGB;
+  return format_ == gfx::BufferFormat::BGRX_8888;
 }
 
 bool GLImageIOSurface::CanCheckIOSurfaceIsInUse() const {
@@ -452,13 +437,6 @@ void GLImageIOSurface::SetColorSpace(const gfx::ColorSpace& color_space) {
     return;
   color_space_ = color_space;
   IOSurfaceSetColorSpace(io_surface_, color_space);
-}
-
-// static
-unsigned GLImageIOSurface::GetInternalFormatForTesting(
-    gfx::BufferFormat format) {
-  DCHECK(ValidFormat(format));
-  return TextureFormat(format);
 }
 
 // static

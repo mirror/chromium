@@ -339,8 +339,7 @@ void OneCopyRasterBufferProvider::CopyOnWorkerThread(
     if (staging_buffer->gpu_memory_buffer) {
       staging_buffer->image_id = ri->CreateImageCHROMIUM(
           staging_buffer->gpu_memory_buffer->AsClientBuffer(),
-          staging_buffer->size.width(), staging_buffer->size.height(),
-          GLInternalFormat(resource_lock->format()));
+          staging_buffer->size.width(), staging_buffer->size.height());
       ri->BindTexImage2DCHROMIUM(image_target, staging_buffer->image_id);
     }
   } else {

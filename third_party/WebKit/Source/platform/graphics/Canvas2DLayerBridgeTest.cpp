@@ -103,8 +103,7 @@ class Canvas2DLayerBridgePtr {
 class MockGLES2InterfaceWithImageSupport : public FakeGLES2Interface {
  public:
   MOCK_METHOD0(Flush, void());
-  MOCK_METHOD4(CreateImageCHROMIUM,
-               GLuint(ClientBuffer, GLsizei, GLsizei, GLenum));
+  MOCK_METHOD3(CreateImageCHROMIUM, GLuint(ClientBuffer, GLsizei, GLsizei));
   MOCK_METHOD1(DestroyImageCHROMIUM, void(GLuint));
   MOCK_METHOD2(GenTextures, void(GLsizei, GLuint*));
   MOCK_METHOD2(DeleteTextures, void(GLsizei, const GLuint*));
@@ -1138,14 +1137,14 @@ TEST_F(Canvas2DLayerBridgeTest, GpuMemoryBufferRecycling) {
   ::testing::Mock::VerifyAndClearExpectations(&gl_);
 
   EXPECT_CALL(gl_, GenTextures(1, _)).WillOnce(SetArgPointee<1>(texture_id1));
-  EXPECT_CALL(gl_, CreateImageCHROMIUM(_, _, _, _)).WillOnce(Return(image_id1));
+  EXPECT_CALL(gl_, CreateImageCHROMIUM(_, _, _)).WillOnce(Return(image_id1));
   DrawSomething(bridge);
   bridge->PrepareTransferableResource(&resource1, &release_callback1);
 
   ::testing::Mock::VerifyAndClearExpectations(&gl_);
 
   EXPECT_CALL(gl_, GenTextures(1, _)).WillOnce(SetArgPointee<1>(texture_id2));
-  EXPECT_CALL(gl_, CreateImageCHROMIUM(_, _, _, _)).WillOnce(Return(image_id2));
+  EXPECT_CALL(gl_, CreateImageCHROMIUM(_, _, _)).WillOnce(Return(image_id2));
   DrawSomething(bridge);
   bridge->PrepareTransferableResource(&resource2, &release_callback2);
 
@@ -1202,14 +1201,14 @@ TEST_F(Canvas2DLayerBridgeTest, NoGpuMemoryBufferRecyclingWhenPageHidden) {
   ::testing::Mock::VerifyAndClearExpectations(&gl_);
 
   EXPECT_CALL(gl_, GenTextures(1, _)).WillOnce(SetArgPointee<1>(texture_id1));
-  EXPECT_CALL(gl_, CreateImageCHROMIUM(_, _, _, _)).WillOnce(Return(image_id1));
+  EXPECT_CALL(gl_, CreateImageCHROMIUM(_, _, _)).WillOnce(Return(image_id1));
   DrawSomething(bridge);
   bridge->PrepareTransferableResource(&resource1, &release_callback1);
 
   ::testing::Mock::VerifyAndClearExpectations(&gl_);
 
   EXPECT_CALL(gl_, GenTextures(1, _)).WillOnce(SetArgPointee<1>(texture_id2));
-  EXPECT_CALL(gl_, CreateImageCHROMIUM(_, _, _, _)).WillOnce(Return(image_id2));
+  EXPECT_CALL(gl_, CreateImageCHROMIUM(_, _, _)).WillOnce(Return(image_id2));
   DrawSomething(bridge);
   bridge->PrepareTransferableResource(&resource2, &release_callback2);
 
@@ -1261,7 +1260,7 @@ TEST_F(Canvas2DLayerBridgeTest, ReleaseGpuMemoryBufferAfterBridgeDestroyed) {
   ::testing::Mock::VerifyAndClearExpectations(&gl_);
 
   EXPECT_CALL(gl_, GenTextures(1, _)).WillOnce(SetArgPointee<1>(texture_id));
-  EXPECT_CALL(gl_, CreateImageCHROMIUM(_, _, _, _)).WillOnce(Return(image_id));
+  EXPECT_CALL(gl_, CreateImageCHROMIUM(_, _, _)).WillOnce(Return(image_id));
   DrawSomething(bridge);
   bridge->PrepareTransferableResource(&resource, &release_callback);
 

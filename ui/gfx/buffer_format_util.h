@@ -47,6 +47,9 @@ GFX_EXPORT size_t BufferOffsetForBufferFormat(const Size& size,
 // Returns the name of |format| as a string.
 GFX_EXPORT const char* BufferFormatToString(BufferFormat format);
 
+// Returns the GL internalformat for the buffer format
+GFX_EXPORT uint32_t BufferFormatToGLFormat(BufferFormat format);
+
 }  // namespace gfx
 
 #endif  // UI_GFX_BUFFER_FORMAT_UTIL_H_

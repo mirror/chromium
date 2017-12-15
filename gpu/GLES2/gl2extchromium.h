@@ -73,8 +73,7 @@ typedef struct _ClientBuffer* ClientBuffer;
 #ifdef GL_GLEXT_PROTOTYPES
 GL_APICALL GLuint GL_APIENTRY glCreateImageCHROMIUM(ClientBuffer buffer,
                                                     GLsizei width,
-                                                    GLsizei height,
-                                                    GLenum internalformat);
+                                                    GLsizei height);
 GL_APICALL void GL_APIENTRY glDestroyImageCHROMIUM(GLuint image_id);
 GL_APICALL void GL_APIENTRY glBindTexImage2DCHROMIUM(GLenum target,
                                                      GLint imageId);

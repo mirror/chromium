@@ -27,7 +27,6 @@ GpuSurfacelessBrowserCompositorOutputSurface::
         std::unique_ptr<viz::CompositorOverlayCandidateValidator>
             overlay_candidate_validator,
         unsigned int target,
-        unsigned int internalformat,
         gfx::BufferFormat format,
         gpu::GpuMemoryBufferManager* gpu_memory_buffer_manager)
     : GpuBrowserCompositorOutputSurface(std::move(context),
@@ -48,8 +47,8 @@ GpuSurfacelessBrowserCompositorOutputSurface::
   gl_helper_.reset(new viz::GLHelper(context_provider_->ContextGL(),
                                      context_provider_->ContextSupport()));
   buffer_queue_.reset(new viz::BufferQueue(
-      context_provider_->ContextGL(), target, internalformat, format,
-      gl_helper_.get(), gpu_memory_buffer_manager_, surface_handle));
+      context_provider_->ContextGL(), target, format, gl_helper_.get(),
+      gpu_memory_buffer_manager_, surface_handle));
   buffer_queue_->Initialize();
 }
 
@@ -95,7 +94,7 @@ void GpuSurfacelessBrowserCompositorOutputSurface::BindFramebuffer() {
 
 GLenum GpuSurfacelessBrowserCompositorOutputSurface::
     GetFramebufferCopyTextureFormat() {
-  return buffer_queue_->internal_format();
+  return buffer_queue_->internalformat();
 }
 
 void GpuSurfacelessBrowserCompositorOutputSurface::Reshape(

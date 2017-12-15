@@ -96,9 +96,9 @@ TEST_F(InProcessCommandBufferTest, CreateImage) {
   std::unique_ptr<gfx::GpuMemoryBuffer> gpu_memory_buffer1 =
       gpu_memory_buffer_manager_->CreateGpuMemoryBuffer(
           kBufferSize, kBufferFormat, kBufferUsage, gpu::kNullSurfaceHandle);
-  int image_id1 = gl_->CreateImageCHROMIUM(gpu_memory_buffer1->AsClientBuffer(),
-                                           kBufferSize.width(),
-                                           kBufferSize.height(), GL_RGBA);
+  int image_id1 =
+      gl_->CreateImageCHROMIUM(gpu_memory_buffer1->AsClientBuffer(),
+                               kBufferSize.width(), kBufferSize.height());
 
   EXPECT_EQ(image_id1, 1);
 
@@ -111,8 +111,7 @@ TEST_F(InProcessCommandBufferTest, CreateImage) {
       gpu_memory_buffer_manager_->CreateGpuMemoryBuffer(
           kBufferSize, kBufferFormat, kBufferUsage, gpu::kNullSurfaceHandle);
   int image_id2 = context2->GetImplementation()->CreateImageCHROMIUM(
-      buffer2->AsClientBuffer(), kBufferSize.width(), kBufferSize.height(),
-      GL_RGBA);
+      buffer2->AsClientBuffer(), kBufferSize.width(), kBufferSize.height());
 
   EXPECT_EQ(image_id2, 2);
 }
