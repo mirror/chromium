@@ -52,6 +52,24 @@
       "revId": "762f534382e45c1f1c865a01d2a176c6d1e06668",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d998d43_b3532076",
+        "filename": "gpu/command_buffer/client/gles2_implementation.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3333,
+      "author": {
+        "id": 1116061
+      },
+      "writtenOn": "2017-12-15T23:47:30Z",
+      "side": 1,
+      "message": "The chunk size of 16KB is likely too inefficient, and more fine grained than needed for scheduling.  I\u0027d start at 1MB or so, and see if we need any lower on slower devices.",
+      "parentUuid": "6c70bb0a_5d7ed39f",
+      "revId": "762f534382e45c1f1c865a01d2a176c6d1e06668",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
