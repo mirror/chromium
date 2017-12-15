@@ -197,8 +197,13 @@ void StubNotificationDisplayService::Close(
       std::remove_if(
           notifications_.begin(), notifications_.end(),
           [notification_type, notification_id](const NotificationData& data) {
-            return data.type == notification_type &&
-                   data.notification.id() == notification_id;
+            if (data.type != notification_type ||
+                data.notification.id() != notification_id)
+              return false;
+
+            if (data.notification.delegate())
+              data.notification.delegate()->Close(false);
+            return true;
           }),
       notifications_.end());
 }
