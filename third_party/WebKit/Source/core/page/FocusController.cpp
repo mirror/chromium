@@ -129,11 +129,8 @@ class FocusNavigation : public GarbageCollected<FocusNavigation> {
 
  private:
   Element* TreeOwner(ContainerNode* node) {
-    if (ShadowRoot* shadow_root = ToShadowRootOrNull(node)) {
-      return shadow_root->IsYoungest()
-                 ? &shadow_root->host()
-                 : shadow_root->ShadowInsertionPointOfYoungerShadowRoot();
-    }
+    if (ShadowRoot* shadow_root = ToShadowRootOrNull(node))
+      return &shadow_root->host();
     // FIXME: Figure out the right thing for OOPI here.
     if (Frame* frame = node->GetDocument().GetFrame())
       return frame->DeprecatedLocalOwner();

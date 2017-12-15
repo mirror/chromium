@@ -43,7 +43,8 @@ class HTMLShadowElement final : public V0InsertionPoint {
   DECLARE_NODE_FACTORY(HTMLShadowElement);
   ~HTMLShadowElement() override;
 
-  ShadowRoot* OlderShadowRoot();
+  // TODO(kochi): Only user is FocusController.cpp.  Remove with the caller.
+  ShadowRoot* OlderShadowRoot() const { return nullptr; }
 
  private:
   explicit HTMLShadowElement(Document&);
