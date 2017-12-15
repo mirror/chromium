@@ -10,6 +10,8 @@ import android.graphics.Point;
  * An instance of DisplayAndroid not associated with any physical display.
  */
 public class VirtualDisplayAndroid extends DisplayAndroid {
+    private float mAndroidUiDipScale;
+
     public static VirtualDisplayAndroid createVirtualDisplay() {
         return getManager().addVirtualDisplay();
     }
@@ -25,14 +27,22 @@ public class VirtualDisplayAndroid extends DisplayAndroid {
         update(new Point(other.getDisplayWidth(), other.getDisplayHeight()), other.getDipScale(),
                 other.getBitsPerPixel(), other.getBitsPerComponent(), other.getRotation(),
                 other.mIsDisplayWideColorGamut, other.mIsDisplayServerWideColorGamut);
+        mAndroidUiDipScale = other.getDipScale();
     }
 
-    @Override
-    public void update(Point size, Float dipScale, Integer bitsPerPixel, Integer bitsPerComponent,
-            Integer rotation, Boolean isDisplayWideColorGamut,
+    public void update(Point size, Float dipScale, Float androidUiDipScale, Integer bitsPerPixel,
+            Integer bitsPerComponent, Integer rotation, Boolean isDisplayWideColorGamut,
             Boolean isDisplayServerWideColorGamut) {
         super.update(size, dipScale, bitsPerPixel, bitsPerComponent, rotation,
                 isDisplayWideColorGamut, isDisplayServerWideColorGamut);
+        if (androidUiDipScale != null) {
+            mAndroidUiDipScale = androidUiDipScale;
+        }
+    }
+
+    @Override
+    public float getAndroidUIDipScale() {
+        return mAndroidUiDipScale;
     }
 
     /**

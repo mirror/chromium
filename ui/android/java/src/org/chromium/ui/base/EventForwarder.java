@@ -31,19 +31,32 @@ public class EventForwarder {
 
     private int mLastMouseButtonState;
 
+    // This display is used to get the source dip scale for input events passed to this forwarder.
+    private WindowAndroid mEventSourceWindow;
+
     @CalledByNative
-    private static EventForwarder create(long nativeEventForwarder, boolean isDragDropEnabled) {
-        return new EventForwarder(nativeEventForwarder, isDragDropEnabled);
+    private static EventForwarder create(
+            long nativeEventForwarder, boolean isDragDropEnabled, WindowAndroid eventSourceWindow) {
+        return new EventForwarder(nativeEventForwarder, isDragDropEnabled, eventSourceWindow);
     }
 
-    private EventForwarder(long nativeEventForwarder, boolean isDragDropEnabled) {
+    private EventForwarder(
+            long nativeEventForwarder, boolean isDragDropEnabled, WindowAndroid eventSourceWindow) {
         mNativeEventForwarder = nativeEventForwarder;
         mIsDragDropEnabled = isDragDropEnabled;
+
+        mEventSourceWindow = eventSourceWindow;
     }
 
     @CalledByNative
     private void destroy() {
         mNativeEventForwarder = 0;
+    }
+
+    // Returns the dip scale the event was routed through. When in VR this may differ from the
+    // dip scale of the WebContents.
+    private float getEventSourceDipScale() {
+        return mEventSourceWindow.getDisplay().getAndroidUIDipScale();
     }
 
     /**
@@ -131,7 +144,8 @@ public class EventForwarder {
                     pointerCount > 1 ? event.getAxisValue(MotionEvent.AXIS_TILT, 1) : 0,
                     event.getRawX(), event.getRawY(), event.getToolType(0),
                     pointerCount > 1 ? event.getToolType(1) : MotionEvent.TOOL_TYPE_UNKNOWN,
-                    event.getButtonState(), event.getMetaState(), isTouchHandleEvent);
+                    event.getButtonState(), event.getMetaState(), isTouchHandleEvent,
+                    getEventSourceDipScale());
 
             if (offset != null) offset.recycle();
             return consumed;
@@ -220,7 +234,7 @@ public class EventForwarder {
                             offsetEvent.getY(), event.getPointerId(0), event.getPressure(0),
                             event.getOrientation(0), event.getAxisValue(MotionEvent.AXIS_TILT, 0),
                             MotionEvent.BUTTON_PRIMARY, event.getButtonState(),
-                            event.getMetaState(), event.getToolType(0));
+                            event.getMetaState(), event.getToolType(0), getEventSourceDipScale());
                 }
                 mLastMouseButtonState = 0;
             }
@@ -247,7 +261,8 @@ public class EventForwarder {
                     offsetEvent.getX(), offsetEvent.getY(), event.getPointerId(0),
                     event.getPressure(0), event.getOrientation(0),
                     event.getAxisValue(MotionEvent.AXIS_TILT, 0), getMouseEventActionButton(event),
-                    event.getButtonState(), event.getMetaState(), event.getToolType(0));
+                    event.getButtonState(), event.getMetaState(), event.getToolType(0),
+                    getEventSourceDipScale());
             return true;
         } finally {
             offsetEvent.recycle();
@@ -265,7 +280,8 @@ public class EventForwarder {
     public boolean onMouseWheelEvent(
             long timeMs, float x, float y, float ticksX, float ticksY, float pixelsPerTick) {
         assert mNativeEventForwarder != 0;
-        nativeOnMouseWheelEvent(mNativeEventForwarder, timeMs, x, y, ticksX, ticksY, pixelsPerTick);
+        nativeOnMouseWheelEvent(mNativeEventForwarder, timeMs, x, y, ticksX, ticksY, pixelsPerTick,
+                getEventSourceDipScale());
         return true;
     }
 
@@ -313,7 +329,7 @@ public class EventForwarder {
         int screenY = y + locationOnScreen[1];
 
         nativeOnDragEvent(mNativeEventForwarder, event.getAction(), x, y, screenX, screenY,
-                mimeTypes, content.toString());
+                mimeTypes, content.toString(), getEventSourceDipScale());
         return true;
     }
 
@@ -327,7 +343,8 @@ public class EventForwarder {
      *        pinch scale to default.
      */
     public boolean onGestureEvent(@GestureEventType int type, long timeMs, float delta) {
-        return nativeOnGestureEvent(mNativeEventForwarder, type, timeMs, delta);
+        return nativeOnGestureEvent(
+                mNativeEventForwarder, type, timeMs, delta, getEventSourceDipScale());
     }
 
     // All touch events (including flings, scrolls etc) accept coordinates in physical pixels.
@@ -337,14 +354,14 @@ public class EventForwarder {
             float touchMajor1, float touchMinor0, float touchMinor1, float orientation0,
             float orientation1, float tilt0, float tilt1, float rawX, float rawY,
             int androidToolType0, int androidToolType1, int androidButtonState,
-            int androidMetaState, boolean isTouchHandleEvent);
+            int androidMetaState, boolean isTouchHandleEvent, float dipScale);
     private native void nativeOnMouseEvent(long nativeEventForwarder, long timeMs, int action,
             float x, float y, int pointerId, float pressure, float orientation, float tilt,
-            int changedButton, int buttonState, int metaState, int toolType);
+            int changedButton, int buttonState, int metaState, int toolType, float dipScale);
     private native void nativeOnMouseWheelEvent(long nativeEventForwarder, long timeMs, float x,
-            float y, float ticksX, float ticksY, float pixelsPerTick);
+            float y, float ticksX, float ticksY, float pixelsPerTick, float dipScale);
     private native void nativeOnDragEvent(long nativeEventForwarder, int action, int x, int y,
-            int screenX, int screenY, String[] mimeTypes, String content);
+            int screenX, int screenY, String[] mimeTypes, String content, float dipScale);
     private native boolean nativeOnGestureEvent(
-            long nativeEventForwarder, int type, long timeMs, float delta);
+            long nativeEventForwarder, int type, long timeMs, float delta, float dipScale);
 }

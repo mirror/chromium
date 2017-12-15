@@ -6,6 +6,7 @@
 #define UI_ANDROID_EVENT_FORWARDER_H_
 
 #include "base/android/scoped_java_ref.h"
+#include "ui/android/ui_android_export.h"
 
 namespace ui {
 
@@ -44,7 +45,8 @@ class EventForwarder {
       jint android_tool_type_1,
       jint android_button_state,
       jint android_meta_state,
-      jboolean is_touch_handle_event);
+      jboolean is_touch_handle_event,
+      jfloat dip_scale);
 
   void OnMouseEvent(JNIEnv* env,
                     const base::android::JavaParamRef<jobject>& obj,
@@ -59,7 +61,8 @@ class EventForwarder {
                     jint android_changed_button,
                     jint android_button_state,
                     jint android_meta_state,
-                    jint tool_type);
+                    jint tool_type,
+                    jfloat dip_scale);
 
   void OnMouseWheelEvent(JNIEnv* env,
                          const base::android::JavaParamRef<jobject>& obj,
@@ -68,7 +71,8 @@ class EventForwarder {
                          jfloat y,
                          jfloat ticks_x,
                          jfloat ticks_y,
-                         jfloat pixels_per_tick);
+                         jfloat pixels_per_tick,
+                         jfloat dip_scale);
 
   void OnDragEvent(JNIEnv* env,
                    const base::android::JavaParamRef<jobject>& jobj,
@@ -78,13 +82,15 @@ class EventForwarder {
                    jint screen_x,
                    jint screen_y,
                    const base::android::JavaParamRef<jobjectArray>& j_mimeTypes,
-                   const base::android::JavaParamRef<jstring>& j_content);
+                   const base::android::JavaParamRef<jstring>& j_content,
+                   jfloat dip_scale);
 
   bool OnGestureEvent(JNIEnv* env,
                       const base::android::JavaParamRef<jobject>& jobj,
                       jint type,
                       jlong time_ms,
-                      jfloat delta);
+                      jfloat delta,
+                      jfloat dip_scale);
 
  private:
   friend class ViewAndroid;

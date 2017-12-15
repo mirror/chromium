@@ -133,6 +133,20 @@ public class DisplayAndroid {
     }
 
     /**
+     * You probably do not want to use this function.
+     *
+     * In VR, there's a mismatch between the dip scale reported by getDipScale and the dip scale
+     * Android UI is rendered with (in order for VR to control the size of the WebContents).
+     * This function should only be used on the boundaries between Android UI and the rest of Chrome
+     * when doing things like scaling sizes/positions.
+     *
+     * @return The dip scale of the Android UI in this display.
+     */
+    public float getAndroidUIDipScale() {
+        return mDipScale;
+    }
+
+    /**
      * @return Number of bits per pixel.
      */
     /* package */ int getBitsPerPixel() {
