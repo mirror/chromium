@@ -6298,44 +6298,9 @@ bool GLES2Implementation::GetVerifiedSyncTokenForIPC(
   return true;
 }
 
-namespace {
-
-bool CreateImageValidInternalFormat(GLenum internalformat,
-                                    const Capabilities& capabilities) {
-  switch (internalformat) {
-    case GL_ATC_RGB_AMD:
-    case GL_ATC_RGBA_INTERPOLATED_ALPHA_AMD:
-      return capabilities.texture_format_atc;
-    case GL_COMPRESSED_RGB_S3TC_DXT1_EXT:
-      return capabilities.texture_format_dxt1;
-    case GL_COMPRESSED_RGBA_S3TC_DXT5_EXT:
-      return capabilities.texture_format_dxt5;
-    case GL_ETC1_RGB8_OES:
-      return capabilities.texture_format_etc1;
-    case GL_R16_EXT:
-      return capabilities.texture_norm16;
-    case GL_RGB10_A2_EXT:
-      return capabilities.image_xr30;
-    case GL_RED:
-    case GL_RG_EXT:
-    case GL_RGB:
-    case GL_RGBA:
-    case GL_RGB_YCBCR_422_CHROMIUM:
-    case GL_RGB_YCBCR_420V_CHROMIUM:
-    case GL_RGB_YCRCB_420_CHROMIUM:
-    case GL_BGRA_EXT:
-      return true;
-    default:
-      return false;
-  }
-}
-
-}  // namespace
-
 GLuint GLES2Implementation::CreateImageCHROMIUMHelper(ClientBuffer buffer,
                                                       GLsizei width,
-                                                      GLsizei height,
-                                                      GLenum internalformat) {
+                                                      GLsizei height) {
   if (width <= 0) {
     SetGLError(GL_INVALID_VALUE, "glCreateImageCHROMIUM", "width <= 0");
     return 0;
@@ -6346,17 +6311,11 @@ GLuint GLES2Implementation::CreateImageCHROMIUMHelper(ClientBuffer buffer,
     return 0;
   }
 
-  if (!CreateImageValidInternalFormat(internalformat, capabilities_)) {
-    SetGLError(GL_INVALID_VALUE, "glCreateImageCHROMIUM", "invalid format");
-    return 0;
-  }
-
   // CreateImage creates a fence sync so we must flush first to ensure all
   // previously created fence syncs are flushed first.
   FlushHelper();
 
-  int32_t image_id =
-      gpu_control_->CreateImage(buffer, width, height, internalformat);
+  int32_t image_id = gpu_control_->CreateImage(buffer, width, height);
   if (image_id < 0) {
     SetGLError(GL_OUT_OF_MEMORY, "glCreateImageCHROMIUM", "image_id < 0");
     return 0;
@@ -6366,15 +6325,12 @@ GLuint GLES2Implementation::CreateImageCHROMIUMHelper(ClientBuffer buffer,
 
 GLuint GLES2Implementation::CreateImageCHROMIUM(ClientBuffer buffer,
                                                 GLsizei width,
-                                                GLsizei height,
-                                                GLenum internalformat) {
+                                                GLsizei height) {
   GPU_CLIENT_SINGLE_THREAD_CHECK();
   GPU_CLIENT_LOG("[" << GetLogPrefix() << "] glCreateImageCHROMIUM(" << width
                      << ", " << height << ", "
-                     << GLES2Util::GetStringImageInternalFormat(internalformat)
                      << ")");
-  GLuint image_id =
-      CreateImageCHROMIUMHelper(buffer, width, height, internalformat);
+  GLuint image_id = CreateImageCHROMIUMHelper(buffer, width, height);
   CheckGLError();
   return image_id;
 }
