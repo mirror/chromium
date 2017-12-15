@@ -16,6 +16,24 @@
       "revId": "f1b0e993a8820529ad92316ecf2f677d37fe5b4e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b4b989e_c325c537",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3753,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-12-15T03:04:28Z",
+      "side": 1,
+      "message": "Added a comment with a link to the bug.",
+      "parentUuid": "f0536cb3_4cf1de60",
+      "revId": "f1b0e993a8820529ad92316ecf2f677d37fe5b4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
