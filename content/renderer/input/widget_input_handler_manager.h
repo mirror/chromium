@@ -21,6 +21,7 @@ class RendererScheduler;
 
 namespace content {
 class MainThreadEventQueue;
+class SynchronousCompositorProxy;
 
 // This class maintains the compositor InputHandlerProxy and is
 // responsible for passing input events on the compositor and main threads.
@@ -78,6 +79,13 @@ class CONTENT_EXPORT WidgetInputHandlerManager
 
   mojom::WidgetInputHandlerHost* GetWidgetInputHandlerHost();
 
+  void AttachSynchronousCompositor(
+      mojom::SynchronousCompositorControlHostPtr control_host,
+      mojom::SynchronousCompositorHostAssociatedPtrInfo host,
+      mojom::SynchronousCompositorAssociatedRequest compositor_request);
+
+  content::SynchronousCompositorProxy* GetSynchronousCompositorProxy();
+
  protected:
   friend class base::RefCountedThreadSafe<WidgetInputHandlerManager>;
   ~WidgetInputHandlerManager() override;
@@ -90,7 +98,8 @@ class CONTENT_EXPORT WidgetInputHandlerManager
   void Init();
   void InitOnCompositorThread(
       const base::WeakPtr<cc::InputHandler>& input_handler,
-      bool smooth_scroll_enabled);
+      bool smooth_scroll_enabled,
+      bool sync_compositing);
   void BindAssociatedChannel(
       mojom::WidgetInputHandlerAssociatedRequest request);
   void BindChannel(mojom::WidgetInputHandlerRequest request);
@@ -137,6 +146,11 @@ class CONTENT_EXPORT WidgetInputHandlerManager
   scoped_refptr<MainThreadEventQueue> input_event_queue_;
   scoped_refptr<base::SingleThreadTaskRunner> main_thread_task_runner_;
   scoped_refptr<base::SingleThreadTaskRunner> compositor_task_runner_;
+
+#if defined(OS_ANDROID)
+  std::unique_ptr<content::SynchronousCompositorProxy>
+      synchronous_compositor_proxy_;
+#endif
 
   DISALLOW_COPY_AND_ASSIGN(WidgetInputHandlerManager);
 };
