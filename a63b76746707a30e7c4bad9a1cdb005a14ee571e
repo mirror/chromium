@@ -16,6 +16,24 @@
       "revId": "a63b76746707a30e7c4bad9a1cdb005a14ee571e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecea5595_06b01430",
+        "filename": "media/filters/video_renderer_algorithm_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1368,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-12-15T00:00:34Z",
+      "side": 0,
+      "message": "Good point. Done. PTAL. Also enabled the tests for Debug builds as well.",
+      "parentUuid": "e392c59a_c7ff5c44",
+      "revId": "a63b76746707a30e7c4bad9a1cdb005a14ee571e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
