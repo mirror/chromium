@@ -21,28 +21,6 @@
 
 namespace media {
 
-namespace {
-
-static unsigned BufferFormatToInternalFormat(gfx::BufferFormat format) {
-  switch (format) {
-    case gfx::BufferFormat::BGRX_8888:
-    case gfx::BufferFormat::RGBX_8888:
-      return GL_RGB;
-
-    case gfx::BufferFormat::BGRA_8888:
-      return GL_BGRA_EXT;
-
-    case gfx::BufferFormat::YVU_420:
-      return GL_RGB_YCRCB_420_CHROMIUM;
-
-    default:
-      NOTREACHED();
-      return GL_BGRA_EXT;
-  }
-}
-
-}  // anonymous namespace
-
 VaapiDrmPicture::VaapiDrmPicture(
     const scoped_refptr<VaapiWrapper>& vaapi_wrapper,
     const MakeGLContextCurrentCallback& make_context_current_cb,
@@ -92,8 +70,8 @@ bool VaapiDrmPicture::Initialize() {
 
     gfx::BufferFormat format = pixmap_->GetBufferFormat();
 
-    scoped_refptr<gl::GLImageNativePixmap> image(new gl::GLImageNativePixmap(
-        size_, BufferFormatToInternalFormat(format)));
+    scoped_refptr<gl::GLImageNativePixmap> image(
+        new gl::GLImageNativePixmap(size_));
     if (!image->Initialize(pixmap_.get(), format)) {
       LOG(ERROR) << "Failed to create GLImage";
       return false;

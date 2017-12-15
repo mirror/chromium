@@ -4,6 +4,8 @@
 
 #include "platform/graphics/CanvasResource.h"
 
+#include "base/debug/stack_trace.h"
+
 #include "components/viz/common/resources/single_release_callback.h"
 #include "components/viz/common/resources/transferable_resource.h"
 #include "gpu/GLES2/gl2extchromium.h"
@@ -196,8 +198,7 @@ CanvasResource_GpuMemoryBuffer::CanvasResource_GpuMemoryBuffer(
     return;
   }
   image_id_ = gl->CreateImageCHROMIUM(gpu_memory_buffer_->AsClientBuffer(),
-                                      size.Width(), size.Height(),
-                                      color_params_.GLInternalFormat());
+                                      size.Width(), size.Height());
   if (!image_id_) {
     gpu_memory_buffer_ = nullptr;
     return;
@@ -292,6 +293,12 @@ void CanvasResource_GpuMemoryBuffer::CopyFromTexture(GLuint source_texture,
                                                      GLenum type) {
   if (!IsValid())
     return;
+
+#ifdef OS_MACOSX
+  if (format == GL_BGRA_EXT)
+    LOG(ERROR) << "GL_BGRA_EXT on MACOSX";
+    LOG(ERROR) << base::debug::StackTrace().ToString();
+#endif
 
   ContextGL()->CopyTextureCHROMIUM(
       source_texture, 0 /*sourceLevel*/, TextureTarget(), texture_id_,

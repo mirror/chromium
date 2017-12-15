@@ -894,8 +894,7 @@ void GLES2InterfaceStub::GetUniformsES3CHROMIUM(GLuint /* program */,
                                                 void* /* info */) {}
 GLuint GLES2InterfaceStub::CreateImageCHROMIUM(ClientBuffer /* buffer */,
                                                GLsizei /* width */,
-                                               GLsizei /* height */,
-                                               GLenum /* internalformat */) {
+                                               GLsizei /* height */) {
   return 0;
 }
 void GLES2InterfaceStub::DestroyImageCHROMIUM(GLuint /* image_id */) {}

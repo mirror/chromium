@@ -84,6 +84,9 @@ class GFX_EXPORT GpuMemoryBuffer {
   // Returns the format for the buffer.
   virtual BufferFormat GetFormat() const = 0;
 
+  // Returns the GL internalformat for the buffer.
+  virtual uint32_t GetInternalformat(bool supports_bgra_ext) const = 0;
+
   // Fills the stride in bytes for each plane of the buffer. The stride of
   // plane K is stored at index K-1 of the |stride| array.
   virtual int stride(size_t plane) const = 0;
