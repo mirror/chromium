@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6e989c70_a8549d6a",
+        "filename": "media/blink/resource_multibuffer_data_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1115926
+      },
+      "writtenOn": "2017-12-15T08:54:37Z",
+      "side": 1,
+      "message": "I don\u0027t think we want to do this, because that means that the next request we do (after a seek for instance) will be made to http://another-origin.example.com/ which will confuse the service worker.\n\nI wonder if it\u0027s enough to just set the single_origin-flag to false?",
+      "range": {
+        "startLine": 247,
+        "startChar": 6,
+        "endLine": 247,
+        "endChar": 26
+      },
+      "revId": "8c9c05ce6f1eec43b543dd5fd3ed392b5b1f59fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
