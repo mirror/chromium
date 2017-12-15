@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f211d6dc_d5ddf841",
+        "filename": "net/extras/sqlite/sqlite_persistent_cookie_store.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1152,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-15T20:02:33Z",
+      "side": 1,
+      "message": "We need a lock to set num_pending_ to 0.  Doesn\u0027t that mean that num_pending_ could have since been incremented on another thread...\n\ni.e., we could go\n\nThread 0:\n- num_pending_++ (now 1)\n- (write_tasks_event_.Reset();\nThread 1 starts Commit():\n* num_pending_\u003d 0\nThread 0:\n- num_pending_++ (now 1)\n- write_tasks_event_.Reset();\nThread 1 finishes Commit():\n* write_tasks_event_.Signal();",
+      "range": {
+        "startLine": 1152,
+        "startChar": 27,
+        "endLine": 1152,
+        "endChar": 28
+      },
+      "revId": "d09c2000ed26223d1704ee226d608e1e2f9271a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "654de9e4_ce29905a",
+        "filename": "net/extras/sqlite/sqlite_persistent_cookie_store.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1248,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-15T20:02:33Z",
+      "side": 1,
+      "message": "AutoSignal takes care of this, no?",
+      "range": {
+        "startLine": 1248,
+        "startChar": 21,
+        "endLine": 1248,
+        "endChar": 27
+      },
+      "revId": "d09c2000ed26223d1704ee226d608e1e2f9271a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
