@@ -53,7 +53,7 @@ class NotificationMessageFilter : public BrowserMessageFilter {
   friend class BrowserThread;
 
   void OnShowPlatformNotification(
-      int request_id,
+      int non_persistent_notification_id,
       const GURL& origin,
       const PlatformNotificationData& notification_data,
       const NotificationResources& notification_resources);
@@ -69,7 +69,7 @@ class NotificationMessageFilter : public BrowserMessageFilter {
                           const std::string& filter_tag);
   void OnClosePlatformNotification(const GURL& origin,
                                    const std::string& tag,
-                                   int request_id);
+                                   int non_persistent_notification_id);
   void OnClosePersistentNotification(const GURL& origin,
                                      const std::string& tag,
                                      const std::string& notification_id);

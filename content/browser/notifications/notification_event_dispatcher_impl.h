@@ -45,10 +45,11 @@ class NotificationEventDispatcherImpl : public NotificationEventDispatcher {
   // dissappears.
   void RendererGone(int renderer_id);
 
-  // Register the fact that a non persistent notification has been displayed.
+  // Regsiter the fact that a non persistent notification has been
+  // displayed.
   void RegisterNonPersistentNotification(const std::string& notification_id,
                                          int renderer_id,
-                                         int request_id);
+                                         int non_persistent_id);
 
  private:
   NotificationEventDispatcherImpl();
@@ -57,8 +58,8 @@ class NotificationEventDispatcherImpl : public NotificationEventDispatcher {
   // Notification Id -> renderer Id.
   std::map<std::string, int> renderer_ids_;
 
-  // Notification Id -> request Id.
-  std::map<std::string, int> request_ids_;
+  // Notification Id -> non-persistent notification id.
+  std::map<std::string, int> non_persistent_ids_;
 
   friend struct base::DefaultSingletonTraits<NotificationEventDispatcherImpl>;
 
