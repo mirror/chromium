@@ -623,6 +623,12 @@ ui::TextInputClient* RenderWidgetHostViewAura::GetTextInputClient() {
   return this;
 }
 
+viz::FrameSinkId RenderWidgetHostViewAura::GetRootFrameSinkId() {
+  if (window_->GetHost()->compositor())
+    return window_->GetHost()->compositor()->frame_sink_id();
+  return viz::FrameSinkId();
+}
+
 void RenderWidgetHostViewAura::SetNeedsBeginFrames(bool needs_begin_frames) {
   needs_begin_frames_ = needs_begin_frames;
   UpdateNeedsBeginFramesInternal();

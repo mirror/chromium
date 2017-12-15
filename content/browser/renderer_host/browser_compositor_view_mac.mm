@@ -471,6 +471,12 @@ void BrowserCompositorMac::SetNeedsBeginFrames(bool needs_begin_frames) {
   delegated_frame_host_->SetNeedsBeginFrames(needs_begin_frames);
 }
 
+viz::FrameSinkId BrowserCompositorMac::GetRootFrameSinkId() {
+  if (recyclable_compositor_->compositor())
+    return recyclable_compositor_->compositor()->frame_sink_id();
+  return viz::FrameSinkId();
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 // DelegatedFrameHost, public:
 
