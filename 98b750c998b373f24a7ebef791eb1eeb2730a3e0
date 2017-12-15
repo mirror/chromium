@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0dc6cc73_862dcb69",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageListBaseAdapter.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-15T21:21:41Z",
+      "side": 1,
+      "message": "nit: Typo \"veiws\"\n\nI\u0027d make this something like \"The default visibility for the views below is GONE.\"",
+      "range": {
+        "startLine": 82,
+        "startChar": 14,
+        "endLine": 82,
+        "endChar": 51
+      },
+      "revId": "98b750c998b373f24a7ebef791eb1eeb2730a3e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b01f7b48_08d2ba83",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageListBaseAdapter.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-15T21:21:41Z",
+      "side": 1,
+      "message": "I think this is a bit cleaner than the switch w/ one case:\n\nif (event.getActionMasked() \u003d\u003d MotionEvent.ACTION_DOWN) {\n   mItemTouchHelper.startDrag(holder);\n}",
+      "range": {
+        "startLine": 147,
+        "startChar": 16,
+        "endLine": 151,
+        "endChar": 17
+      },
+      "revId": "98b750c998b373f24a7ebef791eb1eeb2730a3e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "921ab14f_20b8a2dc",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageListBaseAdapter.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-15T21:21:41Z",
+      "side": 1,
+      "message": "Optional nit on the naming - I like enableDrag() and mDragEnabled over enableDraggable() and mDraggable.",
+      "revId": "98b750c998b373f24a7ebef791eb1eeb2730a3e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87b9e0c2_efe6e13c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageListPreference.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-15T21:21:41Z",
+      "side": 1,
+      "message": "What sort of issues might this bug cause for this UI?",
+      "range": {
+        "startLine": 114,
+        "startChar": 8,
+        "endLine": 115,
+        "endChar": 83
+      },
+      "revId": "98b750c998b373f24a7ebef791eb1eeb2730a3e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

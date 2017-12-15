@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "abc8271a_1a2ac15d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageListBaseAdapter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-15T21:21:41Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "292a8460_ed0c06fe",
+      "range": {
+        "startLine": 82,
+        "startChar": 12,
+        "endLine": 84,
+        "endChar": 49
+      },
+      "revId": "be937e71f7bac46014c3eff205ebe2e9c5e203b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "722f718e_e7620f53",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageListBaseAdapter.java",
         "patchSetId": 3
@@ -140,6 +164,30 @@
       "revId": "be937e71f7bac46014c3eff205ebe2e9c5e203b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e26d076c_c510a5d7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageListBaseAdapter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-15T21:21:41Z",
+      "side": 1,
+      "message": "Sounds good. The video looks great!",
+      "parentUuid": "6e042fbc_4c40d84b",
+      "range": {
+        "startLine": 146,
+        "startChar": 12,
+        "endLine": 153,
+        "endChar": 15
+      },
+      "revId": "be937e71f7bac46014c3eff205ebe2e9c5e203b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -190,6 +238,30 @@
     },
     {
       "key": {
+        "uuid": "b3c9badb_1ce5ab13",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageListBaseAdapter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-15T21:21:41Z",
+      "side": 1,
+      "message": "That make sense. Keeping this on the base adapter sounds good to me.",
+      "parentUuid": "da3a5529_d357ac4f",
+      "range": {
+        "startLine": 176,
+        "startChar": 4,
+        "endLine": 176,
+        "endChar": 53
+      },
+      "revId": "be937e71f7bac46014c3eff205ebe2e9c5e203b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "140ca652_c98d5fd7",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageListBaseAdapter.java",
         "patchSetId": 3
@@ -219,6 +291,24 @@
       "side": 1,
       "message": "Yes, my first prototype was in the *traditional* way, which was complicated and needed much more (3~5 times) lines of code than the one.\n\nA shared abstract Draggable adapter component for other RecyclerView is doable. The key is to create an ItemTouchHelper and provide API for the callbacks when item is dragged and dropped.\n\nI could start a new CL for the general widget before I figure out the questions below:\n\n1, What drag/drop levels the other RecyclerView\u0027s ViewHolder want to support? (Long click, touch on drag handler or touch on row...)\n2, Whether the drag handler icon is required and customized (different icon?, start or end? ...)\n3, Whether a standard drag/drop visual effects (shadow, background...) are accepted on different styles. Currently my selected item background color was set 90% white because the List background is white.\n4, Whether a swiped action is supported and how to redraw the swiped UI.\n5, How to handle grouped items (eg. bookmark folder)?\n...",
       "parentUuid": "140ca652_c98d5fd7",
+      "revId": "be937e71f7bac46014c3eff205ebe2e9c5e203b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3276768_bc4784f8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageListBaseAdapter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-15T21:21:41Z",
+      "side": 1,
+      "message": "1, What drag/drop levels the other RecyclerView\u0027s ViewHolder want to support? (Long click, touch on drag handler or touch on row...)\n\nProbably long click and drag handler, but maybe that could be configurable.\n\n2, Whether the drag handler icon is required and customized (different icon?, start or end? ...)\n\nI\u0027d start with drag handler icon required and always at the start. We can customize later if needed.\n\n3, Whether a standard drag/drop visual effects (shadow, background...) are accepted on different styles. Currently my selected item background color was set 90% white because the List background is white.\n\n90% white sounds good to me.\n\n4, Whether a swiped action is supported and how to redraw the swiped UI.\n\nI\u0027d skip supporting swipe actions. If it\u0027s needed in the future we can update the widget and work out how to support it then.\n\n5, How to handle grouped items (eg. bookmark folder)?\n\nWe don\u0027t have grouped items in most of our UIs, so I wouldn\u0027t add support for this.\n\n\n\nGenerally, you can make the widget very simple - only what\u0027s needed to support your use case - and we can extend it or modify it in the future if we need to.",
+      "parentUuid": "15d49a3e_1ad014ba",
       "revId": "be937e71f7bac46014c3eff205ebe2e9c5e203b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
