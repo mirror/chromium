@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b698077b_d4ce77cc",
+        "filename": "ios/chrome/browser/ui/history_popup/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-12-15T19:47:57Z",
+      "side": 1,
+      "message": "Since fullscreen is a KeyedService, it\u0027s accessible from any coordinator that uses a BrowserState.  The idea here was that if a coordinator knows that its UI is toolbar-based (like the the tab history popup), it can increment/decrement the disabled counter accordingly.  This allows for greater decoupling between coordinators, as each coordinator can individually choose whether or not to disable fullscreen.",
+      "parentUuid": "0e8e4893_b35ab1fe",
+      "range": {
+        "startLine": 41,
+        "startChar": 41,
+        "endLine": 41,
+        "endChar": 0
+      },
+      "revId": "c8ed52a009857bb6e485cbe3d53c4b483db801e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4211547f_0c647ab6",
         "filename": "ios/chrome/browser/ui/history_popup/tab_history_legacy_coordinator.mm",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-12-12T11:22:42Z",
       "side": 1,
       "message": "One problem with this approach in general is that it couples the the lifetime of this coordinator to the disabler. If this coordinator were changed to be long-lived, then fullscreen would just stop working and wouldn\u0027t be at all obvious why.\n\nAt the very least I think the disabler should be set to nil in -disconnect (or -stop). \n\nLonger-term I think I\u0027d prefer a mechanism where the content view controller disables fullscreen when anything is presented from it, but I suspect that\u0027s difficult right now.",
+      "range": {
+        "startLine": 35,
+        "startChar": 44,
+        "endLine": 35,
+        "endChar": 63
+      },
+      "revId": "c8ed52a009857bb6e485cbe3d53c4b483db801e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d539edf_75b4d238",
+        "filename": "ios/chrome/browser/ui/history_popup/tab_history_legacy_coordinator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-12-15T19:47:57Z",
+      "side": 1,
+      "message": "The CL has been updated to use the did[Start/Stop]FullscreenDisablingUI selectors.  In any case, this was already being reset to nullptr when the history popup was dismissed.",
+      "parentUuid": "4211547f_0c647ab6",
       "range": {
         "startLine": 35,
         "startChar": 44,
