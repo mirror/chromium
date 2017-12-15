@@ -35,6 +35,7 @@ void Animator::TraceWrappers(const ScriptWrappableVisitor* visitor) const {
 bool Animator::Animate(ScriptState* script_state,
                        const CompositorMutatorInputState::AnimationState& input,
                        CompositorMutatorOutputState::AnimationState* output) {
+  TRACE_EVENT0("cc", "Animator::Animate");
   did_animate_ = true;
 
   v8::Isolate* isolate = script_state->GetIsolate();

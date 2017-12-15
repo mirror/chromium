@@ -101,6 +101,7 @@ void AnimationWorkletGlobalScope::Dispose() {
 
 Animator* AnimationWorkletGlobalScope::GetAnimatorFor(int player_id,
                                                       const String& name) {
+  TRACE_EVENT0("cc", "AnimationWorkletGlobalScope::GetAnimatorFor");
   Animator* animator = animators_.at(player_id);
   if (!animator) {
     // This is a new player so we should create an animator for it.
@@ -117,6 +118,7 @@ Animator* AnimationWorkletGlobalScope::GetAnimatorFor(int player_id,
 std::unique_ptr<CompositorMutatorOutputState>
 AnimationWorkletGlobalScope::Mutate(
     const CompositorMutatorInputState& mutator_input) {
+  TRACE_EVENT1("cc", "AnimationWorkletGlobalScope::Mutate", "num_anims", mutator_input.animations.size());
   DCHECK(IsContextThread());
 
   // Clean any animator that is not updated
