@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "dfbf8cef_a21523c6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/SurveyInfoBar.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2017-12-15T18:24:44Z",
+      "side": 1,
+      "message": "I moved the accessibility check into onClick otherwise tapping anywhere in the infobar would trigger the infobar, making the clickable span obsolete.\n\nDone.",
+      "parentUuid": "bc8414b5_846dc543",
+      "range": {
+        "startLine": 119,
+        "startChar": 7,
+        "endLine": 119,
+        "endChar": 88
+      },
+      "revId": "27f39a140f596e08426ec172c991c78690c105af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c0485b8d_5fc462f4",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/SurveyInfoBar.java",
         "patchSetId": 2
@@ -60,6 +84,30 @@
       "writtenOn": "2017-12-15T16:50:28Z",
       "side": 1,
       "message": "How does adding the onClickListener make this accessible? What wasn\u0027t working when in accessibility mode before?",
+      "range": {
+        "startLine": 156,
+        "startChar": 24,
+        "endLine": 156,
+        "endChar": 31
+      },
+      "revId": "27f39a140f596e08426ec172c991c78690c105af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ab7d299_9163c09e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/SurveyInfoBar.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2017-12-15T18:24:44Z",
+      "side": 1,
+      "message": "Previously it would highlight and read the prompt, but double tapping it wouldn\u0027t do anything. The survey would only be triggered if the user pressed \u0027Take Survey\u0027 with two fingers. Adding onClickListener allows for triggering via double-tapping of the view.",
+      "parentUuid": "c0485b8d_5fc462f4",
       "range": {
         "startLine": 156,
         "startChar": 24,
