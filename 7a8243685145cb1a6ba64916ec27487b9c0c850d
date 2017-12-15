@@ -16,6 +16,24 @@
       "revId": "7a8243685145cb1a6ba64916ec27487b9c0c850d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1be62ef3_05127ed9",
+        "filename": "content/browser/frame_host/navigation_controller_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-12-15T09:26:19Z",
+      "side": 1,
+      "message": "This function is called in:\nhttps://cs.chromium.org/chromium/src/content/browser/frame_host/navigation_controller_impl.cc?rcl\u003d5097771cd07a2425c3a610379dab99805a3fc9f7\u0026l\u003d1961\n\n```\n  // Convert Enter-in-omnibox to a reload. This is what Blink does in\n  // FrameLoader, but we want to handle it here so that if the navigation is\n  // redirected or handled purely on the browser side in PlzNavigate we have the\n  // same behaviour as Blink would.\n```\n\nThe goal is to make a reload when the user type enter in the omnibox for the same URL. We can assume we don\u0027t want to do it for the navigation that are not initiated by the omnibox.\n\nFYI: Camille started a few days ago to refactor this 32-line-if-condition here:\nhttps://chromium-review.googlesource.com/c/chromium/src/+/824663\n\nThis patch will replace mine. Mine was designed to be easier to merge.",
+      "parentUuid": "0cfe160c_7b34a321",
+      "revId": "7a8243685145cb1a6ba64916ec27487b9c0c850d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
