@@ -1366,8 +1366,7 @@ Console.ConsoleViewMessage = class {
    */
   static _tokenizeMessageText(string) {
     if (!Console.ConsoleViewMessage._tokenizerRegexes) {
-      var linkStringRegex =
-          /(?:[a-zA-Z][a-zA-Z0-9+.-]{2,}:\/\/|data:|www\.)[\w$\-_+*'=\|\/\\(){}[\]^%@&#~,:;.!?]{2,}[\w$\-_+*=\|\/\\({^%@&#~]/;
+      var linkStringRegex = /(?:[a-zA-Z][a-zA-Z0-9+.-]{2,}:\/\/|data:|www\.)[^\s\0"]{2,}[^\s\0"')}\]~,:;.!?]/;
       var pathLineRegex = /(?:\/[\w\.-]*)+\:[\d]+/;
       var timeRegex = /took [\d]+ms/;
       var eventRegex = /'\w+' event/;
