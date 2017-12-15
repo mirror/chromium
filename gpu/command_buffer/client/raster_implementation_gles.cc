@@ -261,9 +261,8 @@ GLuint RasterImplementationGLES::CreateAndConsumeTextureCHROMIUM(
 
 GLuint RasterImplementationGLES::CreateImageCHROMIUM(ClientBuffer buffer,
                                                      GLsizei width,
-                                                     GLsizei height,
-                                                     GLenum internalformat) {
-  return gl_->CreateImageCHROMIUM(buffer, width, height, internalformat);
+                                                     GLsizei height) {
+  return gl_->CreateImageCHROMIUM(buffer, width, height);
 }
 
 void RasterImplementationGLES::BindTexImage2DCHROMIUM(GLenum target,
