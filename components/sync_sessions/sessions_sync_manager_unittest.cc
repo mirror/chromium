@@ -184,7 +184,7 @@ class TestSyncedTabDelegate : public SyncedTabDelegate {
   int GetEntryCount() const override { return entries_.size(); }
   SessionID::id_type GetWindowId() const override { return window_id_.id(); }
   SessionID::id_type GetSessionId() const override { return tab_id_.id(); }
-  bool IsBeingDestroyed() const override { return false; }
+  bool IsBeingDestroyed() const override { return is_being_destroyed_; }
   std::string GetExtensionAppId() const override { return std::string(); }
   bool ProfileIsSupervised() const override { return is_supervised_; }
   void set_is_supervised(bool is_supervised) { is_supervised_ = is_supervised; }
@@ -218,6 +218,8 @@ class TestSyncedTabDelegate : public SyncedTabDelegate {
 
   void set_current_entry_index(int i) { current_entry_index_ = i; }
 
+  void set_is_being_destroyed() { is_being_destroyed_ = true; }
+
   void SetWindowId(SessionID::id_type window_id) {
     window_id_.set_id(window_id);
   }
@@ -242,6 +244,7 @@ class TestSyncedTabDelegate : public SyncedTabDelegate {
  private:
   int current_entry_index_ = -1;
   bool is_supervised_ = false;
+  bool is_being_destroyed_ = false;
   int sync_id_ = kInvalidTabID;
   SessionID tab_id_;
   SessionID window_id_;
@@ -374,6 +377,20 @@ class TestSyncedWindowDelegate : public SyncedWindowDelegate {
     tab_delegates_[index] = delegate;
   }
 
+  void RemoveTab(SyncedTabDelegate* delegate) {
+    int index = -1;
+    for (const auto& p : tab_delegates_) {
+      ASSERT_GE(p.first, 0);
+      if (p.second == delegate) {
+        index = p.first;
+        break;
+      }
+    }
+    if (index < 0)
+      return;
+    tab_delegates_.erase(index);
+  }
+
   SessionID::id_type GetTabIdAt(int index) const override {
     SyncedTabDelegate* delegate = GetTabAt(index);
     if (!delegate)
@@ -479,6 +496,11 @@ class DummyRouter : public LocalSessionEventRouter {
   void Stop() override { handler_ = nullptr; }
 
   void NotifyNav(SyncedTabDelegate* tab) {
+    if (handler_)
+      handler_->OnLocalTabModified(tab);
+  }
+
+  void NotifyDestroy(SyncedTabDelegate* tab) {
     if (handler_)
       handler_->OnLocalTabModified(tab);
   }
@@ -707,6 +729,26 @@ class SessionsSyncManagerTest : public testing::Test {
   TestSyncedTabDelegate* AddTab(SessionID::id_type window_id,
                                 const std::string& url) {
     return AddTab(window_id, url, base::Time::Now());
+  }
+
+  void RemoveTab(SessionID::id_type window_id,
+                 TestSyncedTabDelegate* delegate) {
+    auto it = tabs_.cbegin();
+    for (; it != tabs_.cend(); ++it)
+      if (it->get() == delegate)
+        break;
+    if (it == tabs_.cend())
+      return;
+
+    delegate->set_is_being_destroyed();
+    router_->NotifyDestroy(delegate);
+
+    for (auto& window : windows_) {
+      if (window->GetSessionId() == window_id) {
+        window->RemoveTab(delegate);
+      }
+    }
+    tabs_.erase(it);
   }
 
   void NavigateTab(TestSyncedTabDelegate* delegate,
@@ -1940,6 +1982,29 @@ TEST_F(SessionsSyncManagerTest, OnLocalTabModified) {
   // Verify tab delegates have Sync ids.
   EXPECT_EQ(0, window->GetTabAt(0)->GetSyncId());
   EXPECT_EQ(1, window->GetTabAt(1)->GetSyncId());
+}
+
+TEST_F(SessionsSyncManagerTest, TabSyncChangesOnShutdown) {
+  SyncChangeList out;
+  // Init with no local data, relies on MergeLocalSessionNoTabs.
+  TestSyncedWindowDelegate* window = AddWindow();
+  SessionID::id_type window_id = window->GetSessionId();
+  InitWithSyncDataTakeOutput(syncer::SyncDataList(), &out);
+  EXPECT_FALSE(manager()->current_machine_tag().empty());
+  EXPECT_EQ(2U, out.size());
+
+  auto* tab1 = AddTab(window_id, kFoo1);
+  auto* tab2 = AddTab(window_id, kBar1);
+  out.clear();
+
+  EXPECT_FALSE(manager()->GetAllBrowsersClosingForTesting());
+  RemoveTab(window_id, tab1);
+  EXPECT_EQ(1U, out.size());
+  out.clear();
+
+  manager()->SetAllBrowsersClosing(true);
+  RemoveTab(window_id, tab2);
+  EXPECT_EQ(0U, out.size());
 }
 
 TEST_F(SessionsSyncManagerTest, ForeignSessionModifiedTime) {

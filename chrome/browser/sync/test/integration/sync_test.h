@@ -10,6 +10,7 @@
 #include <vector>
 
 #include "base/compiler_specific.h"
+#include "base/containers/flat_set.h"
 #include "base/macros.h"
 #include "base/process/process.h"
 #include "chrome/browser/extensions/install_verifier.h"
@@ -277,6 +278,9 @@ class SyncTest : public InProcessBrowserTest {
   // before the Profile object is created.
   void SetPreexistingPreferencesFileContents(const std::string& contents);
 
+  // Close browser window at index.
+  void CloseBrowserWindowAtIndex(size_t index);
+
   // Helper to ProfileManager::CreateProfileAsync that creates a new profile
   // used for UI Signin. Blocks until profile is created.
   static Profile* MakeProfileForUISignin(base::FilePath profile_path);
@@ -466,6 +470,9 @@ class SyncTest : public InProcessBrowserTest {
 
   // Disable extension install verification.
   extensions::ScopedInstallVerifierBypassForTest ignore_install_verification_;
+
+  // Indicies of closed browsers. Stored to eliminate possible re-close.
+  base::flat_set<size_t> closed_browsers_indicies_;
 
   DISALLOW_COPY_AND_ASSIGN(SyncTest);
 };

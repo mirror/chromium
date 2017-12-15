@@ -5,6 +5,7 @@
 #include "base/macros.h"
 #include "base/run_loop.h"
 #include "base/test/histogram_tester.h"
+#include "chrome/browser/chrome_notification_types.h"
 #include "chrome/browser/sessions/session_service.h"
 #include "chrome/browser/sessions/session_tab_helper.h"
 #include "chrome/browser/sync/sessions/sync_sessions_router_tab_helper.h"
@@ -24,6 +25,9 @@
 #include "components/sync/driver/sync_driver_switches.h"
 #include "components/sync/protocol/proto_value_conversions.h"
 #include "components/sync/test/fake_server/sessions_hierarchy.h"
+#include "components/sync_sessions/sessions_sync_manager.h"
+#include "content/public/browser/notification_service.h"
+#include "content/public/test/test_utils.h"
 #include "ui/base/mojo/window_open_disposition.mojom.h"
 
 using base::HistogramBase;
@@ -451,4 +455,40 @@ IN_PROC_BROWSER_TEST_F(SingleClientSessionsSyncTest,
                          true, 1);
     histogram_tester.ExpectTotalCount("Sync.CookieJarEmptyOnMismatch", 0);
   }
+}
+
+IN_PROC_BROWSER_TEST_F(SingleClientSessionsSyncTest,
+                       DoNotSyncTabsOnBrowserShutdown) {
+  ASSERT_TRUE(SetupSync()) << "SetupSync() failed.";
+  ASSERT_TRUE(CheckInitialState(0));
+  ASSERT_TRUE(OpenTab(0, GURL(kURL1)));
+
+  sync_sessions::SessionsSyncManager* sessions_sync_manager =
+      static_cast<sync_sessions::SessionsSyncManager*>(
+          GetSyncService(0)->GetSessionsSyncableService());
+  EXPECT_FALSE(sessions_sync_manager->GetAllBrowsersClosingForTesting());
+
+  // All browsers close has been started.
+  content::WindowedNotificationObserver close_all_observer(
+      chrome::NOTIFICATION_CLOSE_ALL_BROWSERS_REQUEST,
+      content::NotificationService::AllSources());
+  content::NotificationService::current()->Notify(
+      chrome::NOTIFICATION_CLOSE_ALL_BROWSERS_REQUEST,
+      content::NotificationService::AllSources(),
+      content::NotificationService::NoDetails());
+  close_all_observer.Wait();
+  base::RunLoop().RunUntilIdle();
+  EXPECT_TRUE(sessions_sync_manager->GetAllBrowsersClosingForTesting());
+
+  // Browser close has been cancelled.
+  content::WindowedNotificationObserver cancel_observer(
+      chrome::NOTIFICATION_BROWSER_CLOSE_CANCELLED,
+      content::NotificationService::AllSources());
+  content::NotificationService::current()->Notify(
+      chrome::NOTIFICATION_BROWSER_CLOSE_CANCELLED,
+      content::NotificationService::AllSources(),
+      content::NotificationService::NoDetails());
+  cancel_observer.Wait();
+  base::RunLoop().RunUntilIdle();
+  EXPECT_FALSE(sessions_sync_manager->GetAllBrowsersClosingForTesting());
 }

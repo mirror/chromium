@@ -70,6 +70,12 @@ void SyncSessionsWebContentsRouter::NotifyTabModified(
   }
 }
 
+void SyncSessionsWebContentsRouter::SetAllBrowsersClosing(
+    bool browsers_closing) {
+  if (handler_)
+    handler_->SetAllBrowsersClosing(browsers_closing);
+}
+
 void SyncSessionsWebContentsRouter::InjectStartSyncFlare(
     syncer::SyncableService::StartSyncFlare flare) {
   flare_ = flare;
