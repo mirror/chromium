@@ -160,5 +160,5 @@ IN_PROC_BROWSER_TEST_F(DriveAppConverterTest, InstallTwice) {
   // Two different app instances.
   ASSERT_NE(first_install, second_install);
   EXPECT_EQ(first_install_id, second_install->id());
-  EXPECT_GE(second_install->version()->CompareTo(first_install_version), 0);
+  EXPECT_GE(second_install->version().CompareTo(first_install_version), 0);
 }
