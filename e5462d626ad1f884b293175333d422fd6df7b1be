@@ -125,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "04558a22_545ef194",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/voice_interaction_controller_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2017-12-15T21:09:46Z",
+      "side": 1,
+      "message": "You are right, removed and shifted the test destructor order and it works.",
+      "parentUuid": "369fa6ac_db58dbe0",
+      "revId": "e5462d626ad1f884b293175333d422fd6df7b1be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f17ad062_2c9e679e",
         "filename": "chrome/browser/chromeos/arc/voice_interaction/voice_interaction_controller_client.cc",
         "patchSetId": 2
