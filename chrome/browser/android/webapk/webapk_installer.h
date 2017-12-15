@@ -31,6 +31,15 @@ namespace content {
 class BrowserContext;
 }
 
+// A Java counterpart will be generated for this enum.
+// GENERATED_JAVA_ENUM_PACKAGE: org.chromium.chrome.browser.webapps
+enum class SpaceStatus {
+  ENOUGH_SPACE = 0,
+  ENOUGH_SPACE_AFTER_FREE_UP_CACHE = 1,
+  NOT_ENOUGH_SPACE = 2,
+  UNDETERMINED = 3,
+};
+
 // Talks to Chrome WebAPK server to download metadata about a WebAPK and issue
 // a request for it to be installed. The native WebApkInstaller owns the Java
 // WebApkInstaller counterpart.
@@ -78,6 +87,14 @@ class WebApkInstaller : public net::URLFetcherDelegate {
   void OnInstallFinished(JNIEnv* env,
                          const base::android::JavaParamRef<jobject>& obj,
                          jint result);
+
+  // Checks if there is enough space to install a WebAPK.
+  // If yes, continue the WebAPK installation process. If there is not enough
+  // space to install (even after clearing Chrome's cache), fails the
+  // installation process immediately.
+  void OnGetSpaceStatus(JNIEnv* env,
+                        const base::android::JavaParamRef<jobject>& obj,
+                        jint status);
 
   // Asynchronously builds the WebAPK proto on a background thread for an update
   // or install request. Runs |callback| on the calling thread when complete.
@@ -164,7 +181,7 @@ class WebApkInstaller : public net::URLFetcherDelegate {
   // Google Play.
   void SendRequest(std::unique_ptr<std::string> serialized_proto);
 
-  net::URLRequestContextGetter* request_context_getter_;
+  content::BrowserContext* browser_context_;
 
   // Sends HTTP request to WebAPK server.
   std::unique_ptr<net::URLFetcher> url_fetcher_;
