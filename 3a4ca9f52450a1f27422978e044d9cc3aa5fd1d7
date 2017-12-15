@@ -16,6 +16,24 @@
       "revId": "3a4ca9f52450a1f27422978e044d9cc3aa5fd1d7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7723bcca_fe9d191f",
+        "filename": "content/public/common/url_loader.mojom",
+        "patchSetId": 53
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-12-15T12:28:16Z",
+      "side": 1,
+      "message": "Yes as you like, but I don\u0027t understand the performance argument. I am using the URLLoaderClientEndpointsPtr in the code. It allocates a new heap object once and then it is moved a dozen of time, which should be cheap. Maybe there are some mojo internal stuff I don\u0027t know though. Let me know.\n\nMaybe you just want me not to pollute /content/common/frame.mojom. I can put it in another file if you want. (MainResourceLoaderParams?)\n\nIf you really want me to remove this struct and move the (mojom::URLLoaderPtrInfo, mojom::URLLoaderClientRequest) pair separately, I can.\nSince using it was a suggestion of several reviewers, I would like them to agree too.",
+      "parentUuid": "1c3d3490_83817fc3",
+      "revId": "3a4ca9f52450a1f27422978e044d9cc3aa5fd1d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
