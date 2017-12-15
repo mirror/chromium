@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "32ae057c_54d61b05",
+        "filename": "storage/browser/blob/blob_registry_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 563,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-12-15T09:24:07Z",
+      "side": 1,
+      "message": "Why do you need to pass the renderer\u0027s origin up at all? Could you instead read the origin off the frame tree (perhaps by adding a method to the delegate)?",
+      "revId": "71bb9274dcc99666657d402dea9f661558094a11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
