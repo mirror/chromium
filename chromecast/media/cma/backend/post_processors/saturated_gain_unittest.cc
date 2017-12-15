@@ -7,6 +7,7 @@
 
 #include "base/strings/stringprintf.h"
 #include "chromecast/media/cma/backend/post_processor_factory.h"
+#include "chromecast/media/cma/backend/post_processors/post_processor_benchmark.h"
 #include "chromecast/media/cma/backend/post_processors/post_processor_unittest.h"
 
 namespace chromecast {
@@ -64,6 +65,13 @@ TEST_P(PostProcessorTest, Gain) {
 
   EXPECT_FLOAT_EQ(original_amplitude * 10.0, SineAmplitude(data, kNumChannels))
       << "Expected a gain of 20dB";
+}
+
+TEST_P(PostProcessorTest, Benchmark) {
+  PostProcessorFactory factory;
+  std::string config = MakeConfigString(20.0);
+  auto pp = factory.CreatePostProcessor(kLibraryPath, config, kNumChannels);
+  AudioProcessorBenchmark(pp.get(), sample_rate_);
 }
 
 }  // namespace post_processor_test

@@ -13,6 +13,7 @@
 #include "base/strings/stringprintf.h"
 #include "chromecast/media/cma/backend/post_processor_factory.h"
 #include "chromecast/media/cma/backend/post_processors/governor.h"
+#include "chromecast/media/cma/backend/post_processors/post_processor_benchmark.h"
 #include "chromecast/media/cma/backend/post_processors/post_processor_unittest.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -132,6 +133,24 @@ TEST_P(PostProcessorTest, GovernorPassthrough) {
   TestPassthrough(pp.get(), sample_rate_);
 }
 
+TEST_P(PostProcessorTest, GovernorBenchmark) {
+  std::string config = MakeConfigString(1.0, 1.0);
+  PostProcessorFactory factory;
+  auto pp = factory.CreatePostProcessor(kLibraryPath, config, kNumChannels);
+  AudioProcessorBenchmark(pp.get(), sample_rate_);
+}
+
 }  // namespace post_processor_test
 }  // namespace media
 }  // namespace chromecast
+
+/*
+Benchmark results:
+Device: Google Home Max
+Benchmark                                 CPU(%)
+------------------------------------------------
+GovernorBenchmark                          0% **
+
+** 0% of CPU usage means, that with given audio test duration CPU spent less
+   time, then system clock resolution. For 10 sec it is ~0.01%
+*/
