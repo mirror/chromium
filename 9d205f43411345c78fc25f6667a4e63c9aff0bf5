@@ -272,6 +272,30 @@
     },
     {
       "key": {
+        "uuid": "bc41c7b7_fd587834",
+        "filename": "chrome/browser/ui/ash/chrome_launcher_prefs.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-12-15T17:18:17Z",
+      "side": 1,
+      "message": "Also please pay attention to L334\n\n  for (size_t i \u003d 0; i \u003c arraysize(kDefaultPinnedApps); ++i) {\n\nwhere default apps are also can be constructed",
+      "parentUuid": "92fa71bc_cd53645a",
+      "range": {
+        "startLine": 250,
+        "startChar": 40,
+        "endLine": 250,
+        "endChar": 51
+      },
+      "revId": "9d205f43411345c78fc25f6667a4e63c9aff0bf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a141c259_d33403ba",
         "filename": "chrome/browser/ui/ash/chrome_launcher_prefs.cc",
         "patchSetId": 4
