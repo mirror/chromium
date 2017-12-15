@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "369fa6ac_db58dbe0",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/voice_interaction_controller_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-15T20:45:21Z",
+      "side": 1,
+      "message": "Think this is because the test releases the profile before the client. You can avoid this by changing the order in test TearDown.\n\nThis should not happen in production.",
+      "parentUuid": "9fc51a37_f13c8322",
+      "revId": "e5462d626ad1f884b293175333d422fd6df7b1be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f17ad062_2c9e679e",
         "filename": "chrome/browser/chromeos/arc/voice_interaction/voice_interaction_controller_client.cc",
         "patchSetId": 2
