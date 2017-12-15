@@ -34,6 +34,24 @@
       "revId": "e1483c93d0056c99982fc48b37f91ff5de065f67",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54e20523_0985795b",
+        "filename": "chrome/browser/chromeos/arc/user_session/arc_user_session_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-12-15T13:44:18Z",
+      "side": 1,
+      "message": "I expected mentioning about shutdown timing / destruction order, like;\n\nOn shutdown, ArcUserSessionService is destroyed with Profile, which is earlier than ArcServiceService, so OnConnecitonClosed may not called in that case.\nSessionManager is also destroyed after ArcUserSessionService, so in such a case\nstale pointer would be kept in SessionManager.\nTo fix such a case, RemoveObserver() from SessionManager here, too.",
+      "parentUuid": "3c6f2719_facbce21",
+      "revId": "e1483c93d0056c99982fc48b37f91ff5de065f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
