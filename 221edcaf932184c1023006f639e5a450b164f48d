@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d96116da_cd92c38a",
+        "filename": "third_party/WebKit/Source/devtools/front_end/object_ui/JavaScriptAutocomplete.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1125920
+      },
+      "writtenOn": "2017-12-15T00:00:06Z",
+      "side": 1,
+      "message": "Should we invalidate cache on paused as well?\nLet imagine I paused at first line:\nwindow.abc \u003d foo();\n.. some otther code ..\nI made stepOver and would like to check window.abc value in console.",
+      "revId": "221edcaf932184c1023006f639e5a450b164f48d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50eeb0e7_da95929c",
+        "filename": "third_party/WebKit/Source/devtools/front_end/object_ui/JavaScriptAutocomplete.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1125920
+      },
+      "writtenOn": "2017-12-15T00:00:06Z",
+      "side": 1,
+      "message": "please use named const for 10 000.",
+      "revId": "221edcaf932184c1023006f639e5a450b164f48d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "755e717b_47f566f8",
+        "filename": "third_party/WebKit/Source/devtools/front_end/object_ui/JavaScriptAutocomplete.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 1125920
+      },
+      "writtenOn": "2017-12-15T00:00:06Z",
+      "side": 1,
+      "message": "please define variable before if or ternary operator is your friend!",
+      "revId": "221edcaf932184c1023006f639e5a450b164f48d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10d5b08c_a6ad4064",
+        "filename": "third_party/WebKit/Source/devtools/front_end/object_ui/JavaScriptAutocomplete.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 1125920
+      },
+      "writtenOn": "2017-12-15T00:00:06Z",
+      "side": 1,
+      "message": "property \u003e\u003e\u003e 0 \u003d\u003d\u003d property \u0026\u0026 (property \u003e 0 || 1 / property \u003e 0) - maybe faster check for array index.",
+      "revId": "221edcaf932184c1023006f639e5a450b164f48d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1adf152c_08196f3c",
+        "filename": "third_party/WebKit/Source/devtools/front_end/object_ui/JavaScriptAutocomplete.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1125920
+      },
+      "writtenOn": "2017-12-15T00:00:06Z",
+      "side": 1,
+      "message": "can we cache query.toLowerCase() and property.toLowerCase() since you use it at least twice?",
+      "revId": "221edcaf932184c1023006f639e5a450b164f48d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
