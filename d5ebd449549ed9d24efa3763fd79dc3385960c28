@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "74403cf1_ab63662e",
+        "filename": "chrome/browser/browser_process_platform_part_chromeos.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-15T00:43:29Z",
+      "side": 1,
+      "message": "std::make_unique",
+      "range": {
+        "startLine": 106,
+        "startChar": 19,
+        "endLine": 106,
+        "endChar": 36
+      },
+      "revId": "d5ebd449549ed9d24efa3763fd79dc3385960c28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d930b4f_d5d07f05",
+        "filename": "chrome/browser/browser_process_platform_part_chromeos.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-15T00:43:29Z",
+      "side": 1,
+      "message": "How do you know cros_component remains valid? Might it be possible for a quick shutdown to destroy cros_component_ before the task runs? Also, this operation seems specific to cros_component_. Is there a reason this needs to be here vs say in the cros_component constructor or some init function?",
+      "range": {
+        "startLine": 109,
+        "startChar": 2,
+        "endLine": 114,
+        "endChar": 58
+      },
+      "revId": "d5ebd449549ed9d24efa3763fd79dc3385960c28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66e5165f_4950241b",
+        "filename": "chrome/browser/browser_process_platform_part_chromeos.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-15T00:43:29Z",
+      "side": 1,
+      "message": "If this include is no longer needed, remove it please.",
+      "range": {
+        "startLine": 12,
+        "startChar": 11,
+        "endLine": 12,
+        "endChar": 33
+      },
+      "revId": "d5ebd449549ed9d24efa3763fd79dc3385960c28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a1f2d4c_92f66673",
+        "filename": "chrome/browser/chromeos/chrome_browser_main_chromeos.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1240,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-15T00:43:29Z",
+      "side": 1,
+      "message": "Why do you need to explicitly shut this down here?",
+      "range": {
+        "startLine": 1240,
+        "startChar": 2,
+        "endLine": 1240,
+        "endChar": 62
+      },
+      "revId": "d5ebd449549ed9d24efa3763fd79dc3385960c28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01379ad1_087270a9",
+        "filename": "chrome/browser/component_updater/cros_component_installer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-15T00:43:29Z",
+      "side": 1,
+      "message": "no explicit",
+      "range": {
+        "startLine": 86,
+        "startChar": 2,
+        "endLine": 86,
+        "endChar": 11
+      },
+      "revId": "d5ebd449549ed9d24efa3763fd79dc3385960c28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d719f634_7bad5f82",
+        "filename": "chrome/browser/component_updater/cros_component_installer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-15T00:43:29Z",
+      "side": 1,
+      "message": "Making random functions virtual is confusing. How about structuring this code in a way that there\u0027s a pure virtual interface used for testing?",
+      "range": {
+        "startLine": 129,
+        "startChar": 2,
+        "endLine": 129,
+        "endChar": 10
+      },
+      "revId": "d5ebd449549ed9d24efa3763fd79dc3385960c28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
