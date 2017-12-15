@@ -46,8 +46,7 @@ class AudioDebugFileWriterTest
     : public testing::TestWithParam<AudioDebugFileWriterTestData> {
  public:
   AudioDebugFileWriterTest()
-      : file_thread_("FileThread"),
-        params_(AudioParameters::Format::AUDIO_PCM_LINEAR,
+      : params_(AudioParameters::Format::AUDIO_PCM_LINEAR,
                 std::tr1::get<0>(GetParam()),
                 std::tr1::get<1>(GetParam()),
                 kBytesPerSample * 8,
@@ -57,7 +56,6 @@ class AudioDebugFileWriterTest
                         writes_),
         source_interleaved_(source_samples_ ? new int16_t[source_samples_]
                                             : nullptr) {
-    file_thread_.StartAndWaitForTesting();
     InitSourceInterleaved(source_interleaved_.get(), source_samples_);
   }
 
@@ -158,7 +156,6 @@ class AudioDebugFileWriterTest
   }
 
   void DoDebugRecording() {
-    // Write tasks are posted to |file_thread_|.
     for (int i = 0; i < writes_; ++i) {
       std::unique_ptr<AudioBus> bus =
           AudioBus::Create(params_.channels(), params_.frames_per_buffer());
@@ -195,11 +192,6 @@ class AudioDebugFileWriterTest
   }
 
  protected:
-  // |file_thread_| must to be declared before |debug_writer_| so that it's
-  // destroyed after. This ensures all tasks posted in |debug_writer_| to the
-  // file thread are run before exiting the test.
-  base::Thread file_thread_;
-
   // The test task environment.
   base::test::ScopedTaskEnvironment scoped_task_environment_;
 
@@ -245,8 +237,7 @@ TEST_P(AudioDebugFileWriterBehavioralTest,
   base::WaitableEvent* wait_for_deletion =
       new base::WaitableEvent(base::WaitableEvent::ResetPolicy::MANUAL,
                               base::WaitableEvent::InitialState::NOT_SIGNALED);
-
-  file_thread_.task_runner()->PostTask(
+  scoped_task_environment_.GetMainThreadTaskRunner()->PostTask(
       FROM_HERE,
       base::Bind(&base::WaitableEvent::Wait, base::Owned(wait_for_deletion)));
 
