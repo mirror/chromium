@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "95622f75_54e839ed",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_subpage.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-12-15T02:09:30Z",
+      "side": 1,
+      "message": "Maybe a better solution would be to add a separate separator div instead?",
+      "parentUuid": "7ede0920_32807fb4",
+      "revId": "8b868e931b805a426430e3d097ff615731f8724c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a0a4cc8a_58e125db",
         "filename": "chrome/browser/resources/settings/internet_page/internet_subpage.html",
         "patchSetId": 3
@@ -142,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "fa031408_20e14659",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_subpage.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-12-15T02:09:30Z",
+      "side": 1,
+      "message": "Don\u0027t create extra variables, but if there are existing vars that are close, push back to UX to use them. Feel free to escalate to bettes@. We should try to be consistent within Settings as much as possible.\n\nIf it\u0027s truly unique, i.e. doesn\u0027t fit the pattern of anywhere else, sure that\u0027s fine. I\u0027m just making sure that is really the case.",
+      "parentUuid": "a3022462_c41dd4d8",
+      "revId": "8b868e931b805a426430e3d097ff615731f8724c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6abe33b7_e4aa3de5",
         "filename": "chrome/browser/resources/settings/internet_page/internet_subpage.html",
         "patchSetId": 3
@@ -174,6 +210,24 @@
       "revId": "8b868e931b805a426430e3d097ff615731f8724c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e0645c3_16bee0b2",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_subpage.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-12-15T02:09:30Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ab9ad310_43cb179b",
+      "revId": "8b868e931b805a426430e3d097ff615731f8724c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
