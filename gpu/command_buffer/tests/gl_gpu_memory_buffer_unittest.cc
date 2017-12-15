@@ -228,9 +228,8 @@ TEST_P(GpuMemoryBufferTest, Lifecycle) {
   buffer->Unmap();
 
   // Create the image. This should add the image ID to the ImageManager.
-  GLuint image_id =
-      glCreateImageCHROMIUM(buffer->AsClientBuffer(), kImageWidth, kImageHeight,
-                            InternalFormat(GetParam()));
+  GLuint image_id = glCreateImageCHROMIUM(buffer->AsClientBuffer(), kImageWidth,
+                                          kImageHeight);
   ASSERT_NE(0u, image_id);
   ASSERT_TRUE(gl_.decoder()->GetImageManagerForTest()->LookupImage(image_id) !=
               NULL);

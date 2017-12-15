@@ -673,8 +673,7 @@ virtual void GetUniformsES3CHROMIUM(GLuint program,
                                     void* info) = 0;
 virtual GLuint CreateImageCHROMIUM(ClientBuffer buffer,
                                    GLsizei width,
-                                   GLsizei height,
-                                   GLenum internalformat) = 0;
+                                   GLsizei height) = 0;
 virtual void DestroyImageCHROMIUM(GLuint image_id) = 0;
 virtual void DescheduleUntilFinishedCHROMIUM() = 0;
 virtual void GetTranslatedShaderSourceANGLE(GLuint shader,

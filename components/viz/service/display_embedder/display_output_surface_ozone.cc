@@ -40,10 +40,10 @@ DisplayOutputSurfaceOzone::DisplayOutputSurfaceOzone(
   // implementation.
   capabilities_.max_frames_pending = 2;
 
-  buffer_queue_.reset(
-      new BufferQueue(context_provider->ContextGL(), target, internalformat,
-                      display::DisplaySnapshot::PrimaryFormat(), &gl_helper_,
-                      gpu_memory_buffer_manager, widget));
+  buffer_queue_.reset(new BufferQueue(context_provider->ContextGL(), target,
+                                      display::DisplaySnapshot::PrimaryFormat(),
+                                      &gl_helper_, gpu_memory_buffer_manager,
+                                      widget));
   buffer_queue_->Initialize();
 }
 

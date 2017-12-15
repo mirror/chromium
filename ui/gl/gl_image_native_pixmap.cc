@@ -6,6 +6,7 @@
 
 #include <vector>
 
+#include "gpu/command_buffer/common/gpu_memory_buffer_support.h"
 #include "ui/gfx/buffer_format_util.h"
 #include "ui/gl/gl_surface_egl.h"
 
@@ -27,32 +28,6 @@
 
 namespace gl {
 namespace {
-
-bool ValidInternalFormat(unsigned internalformat, gfx::BufferFormat format) {
-  switch (internalformat) {
-    case GL_RGB:
-      return format == gfx::BufferFormat::BGR_565 ||
-             format == gfx::BufferFormat::RGBX_8888 ||
-             format == gfx::BufferFormat::BGRX_8888 ||
-             format == gfx::BufferFormat::BGRX_1010102;
-    case GL_RGB_YCRCB_420_CHROMIUM:
-      return format == gfx::BufferFormat::YVU_420;
-    case GL_RGB_YCBCR_420V_CHROMIUM:
-      return format == gfx::BufferFormat::YUV_420_BIPLANAR;
-    case GL_RGBA:
-      return format == gfx::BufferFormat::RGBA_8888;
-    case GL_BGRA_EXT:
-      return format == gfx::BufferFormat::BGRA_8888;
-    case GL_RED_EXT:
-      return format == gfx::BufferFormat::R_8;
-    case GL_R16_EXT:
-      return format == gfx::BufferFormat::R_16;
-    case GL_RG_EXT:
-      return format == gfx::BufferFormat::RG_88;
-    default:
-      return false;
-  }
-}
 
 bool ValidFormat(gfx::BufferFormat format) {
   switch (format) {
@@ -125,10 +100,8 @@ EGLint FourCC(gfx::BufferFormat format) {
 
 }  // namespace
 
-GLImageNativePixmap::GLImageNativePixmap(const gfx::Size& size,
-                                         unsigned internalformat)
+GLImageNativePixmap::GLImageNativePixmap(const gfx::Size& size)
     : GLImageEGL(size),
-      internalformat_(internalformat),
       has_image_flush_external_(
           gl::GLSurfaceEGL::HasEGLExtension("EGL_EXT_image_flush_external")) {}
 
@@ -146,12 +119,6 @@ bool GLImageNativePixmap::Initialize(gfx::NativePixmap* pixmap,
   } else if (pixmap->AreDmaBufFdsValid()) {
     if (!ValidFormat(format)) {
       LOG(ERROR) << "Invalid format: " << static_cast<int>(format);
-      return false;
-    }
-
-    if (!ValidInternalFormat(internalformat_, format)) {
-      LOG(ERROR) << "Invalid internalformat: " << internalformat_
-                 << " for format: " << static_cast<int>(format);
       return false;
     }
 
@@ -204,11 +171,62 @@ bool GLImageNativePixmap::Initialize(gfx::NativePixmap* pixmap,
   }
 
   pixmap_ = pixmap;
+  format_ = format;
   return true;
 }
 
+namespace {
+
+unsigned ImageFormatForGpuMemoryBufferFormat(gfx::BufferFormat format) {
+  switch (format) {
+    case gfx::BufferFormat::ATC:
+      return GL_ATC_RGB_AMD;
+    case gfx::BufferFormat::ATCIA:
+      return GL_ATC_RGBA_INTERPOLATED_ALPHA_AMD;
+    case gfx::BufferFormat::DXT1:
+      return GL_COMPRESSED_RGB_S3TC_DXT1_EXT;
+    case gfx::BufferFormat::DXT5:
+      return GL_COMPRESSED_RGBA_S3TC_DXT5_EXT;
+    case gfx::BufferFormat::ETC1:
+      return GL_ETC1_RGB8_OES;
+    case gfx::BufferFormat::R_8:
+      return GL_RED_EXT;
+    case gfx::BufferFormat::R_16:
+      return GL_R16_EXT;
+    case gfx::BufferFormat::RG_88:
+      return GL_RG_EXT;
+    case gfx::BufferFormat::BGR_565:
+      return GL_RGB;
+    case gfx::BufferFormat::RGBA_4444:
+      return GL_RGBA;
+    case gfx::BufferFormat::RGBX_8888:
+      return GL_RGB;
+    case gfx::BufferFormat::RGBA_8888:
+      return GL_RGBA;
+    case gfx::BufferFormat::BGRX_8888:
+      return GL_RGB;
+    case gfx::BufferFormat::BGRA_8888:
+      return GL_RGBA;
+    case gfx::BufferFormat::RGBA_F16:
+      return GL_RGBA;
+    case gfx::BufferFormat::YVU_420:
+      return GL_RGB_YCRCB_420_CHROMIUM;
+    case gfx::BufferFormat::YUV_420_BIPLANAR:
+      return GL_RGB_YCBCR_420V_CHROMIUM;
+    case gfx::BufferFormat::UYVY_422:
+      return GL_RGB_YCBCR_422_CHROMIUM;
+    case gfx::BufferFormat::BGRX_1010102:
+      return GL_RGB;
+  }
+
+  NOTREACHED();
+  return GL_RGBA;
+}
+
+}  // namespace
+
 unsigned GLImageNativePixmap::GetInternalFormat() {
-  return internalformat_;
+  return ImageFormatForGpuMemoryBufferFormat(format_);
 }
 
 bool GLImageNativePixmap::CopyTexImage(unsigned target) {

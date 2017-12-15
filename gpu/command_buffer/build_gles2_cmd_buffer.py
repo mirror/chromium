@@ -2681,7 +2681,6 @@ _FUNCTION_INFO = {
     'type': 'NoCommand',
     'cmd_args':
         'ClientBuffer buffer, GLsizei width, GLsizei height, '
-        'GLenum internalformat',
     'result': ['GLuint'],
     'extension': "CHROMIUM_image",
     'trace_level': 1,
