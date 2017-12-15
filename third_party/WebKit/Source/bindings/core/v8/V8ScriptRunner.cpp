@@ -225,7 +225,7 @@ bool IsResourceHotForCaching(CachedMetadataHandler* cache_handler,
 // Final compile call for a streamed compilation. Most decisions have already
 // been made, but we need to write back data into the cache.
 v8::MaybeLocal<v8::Script> PostStreamCompile(
-    V8CacheOptions cache_options,
+    v8::ScriptCompiler::CompileOptions compile_options,
     CachedMetadataHandler* cache_handler,
     ScriptStreamer* streamer,
     v8::Isolate* isolate,
@@ -241,8 +241,8 @@ v8::MaybeLocal<v8::Script> PostStreamCompile(
   // If the non-streaming compiler uses the parser cache, retrieve and store
   // the cache data. If the code cache uses time stamp as heuristic, set that
   // time stamp.
-  switch (cache_options) {
-    case kV8CacheOptionsParse: {
+  switch (compile_options) {
+    case v8::ScriptCompiler::kProduceParserCache: {
       const v8::ScriptCompiler::CachedData* new_cached_data =
           streamer->Source()->GetCachedData();
       if (!new_cached_data)
@@ -263,17 +263,14 @@ v8::MaybeLocal<v8::Script> PostStreamCompile(
       break;
     }
 
-    case kV8CacheOptionsDefault:
-    case kV8CacheOptionsCode:
-      V8ScriptRunner::SetCacheTimeStamp(cache_handler);
+    case v8::ScriptCompiler::kConsumeParserCache:
+    case v8::ScriptCompiler::kConsumeCodeCache:
+    case v8::ScriptCompiler::kNoCompileOptions:
       break;
 
-    case kV8CacheOptionsCodeWithoutHeatCheck:
-    case kV8CacheOptionsFullCodeWithoutHeatCheck:
-      // Currently WithoutHeatCheck doesn't support streaming.
+    case v8::ScriptCompiler::kProduceCodeCache:
+    case v8::ScriptCompiler::kProduceFullCodeCache:
       NOTREACHED();
-    case kV8CacheOptionsNone:
-      break;
   }
   return script;
 }
@@ -285,80 +282,130 @@ typedef base::OnceCallback<v8::MaybeLocal<v8::Script>(
     InspectorCompileScriptEvent::V8CacheResult*)>
     CompileFn;
 
-// Select a compile function from any of the above, mainly depending on
-// cacheOptions.
+// Select a compile function from any of the above depending on compile_options.
 static CompileFn SelectCompileFunction(
-    V8CacheOptions cache_options,
+    v8::ScriptCompiler::CompileOptions compile_options,
     CachedMetadataHandler* cache_handler,
-    v8::Local<v8::String> code,
-    v8::ScriptCompiler::NoCacheReason no_handler_reason) {
-  static const int kMinimalCodeLength = 1024;
-  static const int kHotHours = 72;
-
-  // Caching is not available in this case.
-  if (!cache_handler) {
-    return WTF::Bind(CompileWithoutOptions, no_handler_reason);
-  }
-
-  if (cache_options == kV8CacheOptionsNone) {
-    return WTF::Bind(CompileWithoutOptions,
-                     v8::ScriptCompiler::kNoCacheBecauseCachingDisabled);
-  }
-
-  // Caching is not worthwhile for small scripts.  Do not use caching
-  // unless explicitly expected, indicated by the cache option.
-  if (code->Length() < kMinimalCodeLength) {
-    return WTF::Bind(CompileWithoutOptions,
-                     v8::ScriptCompiler::kNoCacheBecauseScriptTooSmall);
-  }
-
-  // The cacheOptions will guide our strategy:
-  switch (cache_options) {
-    case kV8CacheOptionsParse: {
-      // Use parser-cache; in-memory only.
+    v8::ScriptCompiler::NoCacheReason no_cache_reason) {
+  switch (compile_options) {
+    case v8::ScriptCompiler::kNoCompileOptions:
+      return WTF::Bind(CompileWithoutOptions, no_cache_reason);
+    case v8::ScriptCompiler::kProduceParserCache: {
       uint32_t parser_tag = V8ScriptRunner::TagForParserCache(cache_handler);
-      scoped_refptr<CachedMetadata> parser_cache(
-          cache_handler->GetCachedMetadata(parser_tag));
-      if (parser_cache) {
-        return WTF::Bind(CompileAndConsumeCache, WrapPersistent(cache_handler),
-                         std::move(parser_cache),
-                         v8::ScriptCompiler::kConsumeParserCache);
-      }
       return WTF::Bind(CompileAndProduceCache, WrapPersistent(cache_handler),
                        parser_tag, v8::ScriptCompiler::kProduceParserCache,
                        CachedMetadataHandler::kCacheLocally);
     }
-
-    case kV8CacheOptionsDefault:
-    case kV8CacheOptionsCode:
-    case kV8CacheOptionsCodeWithoutHeatCheck:
-    case kV8CacheOptionsFullCodeWithoutHeatCheck: {
+    case v8::ScriptCompiler::kConsumeParserCache: {
+      // Use parser-cache; in-memory only.
+      uint32_t parser_tag = V8ScriptRunner::TagForParserCache(cache_handler);
+      scoped_refptr<CachedMetadata> parser_cache(
+          cache_handler->GetCachedMetadata(parser_tag));
+      DCHECK(parser_cache);
+      return WTF::Bind(CompileAndConsumeCache, WrapPersistent(cache_handler),
+                       std::move(parser_cache),
+                       v8::ScriptCompiler::kConsumeParserCache);
+    }
+    case v8::ScriptCompiler::kConsumeCodeCache: {
       uint32_t code_cache_tag = V8ScriptRunner::TagForCodeCache(cache_handler);
-      // Use code caching for recently seen resources.
-      // Use compression depending on the cache option.
       scoped_refptr<CachedMetadata> code_cache =
           cache_handler->GetCachedMetadata(code_cache_tag);
-      if (code_cache) {
-        return WTF::Bind(CompileAndConsumeCache, WrapPersistent(cache_handler),
-                         std::move(code_cache),
-                         v8::ScriptCompiler::kConsumeCodeCache);
-      }
-      if (cache_options != kV8CacheOptionsCodeWithoutHeatCheck &&
-          cache_options != kV8CacheOptionsFullCodeWithoutHeatCheck &&
-          !IsResourceHotForCaching(cache_handler, kHotHours)) {
-        V8ScriptRunner::SetCacheTimeStamp(cache_handler);
-        return WTF::Bind(CompileWithoutOptions,
-                         v8::ScriptCompiler::kNoCacheBecauseCacheTooCold);
-      }
-      return WTF::Bind(
-          CompileAndProduceCache, WrapPersistent(cache_handler), code_cache_tag,
-          (cache_options == kV8CacheOptionsFullCodeWithoutHeatCheck)
-              ? v8::ScriptCompiler::kProduceFullCodeCache
-              : v8::ScriptCompiler::kProduceCodeCache,
-          CachedMetadataHandler::kSendToPlatform);
-      break;
+      DCHECK(code_cache);
+      return WTF::Bind(CompileAndConsumeCache, WrapPersistent(cache_handler),
+                       std::move(code_cache),
+                       v8::ScriptCompiler::kConsumeCodeCache);
     }
+    case v8::ScriptCompiler::kProduceCodeCache:
+    case v8::ScriptCompiler::kProduceFullCodeCache:
+      NOTREACHED();
+  }
 
+  // All switch branches should return and we should never get here.
+  // But some compilers aren't sure, hence this default.
+  NOTREACHED();
+  return WTF::Bind(CompileWithoutOptions, v8::ScriptCompiler::kNoCacheNoReason);
+}
+
+// Select a compile function for a streaming compile.
+CompileFn SelectCompileFunction(
+    v8::ScriptCompiler::CompileOptions compile_options,
+    CachedMetadataHandler* cache_handler,
+    ScriptStreamer* streamer) {
+  DCHECK(streamer->IsFinished());
+  DCHECK(!streamer->StreamingSuppressed());
+
+  // Streaming compilation may involve use of code cache.
+  // TODO(leszeks): Add compile timer to streaming compilation.
+  return WTF::Bind(PostStreamCompile, compile_options,
+                   WrapPersistent(cache_handler), WrapPersistent(streamer));
+}
+}  // namespace
+
+v8::ScriptCompiler::CompileOptions V8ScriptRunner::GetCompileOptions(
+    V8CacheOptions cache_options,
+    v8::ScriptCompiler::NoCacheReason& no_cache_reason,
+    const ScriptSourceCode& source) {
+  static const int kMinimalCodeLength = 1024;
+  static const int kHotHours = 72;
+
+  switch (source.SourceLocationType()) {
+    case ScriptSourceLocationType::kInline:
+      no_cache_reason = v8::ScriptCompiler::kNoCacheBecauseInlineScript;
+      break;
+    case ScriptSourceLocationType::kInlineInsideDocumentWrite:
+      no_cache_reason = v8::ScriptCompiler::kNoCacheBecauseInDocumentWrite;
+      break;
+    case ScriptSourceLocationType::kExternalFile:
+      no_cache_reason =
+          v8::ScriptCompiler::kNoCacheBecauseResourceWithNoCacheHandler;
+      break;
+    // TODO(leszeks): Possibly differentiate between the other kinds of script
+    // origin also.
+    default:
+      no_cache_reason = v8::ScriptCompiler::kNoCacheBecauseNoResource;
+      break;
+  }
+
+  CachedMetadataHandler* cache_handler = source.CacheHandler();
+  if (!cache_handler) {
+    return v8::ScriptCompiler::kNoCompileOptions;
+  }
+
+  if (cache_options == kV8CacheOptionsNone) {
+    no_cache_reason = v8::ScriptCompiler::kNoCacheBecauseCachingDisabled;
+    return v8::ScriptCompiler::kNoCompileOptions;
+  }
+
+  if (source.Source().length() < kMinimalCodeLength) {
+    no_cache_reason = v8::ScriptCompiler::kNoCacheBecauseScriptTooSmall;
+    return v8::ScriptCompiler::kNoCompileOptions;
+  }
+
+  switch (cache_options) {
+    case kV8CacheOptionsParse: {
+      uint32_t parser_tag = V8ScriptRunner::TagForParserCache(cache_handler);
+      scoped_refptr<CachedMetadata> parser_cache(
+          cache_handler->GetCachedMetadata(parser_tag));
+      if (parser_cache) {
+        return v8::ScriptCompiler::kConsumeParserCache;
+      } else {
+        return v8::ScriptCompiler::kProduceParserCache;
+      }
+    }
+    case kV8CacheOptionsDefault:
+    case kV8CacheOptionsCode:
+      if (!IsResourceHotForCaching(cache_handler, kHotHours)) {
+        no_cache_reason = v8::ScriptCompiler::kNoCacheBecauseCacheTooCold;
+        return v8::ScriptCompiler::kNoCompileOptions;
+      }
+    case kV8CacheOptionsCodeWithoutHeatCheck:
+      no_cache_reason =
+          v8::ScriptCompiler::kNoCacheBecauseDeferredProduceCodeCache;
+      return v8::ScriptCompiler::kNoCompileOptions;
+    case kV8CacheOptionsFullCodeWithoutHeatCheck:
+      no_cache_reason =
+          v8::ScriptCompiler::kNoCacheBecauseDeferredProduceFullCodeCache;
+      return v8::ScriptCompiler::kNoCompileOptions;
     case kV8CacheOptionsNone:
       // Shouldn't happen, as this is handled above.
       // Case is here so that compiler can check all cases are handled.
@@ -369,28 +416,15 @@ static CompileFn SelectCompileFunction(
   // All switch branches should return and we should never get here.
   // But some compilers aren't sure, hence this default.
   NOTREACHED();
-  return WTF::Bind(CompileWithoutOptions, v8::ScriptCompiler::kNoCacheNoReason);
+  return v8::ScriptCompiler::kNoCompileOptions;
 }
-
-// Select a compile function for a streaming compile.
-CompileFn SelectCompileFunction(V8CacheOptions cache_options,
-                                CachedMetadataHandler* cache_handler,
-                                ScriptStreamer* streamer) {
-  DCHECK(streamer->IsFinished());
-  DCHECK(!streamer->StreamingSuppressed());
-
-  // Streaming compilation may involve use of code cache.
-  // TODO(leszeks): Add compile timer to streaming compilation.
-  return WTF::Bind(PostStreamCompile, cache_options,
-                   WrapPersistent(cache_handler), WrapPersistent(streamer));
-}
-}  // namespace
 
 v8::MaybeLocal<v8::Script> V8ScriptRunner::CompileScript(
     ScriptState* script_state,
     const ScriptSourceCode& source,
     AccessControlStatus access_control_status,
-    V8CacheOptions cache_options,
+    v8::ScriptCompiler::CompileOptions compile_options,
+    v8::ScriptCompiler::NoCacheReason no_cache_reason,
     const ReferrerScriptInfo& referrer_info) {
   v8::Isolate* isolate = script_state->GetIsolate();
   if (source.Source().length() >= v8::String::kMaxLength) {
@@ -424,29 +458,10 @@ v8::MaybeLocal<v8::Script> V8ScriptRunner::CompileScript(
       v8::False(isolate),  // is_module
       referrer_info.ToV8HostDefinedOptions(isolate));
 
-  v8::ScriptCompiler::NoCacheReason no_handler_reason;
-  switch (source.SourceLocationType()) {
-    case ScriptSourceLocationType::kInline:
-      no_handler_reason = v8::ScriptCompiler::kNoCacheBecauseInlineScript;
-      break;
-    case ScriptSourceLocationType::kInlineInsideDocumentWrite:
-      no_handler_reason = v8::ScriptCompiler::kNoCacheBecauseInDocumentWrite;
-      break;
-    case ScriptSourceLocationType::kExternalFile:
-      no_handler_reason =
-          v8::ScriptCompiler::kNoCacheBecauseResourceWithNoCacheHandler;
-      break;
-    // TODO(leszeks): Possibly differentiate between the other kinds of script
-    // origin also.
-    default:
-      no_handler_reason = v8::ScriptCompiler::kNoCacheBecauseNoResource;
-      break;
-  }
-
   CompileFn compile_fn =
-      streamer ? SelectCompileFunction(cache_options, cache_handler, streamer)
-               : SelectCompileFunction(cache_options, cache_handler, code,
-                                       no_handler_reason);
+      streamer ? SelectCompileFunction(compile_options, cache_handler, streamer)
+               : SelectCompileFunction(compile_options, cache_handler,
+                                       no_cache_reason);
 
   if (!*TRACE_EVENT_API_GET_CATEGORY_GROUP_ENABLED(kTraceEventCategoryGroup))
     return std::move(compile_fn).Run(isolate, code, origin, nullptr);
@@ -522,6 +537,37 @@ v8::MaybeLocal<v8::Value> V8ScriptRunner::RunCompiledScript(
   return result;
 }
 
+void V8ScriptRunner::ProduceCache(
+    v8::Isolate* isolate,
+    v8::Local<v8::Script> script,
+    const ScriptSourceCode& source,
+    v8::ScriptCompiler::NoCacheReason no_cache_reason) {
+  TRACE_EVENT0("v8", "v8.run");
+  RuntimeCallStatsScopedTracer rcs_scoped_tracer(isolate);
+  RUNTIME_CALL_TIMER_SCOPE(isolate, RuntimeCallStats::CounterId::kV8);
+
+  if (no_cache_reason == v8::ScriptCompiler::kNoCacheBecauseCacheTooCold) {
+    V8ScriptRunner::SetCacheTimeStamp(source.CacheHandler());
+  } else if (no_cache_reason ==
+                 v8::ScriptCompiler::kNoCacheBecauseDeferredProduceCodeCache ||
+             no_cache_reason ==
+                 v8::ScriptCompiler::
+                     kNoCacheBecauseDeferredProduceFullCodeCache) {
+    std::unique_ptr<v8::ScriptCompiler::CachedData> cached_data;
+    cached_data.reset(v8::ScriptCompiler::CreateCodeCache(
+        script->GetUnboundScript(), V8String(isolate, source.Source())));
+    if (cached_data) {
+      const char* data = reinterpret_cast<const char*>(cached_data->data);
+      int length = cached_data->length;
+      CachedMetadataHandler* cache_handler = source.CacheHandler();
+      uint32_t code_cache_tag = V8ScriptRunner::TagForCodeCache(cache_handler);
+      cache_handler->ClearCachedMetadata(CachedMetadataHandler::kCacheLocally);
+      cache_handler->SetCachedMetadata(code_cache_tag, data, length,
+                                       CachedMetadataHandler::kSendToPlatform);
+    }
+  }
+}
+
 v8::MaybeLocal<v8::Value> V8ScriptRunner::CompileAndRunInternalScript(
     ScriptState* script_state,
     const ScriptSourceCode& source_code,
@@ -534,7 +580,8 @@ v8::MaybeLocal<v8::Value> V8ScriptRunner::CompileAndRunInternalScript(
   // - parser_state: always "not parser inserted" for internal scripts.
   if (!V8ScriptRunner::CompileScript(
            script_state, source_code, kSharableCrossOrigin,
-           kV8CacheOptionsDefault, ReferrerScriptInfo())
+           v8::ScriptCompiler::kNoCompileOptions,
+           v8::ScriptCompiler::kNoCacheNoReason, ReferrerScriptInfo())
            .ToLocal(&script))
     return v8::MaybeLocal<v8::Value>();
 

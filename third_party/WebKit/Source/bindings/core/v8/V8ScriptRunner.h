@@ -64,11 +64,13 @@ class CORE_EXPORT V8ScriptRunner final {
   // For the following methods, the caller sites have to hold
   // a HandleScope and a ContextScope.
   // CachedMetadataHandler is set when metadata caching is supported.
-  static v8::MaybeLocal<v8::Script> CompileScript(ScriptState*,
-                                                  const ScriptSourceCode&,
-                                                  AccessControlStatus,
-                                                  V8CacheOptions,
-                                                  const ReferrerScriptInfo&);
+  static v8::MaybeLocal<v8::Script> CompileScript(
+      ScriptState*,
+      const ScriptSourceCode&,
+      AccessControlStatus,
+      v8::ScriptCompiler::CompileOptions,
+      v8::ScriptCompiler::NoCacheReason,
+      const ReferrerScriptInfo&);
   static v8::MaybeLocal<v8::Module> CompileModule(v8::Isolate*,
                                                   const String& source,
                                                   const String& file_name,
@@ -106,6 +108,16 @@ class CORE_EXPORT V8ScriptRunner final {
   static v8::MaybeLocal<v8::Value> EvaluateModule(v8::Local<v8::Module>,
                                                   v8::Local<v8::Context>,
                                                   v8::Isolate*);
+
+  static v8::ScriptCompiler::CompileOptions GetCompileOptions(
+      V8CacheOptions,
+      v8::ScriptCompiler::NoCacheReason&,
+      const ScriptSourceCode&);
+
+  static void ProduceCache(v8::Isolate*,
+                           v8::Local<v8::Script>,
+                           const ScriptSourceCode&,
+                           v8::ScriptCompiler::NoCacheReason);
 
   // Only to be used from ScriptModule::ReportException().
   static void ReportExceptionForModule(v8::Isolate*,
