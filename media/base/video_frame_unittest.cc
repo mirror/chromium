@@ -486,9 +486,6 @@ TEST(VideoFrame, AllocationSize_OddSize) {
       case PIXEL_FORMAT_Y16:
         EXPECT_EQ(30u, allocation_size) << VideoPixelFormatToString(format);
         break;
-      case PIXEL_FORMAT_Y8:
-        EXPECT_EQ(15u, allocation_size) << VideoPixelFormatToString(format);
-        break;
       case PIXEL_FORMAT_MJPEG:
       case PIXEL_FORMAT_UNKNOWN:
         break;
