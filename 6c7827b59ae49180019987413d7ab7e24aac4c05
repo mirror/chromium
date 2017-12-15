@@ -144,6 +144,30 @@
     },
     {
       "key": {
+        "uuid": "38f9d146_592e94a2",
+        "filename": "content/browser/storage_partition_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 720,
+      "author": {
+        "id": 1166494
+      },
+      "writtenOn": "2017-12-15T21:48:29Z",
+      "side": 1,
+      "message": "Done. Changed to PostTask and added tests to make sure |GetNetworkContext| and |GetURLLoaderFactoryForBrowserProcess()| returns new pointers during |NetworkContextObserver::OnConnectionError()|, without calling |FlushNetworkInterfaceForTesting()|.",
+      "parentUuid": "1bbfeec0_9d316f5b",
+      "range": {
+        "startLine": 720,
+        "startChar": 26,
+        "endLine": 720,
+        "endChar": 27
+      },
+      "revId": "6c7827b59ae49180019987413d7ab7e24aac4c05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5fba61b2_7a82b61e",
         "filename": "content/public/browser/storage_partition.h",
         "patchSetId": 3
