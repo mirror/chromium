@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7cab4cb9_a67f7577",
+        "filename": "tools/perf/page_sets/top_25_smooth.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-12-15T18:17:00Z",
+      "side": 0,
+      "message": "Can you move this scroll element refactoring to a separate CL to make the CL easier to review?\n\nRight now this patch is doing both: 1) adding infinite scrolling actions \u0026 2) refactor the scrolling code to reduce boiler plate. \n\nDoing many things in 1 CL make it hard to review \u0026 increase the risk of breakage.",
+      "revId": "5097771cd07a2425c3a610379dab99805a3fc9f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
