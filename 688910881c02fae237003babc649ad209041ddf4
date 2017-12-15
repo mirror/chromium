@@ -210,6 +210,24 @@
       "revId": "688910881c02fae237003babc649ad209041ddf4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bf8a5e5_5f8edf08",
+        "filename": "chrome/browser/extensions/api/autotest_private/autotest_private_api.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1245973
+      },
+      "writtenOn": "2017-12-15T19:42:44Z",
+      "side": 1,
+      "message": "It needs a copy constructor to work, so I cannot disallow copy.  I added DISALLOW_ASSIGN.  Please see the changes in patch 12.\n\nthanks.",
+      "parentUuid": "a7174d36_84618ddd",
+      "revId": "688910881c02fae237003babc649ad209041ddf4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
