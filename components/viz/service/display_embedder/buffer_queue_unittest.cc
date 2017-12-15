@@ -98,11 +98,9 @@ class MockBufferQueue : public BufferQueue {
  public:
   MockBufferQueue(gpu::gles2::GLES2Interface* gl,
                   gpu::GpuMemoryBufferManager* gpu_memory_buffer_manager,
-                  unsigned int target,
-                  unsigned int internalformat)
+                  unsigned int target)
       : BufferQueue(gl,
                     target,
-                    internalformat,
                     display::DisplaySnapshot::PrimaryFormat(),
                     nullptr,
                     gpu_memory_buffer_manager,
@@ -123,9 +121,9 @@ class BufferQueueTest : public ::testing::Test {
     context_provider_ = cc::TestContextProvider::Create(std::move(context));
     context_provider_->BindToCurrentThread();
     gpu_memory_buffer_manager_.reset(new StubGpuMemoryBufferManager);
-    mock_output_surface_ = new MockBufferQueue(context_provider_->ContextGL(),
-                                               gpu_memory_buffer_manager_.get(),
-                                               GL_TEXTURE_2D, GL_RGB);
+    mock_output_surface_ =
+        new MockBufferQueue(context_provider_->ContextGL(),
+                            gpu_memory_buffer_manager_.get(), GL_TEXTURE_2D);
     output_surface_.reset(mock_output_surface_);
     output_surface_->Initialize();
   }
@@ -232,8 +230,8 @@ class MockedContext : public cc::TestWebGraphicsContext3D {
   MOCK_METHOD2(bindFramebuffer, void(GLenum, GLuint));
   MOCK_METHOD2(bindTexture, void(GLenum, GLuint));
   MOCK_METHOD2(bindTexImage2DCHROMIUM, void(GLenum, GLint));
-  MOCK_METHOD4(createImageCHROMIUM,
-               GLuint(ClientBuffer, GLsizei, GLsizei, GLenum));
+  MOCK_METHOD3(createImageCHROMIUM,
+               GLuint(ClientBuffer, GLsizei, GLsizei));
   MOCK_METHOD1(destroyImageCHROMIUM, void(GLuint));
   MOCK_METHOD5(framebufferTexture2D,
                void(GLenum, GLenum, GLenum, GLuint, GLint));
@@ -265,7 +263,7 @@ std::unique_ptr<BufferQueue> CreateBufferQueue(
     gpu::gles2::GLES2Interface* gl,
     gpu::GpuMemoryBufferManager* gpu_memory_buffer_manager) {
   std::unique_ptr<BufferQueue> buffer_queue(new BufferQueue(
-      gl, target, GL_RGB, display::DisplaySnapshot::PrimaryFormat(), nullptr,
+      gl, target, display::DisplaySnapshot::PrimaryFormat(), nullptr,
       gpu_memory_buffer_manager, kFakeSurfaceHandle));
   buffer_queue->Initialize();
   return buffer_queue;
@@ -334,7 +332,7 @@ TEST(BufferQueueStandaloneTest, CheckBoundFramebuffer) {
                                context_provider->ContextSupport()));
 
   output_surface.reset(new BufferQueue(
-      context_provider->ContextGL(), GL_TEXTURE_2D, GL_RGB,
+      context_provider->ContextGL(), GL_TEXTURE_2D,
       display::DisplaySnapshot::PrimaryFormat(), gl_helper.get(),
       gpu_memory_buffer_manager.get(), kFakeSurfaceHandle));
   output_surface->Initialize();
