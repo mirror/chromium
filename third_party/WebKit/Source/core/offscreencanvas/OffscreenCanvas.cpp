@@ -72,7 +72,7 @@ void OffscreenCanvas::SetSize(const IntSize& size) {
   if (context_) {
     if (context_->Is3d()) {
       if (size != size_)
-        context_->Reshape(size.Width(), size.Height());
+        context_->Reshape(size);
     } else if (context_->Is2d()) {
       context_->Reset();
       origin_clean_ = true;
@@ -80,7 +80,7 @@ void OffscreenCanvas::SetSize(const IntSize& size) {
   }
   size_ = size;
   if (frame_dispatcher_) {
-    frame_dispatcher_->Reshape(size_.Width(), size_.Height());
+    frame_dispatcher_->Reshape(size_);
   }
   current_frame_damage_rect_ = SkIRect::MakeWH(size_.Width(), size_.Height());
 }
@@ -233,8 +233,7 @@ OffscreenCanvasFrameDispatcher* OffscreenCanvas::GetOrCreateFrameDispatcher() {
     // (either main or worker) to the browser process and remains unchanged
     // throughout the lifetime of this OffscreenCanvas.
     frame_dispatcher_ = WTF::WrapUnique(new OffscreenCanvasFrameDispatcherImpl(
-        this, client_id_, sink_id_, placeholder_canvas_id_, size_.Width(),
-        size_.Height()));
+        this, client_id_, sink_id_, placeholder_canvas_id_, size_));
   }
   return frame_dispatcher_.get();
 }

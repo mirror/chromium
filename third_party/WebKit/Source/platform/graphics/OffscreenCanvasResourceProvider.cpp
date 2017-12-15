@@ -21,9 +21,9 @@
 
 namespace blink {
 
-OffscreenCanvasResourceProvider::OffscreenCanvasResourceProvider(int width,
-                                                                 int height)
-    : width_(width), height_(height), next_resource_id_(0u) {}
+OffscreenCanvasResourceProvider::OffscreenCanvasResourceProvider(
+    const IntSize& size)
+    : size_(size), next_resource_id_(0u) {}
 
 OffscreenCanvasResourceProvider::~OffscreenCanvasResourceProvider() {}
 
@@ -40,7 +40,7 @@ void OffscreenCanvasResourceProvider::TransferResource(
     viz::TransferableResource* resource) {
   resource->id = next_resource_id_;
   resource->format = viz::ResourceFormat::RGBA_8888;
-  resource->size = gfx::Size(width_, height_);
+  resource->size = gfx::Size(size_.Width(), size_.Height());
   // This indicates the filtering on the resource inherently, not the desired
   // filtering effect on the quad.
   resource->filter = GL_NEAREST;
@@ -57,14 +57,14 @@ void OffscreenCanvasResourceProvider::SetTransferableResourceToSharedBitmap(
       CreateOrRecycleFrameResource();
   if (!frame_resource->shared_bitmap_) {
     frame_resource->shared_bitmap_ =
-        Platform::Current()->AllocateSharedBitmap(IntSize(width_, height_));
+        Platform::Current()->AllocateSharedBitmap(size_);
     if (!frame_resource->shared_bitmap_)
       return;
   }
   unsigned char* pixels = frame_resource->shared_bitmap_->pixels();
   DCHECK(pixels);
   SkImageInfo image_info = SkImageInfo::Make(
-      width_, height_, kN32_SkColorType,
+      size_.Width(), size_.Height(), kN32_SkColorType,
       image->IsPremultiplied() ? kPremul_SkAlphaType : kUnpremul_SkAlphaType);
   if (image_info.isEmpty())
     return;

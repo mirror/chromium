@@ -324,8 +324,7 @@ CanvasRenderingContext* HTMLCanvasElement::GetCanvasRenderingContext(
     frame_dispatcher_ = std::make_unique<OffscreenCanvasFrameDispatcherImpl>(
         nullptr, surface_layer_bridge_->GetFrameSinkId().client_id(),
         surface_layer_bridge_->GetFrameSinkId().sink_id(),
-        OffscreenCanvasFrameDispatcherImpl::kInvalidPlaceholderCanvasId,
-        size_.Width(), size_.Height());
+        OffscreenCanvasFrameDispatcherImpl::kInvalidPlaceholderCanvasId, size_);
   }
 
   SetNeedsCompositingUpdate();
@@ -593,7 +592,7 @@ void HTMLCanvasElement::Reset() {
   SetSurfaceSize(new_size);
 
   if (Is3d() && old_size != Size())
-    context_->Reshape(width(), height());
+    context_->Reshape(Size());
 
   if (LayoutObject* layout_object = GetLayoutObject()) {
     if (layout_object->IsCanvas()) {
@@ -738,7 +737,7 @@ void HTMLCanvasElement::SetSurfaceSize(const IntSize& size) {
     context_->DidSetSurfaceSize();
   }
   if (frame_dispatcher_)
-    frame_dispatcher_->Reshape(size_.Width(), size_.Height());
+    frame_dispatcher_->Reshape(size_);
 }
 
 const AtomicString HTMLCanvasElement::ImageSourceURL() const {

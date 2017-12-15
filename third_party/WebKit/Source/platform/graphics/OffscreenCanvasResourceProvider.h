@@ -14,7 +14,7 @@ namespace blink {
 
 class PLATFORM_EXPORT OffscreenCanvasResourceProvider {
  public:
-  OffscreenCanvasResourceProvider(int width, int height);
+  OffscreenCanvasResourceProvider(const IntSize&);
 
   ~OffscreenCanvasResourceProvider();
 
@@ -30,14 +30,10 @@ class PLATFORM_EXPORT OffscreenCanvasResourceProvider {
   void IncNextResourceId() { next_resource_id_++; }
   unsigned GetNextResourceId() { return next_resource_id_; }
 
-  void Reshape(int width, int height) {
-    width_ = width;
-    height_ = height;
-  }
+  void Reshape(const IntSize& size) { size_ = size; }
 
  private:
-  int width_;
-  int height_;
+  IntSize size_;
   unsigned next_resource_id_;
 
   struct FrameResource {
