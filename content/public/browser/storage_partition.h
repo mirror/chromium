@@ -70,12 +70,14 @@ class CONTENT_EXPORT StoragePartition {
   virtual base::FilePath GetPath() = 0;
   virtual net::URLRequestContextGetter* GetURLRequestContext() = 0;
   virtual net::URLRequestContextGetter* GetMediaURLRequestContext() = 0;
+  // |GetNetworkContext()| will reconnect and return a new pipe if connection
+  // error was detected.
   virtual mojom::NetworkContext* GetNetworkContext() = 0;
   // Returns a pointer to a URLLoaderFactory owned by the storage partition.
   // Prefer to use this instead of creating a new URLLoaderFactory when issuing
   // requests from the Browser process, to share resources. The returned
   // URLLoaderFactory should not be sent to subprocesses, due to its
-  // permissions.
+  // permissions. Will return a new pipe if connection error was detected.
   virtual mojom::URLLoaderFactory* GetURLLoaderFactoryForBrowserProcess() = 0;
   virtual storage::QuotaManager* GetQuotaManager() = 0;
   virtual AppCacheService* GetAppCacheService() = 0;
@@ -91,6 +93,23 @@ class CONTENT_EXPORT StoragePartition {
   virtual ZoomLevelDelegate* GetZoomLevelDelegate() = 0;
 #endif  // !defined(OS_ANDROID)
   virtual PlatformNotificationContext* GetPlatformNotificationContext() = 0;
+
+  // Guarantees provided by |NetworkContextObserver|:
+  // 1. |GetNetworkContext()| will return a new pipe when |OnConnectionError()|
+  //    was triggered.
+  // 2. |OnConnectionError()| will be triggered again if the new pipe fails.
+  // TODO(chongz): The new pipe may fail and trigger |OnConnectionError()| on
+  // first use if network service instance hasn't received error notification
+  // yet. We need to make sure network service instance was reconnected before
+  // we are recreating network context.
+  class NetworkContextObserver {
+   public:
+    virtual void OnConnectionError() = 0;
+  };
+
+  // Clients must remove |NetworkContextObserver*| before being destroyed.
+  virtual void AddNetworkContextObserver(NetworkContextObserver*) = 0;
+  virtual void RemoveNetworkContextObserver(const NetworkContextObserver*) = 0;
 
   enum : uint32_t {
     REMOVE_DATA_MASK_APPCACHE = 1 << 0,
