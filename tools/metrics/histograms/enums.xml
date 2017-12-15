@@ -42833,6 +42833,15 @@ Called by update_traffic_annotation_histograms.py.-->
   <int value="3" label="FAILED_OTHER">Failed for other reason</int>
 </enum>
 
+<enum name="V8SpeculationModeChange">
+  <int value="0" label="kNoSpeculationModeChange">
+    Deoptimization without speculation mode change
+  </int>
+  <int value="1" label="kSetSpeculationDisallow">
+    Deoptimization that disallowed speculation
+  </int>
+</enum>
+
 <enum name="VAJDADecoderFailure">
   <int value="0" label="VAAPI_ERROR"/>
 </enum>
