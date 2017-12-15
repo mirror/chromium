@@ -160,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "10ac2bec_318f1714",
+        "filename": "chrome/browser/chromeos/accessibility/select_to_speak_event_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2017-12-15T18:09:31Z",
+      "side": 1,
+      "message": "Re: Code that didn\u0027t work: I did it before pulling GetMouseEventInDIPs into a function. After it didn\u0027t work I went back to the old way, then refactored into the function.\n\nIt DOES work if I take your lines but cast to a MouseEvent instead of cast to a MouseEvent*. But I think that\u0027s the same as what I had originally, just on two lines. So these lines work properly:\nstd::unique_ptr\u003cui::Event\u003e event_copy \u003d ui::Event::Clone(*event);\nui::MouseEvent mouse_event \u003d static_cast\u003cui::MouseEvent\u003e(event_copy.get());\n\nThese lines cause a crash:\nstd::unique_ptr\u003cui::Event\u003e event_copy \u003d ui::Event::Clone(*event);\nui::MouseEvent* mouse_event \u003d static_cast\u003cui::MouseEvent*\u003e(event_copy.get());\n\nMaybe the pointer static_cast isn\u0027t converting all the fields properly? Here\u0027s how Clone works, also with static_casts: https://cs.chromium.org/chromium/src/ui/events/event.cc?dr\u003dCSs\u0026l\u003d218. I\u0027m not entirely sure what you are looking for, so I might ping you to discuss in real-time.\n\n\nRe: cloning near line 130: I chose not to do this because I wanted to wait until getting past the two \"return false\" lines, just to reduce extra unnecessary work.",
+      "parentUuid": "6cf1f1c4_97e18fb9",
+      "revId": "9fca569de3e5c089b819a27df82484ada9b03264",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c05f3e07_c39fa3be",
         "filename": "chrome/browser/chromeos/accessibility/select_to_speak_event_handler.cc",
         "patchSetId": 3
