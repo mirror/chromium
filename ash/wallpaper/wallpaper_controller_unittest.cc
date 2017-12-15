@@ -1306,6 +1306,42 @@ TEST_F(WallpaperControllerTest, PreventReloadingSameWallpaper) {
   EXPECT_EQ(0, GetWallpaperCount());
 }
 
+TEST_F(WallpaperControllerTest, UpdateCustomWallpaperLayout) {
+  gfx::ImageSkia image = CreateImage(640, 480, kWallpaperColor);
+  WallpaperLayout layout = WALLPAPER_LAYOUT_CENTER;
+  wallpaper::WallpaperType type = wallpaper::CUSTOMIZED;
+  SimulateUserLogin(user_1);
+
+  // Set a custom wallpaper for the user. Verify that the layout is correct and
+  // it's saved to wallpaper info.
+  controller_->SetCustomWallpaper(
+      InitializeUser(account_id_1), wallpaper_files_id_1, file_name_1, layout,
+      type, *image.bitmap(), true /*show_wallpaper=*/);
+  RunAllTasksUntilIdle();
+  EXPECT_EQ(1, GetWallpaperCount());
+  EXPECT_EQ(controller_->GetWallpaperLayout(), layout);
+  wallpaper::WallpaperInfo wallpaper_info;
+  EXPECT_TRUE(controller_->GetUserWallpaperInfo(account_id_1, &wallpaper_info,
+                                                true /* is_persistent */));
+  wallpaper::WallpaperInfo expected_wallpaper_info(
+      base::FilePath(wallpaper_files_id_1).Append(file_name_1).value(), layout,
+      type, base::Time::Now().LocalMidnight());
+  EXPECT_EQ(wallpaper_info, expected_wallpaper_info);
+
+  // Now change to a different layout. Verify that the layout is updated for
+  // both the current wallpaper and the saved wallpaper info.
+  layout = WALLPAPER_LAYOUT_CENTER_CROPPED;
+  controller_->UpdateCustomWallpaperLayout(InitializeUser(account_id_1),
+                                           layout);
+  RunAllTasksUntilIdle();
+  EXPECT_EQ(1, GetWallpaperCount());
+  EXPECT_EQ(controller_->GetWallpaperLayout(), layout);
+  EXPECT_TRUE(controller_->GetUserWallpaperInfo(account_id_1, &wallpaper_info,
+                                                true /* is_persistent */));
+  expected_wallpaper_info.layout = layout;
+  EXPECT_EQ(wallpaper_info, expected_wallpaper_info);
+}
+
 // Tests that if a user who has a custom wallpaper is removed from the device,
 // only the directory that contains the user's custom wallpapers gets removed.
 // The other user's custom wallpaper is not affected.

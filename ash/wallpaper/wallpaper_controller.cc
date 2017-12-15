@@ -1155,6 +1155,26 @@ void WallpaperController::SetCustomizedDefaultWallpaper(
   NOTIMPLEMENTED();
 }
 
+void WallpaperController::UpdateCustomWallpaperLayout(
+    mojom::WallpaperUserInfoPtr user_info,
+    wallpaper::WallpaperLayout layout) {
+  // This method has a very specific use case: callers must ensure the user is
+  // currently active and has a custom wallpaper.
+  const mojom::UserSession* const active_user_session =
+      Shell::Get()->session_controller()->GetUserSession(0);
+  DCHECK(active_user_session);
+  DCHECK(user_info->account_id == active_user_session->user_info->account_id);
+
+  WallpaperInfo info;
+  DCHECK(GetUserWallpaperInfo(user_info->account_id, &info,
+                              !user_info->is_ephemeral));
+  DCHECK(info.type == wallpaper::CUSTOMIZED);
+
+  info.layout = layout;
+  SetUserWallpaperInfo(user_info->account_id, info, !user_info->is_ephemeral);
+  ShowUserWallpaper(std::move(user_info));
+}
+
 void WallpaperController::ShowUserWallpaper(
     mojom::WallpaperUserInfoPtr user_info) {
   // Guest user or regular user in ephemeral mode.
