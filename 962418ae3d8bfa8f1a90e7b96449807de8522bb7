@@ -16,6 +16,24 @@
       "revId": "962418ae3d8bfa8f1a90e7b96449807de8522bb7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2cc55ff_37806f0f",
+        "filename": "components/autofill/core/browser/credit_card_save_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-12-15T18:20:49Z",
+      "side": 1,
+      "message": "Whoops yep!  Meant to remove this with normalized_verified_zip but it must have slipped past me; thanks for catching.",
+      "parentUuid": "054624c7_d15645c2",
+      "revId": "962418ae3d8bfa8f1a90e7b96449807de8522bb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
