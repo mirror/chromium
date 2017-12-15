@@ -928,6 +928,11 @@ void PageInfoBubbleView::SetPermissionInfo(
 
   layout->Layout(permissions_view_);
   SizeToContents();
+
+  // Parent has determined its final size, so adjust the permission secondary
+  // text to fill available space.
+  for (size_t i = 0; i < selector_rows_.size(); ++i)
+    selector_rows_[i]->SizeSecondaryText(width());
 }
 
 void PageInfoBubbleView::SetIdentityInfo(const IdentityInfo& identity_info) {
