@@ -58,11 +58,11 @@ EnumTraits<password_manager::mojom::CredentialManagerError,
       return password_manager::mojom::CredentialManagerError::SUCCESS;
     case password_manager::CredentialManagerError::DISABLED:
       return password_manager::mojom::CredentialManagerError::DISABLED;
-    case password_manager::CredentialManagerError::PENDINGREQUEST:
-      return password_manager::mojom::CredentialManagerError::PENDINGREQUEST;
+    case password_manager::CredentialManagerError::PENDING_REQUEST:
+      return password_manager::mojom::CredentialManagerError::PENDING_REQUEST;
     case password_manager::CredentialManagerError::PASSWORDSTOREUNAVAILABLE:
       return password_manager::mojom::CredentialManagerError::
-          PASSWORDSTOREUNAVAILABLE;
+          PASSWORD_STORE_UNAVAILABLE;
     case password_manager::CredentialManagerError::UNKNOWN:
       return password_manager::mojom::CredentialManagerError::UNKNOWN;
   }
@@ -83,14 +83,19 @@ bool EnumTraits<password_manager::mojom::CredentialManagerError,
     case password_manager::mojom::CredentialManagerError::DISABLED:
       *output = password_manager::CredentialManagerError::DISABLED;
       return true;
-    case password_manager::mojom::CredentialManagerError::PENDINGREQUEST:
-      *output = password_manager::CredentialManagerError::PENDINGREQUEST;
+    case password_manager::mojom::CredentialManagerError::PENDING_REQUEST:
+      *output = password_manager::CredentialManagerError::PENDING_REQUEST;
       return true;
     case password_manager::mojom::CredentialManagerError::
-        PASSWORDSTOREUNAVAILABLE:
+        PASSWORD_STORE_UNAVAILABLE:
       *output =
           password_manager::CredentialManagerError::PASSWORDSTOREUNAVAILABLE;
       return true;
+    case password_manager::mojom::CredentialManagerError::CANCELLED:
+    case password_manager::mojom::CredentialManagerError::NOT_SECURE:
+    case password_manager::mojom::CredentialManagerError::NOT_ALLOWED:
+    case password_manager::mojom::CredentialManagerError::NOT_IMPLEMENTED:
+    case password_manager::mojom::CredentialManagerError::NOT_SUPPORTED:
     case password_manager::mojom::CredentialManagerError::UNKNOWN:
       *output = password_manager::CredentialManagerError::UNKNOWN;
       return true;
