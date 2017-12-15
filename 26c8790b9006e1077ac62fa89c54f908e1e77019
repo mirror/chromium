@@ -2,6 +2,161 @@
   "comments": [
     {
       "key": {
+        "uuid": "556abce6_45eb57ee",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 1879,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-12-15T23:56:22Z",
+      "side": 1,
+      "message": "I feel these methods should go on the lifetime handler and it should simply dismiss the dialog on the presenter if necessary.  The presenter shouldn\u0027t be aware of this logic.",
+      "range": {
+        "startLine": 1879,
+        "startChar": 25,
+        "endLine": 1879,
+        "endChar": 37
+      },
+      "revId": "26c8790b9006e1077ac62fa89c54f908e1e77019",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c04a224_13867476",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/ModalDialogManager.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-12-15T23:56:22Z",
+      "side": 1,
+      "message": "can we have a cancelCurrentDialog protected method on the this class?  It would call the callback and set it to null.  Ideally, we only call cancel once and we want to set this to null reliably to avoid leaking the previous dialog if needed.",
+      "range": {
+        "startLine": 30,
+        "startChar": 27,
+        "endLine": 30,
+        "endChar": 42
+      },
+      "revId": "26c8790b9006e1077ac62fa89c54f908e1e77019",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f33b075b_da02ccad",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/ModalDialogManager.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-12-15T23:56:22Z",
+      "side": 1,
+      "message": "final?",
+      "range": {
+        "startLine": 57,
+        "startChar": 17,
+        "endLine": 57,
+        "endChar": 18
+      },
+      "revId": "26c8790b9006e1077ac62fa89c54f908e1e77019",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25a3b534_59a0902a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/ModalDialogManager.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-12-15T23:56:22Z",
+      "side": 1,
+      "message": "error-prone will complain about using LinkedList.  Looks like we could move to ArrayList and switch from iterator to for (int i \u003d 0 ...)",
+      "range": {
+        "startLine": 84,
+        "startChar": 77,
+        "endLine": 84,
+        "endChar": 87
+      },
+      "revId": "26c8790b9006e1077ac62fa89c54f908e1e77019",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38d28f74_1fc1030a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/ModalDialogManager.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-12-15T23:56:22Z",
+      "side": 1,
+      "message": "should we do:\n\nassert dialog \u003d\u003d mCurrentPresenter.mModalDialog;",
+      "revId": "26c8790b9006e1077ac62fa89c54f908e1e77019",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5907cfba_9b43e528",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/TabModalLifetimeHandler.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-12-15T23:56:22Z",
+      "side": 1,
+      "message": "use tabModelSelector here instead of activity.getTabModelSelector();",
+      "range": {
+        "startLine": 46,
+        "startChar": 65,
+        "endLine": 46,
+        "endChar": 95
+      },
+      "revId": "26c8790b9006e1077ac62fa89c54f908e1e77019",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94e8c22b_d05cbe22",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/TabModalLifetimeHandler.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-12-15T23:56:22Z",
+      "side": 1,
+      "message": "Should we be dismissing the tab modal dialogs if you switch tabs?  i.e. you click on the tab in the tab strip?\n\nI\u0027m wondering if we should do:\n\nTab currentTab \u003d tabModelSelector.getCurrentTab();\nif (mActiveTab !\u003d currentTab) dismissAll();\nmActiveTab \u003d currentTab;",
+      "range": {
+        "startLine": 49,
+        "startChar": 20,
+        "endLine": 49,
+        "endChar": 30
+      },
+      "revId": "26c8790b9006e1077ac62fa89c54f908e1e77019",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c48e1417_f5690e80",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/TabModalLifetimeHandler.java",
         "patchSetId": 16
@@ -13,6 +168,29 @@
       "writtenOn": "2017-12-15T00:44:32Z",
       "side": 1,
       "message": "nit: JavaDoc here and below",
+      "revId": "26c8790b9006e1077ac62fa89c54f908e1e77019",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d69d6d25_9aa214cc",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/TabModalPresenter.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-12-15T23:56:22Z",
+      "side": 1,
+      "message": "Since I think the omnibox focus should be in the lifetime manager, we might need to expose something along the lines of updateContainerHierarchy for the manager to call.  This just needs to know whether it needs to sit on top.",
+      "range": {
+        "startLine": 91,
+        "startChar": 16,
+        "endLine": 91,
+        "endChar": 37
+      },
       "revId": "26c8790b9006e1077ac62fa89c54f908e1e77019",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
