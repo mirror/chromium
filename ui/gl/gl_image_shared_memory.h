@@ -24,7 +24,7 @@ namespace gl {
 
 class GL_EXPORT GLImageSharedMemory : public GLImageMemory {
  public:
-  GLImageSharedMemory(const gfx::Size& size, unsigned internalformat);
+  explicit GLImageSharedMemory(const gfx::Size& size);
 
   bool Initialize(const base::SharedMemoryHandle& handle,
                   gfx::GenericSharedMemoryId shared_memory_id,

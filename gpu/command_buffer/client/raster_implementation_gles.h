@@ -71,8 +71,7 @@ class RASTER_EXPORT RasterImplementationGLES : public RasterInterface {
   // Image objects.
   GLuint CreateImageCHROMIUM(ClientBuffer buffer,
                              GLsizei width,
-                             GLsizei height,
-                             GLenum internalformat) override;
+                             GLsizei height) override;
   void BindTexImage2DCHROMIUM(GLenum target, GLint imageId) override;
   void ReleaseTexImage2DCHROMIUM(GLenum target, GLint imageId) override;
   void DestroyImageCHROMIUM(GLuint image_id) override;

@@ -115,7 +115,7 @@ TEST_P(GLCopyTexImage2DWorkaroundTest, UseIntermediaryTexture) {
   std::unique_ptr<gfx::GpuMemoryBuffer> buffer(gl_.CreateGpuMemoryBuffer(
       gfx::Size(width, height), gfx::BufferFormat::RGBA_8888));
   GLuint image_id =
-      glCreateImageCHROMIUM(buffer->AsClientBuffer(), width, height, GL_RGBA);
+      glCreateImageCHROMIUM(buffer->AsClientBuffer(), width, height);
   ASSERT_NE(0u, image_id);
   glBindTexImage2DCHROMIUM(source_target, image_id);
 

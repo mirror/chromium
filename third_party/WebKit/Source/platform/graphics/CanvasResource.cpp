@@ -196,8 +196,7 @@ CanvasResource_GpuMemoryBuffer::CanvasResource_GpuMemoryBuffer(
     return;
   }
   image_id_ = gl->CreateImageCHROMIUM(gpu_memory_buffer_->AsClientBuffer(),
-                                      size.Width(), size.Height(),
-                                      color_params_.GLInternalFormat());
+                                      size.Width(), size.Height());
   if (!image_id_) {
     gpu_memory_buffer_ = nullptr;
     return;
@@ -292,6 +291,11 @@ void CanvasResource_GpuMemoryBuffer::CopyFromTexture(GLuint source_texture,
                                                      GLenum type) {
   if (!IsValid())
     return;
+
+#ifdef OS_MACOSX
+  if (format == GL_BGRA_EXT)
+    LOG(ERROR) << "GL_BGRA_EXT on MACOSX";
+#endif
 
   ContextGL()->CopyTextureCHROMIUM(
       source_texture, 0 /*sourceLevel*/, TextureTarget(), texture_id_,

@@ -53,6 +53,7 @@ class GpuMemoryBufferImpl : public gfx::GpuMemoryBuffer {
   }
   gfx::Size GetSize() const override { return size_; }
   gfx::BufferFormat GetFormat() const override { return format_; }
+  uint32_t GetInternalformat(bool supports_bgra_ext) const override { return 0; }
   int stride(size_t plane) const override {
     DCHECK_LT(plane, num_planes_);
     return static_cast<int>(gfx::RowSizeForBufferFormat(

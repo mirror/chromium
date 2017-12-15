@@ -60,6 +60,8 @@ class GPU_EXPORT GpuMemoryBufferImplSharedMemory : public GpuMemoryBufferImpl {
   base::trace_event::MemoryAllocatorDumpGuid GetGUIDForTracing(
       uint64_t tracing_process_id) const override;
 
+  uint32_t GetInternalformat(bool supports_bgra_ext) const override;
+
  private:
   GpuMemoryBufferImplSharedMemory(
       gfx::GpuMemoryBufferId id,
