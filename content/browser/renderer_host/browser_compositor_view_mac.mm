@@ -408,6 +408,7 @@ void BrowserCompositorMac::TransitionToState(State new_state) {
     gfx::Size pixel_size = gfx::ConvertSizeToPixel(scale_factor, dip_size);
 
     delegated_frame_host_->SetCompositor(recyclable_compositor_->compositor());
+    client_->SetCompositorForEventRouting(recyclable_compositor_->compositor());
     delegated_frame_host_->WasShown(ui::LatencyInfo());
     // Unsuspend the browser compositor after showing the delegated frame host.
     // If there is not a saved delegated frame, then the delegated frame host
@@ -428,6 +429,7 @@ void BrowserCompositorMac::TransitionToState(State new_state) {
     // necessary to remove all connections to its old ui::Compositor.
     delegated_frame_host_->WasHidden();
     delegated_frame_host_->ResetCompositor();
+    client_->SetCompositorForEventRouting(nullptr);
     state_ = HasDetachedCompositor;
   }
 

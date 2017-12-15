@@ -2272,6 +2272,9 @@ void RenderWidgetHostViewAura::AddedToRootWindow() {
 
   if (delegated_frame_host_)
     delegated_frame_host_->SetCompositor(window_->GetHost()->compositor());
+  if (host_->delegate() && host_->delegate()->GetInputEventRouter())
+    host_->delegate()->GetInputEventRouter()->set_compositor(
+        window_->GetHost()->compositor());
 }
 
 void RenderWidgetHostViewAura::RemovingFromRootWindow() {
@@ -2285,6 +2288,8 @@ void RenderWidgetHostViewAura::RemovingFromRootWindow() {
   window_->GetHost()->RemoveObserver(this);
   if (delegated_frame_host_)
     delegated_frame_host_->ResetCompositor();
+  if (host_->delegate() && host_->delegate()->GetInputEventRouter())
+    host_->delegate()->GetInputEventRouter()->set_compositor(nullptr);
 
 #if defined(OS_WIN)
   // Update the legacy window's parent temporarily to the hidden window. It

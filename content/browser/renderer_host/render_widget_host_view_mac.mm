@@ -405,6 +405,15 @@ void RenderWidgetHostViewMac::OnFrameTokenChanged(uint32_t frame_token) {
   OnFrameTokenChangedForView(frame_token);
 }
 
+void RenderWidgetHostViewMac::SetCompositorForEventRouting(
+    ui::Compositor* compositor) {
+  if (render_widget_host_->delegate() &&
+      render_widget_host_->delegate()->GetInputEventRouter()) {
+    render_widget_host_->delegate()->GetInputEventRouter()->set_compositor(
+        compositor);
+  }
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 // AcceleratedWidgetMacNSView, public:
 

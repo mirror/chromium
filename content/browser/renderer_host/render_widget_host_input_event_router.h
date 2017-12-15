@@ -15,6 +15,7 @@
 #include "base/gtest_prod_util.h"
 #include "base/macros.h"
 #include "components/viz/common/surfaces/surface_id.h"
+#include "components/viz/host/hit_test/hit_test_query.h"
 #include "components/viz/service/surfaces/surface_hittest_delegate.h"
 #include "content/browser/renderer_host/render_widget_host_view_base_observer.h"
 #include "content/common/content_export.h"
@@ -35,6 +36,7 @@ class PointF;
 }
 
 namespace ui {
+class Compositor;
 class LatencyInfo;
 }
 
@@ -97,6 +99,9 @@ class CONTENT_EXPORT RenderWidgetHostInputEventRouter
       const gfx::PointF& point,
       gfx::PointF* transformed_point);
 
+  // Needed for Viz hit testing.
+  void set_compositor(ui::Compositor* compositor) { compositor_ = compositor; }
+
   std::vector<RenderWidgetHostView*> GetRenderWidgetHostViewsForTests() const;
 
  private:
@@ -133,10 +138,14 @@ class CONTENT_EXPORT RenderWidgetHostInputEventRouter
 
   RenderWidgetHostViewBase* FindEventTarget(RenderWidgetHostViewBase* root_view,
                                             const gfx::Point& point,
+                                            const gfx::Point& point_in_screen,
+                                            viz::EventSource source,
                                             gfx::Point* transformed_point);
 
   RenderWidgetHostViewBase* FindEventTarget(RenderWidgetHostViewBase* root_view,
                                             const gfx::PointF& point,
+                                            const gfx::PointF& point_in_screen,
+                                            viz::EventSource source,
                                             gfx::PointF* transformed_point);
 
   void RouteTouchscreenGestureEvent(RenderWidgetHostViewBase* root_view,
@@ -188,6 +197,8 @@ class CONTENT_EXPORT RenderWidgetHostInputEventRouter
   bool gesture_pinch_did_send_scroll_begin_;
   std::unordered_map<viz::SurfaceId, HittestData, viz::SurfaceIdHash>
       hittest_data_;
+
+  ui::Compositor* compositor_ = nullptr;
 
   DISALLOW_COPY_AND_ASSIGN(RenderWidgetHostInputEventRouter);
   friend class RenderWidgetHostInputEventRouterTest;
