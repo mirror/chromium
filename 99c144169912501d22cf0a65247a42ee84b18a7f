@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b603239e_7692a4e4",
+        "filename": "components/viz/service/display/direct_renderer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-12-15T16:39:54Z",
+      "side": 1,
+      "message": "nit: Can you group the *ForTesting() functions near each other?",
+      "revId": "99c144169912501d22cf0a65247a42ee84b18a7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e82b9344_2745538d",
+        "filename": "components/viz/service/display/software_renderer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 814,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-12-15T16:39:54Z",
+      "side": 1,
+      "message": "nit: might as well make this a ranged for?",
+      "revId": "99c144169912501d22cf0a65247a42ee84b18a7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e628cc0a_5d5e3e97",
+        "filename": "components/viz/service/display/software_renderer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 843,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-12-15T16:39:54Z",
+      "side": 1,
+      "message": "nit: return base::ContainsValue(render_pass_bitmaps_, render_pass_id);",
+      "revId": "99c144169912501d22cf0a65247a42ee84b18a7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
