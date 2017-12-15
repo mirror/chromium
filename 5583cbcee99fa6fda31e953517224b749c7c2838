@@ -188,6 +188,30 @@
       "revId": "5583cbcee99fa6fda31e953517224b749c7c2838",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b957b89a_f5d75ae3",
+        "filename": "content/browser/download/download_resource_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-12-15T22:31:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a090b716_e83cba72",
+      "range": {
+        "startLine": 105,
+        "startChar": 6,
+        "endLine": 106,
+        "endChar": 73
+      },
+      "revId": "5583cbcee99fa6fda31e953517224b749c7c2838",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
