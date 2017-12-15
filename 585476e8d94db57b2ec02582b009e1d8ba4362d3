@@ -48,6 +48,23 @@
     },
     {
       "key": {
+        "uuid": "f25f7ca8_d6de3d1c",
+        "filename": "content/browser/frame_host/render_frame_host_impl.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 1440,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-12-15T20:52:25Z",
+      "side": 1,
+      "message": "Should the endpoints of this interface be attached to RenderWidget/RenderWidgetHost, rather than RenderFrame/RenderFrameHost? It should only ever make sense to query this on a main frame or an OOPIF, which correspond to frames that have widgets. Also, FrameSinkIds are associated with widgets.",
+      "revId": "585476e8d94db57b2ec02582b009e1d8ba4362d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5e025be7_a11e578a",
         "filename": "content/browser/site_per_process_browsertest.cc",
         "patchSetId": 22
