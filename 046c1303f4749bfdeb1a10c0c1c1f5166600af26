@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "98317084_f1762818",
+        "filename": "chrome/browser/extensions/api/developer_private/developer_private_api.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 680,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-15T22:38:23Z",
+      "side": 1,
+      "message": "What I\u0027m envisioning:\n\nnamespace {\n\nvoid OnDirectorySizeCalculated(\n    base::OnceCallback\u003cvoid(const base::string16\u0026)\u003e callback,\n    int64_t size_in_bytes) {\n  base::string16 response;\n\n  const int one_mebibyte_in_bytes \u003d 1024 * 1024;\n  if (size_in_bytes \u003c one_mebibyte_in_bytes) {\n    response \u003d l10n_util::GetStringUTF16(IDS_APPLICATION_INFO_SIZE_SMALL_LABEL);\n  } else {\n    response \u003d\n        ui::FormatBytesWithUnits(size_in_bytes, ui::DATA_UNITS_MEBIBYTE, true);\n  }\n  std::move(callback).Run(response);\n}\n\n}  // namespace\n\nvoid CalculateExtensionDirectorySize(\n    const base::FilePath\u0026 extension_path,\n    base::OnceCallback\u003cvoid(const base::string16\u0026)\u003e callback) {\n  GetExtensionFileTaskRunner()-\u003ePostTask(\n      base::BindOnce(\u0026base::ComputeDirectorySize, extension_path),\n      base::BindOnce(\u0026OnDirectorySizeCalculated, std::move(callback));\n}\n\n\nand then here:\n\nExtensionFunction::ResponseAction\nDeveloperPrivateGetExtensionSizeFunction::Run() {\n  std::unique_ptr\u003cdeveloper::GetExtensionSize::Params\u003e params(\n      developer::GetExtensionSize::Params::Create(*args_));\n  EXTENSION_FUNCTION_VALIDATE(params);\n\n  const Extension* extension \u003d GetExtensionById(params-\u003eid);\n  if (!extension)\n    return RespondNow(Error(kNoSuchExtensionError));\n\n  CalculateExtensionDirectorySize(\n      extension-\u003epath(),\n      base::BindOnce(\n          \u0026DeveloperPrivateGetExtensionSizeFunction::OnSizeCalculated,\n          this /* refcounted */));\n  return RespondLater();\n}\n\nvoid DeveloperPrivateGetExtensionSizeFunction::OnSizeCalculated(\n    const base::string16\u0026 size) {\n  Respond(OneArgument(std::make_unique\u003cbase::Value\u003e(size)));\n}\n\nWe can leave this for a followup.",
+      "parentUuid": "d64fe002_5e2f19ce",
+      "revId": "046c1303f4749bfdeb1a10c0c1c1f5166600af26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "da4fbded_4f21e181",
         "filename": "chrome/browser/resources/md_extensions/detail_view.html",
         "patchSetId": 4

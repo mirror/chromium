@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3fdd4544_8dc1af4b",
+        "filename": "chrome/browser/extensions/api/developer_private/developer_private_api.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 700,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-15T22:38:23Z",
+      "side": 1,
+      "message": "nit: prefer std::make_unique\u003c\u003e",
+      "revId": "851376eb526eb650e93468c6d5cf9c85e08257ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a60a3f9_e216364a",
+        "filename": "chrome/browser/extensions/api/developer_private/developer_private_api.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-15T22:38:23Z",
+      "side": 1,
+      "message": "Remove",
+      "revId": "851376eb526eb650e93468c6d5cf9c85e08257ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42bc19d8_a09d2d1f",
+        "filename": "chrome/browser/resources/md_extensions/detail_view.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-15T22:38:23Z",
+      "side": 1,
+      "message": "hidden$, right?",
+      "range": {
+        "startLine": 282,
+        "startChar": 52,
+        "endLine": 282,
+        "endChar": 58
+      },
+      "revId": "851376eb526eb650e93468c6d5cf9c85e08257ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f94ad1ad_1ad1f94c",
+        "filename": "third_party/closure_compiler/externs/developer_private.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 613,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-15T22:38:23Z",
+      "side": 1,
+      "message": "regenerate this file (to include the comments)",
+      "revId": "851376eb526eb650e93468c6d5cf9c85e08257ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
