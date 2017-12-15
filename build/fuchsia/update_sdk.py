@@ -51,9 +51,8 @@ def main():
     cmd = [os.path.join(find_depot_tools.DEPOT_TOOLS_PATH, 'gsutil.py'),
            'cp', bucket + sdk_hash, f.name]
     subprocess.check_call(cmd)
-    f.seek(0)
     EnsureDirExists(output_dir)
-    tarfile.open(mode='r:gz', fileobj=f).extractall(path=output_dir)
+    tarfile.open(name=f.name, mode='r:gz').extractall(path=output_dir)
 
   with open(hash_filename, 'w') as f:
     f.write(sdk_hash)
