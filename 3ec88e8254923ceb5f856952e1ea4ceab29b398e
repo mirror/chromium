@@ -215,6 +215,24 @@
     },
     {
       "key": {
+        "uuid": "a507740f_5a4028dd",
+        "filename": "chrome/browser/ui/ash/wallpaper_policy_handler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-12-15T00:47:05Z",
+      "side": 1,
+      "message": "The problem is that the paths may have unlimited possibilities, e.g. https://cs.chromium.org/chromium/src/chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.cc?dr\u003dCSs\u0026l\u003d636  |wallpaper_files_id| and |file_path| can take random values.\n\nCan we add the following three lines at this point https://cs.chromium.org/chromium/src/chrome/browser/ui/ash/wallpaper_controller_client.cc?l\u003d238\n\nash::WallpaperController::dir_user_data_path_ \u003d user_data_path;\nash::WallpaperController::dir_chrome_os_wallpapers_path_ \u003d chromeos_wallpapers_path;\nash::WallpaperController::dir_chrome_os_custom_wallpapers_path_ \u003d chromeos_custom_wallpapers_path;\n\nAnd all the methods that calculate paths will stay in //ash as utility functions.. Is it a bad approach?..\n\n(I think ideally only //ash should need the wallpaper paths, but due to legacy reasons, Chrome (for example the wallpaper pick extension) still depends on them, and we\u0027re still working on it..)",
+      "parentUuid": "7da330c1_c925aa83",
+      "revId": "3ec88e8254923ceb5f856952e1ea4ceab29b398e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "78f2222d_b317d268",
         "filename": "chrome/browser/ui/ash/wallpaper_policy_handler.cc",
         "patchSetId": 9
