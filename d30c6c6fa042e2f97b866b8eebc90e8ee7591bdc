@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1e38a296_248668e9",
+        "filename": "content/browser/service_worker/service_worker_process_manager_unittest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-12-15T02:44:37Z",
+      "side": 1,
+      "message": "nit:\nI think it is better to use different ID.",
+      "range": {
+        "startLine": 395,
+        "startChar": 8,
+        "endLine": 395,
+        "endChar": 25
+      },
+      "revId": "d30c6c6fa042e2f97b866b8eebc90e8ee7591bdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
