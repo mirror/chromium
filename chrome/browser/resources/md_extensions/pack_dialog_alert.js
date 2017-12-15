@@ -41,8 +41,10 @@ cr.define('extensions', function() {
           this.title_ = loadTimeData.getString('packDialogErrorTitle');
           this.cancelLabel_ = loadTimeData.getString('ok');
           break;
-        // If status were success, this dialog should not be attached at all.
         case chrome.developerPrivate.PackStatus.SUCCESS:
+          this.title_ = loadTimeData.getString('packDialogTitle');
+          this.cancelLabel_ = loadTimeData.getString('ok');
+          break;
         default:
           assertNotReached();
           return;
