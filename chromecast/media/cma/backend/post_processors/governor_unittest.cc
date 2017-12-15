@@ -132,6 +132,13 @@ TEST_P(PostProcessorTest, GovernorPassthrough) {
   TestPassthrough(pp.get(), sample_rate_);
 }
 
+TEST_P(PostProcessorTest, GovernorCpuUsage) {
+  std::string config = MakeConfigString(1.0, 1.0);
+  PostProcessorFactory factory;
+  auto pp = factory.CreatePostProcessor(kLibraryPath, config, kNumChannels);
+  AudioProcessorBenchmark(pp.get(), sample_rate_);
+}
+
 }  // namespace post_processor_test
 }  // namespace media
 }  // namespace chromecast
