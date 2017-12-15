@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "26900425_ebc2d73a",
+        "filename": "chrome/services/printing/DEPS",
+        "patchSetId": 13
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-15T21:50:36Z",
+      "side": 1,
+      "message": "BTW, this got added with CRLF line endings, but it\u0027s not obvious from PolyGerrit. Same for a few other DEPS files. I\u0027ll fix them.",
+      "revId": "407c3fcf555e8df54e8236531847720a0c3cbbed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
