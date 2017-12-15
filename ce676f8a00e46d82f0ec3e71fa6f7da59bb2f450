@@ -16,6 +16,24 @@
       "revId": "ce676f8a00e46d82f0ec3e71fa6f7da59bb2f450",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a34c9fb9_01419751",
+        "filename": "chrome/browser/page_load_metrics/observers/multi_tab_loading_page_load_metrics_observer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115941
+      },
+      "writtenOn": "2017-12-15T03:51:41Z",
+      "side": 1,
+      "message": "Good catch! Unified them and moved into histogram_suffixes.{h,cc}.\n(Actually these were in data_reduction_proxy::internal namespace, so I had to add \u0027::\u0027 operator in several places to correctly reference new constants)",
+      "parentUuid": "7e884b64_db1ea247",
+      "revId": "ce676f8a00e46d82f0ec3e71fa6f7da59bb2f450",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
