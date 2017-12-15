@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "06c8bd3c_071b9e88",
+        "filename": "tools/licenses.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-12-15T20:34:20Z",
+      "side": 1,
+      "message": "Done, formatted using `\"%s\" % foo` since it\u0027s the style used in the rest of the file.",
+      "parentUuid": "a1b87127_b230ba0f",
+      "range": {
+        "startLine": 400,
+        "startChar": 27,
+        "endLine": 400,
+        "endChar": 55
+      },
+      "revId": "d8b6372de7291bfcbbb3fdfb1854057f77175626",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f7024665_32f1b15a",
         "filename": "tools/licenses.py",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "bbdbdfd2_2a1bd324",
+        "filename": "tools/licenses.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-12-15T20:34:20Z",
+      "side": 1,
+      "message": "replaced with `os.path.exists`, it will throw an exception when trying to read if it\u0027s a directory.",
+      "parentUuid": "f7024665_32f1b15a",
+      "range": {
+        "startLine": 445,
+        "startChar": 19,
+        "endLine": 445,
+        "endChar": 56
+      },
+      "revId": "d8b6372de7291bfcbbb3fdfb1854057f77175626",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "277ced35_3ebdf11d",
         "filename": "tools/licenses.py",
         "patchSetId": 2
@@ -68,6 +116,30 @@
       "revId": "d8b6372de7291bfcbbb3fdfb1854057f77175626",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fc1cb16_e9a60a51",
+        "filename": "tools/licenses.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 608,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-12-15T20:34:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "277ced35_3ebdf11d",
+      "range": {
+        "startLine": 608,
+        "startChar": 18,
+        "endLine": 608,
+        "endChar": 27
+      },
+      "revId": "d8b6372de7291bfcbbb3fdfb1854057f77175626",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
