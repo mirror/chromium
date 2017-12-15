@@ -46,6 +46,23 @@
       "revId": "f78a6f987ce7d1187180250f4cfc739b0cbc4e9b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ecc12e01_cf08a42c",
+        "filename": "components/autofill/content/renderer/autofill_agent.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-12-15T23:20:41Z",
+      "side": 1,
+      "message": "I\u0027ll echo mathp and suggest that this comment, and the similar ones on the setter, doesn\u0027t adequately describe this flag.\n\nPerhaps:\n\n\"This flag denotes whether or not password suggestions need to be programatically queried. This is needed on Android because...\"",
+      "revId": "f78a6f987ce7d1187180250f4cfc739b0cbc4e9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
