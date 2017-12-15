@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "51ebfc05_71021b1a",
+        "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1975,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2017-12-15T21:49:59Z",
+      "side": 1,
+      "message": "Just a note. I\u0027m going to use the name later in WebWidget.h class as well along the HandleInputEvent. I don\u0027t have any preferences around the naming. Dave as you suggested the current name, do you agree with DispatchBufferedTouchEvents as well?",
+      "parentUuid": "d9b29aea_dc7b1e2b",
+      "range": {
+        "startLine": 1975,
+        "startChar": 33,
+        "endLine": 1975,
+        "endChar": 59
+      },
+      "revId": "d9eab7e6b24cb0cf9c20ab989f0f3f9a219b5df4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "85a9f7b5_1218a3e6",
         "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.cpp",
         "patchSetId": 2
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "91ea40ce_6d9fed20",
+        "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1976,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2017-12-15T21:49:59Z",
+      "side": 1,
+      "message": "I\u0027m not sure what you mean here? What TODO? did you put the comment in the correct line? I\u0027m dereferencing MainFrameImpl() here in this function. So I believe I need to make sure it is not null similar to other functions of this class.",
+      "parentUuid": "85a9f7b5_1218a3e6",
+      "revId": "d9eab7e6b24cb0cf9c20ab989f0f3f9a219b5df4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ab3edcda_a92271dc",
         "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.cpp",
         "patchSetId": 2
@@ -53,6 +95,24 @@
       "writtenOn": "2017-12-15T17:08:53Z",
       "side": 1,
       "message": "type \u003d kPointerCausedUaAction",
+      "revId": "d9eab7e6b24cb0cf9c20ab989f0f3f9a219b5df4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2479b573_41007896",
+        "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1991,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2017-12-15T21:49:59Z",
+      "side": 1,
+      "message": "Oh Yes. My bad. Btw, This block of code which is literally duplicated across 3 classes in this review is going to be removed in my next CL. I had to have it this way in this review because Blink has 3 entry points and I had to change all 3. I though it might not be worth putting more effort to refactor this duplicated code that is going to be removed in the next CL.",
+      "parentUuid": "ab3edcda_a92271dc",
       "revId": "d9eab7e6b24cb0cf9c20ab989f0f3f9a219b5df4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
