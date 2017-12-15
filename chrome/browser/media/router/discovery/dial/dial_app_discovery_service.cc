@@ -1,0 +1,176 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+#include "chrome/browser/media/router/discovery/dial/dial_app_discovery_service.h"
+
+#include "base/memory/ptr_util.h"
+#include "base/stl_util.h"
+#include "base/strings/string_util.h"
+#include "base/time/default_clock.h"
+#include "chrome/browser/media/router/discovery/dial/dial_app_info_fetcher.h"
+#include "chrome/browser/media/router/discovery/dial/safe_dial_app_info_parser.h"
+#include "url/gurl.h"
+
+namespace {
+
+// How long to cache an app info.
+constexpr int kDialAppInfoCacheTimeHours = 1;
+
+// Maximum size on the number of cached entries.
+constexpr int kCacheMaxEntries = 256;
+
+media_router::DialAppStatus GetAvailabilityFromAppInfo(
+    const media_router::ParsedDialAppInfo& app_info) {
+  if (app_info.state == media_router::DialAppState::kRunning ||
+      app_info.state == media_router::DialAppState::kStopped) {
+    return media_router::DialAppStatus::kAvailable;
+  }
+
+  return media_router::DialAppStatus::kUnavailable;
+}
+
+}  // namespace
+
+namespace media_router {
+
+DialAppDiscoveryService::DialAppDiscoveryService(
+    service_manager::Connector* connector,
+    const DialAppInfoParseSuccessCallback& success_cb,
+    const DialAppInfoParseErrorCallback& error_cb)
+    : success_cb_(success_cb),
+      error_cb_(error_cb),
+      clock_(new base::DefaultClock()) {
+  parser_ = base::MakeUnique<SafeDialAppInfoParser>(connector);
+}
+
+DialAppDiscoveryService::~DialAppDiscoveryService() {
+  if (!pending_app_urls_.empty()) {
+    DVLOG(1) << "Fail to finish parsing " << pending_app_urls_.size()
+             << " app info.";
+  }
+}
+
+void DialAppDiscoveryService::FetchDialAppInfo(
+    const GURL& app_url,
+    net::URLRequestContextGetter* request_context) {
+  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  DVLOG(2) << "Fetch DIAL app info from: " << app_url.spec();
+
+  auto* cache_entry = CheckAndUpdateCache(app_url);
+  // Get app info from cache.
+  if (cache_entry) {
+    success_cb_.Run(app_url, cache_entry->app_info);
+    return;
+  }
+
+  // No op if there is an existing Fetcher.
+  if (!pending_app_urls_.insert(app_url).second) {
+    DVLOG(2) << "There is a pending fetch request for: " << app_url.spec();
+    return;
+  }
+
+  auto app_info_fetcher = base::WrapUnique(new DialAppInfoFetcher(
+      app_url, request_context,
+      base::BindOnce(&DialAppDiscoveryService::OnDialAppInfoFetchComplete,
+                     base::Unretained(this), app_url),
+      base::BindOnce(&DialAppDiscoveryService::OnDialAppInfoFetchError,
+                     base::Unretained(this), app_url)));
+
+  app_info_fetcher->Start();
+  app_info_fetcher_map_.insert(
+      std::make_pair(app_url, std::move(app_info_fetcher)));
+}
+
+void DialAppDiscoveryService::SetClockForTest(
+    std::unique_ptr<base::Clock> clock) {
+  clock_ = std::move(clock);
+}
+
+void DialAppDiscoveryService::SetParserForTest(
+    std::unique_ptr<SafeDialAppInfoParser> parser) {
+  parser_ = std::move(parser);
+}
+
+const DialAppDiscoveryService::CacheEntry*
+DialAppDiscoveryService::CheckAndUpdateCache(const GURL& app_url) {
+  const auto& it = app_info_cache_.find(app_url);
+  if (it == app_info_cache_.end())
+    return nullptr;
+
+  // If the entry's config_id does not match, or it has expired, remove it.
+  if (clock_->Now() >= it->second.expire_time) {
+    DVLOG(2) << "Removing expired entry " << it->first;
+    app_info_cache_.erase(it);
+    return nullptr;
+  }
+
+  // Entry is valid.
+  return &it->second;
+}
+
+void DialAppDiscoveryService::OnDialAppInfo(
+    const GURL& app_url,
+    std::unique_ptr<ParsedDialAppInfo> parsed_app_info,
+    SafeDialAppInfoParser::ParsingError parsing_error) {
+  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+
+  pending_app_urls_.erase(app_url);
+
+  if (!parsed_app_info) {
+    error_cb_.Run(app_url, "Failed to parse app info XML in utility process");
+    return;
+  }
+
+  DialAppInfo app_info;
+  app_info.app_name = parsed_app_info->name;
+  app_info.app_status = GetAvailabilityFromAppInfo(*parsed_app_info);
+
+  DVLOG(2) << "Get parsed DIAL app info from utility process, [app_url]: "
+           << app_url.spec() << " [name]: " << app_info.app_name
+           << " [status]: " << static_cast<int>(app_info.app_status);
+
+  if (app_info_cache_.size() >= kCacheMaxEntries) {
+    success_cb_.Run(app_url, app_info);
+    return;
+  }
+
+  DVLOG(2) << "Caching app info for " << app_url.spec();
+  CacheEntry cached_app_info;
+  cached_app_info.expire_time =
+      clock_->Now() + base::TimeDelta::FromHours(kDialAppInfoCacheTimeHours);
+  cached_app_info.app_info = app_info;
+  app_info_cache_.insert(std::make_pair(app_url, cached_app_info));
+
+  success_cb_.Run(app_url, app_info);
+}
+
+void DialAppDiscoveryService::OnDialAppInfoFetchComplete(
+    const GURL& app_url,
+    const std::string& app_info_xml) {
+  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+
+  parser_->Parse(app_info_xml,
+                 base::BindOnce(&DialAppDiscoveryService::OnDialAppInfo,
+                                base::Unretained(this), app_url));
+
+  app_info_fetcher_map_.erase(app_url);
+}
+
+void DialAppDiscoveryService::OnDialAppInfoFetchError(
+    const GURL& app_url,
+    const std::string& error_message) {
+  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  DVLOG(2) << "Fail to fetch app info XML from: " << app_url.spec()
+           << " due to error: " << error_message;
+
+  error_cb_.Run(app_url, error_message);
+  app_info_fetcher_map_.erase(app_url);
+}
+
+DialAppDiscoveryService::CacheEntry::CacheEntry() {}
+DialAppDiscoveryService::CacheEntry::CacheEntry(const CacheEntry& other) =
+    default;
+DialAppDiscoveryService::CacheEntry::~CacheEntry() = default;
+
+}  // namespace media_router
