@@ -986,7 +986,7 @@ TEST_P(FrameThrottlingTest, ThrottleInnerCompositedLayer) {
   inner_div->setAttribute(styleAttr, "background: yellow; overflow: hidden");
   // Do an unthrottled style and layout update, simulating the situation
   // triggered by script style/layout access.
-  GetDocument().View()->UpdateLifecycleToLayoutClean();
+  GetDocument().View()->UpdateLifecycleToCompositingInputsClean();
   {
     // And a throttled full lifecycle update.
     DocumentLifecycle::AllowThrottlingScope throttling_scope(

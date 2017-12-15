@@ -21,9 +21,11 @@ CompositingInputsUpdater::CompositingInputsUpdater(PaintLayer* root_layer)
 
 CompositingInputsUpdater::~CompositingInputsUpdater() {}
 
-void CompositingInputsUpdater::Update() {
+void CompositingInputsUpdater::Update(
+    CompositingUpdateType compositing_update_type) {
   TRACE_EVENT0("blink", "CompositingInputsUpdater::update");
-  UpdateRecursive(root_layer_, kDoNotForceUpdate, AncestorInfo());
+  UpdateRecursive(root_layer_, kDoNotForceUpdate, AncestorInfo(),
+                  compositing_update_type);
 }
 
 static const PaintLayer* FindParentLayerOnClippingContainerChain(
@@ -84,206 +86,215 @@ static bool NeedsToEscapeClipInheritedFromCompositingContainer(
   return !desired_clip.IsDescendantOf(inherited_clip);
 }
 
-void CompositingInputsUpdater::UpdateRecursive(PaintLayer* layer,
-                                               UpdateType update_type,
-                                               AncestorInfo info) {
-  if (!layer->ChildNeedsCompositingInputsUpdate() &&
-      update_type != kForceUpdate)
-    return;
+void CompositingInputsUpdater::UpdateRecursive(
+    PaintLayer* layer,
+    UpdateType update_type,
+    AncestorInfo info,
+    CompositingUpdateType compositing_update_type) {
+  if (compositing_update_type >=
+      kCompositingUpdateAfterCompositingInputChange) {
+    const PaintLayer* previous_overflow_layer = layer->AncestorOverflowLayer();
+    layer->UpdateAncestorOverflowLayer(info.last_overflow_clip_layer);
+    if (info.last_overflow_clip_layer &&
+        layer->NeedsCompositingInputsUpdate() &&
+        layer->GetLayoutObject().Style()->HasStickyConstrainedPosition()) {
+      if (!RuntimeEnabledFeatures::RootLayerScrollingEnabled()) {
+        if (info.last_overflow_clip_layer != previous_overflow_layer) {
+          // Old ancestor scroller should no longer have these constraints.
+          DCHECK(!previous_overflow_layer ||
+                 !previous_overflow_layer->GetScrollableArea() ||
+                 !previous_overflow_layer->GetScrollableArea()
+                      ->GetStickyConstraintsMap()
+                      .Contains(layer));
 
-  const PaintLayer* previous_overflow_layer = layer->AncestorOverflowLayer();
-  layer->UpdateAncestorOverflowLayer(info.last_overflow_clip_layer);
-  if (info.last_overflow_clip_layer && layer->NeedsCompositingInputsUpdate() &&
-      layer->GetLayoutObject().Style()->HasStickyConstrainedPosition()) {
-    if (!RuntimeEnabledFeatures::RootLayerScrollingEnabled()) {
-      if (info.last_overflow_clip_layer != previous_overflow_layer) {
-        // Old ancestor scroller should no longer have these constraints.
-        DCHECK(!previous_overflow_layer ||
-               !previous_overflow_layer->GetScrollableArea() ||
-               !previous_overflow_layer->GetScrollableArea()
-                    ->GetStickyConstraintsMap()
-                    .Contains(layer));
+          // If our ancestor scroller has changed and the previous one was the
+          // root layer, we are no longer viewport constrained.
+          if (previous_overflow_layer &&
+              previous_overflow_layer->IsRootLayer()) {
+            layer->GetLayoutObject()
+                .View()
+                ->GetFrameView()
+                ->RemoveViewportConstrainedObject(layer->GetLayoutObject());
+          }
+        }
 
-        // If our ancestor scroller has changed and the previous one was the
-        // root layer, we are no longer viewport constrained.
-        if (previous_overflow_layer && previous_overflow_layer->IsRootLayer()) {
+        if (info.last_overflow_clip_layer->IsRootLayer()) {
           layer->GetLayoutObject()
               .View()
               ->GetFrameView()
-              ->RemoveViewportConstrainedObject(layer->GetLayoutObject());
+              ->AddViewportConstrainedObject(layer->GetLayoutObject());
         }
       }
-
-      if (info.last_overflow_clip_layer->IsRootLayer()) {
-        layer->GetLayoutObject()
-            .View()
-            ->GetFrameView()
-            ->AddViewportConstrainedObject(layer->GetLayoutObject());
-      }
+      layer->GetLayoutObject().UpdateStickyPositionConstraints();
     }
-    layer->GetLayoutObject().UpdateStickyPositionConstraints();
-
-    // Sticky position constraints and ancestor overflow scroller affect
-    // the sticky layer position, so we need to update it again here.
-    // TODO(flackr): This should be refactored in the future to be clearer
-    // (i.e. update layer position and ancestor inputs updates in the
-    // same walk)
-    layer->UpdateLayerPosition();
   }
 
-  geometry_map_.PushMappingsToAncestor(layer, layer->Parent());
+  layer->UpdateLayerPosition();
 
-  if (layer->HasCompositedLayerMapping())
-    info.enclosing_composited_layer = layer;
+  if (compositing_update_type >=
+      kCompositingUpdateAfterCompositingInputChange) {  // &&
+                                                        // layer->NeedsCompositingInputsUpdate()
+    geometry_map_.PushMappingsToAncestor(layer, layer->Parent());
 
-  if (layer->NeedsCompositingInputsUpdate()) {
-    if (info.enclosing_composited_layer) {
-      info.enclosing_composited_layer->GetCompositedLayerMapping()
-          ->SetNeedsGraphicsLayerUpdate(kGraphicsLayerUpdateSubtree);
+    if (layer->HasCompositedLayerMapping())
+      info.enclosing_composited_layer = layer;
+
+    if (layer->NeedsCompositingInputsUpdate()) {
+      if (info.enclosing_composited_layer) {
+        info.enclosing_composited_layer->GetCompositedLayerMapping()
+            ->SetNeedsGraphicsLayerUpdate(kGraphicsLayerUpdateSubtree);
+      }
+      update_type = kForceUpdate;
     }
-    update_type = kForceUpdate;
-  }
 
-  if (update_type == kForceUpdate) {
-    PaintLayer::AncestorDependentCompositingInputs properties;
+    if (update_type == kForceUpdate) {
+      PaintLayer::AncestorDependentCompositingInputs properties;
 
-    if (!layer->IsRootLayer()) {
-      if (!RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
-        properties.unclipped_absolute_bounding_box =
-            EnclosingIntRect(geometry_map_.AbsoluteRect(
-                FloatRect(layer->BoundingBoxForCompositingOverlapTest())));
-        // FIXME: Setting the absBounds to 1x1 instead of 0x0 makes very little
-        // sense, but removing this code will make JSGameBench sad.
-        // See https://codereview.chromium.org/13912020/
-        if (properties.unclipped_absolute_bounding_box.IsEmpty())
-          properties.unclipped_absolute_bounding_box.SetSize(IntSize(1, 1));
+      if (!layer->IsRootLayer()) {
+        if (!RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
+          properties.unclipped_absolute_bounding_box =
+              EnclosingIntRect(geometry_map_.AbsoluteRect(
+                  FloatRect(layer->BoundingBoxForCompositingOverlapTest())));
+          // FIXME: Setting the absBounds to 1x1 instead of 0x0 makes very
+          // little sense, but removing this code will make JSGameBench sad. See
+          // https://codereview.chromium.org/13912020/
+          if (properties.unclipped_absolute_bounding_box.IsEmpty())
+            properties.unclipped_absolute_bounding_box.SetSize(IntSize(1, 1));
 
-        ClipRect clip_rect;
-        layer->Clipper(PaintLayer::kDoNotUseGeometryMapper)
-            .CalculateBackgroundClipRect(
-                ClipRectsContext(root_layer_,
-                                 kAbsoluteClipRectsIgnoringViewportClip),
-                clip_rect);
-        IntRect snapped_clip_rect = PixelSnappedIntRect(clip_rect.Rect());
-        properties.clipped_absolute_bounding_box =
-            properties.unclipped_absolute_bounding_box;
-        properties.clipped_absolute_bounding_box.Intersect(snapped_clip_rect);
-      }
+          ClipRect clip_rect;
+          layer->Clipper(PaintLayer::kDoNotUseGeometryMapper)
+              .CalculateBackgroundClipRect(
+                  ClipRectsContext(root_layer_,
+                                   kAbsoluteClipRectsIgnoringViewportClip),
+                  clip_rect);
+          IntRect snapped_clip_rect = PixelSnappedIntRect(clip_rect.Rect());
+          properties.clipped_absolute_bounding_box =
+              properties.unclipped_absolute_bounding_box;
+          properties.clipped_absolute_bounding_box.Intersect(snapped_clip_rect);
+        }
 
-      const PaintLayer* parent = layer->Parent();
-      properties.opacity_ancestor =
-          parent->IsTransparent() ? parent : parent->OpacityAncestor();
-      properties.transform_ancestor =
-          parent->Transform() ? parent : parent->TransformAncestor();
-      properties.filter_ancestor = parent->HasFilterInducingProperty()
-                                       ? parent
-                                       : parent->FilterAncestor();
-      bool layer_is_fixed_position =
-          layer->GetLayoutObject().Style()->GetPosition() == EPosition::kFixed;
+        const PaintLayer* parent = layer->Parent();
+        properties.opacity_ancestor =
+            parent->IsTransparent() ? parent : parent->OpacityAncestor();
+        properties.transform_ancestor =
+            parent->Transform() ? parent : parent->TransformAncestor();
+        properties.filter_ancestor = parent->HasFilterInducingProperty()
+                                         ? parent
+                                         : parent->FilterAncestor();
+        bool layer_is_fixed_position =
+            layer->GetLayoutObject().Style()->GetPosition() ==
+            EPosition::kFixed;
 
-      if (layer_is_fixed_position && properties.filter_ancestor &&
-          layer->FixedToViewport()) {
-        UseCounter::Count(layer->GetLayoutObject().GetDocument(),
-                          WebFeature::kViewportFixedPositionUnderFilter);
-      }
+        if (layer_is_fixed_position && properties.filter_ancestor &&
+            layer->FixedToViewport()) {
+          UseCounter::Count(layer->GetLayoutObject().GetDocument(),
+                            WebFeature::kViewportFixedPositionUnderFilter);
+        }
 
-      properties.nearest_fixed_position_layer =
-          layer_is_fixed_position ? layer : parent->NearestFixedPositionLayer();
+        properties.nearest_fixed_position_layer =
+            layer_is_fixed_position ? layer
+                                    : parent->NearestFixedPositionLayer();
 
-      if (info.has_ancestor_with_clip_related_property) {
-        // This is the ancestor that is |layer|'s containing block, or has a
-        // CSS clip, which ever is the closest.
-        const PaintLayer* parent_layer_on_clipping_container_chain =
-            FindParentLayerOnClippingContainerChain(layer);
-        const bool parent_has_clip_related_property =
-            parent_layer_on_clipping_container_chain->GetLayoutObject()
-                .HasClipRelatedProperty();
-        properties.clipping_container =
-            parent_has_clip_related_property
-                ? &parent_layer_on_clipping_container_chain->GetLayoutObject()
-                : parent_layer_on_clipping_container_chain->ClippingContainer();
+        if (info.has_ancestor_with_clip_related_property) {
+          // This is the ancestor that is |layer|'s containing block, or has a
+          // CSS clip, which ever is the closest.
+          const PaintLayer* parent_layer_on_clipping_container_chain =
+              FindParentLayerOnClippingContainerChain(layer);
+          const bool parent_has_clip_related_property =
+              parent_layer_on_clipping_container_chain->GetLayoutObject()
+                  .HasClipRelatedProperty();
+          properties.clipping_container =
+              parent_has_clip_related_property
+                  ? &parent_layer_on_clipping_container_chain->GetLayoutObject()
+                  : parent_layer_on_clipping_container_chain
+                        ->ClippingContainer();
 
-        if (!layer->SubtreeIsInvisible()) {
-          if (layer->GetLayoutObject().IsOutOfFlowPositioned() &&
-              NeedsToEscapeClipInheritedFromCompositingContainer(
-                  layer, parent_layer_on_clipping_container_chain
-                             ->GetLayoutObject())) {
-            properties.clip_parent = parent_layer_on_clipping_container_chain;
-          } else if (parent_layer_on_clipping_container_chain
-                         ->CompositingContainer() ==
-                     layer->CompositingContainer()) {
-            // If the clipping container of |layer| is a sibling in the
-            // stacking tree, and it escapes a stacking ancestor clip,
-            // this layer should escape that clip also.
-            if (parent_layer_on_clipping_container_chain->ClipParent()) {
-              // It may be attempting to inherit the clip state of
-              // parent_layer_on_clipping_container_chain directly, but our
-              // paint order can be before the clipping parent due to negative
-              // z-index. Our compositor implementation currently only allow
-              // inheriting clip from layer that paints before us.
-              properties.clip_parent =
-                  parent_layer_on_clipping_container_chain->ClipParent();
+          if (!layer->SubtreeIsInvisible()) {
+            if (layer->GetLayoutObject().IsOutOfFlowPositioned() &&
+                NeedsToEscapeClipInheritedFromCompositingContainer(
+                    layer, parent_layer_on_clipping_container_chain
+                               ->GetLayoutObject())) {
+              properties.clip_parent = parent_layer_on_clipping_container_chain;
+            } else if (parent_layer_on_clipping_container_chain
+                           ->CompositingContainer() ==
+                       layer->CompositingContainer()) {
+              // If the clipping container of |layer| is a sibling in the
+              // stacking tree, and it escapes a stacking ancestor clip,
+              // this layer should escape that clip also.
+              if (parent_layer_on_clipping_container_chain->ClipParent()) {
+                // It may be attempting to inherit the clip state of
+                // parent_layer_on_clipping_container_chain directly, but our
+                // paint order can be before the clipping parent due to negative
+                // z-index. Our compositor implementation currently only allow
+                // inheriting clip from layer that paints before us.
+                properties.clip_parent =
+                    parent_layer_on_clipping_container_chain->ClipParent();
+              }
             }
           }
         }
-      }
 
-      if (info.last_scrolling_ancestor) {
-        const LayoutObject* containing_block =
-            layer->GetLayoutObject().ContainingBlock();
-        const PaintLayer* parent_layer_on_containing_block_chain =
-            FindParentLayerOnContainingBlockChain(containing_block);
+        if (info.last_scrolling_ancestor) {
+          const LayoutObject* containing_block =
+              layer->GetLayoutObject().ContainingBlock();
+          const PaintLayer* parent_layer_on_containing_block_chain =
+              FindParentLayerOnContainingBlockChain(containing_block);
 
-        properties.ancestor_scrolling_layer =
-            parent_layer_on_containing_block_chain->AncestorScrollingLayer();
-        if (parent_layer_on_containing_block_chain->ScrollsOverflow()) {
           properties.ancestor_scrolling_layer =
-              parent_layer_on_containing_block_chain;
-        }
+              parent_layer_on_containing_block_chain->AncestorScrollingLayer();
+          if (parent_layer_on_containing_block_chain->ScrollsOverflow()) {
+            properties.ancestor_scrolling_layer =
+                parent_layer_on_containing_block_chain;
+          }
 
-        if (layer->StackingNode()->IsStacked() &&
-            properties.ancestor_scrolling_layer &&
-            !info.ancestor_stacking_context->GetLayoutObject().IsDescendantOf(
-                &properties.ancestor_scrolling_layer->GetLayoutObject()))
-          properties.scroll_parent = properties.ancestor_scrolling_layer;
+          if (layer->StackingNode()->IsStacked() &&
+              properties.ancestor_scrolling_layer &&
+              !info.ancestor_stacking_context->GetLayoutObject().IsDescendantOf(
+                  &properties.ancestor_scrolling_layer->GetLayoutObject()))
+            properties.scroll_parent = properties.ancestor_scrolling_layer;
+        }
       }
+
+      layer->UpdateAncestorDependentCompositingInputs(
+          properties, info.has_ancestor_with_clip_path);
     }
 
-    layer->UpdateAncestorDependentCompositingInputs(
-        properties, info.has_ancestor_with_clip_path);
+    if (layer->StackingNode()->IsStackingContext())
+      info.ancestor_stacking_context = layer;
+
+    if (layer->IsRootLayer() || layer->GetLayoutObject().HasOverflowClip())
+      info.last_overflow_clip_layer = layer;
+
+    if (layer->ScrollsOverflow())
+      info.last_scrolling_ancestor = layer;
+
+    if (layer->GetLayoutObject().HasClipRelatedProperty())
+      info.has_ancestor_with_clip_related_property = true;
+
+    if (layer->GetLayoutObject().HasClipPath())
+      info.has_ancestor_with_clip_path = true;
   }
-
-  if (layer->StackingNode()->IsStackingContext())
-    info.ancestor_stacking_context = layer;
-
-  if (layer->IsRootLayer() || layer->GetLayoutObject().HasOverflowClip())
-    info.last_overflow_clip_layer = layer;
-
-  if (layer->ScrollsOverflow())
-    info.last_scrolling_ancestor = layer;
-
-  if (layer->GetLayoutObject().HasClipRelatedProperty())
-    info.has_ancestor_with_clip_related_property = true;
-
-  if (layer->GetLayoutObject().HasClipPath())
-    info.has_ancestor_with_clip_path = true;
 
   for (PaintLayer* child = layer->FirstChild(); child;
        child = child->NextSibling())
-    UpdateRecursive(child, update_type, info);
+    UpdateRecursive(child, update_type, info, compositing_update_type);
 
-  layer->DidUpdateCompositingInputs();
+  if (compositing_update_type >=
+      kCompositingUpdateAfterCompositingInputChange) {  // &&
+                                                        // layer->NeedsCompositingInputsUpdate()
+    layer->DidUpdateCompositingInputs();
 
-  geometry_map_.PopMappingsToAncestor(layer->Parent());
+    geometry_map_.PopMappingsToAncestor(layer->Parent());
 
-  if (layer->SelfPaintingStatusChanged()) {
-    layer->ClearSelfPaintingStatusChanged();
-    // If the floating object becomes non-self-painting, so some ancestor should
-    // paint it; if it becomes self-painting, it should paint itself and no
-    // ancestor should paint it.
-    if (layer->GetLayoutObject().IsFloating()) {
-      LayoutBlockFlow::UpdateAncestorShouldPaintFloatingObject(
-          *layer->GetLayoutBox());
+    if (layer->SelfPaintingStatusChanged()) {
+      layer->ClearSelfPaintingStatusChanged();
+      // If the floating object becomes non-self-painting, so some ancestor
+      // should paint it; if it becomes self-painting, it should paint itself
+      // and no ancestor should paint it.
+      if (layer->GetLayoutObject().IsFloating()) {
+        LayoutBlockFlow::UpdateAncestorShouldPaintFloatingObject(
+            *layer->GetLayoutBox());
+      }
     }
   }
 }

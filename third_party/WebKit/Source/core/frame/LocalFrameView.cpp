@@ -1147,7 +1147,7 @@ void LocalFrameView::ScheduleOrPerformPostLayoutTasks() {
   }
 }
 
-void LocalFrameView::UpdateLayout() {
+void LocalFrameView::UpdateLayout(bool in_lifecycle) {
   // We should never layout a Document which is not in a LocalFrame.
   DCHECK(frame_);
   DCHECK_EQ(frame_->View(), this);
@@ -1327,7 +1327,10 @@ void LocalFrameView::UpdateLayout() {
 
   // FIXME: Could find the common ancestor layer of all dirty subtrees and mark
   // from there. crbug.com/462719
-  GetLayoutViewItem().EnclosingLayer()->UpdateLayerPositionsAfterLayout();
+  if (in_lifecycle)
+    SetNeedsCompositingUpdate(kCompositingUpdateAfterGeometryChange);
+  else
+    GetLayoutViewItem().EnclosingLayer()->UpdateLayerPositionsAfterLayout();
 
   TRACE_EVENT_OBJECT_SNAPSHOT_WITH_ID(
       TRACE_DISABLED_BY_DEFAULT("blink.debug.layout.trees"), "LayoutTree", this,
@@ -3068,11 +3071,6 @@ void LocalFrameView::UpdateLifecyclePhasesForPrinting() {
       DocumentLifecycle::kPrePaintClean);
 }
 
-void LocalFrameView::UpdateLifecycleToLayoutClean() {
-  GetFrame().LocalFrameRoot().View()->UpdateLifecyclePhasesInternal(
-      DocumentLifecycle::kLayoutClean);
-}
-
 void LocalFrameView::ScheduleVisualUpdateForPaintInvalidationIfNeeded() {
   LocalFrame& local_frame_root = GetFrame().LocalFrameRoot();
   if (local_frame_root.View()->current_update_lifecycle_phases_target_state_ <
@@ -3476,7 +3474,7 @@ void LocalFrameView::UpdateStyleAndLayoutIfNeededRecursiveInternal() {
   CHECK(!nested_layout_count_);
 
   if (NeedsLayout())
-    UpdateLayout();
+    UpdateLayout(true);
 
   CheckDoesNotNeedLayout();
 
