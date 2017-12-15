@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1d2b1f86_9f148b26",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-12-15T12:02:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "213f00e0_ee57c3aa",
+      "revId": "be692d8a3bc669662bbe4c52c152a5c336011d9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5c278192_b128b3d2",
         "filename": "chrome/browser/ui/views/close_bubble_on_tab_activation_helper.cc",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "be692d8a3bc669662bbe4c52c152a5c336011d9e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b80db5d7_7757831a",
+        "filename": "chrome/browser/ui/views/close_bubble_on_tab_activation_helper.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-12-15T12:02:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5c278192_b128b3d2",
+      "revId": "be692d8a3bc669662bbe4c52c152a5c336011d9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "fb70a362_9e392550",
+        "filename": "chrome/browser/ui/views/close_bubble_on_tab_activation_helper.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-12-15T12:02:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "25aebbbc_dd3e7891",
+      "revId": "be692d8a3bc669662bbe4c52c152a5c336011d9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f12caf99_d0b95558",
         "filename": "chrome/browser/ui/views/close_bubble_on_tab_activation_helper.h",
         "patchSetId": 5
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "48a12ea7_5302ed1a",
+        "filename": "chrome/browser/ui/views/close_bubble_on_tab_activation_helper.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-12-15T12:02:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f12caf99_d0b95558",
+      "revId": "be692d8a3bc669662bbe4c52c152a5c336011d9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "188f79b1_4c81d1e9",
         "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.h",
         "patchSetId": 5
@@ -81,6 +153,24 @@
       "writtenOn": "2017-12-15T06:46:10Z",
       "side": 1,
       "message": "neat - ExtensionPopup could probably use this too, to replace what it currently does.. (but in case of merge, that\u0027s probably better left for a follow-up).",
+      "revId": "be692d8a3bc669662bbe4c52c152a5c336011d9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d301a59c_464612a6",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-12-15T12:02:26Z",
+      "side": 1,
+      "message": "OK, I\u0027ll do this as a follow-up.",
+      "parentUuid": "188f79b1_4c81d1e9",
       "revId": "be692d8a3bc669662bbe4c52c152a5c336011d9e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
