@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "7e435b13_05ca4ce1",
+        "filename": "third_party/zlib/contrib/optimizations/arm/armv8_crc32.c",
+        "patchSetId": 5
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-12-15T20:25:50Z",
+      "side": 1,
+      "message": "Good idea on unit tests.\nZlib provides some unit tests but they aren\u0027t in a position to fit into gtest naturally. I would love to write some tests once I finish the fuzzers.\n\nAnyway, at this point in code, len has to be less than 8.\nSuppose len is 1. Because we -- first, we never enter this loop and are indeed off by one.\n\nAlso, I believe it is only likely to crash when len is 0.\nBecause we -- first, we wrap around to the maximum value size_t can hold on this platform. That would mean a LOT of looping to get back to 0 and exit the while loop. During those loops, we keep asking for the next byte in the buffer. Sooner or later, it should request an invalid memory address.\n\nHowever, if len is anything other than 0 we won\u0027t wrap around. We\u0027ll only access valid memory and will only have the off-by-one error.",
+      "parentUuid": "4ef0b37b_eeb8db24",
+      "revId": "3fa03e0f3d9ce5de8198764b6714048d2ccd9c04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ff6d9d74_3e70b7ca",
         "filename": "third_party/zlib/crc32.c",
         "patchSetId": 5
