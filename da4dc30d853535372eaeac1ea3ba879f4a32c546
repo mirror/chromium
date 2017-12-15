@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3e53f486_8df481c8",
+        "filename": "ash/shelf/shelf_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1807,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-15T19:25:43Z",
+      "side": 1,
+      "message": "This cast is unsafe since not all ShelfItem\u0027s view is a ShelfButton.\n\nHow about comparing |drag_view_| with |source|?\ni.e.\n  const bool is_shelf_button_dragging \u003d drag_view_ \u003d\u003d source;",
+      "range": {
+        "startLine": 1807,
+        "startChar": 13,
+        "endLine": 1807,
+        "endChar": 46
+      },
+      "revId": "da4dc30d853535372eaeac1ea3ba879f4a32c546",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
