@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "4d7aaffd_27068ba2",
+        "filename": "chrome/browser/ui/views/translate/translate_bubble_view_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-12-15T00:15:53Z",
+      "side": 1,
+      "message": "I meant because you have ui::VKEY_RETURN there.",
+      "parentUuid": "c644bf70_da1663b4",
+      "range": {
+        "startLine": 154,
+        "startChar": 56,
+        "endLine": 154,
+        "endChar": 61
+      },
+      "revId": "c6d1efe0e00e9161ebad1b23c3102f0251824939",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5b99a2ad_f3c4356e",
         "filename": "chrome/browser/ui/views/translate/translate_bubble_view_browsertest.cc",
         "patchSetId": 7
@@ -351,6 +375,24 @@
       "revId": "c6d1efe0e00e9161ebad1b23c3102f0251824939",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c4460fe8_e15af1e8",
+        "filename": "chrome/browser/ui/views/translate/translate_bubble_view_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 510,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-12-15T00:15:53Z",
+      "side": 1,
+      "message": "I do feel strongly. Having a browser test is a much higher cost, so I\u0027d rather just have the unit test version if the coverage is the same. (You don\u0027t have to do it for this CL but I bet testing that the \"file://\" scheme isn\u0027t blacklistable could be converted to a unit test too.)",
+      "parentUuid": "67c141e1_b090b429",
+      "revId": "c6d1efe0e00e9161ebad1b23c3102f0251824939",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
