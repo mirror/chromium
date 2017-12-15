@@ -11,8 +11,12 @@
 #include <vector>
 
 #include "base/test/histogram_tester.h"
+#include "base/test/scoped_feature_list.h"
 #include "chrome/browser/predictors/loading_test_util.h"
+#include "chrome/common/pref_names.h"
 #include "chrome/test/base/testing_profile.h"
+#include "components/data_reduction_proxy/core/common/data_reduction_proxy_features.h"
+#include "components/prefs/pref_service.h"
 #include "content/public/test/test_browser_thread_bundle.h"
 #include "content/public/test/test_utils.h"
 #include "testing/gmock/include/gmock/gmock.h"
@@ -306,6 +310,50 @@ TEST_F(LoadingPredictorPreconnectTest, TestHandleOmniboxHint) {
       GURL("http://en.wikipedia.org/wiki/random");
   predictor_->PrepareForPageLoad(preresolve_suggestion2, HintOrigin::OMNIBOX,
                                  false);
+}
+
+TEST_F(LoadingPredictorPreconnectTest, TestHandleOmniboxHintDataSaverEnabled) {
+  // Enable data saver.
+  PrefService* prefs = profile_->GetPrefs();
+  prefs->SetBoolean(prefs::kDataSaverEnabled, true /* enabled */);
+  // Give the setting notification a chance to propagate.
+  content::RunAllPendingInMessageLoop();
+
+  // Enable the experiment.
+  base::test::ScopedFeatureList scoped_feature_list;
+  scoped_feature_list.InitAndEnableFeature(
+      data_reduction_proxy::features::kDisableDnsPreResolution);
+
+  const GURL preconnect_suggestion = GURL("http://search.com/kittens");
+  EXPECT_CALL(*mock_preconnect_manager_,
+              StartPreconnectUrl(preconnect_suggestion, true))
+      .Times(0);
+  predictor_->PrepareForPageLoad(preconnect_suggestion, HintOrigin::OMNIBOX,
+                                 false);
+  // The second suggestion for the same host should be filtered out.
+  const GURL preconnect_suggestion2 = GURL("http://search.com/puppies");
+  predictor_->PrepareForPageLoad(preconnect_suggestion2, HintOrigin::OMNIBOX,
+                                 false);
+
+  const GURL preresolve_suggestion = GURL("http://en.wikipedia.org/wiki/main");
+  EXPECT_CALL(*mock_preconnect_manager_,
+              StartPreresolveHost(preresolve_suggestion))
+      .Times(0);
+  predictor_->PrepareForPageLoad(preresolve_suggestion, HintOrigin::OMNIBOX,
+                                 false);
+  // The second suggestions should be filtered out as well.
+  const GURL preresolve_suggestion2 =
+      GURL("http://en.wikipedia.org/wiki/random");
+  predictor_->PrepareForPageLoad(preresolve_suggestion2, HintOrigin::OMNIBOX,
+                                 false);
+
+  // HTTPS URLs should still be preconnected to.
+  const GURL https_preconnect_suggestion = GURL("https://search.com/kittens");
+  EXPECT_CALL(*mock_preconnect_manager_,
+              StartPreconnectUrl(https_preconnect_suggestion, true))
+      .Times(1);
+  predictor_->PrepareForPageLoad(https_preconnect_suggestion,
+                                 HintOrigin::OMNIBOX, true);
 }
 
 // Checks that the predictor preconnects to an initial origin even when it

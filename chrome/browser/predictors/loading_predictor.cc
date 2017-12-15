@@ -9,10 +9,12 @@
 
 #include "base/memory/ptr_util.h"
 #include "base/metrics/histogram_macros.h"
+#include "chrome/browser/data_saver/data_saver_util.h"
 #include "chrome/browser/predictors/loading_data_collector.h"
 #include "chrome/browser/predictors/loading_stats_collector.h"
 #include "chrome/browser/predictors/resource_prefetch_common.h"
 #include "chrome/browser/predictors/resource_prefetch_predictor.h"
+#include "components/data_reduction_proxy/core/common/data_reduction_proxy_features.h"
 
 namespace predictors {
 
@@ -363,6 +365,12 @@ void LoadingPredictor::MaybeRemovePreconnect(const GURL& url) {
 void LoadingPredictor::HandleOmniboxHint(const GURL& url, bool preconnectable) {
   if (!url.is_valid() || !url.has_host() ||
       !config_.IsPreconnectEnabledForOrigin(profile_, HintOrigin::OMNIBOX)) {
+    return;
+  }
+
+  if (base::FeatureList::IsEnabled(
+          data_reduction_proxy::features::kDisableDnsPreResolution) &&
+      chrome::WouldLikelyBeFetchedViaDataSaverUI(profile_, url)) {
     return;
   }
 

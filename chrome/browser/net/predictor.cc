@@ -30,6 +30,7 @@
 #include "base/trace_event/trace_event.h"
 #include "base/values.h"
 #include "build/build_config.h"
+#include "chrome/browser/data_saver/data_saver_util.h"
 #include "chrome/browser/io_thread.h"
 #include "chrome/browser/predictors/loading_predictor_config.h"
 #include "chrome/browser/prefs/session_startup_pref.h"
@@ -37,6 +38,7 @@
 #include "chrome/common/chrome_features.h"
 #include "chrome/common/chrome_switches.h"
 #include "chrome/common/pref_names.h"
+#include "components/data_reduction_proxy/core/common/data_reduction_proxy_features.h"
 #include "components/pref_registry/pref_registry_syncable.h"
 #include "components/prefs/pref_service.h"
 #include "components/prefs/scoped_user_pref_update.h"
@@ -1008,6 +1010,12 @@ void Predictor::AppendToResolutionQueue(
 
   if (WouldLikelyProxyURL(url)) {
     info->DLogResultsStats("DNS PrefetchForProxiedRequest");
+    return;
+  }
+
+  if (base::FeatureList::IsEnabled(
+          data_reduction_proxy::features::kDisableDnsPreResolution) &&
+      chrome::WouldLikelyBeFetchedViaDataSaverIO(profile_io_data_, url)) {
     return;
   }
 
