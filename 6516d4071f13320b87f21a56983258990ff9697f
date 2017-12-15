@@ -52,6 +52,24 @@
       "revId": "6516d4071f13320b87f21a56983258990ff9697f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53c097a9_e5ac4cc0",
+        "filename": "components/viz/service/display/overlay_strategy_fullscreen.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1112153
+      },
+      "writtenOn": "2017-12-15T23:04:32Z",
+      "side": 1,
+      "message": "Sorry for late respense. I was stuck with gpu hang issue.\n\n\u003e I think we should continue down that path.\n\nWhat\u0027s mean? Do you want to give up youtube fullscreen scaling support? or do you have better idea?\n\n\u003e I\u0027m afraid we\u0027d break those with this change.\n\nI think it\u0027s ok as you always check via capability_checker_-\u003eCheckOverlaySupport(\u0026new_candidate_list);\nThis if statement is kind of \u0027early return optimization\u0027.",
+      "parentUuid": "61b180d4_8c90db37",
+      "revId": "6516d4071f13320b87f21a56983258990ff9697f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
