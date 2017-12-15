@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cd7b1043_d00f55bc",
+        "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 3260,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-12-15T22:54:28Z",
+      "side": 1,
+      "message": "Ideally we should use the element\u0027s dimension (the actual \u003cinput/\u003e) and caret bounds to resovle this. Right now the issue with using the method is that if the user has zoomed in, tapping the input will actually zoom out a bit. Also if the \u003cinput/\u003e is too wide or long, or caret is further away from top-left (or it is a Right-to-Left font) we might have issues here.",
+      "revId": "9ba3c5173f38df6f7c05501e0040fca4802412fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
