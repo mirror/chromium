@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d96c7866_d4d7afd8",
+        "filename": "ios/chrome/browser/passwords/password_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 492,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-12-15T23:01:57Z",
+      "side": 1,
+      "message": "Name OnInPageNavigation is confusing, it should be called something like OnSuccessfulFormSubmission. I\u0027m going to make big refactoring next year, this will be one of the changes to name this function more properly. I named this function OnInPageNavigation, when I\u0027ve implemented using In-Page navigation as trigger that a form was submitted, after that it became called for many other submission triggers - for example success or XHR submission of IFrame detach.\nI\u0027ve left a comment to show what exactly we need from this function, namely that OnInPageNavigation skips checking correctness of submission. Let me know, if we need to update comment.",
+      "parentUuid": "f1daa0b9_2259b9dc",
+      "range": {
+        "startLine": 492,
+        "startChar": 36,
+        "endLine": 492,
+        "endChar": 54
+      },
+      "revId": "2795e19e0d3e48154fe2a68d4a68e6e03045b23c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2a58e2fe_ff9e7392",
         "filename": "ios/chrome/browser/passwords/resources/password_controller.js",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "2795e19e0d3e48154fe2a68d4a68e6e03045b23c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49116fe3_40e5a50e",
+        "filename": "ios/chrome/browser/passwords/resources/password_controller.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-12-15T23:01:57Z",
+      "side": 1,
+      "message": "This function returns string representation of form, getPasswordFormElement_ DOM note that represents form.",
+      "parentUuid": "2a58e2fe_ff9e7392",
+      "range": {
+        "startLine": 160,
+        "startChar": 26,
+        "endLine": 160,
+        "endChar": 30
+      },
+      "revId": "2795e19e0d3e48154fe2a68d4a68e6e03045b23c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
