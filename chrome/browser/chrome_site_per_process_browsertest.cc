@@ -705,11 +705,6 @@ class TestSpellCheckMessageFilter : public content::BrowserMessageFilter,
   bool HasReceivedText() const { return text_received_; }
 
   void Wait() {
-    if (!text_received_)
-      message_loop_runner_->Run();
-  }
-
-  void WaitUntilTimeout() {
     if (text_received_)
       return;
     content::BrowserThread::PostDelayedTask(
@@ -903,7 +898,7 @@ IN_PROC_BROWSER_TEST_F(ChromeSitePerProcessTest, OOPIFDisabledSpellCheckTest) {
   scoped_refptr<TestSpellCheckMessageFilter> filter =
       browser_client.GetSpellCheckMessageFilterForProcess(
           cross_site_subframe->GetProcess());
-  filter->WaitUntilTimeout();
+  filter->Wait();
 
   // Shouldn't receive text since spellchecking is disabled.
   EXPECT_FALSE(filter->HasReceivedText());
