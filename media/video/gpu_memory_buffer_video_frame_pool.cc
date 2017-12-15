@@ -218,33 +218,6 @@ gfx::BufferFormat GpuMemoryBufferFormat(
   return gfx::BufferFormat::BGRA_8888;
 }
 
-unsigned ImageInternalFormat(GpuVideoAcceleratorFactories::OutputFormat format,
-                             size_t plane) {
-  switch (format) {
-    case GpuVideoAcceleratorFactories::OutputFormat::I420:
-      DCHECK_LE(plane, 2u);
-      return GL_RED_EXT;
-    case GpuVideoAcceleratorFactories::OutputFormat::NV12_DUAL_GMB:
-      DCHECK_LE(plane, 1u);
-      return plane == 0 ? GL_RED_EXT : GL_RG_EXT;
-    case GpuVideoAcceleratorFactories::OutputFormat::NV12_SINGLE_GMB:
-      DCHECK_LE(plane, 1u);
-      return GL_RGB_YCBCR_420V_CHROMIUM;
-    case GpuVideoAcceleratorFactories::OutputFormat::UYVY:
-      DCHECK_EQ(0u, plane);
-      return GL_RGB_YCBCR_422_CHROMIUM;
-    case GpuVideoAcceleratorFactories::OutputFormat::XR30:
-      DCHECK_EQ(0u, plane);
-      // Technically speaking we should say GL_RGB10_EXT, but that format is not
-      // supported in OpenGLES.
-      return GL_RGB10_A2_EXT;
-    case GpuVideoAcceleratorFactories::OutputFormat::UNDEFINED:
-      NOTREACHED();
-      break;
-  }
-  return 0;
-}
-
 // The number of output planes to be copied in each iteration.
 size_t PlanesPerCopy(GpuVideoAcceleratorFactories::OutputFormat format) {
   switch (format) {
@@ -765,8 +738,7 @@ void GpuMemoryBufferVideoFramePool::PoolImpl::
       const size_t height =
           VideoFrame::Rows(i, VideoFormat(output_format_), coded_size.height());
       plane_resource.image_id = gles2->CreateImageCHROMIUM(
-          plane_resource.gpu_memory_buffer->AsClientBuffer(), width, height,
-          ImageInternalFormat(output_format_, i));
+          plane_resource.gpu_memory_buffer->AsClientBuffer(), width, height);
     } else if (plane_resource.image_id) {
       gles2->ReleaseTexImage2DCHROMIUM(texture_target, plane_resource.image_id);
     }

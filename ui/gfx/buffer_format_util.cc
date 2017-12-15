@@ -284,4 +284,68 @@ const char* BufferFormatToString(BufferFormat format) {
   return "Invalid Format";
 }
 
+#define GL_ATC_RGB_AMD                    0x8C92
+#define GL_ATC_RGBA_EXPLICIT_ALPHA_AMD    0x8C93
+#define GL_ATC_RGBA_INTERPOLATED_ALPHA_AMD 0x87EE
+
+#define GL_COMPRESSED_RGB_S3TC_DXT1_EXT   0x83F0
+#define GL_COMPRESSED_RGBA_S3TC_DXT1_EXT  0x83F1
+#define GL_COMPRESSED_RGBA_S3TC_DXT5_EXT  0x83F3
+
+#define GL_ETC1_RGB8_OES                  0x8D64
+
+#define GL_RED_EXT                        0x1903
+#define GL_R16_EXT                        0x822A
+#define GL_RG_EXT                         0x8227
+#define GL_RGB                            0x1907
+#define GL_RGBA                           0x1908
+#define GL_BGRA_EXT                       0x80E1
+
+#define GL_RGB_YCRCB_420_CHROMIUM 0x78FA
+#define GL_RGB_YCBCR_422_CHROMIUM 0x78FB
+#define GL_RGB_YCBCR_420V_CHROMIUM 0x78FC
+
+#define GL_NONE                           0
+
+uint32_t BufferFormatToGLFormat(BufferFormat format) {
+  switch (format) {
+    case gfx::BufferFormat::ATC:
+      return GL_ATC_RGB_AMD;
+    case gfx::BufferFormat::ATCIA:
+      return GL_ATC_RGBA_INTERPOLATED_ALPHA_AMD;
+    case gfx::BufferFormat::DXT1:
+      return GL_COMPRESSED_RGB_S3TC_DXT1_EXT;
+    case gfx::BufferFormat::DXT5:
+      return GL_COMPRESSED_RGBA_S3TC_DXT5_EXT;
+    case gfx::BufferFormat::ETC1:
+      return GL_ETC1_RGB8_OES;
+    case gfx::BufferFormat::R_8:
+      return GL_RED_EXT;
+    case gfx::BufferFormat::R_16:
+      return GL_R16_EXT;
+    case gfx::BufferFormat::RG_88:
+      return GL_RG_EXT;
+    case gfx::BufferFormat::BGR_565:
+    case gfx::BufferFormat::RGBX_8888:
+    case gfx::BufferFormat::BGRX_8888:
+    case gfx::BufferFormat::BGRX_1010102:
+      return GL_RGB;
+    case gfx::BufferFormat::RGBA_4444:
+    case gfx::BufferFormat::RGBA_8888:
+    case gfx::BufferFormat::RGBA_F16:
+      return GL_RGBA;
+    case gfx::BufferFormat::BGRA_8888:
+      return GL_BGRA_EXT;
+    case gfx::BufferFormat::YVU_420:
+      return GL_RGB_YCRCB_420_CHROMIUM;
+    case gfx::BufferFormat::YUV_420_BIPLANAR:
+      return GL_RGB_YCBCR_420V_CHROMIUM;
+    case gfx::BufferFormat::UYVY_422:
+      return GL_RGB_YCBCR_422_CHROMIUM;
+    default:
+      NOTREACHED();
+      return GL_NONE;
+  }
+}
+
 }  // namespace gfx

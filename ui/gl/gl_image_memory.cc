@@ -20,25 +20,6 @@ using gfx::BufferFormat;
 namespace gl {
 namespace {
 
-bool ValidInternalFormat(unsigned internalformat) {
-  switch (internalformat) {
-    case GL_ATC_RGB_AMD:
-    case GL_ATC_RGBA_INTERPOLATED_ALPHA_AMD:
-    case GL_COMPRESSED_RGB_S3TC_DXT1_EXT:
-    case GL_COMPRESSED_RGBA_S3TC_DXT5_EXT:
-    case GL_ETC1_RGB8_OES:
-    case GL_RED:
-    case GL_RG:
-    case GL_RGB:
-    case GL_RGBA:
-    case GL_RGB10_A2_EXT:
-    case GL_BGRA_EXT:
-      return true;
-    default:
-      return false;
-  }
-}
-
 bool ValidFormat(gfx::BufferFormat format) {
   switch (format) {
     case gfx::BufferFormat::ATC:
@@ -376,9 +357,8 @@ std::unique_ptr<uint8_t[]> GLES2Data(const gfx::Size& size,
 
 }  // namespace
 
-GLImageMemory::GLImageMemory(const gfx::Size& size, unsigned internalformat)
+GLImageMemory::GLImageMemory(const gfx::Size& size)
     : size_(size),
-      internalformat_(internalformat),
       memory_(nullptr),
       format_(gfx::BufferFormat::RGBA_8888),
       stride_(0) {}
@@ -395,12 +375,6 @@ GLImageMemory* GLImageMemory::FromGLImage(GLImage* image) {
 bool GLImageMemory::Initialize(const unsigned char* memory,
                                gfx::BufferFormat format,
                                size_t stride) {
-  if (!ValidInternalFormat(internalformat_)) {
-    LOG(ERROR) << "Invalid internalformat: "
-               << GLEnums::GetStringEnum(internalformat_);
-    return false;
-  }
-
   if (!ValidFormat(format)) {
     LOG(ERROR) << "Invalid format: " << gfx::BufferFormatToString(format);
     return false;
@@ -426,7 +400,7 @@ gfx::Size GLImageMemory::GetSize() {
 }
 
 unsigned GLImageMemory::GetInternalFormat() {
-  return internalformat_;
+  return TextureFormat(format_);
 }
 
 bool GLImageMemory::BindTexImage(unsigned target) {
@@ -531,12 +505,6 @@ bool GLImageMemory::ScheduleOverlayPlane(gfx::AcceleratedWidget widget,
 
 GLImageMemory::Type GLImageMemory::GetType() const {
   return Type::MEMORY;
-}
-
-// static
-unsigned GLImageMemory::GetInternalFormatForTesting(gfx::BufferFormat format) {
-  DCHECK(ValidFormat(format));
-  return TextureFormat(format);
 }
 
 }  // namespace gl

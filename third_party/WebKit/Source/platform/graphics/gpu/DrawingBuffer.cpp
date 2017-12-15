@@ -1307,11 +1307,9 @@ scoped_refptr<DrawingBuffer::ColorBuffer> DrawingBuffer::CreateColorBuffer(
       Platform::Current()->GetGpuMemoryBufferManager();
   if (ShouldUseChromiumImage()) {
     gfx::BufferFormat buffer_format;
-    GLenum gl_format = GL_NONE;
     if (allocate_alpha_channel_) {
       buffer_format = use_half_float_storage_ ? gfx::BufferFormat::RGBA_F16
                                               : gfx::BufferFormat::RGBA_8888;
-      gl_format = GL_RGBA;
     } else {
       DCHECK(!use_half_float_storage_);
       buffer_format = gfx::BufferFormat::RGBX_8888;
@@ -1319,16 +1317,14 @@ scoped_refptr<DrawingBuffer::ColorBuffer> DrawingBuffer::CreateColorBuffer(
               gfx::BufferFormat::BGRX_8888,
               ContextProvider()->GetCapabilities()))
         buffer_format = gfx::BufferFormat::BGRX_8888;
-      gl_format = GL_RGB;
     }
     gpu_memory_buffer = gpu_memory_buffer_manager->CreateGpuMemoryBuffer(
         gfx::Size(size), buffer_format, gfx::BufferUsage::SCANOUT,
         gpu::kNullSurfaceHandle);
     if (gpu_memory_buffer) {
       gpu_memory_buffer->SetColorSpace(storage_color_space_);
-      image_id =
-          gl_->CreateImageCHROMIUM(gpu_memory_buffer->AsClientBuffer(),
-                                   size.Width(), size.Height(), gl_format);
+      image_id = gl_->CreateImageCHROMIUM(gpu_memory_buffer->AsClientBuffer(),
+                                          size.Width(), size.Height());
       if (!image_id)
         gpu_memory_buffer.reset();
     }

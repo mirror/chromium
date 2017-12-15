@@ -132,9 +132,7 @@ class GLManager : private GpuControl {
   void SetGpuControlClient(GpuControlClient*) override;
   const Capabilities& GetCapabilities() const override;
   int32_t CreateImage(ClientBuffer buffer,
-                      size_t width,
-                      size_t height,
-                      unsigned internalformat) override;
+                      size_t width, size_t height) override;
   void DestroyImage(int32_t id) override;
   void SignalQuery(uint32_t query, const base::Closure& callback) override;
   void CreateGpuFence(uint32_t gpu_fence_id, ClientGpuFence source) override;
