@@ -271,8 +271,6 @@ NSString* const kOverscrollActionsDidEnd = @"OverscrollActionsDidStop";
       kTabHistoryPopupWillHideNotification :
           kTabHistoryPopupWillShowNotification,
       kVoiceSearchWillHideNotification : kVoiceSearchWillShowNotification,
-      kVoiceSearchBarViewButtonDeselectedNotification :
-          kVoiceSearchBarViewButtonSelectedNotification,
       kPageInfoWillHideNotification : kPageInfoWillShowNotification,
       kLocationBarResignsFirstResponderNotification :
           kLocationBarBecomesFirstResponderNotification,
