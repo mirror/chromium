@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f307dfc6_61820b19",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-12-15T10:34:16Z",
+      "side": 1,
+      "message": "s/prevents/fixes/ ?",
+      "range": {
+        "startLine": 11,
+        "startChar": 51,
+        "endLine": 11,
+        "endChar": 59
+      },
+      "revId": "ea2ca9f397267dbd1ba052bcc1af9706ce670fa8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e37eabfa_83bd4bc8",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 727,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-12-15T10:34:16Z",
+      "side": 1,
+      "message": "s/UILayoutPriorityDefaultHight/UILayoutPriorityDefaultHigh/\ns/low/lower/",
+      "revId": "ea2ca9f397267dbd1ba052bcc1af9706ce670fa8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
