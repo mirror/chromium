@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "43baad38_a7569dcd",
+        "filename": "content/browser/storage_partition_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 634,
+      "author": {
+        "id": 1166494
+      },
+      "writtenOn": "2017-12-15T04:19:03Z",
+      "side": 1,
+      "message": "Sorry but I don\u0027t quite understand your question...\nAfter the crash |network_context_.encountered_error()| will become |true| before |connection_error_handler| was triggered, thus |GetNetworkContext()| would enter this section of code (e.g. |GetContentClient()-\u003ebrowser()-\u003eCreateNetworkContext()|) to create and return a new pipe.",
+      "parentUuid": "25c6fd21_3f2fc56b",
+      "range": {
+        "startLine": 634,
+        "startChar": 31,
+        "endLine": 634,
+        "endChar": 66
+      },
+      "revId": "6c7827b59ae49180019987413d7ab7e24aac4c05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f4286705_ea44b461",
         "filename": "content/browser/storage_partition_impl.cc",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-12-14T17:59:41Z",
       "side": 1,
       "message": "I think we need to destroy |url_loader_factory_for_browser_process_|, too, as we aren\u0027t guaranteed that it will know it\u0027s dead by this point, since the pipes are separate.",
+      "range": {
+        "startLine": 720,
+        "startChar": 26,
+        "endLine": 720,
+        "endChar": 27
+      },
+      "revId": "6c7827b59ae49180019987413d7ab7e24aac4c05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecb09420_b18d187d",
+        "filename": "content/browser/storage_partition_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 720,
+      "author": {
+        "id": 1166494
+      },
+      "writtenOn": "2017-12-15T04:19:03Z",
+      "side": 1,
+      "message": "Done. Thanks for the catch!\n\nOne Question: Are we going to hit the similar re-entrancy iisue if the observer is calling |GetNetworkContext()| to re-create |network_context_| during |observer.OnConnectionError()|?\n\n(It doesn\u0027t crash from my experiments though.)",
+      "parentUuid": "f4286705_ea44b461",
       "range": {
         "startLine": 720,
         "startChar": 26,
@@ -94,6 +142,54 @@
     },
     {
       "key": {
+        "uuid": "f4a93747_485469a9",
+        "filename": "content/public/browser/storage_partition.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1166494
+      },
+      "writtenOn": "2017-12-15T04:19:03Z",
+      "side": 1,
+      "message": "Done. Renamed to |NetworkContextObserver|.\nWe probably want to add |NetworkServiceObserver| on |network_service_instance| as well to make sure we are not recreating |NetworkContext| using the old/invalid |NetworkService|.",
+      "parentUuid": "6bd2943f_68e6951a",
+      "range": {
+        "startLine": 95,
+        "startChar": 31,
+        "endLine": 95,
+        "endChar": 32
+      },
+      "revId": "6c7827b59ae49180019987413d7ab7e24aac4c05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3aa60a0c_3461492c",
+        "filename": "content/public/browser/storage_partition.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1166494
+      },
+      "writtenOn": "2017-12-15T04:19:03Z",
+      "side": 1,
+      "message": "\u003e Is it guaranteed that after an OnConnectionError() notification is received, that the next call to StoragePartition::GetNetworkContext() will not return the old pipe?\n\nYes it\u0027s guaranteed that a new pipe will be returned.\n(However note that the new pipe is not guaranteed to work if network service instance hasn\u0027t received error notification yet, and |OnConnectionError()| will be triggered again soon in this case.)\n\n\u003e More generally, I think there should be some comments here about the guarantees regarding ordering of OnConnectionError(), GetNetworkContext() returning a new pipe, and most importantly that if a consumer responds to OnConnectionError() by getting a new pipe, this interface guarantees another OnConnectionError() call referring to that pipe if there\u0027s another crash/problem.\n\nYes another |OnConnectionError()| will be triggered if there is another crash.\nAdded more comments.\n\n\u003e Even more generally :-}, the important thing for consumers to be able to do is associate instances of an OnConnectionError() with a particular network context that\u0027s been retrieved from the StoragePartition.  It looks like we\u0027re doing that through timing and ordering (and I can\u0027t think of a better way) but we should be explicit about those relationships.\n\nMy understanding is that there will only be one active NetworkContext per StoragePartition at a time. Or will it make things more clear if I change the API to |OnConnectionError(mojom::NetworkContext* failed_context)|?\n\n\u003e ETA: It looks from storage_partition_impl.cc that we\u0027re not yet supporting automatic reacquisition of a valid NetworkContext pipe after failure.  That\u0027s fine, but I\u0027d like to make sure that the guarantees we\u0027re eventually going to provide are spelled out so that consumer can program to them now.  (+, of course, a TODO() to indicate that we\u0027re not there yet :-}.)\n\nHmmm |StoragePartition::GetNetworkContext()| does recreate NetworkContext pipe automatically. I\u0027m not sure but is this what you are asking?\nAdded comments to |StoragePartition::GetNetworkContext()|.",
+      "parentUuid": "5fba61b2_7a82b61e",
+      "range": {
+        "startLine": 95,
+        "startChar": 8,
+        "endLine": 95,
+        "endChar": 30
+      },
+      "revId": "6c7827b59ae49180019987413d7ab7e24aac4c05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "72fce57f_d46811f3",
         "filename": "content/public/browser/storage_partition.h",
         "patchSetId": 3
@@ -141,6 +237,30 @@
     },
     {
       "key": {
+        "uuid": "c09703bb_b99f7315",
+        "filename": "content/public/browser/storage_partition.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1166494
+      },
+      "writtenOn": "2017-12-15T04:19:03Z",
+      "side": 1,
+      "message": "Sounds good, thanks!",
+      "parentUuid": "0bb8e970_6fb6d5df",
+      "range": {
+        "startLine": 97,
+        "startChar": 17,
+        "endLine": 97,
+        "endChar": 34
+      },
+      "revId": "6c7827b59ae49180019987413d7ab7e24aac4c05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "48bd741a_2c659ea0",
         "filename": "content/public/browser/storage_partition.h",
         "patchSetId": 3
@@ -152,6 +272,30 @@
       "writtenOn": "2017-12-14T17:49:45Z",
       "side": 1,
       "message": "It\u0027s probably obvious based on the interface, but I\u0027m inclined to think that it\u0027s worth a short note that the NetworkServiceObserver must be removed from the StoragePartition before it is destroyed.",
+      "range": {
+        "startLine": 100,
+        "startChar": 15,
+        "endLine": 100,
+        "endChar": 40
+      },
+      "revId": "6c7827b59ae49180019987413d7ab7e24aac4c05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fc229ee_81f07bec",
+        "filename": "content/public/browser/storage_partition.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1166494
+      },
+      "writtenOn": "2017-12-15T04:19:03Z",
+      "side": 1,
+      "message": "Done. Added comments.",
+      "parentUuid": "48bd741a_2c659ea0",
       "range": {
         "startLine": 100,
         "startChar": 15,
