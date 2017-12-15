@@ -54,6 +54,9 @@ class TouchDelegate {
   // applies to all touch points currently active.
   virtual void OnTouchCancel() = 0;
 
+  virtual void AddHighResTimestampSubscriber(void* subscriber) = 0;
+  virtual void RemoveHighResTimestampSubscriber(void* subscriber) = 0;
+
  protected:
   virtual ~TouchDelegate() {}
 };

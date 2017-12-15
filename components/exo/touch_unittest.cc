@@ -40,6 +40,8 @@ class MockTouchDelegate : public TouchDelegate {
   MOCK_METHOD3(OnTouchShape, void(int, float, float));
   MOCK_METHOD0(OnTouchFrame, void());
   MOCK_METHOD0(OnTouchCancel, void());
+  MOCK_METHOD1(AddHighResTimestampSubscriber, void(void*));
+  MOCK_METHOD1(RemoveHighResTimestampSubscriber, void(void*));
 };
 
 class MockTouchStylusDelegate : public TouchStylusDelegate {
@@ -395,6 +397,26 @@ TEST_F(TouchTest, OnTouchTilt) {
   generator.ReleaseTouch();
 
   EXPECT_CALL(delegate, OnTouchDestroying(touch.get()));
+  touch.reset();
+}
+
+TEST_F(TouchTest, HighResTimestamp) {
+  MockTouchDelegate delegate;
+  std::unique_ptr<Touch> touch(new Touch(&delegate));
+
+  int subscriber = 0;
+
+  {
+    testing::InSequence s;
+
+    EXPECT_CALL(delegate, AddHighResTimestampSubscriber(&subscriber));
+    EXPECT_CALL(delegate, RemoveHighResTimestampSubscriber(&subscriber));
+    EXPECT_CALL(delegate, OnTouchDestroying(touch.get()));
+  }
+
+  touch->AddHighResTimestampSubscriber(&subscriber);
+  touch->RemoveHighResTimestampSubscriber(&subscriber);
+
   touch.reset();
 }
 

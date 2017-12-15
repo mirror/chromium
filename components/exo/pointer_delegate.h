@@ -65,6 +65,9 @@ class PointerDelegate {
   // this method is called.
   virtual void OnPointerFrame() = 0;
 
+  virtual void AddHighResTimestampSubscriber(void* subscriber) = 0;
+  virtual void RemoveHighResTimestampSubscriber(void* subscriber) = 0;
+
  protected:
   virtual ~PointerDelegate() {}
 };

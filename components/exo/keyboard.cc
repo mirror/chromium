@@ -184,6 +184,7 @@ bool Keyboard::HasObserver(KeyboardObserver* observer) const {
 }
 
 void Keyboard::RemoveObserver(KeyboardObserver* observer) {
+  // TODO: FIX -> RemoveObserver
   observer_list_.HasObserver(observer);
 }
 
@@ -205,6 +206,14 @@ void Keyboard::AckKeyboardKey(uint32_t serial, bool handled) {
   if (!handled && focus_)
     ProcessAccelerator(focus_, &it->second.first);
   pending_key_acks_.erase(serial);
+}
+
+void Keyboard::AddHighResTimestampSubscriber(void* subscriber) {
+  delegate_->AddHighResTimestampSubscriber(subscriber);
+}
+
+void Keyboard::RemoveHighResTimestampSubscriber(void* subscriber) {
+  delegate_->RemoveHighResTimestampSubscriber(subscriber);
 }
 
 ////////////////////////////////////////////////////////////////////////////////

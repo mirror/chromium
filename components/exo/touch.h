@@ -8,7 +8,9 @@
 #include <vector>
 
 #include "base/macros.h"
+#include "base/observer_list.h"
 #include "components/exo/surface_observer.h"
+#include "components/exo/touch_observer.h"
 #include "ui/events/event_handler.h"
 #include "ui/gfx/geometry/point_f.h"
 
@@ -27,9 +29,17 @@ class Touch : public ui::EventHandler, public SurfaceObserver {
   explicit Touch(TouchDelegate* delegate);
   ~Touch() override;
 
+  // Management of the observer list.
+  void AddObserver(TouchObserver* observer);
+  void RemoveObserver(TouchObserver* observer);
+
   // Set delegate for stylus events.
   void SetStylusDelegate(TouchStylusDelegate* delegate);
   bool HasStylusDelegate() const;
+
+  // Management of high-resolution timestamp subscribers.
+  void AddHighResTimestampSubscriber(void* subscriber);
+  void RemoveHighResTimestampSubscriber(void* subscriber);
 
   // Overridden from ui::EventHandler:
   void OnTouchEvent(ui::TouchEvent* event) override;
@@ -49,6 +59,9 @@ class Touch : public ui::EventHandler, public SurfaceObserver {
 
   // The current focus surface for the touch device.
   Surface* focus_ = nullptr;
+
+  // List of touch observers.
+  base::ObserverList<TouchObserver> observer_list_;
 
   // Vector of touch points in focus surface.
   std::vector<int> touch_points_;

@@ -41,6 +41,9 @@ class KeyboardDelegate {
   // Called when keyboard modifier state changed.
   virtual void OnKeyboardModifiers(int modifier_flags) = 0;
 
+  virtual void AddHighResTimestampSubscriber(void* subscriber) = 0;
+  virtual void RemoveHighResTimestampSubscriber(void* subscriber) = 0;
+
  protected:
   virtual ~KeyboardDelegate() {}
 };

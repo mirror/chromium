@@ -48,10 +48,20 @@ Touch::Touch(TouchDelegate* delegate) : delegate_(delegate) {
 }
 
 Touch::~Touch() {
+  for (auto& observer : observer_list_)
+    observer.OnTouchDestroying(this);
   delegate_->OnTouchDestroying(this);
   if (focus_)
     focus_->RemoveSurfaceObserver(this);
   WMHelper::GetInstance()->RemovePreTargetHandler(this);
+}
+
+void Touch::AddObserver(TouchObserver* observer) {
+  observer_list_.AddObserver(observer);
+}
+
+void Touch::RemoveObserver(TouchObserver* observer) {
+  observer_list_.RemoveObserver(observer);
 }
 
 void Touch::SetStylusDelegate(TouchStylusDelegate* delegate) {
@@ -60,6 +70,14 @@ void Touch::SetStylusDelegate(TouchStylusDelegate* delegate) {
 
 bool Touch::HasStylusDelegate() const {
   return !!stylus_delegate_;
+}
+
+void Touch::AddHighResTimestampSubscriber(void* subscriber) {
+  delegate_->AddHighResTimestampSubscriber(subscriber);
+}
+
+void Touch::RemoveHighResTimestampSubscriber(void* subscriber) {
+  delegate_->RemoveHighResTimestampSubscriber(subscriber);
 }
 
 ////////////////////////////////////////////////////////////////////////////////

@@ -53,6 +53,10 @@ class Keyboard : public ui::EventHandler,
 
   void AckKeyboardKey(uint32_t serial, bool handled);
 
+  // Management of high-resolution timestamp subscribers.
+  void AddHighResTimestampSubscriber(void* subscriber);
+  void RemoveHighResTimestampSubscriber(void* subscriber);
+
   // Overridden from ui::EventHandler:
   void OnKeyEvent(ui::KeyEvent* event) override;
 

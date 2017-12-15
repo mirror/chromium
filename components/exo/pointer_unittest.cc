@@ -43,6 +43,8 @@ class MockPointerDelegate : public PointerDelegate {
                void(base::TimeTicks, const gfx::Vector2dF&, bool));
   MOCK_METHOD1(OnPointerScrollStop, void(base::TimeTicks));
   MOCK_METHOD0(OnPointerFrame, void());
+  MOCK_METHOD1(AddHighResTimestampSubscriber, void(void*));
+  MOCK_METHOD1(RemoveHighResTimestampSubscriber, void(void*));
 };
 
 TEST_F(PointerTest, SetCursor) {
@@ -473,6 +475,26 @@ TEST_F(PointerTest, IgnorePointerEventDuringModal) {
   generator.MoveMouseTo(surface->window()->GetBoundsInScreen().bottom_right());
 
   EXPECT_CALL(delegate, OnPointerDestroying(pointer.get()));
+  pointer.reset();
+}
+
+TEST_F(PointerTest, HighResTimestamp) {
+  MockPointerDelegate delegate;
+  std::unique_ptr<Pointer> pointer(new Pointer(&delegate));
+
+  int subscriber = 0;
+
+  {
+    testing::InSequence s;
+
+    EXPECT_CALL(delegate, AddHighResTimestampSubscriber(&subscriber));
+    EXPECT_CALL(delegate, RemoveHighResTimestampSubscriber(&subscriber));
+    EXPECT_CALL(delegate, OnPointerDestroying(pointer.get()));
+  }
+
+  pointer->AddHighResTimestampSubscriber(&subscriber);
+  pointer->RemoveHighResTimestampSubscriber(&subscriber);
+
   pointer.reset();
 }
 

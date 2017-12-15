@@ -9,7 +9,9 @@
 
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
+#include "base/observer_list.h"
 #include "base/unguessable_token.h"
+#include "components/exo/pointer_observer.h"
 #include "components/exo/surface_observer.h"
 #include "components/exo/surface_tree_host.h"
 #include "components/exo/wm_helper.h"
@@ -48,6 +50,10 @@ class Pointer : public SurfaceTreeHost,
   explicit Pointer(PointerDelegate* delegate);
   ~Pointer() override;
 
+  // Management of the observer list.
+  void AddObserver(PointerObserver* observer);
+  void RemoveObserver(PointerObserver* observer);
+
   // Set the pointer surface, i.e., the surface that contains the pointer image
   // (cursor). The |hotspot| argument defines the position of the pointer
   // surface relative to the pointer location. Its top-left corner is always at
@@ -60,6 +66,10 @@ class Pointer : public SurfaceTreeHost,
 
   // Returns the current cursor for the pointer.
   gfx::NativeCursor GetCursor();
+
+  // Management of high-resolution timestamp subscribers.
+  void AddHighResTimestampSubscriber(void* subscriber);
+  void RemoveHighResTimestampSubscriber(void* subscriber);
 
   // Overridden from SurfaceDelegate:
   void OnSurfaceCommit() override;
@@ -139,6 +149,9 @@ class Pointer : public SurfaceTreeHost,
 
   // Last received event type.
   ui::EventType last_event_type_ = ui::ET_UNKNOWN;
+
+  // List of pointer observers.
+  base::ObserverList<PointerObserver> observer_list_;
 
   // Weak pointer factory used for cursor capture callbacks.
   base::WeakPtrFactory<Pointer> cursor_capture_weak_ptr_factory_;

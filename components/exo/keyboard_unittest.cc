@@ -8,6 +8,7 @@
 #include "ash/wm/tablet_mode/tablet_mode_controller.h"
 #include "base/macros.h"
 #include "base/run_loop.h"
+#include "base/time/time.h"
 #include "components/exo/buffer.h"
 #include "components/exo/keyboard_delegate.h"
 #include "components/exo/keyboard_device_configuration_delegate.h"
@@ -40,6 +41,8 @@ class MockKeyboardDelegate : public KeyboardDelegate {
   MOCK_METHOD1(OnKeyboardLeave, void(Surface*));
   MOCK_METHOD3(OnKeyboardKey, uint32_t(base::TimeTicks, ui::DomCode, bool));
   MOCK_METHOD1(OnKeyboardModifiers, void(int));
+  MOCK_METHOD1(AddHighResTimestampSubscriber, void(void*));
+  MOCK_METHOD1(RemoveHighResTimestampSubscriber, void(void*));
 };
 
 class MockKeyboardDeviceConfigurationDelegate
@@ -561,6 +564,26 @@ TEST_F(KeyboardTest, AckKeyboardKeyExpiredWithMovingFocusAccelerator) {
       base::TimeDelta::FromMilliseconds(1000));
   run_loop.Run();
   RunAllPendingInMessageLoop();
+
+  keyboard.reset();
+}
+
+TEST_F(KeyboardTest, HighResTimestamp) {
+  MockKeyboardDelegate delegate;
+  Seat seat;
+  auto keyboard = std::make_unique<Keyboard>(&delegate, &seat);
+
+  int subscriber = 0;
+
+  {
+    testing::InSequence s;
+
+    EXPECT_CALL(delegate, AddHighResTimestampSubscriber(&subscriber));
+    EXPECT_CALL(delegate, RemoveHighResTimestampSubscriber(&subscriber));
+  }
+
+  keyboard->AddHighResTimestampSubscriber(&subscriber);
+  keyboard->RemoveHighResTimestampSubscriber(&subscriber);
 
   keyboard.reset();
 }

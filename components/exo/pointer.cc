@@ -91,6 +91,8 @@ Pointer::Pointer(PointerDelegate* delegate)
 }
 
 Pointer::~Pointer() {
+  for (auto& observer : observer_list_)
+    observer.OnPointerDestroying(this);
   delegate_->OnPointerDestroying(this);
   if (focus_surface_) {
     focus_surface_->RemoveSurfaceObserver(this);
@@ -104,6 +106,14 @@ Pointer::~Pointer() {
   helper->RemovePreTargetHandler(this);
   if (root_surface())
     root_surface()->RemoveSurfaceObserver(this);
+}
+
+void Pointer::AddObserver(PointerObserver* observer) {
+  observer_list_.AddObserver(observer);
+}
+
+void Pointer::RemoveObserver(PointerObserver* observer) {
+  observer_list_.RemoveObserver(observer);
 }
 
 void Pointer::SetCursor(Surface* surface, const gfx::Point& hotspot) {
@@ -152,6 +162,14 @@ void Pointer::SetGesturePinchDelegate(PointerGesturePinchDelegate* delegate) {
 
 gfx::NativeCursor Pointer::GetCursor() {
   return cursor_;
+}
+
+void Pointer::AddHighResTimestampSubscriber(void* subscriber) {
+  delegate_->AddHighResTimestampSubscriber(subscriber);
+}
+
+void Pointer::RemoveHighResTimestampSubscriber(void* subscriber) {
+  delegate_->RemoveHighResTimestampSubscriber(subscriber);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
