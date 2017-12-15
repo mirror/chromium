@@ -452,7 +452,7 @@ class CC_EXPORT LayerTreeHostImpl
     return &image_animation_controller_.value();
   }
 
-  virtual void WillBeginImplFrame(const viz::BeginFrameArgs& args);
+  virtual bool WillBeginImplFrame(const viz::BeginFrameArgs& args);
   virtual void DidFinishImplFrame();
   void DidNotProduceFrame(const viz::BeginFrameAck& ack);
   void DidModifyTilePriorities();
