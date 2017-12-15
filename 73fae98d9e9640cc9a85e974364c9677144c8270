@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "43fb3c17_3cbf0700",
+        "filename": "gin/array_buffer.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002763
+      },
+      "writtenOn": "2017-12-15T12:00:35Z",
+      "side": 1,
+      "message": "nit - could you make Protection the first argument (keeping data and length next to each other).",
+      "range": {
+        "startLine": 33,
+        "startChar": 33,
+        "endLine": 33,
+        "endChar": 55
+      },
+      "revId": "73fae98d9e9640cc9a85e974364c9677144c8270",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
