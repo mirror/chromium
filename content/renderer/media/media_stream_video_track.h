@@ -23,6 +23,17 @@ namespace content {
 
 struct VideoTrackAdapterSettings;
 
+namespace media_stream_remote_video_source_unittest {
+class MediaStreamRemoteVideoSourceTest;
+FORWARD_DECLARE_TEST(MediaStreamRemoteVideoSourceTest, StartTrack);
+FORWARD_DECLARE_TEST(MediaStreamRemoteVideoSourceTest, RemoteTrackStop);
+}  // namespace media_stream_remote_video_source_unittest
+
+namespace pepper_to_video_track_adapter_unittest {
+class PepperToVideoTrackAdapterTest;
+FORWARD_DECLARE_TEST(PepperToVideoTrackAdapterTest, PutFrame);
+}  // namespace pepper_to_video_track_adapter_unittest
+
 // MediaStreamVideoTrack is a video specific representation of a
 // blink::WebMediaStreamTrack in content. It is owned by the blink object
 // and can be retrieved from a blink object using
@@ -113,9 +124,15 @@ class CONTENT_EXPORT MediaStreamVideoTrack : public MediaStreamTrack {
   // MediaStreamVideoSink is a friend to allow it to call AddSink() and
   // RemoveSink().
   friend class MediaStreamVideoSink;
-  FRIEND_TEST_ALL_PREFIXES(MediaStreamRemoteVideoSourceTest, StartTrack);
-  FRIEND_TEST_ALL_PREFIXES(MediaStreamRemoteVideoSourceTest, RemoteTrackStop);
-  FRIEND_TEST_ALL_PREFIXES(PepperToVideoTrackAdapterTest, PutFrame);
+  FRIEND_TEST_ALL_PREFIXES(media_stream_remote_video_source_unittest::
+                               MediaStreamRemoteVideoSourceTest,
+                           StartTrack);
+  FRIEND_TEST_ALL_PREFIXES(media_stream_remote_video_source_unittest::
+                               MediaStreamRemoteVideoSourceTest,
+                           RemoteTrackStop);
+  FRIEND_TEST_ALL_PREFIXES(
+      pepper_to_video_track_adapter_unittest::PepperToVideoTrackAdapterTest,
+      PutFrame);
 
   // Add |sink| to receive state changes on the main render thread and video
   // frames in the |callback| method on the IO-thread.
