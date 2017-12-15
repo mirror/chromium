@@ -727,7 +727,7 @@ def generate_cplusplus_isolate_script_test_with_args(dimension):
 
 
 def ShouldBenchmarksBeScheduled(
-    benchmark, name, os_name, browser_name):
+    benchmark, name, os_name, browser_name, expectations_data):
   # StoryExpectations uses finder_options.browser_type, platform.GetOSName,
   # platform.GetDeviceTypeName, and platform.IsSvelte to determine if the
   # the expectation test condition is true and the test should be disabled.
@@ -778,6 +778,8 @@ def ShouldBenchmarksBeScheduled(
   e = ExpectationData(browser_name, os_name, device_type_name)
 
   b = benchmark()
+  if expectations_data:
+    b.AugmentExpectationsWithParser(expectations_data)
   # TODO(rnephew): As part of the refactoring of TestConditions this will
   # be refactored to make more sense. SUPPORTED_PLATFORMS was not the original
   # intended use of TestConditions, so we actually want to test the opposite.
@@ -787,7 +789,7 @@ def ShouldBenchmarksBeScheduled(
 
 def generate_telemetry_tests(name, tester_config, benchmarks,
                              benchmark_sharding_map,
-                             benchmark_ref_build_blacklist):
+                             benchmark_ref_build_blacklist, expectations_data):
   isolated_scripts = []
   # First determine the browser that you need based on the tester
   browser_name = ''
@@ -822,7 +824,8 @@ def generate_telemetry_tests(name, tester_config, benchmarks,
           dimension, device))
 
     if not ShouldBenchmarksBeScheduled(
-        benchmark, name, swarming_dimensions[0]['os'], browser_name):
+        benchmark, name, swarming_dimensions[0]['os'], browser_name,
+        expectations_data):
       continue
 
     test = generate_telemetry_test(
@@ -908,7 +911,7 @@ def remove_blacklisted_device_tests(tests, blacklisted_devices):
       in blacklist_device_to_test.items()}
 
 
-def generate_all_tests(waterfall):
+def generate_all_tests(waterfall, expectations_data):
   tests = {}
 
   all_benchmarks = current_benchmarks()
@@ -923,7 +926,7 @@ def generate_all_tests(waterfall):
     # Generate benchmarks
     isolated_scripts = generate_telemetry_tests(
         name, config, all_benchmarks, benchmark_sharding_map,
-        BENCHMARK_REF_BUILD_BLACKLIST)
+        BENCHMARK_REF_BUILD_BLACKLIST, expectations_data)
     # Generate swarmed non-telemetry tests if present
     if config['swarming_dimensions'][0].get('perf_tests', False):
       isolated_scripts += generate_cplusplus_isolate_script_test(
@@ -982,10 +985,10 @@ def append_extra_tests(waterfall, tests):
         tests[key] = value
 
 
-def update_all_tests(waterfalls):
+def update_all_tests(waterfalls, expectations_data):
   all_tests = {}
   for w in waterfalls:
-    tests = generate_all_tests(w)
+    tests = generate_all_tests(w, expectations_data)
     # Note: |all_tests| don't cover those manually-specified tests added by
     # append_extra_tests().
     all_tests.update(tests)
@@ -994,8 +997,8 @@ def update_all_tests(waterfalls):
     with open(config_file, 'w') as fp:
       json.dump(tests, fp, indent=2, separators=(',', ': '), sort_keys=True)
       fp.write('\n')
-  verify_all_tests_in_benchmark_csv(all_tests,
-                                    get_all_waterfall_benchmarks_metadata())
+  verify_all_tests_in_benchmark_csv(
+      all_tests, get_all_waterfall_benchmarks_metadata(expectations_data))
 
 
 # not_scheduled means this test is not scheduled on any of the chromium.perf
@@ -1040,15 +1043,19 @@ NON_WATERFALL_BENCHMARKS = {
 
 # Returns a dictionary mapping waterfall benchmark name to benchmark owner
 # metadata
-def get_all_waterfall_benchmarks_metadata():
-  return get_all_benchmarks_metadata(NON_TELEMETRY_BENCHMARKS)
+def get_all_waterfall_benchmarks_metadata(expectations_data):
+  return get_all_benchmarks_metadata(
+      NON_TELEMETRY_BENCHMARKS, expectations_data)
 
 
-def get_all_benchmarks_metadata(metadata):
+def get_all_benchmarks_metadata(metadata, expectations_data):
   benchmark_list = current_benchmarks()
 
   for benchmark in benchmark_list:
-    exp = benchmark().GetExpectations()
+    b = benchmark()
+    if expectations_data:
+      b.AugmentExpectationsWithParser(expectations_data)
+    exp = b.expectations
     disabled = 'all' in decorators.GetDisabledAttributes(benchmark) or any(
         any(isinstance(condition, expectations.ALL.__class__)
             for condition in conditions)
@@ -1123,7 +1130,7 @@ def _verify_benchmark_owners(benchmark_metadata):
       'Please fix the following errors:\n'+ '\n'.join(error_messages))
 
 
-def update_benchmark_csv():
+def update_benchmark_csv(expectations_data):
   """Updates go/chrome-benchmarks.
 
   Updates telemetry/perf/benchmark.csv containing the current benchmark names,
@@ -1137,7 +1144,8 @@ def update_benchmark_csv():
   csv_data = []
   all_benchmarks = NON_TELEMETRY_BENCHMARKS
   all_benchmarks.update(NON_WATERFALL_BENCHMARKS)
-  benchmark_metadata = get_all_benchmarks_metadata(all_benchmarks)
+  benchmark_metadata = get_all_benchmarks_metadata(all_benchmarks,
+                                                   expectations_data)
   _verify_benchmark_owners(benchmark_metadata)
 
   for benchmark_name in benchmark_metadata:
@@ -1163,5 +1171,9 @@ def main():
   fyi_waterfall = get_fyi_waterfall_config()
   fyi_waterfall['name'] = 'chromium.perf.fyi'
 
-  update_all_tests([fyi_waterfall, waterfall])
-  update_benchmark_csv()
+  expectations_data = None
+  with open(path_util.GetExpectationsPath()) as fp:
+    expectations_data = fp.read()
+
+  update_all_tests([fyi_waterfall, waterfall], expectations_data)
+  update_benchmark_csv(expectations_data)

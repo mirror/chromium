@@ -140,7 +140,7 @@ class PerfDataGeneratorTest(unittest.TestCase):
     sharding_map = {'fake': {'regular': 'a'}}
     benchmarks = [RegularBenchmark]
     tests = perf_data_generator.generate_telemetry_tests(
-        'fake', test_config, benchmarks, sharding_map, ['blacklisted'])
+        'fake', test_config, benchmarks, sharding_map, ['blacklisted'], None)
 
     self.assertEqual(len(tests), 1)
     test = tests[0]
@@ -171,7 +171,7 @@ class PerfDataGeneratorTest(unittest.TestCase):
     sharding_map = {'fake': {'blacklisted': 'a', 'not_blacklisted': 'a'}}
     benchmarks = [BlacklistedBenchmark, NotBlacklistedBenchmark]
     tests = perf_data_generator.generate_telemetry_tests(
-        'fake', test_config, benchmarks, sharding_map, ['blacklisted'])
+        'fake', test_config, benchmarks, sharding_map, ['blacklisted'], None)
 
     generated_test_names = set(t['name'] for t in tests)
     self.assertEquals(
@@ -270,7 +270,7 @@ class PerfDataGeneratorTest(unittest.TestCase):
 
     with self.assertRaises(TypeError):
       perf_data_generator.ShouldBenchmarksBeScheduled(
-          RegularBenchmark, 'bot_name', 'os_name', None)
+          RegularBenchmark, 'bot_name', 'os_name', None, None)
 
   def testShouldBenchmarksBeScheduledShouldRun(self):
     class RegularBenchmark(benchmark.Benchmark):
@@ -281,8 +281,9 @@ class PerfDataGeneratorTest(unittest.TestCase):
     for os in valid_os_list:
       self.assertTrue(
           perf_data_generator.ShouldBenchmarksBeScheduled(
-              RegularBenchmark, 'bot_name', os, None))
+              RegularBenchmark, 'bot_name', os, None, None))
 
+  # Delete this test after only using expectations file.
   def testShouldBenchmarksBeScheduledDisabledButScheduled(self):
     class RegularBenchmark(benchmark.Benchmark):
       @classmethod
@@ -299,7 +300,21 @@ class PerfDataGeneratorTest(unittest.TestCase):
     for os in valid_os_list:
       self.assertTrue(
           perf_data_generator.ShouldBenchmarksBeScheduled(
-              RegularBenchmark, 'bot_name', os, None))
+              RegularBenchmark, 'bot_name', os, None, None))
+
+  def testShouldBenchmarksBeScheduledDisabledButScheduledFile(self):
+    class RegularBenchmark(benchmark.Benchmark):
+      @classmethod
+      def Name(cls):
+        return 'regular'
+
+    expectations_data = '# tags: All\ncrbug.com/123 [ All ] regular/* [ Skip ]'
+    valid_os_list = ['mac', 'android', 'windows', 'linux']
+    for os in valid_os_list:
+      self.assertTrue(
+          perf_data_generator.ShouldBenchmarksBeScheduled(
+              RegularBenchmark, 'bot_name', os, None, expectations_data))
+
 
   def testShouldBenchmarkBeScheduledSupportedPlatform(self):
     class RegularBenchmark(benchmark.Benchmark):
@@ -311,7 +326,7 @@ class PerfDataGeneratorTest(unittest.TestCase):
 
     self.assertFalse(
         perf_data_generator.ShouldBenchmarksBeScheduled(
-            RegularBenchmark, 'bot_name', 'mac', None))
+            RegularBenchmark, 'bot_name', 'mac', None, None))
 
   def testListsAlphabetical(self):
     keys = [
