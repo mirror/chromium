@@ -22,6 +22,53 @@
       "revId": "5daf6881110abdced4df634e4097502ecdccc97c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc4d484a_cc755ae9",
+        "filename": "chromecast/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1202434
+      },
+      "writtenOn": "2017-12-15T20:25:09Z",
+      "side": 1,
+      "message": "I\u0027m fine with this unless someone else has a better suggestion.",
+      "parentUuid": "ee3dfcea_53a90ed5",
+      "range": {
+        "startLine": 54,
+        "startChar": 0,
+        "endLine": 54,
+        "endChar": 38
+      },
+      "revId": "5daf6881110abdced4df634e4097502ecdccc97c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d51a70b1_65425530",
+        "filename": "chromecast/base/cast_paths.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1202434
+      },
+      "writtenOn": "2017-12-15T20:25:09Z",
+      "side": 1,
+      "message": "nit: remove unnecessary negation\n\n#ifdef CAST_DESKTOP_BUILD",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 32
+      },
+      "revId": "5daf6881110abdced4df634e4097502ecdccc97c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
