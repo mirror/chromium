@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c8dbdc74_56c07130",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/test_voice_interaction_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2017-12-15T20:24:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "33edfc51_1be2deae",
+      "revId": "e5462d626ad1f884b293175333d422fd6df7b1be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d69b0ae5_7e484df6",
         "filename": "chrome/browser/chromeos/arc/voice_interaction/voice_interaction_controller_client.cc",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "68db1d34_999d09b8",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/voice_interaction_controller_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2017-12-15T20:24:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d69b0ae5_7e484df6",
+      "revId": "e5462d626ad1f884b293175333d422fd6df7b1be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e74eef1f_9c5be802",
         "filename": "chrome/browser/chromeos/arc/voice_interaction/voice_interaction_controller_client.cc",
         "patchSetId": 2
@@ -50,6 +86,24 @@
       "revId": "e5462d626ad1f884b293175333d422fd6df7b1be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fc51a37_f13c8322",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/voice_interaction_controller_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2017-12-15T20:24:25Z",
+      "side": 1,
+      "message": "Need to keep it.  It seems there is a timing issue during shutdown if removed. This notification seems a good time to cleanup than relying on destructor.\n\n[85206:85206:1215/105022.900280:2504222549571:WARNING:pref_notifier_impl.cc(23)] Pref observer found at shutdown.\n[85206:85206:1215/105022.900400:2504222549684:WARNING:pref_notifier_impl.cc(23)] Pref observer found at shutdown.\n[85206:85206:1215/105022.900456:2504222549738:WARNING:pref_notifier_impl.cc(23)] Pref observer found at shutdown.\nReceived signal 11 SEGV_MAPERR ffffcab31f5a97af\n#0 0x0000044b8a4c base::debug::StackTrace::StackTrace()\n#1 0x0000044b85b1 base::debug::(anonymous namespace)::StackDumpSignalHandler()\n#2 0x7fc9035d90c0 \u003cunknown\u003e\n#3 0x0000052fff6f PrefChangeRegistrar::~PrefChangeRegistrar()\n#4 0x0000030ad29a arc::VoiceInteractionControllerClient::~VoiceInteractionControllerClient()\n#5 0x0000030ad30e arc::VoiceInteractionControllerClient::~VoiceInteractionControllerClient()\n#6 0x000001c73034 arc::VoiceInteractionControllerClientTest::TearDown()\n#7 0x0000021bde40 testing::TestInfo::Run()\n#8 0x0000021be327 testing::TestCase::Run()\n#9 0x0000021c4947 testing::internal::UnitTestImpl::RunAllTests()\n#10 0x0000021c4597 testing::UnitTest::Run()\n#11 0x000003c1b872 base::TestSuite::Run()",
+      "parentUuid": "e74eef1f_9c5be802",
+      "revId": "e5462d626ad1f884b293175333d422fd6df7b1be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "47056700_23f0f9a8",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/voice_interaction_controller_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2017-12-15T20:24:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f17ad062_2c9e679e",
+      "range": {
+        "startLine": 178,
+        "startChar": 19,
+        "endLine": 178,
+        "endChar": 23
+      },
+      "revId": "e5462d626ad1f884b293175333d422fd6df7b1be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f12e908f_e854afad",
         "filename": "chrome/browser/chromeos/arc/voice_interaction/voice_interaction_controller_client.h",
         "patchSetId": 2
@@ -90,6 +168,24 @@
       "revId": "e5462d626ad1f884b293175333d422fd6df7b1be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a48a434_df144329",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/voice_interaction_controller_client.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2017-12-15T20:24:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f12e908f_e854afad",
+      "revId": "e5462d626ad1f884b293175333d422fd6df7b1be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -110,6 +206,24 @@
     },
     {
       "key": {
+        "uuid": "afc9d21f_39d9ee96",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/voice_interaction_controller_client.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2017-12-15T20:24:25Z",
+      "side": 1,
+      "message": "Talked to Xiyuan briefly about the various ways to make singleton.  base::Singleton is harder to reasoning the life cycle and ownership of the object and the few singletons in the chromeos browser main are in this style.  Let me know if you feel strongly we should go with base::Singleton,  one way or the other we could make it work.",
+      "parentUuid": "b83ffa35_1a2a6c5b",
+      "revId": "e5462d626ad1f884b293175333d422fd6df7b1be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f8c9bd34_a1a9470f",
         "filename": "chrome/browser/chromeos/arc/voice_interaction/voice_interaction_controller_client.h",
         "patchSetId": 2
@@ -124,6 +238,24 @@
       "revId": "e5462d626ad1f884b293175333d422fd6df7b1be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70813c20_42424402",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/voice_interaction_controller_client.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2017-12-15T20:24:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f8c9bd34_a1a9470f",
+      "revId": "e5462d626ad1f884b293175333d422fd6df7b1be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -144,6 +276,24 @@
     },
     {
       "key": {
+        "uuid": "ce023590_ab5e15df",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/voice_interaction_controller_client.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2017-12-15T20:24:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8281924c_985d3b08",
+      "revId": "e5462d626ad1f884b293175333d422fd6df7b1be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "67647bdc_059faff5",
         "filename": "chrome/browser/chromeos/arc/voice_interaction/voice_interaction_controller_client.h",
         "patchSetId": 2
@@ -161,6 +311,24 @@
     },
     {
       "key": {
+        "uuid": "2272b3ee_993ad61b",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/voice_interaction_controller_client.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2017-12-15T20:24:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67647bdc_059faff5",
+      "revId": "e5462d626ad1f884b293175333d422fd6df7b1be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ef13e9cf_e38bba59",
         "filename": "chrome/browser/chromeos/arc/voice_interaction/voice_interaction_controller_client_unittest.cc",
         "patchSetId": 2
@@ -175,6 +343,24 @@
       "revId": "e5462d626ad1f884b293175333d422fd6df7b1be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7759a64_234d9e53",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/voice_interaction_controller_client_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2017-12-15T20:24:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ef13e9cf_e38bba59",
+      "revId": "e5462d626ad1f884b293175333d422fd6df7b1be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
