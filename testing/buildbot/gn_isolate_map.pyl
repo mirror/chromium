@@ -1154,6 +1154,10 @@
     "label": "//ui/views:views_unittests",
     "type": "windowed_test_launcher",
   },
+  "views_perftests": {
+    "label": "//ui/views:views_perftests",
+    "type": "windowed_test_launcher",
+  },
   "viz_unittests": {
     "label": "//components/viz:viz_unittests",
     "type": "windowed_test_launcher",
