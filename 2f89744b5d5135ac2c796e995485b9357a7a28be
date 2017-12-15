@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "af87e378_37e6ee6e",
+        "filename": "chrome/browser/ui/views/location_bar/star_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-12-15T14:20:28Z",
+      "side": 1,
+      "message": "In the framework I\u0027d worked on in the past there was a component (or sets of components) which centralized user actions or commands. Various UI elements could then be \"attached\" to a given command. The UI elements would then interrogate the \"action\" for state (enabled, checked, etc...), UI icon image and colors, etc..\n\nIt was a publish/subscribe or observer model where the \"action\" would push state changes to the UI elements. The UI element would invoke the action in response to whatever external stimuli was appropriate for that element. Nearly all interactive UI elements, buttons, menu items, toolbars, lists, could be attached to any action. Multiple UI elements could be attached to the same action, such as a menu item and toolbar button. Every UI element would invoke the same exact command or action. This would ensure consistent behavior across the UI.\n\nThe action components could be customized to perform a specific action or operation, such as advance to the next/previous record in a query, show an open/save file dialog, or any myriad of operations.\n\nThis was more flexible than keeping some list of numeric command identifiers since each action or command is represented by a specific instance and it\u0027s delegate. A centralized action manager (think CommandUpdater) would update each of the action instances right before the UI would go idle. Any changes to state would be propagated throughout the UI. State changes could also be pushed at any time.",
+      "parentUuid": "2efa2895_35c7d290",
+      "revId": "2f89744b5d5135ac2c796e995485b9357a7a28be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "116fc920_b84bc100",
         "filename": "chrome/browser/ui/views/location_bar/star_view.h",
         "patchSetId": 2
