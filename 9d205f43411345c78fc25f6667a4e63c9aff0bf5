@@ -248,6 +248,30 @@
     },
     {
       "key": {
+        "uuid": "92fa71bc_cd53645a",
+        "filename": "chrome/browser/ui/ash/chrome_launcher_prefs.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-12-15T16:57:18Z",
+      "side": 1,
+      "message": "That pref does not come from policy, please see L161 above. For policy we have kPolicyPinnedLauncherApps. kPinnedLauncherApps was used to store current set of user pins (legacy case. not we store them at sync service). And for unmanaged/managed users we have different behavior. IIRC for managed user we have prefs synced prior to this call but for non-managed users we would have different scenario when prefs are synced delayed.\n\nI also strongly encourage to to provide unit tests for your case. All pins related functionality has good coverage.",
+      "parentUuid": "0a0905d1_bf199c72",
+      "range": {
+        "startLine": 250,
+        "startChar": 40,
+        "endLine": 250,
+        "endChar": 51
+      },
+      "revId": "9d205f43411345c78fc25f6667a4e63c9aff0bf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a141c259_d33403ba",
         "filename": "chrome/browser/ui/ash/chrome_launcher_prefs.cc",
         "patchSetId": 4
