@@ -211,6 +211,30 @@
       "revId": "b2f60525a575fefb75d1a771d7731f38663483d9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d528cef3_d92a3b50",
+        "filename": "chrome/browser/resources/print_preview/new/app.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-15T01:40:15Z",
+      "side": 1,
+      "message": "If null is a legititame post-initialization value, then keeping the return here seems fine.",
+      "parentUuid": "cbf62acf_d6912fce",
+      "range": {
+        "startLine": 234,
+        "startChar": 4,
+        "endLine": 236,
+        "endChar": 0
+      },
+      "revId": "b2f60525a575fefb75d1a771d7731f38663483d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
