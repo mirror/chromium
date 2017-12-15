@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a3cc7789_bee1fbe0",
+        "filename": "content/common/service_worker/service_worker_utils.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-12-15T02:53:04Z",
+      "side": 1,
+      "message": "I don\u0027t think that means we should crash though - I added a check above for both being negative, where we gracefully fail the network request. Thanks!",
+      "parentUuid": "df1505ec_e0d04ffe",
+      "revId": "f57fb467ac134b867c3bb5cc510b8e09ad3147c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c276f243_14b5e80b",
         "filename": "content/renderer/service_worker/service_worker_subresource_loader.cc",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "f57fb467ac134b867c3bb5cc510b8e09ad3147c7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42d7e2ce_380ed42f",
+        "filename": "content/renderer/service_worker/service_worker_subresource_loader.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-12-15T02:53:04Z",
+      "side": 1,
+      "message": "I thought that change would have to be made here though, as we would have to loop through those ranges. I changed the util name to be \"ExtractSinglePartHttpRange\"",
+      "parentUuid": "c276f243_14b5e80b",
+      "revId": "f57fb467ac134b867c3bb5cc510b8e09ad3147c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
