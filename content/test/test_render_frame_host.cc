@@ -470,9 +470,15 @@ void TestRenderFrameHost::SendNavigateWithParamsAndInterfaceProvider(
                                 contents_mime_type_);
     navigation_handle()->set_response_headers_for_testing(response_headers);
   }
-  DidCommitProvisionalLoad(
-      std::make_unique<FrameHostMsg_DidCommitProvisionalLoad_Params>(*params),
-      std::move(request));
+
+  if (params->was_within_same_document)
+    DidCommitSameDocumentNavigation(
+        std::make_unique<FrameHostMsg_DidCommitProvisionalLoad_Params>(
+            *params));
+  else
+    DidCommitProvisionalLoad(
+        std::make_unique<FrameHostMsg_DidCommitProvisionalLoad_Params>(*params),
+        std::move(request));
   last_commit_was_error_page_ = params->url_is_unreachable;
 }
 
