@@ -135,6 +135,9 @@ AVSampleFormatToSampleFormat(AVSampleFormat sample_format, AVCodecID codec_id);
 MEDIA_EXPORT VideoPixelFormat
 AVPixelFormatToVideoPixelFormat(AVPixelFormat pixel_format);
 
+// Retrieves the amount of bits per channel for a given |picel_format|.
+size_t AVPixelFormatChannelBitDepth(AVPixelFormat pixel_format);
+
 // Converts video formats to its corresponding FFmpeg's pixel formats.
 AVPixelFormat VideoPixelFormatToAVPixelFormat(VideoPixelFormat video_format);
 
