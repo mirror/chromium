@@ -69,6 +69,24 @@
       "revId": "d0ea899c3401fecf06a81c1a73c09a4334104e86",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e877f94_914988dd",
+        "filename": "components/viz/service/display/gl_renderer_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 492,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-12-15T03:08:04Z",
+      "side": 1,
+      "message": "Yeah, but we instantiate these tests with different flags (capabilities) on the display context. We need to create the child context provider the same way (which is test dependent). Using the same context for both resource providers circumvents this problem.",
+      "parentUuid": "37425064_7ce57da3",
+      "revId": "d0ea899c3401fecf06a81c1a73c09a4334104e86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
