@@ -22,6 +22,30 @@
       "revId": "482a71f6c0b3f55145161329bffe1b2f77e9a41b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f234d6ac_58d57b3a",
+        "filename": "components/ntp_tiles/field_trial.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-12-15T10:00:32Z",
+      "side": 1,
+      "message": "+1 to simplifying but please beware of platforms where Popular Sites is disabled (desktop).",
+      "parentUuid": "4ed0e2bf_d7dcdb9d",
+      "range": {
+        "startLine": 30,
+        "startChar": 60,
+        "endLine": 30,
+        "endChar": 0
+      },
+      "revId": "482a71f6c0b3f55145161329bffe1b2f77e9a41b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
