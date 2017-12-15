@@ -94,6 +94,30 @@
       "revId": "efd59ded51d79260f207417c820a9fa161fb4213",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c1c2eaf_4aa6fb69",
+        "filename": "ui/ozone/platform/drm/gpu/gbm_buffer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1107749
+      },
+      "writtenOn": "2017-12-15T21:51:03Z",
+      "side": 1,
+      "message": "But this will likely break some other bot post conversion. The reason there is breakage is because there are 2 platforms where the sizes don\u0027t match.\n\nCase in point, the linux-chromeos-rel bot is broken due to this change.",
+      "parentUuid": "646177b7_671e4356",
+      "range": {
+        "startLine": 84,
+        "startChar": 60,
+        "endLine": 84,
+        "endChar": 63
+      },
+      "revId": "efd59ded51d79260f207417c820a9fa161fb4213",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
