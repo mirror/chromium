@@ -35,12 +35,10 @@ class ChannelMojo;
 }
 
 namespace gpu {
-class GpuMemoryBufferManager;
-}
-
-namespace gpu {
 struct SyncToken;
 class GpuChannelHost;
+class GpuMemoryBufferManager;
+
 using GpuChannelEstablishedCallback =
     base::Callback<void(scoped_refptr<GpuChannelHost>)>;
 
@@ -65,8 +63,7 @@ class GPU_EXPORT GpuChannelHost
   GpuChannelHost(int channel_id,
                  const gpu::GPUInfo& gpu_info,
                  const gpu::GpuFeatureInfo& gpu_feature_info,
-                 mojo::ScopedMessagePipeHandle handle,
-                 gpu::GpuMemoryBufferManager* gpu_memory_buffer_manager);
+                 mojo::ScopedMessagePipeHandle handle);
 
   bool IsLost() const {
     DCHECK(listener_.get());
@@ -116,10 +113,6 @@ class GPU_EXPORT GpuChannelHost
 
   // Remove the message route associated with |route_id|.
   void RemoveRoute(int route_id);
-
-  gpu::GpuMemoryBufferManager* gpu_memory_buffer_manager() const {
-    return gpu_memory_buffer_manager_;
-  }
 
   // Returns a handle to the shared memory that can be sent via IPC to the
   // GPU process. The caller is responsible for ensuring it is closed. Returns
@@ -216,8 +209,6 @@ class GPU_EXPORT GpuChannelHost
   // outlives |this|. It is therefore safe to PostTask calls to the IO thread
   // with base::Unretained(listener_).
   std::unique_ptr<Listener, base::OnTaskRunnerDeleter> listener_;
-
-  gpu::GpuMemoryBufferManager* gpu_memory_buffer_manager_;
 
   // Image IDs are allocated in sequence.
   base::AtomicSequenceNumber next_image_id_;
