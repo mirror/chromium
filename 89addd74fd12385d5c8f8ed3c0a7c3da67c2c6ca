@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3393a1c1_99b6d5fb",
+        "filename": "content/browser/shared_worker/worker_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-15T03:39:38Z",
+      "side": 1,
+      "message": "We don\u0027t need this class at all now?",
+      "revId": "89addd74fd12385d5c8f8ed3c0a7c3da67c2c6ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
