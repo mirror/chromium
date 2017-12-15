@@ -630,6 +630,9 @@ mojom::NetworkContext* StoragePartitionImpl::GetNetworkContext() {
   if (!network_context_.is_bound() || network_context_.encountered_error()) {
     network_context_ = GetContentClient()->browser()->CreateNetworkContext(
         browser_context_, is_in_memory_, relative_partition_path_);
+    network_context_.set_connection_error_handler(base::BindOnce(
+        &StoragePartitionImpl::NotifyNetworkContextConnectionError,
+        weak_factory_.GetWeakPtr()));
   }
   return network_context_.get();
 }
@@ -700,6 +703,29 @@ ZoomLevelDelegate* StoragePartitionImpl::GetZoomLevelDelegate() {
 PlatformNotificationContextImpl*
 StoragePartitionImpl::GetPlatformNotificationContext() {
   return platform_notification_context_.get();
+}
+
+void StoragePartitionImpl::AddNetworkContextObserver(
+    NetworkContextObserver* observer) {
+  DCHECK(base::FeatureList::IsEnabled(features::kNetworkService));
+  network_context_observers_.AddObserver(observer);
+}
+
+void StoragePartitionImpl::RemoveNetworkContextObserver(
+    const NetworkContextObserver* observer) {
+  DCHECK(base::FeatureList::IsEnabled(features::kNetworkService));
+  network_context_observers_.RemoveObserver(observer);
+}
+
+void StoragePartitionImpl::NotifyNetworkContextConnectionError() {
+  DCHECK(base::FeatureList::IsEnabled(features::kNetworkService));
+  // Associated |URLLoaderFactoryPtr| probably haven't received error
+  // notification yet. Destroy manually.
+  if (url_loader_factory_for_browser_process_)
+    url_loader_factory_for_browser_process_.reset();
+
+  for (auto& observer : network_context_observers_)
+    observer.OnConnectionError();
 }
 
 BackgroundFetchContext* StoragePartitionImpl::GetBackgroundFetchContext() {

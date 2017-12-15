@@ -32,12 +32,19 @@ mojom::NetworkContextPtr CreateNetworkContext() {
 
 // This test source has been excluded from Android as Android doesn't have
 // out-of-process Network Service.
-class NetworkServiceRestartBrowserTest : public ContentBrowserTest {
+class NetworkServiceRestartBrowserTest
+    : public ContentBrowserTest,
+      public StoragePartition::NetworkContextObserver {
  public:
   NetworkServiceRestartBrowserTest() {
     scoped_feature_list_.InitAndEnableFeature(features::kNetworkService);
     EXPECT_TRUE(embedded_test_server()->Start());
   }
+
+  // StoragePartition::NetworkContextObserver overrides:
+  void OnConnectionError() override { ++connection_error_count_; }
+
+  int GetConnectionErrorCount() const { return connection_error_count_; }
 
   GURL GetTestURL() const {
     // Use '/echoheader' instead of '/echo' to avoid a disk_cache bug.
@@ -47,6 +54,7 @@ class NetworkServiceRestartBrowserTest : public ContentBrowserTest {
 
  private:
   base::test::ScopedFeatureList scoped_feature_list_;
+  int connection_error_count_ = 0;
 
   DISALLOW_COPY_AND_ASSIGN(NetworkServiceRestartBrowserTest);
 };
@@ -85,21 +93,70 @@ IN_PROC_BROWSER_TEST_F(NetworkServiceRestartBrowserTest,
   StoragePartitionImpl* partition = static_cast<StoragePartitionImpl*>(
       BrowserContext::GetDefaultStoragePartition(
           shell()->web_contents()->GetBrowserContext()));
+  partition->AddNetworkContextObserver(this);
 
   mojom::NetworkContext* old_network_context = partition->GetNetworkContext();
   EXPECT_EQ(net::OK, LoadBasicRequest(old_network_context, GetTestURL()));
+  EXPECT_EQ(0, GetConnectionErrorCount());
 
   // Crash the NetworkService process. Existing interfaces should receive error
   // notifications at some point.
   SimulateNetworkServiceCrash();
   // Flush the interface to make sure the error notification was received.
   partition->FlushNetworkInterfaceForTesting();
+  // It's possible that NetworkContext was re-created multiple times before
+  // NetworkService instance has received error notification.
+  // TODO(chongz): Make sure NetworkContextObserver was only triggered once.
+  EXPECT_GE(1, GetConnectionErrorCount());
 
   // |partition->GetNetworkContext()| should return a valid new pointer after
   // crash.
   EXPECT_NE(old_network_context, partition->GetNetworkContext());
   EXPECT_EQ(net::OK,
             LoadBasicRequest(partition->GetNetworkContext(), GetTestURL()));
+  partition->RemoveNetworkContextObserver(this);
+}
+
+// Make sure |StoragePartitionImpl::GetNetworkContext()| returns valid interface
+// after multiple crashes.
+IN_PROC_BROWSER_TEST_F(NetworkServiceRestartBrowserTest,
+                       StoragePartitionImplGetNetworkContextMultipleCrash) {
+  StoragePartitionImpl* partition = static_cast<StoragePartitionImpl*>(
+      BrowserContext::GetDefaultStoragePartition(
+          shell()->web_contents()->GetBrowserContext()));
+  partition->AddNetworkContextObserver(this);
+
+  EXPECT_EQ(net::OK,
+            LoadBasicRequest(partition->GetNetworkContext(), GetTestURL()));
+  EXPECT_EQ(0, GetConnectionErrorCount());
+
+  // Crash the NetworkService process. Existing interfaces should receive error
+  // notifications at some point.
+  SimulateNetworkServiceCrash();
+  // Flush the interface to make sure the error notification was received.
+  partition->FlushNetworkInterfaceForTesting();
+  // It's possible that NetworkContext was re-created multiple times before
+  // NetworkService instance has received error notification.
+  // TODO(chongz): Make sure NetworkContextObserver was only triggered once.
+  EXPECT_GE(1, GetConnectionErrorCount());
+
+  // |partition->GetNetworkContext()| should still return a valid pointer.
+  EXPECT_EQ(net::OK,
+            LoadBasicRequest(partition->GetNetworkContext(), GetTestURL()));
+
+  // Crash the NetworkService process again.
+  SimulateNetworkServiceCrash();
+  // Flush the interface to make sure the error notification was received.
+  partition->FlushNetworkInterfaceForTesting();
+  // It's possible that NetworkContext was re-created multiple times before
+  // NetworkService instance has received error notification.
+  // TODO(chongz): Make sure NetworkContextObserver was only triggered once.
+  EXPECT_GE(2, GetConnectionErrorCount());
+
+  // |partition->GetNetworkContext()| should still return a valid pointer.
+  EXPECT_EQ(net::OK,
+            LoadBasicRequest(partition->GetNetworkContext(), GetTestURL()));
+  partition->RemoveNetworkContextObserver(this);
 }
 
 }  // namespace content
