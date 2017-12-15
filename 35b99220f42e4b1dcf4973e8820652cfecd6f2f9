@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "88b21334_fa3dd1c3",
+        "filename": "content/public/common/network_common_param.typemap",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-12-15T18:44:43Z",
+      "side": 1,
+      "message": "Combined this file with //content/public/common/ssl_info.typemap and changed its name to be\ncontent/public/common/network_param.typemap\n\nDone",
+      "parentUuid": "62370aed_99b73588",
+      "revId": "35b99220f42e4b1dcf4973e8820652cfecd6f2f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6262310c_4758bbab",
         "filename": "services/network/public/cpp/common_param_ipc_traits.h",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "35b99220f42e4b1dcf4973e8820652cfecd6f2f9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "038f8a99_a982611b",
+        "filename": "services/network/public/cpp/common_param_ipc_traits.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-12-15T18:44:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6262310c_4758bbab",
+      "revId": "35b99220f42e4b1dcf4973e8820652cfecd6f2f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
