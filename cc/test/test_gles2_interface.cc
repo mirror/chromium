@@ -274,10 +274,8 @@ void TestGLES2Interface::CompressedTexImage2D(GLenum target,
 
 GLuint TestGLES2Interface::CreateImageCHROMIUM(ClientBuffer buffer,
                                                GLsizei width,
-                                               GLsizei height,
-                                               GLenum internalformat) {
-  return test_context_->createImageCHROMIUM(
-      buffer, width, height, internalformat);
+                                               GLsizei height) {
+  return test_context_->createImageCHROMIUM(buffer, width, height);
 }
 
 void TestGLES2Interface::DestroyImageCHROMIUM(GLuint image_id) {

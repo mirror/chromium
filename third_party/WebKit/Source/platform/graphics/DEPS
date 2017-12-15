@@ -23,6 +23,7 @@ include_rules = [
     "+media/base/video_frame.h",
     "+services/viz/public/interfaces",
     "+public/web/WebSettings.h",
+    "+ui/gl/gl_utils.h",
 ]
 
 specific_include_rules = {
