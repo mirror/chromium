@@ -22,6 +22,30 @@
       "revId": "ef0daf318973d189647ed30670ecd25573a3add8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7cc107b_672ca698",
+        "filename": "base/metrics/statistics_recorder.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1248153
+      },
+      "writtenOn": "2017-12-15T01:05:09Z",
+      "side": 1,
+      "message": "This is used to delete the histogram to delete *after* auto_lock has been released.\n\nC++ ensures that local objects are deleted in reverse order of their construction. So histogram_to_delete has to be constructed before auto_lock, in order to be destructed after auto_lock.\n\nThis is what I can infer from the existence of the variable histogram_to_delete and the extra pair of braces on lines 86 and 128 in the original code. If it wasn\u0027t for that reason, then there was no need for an extra variable and indentation level. A \u0027delete histogram\u0027 in the original code on line 125 would have been enough.\n\nAnd yes, there was no comment to signal this subtlety. Not even in the original code.\n\nThis pattern occurs in several functions of this file.",
+      "parentUuid": "35b2bd25_316501f5",
+      "range": {
+        "startLine": 84,
+        "startChar": 33,
+        "endLine": 84,
+        "endChar": 52
+      },
+      "revId": "ef0daf318973d189647ed30670ecd25573a3add8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

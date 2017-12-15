@@ -22,6 +22,30 @@
       "revId": "76c7e1e4d89b8675041c6c8f4c16266682e25c4b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d54e9781_a868bb82",
+        "filename": "base/metrics/statistics_recorder.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1248153
+      },
+      "writtenOn": "2017-12-15T01:05:09Z",
+      "side": 0,
+      "message": "This is now done on lines 141 and 144.",
+      "parentUuid": "4172b134_ce202ee6",
+      "range": {
+        "startLine": 151,
+        "startChar": 4,
+        "endLine": 151,
+        "endChar": 60
+      },
+      "revId": "76c7e1e4d89b8675041c6c8f4c16266682e25c4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
