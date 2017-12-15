@@ -12,7 +12,6 @@
 
 #include <stdint.h>
 
-#include <list>
 #include <map>
 #include <memory>
 #include <string>
@@ -36,35 +35,6 @@ class HistogramSnapshotManager;
 
 class BASE_EXPORT StatisticsRecorder {
  public:
-  // A class used as a key for the histogram map below. It always references
-  // a string owned outside of this class, likely in the value of the map.
-  class StringKey : public StringPiece {
-   public:
-    // Constructs the StringKey using various sources. The source must live
-    // at least as long as the created object.
-    StringKey(const std::string& str) : StringPiece(str) {}
-    StringKey(StringPiece str) : StringPiece(str) {}
-
-    // Though StringPiece is better passed by value than by reference, in
-    // this case it's being passed many times and likely already been stored
-    // in memory (not just registers) so the benefit of pass-by-value is
-    // negated.
-    bool operator<(const StringKey& rhs) const {
-      // Since order is unimportant in the map and string comparisons can be
-      // slow, use the length as the primary sort value.
-      if (length() < rhs.length())
-        return true;
-      if (length() > rhs.length())
-        return false;
-
-      // Fall back to an actual string comparison. The lengths are the same
-      // so a simple memory-compare is sufficient. This is slightly more
-      // efficient than calling operator<() for StringPiece which would
-      // again have to check lengths before calling wordmemcmp().
-      return wordmemcmp(data(), rhs.data(), length()) < 0;
-    }
-  };
-
   // An interface class that allows the StatisticsRecorder to forcibly merge
   // histograms from providers when necessary.
   class HistogramProvider {
@@ -73,9 +43,7 @@ class BASE_EXPORT StatisticsRecorder {
     virtual void MergeHistogramDeltas() = 0;
   };
 
-  typedef std::map<StringKey, HistogramBase*> HistogramMap;
   typedef std::vector<HistogramBase*> Histograms;
-  typedef std::vector<WeakPtr<HistogramProvider>> HistogramProviders;
 
   ~StatisticsRecorder();
 
@@ -115,13 +83,17 @@ class BASE_EXPORT StatisticsRecorder {
   static std::string ToJSON(JSONVerbosityLevel verbosity_level);
 
   // Method for extracting histograms which were marked for use by UMA.
+  //
+  // This method is thread safe.
   static void GetHistograms(Histograms* output);
 
   // Method for extracting BucketRanges used by all histograms registered.
   static void GetBucketRanges(std::vector<const BucketRanges*>* output);
 
-  // Find a histogram by name. It matches the exact name. This method is thread
-  // safe.  It returns NULL if a matching histogram is not found.
+  // Find a histogram by name. It matches the exact name.
+  // It returns NULL if a matching histogram is not found.
+  //
+  // This method is thread safe.
   static HistogramBase* FindHistogram(base::StringPiece name);
 
   // Imports histograms from providers. This must be called on the UI thread.
@@ -141,6 +113,8 @@ class BASE_EXPORT StatisticsRecorder {
   // caller supplied vector (Histograms). Only histograms which have |query| as
   // a substring are copied (an empty string will process all registered
   // histograms).
+  //
+  // This method is thread safe.
   static void GetSnapshot(const std::string& query, Histograms* snapshot);
 
   typedef base::Callback<void(HistogramBase::Sample)> OnSampleCallback;
@@ -203,14 +177,33 @@ class BASE_EXPORT StatisticsRecorder {
   static bool ShouldRecordHistogram(uint64_t histogram_hash);
 
  private:
+  typedef std::vector<WeakPtr<HistogramProvider>> HistogramProviders;
+
+  // A custom string ordering for HistogramMap. Since order is unimportant in
+  // the map and string comparisons can be slow, use the length as the primary
+  // sort value.
+  struct KeyOrder {
+    bool operator()(const StringPiece& a, const StringPiece& b) const {
+      const size_t la = a.length();
+      const size_t lb = b.length();
+      if (la != lb)
+        return la < lb;
+
+      return StringPiece::wordmemcmp(a.data(), b.data(), la) < 0;
+    }
+  };
+
+  typedef std::map<StringPiece, HistogramBase*, KeyOrder> HistogramMap;
+
   // We keep a map of callbacks to histograms, so that as histograms are
   // created, we can set the callback properly.
-  typedef std::map<std::string, OnSampleCallback> CallbackMap;
+  typedef std::map<std::string, OnSampleCallback, KeyOrder> CallbackMap;
 
   // We keep all |bucket_ranges_| in a map, from checksum to a list of
   // |bucket_ranges_|.  Checksum is calculated from the |ranges_| in
   // |bucket_ranges_|.
-  typedef std::map<uint32_t, std::list<const BucketRanges*>*> RangesMap;
+  typedef std::vector<const BucketRanges*> BucketRangesList;
+  typedef std::map<uint32_t, BucketRangesList*> RangesMap;
 
   friend struct LazyInstanceTraitsBase<StatisticsRecorder>;
   friend class StatisticsRecorderTest;
