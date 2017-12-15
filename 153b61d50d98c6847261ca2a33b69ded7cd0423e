@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bc5853df_3c563d96",
+        "filename": "ios/web/web_state/crw_pass_kit_downloader.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-12-15T01:33:34Z",
+      "side": 0,
+      "message": "Why remove the DCHECK?\n\nOne could still disable the feature using Chrome flags as well.",
+      "revId": "153b61d50d98c6847261ca2a33b69ded7cd0423e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
