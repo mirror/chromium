@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4ed0e2bf_d7dcdb9d",
+        "filename": "components/ntp_tiles/field_trial.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-12-15T09:12:32Z",
+      "side": 1,
+      "message": "This switch seems useless now. Remove?\n(In fact, everything below seems pointless. Could we just \"return true\" here?)",
+      "range": {
+        "startLine": 30,
+        "startChar": 60,
+        "endLine": 30,
+        "endChar": 0
+      },
+      "revId": "482a71f6c0b3f55145161329bffe1b2f77e9a41b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
