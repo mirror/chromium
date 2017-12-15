@@ -34,6 +34,24 @@
       "revId": "a9402d31c2cab93e09ac7a0034a4d48d63323a48",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f16221c5_527ea7ef",
+        "filename": "components/prefs/pref_notifier_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-12-15T02:48:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ab63afa8_5cfbe7d3",
+      "revId": "a9402d31c2cab93e09ac7a0034a4d48d63323a48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
