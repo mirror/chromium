@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2ab63f95_75b0a2ec",
+        "filename": "ui/views/layout/grid_layout_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-15T21:31:26Z",
+      "side": 1,
+      "message": "Can\u0027t you move this to the member initializer list? (same comment below).",
+      "range": {
+        "startLine": 104,
+        "startChar": 8,
+        "endLine": 104,
+        "endChar": 31
+      },
+      "revId": "41ef9f3fb143363ee46509afb140534be65b0479",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
