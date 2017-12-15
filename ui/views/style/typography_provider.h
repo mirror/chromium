@@ -37,9 +37,10 @@ class VIEWS_EXPORT TypographyProvider {
 
   // Returns the weight that will result in the ResourceBundle returning an
   // appropriate "medium" weight for UI. This caters for systems that are known
-  // to be unable to provide a system font with weight other than NORMAL or BOLD
-  // and for user configurations where the NORMAL font is already BOLD. In both
-  // of these cases, NORMAL is returned instead.
+  // to be unable to provide a system font with weight other than NORMAL or
+  // BOLD, for user configurations where the NORMAL font is already BOLD, and
+  // for systems where NORMAL provides sufficient weight when using the default
+  // OS settings. In any of these cases, NORMAL is returned instead.
   static gfx::Font::Weight MediumWeightForUI();
 
  protected:
