@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4f4d7a33_5b065e27",
+        "filename": "cc/paint/decode_stashing_image_provider.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-12-15T02:25:36Z",
+      "side": 1,
+      "message": "Good idea. Reset makes more sense, as this is used in contexts other than the transfer cache.",
+      "parentUuid": "247bdf90_2e784a22",
+      "range": {
+        "startLine": 27,
+        "startChar": 7,
+        "endLine": 27,
+        "endChar": 12
+      },
+      "revId": "85ace3bee84c32810f611e1eebeace59d522432e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9df8ddfb_b350d225",
         "filename": "cc/paint/oop_pixeltest.cc",
         "patchSetId": 9
@@ -45,6 +69,30 @@
       "revId": "85ace3bee84c32810f611e1eebeace59d522432e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f8d1a97_a8a192b0",
+        "filename": "cc/paint/oop_pixeltest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-12-15T02:25:36Z",
+      "side": 1,
+      "message": "Sure :D",
+      "parentUuid": "9df8ddfb_b350d225",
+      "range": {
+        "startLine": 43,
+        "startChar": 4,
+        "endLine": 43,
+        "endChar": 34
+      },
+      "revId": "85ace3bee84c32810f611e1eebeace59d522432e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "0bdb12ab_58b47a27",
+        "filename": "cc/paint/oop_pixeltest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-12-15T02:25:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ad6228de_657ebdf8",
+      "range": {
+        "startLine": 138,
+        "startChar": 8,
+        "endLine": 138,
+        "endChar": 75
+      },
+      "revId": "85ace3bee84c32810f611e1eebeace59d522432e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4b788cd6_9f0c594b",
         "filename": "cc/paint/paint_op_buffer.cc",
         "patchSetId": 9
@@ -91,6 +163,30 @@
       "revId": "85ace3bee84c32810f611e1eebeace59d522432e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3aaac85_27d207ee",
+        "filename": "cc/paint/paint_op_buffer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-12-15T02:25:36Z",
+      "side": 1,
+      "message": "makes sense.",
+      "parentUuid": "4b788cd6_9f0c594b",
+      "range": {
+        "startLine": 27,
+        "startChar": 56,
+        "endLine": 27,
+        "endChar": 60
+      },
+      "revId": "85ace3bee84c32810f611e1eebeace59d522432e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "69f55832_ce695d1e",
+        "filename": "cc/paint/paint_op_buffer_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-12-15T02:25:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "633a1f50_df70c45a",
+      "range": {
+        "startLine": 111,
+        "startChar": 6,
+        "endLine": 111,
+        "endChar": 36
+      },
+      "revId": "85ace3bee84c32810f611e1eebeace59d522432e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87680641_43bb6f50",
         "filename": "cc/paint/paint_op_reader.cc",
         "patchSetId": 9
@@ -128,6 +248,24 @@
       "writtenOn": "2017-12-14T23:25:44Z",
       "side": 1,
       "message": "I think this should be:\n\nif (!valid_ || transfer_cache_entry_id \u003d\u003d kInvalidImageTransferCacheEntryId) {\n  SetInvalid();\n  return;\n}\n\nunless reading an invalid transfer cache entry id is expected sometimes?",
+      "revId": "85ace3bee84c32810f611e1eebeace59d522432e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da67cc95_c87ba133",
+        "filename": "cc/paint/paint_op_reader.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-12-15T02:25:36Z",
+      "side": 1,
+      "message": "I write an invalid ID if no image was available (decode failure, etc...). Added a comment.",
+      "parentUuid": "87680641_43bb6f50",
       "revId": "85ace3bee84c32810f611e1eebeace59d522432e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -157,6 +295,30 @@
     },
     {
       "key": {
+        "uuid": "7dfce542_4f159891",
+        "filename": "cc/paint/paint_op_writer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-12-15T02:25:36Z",
+      "side": 1,
+      "message": "Added a comment. Basically just if we have a decode failure.",
+      "parentUuid": "00741d45_e6c72ebe",
+      "range": {
+        "startLine": 144,
+        "startChar": 19,
+        "endLine": 144,
+        "endChar": 52
+      },
+      "revId": "85ace3bee84c32810f611e1eebeace59d522432e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ddd9045e_fd39d3b2",
         "filename": "cc/tiles/gpu_image_decode_cache.cc",
         "patchSetId": 9
@@ -171,6 +333,24 @@
       "revId": "85ace3bee84c32810f611e1eebeace59d522432e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c42e754b_1da232d0",
+        "filename": "cc/tiles/gpu_image_decode_cache.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 528,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-12-15T02:25:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ddd9045e_fd39d3b2",
+      "revId": "85ace3bee84c32810f611e1eebeace59d522432e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -197,6 +377,30 @@
     },
     {
       "key": {
+        "uuid": "c8c005fd_a8547496",
+        "filename": "cc/tiles/gpu_image_decode_cache.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1405,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-12-15T02:25:36Z",
+      "side": 1,
+      "message": "just removed the comment. wasn\u0027t really adding much.",
+      "parentUuid": "bf10c12c_7abdf455",
+      "range": {
+        "startLine": 1405,
+        "startChar": 22,
+        "endLine": 1405,
+        "endChar": 33
+      },
+      "revId": "85ace3bee84c32810f611e1eebeace59d522432e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "48c4081e_8315048d",
         "filename": "cc/tiles/gpu_image_decode_cache.h",
         "patchSetId": 9
@@ -208,6 +412,24 @@
       "writtenOn": "2017-12-14T23:25:44Z",
       "side": 1,
       "message": "At some point we should also switch to kGpu, kCpu, and kTransferCache",
+      "revId": "85ace3bee84c32810f611e1eebeace59d522432e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae8cd945_d79836be",
+        "filename": "cc/tiles/gpu_image_decode_cache.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-12-15T02:25:36Z",
+      "side": 1,
+      "message": "yup... done.",
+      "parentUuid": "48c4081e_8315048d",
       "revId": "85ace3bee84c32810f611e1eebeace59d522432e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -249,6 +471,30 @@
       "side": 1,
       "message": "Ack. We can do a similar thing with the transfer cache serialize helper maybe (to fix the TODO below)",
       "parentUuid": "af04e998_a9df02aa",
+      "range": {
+        "startLine": 7340,
+        "startChar": 35,
+        "endLine": 7340,
+        "endChar": 58
+      },
+      "revId": "85ace3bee84c32810f611e1eebeace59d522432e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cffd1a6_a1072949",
+        "filename": "gpu/command_buffer/client/gles2_implementation.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 7340,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-12-15T02:25:36Z",
+      "side": 1,
+      "message": "Updated to remove the TODO.",
+      "parentUuid": "b4aa1cfe_099599c9",
       "range": {
         "startLine": 7340,
         "startChar": 35,
