@@ -37,11 +37,23 @@ void DisableQuicOnIOThread(
   DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
 
   // Disable QUIC for HttpNetworkSessions using IOThread's NetworkService.
+  if (!base::FeatureList::IsEnabled(features::kNetworkService))
+    content::GetNetworkServiceImpl()->DisableQuic();
   io_thread->DisableQuic();
 
   // Safebrowsing isn't yet using the IOThread's NetworkService, so must be
   // handled separately.
   safe_browsing_service->DisableQuicOnIOThread();
+}
+
+void CreateSystemNetworkContextImplOnIOThread(
+    IOThread* io_thread,
+    content::mojom::NetworkContextRequest network_context_request) {
+  auto* globals = io_thread->globals();
+  globals->system_network_context_impl =
+      content::GetNetworkServiceImpl()->CreateNetworkContextImpl(
+          std::move(network_context_request),
+          globals->system_request_context.url_request_context.get());
 }
 
 }  // namespace
@@ -51,8 +63,14 @@ base::LazyInstance<SystemNetworkContextManager>::Leaky
 
 content::mojom::NetworkContext* SystemNetworkContextManager::GetContext() {
   if (!base::FeatureList::IsEnabled(features::kNetworkService)) {
-    // SetUp should already have been called.
-    DCHECK(io_thread_network_context_);
+    if (!io_thread_network_context_) {
+      IOThread* io_thread = g_browser_process->io_thread();
+      content::BrowserThread::PostTask(
+          content::BrowserThread::IO, FROM_HERE,
+          base::BindOnce(&CreateSystemNetworkContextImplOnIOThread, io_thread,
+                         mojo::MakeRequest(&io_thread_network_context_)));
+    }
+
     return io_thread_network_context_.get();
   }
 
@@ -79,10 +97,8 @@ SystemNetworkContextManager::GetURLLoaderFactory() {
 }
 
 void SystemNetworkContextManager::SetUp(
-    content::mojom::NetworkContextRequest* network_context_request,
     content::mojom::NetworkContextParamsPtr* network_context_params,
     bool* is_quic_allowed) {
-  *network_context_request = mojo::MakeRequest(&io_thread_network_context_);
   if (!base::FeatureList::IsEnabled(features::kNetworkService)) {
     *network_context_params = CreateNetworkContextParams();
   } else {

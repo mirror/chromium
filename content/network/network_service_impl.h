@@ -22,13 +22,11 @@
 namespace net {
 class NetLog;
 class LoggingNetworkChangeObserver;
-class URLRequestContext;
 }  // namespace net
 
 namespace content {
 
 class NetworkContext;
-class URLRequestContextBuilderMojo;
 
 class CONTENT_EXPORT NetworkServiceImpl : public service_manager::Service,
                                           public NetworkService {
@@ -44,11 +42,9 @@ class CONTENT_EXPORT NetworkServiceImpl : public service_manager::Service,
 
   ~NetworkServiceImpl() override;
 
-  std::unique_ptr<mojom::NetworkContext> CreateNetworkContextWithBuilder(
-      content::mojom::NetworkContextRequest request,
-      content::mojom::NetworkContextParamsPtr params,
-      std::unique_ptr<URLRequestContextBuilderMojo> builder,
-      net::URLRequestContext** url_request_context) override;
+  std::unique_ptr<mojom::NetworkContext> CreateNetworkContextImpl(
+      mojom::NetworkContextRequest request,
+      net::URLRequestContext* url_request_context) override;
 
   static std::unique_ptr<NetworkServiceImpl> CreateForTesting();
 
