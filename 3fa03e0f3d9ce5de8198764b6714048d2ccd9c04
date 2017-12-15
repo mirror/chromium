@@ -109,6 +109,24 @@
     },
     {
       "key": {
+        "uuid": "1424d85a_ad990be9",
+        "filename": "third_party/zlib/contrib/optimizations/arm/armv8_crc32.c",
+        "patchSetId": 5
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-12-15T23:52:45Z",
+      "side": 1,
+      "message": "Although, you might be onto something.\nIt is entirely possible that this tail was never executed (nor the head) because all of the allocations on the bots were at least 8-byte aligned.",
+      "parentUuid": "f5035955_18cd3db3",
+      "revId": "3fa03e0f3d9ce5de8198764b6714048d2ccd9c04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ff6d9d74_3e70b7ca",
         "filename": "third_party/zlib/crc32.c",
         "patchSetId": 5
