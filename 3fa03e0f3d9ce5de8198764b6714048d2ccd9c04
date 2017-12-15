@@ -91,6 +91,24 @@
     },
     {
       "key": {
+        "uuid": "f5035955_18cd3db3",
+        "filename": "third_party/zlib/contrib/optimizations/arm/armv8_crc32.c",
+        "patchSetId": 5
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-12-15T23:50:37Z",
+      "side": 1,
+      "message": "I think it is still possible. This isn\u0027t the tail of 512, 1024, etc. It is the unaligned tail.\n\nThe first while (len \u0026\u0026 ((uintptr_t)buf \u0026 7)) loop on line 33 handles the unaligned head of the data. Suppose we have 1024 bytes, but the first single byte isn\u0027t aligned. That loop will iterate 1 time, leaving 1023 bytes.\n\nThe next while loop is an unrolled, 8-byte aligned loop. It will loop 15 times (working on 64 bytes at a time), leaving 63 bytes when it is done.\n\nThen when it runs out of unrolled space, it tightens into another 8-byte aligned while loop. This will run 7 times, leaving 7 bytes when finished.\n\nBecause the head wasn\u0027t aligned, the tail won\u0027t be aligned either. The head was out of alignment by 1 byte. So the tail is out of alignment by 7 bytes (8 byte alignment - 1 byte offset in the head).\n\nSo this final loop runs 7 times, even though our data size if 1024.",
+      "parentUuid": "692e93d3_a4af15a9",
+      "revId": "3fa03e0f3d9ce5de8198764b6714048d2ccd9c04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ff6d9d74_3e70b7ca",
         "filename": "third_party/zlib/crc32.c",
         "patchSetId": 5
