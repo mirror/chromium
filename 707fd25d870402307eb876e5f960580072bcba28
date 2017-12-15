@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aa0848fa_61bd9b8f",
+        "filename": "services/ui/public/cpp/input_devices/input_device_client.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-12-15T18:45:16Z",
+      "side": 1,
+      "message": "You don\u0027t need a forward def if the friend class is in the same namespace.",
+      "revId": "707fd25d870402307eb876e5f960580072bcba28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f400f40_f7a2b1a5",
+        "filename": "services/ui/public/cpp/input_devices/input_device_client.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-12-15T18:45:16Z",
+      "side": 1,
+      "message": "Is it worth adding mouse/touchpad functions for consistency?",
+      "revId": "707fd25d870402307eb876e5f960580072bcba28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e0c9084_a056f0b4",
+        "filename": "services/ui/public/cpp/input_devices/input_device_client_test_api.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-12-15T18:45:16Z",
+      "side": 1,
+      "message": "Include input_device.h too?",
+      "revId": "707fd25d870402307eb876e5f960580072bcba28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "597736ad_6e68453e",
+        "filename": "services/ui/public/cpp/input_devices/input_device_client_test_api.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-12-15T18:45:16Z",
+      "side": 1,
+      "message": "Can you add a brief description of how is used? Like (1) set lists of devices (2) call OnDeviceListsComplete(), etc.",
+      "revId": "707fd25d870402307eb876e5f960580072bcba28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5221c9a4_61145ade",
+        "filename": "services/ui/public/cpp/input_devices/input_device_client_test_api.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-12-15T18:45:16Z",
+      "side": 1,
+      "message": "Similar vein, is it worth flushing this out for mouse/touchpad to encourage people to write tests?",
+      "revId": "707fd25d870402307eb876e5f960580072bcba28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
