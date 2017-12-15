@@ -94,6 +94,30 @@
       "revId": "ff08dcc4cab02422a1fb4a09bf1c3e4e2031e33a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9be31ab9_23cff14c",
+        "filename": "cr-buildbucket.cfg",
+        "patchSetId": 2
+      },
+      "lineNbr": 473,
+      "author": {
+        "id": 1134874
+      },
+      "writtenOn": "2017-12-15T02:36:54Z",
+      "side": 1,
+      "message": "Oh, hahaha... Yes, that\u0027s true :)",
+      "parentUuid": "9c672c31_41d5fa9c",
+      "range": {
+        "startLine": 473,
+        "startChar": 25,
+        "endLine": 473,
+        "endChar": 27
+      },
+      "revId": "ff08dcc4cab02422a1fb4a09bf1c3e4e2031e33a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
