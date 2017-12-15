@@ -476,7 +476,6 @@ public class ChromeFullscreenManager
         }
         boolean controlsResizeView =
                 topContentOffset > 0 || bottomControlOffset < getBottomControlsHeight();
-        controlsResizeView &= !VrShellDelegate.isInVr();
         mControlsResizeView = controlsResizeView;
         Tab tab = getTab();
         if (tab == null) return;
@@ -641,6 +640,15 @@ public class ChromeFullscreenManager
     @Override
     public void setPositionsForTab(float topControlsOffset, float bottomControlsOffset,
             float topContentOffset) {
+        if (VrShellDelegate.isInVr()) {
+            // The dip scale of java UI and WebContents are different while in VR, leading to a
+            // mismatch in size in pixels when converting from dips. Since we hide the controls in
+            // VR anyways, just set the offsets to what they're supposed to be with the controls
+            // hidden.
+            topControlsOffset = -getTopControlsHeight();
+            bottomControlsOffset = getBottomControlsHeight();
+            topContentOffset = 0;
+        }
         float rendererTopControlOffset =
                 Math.round(Math.max(topControlsOffset, -getTopControlsHeight()));
         float rendererBottomControlOffset =
