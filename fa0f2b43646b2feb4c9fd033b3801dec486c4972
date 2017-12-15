@@ -235,6 +235,30 @@
       "revId": "fa0f2b43646b2feb4c9fd033b3801dec486c4972",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bd69594_f49f5991",
+        "filename": "chrome/browser/ui/browser_command_controller.cc",
+        "patchSetId": 32
+      },
+      "lineNbr": 1293,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-12-15T00:10:07Z",
+      "side": 1,
+      "message": "I\u0027ll investigate this further tomorrow. Are you fine with me fixing this in a follow up CL? I\u0027d really like to land this one soon.",
+      "parentUuid": "2b52968a_e3cd0eca",
+      "range": {
+        "startLine": 1293,
+        "startChar": 18,
+        "endLine": 1293,
+        "endChar": 60
+      },
+      "revId": "fa0f2b43646b2feb4c9fd033b3801dec486c4972",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
