@@ -50,6 +50,23 @@
       "revId": "d92b2be7f9384569643e40e5763275fcc2b863eb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5c49da0_359ffc22",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerPainter.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1076,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-12-15T00:23:38Z",
+      "side": 1,
+      "message": "What about FillMaskingFragment?",
+      "revId": "d92b2be7f9384569643e40e5763275fcc2b863eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
