@@ -835,6 +835,7 @@ public class ContextualSearchManager
      */
     public void onAccessibilityModeChanged(boolean enabled) {
         mIsAccessibilityModeEnabled = enabled;
+        if (enabled) hideContextualSearch(StateChangeReason.UNKNOWN);
     }
 
     /**
