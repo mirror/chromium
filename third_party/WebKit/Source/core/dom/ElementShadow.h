@@ -48,13 +48,13 @@ class CORE_EXPORT ElementShadow final : public GarbageCollected<ElementShadow>,
     return shadow_root_->host();
   }
 
-  // TODO(hayato): Remove youngestShadowRoot() and oldestShadowRoot() from
-  // ElementShadow
-  ShadowRoot& YoungestShadowRoot() const;
-  ShadowRoot& OldestShadowRoot() const {
+  // TODO(kochi): Replace all {Youngest,Oldest}ShadowRoot() with this.
+  ShadowRoot& GetShadowRoot() const {
     DCHECK(shadow_root_);
     return *shadow_root_;
   }
+  ShadowRoot& YoungestShadowRoot() const { return GetShadowRoot(); }
+  ShadowRoot& OldestShadowRoot() const { return GetShadowRoot(); }
 
   ElementShadow* ContainingShadow() const;
 
@@ -85,7 +85,6 @@ class CORE_EXPORT ElementShadow final : public GarbageCollected<ElementShadow>,
  private:
   ElementShadow();
 
-  void AppendShadowRoot(ShadowRoot&);
   void Distribute();
 
   TraceWrapperMember<ElementShadowV0> element_shadow_v0_;
@@ -102,7 +101,7 @@ inline ShadowRoot* Node::YoungestShadowRoot() const {
 
 inline ShadowRoot* Element::YoungestShadowRoot() const {
   if (ElementShadow* shadow = Shadow())
-    return &shadow->YoungestShadowRoot();
+    return &shadow->GetShadowRoot();
   return nullptr;
 }
 
