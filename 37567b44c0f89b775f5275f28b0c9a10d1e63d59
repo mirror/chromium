@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1f2fd17f_03f019db",
+        "filename": "chrome/browser/notifications/platform_notification_service_interactive_uitest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-12-15T17:30:24Z",
+      "side": 1,
+      "message": "We allow the developer to specify it, we\u0027ll give it back to them in the `notificationclick` event, but we\u0027ll never use the properties internally to affect our directionality decisions.",
+      "parentUuid": "0bb0ebea_756908a4",
+      "revId": "37567b44c0f89b775f5275f28b0c9a10d1e63d59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "01d68049_00c89d96",
         "filename": "chrome/browser/notifications/platform_notification_service_interactive_uitest.cc",
         "patchSetId": 5
@@ -36,6 +54,47 @@
         "endLine": 981,
         "endChar": 28
       },
+      "revId": "37567b44c0f89b775f5275f28b0c9a10d1e63d59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96fb5273_dd19626d",
+        "filename": "chrome/browser/notifications/platform_notification_service_interactive_uitest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 981,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-12-15T17:30:24Z",
+      "side": 1,
+      "message": "That\u0027s a side effect. You only want to check the displayed notification once it\u0027s been shown -- otherwise the assert on line 997 would fail.\n\nWe can determine that with the `show` event, but you haven\u0027t implemented that yet for Mojo. Therefore we have to use a different mechanism to wait until the notification has been shown.\n\nThis should have a TODO on removing the *WithoutWaitingForEvent function once the `show` event is supported again.",
+      "parentUuid": "01d68049_00c89d96",
+      "range": {
+        "startLine": 981,
+        "startChar": 0,
+        "endLine": 981,
+        "endChar": 28
+      },
+      "revId": "37567b44c0f89b775f5275f28b0c9a10d1e63d59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e1aa41a_5094c3f2",
+        "filename": "content/browser/notifications/blink_notification_service_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-12-15T17:30:24Z",
+      "side": 1,
+      "message": "here -\u003e in the NotificationIdGenerator",
       "revId": "37567b44c0f89b775f5275f28b0c9a10d1e63d59",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
