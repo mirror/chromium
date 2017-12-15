@@ -29,8 +29,8 @@ class VideoOverlayFactory::Texture {
           gfx::Size(1, 1), gfx::BufferFormat::RGBA_8888,
           gfx::BufferUsage::SCANOUT);
       if (gpu_memory_buffer_) {
-        image_id_ = gl->CreateImageCHROMIUM(
-            gpu_memory_buffer_->AsClientBuffer(), 1, 1, GL_RGBA);
+        image_id_ =
+            gl->CreateImageCHROMIUM(gpu_memory_buffer_->AsClientBuffer(), 1, 1);
       }
       if (image_id_) {
         gl->GenTextures(1, &texture_id_);
