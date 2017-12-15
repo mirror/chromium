@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "14413dec_e31e1895",
+        "filename": "tools/memory/asan/blacklist_win.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1160859
+      },
+      "writtenOn": "2017-12-15T17:28:37Z",
+      "side": 1,
+      "message": "q for someone - what does @20 mean?",
+      "range": {
+        "startLine": 12,
+        "startChar": 33,
+        "endLine": 12,
+        "endChar": 36
+      },
+      "revId": "21c3330d61b341ad013c6f3fed1c6a5874330526",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d841bee0_ea09ae54",
+        "filename": "tools/memory/asan/blacklist_win.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1160859
+      },
+      "writtenOn": "2017-12-15T17:28:37Z",
+      "side": 1,
+      "message": "does 27 preclude/overlap with 28?",
+      "revId": "21c3330d61b341ad013c6f3fed1c6a5874330526",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
