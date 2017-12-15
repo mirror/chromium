@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1d01db2d_6ddf2752",
+        "filename": "chrome/browser/ui/omnibox/omnibox_view_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-12-15T21:03:54Z",
+      "side": 1,
+      "message": "Can we get rid of this observer too?  Like the other, it seems to exist solely to do some sort of \"run everything until idle\" functionality, which we ought to be able to invoke directly now.",
+      "revId": "08b1caa7edbd5386ecbdbbe21e6e6c074db54e7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a4b3e87_b7e21b8b",
+        "filename": "chrome/browser/ui/omnibox/omnibox_view_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-12-15T21:03:54Z",
+      "side": 1,
+      "message": "How many of these tests that are still DISABLED or MAYBE could actually be enabled now?\n\nFor example, the bug for this is closed as a duplicate of a bug that\u0027s been marked fixed for a couple of years.  Can we just re-enable?\n\nSimilar questions apply to all the other tests below.\n\n(If it\u0027s less risky, I\u0027d be OK with landing this patch and then writing a subsequent one that re-enables all the tests to see how bad that is.)",
+      "revId": "08b1caa7edbd5386ecbdbbe21e6e6c074db54e7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23beffd9_ff89473c",
+        "filename": "chrome/browser/ui/omnibox/omnibox_view_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1250,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-12-15T21:03:54Z",
+      "side": 1,
+      "message": "This is the bug this CL is supposed to fix.  Are you saying the fix doesn\u0027t work on Mac?",
+      "revId": "08b1caa7edbd5386ecbdbbe21e6e6c074db54e7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
