@@ -152,6 +152,30 @@
       "revId": "1129b0a676991d835847ac1170996026bc11945a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "290a0797_7e052413",
+        "filename": "content/common/service_worker/service_worker_utils.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-12-15T07:04:03Z",
+      "side": 1,
+      "message": "Yeah setting kLast as default value seems fine, because no code will peek/use |frame_type| from an empty client info.",
+      "parentUuid": "522cf229_a846d782",
+      "range": {
+        "startLine": 176,
+        "startChar": 13,
+        "endLine": 176,
+        "endChar": 63
+      },
+      "revId": "1129b0a676991d835847ac1170996026bc11945a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
