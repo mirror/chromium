@@ -22,6 +22,30 @@
       "revId": "62f67957d00728451c072360edbdc02454ba4355",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "323616c1_6ab3ef53",
+        "filename": "chrome/browser/chromeos/arc/wallpaper/arc_wallpaper_service.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-12-15T00:59:08Z",
+      "side": 1,
+      "message": "Done. Please be aware that under MASH, ARC will always get this signal. While prior to this CL, ARC doesn\u0027t get anything under MASH because the observer is not added.",
+      "parentUuid": "6ab0fa93_013ba5c2",
+      "range": {
+        "startLine": 239,
+        "startChar": 0,
+        "endLine": 240,
+        "endChar": 11
+      },
+      "revId": "62f67957d00728451c072360edbdc02454ba4355",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
