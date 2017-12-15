@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b719ecd8_50079a93",
+        "filename": "net/socket/ssl_server_socket_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1229024
+      },
+      "writtenOn": "2017-12-15T02:23:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9e80b27e_b97380a5",
+      "range": {
+        "startLine": 39,
+        "startChar": 13,
+        "endLine": 39,
+        "endChar": 68
+      },
+      "revId": "732f49faf6aec82f376b34cb467c23cf80693211",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "51edf1e9_6dd9fa0b",
         "filename": "net/socket/ssl_server_socket_impl.cc",
         "patchSetId": 1
@@ -36,6 +60,24 @@
       "writtenOn": "2017-12-15T00:28:49Z",
       "side": 1,
       "message": "This seems to be left uninitialized.",
+      "revId": "732f49faf6aec82f376b34cb467c23cf80693211",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23f03de6_95883ffd",
+        "filename": "net/socket/ssl_server_socket_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1229024
+      },
+      "writtenOn": "2017-12-15T02:23:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "51edf1e9_6dd9fa0b",
       "revId": "732f49faf6aec82f376b34cb467c23cf80693211",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "147a9b6e_251957b3",
+        "filename": "net/socket/ssl_server_socket_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1229024
+      },
+      "writtenOn": "2017-12-15T02:23:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b3971864_fbc5d34c",
+      "revId": "732f49faf6aec82f376b34cb467c23cf80693211",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d6cc1793_4af226c7",
         "filename": "net/socket/ssl_server_socket_impl.cc",
         "patchSetId": 1
@@ -70,6 +130,24 @@
       "writtenOn": "2017-12-15T00:28:49Z",
       "side": 1,
       "message": "Though it\u0027s not needed I suppose, I\u0027d attach this unconditionally. It seems simpler for other callbacks we may want.",
+      "revId": "732f49faf6aec82f376b34cb467c23cf80693211",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a4feb7d_ccbd31cc",
+        "filename": "net/socket/ssl_server_socket_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 710,
+      "author": {
+        "id": 1229024
+      },
+      "writtenOn": "2017-12-15T02:23:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d6cc1793_4af226c7",
       "revId": "732f49faf6aec82f376b34cb467c23cf80693211",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -93,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "66f0658c_096f897a",
+        "filename": "net/socket/ssl_server_socket_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 789,
+      "author": {
+        "id": 1229024
+      },
+      "writtenOn": "2017-12-15T02:23:57Z",
+      "side": 1,
+      "message": "Done. Seems to work.",
+      "parentUuid": "3140edfa_c31bd20f",
+      "revId": "732f49faf6aec82f376b34cb467c23cf80693211",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0aff5ef4_f5791f05",
         "filename": "net/socket/ssl_server_socket_impl.cc",
         "patchSetId": 1
@@ -104,6 +200,24 @@
       "writtenOn": "2017-12-15T00:28:49Z",
       "side": 1,
       "message": "Mind adding a short comment for what the second check is for? Something like\n\n// SSLPrivateKey only supports ECDHE-based ciphers.",
+      "revId": "732f49faf6aec82f376b34cb467c23cf80693211",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c8181a1_5796ae52",
+        "filename": "net/socket/ssl_server_socket_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 866,
+      "author": {
+        "id": 1229024
+      },
+      "writtenOn": "2017-12-15T02:23:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0aff5ef4_f5791f05",
       "revId": "732f49faf6aec82f376b34cb467c23cf80693211",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -168,6 +282,24 @@
       "writtenOn": "2017-12-15T00:28:49Z",
       "side": 1,
       "message": "Could you also add:\n\n  client_ssl_config_.version_max \u003d SSL_PROTOCOL_VERSION_TLS1_2;\n\nJust one less thing to fix when we get around to turning TLS 1.3 on by default. :-) TLS 1.3 always works with SSLPrivateKey, so you\u0027ll want to turn it off too for this test.",
+      "revId": "732f49faf6aec82f376b34cb467c23cf80693211",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a318486_86d53722",
+        "filename": "net/socket/ssl_server_socket_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1175,
+      "author": {
+        "id": 1229024
+      },
+      "writtenOn": "2017-12-15T02:23:57Z",
+      "side": 1,
+      "message": "Done. Thanks for pointing that out.",
+      "parentUuid": "08e8c13b_d3aaa07f",
       "revId": "732f49faf6aec82f376b34cb467c23cf80693211",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
