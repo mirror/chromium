@@ -215,6 +215,12 @@ Polymer({
             loadTimeData.getBoolean('cleanupPoweredByPartner');
       },
     },
+
+    /** @private */
+    logsPermissionExplanation_: {
+      type: String,
+      value: '',
+    },
   },
 
   /** @private {?settings.ChromeCleanupProxy} */
@@ -248,6 +254,11 @@ Polymer({
   attached: function() {
     this.userInitiatedCleanupsEnabled_ =
         loadTimeData.getBoolean('userInitiatedCleanupsEnabled');
+    if (this.userInitiatedCleanupsEnabled_) {
+      this.logsPermissionExplanation_ =
+          this.i18n('chromeCleanupTitleLogsPermissionExplanation');
+    }
+
     this.browserProxy_ = settings.ChromeCleanupProxyImpl.getInstance();
     this.cardStateToComponentsMap_ = this.buildCardStateToComponentsMap_();
 
