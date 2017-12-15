@@ -213,6 +213,24 @@
     },
     {
       "key": {
+        "uuid": "79dc56db_76107dcb",
+        "filename": "third_party/WebKit/Source/core/dom/ComputedAccessibleNode.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1256034
+      },
+      "writtenOn": "2017-12-15T05:30:47Z",
+      "side": 1,
+      "message": "Done (not sure if descriptive enough as I\u0027m not entirely sure what will be replacing them)",
+      "parentUuid": "7040d226_ca8d3d32",
+      "revId": "9a6b7a6c3fcbbde318265246f241c4ab6e609718",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "48c70115_acf7b1c0",
         "filename": "third_party/WebKit/Source/core/frame/Window.idl",
         "patchSetId": 3
