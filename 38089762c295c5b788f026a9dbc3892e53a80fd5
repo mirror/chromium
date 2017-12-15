@@ -140,6 +140,24 @@
       "revId": "38089762c295c5b788f026a9dbc3892e53a80fd5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cf7a44d_45995e96",
+        "filename": "services/resource_coordinator/public/interfaces/memory_instrumentation/memory_instrumentation.mojom",
+        "patchSetId": 14
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-12-15T11:38:54Z",
+      "side": 1,
+      "message": "Yeah I\u0027ll be honest I don\u0027t have a strong opinion on this, my only argument was just consistency.\nThe next function in that same mojom file returns \u003d\u003e (bool success, uint64 dump_id), so would have been a bit odd to have return a bool success depending on the second type.\n\nI personally think it\u0027s not a huge deal in any case, so if there are no strong feeling I\u0027d leave it as it is just to avoid the cost of some other refactoring (and the risk of introducing bugs with that).\n\nThanks a lot Chris for the very open feedback.",
+      "parentUuid": "88bc1eb5_34e4d5e0",
+      "revId": "38089762c295c5b788f026a9dbc3892e53a80fd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
