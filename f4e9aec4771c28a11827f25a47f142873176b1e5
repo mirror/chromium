@@ -16,6 +16,24 @@
       "revId": "f4e9aec4771c28a11827f25a47f142873176b1e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "622cc4a6_d1d105f6",
+        "filename": "content/browser/renderer_host/media/media_stream_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1372,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-12-15T13:06:13Z",
+      "side": 1,
+      "message": "\u003e Should we add a check here for opened_device-\u003einput or assign some dummy audio params to device.input?\n\nI mean assign UnavailableDeviceParams().",
+      "parentUuid": "1905e524_d5aef5d3",
+      "revId": "f4e9aec4771c28a11827f25a47f142873176b1e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
