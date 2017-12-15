@@ -16,6 +16,24 @@
       "revId": "b1554580c8d0c1fb070e5faa4fc81801fd3bf5d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78dc41ba_f288d45d",
+        "filename": "third_party/WebKit/Source/devtools/front_end/help/releaseNote.css",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2017-12-15T22:00:19Z",
+      "side": 1,
+      "message": "I suspect it is because we have real scrollbars on mac with dark theme.",
+      "parentUuid": "4cf1ccf4_b21b55ac",
+      "revId": "b1554580c8d0c1fb070e5faa4fc81801fd3bf5d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
