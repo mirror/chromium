@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b21aed8f_8d1b27f2",
+        "filename": "chrome/browser/chromeos/accessibility/select_to_speak_event_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-12-15T19:10:51Z",
+      "side": 1,
+      "message": "I think this should return event_copy, the return value should be std::unique_ptr\u003cui::Event\u003e, and the calling could should use *event_copy-\u003eAsMouseEvent() to pass it to ui::MakeWebMouseEvent.\n\nYou might have to std::move(event_copy) in this function to return it, since you are passing the memory.",
+      "revId": "6d18aea9c8544e431fbfe11a79c61155cb0f354e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
