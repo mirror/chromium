@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7bf5afda_00ac4f7a",
+        "filename": "sandbox/linux/syscall_broker/broker_file_permission.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-12-15T18:16:28Z",
+      "side": 1,
+      "message": "file_to_access",
+      "range": {
+        "startLine": 66,
+        "startChar": 9,
+        "endLine": 66,
+        "endChar": 21
+      },
+      "revId": "33c9f4a01b20c3de53ecbe7527200a2cf6b05b29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ba1906b_dbad48c4",
+        "filename": "sandbox/linux/syscall_broker/broker_file_permission.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-12-15T18:16:28Z",
+      "side": 1,
+      "message": "Comment about async-signal-safety?",
+      "revId": "33c9f4a01b20c3de53ecbe7527200a2cf6b05b29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
