@@ -163,7 +163,7 @@
         margin: 0;
       }
 
-      #remove-extension {
+      button[is='cr-link-row'] {
         width: 100%;
       }
 
@@ -357,13 +357,12 @@
             </template>
           </div>
         </template>
-        <div class="section control-line actionable" id="extensions-options"
-            on-tap="onOptionsTap_"
-            hidden$="[[!shouldShowOptionsLink_(data.*)]]">
-          <span id="optionLabel">$i18n{itemOptions}</span>
-          <button class="icon-external" is="paper-icon-button-light"
-              aria-labelledby="optionLabel" actionable></button>
-        </div>
+        <button class="hr" is="cr-link-row" id="extensions-options"
+            disabled="[[!isEnabled_(data.state)]]"
+            hidden="[[!shouldShowOptionsLink_(data.*)]]"
+            icon-class="icon-external" label="$i18n{itemOptions}"
+            on-tap="onExtensionOptionsTap_">
+        </button>
         <div class="section block">
           <div class="section-title">$i18n{itemSource}</div>
           <div id="source" class="section-content">

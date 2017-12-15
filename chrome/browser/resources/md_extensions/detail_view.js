@@ -158,7 +158,7 @@ cr.define('extensions', function() {
     },
 
     /** @private */
-    onOptionsTap_: function() {
+    onExtensionOptionsTap_: function() {
       this.delegate.showItemOptionsPage(this.data);
     },
 
