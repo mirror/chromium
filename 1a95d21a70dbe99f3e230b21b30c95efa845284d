@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "35a65895_ec49ae7d",
+        "filename": "components/cronet/android/BUILD.gn",
+        "patchSetId": 20
+      },
+      "lineNbr": 511,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-12-15T16:11:46Z",
+      "side": 1,
+      "message": "Hmm I don\u0027t think we want cronet_tests including :cronet as this defeats the purpose of the split between cronet and cronet_tests.  I added cronet_tests so that we can accurately test libcronet like an embedder would be able to use it.  The comment on line 490 kinda pertains to this.  Perhaps we should add a dummy stub impl of a Cronet method so that we get a duplicate symbol error if cronet_tests includes cronet.",
+      "range": {
+        "startLine": 511,
+        "startChar": 14,
+        "endLine": 511,
+        "endChar": 0
+      },
+      "revId": "1a95d21a70dbe99f3e230b21b30c95efa845284d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c349b81f_15ca9c5c",
+        "filename": "components/cronet/native/buffer.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-12-15T16:11:46Z",
+      "side": 1,
+      "message": "Where is this called from?  Sorry, I\u0027m confused.",
+      "range": {
+        "startLine": 16,
+        "startChar": 22,
+        "endLine": 16,
+        "endChar": 0
+      },
+      "revId": "1a95d21a70dbe99f3e230b21b30c95efa845284d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4be1cab_fb1a5162",
+        "filename": "components/cronet/native/cronet.idl",
+        "patchSetId": 20
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-12-15T16:11:46Z",
+      "side": 1,
+      "message": "Initiiaze-\u003eInitialize\nand on line 23",
+      "range": {
+        "startLine": 17,
+        "startChar": 5,
+        "endLine": 17,
+        "endChar": 14
+      },
+      "revId": "1a95d21a70dbe99f3e230b21b30c95efa845284d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd28a6e9_b458d48f",
+        "filename": "components/cronet/native/cronet.idl",
+        "patchSetId": 20
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-12-15T16:11:46Z",
+      "side": 1,
+      "message": "Might want to mention that the buffer data is uninitialized (i.e. malloc not calloc is called).",
+      "range": {
+        "startLine": 23,
+        "startChar": 53,
+        "endLine": 23,
+        "endChar": 0
+      },
+      "revId": "1a95d21a70dbe99f3e230b21b30c95efa845284d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fc00d50_64da5ab7",
+        "filename": "components/cronet/native/cronet.idl",
+        "patchSetId": 20
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-12-15T16:11:46Z",
+      "side": 1,
+      "message": "Might want to mention that this is passed to Buffer::InitWithDataAndCallback().",
+      "range": {
+        "startLine": 41,
+        "startChar": 68,
+        "endLine": 41,
+        "endChar": 0
+      },
+      "revId": "1a95d21a70dbe99f3e230b21b30c95efa845284d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2738a7aa_accf7822",
+        "filename": "components/cronet/native/cronet.idl",
+        "patchSetId": 20
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-12-15T16:11:46Z",
+      "side": 1,
+      "message": "\"Guaranteed to be called once\" seems too strong.  If we pass this buffer back via OnReadComplete, is destruction up to the app? i.e. I could imagine an app destroying it via some other means than OnDestroy().  What about \"If a UrlRequest has ownership of a Buffer and the UrlRequest is destroyed (e.g. Cronet_UrlRequest_Destroy() is called), then the UrlRequest will call OnDestroy().\"",
+      "range": {
+        "startLine": 47,
+        "startChar": 15,
+        "endLine": 47,
+        "endChar": 43
+      },
+      "revId": "1a95d21a70dbe99f3e230b21b30c95efa845284d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "433e9ce3_943bf4ea",
+        "filename": "components/cronet/native/include/cronet_c.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-12-15T16:11:46Z",
+      "side": 1,
+      "message": "Are we sure we want to provide a direct executor?  Seems dangerous, and simple enough that if embedders want to run with scissors we should make them implement their own scissors perhaps.  In Java we make embedders call allowDirectExecutor() first to permitting direct executors.",
+      "range": {
+        "startLine": 18,
+        "startChar": 64,
+        "endLine": 18,
+        "endChar": 0
+      },
+      "revId": "1a95d21a70dbe99f3e230b21b30c95efa845284d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
