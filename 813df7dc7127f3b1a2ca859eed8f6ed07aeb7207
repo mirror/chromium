@@ -22,6 +22,30 @@
       "revId": "813df7dc7127f3b1a2ca859eed8f6ed07aeb7207",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a96096d_bf356d0f",
+        "filename": "tools/android/customtabs_benchmark/scripts/customtabs_benchmark.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2017-12-15T15:24:10Z",
+      "side": 1,
+      "message": "Without this default, if you don\u0027t specify output_file, it tries to open a None file and gives an even-more-confusing error :)",
+      "parentUuid": "e2d74cd8_726a591c",
+      "range": {
+        "startLine": 241,
+        "startChar": 52,
+        "endLine": 241,
+        "endChar": 63
+      },
+      "revId": "813df7dc7127f3b1a2ca859eed8f6ed07aeb7207",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
