@@ -10,13 +10,17 @@
 <dom-module id="extensions-pack-dialog-alert">
   <template>
     <style include="cr-shared-style paper-button-style">
+      .body {
+        white-space: pre-wrap;
+        word-break: break-word;
+      }
     </style>
 
     <dialog is="cr-dialog" id="dialog" close-text="$i18n{close}">
       <div class="title" slot="title">[[title_]]</div>
-      <div class="body" slot="body">
-        [[model.message]]
-      </div>
+      <div class="body" slot="body"><!-- no space allowed
+        -->[[model.message]]<!-- no space allowed
+      --></div>
       <div class="button-container" slot="button-container">
         <paper-button class="cancel-button" on-tap="onCancelTap_"
             hidden="[[!cancelLabel_]]">

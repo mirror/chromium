@@ -89,11 +89,7 @@ cr.define('extensions', function() {
      * @private
      */
     onPackResponse_: function(response) {
-      if (response.status === chrome.developerPrivate.PackStatus.SUCCESS) {
-        this.$.dialog.close();
-      } else {
-        this.set('lastResponse_', response);
-      }
+      this.set('lastResponse_', response);
     },
 
     /**
