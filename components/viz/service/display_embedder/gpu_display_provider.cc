@@ -129,7 +129,7 @@ std::unique_ptr<Display> GpuDisplayProvider::CreateDisplay(
       output_surface = base::MakeUnique<GLOutputSurfaceOzone>(
           std::move(context_provider), surface_handle,
           synthetic_begin_frame_source.get(), gpu_memory_buffer_manager_.get(),
-          GL_TEXTURE_2D, GL_RGB);
+          GL_TEXTURE_2D);
 #elif defined(OS_MACOSX)
       output_surface = base::MakeUnique<GLOutputSurfaceMac>(
           std::move(context_provider), surface_handle,
