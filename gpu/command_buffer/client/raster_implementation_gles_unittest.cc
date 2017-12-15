@@ -31,6 +31,7 @@ class RasterMockGLES2Interface : public gles2::GLES2InterfaceStub {
  public:
   // Command buffer Flush / Finish.
   MOCK_METHOD0(Finish, void());
+  MOCK_METHOD0(Flush, void());
   MOCK_METHOD0(ShallowFlushCHROMIUM, void());
   MOCK_METHOD0(OrderingBarrierCHROMIUM, void());
 
@@ -154,6 +155,11 @@ class RasterMockGLES2Interface : public gles2::GLES2InterfaceStub {
                      GLfloat post_translate_y,
                      GLfloat post_scale));
   MOCK_METHOD0(EndRasterCHROMIUM, void());
+
+  MOCK_MEDHOD2(PixelStorei, void(GLenum pname, GLint param));
+  MOCK_METHOD2(TraceBeginCHROMIUM,
+               void(const char* category_name, const char* trace_name));
+  MOCK_METHOD0(TraceEndCHROMIUM, void());
 };
 
 class RasterImplementationGLESTest : public testing::Test {
@@ -179,6 +185,11 @@ class RasterImplementationGLESTest : public testing::Test {
 TEST_F(RasterImplementationGLESTest, Finish) {
   EXPECT_CALL(*gl_, Finish()).Times(1);
   ri_->Finish();
+}
+
+TEST_F(RasterImplementationGLESTest, Flush) {
+  EXPECT_CALL(*gl_, Flush()).Times(1);
+  ri_->Flush();
 }
 
 TEST_F(RasterImplementationGLESTest, ShallowFlushCHROMIUM) {
@@ -645,6 +656,18 @@ TEST_F(RasterImplementationGLESTest, RasterCHROMIUM) {
 TEST_F(RasterImplementationGLESTest, EndRasterCHROMIUM) {
   EXPECT_CALL(*gl_, EndRasterCHROMIUM()).Times(1);
   ri_->EndRasterCHROMIUM();
+}
+
+TEST_F(RasterImplementationGLESTest, BeginGpuRaster) {
+  EXPECT_CALL(*gl_, TraceBeginCHROMIUM("BeginGpuRaster", "GpuRasterization"))
+      .Times(1);
+  ri_->BeginGpuRaster();
+}
+
+TEST_F(RasterImplementationGLESTest, EndGpuRaster) {
+  EXPECT_CALL(*gl_, PixelStorei(GL_UNPACK_ALIGNMENT, 4)).Times(1);
+  EXPECT_CALL(*gl_, TraceEndCHROMIUM()).Times(1);
+  ri_->EndGpuRaster();
 }
 
 }  // namespace raster
