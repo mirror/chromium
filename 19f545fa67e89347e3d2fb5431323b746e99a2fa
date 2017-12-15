@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6da632c1_b200158e",
+        "filename": "components/exo/buffer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-12-15T16:19:23Z",
+      "side": 1,
+      "message": "nit: you can skip this temporary variable if you like",
+      "revId": "19f545fa67e89347e3d2fb5431323b746e99a2fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b980253_18c50aaa",
+        "filename": "components/viz/service/display_embedder/buffer_queue.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-12-15T16:19:23Z",
+      "side": 1,
+      "message": "can we remove this now? as user of it can just use buffer_format() + helper function..",
+      "revId": "19f545fa67e89347e3d2fb5431323b746e99a2fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "334ea752_a3a431f5",
+        "filename": "gpu/command_buffer/common/gpu_memory_buffer_support.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-12-15T16:19:23Z",
+      "side": 1,
+      "message": "nit: add short comment to explain function. maybe mention that it doesn\u0027t take into account if format is supported or not",
+      "revId": "19f545fa67e89347e3d2fb5431323b746e99a2fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51b303f2_1204b049",
+        "filename": "gpu/command_buffer/common/gpu_memory_buffer_support.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-12-15T16:19:23Z",
+      "side": 1,
+      "message": "please remove this as above function should be enough",
+      "revId": "19f545fa67e89347e3d2fb5431323b746e99a2fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c60b5af0_25975f47",
+        "filename": "gpu/ipc/in_process_command_buffer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 803,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-12-15T16:19:23Z",
+      "side": 1,
+      "message": "can remove temporary variable if you like",
+      "revId": "19f545fa67e89347e3d2fb5431323b746e99a2fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26b4ca7f_35842ddd",
+        "filename": "gpu/ipc/service/gpu_channel.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 708,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-12-15T16:19:23Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "19f545fa67e89347e3d2fb5431323b746e99a2fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d0ee963_aff4be1f",
+        "filename": "ui/gl/gl_image_native_pixmap.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-12-15T16:19:23Z",
+      "side": 1,
+      "message": "not sure you\u0027re allowed to include this here. see DEPS file. we might have to move the helper function ui/gfx",
+      "revId": "19f545fa67e89347e3d2fb5431323b746e99a2fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f06800ba_254241f1",
+        "filename": "ui/gl/gl_image_native_pixmap.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-12-15T16:19:23Z",
+      "side": 1,
+      "message": "why re-implement this here?",
+      "revId": "19f545fa67e89347e3d2fb5431323b746e99a2fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59e688c5_cbdee20f",
+        "filename": "ui/gl/gl_image_native_pixmap.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-12-15T16:19:23Z",
+      "side": 1,
+      "message": "can we remove this now?",
+      "revId": "19f545fa67e89347e3d2fb5431323b746e99a2fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58c18bb3_55312773",
+        "filename": "ui/gl/gl_image_native_pixmap.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-12-15T16:19:23Z",
+      "side": 1,
+      "message": "can we get format from pixmap_ instead?",
+      "revId": "19f545fa67e89347e3d2fb5431323b746e99a2fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
