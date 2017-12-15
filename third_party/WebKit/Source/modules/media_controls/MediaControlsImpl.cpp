@@ -104,6 +104,10 @@ constexpr int kMinHeightForOverlayPlayButton = kOverlayPlayButtonHeight +
 // LayoutTests/media/media-controls.js.
 const double kTimeWithoutMouseMovementBeforeHidingMediaControls = 3;
 
+// The minimum time for the controls to be shown before they can be hidden by a
+// tap.
+constexpr WTF::TimeDelta kMinimumTimeShown = TimeDelta::FromMilliseconds(400);
+
 const char* kStateCSSClasses[6] = {
     "phase-pre-ready state-no-source",    // kNoSource
     "phase-pre-ready state-no-metadata",  // kNotLoaded
@@ -325,7 +329,8 @@ MediaControlsImpl::MediaControlsImpl(HTMLMediaElement& media_element)
           media_element.GetDocument().GetTaskRunner(TaskType::kUnspecedTimer),
           this,
           &MediaControlsImpl::ElementSizeChangedTimerFired),
-      keep_showing_until_timer_fires_(false) {
+      keep_showing_until_timer_fires_(false),
+      controls_opaque_duration_(WTF::Time::Now()) {
   resize_observer_->observe(&media_element);
 }
 
@@ -712,6 +717,9 @@ bool MediaControlsImpl::IsVisible() const {
 void MediaControlsImpl::MakeOpaque() {
   ShowCursor();
   panel_->MakeOpaque();
+
+  if (controls_opaque_duration_.is_null())
+    controls_opaque_duration_ = WTF::Time::Now();
 }
 
 void MediaControlsImpl::MakeTransparent() {
@@ -719,6 +727,8 @@ void MediaControlsImpl::MakeTransparent() {
   if (MediaElement().ShouldShowControls())
     HideCursor();
   panel_->MakeTransparent();
+
+  controls_opaque_duration_ = WTF::Time();
 }
 
 bool MediaControlsImpl::ShouldHideMediaControls(unsigned behavior_flags) const {
@@ -994,6 +1004,32 @@ void MediaControlsImpl::UpdateOverflowMenuWanted() const {
     download_iph_manager_->UpdateInProductHelp();
 }
 
+void MediaControlsImpl::MaybeToggleControlsFromTap() {
+  if (MediaElement().paused())
+    return;
+
+  // Only hide the controls if the |controls_opaque_duration_| is greater than
+  // the minimum time to be shown.
+  bool hide_controls =
+      !controls_opaque_duration_.is_null() && IsVisible() &&
+      (WTF::Time::Now() - controls_opaque_duration_) > kMinimumTimeShown &&
+      ShouldHideMediaControls(kIgnoreWaitForTimer | kIgnoreControlsHover |
+                              kIgnoreVideoHover);
+
+  // If the controls are visible we should try to hide them unless they should
+  // be kept around for another reason. If the controls are not visible then
+  // show them and start the timer to automatically hide them.
+  if (hide_controls) {
+    MakeTransparent();
+  } else {
+    MakeOpaque();
+    if (ShouldHideMediaControls(kIgnoreWaitForTimer)) {
+      keep_showing_until_timer_fires_ = true;
+      StartHideMediaControlsTimer();
+    }
+  }
+}
+
 void MediaControlsImpl::DefaultEventHandler(Event* event) {
   HTMLDivElement::DefaultEventHandler(event);
 
@@ -1015,7 +1051,7 @@ void MediaControlsImpl::DefaultEventHandler(Event* event) {
   // Touch events are treated differently to avoid fake mouse events to trigger
   // random behavior. The expect behaviour for touch is that a tap will show the
   // controls and they will hide when the timer to hide fires.
-  if (is_touch_event) {
+  if (is_touch_event && !IsModern()) {
     if (event->type() != EventTypeNames::gesturetap)
       return;
 

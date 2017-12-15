@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<title>Test that the controls are hidden if they are tapped</title>
+<script src="../../../resources/testharness.js"></script>
+<script src="../../../resources/testharnessreport.js"></script>
+<script src="../../media-controls.js"></script>
+<video controls width=400 src="../../content/60_sec_video.webm"></video>
+<script>
+async_test(t => {
+  const minimumTimeShownMs = 400;
+  const doubleTapTimeoutMs = 300;
+
+  const video = document.querySelector('video');
+  let step = 0;
+
+  video.addEventListener('playing', t.step_func(() => {
+    assert_true(isControlsPanelVisible(video));
+    step++;
+  }), { once: true });
+
+  video.ontimeupdate = t.step_func(() => {
+    if (step == 1) {
+      setTimeout(() => { step++; }, minimumTimeShownMs);
+    } else if (step == 2) {
+      // Single tap in the top right hand corner
+      const coordinates =
+        coordinatesOutsideElement(mediaControlsOverlayPlayButton(video));
+      singleTapAtCoordinates(coordinates[0] + 1, coordinates[1] + 1);
+      setTimeout(() => { step++; }, doubleTapTimeoutMs);
+    } else if (step == 3) {
+      assert_false(isControlsPanelVisible(video));
+      t.done();
+    }
+  });
+
+  video.play();
+});
+</script>
+</html>i

@@ -32,6 +32,7 @@
 #include "core/html/media/MediaControls.h"
 #include "modules/ModulesExport.h"
 #include "platform/Timer.h"
+#include "platform/wtf/Time.h"
 
 namespace blink {
 
@@ -156,6 +157,8 @@ class MODULES_EXPORT MediaControlsImpl final : public HTMLDivElement,
     kBuffering,
   };
   ControlsState State() const;
+
+  void MaybeToggleControlsFromTap();
 
  private:
   // MediaControlsMediaEventListener is a component that is listening to events
@@ -315,6 +318,9 @@ class MODULES_EXPORT MediaControlsImpl final : public HTMLDivElement,
   IntSize size_;
 
   bool keep_showing_until_timer_fires_ : 1;
+
+  // The duration the controls have been opaque.
+  WTF::Time controls_opaque_duration_;
 
   Member<MediaDownloadInProductHelpManager> download_iph_manager_;
 };
