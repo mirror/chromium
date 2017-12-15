@@ -1,0 +1,227 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d73b5f65_3ff77f90",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 1318,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-12-15T00:40:14Z",
+      "side": 1,
+      "message": "Installation?\n\nIIUC verificaion is done on login screen and on boot continue, only installation is done.",
+      "range": {
+        "startLine": 1318,
+        "startChar": 31,
+        "endLine": 1318,
+        "endChar": 43
+      },
+      "revId": "fa14ce43f37740b9e6ff4c78a74f5c3a43802641",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cec2195_54d3a154",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 1320,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-12-15T00:40:14Z",
+      "side": 1,
+      "message": "remove? (see my comment above)",
+      "revId": "fa14ce43f37740b9e6ff4c78a74f5c3a43802641",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2e2c632_d84dec21",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 1327,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-12-15T00:40:14Z",
+      "side": 1,
+      "message": "bootlockboxd? You\u0027re not going to use cryptohome since you\u0027re introducing the small daemon, right?",
+      "range": {
+        "startLine": 1327,
+        "startChar": 30,
+        "endLine": 1327,
+        "endChar": 40
+      },
+      "revId": "fa14ce43f37740b9e6ff4c78a74f5c3a43802641",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47e5f2dd_1aec41e7",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 1332,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-12-15T00:40:14Z",
+      "side": 1,
+      "message": "What should we record for the very first Chrome OS boot (the host side dalvik-cache dir will be empty.)",
+      "revId": "fa14ce43f37740b9e6ff4c78a74f5c3a43802641",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22b4fcc7_ea59a3ec",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 1334,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-12-15T00:40:14Z",
+      "side": 1,
+      "message": "\"Invalid\" may be shorter and clearer.",
+      "revId": "fa14ce43f37740b9e6ff4c78a74f5c3a43802641",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02044cff_5227bcd3",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 1336,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-12-15T00:40:14Z",
+      "side": 1,
+      "message": "I think you need to move \"bootlockbox not ready\" here because your code will do verification first.\n\nDoes ArcCodeRelocationResult need the error too? I guess it doesn\u0027t.",
+      "revId": "fa14ce43f37740b9e6ff4c78a74f5c3a43802641",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c8fd932_18830b57",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 2439,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-12-15T00:40:14Z",
+      "side": 1,
+      "message": "Not sure if we want the prefix. Most ARC++ stats don\u0027t use such a prefix.",
+      "range": {
+        "startLine": 2439,
+        "startChar": 21,
+        "endLine": 2439,
+        "endChar": 30
+      },
+      "revId": "fa14ce43f37740b9e6ff4c78a74f5c3a43802641",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81fd643f_5c0ae6be",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 2439,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-12-15T00:40:14Z",
+      "side": 1,
+      "message": "same, Installation?",
+      "range": {
+        "startLine": 2439,
+        "startChar": 49,
+        "endLine": 2439,
+        "endChar": 61
+      },
+      "revId": "fa14ce43f37740b9e6ff4c78a74f5c3a43802641",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62dc904a_a52d6771",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 2443,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-12-15T00:40:14Z",
+      "side": 1,
+      "message": "installation",
+      "range": {
+        "startLine": 2443,
+        "startChar": 16,
+        "endLine": 2443,
+        "endChar": 28
+      },
+      "revId": "fa14ce43f37740b9e6ff4c78a74f5c3a43802641",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "672b71cc_9c7f2332",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 2462,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-12-15T00:40:14Z",
+      "side": 1,
+      "message": "Remove?",
+      "range": {
+        "startLine": 2462,
+        "startChar": 30,
+        "endLine": 2462,
+        "endChar": 34
+      },
+      "revId": "fa14ce43f37740b9e6ff4c78a74f5c3a43802641",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "926e867b_49b4862e",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 2462,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-12-15T00:40:14Z",
+      "side": 1,
+      "message": "Can you also record RelocationTime and TotalTime?",
+      "revId": "fa14ce43f37740b9e6ff4c78a74f5c3a43802641",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
