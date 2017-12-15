@@ -33,17 +33,25 @@ source_set("omnibox_util") {
 source_set("omnibox_internal") {
   configs += [ "//build/config/compiler:enable_arc" ]
   sources = [
-    "autocomplete_match_formatter.h",
+    "autocomplete_match_formatte.h",
     "autocomplete_match_formatter.mm",
     "autocomplete_result_consumer.h",
     "autocomplete_suggestion.h",
     "chrome_omnibox_client_ios.h",
     "chrome_omnibox_client_ios.mm",
+    "clipping_mask_view.h",
+    "clipping_mask_view.mm",
+    "clipping_textfield.h",
+    "clipping_textfield.mm",
+    "clipping_textfield_container.h",
+    "clipping_textfield_container.mm",
     "image_retriever.h",
     "location_bar_controller_impl.h",
     "location_bar_controller_impl.mm",
     "location_bar_view.h",
     "location_bar_view.mm",
+    "omnibox_clipping_feature.h",
+    "omnibox_clipping_feature.mm",
     "omnibox_popup_mediator.h",
     "omnibox_popup_mediator.mm",
     "omnibox_popup_positioner.h",
@@ -125,6 +133,7 @@ source_set("unit_tests") {
   configs += [ "//build/config/compiler:enable_arc" ]
   testonly = true
   sources = [
+    "clipping_textfield_container_unittest.mm",
     "omnibox_text_field_ios_unittest.mm",
   ]
   deps = [
