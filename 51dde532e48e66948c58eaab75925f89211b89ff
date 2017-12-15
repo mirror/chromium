@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c235e681_ac818d15",
+        "filename": "chrome/browser/io_thread.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 693,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-12-15T21:21:43Z",
+      "side": 1,
+      "message": "I don\u0027t think so. (note also all the QuicAllowedPolicyDynamicTest tests pass)\n\nThe placement of where NetworkService::DisableQuic changed. This method is called by DisableQuicOnIOThread. That function itself called content::GetNetworkServiceImpl()-\u003eDisableQuic() (when NS is disabled). That function was called by SystemNetworkContextManager::DisableQuic which calls content::GetNetworkService()-\u003eDisableQuic() if NS is enabled. The NS::DisableQuic calls would disable quic on all the registered NetworkContexts",
+      "parentUuid": "927dedfb_f57024e2",
+      "range": {
+        "startLine": 693,
+        "startChar": 27,
+        "endLine": 693,
+        "endChar": 28
+      },
+      "revId": "51dde532e48e66948c58eaab75925f89211b89ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4fb67e39_9ba1671d",
         "filename": "chrome/browser/io_thread.h",
         "patchSetId": 12
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "4255f4d8_4934b1e4",
+        "filename": "chrome/browser/io_thread.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-12-15T21:21:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4fb67e39_9ba1671d",
+      "range": {
+        "startLine": 33,
+        "startChar": 32,
+        "endLine": 33,
+        "endChar": 33
+      },
+      "revId": "51dde532e48e66948c58eaab75925f89211b89ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2d7f11db_2b94421d",
         "filename": "chrome/browser/io_thread.h",
         "patchSetId": 12
@@ -59,6 +107,30 @@
       "writtenOn": "2017-12-15T17:37:56Z",
       "side": 1,
       "message": "Can be forward declared.",
+      "range": {
+        "startLine": 34,
+        "startChar": 32,
+        "endLine": 34,
+        "endChar": 33
+      },
+      "revId": "51dde532e48e66948c58eaab75925f89211b89ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1426a01a_4cbcbd02",
+        "filename": "chrome/browser/io_thread.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-12-15T21:21:43Z",
+      "side": 1,
+      "message": "I don\u0027t think so, since it\u0027s a member",
+      "parentUuid": "2d7f11db_2b94421d",
       "range": {
         "startLine": 34,
         "startChar": 32,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "086fcc10_fb7aea78",
+        "filename": "chrome/browser/io_thread.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-12-15T21:21:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a3e6d4f_c48ee0b0",
+      "range": {
+        "startLine": 134,
+        "startChar": 13,
+        "endLine": 134,
+        "endChar": 35
+      },
+      "revId": "51dde532e48e66948c58eaab75925f89211b89ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cd931323_3dbb771f",
         "filename": "chrome/browser/io_thread.h",
         "patchSetId": 12
@@ -105,6 +201,30 @@
       "writtenOn": "2017-12-15T17:37:56Z",
       "side": 1,
       "message": "I don\u0027t think this is ever used?",
+      "range": {
+        "startLine": 139,
+        "startChar": 36,
+        "endLine": 139,
+        "endChar": 50
+      },
+      "revId": "51dde532e48e66948c58eaab75925f89211b89ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4be8f384_472ea8b3",
+        "filename": "chrome/browser/io_thread.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-12-15T21:21:43Z",
+      "side": 1,
+      "message": "hmm I guess the comment isn\u0027t above isn\u0027t clear?\n\nIt\u0027s needed because SystemNetworkContextManager::GetContext returns a NetworkContext interface pointer, which needs to be bound. That\u0027s done by creating a NetworkContext C++ class, which is what this pointer stores.",
+      "parentUuid": "cd931323_3dbb771f",
       "range": {
         "startLine": 139,
         "startChar": 36,
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "39292f9f_5cc7a18e",
+        "filename": "chrome/browser/net/system_network_context_manager.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-12-15T21:21:43Z",
+      "side": 1,
+      "message": "Done (For 1, I don\u0027t think there wasn\u0027t a bug before, per the comment there, but I did it since it simplifies this file)",
+      "parentUuid": "413716c7_b53d8a2e",
+      "range": {
+        "startLine": 131,
+        "startChar": 34,
+        "endLine": 131,
+        "endChar": 35
+      },
+      "revId": "51dde532e48e66948c58eaab75925f89211b89ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "18b7bf36_258857bd",
         "filename": "content/browser/network_service_instance.cc",
         "patchSetId": 12
@@ -151,6 +295,30 @@
       "writtenOn": "2017-12-15T17:37:56Z",
       "side": 1,
       "message": "Think this should be up with the others, so it\u0027s easy to see what the globals are. Or better, any reason not to just make this a strong binding?",
+      "range": {
+        "startLine": 38,
+        "startChar": 9,
+        "endLine": 38,
+        "endChar": 29
+      },
+      "revId": "51dde532e48e66948c58eaab75925f89211b89ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e025d97_63d8c10a",
+        "filename": "content/browser/network_service_instance.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-12-15T21:21:43Z",
+      "side": 1,
+      "message": "In general I prefer to keep things local if other methods in that file don\u0027t need it. I didn\u0027t see any reason to slow shutdown so that\u0027s why I leak it.",
+      "parentUuid": "18b7bf36_258857bd",
       "range": {
         "startLine": 38,
         "startChar": 9,
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "4c5193dc_312c2511",
+        "filename": "content/browser/network_service_instance.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-12-15T21:21:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6281e798_919941ac",
+      "range": {
+        "startLine": 44,
+        "startChar": 12,
+        "endLine": 44,
+        "endChar": 0
+      },
+      "revId": "51dde532e48e66948c58eaab75925f89211b89ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b0780a84_cd56c742",
         "filename": "content/browser/network_service_instance.cc",
         "patchSetId": 12
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "e3db39ab_8a88a29b",
+        "filename": "content/browser/network_service_instance.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-12-15T21:21:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b0780a84_cd56c742",
+      "range": {
+        "startLine": 55,
+        "startChar": 33,
+        "endLine": 55,
+        "endChar": 34
+      },
+      "revId": "51dde532e48e66948c58eaab75925f89211b89ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c670a742_0ce6b135",
         "filename": "content/browser/network_service_instance.cc",
         "patchSetId": 12
@@ -220,6 +436,30 @@
       "writtenOn": "2017-12-15T17:37:56Z",
       "side": 1,
       "message": "Can just make this return a NEtworkServiceImpl instead (Since it\u0027s a private method, and you say you\u0027re merging the classes, anyways, to have just a private NetworkService class.  That also gets rid of the cast in StoragePartitionImpl)",
+      "range": {
+        "startLine": 60,
+        "startChar": 16,
+        "endLine": 60,
+        "endChar": 37
+      },
+      "revId": "51dde532e48e66948c58eaab75925f89211b89ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5836ec87_8667ba17",
+        "filename": "content/browser/network_service_instance.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-12-15T21:21:43Z",
+      "side": 1,
+      "message": "That was an old code review comment, excuse the confusion as I changed the code to fix tests.\n\nRight now this is exposed outside content, hence why it returns the interface.",
+      "parentUuid": "c670a742_0ce6b135",
       "range": {
         "startLine": 60,
         "startChar": 16,
@@ -255,6 +495,30 @@
     },
     {
       "key": {
+        "uuid": "2754f670_9e5fe1dd",
+        "filename": "content/browser/storage_partition_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-12-15T21:21:43Z",
+      "side": 1,
+      "message": "This class, like the system context comment you left, is also used to setup a binding for the NetworkContext interface when network service isn\u0027t being used.",
+      "parentUuid": "a4c7fb0f_c3065c44",
+      "range": {
+        "startLine": 269,
+        "startChar": 8,
+        "endLine": 269,
+        "endChar": 23
+      },
+      "revId": "51dde532e48e66948c58eaab75925f89211b89ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a23ee1f2_db1fd622",
         "filename": "content/network/url_request_context_builder_mojo.cc",
         "patchSetId": 12
@@ -266,6 +530,30 @@
       "writtenOn": "2017-12-15T17:37:56Z",
       "side": 1,
       "message": "Disconnecting NetworkContext initialization from the in-process NetworkService seems like it may cause some problems down the line - namely, we can\u0027t get rid of Chrome\u0027s in-process NetLog or HostResolver (Or make quic disabling go through the NetworkServicePtr) in the network service disabled case.  I guess we can (in the future) make this some sort of callback using NetworkServiceInstance, which will hook those up in the in-process case, and bypass that logic otherwise?",
+      "range": {
+        "startLine": 37,
+        "startChar": 53,
+        "endLine": 37,
+        "endChar": 66
+      },
+      "revId": "51dde532e48e66948c58eaab75925f89211b89ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50b00cd7_291a2319",
+        "filename": "content/network/url_request_context_builder_mojo.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-12-15T21:21:43Z",
+      "side": 1,
+      "message": "\u003e Disconnecting NetworkContext initialization from the in-process NetworkService seems like it may cause some problems down the line - namely, we can\u0027t get rid of Chrome\u0027s in-process NetLog or HostResolver (Or make quic disabling go through the NetworkServicePtr) in the network service disabled case.  I guess we can (in the future) make this some sort of callback using NetworkServiceInstance, which will hook those up in the in-process case, and bypass that logic otherwise?\n\n\nI\u0027m not sure I follow. Currently, in the network service disabled case we still use NetworkService to disable quic (per my other comment). The main purpose here is to avoid creating NetworkContext C++ class in the browser process when the network service is enabled. If the network service is disabled, we do create NetworkContext in the browser process per URLLRequestContext, which should satisfy the goals you listed above?",
+      "parentUuid": "a23ee1f2_db1fd622",
       "range": {
         "startLine": 37,
         "startChar": 53,
