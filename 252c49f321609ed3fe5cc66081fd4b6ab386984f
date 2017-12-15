@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a9a5ed10_c0d96feb",
+        "filename": "build/config/BUILDCONFIG.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 528,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-12-15T19:05:49Z",
+      "side": 1,
+      "message": "We only need to add new things to this list of a target needs to opt-out of that config, which I don\u0027t see here). There is some discussion in the comment above.\n\nYou can just add it to the \"compiler\" config if it\u0027s really global to everything.",
+      "revId": "252c49f321609ed3fe5cc66081fd4b6ab386984f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
