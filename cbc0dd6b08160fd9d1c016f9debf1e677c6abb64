@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b77e6ce9_6d111753",
+        "filename": "extensions/browser/updater/update_data_provider.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1238209
+      },
+      "writtenOn": "2017-12-15T20:39:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b7ea41fc_97e0a8e1",
+      "revId": "cbc0dd6b08160fd9d1c016f9debf1e677c6abb64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "911208a4_bc91f1c9",
         "filename": "extensions/browser/updater/update_data_provider_unittest.cc",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "cbc0dd6b08160fd9d1c016f9debf1e677c6abb64",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e4654c7_29c1dcaf",
+        "filename": "extensions/browser/updater/update_data_provider_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 1238209
+      },
+      "writtenOn": "2017-12-15T20:39:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "911208a4_bc91f1c9",
+      "revId": "cbc0dd6b08160fd9d1c016f9debf1e677c6abb64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "b595088e_64875550",
+        "filename": "extensions/browser/updater/update_data_provider_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 470,
+      "author": {
+        "id": 1238209
+      },
+      "writtenOn": "2017-12-15T20:39:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cbb2f22b_9ef82d19",
+      "revId": "cbc0dd6b08160fd9d1c016f9debf1e677c6abb64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bb633b31_a4eb408d",
         "filename": "extensions/browser/updater/update_service.cc",
         "patchSetId": 5
@@ -64,6 +118,24 @@
       "writtenOn": "2017-12-14T14:59:48Z",
       "side": 1,
       "message": "It\u0027s unclear to me why we branch like this.  Can you add a comment?",
+      "revId": "cbc0dd6b08160fd9d1c016f9debf1e677c6abb64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed72b55e_51729c8d",
+        "filename": "extensions/browser/updater/update_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1238209
+      },
+      "writtenOn": "2017-12-15T20:39:43Z",
+      "side": 1,
+      "message": "I wanted to have a place holder to support extension cache. Because the current implementation of update client in component updater doesn\u0027t support extension cache yet, I\u0027ll remove this change.",
+      "parentUuid": "bb633b31_a4eb408d",
       "revId": "cbc0dd6b08160fd9d1c016f9debf1e677c6abb64",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "ce088b47_812ae072",
+        "filename": "extensions/browser/updater/update_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1238209
+      },
+      "writtenOn": "2017-12-15T20:39:43Z",
+      "side": 1,
+      "message": "For foreground updates, update client only supports installing one ID at a time because update tasks are done sequentially. I\u0027ll change update client implementation to support installing multiple extensions sequentially.",
+      "parentUuid": "f33465d3_e917232b",
+      "revId": "cbc0dd6b08160fd9d1c016f9debf1e677c6abb64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9026640f_be14d71d",
         "filename": "extensions/browser/updater/update_service.h",
         "patchSetId": 5
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "f2ea0418_d2e199dc",
+        "filename": "extensions/browser/updater/update_service.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1238209
+      },
+      "writtenOn": "2017-12-15T20:39:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9026640f_be14d71d",
+      "revId": "cbc0dd6b08160fd9d1c016f9debf1e677c6abb64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b29eebb2_b78927d0",
         "filename": "extensions/browser/updater/update_service.h",
         "patchSetId": 5
@@ -118,6 +226,24 @@
       "revId": "cbc0dd6b08160fd9d1c016f9debf1e677c6abb64",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68d88c7a_01693d3f",
+        "filename": "extensions/browser/updater/update_service.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1238209
+      },
+      "writtenOn": "2017-12-15T20:39:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b29eebb2_b78927d0",
+      "revId": "cbc0dd6b08160fd9d1c016f9debf1e677c6abb64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
