@@ -88,6 +88,24 @@
       "revId": "cfc08be7a0e431cde74e66f0c0986affd7eec2b2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44f02e58_af9ef468",
+        "filename": "chrome/browser/ui/webui/offline/offline_internals_ui_message_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2017-12-15T03:40:18Z",
+      "side": 1,
+      "message": "Updated code to use ListValue. Please let me know if I missed anything.",
+      "parentUuid": "ef8234cf_3b43e9a7",
+      "revId": "cfc08be7a0e431cde74e66f0c0986affd7eec2b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
