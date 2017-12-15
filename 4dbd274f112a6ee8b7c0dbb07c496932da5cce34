@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bd57169a_1917d505",
+        "filename": "third_party/WebKit/Source/core/workers/DedicatedWorker.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-12-15T12:08:58Z",
+      "side": 1,
+      "message": "Good point.\n\nThis is just moved from DedicatedWorkerMessagingProxy. To minimize the diffs, I\u0027ll make a follow-up CL for this.",
+      "parentUuid": "82f1b668_cc00db04",
+      "revId": "4dbd274f112a6ee8b7c0dbb07c496932da5cce34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5febcbc7_6057b43f",
         "filename": "third_party/WebKit/Source/core/workers/DedicatedWorkerMessagingProxy.cpp",
         "patchSetId": 10
@@ -53,6 +71,24 @@
       "writtenOn": "2017-12-15T01:26:48Z",
       "side": 1,
       "message": "Oh, ok this is the one that raised the core/ and modules/fetch question... I think we\u0027ll be probably moving these in core/.",
+      "revId": "4dbd274f112a6ee8b7c0dbb07c496932da5cce34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d90ef27_43f44f7f",
+        "filename": "third_party/WebKit/Source/core/workers/RequestCredentials.idl",
+        "patchSetId": 10
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-12-15T12:08:58Z",
+      "side": 1,
+      "message": "Acked.",
+      "parentUuid": "d800224f_7f39e8fe",
       "revId": "4dbd274f112a6ee8b7c0dbb07c496932da5cce34",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
