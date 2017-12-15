@@ -24,6 +24,9 @@
 #include "gpu/ipc/client/gpu_memory_buffer_impl_android_hardware_buffer.h"
 #endif
 
+#include <GLES2/gl2.h>
+#include <GLES2/gl2extchromium.h>
+
 namespace gpu {
 
 GpuMemoryBufferImpl::GpuMemoryBufferImpl(gfx::GpuMemoryBufferId id,

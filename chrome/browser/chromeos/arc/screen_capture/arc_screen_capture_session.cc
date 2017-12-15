@@ -202,7 +202,7 @@ void ArcScreenCaptureSession::SetOutputBuffer(
   GLuint texture;
   gl->GenTextures(1, &texture);
   GLuint id = gl->CreateImageCHROMIUM(gpu_memory_buffer->AsClientBuffer(),
-                                      size_.width(), size_.height(), GL_RGB);
+                                      size_.width(), size_.height());
   if (!id) {
     LOG(ERROR) << "Failed to allocate backing surface from GpuMemoryBuffer";
     gl->DeleteTextures(1, &texture);

@@ -2954,7 +2954,7 @@ bool BackTexture::AllocateNativeGpuMemoryBuffer(const gfx::Size& size,
               gfx::BufferFormat::RGBX_8888
 #endif
               : gfx::BufferFormat::RGBA_8888,
-          gfx::BufferUsage::SCANOUT, format, &is_cleared);
+          gfx::BufferUsage::SCANOUT, &is_cleared);
   if (!image || !image->BindTexImage(Target()))
     return false;
 
@@ -17338,7 +17338,6 @@ void GLES2DecoderImpl::DoCopyTextureCHROMIUM(
                        "source_level or dest_level out of range");
     return;
   }
-
   Texture* source_texture = source_texture_ref->texture();
   Texture* dest_texture = dest_texture_ref->texture();
   GLenum source_target = source_texture->target();
@@ -17444,8 +17443,44 @@ void GLES2DecoderImpl::DoCopyTextureCHROMIUM(
         nullptr);
     GLenum error = LOCAL_PEEK_GL_ERROR(kFunctionName);
     if (error != GL_NO_ERROR) {
+      LOG(ERROR) << "internal_format: " << GLES2Util::GetStringEnum(internal_format) <<
+          ", format: " << GLES2Util::GetStringEnum(format) <<
+          ", bgra8888 tex format: " << feature_info_->feature_flags().ext_texture_format_bgra8888;
+
+      LOG(ERROR) <<
+          "dest_level_defined: " << dest_level_defined <<
+          " dest_width: " << dest_width <<
+          " source_width: " << source_width <<
+          " dest_height: " << dest_height <<
+          " source_height: " << source_height;
+      LOG(ERROR) << "dest_internal_format: " << GLES2Util::GetStringEnum(dest_internal_format);
+      LOG(ERROR) << "internal_format: " << GLES2Util::GetStringEnum(internal_format);
+      LOG(ERROR) << "dest_type_previous: " << GLES2Util::GetStringEnum(dest_type_previous);
+      LOG(ERROR) << "dest_type: " << GLES2Util::GetStringEnum(dest_type);
+      LOG(ERROR) << "source_type: " << GLES2Util::GetStringEnum(source_type);
+      LOG(ERROR) << "source_internal_format: " << GLES2Util::GetStringEnum(source_internal_format);
+
+      LOG(ERROR) << "adjusted format: " <<
+          TextureManager::AdjustTexFormat(feature_info_.get(), format);
+      LOG(ERROR) << "adjusted internal format: " <<
+          GLES2Util::GetStringEnum(TextureManager::AdjustTexInternalFormat(feature_info_.get(),
+                                                                           internal_format));
+
+      if (image)
+        LOG(ERROR) << "source image type: " << static_cast<uint32_t>(image->GetType());
+      else
+        LOG(ERROR) << "source image type: none";
+
+      gl::GLImage* dest_image =
+          dest_texture->GetLevelImage(dest_target, dest_level);
+      if (dest_image)
+        LOG(ERROR) << "dest image type: " << static_cast<uint32_t>(dest_image->GetType());
+      else
+        LOG(ERROR) << "dest image type: none";
+
       RestoreCurrentTextureBindings(&state_, dest_binding_target,
                                     state_.active_texture_unit);
+
       return;
     }
 
@@ -18127,23 +18162,18 @@ void GLES2DecoderImpl::DoTexStorage2DImageCHROMIUM(GLenum target,
   }
 
   gfx::BufferFormat buffer_format;
-  GLint untyped_format;
   switch (internal_format) {
     case GL_RGBA8_OES:
       buffer_format = gfx::BufferFormat::RGBA_8888;
-      untyped_format = GL_RGBA;
       break;
     case GL_BGRA8_EXT:
       buffer_format = gfx::BufferFormat::BGRA_8888;
-      untyped_format = GL_BGRA_EXT;
       break;
     case GL_RGBA16F_EXT:
       buffer_format = gfx::BufferFormat::RGBA_F16;
-      untyped_format = GL_RGBA;
       break;
     case GL_R8_EXT:
       buffer_format = gfx::BufferFormat::R_8;
-      untyped_format = GL_RED_EXT;
       break;
     default:
       LOCAL_SET_GL_ERROR(GL_INVALID_ENUM, "glTexStorage2DImageCHROMIUM",
@@ -18163,7 +18193,7 @@ void GLES2DecoderImpl::DoTexStorage2DImageCHROMIUM(GLenum target,
   scoped_refptr<gl::GLImage> image =
       GetContextGroup()->image_factory()->CreateAnonymousImage(
           gfx::Size(width, height), buffer_format, gfx::BufferUsage::SCANOUT,
-          untyped_format, &is_cleared);
+          &is_cleared);
   if (!image || !image->BindTexImage(target)) {
     LOCAL_SET_GL_ERROR(GL_INVALID_OPERATION, "glTexStorage2DImageCHROMIUM",
                        "Failed to create or bind GL Image");
