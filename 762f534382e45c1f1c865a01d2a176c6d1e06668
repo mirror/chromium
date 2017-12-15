@@ -70,6 +70,24 @@
       "revId": "762f534382e45c1f1c865a01d2a176c6d1e06668",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20bba532_fac94ef5",
+        "filename": "gpu/command_buffer/client/gles2_implementation.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3333,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-12-15T23:51:43Z",
+      "side": 1,
+      "message": "I chose 16K to test this was working. In any case, I think we should always copy at least one row, either by doing std::max(num_rows_to_copy, 1) or by ensuring that the max bytes per copy is at least max row length (is this cached somewhere on the client?) * max group size (8 bytes).",
+      "parentUuid": "3d998d43_b3532076",
+      "revId": "762f534382e45c1f1c865a01d2a176c6d1e06668",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
