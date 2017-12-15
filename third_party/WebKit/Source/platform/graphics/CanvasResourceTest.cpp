@@ -29,8 +29,8 @@ class MockGLES2InterfaceWithMailboxSupport : public FakeGLES2Interface {
   MOCK_METHOD2(ProduceTextureDirectCHROMIUM, void(GLuint, const GLbyte*));
   MOCK_METHOD1(GenMailboxCHROMIUM, void(GLbyte*));
   MOCK_METHOD1(GenUnverifiedSyncTokenCHROMIUM, void(GLbyte*));
-  MOCK_METHOD4(CreateImageCHROMIUM,
-               GLuint(ClientBuffer, GLsizei, GLsizei, GLenum));
+  MOCK_METHOD3(CreateImageCHROMIUM,
+               GLuint(ClientBuffer, GLsizei, GLsizei));
 };
 
 class FakeCanvasResourcePlatformSupport : public TestingPlatformSupport {
@@ -127,7 +127,7 @@ TEST_F(CanvasResourceTest, GpuMemoryBufferSyncTokenRefresh) {
   ScopedTestingPlatformSupport<FakeCanvasResourcePlatformSupport> platform;
 
   constexpr GLuint image_id = 1;
-  EXPECT_CALL(gl_, CreateImageCHROMIUM(_, _, _, _)).WillOnce(Return(image_id));
+  EXPECT_CALL(gl_, CreateImageCHROMIUM(_, _, _)).WillOnce(Return(image_id));
   scoped_refptr<CanvasResource> resource =
       CanvasResource_GpuMemoryBuffer::Create(
           IntSize(10, 10), CanvasColorParams(),

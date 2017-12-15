@@ -224,8 +224,7 @@ class GLES2InterfaceForTests : public gpu::gles2::GLES2InterfaceStub,
 
   GLuint CreateImageCHROMIUM(ClientBuffer buffer,
                              GLsizei width,
-                             GLsizei height,
-                             GLenum internalformat) override {
+                             GLsizei height) override {
     if (create_image_chromium_fail_)
       return 0;
     image_sizes_.Set(current_image_id_, IntSize(width, height));

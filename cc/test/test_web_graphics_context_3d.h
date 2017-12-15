@@ -260,8 +260,7 @@ class TestWebGraphicsContext3D {
 
   virtual GLuint createImageCHROMIUM(ClientBuffer buffer,
                                      GLsizei width,
-                                     GLsizei height,
-                                     GLenum internalformat);
+                                     GLsizei height);
   virtual void destroyImageCHROMIUM(GLuint image_id);
   virtual GLuint createGpuMemoryBufferImageCHROMIUM(GLsizei width,
                                                     GLsizei height,

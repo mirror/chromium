@@ -44,7 +44,6 @@ class VIZ_SERVICE_EXPORT BufferQueue {
  public:
   BufferQueue(gpu::gles2::GLES2Interface* gl,
               uint32_t texture_target,
-              uint32_t internal_format,
               gfx::BufferFormat format,
               GLHelper* gl_helper,
               gpu::GpuMemoryBufferManager* gpu_memory_buffer_manager,
@@ -64,8 +63,8 @@ class VIZ_SERVICE_EXPORT BufferQueue {
   uint32_t GetCurrentTextureId() const;
 
   uint32_t fbo() const { return fbo_; }
-  uint32_t internal_format() const { return internal_format_; }
   gfx::BufferFormat buffer_format() const { return format_; }
+  uint32_t internalformat() const;
 
  private:
   friend class BufferQueueTest;
@@ -113,7 +112,6 @@ class VIZ_SERVICE_EXPORT BufferQueue {
   uint32_t fbo_;
   size_t allocated_count_;
   uint32_t texture_target_;
-  uint32_t internal_format_;
   gfx::BufferFormat format_;
   // This surface is currently bound. This may be nullptr if no surface has
   // been bound, or if allocation failed at bind.
