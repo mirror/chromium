@@ -16,6 +16,24 @@
       "revId": "50fe92953f4739f17a62303fedbf8db9234317c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5b07852_0209f7b8",
+        "filename": "chrome/browser/android/webapk/webapk_installer.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-12-15T19:03:21Z",
+      "side": 0,
+      "message": "We need the browser context to create the cache remover, so it\u0027s easier to store the browser context.",
+      "parentUuid": "22be4632_f4df9024",
+      "revId": "50fe92953f4739f17a62303fedbf8db9234317c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
