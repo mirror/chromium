@@ -233,6 +233,24 @@
     },
     {
       "key": {
+        "uuid": "3dab3f80_e70d8954",
+        "filename": "chrome/browser/ui/ash/wallpaper_policy_handler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-12-15T01:48:46Z",
+      "side": 1,
+      "message": "Sure, duplicating the static variables for the paths seems OK to me.\n\nIf you want something a little more fancy, but maybe a little more clear, you could create a WallpaperPaths class in ash/public/cpp/wallpaper_paths.h/cc. It could have static variables for the paths and Set/Get methods. Documentation could say that you must set the various paths before you can call the utility getters (which I think would just concatenate the paths). Putting the logic in //ash/public/cpp is a signal that it has been vetted for mash. Eventually DEPS will block #includes of //ash except for //ash/public.\n\nIf you like the latter idea, you could do it in a separate CL.",
+      "parentUuid": "a507740f_5a4028dd",
+      "revId": "3ec88e8254923ceb5f856952e1ea4ceab29b398e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "78f2222d_b317d268",
         "filename": "chrome/browser/ui/ash/wallpaper_policy_handler.cc",
         "patchSetId": 9
