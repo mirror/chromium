@@ -6,14 +6,22 @@
 
 namespace memory_instrumentation {
 
+QueuedRequest::Args::Args(MemoryDumpType dump_type,
+                          MemoryDumpLevelOfDetail level_of_detail,
+                          bool add_to_trace)
+    : dump_type(dump_type),
+      level_of_detail(level_of_detail),
+      add_to_trace(add_to_trace) {}
+QueuedRequest::Args::~Args() {}
+
 QueuedRequest::Response::Response() {}
 QueuedRequest::Response::~Response() {}
 
 QueuedRequest::QueuedRequest(
-    const base::trace_event::MemoryDumpRequestArgs& args,
-    const RequestGlobalMemoryDumpInternalCallback& callback,
-    bool add_to_trace)
-    : args(args), callback(callback), add_to_trace(add_to_trace) {}
+    const Args& args,
+    const base::trace_event::MemoryDumpRequestArgs& request_args,
+    const RequestGlobalMemoryDumpInternalCallback& callback)
+    : args(args), request_args(request_args), callback(callback) {}
 
 QueuedRequest::~QueuedRequest() {}
 
