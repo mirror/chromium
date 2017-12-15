@@ -4,7 +4,6 @@
 
 #include "core/css/parser/CSSPropertyParser.h"
 
-#include "core/css/CSSColorValue.h"
 #include "core/css/CSSValueList.h"
 #include "core/css/parser/CSSParser.h"
 #include "platform/testing/RuntimeEnabledFeaturesTestHelpers.h"
