@@ -603,6 +603,11 @@ PATH_SPECIFIC_WHITELISTED_LICENSES = {
     'tools/gyp/test': [
         'UNKNOWN',
     ],
+    # Build products from Google Maps team. Publicly visible, no
+    # explicit license.
+    'tools/perf/page_sets/maps_perf_test': [
+        'UNKNOWN',
+    ],
     'tools/python/google/__init__.py': [
         'UNKNOWN',
     ],
