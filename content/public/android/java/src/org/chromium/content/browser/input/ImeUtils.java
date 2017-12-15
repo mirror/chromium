@@ -114,19 +114,16 @@ public class ImeUtils {
         outAttrs.imeOptions |= getImeAction(inputType, inputFlags, inputMode,
                 (outAttrs.inputType & EditorInfo.TYPE_TEXT_FLAG_MULTI_LINE) != 0);
 
-        // Handling of autocapitalize. Blink will send the flag taking into account the element's
-        // type. This is not using AutocapitalizeNone because Android does not autocapitalize by
-        // default and there is no way to express no capitalization.
-        // Autocapitalize is meant as a hint to the virtual keyboard.
+        // Handling of autocapitalize. Blink gives us the "used autocapitalization hint" defined in
+        // the HTML spec, so we can use the value as-is. For the default state, we explicitly enable
+        // sentences autocapitalization since Android IMEs don't autocapitalize by default.
+        // https://html.spec.whatwg.org/multipage/interaction.html#used-autocapitalization-hint
         if ((inputFlags & WebTextInputFlags.AUTOCAPITALIZE_CHARACTERS) != 0) {
             outAttrs.inputType |= InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS;
         } else if ((inputFlags & WebTextInputFlags.AUTOCAPITALIZE_WORDS) != 0) {
             outAttrs.inputType |= InputType.TYPE_TEXT_FLAG_CAP_WORDS;
-        } else if ((inputFlags & WebTextInputFlags.AUTOCAPITALIZE_SENTENCES) != 0) {
-            outAttrs.inputType |= InputType.TYPE_TEXT_FLAG_CAP_SENTENCES;
-        }
-        // Content editable doesn't use autocapitalize so we need to set it manually.
-        if (inputType == TextInputType.CONTENT_EDITABLE) {
+        } else if ((inputFlags & WebTextInputFlags.AUTOCAPITALIZE_SENTENCES) != 0
+                || (inputFlags & WebTextInputFlags.AUTOCAPITALIZE_NONE) == 0) {
             outAttrs.inputType |= InputType.TYPE_TEXT_FLAG_CAP_SENTENCES;
         }
 
