@@ -20,11 +20,6 @@
 #error "This file requires ARC support."
 #endif
 
-// A category for making existing methods visible for use in these tests.
-@interface OmniboxTextFieldIOS (VisibleForTesting)
-- (CGRect)rectForDrawTextInRect:(CGRect)rect;
-@end
-
 namespace {
 
 class OmniboxTextFieldTest : public PlatformTest {
@@ -140,65 +135,6 @@ TEST_F(OmniboxTextFieldTest, enterPreEditState_preEditTextAlignment_change) {
   UILabel* preEditLabel = [textfield_ preEditStaticLabel];
   EXPECT_EQ(NSTextAlignmentLeft, preEditLabel.textAlignment);
   [textfield_ resignFirstResponder];
-}
-
-TEST_F(OmniboxTextFieldTest, rectForDrawTextInRect_entireURLFits) {
-  NSString* text = @"http://www.google.com";
-  [textfield_ setText:text];
-  CGSize textSize = [[textfield_ attributedText] size];
-  CGFloat widthForEntireURL = ceil(textSize.width) + 10;
-
-  CGRect inputRect = CGRectMake(0, 0, widthForEntireURL, textSize.height);
-  CGRect actualRect = [textfield_ rectForDrawTextInRect:inputRect];
-  ExpectRectEqual(inputRect, actualRect);
-}
-
-TEST_F(OmniboxTextFieldTest, rectForDrawTextInRect_clippedPrefix) {
-  NSString* text = @"http://www.google.com";
-  [textfield_ setText:text];
-  CGSize textSize = [[textfield_ attributedText] size];
-  CGFloat clippedWidth = 10;
-  CGFloat widthForPartOfHost = ceil(textSize.width) - clippedWidth;
-
-  CGRect inputRect = CGRectMake(0, 0, widthForPartOfHost, textSize.height);
-  CGRect actualRect = [textfield_ rectForDrawTextInRect:inputRect];
-  CGRect expectedRect =
-      CGRectMake(-1 * clippedWidth, 0, ceil(textSize.width), textSize.height);
-  ExpectRectEqual(expectedRect, actualRect);
-}
-
-TEST_F(OmniboxTextFieldTest, rectForDrawTextInRect_clippedSuffix) {
-  NSString* text = @"http://www.google.com/somelongpath";
-  [textfield_ setText:text];
-  CGSize textSize = [[textfield_ attributedText] size];
-  CGFloat widthForPartOfPath = ceil(textSize.width) - 10;
-
-  CGRect inputRect = CGRectMake(0, 0, widthForPartOfPath, textSize.height);
-  CGRect actualRect = [textfield_ rectForDrawTextInRect:inputRect];
-  CGRect expectedRect = CGRectMake(0, 0, ceil(textSize.width), textSize.height);
-  ExpectRectEqual(expectedRect, actualRect);
-}
-
-TEST_F(OmniboxTextFieldTest, rectForDrawTextInRect_noScheme) {
-  NSString* text = @"www.google.com";
-  [textfield_ setText:text];
-  CGSize textSize = [[textfield_ attributedText] size];
-
-  CGRect inputRect = CGRectMake(0, 0, ceil(textSize.width), textSize.height);
-  CGRect actualRect = [textfield_ rectForDrawTextInRect:inputRect];
-  ExpectRectEqual(inputRect, actualRect);
-}
-
-// When the text doesn't contain a host the method bails early and returns
-// the |rect| passed in.
-TEST_F(OmniboxTextFieldTest, rectForDrawTextInRect_noHost) {
-  NSString* text = @"http://";
-  [textfield_ setText:text];
-  CGSize textSize = [[textfield_ attributedText] size];
-
-  CGRect inputRect = CGRectMake(0, 0, ceil(textSize.width), textSize.height);
-  CGRect actualRect = [textfield_ rectForDrawTextInRect:inputRect];
-  ExpectRectEqual(inputRect, actualRect);
 }
 
 TEST_F(OmniboxTextFieldTest, SelectedRanges) {
