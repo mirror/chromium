@@ -25,7 +25,7 @@ class URLLoaderClientImplTest : public ::testing::Test,
                                 mojom::URLLoaderFactory {
  protected:
   URLLoaderClientImplTest()
-      : dispatcher_(new ResourceDispatcher(this, message_loop_.task_runner())),
+      : dispatcher_(new ResourceDispatcher(message_loop_.task_runner())),
         mojo_binding_(this) {
     mojo_binding_.Bind(mojo::MakeRequest(&url_loader_factory_proxy_));
 
@@ -34,7 +34,6 @@ class URLLoaderClientImplTest : public ::testing::Test,
         TRAFFIC_ANNOTATION_FOR_TESTS, false,
         std::make_unique<TestRequestPeer>(dispatcher_.get(),
                                           &request_peer_context_),
-        blink::WebURLRequest::LoadingIPCType::kMojo,
         url_loader_factory_proxy_.get(),
         std::vector<std::unique_ptr<URLLoaderThrottle>>(),
         mojom::URLLoaderClientEndpointsPtr());

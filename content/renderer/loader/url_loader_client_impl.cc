@@ -144,6 +144,10 @@ void URLLoaderClientImpl::SetDefersLoading() {
 
 void URLLoaderClientImpl::UnsetDefersLoading() {
   is_deferred_ = false;
+
+  task_runner_->PostTask(
+      FROM_HERE, base::BindOnce(&URLLoaderClientImpl::FlushDeferredMessages,
+                                weak_factory_.GetWeakPtr()));
 }
 
 void URLLoaderClientImpl::FlushDeferredMessages() {

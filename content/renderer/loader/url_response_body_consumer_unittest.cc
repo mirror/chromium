@@ -92,8 +92,7 @@ class URLResponseBodyConsumerTest : public ::testing::Test,
                                     public ::IPC::Sender {
  protected:
   URLResponseBodyConsumerTest()
-      : dispatcher_(new ResourceDispatcher(this, message_loop_.task_runner())) {
-  }
+      : dispatcher_(new ResourceDispatcher(message_loop_.task_runner())) {}
 
   ~URLResponseBodyConsumerTest() override {
     dispatcher_.reset();
@@ -137,8 +136,7 @@ class URLResponseBodyConsumerTest : public ::testing::Test,
         std::move(request), 0, nullptr, url::Origin(),
         TRAFFIC_ANNOTATION_FOR_TESTS, false,
         std::make_unique<TestRequestPeer>(context, message_loop_.task_runner()),
-        blink::WebURLRequest::LoadingIPCType::kChromeIPC, nullptr,
-        std::vector<std::unique_ptr<URLLoaderThrottle>>(),
+        nullptr, std::vector<std::unique_ptr<URLLoaderThrottle>>(),
         mojom::URLLoaderClientEndpointsPtr());
   }
 
