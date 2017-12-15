@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9746259c_b425ae47",
+        "filename": "chrome/browser/extensions/api/autotest_private/autotest_private_api.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1245973
+      },
+      "writtenOn": "2017-12-15T06:28:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7442b1e1_372efc03",
+      "revId": "688910881c02fae237003babc649ad209041ddf4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "afa4b0dd_a809ed86",
         "filename": "chrome/browser/extensions/api/autotest_private/autotest_private_api.cc",
         "patchSetId": 9
@@ -33,6 +51,24 @@
       "revId": "688910881c02fae237003babc649ad209041ddf4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54fe29a0_53a3d5bc",
+        "filename": "chrome/browser/extensions/api/autotest_private/autotest_private_api.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 440,
+      "author": {
+        "id": 1245973
+      },
+      "writtenOn": "2017-12-15T06:28:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "afa4b0dd_a809ed86",
+      "revId": "688910881c02fae237003babc649ad209041ddf4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "09202dcf_a5a56bf3",
+        "filename": "chrome/browser/extensions/api/autotest_private/autotest_private_api.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1245973
+      },
+      "writtenOn": "2017-12-15T06:28:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "86972c2d_1d543479",
+      "revId": "688910881c02fae237003babc649ad209041ddf4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "59513340_5849787a",
         "filename": "chrome/browser/extensions/api/autotest_private/autotest_private_api.h",
         "patchSetId": 9
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "76b3825d_21fca7bf",
+        "filename": "chrome/browser/extensions/api/autotest_private/autotest_private_api.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1245973
+      },
+      "writtenOn": "2017-12-15T06:28:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "59513340_5849787a",
+      "revId": "688910881c02fae237003babc649ad209041ddf4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "85e7a796_2b01c932",
         "filename": "chrome/browser/extensions/api/autotest_private/autotest_private_api.h",
         "patchSetId": 9
@@ -84,6 +156,24 @@
       "revId": "688910881c02fae237003babc649ad209041ddf4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03f7be77_796dcedf",
+        "filename": "chrome/browser/extensions/api/autotest_private/autotest_private_api.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1245973
+      },
+      "writtenOn": "2017-12-15T06:28:49Z",
+      "side": 1,
+      "message": "Adding this line caused compiler error: no matching constructor for extension::AutotestPrivateGetPrinterListFunction.",
+      "parentUuid": "85e7a796_2b01c932",
+      "revId": "688910881c02fae237003babc649ad209041ddf4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
