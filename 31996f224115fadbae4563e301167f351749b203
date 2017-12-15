@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d5b863c7_93f1befd",
+        "filename": "chrome/browser/vr/ui_input_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-12-15T21:46:02Z",
+      "side": 1,
+      "message": "Will this result in leaves and enters being called many times rather than just when there\u0027s a change?",
+      "revId": "31996f224115fadbae4563e301167f351749b203",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
