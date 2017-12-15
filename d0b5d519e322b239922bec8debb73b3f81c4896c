@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "72cfa991_908550e9",
+        "filename": "components/exo/keyboard.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-12-15T20:38:27Z",
+      "side": 1,
+      "message": "hm, can we avoid modifying base exo classes completely and just handle this in the wayland specific code in server.cc instead? it seems like base exo classes already provide the high resolution time stamps in the existing interface in an appropriate way.",
+      "revId": "d0b5d519e322b239922bec8debb73b3f81c4896c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68c36f77_292651cd",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3137,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-12-15T20:38:27Z",
+      "side": 1,
+      "message": "could we implement this using a simple weak pointer callback instead?\n\nsomething like:\n\nclass WaylandInputTimestamps\n    : public base::SupportsWeakPtr\u003cWaylandInputTimestamps\u003e {\n public: \n  void SendTimestamp(base::TimeTicks time) {\n   zwp_input_timestamps_v1_send_timestamp(resource_, ...);\n  }\n private:\n  wl_resource* const resource_;\n};\n\nand then\n\nwayland_pointer_delegate-\u003eset_input_timestamp_callback(\n    base::Bind(\u0026WaylandInputTimestamps::SendTimestamp,\n               timestamps-\u003eAsWeakPtr()));\n\nNote: we know that the delegate type of all pointer resources is WaylandPointerDelegate so adding a Pointer::delegate() function and using a static cast in server.cc is fine and keeps the logic simple.",
+      "revId": "d0b5d519e322b239922bec8debb73b3f81c4896c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8ff28cf_ef4207e3",
+        "filename": "third_party/wayland-protocols/README.chromium",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-12-15T20:38:27Z",
+      "side": 1,
+      "message": "I guess this will need a version update once it lands upstream, right?\n\nfyi, we don\u0027t have to roll to a specific tag. we can update to a specific commit but it\u0027s always nice to track official release tags when possible",
+      "range": {
+        "startLine": 3,
+        "startChar": 9,
+        "endLine": 3,
+        "endChar": 3
+      },
+      "revId": "d0b5d519e322b239922bec8debb73b3f81c4896c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40b117d4_34e8df9a",
+        "filename": "third_party/wayland-protocols/include/protocol/input-timestamps-unstable-v1-client-protocol.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-12-15T20:38:27Z",
+      "side": 1,
+      "message": "does the protocol need to support multiple input_timestamps instances per wl_keyboard/pointer/touch? it would simplify the implementation a lot if second call to this function for the same wl_keyboard would generate an error.",
+      "revId": "d0b5d519e322b239922bec8debb73b3f81c4896c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
