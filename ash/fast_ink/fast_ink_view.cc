@@ -415,9 +415,9 @@ void FastInkView::UpdateSurface() {
   if (resource->image) {
     gles2->ReleaseTexImage2DCHROMIUM(GL_TEXTURE_2D, resource->image);
   } else {
-    resource->image = gles2->CreateImageCHROMIUM(
-        gpu_memory_buffer_->AsClientBuffer(), buffer_size.width(),
-        buffer_size.height(), SK_B32_SHIFT ? GL_RGBA : GL_BGRA_EXT);
+    resource->image =
+        gles2->CreateImageCHROMIUM(gpu_memory_buffer_->AsClientBuffer(),
+                                   buffer_size.width(), buffer_size.height());
     if (!resource->image) {
       LOG(ERROR) << "Failed to create image";
       return;

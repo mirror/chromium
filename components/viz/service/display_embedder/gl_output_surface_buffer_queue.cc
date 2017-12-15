@@ -15,6 +15,7 @@
 #include "components/viz/service/display_embedder/buffer_queue.h"
 #include "gpu/command_buffer/client/context_support.h"
 #include "gpu/command_buffer/client/gles2_interface.h"
+#include "ui/gl/gl_utils.h"
 
 namespace viz {
 
@@ -24,7 +25,6 @@ GLOutputSurfaceBufferQueue::GLOutputSurfaceBufferQueue(
     SyntheticBeginFrameSource* synthetic_begin_frame_source,
     gpu::GpuMemoryBufferManager* gpu_memory_buffer_manager,
     uint32_t target,
-    uint32_t internalformat,
     gfx::BufferFormat buffer_format)
     : GLOutputSurface(context_provider, synthetic_begin_frame_source),
       gl_helper_(context_provider->ContextGL(),
@@ -41,7 +41,7 @@ GLOutputSurfaceBufferQueue::GLOutputSurfaceBufferQueue(
   capabilities_.max_frames_pending = 2;
 
   buffer_queue_.reset(new BufferQueue(
-      context_provider->ContextGL(), target, internalformat, buffer_format,
+      context_provider->ContextGL(), target, buffer_format,
       &gl_helper_, gpu_memory_buffer_manager, surface_handle));
   buffer_queue_->Initialize();
 }
@@ -88,7 +88,7 @@ void GLOutputSurfaceBufferQueue::SwapBuffers(OutputSurfaceFrame frame) {
 }
 
 uint32_t GLOutputSurfaceBufferQueue::GetFramebufferCopyTextureFormat() {
-  return buffer_queue_->internal_format();
+  return gl::GLFormatForBufferFormat(buffer_queue_->buffer_format());
 }
 
 bool GLOutputSurfaceBufferQueue::IsDisplayedAsOverlayPlane() const {
