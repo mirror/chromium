@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "cb2accdf_b600b98e",
+        "filename": "third_party/WebKit/Source/devtools/front_end/object_ui/JavaScriptAutocomplete.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2017-12-15T21:42:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d96116da_cd92c38a",
+      "revId": "221edcaf932184c1023006f639e5a450b164f48d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "50eeb0e7_da95929c",
         "filename": "third_party/WebKit/Source/devtools/front_end/object_ui/JavaScriptAutocomplete.js",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "221edcaf932184c1023006f639e5a450b164f48d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26911452_295d677a",
+        "filename": "third_party/WebKit/Source/devtools/front_end/object_ui/JavaScriptAutocomplete.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2017-12-15T21:42:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "50eeb0e7_da95929c",
+      "revId": "221edcaf932184c1023006f639e5a450b164f48d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "2f33835e_8e6d2b8c",
+        "filename": "third_party/WebKit/Source/devtools/front_end/object_ui/JavaScriptAutocomplete.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2017-12-15T21:42:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "755e717b_47f566f8",
+      "revId": "221edcaf932184c1023006f639e5a450b164f48d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "10d5b08c_a6ad4064",
         "filename": "third_party/WebKit/Source/devtools/front_end/object_ui/JavaScriptAutocomplete.js",
         "patchSetId": 3
@@ -64,6 +118,24 @@
       "writtenOn": "2017-12-15T00:00:06Z",
       "side": 1,
       "message": "property \u003e\u003e\u003e 0 \u003d\u003d\u003d property \u0026\u0026 (property \u003e 0 || 1 / property \u003e 0) - maybe faster check for array index.",
+      "revId": "221edcaf932184c1023006f639e5a450b164f48d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40a95bd1_2815f05e",
+        "filename": "third_party/WebKit/Source/devtools/front_end/object_ui/JavaScriptAutocomplete.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2017-12-15T21:42:51Z",
+      "side": 1,
+      "message": "That doesn\u0027t work because \" 0 \" \u003d\u003d 0",
+      "parentUuid": "10d5b08c_a6ad4064",
       "revId": "221edcaf932184c1023006f639e5a450b164f48d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -84,6 +156,24 @@
       "revId": "221edcaf932184c1023006f639e5a450b164f48d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "633ab734_e2313971",
+        "filename": "third_party/WebKit/Source/devtools/front_end/object_ui/JavaScriptAutocomplete.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2017-12-15T21:42:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1adf152c_08196f3c",
+      "revId": "221edcaf932184c1023006f639e5a450b164f48d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
