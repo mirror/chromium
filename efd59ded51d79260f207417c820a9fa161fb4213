@@ -118,6 +118,30 @@
       "revId": "efd59ded51d79260f207417c820a9fa161fb4213",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e77fbe42_4a5d5dd9",
+        "filename": "ui/ozone/platform/drm/gpu/gbm_buffer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1108829
+      },
+      "writtenOn": "2017-12-15T21:55:56Z",
+      "side": 1,
+      "message": "Yup, just realized that :(.\n\nI\u0027ve changed to use \u003c\u003c directly instead of StringPrintf. Let me know what you think. Thanks,",
+      "parentUuid": "1c1c2eaf_4aa6fb69",
+      "range": {
+        "startLine": 84,
+        "startChar": 60,
+        "endLine": 84,
+        "endChar": 63
+      },
+      "revId": "efd59ded51d79260f207417c820a9fa161fb4213",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
