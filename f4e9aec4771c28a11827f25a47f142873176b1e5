@@ -34,6 +34,24 @@
       "revId": "f4e9aec4771c28a11827f25a47f142873176b1e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b543e25_9425ef42",
+        "filename": "content/browser/renderer_host/media/media_stream_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1372,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-12-15T14:35:02Z",
+      "side": 1,
+      "message": "I can understand using UnavailableDeviceParams for tab/desktop capture. But here it\u0027s explicitly not audio capture. When do we end up with nullopt params here and where are they propagated further to?\n\nIt\u0027s really hard to track what\u0027s going on in MediaStreamManager.\nI\u0027m also concerned about DHCEKS in renderer-side *audio_source.cc\n\nI would recommend to document all the cases/paths where in the old we fallback (or rely on fallback) to Unavailable params. And then we should decide for each case if fallback is desired (like for tab capture) or if we should handle \"no device\" situation instead.\n\nguidou@ WDYT? Are you comfortable navigating this CL? (I\u0027m not)",
+      "parentUuid": "622cc4a6_d1d105f6",
+      "revId": "f4e9aec4771c28a11827f25a47f142873176b1e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
