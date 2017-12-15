@@ -42,6 +42,30 @@
     },
     {
       "key": {
+        "uuid": "c9790e44_b896e7ed",
+        "filename": "content/browser/webauth/collected_client_data.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-15T12:21:57Z",
+      "side": 1,
+      "message": "So I did some more research, both `static constexpr const char` and `constexpr char` are equivalent in this case. Given that shorter is better in general, I like your version better.\n\nHowever, both of these versions result in internal linkage, meaning each compilation unit using these strings gets its own copy, resulting in multiple occurrences of this string in the binary. In order to avoid this you should declare your string as `extern const char kCreateType[];` followed by a `const char kCreateType[] \u003d \"webauthn.create\";` in the cc file. This is a bit cumbersome, but C++17 will improve it. There you can simply say `inline constexpr char kCreateType[] \u003d \"webauthn.create\";` to achieve the same effect. For more reading on this topic check out http://go/totw/140 (unfortunately Google only).",
+      "parentUuid": "0307258d_29dba666",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 28
+      },
+      "revId": "6c24693bca1d330bcbaccbb13ac200f6c1b7b698",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "25450864_a6f93fa7",
         "filename": "device/u2f/attestation_object.cc",
         "patchSetId": 1
