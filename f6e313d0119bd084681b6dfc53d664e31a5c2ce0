@@ -22,6 +22,30 @@
       "revId": "f6e313d0119bd084681b6dfc53d664e31a5c2ce0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5dcaba3_896284d5",
+        "filename": "storage/common/quota/quota_limit_type.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-12-15T00:30:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e78c9ec9_19a95a0f",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "f6e313d0119bd084681b6dfc53d664e31a5c2ce0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
