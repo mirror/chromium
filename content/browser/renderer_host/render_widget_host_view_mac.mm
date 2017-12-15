@@ -1638,6 +1638,10 @@ bool RenderWidgetHostViewMac::TransformPointToCoordSpaceForView(
                                           transformed_point);
 }
 
+viz::FrameSinkId RenderWidgetHostViewMac::GetRootFrameSinkId() {
+  return browser_compositor_->GetRootFrameSinkId();
+}
+
 bool RenderWidgetHostViewMac::Send(IPC::Message* message) {
   if (render_widget_host_)
     return render_widget_host_->Send(message);
