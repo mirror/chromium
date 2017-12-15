@@ -1,0 +1,303 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1ffba637_822d32ef",
+        "filename": "chrome/browser/ui/extensions/hosted_app_browser_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-15T03:34:05Z",
+      "side": 1,
+      "message": "Just use SiteEngagementService::Get, and you can remove the need to include site_engagement_service_factory.h",
+      "range": {
+        "startLine": 84,
+        "startChar": 10,
+        "endLine": 84,
+        "endChar": 38
+      },
+      "revId": "a33b2fb61a51837a2e67fbb6e0fd81073cd1380d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc0078f7_ba173d82",
+        "filename": "chrome/browser/ui/extensions/hosted_app_browser_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-15T03:34:05Z",
+      "side": 1,
+      "message": "Are these DVLOGs strictly necessary?",
+      "range": {
+        "startLine": 198,
+        "startChar": 0,
+        "endLine": 200,
+        "endChar": 29
+      },
+      "revId": "a33b2fb61a51837a2e67fbb6e0fd81073cd1380d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89280b86_ba186664",
+        "filename": "chrome/browser/ui/extensions/hosted_app_browser_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-15T03:34:05Z",
+      "side": 1,
+      "message": "Should this use IsForHostedApp(browser_) instead? Otherwise this would get triggered for Chrome Apps.",
+      "range": {
+        "startLine": 204,
+        "startChar": 7,
+        "endLine": 204,
+        "endChar": 25
+      },
+      "revId": "a33b2fb61a51837a2e67fbb6e0fd81073cd1380d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e64fc0b_91729f94",
+        "filename": "chrome/browser/ui/extensions/hosted_app_browser_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-15T03:34:05Z",
+      "side": 1,
+      "message": "I think this is already available on this object as GetExtension(), unless there\u0027s something specific about wanting ENABLED extensions only. Can a HostedAppBrowserController exist for a non-enabled extension?",
+      "range": {
+        "startLine": 211,
+        "startChar": 2,
+        "endLine": 214,
+        "endChar": 50
+      },
+      "revId": "a33b2fb61a51837a2e67fbb6e0fd81073cd1380d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "855b83f5_d9a786e8",
+        "filename": "chrome/browser/ui/extensions/hosted_app_browser_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-15T03:34:05Z",
+      "side": 1,
+      "message": "This whole section seems like it could be a static method on HostedAppBrowserController, where the implementation would be replaced when we have a more explicit indicator.\n\nHostedAppBrowserController::IsInstalledPwa(Browser*, content::WebContents*)",
+      "range": {
+        "startLine": 210,
+        "startChar": 0,
+        "endLine": 224,
+        "endChar": 0
+      },
+      "revId": "a33b2fb61a51837a2e67fbb6e0fd81073cd1380d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8e94883_de4c74fe",
+        "filename": "chrome/browser/ui/extensions/hosted_app_browser_controller.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-15T03:34:05Z",
+      "side": 1,
+      "message": "This is perhaps better named as kPwaWindowEngagmentTypeHistogram to make it PWA specific.",
+      "range": {
+        "startLine": 23,
+        "startChar": 18,
+        "endLine": 23,
+        "endChar": 51
+      },
+      "revId": "a33b2fb61a51837a2e67fbb6e0fd81073cd1380d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f62f6dd1_da005268",
+        "filename": "chrome/browser/ui/extensions/hosted_app_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 473,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-15T03:34:05Z",
+      "side": 1,
+      "message": "Nit: HostedAppPwaOnlyTest, as the style guide prefers to capitalize acronyms in type/function names (https://google.github.io/styleguide/cppguide.html#Type_Names)",
+      "range": {
+        "startLine": 473,
+        "startChar": 23,
+        "endLine": 473,
+        "endChar": 43
+      },
+      "revId": "a33b2fb61a51837a2e67fbb6e0fd81073cd1380d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6aa19caa_c1e5ec7c",
+        "filename": "chrome/browser/ui/extensions/hosted_app_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 473,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-15T03:34:05Z",
+      "side": 1,
+      "message": "Nit: only one EngagementHistogram",
+      "range": {
+        "startLine": 473,
+        "startChar": 45,
+        "endLine": 473,
+        "endChar": 65
+      },
+      "revId": "a33b2fb61a51837a2e67fbb6e0fd81073cd1380d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9b540bb_5daf3c28",
+        "filename": "chrome/browser/ui/extensions/hosted_app_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 483,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-15T03:34:05Z",
+      "side": 1,
+      "message": "Can you call some of the SiteEngagementService::Handle* methods to ensure we record a hit in the histogram for the appropriate engagement type? You\u0027ll need to friend this test class in site_engagement_service.h",
+      "range": {
+        "startLine": 483,
+        "startChar": 10,
+        "endLine": 483,
+        "endChar": 11
+      },
+      "revId": "a33b2fb61a51837a2e67fbb6e0fd81073cd1380d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87807e2f_5d4d0be6",
+        "filename": "chrome/browser/ui/extensions/hosted_app_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 488,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-15T03:34:05Z",
+      "side": 1,
+      "message": "Just use histograms.ExpectUniqueSample(extensions::kAppWindowEngagementTypeHistogram, SiteEngagementService::ENGAGEMENT_WEBAPP_SHORTCUT_LAUNCH, 1);\n\nThat implicitly does ExpectTotalCount + ExpectBucketCount.",
+      "range": {
+        "startLine": 485,
+        "startChar": 0,
+        "endLine": 488,
+        "endChar": 67
+      },
+      "revId": "a33b2fb61a51837a2e67fbb6e0fd81073cd1380d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5b38bd8_abf2c1f1",
+        "filename": "chrome/browser/ui/extensions/hosted_app_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 491,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-15T03:34:05Z",
+      "side": 1,
+      "message": "EngagementHistogramNotRecordedIfNoScope\n\nWould this test need to change when we change the detection method for PWAs? I assume not.",
+      "range": {
+        "startLine": 491,
+        "startChar": 45,
+        "endLine": 491,
+        "endChar": 72
+      },
+      "revId": "a33b2fb61a51837a2e67fbb6e0fd81073cd1380d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf826160_4559891e",
+        "filename": "chrome/browser/ui/extensions/hosted_app_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 506,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-15T03:34:05Z",
+      "side": 1,
+      "message": "EngagementHistogramRecordedOncePerLaunch ?",
+      "range": {
+        "startLine": 506,
+        "startChar": 45,
+        "endLine": 506,
+        "endChar": 72
+      },
+      "revId": "a33b2fb61a51837a2e67fbb6e0fd81073cd1380d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89e54926_0ed0f16a",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 68370,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-15T03:34:05Z",
+      "side": 1,
+      "message": "This creates a new top-level category. Let\u0027s put this under the existing webapp category, which is where I want to consolidate all these metrics. Suggestion: Webapp.EngagementType",
+      "range": {
+        "startLine": 68370,
+        "startChar": 17,
+        "endLine": 68370,
+        "endChar": 36
+      },
+      "revId": "a33b2fb61a51837a2e67fbb6e0fd81073cd1380d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
