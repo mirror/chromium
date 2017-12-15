@@ -85,6 +85,24 @@
       "revId": "d92b2be7f9384569643e40e5763275fcc2b863eb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f444fa42_1259ed5c",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerPainter.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1076,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-12-15T01:47:19Z",
+      "side": 1,
+      "message": "I see, ok. DCHECK in that method that SPv175 is not on?",
+      "parentUuid": "93fb2dd1_874d3cf7",
+      "revId": "d92b2be7f9384569643e40e5763275fcc2b863eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
