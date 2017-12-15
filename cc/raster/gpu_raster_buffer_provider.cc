@@ -39,11 +39,11 @@ static void RasterizeSourceOOP(
     const gfx::Rect& playback_rect,
     const gfx::AxisTransform2d& transform,
     const RasterSource::PlaybackSettings& playback_settings,
-    viz::ContextProvider* context_provider,
+    viz::RasterContextProvider* context_provider,
     ResourceProvider::ScopedWriteLockRaster* resource_lock,
     bool use_distance_field_text,
     int msaa_sample_count) {
-  gpu::raster::RasterInterface* ri = context_provider->RasterContext();
+  gpu::raster::RasterInterface* ri = context_provider->RasterInterface();
   GLuint texture_id = resource_lock->ConsumeTexture(ri);
 
   ri->BeginRasterCHROMIUM(texture_id, raster_source->background_color(),
@@ -64,6 +64,28 @@ static void RasterizeSourceOOP(
   ri->DeleteTextures(1, &texture_id);
 }
 
+// The following class is needed to modify GL resources using GrContexts for
+// GPU raster. The user must ensure that they only use GPU raster on
+// GL resources while an instance of this class is alive.
+class CC_EXPORT ScopedGrContextAccess {
+ public:
+  explicit ScopedGrContextAccess(viz::RasterContextProvider* context_provider)
+      : context_provider_(context_provider) {
+    gpu::raster::RasterInterface* ri = context_provider_->RasterInterface();
+    ri->BeginGpuRaster();
+
+    class GrContext* gr_context = context_provider_->GrContext();
+    gr_context->resetContext();
+  }
+  ~ScopedGrContextAccess() {
+    gpu::raster::RasterInterface* ri = context_provider_->RasterInterface();
+    ri->EndGpuRaster();
+  }
+
+ private:
+  viz::RasterContextProvider* context_provider_;
+};
+
 static void RasterizeSource(
     const RasterSource* raster_source,
     bool resource_has_previous_content,
@@ -72,13 +94,13 @@ static void RasterizeSource(
     const gfx::Rect& playback_rect,
     const gfx::AxisTransform2d& transform,
     const RasterSource::PlaybackSettings& playback_settings,
-    viz::ContextProvider* context_provider,
+    viz::RasterContextProvider* context_provider,
     ResourceProvider::ScopedWriteLockRaster* resource_lock,
     bool use_distance_field_text,
     int msaa_sample_count) {
-  ScopedGpuRaster gpu_raster(context_provider);
+  ScopedGrContextAccess gr_context_access(context_provider);
 
-  gpu::raster::RasterInterface* ri = context_provider->RasterContext();
+  gpu::raster::RasterInterface* ri = context_provider->RasterInterface();
   GLuint texture_id = resource_lock->ConsumeTexture(ri);
 
   {
@@ -144,7 +166,7 @@ void GpuRasterBufferProvider::RasterBufferImpl::Playback(
 
 GpuRasterBufferProvider::GpuRasterBufferProvider(
     viz::ContextProvider* compositor_context_provider,
-    viz::ContextProvider* worker_context_provider,
+    viz::RasterContextProvider* worker_context_provider,
     LayerTreeResourceProvider* resource_provider,
     bool use_distance_field_text,
     int gpu_rasterization_msaa_sample_count,
@@ -275,9 +297,9 @@ void GpuRasterBufferProvider::PlaybackOnWorkerThread(
     uint64_t new_content_id,
     const gfx::AxisTransform2d& transform,
     const RasterSource::PlaybackSettings& playback_settings) {
-  viz::ContextProvider::ScopedContextLock scoped_context(
+  viz::RasterContextProvider::ScopedContextLockRaster scoped_context(
       worker_context_provider_);
-  gpu::raster::RasterInterface* ri = scoped_context.RasterContext();
+  gpu::raster::RasterInterface* ri = scoped_context.RasterInterface();
   DCHECK(ri);
 
   // Synchronize with compositor. Nop if sync token is empty.
