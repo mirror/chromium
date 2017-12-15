@@ -870,6 +870,11 @@ cr.define('cr.login', function() {
       else
         console.error('Authenticator: contentWindow is null.');
 
+      chrome.send('metricsHandler:recordBooleanHistogram', [
+        'ChromeOS.GAIA.AuthenticatorContentWindowNull',
+        Boolean(this.webview_.contentWindow)
+      ]);
+
       this.fireReadyEvent_();
       // Focus webview after dispatching event when webview is already visible.
       this.webview_.focus();
