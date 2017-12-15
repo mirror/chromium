@@ -82,7 +82,7 @@ RankerModelStatus BinaryClassifierPredictor::ValidateModel(
 bool BinaryClassifierPredictor::Initialize() {
   if (ranker_model_->proto().model_case() ==
       RankerModelProto::kLogisticRegression) {
-    inference_module_.reset(new GenericLogisticRegressionInference(
+    inference_module_ = std::make_unique<GenericLogisticRegressionInference>(
         ranker_model_->proto().logistic_regression()));
     return true;
   }
