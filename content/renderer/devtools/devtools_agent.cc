@@ -163,10 +163,6 @@ DevToolsAgent::DevToolsAgent(RenderFrameImpl* frame)
 DevToolsAgent::~DevToolsAgent() {
 }
 
-void DevToolsAgent::WidgetWillClose() {
-  ContinueProgram();
-}
-
 void DevToolsAgent::OnDestruct() {
   delete this;
 }
