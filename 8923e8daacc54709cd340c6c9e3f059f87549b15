@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f0b34351_e5dd1dc6",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 6591,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-12-15T02:27:18Z",
+      "side": 1,
+      "message": "As far as I can tell, there are three callers of this and they\u0027re all exactly:\n\n  UpdateEncoding(frame_, frame_-\u003eView()-\u003ePageEncoding().Utf8());\n\nIn a follow-up CL, can you try removing the method parameters, using |frame_| and getting the encoding in this method instead?",
+      "revId": "8923e8daacc54709cd340c6c9e3f059f87549b15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
