@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bafe996e_537df317",
+        "filename": "third_party/WebKit/Source/core/css/CSSDefaultStyleSheets.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1151889
+      },
+      "writtenOn": "2017-12-15T02:41:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "497122fa_c56a0342",
+      "range": {
+        "startLine": 103,
+        "startChar": 15,
+        "endLine": 103,
+        "endChar": 23
+      },
+      "revId": "f3d4e95d9386fdb104caaf5bc5a9fcfe915d91d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87221037_d381f5dd",
         "filename": "third_party/WebKit/Source/core/css/CSSDefaultStyleSheets.h",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "31ef7ea3_5cc5228d",
+        "filename": "third_party/WebKit/Source/core/css/CSSDefaultStyleSheets.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1151889
+      },
+      "writtenOn": "2017-12-15T02:41:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87221037_d381f5dd",
+      "range": {
+        "startLine": 68,
+        "startChar": 2,
+        "endLine": 68,
+        "endChar": 13
+      },
+      "revId": "f3d4e95d9386fdb104caaf5bc5a9fcfe915d91d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5f728fc9_1acaa74f",
         "filename": "third_party/WebKit/Source/core/leak_detector/BlinkLeakDetector.cpp",
         "patchSetId": 3
@@ -68,6 +116,30 @@
       "revId": "f3d4e95d9386fdb104caaf5bc5a9fcfe915d91d9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73c3df70_db79b48a",
+        "filename": "third_party/WebKit/Source/core/leak_detector/BlinkLeakDetector.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1151889
+      },
+      "writtenOn": "2017-12-15T02:41:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5f728fc9_1acaa74f",
+      "range": {
+        "startLine": 66,
+        "startChar": 11,
+        "endLine": 66,
+        "endChar": 19
+      },
+      "revId": "f3d4e95d9386fdb104caaf5bc5a9fcfe915d91d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
