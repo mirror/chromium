@@ -1048,7 +1048,7 @@ def get_all_benchmarks_metadata(metadata):
   benchmark_list = current_benchmarks()
 
   for benchmark in benchmark_list:
-    exp = benchmark().GetExpectations()
+    exp = benchmark().expectations
     disabled = 'all' in decorators.GetDisabledAttributes(benchmark) or any(
         any(isinstance(condition, expectations.ALL.__class__)
             for condition in conditions)
