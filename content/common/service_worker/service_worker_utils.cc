@@ -10,11 +10,14 @@
 #include "base/command_line.h"
 #include "base/feature_list.h"
 #include "base/logging.h"
+#include "base/numerics/safe_math.h"
 #include "base/strings/string_util.h"
 #include "content/public/common/browser_side_navigation_policy.h"
 #include "content/public/common/content_features.h"
 #include "content/public/common/content_switches.h"
 #include "content/public/common/origin_util.h"
+#include "net/http/http_byte_range.h"
+#include "net/http/http_util.h"
 
 namespace content {
 
@@ -162,6 +165,51 @@ std::string ServiceWorkerUtils::ClientTypeToString(
   std::ostringstream oss;
   oss << type;
   return oss.str();
+}
+
+bool ServiceWorkerUtils::ExtractSinglePartHttpRange(
+    const net::HttpRequestHeaders& headers,
+    bool* has_range,
+    uint64_t* offset_out,
+    uint64_t* length_out) {
+  std::string range_header;
+  *has_range = false;
+  net::HttpByteRange byte_range;
+  if (headers.GetHeader(net::HttpRequestHeaders::kRange, &range_header)) {
+    // We only care about "Range" header here.
+    std::vector<net::HttpByteRange> ranges;
+    if (net::HttpUtil::ParseRangeHeader(range_header, &ranges)) {
+      if (ranges.size() == 1) {
+        *has_range = true;
+        byte_range = ranges[0];
+      } else {
+        // Multi-part ranges are not supported.
+        return false;
+      }
+    }
+  }
+  if (!*has_range)
+    return true;
+  if (byte_range.first_byte_position() < 0)
+    return false;
+  if (byte_range.last_byte_position() < 0)
+    return false;
+
+  uint64_t first_byte_position =
+      static_cast<uint64_t>(byte_range.last_byte_position());
+  uint64_t last_byte_position =
+      static_cast<uint64_t>(byte_range.first_byte_position());
+
+  base::CheckedNumeric<uint64_t> length = first_byte_position;
+  length -= last_byte_position;
+  length += 1;
+
+  if (!length.IsValid())
+    return false;
+
+  *offset_out = static_cast<uint64_t>(byte_range.first_byte_position());
+  *length_out = length.ValueOrDie();
+  return true;
 }
 
 bool LongestScopeMatcher::MatchLongest(const GURL& scope) {
