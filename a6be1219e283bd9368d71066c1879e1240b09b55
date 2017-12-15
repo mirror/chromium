@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ddd7c833_9b81f21e",
+        "filename": "ui/gfx/harfbuzz_font_skia.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-15T15:46:18Z",
+      "side": 1,
+      "message": "nit: add a comment; can other platforms do something smarter here?",
+      "revId": "a6be1219e283bd9368d71066c1879e1240b09b55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7944150c_bec46636",
+        "filename": "ui/views/controls/label_perftest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-15T15:46:18Z",
+      "side": 1,
+      "message": "Where do these numbers come from? Maybe comment?",
+      "revId": "a6be1219e283bd9368d71066c1879e1240b09b55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "786072da_4d014b53",
+        "filename": "ui/views/controls/label_perftest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-15T15:46:18Z",
+      "side": 1,
+      "message": "What\u0027s the point of repeating 10 times within a lap? Smoother averages? Please add a comment.",
+      "revId": "a6be1219e283bd9368d71066c1879e1240b09b55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a02c0c5f_d822ce41",
+        "filename": "ui/views/controls/label_perftest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-15T15:46:18Z",
+      "side": 1,
+      "message": "Is |j \u0026 1| quicker than |j % 2 \u003d\u003d 0|?",
+      "revId": "a6be1219e283bd9368d71066c1879e1240b09b55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7df75ec_6c9ca1b4",
+        "filename": "ui/views/views_perftests.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-15T15:46:18Z",
+      "side": 1,
+      "message": "Is this needed for views tests? Maybe comment as to why",
+      "revId": "a6be1219e283bd9368d71066c1879e1240b09b55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
