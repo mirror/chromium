@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "66b282d7_5a05ba1c",
+        "filename": "chrome/browser/notifications/platform_notification_service_interactive_uitest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-12-15T17:54:47Z",
+      "side": 1,
+      "message": "\u003e We allow the developer to specify it, we\u0027ll give it back to them in the `notificationclick` event, but we\u0027ll never use the properties internally to affect our directionality decisions.\n\nThanks, I\u0027ve updated the comments to make this a little clearer.",
+      "parentUuid": "1f2fd17f_03f019db",
+      "revId": "37567b44c0f89b775f5275f28b0c9a10d1e63d59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "01d68049_00c89d96",
         "filename": "chrome/browser/notifications/platform_notification_service_interactive_uitest.cc",
         "patchSetId": 5
@@ -81,6 +99,30 @@
       "revId": "37567b44c0f89b775f5275f28b0c9a10d1e63d59",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3583ff2a_7948d45e",
+        "filename": "chrome/browser/notifications/platform_notification_service_interactive_uitest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 981,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-12-15T17:54:47Z",
+      "side": 1,
+      "message": "Done, but please could you double check the new comment makes sense?",
+      "parentUuid": "96fb5273_dd19626d",
+      "range": {
+        "startLine": 981,
+        "startChar": 0,
+        "endLine": 981,
+        "endChar": 28
+      },
+      "revId": "37567b44c0f89b775f5275f28b0c9a10d1e63d59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
