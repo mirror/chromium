@@ -13,6 +13,24 @@
 #include "base/macros.h"
 #include "components/cronet/native/generated/cronet.idl_c.h"
 
+struct Cronet_Buffer {
+  Cronet_Buffer() = default;
+  virtual ~Cronet_Buffer() = default;
+
+  virtual void SetContext(Cronet_BufferContext context) = 0;
+  virtual Cronet_BufferContext GetContext() = 0;
+
+  virtual void InitWithDataAndCallback(RawDataPtr data,
+                                       uint64_t size,
+                                       Cronet_BufferCallbackPtr callback) = 0;
+  virtual void InitWithAlloc(uint64_t size) = 0;
+  virtual uint64_t GetSize() = 0;
+  virtual RawDataPtr GetData() = 0;
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(Cronet_Buffer);
+};
+
 struct Cronet_BufferCallback {
   Cronet_BufferCallback() = default;
   virtual ~Cronet_BufferCallback() = default;
@@ -62,6 +80,7 @@ struct Cronet_Engine {
   virtual void StartWithParams(Cronet_EngineParamsPtr params) = 0;
   virtual void StartNetLogToFile(CharString fileName, bool logAll) = 0;
   virtual void StopNetLog() = 0;
+  virtual void Shutdown() = 0;
   virtual CharString GetVersionString() = 0;
   virtual CharString GetDefaultUserAgent() = 0;
 

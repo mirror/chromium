@@ -8,6 +8,98 @@
 
 #include "base/logging.h"
 
+// C functions of Cronet_Buffer that forward calls to C++ implementation.
+void Cronet_Buffer_Destroy(Cronet_BufferPtr self) {
+  DCHECK(self);
+  return delete self;
+}
+
+void Cronet_Buffer_SetContext(Cronet_BufferPtr self,
+                              Cronet_BufferContext context) {
+  DCHECK(self);
+  return self->SetContext(context);
+}
+
+Cronet_BufferContext Cronet_Buffer_GetContext(Cronet_BufferPtr self) {
+  DCHECK(self);
+  return self->GetContext();
+}
+
+void Cronet_Buffer_InitWithDataAndCallback(Cronet_BufferPtr self,
+                                           RawDataPtr data,
+                                           uint64_t size,
+                                           Cronet_BufferCallbackPtr callback) {
+  DCHECK(self);
+  self->InitWithDataAndCallback(data, size, callback);
+}
+
+void Cronet_Buffer_InitWithAlloc(Cronet_BufferPtr self, uint64_t size) {
+  DCHECK(self);
+  self->InitWithAlloc(size);
+}
+
+uint64_t Cronet_Buffer_GetSize(Cronet_BufferPtr self) {
+  DCHECK(self);
+  return self->GetSize();
+}
+
+RawDataPtr Cronet_Buffer_GetData(Cronet_BufferPtr self) {
+  DCHECK(self);
+  return self->GetData();
+}
+
+// Implementation of Cronet_Buffer that forwards calls to C functions
+// implemented by the app.
+class Cronet_BufferStub : public Cronet_Buffer {
+ public:
+  explicit Cronet_BufferStub(
+      Cronet_Buffer_InitWithDataAndCallbackFunc InitWithDataAndCallbackFunc,
+      Cronet_Buffer_InitWithAllocFunc InitWithAllocFunc,
+      Cronet_Buffer_GetSizeFunc GetSizeFunc,
+      Cronet_Buffer_GetDataFunc GetDataFunc)
+      : InitWithDataAndCallbackFunc_(InitWithDataAndCallbackFunc),
+        InitWithAllocFunc_(InitWithAllocFunc),
+        GetSizeFunc_(GetSizeFunc),
+        GetDataFunc_(GetDataFunc) {}
+
+  ~Cronet_BufferStub() override {}
+
+  void SetContext(Cronet_BufferContext context) override { context_ = context; }
+
+  Cronet_BufferContext GetContext() override { return context_; }
+
+ protected:
+  void InitWithDataAndCallback(RawDataPtr data,
+                               uint64_t size,
+                               Cronet_BufferCallbackPtr callback) override {
+    InitWithDataAndCallbackFunc_(this, data, size, callback);
+  }
+
+  void InitWithAlloc(uint64_t size) override { InitWithAllocFunc_(this, size); }
+
+  uint64_t GetSize() override { return GetSizeFunc_(this); }
+
+  RawDataPtr GetData() override { return GetDataFunc_(this); }
+
+ private:
+  Cronet_BufferContext context_ = nullptr;
+  Cronet_Buffer_InitWithDataAndCallbackFunc InitWithDataAndCallbackFunc_;
+  Cronet_Buffer_InitWithAllocFunc InitWithAllocFunc_;
+  Cronet_Buffer_GetSizeFunc GetSizeFunc_;
+  Cronet_Buffer_GetDataFunc GetDataFunc_;
+
+  DISALLOW_COPY_AND_ASSIGN(Cronet_BufferStub);
+};
+
+Cronet_BufferPtr Cronet_Buffer_CreateStub(
+    Cronet_Buffer_InitWithDataAndCallbackFunc InitWithDataAndCallbackFunc,
+    Cronet_Buffer_InitWithAllocFunc InitWithAllocFunc,
+    Cronet_Buffer_GetSizeFunc GetSizeFunc,
+    Cronet_Buffer_GetDataFunc GetDataFunc) {
+  return new Cronet_BufferStub(InitWithDataAndCallbackFunc, InitWithAllocFunc,
+                               GetSizeFunc, GetDataFunc);
+}
+
 // C functions of Cronet_BufferCallback that forward calls to C++
 // implementation.
 void Cronet_BufferCallback_Destroy(Cronet_BufferCallbackPtr self) {
@@ -37,7 +129,8 @@ void Cronet_BufferCallback_OnDestroy(Cronet_BufferCallbackPtr self,
 // implemented by the app.
 class Cronet_BufferCallbackStub : public Cronet_BufferCallback {
  public:
-  Cronet_BufferCallbackStub(Cronet_BufferCallback_OnDestroyFunc OnDestroyFunc)
+  explicit Cronet_BufferCallbackStub(
+      Cronet_BufferCallback_OnDestroyFunc OnDestroyFunc)
       : OnDestroyFunc_(OnDestroyFunc) {}
 
   ~Cronet_BufferCallbackStub() override {}
@@ -91,7 +184,8 @@ void Cronet_Runnable_Run(Cronet_RunnablePtr self) {
 // implemented by the app.
 class Cronet_RunnableStub : public Cronet_Runnable {
  public:
-  Cronet_RunnableStub(Cronet_Runnable_RunFunc RunFunc) : RunFunc_(RunFunc) {}
+  explicit Cronet_RunnableStub(Cronet_Runnable_RunFunc RunFunc)
+      : RunFunc_(RunFunc) {}
 
   ~Cronet_RunnableStub() override {}
 
@@ -142,7 +236,7 @@ void Cronet_Executor_Execute(Cronet_ExecutorPtr self,
 // implemented by the app.
 class Cronet_ExecutorStub : public Cronet_Executor {
  public:
-  Cronet_ExecutorStub(Cronet_Executor_ExecuteFunc ExecuteFunc)
+  explicit Cronet_ExecutorStub(Cronet_Executor_ExecuteFunc ExecuteFunc)
       : ExecuteFunc_(ExecuteFunc) {}
 
   ~Cronet_ExecutorStub() override {}
@@ -205,6 +299,11 @@ void Cronet_Engine_StopNetLog(Cronet_EnginePtr self) {
   self->StopNetLog();
 }
 
+void Cronet_Engine_Shutdown(Cronet_EnginePtr self) {
+  DCHECK(self);
+  self->Shutdown();
+}
+
 CharString Cronet_Engine_GetVersionString(Cronet_EnginePtr self) {
   DCHECK(self);
   return self->GetVersionString();
@@ -219,15 +318,17 @@ CharString Cronet_Engine_GetDefaultUserAgent(Cronet_EnginePtr self) {
 // implemented by the app.
 class Cronet_EngineStub : public Cronet_Engine {
  public:
-  Cronet_EngineStub(
+  explicit Cronet_EngineStub(
       Cronet_Engine_StartWithParamsFunc StartWithParamsFunc,
       Cronet_Engine_StartNetLogToFileFunc StartNetLogToFileFunc,
       Cronet_Engine_StopNetLogFunc StopNetLogFunc,
+      Cronet_Engine_ShutdownFunc ShutdownFunc,
       Cronet_Engine_GetVersionStringFunc GetVersionStringFunc,
       Cronet_Engine_GetDefaultUserAgentFunc GetDefaultUserAgentFunc)
       : StartWithParamsFunc_(StartWithParamsFunc),
         StartNetLogToFileFunc_(StartNetLogToFileFunc),
         StopNetLogFunc_(StopNetLogFunc),
+        ShutdownFunc_(ShutdownFunc),
         GetVersionStringFunc_(GetVersionStringFunc),
         GetDefaultUserAgentFunc_(GetDefaultUserAgentFunc) {}
 
@@ -248,6 +349,8 @@ class Cronet_EngineStub : public Cronet_Engine {
 
   void StopNetLog() override { StopNetLogFunc_(this); }
 
+  void Shutdown() override { ShutdownFunc_(this); }
+
   CharString GetVersionString() override { return GetVersionStringFunc_(this); }
 
   CharString GetDefaultUserAgent() override {
@@ -259,6 +362,7 @@ class Cronet_EngineStub : public Cronet_Engine {
   Cronet_Engine_StartWithParamsFunc StartWithParamsFunc_;
   Cronet_Engine_StartNetLogToFileFunc StartNetLogToFileFunc_;
   Cronet_Engine_StopNetLogFunc StopNetLogFunc_;
+  Cronet_Engine_ShutdownFunc ShutdownFunc_;
   Cronet_Engine_GetVersionStringFunc GetVersionStringFunc_;
   Cronet_Engine_GetDefaultUserAgentFunc GetDefaultUserAgentFunc_;
 
@@ -269,11 +373,12 @@ Cronet_EnginePtr Cronet_Engine_CreateStub(
     Cronet_Engine_StartWithParamsFunc StartWithParamsFunc,
     Cronet_Engine_StartNetLogToFileFunc StartNetLogToFileFunc,
     Cronet_Engine_StopNetLogFunc StopNetLogFunc,
+    Cronet_Engine_ShutdownFunc ShutdownFunc,
     Cronet_Engine_GetVersionStringFunc GetVersionStringFunc,
     Cronet_Engine_GetDefaultUserAgentFunc GetDefaultUserAgentFunc) {
   return new Cronet_EngineStub(StartWithParamsFunc, StartNetLogToFileFunc,
-                               StopNetLogFunc, GetVersionStringFunc,
-                               GetDefaultUserAgentFunc);
+                               StopNetLogFunc, ShutdownFunc,
+                               GetVersionStringFunc, GetDefaultUserAgentFunc);
 }
 
 // C functions of Cronet_UrlRequestStatusListener that forward calls to C++
@@ -310,7 +415,7 @@ void Cronet_UrlRequestStatusListener_OnStatus(
 class Cronet_UrlRequestStatusListenerStub
     : public Cronet_UrlRequestStatusListener {
  public:
-  Cronet_UrlRequestStatusListenerStub(
+  explicit Cronet_UrlRequestStatusListenerStub(
       Cronet_UrlRequestStatusListener_OnStatusFunc OnStatusFunc)
       : OnStatusFunc_(OnStatusFunc) {}
 
@@ -413,7 +518,7 @@ void Cronet_UrlRequestCallback_OnCanceled(Cronet_UrlRequestCallbackPtr self,
 // functions implemented by the app.
 class Cronet_UrlRequestCallbackStub : public Cronet_UrlRequestCallback {
  public:
-  Cronet_UrlRequestCallbackStub(
+  explicit Cronet_UrlRequestCallbackStub(
       Cronet_UrlRequestCallback_OnRedirectReceivedFunc OnRedirectReceivedFunc,
       Cronet_UrlRequestCallback_OnResponseStartedFunc OnResponseStartedFunc,
       Cronet_UrlRequestCallback_OnReadCompletedFunc OnReadCompletedFunc,
@@ -539,7 +644,7 @@ void Cronet_UploadDataSink_OnRewindError(Cronet_UploadDataSinkPtr self,
 // implemented by the app.
 class Cronet_UploadDataSinkStub : public Cronet_UploadDataSink {
  public:
-  Cronet_UploadDataSinkStub(
+  explicit Cronet_UploadDataSinkStub(
       Cronet_UploadDataSink_OnReadSucceededFunc OnReadSucceededFunc,
       Cronet_UploadDataSink_OnReadErrorFunc OnReadErrorFunc,
       Cronet_UploadDataSink_OnRewindSuccededFunc OnRewindSuccededFunc,
@@ -638,7 +743,7 @@ void Cronet_UploadDataProvider_Close(Cronet_UploadDataProviderPtr self) {
 // functions implemented by the app.
 class Cronet_UploadDataProviderStub : public Cronet_UploadDataProvider {
  public:
-  Cronet_UploadDataProviderStub(
+  explicit Cronet_UploadDataProviderStub(
       Cronet_UploadDataProvider_GetLengthFunc GetLengthFunc,
       Cronet_UploadDataProvider_ReadFunc ReadFunc,
       Cronet_UploadDataProvider_RewindFunc RewindFunc,
@@ -753,13 +858,14 @@ void Cronet_UrlRequest_GetStatus(Cronet_UrlRequestPtr self,
 // implemented by the app.
 class Cronet_UrlRequestStub : public Cronet_UrlRequest {
  public:
-  Cronet_UrlRequestStub(Cronet_UrlRequest_InitWithParamsFunc InitWithParamsFunc,
-                        Cronet_UrlRequest_StartFunc StartFunc,
-                        Cronet_UrlRequest_FollowRedirectFunc FollowRedirectFunc,
-                        Cronet_UrlRequest_ReadFunc ReadFunc,
-                        Cronet_UrlRequest_CancelFunc CancelFunc,
-                        Cronet_UrlRequest_IsDoneFunc IsDoneFunc,
-                        Cronet_UrlRequest_GetStatusFunc GetStatusFunc)
+  explicit Cronet_UrlRequestStub(
+      Cronet_UrlRequest_InitWithParamsFunc InitWithParamsFunc,
+      Cronet_UrlRequest_StartFunc StartFunc,
+      Cronet_UrlRequest_FollowRedirectFunc FollowRedirectFunc,
+      Cronet_UrlRequest_ReadFunc ReadFunc,
+      Cronet_UrlRequest_CancelFunc CancelFunc,
+      Cronet_UrlRequest_IsDoneFunc IsDoneFunc,
+      Cronet_UrlRequest_GetStatusFunc GetStatusFunc)
       : InitWithParamsFunc_(InitWithParamsFunc),
         StartFunc_(StartFunc),
         FollowRedirectFunc_(FollowRedirectFunc),

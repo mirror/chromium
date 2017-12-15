@@ -10,72 +10,6 @@
 
 #include "base/logging.h"
 
-// Struct Cronet_Buffer.
-Cronet_Buffer::Cronet_Buffer() {}
-
-Cronet_Buffer::~Cronet_Buffer() {}
-
-Cronet_BufferPtr Cronet_Buffer_Create() {
-  return new Cronet_Buffer();
-}
-
-void Cronet_Buffer_Destroy(Cronet_BufferPtr self) {
-  delete self;
-}
-
-// Struct Cronet_Buffer setters.
-void Cronet_Buffer_set_size(Cronet_BufferPtr self, int32_t size) {
-  DCHECK(self);
-  self->size = size;
-}
-
-void Cronet_Buffer_set_limit(Cronet_BufferPtr self, int32_t limit) {
-  DCHECK(self);
-  self->limit = limit;
-}
-
-void Cronet_Buffer_set_position(Cronet_BufferPtr self, int32_t position) {
-  DCHECK(self);
-  self->position = position;
-}
-
-void Cronet_Buffer_set_data(Cronet_BufferPtr self, RawDataPtr data) {
-  DCHECK(self);
-  self->data = data;
-}
-
-void Cronet_Buffer_set_callback(Cronet_BufferPtr self,
-                                Cronet_BufferCallbackPtr callback) {
-  DCHECK(self);
-  self->callback = callback;
-}
-
-// Struct Cronet_Buffer getters.
-int32_t Cronet_Buffer_get_size(Cronet_BufferPtr self) {
-  DCHECK(self);
-  return self->size;
-}
-
-int32_t Cronet_Buffer_get_limit(Cronet_BufferPtr self) {
-  DCHECK(self);
-  return self->limit;
-}
-
-int32_t Cronet_Buffer_get_position(Cronet_BufferPtr self) {
-  DCHECK(self);
-  return self->position;
-}
-
-RawDataPtr Cronet_Buffer_get_data(Cronet_BufferPtr self) {
-  DCHECK(self);
-  return self->data;
-}
-
-Cronet_BufferCallbackPtr Cronet_Buffer_get_callback(Cronet_BufferPtr self) {
-  DCHECK(self);
-  return self->callback;
-}
-
 // Struct Cronet_Exception.
 Cronet_Exception::Cronet_Exception() {}
 
@@ -205,7 +139,7 @@ void Cronet_PublicKeyPins_set_host(Cronet_PublicKeyPinsPtr self,
 }
 
 void Cronet_PublicKeyPins_add_pinsSha256(Cronet_PublicKeyPinsPtr self,
-                                         RawDataPtr pinsSha256) {
+                                         CharString pinsSha256) {
   DCHECK(self);
   self->pinsSha256.push_back(pinsSha256);
 }
@@ -226,12 +160,12 @@ uint32_t Cronet_PublicKeyPins_get_pinsSha256Size(Cronet_PublicKeyPinsPtr self) {
   DCHECK(self);
   return self->pinsSha256.size();
 }
-RawDataPtr Cronet_PublicKeyPins_get_pinsSha256AtIndex(
+CharString Cronet_PublicKeyPins_get_pinsSha256AtIndex(
     Cronet_PublicKeyPinsPtr self,
     uint32_t index) {
   DCHECK(self);
   DCHECK(index < self->pinsSha256.size());
-  return self->pinsSha256[index];
+  return self->pinsSha256[index].c_str();
 }
 
 bool Cronet_PublicKeyPins_get_includeSubdomains(Cronet_PublicKeyPinsPtr self) {
@@ -257,6 +191,12 @@ void Cronet_EngineParams_set_userAgent(Cronet_EngineParamsPtr self,
                                        CharString userAgent) {
   DCHECK(self);
   self->userAgent = userAgent;
+}
+
+void Cronet_EngineParams_set_acceptLanguage(Cronet_EngineParamsPtr self,
+                                            CharString acceptLanguage) {
+  DCHECK(self);
+  self->acceptLanguage = acceptLanguage;
 }
 
 void Cronet_EngineParams_set_storagePath(Cronet_EngineParamsPtr self,
@@ -319,10 +259,22 @@ void Cronet_EngineParams_set_enablePublicKeyPinningBypassForLocalTrustAnchors(
       enablePublicKeyPinningBypassForLocalTrustAnchors;
 }
 
+void Cronet_EngineParams_set_experimentalOptions(
+    Cronet_EngineParamsPtr self,
+    CharString experimentalOptions) {
+  DCHECK(self);
+  self->experimentalOptions = experimentalOptions;
+}
+
 // Struct Cronet_EngineParams getters.
 CharString Cronet_EngineParams_get_userAgent(Cronet_EngineParamsPtr self) {
   DCHECK(self);
   return self->userAgent.c_str();
+}
+
+CharString Cronet_EngineParams_get_acceptLanguage(Cronet_EngineParamsPtr self) {
+  DCHECK(self);
+  return self->acceptLanguage.c_str();
 }
 
 CharString Cronet_EngineParams_get_storagePath(Cronet_EngineParamsPtr self) {
@@ -385,6 +337,12 @@ bool Cronet_EngineParams_get_enablePublicKeyPinningBypassForLocalTrustAnchors(
     Cronet_EngineParamsPtr self) {
   DCHECK(self);
   return self->enablePublicKeyPinningBypassForLocalTrustAnchors;
+}
+
+CharString Cronet_EngineParams_get_experimentalOptions(
+    Cronet_EngineParamsPtr self) {
+  DCHECK(self);
+  return self->experimentalOptions.c_str();
 }
 
 // Struct Cronet_HttpHeader.
