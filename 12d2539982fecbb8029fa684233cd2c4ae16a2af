@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "95c1ee74_c0d992a4",
+        "filename": "content/browser/devtools/protocol/storage_handler.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-12-15T23:59:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4b601af8_3efa7737",
+      "revId": "12d2539982fecbb8029fa684233cd2c4ae16a2af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "733d4b7d_4f8eb624",
         "filename": "third_party/WebKit/Source/devtools/front_end/test_runner/TestRunner.js",
         "patchSetId": 19
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-15T22:58:02Z",
       "side": 1,
       "message": "Instead of bringing more deprecated stuff, should we just make an explicit helper function ResourcesTestRunner.init() and await it in all tests?",
+      "revId": "12d2539982fecbb8029fa684233cd2c4ae16a2af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68293b87_5f195649",
+        "filename": "third_party/WebKit/Source/devtools/front_end/test_runner/TestRunner.js",
+        "patchSetId": 19
+      },
+      "lineNbr": 667,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-12-15T23:59:08Z",
+      "side": 1,
+      "message": "OK.",
+      "parentUuid": "733d4b7d_4f8eb624",
       "revId": "12d2539982fecbb8029fa684233cd2c4ae16a2af",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
