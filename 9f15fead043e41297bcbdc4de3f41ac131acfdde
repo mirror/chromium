@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "81cae575_f19b21d3",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 934,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-15T03:08:11Z",
+      "side": 1,
+      "message": "oops - I guess this should be\n\nfor (auto\u0026 row : selector_rows_)\n  row-\u003eSizeSecondaryText(width());",
+      "revId": "9f15fead043e41297bcbdc4de3f41ac131acfdde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efff1011_f1f2cf9f",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 935,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-15T03:08:11Z",
+      "side": 1,
+      "message": "So I think this could invalidate layout. Which means the size could be different. So I think another SizeToContents() call is required after this.\n\nI expect it currently works on the initial bubble showing, since there\u0027s also a SizeToContents call in BubbleDialogDelegateView::CreateBubble(). \n\nBut if something calls PageInfoBubbleView::SetPermissionInfo() while the bubble is still visible, then there won\u0027t be a SizeToContents after this.\n\nWhich I think means we need a SizeToContents after this?\n\n\nBut a double layout might start affecting performance..  Usually that SizeToContents in BubbleDialogDelegateView::CreateBubble() does nothing because the size doesn\u0027t change. When it *does* change, it ~doubles the time it takes for the widget to appear.\n\nWe\u0027ve been running into performance issues with the profile switcher -- See http://crbug.com/789118\n\nIt might be worth comparing some chrome://tracing before/after this change -- I can show you how to do that.\n\n\nIs there a way to avoid the second Layout pass?\n\n\nI\u0027m thinking something like\n\n - inherit from views::Label for |secondary_label_|\n - constructor takes a View* |match_width_view|\n - override CalculatePreferredSize() like\n {\n   int width \u003d match_width_view-\u003eGetPreferredSize().width();\n   return gfx::Size(width, GetHeightForWidth(width));\n }",
+      "revId": "9f15fead043e41297bcbdc4de3f41ac131acfdde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
