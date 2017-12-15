@@ -22,6 +22,30 @@
       "revId": "efd59ded51d79260f207417c820a9fa161fb4213",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f04fbde3_f32d4327",
+        "filename": "ui/ozone/platform/drm/gpu/gbm_buffer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-12-15T19:35:37Z",
+      "side": 1,
+      "message": "SGTM, alternatively, we could just avoid StringPrintf and just \u003c\u003c everything.",
+      "parentUuid": "dac3019d_f724aa28",
+      "range": {
+        "startLine": 84,
+        "startChar": 60,
+        "endLine": 84,
+        "endChar": 63
+      },
+      "revId": "efd59ded51d79260f207417c820a9fa161fb4213",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
