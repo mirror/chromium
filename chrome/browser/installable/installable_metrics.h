@@ -37,6 +37,7 @@ enum class WebAppInstallSource {
   AUTOMATIC_PROMPT = 0,  // Automatic prompt e.g. install banner.
   MENU = 1,              // Chrome menu
   API = 2,               // BeforeInstallPrompt.prompt().
+  MANAGEMENT_API = 3,    // Extensions management API (not reported).
   COUNT,
 };
 
@@ -59,7 +60,13 @@ class InstallableMetrics {
   InstallableMetrics();
   ~InstallableMetrics();
 
+  // Records |source| in the Webapp.Install.InstallSource histogram.
+  // IsReportableInstallSource(|source|) must be true.
   static void TrackInstallSource(WebAppInstallSource source);
+
+  // Returns whether |source| is a value that may be passed to
+  // TrackInstallSource.
+  static bool IsReportableInstallSource(WebAppInstallSource source);
 
   // This records the state of the installability check when the Android menu is
   // opened.
