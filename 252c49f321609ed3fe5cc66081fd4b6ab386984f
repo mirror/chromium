@@ -16,6 +16,24 @@
       "revId": "252c49f321609ed3fe5cc66081fd4b6ab386984f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4bdb31f_bb117b85",
+        "filename": "build/config/BUILDCONFIG.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 528,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-12-15T19:14:03Z",
+      "side": 1,
+      "message": "I misunderstood and see it\u0027s used by the .gni file.\n\nCan you add a todo here to remove this with the bug link?",
+      "parentUuid": "a9a5ed10_c0d96feb",
+      "revId": "252c49f321609ed3fe5cc66081fd4b6ab386984f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
