@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CONTENT_COMMON_ANDROID_SYNC_COMPOSITOR_MESSAGES_H_
-#define CONTENT_COMMON_ANDROID_SYNC_COMPOSITOR_MESSAGES_H_
+#ifndef CONTENT_COMMON_SYNC_COMPOSITOR_MESSAGES_H_
+#define CONTENT_COMMON_SYNC_COMPOSITOR_MESSAGES_H_
 
 #include <stddef.h>
 
@@ -19,8 +19,8 @@
 #include "ui/gfx/geometry/point.h"
 #include "ui/gfx/geometry/scroll_offset.h"
 
-#ifndef INTERNAL_CONTENT_COMMON_ANDROID_SYNC_COMPOSITOR_MESSAGES_H_
-#define INTERNAL_CONTENT_COMMON_ANDROID_SYNC_COMPOSITOR_MESSAGES_H_
+#ifndef INTERNAL_CONTENT_COMMON_SYNC_COMPOSITOR_MESSAGES_H_
+#define INTERNAL_CONTENT_COMMON_SYNC_COMPOSITOR_MESSAGES_H_
 
 namespace content {
 
@@ -78,7 +78,7 @@ struct SyncCompositorCommonRendererParams {
 
 }  // namespace content
 
-#endif  // INTERNAL_CONTENT_COMMON_ANDROID_SYNC_COMPOSITOR_MESSAGES_H_
+#endif  // INTERNAL_CONTENT_COMMON_SYNC_COMPOSITOR_MESSAGES_H_
 
 #undef IPC_MESSAGE_EXPORT
 #define IPC_MESSAGE_EXPORT CONTENT_EXPORT
@@ -116,15 +116,14 @@ IPC_STRUCT_TRAITS_END()
 
 // Messages sent from the browser to the renderer.
 // Synchronous IPCs are allowed here to the renderer compositor thread. See
-// design doc https://goo.gl/Tn81FW and crbug.com/526842 for details.
+// design doc https://goo.gl/Tn81FW and https://crbug.com/526842 for details.
 
 IPC_SYNC_MESSAGE_CONTROL1_1(
     SyncCompositorMsg_SynchronizeRendererState,
     std::vector<int> /* routing ids*/,
     std::vector<content::SyncCompositorCommonRendererParams>)
 
-IPC_MESSAGE_ROUTED1(SyncCompositorMsg_ComputeScroll,
-                    base::TimeTicks);
+IPC_MESSAGE_ROUTED1(SyncCompositorMsg_ComputeScroll, base::TimeTicks);
 
 IPC_MESSAGE_ROUTED1(SyncCompositorMsg_DemandDrawHwAsync,
                     content::SyncCompositorDemandDrawHwParams)
@@ -173,4 +172,4 @@ IPC_MESSAGE_ROUTED2(SyncCompositorHostMsg_ReturnFrame,
                     uint32_t /* layer_tree_frame_sink_id */,
                     base::Optional<viz::CompositorFrame>);
 
-#endif  // CONTENT_COMMON_ANDROID_SYNC_COMPOSITOR_MESSAGES_H_
+#endif  // CONTENT_COMMON_SYNC_COMPOSITOR_MESSAGES_H_
