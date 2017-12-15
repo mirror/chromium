@@ -259,6 +259,30 @@
       "revId": "b2f60525a575fefb75d1a771d7731f38663483d9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cd71ed7b_ce30ce7e",
+        "filename": "chrome/browser/resources/print_preview/new/app.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-12-15T02:25:54Z",
+      "side": 1,
+      "message": "okay, restored it here.",
+      "parentUuid": "98577dae_f1a657a1",
+      "range": {
+        "startLine": 234,
+        "startChar": 4,
+        "endLine": 236,
+        "endChar": 0
+      },
+      "revId": "b2f60525a575fefb75d1a771d7731f38663483d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
