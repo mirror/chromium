@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ee031498_837f3d2f",
+        "filename": "ui/events/event.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-12-15T20:47:59Z",
+      "side": 1,
+      "message": "You can tell we\u0027re relying on the implicit copy constructors because of all the code in this function. (I also deleted the MouseEvent copy constructor and tried to compile -- we do rely on it a lot.)",
+      "revId": "b1c53d7c60107283983b379af5dc2469aa935f88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
