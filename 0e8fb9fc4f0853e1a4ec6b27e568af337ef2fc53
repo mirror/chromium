@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3690ddec_b116e8c3",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/websockets/Create-invalid-urls.htm",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1233284
+      },
+      "writtenOn": "2017-12-15T04:11:58Z",
+      "side": 1,
+      "message": "yes, right. I changed to use a valid URL.",
+      "parentUuid": "a06f1ae3_c7ac33d6",
+      "revId": "0e8fb9fc4f0853e1a4ec6b27e568af337ef2fc53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fb8ea82e_d67e1217",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/websockets/Create-invalid-urls.htm",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "0e8fb9fc4f0853e1a4ec6b27e568af337ef2fc53",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fa1a3f9_7d027b36",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/websockets/Create-invalid-urls.htm",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1233284
+      },
+      "writtenOn": "2017-12-15T04:11:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fb8ea82e_d67e1217",
+      "revId": "0e8fb9fc4f0853e1a4ec6b27e568af337ef2fc53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
