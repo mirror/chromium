@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "088654d3_63872351",
+        "filename": "ui/views/test/views_pixel_test.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-15T15:28:51Z",
+      "side": 1,
+      "message": "Ah, I understand the fallback idea a bit better now. If a reference image is supplied for a particular platform/version, then that platform/version *only tries that image*, and it must pass. (similar for the common image). Otherwise, if there\u0027s no exact platform/version reference image (and no common image), tests (like this new one) are allowed to fail. I guess that\u0027s reasonable, and hopefully easy to maintain.",
+      "parentUuid": "c8325d34_732f81f3",
+      "revId": "03d966e7440581cd02b35ca46796fbc176f0a83c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7cab0dec_a7d0c3d2",
         "filename": "ui/views/test/views_pixel_test.cc",
         "patchSetId": 16
