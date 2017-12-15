@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "52902ccb_eed9d815",
+        "filename": "third_party/zlib/contrib/optimizations/arm/armv8_crc32.c",
+        "patchSetId": 5
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-12-15T11:12:53Z",
+      "side": 1,
+      "message": "This can\u0027t be right, it\u0027s off-by-one.  Since no bot complained, a unit test is needed to prevent this error.",
+      "revId": "3fa03e0f3d9ce5de8198764b6714048d2ccd9c04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ff6d9d74_3e70b7ca",
         "filename": "third_party/zlib/crc32.c",
         "patchSetId": 5
@@ -13,6 +30,24 @@
       "writtenOn": "2017-12-13T23:48:59Z",
       "side": 1,
       "message": "I wonder if it would make sense to fallback to the pure C version for len \u003c 8?",
+      "revId": "3fa03e0f3d9ce5de8198764b6714048d2ccd9c04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f605752b_959e973e",
+        "filename": "third_party/zlib/crc32.c",
+        "patchSetId": 5
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-12-15T11:12:53Z",
+      "side": 1,
+      "message": "Well probably, the crc32 bench mark on small buffers could help to see if does make sense.",
+      "parentUuid": "ff6d9d74_3e70b7ca",
       "revId": "3fa03e0f3d9ce5de8198764b6714048d2ccd9c04",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
