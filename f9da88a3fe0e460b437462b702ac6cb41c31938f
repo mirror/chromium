@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fdbe868a_d555eaae",
+        "filename": "chrome/test/data/extensions/api_test/autotest_private/test.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-12-15T21:33:39Z",
+      "side": 1,
+      "message": "I think you want to finish the test when the callback is called. i.e.\n \nchrome.autotestPrivate.getPrinterList(function() { chrome.test.succeed(); });\nOR\nchrome.autotestPrivate.getPrinterList(chrome.test.callbackPass() {});",
+      "range": {
+        "startLine": 134,
+        "startChar": 4,
+        "endLine": 134,
+        "endChar": 41
+      },
+      "revId": "f9da88a3fe0e460b437462b702ac6cb41c31938f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
