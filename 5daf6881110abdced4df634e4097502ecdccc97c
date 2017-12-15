@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ee3dfcea_53a90ed5",
+        "filename": "chromecast/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1232445
+      },
+      "writtenOn": "2017-12-15T20:21:56Z",
+      "side": 1,
+      "message": "Not sure where the best place to put this definition is. If you have a better place, please let me know.\n\nI think this place is good since we probably want this under chromecast/, and the comment above says it applies there.",
+      "range": {
+        "startLine": 54,
+        "startChar": 0,
+        "endLine": 54,
+        "endChar": 38
+      },
+      "revId": "5daf6881110abdced4df634e4097502ecdccc97c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
