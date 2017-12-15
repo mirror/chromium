@@ -105,6 +105,7 @@ class SupervisedUserTestBase : public chromeos::LoginManagerTest {
 
   cryptohome::MockAsyncMethodCaller* mock_async_method_caller_;
   cryptohome::MockHomedirMethods* mock_homedir_methods_;
+  FakeCryptohomeClient* fake_cryptohome_client_ = nullptr;
   NetworkPortalDetectorTestImpl* network_portal_detector_;
   SupervisedUserRegistrationUtilityStub* registration_utility_stub_;
   std::unique_ptr<ScopedTestingSupervisedUserRegistrationUtility>

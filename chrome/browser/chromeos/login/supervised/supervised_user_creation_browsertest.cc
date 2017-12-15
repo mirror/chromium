@@ -137,7 +137,7 @@ IN_PROC_BROWSER_TEST_F(SupervisedUserCreationTest,
 
 IN_PROC_BROWSER_TEST_F(SupervisedUserCreationTest,
                        PRE_CreateAndRemoveSupervisedUser) {
-  SigninAsSupervisedUser(true, 0, kTestSupervisedUserDisplayName);
+  SigninAsSupervisedUser(0, kTestSupervisedUserDisplayName);
 }
 
 IN_PROC_BROWSER_TEST_F(SupervisedUserCreationTest,
@@ -181,7 +181,7 @@ IN_PROC_BROWSER_TEST_F(SupervisedUserOwnerCreationTest,
 
 IN_PROC_BROWSER_TEST_F(SupervisedUserOwnerCreationTest,
                        PRE_CreateAndRemoveSupervisedUser) {
-  SigninAsSupervisedUser(true, 0, kTestSupervisedUserDisplayName);
+  SigninAsSupervisedUser(0, kTestSupervisedUserDisplayName);
 }
 
 IN_PROC_BROWSER_TEST_F(SupervisedUserOwnerCreationTest,
@@ -251,7 +251,7 @@ IN_PROC_BROWSER_TEST_F(SupervisedUserCreationTest,
 
 IN_PROC_BROWSER_TEST_F(SupervisedUserCreationTest,
                        PRE_CheckNoNotificationTray) {
-  SigninAsSupervisedUser(true, 0, kTestSupervisedUserDisplayName);
+  SigninAsSupervisedUser(0, kTestSupervisedUserDisplayName);
 
   // After sign-in, the tray should be visible.
   EXPECT_TRUE(GetWebNotificationTrayVisibility());
