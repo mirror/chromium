@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "82f1b668_cc00db04",
+        "filename": "third_party/WebKit/Source/core/workers/DedicatedWorker.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-15T03:57:20Z",
+      "side": 1,
+      "message": "I\u0027m a bit confused about ownership. I would recommend std::move(script_origin) but I think CreateDedicatedWorker just takes a const url::Origin\u0026. Should we just pass script_origin.get(), or ConnectToWorkerInterfaceProvider should can just take a SecurityOrigin\u0026?.",
+      "revId": "4dbd274f112a6ee8b7c0dbb07c496932da5cce34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5febcbc7_6057b43f",
         "filename": "third_party/WebKit/Source/core/workers/DedicatedWorkerMessagingProxy.cpp",
         "patchSetId": 10
