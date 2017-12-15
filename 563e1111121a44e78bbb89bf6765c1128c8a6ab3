@@ -16,6 +16,24 @@
       "revId": "563e1111121a44e78bbb89bf6765c1128c8a6ab3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10bc98b4_90b0954b",
+        "filename": "chrome/browser/resources/md_extensions/detail_view.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-15T00:38:41Z",
+      "side": 1,
+      "message": "Done.\n\nTechnically this can be for an app or an extension, hence the equivalent chrome.developerPrivate API method is called showItemOptionsPage(). Having said that, I think it is common in our codebase currently, to use \"extension\" meaning \"extension or app\", so should be clear enough. For example \"Remove extension\" is displayed for both apps and extensions.",
+      "parentUuid": "1d1440ed_9a605908",
+      "revId": "563e1111121a44e78bbb89bf6765c1128c8a6ab3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
