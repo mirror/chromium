@@ -16,6 +16,24 @@
       "revId": "31996f224115fadbae4563e301167f351749b203",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84a2e099_f7e1377d",
+        "filename": "chrome/browser/vr/ui_input_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-12-15T21:53:40Z",
+      "side": 1,
+      "message": "We send a move above and returned. Clarified with you offline that you missed the return :)",
+      "parentUuid": "d5b863c7_93f1befd",
+      "revId": "31996f224115fadbae4563e301167f351749b203",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
