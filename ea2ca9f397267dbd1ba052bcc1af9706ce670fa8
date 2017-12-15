@@ -25,6 +25,69 @@
     },
     {
       "key": {
+        "uuid": "0d575f98_4d90d92a",
+        "filename": "ios/chrome/browser/ui/qr_scanner/qr_scanner_transitioning_delegate.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-12-15T13:01:57Z",
+      "side": 1,
+      "message": "Style nit: presentedView.frame \u003d finalFrame",
+      "range": {
+        "startLine": 64,
+        "startChar": 38,
+        "endLine": 64,
+        "endChar": 0
+      },
+      "revId": "ea2ca9f397267dbd1ba052bcc1af9706ce670fa8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68c7124a_24d089de",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 723,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-12-15T13:01:57Z",
+      "side": 1,
+      "message": "Did you find these two issues thanks to a console log?\n\n(If so, have you tried https://www.wtfautolayout.com/?)",
+      "revId": "ea2ca9f397267dbd1ba052bcc1af9706ce670fa8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c213b22_c44b171f",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 724,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-12-15T13:01:57Z",
+      "side": 1,
+      "message": "s/|required|/UILayoutPriorityRequired",
+      "range": {
+        "startLine": 724,
+        "startChar": 67,
+        "endLine": 724,
+        "endChar": 75
+      },
+      "revId": "ea2ca9f397267dbd1ba052bcc1af9706ce670fa8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e37eabfa_83bd4bc8",
         "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.mm",
         "patchSetId": 3
