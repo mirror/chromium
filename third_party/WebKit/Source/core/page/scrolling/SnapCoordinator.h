@@ -67,10 +67,36 @@ class CORE_EXPORT SnapCoordinator final
                        bool did_scroll_x,
                        bool did_scroll_y,
                        ScrollOffset* snap_offset);
-  static ScrollOffset FindSnapOffset(const ScrollOffset& current_offset,
-                                     const SnapContainerData&,
-                                     bool should_snap_on_x,
-                                     bool should_snap_on_y);
+
+  // Returns true if there is a valid offset to snap to. If the snap area it
+  // finds on x and the one it finds on y could not be visible at same time,
+  // it chooses the closer snap area and recursively calls itself to find
+  // another snap offset on the other axis that satisfies the visilbility
+  // requirement of the first snap area.
+  // If such a snap offset does not exist, we return the original offset.
+  // current_offset - The original scroll offset before snapping.
+  // snap_container_data - The snap data of the snap container that we'd like to
+  //    perform snapping.
+  // visibility_requirement - The snap_offset we choose should be within this
+  //    rect. The rect is the scrollable region of the container if this is the
+  //    first call. It is the visible area of the snapped area if this is a
+  //    recursive call after we have already snapped on one of the axes.
+  // should_snap_on_x, should_snap_on_y - Whether we should perform snapping on
+  //    each axis. They should be set to the scrolled axes if this is the first
+  //    call. They should be set to the non-snapped axis if this is a recursive
+  //    call after we have already snapped on one of the axes.
+  // snap_offset - If this is the first call, snap_offset has the same value as
+  //    current_offset. If this is a recursive call after we have already
+  //    snapped on an axis, snap_offset would have the snapped value on that
+  //    axis. This is to make sure the final snap_offset we choose is visible
+  //    given the snapped offset. This parameter is also responsible to return
+  //    the final snap_offset.
+  static bool FindSnapOffset(const ScrollOffset& current_offset,
+                             const SnapContainerData&,
+                             const FloatRect& visibility_requirement,
+                             bool should_snap_on_x,
+                             bool should_snap_on_y,
+                             ScrollOffset* snap_offset);
 
 #ifndef NDEBUG
   void ShowSnapAreaMap();
