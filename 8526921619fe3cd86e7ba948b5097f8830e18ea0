@@ -16,6 +16,24 @@
       "revId": "8526921619fe3cd86e7ba948b5097f8830e18ea0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02b8c540_3a70a3f0",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerThread.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-15T07:13:22Z",
+      "side": 1,
+      "message": "This wording didn\u0027t feel very natural to me either... wouldn\u0027t simple naming like following work?  Other methods don\u0027t take this RequestTo form.\n\nEvaluateClassicScript()\nImportModuleScript()\n\nEach calls EvaluateClassicScriptOnWorkerThread() etc then, which just feels fine.\n\nOr PostTaskToX works for me too.",
+      "parentUuid": "a9f04763_8ff53901",
+      "revId": "8526921619fe3cd86e7ba948b5097f8830e18ea0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
