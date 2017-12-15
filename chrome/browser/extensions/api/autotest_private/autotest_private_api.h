@@ -8,6 +8,7 @@
 #include <string>
 
 #include "base/compiler_specific.h"
+#include "chrome/browser/chromeos/printing/cups_printers_manager.h"
 #include "chrome/browser/extensions/chrome_extension_function.h"
 #include "extensions/browser/browser_context_keyed_api_factory.h"
 #include "ui/message_center/notification_types.h"
@@ -206,6 +207,19 @@ class AutotestPrivateSetPlayStoreEnabledFunction
 
  private:
   ~AutotestPrivateSetPlayStoreEnabledFunction() override {}
+  ResponseAction Run() override;
+};
+
+class AutotestPrivateGetPrinterListFunction : public UIThreadExtensionFunction {
+ public:
+  DECLARE_EXTENSION_FUNCTION("autotestPrivate.getPrinterList",
+                             AUTOTESTPRIVATE_GETPRINTERLIST)
+
+ private:
+  static std::string GetPrinterType(
+      chromeos::CupsPrintersManager::PrinterClass type);
+
+  ~AutotestPrivateGetPrinterListFunction() override = default;
   ResponseAction Run() override;
 };
 

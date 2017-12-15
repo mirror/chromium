@@ -30,11 +30,13 @@
 #if defined(OS_CHROMEOS)
 #include "chrome/browser/chromeos/arc/arc_util.h"
 #include "chrome/browser/chromeos/login/lock/screen_locker.h"
+#include "chrome/browser/chromeos/printing/cups_printers_manager.h"
 #include "chrome/browser/chromeos/system/input_device_settings.h"
 #include "chrome/browser/profiles/profile_manager.h"
 #include "chrome/browser/ui/ash/login_screen_client.h"
 #include "chromeos/dbus/dbus_thread_manager.h"
 #include "chromeos/dbus/session_manager_client.h"
+#include "chromeos/printing/printer_configuration.h"
 #include "components/user_manager/user_manager.h"
 #include "ui/message_center/message_center.h"
 #include "ui/message_center/notification.h"
@@ -408,6 +410,52 @@ AutotestPrivateGetVisibleNotificationsFunction::Run() {
     values->Append(std::move(result));
   }
 
+#endif
+  return RespondNow(OneArgument(std::move(values)));
+}
+
+// static
+std::string AutotestPrivateGetPrinterListFunction::GetPrinterType(
+    chromeos::CupsPrintersManager::PrinterClass type) {
+#if defined(OS_CHROMEOS)
+  switch (type) {
+    case chromeos::CupsPrintersManager::PrinterClass::kConfigured:
+      return "configured";
+    case chromeos::CupsPrintersManager::PrinterClass::kEnterprise:
+      return "enterprise";
+    case chromeos::CupsPrintersManager::PrinterClass::kAutomatic:
+      return "automatic";
+    case chromeos::CupsPrintersManager::PrinterClass::kDiscovered:
+      return "discovered";
+    default:
+      return "unknown";
+  }
+#endif
+  return "unknown";
+}
+
+ExtensionFunction::ResponseAction AutotestPrivateGetPrinterListFunction::Run() {
+  DVLOG(1) << "AutotestPrivateGetPrinterListFunction";
+  std::unique_ptr<base::ListValue> values = std::make_unique<base::ListValue>();
+#if defined(OS_CHROMEOS)
+  Profile* profile = ProfileManager::GetActiveUserProfile();
+  std::unique_ptr<chromeos::CupsPrintersManager> printersManager =
+      chromeos::CupsPrintersManager::Create(profile);
+  std::vector<chromeos::CupsPrintersManager::PrinterClass> printerType = {
+      chromeos::CupsPrintersManager::PrinterClass::kConfigured,
+      chromeos::CupsPrintersManager::PrinterClass::kEnterprise,
+      chromeos::CupsPrintersManager::PrinterClass::kAutomatic};
+  for (auto& pType : printerType) {
+    std::vector<chromeos::Printer> printerList =
+        printersManager->GetPrinters(pType);
+    for (auto& printer : printerList) {
+      auto result = std::make_unique<base::DictionaryValue>();
+      result->SetString("printerName", printer.display_name());
+      result->SetString("printerId", printer.id());
+      result->SetString("printerType", GetPrinterType(pType));
+      values->Append(std::move(result));
+    }
+  }
 #endif
   return RespondNow(OneArgument(std::move(values)));
 }
