@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "33387650_ea713dd4",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_break_token.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2017-12-15T16:18:05Z",
+      "side": 1,
+      "message": "Immutability FTW! :-/\n\nThere are of course other options (such as regenerating the break token with this flag set to true).\n\nAlso, I wanted a better abstraction than \"ignore floats\" here, but came up empty-handed.",
+      "revId": "038cd24f17659ef4d9b811b3b256634f5ff2ccd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
