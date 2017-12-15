@@ -93228,6 +93228,13 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="V8.SpeculationModeChange" enum="V8SpeculationModeChange">
+  <owner>sigurds@chromium.org</owner>
+  <summary>
+    Tracks for each deoptimization whether the speculation mode changed.
+  </summary>
+</histogram>
+
 <histogram name="V8.UsageAnalysis">
   <obsolete>
     This histogram is no longer present in V8.
