@@ -79,7 +79,7 @@ GpuChannelManager::GpuChannelManager(
       application_status_listener_(
           base::Bind(&GpuChannelManager::OnApplicationStateChange,
                      base::Unretained(this))),
-      is_running_on_low_end_mode_(base::SysInfo::IsLowEndDevice()),
+      is_running_on_low_end_mode_(true),
       is_backgrounded_for_testing_(false),
 #endif
       exiting_for_lost_context_(false),
