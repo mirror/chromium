@@ -22,7 +22,6 @@ namespace viz {
 
 BufferQueue::BufferQueue(gpu::gles2::GLES2Interface* gl,
                          uint32_t texture_target,
-                         uint32_t internal_format,
                          gfx::BufferFormat format,
                          GLHelper* gl_helper,
                          gpu::GpuMemoryBufferManager* gpu_memory_buffer_manager,
@@ -31,13 +30,10 @@ BufferQueue::BufferQueue(gpu::gles2::GLES2Interface* gl,
       fbo_(0),
       allocated_count_(0),
       texture_target_(texture_target),
-      internal_format_(internal_format),
       format_(format),
       gl_helper_(gl_helper),
       gpu_memory_buffer_manager_(gpu_memory_buffer_manager),
       surface_handle_(surface_handle) {
-  DCHECK(gpu::IsImageFormatCompatibleWithGpuMemoryBufferFormat(internal_format,
-                                                               format_));
 }
 
 BufferQueue::~BufferQueue() {
@@ -273,9 +269,8 @@ std::unique_ptr<BufferQueue::AllocatedSurface> BufferQueue::GetNextSurface() {
   }
   buffer->SetColorSpace(color_space_);
 
-  uint32_t id =
-      gl_->CreateImageCHROMIUM(buffer->AsClientBuffer(), size_.width(),
-                               size_.height(), internal_format_);
+  uint32_t id = gl_->CreateImageCHROMIUM(buffer->AsClientBuffer(),
+                                         size_.width(), size_.height());
   if (!id) {
     LOG(ERROR) << "Failed to allocate backing image surface";
     gl_->DeleteTextures(1, &texture);
@@ -287,6 +282,10 @@ std::unique_ptr<BufferQueue::AllocatedSurface> BufferQueue::GetNextSurface() {
   gl_->BindTexImage2DCHROMIUM(texture_target_, id);
   return base::MakeUnique<AllocatedSurface>(this, std::move(buffer), texture,
                                             id, stencil, gfx::Rect(size_));
+}
+
+uint32_t BufferQueue::internal_format() const {
+  return gpu::ImageFormatForGpuMemoryBufferFormat(format_);
 }
 
 BufferQueue::AllocatedSurface::AllocatedSurface(
