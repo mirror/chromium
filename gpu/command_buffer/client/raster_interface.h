@@ -80,8 +80,7 @@ class RasterInterface {
   // Image objects.
   virtual GLuint CreateImageCHROMIUM(ClientBuffer buffer,
                                      GLsizei width,
-                                     GLsizei height,
-                                     GLenum internalformat) = 0;
+                                     GLsizei height) = 0;
   virtual void BindTexImage2DCHROMIUM(GLenum target, GLint imageId) = 0;
   virtual void ReleaseTexImage2DCHROMIUM(GLenum target, GLint imageId) = 0;
   virtual void DestroyImageCHROMIUM(GLuint image_id) = 0;

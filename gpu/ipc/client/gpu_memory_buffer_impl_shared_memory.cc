@@ -232,4 +232,13 @@ GpuMemoryBufferImplSharedMemory::GetGUIDForTracing(
       "shared_memory_gpu/%" PRIx64 "/%d", tracing_process_id, id_.id));
 }
 
+uint32_t GpuMemoryBufferImplSharedMemory::GetInternalformat(bool supports_bgra_ext) const {
+  switch (format_) {
+    case gfx::BufferFormat::BGRA_8888:
+      return supports_bgra_ext ? GL_BGRA_EXT : GL_RGBA;
+    default:
+      return GpuMemoryBufferImpl::GetInternalformat(supports_bgra_ext);
+  }
+}
+
 }  // namespace gpu

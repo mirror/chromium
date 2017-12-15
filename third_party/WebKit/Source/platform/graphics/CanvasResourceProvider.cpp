@@ -18,6 +18,7 @@
 #include "third_party/skia/include/gpu/GrBackendSurface.h"
 #include "third_party/skia/include/gpu/GrContext.h"
 #include "ui/gfx/gpu_memory_buffer.h"
+#include "ui/gl/gl_utils.h"
 
 namespace blink {
 
@@ -258,9 +259,6 @@ std::unique_ptr<CanvasResourceProvider> CanvasResourceProvider::Create(
           if (!gpu::IsImageSizeValidForGpuMemoryBufferFormat(
                   gfx::Size(size), colorParams.GetBufferFormat()))
             continue;
-          DCHECK(gpu::IsImageFormatCompatibleWithGpuMemoryBufferFormat(
-              colorParams.GLInternalFormat(), colorParams.GetBufferFormat()));
-
           provider =
               std::make_unique<CanvasResourceProvider_Texture_GpuMemoryBuffer>(
                   size, msaa_sample_count, colorParams,
