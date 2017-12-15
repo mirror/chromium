@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "03bd832a_a8df2996",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwContents.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1230,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-12-15T00:53:34Z",
+      "side": 1,
+      "message": "maybe have a getJavascriptInjector method that also caches the result? a bit weird to have this as a floating object in AwContents.",
+      "revId": "a32f31074726123467661e61d632dcfc0d3a6a97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79d0bf19_e4fd972d",
+        "filename": "content/browser/android/javascript_injector.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-12-15T00:53:34Z",
+      "side": 1,
+      "message": "comment this is owned by web_contents",
+      "revId": "a32f31074726123467661e61d632dcfc0d3a6a97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
