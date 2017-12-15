@@ -24,6 +24,8 @@ static_library("router") {
   sources = [
     "browser_presentation_connection_proxy.cc",
     "browser_presentation_connection_proxy.h",
+    "independent_otr_profile_manager.cc",
+    "independent_otr_profile_manager.h",
     "issue_manager.cc",
     "issue_manager.h",
     "issues_observer.cc",
@@ -47,6 +49,8 @@ static_library("router") {
     "media_sinks_observer.h",
     "presentation_media_sinks_observer.cc",
     "presentation_media_sinks_observer.h",
+    "presentation_navigation_policy.cc",
+    "presentation_navigation_policy.h",
     "presentation_service_delegate_impl.cc",
     "presentation_service_delegate_impl.h",
     "presentation_service_delegate_observers.cc",
