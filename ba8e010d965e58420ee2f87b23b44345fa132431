@@ -22,6 +22,30 @@
       "revId": "ba8e010d965e58420ee2f87b23b44345fa132431",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c92e5fb_3c3ac5de",
+        "filename": "net/der/tag.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-12-15T21:06:02Z",
+      "side": 1,
+      "message": "I think so. My guess, just from looking at http://luca.ntop.org/Teaching/Appunti/asn1.html, is that that page uses [class number] in some places, which if you don\u0027t cross reference some other sections, isn\u0027t obvious that class and number are separate tokens. May be where the confusion came from?",
+      "parentUuid": "d4d90d0c_003d3e1a",
+      "range": {
+        "startLine": 70,
+        "startChar": 50,
+        "endLine": 70,
+        "endChar": 60
+      },
+      "revId": "ba8e010d965e58420ee2f87b23b44345fa132431",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

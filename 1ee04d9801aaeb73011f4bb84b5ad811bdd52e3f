@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5b69a453_0c55a622",
+        "filename": "net/der/tag.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-12-15T21:06:02Z",
+      "side": 1,
+      "message": "There are some places, like ParserTest.ParseTags, some functions in parse_certificate.cc, probably other places, which do stuff like \"kTagContextSpecific | kTagConstructed | 30\". I guess that still works with the new representation, but just wondering whether you think that is reasonable or if places should be changed to use ContextSpecificConstructed?",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 50
+      },
+      "revId": "1ee04d9801aaeb73011f4bb84b5ad811bdd52e3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
