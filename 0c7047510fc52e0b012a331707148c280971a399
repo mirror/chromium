@@ -22,6 +22,76 @@
       "revId": "0c7047510fc52e0b012a331707148c280971a399",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc75332b_526d37dc",
+        "filename": "net/nqe/network_quality_estimator_params.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 523,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-12-15T02:04:04Z",
+      "side": 1,
+      "message": "Alternatively, you can store the value of |forced_effective_connection_type_| in the ctor. But, additionally also initialize |force_ect_on_cellular_only_| boolean in the ctor.\n\nThen, in this method, read these two variables along with |connection_type| to determine the ECT. I am thinking of something like (see my other comment too in the header file):\n\nGetForceEffectiveConnectionType(NetworkChangeNotifier::ConnectionType connection_type) {\n  if(!force_ect_on_cellular_only_) {\n    return forced_effective_connection_type_;\n  }\n\n  if(!net::NetworkChangeNotifier::IsConnectionCellular(connection_type)) {\n     return nullopt;\n  }\n\n  return forced_effective_connection_type_;\n}",
+      "parentUuid": "1d17b6a6_20c382d0",
+      "range": {
+        "startLine": 523,
+        "startChar": 4,
+        "endLine": 523,
+        "endChar": 37
+      },
+      "revId": "0c7047510fc52e0b012a331707148c280971a399",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "933fc612_342abcbd",
+        "filename": "net/nqe/network_quality_estimator_params.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-12-15T02:04:04Z",
+      "side": 1,
+      "message": "nit: s/GetForce/GetForced/",
+      "range": {
+        "startLine": 102,
+        "startChar": 42,
+        "endLine": 102,
+        "endChar": 50
+      },
+      "revId": "0c7047510fc52e0b012a331707148c280971a399",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19fb2d20_72ebdb70",
+        "filename": "net/nqe/network_quality_estimator_params.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-12-15T02:04:04Z",
+      "side": 1,
+      "message": "I think along with this, we need to add a boolean variable:\nconst bool force_ect_on_cellular_only_;\n\nThen, set the value of this bool in the ctor of this class.\n\nThen, in the GetForcedEffectiveConnectionType(connection_type) method, we can read the value of this bool. If it is set to false, then we just follow the original code path. If it set to true, then we also additional check the value of connection_type.\n\nIdeally, we should not need to parse any strings in the GetForcedEffectiveConnectionType() method to avoid the overhead.",
+      "range": {
+        "startLine": 273,
+        "startChar": 42,
+        "endLine": 273,
+        "endChar": 75
+      },
+      "revId": "0c7047510fc52e0b012a331707148c280971a399",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
