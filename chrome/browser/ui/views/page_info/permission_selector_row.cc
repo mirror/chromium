@@ -274,7 +274,11 @@ PermissionSelectorRow::PermissionSelectorRow(
     const GURL& url,
     const PageInfoUI::PermissionInfo& permission,
     views::GridLayout* layout)
-    : profile_(profile), icon_(NULL), menu_button_(NULL), combobox_(NULL) {
+    : profile_(profile),
+      icon_(nullptr),
+      menu_button_(nullptr),
+      combobox_(nullptr),
+      secondary_label_(nullptr) {
   const int list_item_padding = ChromeLayoutProvider::Get()->GetDistanceMetric(
                                     DISTANCE_CONTROL_LIST_VERTICAL) /
                                 2;
@@ -316,18 +320,26 @@ PermissionSelectorRow::PermissionSelectorRow(
   if (!reason.empty()) {
     layout->StartRow(1, PageInfoBubbleView::kPermissionColumnSetId);
     layout->SkipColumns(1);
-    views::Label* permission_decision_reason = new views::Label(reason);
-    permission_decision_reason->SetEnabledColor(
+    secondary_label_ = new views::Label(reason);
+    secondary_label_->SetHorizontalAlignment(gfx::ALIGN_LEFT);
+    secondary_label_->SetEnabledColor(
         PageInfoUI::GetPermissionDecisionTextColor());
+    // The |secondary_label_| should wrap when it's too long instead of
+    // stretching its parent view horizontally. To do this, wait until the
+    // parent's size has been calculated before sizing it.
+    secondary_label_->set_collapse_when_hidden(true);
+    secondary_label_->SetMultiLine(true);
+    secondary_label_->SetVisible(false);
 
     views::ColumnSet* column_set =
         layout->GetColumnSet(PageInfoBubbleView::kPermissionColumnSetId);
     DCHECK(column_set);
     // Long labels should span the remaining width of the row (minus the end
     // margin). This includes the permission label, combobox, and space between
-    // them (3 columns total).
-    constexpr int kColumnSpan = 3;
-    layout->AddView(permission_decision_reason, kColumnSpan, 1,
+    // them (3 columns total), but only in non-Harmony.
+    const int column_span =
+        ui::MaterialDesignController::IsSecondaryUiMaterial() ? 1 : 3;
+    layout->AddView(secondary_label_, column_span, 1,
                     views::GridLayout::LEADING, views::GridLayout::CENTER);
   }
   layout->AddPaddingRow(0,
@@ -426,6 +438,17 @@ int PermissionSelectorRow::GetComboboxWidth() const {
 void PermissionSelectorRow::SetMinComboboxWidth(int width) {
   DCHECK(combobox_);
   combobox_->set_min_width(width);
+}
+
+void PermissionSelectorRow::SizeSecondaryText(int row_width) {
+  if (!secondary_label_)
+    return;
+  DCHECK(ui::MaterialDesignController::IsSecondaryUiMaterial());
+
+  // Set a max width so |secondary_label_| can wrap to the next line if needed.
+  int available_width = combobox_ ? row_width - GetComboboxWidth() : row_width;
+  secondary_label_->SetMaximumWidth(available_width);
+  secondary_label_->SetVisible(true);
 }
 
 views::View* PermissionSelectorRow::button() {
