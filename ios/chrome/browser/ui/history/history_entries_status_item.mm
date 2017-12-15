@@ -44,13 +44,11 @@
 @implementation HistoryEntriesStatusItem
 @synthesize delegate = _delegate;
 @synthesize hidden = _hidden;
-@synthesize showsOtherBrowsingDataNotice = _showsOtherBrowsingDataNotice;
 
 - (instancetype)initWithType:(NSInteger)type {
   self = [super initWithType:type];
   if (self) {
     _hidden = NO;
-    _showsOtherBrowsingDataNotice = NO;
   }
   return self;
 }
@@ -62,7 +60,7 @@
 - (void)configureCell:(HistoryEntriesStatusCell*)cell {
   [super configureCell:cell];
   [cell setDelegate:self];
-  if (self.hidden || !self.showsOtherBrowsingDataNotice) {
+  if (self.hidden) {
     cell.textLabel.text = nil;
   } else {
     cell.textLabel.text =
@@ -78,8 +76,7 @@
 }
 
 - (BOOL)isEqualToHistoryEntriesStatusItem:(HistoryEntriesStatusItem*)object {
-  return self.hidden == object.hidden &&
-         self.showsOtherBrowsingDataNotice == self.showsOtherBrowsingDataNotice;
+  return self.hidden == object.hidden;
 }
 
 - (BOOL)isEqual:(id)object {
