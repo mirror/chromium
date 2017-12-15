@@ -73,7 +73,25 @@ class CORE_EXPORT TypingCommand final : public CompositeEditCommand {
                          Options,
                          TextCompositionType = kTextCompositionNone,
                          const bool is_incremental_insertion = false);
+  // Like the preceding InsertText() method but does not fire the beforeinput
+  // and input events.
+  static void InsertTextWithoutEvents(Document&,
+                                      const String&,
+                                      Options,
+                                      TextCompositionType = kTextCompositionNone,
+                                      const bool is_incremental_insertion = false);
   static void InsertText(
+      Document&,
+      const String&,
+      const SelectionInDOMTree&,
+      Options,
+      EditingState*,
+      TextCompositionType = kTextCompositionNone,
+      const bool is_incremental_insertion = false,
+      InputEvent::InputType = InputEvent::InputType::kInsertText);
+  // Like the preceding InsertText() method but does not fire the beforeinput
+  // and input events.
+  static void InsertTextWithoutEvents(
       Document&,
       const String&,
       const SelectionInDOMTree&,

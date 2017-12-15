@@ -308,6 +308,18 @@ void TypingCommand::InsertText(Document& document,
              options, &editing_state, composition, is_incremental_insertion);
 }
 
+void TypingCommand::InsertTextWithoutEvents(Document& document,
+                                            const String& text,
+                                            Options options,
+                                            TextCompositionType composition,
+                                            const bool is_incremental_insertion) {
+  LocalFrame* frame = document.GetFrame();
+  DCHECK(frame);
+  EditingState editing_state;
+  InsertTextWithoutEvents(document, text, frame->Selection().GetSelectionInDOMTree(),
+             options, &editing_state, composition, is_incremental_insertion);
+}
+
 void TypingCommand::AdjustSelectionAfterIncrementalInsertion(
     LocalFrame* frame,
     const size_t selection_start,
@@ -339,7 +351,7 @@ void TypingCommand::AdjustSelectionAfterIncrementalInsertion(
   SetEndingSelection(SelectionForUndoStep::From(selection));
 }
 
-// FIXME: We shouldn't need to take selectionForInsertion. It should be
+// FIXME: We shouldn't need to take selection_for_insertion. It should be
 // identical to FrameSelection's current selection.
 void TypingCommand::InsertText(
     Document& document,
@@ -353,8 +365,6 @@ void TypingCommand::InsertText(
   LocalFrame* frame = document.GetFrame();
   DCHECK(frame);
 
-  const VisibleSelection& current_selection =
-      frame->Selection().ComputeVisibleSelectionInDOMTreeDeprecated();
   const VisibleSelection& selection_for_insertion =
       CreateVisibleSelection(passed_selection_for_insertion);
 
@@ -378,8 +388,30 @@ void TypingCommand::InsertText(
     ABORT_EDITING_COMMAND_IF(!selection_for_insertion.IsValidFor(document));
   }
 
+  InsertTextWithoutEvents(document, new_text, selection_for_insertion.AsSelection(), options, editing_state, composition_type, is_incremental_insertion, input_type);
+}
+
+// FIXME: We shouldn't need to take passed_selection_for_insertion. It should be
+// identical to FrameSelection's current selection.
+void TypingCommand::InsertTextWithoutEvents(
+    Document& document,
+    const String& text,
+    const SelectionInDOMTree& passed_selection_for_insertion,
+    Options options,
+    EditingState* editing_state,
+    TextCompositionType composition_type,
+    const bool is_incremental_insertion,
+    InputEvent::InputType input_type) {
+  LocalFrame* frame = document.GetFrame();
+  DCHECK(frame);
+
+  const VisibleSelection& current_selection =
+      frame->Selection().ComputeVisibleSelectionInDOMTreeDeprecated();
+  const VisibleSelection& selection_for_insertion =
+      CreateVisibleSelection(passed_selection_for_insertion);
+
   // Do nothing if no need to delete and insert.
-  if (selection_for_insertion.IsCaret() && new_text.IsEmpty())
+  if (selection_for_insertion.IsCaret() && text.IsEmpty())
     return;
 
   // TODO(editing-dev): The use of updateStyleAndLayoutIgnorePendingStylesheets
@@ -418,13 +450,13 @@ void TypingCommand::InsertText(
     last_typing_command->input_type_ = input_type;
 
     EventQueueScope event_queue_scope;
-    last_typing_command->InsertText(new_text, options & kSelectInsertedText,
+    last_typing_command->InsertText(text, options & kSelectInsertedText,
                                     editing_state);
     return;
   }
 
   TypingCommand* command = TypingCommand::Create(
-      document, kInsertText, new_text, options, composition_type);
+      document, kInsertText, text, options, composition_type);
   bool change_selection = selection_for_insertion != current_selection;
   if (change_selection) {
     const SelectionForUndoStep& selection_for_insertion_as_undo_step =

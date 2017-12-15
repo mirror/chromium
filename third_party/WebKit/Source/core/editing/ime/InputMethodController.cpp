@@ -79,6 +79,16 @@ void DispatchCompositionEndEvent(LocalFrame& frame, const String& text) {
   target->DispatchEvent(event);
 }
 
+/* void DispatchInputEvent(LocalFrame& frame, const String& text) {
+  Element* target = frame.GetDocument()->FocusedElement();
+  if (!target)
+    return;
+
+  CompositionEvent* event = CompositionEvent::Create(
+      EventTypeNames::compositionend, frame.DomWindow(), text);
+  target->DispatchEvent(event);
+  } */
+
 bool NeedsIncrementalInsertion(const LocalFrame& frame,
                                const String& new_text) {
   // No need to apply incremental insertion if it doesn't support formated text.
