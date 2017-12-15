@@ -46,6 +46,30 @@
       "revId": "3e3a5b12618cb0201fe62c1d3f924b804440200a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a3a0022_56ba733d",
+        "filename": "components/cronet/android/cronet_library_loader.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-12-15T15:10:41Z",
+      "side": 1,
+      "message": "This function is called on Cronet\u0027s initialization thread though which isn\u0027t shared with WebView.  It\u0027s defined here:\nhttps://cs.chromium.org/chromium/src/components/cronet/android/java/src/org/chromium/net/impl/CronetLibraryLoader.java?rcl\u003d0b5cc4e2edb5d0b650b819cd40f61b3691b78d71\u0026l\u003d32\nSo there shouldn\u0027t be a way for WebView to start a MessageLoop here.",
+      "parentUuid": "f6797fff_835c5e01",
+      "range": {
+        "startLine": 93,
+        "startChar": 7,
+        "endLine": 93,
+        "endChar": 35
+      },
+      "revId": "3e3a5b12618cb0201fe62c1d3f924b804440200a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
