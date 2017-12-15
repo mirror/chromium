@@ -16,6 +16,9 @@ DownloadEntry InProgressConversions::DownloadEntryFromProto(
   entry.guid = proto.guid();
   entry.request_origin = proto.request_origin();
   entry.download_source = DownloadSourceFromProto(proto.download_source());
+  entry.ukm_download_id = proto.ukm_download_id();
+  entry.ukm_source_id =
+      ukm::ConvertToSourceId(proto.ukm_source_id(), ukm::SourceIdType::UKM);
   return entry;
 }
 
@@ -25,6 +28,8 @@ metadata_pb::DownloadEntry InProgressConversions::DownloadEntryToProto(
   proto.set_guid(entry.guid);
   proto.set_request_origin(entry.request_origin);
   proto.set_download_source(DownloadSourceToProto(entry.download_source));
+  proto.set_ukm_download_id(entry.ukm_download_id);
+  proto.set_ukm_source_id(int(entry.ukm_source_id));
   return proto;
 }
 
