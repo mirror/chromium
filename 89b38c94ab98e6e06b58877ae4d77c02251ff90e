@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ab8bc5a5_6e2384c6",
+        "filename": "build/linux/sysroot_scripts/sysroots.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-12-15T21:18:46Z",
+      "side": 1,
+      "message": "I would revert this file.  Rolling the sysroots means that all devs and bots will have to download the new ones.  And since this change just removes some libraries, it\u0027s not really needed -- this change would just get picked up in the next sysroot roll.",
+      "range": {
+        "startLine": 1,
+        "startChar": 1,
+        "endLine": 1,
+        "endChar": 0
+      },
+      "revId": "89b38c94ab98e6e06b58877ae4d77c02251ff90e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
