@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "ea978c3f_f056704e",
+        "filename": "chrome/browser/ui/webui/extensions/extensions_ui.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-12-15T22:21:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4677707a_1be703a5",
+      "revId": "3ebfb09af88943a01f87538d16a6af8b1b66c2ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1845ce2f_d7c60112",
         "filename": "chrome/test/data/webui/extensions/extension_error_page_test.js",
         "patchSetId": 4
