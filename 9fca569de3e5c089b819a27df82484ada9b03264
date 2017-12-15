@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b937123f_f8a57a8c",
+        "filename": "chrome/browser/chromeos/accessibility/accessibility_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 954,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2017-12-15T01:18:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b0c44408_d0e35d81",
+      "revId": "9fca569de3e5c089b819a27df82484ada9b03264",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dfa58adf_a2114a6e",
         "filename": "chrome/browser/chromeos/accessibility/select_to_speak_event_handler.cc",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "9fca569de3e5c089b819a27df82484ada9b03264",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5ca3ec2_4cc5e175",
+        "filename": "chrome/browser/chromeos/accessibility/select_to_speak_event_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2017-12-15T01:18:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dfa58adf_a2114a6e",
+      "revId": "9fca569de3e5c089b819a27df82484ada9b03264",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "f7302d18_82186fc6",
+        "filename": "chrome/browser/chromeos/accessibility/select_to_speak_event_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2017-12-15T01:18:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2aca8f6b_f7ebb3fc",
+      "revId": "9fca569de3e5c089b819a27df82484ada9b03264",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5fa839e9_a73cfd1c",
         "filename": "chrome/browser/chromeos/accessibility/select_to_speak_event_handler.cc",
         "patchSetId": 3
@@ -64,6 +118,24 @@
       "writtenOn": "2017-12-14T23:37:56Z",
       "side": 1,
       "message": "I think this will do an extra copy of the event. Can you do something like this?\n\nunique_ptr\u003cui::Event\u003e event_copy \u003d ui::Event::Clone(*event);\nui::MouseEvent* mouse_event \u003d static_cast\u003cui::MouseEvent*\u003e(event_copy.get());\n\nAlso, you might DCHECK(event_copy-\u003eIsMouseEvent()) before the cast, just to be super clear.",
+      "revId": "9fca569de3e5c089b819a27df82484ada9b03264",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae3b3268_c6357b72",
+        "filename": "chrome/browser/chromeos/accessibility/select_to_speak_event_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2017-12-15T01:18:20Z",
+      "side": 1,
+      "message": "Actually that doesn\u0027t work -- it causes this error:\n\n[53040:53040:1214/163123.646182:ERROR:observer_list.h(236)] NOTREACHED() hit.\n[53040:53040:1214/163129.000858:ERROR:web_input_event.cc(410)] Not implemented reached in blink::WebMouseEvent ui::MakeWebMouseEventFromUiEvent(const ui::MouseEvent \u0026)Received unexpected event: 9806971\n\nI\u0027m not sure why -- it\u0027s like that Clone function isn\u0027t actually cloning all the parts of the Event.",
+      "parentUuid": "5fa839e9_a73cfd1c",
       "revId": "9fca569de3e5c089b819a27df82484ada9b03264",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "3ae7a1c1_85a6c2a4",
+        "filename": "chrome/browser/chromeos/accessibility/select_to_speak_event_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2017-12-15T01:18:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c05f3e07_c39fa3be",
+      "revId": "9fca569de3e5c089b819a27df82484ada9b03264",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8784aa69_17f45d94",
         "filename": "chrome/browser/chromeos/accessibility/select_to_speak_event_handler.cc",
         "patchSetId": 3
@@ -101,6 +191,24 @@
       "revId": "9fca569de3e5c089b819a27df82484ada9b03264",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62494fbd_2127438c",
+        "filename": "chrome/browser/chromeos/accessibility/select_to_speak_event_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2017-12-15T01:18:20Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "8784aa69_17f45d94",
+      "revId": "9fca569de3e5c089b819a27df82484ada9b03264",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "c4249093_ed21ff79",
+        "filename": "chrome/browser/chromeos/accessibility/select_to_speak_event_handler.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2017-12-15T01:18:20Z",
+      "side": 1,
+      "message": "Done with \u003d default.\nDidn\u0027t compile with protected because the SelectToSpeakEventHandler needs to access it. I\u0027m going to leave as-is rather than work around this.",
+      "parentUuid": "7a4f996b_072f548f",
+      "revId": "9fca569de3e5c089b819a27df82484ada9b03264",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9e854309_e1ea34e5",
         "filename": "chrome/browser/chromeos/accessibility/select_to_speak_event_handler.h",
         "patchSetId": 3
@@ -135,6 +261,24 @@
       "revId": "9fca569de3e5c089b819a27df82484ada9b03264",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "745620be_6856bc84",
+        "filename": "chrome/browser/chromeos/accessibility/select_to_speak_event_handler.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2017-12-15T01:18:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9e854309_e1ea34e5",
+      "revId": "9fca569de3e5c089b819a27df82484ada9b03264",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "f37948a7_31856f40",
+        "filename": "chrome/browser/chromeos/accessibility/select_to_speak_event_handler.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2017-12-15T01:18:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "db6cc6a3_61901ddc",
+      "revId": "9fca569de3e5c089b819a27df82484ada9b03264",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "11d3023c_2ac390e6",
         "filename": "chrome/browser/chromeos/chrome_browser_main_chromeos.cc",
         "patchSetId": 3
@@ -166,6 +328,24 @@
       "writtenOn": "2017-12-14T23:37:56Z",
       "side": 1,
       "message": "I don\u0027t think this will work. What if the user has multiple displays at multiple scale factors? I think it will do the DPI scaling only at the internal monitor\u0027s resolution.\n\nEventRewriterController seems to have some knowledge of root windows and multiple displays, maybe it could help somehow? I\u0027m not too familiar with it.",
+      "revId": "9fca569de3e5c089b819a27df82484ada9b03264",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e34ba384_f509df6c",
+        "filename": "chrome/browser/chromeos/chrome_browser_main_chromeos.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1099,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2017-12-15T01:18:20Z",
+      "side": 1,
+      "message": "Select to Speak already doesn\u0027t work on multiple displays. I\u0027ve got that filed separately at crbug.com/794653. I figure I\u0027ll need to come back here and modify it to work with multiple displays, but I\u0027d like to do that whole change as a unit. In addition to getting the events from the right display, STS may also need modifications around drawing the focus ring on the second display, for example.\n\nDoes it sound OK to you to do this as a follow-up?",
+      "parentUuid": "11d3023c_2ac390e6",
       "revId": "9fca569de3e5c089b819a27df82484ada9b03264",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
