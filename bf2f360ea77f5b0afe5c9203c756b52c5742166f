@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d8e9d910_ff4f6f0c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1250427
+      },
+      "writtenOn": "2017-12-15T17:00:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "95ef4772_361f71bc",
+      "range": {
+        "startLine": 9,
+        "startChar": 21,
+        "endLine": 9,
+        "endChar": 28
+      },
+      "revId": "bf2f360ea77f5b0afe5c9203c756b52c5742166f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f2b18680_c860e139",
         "filename": "content/browser/renderer_host/media/peer_connection_tracker_host.cc",
         "patchSetId": 10
@@ -36,6 +60,30 @@
       "writtenOn": "2017-12-13T15:37:49Z",
       "side": 1,
       "message": "Are the mojo messages not received on the UI thread?\nIf they are, just keep the DCHECK_CURRENTLY_ON.",
+      "range": {
+        "startLine": 77,
+        "startChar": 2,
+        "endLine": 77,
+        "endChar": 4
+      },
+      "revId": "bf2f360ea77f5b0afe5c9203c756b52c5742166f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "008831ec_9c848fe1",
+        "filename": "content/browser/renderer_host/media/peer_connection_tracker_host.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1250427
+      },
+      "writtenOn": "2017-12-15T17:00:10Z",
+      "side": 1,
+      "message": "I had observed the mojo calls were coming in IO thread. To reconfirm I triggered dry run with modified code. I will restore my code to prevent test failures.",
+      "parentUuid": "f2b18680_c860e139",
       "range": {
         "startLine": 77,
         "startChar": 2,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "794c8bf1_7c109a3c",
+        "filename": "content/browser/renderer_host/media/peer_connection_tracker_host.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1250427
+      },
+      "writtenOn": "2017-12-15T17:00:10Z",
+      "side": 1,
+      "message": "I missed to add \"if(!BrowserThread::CurrentlyOn(BrowserThread::UI)\" here. Will be taken care in next patch set",
+      "parentUuid": "71c7e465_16bb27c9",
+      "range": {
+        "startLine": 135,
+        "startChar": 2,
+        "endLine": 135,
+        "endChar": 21
+      },
+      "revId": "bf2f360ea77f5b0afe5c9203c756b52c5742166f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6bc9eb41_27b2ef98",
         "filename": "content/browser/renderer_host/media/peer_connection_tracker_host.h",
         "patchSetId": 10
@@ -91,6 +163,30 @@
       "revId": "bf2f360ea77f5b0afe5c9203c756b52c5742166f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41039ee9_6a84b80e",
+        "filename": "content/browser/renderer_host/media/peer_connection_tracker_host.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1250427
+      },
+      "writtenOn": "2017-12-15T17:00:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6bc9eb41_27b2ef98",
+      "range": {
+        "startLine": 50,
+        "startChar": 33,
+        "endLine": 50,
+        "endChar": 34
+      },
+      "revId": "bf2f360ea77f5b0afe5c9203c756b52c5742166f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "d3556eac_472a4629",
+        "filename": "content/browser/renderer_host/media/peer_connection_tracker_host.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1250427
+      },
+      "writtenOn": "2017-12-15T17:00:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7d32b637_3915994a",
+      "range": {
+        "startLine": 52,
+        "startChar": 7,
+        "endLine": 52,
+        "endChar": 27
+      },
+      "revId": "bf2f360ea77f5b0afe5c9203c756b52c5742166f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3846cf7e_2dc9a3fb",
         "filename": "content/common/media/peer_connection_tracker.mojom",
         "patchSetId": 10
@@ -137,6 +257,30 @@
       "revId": "bf2f360ea77f5b0afe5c9203c756b52c5742166f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3dd51894_7353805a",
+        "filename": "content/common/media/peer_connection_tracker.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1250427
+      },
+      "writtenOn": "2017-12-15T17:00:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3846cf7e_2dc9a3fb",
+      "range": {
+        "startLine": 11,
+        "startChar": 17,
+        "endLine": 11,
+        "endChar": 27
+      },
+      "revId": "bf2f360ea77f5b0afe5c9203c756b52c5742166f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "a6d4359c_bb979424",
+        "filename": "content/common/media/peer_connection_tracker.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1250427
+      },
+      "writtenOn": "2017-12-15T17:00:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5c328c89_eed667d3",
+      "range": {
+        "startLine": 14,
+        "startChar": 12,
+        "endLine": 14,
+        "endChar": 16
+      },
+      "revId": "bf2f360ea77f5b0afe5c9203c756b52c5742166f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8d407c0a_644836be",
         "filename": "content/common/media/peer_connection_tracker.mojom",
         "patchSetId": 10
@@ -183,6 +351,30 @@
       "revId": "bf2f360ea77f5b0afe5c9203c756b52c5742166f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6444cfd3_a5fdfbf5",
+        "filename": "content/common/media/peer_connection_tracker.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1250427
+      },
+      "writtenOn": "2017-12-15T17:00:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8d407c0a_644836be",
+      "range": {
+        "startLine": 17,
+        "startChar": 33,
+        "endLine": 17,
+        "endChar": 43
+      },
+      "revId": "bf2f360ea77f5b0afe5c9203c756b52c5742166f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "89d767e0_9be96d41",
+        "filename": "content/renderer/media/peer_connection_tracker.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1250427
+      },
+      "writtenOn": "2017-12-15T17:00:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "322615f7_2c1bb378",
+      "range": {
+        "startLine": 177,
+        "startChar": 7,
+        "endLine": 177,
+        "endChar": 35
+      },
+      "revId": "bf2f360ea77f5b0afe5c9203c756b52c5742166f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "db7aca9b_dad38ab0",
         "filename": "content/renderer/media/peer_connection_tracker_unittest.cc",
         "patchSetId": 10
@@ -229,6 +445,30 @@
       "revId": "bf2f360ea77f5b0afe5c9203c756b52c5742166f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ed2f845_486506e3",
+        "filename": "content/renderer/media/peer_connection_tracker_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1250427
+      },
+      "writtenOn": "2017-12-15T17:00:10Z",
+      "side": 1,
+      "message": "TrackCreateOffer() is calling internally \"OnUpdatePeerConnection\", thus I thought it is redundant to call explicitly.\nWill add EXPECT_CALL OnUpdatePeerConnection for  on this object as earlier and push next patchset.",
+      "parentUuid": "db7aca9b_dad38ab0",
+      "range": {
+        "startLine": 88,
+        "startChar": 2,
+        "endLine": 88,
+        "endChar": 35
+      },
+      "revId": "bf2f360ea77f5b0afe5c9203c756b52c5742166f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
