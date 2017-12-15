@@ -34,6 +34,24 @@
       "revId": "31996f224115fadbae4563e301167f351749b203",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a33ec800_e364457b",
+        "filename": "chrome/browser/vr/ui_input_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-12-15T21:53:51Z",
+      "side": 1,
+      "message": "Looks like I missed the early out :) (Yash pointed this out offline).",
+      "parentUuid": "d5b863c7_93f1befd",
+      "revId": "31996f224115fadbae4563e301167f351749b203",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
