@@ -67,6 +67,24 @@
       "revId": "d92b2be7f9384569643e40e5763275fcc2b863eb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93fb2dd1_874d3cf7",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerPainter.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1076,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-12-15T01:45:52Z",
+      "side": 1,
+      "message": "We already have dedicated SPv175 paths calling it from PaintAncestorClippingMask() and PaintChildClippingMaskForFragments() which don\u0027t traverse the paint layer tree so they are not affected.",
+      "parentUuid": "e5c49da0_359ffc22",
+      "revId": "d92b2be7f9384569643e40e5763275fcc2b863eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
