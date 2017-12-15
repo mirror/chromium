@@ -17,7 +17,7 @@ namespace gl {
 
 class GL_EXPORT GLImageNativePixmap : public gl::GLImageEGL {
  public:
-  GLImageNativePixmap(const gfx::Size& size, unsigned internalformat);
+  GLImageNativePixmap(const gfx::Size& size);
 
   // Create an EGLImage from a given NativePixmap.
   bool Initialize(gfx::NativePixmap* pixmap, gfx::BufferFormat format);
@@ -43,13 +43,10 @@ class GL_EXPORT GLImageNativePixmap : public gl::GLImageEGL {
                     uint64_t process_tracing_id,
                     const std::string& dump_name) override;
 
-  static unsigned GetInternalFormatForTesting(gfx::BufferFormat format);
-
  protected:
   ~GLImageNativePixmap() override;
 
  private:
-  unsigned internalformat_;
   scoped_refptr<gfx::NativePixmap> pixmap_;
   bool has_image_flush_external_;
   bool has_image_dma_buf_export_;

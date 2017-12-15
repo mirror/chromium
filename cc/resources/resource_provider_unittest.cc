@@ -3117,8 +3117,8 @@ class AllocationTrackingContext3D : public TextureStateTrackingContext {
                     GLsizei image_size,
                     const void* data));
   MOCK_METHOD1(waitAsyncTexImage2DCHROMIUM, void(GLenum));
-  MOCK_METHOD4(createImageCHROMIUM,
-               GLuint(ClientBuffer, GLsizei, GLsizei, GLenum));
+  MOCK_METHOD3(createImageCHROMIUM,
+               GLuint(ClientBuffer, GLsizei, GLsizei));
   MOCK_METHOD1(destroyImageCHROMIUM, void(GLuint));
   MOCK_METHOD2(bindTexImage2DCHROMIUM, void(GLenum, GLint));
   MOCK_METHOD2(releaseTexImage2DCHROMIUM, void(GLenum, GLint));
