@@ -1502,7 +1502,7 @@ WebGLRenderingContextBase::PaintRenderingResultsToDataArray(
   return GetDrawingBuffer()->PaintRenderingResultsToDataArray(source_buffer);
 }
 
-void WebGLRenderingContextBase::Reshape(int width, int height) {
+void WebGLRenderingContextBase::Reshape(const IntSize& size) {
   if (isContextLost())
     return;
 
@@ -1521,27 +1521,26 @@ void WebGLRenderingContextBase::Reshape(int width, int height) {
   GLint max_size = std::min(max_texture_size_, max_renderbuffer_size_);
   GLint max_width = std::min(max_size, max_viewport_dims_[0]);
   GLint max_height = std::min(max_size, max_viewport_dims_[1]);
-  width = Clamp(width, 1, max_width);
-  height = Clamp(height, 1, max_height);
+  IntSize adjustedSize = size.ShrunkTo(IntSize(max_width, max_height));
 
   // Limit drawing buffer area to 4k*4k to avoid memory exhaustion. Width or
   // height may be larger than 4k as long as it's within the max viewport
   // dimensions and total area remains within the limit.
   // For example: 5120x2880 should be fine.
   const int kMaxArea = 4096 * 4096;
-  int current_area = width * height;
+  int current_area = size.Area();
   if (current_area > kMaxArea) {
     // If we've exceeded the area limit scale the buffer down, preserving
     // ascpect ratio, until it fits.
     float scale_factor =
         sqrtf(static_cast<float>(kMaxArea) / static_cast<float>(current_area));
-    width = std::max(1, static_cast<int>(width * scale_factor));
-    height = std::max(1, static_cast<int>(height * scale_factor));
+    adjustedSize.Scale(scale_factor);
+    adjustedSize = adjustedSize.ExpandedTo(IntSize(1, 1));
   }
 
   // We don't have to mark the canvas as dirty, since the newly created image
   // buffer will also start off clear (and this matches what reshape will do).
-  GetDrawingBuffer()->Resize(IntSize(width, height));
+  GetDrawingBuffer()->Resize(adjustedSize);
 
   if (buffer) {
     ContextGL()->BindBuffer(GL_PIXEL_UNPACK_BUFFER,

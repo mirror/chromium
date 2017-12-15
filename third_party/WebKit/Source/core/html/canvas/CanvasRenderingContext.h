@@ -160,7 +160,7 @@ class CORE_EXPORT CanvasRenderingContext : public ScriptWrappable,
   // WebGL-specific interface
   virtual bool Is3d() const { return false; }
   virtual void SetFilterQuality(SkFilterQuality) { NOTREACHED(); }
-  virtual void Reshape(int width, int height) { NOTREACHED(); }
+  virtual void Reshape(const IntSize&) { NOTREACHED(); }
   virtual void MarkLayerComposited() { NOTREACHED(); }
   virtual scoped_refptr<Uint8Array> PaintRenderingResultsToDataArray(
       SourceDrawingBuffer) {

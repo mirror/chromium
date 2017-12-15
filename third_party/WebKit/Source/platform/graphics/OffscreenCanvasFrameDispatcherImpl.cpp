@@ -31,12 +31,10 @@ OffscreenCanvasFrameDispatcherImpl::OffscreenCanvasFrameDispatcherImpl(
     uint32_t client_id,
     uint32_t sink_id,
     int canvas_id,
-    int width,
-    int height)
+    const IntSize& size)
     : OffscreenCanvasFrameDispatcher(client),
       frame_sink_id_(viz::FrameSinkId(client_id, sink_id)),
-      width_(width),
-      height_(height),
+      size_(size),
       change_size_for_next_commit_(false),
       needs_begin_frame_(false),
       binding_(this),
@@ -60,8 +58,6 @@ OffscreenCanvasFrameDispatcherImpl::OffscreenCanvasFrameDispatcherImpl(
     provider->CreateCompositorFrameSink(frame_sink_id_, std::move(client),
                                         mojo::MakeRequest(&sink_));
   }
-  offscreen_canvas_resource_provider_ =
-      std::make_unique<OffscreenCanvasResourceProvider>(width, height);
 }
 
 OffscreenCanvasFrameDispatcherImpl::~OffscreenCanvasFrameDispatcherImpl() {
@@ -160,7 +156,7 @@ void OffscreenCanvasFrameDispatcherImpl::DispatchFrame(
   }
   frame.metadata.begin_frame_ack = current_begin_frame_ack_;
 
-  const gfx::Rect bounds(width_, height_);
+  const gfx::Rect bounds(size_.Width(), size_.Height());
   const int kRenderPassId = 1;
   bool is_clipped = false;
   // TODO(crbug.com/705019): optimize for contexts that have {alpha: false}
@@ -230,7 +226,7 @@ void OffscreenCanvasFrameDispatcherImpl::DispatchFrame(
 
   viz::TextureDrawQuad* quad =
       pass->CreateAndAppendDrawQuad<viz::TextureDrawQuad>();
-  gfx::Size rect_size(width_, height_);
+  gfx::Size rect_size(size_.Width(), size_.Height());
 
   // TODO(crbug.com/705019): optimize for contexts that have {alpha: false}
   const bool kNeedsBlending = true;
@@ -433,17 +429,16 @@ void OffscreenCanvasFrameDispatcherImpl::ReclaimResource(unsigned resource_id) {
 }
 
 bool OffscreenCanvasFrameDispatcherImpl::VerifyImageSize(
-    const IntSize image_size) {
-  if (image_size.Width() == width_ && image_size.Height() == height_)
+    const IntSize& image_size) {
+  if (image_size == size_)
     return true;
   return false;
 }
 
-void OffscreenCanvasFrameDispatcherImpl::Reshape(int width, int height) {
-  if (width_ != width || height_ != height) {
-    width_ = width;
-    height_ = height;
-    offscreen_canvas_resource_provider_->Reshape(width, height);
+void OffscreenCanvasFrameDispatcherImpl::Reshape(const IntSize& size) {
+  if (size_ != size) {
+    size_ = size;
+    offscreen_canvas_resource_provider_->Reshape(size);
     change_size_for_next_commit_ = true;
   }
 }

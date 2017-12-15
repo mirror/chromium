@@ -28,8 +28,7 @@ class PLATFORM_EXPORT OffscreenCanvasFrameDispatcherImpl
                                      uint32_t client_id,
                                      uint32_t sink_id,
                                      int placeholder_canvas_id,
-                                     int width,
-                                     int height);
+                                     const IntSize&);
 
   // OffscreenCanvasFrameDispatcher implementation.
   virtual ~OffscreenCanvasFrameDispatcherImpl();
@@ -41,7 +40,7 @@ class PLATFORM_EXPORT OffscreenCanvasFrameDispatcherImpl
                      double commit_start_time,
                      const SkIRect& damage_rect) final;
   void ReclaimResource(unsigned resource_id) final;
-  void Reshape(int width, int height) final;
+  void Reshape(const IntSize&) final;
 
   // viz::mojom::blink::CompositorFrameSinkClient implementation.
   void DidReceiveCompositorFrameAck(
@@ -73,8 +72,7 @@ class PLATFORM_EXPORT OffscreenCanvasFrameDispatcherImpl
   const viz::FrameSinkId frame_sink_id_;
   viz::LocalSurfaceId current_local_surface_id_;
 
-  int width_;
-  int height_;
+  IntSize size_;
   bool change_size_for_next_commit_;
   bool suspend_animation_ = false;
   bool needs_begin_frame_ = false;
@@ -85,7 +83,7 @@ class PLATFORM_EXPORT OffscreenCanvasFrameDispatcherImpl
   std::unique_ptr<OffscreenCanvasResourceProvider>
       offscreen_canvas_resource_provider_;
 
-  bool VerifyImageSize(const IntSize);
+  bool VerifyImageSize(const IntSize&);
   void PostImageToPlaceholderIfNotBlocked(scoped_refptr<StaticBitmapImage>,
                                           unsigned resource_id);
   // virtual for testing

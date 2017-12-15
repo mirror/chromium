@@ -1095,7 +1095,7 @@ IntSize ImageBitmap::Size() const {
     return IntSize();
   DCHECK_GT(image_->width(), 0);
   DCHECK_GT(image_->height(), 0);
-  return IntSize(image_->width(), image_->height());
+  return image_->Size();
 }
 
 ScriptPromise ImageBitmap::CreateImageBitmap(
