@@ -275,9 +275,10 @@ void BookmarkBubbleView::OnIOSPromotionFootnoteLinkClicked() {
 void BookmarkBubbleView::Init() {
   using views::GridLayout;
 
-  SetLayoutManager(new views::FillLayout());
+  SetLayoutManager(std::make_unique<views::FillLayout>());
   bookmark_contents_view_ = new views::View();
-  GridLayout* layout = GridLayout::CreateAndInstall(bookmark_contents_view_);
+  GridLayout* layout = bookmark_contents_view_->SetLayoutManager(
+      std::make_unique<views::GridLayout>(bookmark_contents_view_));
 
   constexpr int kColumnId = 0;
   ConfigureTextfieldStack(layout, kColumnId);
