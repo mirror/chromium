@@ -22,6 +22,30 @@
       "revId": "22556861e375737acf7e04fb671831c08675a5cc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23e80c41_710025e8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-12-15T16:01:41Z",
+      "side": 1,
+      "message": "Done. Thanks for the catch!",
+      "parentUuid": "4ebbd591_47371978",
+      "range": {
+        "startLine": 11,
+        "startChar": 18,
+        "endLine": 12,
+        "endChar": 42
+      },
+      "revId": "22556861e375737acf7e04fb671831c08675a5cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
