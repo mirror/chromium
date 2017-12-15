@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "52b3b9ac_58bbdac4",
+        "filename": "chrome/app/chromeos_strings.grdp",
+        "patchSetId": 1
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1235104
+      },
+      "writtenOn": "2017-12-15T03:56:13Z",
+      "side": 1,
+      "message": "Thanks, the description provides much more context now. For the string:\n\n1) Instead of \"Failed to disconnect\", how about \"Can\u0027t disconnect from \n X\"\n\n2) We need to be a little more clear about X. It would be OK to name only the two most likely sources, e.g.\n\"Can\u0027t disconnect from archive or storage device\"\n\"Can\u0027t disconnect from archive or virtual disk\"\n\"Can\u0027t disconnect from archive or file\" \n\nGoal is to give the user some idea of what to look for next.\n\nWDYT?",
+      "range": {
+        "startLine": 311,
+        "startChar": 39,
+        "endLine": 311,
+        "endChar": 59
+      },
+      "revId": "52afcec3847f72461a739448ce4b2a14f1adf234",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "12c3ac15_4c4f6479",
+        "filename": "chrome/app/chromeos_strings.grdp",
+        "patchSetId": 1
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1235104
+      },
+      "writtenOn": "2017-12-15T03:56:13Z",
+      "side": 1,
+      "message": "As in previous comment: \"Can\u0027t disconnect from X\" would be preferred. It gives the average user a little more of an idea of what the problem is by using slightly less technical language.",
+      "range": {
+        "startLine": 313,
+        "startChar": 3,
+        "endLine": 313,
+        "endChar": 23
+      },
+      "revId": "52afcec3847f72461a739448ce4b2a14f1adf234",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
