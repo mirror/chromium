@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "752d12b5_0c0b12b0",
+        "filename": "components/autofill/content/common/autofill_agent.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-12-15T16:34:13Z",
+      "side": 1,
+      "message": "Please be a little more clear in the sentence. What queries what password suggestions?",
+      "range": {
+        "startLine": 71,
+        "startChar": 5,
+        "endLine": 71,
+        "endChar": 49
+      },
+      "revId": "f78a6f987ce7d1187180250f4cfc739b0cbc4e9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
