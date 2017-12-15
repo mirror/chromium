@@ -24,7 +24,6 @@
 #include "components/viz/common/resources/buffer_to_texture_target_map.h"
 #include "content/app/mojo/mojo_init.h"
 #include "content/common/in_process_child_thread_params.h"
-#include "content/common/resource_messages.h"
 #include "content/common/service_manager/child_connection.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/content_browser_client.h"
