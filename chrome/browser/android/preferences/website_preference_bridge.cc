@@ -46,6 +46,7 @@
 #include "net/base/registry_controlled_domains/registry_controlled_domain.h"
 #include "storage/browser/quota/quota_manager.h"
 #include "third_party/WebKit/common/quota/quota_status_code.h"
+#include "third_party/WebKit/common/quota/storage_type.h"
 #include "url/origin.h"
 #include "url/url_constants.h"
 
@@ -800,7 +801,7 @@ static void JNI_WebsitePreferenceBridge_ClearStorageData(
 
   auto storage_info_fetcher = base::MakeRefCounted<StorageInfoFetcher>(profile);
   storage_info_fetcher->ClearStorage(
-      host, static_cast<storage::StorageType>(type),
+      host, static_cast<blink::StorageType>(type),
       base::Bind(&OnStorageInfoCleared,
                  ScopedJavaGlobalRef<jobject>(java_callback)));
 }
