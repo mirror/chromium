@@ -133,6 +133,10 @@ jumbo_source_set("scheduler") {
     "//third_party/WebKit/Source/platform/wtf",
   ]
 
+  public_deps = [
+    "//third_party/WebKit/Source/platform:blink_platform_public_deps",
+  ]
+
   configs += [
     "//third_party/WebKit/Source/platform:blink_platform_config",
     "//third_party/WebKit/Source/platform:blink_platform_implementation",
