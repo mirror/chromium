@@ -29,6 +29,7 @@ jumbo_source_set("instrumentation") {
     "//services/resource_coordinator/public/cpp:resource_coordinator_cpp",
     "//services/service_manager/public/interfaces:interfaces_blink",
     "//skia",
+    "//third_party/WebKit/Source/platform:blink_platform_public_deps",
   ]
 
   deps = [

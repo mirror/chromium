@@ -80,9 +80,9 @@ jumbo_source_set("network") {
   public_deps = [
     ":make_generated",
     "//net",
+    "//third_party/WebKit/Source/platform:blink_platform_public_deps",
     "//third_party/WebKit/Source/platform/blob",
     "//third_party/WebKit/common:blink_common",
-    "//third_party/WebKit/public:mojo_bindings_blink",
   ]
 
   deps = [
