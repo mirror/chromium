@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5e9b371d_213de0e7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/SurveyInfoBar.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-15T16:50:28Z",
+      "side": 1,
+      "message": "Accessibility mode can be toggled on and off, so the onClickListener should probably be added.",
+      "range": {
+        "startLine": 119,
+        "startChar": 7,
+        "endLine": 119,
+        "endChar": 88
+      },
+      "revId": "27f39a140f596e08426ec172c991c78690c105af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0485b8d_5fc462f4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/SurveyInfoBar.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-15T16:50:28Z",
+      "side": 1,
+      "message": "How does adding the onClickListener make this accessible? What wasn\u0027t working when in accessibility mode before?",
+      "range": {
+        "startLine": 156,
+        "startChar": 24,
+        "endLine": 156,
+        "endChar": 31
+      },
+      "revId": "27f39a140f596e08426ec172c991c78690c105af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
