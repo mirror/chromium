@@ -48,10 +48,7 @@ class CORE_EXPORT ElementShadow final : public GarbageCollected<ElementShadow>,
     return shadow_root_->host();
   }
 
-  // TODO(hayato): Remove youngestShadowRoot() and oldestShadowRoot() from
-  // ElementShadow
-  ShadowRoot& YoungestShadowRoot() const;
-  ShadowRoot& OldestShadowRoot() const {
+  ShadowRoot& GetShadowRoot() const {
     DCHECK(shadow_root_);
     return *shadow_root_;
   }
@@ -71,8 +68,8 @@ class CORE_EXPORT ElementShadow final : public GarbageCollected<ElementShadow>,
   void SetNeedsDistributionRecalc();
   bool NeedsDistributionRecalc() const { return needs_distribution_recalc_; }
 
-  bool IsV1() const { return YoungestShadowRoot().IsV1(); }
-  bool IsOpenOrV0() const { return YoungestShadowRoot().IsOpenOrV0(); }
+  bool IsV1() const { return GetShadowRoot().IsV1(); }
+  bool IsOpenOrV0() const { return GetShadowRoot().IsOpenOrV0(); }
 
   ElementShadowV0& V0() const {
     DCHECK(element_shadow_v0_);
@@ -94,15 +91,15 @@ class CORE_EXPORT ElementShadow final : public GarbageCollected<ElementShadow>,
   DISALLOW_COPY_AND_ASSIGN(ElementShadow);
 };
 
-inline ShadowRoot* Node::YoungestShadowRoot() const {
+inline ShadowRoot* Node::GetShadowRoot() const {
   if (!IsElementNode())
     return nullptr;
-  return ToElement(this)->YoungestShadowRoot();
+  return ToElement(this)->GetShadowRoot();
 }
 
-inline ShadowRoot* Element::YoungestShadowRoot() const {
+inline ShadowRoot* Element::GetShadowRoot() const {
   if (ElementShadow* shadow = Shadow())
-    return &shadow->YoungestShadowRoot();
+    return &shadow->GetShadowRoot();
   return nullptr;
 }
 

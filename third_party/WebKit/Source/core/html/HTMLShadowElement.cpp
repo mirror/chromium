@@ -56,13 +56,15 @@ ShadowRoot* HTMLShadowElement::OlderShadowRoot() {
 
   UpdateDistribution();
 
+  return nullptr;
+  /*
   ShadowRoot* older = containing_root->OlderShadowRoot();
   if (!older || !older->IsOpenOrV0() ||
       older->ShadowInsertionPointOfYoungerShadowRoot() != this)
     return nullptr;
-
   DCHECK(older->IsOpenOrV0());
   return older;
+  */
 }
 
 Node::InsertionNotificationRequest HTMLShadowElement::InsertedInto(

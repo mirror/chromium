@@ -785,8 +785,7 @@ void Node::RecalcDistribution() {
       child->RecalcDistribution();
   }
 
-  for (ShadowRoot* root = YoungestShadowRoot(); root;
-       root = root->OlderShadowRoot()) {
+  if (ShadowRoot* root = GetShadowRoot()) {
     if (root->ChildNeedsDistributionRecalc())
       root->RecalcDistribution();
   }
@@ -1831,16 +1830,6 @@ static void AppendMarkedTree(const String& base_indent,
         AppendMarkedTree(indent.ToString(), pseudo, marked_node1, marked_label1,
                          marked_node2, marked_label2, builder);
     }
-
-    if (node.IsShadowRoot()) {
-      if (ShadowRoot* younger_shadow_root =
-              ToShadowRoot(node).YoungerShadowRoot())
-        AppendMarkedTree(indent.ToString(), younger_shadow_root, marked_node1,
-                         marked_label1, marked_node2, marked_label2, builder);
-    } else if (ShadowRoot* oldest_shadow_root = OldestShadowRootFor(&node)) {
-      AppendMarkedTree(indent.ToString(), oldest_shadow_root, marked_node1,
-                       marked_label1, marked_node2, marked_label2, builder);
-    }
   }
 }
 
@@ -2049,8 +2038,7 @@ void Node::RemoveAllEventListenersRecursively() {
   ScriptForbiddenScope forbid_script_during_raw_iteration;
   for (Node& node : NodeTraversal::StartsAt(*this)) {
     node.RemoveAllEventListeners();
-    for (ShadowRoot* root = node.YoungestShadowRoot(); root;
-         root = root->OlderShadowRoot())
+    if (ShadowRoot* root = node.GetShadowRoot())
       root->RemoveAllEventListenersRecursively();
   }
 }

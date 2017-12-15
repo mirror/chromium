@@ -105,12 +105,6 @@ class CORE_EXPORT ShadowRoot final : public DocumentFragment, public TreeScope {
   void SetNeedsAssignmentRecalc();
 
   // For V0
-  ShadowRoot* YoungerShadowRoot() const;
-  ShadowRoot* OlderShadowRoot() const;
-  void SetYoungerShadowRoot(ShadowRoot&);
-  void SetOlderShadowRoot(ShadowRoot&);
-  bool IsYoungest() const { return !YoungerShadowRoot(); }
-  bool IsOldest() const { return !OlderShadowRoot(); }
   bool ContainsShadowElements() const;
   bool ContainsContentElements() const;
   bool ContainsInsertionPoints() const {

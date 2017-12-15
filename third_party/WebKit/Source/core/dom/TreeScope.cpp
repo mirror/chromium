@@ -80,19 +80,10 @@ void TreeScope::ResetTreeScope() {
   selection_ = nullptr;
 }
 
-TreeScope* TreeScope::OlderShadowRootOrParentTreeScope() const {
-  if (RootNode().IsShadowRoot()) {
-    if (ShadowRoot* older_shadow_root =
-            ToShadowRoot(RootNode()).OlderShadowRoot())
-      return older_shadow_root;
-  }
-  return ParentTreeScope();
-}
-
 bool TreeScope::IsInclusiveOlderSiblingShadowRootOrAncestorTreeScopeOf(
     const TreeScope& scope) const {
   for (const TreeScope* current = &scope; current;
-       current = current->OlderShadowRootOrParentTreeScope()) {
+       current = current->ParentTreeScope()) {
     if (current == this)
       return true;
   }
@@ -450,13 +441,6 @@ unsigned short TreeScope::ComparePosition(const TreeScope& other_scope) const {
         return shadow_host1->compareDocumentPosition(
             shadow_host2, Node::kTreatShadowTreesAsDisconnected);
 
-      for (const ShadowRoot* child =
-               ToShadowRoot(child2->RootNode()).OlderShadowRoot();
-           child; child = child->OlderShadowRoot()) {
-        if (child == child1)
-          return Node::kDocumentPositionFollowing;
-      }
-
       return Node::kDocumentPositionPreceding;
     }
   }
@@ -515,8 +499,7 @@ Element* TreeScope::GetElementByAccessKey(const String& key) const {
     if (DeprecatedEqualIgnoringCase(element.FastGetAttribute(accesskeyAttr),
                                     key))
       result = &element;
-    for (ShadowRoot* shadow_root = element.YoungestShadowRoot(); shadow_root;
-         shadow_root = shadow_root->OlderShadowRoot()) {
+    if (ShadowRoot* shadow_root = element.GetShadowRoot()) {
       if (Element* shadow_result = shadow_root->GetElementByAccessKey(key))
         result = shadow_result;
     }
@@ -527,8 +510,7 @@ Element* TreeScope::GetElementByAccessKey(const String& key) const {
 void TreeScope::SetNeedsStyleRecalcForViewportUnits() {
   for (Element* element = ElementTraversal::FirstWithin(RootNode()); element;
        element = ElementTraversal::NextIncludingPseudo(*element)) {
-    for (ShadowRoot* root = element->YoungestShadowRoot(); root;
-         root = root->OlderShadowRoot())
+    if (ShadowRoot* root = element->GetShadowRoot())
       root->SetNeedsStyleRecalcForViewportUnits();
     const ComputedStyle* style = element->GetComputedStyle();
     if (style && style->HasViewportUnits())

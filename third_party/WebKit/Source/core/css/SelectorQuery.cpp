@@ -321,8 +321,7 @@ static ShadowRoot* AuthorShadowRootOf(const ContainerNode& node) {
   if (!shadow)
     return nullptr;
 
-  for (ShadowRoot* shadow_root = &shadow->OldestShadowRoot(); shadow_root;
-       shadow_root = shadow_root->YoungerShadowRoot()) {
+  if (ShadowRoot* shadow_root = &shadow->GetShadowRoot()) {
     if (shadow_root->IsOpenOrV0())
       return shadow_root;
   }

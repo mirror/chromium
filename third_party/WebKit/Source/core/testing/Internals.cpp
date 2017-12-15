@@ -757,36 +757,26 @@ void Internals::setBrowserControlsShownRatio(float ratio) {
 }
 
 ShadowRoot* Internals::shadowRoot(Element* host) {
-  // FIXME: Internals::shadowRoot() in tests should be converted to
-  // youngestShadowRoot() or oldestShadowRoot().
-  // https://bugs.webkit.org/show_bug.cgi?id=78465
-  return youngestShadowRoot(host);
+  DCHECK(host);
+  return host->GetShadowRoot();
 }
 
 ShadowRoot* Internals::youngestShadowRoot(Element* host) {
+  // TODO:
   DCHECK(host);
-  if (ElementShadow* shadow = host->Shadow())
-    return &shadow->YoungestShadowRoot();
-  return nullptr;
+  return host->GetShadowRoot();
 }
 
 ShadowRoot* Internals::oldestShadowRoot(Element* host) {
+  // TODO:
   DCHECK(host);
-  if (ElementShadow* shadow = host->Shadow())
-    return &shadow->OldestShadowRoot();
-  return nullptr;
+  return host->GetShadowRoot();
 }
 
 ShadowRoot* Internals::youngerShadowRoot(Node* shadow,
                                          ExceptionState& exception_state) {
   DCHECK(shadow);
-  if (!shadow->IsShadowRoot()) {
-    exception_state.ThrowDOMException(
-        kInvalidAccessError, "The node provided is not a shadow root.");
-    return nullptr;
-  }
-
-  return ToShadowRoot(shadow)->YoungerShadowRoot();
+  return nullptr;
 }
 
 String Internals::shadowRootType(const Node* root,

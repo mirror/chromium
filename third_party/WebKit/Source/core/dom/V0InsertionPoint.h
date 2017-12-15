@@ -112,8 +112,6 @@ inline ElementShadow* ShadowWhereNodeCanBeDistributedForV0(const Node& node) {
   Node* parent = node.parentNode();
   if (!parent)
     return nullptr;
-  if (parent->IsShadowRoot() && !ToShadowRoot(parent)->IsYoungest())
-    return node.OwnerShadowHost()->Shadow();
   if (IsActiveV0InsertionPoint(*parent))
     return node.OwnerShadowHost()->Shadow();
   if (parent->IsElementNode())

@@ -132,14 +132,6 @@ ElementShadowV0::ElementShadowV0(ElementShadow& element_shadow)
 
 ElementShadowV0::~ElementShadowV0() {}
 
-ShadowRoot& ElementShadowV0::YoungestShadowRoot() const {
-  return element_shadow_->YoungestShadowRoot();
-}
-
-ShadowRoot& ElementShadowV0::OldestShadowRoot() const {
-  return element_shadow_->OldestShadowRoot();
-}
-
 const V0InsertionPoint* ElementShadowV0::FinalDestinationInsertionPointFor(
     const Node* key) const {
   DCHECK(key);
@@ -162,8 +154,7 @@ void ElementShadowV0::Distribute() {
   HeapVector<Member<HTMLShadowElement>, 32> shadow_insertion_points;
   DistributionPool pool(element_shadow_->Host());
 
-  for (ShadowRoot* root = &YoungestShadowRoot(); root;
-       root = root->OlderShadowRoot()) {
+  if (ShadowRoot* root = &GetShadowRoot()) {
     HTMLShadowElement* shadow_insertion_point = nullptr;
     for (const auto& point : root->DescendantInsertionPoints()) {
       if (!point->IsActive())
@@ -219,8 +210,7 @@ const SelectRuleFeatureSet& ElementShadowV0::EnsureSelectFeatureSet() {
     return select_features_;
 
   select_features_.Clear();
-  for (const ShadowRoot* root = &OldestShadowRoot(); root;
-       root = root->YoungerShadowRoot())
+  if (const ShadowRoot* root = &GetShadowRoot())
     CollectSelectFeatureSetFrom(*root);
   needs_select_feature_set_ = false;
   return select_features_;
