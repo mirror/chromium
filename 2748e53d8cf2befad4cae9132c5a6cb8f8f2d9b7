@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "28fd745b_d93b6c76",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-12-15T23:19:33Z",
+      "side": 1,
+      "message": "missing some include and code updates here",
+      "revId": "2748e53d8cf2befad4cae9132c5a6cb8f8f2d9b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31fb22f5_5b9ed503",
+        "filename": "third_party/WebKit/common/renderer/initial_state.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-12-15T23:19:33Z",
+      "side": 1,
+      "message": "browser still shouldn\u0027t be including renderer things, should just move this up one level?",
+      "range": {
+        "startLine": 5,
+        "startChar": 42,
+        "endLine": 5,
+        "endChar": 50
+      },
+      "revId": "2748e53d8cf2befad4cae9132c5a6cb8f8f2d9b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
