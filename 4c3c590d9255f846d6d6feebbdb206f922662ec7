@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fff1adb9_e9b277c2",
+        "filename": "chrome/browser/chromeos/arc/accessibility/arc_accessibility_helper_bridge.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-12-15T05:19:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "232424e6_306aec37",
+      "range": {
+        "startLine": 84,
+        "startChar": 2,
+        "endLine": 84,
+        "endChar": 26
+      },
+      "revId": "4c3c590d9255f846d6d6feebbdb206f922662ec7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d7a918db_a66d4af6",
         "filename": "chrome/browser/chromeos/arc/accessibility/arc_accessibility_helper_bridge.h",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "d45edd26_1f29f7d0",
+        "filename": "chrome/browser/chromeos/arc/accessibility/arc_accessibility_helper_bridge.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-12-15T05:19:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d7a918db_a66d4af6",
+      "range": {
+        "startLine": 90,
+        "startChar": 2,
+        "endLine": 90,
+        "endChar": 35
+      },
+      "revId": "4c3c590d9255f846d6d6feebbdb206f922662ec7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2be228e9_e8871377",
         "filename": "chrome/browser/chromeos/arc/accessibility/arc_accessibility_helper_bridge.h",
         "patchSetId": 2
@@ -68,6 +116,30 @@
       "revId": "4c3c590d9255f846d6d6feebbdb206f922662ec7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a970e5d2_92a825e4",
+        "filename": "chrome/browser/chromeos/arc/accessibility/arc_accessibility_helper_bridge.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-12-15T05:19:28Z",
+      "side": 1,
+      "message": "Done. Added a comment.",
+      "parentUuid": "2be228e9_e8871377",
+      "range": {
+        "startLine": 114,
+        "startChar": 0,
+        "endLine": 116,
+        "endChar": 0
+      },
+      "revId": "4c3c590d9255f846d6d6feebbdb206f922662ec7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
