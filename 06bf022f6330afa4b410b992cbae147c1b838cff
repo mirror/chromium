@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4485f559_2176e407",
+        "filename": "chrome/browser/chromeos/attestation/enrollment_policy_observer.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1161144
+      },
+      "writtenOn": "2017-12-15T23:28:05Z",
+      "side": 1,
+      "message": "Well it is not a way to signal an error. It is a way to let the server knows that this device cannot have an EID. Basically the server asks \"please send me an EID\" which is done through uploading the enrollment cert, but some devices just cannot get an EID (e.g. they don\u0027t have a stable secret).",
+      "parentUuid": "92dd57fd_6b636d5c",
+      "range": {
+        "startLine": 176,
+        "startChar": 52,
+        "endLine": 176,
+        "endChar": 71
+      },
+      "revId": "06bf022f6330afa4b410b992cbae147c1b838cff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "13ed1f58_a73f7a46",
         "filename": "chrome/browser/chromeos/attestation/platform_verification_flow_unittest.cc",
         "patchSetId": 13
@@ -45,6 +69,30 @@
       "revId": "06bf022f6330afa4b410b992cbae147c1b838cff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c78bf756_2a688f8b",
+        "filename": "chrome/browser/chromeos/attestation/platform_verification_flow_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1161144
+      },
+      "writtenOn": "2017-12-15T23:28:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "13ed1f58_a73f7a46",
+      "range": {
+        "startLine": 231,
+        "startChar": 24,
+        "endLine": 231,
+        "endChar": 55
+      },
+      "revId": "06bf022f6330afa4b410b992cbae147c1b838cff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "88d43990_5220d15c",
+        "filename": "chrome/browser/chromeos/policy/device_cloud_policy_manager_chromeos_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1161144
+      },
+      "writtenOn": "2017-12-15T23:28:05Z",
+      "side": 1,
+      "message": "I don\u0027t  think it does ad probably should be added. Different CL, yes.",
+      "parentUuid": "e0b8b80a_e75b5c50",
+      "range": {
+        "startLine": 89,
+        "startChar": 5,
+        "endLine": 89,
+        "endChar": 24
+      },
+      "revId": "06bf022f6330afa4b410b992cbae147c1b838cff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f3242a1c_3a3d89aa",
         "filename": "chrome/browser/extensions/api/enterprise_platform_keys_private/enterprise_platform_keys_private_api_unittest.cc",
         "patchSetId": 13
@@ -91,6 +163,30 @@
       "revId": "06bf022f6330afa4b410b992cbae147c1b838cff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6637f282_3b2f6134",
+        "filename": "chrome/browser/extensions/api/enterprise_platform_keys_private/enterprise_platform_keys_private_api_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 438,
+      "author": {
+        "id": 1161144
+      },
+      "writtenOn": "2017-12-15T23:28:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f3242a1c_3a3d89aa",
+      "range": {
+        "startLine": 438,
+        "startChar": 33,
+        "endLine": 438,
+        "endChar": 53
+      },
+      "revId": "06bf022f6330afa4b410b992cbae147c1b838cff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "4a3bcef3_e1e49ffe",
+        "filename": "chromeos/attestation/attestation_flow_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1161144
+      },
+      "writtenOn": "2017-12-15T23:28:05Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a9b06399_67ffbc14",
+      "range": {
+        "startLine": 44,
+        "startChar": 6,
+        "endLine": 44,
+        "endChar": 25
+      },
+      "revId": "06bf022f6330afa4b410b992cbae147c1b838cff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b7cc5216_88ca9035",
         "filename": "chromeos/cryptohome/async_method_caller.cc",
         "patchSetId": 13
@@ -131,6 +251,24 @@
       "revId": "06bf022f6330afa4b410b992cbae147c1b838cff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64c5b8cf_1a6af18c",
+        "filename": "chromeos/cryptohome/async_method_caller.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1161144
+      },
+      "writtenOn": "2017-12-15T23:28:05Z",
+      "side": 1,
+      "message": "But I added that blank line it needed :)",
+      "parentUuid": "b7cc5216_88ca9035",
+      "revId": "06bf022f6330afa4b410b992cbae147c1b838cff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -154,6 +292,30 @@
       "revId": "06bf022f6330afa4b410b992cbae147c1b838cff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "316c9ad8_15ef84d6",
+        "filename": "chromeos/dbus/cryptohome_client.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1161144
+      },
+      "writtenOn": "2017-12-15T23:28:05Z",
+      "side": 1,
+      "message": "No, I forgot to delete it.",
+      "parentUuid": "628c2bdf_407dee21",
+      "range": {
+        "startLine": 67,
+        "startChar": 17,
+        "endLine": 67,
+        "endChar": 44
+      },
+      "revId": "06bf022f6330afa4b410b992cbae147c1b838cff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
