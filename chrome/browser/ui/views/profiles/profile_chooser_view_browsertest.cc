@@ -14,6 +14,7 @@
 #include "base/strings/utf_string_conversions.h"
 #include "base/test/histogram_tester.h"
 #include "base/threading/thread_restrictions.h"
+#include "build/build_config.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/chrome_notification_types.h"
 #include "chrome/browser/extensions/extension_browsertest.h"
@@ -180,16 +181,25 @@ class ProfileChooserViewExtensionsTest
 
  protected:
   void OpenProfileChooserView(Browser* browser) {
+#if defined(OS_MACOSX) && !BUILDFLAG(MAC_VIEWS_BROWSER)
+    // Show the avatar bubble via API on macOS until |mac_views_browser| is
+    // enabled.
+    ProfileChooserView::close_on_deactivate_for_testing_ = false;
+    browser->window()->ShowAvatarBubbleFromAvatarButton(
+        BrowserWindow::AVATAR_BUBBLE_MODE_DEFAULT,
+        signin::ManageAccountsParams(),
+        signin_metrics::AccessPoint::ACCESS_POINT_UNKNOWN, true);
+#else
     BrowserView* browser_view = BrowserView::GetBrowserViewForBrowser(browser);
     views::View* button = browser_view->frame()->GetNewAvatarMenuButton();
     if (!button)
       NOTREACHED() << "NewAvatarButton not found.";
 
-    ProfileChooserView::close_on_deactivate_for_testing_ = false;
-
     ui::MouseEvent e(ui::ET_MOUSE_PRESSED, gfx::Point(), gfx::Point(),
                      ui::EventTimeForNow(), ui::EF_LEFT_MOUSE_BUTTON, 0);
     button->OnMousePressed(e);
+#endif  // defined(OS_MACOSX) && !BUILDFLAG(MAC_VIEWS_BROWSER)
+
     base::RunLoop().RunUntilIdle();
     EXPECT_TRUE(ProfileChooserView::IsShowing());
 
@@ -242,8 +252,18 @@ class ProfileChooserViewExtensionsTest
   DISALLOW_COPY_AND_ASSIGN(ProfileChooserViewExtensionsTest);
 };
 
+#if !defined(OS_MACOSX) || BUILDFLAG(MAC_VIEWS_BROWSER)
+#define MAYBE_NoProfileChooserOnOutsideUserDataDirProfiles \
+  NoProfileChooserOnOutsideUserDataDirProfiles
+#else
+// Test fails on macOS as |ProfileImpl::GetSSLConfigService| is not yet
+// initialized when creating the browser.
+// TODO(msarda): Enable this test on macOS when MavViews are disabled.
+#define MAYBE_NoProfileChooserOnOutsideUserDataDirProfiles \
+  DISABLED_NoProfileChooserOnOutsideUserDataDirProfiles
+#endif
 IN_PROC_BROWSER_TEST_F(ProfileChooserViewExtensionsTest,
-    NoProfileChooserOnOutsideUserDataDirProfiles) {
+                       MAYBE_NoProfileChooserOnOutsideUserDataDirProfiles) {
   // Test that the profile chooser view does not show when avatar menu is not
   // available. This can be repro'ed with a profile path outside user_data_dir.
   // crbug.com/527505
@@ -385,6 +405,40 @@ IN_PROC_BROWSER_TEST_F(ProfileChooserViewExtensionsTest,
 
   // We need to hide the User Manager or else the process can't die.
   UserManager::Hide();
+}
+
+// Profile chooser view must close when the active tab changes.
+// Regression test for http://crbug.com/792845
+IN_PROC_BROWSER_TEST_F(ProfileChooserViewExtensionsTest,
+                       CloseBubbleOnActiveTabChanged) {
+  TabStripModel* tab_strip = browser()->tab_strip_model();
+  {
+    // Profile chooser view should close when a tab is added.
+    EXPECT_EQ(0, tab_strip->active_index());
+    ASSERT_NO_FATAL_FAILURE(OpenProfileChooserView(browser()));
+    AddTabAtIndex(1, GURL("https://test_url.com"),
+                  ui::PageTransition::PAGE_TRANSITION_LINK);
+    EXPECT_EQ(1, tab_strip->active_index());
+    base::RunLoop().RunUntilIdle();
+    EXPECT_FALSE(ProfileChooserView::IsShowing());
+  }
+  {
+    // Profile chooser view should close when active tab is changed.
+    EXPECT_EQ(1, tab_strip->active_index());
+    ASSERT_NO_FATAL_FAILURE(OpenProfileChooserView(browser()));
+    browser()->tab_strip_model()->ActivateTabAt(0, false);
+    base::RunLoop().RunUntilIdle();
+    EXPECT_FALSE(ProfileChooserView::IsShowing());
+  }
+  {
+    // 3. Profile chooser view should close when active tab is closed.
+    EXPECT_EQ(0, tab_strip->active_index());
+    ASSERT_NO_FATAL_FAILURE(OpenProfileChooserView(browser()));
+    browser()->tab_strip_model()->CloseWebContentsAt(0,
+                                                     TabStripModel::CLOSE_NONE);
+    base::RunLoop().RunUntilIdle();
+    EXPECT_FALSE(ProfileChooserView::IsShowing());
+  }
 }
 
 // Shows a non-signed in profile with no others.
