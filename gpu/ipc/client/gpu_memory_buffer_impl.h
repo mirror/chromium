@@ -37,6 +37,7 @@ class GPU_EXPORT GpuMemoryBufferImpl : public gfx::GpuMemoryBuffer {
   // Overridden from gfx::GpuMemoryBuffer:
   gfx::Size GetSize() const override;
   gfx::BufferFormat GetFormat() const override;
+  uint32_t GetInternalformat(bool supports_bgra_ext) const override;
   gfx::GpuMemoryBufferId GetId() const override;
   ClientBuffer AsClientBuffer() override;
 
