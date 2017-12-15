@@ -142,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "6cf1f1c4_97e18fb9",
+        "filename": "chrome/browser/chromeos/accessibility/select_to_speak_event_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-12-15T02:11:44Z",
+      "side": 1,
+      "message": "In the code that didn\u0027t work, had you pulled GetMouseEventInDIPS out to a function already? If so, what were you returning from that function?\n\nI think if you have a mouse event, as a ui::Event(), and you copy it without calling Clone(), you don\u0027t get all the fields. (This is slicing/shaving. I\u0027m a little surprised that our Event class is copyable.)\n\nI\u0027d really like to see something along the lines of what I suggested. I\u0027m surprised that static_cast\u003cui::MouseEvent\u003e() works properly here. I\u0027m also uncertain what happens to the temporary unique_ptr\u003c\u003e returned by ui::Event::Clone(). It\u0027s possible this is a use-after-free, since I\u0027m not sure when the temporary goes out of scope.\n\nWhat about cloning the event and fixing it up near line 130?",
+      "parentUuid": "ae3b3268_c6357b72",
+      "revId": "9fca569de3e5c089b819a27df82484ada9b03264",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c05f3e07_c39fa3be",
         "filename": "chrome/browser/chromeos/accessibility/select_to_speak_event_handler.cc",
         "patchSetId": 3

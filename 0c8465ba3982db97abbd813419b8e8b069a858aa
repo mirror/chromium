@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "322b8947_6b6bdf9b",
+        "filename": "chrome/browser/chromeos/accessibility/select_to_speak_event_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-12-15T02:11:44Z",
+      "side": 1,
+      "message": "This is backwards. It will flakily fail due to uninitialized memory. You want this:\n\n: root_window_(root_window) {\n  DCHECK(root_window_);\n}",
+      "revId": "0c8465ba3982db97abbd813419b8e8b069a858aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "049d76c9_ddd04929",
+        "filename": "chrome/browser/chromeos/accessibility/select_to_speak_event_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-12-15T02:11:44Z",
+      "side": 1,
+      "message": "optional idea: This could be a mutator that takes a non-const MouseEvent and fixes up the fields.",
+      "revId": "0c8465ba3982db97abbd813419b8e8b069a858aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ff10184_98b792b4",
+        "filename": "chrome/browser/chromeos/accessibility/select_to_speak_event_rewriter_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-12-15T02:11:44Z",
+      "side": 1,
+      "message": "nit: just last_mouse_event_location()\n\nI\u0027m also OK with making last_mouse_location_ and events_captured_ public, since this is just test code.",
+      "revId": "0c8465ba3982db97abbd813419b8e8b069a858aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d316163f_fbe41573",
+        "filename": "chrome/browser/chromeos/accessibility/select_to_speak_event_rewriter_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-12-15T02:11:44Z",
+      "side": 1,
+      "message": "nit: \u003d gfx:Point(0,0) not needed, it\u0027s the default",
+      "revId": "0c8465ba3982db97abbd813419b8e8b069a858aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
