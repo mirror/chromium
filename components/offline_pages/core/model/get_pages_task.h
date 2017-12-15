@@ -17,6 +17,10 @@
 
 class GURL;
 
+namespace base {
+class FilePath;
+}  // namespace base
+
 namespace offline_pages {
 class ClientPolicyController;
 
@@ -91,6 +95,13 @@ class GetPagesTask : public Task {
       OfflinePageMetadataStoreSQL* store,
       const SingleOfflinePageItemCallback& callback,
       int64_t offline_id);
+
+  // Creates |GetPagesTask| selecting persistent items that require upgrade from
+  // legacy storage location to the public location.
+  static std::unique_ptr<GetPagesTask> CreateTaskSelectingItemsForUpgrade(
+      OfflinePageMetadataStoreSQL* store,
+      const MultipleOfflinePageItemCallback& callback,
+      const base::FilePath& legacy_persistent_pages_dir);
 
   ~GetPagesTask() override;
 

@@ -165,6 +165,12 @@ class OfflinePageModelTaskified : public OfflinePageModel,
   void CheckTemporaryPagesConsistency();
   void CheckPersistentPagesConsistency();
 
+  // Method for upgrade to public storage.
+  void PostUpgradeItemSelection(bool is_initializing);
+  void SelectItemsForUpgrade();
+  void OnSelectItemsForUpgradeDone(
+      const MultipleOfflinePageItemResult& pages_for_upgrade);
+
   // Other utility methods.
   void RemovePagesMatchingUrlAndNamespace(const OfflinePageItem& page);
   void CreateArchivesDirectoryIfNeeded();

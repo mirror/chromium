@@ -7,6 +7,7 @@
 #include <algorithm>
 
 #include "base/bind.h"
+#include "base/files/file_path.h"
 #include "base/memory/ptr_util.h"
 #include "components/offline_pages/core/client_policy_controller.h"
 #include "components/offline_pages/core/offline_store_utils.h"
@@ -242,6 +243,34 @@ void WrapInMultipleItemsCallback(const SingleOfflinePageItemCallback& callback,
     callback.Run(&pages[0]);
 }
 
+ReadResult SelectItemsForUpgrade(
+    const base::FilePath& legacy_persistent_pages_dir,
+    sql::Connection* db) {
+  ReadResult result;
+  if (!db) {
+    result.success = false;
+    return result;
+  }
+
+  static const char kSql[] = "SELECT " OFFLINE_PAGE_PROJECTION
+                             " FROM offlinepages_v1"
+                             " WHERE upgrade_attempt > 0 AND "
+                             "      (client_namespace = 'async_loading' OR "
+                             "       client_namespace = 'download' OR "
+                             "       client_namespace = 'ntp_suggestions' OR "
+                             "       client_namespace = 'browser_actions')";
+  sql::Statement statement(db->GetCachedStatement(SQL_FROM_HERE, kSql));
+
+  while (statement.Step()) {
+    OfflinePageItem temp_item = MakeOfflinePageItem(&statement);
+    if (legacy_persistent_pages_dir.IsParent(temp_item.file_path))
+      result.pages.push_back(temp_item);
+  }
+
+  result.success = true;
+  return result;
+}
+
 }  // namespace
 
 GetPagesTask::ReadResult::ReadResult() : success(false) {}
@@ -333,6 +362,17 @@ std::unique_ptr<GetPagesTask> GetPagesTask::CreateTaskMatchingOfflineId(
   return std::unique_ptr<GetPagesTask>(
       new GetPagesTask(store, base::BindOnce(&ReadPagesByOfflineId, offline_id),
                        base::Bind(&WrapInMultipleItemsCallback, callback)));
+}
+
+// static
+std::unique_ptr<GetPagesTask> GetPagesTask::CreateTaskSelectingItemsForUpgrade(
+    OfflinePageMetadataStoreSQL* store,
+    const MultipleOfflinePageItemCallback& callback,
+    const base::FilePath& legacy_persistent_pages_dir) {
+  return std::unique_ptr<GetPagesTask>(new GetPagesTask(
+      store,
+      base::BindOnce(&SelectItemsForUpgrade, legacy_persistent_pages_dir),
+      callback));
 }
 
 GetPagesTask::GetPagesTask(OfflinePageMetadataStoreSQL* store,

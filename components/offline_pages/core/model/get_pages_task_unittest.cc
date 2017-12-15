@@ -8,6 +8,7 @@
 
 #include <utility>
 
+#include "base/files/scoped_temp_dir.h"
 #include "base/memory/ref_counted.h"
 #include "base/test/test_mock_time_task_runner.h"
 #include "base/threading/thread_task_runner_handle.h"
@@ -300,6 +301,52 @@ TEST_F(GetPagesTaskTest, GetPagesRemovedOnCacheReset) {
   result_set.insert(read_result().begin(), read_result().end());
   EXPECT_EQ(1UL, result_set.size());
   EXPECT_EQ(1UL, result_set.count(cct_item));
+}
+
+TEST_F(GetPagesTaskTest, SelectItemsForUpgrade) {
+  base::ScopedTempDir temp_dir;
+  ASSERT_TRUE(temp_dir.CreateUniqueTempDir());
+  generator()->SetArchiveDirectory(temp_dir.GetPath());
+
+  // Create a page that will never appear in selection.
+  ClientPolicyController policy_controller;
+  generator()->SetNamespace(kCCTNamespace);
+  OfflinePageItem item = generator()->CreateItem();
+  item.upgrade_attempt = 5;
+  store_util()->InsertItem(item);
+
+  std::vector<std::string> selected_namespaces{
+      kDownloadNamespace, kAsyncNamespace, kNTPSuggestionsNamespace,
+      kBrowserActionsNamespace};
+  std::vector<OfflinePageItem> kept_items;
+
+  for (auto name_space : selected_namespaces) {
+    generator()->SetNamespace(name_space);
+    // Should make it (has more attempts and file in the right place).
+    item = generator()->CreateItemWithTempFile();
+    item.upgrade_attempt = 1;
+    store_util()->InsertItem(item);
+    kept_items.push_back(item);
+
+    // Should be skipped (file path is not pointing to the right place).
+    item = generator()->CreateItem();
+    item.upgrade_attempt = 1;
+    store_util()->InsertItem(item);
+
+    // Should be skipped (no more upgrade attempts available).
+    item = generator()->CreateItemWithTempFile();
+    item.upgrade_attempt = 0;
+    store_util()->InsertItem(item);
+  }
+
+  runner()->RunTask(GetPagesTask::CreateTaskSelectingItemsForUpgrade(
+      store(), get_pages_callback(), temp_dir.GetPath()));
+
+  std::set<OfflinePageItem> result_set;
+  result_set.insert(read_result().begin(), read_result().end());
+  ASSERT_TRUE(kept_items.size() == result_set.size());
+  for (auto expected_item : kept_items)
+    EXPECT_EQ(1UL, result_set.count(expected_item));
 }
 
 }  // namespace offline_pages
