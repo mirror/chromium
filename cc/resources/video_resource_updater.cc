@@ -312,7 +312,7 @@ VideoFrameExternalResources VideoResourceUpdater::CreateForSoftwarePlanes(
   TRACE_EVENT0("cc", "VideoResourceUpdater::CreateForSoftwarePlanes");
   const media::VideoPixelFormat input_frame_format = video_frame->format();
 
-  int bits_per_channel = video_frame->BitsPerChannel(input_frame_format);
+  int bits_per_channel = video_frame->bit_depth();
 
   // Only YUV and Y16 software video frames are supported.
   DCHECK(media::IsYuvPlanar(input_frame_format) ||

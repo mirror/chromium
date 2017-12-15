@@ -24,7 +24,8 @@ class VideoFramePool::PoolImpl
                                         const gfx::Size& coded_size,
                                         const gfx::Rect& visible_rect,
                                         const gfx::Size& natural_size,
-                                        base::TimeDelta timestamp);
+                                        base::TimeDelta timestamp,
+                                        size_t bit_depth);
 
   // Shuts down the frame pool and releases all frames in |frames_|.
   // Once this is called frames will no longer be inserted back into
@@ -76,7 +77,8 @@ scoped_refptr<VideoFrame> VideoFramePool::PoolImpl::CreateFrame(
     const gfx::Size& coded_size,
     const gfx::Rect& visible_rect,
     const gfx::Size& natural_size,
-    base::TimeDelta timestamp) {
+    base::TimeDelta timestamp,
+    size_t bit_depth) {
   base::AutoLock auto_lock(lock_);
   DCHECK(!is_shutdown_);
 
@@ -98,7 +100,7 @@ scoped_refptr<VideoFrame> VideoFramePool::PoolImpl::CreateFrame(
 
   if (!frame) {
     frame = VideoFrame::CreateZeroInitializedFrame(
-        format, coded_size, visible_rect, natural_size, timestamp);
+        format, coded_size, visible_rect, natural_size, timestamp, bit_depth);
     // This can happen if the arguments are not valid.
     if (!frame) {
       LOG(ERROR) << "Failed to create a video frame";
@@ -151,9 +153,10 @@ scoped_refptr<VideoFrame> VideoFramePool::CreateFrame(
     const gfx::Size& coded_size,
     const gfx::Rect& visible_rect,
     const gfx::Size& natural_size,
-    base::TimeDelta timestamp) {
+    base::TimeDelta timestamp,
+    size_t bit_depth) {
   return pool_->CreateFrame(format, coded_size, visible_rect, natural_size,
-                            timestamp);
+                            timestamp, bit_depth);
 }
 
 size_t VideoFramePool::GetPoolSizeForTesting() const {
