@@ -17,7 +17,7 @@ namespace gl {
 
 class GL_EXPORT GLImageNativePixmap : public gl::GLImageEGL {
  public:
-  GLImageNativePixmap(const gfx::Size& size, unsigned internalformat);
+  GLImageNativePixmap(const gfx::Size& size);
 
   bool Initialize(gfx::NativePixmap* pixmap, gfx::BufferFormat format);
 
@@ -44,7 +44,6 @@ class GL_EXPORT GLImageNativePixmap : public gl::GLImageEGL {
   ~GLImageNativePixmap() override;
 
  private:
-  unsigned internalformat_;
   scoped_refptr<gfx::NativePixmap> pixmap_;
   bool has_image_flush_external_;
 };

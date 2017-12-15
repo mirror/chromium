@@ -122,8 +122,7 @@ class GPU_EXPORT InProcessCommandBuffer : public CommandBuffer,
   const Capabilities& GetCapabilities() const override;
   int32_t CreateImage(ClientBuffer buffer,
                       size_t width,
-                      size_t height,
-                      unsigned internalformat) override;
+                      size_t height) override;
   void DestroyImage(int32_t id) override;
   void SignalQuery(uint32_t query_id, const base::Closure& callback) override;
   void SetLock(base::Lock*) override;
@@ -313,7 +312,6 @@ class GPU_EXPORT InProcessCommandBuffer : public CommandBuffer,
                               const gfx::GpuMemoryBufferHandle& handle,
                               const gfx::Size& size,
                               gfx::BufferFormat format,
-                              uint32_t internalformat,
                               // uint32_t order_num,
                               uint64_t fence_sync);
   void DestroyImageOnGpuThread(int32_t id);

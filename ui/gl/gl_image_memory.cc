@@ -19,24 +19,6 @@ using gfx::BufferFormat;
 namespace gl {
 namespace {
 
-bool ValidInternalFormat(unsigned internalformat) {
-  switch (internalformat) {
-    case GL_ATC_RGB_AMD:
-    case GL_ATC_RGBA_INTERPOLATED_ALPHA_AMD:
-    case GL_COMPRESSED_RGB_S3TC_DXT1_EXT:
-    case GL_COMPRESSED_RGBA_S3TC_DXT5_EXT:
-    case GL_ETC1_RGB8_OES:
-    case GL_RED:
-    case GL_RG:
-    case GL_RGB:
-    case GL_RGBA:
-    case GL_BGRA_EXT:
-      return true;
-    default:
-      return false;
-  }
-}
-
 bool ValidFormat(gfx::BufferFormat format) {
   switch (format) {
     case gfx::BufferFormat::ATC:
@@ -98,43 +80,10 @@ bool IsCompressedFormat(gfx::BufferFormat format) {
 }
 
 GLenum TextureFormat(gfx::BufferFormat format) {
-  switch (format) {
-    case gfx::BufferFormat::ATC:
-      return GL_ATC_RGB_AMD;
-    case gfx::BufferFormat::ATCIA:
-      return GL_ATC_RGBA_INTERPOLATED_ALPHA_AMD;
-    case gfx::BufferFormat::DXT1:
-      return GL_COMPRESSED_RGB_S3TC_DXT1_EXT;
-    case gfx::BufferFormat::DXT5:
-      return GL_COMPRESSED_RGBA_S3TC_DXT5_EXT;
-    case gfx::BufferFormat::ETC1:
-      return GL_ETC1_RGB8_OES;
-    case gfx::BufferFormat::R_8:
-      return GL_RED;
-    case gfx::BufferFormat::R_16:
-      return GL_R16_EXT;
-    case gfx::BufferFormat::RG_88:
-      return GL_RG;
-    case gfx::BufferFormat::RGBA_4444:
-    case gfx::BufferFormat::RGBA_8888:
-    case gfx::BufferFormat::RGBA_F16:
-      return GL_RGBA;
-    case gfx::BufferFormat::BGRA_8888:
+  if (format == gfx::BufferFormat::BGRA_8888)
       return GL_BGRA_EXT;
-    case gfx::BufferFormat::BGR_565:
-    case gfx::BufferFormat::RGBX_8888:
-    case gfx::BufferFormat::BGRX_8888:
-      return GL_RGB;
-    case gfx::BufferFormat::BGRX_1010102:
-    case gfx::BufferFormat::YVU_420:
-    case gfx::BufferFormat::YUV_420_BIPLANAR:
-    case gfx::BufferFormat::UYVY_422:
-      NOTREACHED();
-      return 0;
-  }
-
-  NOTREACHED();
-  return 0;
+  else
+    return gfx::GLFormatForBufferFormat(format);
 }
 
 GLenum DataFormat(gfx::BufferFormat format) {
@@ -370,9 +319,8 @@ std::unique_ptr<uint8_t[]> GLES2Data(const gfx::Size& size,
 
 }  // namespace
 
-GLImageMemory::GLImageMemory(const gfx::Size& size, unsigned internalformat)
+GLImageMemory::GLImageMemory(const gfx::Size& size)
     : size_(size),
-      internalformat_(internalformat),
       memory_(nullptr),
       format_(gfx::BufferFormat::RGBA_8888),
       stride_(0) {}
@@ -389,11 +337,6 @@ GLImageMemory* GLImageMemory::FromGLImage(GLImage* image) {
 bool GLImageMemory::Initialize(const unsigned char* memory,
                                gfx::BufferFormat format,
                                size_t stride) {
-  if (!ValidInternalFormat(internalformat_)) {
-    LOG(ERROR) << "Invalid internalformat: " << internalformat_;
-    return false;
-  }
-
   if (!ValidFormat(format)) {
     LOG(ERROR) << "Invalid format: " << static_cast<int>(format);
     return false;
@@ -419,7 +362,7 @@ gfx::Size GLImageMemory::GetSize() {
 }
 
 unsigned GLImageMemory::GetInternalFormat() {
-  return internalformat_;
+  return TextureFormat(format_);
 }
 
 bool GLImageMemory::BindTexImage(unsigned target) {
