@@ -675,4 +675,9 @@ void DirectRenderer::SetCurrentFrameForTesting(const DrawingFrame& frame) {
   current_frame_ = frame;
 }
 
+bool DirectRenderer::HasAllocatedResourcesForTesting(
+    const RenderPassId& render_pass_id) const {
+  return IsRenderPassResourceAllocated(render_pass_id);
+}
+
 }  // namespace viz
