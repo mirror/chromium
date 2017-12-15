@@ -20,7 +20,13 @@
 #include "base/test/gtest_util.h"
 #include "base/test/mock_entropy_provider.h"
 #include "base/test/scoped_feature_list.h"
+#include "build/build_config.h"
 #include "testing/gtest/include/gtest/gtest.h"
+
+#if defined(OS_POSIX) && !defined(OS_NACL)
+#include <errno.h>
+#include <sys/mman.h>
+#endif
 
 namespace base {
 
@@ -1392,5 +1398,36 @@ TEST(FieldTrialListTest, SerializeSharedMemoryHandleMetadata) {
   EXPECT_FALSE(deserialized.GetGUID().is_empty());
 }
 #endif  // !defined(OS_NACL)
+
+#if defined(OS_ANDROID) || defined(OS_LINUX) || defined(OS_IOS)
+TEST(FieldTrialListTest, CheckReadOnlySharedMemoryHandle) {
+  FieldTrialList field_trial_list(nullptr);
+  FieldTrialList::CreateFieldTrial("Trial1", "Group1");
+
+  test::ScopedFeatureList scoped_feature_list;
+  scoped_feature_list.Init();
+
+  FieldTrialList::InstantiateFieldTrialAllocatorIfNeeded();
+
+  SharedMemoryHandle handle = FieldTrialList::GetFieldTrialHandle();
+  ASSERT_TRUE(handle.IsValid());
+
+  // Verify that the handle is really read-only, to do that, try to
+  // perform a direct mmap() attempt from its file descriptor.
+  const size_t kDataSize = 1024;
+  errno = 0;
+  void* address = mmap(nullptr, kDataSize, PROT_READ | PROT_WRITE, MAP_SHARED,
+                       handle.GetHandle(), 0);
+  bool success = (address != nullptr) && (address != MAP_FAILED);
+  EXPECT_FALSE(success) << "The field trial handle should not be writable!!";
+#if defined(OS_ANDROID)
+  EXPECT_EQ(EPERM, errno);
+#else
+  EXPECT_EQ(EACCES, errno);
+#endif
+  if (success)
+    munmap(address, kDataSize);
+}
+#endif  // defined(OS_ANDROID) || defined(OS_LINUX) || defined(OS_IOS)
 
 }  // namespace base
