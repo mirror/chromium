@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "de12b35b_d4f8524e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-12-15T21:36:59Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d0d839f5_e3470662",
+      "revId": "9d4b2aad32eef98a07c7b42fe3db78ab4d268b65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9e8617a7_30f03375",
         "filename": "chrome/services/printing/BUILD.gn",
         "patchSetId": 7
