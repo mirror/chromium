@@ -34,6 +34,24 @@
       "revId": "6ccd25c38daa35ee95ef037600f7cbef58167f75",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ef3db38_e77ec291",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsRotateToFullscreenDelegate.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-12-15T16:33:11Z",
+      "side": 1,
+      "message": "No but I prefer to be safe and assume mirroring. Happy to drop if there might be side effects.",
+      "parentUuid": "3aa5fc12_c47fe1cc",
+      "revId": "6ccd25c38daa35ee95ef037600f7cbef58167f75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
