@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a30c5888_b44c6bdb",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_delegate.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-12-15T01:44:22Z",
+      "side": 1,
+      "message": "It\u0027s not required, but AFAIK recommended since there\u0027s less magic involved. The replacement rules are:\n\n  base::Passed(x) \u003d\u003e x\n  base::Passed(\u0026x) \u003d\u003e std::move(x)\n\nI\u0027ve only done this for the calls I\u0027ve modified, I think we\u0027re planning to do a general cleanup of the pre-existing calls separately.",
+      "parentUuid": "42a2a74c_138c3ff0",
+      "range": {
+        "startLine": 221,
+        "startChar": 11,
+        "endLine": 221,
+        "endChar": 15
+      },
+      "revId": "dddf1c12199fb5c1fd75181f726a1be60bb9f8c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f1d9af73_89c80077",
         "filename": "device/vr/openvr/openvr_render_loop.cc",
         "patchSetId": 21
@@ -39,6 +63,24 @@
       "revId": "dddf1c12199fb5c1fd75181f726a1be60bb9f8c1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "071e3406_74364b97",
+        "filename": "device/vr/openvr/openvr_render_loop.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-12-15T01:44:22Z",
+      "side": 1,
+      "message": "I don\u0027t have a strong opinion here. Currently the booleans indicate which of the methods of the VRSubmitFrameClient are in use, and I wanted to keep the configuration close to the device-specific implementation that would have to use the interfaces. Inferring this from the transport method enum or similar seems clunky and needs more logic in VRDisplay to be kept in sync with the devices.\n\nSince mojo initializes all the boolean fields to false, I\u0027ve removed the \"\u003d false\" settings and added comments that implementations should be able to ignore ones they don\u0027t need and just set the ones actively used.",
+      "parentUuid": "f1d9af73_89c80077",
+      "revId": "dddf1c12199fb5c1fd75181f726a1be60bb9f8c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -62,6 +104,30 @@
       "revId": "dddf1c12199fb5c1fd75181f726a1be60bb9f8c1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c04ac79e_82624d34",
+        "filename": "device/vr/test/fake_vr_device.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-12-15T01:44:22Z",
+      "side": 1,
+      "message": "I\u0027ve changed it to a default-initialized mojom::VRDisplayFrameTransportOptions::New(), this will have TransportMethod\u003dNONE. I added a comment in vr_service.mojom that it\u0027s only supposed to be null on failure.",
+      "parentUuid": "e9f743ec_c95ac6f2",
+      "range": {
+        "startLine": 59,
+        "startChar": 32,
+        "endLine": 59,
+        "endChar": 39
+      },
+      "revId": "dddf1c12199fb5c1fd75181f726a1be60bb9f8c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
