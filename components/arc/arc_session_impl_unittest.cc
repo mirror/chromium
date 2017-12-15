@@ -85,6 +85,7 @@ class TestArcSessionObserver : public ArcSession::Observer {
   struct OnSessionStoppedArgs {
     ArcStopReason reason;
     bool was_running;
+    bool full_requested;
   };
 
   explicit TestArcSessionObserver(ArcSession* arc_session)
@@ -99,8 +100,10 @@ class TestArcSessionObserver : public ArcSession::Observer {
   }
 
   // ArcSession::Observer overrides:
-  void OnSessionStopped(ArcStopReason reason, bool was_running) override {
-    on_session_stopped_args_.emplace(OnSessionStoppedArgs{reason, was_running});
+  void OnSessionStopped(
+      ArcStopReason reason, bool was_running, bool full_requested) override {
+    on_session_stopped_args_.emplace(
+        OnSessionStoppedArgs{reason, was_running, full_requested});
   }
 
  private:
@@ -166,7 +169,7 @@ class ArcSessionImplTest : public testing::Test {
 
   void SetupMiniContainer(ArcSessionImpl* arc_session,
                           TestArcSessionObserver* observer) {
-    arc_session->Start(ArcInstanceMode::MINI_INSTANCE);
+    arc_session->StartMiniInstance();
     base::RunLoop().RunUntilIdle();
     ASSERT_EQ(ArcSessionImpl::State::RUNNING_MINI_INSTANCE,
               arc_session->GetStateForTesting());
@@ -181,74 +184,11 @@ class ArcSessionImplTest : public testing::Test {
   DISALLOW_COPY_AND_ASSIGN(ArcSessionImplTest);
 };
 
-// Simple case. Starting FULL_INSTANCE will eventually start the container.
-TEST_F(ArcSessionImplTest, FullInstance_Success) {
-  auto arc_session = CreateArcSession();
-  TestArcSessionObserver observer(arc_session.get());
-  arc_session->Start(ArcInstanceMode::FULL_INSTANCE);
-  base::RunLoop().RunUntilIdle();
-
-  EXPECT_EQ(ArcSessionImpl::State::RUNNING_FULL_INSTANCE,
-            arc_session->GetStateForTesting());
-  EXPECT_FALSE(observer.on_session_stopped_args().has_value());
-}
-
-// SessionManagerClient::StartArcInstance() reports an error, so that
-// the container fails to start.
-TEST_F(ArcSessionImplTest, FullInstance_DBusFail) {
-  EmulateDBusFailure();
-
-  auto arc_session = CreateArcSession();
-  TestArcSessionObserver observer(arc_session.get());
-  arc_session->Start(ArcInstanceMode::FULL_INSTANCE);
-  base::RunLoop().RunUntilIdle();
-
-  EXPECT_EQ(ArcSessionImpl::State::STOPPED, arc_session->GetStateForTesting());
-  ASSERT_TRUE(observer.on_session_stopped_args().has_value());
-  EXPECT_EQ(ArcStopReason::GENERIC_BOOT_FAILURE,
-            observer.on_session_stopped_args()->reason);
-  EXPECT_FALSE(observer.on_session_stopped_args()->was_running);
-}
-
-// SessionManagerClient::StartArcInstance() fails due to low disk, so that
-// the container fails to start with reporting LOW_DISK_SPACE.
-TEST_F(ArcSessionImplTest, FullInstance_LowDisk) {
-  GetSessionManagerClient()->set_low_disk(true);
-
-  auto arc_session = CreateArcSession();
-  TestArcSessionObserver observer(arc_session.get());
-  arc_session->Start(ArcInstanceMode::FULL_INSTANCE);
-  base::RunLoop().RunUntilIdle();
-
-  EXPECT_EQ(ArcSessionImpl::State::STOPPED, arc_session->GetStateForTesting());
-  ASSERT_TRUE(observer.on_session_stopped_args().has_value());
-  EXPECT_EQ(ArcStopReason::LOW_DISK_SPACE,
-            observer.on_session_stopped_args()->reason);
-  EXPECT_FALSE(observer.on_session_stopped_args()->was_running);
-}
-
-// Mojo connection fails, so that the container fails to start.
-TEST_F(ArcSessionImplTest, FullInstance_MojoConnectionFail) {
-  auto delegate = std::make_unique<FakeDelegate>();
-  delegate->EmulateMojoConnectionFailure();
-
-  auto arc_session = CreateArcSession(std::move(delegate));
-  TestArcSessionObserver observer(arc_session.get());
-  arc_session->Start(ArcInstanceMode::FULL_INSTANCE);
-  base::RunLoop().RunUntilIdle();
-
-  EXPECT_EQ(ArcSessionImpl::State::STOPPED, arc_session->GetStateForTesting());
-  ASSERT_TRUE(observer.on_session_stopped_args().has_value());
-  EXPECT_EQ(ArcStopReason::GENERIC_BOOT_FAILURE,
-            observer.on_session_stopped_args()->reason);
-  EXPECT_FALSE(observer.on_session_stopped_args()->was_running);
-}
-
 // Starting mini container success case.
 TEST_F(ArcSessionImplTest, MiniInstance_Success) {
   auto arc_session = CreateArcSession();
   TestArcSessionObserver observer(arc_session.get());
-  arc_session->Start(ArcInstanceMode::MINI_INSTANCE);
+  arc_session->StartMiniInstance();
   base::RunLoop().RunUntilIdle();
 
   EXPECT_EQ(ArcSessionImpl::State::RUNNING_MINI_INSTANCE,
@@ -263,7 +203,7 @@ TEST_F(ArcSessionImplTest, MiniInstance_DBusFail) {
 
   auto arc_session = CreateArcSession();
   TestArcSessionObserver observer(arc_session.get());
-  arc_session->Start(ArcInstanceMode::MINI_INSTANCE);
+  arc_session->StartMiniInstance();
   base::RunLoop().RunUntilIdle();
 
   EXPECT_EQ(ArcSessionImpl::State::STOPPED, arc_session->GetStateForTesting());
@@ -271,6 +211,7 @@ TEST_F(ArcSessionImplTest, MiniInstance_DBusFail) {
   EXPECT_EQ(ArcStopReason::GENERIC_BOOT_FAILURE,
             observer.on_session_stopped_args()->reason);
   EXPECT_FALSE(observer.on_session_stopped_args()->was_running);
+  EXPECT_FALSE(observer.on_session_stopped_args()->full_requested);
 }
 
 // SessionManagerClient::StartArcInstance() reports an error due to low disk,
@@ -281,7 +222,7 @@ TEST_F(ArcSessionImplTest, MiniInstance_LowDisk) {
 
   auto arc_session = CreateArcSession();
   TestArcSessionObserver observer(arc_session.get());
-  arc_session->Start(ArcInstanceMode::MINI_INSTANCE);
+  arc_session->StartMiniInstance();
   base::RunLoop().RunUntilIdle();
 
   EXPECT_EQ(ArcSessionImpl::State::STOPPED, arc_session->GetStateForTesting());
@@ -289,6 +230,7 @@ TEST_F(ArcSessionImplTest, MiniInstance_LowDisk) {
   EXPECT_EQ(ArcStopReason::LOW_DISK_SPACE,
             observer.on_session_stopped_args()->reason);
   EXPECT_FALSE(observer.on_session_stopped_args()->was_running);
+  EXPECT_FALSE(observer.on_session_stopped_args()->full_requested);
 }
 
 // Upgrading a mini container to a full container. Success case.
@@ -299,7 +241,7 @@ TEST_F(ArcSessionImplTest, Upgrade_Success) {
   ASSERT_NO_FATAL_FAILURE(SetupMiniContainer(arc_session.get(), &observer));
 
   // Then, upgrade to a full instance.
-  arc_session->Start(ArcInstanceMode::FULL_INSTANCE);
+  arc_session->RequestUpgrade();
   base::RunLoop().RunUntilIdle();
 
   EXPECT_EQ(ArcSessionImpl::State::RUNNING_FULL_INSTANCE,
@@ -319,7 +261,7 @@ TEST_F(ArcSessionImplTest, Upgrade_DBusFail) {
   EmulateDBusFailure();
 
   // Then upgrade, which should fail.
-  arc_session->Start(ArcInstanceMode::FULL_INSTANCE);
+  arc_session->RequestUpgrade();
   base::RunLoop().RunUntilIdle();
 
   EXPECT_EQ(ArcSessionImpl::State::STOPPED, arc_session->GetStateForTesting());
@@ -327,6 +269,7 @@ TEST_F(ArcSessionImplTest, Upgrade_DBusFail) {
   EXPECT_EQ(ArcStopReason::GENERIC_BOOT_FAILURE,
             observer.on_session_stopped_args()->reason);
   EXPECT_FALSE(observer.on_session_stopped_args()->was_running);
+  EXPECT_TRUE(observer.on_session_stopped_args()->full_requested);
 }
 
 // Mojo connection fails on upgrading. Then, the upgrade fails.
@@ -343,7 +286,7 @@ TEST_F(ArcSessionImplTest, Upgrade_MojoConnectionFail) {
   ASSERT_NO_FATAL_FAILURE(SetupMiniContainer(arc_session.get(), &observer));
 
   // Upgrade should fail, due to Mojo connection fail set above.
-  arc_session->Start(ArcInstanceMode::FULL_INSTANCE);
+  arc_session->RequestUpgrade();
   base::RunLoop().RunUntilIdle();
 
   EXPECT_EQ(ArcSessionImpl::State::STOPPED, arc_session->GetStateForTesting());
@@ -351,6 +294,7 @@ TEST_F(ArcSessionImplTest, Upgrade_MojoConnectionFail) {
   EXPECT_EQ(ArcStopReason::GENERIC_BOOT_FAILURE,
             observer.on_session_stopped_args()->reason);
   EXPECT_FALSE(observer.on_session_stopped_args()->was_running);
+  EXPECT_TRUE(observer.on_session_stopped_args()->full_requested);
 }
 
 // Calling StartArcInstance() during STARTING_MINI_INSTANCE should eventually
@@ -358,12 +302,12 @@ TEST_F(ArcSessionImplTest, Upgrade_MojoConnectionFail) {
 TEST_F(ArcSessionImplTest, Upgrade_StartingMiniInstance) {
   auto arc_session = CreateArcSession();
   TestArcSessionObserver observer(arc_session.get());
-  arc_session->Start(ArcInstanceMode::MINI_INSTANCE);
+  arc_session->StartMiniInstance();
   ASSERT_EQ(ArcSessionImpl::State::STARTING_MINI_INSTANCE,
             arc_session->GetStateForTesting());
 
   // Before moving forward to RUNNING_MINI_INSTANCE, start upgrading it.
-  arc_session->Start(ArcInstanceMode::FULL_INSTANCE);
+  arc_session->RequestUpgrade();
 
   // The state should not immediately switch to STARTING_FULL_INSTANCE, yet.
   EXPECT_EQ(ArcSessionImpl::State::STARTING_MINI_INSTANCE,
@@ -381,7 +325,7 @@ TEST_F(ArcSessionImplTest, Upgrade_StartingMiniInstance) {
 TEST_F(ArcSessionImplTest, Stop_StartingMiniInstance) {
   auto arc_session = CreateArcSession();
   TestArcSessionObserver observer(arc_session.get());
-  arc_session->Start(ArcInstanceMode::MINI_INSTANCE);
+  arc_session->StartMiniInstance();
   ASSERT_EQ(ArcSessionImpl::State::STARTING_MINI_INSTANCE,
             arc_session->GetStateForTesting());
 
@@ -393,13 +337,14 @@ TEST_F(ArcSessionImplTest, Stop_StartingMiniInstance) {
   EXPECT_EQ(ArcStopReason::SHUTDOWN,
             observer.on_session_stopped_args()->reason);
   EXPECT_FALSE(observer.on_session_stopped_args()->was_running);
+  EXPECT_FALSE(observer.on_session_stopped_args()->full_requested);
 }
 
 // Testing stop during RUNNING_MINI_INSTANCE.
 TEST_F(ArcSessionImplTest, Stop_RunningMiniInstance) {
   auto arc_session = CreateArcSession();
   TestArcSessionObserver observer(arc_session.get());
-  arc_session->Start(ArcInstanceMode::MINI_INSTANCE);
+  arc_session->StartMiniInstance();
   base::RunLoop().RunUntilIdle();
   ASSERT_EQ(ArcSessionImpl::State::RUNNING_MINI_INSTANCE,
             arc_session->GetStateForTesting());
@@ -412,67 +357,7 @@ TEST_F(ArcSessionImplTest, Stop_RunningMiniInstance) {
   EXPECT_EQ(ArcStopReason::SHUTDOWN,
             observer.on_session_stopped_args()->reason);
   EXPECT_FALSE(observer.on_session_stopped_args()->was_running);
-}
-
-// Testing stop during STARTING_FULL_INSTANCE.
-TEST_F(ArcSessionImplTest, Stop_StartingFullInstance) {
-  auto arc_session = CreateArcSession();
-  TestArcSessionObserver observer(arc_session.get());
-  arc_session->Start(ArcInstanceMode::FULL_INSTANCE);
-  ASSERT_EQ(ArcSessionImpl::State::STARTING_FULL_INSTANCE,
-            arc_session->GetStateForTesting());
-
-  arc_session->Stop();
-  base::RunLoop().RunUntilIdle();
-
-  EXPECT_EQ(ArcSessionImpl::State::STOPPED, arc_session->GetStateForTesting());
-  ASSERT_TRUE(observer.on_session_stopped_args().has_value());
-  EXPECT_EQ(ArcStopReason::SHUTDOWN,
-            observer.on_session_stopped_args()->reason);
-  EXPECT_FALSE(observer.on_session_stopped_args()->was_running);
-}
-
-// Testing stop during CONNECTING_MOJO.
-TEST_F(ArcSessionImplTest, Stop_ConnectingMojo) {
-  // Let Mojo connection suspend.
-  auto delegate = std::make_unique<FakeDelegate>();
-  delegate->SuspendMojoConnection();
-  auto* delegate_ptr = delegate.get();
-  auto arc_session = CreateArcSession(std::move(delegate));
-  TestArcSessionObserver observer(arc_session.get());
-  arc_session->Start(ArcInstanceMode::FULL_INSTANCE);
-  base::RunLoop().RunUntilIdle();
-  ASSERT_EQ(ArcSessionImpl::State::CONNECTING_MOJO,
-            arc_session->GetStateForTesting());
-
-  arc_session->Stop();
-  delegate_ptr->ResumeMojoConnection();
-  base::RunLoop().RunUntilIdle();
-
-  EXPECT_EQ(ArcSessionImpl::State::STOPPED, arc_session->GetStateForTesting());
-  ASSERT_TRUE(observer.on_session_stopped_args().has_value());
-  EXPECT_EQ(ArcStopReason::SHUTDOWN,
-            observer.on_session_stopped_args()->reason);
-  EXPECT_FALSE(observer.on_session_stopped_args()->was_running);
-}
-
-// Testing stop during RUNNING_FULL_INSTANCE.
-TEST_F(ArcSessionImplTest, Stop_RunningFullInstance) {
-  auto arc_session = CreateArcSession();
-  TestArcSessionObserver observer(arc_session.get());
-  arc_session->Start(ArcInstanceMode::FULL_INSTANCE);
-  base::RunLoop().RunUntilIdle();
-  ASSERT_EQ(ArcSessionImpl::State::RUNNING_FULL_INSTANCE,
-            arc_session->GetStateForTesting());
-
-  arc_session->Stop();
-  base::RunLoop().RunUntilIdle();
-
-  EXPECT_EQ(ArcSessionImpl::State::STOPPED, arc_session->GetStateForTesting());
-  ASSERT_TRUE(observer.on_session_stopped_args().has_value());
-  EXPECT_EQ(ArcStopReason::SHUTDOWN,
-            observer.on_session_stopped_args()->reason);
-  EXPECT_TRUE(observer.on_session_stopped_args()->was_running);
+  EXPECT_FALSE(observer.on_session_stopped_args()->full_requested);
 }
 
 // Testing stop during STARTING_FULL_INSTANCE for upgrade.
@@ -483,7 +368,7 @@ TEST_F(ArcSessionImplTest, Stop_StartingFullInstanceForUpgrade) {
   ASSERT_NO_FATAL_FAILURE(SetupMiniContainer(arc_session.get(), &observer));
 
   // Then upgrade.
-  arc_session->Start(ArcInstanceMode::FULL_INSTANCE);
+  arc_session->RequestUpgrade();
   ASSERT_EQ(ArcSessionImpl::State::STARTING_FULL_INSTANCE,
             arc_session->GetStateForTesting());
 
@@ -496,6 +381,7 @@ TEST_F(ArcSessionImplTest, Stop_StartingFullInstanceForUpgrade) {
   EXPECT_EQ(ArcStopReason::SHUTDOWN,
             observer.on_session_stopped_args()->reason);
   EXPECT_FALSE(observer.on_session_stopped_args()->was_running);
+  EXPECT_TRUE(observer.on_session_stopped_args()->full_requested);
 }
 
 // Testing stop during CONNECTING_MOJO for upgrade.
@@ -510,7 +396,7 @@ TEST_F(ArcSessionImplTest, Stop_ConnectingMojoForUpgrade) {
   ASSERT_NO_FATAL_FAILURE(SetupMiniContainer(arc_session.get(), &observer));
 
   // Then upgrade. This should suspend at Mojo connection.
-  arc_session->Start(ArcInstanceMode::FULL_INSTANCE);
+  arc_session->RequestUpgrade();
   base::RunLoop().RunUntilIdle();
   ASSERT_EQ(ArcSessionImpl::State::CONNECTING_MOJO,
             arc_session->GetStateForTesting());
@@ -525,6 +411,7 @@ TEST_F(ArcSessionImplTest, Stop_ConnectingMojoForUpgrade) {
   EXPECT_EQ(ArcStopReason::SHUTDOWN,
             observer.on_session_stopped_args()->reason);
   EXPECT_FALSE(observer.on_session_stopped_args()->was_running);
+  EXPECT_TRUE(observer.on_session_stopped_args()->full_requested);
 }
 
 // Testing stop during RUNNING_FULL_INSTANCE after upgrade.
@@ -535,7 +422,7 @@ TEST_F(ArcSessionImplTest, Stop_RunningFullInstanceForUpgrade) {
   ASSERT_NO_FATAL_FAILURE(SetupMiniContainer(arc_session.get(), &observer));
 
   // And upgrade successfully.
-  arc_session->Start(ArcInstanceMode::FULL_INSTANCE);
+  arc_session->RequestUpgrade();
   base::RunLoop().RunUntilIdle();
   ASSERT_EQ(ArcSessionImpl::State::RUNNING_FULL_INSTANCE,
             arc_session->GetStateForTesting());
@@ -549,6 +436,7 @@ TEST_F(ArcSessionImplTest, Stop_RunningFullInstanceForUpgrade) {
   EXPECT_EQ(ArcStopReason::SHUTDOWN,
             observer.on_session_stopped_args()->reason);
   EXPECT_TRUE(observer.on_session_stopped_args()->was_running);
+  EXPECT_TRUE(observer.on_session_stopped_args()->full_requested);
 }
 
 // Testing stop during STARTING_MINI_INSTANCE with upgrade request.
@@ -556,12 +444,12 @@ TEST_F(ArcSessionImplTest,
        Stop_StartingFullInstanceForUpgradeDuringMiniInstanceStart) {
   auto arc_session = CreateArcSession();
   TestArcSessionObserver observer(arc_session.get());
-  arc_session->Start(ArcInstanceMode::MINI_INSTANCE);
+  arc_session->StartMiniInstance();
   ASSERT_EQ(ArcSessionImpl::State::STARTING_MINI_INSTANCE,
             arc_session->GetStateForTesting());
 
   // Request to upgrade during starting mini container.
-  arc_session->Start(ArcInstanceMode::FULL_INSTANCE);
+  arc_session->RequestUpgrade();
   // Then, the state should stay at STARTING_MINI_INSTANCE.
   ASSERT_EQ(ArcSessionImpl::State::STARTING_MINI_INSTANCE,
             arc_session->GetStateForTesting());
@@ -575,6 +463,7 @@ TEST_F(ArcSessionImplTest,
   EXPECT_EQ(ArcStopReason::SHUTDOWN,
             observer.on_session_stopped_args()->reason);
   EXPECT_FALSE(observer.on_session_stopped_args()->was_running);
+  EXPECT_TRUE(observer.on_session_stopped_args()->full_requested);
 }
 
 // Stop is requested, but at the same time
@@ -587,8 +476,8 @@ TEST_F(ArcSessionImplTest, Stop_ConflictWithFailure) {
 
   auto arc_session = CreateArcSession();
   TestArcSessionObserver observer(arc_session.get());
-  arc_session->Start(ArcInstanceMode::FULL_INSTANCE);
-  ASSERT_EQ(ArcSessionImpl::State::STARTING_FULL_INSTANCE,
+  arc_session->StartMiniInstance();
+  ASSERT_EQ(ArcSessionImpl::State::STARTING_MINI_INSTANCE,
             arc_session->GetStateForTesting());
 
   arc_session->Stop();
@@ -601,13 +490,15 @@ TEST_F(ArcSessionImplTest, Stop_ConflictWithFailure) {
   EXPECT_EQ(ArcStopReason::SHUTDOWN,
             observer.on_session_stopped_args()->reason);
   EXPECT_FALSE(observer.on_session_stopped_args()->was_running);
+  EXPECT_FALSE(observer.on_session_stopped_args()->full_requested);
 }
 
 // Emulating crash.
 TEST_F(ArcSessionImplTest, ArcStopInstance) {
   auto arc_session = CreateArcSession();
   TestArcSessionObserver observer(arc_session.get());
-  arc_session->Start(ArcInstanceMode::FULL_INSTANCE);
+  arc_session->StartMiniInstance();
+  arc_session->RequestUpgrade();
   base::RunLoop().RunUntilIdle();
   ASSERT_EQ(ArcSessionImpl::State::RUNNING_FULL_INSTANCE,
             arc_session->GetStateForTesting());
@@ -622,6 +513,7 @@ TEST_F(ArcSessionImplTest, ArcStopInstance) {
   ASSERT_TRUE(observer.on_session_stopped_args().has_value());
   EXPECT_EQ(ArcStopReason::CRASH, observer.on_session_stopped_args()->reason);
   EXPECT_TRUE(observer.on_session_stopped_args()->was_running);
+  EXPECT_TRUE(observer.on_session_stopped_args()->full_requested);
 }
 
 // ArcStopInstance for the *previous* ARC container may be reported
@@ -629,7 +521,8 @@ TEST_F(ArcSessionImplTest, ArcStopInstance) {
 // Unrelated ArcStopInstance signal should be ignored.
 TEST_F(ArcSessionImplTest, ArcStopInstance_WrongContainerInstanceId) {
   auto arc_session = CreateArcSession();
-  arc_session->Start(ArcInstanceMode::FULL_INSTANCE);
+  arc_session->StartMiniInstance();
+  arc_session->RequestUpgrade();
   base::RunLoop().RunUntilIdle();
   ASSERT_EQ(ArcSessionImpl::State::RUNNING_FULL_INSTANCE,
             arc_session->GetStateForTesting());
