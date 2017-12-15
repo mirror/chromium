@@ -32,6 +32,7 @@
 #include "ui/aura/env.h"
 #include "ui/compositor/compositor.h"
 #include "ui/gfx/gpu_memory_buffer.h"
+#include "ui/gl/gl_utils.h"
 
 namespace exo {
 namespace {
@@ -39,36 +40,6 @@ namespace {
 // The amount of time before we wait for release queries using
 // GetQueryObjectuivEXT(GL_QUERY_RESULT_EXT).
 const int kWaitForReleaseDelayMs = 500;
-
-GLenum GLInternalFormat(gfx::BufferFormat format) {
-  const GLenum kGLInternalFormats[] = {
-      GL_ATC_RGBA_INTERPOLATED_ALPHA_AMD,  // ATC
-      GL_COMPRESSED_RGB_S3TC_DXT1_EXT,     // ATCIA
-      GL_COMPRESSED_RGB_S3TC_DXT1_EXT,     // DXT1
-      GL_COMPRESSED_RGBA_S3TC_DXT5_EXT,    // DXT5
-      GL_ETC1_RGB8_OES,                    // ETC1
-      GL_R8_EXT,                           // R_8
-      GL_R16_EXT,                          // R_16
-      GL_RG8_EXT,                          // RG_88
-      GL_RGB,                              // BGR_565
-      GL_RGBA,                             // RGBA_4444
-      GL_RGB,                              // RGBX_8888
-      GL_RGBA,                             // RGBA_8888
-      GL_RGB,                              // BGRX_8888
-      GL_RGB,                              // BGRX_1010102
-      GL_BGRA_EXT,                         // BGRA_8888
-      GL_RGBA,                             // RGBA_F16
-      GL_RGB_YCRCB_420_CHROMIUM,           // YVU_420
-      GL_RGB_YCBCR_420V_CHROMIUM,          // YUV_420_BIPLANAR
-      GL_RGB_YCBCR_422_CHROMIUM,           // UYVY_422
-  };
-  static_assert(arraysize(kGLInternalFormats) ==
-                    (static_cast<int>(gfx::BufferFormat::LAST) + 1),
-                "BufferFormat::LAST must be last value of kGLInternalFormats");
-
-  DCHECK(format <= gfx::BufferFormat::LAST);
-  return kGLInternalFormats[static_cast<int>(format)];
-}
 
 unsigned CreateGLTexture(gpu::gles2::GLES2Interface* gles2, GLenum target) {
   unsigned texture_id = 0;
@@ -152,7 +123,6 @@ class Buffer::Texture : public ui::ContextFactoryObserver {
   scoped_refptr<viz::ContextProvider> context_provider_;
   const unsigned texture_target_;
   const unsigned query_type_;
-  const GLenum internalformat_;
   unsigned image_id_ = 0;
   unsigned query_id_ = 0;
   unsigned texture_id_ = 0;
@@ -173,7 +143,6 @@ Buffer::Texture::Texture(ui::ContextFactory* context_factory,
       context_provider_(context_provider),
       texture_target_(GL_TEXTURE_2D),
       query_type_(GL_COMMANDS_COMPLETED_CHROMIUM),
-      internalformat_(GL_RGBA),
       weak_ptr_factory_(this) {
   gpu::gles2::GLES2Interface* gles2 = context_provider_->ContextGL();
   texture_id_ = CreateGLTexture(gles2, texture_target_);
@@ -194,14 +163,12 @@ Buffer::Texture::Texture(ui::ContextFactory* context_factory,
       context_provider_(context_provider),
       texture_target_(texture_target),
       query_type_(query_type),
-      internalformat_(GLInternalFormat(gpu_memory_buffer->GetFormat())),
       wait_for_release_delay_(wait_for_release_delay),
       weak_ptr_factory_(this) {
   gpu::gles2::GLES2Interface* gles2 = context_provider_->ContextGL();
   gfx::Size size = gpu_memory_buffer->GetSize();
-  image_id_ =
-      gles2->CreateImageCHROMIUM(gpu_memory_buffer->AsClientBuffer(),
-                                 size.width(), size.height(), internalformat_);
+  image_id_ = gles2->CreateImageCHROMIUM(gpu_memory_buffer->AsClientBuffer(),
+                                         size.width(), size.height());
   DLOG_IF(WARNING, !image_id_) << "Failed to create GLImage";
 
   gles2->GenQueriesEXT(1, &query_id_);
@@ -295,12 +262,15 @@ gpu::SyncToken Buffer::Texture::CopyTexImage(Texture* destination,
   gpu::SyncToken sync_token;
   if (context_provider_) {
     gpu::gles2::GLES2Interface* gles2 = context_provider_->ContextGL();
+    const GLenum internalformat =
+        gl::GLFormatForBufferFormat(gpu_memory_buffer_->GetFormat());
+
     gles2->ActiveTexture(GL_TEXTURE0);
     gles2->BindTexture(texture_target_, texture_id_);
     DCHECK_NE(image_id_, 0u);
     gles2->BindTexImage2DCHROMIUM(texture_target_, image_id_);
     gles2->CopyTextureCHROMIUM(texture_id_, 0, destination->texture_target_,
-                               destination->texture_id_, 0, internalformat_,
+                               destination->texture_id_, 0, internalformat,
                                GL_UNSIGNED_BYTE, false, false, false);
     DCHECK_NE(query_id_, 0u);
     gles2->BeginQueryEXT(query_type_, query_id_);
