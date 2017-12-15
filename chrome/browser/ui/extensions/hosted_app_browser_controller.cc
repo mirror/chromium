@@ -4,6 +4,9 @@
 
 #include "chrome/browser/ui/extensions/hosted_app_browser_controller.h"
 
+#include "base/metrics/histogram_macros.h"
+#include "chrome/browser/engagement/site_engagement_service.h"
+#include "chrome/browser/engagement/site_engagement_service_factory.h"
 #include "chrome/browser/extensions/tab_helper.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ssl/security_state_tab_helper.h"
@@ -13,9 +16,11 @@
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
 #include "chrome/browser/web_applications/web_app.h"
 #include "chrome/common/chrome_features.h"
+#include "chrome/common/extensions/api/url_handlers/url_handlers_parser.h"
 #include "chrome/common/extensions/manifest_handlers/app_launch_info.h"
 #include "chrome/common/extensions/manifest_handlers/app_theme_color_info.h"
 #include "components/security_state/core/security_state.h"
+#include "content/public/browser/browser_context.h"
 #include "content/public/browser/navigation_entry.h"
 #include "content/public/browser/web_contents.h"
 #include "extensions/browser/extension_registry.h"
@@ -54,6 +59,9 @@ gfx::ImageSkia GetFallbackAppIcon(Browser* browser) {
 
 }  // namespace
 
+const char kAppWindowEngagementTypeHistogram[] =
+    "PWAWindowEngagement.EngagementType";
+
 // static
 bool HostedAppBrowserController::IsForHostedApp(const Browser* browser) {
   const std::string extension_id =
@@ -72,7 +80,9 @@ bool HostedAppBrowserController::IsForExperimentalHostedAppBrowser(
 }
 
 HostedAppBrowserController::HostedAppBrowserController(Browser* browser)
-    : browser_(browser),
+    : SiteEngagementObserver(
+          SiteEngagementServiceFactory::GetForProfile(browser->profile())),
+      browser_(browser),
       extension_id_(
           web_app::GetExtensionIdFromApplicationName(browser->app_name())) {}
 
@@ -176,6 +186,47 @@ std::string HostedAppBrowserController::GetDomainAndRegistry() const {
   return net::registry_controlled_domains::GetDomainAndRegistry(
       AppLaunchInfo::GetLaunchWebURL(GetExtension()),
       net::registry_controlled_domains::INCLUDE_PRIVATE_REGISTRIES);
+}
+
+void HostedAppBrowserController::OnEngagementEvent(
+    content::WebContents* web_contents,
+    const GURL& url,
+    double score,
+    SiteEngagementService::EngagementType type) {
+  if (!web_contents ||
+      web_contents != browser_->tab_strip_model()->GetActiveWebContents()) {
+    DVLOG(1) << "HostedAppBrowserController: Event not for this browser's "
+                "WebContents (\""
+             << url << "\")";
+    return;
+  }
+
+  if (!browser_->is_app()) {
+    DVLOG(1) << "HostedAppBrowserController: Browser is not an app (\"" << url
+             << "\")";
+    return;
+  }
+
+  content::BrowserContext* context = web_contents->GetBrowserContext();
+  const extensions::Extension* app =
+      extensions::ExtensionRegistry::Get(context)->GetExtensionById(
+          web_app::GetExtensionIdFromApplicationName(browser_->app_name()),
+          extensions::ExtensionRegistry::ENABLED);
+
+  // Bookmark Apps for installable websites have scope.
+  // TODO(https://crbug.com/774918): Replace once there is a more explicit
+  // indicator of a Bookmark App for an installable website.
+  if (extensions::UrlHandlers::GetUrlHandlers(app) == nullptr) {
+    DVLOG(1) << "HostedAppBrowserController: No URL handlers (not a PWA) (\""
+             << url << "\")";
+    return;
+  }
+
+  DVLOG(1) << "HostedAppBrowserController: Recording engagement type " << type
+           << " (\"" << url << "\")";
+
+  UMA_HISTOGRAM_ENUMERATION(kAppWindowEngagementTypeHistogram, type,
+                            SiteEngagementService::ENGAGEMENT_LAST);
 }
 
 }  // namespace extensions
