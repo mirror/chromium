@@ -50,6 +50,24 @@
       "revId": "99c144169912501d22cf0a65247a42ee84b18a7f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "633a22bb_cbc9f93f",
+        "filename": "components/viz/service/display/software_renderer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 843,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-15T20:46:42Z",
+      "side": 1,
+      "message": "This will not accept a keyed structure, as it used std::find() and such structures have better find() methods.",
+      "parentUuid": "e628cc0a_5d5e3e97",
+      "revId": "99c144169912501d22cf0a65247a42ee84b18a7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
