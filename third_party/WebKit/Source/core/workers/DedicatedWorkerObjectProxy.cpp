@@ -62,7 +62,7 @@ std::unique_ptr<DedicatedWorkerObjectProxy> DedicatedWorkerObjectProxy::Create(
 DedicatedWorkerObjectProxy::~DedicatedWorkerObjectProxy() {}
 
 void DedicatedWorkerObjectProxy::PostMessageToWorkerObject(
-    scoped_refptr<SerializedScriptValue> message,
+    std::unique_ptr<SerializedScriptValue> message,
     Vector<MessagePortChannel> channels,
     const v8_inspector::V8StackTraceId& stack_id) {
   GetParentFrameTaskRunners()
@@ -70,12 +70,12 @@ void DedicatedWorkerObjectProxy::PostMessageToWorkerObject(
       ->PostTask(BLINK_FROM_HERE,
                  CrossThreadBind(
                      &DedicatedWorkerMessagingProxy::PostMessageToWorkerObject,
-                     messaging_proxy_weak_ptr_, std::move(message),
+                     messaging_proxy_weak_ptr_, WTF::Passed(std::move(message)),
                      WTF::Passed(std::move(channels)), stack_id));
 }
 
 void DedicatedWorkerObjectProxy::ProcessMessageFromWorkerObject(
-    scoped_refptr<SerializedScriptValue> message,
+    std::unique_ptr<SerializedScriptValue> message,
     Vector<MessagePortChannel> channels,
     WorkerThread* worker_thread,
     const v8_inspector::V8StackTraceId& stack_id) {

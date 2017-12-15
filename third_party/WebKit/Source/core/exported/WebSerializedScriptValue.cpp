@@ -37,6 +37,14 @@
 
 namespace blink {
 
+WebSerializedScriptValue::WebSerializedScriptValue() = default;
+WebSerializedScriptValue::WebSerializedScriptValue(
+    WebSerializedScriptValue&& other) = default;
+WebSerializedScriptValue& WebSerializedScriptValue::operator=(
+    WebSerializedScriptValue&& other) = default;
+
+WebSerializedScriptValue::~WebSerializedScriptValue() = default;
+
 WebSerializedScriptValue WebSerializedScriptValue::FromString(
     const WebString& s) {
   return SerializedScriptValue::Create(s);
@@ -58,36 +66,31 @@ WebSerializedScriptValue WebSerializedScriptValue::CreateInvalid() {
   return SerializedScriptValue::Create();
 }
 
-void WebSerializedScriptValue::Reset() {
-  private_.Reset();
-}
-
-void WebSerializedScriptValue::Assign(const WebSerializedScriptValue& other) {
-  private_ = other.private_;
-}
-
 WebString WebSerializedScriptValue::ToString() const {
   return private_->ToWireString();
 }
 
 v8::Local<v8::Value> WebSerializedScriptValue::Deserialize(
-    v8::Isolate* isolate) {
+    v8::Isolate* isolate) && {
   return private_->Deserialize(isolate);
 }
 
 WebSerializedScriptValue::WebSerializedScriptValue(
-    scoped_refptr<SerializedScriptValue> value)
+    std::unique_ptr<SerializedScriptValue> value)
     : private_(std::move(value)) {}
 
 WebSerializedScriptValue& WebSerializedScriptValue::operator=(
-    scoped_refptr<SerializedScriptValue> value) {
+    std::unique_ptr<SerializedScriptValue> value) {
   private_ = std::move(value);
   return *this;
 }
 
-WebSerializedScriptValue::operator scoped_refptr<SerializedScriptValue>()
-    const {
-  return private_.Get();
+WebSerializedScriptValue::operator SerializedScriptValue*() const {
+  return private_.get();
+}
+
+WebSerializedScriptValue::operator std::unique_ptr<SerializedScriptValue>() && {
+  return std::move(private_);
 }
 
 }  // namespace blink

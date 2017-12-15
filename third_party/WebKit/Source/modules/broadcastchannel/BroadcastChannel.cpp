@@ -61,9 +61,10 @@ void BroadcastChannel::postMessage(const ScriptValue& message,
     exception_state.ThrowDOMException(kInvalidStateError, "Channel is closed");
     return;
   }
-  scoped_refptr<SerializedScriptValue> value = SerializedScriptValue::Serialize(
-      message.GetIsolate(), message.V8Value(),
-      SerializedScriptValue::SerializeOptions(), exception_state);
+  std::unique_ptr<SerializedScriptValue> value =
+      SerializedScriptValue::Serialize(
+          message.GetIsolate(), message.V8Value(),
+          SerializedScriptValue::SerializeOptions(), exception_state);
   if (exception_state.HadException())
     return;
 

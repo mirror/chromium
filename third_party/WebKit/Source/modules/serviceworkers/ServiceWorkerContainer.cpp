@@ -471,12 +471,13 @@ void ServiceWorkerContainer::DispatchMessageEvent(
 
   MessagePortArray* ports =
       MessagePort::EntanglePorts(*GetExecutionContext(), std::move(channels));
-  scoped_refptr<SerializedScriptValue> value =
+  std::unique_ptr<SerializedScriptValue> value =
       SerializedScriptValue::Create(message);
   ServiceWorker* source =
       ServiceWorker::From(GetExecutionContext(), std::move(handle));
   DispatchEvent(MessageEvent::Create(
-      ports, value, GetExecutionContext()->GetSecurityOrigin()->ToString(),
+      ports, std::move(value),
+      GetExecutionContext()->GetSecurityOrigin()->ToString(),
       String() /* lastEventId */, source, String() /* suborigin */));
 }
 

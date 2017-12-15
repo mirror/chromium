@@ -120,7 +120,7 @@ class MessageChannel :
   // Post a message to the onmessage handler for this channel's instance
   // synchronously.  This is used by PostMessageToJavaScript.
   void PostMessageToJavaScriptImpl(
-      const blink::WebSerializedScriptValue& message_data);
+      blink::WebSerializedScriptValue&& message_data);
 
   PluginObject* GetPluginObject(v8::Isolate* isolate);
 

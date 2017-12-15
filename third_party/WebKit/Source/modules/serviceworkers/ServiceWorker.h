@@ -32,7 +32,6 @@
 #define ServiceWorker_h
 
 #include <memory>
-#include "base/memory/scoped_refptr.h"
 #include "bindings/core/v8/ActiveScriptWrappable.h"
 #include "bindings/core/v8/ScriptPromise.h"
 #include "bindings/core/v8/serialization/SerializedScriptValue.h"
@@ -63,7 +62,7 @@ class MODULES_EXPORT ServiceWorker final
   EAGERLY_FINALIZE();
 
   void postMessage(ScriptState*,
-                   scoped_refptr<SerializedScriptValue> message,
+                   std::unique_ptr<SerializedScriptValue> message,
                    const MessagePortArray&,
                    ExceptionState&);
   static bool CanTransferArrayBuffersAndImageBitmaps() { return false; }

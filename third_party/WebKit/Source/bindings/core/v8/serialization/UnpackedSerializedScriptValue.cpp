@@ -4,6 +4,8 @@
 
 #include "bindings/core/v8/serialization/UnpackedSerializedScriptValue.h"
 
+#include <memory>
+
 #include "bindings/core/v8/serialization/SerializedScriptValue.h"
 #include "bindings/core/v8/serialization/SerializedScriptValueFactory.h"
 #include "core/imagebitmap/ImageBitmap.h"
@@ -14,7 +16,7 @@
 namespace blink {
 
 UnpackedSerializedScriptValue::UnpackedSerializedScriptValue(
-    scoped_refptr<SerializedScriptValue> value)
+    std::unique_ptr<SerializedScriptValue> value)
     : value_(std::move(value)) {
   auto& array_buffer_contents = value_->array_buffer_contents_array_;
   if (!array_buffer_contents.IsEmpty()) {

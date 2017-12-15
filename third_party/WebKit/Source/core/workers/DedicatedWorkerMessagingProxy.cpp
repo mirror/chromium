@@ -5,6 +5,7 @@
 #include "core/workers/DedicatedWorkerMessagingProxy.h"
 
 #include <memory>
+#include "base/memory/scoped_refptr.h"
 #include "bindings/core/v8/V8CacheOptions.h"
 #include "core/dom/Document.h"
 #include "core/events/ErrorEvent.h"
@@ -25,7 +26,7 @@
 namespace blink {
 
 struct DedicatedWorkerMessagingProxy::QueuedTask {
-  scoped_refptr<SerializedScriptValue> message;
+  std::unique_ptr<SerializedScriptValue> message;
   Vector<MessagePortChannel> channels;
   v8_inspector::V8StackTraceId stack_id;
 };
@@ -81,7 +82,7 @@ void DedicatedWorkerMessagingProxy::StartWorkerGlobalScope(
 }
 
 void DedicatedWorkerMessagingProxy::PostMessageToWorkerGlobalScope(
-    scoped_refptr<SerializedScriptValue> message,
+    std::unique_ptr<SerializedScriptValue> message,
     Vector<MessagePortChannel> channels,
     const v8_inspector::V8StackTraceId& stack_id) {
   DCHECK(IsParentContextThread());
@@ -91,8 +92,8 @@ void DedicatedWorkerMessagingProxy::PostMessageToWorkerGlobalScope(
   if (GetWorkerThread()) {
     WTF::CrossThreadClosure task = CrossThreadBind(
         &DedicatedWorkerObjectProxy::ProcessMessageFromWorkerObject,
-        CrossThreadUnretained(&WorkerObjectProxy()), std::move(message),
-        WTF::Passed(std::move(channels)),
+        CrossThreadUnretained(&WorkerObjectProxy()),
+        WTF::Passed(std::move(message)), WTF::Passed(std::move(channels)),
         CrossThreadUnretained(GetWorkerThread()), stack_id);
     GetWorkerThread()
         ->GetTaskRunner(TaskType::kPostedMessage)
@@ -112,7 +113,7 @@ bool DedicatedWorkerMessagingProxy::HasPendingActivity() const {
 }
 
 void DedicatedWorkerMessagingProxy::PostMessageToWorkerObject(
-    scoped_refptr<SerializedScriptValue> message,
+    std::unique_ptr<SerializedScriptValue> message,
     Vector<MessagePortChannel> channels,
     const v8_inspector::V8StackTraceId& stack_id) {
   DCHECK(IsParentContextThread());

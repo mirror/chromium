@@ -33,7 +33,6 @@
 
 #include <memory>
 #include "base/macros.h"
-#include "base/memory/scoped_refptr.h"
 #include "core/CoreExport.h"
 #include "core/dom/MessagePort.h"
 #include "core/workers/ThreadedObjectProxyBase.h"
@@ -65,11 +64,11 @@ class CORE_EXPORT DedicatedWorkerObjectProxy : public ThreadedObjectProxyBase {
       ParentFrameTaskRunners*);
   ~DedicatedWorkerObjectProxy() override;
 
-  void PostMessageToWorkerObject(scoped_refptr<SerializedScriptValue>,
+  void PostMessageToWorkerObject(std::unique_ptr<SerializedScriptValue>,
                                  Vector<MessagePortChannel>,
                                  const v8_inspector::V8StackTraceId&);
   void ProcessUnhandledException(int exception_id, WorkerThread*);
-  void ProcessMessageFromWorkerObject(scoped_refptr<SerializedScriptValue>,
+  void ProcessMessageFromWorkerObject(std::unique_ptr<SerializedScriptValue>,
                                       Vector<MessagePortChannel>,
                                       WorkerThread*,
                                       const v8_inspector::V8StackTraceId&);

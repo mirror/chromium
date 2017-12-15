@@ -59,8 +59,7 @@ class WebBlobInfo;
 typedef HashMap<String, scoped_refptr<BlobDataHandle>> BlobDataHandleMap;
 typedef Vector<WebBlobInfo> WebBlobInfoArray;
 
-class CORE_EXPORT SerializedScriptValue
-    : public ThreadSafeRefCounted<SerializedScriptValue> {
+class CORE_EXPORT SerializedScriptValue {
  public:
   using ArrayBufferContentsArray = Vector<WTF::ArrayBufferContents, 1>;
   using ImageBitmapContentsArray = Vector<scoped_refptr<StaticBitmapImage>, 1>;
@@ -126,24 +125,25 @@ class CORE_EXPORT SerializedScriptValue
     WasmSerializationPolicy wasm_policy = kTransfer;
     StoragePolicy for_storage = kNotForStorage;
   };
-  static scoped_refptr<SerializedScriptValue> Serialize(v8::Isolate*,
-                                                        v8::Local<v8::Value>,
-                                                        const SerializeOptions&,
-                                                        ExceptionState&);
-  static scoped_refptr<SerializedScriptValue> SerializeAndSwallowExceptions(
+  static std::unique_ptr<SerializedScriptValue> Serialize(
+      v8::Isolate*,
+      v8::Local<v8::Value>,
+      const SerializeOptions&,
+      ExceptionState&);
+  static std::unique_ptr<SerializedScriptValue> SerializeAndSwallowExceptions(
       v8::Isolate*,
       v8::Local<v8::Value>);
 
-  static scoped_refptr<SerializedScriptValue> Create();
-  static scoped_refptr<SerializedScriptValue> Create(const String&);
-  static scoped_refptr<SerializedScriptValue> Create(
+  static std::unique_ptr<SerializedScriptValue> Create();
+  static std::unique_ptr<SerializedScriptValue> Create(const String&);
+  static std::unique_ptr<SerializedScriptValue> Create(
       scoped_refptr<const SharedBuffer>);
-  static scoped_refptr<SerializedScriptValue> Create(const char* data,
-                                                     size_t length);
+  static std::unique_ptr<SerializedScriptValue> Create(const char* data,
+                                                       size_t length);
 
   ~SerializedScriptValue();
 
-  static scoped_refptr<SerializedScriptValue> NullValue();
+  static std::unique_ptr<SerializedScriptValue> NullValue();
 
   String ToWireString() const;
 
@@ -164,13 +164,12 @@ class CORE_EXPORT SerializedScriptValue
   }
   v8::Local<v8::Value> Deserialize(v8::Isolate*, const DeserializeOptions&);
 
-  // Takes ownership of a reference and creates an "unpacked" version of this
-  // value, where the transferred contents have been turned into complete
-  // objects local to this thread. A SerializedScriptValue can only be unpacked
-  // once, and the result is bound to a thread.
-  // See UnpackedSerializedScriptValue.h for more details.
+  // Creates an "unpacked" version of this value, where the transferred contents
+  // have been turned into complete objects local to this thread. A
+  // SerializedScriptValue can only be unpacked once, and the result is bound to
+  // a thread. See UnpackedSerializedScriptValue.h for more details.
   static UnpackedSerializedScriptValue* Unpack(
-      scoped_refptr<SerializedScriptValue>);
+      std::unique_ptr<SerializedScriptValue>);
 
   // Used for debugging. Returns true if there are "packed" transferred contents
   // which would require this value to be unpacked before deserialization.
@@ -277,7 +276,7 @@ class CORE_EXPORT SerializedScriptValue
 template <>
 struct NativeValueTraits<SerializedScriptValue>
     : public NativeValueTraitsBase<SerializedScriptValue> {
-  CORE_EXPORT static inline scoped_refptr<SerializedScriptValue> NativeValue(
+  CORE_EXPORT static inline std::unique_ptr<SerializedScriptValue> NativeValue(
       v8::Isolate* isolate,
       v8::Local<v8::Value> value,
       const SerializedScriptValue::SerializeOptions& options,

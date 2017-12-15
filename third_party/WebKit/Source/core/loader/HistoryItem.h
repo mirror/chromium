@@ -95,7 +95,7 @@ class CORE_EXPORT HistoryItem final
   void SetURLString(const String&);
   void SetReferrer(const Referrer&);
 
-  void SetStateObject(scoped_refptr<SerializedScriptValue>);
+  void SetStateObject(std::unique_ptr<SerializedScriptValue>);
   SerializedScriptValue* StateObject() const { return state_object_.get(); }
 
   void SetItemSequenceNumber(long long number) {
@@ -152,7 +152,7 @@ class CORE_EXPORT HistoryItem final
   HistoryScrollRestorationType scroll_restoration_type_;
 
   // Support for HTML5 History
-  scoped_refptr<SerializedScriptValue> state_object_;
+  std::unique_ptr<SerializedScriptValue> state_object_;
 
   // info used to repost form data
   scoped_refptr<EncodedFormData> form_data_;

@@ -63,7 +63,7 @@ MessagePort::~MessagePort() {
 }
 
 void MessagePort::postMessage(ScriptState* script_state,
-                              scoped_refptr<SerializedScriptValue> message,
+                              std::unique_ptr<SerializedScriptValue> message,
                               const MessagePortArray& ports,
                               ExceptionState& exception_state) {
   if (!IsEntangled())
@@ -72,7 +72,7 @@ void MessagePort::postMessage(ScriptState* script_state,
   DCHECK(!IsNeutered());
 
   BlinkTransferableMessage msg;
-  msg.message = message;
+  msg.message = std::move(message);
 
   // Make sure we aren't connected to any of the passed-in ports.
   for (unsigned i = 0; i < ports.size(); ++i) {

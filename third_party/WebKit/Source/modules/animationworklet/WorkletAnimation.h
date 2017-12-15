@@ -5,6 +5,8 @@
 #ifndef WorkletAnimation_h
 #define WorkletAnimation_h
 
+#include <memory>
+
 #include "bindings/core/v8/serialization/SerializedScriptValue.h"
 #include "bindings/modules/v8/document_timeline_or_scroll_timeline.h"
 #include "core/animation/Animation.h"
@@ -41,7 +43,7 @@ class MODULES_EXPORT WorkletAnimation : public WorkletAnimationBase,
       String animator_name,
       const AnimationEffectReadOnlyOrAnimationEffectReadOnlySequence&,
       DocumentTimelineOrScrollTimeline,
-      scoped_refptr<SerializedScriptValue>,
+      std::unique_ptr<SerializedScriptValue>,
       ExceptionState&);
 
   ~WorkletAnimation() override {}
@@ -70,8 +72,6 @@ class MODULES_EXPORT WorkletAnimation : public WorkletAnimationBase,
 
   const DocumentTimelineOrScrollTimeline& Timeline() { return timeline_; }
 
-  const scoped_refptr<SerializedScriptValue> Options() { return options_; }
-
   void Trace(blink::Visitor*) override;
 
  private:
@@ -79,7 +79,7 @@ class MODULES_EXPORT WorkletAnimation : public WorkletAnimationBase,
                    Document&,
                    const HeapVector<Member<KeyframeEffectReadOnly>>&,
                    DocumentTimelineOrScrollTimeline,
-                   scoped_refptr<SerializedScriptValue>);
+                   std::unique_ptr<SerializedScriptValue>);
 
   const String animator_name_;
   Animation::AnimationPlayState play_state_;
@@ -88,7 +88,7 @@ class MODULES_EXPORT WorkletAnimation : public WorkletAnimationBase,
 
   HeapVector<Member<KeyframeEffectReadOnly>> effects_;
   DocumentTimelineOrScrollTimeline timeline_;
-  scoped_refptr<SerializedScriptValue> options_;
+  std::unique_ptr<SerializedScriptValue> options_;
 
   std::unique_ptr<CompositorAnimationPlayer> compositor_player_;
 };

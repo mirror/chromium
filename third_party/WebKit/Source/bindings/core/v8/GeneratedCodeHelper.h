@@ -11,7 +11,8 @@
 #ifndef GeneratedCodeHelper_h
 #define GeneratedCodeHelper_h
 
-#include "base/memory/scoped_refptr.h"
+#include <memory>
+
 #include "bindings/core/v8/ExceptionState.h"
 #include "bindings/core/v8/V8BindingForCore.h"
 #include "core/CoreExport.h"

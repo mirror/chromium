@@ -22,7 +22,7 @@ struct CORE_EXPORT BlinkCloneableMessage {
   BlinkCloneableMessage(BlinkCloneableMessage&&);
   BlinkCloneableMessage& operator=(BlinkCloneableMessage&&);
 
-  scoped_refptr<blink::SerializedScriptValue> message;
+  std::unique_ptr<blink::SerializedScriptValue> message;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(BlinkCloneableMessage);

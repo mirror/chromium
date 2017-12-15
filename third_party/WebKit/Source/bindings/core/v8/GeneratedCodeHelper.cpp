@@ -4,6 +4,8 @@
 
 #include "bindings/core/v8/GeneratedCodeHelper.h"
 
+#include <memory>
+
 #include "bindings/core/v8/V8BindingForCore.h"
 #include "bindings/core/v8/serialization/SerializedScriptValue.h"
 #include "core/dom/ExecutionContext.h"
