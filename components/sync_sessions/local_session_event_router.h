@@ -35,6 +35,11 @@ class LocalSessionEventHandler {
   virtual void OnFaviconsChanged(const std::set<GURL>& page_urls,
                                  const GURL& icon_url) = 0;
 
+  // A flag set when browsers are closing, so we shouldn't send tabs
+  // closing events to sync server. Tabs will be restored on the next browser
+  // start.
+  virtual void SetAllBrowsersClosing(bool browsers_closing) = 0;
+
  protected:
   LocalSessionEventHandler() {}
 
