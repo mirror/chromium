@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ecbbd645_b633098c",
+        "filename": "services/ui/public/cpp/input_devices/input_device_client.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-15T18:57:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aa0848fa_61bd9b8f",
+      "revId": "707fd25d870402307eb876e5f960580072bcba28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2f400f40_f7a2b1a5",
         "filename": "services/ui/public/cpp/input_devices/input_device_client.h",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-15T18:45:16Z",
       "side": 1,
       "message": "Is it worth adding mouse/touchpad functions for consistency?",
+      "revId": "707fd25d870402307eb876e5f960580072bcba28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f330ed4_2fa65ac9",
+        "filename": "services/ui/public/cpp/input_devices/input_device_client.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-15T18:57:36Z",
+      "side": 1,
+      "message": "Didn\u0027t seem worth it. I kept the test api only at what is actually used. If we need others functions from test code in the future we can expose them then.",
+      "parentUuid": "2f400f40_f7a2b1a5",
       "revId": "707fd25d870402307eb876e5f960580072bcba28",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "d7d2fd72_a756a94d",
+        "filename": "services/ui/public/cpp/input_devices/input_device_client_test_api.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-15T18:57:36Z",
+      "side": 1,
+      "message": "Isn\u0027t that covered by virtue of TouchscreenDevice being an InputDevice? But added.",
+      "parentUuid": "0e0c9084_a056f0b4",
+      "revId": "707fd25d870402307eb876e5f960580072bcba28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "597736ad_6e68453e",
         "filename": "services/ui/public/cpp/input_devices/input_device_client_test_api.h",
         "patchSetId": 4
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "176a1306_ec6d251f",
+        "filename": "services/ui/public/cpp/input_devices/input_device_client_test_api.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-15T18:57:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "597736ad_6e68453e",
+      "revId": "707fd25d870402307eb876e5f960580072bcba28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5221c9a4_61145ade",
         "filename": "services/ui/public/cpp/input_devices/input_device_client_test_api.h",
         "patchSetId": 4
@@ -81,6 +153,24 @@
       "writtenOn": "2017-12-15T18:45:16Z",
       "side": 1,
       "message": "Similar vein, is it worth flushing this out for mouse/touchpad to encourage people to write tests?",
+      "revId": "707fd25d870402307eb876e5f960580072bcba28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "960e038b_24dfc706",
+        "filename": "services/ui/public/cpp/input_devices/input_device_client_test_api.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-15T18:57:36Z",
+      "side": 1,
+      "message": "I would rather wait until there is a need. Following a pattern like you suggest ends up with a lot of code that isn\u0027t used.",
+      "parentUuid": "5221c9a4_61145ade",
       "revId": "707fd25d870402307eb876e5f960580072bcba28",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
