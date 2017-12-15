@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e30324a4_ff3e476e",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-12-15T19:56:23Z",
+      "side": 1,
+      "message": "ConsoleView tells the Widget system which elements need scrollTop restored.  However, the Widget system attaches/shows/restoreScrollTop before telling the parent to invalidate constraints.  Before invalidating constraints, clientHeight \u003d\u003d\u003d scrollHeight, so setting scrollTop does nothing.\n\nWithout this line, this case will break:\n- Open Console panel with minimized console drawer\n- Close console drawer\n- Go to another panel (Network)\n- Open Console drawer",
+      "range": {
+        "startLine": 354,
+        "startChar": 4,
+        "endLine": 354,
+        "endChar": 50
+      },
+      "revId": "731ee15c5ab4b70802e36bb9882aac9733e1e19b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
