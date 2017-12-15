@@ -46,6 +46,30 @@
       "revId": "ff08dcc4cab02422a1fb4a09bf1c3e4e2031e33a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1f68a69c_f7b52584",
+        "filename": "cr-buildbucket.cfg",
+        "patchSetId": 2
+      },
+      "lineNbr": 473,
+      "author": {
+        "id": 1134874
+      },
+      "writtenOn": "2017-12-15T02:23:24Z",
+      "side": 1,
+      "message": "If you mean including the internal link, yes, Andrii pointed it out too and I\u0027ve marked the CL as private, reuploading at https://chromium-review.googlesource.com/c/chromium/src/+/827736.",
+      "parentUuid": "0002aacf_b5bb291f",
+      "range": {
+        "startLine": 473,
+        "startChar": 25,
+        "endLine": 473,
+        "endChar": 27
+      },
+      "revId": "ff08dcc4cab02422a1fb4a09bf1c3e4e2031e33a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
