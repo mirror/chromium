@@ -1311,6 +1311,7 @@ int SimpleSynchronousEntry::ReadAndValidateStream0AndMaybe1(
   if (file_size > GetSimpleCachePrefetchSize()) {
     RecordWhetherOpenDidPrefetch(cache_type_, false);
   } else {
+    LOG(ERROR) << "Did prefetch with file_size:" << file_size;
     RecordWhetherOpenDidPrefetch(cache_type_, true);
     prefetch_buf = std::make_unique<char[]>(file_size);
     if (file->Read(0, prefetch_buf.get(), file_size) != file_size)
