@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6e4b071f_fd908d0c",
+        "filename": "ios/chrome/browser/ui/fullscreen/fullscreen_web_state_list_observer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-12-15T22:55:39Z",
+      "side": 1,
+      "message": "probably add a comment for |controller|",
+      "revId": "5eea79d9c50602baf7f8e560dd8db258fba0c6a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
