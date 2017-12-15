@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9e617380_a1e56a2d",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1164963
+      },
+      "writtenOn": "2017-12-15T18:31:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "524fdcd1_708b97cb",
+      "range": {
+        "startLine": 257,
+        "startChar": 0,
+        "endLine": 282,
+        "endChar": 0
+      },
+      "revId": "4c62fffed5dfa814c260d1416a661356d90a6d23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7ca214df_1c67dbf1",
         "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.cpp",
         "patchSetId": 6
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "2454bdc9_aa4198fb",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1164963
+      },
+      "writtenOn": "2017-12-15T18:31:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7ca214df_1c67dbf1",
+      "range": {
+        "startLine": 412,
+        "startChar": 13,
+        "endLine": 412,
+        "endChar": 31
+      },
+      "revId": "4c62fffed5dfa814c260d1416a661356d90a6d23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "921cb245_e91792cb",
         "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.cpp",
         "patchSetId": 6
@@ -68,6 +116,30 @@
       "revId": "4c62fffed5dfa814c260d1416a661356d90a6d23",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28fdc62f_05982c17",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 1164963
+      },
+      "writtenOn": "2017-12-15T18:31:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "921cb245_e91792cb",
+      "range": {
+        "startLine": 420,
+        "startChar": 8,
+        "endLine": 420,
+        "endChar": 73
+      },
+      "revId": "4c62fffed5dfa814c260d1416a661356d90a6d23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
