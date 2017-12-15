@@ -141,12 +141,22 @@ v8::Local<v8::Value> ScriptController::ExecuteScriptAndReturnValue(
              .ToLocal(&script))
       return result;
 
-    V8ScriptRunner::ProduceCache(GetIsolate(), script, source, no_cache_reason);
+    v8::MaybeLocal<v8::Value> maybe_result;
+    if (RuntimeEnabledFeatures::CodeCacheAfterExecuteEnabled()) {
+      maybe_result = V8ScriptRunner::RunCompiledScript(
+          GetIsolate(), script, GetFrame()->GetDocument());
+      V8ScriptRunner::ProduceCache(GetIsolate(), script, source,
+                                   no_cache_reason);
+    } else {
+      V8ScriptRunner::ProduceCache(GetIsolate(), script, source,
+                                   no_cache_reason);
+      maybe_result = V8ScriptRunner::RunCompiledScript(
+          GetIsolate(), script, GetFrame()->GetDocument());
+    }
 
-    if (!V8ScriptRunner::RunCompiledScript(GetIsolate(), script,
-                                           GetFrame()->GetDocument())
-             .ToLocal(&result))
+    if (!maybe_result.ToLocal(&result)) {
       return result;
+    }
   }
 
   return result;
