@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "68f77b29_86a73f7e",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 663,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-12-15T16:56:13Z",
+      "side": 1,
+      "message": "Done. Split to a smaller CL. https://chromium-review.googlesource.com/c/chromium/src/+/827925",
+      "parentUuid": "8d4f43ce_e297f419",
+      "range": {
+        "startLine": 663,
+        "startChar": 54,
+        "endLine": 663,
+        "endChar": 61
+      },
+      "revId": "7aca9b1790edb94e1b8854ffbe7038157a388bb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8a651feb_c565b87b",
         "filename": "net/nqe/network_quality_estimator_params.cc",
         "patchSetId": 11
@@ -72,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "a865a1de_96b75961",
+        "filename": "net/nqe/network_quality_estimator_params.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 523,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-12-15T16:56:13Z",
+      "side": 1,
+      "message": "ECT flag code is moved to https://chromium-review.googlesource.com/c/chromium/src/+/827925",
+      "parentUuid": "ff997d4a_144296be",
+      "range": {
+        "startLine": 523,
+        "startChar": 4,
+        "endLine": 523,
+        "endChar": 37
+      },
+      "revId": "7aca9b1790edb94e1b8854ffbe7038157a388bb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6515180e_78393471",
         "filename": "tools/chrome_proxy/integration_tests/chrome_proxy_measurements.py",
         "patchSetId": 11
@@ -89,6 +137,24 @@
     },
     {
       "key": {
+        "uuid": "dd0f855e_6b6e9a4a",
+        "filename": "tools/chrome_proxy/integration_tests/chrome_proxy_measurements.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-12-15T16:56:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6515180e_78393471",
+      "revId": "7aca9b1790edb94e1b8854ffbe7038157a388bb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d58bf109_c3c419f6",
         "filename": "tools/chrome_proxy/webdriver/lite_page.py",
         "patchSetId": 11
@@ -103,6 +169,24 @@
       "revId": "7aca9b1790edb94e1b8854ffbe7038157a388bb3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d306436_3580fc39",
+        "filename": "tools/chrome_proxy/webdriver/lite_page.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-12-15T16:56:13Z",
+      "side": 1,
+      "message": "Removed, didn\u0027t need.",
+      "parentUuid": "d58bf109_c3c419f6",
+      "revId": "7aca9b1790edb94e1b8854ffbe7038157a388bb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -186,6 +270,24 @@
     },
     {
       "key": {
+        "uuid": "7b79db21_34b50b72",
+        "filename": "tools/chrome_proxy/webdriver/lofi.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-12-15T16:56:13Z",
+      "side": 1,
+      "message": "Removed, only support before 61.",
+      "parentUuid": "88a1b87d_355eadc9",
+      "revId": "7aca9b1790edb94e1b8854ffbe7038157a388bb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "24f26eb8_47c4e3e9",
         "filename": "tools/chrome_proxy/webdriver/lofi.py",
         "patchSetId": 11
@@ -206,6 +308,30 @@
       "revId": "7aca9b1790edb94e1b8854ffbe7038157a388bb3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9de1a774_3344428e",
+        "filename": "tools/chrome_proxy/webdriver/lofi.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-12-15T16:56:13Z",
+      "side": 1,
+      "message": "The test is below.",
+      "parentUuid": "24f26eb8_47c4e3e9",
+      "range": {
+        "startLine": 158,
+        "startChar": 6,
+        "endLine": 158,
+        "endChar": 25
+      },
+      "revId": "7aca9b1790edb94e1b8854ffbe7038157a388bb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
