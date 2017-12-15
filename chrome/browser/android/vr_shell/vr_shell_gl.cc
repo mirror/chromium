@@ -1305,6 +1305,7 @@ void VrShellGl::OnAssetsLoaded(vr::AssetsLoadStatus status,
                                const base::Version& component_version) {
   // TODO(793407): Handle adding background image to UI.
   if (status == vr::AssetsLoadStatus::kSuccess) {
+    ui_->SetBackgroundImage(std::move(background_image));
     VLOG(1) << "Successfully loaded VR assets component";
   } else {
     VLOG(1) << "Failed to load VR assets component";

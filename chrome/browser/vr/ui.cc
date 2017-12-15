@@ -287,6 +287,13 @@ void Ui::Dump() {
   LOG(ERROR) << os.str();
 }
 
+void Ui::SetBackgroundImage(std::unique_ptr<SkBitmap> bitmap) {
+  Background* background =
+      reinterpret_cast<Background*>(scene_->GetUiElementByName(kCeiling));
+  DCHECK(background);
+  background->SetImage(std::move(bitmap));
+}
+
 void Ui::ReinitializeForTest(const UiInitialState& ui_initial_state) {
   InitializeModel(ui_initial_state);
 }
