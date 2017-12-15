@@ -178,6 +178,24 @@
     },
     {
       "key": {
+        "uuid": "cdbbba17_0fee2e4a",
+        "filename": "third_party/WebKit/Source/modules/clipboard/ClipboardPromise.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-12-15T05:00:47Z",
+      "side": 1,
+      "message": "Thanks for explaining, that\u0027s what I suspected but it\u0027s good to know where we\u0027re at.\n\nGary: Could you file a bug for this and make add a link to the bug where the permissions are checked saying that they are only checked in the renderer. I\u0027d like to avoid people accidentally blatantly copying the non-ideal approach.",
+      "parentUuid": "c0b0e65f_fc3eacc1",
+      "revId": "813caf3ccf13ce3ec5fe35c7c9dcf4419acebaea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a1e94a5_d5472e1b",
         "filename": "third_party/WebKit/Source/modules/clipboard/ClipboardPromise.cpp",
         "patchSetId": 1

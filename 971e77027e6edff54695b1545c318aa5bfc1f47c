@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0424abfc_6391c363",
+        "filename": "content/shell/browser/layout_test/layout_test_message_filter.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-12-15T05:00:47Z",
+      "side": 1,
+      "message": "nit: should this be clipboard-read for consistency/disambiguity?",
+      "revId": "971e77027e6edff54695b1545c318aa5bfc1f47c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a0e4304_48240914",
+        "filename": "third_party/WebKit/LayoutTests/NeverFixTests",
+        "patchSetId": 9
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-12-15T05:00:47Z",
+      "side": 1,
+      "message": ":( Is this because the permissions now interfere with the test? It\u0027s unfortunate to disable tests. I\u0027m less concerned about the manual ones since they will never really be run anyway, but it would be good to keep the automated one if possible.\n\nCould we do something like add a switch which enables the permission in LayoutTestPermissionManager when it\u0027s passed in? I defer to blink experts though.",
+      "revId": "971e77027e6edff54695b1545c318aa5bfc1f47c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "354980dd_b3835b1f",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/resources/permissions-helper.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-12-15T05:00:47Z",
+      "side": 1,
+      "message": "nit: perhaps this should be clipboard-read for consistency",
+      "revId": "971e77027e6edff54695b1545c318aa5bfc1f47c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "731b9d0d_f5ecf929",
+        "filename": "third_party/WebKit/Source/modules/clipboard/ClipboardPromise.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-12-15T05:00:47Z",
+      "side": 1,
+      "message": "nit: This paragraph is a little disjointed/confusing. I wonder if we could just say something like:\n\n// In Chromium we automatically grant clipboard-write and clipboard-read access is gated behind a prompt. Both clipboard read and write require the tab to be focussed to be allowed.",
+      "revId": "971e77027e6edff54695b1545c318aa5bfc1f47c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9436b450_51856503",
+        "filename": "third_party/WebKit/Source/modules/clipboard/ClipboardPromise.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-12-15T05:00:47Z",
+      "side": 1,
+      "message": "nit: I guess this should probably go in the header?",
+      "revId": "971e77027e6edff54695b1545c318aa5bfc1f47c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87c22a7e_2f58bed4",
+        "filename": "third_party/WebKit/Source/modules/clipboard/ClipboardPromise.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-12-15T05:00:47Z",
+      "side": 1,
+      "message": "nit: I guess you could just call RequestPermission for consistency. But it\u0027s not actually significant.",
+      "revId": "971e77027e6edff54695b1545c318aa5bfc1f47c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3aa0c9fc_f92969f7",
+        "filename": "third_party/WebKit/Source/modules/clipboard/ClipboardPromise.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-12-15T05:00:47Z",
+      "side": 1,
+      "message": "I believe this is unused? Can we delete it until it\u0027s used?",
+      "revId": "971e77027e6edff54695b1545c318aa5bfc1f47c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "379b8e4b_8d15b353",
+        "filename": "third_party/WebKit/Source/modules/clipboard/ClipboardPromise.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-12-15T05:00:47Z",
+      "side": 1,
+      "message": "This should be !\u003d GRANTED for safety.",
+      "revId": "971e77027e6edff54695b1545c318aa5bfc1f47c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d76fd99c_900d76e5",
+        "filename": "third_party/WebKit/Source/modules/clipboard/ClipboardPromise.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-12-15T05:00:47Z",
+      "side": 1,
+      "message": "I think this is the same as HandleWritePermission. I understand they will eventually be different but it seems better not to duplicate code until necessary (they\u0027re already slightly different due to the DCHECK). Should we merge them?",
+      "revId": "971e77027e6edff54695b1545c318aa5bfc1f47c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9726f7c2_3c8e72a9",
+        "filename": "third_party/WebKit/Source/modules/clipboard/ClipboardPromise.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-12-15T05:00:47Z",
+      "side": 1,
+      "message": "This should be !\u003d GRANTED for safety.",
+      "revId": "971e77027e6edff54695b1545c318aa5bfc1f47c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
