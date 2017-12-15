@@ -1071,8 +1071,10 @@ WebContents* GetEmbedderForGuest(content::WebContents* guest);
 // Network Service is enabled.
 void SimulateNetworkServiceCrash();
 
-// Load the given |url| with |network_context| and return the |net::Error| code.
+// Load the given |url| and return the |net::Error| code.
 int LoadBasicRequest(mojom::NetworkContext* network_context, const GURL& url);
+int LoadBasicRequest(mojom::URLLoaderFactory* url_loader_factory,
+                     const GURL& url);
 
 }  // namespace content
 
