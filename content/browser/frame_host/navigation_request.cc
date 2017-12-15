@@ -853,6 +853,8 @@ void NavigationRequest::OnResponseStarted(
     }
   }
 
+  RenderFrameDevToolsAgentHost::OnNavigationResponseReceived(*this, *response);
+
   // Check if the navigation should be allowed to proceed.
   navigation_handle_->WillProcessResponse(
       render_frame_host, response->head.headers.get(),
@@ -867,6 +869,9 @@ void NavigationRequest::OnRequestFailed(
     bool has_stale_copy_in_cache,
     int net_error,
     const base::Optional<net::SSLInfo>& ssl_info) {
+
+  RenderFrameDevToolsAgentHost::OnNavigationRequestFailed(*this, net_error);
+
   NavigationRequest::OnRequestFailedInternal(has_stale_copy_in_cache, net_error,
                                              ssl_info, false);
 }
@@ -1071,6 +1076,8 @@ void NavigationRequest::OnStartChecksComplete(
   bool report_raw_headers =
       RenderFrameDevToolsAgentHost::IsNetworkHandlerEnabled(frame_tree_node_);
 
+  RenderFrameDevToolsAgentHost::OnNavigationRequestWillBeSent(*this);
+
   loader_ = NavigationURLLoader::Create(
       browser_context->GetResourceContext(), partition,
       std::make_unique<NavigationRequestInfo>(
@@ -1078,7 +1085,8 @@ void NavigationRequest::OnStartChecksComplete(
           frame_tree_node_->IsMainFrame(), parent_is_main_frame,
           IsSecureFrame(frame_tree_node_->parent()),
           frame_tree_node_->frame_tree_node_id(), is_for_guests_only,
-          report_raw_headers, navigating_frame_host->GetVisibilityState()),
+          report_raw_headers, navigating_frame_host->GetVisibilityState(),
+          devtools_navigation_token_),
       std::move(navigation_ui_data),
       navigation_handle_->service_worker_handle(),
       navigation_handle_->appcache_handle(), this);
@@ -1111,6 +1119,8 @@ void NavigationRequest::OnRedirectChecksComplete(
     // destroyed the NavigationRequest.
     return;
   }
+
+  RenderFrameDevToolsAgentHost::OnNavigationRequestWillBeSent(*this);
 
   loader_->FollowRedirect();
 }

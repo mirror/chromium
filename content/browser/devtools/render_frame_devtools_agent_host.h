@@ -28,6 +28,10 @@ namespace net {
 class HttpRequestHeaders;
 }
 
+namespace network {
+struct URLLoaderCompletionStatus;
+}
+
 namespace viz {
 class CompositorFrameMetadata;
 }
@@ -43,6 +47,9 @@ class NavigationRequest;
 class NavigationThrottle;
 class RenderFrameHostImpl;
 
+struct CommonNavigationParams;
+struct ResourceResponse;
+
 class CONTENT_EXPORT RenderFrameDevToolsAgentHost
     : public DevToolsAgentHostImpl,
       private WebContentsObserver {
@@ -56,6 +63,11 @@ class CONTENT_EXPORT RenderFrameDevToolsAgentHost
   static void OnBeforeNavigation(RenderFrameHost* current,
                                  RenderFrameHost* pending);
   static void OnResetNavigationRequest(NavigationRequest* navigation_request);
+
+  static void OnNavigationRequestWillBeSent(const NavigationRequest& nav_request);
+  static void OnNavigationResponseReceived(const NavigationRequest& nav_request, const ResourceResponse& response);
+  static void OnNavigationRequestFailed(const NavigationRequest& nav_request, int error_code);
+  static void OnNavigationLoadingComplete(int frame_tree_node_id, const base::UnguessableToken& devtools_navigation_token, const network::URLLoaderCompletionStatus& status);
 
   static std::unique_ptr<NavigationThrottle> CreateThrottleForNavigation(
       NavigationHandle* navigation_handle);

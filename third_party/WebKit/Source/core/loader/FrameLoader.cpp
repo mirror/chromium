@@ -281,6 +281,7 @@ void FrameLoader::Init() {
       Client()->CreateDocumentLoader(frame_, initial_request, SubstituteData(),
                                      ClientRedirectPolicy::kNotClientRedirect,
                                      base::UnguessableToken::Create());
+  fprintf(stderr, "Created provisional loader: %s\n", provisional_document_loader_->GetDevToolsNavigationToken().ToString().c_str());
   provisional_document_loader_->StartLoading();
 
   frame_->GetDocument()->CancelParsing();
@@ -1549,6 +1550,7 @@ void FrameLoader::StartLoad(FrameLoadRequest& frame_load_request,
   provisional_document_loader_ =
       CreateDocumentLoader(resource_request, frame_load_request, type,
                            navigation_type, base::UnguessableToken::Create());
+  fprintf(stderr, "Created provisional loader: %s\n", provisional_document_loader_->GetDevToolsNavigationToken().ToString().c_str());
 
   // PlzNavigate: We need to ensure that script initiated navigations are
   // honored.

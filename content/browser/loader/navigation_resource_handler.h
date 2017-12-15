@@ -9,6 +9,7 @@
 
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
+#include "base/unguessable_token.h"
 #include "content/browser/loader/layered_resource_handler.h"
 #include "content/public/browser/stream_handle.h"
 
@@ -64,6 +65,7 @@ class NavigationResourceHandler : public LayeredResourceHandler {
   // NavigationResourceHandler has joint ownership of the
   // NavigationURLLoaderImplCore with the NavigationURLLoaderImpl.
   scoped_refptr<NavigationURLLoaderImplCore> core_;
+  base::UnguessableToken devtools_navigation_token_;
   std::unique_ptr<StreamHandle> stream_handle_;
   ResourceDispatcherHostDelegate* resource_dispatcher_host_delegate_;
 

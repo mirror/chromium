@@ -18,7 +18,8 @@ NavigationRequestInfo::NavigationRequestInfo(
     int frame_tree_node_id,
     bool is_for_guests_only,
     bool report_raw_headers,
-    blink::mojom::PageVisibilityState page_visibility_state)
+    blink::mojom::PageVisibilityState page_visibility_state,
+    const base::UnguessableToken& devtools_navigation_token)
     : common_params(common_params),
       begin_params(std::move(begin_params)),
       site_for_cookies(site_for_cookies),
@@ -28,7 +29,8 @@ NavigationRequestInfo::NavigationRequestInfo(
       frame_tree_node_id(frame_tree_node_id),
       is_for_guests_only(is_for_guests_only),
       report_raw_headers(report_raw_headers),
-      page_visibility_state(page_visibility_state) {}
+      page_visibility_state(page_visibility_state),
+      devtools_navigation_token(devtools_navigation_token) {}
 
 NavigationRequestInfo::~NavigationRequestInfo() {}
 

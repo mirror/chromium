@@ -120,8 +120,7 @@ void ServiceWorkerDevToolsAgentHost::NavigationPreloadRequestSent(
     const std::string& request_id,
     const ResourceRequest& request) {
   for (auto* network : protocol::NetworkHandler::ForAgentHost(this)) {
-    network->NavigationPreloadRequestSent(worker_id().first, request_id,
-                                          request);
+    network->NavigationRequestSent(request_id, "", request, protocol::Network::Initiator::TypeEnum::Preload);
   }
 }
 
@@ -130,8 +129,7 @@ void ServiceWorkerDevToolsAgentHost::NavigationPreloadResponseReceived(
     const GURL& url,
     const ResourceResponseHead& head) {
   for (auto* network : protocol::NetworkHandler::ForAgentHost(this)) {
-    network->NavigationPreloadResponseReceived(worker_id().first, request_id,
-                                               url, head);
+    network->NavigationResponseReceived(request_id, "", url, head);
   }
 }
 
@@ -139,7 +137,7 @@ void ServiceWorkerDevToolsAgentHost::NavigationPreloadCompleted(
     const std::string& request_id,
     const network::URLLoaderCompletionStatus& status) {
   for (auto* network : protocol::NetworkHandler::ForAgentHost(this))
-    network->NavigationPreloadCompleted(request_id, status);
+    network->NavigationLoadingComplete(request_id, status);
 }
 
 int64_t ServiceWorkerDevToolsAgentHost::service_worker_version_id() const {
