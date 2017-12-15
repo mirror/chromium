@@ -22,7 +22,6 @@ struct WebIDBValue;
 
 class MODULES_EXPORT IDBValue final : public RefCounted<IDBValue> {
  public:
-  static scoped_refptr<IDBValue> Create();
   static scoped_refptr<IDBValue> Create(const WebIDBValue&, v8::Isolate*);
   static scoped_refptr<IDBValue> Create(const IDBValue*,
                                         IDBKey*,
@@ -47,9 +46,10 @@ class MODULES_EXPORT IDBValue final : public RefCounted<IDBValue> {
   const IDBKeyPath& KeyPath() const { return key_path_; }
 
  private:
+  DISALLOW_COPY_AND_ASSIGN(IDBValue);
+
   friend class IDBValueUnwrapper;
 
-  IDBValue();
   IDBValue(const WebIDBValue&, v8::Isolate*);
   IDBValue(scoped_refptr<SharedBuffer>,
            const WebVector<WebBlobInfo>&,

@@ -14,8 +14,6 @@
 
 namespace blink {
 
-IDBValue::IDBValue() = default;
-
 IDBValue::IDBValue(const WebIDBValue& value, v8::Isolate* isolate)
     : IDBValue(value.data,
                value.web_blob_info,
@@ -76,10 +74,6 @@ IDBValue::IDBValue(
 IDBValue::~IDBValue() {
   if (isolate_)
     isolate_->AdjustAmountOfExternalAllocatedMemory(-external_allocated_size_);
-}
-
-scoped_refptr<IDBValue> IDBValue::Create() {
-  return base::AdoptRef(new IDBValue());
 }
 
 scoped_refptr<IDBValue> IDBValue::Create(const WebIDBValue& value,
