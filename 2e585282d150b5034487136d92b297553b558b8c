@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "914d729f_60618f14",
+        "filename": "third_party/WebKit/Source/core/html/HTMLCanvasElement.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 708,
+      "author": {
+        "id": 1149164
+      },
+      "writtenOn": "2017-12-15T20:42:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "42a5e237_9c27af43",
+      "range": {
+        "startLine": 708,
+        "startChar": 12,
+        "endLine": 708,
+        "endChar": 20
+      },
+      "revId": "2e585282d150b5034487136d92b297553b558b8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "14c8296c_1c0adfbd",
         "filename": "third_party/WebKit/Source/modules/webgl/WebGLRenderingContextBase.cpp",
         "patchSetId": 13
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "04be7c5d_1b87691b",
+        "filename": "third_party/WebKit/Source/modules/webgl/WebGLRenderingContextBase.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 1497,
+      "author": {
+        "id": 1149164
+      },
+      "writtenOn": "2017-12-15T20:42:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "14c8296c_1c0adfbd",
+      "range": {
+        "startLine": 1497,
+        "startChar": 6,
+        "endLine": 1497,
+        "endChar": 11
+      },
+      "revId": "2e585282d150b5034487136d92b297553b558b8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fac4df34_9de80144",
         "filename": "third_party/WebKit/Source/platform/graphics/StaticBitmapImage.cpp",
         "patchSetId": 13
@@ -68,6 +116,30 @@
       "revId": "2e585282d150b5034487136d92b297553b558b8c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e331928a_0236f177",
+        "filename": "third_party/WebKit/Source/platform/graphics/StaticBitmapImage.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1149164
+      },
+      "writtenOn": "2017-12-15T20:42:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fac4df34_9de80144",
+      "range": {
+        "startLine": 192,
+        "startChar": 13,
+        "endLine": 192,
+        "endChar": 18
+      },
+      "revId": "2e585282d150b5034487136d92b297553b558b8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
