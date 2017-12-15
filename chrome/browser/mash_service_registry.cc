@@ -18,24 +18,29 @@ namespace {
 struct Service {
   const char* name;
   const char* description;
+  const char* process_group;  // If null, uses a separate process.
 };
 
 constexpr Service kServices[] = {
-    {mash::quick_launch::mojom::kServiceName, "Quick Launch"},
-    {ui::mojom::kServiceName, "UI Service"},
-    {ash::mojom::kServiceName, "Ash Window Manager and Shell"},
-    {"accessibility_autoclick", "Ash Accessibility Autoclick"},
-    {"touch_hud", "Ash Touch Hud"},
-    {font_service::mojom::kServiceName, "Font Service"},
+    {mash::quick_launch::mojom::kServiceName, "Quick Launch", nullptr},
+    {ui::mojom::kServiceName, "UI Service", kAshAndUiProcessGroup},
+    {ash::mojom::kServiceName, "Ash Window Manager and Shell",
+     kAshAndUiProcessGroup},
+    {"accessibility_autoclick", "Ash Accessibility Autoclick", nullptr},
+    {"touch_hud", "Ash Touch Hud", nullptr},
+    {font_service::mojom::kServiceName, "Font Service", nullptr},
 };
 
 }  // namespace
 
 void RegisterOutOfProcessServices(
     content::ContentBrowserClient::OutOfProcessServiceMap* services) {
-  for (size_t i = 0; i < arraysize(kServices); ++i) {
-    (*services)[kServices[i].name] =
-        base::ASCIIToUTF16(kServices[i].description);
+  for (const auto& service : kServices) {
+    base::Optional<std::string> process_group;
+    if (service.process_group)
+      process_group.emplace(service.process_group);
+    (*services)[service.name] = {base::ASCIIToUTF16(service.description),
+                                 process_group};
   }
 }
 
