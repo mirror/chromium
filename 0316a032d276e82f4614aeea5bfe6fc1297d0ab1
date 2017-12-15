@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c5f98725_683036fd",
+        "filename": "cc/tiles/software_image_decode_cache.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-12-15T21:38:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "64781b65_4b35ee7c",
+      "range": {
+        "startLine": 132,
+        "startChar": 0,
+        "endLine": 140,
+        "endChar": 1
+      },
+      "revId": "0316a032d276e82f4614aeea5bfe6fc1297d0ab1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "274db993_ddabc8ea",
         "filename": "cc/tiles/software_image_decode_cache.cc",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-12-15T11:11:04Z",
       "side": 1,
       "message": "The comment needs updating? And I wonder if we can make a few things simpler in code here now. IIUC, here is the stages we would go through:\n\n1) kOriginal shouldn\u0027t reach here.\n2) kSubrectOriginal. There is no scale component, the candidate is the original decode from which the subset will be extracted. The candidate\u0027s processing type must be kOriginal.\n3) kSubrectAndScale. The candidate is a subset from the original decode which will be scaled below. So it should either be kOriginal or kSubrectOriginal depending on image size? Could we always do kOriginal instead and avoid the subtlety? I thought we don\u0027t do that in kSubrectOriginal cases to avoid locking the full decode throughout the draw op, but that won\u0027t be the case here. Or is there another reason we\u0027d want to do that here?",
+      "range": {
+        "startLine": 443,
+        "startChar": 6,
+        "endLine": 458,
+        "endChar": 36
+      },
+      "revId": "0316a032d276e82f4614aeea5bfe6fc1297d0ab1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9afbb70c_b3400a6f",
+        "filename": "cc/tiles/software_image_decode_cache.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-12-15T21:38:48Z",
+      "side": 1,
+      "message": "I\u0027ll be changing the logic in the next follow up patch that includes decode to scale.\n\nThe kSubrectAndScale case, the candidate can also be kSubrectAndScale with a different (larger) scale.",
+      "parentUuid": "274db993_ddabc8ea",
       "range": {
         "startLine": 443,
         "startChar": 6,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "77961931_01745d04",
+        "filename": "cc/tiles/software_image_decode_cache.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 483,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-12-15T21:38:48Z",
+      "side": 1,
+      "message": "I\u0027m not sure what DCHECK we could do.. It would only be used to check if the candidate type is Original?",
+      "parentUuid": "1480e0b0_92fc7109",
+      "range": {
+        "startLine": 483,
+        "startChar": 10,
+        "endLine": 483,
+        "endChar": 65
+      },
+      "revId": "0316a032d276e82f4614aeea5bfe6fc1297d0ab1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d6b2e396_4264e5e2",
         "filename": "cc/tiles/software_image_decode_cache.cc",
         "patchSetId": 2
@@ -88,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "d1689868_be06bb49",
+        "filename": "cc/tiles/software_image_decode_cache.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-12-15T21:38:48Z",
+      "side": 1,
+      "message": "The other two cases are either under the if or a dcheck below, so I\u0027m not sure what this adds.",
+      "parentUuid": "d6b2e396_4264e5e2",
+      "revId": "0316a032d276e82f4614aeea5bfe6fc1297d0ab1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7f5ccfc3_5e914ec3",
         "filename": "cc/tiles/software_image_decode_cache.cc",
         "patchSetId": 2
@@ -99,6 +189,30 @@
       "writtenOn": "2017-12-15T11:11:04Z",
       "side": 1,
       "message": "DCHECK that the candidate type is kOriginal?",
+      "range": {
+        "startLine": 551,
+        "startChar": 5,
+        "endLine": 551,
+        "endChar": 58
+      },
+      "revId": "0316a032d276e82f4614aeea5bfe6fc1297d0ab1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efb0fe1b_dace917e",
+        "filename": "cc/tiles/software_image_decode_cache.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 551,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-12-15T21:38:48Z",
+      "side": 1,
+      "message": "I DCHECKed that it needs to extract subset, which is an equivalent check",
+      "parentUuid": "7f5ccfc3_5e914ec3",
       "range": {
         "startLine": 551,
         "startChar": 5,
@@ -166,6 +280,30 @@
       "revId": "0316a032d276e82f4614aeea5bfe6fc1297d0ab1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "955b1f6f_b30caf95",
+        "filename": "cc/tiles/software_image_decode_cache.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-12-15T21:38:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "21d8b68a_7eeb2304",
+      "range": {
+        "startLine": 37,
+        "startChar": 24,
+        "endLine": 37,
+        "endChar": 69
+      },
+      "revId": "0316a032d276e82f4614aeea5bfe6fc1297d0ab1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
