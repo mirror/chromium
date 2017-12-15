@@ -6,6 +6,7 @@
 #include "chrome/browser/chrome_notification_types.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
+#include "chrome/browser/ui/test/test_browser_dialog.h"
 #include "chrome/common/url_constants.h"
 #include "chrome/test/base/in_process_browser_test.h"
 #include "chrome/test/base/ui_test_utils.h"
@@ -17,7 +18,31 @@
 
 using web_modal::WebContentsModalDialogManager;
 
-typedef InProcessBrowserTest RepostFormWarningTest;
+class RepostFormWarningTest : public DialogBrowserTest {
+ public:
+  RepostFormWarningTest() {}
+
+  void ShowDialog(const std::string& name) override;
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(ReportFormWarningTest);
+};
+
+void RepostFormWarningTest::ShowDialog(const std::string& name) {
+  ASSERT_TRUE(embedded_test_server()->Start());
+
+  // Load a form.
+  ui_test_utils::NavigateToURL(browser(),
+                               embedded_test_server()->GetURL("/form.html"));
+  // Submit it.
+  ui_test_utils::NavigateToURL(
+      browser(), GURL("javascript:document.getElementById('form').submit()"));
+
+  // Try to reload it, checking for repost.
+  content::WebContents* web_contents =
+      browser()->tab_strip_model()->GetActiveWebContents();
+  web_contents->GetController().Reload(content::ReloadType::NORMAL, true);
+}
 
 // If becomes flaky, disable on Windows and use http://crbug.com/47228
 IN_PROC_BROWSER_TEST_F(RepostFormWarningTest, TestDoubleReload) {
@@ -89,4 +114,8 @@ IN_PROC_BROWSER_TEST_F(RepostFormWarningTest, TestLoginAfterRepost) {
       embedded_test_server()->GetURL("/bar"), content::Referrer(),
       WindowOpenDisposition::CURRENT_TAB, ui::PAGE_TRANSITION_TYPED, false));
   navigation_observer.Wait();
+}
+
+IN_PROC_BROWSER_TEST_F(RepostFormWarningTest, InvokeDialog_TestRepostWarning) {
+  RunDialog();
 }
