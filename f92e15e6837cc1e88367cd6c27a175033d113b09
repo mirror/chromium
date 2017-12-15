@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "e8a24e15_37e7aa94",
+        "filename": "components/autofill/ios/browser/resources/autofill_controller.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 650,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-12-15T23:44:01Z",
+      "side": 1,
+      "message": "Can we pass a flag into this function to control whether or not the delay is applied? So we can play with it a bit?",
+      "revId": "f92e15e6837cc1e88367cd6c27a175033d113b09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9c54f8c7_56456631",
         "filename": "components/autofill/ios/browser/resources/autofill_controller.js",
         "patchSetId": 1
