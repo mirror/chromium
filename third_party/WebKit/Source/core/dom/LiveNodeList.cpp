@@ -50,6 +50,14 @@ void LiveNodeList::InvalidateCache(Document*) const {
   collection_items_cache_.Invalidate();
 }
 
+void LiveNodeList::InvalidateAndDisableCache() const {
+  collection_items_cache_.InvalidateAndDisable();
+}
+
+void LiveNodeList::EnableCache() const {
+  collection_items_cache_.Enable();
+}
+
 unsigned LiveNodeList::length() const {
   return collection_items_cache_.NodeCount(*this);
 }

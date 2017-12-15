@@ -7037,6 +7037,16 @@ void Document::InvalidateNodeListCaches(const QualifiedName* attr_name) {
     list->InvalidateCacheForAttribute(attr_name);
 }
 
+void Document::InvalidateAndDisableNodeListCaches() {
+  for (const LiveNodeListBase* list : lists_invalidated_at_document_)
+    list->InvalidateAndDisableCache();
+}
+
+void Document::EnableNodeListCaches() {
+  for (const LiveNodeListBase* list : lists_invalidated_at_document_)
+    list->EnableCache();
+}
+
 void Document::PlatformColorsChanged() {
   if (!IsActive())
     return;

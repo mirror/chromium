@@ -183,6 +183,8 @@ HTMLCollection::HTMLCollection(ContainerNode& owner_node,
   // tracing and potentially calls virtual methods which is not allowed in a
   // base class constructor.
   GetDocument().RegisterNodeList(this);
+  if (owner_node.NodeListCachesInAncestorsAreDisabled())
+    collection_items_cache_.Disable();
 }
 
 HTMLCollection* HTMLCollection::Create(ContainerNode& base,
@@ -195,6 +197,16 @@ HTMLCollection::~HTMLCollection() {}
 void HTMLCollection::InvalidateCache(Document* old_document) const {
   collection_items_cache_.Invalidate();
   InvalidateIdNameCacheMaps(old_document);
+}
+
+void HTMLCollection::InvalidateAndDisableCache() const {
+  collection_items_cache_.InvalidateAndDisable();
+  InvalidateIdNameCacheMaps();
+}
+
+void HTMLCollection::EnableCache() const {
+  collection_items_cache_.Enable();
+  named_item_cache_.Clear();
 }
 
 unsigned HTMLCollection::length() const {
@@ -485,7 +497,7 @@ void HTMLCollection::NamedPropertyEnumerator(Vector<String>& names,
 }
 
 void HTMLCollection::UpdateIdNameCache() const {
-  if (HasValidIdNameCache())
+  if (HasValidIdNameCache() && !collection_items_cache_.IsDisabled())
     return;
 
   NamedItemCache* cache = NamedItemCache::Create();

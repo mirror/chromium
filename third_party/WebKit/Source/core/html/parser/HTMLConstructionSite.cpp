@@ -362,6 +362,8 @@ void HTMLConstructionSite::InitFragmentParsing(DocumentFragment* fragment,
 
   attachment_root_ = fragment;
   is_parsing_fragment_ = true;
+  context_element_has_caches_disabled_ =
+      context_element->NodeListCachesInAncestorsAreDisabled();
 
   if (!context_element->GetDocument().IsTemplateDocument())
     form_ = Traversal<HTMLFormElement>::FirstAncestorOrSelf(*context_element);
@@ -962,6 +964,9 @@ Element* HTMLConstructionSite::CreateElement(
     // "8. Append each attribute in the given token to element."
     SetAttributes(element, token, parser_content_policy_);
   }
+
+  element->SetNodeListCachesInAncestorsAreDisabled(
+      context_element_has_caches_disabled_);
 
   return element;
 }

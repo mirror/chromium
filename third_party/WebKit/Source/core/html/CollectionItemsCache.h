@@ -55,6 +55,7 @@ class CollectionItemsCache : public CollectionIndexCache<Collection, NodeType> {
   unsigned NodeCount(const Collection&);
   NodeType* NodeAt(const Collection&, unsigned index);
   void Invalidate();
+  void InvalidateAndDisable();
 
  private:
   bool list_valid_;
@@ -77,11 +78,21 @@ void CollectionItemsCache<Collection, NodeType>::Invalidate() {
   }
 }
 
+template <typename Collection, typename NodeType>
+void CollectionItemsCache<Collection, NodeType>::InvalidateAndDisable() {
+  Invalidate();
+  Base::Disable();
+}
+
 template <class Collection, class NodeType>
 unsigned CollectionItemsCache<Collection, NodeType>::NodeCount(
     const Collection& collection) {
   if (this->IsCachedNodeCountValid())
     return this->CachedNodeCount();
+
+  if (Base::IsDisabled()) {
+    return Base::NodeCount(collection);
+  }
 
   NodeType* current_node = collection.TraverseToFirst();
   unsigned current_index = 0;
@@ -101,6 +112,7 @@ inline NodeType* CollectionItemsCache<Collection, NodeType>::NodeAt(
     const Collection& collection,
     unsigned index) {
   if (list_valid_) {
+    DCHECK(!Base::IsDisabled());
     DCHECK(this->IsCachedNodeCountValid());
     return index < this->CachedNodeCount() ? cached_list_[index] : nullptr;
   }

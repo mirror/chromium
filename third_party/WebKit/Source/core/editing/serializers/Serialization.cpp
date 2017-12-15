@@ -608,6 +608,8 @@ DocumentFragment* CreateFragmentForInnerOuterHTML(
   DocumentFragment* fragment = DocumentFragment::Create(document);
 
   if (document.IsHTMLDocument()) {
+    fragment->SetNodeListCachesInAncestorsAreDisabled(
+        context_element->NodeListCachesInAncestorsAreDisabled());
     fragment->ParseHTML(markup, context_element, parser_content_policy);
     return fragment;
   }

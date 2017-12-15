@@ -36,6 +36,20 @@ void LiveNodeListBase::InvalidateCacheForAttribute(
     ToHTMLCollection(this)->InvalidateCacheForAttribute(attr_name);
 }
 
+void LiveNodeListBase::InvalidateAndDisableCache() const {
+  if (IsLiveNodeListType(GetType()))
+    ToLiveNodeList(this)->InvalidateAndDisableCache();
+  else
+    ToHTMLCollection(this)->InvalidateAndDisableCache();
+}
+
+void LiveNodeListBase::EnableCache() const {
+  if (IsLiveNodeListType(GetType()))
+    ToLiveNodeList(this)->EnableCache();
+  else
+    ToHTMLCollection(this)->EnableCache();
+}
+
 ContainerNode& LiveNodeListBase::RootNode() const {
   if (IsRootedAtTreeScope() && owner_node_->IsInTreeScope())
     return owner_node_->ContainingTreeScope().RootNode();

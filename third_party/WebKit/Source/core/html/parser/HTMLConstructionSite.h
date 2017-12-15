@@ -334,6 +334,7 @@ class HTMLConstructionSite final {
 
   ParserContentPolicy parser_content_policy_;
   bool is_parsing_fragment_;
+  bool context_element_has_caches_disabled_ = false;
 
   // http://www.whatwg.org/specs/web-apps/current-work/multipage/tokenization.html#parsing-main-intable
   // In the "in table" insertion mode, we sometimes get into a state where

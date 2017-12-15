@@ -28,7 +28,10 @@
 
 namespace blink {
 
-ChildNodeList::ChildNodeList(ContainerNode& parent) : parent_(parent) {}
+ChildNodeList::ChildNodeList(ContainerNode& parent) : parent_(parent) {
+  if (parent.NodeListCachesInAncestorsAreDisabled())
+    collection_index_cache_.Disable();
+}
 
 Node* ChildNodeList::VirtualOwnerNode() const {
   return &OwnerNode();

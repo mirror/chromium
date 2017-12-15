@@ -139,6 +139,8 @@ class NodeListsNodeData final : public GarbageCollected<NodeListsNodeData> {
   static NodeListsNodeData* Create() { return new NodeListsNodeData; }
 
   void InvalidateCaches(const QualifiedName* attr_name = nullptr);
+  void InvalidateAndDisableCaches();
+  void EnableCaches();
 
   bool IsEmpty() const {
     return !child_node_list_ && atomic_name_caches_.IsEmpty() &&

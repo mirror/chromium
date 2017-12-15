@@ -45,6 +45,22 @@ void NodeListsNodeData::InvalidateCaches(const QualifiedName* attr_name) {
     cache.value->InvalidateCache();
 }
 
+void NodeListsNodeData::InvalidateAndDisableCaches() {
+  for (const auto& cache : atomic_name_caches_)
+    cache.value->InvalidateAndDisableCache();
+
+  for (auto& cache : tag_collection_ns_caches_)
+    cache.value->InvalidateAndDisableCache();
+}
+
+void NodeListsNodeData::EnableCaches() {
+  for (const auto& cache : atomic_name_caches_)
+    cache.value->EnableCache();
+
+  for (auto& cache : tag_collection_ns_caches_)
+    cache.value->EnableCache();
+}
+
 void NodeListsNodeData::Trace(blink::Visitor* visitor) {
   visitor->Trace(child_node_list_);
   visitor->Trace(atomic_name_caches_);
