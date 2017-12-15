@@ -1703,6 +1703,10 @@ IPC_MESSAGE_ROUTED2(FrameHostMsg_GetNearestFindResult_Reply,
                     float /* distance */)
 #endif
 
+// Notifies the remote frame that its graphics are gone and next time that it's
+// visible it must fully redraw into a new viz::LocalSurfaceId.
+IPC_MESSAGE_ROUTED0(FrameHostMsg_WasEvicted)
+
 // Adding a new message? Stick to the sort order above: first platform
 // independent FrameMsg, then ifdefs for platform specific FrameMsg, then
 // platform independent FrameHostMsg, then ifdefs for platform specific

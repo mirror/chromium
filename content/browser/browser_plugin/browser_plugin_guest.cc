@@ -314,6 +314,7 @@ bool BrowserPluginGuest::OnMessageReceivedFromEmbedder(
                         OnUpdateResizeParams)
     IPC_MESSAGE_HANDLER(BrowserPluginHostMsg_SatisfySequence, OnSatisfySequence)
     IPC_MESSAGE_HANDLER(BrowserPluginHostMsg_RequireSequence, OnRequireSequence)
+    IPC_MESSAGE_HANDLER(BrowserPluginHostMsg_WasEvicted, OnWasEvicted);
     IPC_MESSAGE_UNHANDLED(handled = false)
   IPC_END_MESSAGE_MAP()
   return handled;
@@ -1174,6 +1175,14 @@ void BrowserPluginGuest::OnImeCompositionRangeChanged(
 void BrowserPluginGuest::SetContextMenuPosition(const gfx::Point& position) {
   if (delegate_)
     delegate_->SetContextMenuPosition(position);
+}
+
+void BrowserPluginGuest::OnWasEvicted(int browser_plugin_instance_id) {
+  RenderWidgetHostViewGuest* view = static_cast<RenderWidgetHostViewGuest*>(
+      web_contents()->GetRenderWidgetHostView());
+  if (!view)
+    return;
+  view->WasEvicted();
 }
 
 }  // namespace content

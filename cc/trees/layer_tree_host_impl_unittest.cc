@@ -9201,8 +9201,7 @@ void ExpectFullDamageAndDraw(LayerTreeHostImpl* host_impl) {
 }
 }  // namespace
 
-TEST_F(LayerTreeHostImplTestDrawAndTestDamage,
-       RequireHighResAndRedrawWhenVisible) {
+TEST_F(LayerTreeHostImplTestDrawAndTestDamage, RequireHighResWhenVisible) {
   ASSERT_TRUE(host_impl_->active_tree());
 
   std::unique_ptr<SolidColorLayerImpl> root =
@@ -9233,9 +9232,31 @@ TEST_F(LayerTreeHostImplTestDrawAndTestDamage,
   did_request_redraw_ = false;
   host_impl_->SetVisible(true);
   EXPECT_TRUE(host_impl_->RequiresHighResToDraw());
-  // Expect redraw and full frame damage when becoming visible.
+}
+
+// Verifies that SetNeedsRedrawIntoNewSurface will set full damage, request
+// redraw, and notify LayerTreeFrameSink.
+TEST_F(LayerTreeHostImplTestDrawAndTestDamage, SetNeedsRedrawIntoNewSurface) {
+  ASSERT_TRUE(host_impl_->active_tree());
+
+  std::unique_ptr<SolidColorLayerImpl> root =
+      SolidColorLayerImpl::Create(host_impl_->active_tree(), 1);
+  root->SetBackgroundColor(SK_ColorRED);
+  SetupRootLayerImpl(std::move(root));
+
+  host_impl_->active_tree()->BuildPropertyTreesForTesting();
+
+  auto* sink =
+      static_cast<FakeLayerTreeFrameSink*>(host_impl_->layer_tree_frame_sink());
+
+  did_request_redraw_ = false;
+  sink->reset_needs_new_surface();
+
+  host_impl_->SetNeedsRedrawIntoNewSurface();
+
   EXPECT_TRUE(did_request_redraw_);
   EXPECT_SCOPED(ExpectFullDamageAndDraw(host_impl_.get()));
+  EXPECT_TRUE(sink->needs_new_surface());
 }
 
 TEST_F(LayerTreeHostImplTest, RequireHighResAfterGpuRasterizationToggles) {

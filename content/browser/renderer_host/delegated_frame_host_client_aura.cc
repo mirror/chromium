@@ -102,4 +102,8 @@ void DelegatedFrameHostClientAura::CompositorResizeLockEnded() {
   render_widget_host_view_->host_->WasResized();
 }
 
+void DelegatedFrameHostClientAura::WasEvicted() {
+  render_widget_host_view_->WasEvicted();
+}
+
 }  // namespace content
