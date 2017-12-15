@@ -16,6 +16,7 @@
 #include "chrome/browser/supervised_user/legacy/supervised_user_registration_utility_stub.h"
 #include "chromeos/cryptohome/mock_async_method_caller.h"
 #include "chromeos/cryptohome/mock_homedir_methods.h"
+#include "chromeos/dbus/fake_cryptohome_client.h"
 #include "components/sync/model/fake_sync_change_processor.h"
 #include "components/sync/model/sync_change.h"
 #include "components/sync/model/sync_error_factory_mock.h"
@@ -95,8 +96,7 @@ class SupervisedUserTestBase : public chromeos::LoginManagerTest {
   void FillNewUserData(const std::string& display_name);
   void StartUserCreation(const std::string& button_id,
                          const std::string& expected_display_name);
-  void SigninAsSupervisedUser(bool check_homedir_calls,
-                              int user_index,
+  void SigninAsSupervisedUser(int user_index,
                               const std::string& expected_display_name);
   void SigninAsManager(int user_index);
   void RemoveSupervisedUser(size_t original_user_count,
@@ -105,6 +105,7 @@ class SupervisedUserTestBase : public chromeos::LoginManagerTest {
 
   cryptohome::MockAsyncMethodCaller* mock_async_method_caller_;
   cryptohome::MockHomedirMethods* mock_homedir_methods_;
+  FakeCryptohomeClient* fake_cryptohome_client_ = nullptr;
   NetworkPortalDetectorTestImpl* network_portal_detector_;
   SupervisedUserRegistrationUtilityStub* registration_utility_stub_;
   std::unique_ptr<ScopedTestingSupervisedUserRegistrationUtility>
