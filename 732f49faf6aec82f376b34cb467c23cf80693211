@@ -133,6 +133,30 @@
     },
     {
       "key": {
+        "uuid": "41e2ce76_e6c67beb",
+        "filename": "net/socket/ssl_server_socket_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-12-15T00:29:53Z",
+      "side": 1,
+      "message": "(Sorry, disregard this comment in favor of the analogous one in the cc file. I forgot to delete this one when I moved it to the .cc file after I saw the index thing.)",
+      "parentUuid": "675077fb_a3583b72",
+      "range": {
+        "startLine": 35,
+        "startChar": 8,
+        "endLine": 35,
+        "endChar": 18
+      },
+      "revId": "732f49faf6aec82f376b34cb467c23cf80693211",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "08e8c13b_d3aaa07f",
         "filename": "net/socket/ssl_server_socket_unittest.cc",
         "patchSetId": 1
