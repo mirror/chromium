@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9b947ba6_29cc0453",
+        "filename": "chrome/browser/browser_process_platform_part_chromeos.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1178302
+      },
+      "writtenOn": "2017-12-15T18:53:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "74403cf1_ab63662e",
+      "range": {
+        "startLine": 106,
+        "startChar": 19,
+        "endLine": 106,
+        "endChar": 36
+      },
+      "revId": "d5ebd449549ed9d24efa3763fd79dc3385960c28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9d930b4f_d5d07f05",
         "filename": "chrome/browser/browser_process_platform_part_chromeos.cc",
         "patchSetId": 5
@@ -36,6 +60,30 @@
       "writtenOn": "2017-12-15T00:43:29Z",
       "side": 1,
       "message": "How do you know cros_component remains valid? Might it be possible for a quick shutdown to destroy cros_component_ before the task runs? Also, this operation seems specific to cros_component_. Is there a reason this needs to be here vs say in the cros_component constructor or some init function?",
+      "range": {
+        "startLine": 109,
+        "startChar": 2,
+        "endLine": 114,
+        "endChar": 58
+      },
+      "revId": "d5ebd449549ed9d24efa3763fd79dc3385960c28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e67a9889_9fc7f48e",
+        "filename": "chrome/browser/browser_process_platform_part_chromeos.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1178302
+      },
+      "writtenOn": "2017-12-15T18:53:57Z",
+      "side": 1,
+      "message": "I moved this into one RegisterInstalled (functions as Init but with more specific meaning). RegisterN has to be called on UI thread and that\u0027s why I split this into 2 parts and use PostTaskWithTraitsAndReplyWithResult.\n\nRegisterInstalled does IO (searching in a folder non-recursively for installed components folder name) so I hesitate to do it in constructor. It takes little time to finish and cros_component_ is always non-null before ShutdownCrosComponent is called. In a quick shutdown (ShutdownCrosComponent is called), it should be fine since the operation (RegisterInstalled) is no longer needed.",
+      "parentUuid": "9d930b4f_d5d07f05",
       "range": {
         "startLine": 109,
         "startChar": 2,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "633cecb2_9947b66b",
+        "filename": "chrome/browser/browser_process_platform_part_chromeos.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1178302
+      },
+      "writtenOn": "2017-12-15T18:53:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "66e5165f_4950241b",
+      "range": {
+        "startLine": 12,
+        "startChar": 11,
+        "endLine": 12,
+        "endChar": 33
+      },
+      "revId": "d5ebd449549ed9d24efa3763fd79dc3385960c28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a1f2d4c_92f66673",
         "filename": "chrome/browser/chromeos/chrome_browser_main_chromeos.cc",
         "patchSetId": 5
@@ -82,6 +154,30 @@
       "writtenOn": "2017-12-15T00:43:29Z",
       "side": 1,
       "message": "Why do you need to explicitly shut this down here?",
+      "range": {
+        "startLine": 1240,
+        "startChar": 2,
+        "endLine": 1240,
+        "endChar": 62
+      },
+      "revId": "d5ebd449549ed9d24efa3763fd79dc3385960c28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69dec00e_b7dd4a26",
+        "filename": "chrome/browser/chromeos/chrome_browser_main_chromeos.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1240,
+      "author": {
+        "id": 1178302
+      },
+      "writtenOn": "2017-12-15T18:53:57Z",
+      "side": 1,
+      "message": "It resets cros_component_ pointer.\nIn future, I plan to add more operations (unmount component images, etc.).",
+      "parentUuid": "3a1f2d4c_92f66673",
       "range": {
         "startLine": 1240,
         "startChar": 2,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "2efedeae_145ef6f8",
+        "filename": "chrome/browser/component_updater/cros_component_installer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1178302
+      },
+      "writtenOn": "2017-12-15T18:53:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "01379ad1_087270a9",
+      "range": {
+        "startLine": 86,
+        "startChar": 2,
+        "endLine": 86,
+        "endChar": 11
+      },
+      "revId": "d5ebd449549ed9d24efa3763fd79dc3385960c28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d719f634_7bad5f82",
         "filename": "chrome/browser/component_updater/cros_component_installer.h",
         "patchSetId": 5
@@ -137,6 +257,30 @@
       "revId": "d5ebd449549ed9d24efa3763fd79dc3385960c28",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6d3105d_752a148e",
+        "filename": "chrome/browser/component_updater/cros_component_installer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1178302
+      },
+      "writtenOn": "2017-12-15T18:53:57Z",
+      "side": 1,
+      "message": "Done\n\nAdded a CrOSComponentBase. Since not all functions are worth mocking, so I have only 2 pure virtual functions in CrOSComponentBase.",
+      "parentUuid": "d719f634_7bad5f82",
+      "range": {
+        "startLine": 129,
+        "startChar": 2,
+        "endLine": 129,
+        "endChar": 10
+      },
+      "revId": "d5ebd449549ed9d24efa3763fd79dc3385960c28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
