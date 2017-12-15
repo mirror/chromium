@@ -17,7 +17,7 @@ bool PathProvider(int key, base::FilePath* result) {
   switch (key) {
     case DIR_CAST_HOME: {
       base::FilePath home = base::GetHomeDir();
-#if defined(ARCH_CPU_ARMEL)
+#if !defined(CAST_DESKTOP_BUILD)
       // When running on the actual device, $HOME is set to the user's
       // directory under the data partition.
       *result = home;
