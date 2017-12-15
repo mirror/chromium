@@ -16,6 +16,24 @@
       "revId": "64a64ad0f1a1101653e88c676e8849bca58d1b4f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59f80b0f_c98794c5",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-display/display-contents-button.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1251514
+      },
+      "writtenOn": "2017-12-15T12:17:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3714d16d_aaf29052",
+      "revId": "64a64ad0f1a1101653e88c676e8849bca58d1b4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
