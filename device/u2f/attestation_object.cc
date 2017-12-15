@@ -2,15 +2,15 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "content/browser/webauth/attestation_object.h"
+#include "device/u2f/attestation_object.h"
 
 #include <utility>
 
 #include "components/cbor/cbor_values.h"
 #include "components/cbor/cbor_writer.h"
-#include "content/browser/webauth/attestation_statement.h"
+#include "device/u2f/attestation_statement.h"
 
-namespace content {
+namespace device {
 
 namespace {
 constexpr char kAuthDataKey[] = "authData";
@@ -32,13 +32,10 @@ std::vector<uint8_t> AttestationObject::SerializeToCBOREncodedBytes() {
       cbor::CBORValue(authenticator_data_->SerializeToByteArray());
   map[kAttestationKey] =
       cbor::CBORValue(attestation_statement_->GetAsCBORMap());
-  auto cbor = cbor::CBORWriter::Write(cbor::CBORValue(map));
-  if (cbor.has_value()) {
-    return cbor.value();
-  }
-  return std::vector<uint8_t>();
+  return cbor::CBORWriter::Write(cbor::CBORValue(map))
+      .value_or(std::vector<uint8_t>());
 }
 
 AttestationObject::~AttestationObject() {}
 
-}  // namespace content
+}  // namespace device

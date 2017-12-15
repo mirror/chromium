@@ -19,6 +19,10 @@ using ::testing::_;
 
 namespace device {
 
+namespace {
+constexpr char kTestRelyingPartyId[] = "google.com";
+}
+
 class U2fSignTest : public testing::Test {
  public:
   U2fSignTest()
@@ -76,9 +80,9 @@ TEST_F(U2fSignTest, TestSignSuccess) {
           testing::Invoke(&discovery, &MockU2fDiscovery::StartSuccessAsync));
   TestSignCallback cb;
 
-  std::unique_ptr<U2fRequest> request =
-      U2fSign::TrySign(handles, std::vector<uint8_t>(32),
-                       std::vector<uint8_t>(32), {&discovery}, cb.callback());
+  std::unique_ptr<U2fRequest> request = U2fSign::TrySign(
+      handles, std::vector<uint8_t>(32), std::vector<uint8_t>(32),
+      kTestRelyingPartyId, {&discovery}, cb.callback());
 
   discovery.AddDevice(std::move(device));
   std::tuple<U2fReturnCode, std::vector<uint8_t>, std::vector<uint8_t>>&
@@ -113,9 +117,9 @@ TEST_F(U2fSignTest, TestDelayedSuccess) {
           testing::Invoke(&discovery, &MockU2fDiscovery::StartSuccessAsync));
   TestSignCallback cb;
 
-  std::unique_ptr<U2fRequest> request =
-      U2fSign::TrySign(handles, std::vector<uint8_t>(32),
-                       std::vector<uint8_t>(32), {&discovery}, cb.callback());
+  std::unique_ptr<U2fRequest> request = U2fSign::TrySign(
+      handles, std::vector<uint8_t>(32), std::vector<uint8_t>(32),
+      kTestRelyingPartyId, {&discovery}, cb.callback());
   request->Start();
   discovery.AddDevice(std::move(device));
   std::tuple<U2fReturnCode, std::vector<uint8_t>, std::vector<uint8_t>>&
@@ -158,9 +162,9 @@ TEST_F(U2fSignTest, TestMultipleHandles) {
           testing::Invoke(&discovery, &MockU2fDiscovery::StartSuccessAsync));
 
   TestSignCallback cb;
-  std::unique_ptr<U2fRequest> request =
-      U2fSign::TrySign(handles, std::vector<uint8_t>(32),
-                       std::vector<uint8_t>(32), {&discovery}, cb.callback());
+  std::unique_ptr<U2fRequest> request = U2fSign::TrySign(
+      handles, std::vector<uint8_t>(32), std::vector<uint8_t>(32),
+      kTestRelyingPartyId, {&discovery}, cb.callback());
   discovery.AddDevice(std::move(device));
   std::tuple<U2fReturnCode, std::vector<uint8_t>, std::vector<uint8_t>>&
       response = cb.WaitForCallback();
@@ -202,9 +206,9 @@ TEST_F(U2fSignTest, TestMultipleDevices) {
           testing::Invoke(&discovery, &MockU2fDiscovery::StartSuccessAsync));
 
   TestSignCallback cb;
-  std::unique_ptr<U2fRequest> request =
-      U2fSign::TrySign(handles, std::vector<uint8_t>(32),
-                       std::vector<uint8_t>(32), {&discovery}, cb.callback());
+  std::unique_ptr<U2fRequest> request = U2fSign::TrySign(
+      handles, std::vector<uint8_t>(32), std::vector<uint8_t>(32),
+      kTestRelyingPartyId, {&discovery}, cb.callback());
   discovery.AddDevice(std::move(device0));
   discovery.AddDevice(std::move(device1));
   std::tuple<U2fReturnCode, std::vector<uint8_t>, std::vector<uint8_t>>&
@@ -249,21 +253,15 @@ TEST_F(U2fSignTest, TestFakeEnroll) {
           testing::Invoke(&discovery, &MockU2fDiscovery::StartSuccessAsync));
 
   TestSignCallback cb;
-  std::unique_ptr<U2fRequest> request =
-      U2fSign::TrySign(handles, std::vector<uint8_t>(32),
-                       std::vector<uint8_t>(32), {&discovery}, cb.callback());
+  std::unique_ptr<U2fRequest> request = U2fSign::TrySign(
+      handles, std::vector<uint8_t>(32), std::vector<uint8_t>(32),
+      kTestRelyingPartyId, {&discovery}, cb.callback());
   request->Start();
   discovery.AddDevice(std::move(device0));
   discovery.AddDevice(std::move(device1));
   std::tuple<U2fReturnCode, std::vector<uint8_t>, std::vector<uint8_t>>&
       response = cb.WaitForCallback();
   EXPECT_EQ(U2fReturnCode::SUCCESS, std::get<0>(response));
-
-  // Device that responded had no correct keys, so a registration response is
-  // expected.
-  ASSERT_GE(1u, std::get<1>(response).size());
-  EXPECT_EQ(static_cast<uint8_t>(MockU2fDevice::kRegister),
-            std::get<1>(response)[0]);
 
   // Verify that we get a blank key handle for the key that was registered.
   EXPECT_TRUE(std::get<2>(response).empty());
