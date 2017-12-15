@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b59ecf2d_524b4820",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/device_keyboard_handler_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-15T21:30:01Z",
+      "side": 1,
+      "message": "This is necessitated by SetKeyboardDevices now calling the real functions rather than directly setting a member. Without this change the code early outs because the ids are the same.",
+      "range": {
+        "startLine": 128,
+        "startChar": 7,
+        "endLine": 128,
+        "endChar": 8
+      },
+      "revId": "687e21fdc20599606ef54d665293f798dab30595",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
