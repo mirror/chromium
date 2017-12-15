@@ -101,7 +101,7 @@ class PerfContextProvider : public viz::ContextProvider {
     return gpu_feature_info_;
   }
   gpu::gles2::GLES2Interface* ContextGL() override { return context_gl_.get(); }
-  gpu::raster::RasterInterface* RasterContext() override {
+  gpu::raster::RasterInterface* RasterInterface() override {
     return raster_context_.get();
   }
   gpu::ContextSupport* ContextSupport() override { return &support_; }
@@ -315,7 +315,7 @@ class RasterBufferProviderPerfTestBase {
 
  protected:
   scoped_refptr<viz::ContextProvider> compositor_context_provider_;
-  scoped_refptr<viz::ContextProvider> worker_context_provider_;
+  scoped_refptr<viz::RasterContextProvider> worker_context_provider_;
   std::unique_ptr<LayerTreeResourceProvider> resource_provider_;
   scoped_refptr<base::TestSimpleTaskRunner> task_runner_;
   std::unique_ptr<SynchronousTaskGraphRunner> task_graph_runner_;
