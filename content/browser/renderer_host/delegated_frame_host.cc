@@ -633,6 +633,7 @@ void DelegatedFrameHost::EvictDelegatedFrame() {
     return;
   }
 
+  client_->WasEvicted();
   client_->DelegatedFrameHostGetLayer()->SetShowSolidColorContent();
   support_->EvictCurrentSurface();
   resize_lock_.reset();

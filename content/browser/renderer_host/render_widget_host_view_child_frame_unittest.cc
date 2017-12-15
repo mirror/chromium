@@ -282,6 +282,16 @@ TEST_F(RenderWidgetHostViewChildFrameTest, ViewportIntersectionUpdated) {
   EXPECT_EQ(intersection_rect, std::get<0>(sent_rect));
 }
 
+// Test that the child frame's renderer will be notified when evicted.
+TEST_F(RenderWidgetHostViewChildFrameTest, WasEvicted) {
+  MockRenderProcessHost* process =
+      static_cast<MockRenderProcessHost*>(widget_host_->GetProcess());
+  EXPECT_FALSE(
+      process->sink().GetUniqueMessageMatching(ViewMsg_WasEvicted::ID));
+  view_->WasEvicted();
+  EXPECT_TRUE(process->sink().GetUniqueMessageMatching(ViewMsg_WasEvicted::ID));
+}
+
 // Tests specific to non-scroll-latching behaviour.
 // TODO(mcnee): Remove once scroll-latching lands. crbug.com/526463
 class RenderWidgetHostViewChildFrameScrollLatchingDisabledTest

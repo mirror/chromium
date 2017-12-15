@@ -227,4 +227,8 @@ void ClientLayerTreeFrameSink::OnMojoConnectionError(
     client_->DidLoseLayerTreeFrameSink();
 }
 
+void ClientLayerTreeFrameSink::SetNeedsNewSurface() {
+  local_surface_id_provider_->SetNeedsNewSurface();
+}
+
 }  // namespace viz
