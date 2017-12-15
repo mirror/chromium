@@ -34,6 +34,24 @@
       "revId": "3fc357793d72ba064922d7712fa7eadff67a0668",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56da4a44_fc104406",
+        "filename": "media/gpu/windows/d3d11_h264_accelerator.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-12-15T09:07:31Z",
+      "side": 1,
+      "message": "Could we perhaps run H264Decoder on its own thread, and when it calls this method on its thread, PostTask from here to the GPU main with a WaitableEvent, and wait on it here?\n\nThe task on the gpu main could then attempt to call DecoderBeginFrame, and if needed to retry, keep reposting itself using PostDelayedTask back to gpu main, and once successful, stop reposting, signal the WaitableEvent waking up this method and letting decoder thread resume, returning to H264Decoder?",
+      "parentUuid": "7978810e_e74736b8",
+      "revId": "3fc357793d72ba064922d7712fa7eadff67a0668",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
