@@ -18,6 +18,17 @@ source_set("lib") {
     "//mojo/public/cpp/bindings",
   ]
 
+  if (is_win) {
+    sources += [
+      "pdf_to_emf_converter.cc",
+      "pdf_to_emf_converter.h",
+      "pdf_to_emf_converter_factory.cc",
+      "pdf_to_emf_converter_factory.h",
+    ]
+
+    deps += [ "//skia" ]
+  }
+
   public_deps = [
     "//chrome/services/printing/public/interfaces",
     "//services/service_manager/public/cpp",
