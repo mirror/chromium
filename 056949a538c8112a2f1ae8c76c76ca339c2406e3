@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ad08e1e9_9632f3b4",
+        "filename": "content/browser/service_worker/service_worker_url_job_wrapper.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-15T10:05:52Z",
+      "side": 1,
+      "message": "It\u0027s needed, its ownership must be detached from this wrapper.",
+      "parentUuid": "b369531f_0368879a",
+      "revId": "056949a538c8112a2f1ae8c76c76ca339c2406e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "14c3ecbe_f20ec472",
         "filename": "content/browser/service_worker/service_worker_url_loader_job.cc",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "056949a538c8112a2f1ae8c76c76ca339c2406e3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8622a175_e0ed484b",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-15T10:05:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "14c3ecbe_f20ec472",
+      "revId": "056949a538c8112a2f1ae8c76c76ca339c2406e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +101,24 @@
       "side": 1,
       "message": "I meant \"self-destructs\" above",
       "parentUuid": "87748e4f_6e7d036f",
+      "revId": "056949a538c8112a2f1ae8c76c76ca339c2406e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37d2b069_7d84c782",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-15T10:05:52Z",
+      "side": 1,
+      "message": "Reworded, how does it look now?",
+      "parentUuid": "1cc6848b_4d98dc01",
       "revId": "056949a538c8112a2f1ae8c76c76ca339c2406e3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
