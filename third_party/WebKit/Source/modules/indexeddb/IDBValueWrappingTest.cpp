@@ -485,7 +485,7 @@ TEST(IDBValueUnwrapperTest, IsWrapped) {
   IDBKey* key = IDBKey::CreateNumber(42.0);
   IDBKeyPath key_path(String("primaryKey"));
 
-  scoped_refptr<IDBValue> wrapped_value = IDBValue::Create(
+  std::unique_ptr<IDBValue> wrapped_value = IDBValue::Create(
       wrapped_marker_buffer,
       std::make_unique<Vector<scoped_refptr<BlobDataHandle>>>(
           blob_data_handles),
@@ -501,7 +501,7 @@ TEST(IDBValueUnwrapperTest, IsWrapped) {
   // return false.
   ASSERT_LT(3U, wrapped_marker_bytes.size());
   for (size_t i = 0; i < 3; ++i) {
-    scoped_refptr<IDBValue> mutant_value = IDBValue::Create(
+    std::unique_ptr<IDBValue> mutant_value = IDBValue::Create(
         SharedBuffer::Create(wrapped_marker_bytes.data(), i),
         std::make_unique<Vector<scoped_refptr<BlobDataHandle>>>(
             blob_data_handles),
@@ -517,7 +517,7 @@ TEST(IDBValueUnwrapperTest, IsWrapped) {
     for (int j = 0; j < 8; ++j) {
       char mask = 1 << j;
       wrapped_marker_bytes[i] ^= mask;
-      scoped_refptr<IDBValue> mutant_value = IDBValue::Create(
+      std::unique_ptr<IDBValue> mutant_value = IDBValue::Create(
           SharedBuffer::Create(wrapped_marker_bytes.data(),
                                wrapped_marker_bytes.size()),
           std::make_unique<Vector<scoped_refptr<BlobDataHandle>>>(

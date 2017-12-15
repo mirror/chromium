@@ -208,7 +208,7 @@ bool IDBValueUnwrapper::IsWrapped(IDBValue* value) {
 }
 
 bool IDBValueUnwrapper::IsWrapped(
-    const Vector<scoped_refptr<IDBValue>>& values) {
+    const Vector<std::unique_ptr<IDBValue>>& values) {
   for (const auto& value : values) {
     if (IsWrapped(value.get()))
       return true;
@@ -216,8 +216,8 @@ bool IDBValueUnwrapper::IsWrapped(
   return false;
 }
 
-scoped_refptr<IDBValue> IDBValueUnwrapper::Unwrap(
-    IDBValue* wrapped_value,
+std::unique_ptr<IDBValue> IDBValueUnwrapper::Unwrap(
+    std::unique_ptr<IDBValue> wrapped_value,
     scoped_refptr<SharedBuffer>&& wrapper_blob_content) {
   DCHECK(wrapped_value);
   DCHECK(wrapped_value->data_);
@@ -226,6 +226,7 @@ scoped_refptr<IDBValue> IDBValueUnwrapper::Unwrap(
             wrapped_value->blob_data_->size());
 
   // Create an IDBValue with the same blob information, minus the last blob.
+  // TODO(pwnall): Remove the copying by taking out the vectors.
   unsigned blob_count = wrapped_value->BlobInfo()->size() - 1;
   std::unique_ptr<Vector<scoped_refptr<BlobDataHandle>>> blob_data =
       std::make_unique<Vector<scoped_refptr<BlobDataHandle>>>();
