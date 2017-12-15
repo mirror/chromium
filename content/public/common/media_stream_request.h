@@ -13,6 +13,7 @@
 #include <vector>
 
 #include "base/callback_forward.h"
+#include "base/optional.h"
 #include "content/common/content_export.h"
 #include "media/base/audio_parameters.h"
 #include "media/base/video_facing.h"
@@ -127,8 +128,7 @@ struct CONTENT_EXPORT MediaStreamDevice {
 
   // Contains the device properties of the capture device. It's valid only when
   // the type of device is audio (i.e. IsAudioInputMediaType returns true).
-  media::AudioParameters input =
-      media::AudioParameters::UnavailableDeviceParams();
+  base::Optional<media::AudioParameters> input;
 
   // Id for this capture session. Unique for all sessions of the same type.
   int session_id = kNoId;
