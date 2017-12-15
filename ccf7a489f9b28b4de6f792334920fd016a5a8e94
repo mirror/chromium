@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "56fc587b_641660b2",
+        "filename": "extensions/renderer/dispatcher.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 499,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-12-15T19:08:00Z",
+      "side": 1,
+      "message": "nit: can use count(frame-\u003eLocalRoot()) !\u003d 0u, or such.",
+      "range": {
+        "startLine": 499,
+        "startChar": 40,
+        "endLine": 499,
+        "endChar": 44
+      },
+      "revId": "ccf7a489f9b28b4de6f792334920fd016a5a8e94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "255be8ca_f50d9b1c",
+        "filename": "extensions/renderer/dispatcher.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 503,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-12-15T19:08:00Z",
+      "side": 1,
+      "message": "I\u0027m not sure about the subtleties involved with this, Devlin do you know?",
+      "revId": "ccf7a489f9b28b4de6f792334920fd016a5a8e94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
