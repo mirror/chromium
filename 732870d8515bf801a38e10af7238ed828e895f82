@@ -16,6 +16,24 @@
       "revId": "732870d8515bf801a38e10af7238ed828e895f82",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4ef6143_51cb977f",
+        "filename": "PRESUBMIT.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-12-15T21:49:19Z",
+      "side": 1,
+      "message": "Yes, thanks for your suggestion. Didn\u0027t realize there was a blacklist.\n\nWould rather leave this separate because we can\u0027t blacklist all of page_sets -- it contains handwritten Python files -- and the regex will get long if we add the \"or\" of these two.",
+      "parentUuid": "cc82c965_c1460d8d",
+      "revId": "732870d8515bf801a38e10af7238ed828e895f82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
