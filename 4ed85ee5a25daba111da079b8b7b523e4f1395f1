@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "576fde78_d49ebcd7",
+        "filename": "chrome/browser/chromeos/accessibility/select_to_speak_event_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-12-15T22:20:20Z",
+      "side": 1,
+      "message": "optional: I have verified that this works properly:\n\nui::MouseEvent mutable_event(event);\nConvertMouseEventToDIPs(\u0026mutable_event);\n\n(Then ConvertMouseEventToDIPs can take a MouseEvent* and doesn\u0027t need casting / AsMouseEvent.)\n\nOr just keep what you have now, it\u0027s fine too.",
+      "revId": "4ed85ee5a25daba111da079b8b7b523e4f1395f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
