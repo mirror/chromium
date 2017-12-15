@@ -318,6 +318,8 @@ class HttpStreamFactoryImpl::Job {
   int StartInternal();
   int DoInitConnectionImpl();
 
+  void OnResultAfterQuicHostResolution(int result);
+
   // Each of these methods corresponds to a State value.  Those with an input
   // argument receive the result from the previous state.  If a method returns
   // ERR_IO_PENDING, then the result from OnIOComplete will be passed to the
@@ -463,6 +465,8 @@ class HttpStreamFactoryImpl::Job {
   bool should_reconsider_proxy_;
 
   QuicStreamRequest quic_request_;
+  bool expect_quic_host_resolution_;
+  bool should_notify_delegate_of_result_after_quic_host_resolution_;
 
   // True if this job used an existing QUIC session.
   bool using_existing_quic_session_;
