@@ -22,6 +22,30 @@
       "revId": "941d4db75a140277c26ad5bb5a8334fbfa5bc407",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55341a38_9c5e155a",
+        "filename": "third_party/WebKit/Source/platform/scheduler/util/thread_cpu_throttler.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-12-15T19:43:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "04fdb264_0438c380",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 21,
+        "endChar": 59
+      },
+      "revId": "941d4db75a140277c26ad5bb5a8334fbfa5bc407",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
