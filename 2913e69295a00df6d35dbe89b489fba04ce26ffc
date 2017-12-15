@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "95363116_6abd853a",
+        "filename": "ui/platform_window/x11/x11_window_ozone_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-12-15T14:51:39Z",
+      "side": 1,
+      "message": "sadrul: I think this test should go in ui/ozone/platform/x11/ since it\u0027s going to be part of ozone_x11_unittests anyways. What do you think about doing that?",
+      "revId": "2913e69295a00df6d35dbe89b489fba04ce26ffc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7d1ffe0_4ef24d9a",
+        "filename": "ui/platform_window/x11/x11_window_ozone_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-12-15T14:51:39Z",
+      "side": 1,
+      "message": "nit: constexpr or const",
+      "revId": "2913e69295a00df6d35dbe89b489fba04ce26ffc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c43e25ae_640da76d",
+        "filename": "ui/platform_window/x11/x11_window_ozone_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-12-15T14:51:39Z",
+      "side": 1,
+      "message": "nit: constexpr or const",
+      "revId": "2913e69295a00df6d35dbe89b489fba04ce26ffc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

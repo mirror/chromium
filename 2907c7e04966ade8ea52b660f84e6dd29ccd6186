@@ -198,6 +198,24 @@
     },
     {
       "key": {
+        "uuid": "baa6d6c4_b9afafb3",
+        "filename": "ui/events/BUILD.gn",
+        "patchSetId": 17
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-12-15T14:51:39Z",
+      "side": 1,
+      "message": "I see why this would work, but it\u0027s not the right way to do things. The file \"ui/events/test/events_test_utils_x11.cc\" needs a dep on //ui/events/keycodes:x11, so you should a dep from //ui/events:test_support to //ui/events/keycodes:x11.\n\nRealistically this shouldn\u0027t be a public_dep in the first place and is likely my fault from when I was splitting up X11 stuff for Ozone X11 in the first place.",
+      "parentUuid": "69a968a7_e1521e37",
+      "revId": "2907c7e04966ade8ea52b660f84e6dd29ccd6186",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ec6a7f4b_b98a8b89",
         "filename": "ui/platform_window/x11/x11_window_ozone.cc",
         "patchSetId": 17
