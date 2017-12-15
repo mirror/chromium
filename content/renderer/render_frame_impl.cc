@@ -109,6 +109,7 @@
 #include "content/renderer/ime_event_guard.h"
 #include "content/renderer/input/frame_input_handler_impl.h"
 #include "content/renderer/input/input_handler_manager.h"
+#include "content/renderer/input/input_target_client_impl.h"
 #include "content/renderer/installedapp/related_apps_fetcher.h"
 #include "content/renderer/internal_document_state_data.h"
 #include "content/renderer/loader/request_extra_data.h"
@@ -1314,6 +1315,7 @@ RenderFrameImpl::RenderFrameImpl(CreateParams params)
       media_factory_(this,
                      base::Bind(&RenderFrameImpl::RequestOverlayRoutingToken,
                                 base::Unretained(this))),
+      input_target_client_impl_(std::make_unique<InputTargetClientImpl>(this)),
       devtools_frame_token_(
           blink::WebString::FromUTF8(params.devtools_frame_token.ToString())),
       weak_factory_(this) {
@@ -7076,6 +7078,10 @@ void RenderFrameImpl::RegisterMojoInterfaces() {
 
   registry_.AddInterface(base::Bind(&FrameInputHandlerImpl::CreateMojoService,
                                     weak_factory_.GetWeakPtr()));
+
+  registry_.AddInterface(
+      base::Bind(&InputTargetClientImpl::BindToRequest,
+                 base::Unretained(input_target_client_impl_.get())));
 
   registry_.AddInterface(
       base::Bind(&RenderFrameImpl::BindWidget, weak_factory_.GetWeakPtr()));
