@@ -1,0 +1,159 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "92dd57fd_6b636d5c",
+        "filename": "chrome/browser/chromeos/attestation/enrollment_policy_observer.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1152319
+      },
+      "writtenOn": "2017-12-15T18:06:01Z",
+      "side": 1,
+      "message": "just a question from somebody who doesn\u0027t know this area: there is no other way to signal an error, right? does the upper layer expect getting an empty cert as an indication of an error, does it handle it properly?",
+      "range": {
+        "startLine": 176,
+        "startChar": 52,
+        "endLine": 176,
+        "endChar": 71
+      },
+      "revId": "06bf022f6330afa4b410b992cbae147c1b838cff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13ed1f58_a73f7a46",
+        "filename": "chrome/browser/chromeos/attestation/platform_verification_flow_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1152319
+      },
+      "writtenOn": "2017-12-15T18:06:01Z",
+      "side": 1,
+      "message": "how about adding a test that verifies that in case of BAD_REQUEST status we also end up with PLATFORM_NOT_VERIFIED?",
+      "range": {
+        "startLine": 231,
+        "startChar": 24,
+        "endLine": 231,
+        "endChar": 55
+      },
+      "revId": "06bf022f6330afa4b410b992cbae147c1b838cff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0b8b80a_e75b5c50",
+        "filename": "chrome/browser/chromeos/policy/device_cloud_policy_manager_chromeos_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1152319
+      },
+      "writtenOn": "2017-12-15T18:06:01Z",
+      "side": 1,
+      "message": "just a question: does it have unittests for non-success cases? maybe a subj of a separate CL, if not.",
+      "range": {
+        "startLine": 89,
+        "startChar": 5,
+        "endLine": 89,
+        "endChar": 24
+      },
+      "revId": "06bf022f6330afa4b410b992cbae147c1b838cff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3242a1c_3a3d89aa",
+        "filename": "chrome/browser/extensions/api/enterprise_platform_keys_private/enterprise_platform_keys_private_api_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 438,
+      "author": {
+        "id": 1152319
+      },
+      "writtenOn": "2017-12-15T18:06:01Z",
+      "side": 1,
+      "message": "how about adding a test verifying that BAD_REQUEST also leads to kGetCertificateFailed?",
+      "range": {
+        "startLine": 438,
+        "startChar": 33,
+        "endLine": 438,
+        "endChar": 53
+      },
+      "revId": "06bf022f6330afa4b410b992cbae147c1b838cff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9b06399_67ffbc14",
+        "filename": "chromeos/attestation/attestation_flow_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1152319
+      },
+      "writtenOn": "2017-12-15T18:06:01Z",
+      "side": 1,
+      "message": "Shouldn\u0027t we add unit tests for ATTESTATION_SERVER_BAD_REQUEST_FAILURE?",
+      "range": {
+        "startLine": 44,
+        "startChar": 6,
+        "endLine": 44,
+        "endChar": 25
+      },
+      "revId": "06bf022f6330afa4b410b992cbae147c1b838cff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7cc5216_88ca9035",
+        "filename": "chromeos/cryptohome/async_method_caller.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1152319
+      },
+      "writtenOn": "2017-12-15T18:06:01Z",
+      "side": 1,
+      "message": "nit: revert adding this file as you don\u0027t change async_method_caller anymore",
+      "revId": "06bf022f6330afa4b410b992cbae147c1b838cff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "628c2bdf_407dee21",
+        "filename": "chromeos/dbus/cryptohome_client.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1152319
+      },
+      "writtenOn": "2017-12-15T18:06:01Z",
+      "side": 1,
+      "message": "Where do we use it? Is it needed?",
+      "range": {
+        "startLine": 67,
+        "startChar": 17,
+        "endLine": 67,
+        "endChar": 44
+      },
+      "revId": "06bf022f6330afa4b410b992cbae147c1b838cff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
