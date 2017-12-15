@@ -13,7 +13,7 @@ namespace cc {
 class PixelTestOutputSurface : public viz::OutputSurface {
  public:
   explicit PixelTestOutputSurface(
-      scoped_refptr<viz::ContextProvider> context_provider,
+      scoped_refptr<viz::GLContextProvider> context_provider,
       bool flipped_output_surface);
   explicit PixelTestOutputSurface(
       std::unique_ptr<viz::SoftwareOutputDevice> software_device);

@@ -18,7 +18,7 @@ namespace cc {
 class CC_EXPORT LayerTreeResourceProvider : public ResourceProvider {
  public:
   LayerTreeResourceProvider(
-      viz::ContextProvider* compositor_context_provider,
+      viz::GLContextProvider* compositor_context_provider,
       viz::SharedBitmapManager* shared_bitmap_manager,
       gpu::GpuMemoryBufferManager* gpu_memory_buffer_manager,
       bool delegated_sync_points_required,

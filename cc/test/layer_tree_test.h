@@ -144,15 +144,16 @@ class LayerTreeTest : public testing::Test, public TestHooks {
   virtual std::unique_ptr<viz::TestLayerTreeFrameSink> CreateLayerTreeFrameSink(
       const viz::RendererSettings& renderer_settings,
       double refresh_rate,
-      scoped_refptr<viz::ContextProvider> compositor_context_provider,
-      scoped_refptr<viz::ContextProvider> worker_context_provider);
-  // Override this and call the base class to change what viz::ContextProvider
+      scoped_refptr<viz::GLContextProvider> compositor_context_provider,
+      scoped_refptr<viz::RasterContextProvider> worker_context_provider);
+  // Override this and call the base class to change what viz::GLContextProvider
   // will be used, such as to prevent sharing the context with the
   // LayerTreeFrameSink. Or override it and create your own OutputSurface to
   // change what type of OutputSurface is used, such as a real OutputSurface for
   // pixel tests or a software-compositing OutputSurface.
   std::unique_ptr<viz::OutputSurface> CreateDisplayOutputSurfaceOnThread(
-      scoped_refptr<viz::ContextProvider> compositor_context_provider) override;
+      scoped_refptr<viz::GLContextProvider> compositor_context_provider)
+      override;
 
   gfx::Vector2dF ScrollDelta(LayerImpl* layer_impl);
 

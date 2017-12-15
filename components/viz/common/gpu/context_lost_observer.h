@@ -7,7 +7,7 @@
 
 namespace viz {
 
-// Observers a ContextProvider and is notified when the context is lost.
+// Observers a GLContextProvider and is notified when the context is lost.
 class ContextLostObserver {
  public:
   virtual void OnContextLost() = 0;

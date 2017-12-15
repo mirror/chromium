@@ -34,11 +34,11 @@ class GrContextForGLES2Interface;
 
 namespace viz {
 
-// A ContextProvider used in the viz process to setup command buffers between
+// A GLContextProvider used in the viz process to setup command buffers between
 // the compositor and gpu thread.
 // TODO(kylechar): Rename VizProcessContextProvider and move to
 // components/viz/service.
-class VIZ_COMMON_EXPORT InProcessContextProvider : public ContextProvider {
+class VIZ_COMMON_EXPORT InProcessContextProvider : public MultiContextProvider {
  public:
   InProcessContextProvider(
       scoped_refptr<gpu::InProcessCommandBuffer::Service> service,
@@ -51,7 +51,7 @@ class VIZ_COMMON_EXPORT InProcessContextProvider : public ContextProvider {
 
   gpu::ContextResult BindToCurrentThread() override;
   gpu::gles2::GLES2Interface* ContextGL() override;
-  gpu::raster::RasterInterface* RasterContext() override;
+  gpu::raster::RasterInterface* RasterInterface() override;
   gpu::ContextSupport* ContextSupport() override;
   class GrContext* GrContext() override;
   ContextCacheController* CacheController() override;

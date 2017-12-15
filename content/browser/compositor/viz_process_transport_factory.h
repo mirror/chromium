@@ -64,7 +64,7 @@ class VizProcessTransportFactory : public ui::ContextFactory,
   // ui::ContextFactory implementation.
   void CreateLayerTreeFrameSink(
       base::WeakPtr<ui::Compositor> compositor) override;
-  scoped_refptr<viz::ContextProvider> SharedMainThreadContextProvider()
+  scoped_refptr<viz::GLContextProvider> SharedMainThreadContextProvider()
       override;
   void RemoveCompositor(ui::Compositor* compositor) override;
   double GetRefreshRate() const override;

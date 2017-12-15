@@ -76,10 +76,10 @@ class MockCompositorFrameSink : public viz::mojom::blink::CompositorFrameSink {
 class MockVideoFrameResourceProvider
     : public blink::VideoFrameResourceProvider {
  public:
-  MockVideoFrameResourceProvider(viz::ContextProvider* context_provider)
+  MockVideoFrameResourceProvider(viz::GLContextProvider* context_provider)
       : blink::VideoFrameResourceProvider(
             base::BindRepeating(
-                [](base::OnceCallback<void(viz::ContextProvider*)>) {}),
+                [](base::OnceCallback<void(viz::GLContextProvider*)>) {}),
             nullptr,
             nullptr,
             cc::LayerTreeSettings()) {
@@ -87,7 +87,7 @@ class MockVideoFrameResourceProvider
   }
   ~MockVideoFrameResourceProvider() = default;
 
-  MOCK_METHOD1(Initialize, void(viz::ContextProvider*));
+  MOCK_METHOD1(Initialize, void(viz::GLContextProvider*));
   MOCK_METHOD2(AppendQuads,
                void(viz::RenderPass*, scoped_refptr<media::VideoFrame>));
   MOCK_METHOD0(ReleaseFrameResources, void());

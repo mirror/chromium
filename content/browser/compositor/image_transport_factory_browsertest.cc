@@ -39,7 +39,7 @@ IN_PROC_BROWSER_TEST_F(ImageTransportFactoryBrowserTest,
   ImageTransportFactory* factory = ImageTransportFactory::GetInstance();
 
   // This test doesn't make sense in software compositing mode.
-  scoped_refptr<viz::ContextProvider> context_provider =
+  scoped_refptr<viz::GLContextProvider> context_provider =
       factory->GetContextFactory()->SharedMainThreadContextProvider();
   if (context_provider->GetGpuFeatureInfo()
           .status_values[gpu::GPU_FEATURE_TYPE_GPU_COMPOSITING] !=
@@ -102,7 +102,7 @@ IN_PROC_BROWSER_TEST_F(ImageTransportFactoryTearDownBrowserTest,
                        MAYBE_LoseOnTearDown) {
   ImageTransportFactory* factory = ImageTransportFactory::GetInstance();
   // This test doesn't make sense in software compositing mode.
-  scoped_refptr<viz::ContextProvider> context_provider =
+  scoped_refptr<viz::GLContextProvider> context_provider =
       factory->GetContextFactory()->SharedMainThreadContextProvider();
   if (context_provider->GetGpuFeatureInfo()
           .status_values[gpu::GPU_FEATURE_TYPE_GPU_COMPOSITING] !=

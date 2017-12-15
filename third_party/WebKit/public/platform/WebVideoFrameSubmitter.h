@@ -17,16 +17,16 @@ class GpuMemoryBufferManager;
 }
 
 namespace viz {
-class ContextProvider;
+class GLContextProvider;
 class FrameSinkId;
 class SharedBitmapManager;
 }  // namespace viz
 
 namespace blink {
 
-// Callback to obtain the media ContextProvider.
+// Callback to obtain the media GLContextProvider.
 using WebContextProviderCallback = base::RepeatingCallback<void(
-    base::OnceCallback<void(viz::ContextProvider*)>)>;
+    base::OnceCallback<void(viz::GLContextProvider*)>)>;
 
 // Exposes the VideoFrameSubmitter, which submits CompositorFrames containing
 // information from VideoFrames.

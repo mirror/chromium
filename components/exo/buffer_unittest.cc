@@ -84,7 +84,7 @@ TEST_F(BufferTest, IsLost) {
       buffer->ProduceTransferableResource(frame_sink_holder, false, &resource);
   ASSERT_TRUE(rv);
 
-  scoped_refptr<viz::ContextProvider> context_provider =
+  scoped_refptr<viz::GLContextProvider> context_provider =
       aura::Env::GetInstance()
           ->context_factory()
           ->SharedMainThreadContextProvider();

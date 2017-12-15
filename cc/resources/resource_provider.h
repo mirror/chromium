@@ -85,7 +85,7 @@ class CC_EXPORT ResourceProvider
   using ResourceIdArray = std::vector<viz::ResourceId>;
   using ResourceIdMap = std::unordered_map<viz::ResourceId, viz::ResourceId>;
 
-  ResourceProvider(viz::ContextProvider* compositor_context_provider,
+  ResourceProvider(viz::GLContextProvider* compositor_context_provider,
                    viz::SharedBitmapManager* shared_bitmap_manager,
                    gpu::GpuMemoryBufferManager* gpu_memory_buffer_manager,
                    bool delegated_sync_points_required,
@@ -403,12 +403,12 @@ class CC_EXPORT ResourceProvider
            resource->read_lock_fence->HasPassed();
   }
 
-  // Returns null if we do not have a viz::ContextProvider.
+  // Returns null if we do not have a viz::GLContextProvider.
   gpu::gles2::GLES2Interface* ContextGL() const;
 
   // Holds const settings for the ResourceProvider. Never changed after init.
   struct Settings {
-    Settings(viz::ContextProvider* compositor_context_provider,
+    Settings(viz::GLContextProvider* compositor_context_provider,
              bool delegated_sync_points_needed,
              const viz::ResourceSettings& resource_settings);
 
@@ -436,7 +436,7 @@ class CC_EXPORT ResourceProvider
   // Maps from a child id to the set of resources to be returned to it.
   base::small_map<std::map<int, ResourceIdArray>> batched_returning_resources_;
 
-  viz::ContextProvider* compositor_context_provider_;
+  viz::GLContextProvider* compositor_context_provider_;
   viz::SharedBitmapManager* shared_bitmap_manager_;
   gpu::GpuMemoryBufferManager* gpu_memory_buffer_manager_;
   viz::ResourceId next_id_;

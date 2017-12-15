@@ -20,7 +20,7 @@ class Size;
 }
 
 namespace viz {
-class ContextProvider;
+class GLContextProvider;
 class GLHelper;
 }
 
@@ -29,7 +29,7 @@ namespace content {
 // Create and manages texture mailbox to be used by Reflector.
 class CONTENT_EXPORT ReflectorTexture {
  public:
-  explicit ReflectorTexture(viz::ContextProvider* provider);
+  explicit ReflectorTexture(viz::GLContextProvider* provider);
   ~ReflectorTexture();
 
   void CopyTextureFullImage(const gfx::Size& size);

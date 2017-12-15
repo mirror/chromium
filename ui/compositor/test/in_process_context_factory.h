@@ -63,7 +63,7 @@ class InProcessContextFactory : public ContextFactory,
                                              Layer* mirroring_layer) override;
   void RemoveReflector(Reflector* reflector) override;
 
-  scoped_refptr<viz::ContextProvider> SharedMainThreadContextProvider()
+  scoped_refptr<viz::GLContextProvider> SharedMainThreadContextProvider()
       override;
   void RemoveCompositor(Compositor* compositor) override;
   double GetRefreshRate() const override;

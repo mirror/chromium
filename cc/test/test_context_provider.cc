@@ -239,7 +239,7 @@ gpu::gles2::GLES2Interface* TestContextProvider::ContextGL() {
   return context_gl_.get();
 }
 
-gpu::raster::RasterInterface* TestContextProvider::RasterContext() {
+gpu::raster::RasterInterface* TestContextProvider::RasterInterface() {
   return raster_context_.get();
 }
 

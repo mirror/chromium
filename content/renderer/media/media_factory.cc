@@ -105,20 +105,21 @@ class FrameFetchContext : public media::ResourceFetchContext {
 };
 
 void ObtainAndSetContextProvider(
-    base::OnceCallback<void(viz::ContextProvider*)>
+    base::OnceCallback<void(viz::GLContextProvider*)>
         set_context_provider_callback,
     media::GpuVideoAcceleratorFactories* factories) {
-  viz::ContextProvider* context_provider = factories->GetMediaContextProvider();
+  viz::GLContextProvider* context_provider =
+      factories->GetMediaContextProvider();
   std::move(set_context_provider_callback).Run(context_provider);
 }
 
-// Obtains the media ContextProvider and calls the given callback on the same
-// thread this is called on. Obtaining the media ContextProvider requires
+// Obtains the media GLContextProvider and calls the given callback on the same
+// thread this is called on. Obtaining the media GLContextProvider requires
 // getting GPuVideoAcceleratorFactories, which must be done on the main
 // thread.
 void PostMediaContextProviderToCallback(
     scoped_refptr<base::SingleThreadTaskRunner> main_task_runner,
-    base::OnceCallback<void(viz::ContextProvider*)>
+    base::OnceCallback<void(viz::GLContextProvider*)>
         set_context_provider_callback) {
   base::PostTaskAndReplyWithResult(
       main_task_runner.get(), FROM_HERE, base::BindOnce([]() {

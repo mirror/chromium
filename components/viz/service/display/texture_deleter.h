@@ -20,7 +20,7 @@ struct SyncToken;
 }
 
 namespace viz {
-class ContextProvider;
+class GLContextProvider;
 class SingleReleaseCallback;
 
 class VIZ_SERVICE_EXPORT TextureDeleter {
@@ -37,9 +37,9 @@ class VIZ_SERVICE_EXPORT TextureDeleter {
   // TextureDeleter is destroyed due to the compositor shutting down, then the
   // ReleaseCallback will become a no-op and the texture will be deleted
   // immediately on the impl thread, along with dropping the reference to the
-  // ContextProvider.
+  // GLContextProvider.
   std::unique_ptr<SingleReleaseCallback> GetReleaseCallback(
-      scoped_refptr<ContextProvider> context_provider,
+      scoped_refptr<GLContextProvider> context_provider,
       unsigned texture_id);
 
  private:

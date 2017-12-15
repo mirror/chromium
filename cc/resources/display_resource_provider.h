@@ -20,7 +20,7 @@ namespace cc {
 class CC_EXPORT DisplayResourceProvider : public ResourceProvider {
  public:
   DisplayResourceProvider(
-      viz::ContextProvider* compositor_context_provider,
+      viz::GLContextProvider* compositor_context_provider,
       viz::SharedBitmapManager* shared_bitmap_manager,
       gpu::GpuMemoryBufferManager* gpu_memory_buffer_manager,
       const viz::ResourceSettings& resource_settings);

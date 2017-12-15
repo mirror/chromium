@@ -158,7 +158,7 @@ void HeadsUpDisplayLayerImpl::AppendQuads(viz::RenderPass* render_pass,
 void HeadsUpDisplayLayerImpl::UpdateHudTexture(
     DrawMode draw_mode,
     ResourceProvider* resource_provider,
-    viz::ContextProvider* context_provider,
+    viz::GLContextProvider* context_provider,
     const viz::RenderPassList& list) {
   if (draw_mode == DRAW_MODE_RESOURCELESS_SOFTWARE || !resources_.back()->id())
     return;

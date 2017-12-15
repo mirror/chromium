@@ -88,7 +88,7 @@ void RendererWindowTreeClient::SetVisible(bool visible) {
 }
 
 void RendererWindowTreeClient::RequestLayerTreeFrameSink(
-    scoped_refptr<viz::ContextProvider> context_provider,
+    scoped_refptr<viz::GLContextProvider> context_provider,
     gpu::GpuMemoryBufferManager* gpu_memory_buffer_manager,
     const LayerTreeFrameSinkCallback& callback) {
   DCHECK(pending_layer_tree_frame_sink_callback_.is_null());
@@ -124,7 +124,7 @@ RendererWindowTreeClient::~RendererWindowTreeClient() {
 }
 
 void RendererWindowTreeClient::RequestLayerTreeFrameSinkInternal(
-    scoped_refptr<viz::ContextProvider> context_provider,
+    scoped_refptr<viz::GLContextProvider> context_provider,
     gpu::GpuMemoryBufferManager* gpu_memory_buffer_manager,
     const LayerTreeFrameSinkCallback& callback) {
   viz::mojom::CompositorFrameSinkPtrInfo sink_info;

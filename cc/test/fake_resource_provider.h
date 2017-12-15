@@ -19,7 +19,7 @@ namespace cc {
 class FakeResourceProvider : public ResourceProvider {
  public:
   static std::unique_ptr<FakeResourceProvider> Create(
-      viz::ContextProvider* context_provider,
+      viz::GLContextProvider* context_provider,
       viz::SharedBitmapManager* shared_bitmap_manager,
       bool high_bit_for_testing = false) {
     viz::ResourceSettings resource_settings;
@@ -32,7 +32,7 @@ class FakeResourceProvider : public ResourceProvider {
 
   static std::unique_ptr<LayerTreeResourceProvider>
   CreateLayerTreeResourceProvider(
-      viz::ContextProvider* context_provider,
+      viz::GLContextProvider* context_provider,
       viz::SharedBitmapManager* shared_bitmap_manager,
       gpu::GpuMemoryBufferManager* gpu_memory_buffer_manager = nullptr,
       bool high_bit_for_testing = false) {
@@ -45,7 +45,7 @@ class FakeResourceProvider : public ResourceProvider {
   }
 
   static std::unique_ptr<DisplayResourceProvider> CreateDisplayResourceProvider(
-      viz::ContextProvider* context_provider,
+      viz::GLContextProvider* context_provider,
       viz::SharedBitmapManager* shared_bitmap_manager,
       gpu::GpuMemoryBufferManager* gpu_memory_buffer_manager = nullptr) {
     viz::ResourceSettings resource_settings;
@@ -56,7 +56,7 @@ class FakeResourceProvider : public ResourceProvider {
   }
 
   static std::unique_ptr<FakeResourceProvider> Create(
-      viz::ContextProvider* context_provider,
+      viz::GLContextProvider* context_provider,
       viz::SharedBitmapManager* shared_bitmap_manager,
       gpu::GpuMemoryBufferManager* gpu_memory_buffer_manager,
       bool high_bit_for_testing = false) {
@@ -69,7 +69,7 @@ class FakeResourceProvider : public ResourceProvider {
   }
 
  private:
-  FakeResourceProvider(viz::ContextProvider* context_provider,
+  FakeResourceProvider(viz::GLContextProvider* context_provider,
                        viz::SharedBitmapManager* shared_bitmap_manager,
                        gpu::GpuMemoryBufferManager* gpu_memory_buffer_manager,
                        bool delegated_sync_points_required,

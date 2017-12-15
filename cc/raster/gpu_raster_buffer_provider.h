@@ -13,15 +13,15 @@
 #include "gpu/command_buffer/common/sync_token.h"
 
 namespace viz {
-class ContextProvider;
+class GLContextProvider;
 }
 
 namespace cc {
 
 class CC_EXPORT GpuRasterBufferProvider : public RasterBufferProvider {
  public:
-  GpuRasterBufferProvider(viz::ContextProvider* compositor_context_provider,
-                          viz::ContextProvider* worker_context_provider,
+  GpuRasterBufferProvider(viz::GLContextProvider* compositor_context_provider,
+                          viz::RasterContextProvider* worker_context_provider,
                           LayerTreeResourceProvider* resource_provider,
                           bool use_distance_field_text,
                           int gpu_rasterization_msaa_sample_count,
@@ -90,8 +90,8 @@ class CC_EXPORT GpuRasterBufferProvider : public RasterBufferProvider {
     DISALLOW_COPY_AND_ASSIGN(RasterBufferImpl);
   };
 
-  viz::ContextProvider* const compositor_context_provider_;
-  viz::ContextProvider* const worker_context_provider_;
+  viz::GLContextProvider* const compositor_context_provider_;
+  viz::RasterContextProvider* const worker_context_provider_;
   LayerTreeResourceProvider* const resource_provider_;
   const bool use_distance_field_text_;
   const int msaa_sample_count_;
