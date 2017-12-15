@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e156249c_3503d8c6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-15T19:30:33Z",
+      "side": 1,
+      "message": "nit: Please use a shorter subject. Put details in description and wrap at 80 chars.\n\nCheck out \"Writing commit descriptions\" in\nhttps://www.chromium.org/developers/contributing-code",
+      "revId": "2eb854999cf9f99b71352b0d1286511c699a61a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "085c6c25_06c9a6df",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2542,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-15T19:30:33Z",
+      "side": 1,
+      "message": "Can we split this into two methods instead using a bool arg?\ne.g. \n  IsPointWithinDragBuffer() and IsPointWithinPageFlipBuffer().",
+      "revId": "2eb854999cf9f99b71352b0d1286511c699a61a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
