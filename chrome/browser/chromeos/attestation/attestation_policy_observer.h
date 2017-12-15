@@ -12,6 +12,7 @@
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "chrome/browser/chromeos/settings/cros_settings.h"
+#include "chromeos/attestation/attestation_constants.h"
 
 namespace policy {
 class CloudPolicyClient;
@@ -83,6 +84,9 @@ class AttestationPolicyObserver {
 
   // Marks a key as uploaded in the payload proto.
   void MarkAsUploaded(const std::string& key_payload);
+
+  // Handles failure of getting a certificate.
+  void HandleGetCertificateFailure(AttestationStatus status);
 
   // Reschedules a policy check (i.e. a call to Start) for a later time.
   // TODO(dkrahn): A better solution would be to wait for a dbus signal which
