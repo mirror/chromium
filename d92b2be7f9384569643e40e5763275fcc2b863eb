@@ -103,6 +103,24 @@
       "revId": "d92b2be7f9384569643e40e5763275fcc2b863eb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "309a6a20_b0ed602a",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerPainter.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1076,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-12-15T19:16:17Z",
+      "side": 1,
+      "message": "We still call it through dedicated SPv175 paths, see line 1288 and line 1319 below.",
+      "parentUuid": "f444fa42_1259ed5c",
+      "revId": "d92b2be7f9384569643e40e5763275fcc2b863eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
