@@ -46,6 +46,30 @@
       "revId": "dd0f4b75b9afc6a78e0ed23b2d782348504ecdc1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de8aa1d2_727386ea",
+        "filename": "chrome/browser/ui/webui/extensions/extensions_ui.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-15T02:03:20Z",
+      "side": 1,
+      "message": "Updated to use IDS_DIRECTORY_LISTING_SIZE for now, and added a TODO to replace that string in a follow up.",
+      "parentUuid": "14a52d04_7ee0eb73",
+      "range": {
+        "startLine": 218,
+        "startChar": 41,
+        "endLine": 218,
+        "endChar": 72
+      },
+      "revId": "dd0f4b75b9afc6a78e0ed23b2d782348504ecdc1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
