@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "296dc555_e5d315bd",
+        "filename": "third_party/WebKit/Source/core/editing/commands/ApplyBlockElementCommandTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1217339
+      },
+      "writtenOn": "2017-12-15T07:10:36Z",
+      "side": 1,
+      "message": "It was easy to make this test, thanks for pointing to me.",
+      "revId": "920f1b597a23a92feb170f6326430bf2e7013c5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c99edae_f12c02b0",
+        "filename": "third_party/WebKit/Source/core/editing/commands/FormatBlockCommand.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1217339
+      },
+      "writtenOn": "2017-12-15T07:10:36Z",
+      "side": 1,
+      "message": "It seems that MoveParagraphWithClones can turn |last_paragraph_in_block_node| into disconnected position. It doesn\u0027t look like expected behavior to me.\nShould we file a separate bug and fix that?",
+      "revId": "920f1b597a23a92feb170f6326430bf2e7013c5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
