@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fd24b50c_cbd19093",
+        "filename": "components/autofill/content/common/autofill_agent.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-12-16T15:57:16Z",
+      "side": 1,
+      "message": "nit: This sentence doesn\u0027t quite make sense to me. Maybe \"to\"\u003d\u003e\"will\" and \"suggestion\"\u003d\u003e\"suggestions\"?",
+      "range": {
+        "startLine": 71,
+        "startChar": 38,
+        "endLine": 71,
+        "endChar": 40
+      },
+      "revId": "a2aed0c5d85f4c2f84f9b78f4595c1ffdda49251",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
