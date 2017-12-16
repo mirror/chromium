@@ -25,6 +25,7 @@
 #include "components/keyed_service/content/browser_context_dependency_manager.h"
 #include "components/offline_pages/features/features.h"
 #include "content/public/browser/browser_context.h"
+#include "net/url_request/url_request_context_getter.h"
 
 #if defined(OS_ANDROID)
 #include "chrome/browser/android/download/service/download_task_scheduler.h"
@@ -69,6 +70,9 @@ KeyedService* DownloadServiceFactory::BuildServiceInstanceFor(
 
   auto* download_manager = content::BrowserContext::GetDownloadManager(context);
 
+  net::URLRequestContextGetter* request_context_getter =
+      Profile::FromBrowserContext(context)->GetRequestContext();
+
   base::FilePath storage_dir;
   if (!context->IsOffTheRecord() && !context->GetPath().empty()) {
     storage_dir =
@@ -87,9 +91,9 @@ KeyedService* DownloadServiceFactory::BuildServiceInstanceFor(
   task_scheduler = base::MakeUnique<DownloadTaskSchedulerImpl>(context);
 #endif
 
-  return download::CreateDownloadService(std::move(clients), download_manager,
-                                         storage_dir, background_task_runner,
-                                         std::move(task_scheduler));
+  return download::CreateDownloadService(
+      std::move(clients), download_manager, request_context_getter, storage_dir,
+      background_task_runner, std::move(task_scheduler));
 }
 
 content::BrowserContext* DownloadServiceFactory::GetBrowserContextToUse(
