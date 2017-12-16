@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "154b1e13_f31fd87d",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-12-16T00:27:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dca60d2c_16a500f6",
+      "revId": "ade5a4baf2797f6de3761422442e011feec938c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "98f14a59_53161518",
         "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.h",
         "patchSetId": 9
@@ -33,6 +51,24 @@
       "revId": "ade5a4baf2797f6de3761422442e011feec938c4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a67295c3_a9535e44",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-12-16T00:27:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "98f14a59_53161518",
+      "revId": "ade5a4baf2797f6de3761422442e011feec938c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "8c4ec002_435ae15a",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_metrics.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-12-16T00:27:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "963639e3_a4768930",
+      "revId": "ade5a4baf2797f6de3761422442e011feec938c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8ba04dce_5eb3787a",
         "filename": "chrome/browser/media/router/mojo/media_router_mojo_metrics.cc",
         "patchSetId": 9
@@ -67,6 +121,24 @@
       "revId": "ade5a4baf2797f6de3761422442e011feec938c4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77917c9c_f36a7bba",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_metrics.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-12-16T00:27:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8ba04dce_5eb3787a",
+      "revId": "ade5a4baf2797f6de3761422442e011feec938c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "175dc68a_72115bf5",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_metrics.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-12-16T00:27:08Z",
+      "side": 1,
+      "message": "Right, it\u0027d be good to have tests for recording these histograms. For now I exposed all of them mostly for the sake of consistency.",
+      "parentUuid": "835b3b22_93f8e780",
+      "revId": "ade5a4baf2797f6de3761422442e011feec938c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "09335ebf_bef77d55",
         "filename": "chrome/browser/media/router/mojo/media_router_mojo_metrics.h",
         "patchSetId": 9
@@ -101,6 +191,24 @@
       "revId": "ade5a4baf2797f6de3761422442e011feec938c4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "012bc3a2_4bb91806",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_metrics.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-12-16T00:27:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "09335ebf_bef77d55",
+      "revId": "ade5a4baf2797f6de3761422442e011feec938c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
