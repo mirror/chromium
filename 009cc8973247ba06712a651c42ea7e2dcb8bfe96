@@ -22,6 +22,30 @@
       "revId": "009cc8973247ba06712a651c42ea7e2dcb8bfe96",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fac2dae2_f7a7db84",
+        "filename": "third_party/WebKit/Source/devtools/front_end/security/SecurityPanel.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 773,
+      "author": {
+        "id": 1135976
+      },
+      "writtenOn": "2017-12-16T00:33:42Z",
+      "side": 1,
+      "message": "I don\u0027t think so. What is the process for localization in DevTools?",
+      "parentUuid": "547161c1_80bdf175",
+      "range": {
+        "startLine": 773,
+        "startChar": 74,
+        "endLine": 773,
+        "endChar": 82
+      },
+      "revId": "009cc8973247ba06712a651c42ea7e2dcb8bfe96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
