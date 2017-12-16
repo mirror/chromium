@@ -42,6 +42,24 @@
     },
     {
       "key": {
+        "uuid": "3cba6bf8_32faa864",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 1320,
+      "author": {
+        "id": 1160144
+      },
+      "writtenOn": "2017-12-16T02:14:43Z",
+      "side": 1,
+      "message": "Done, also change valid to success which make more sense here.",
+      "parentUuid": "5cec2195_54d3a154",
+      "revId": "fa14ce43f37740b9e6ff4c78a74f5c3a43802641",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e2e2c632_d84dec21",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 1
@@ -82,6 +100,24 @@
     },
     {
       "key": {
+        "uuid": "ceadb483_a9e693bb",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 1332,
+      "author": {
+        "id": 1160144
+      },
+      "writtenOn": "2017-12-16T02:14:43Z",
+      "side": 1,
+      "message": "Can we directly use OTA, the 3rd value for this?",
+      "parentUuid": "47e5f2dd_1aec41e7",
+      "revId": "fa14ce43f37740b9e6ff4c78a74f5c3a43802641",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "22b4fcc7_ea59a3ec",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 1
@@ -110,6 +146,24 @@
       "writtenOn": "2017-12-15T00:40:14Z",
       "side": 1,
       "message": "I think you need to move \"bootlockbox not ready\" here because your code will do verification first.\n\nDoes ArcCodeRelocationResult need the error too? I guess it doesn\u0027t.",
+      "revId": "fa14ce43f37740b9e6ff4c78a74f5c3a43802641",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e51ed132_f41857a7",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 1336,
+      "author": {
+        "id": 1160144
+      },
+      "writtenOn": "2017-12-16T02:14:43Z",
+      "side": 1,
+      "message": "I added bootlockboxd not ready to here and kept original one because bootlockboxd may not be valid when relocate/signing.",
+      "parentUuid": "02044cff_5227bcd3",
       "revId": "fa14ce43f37740b9e6ff4c78a74f5c3a43802641",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -162,6 +216,54 @@
     },
     {
       "key": {
+        "uuid": "740f7800_00376ca1",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 2439,
+      "author": {
+        "id": 1160144
+      },
+      "writtenOn": "2017-12-16T02:14:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2c8fd932_18830b57",
+      "range": {
+        "startLine": 2439,
+        "startChar": 21,
+        "endLine": 2439,
+        "endChar": 30
+      },
+      "revId": "fa14ce43f37740b9e6ff4c78a74f5c3a43802641",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a360cd25_2e44ab30",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 2439,
+      "author": {
+        "id": 1160144
+      },
+      "writtenOn": "2017-12-16T02:14:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "81fd643f_5c0ae6be",
+      "range": {
+        "startLine": 2439,
+        "startChar": 49,
+        "endLine": 2439,
+        "endChar": 61
+      },
+      "revId": "fa14ce43f37740b9e6ff4c78a74f5c3a43802641",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "62dc904a_a52d6771",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 1
@@ -182,6 +284,30 @@
       "revId": "fa14ce43f37740b9e6ff4c78a74f5c3a43802641",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42e07fa3_f360e114",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 2443,
+      "author": {
+        "id": 1160144
+      },
+      "writtenOn": "2017-12-16T02:14:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "62dc904a_a52d6771",
+      "range": {
+        "startLine": 2443,
+        "startChar": 16,
+        "endLine": 2443,
+        "endChar": 28
+      },
+      "revId": "fa14ce43f37740b9e6ff4c78a74f5c3a43802641",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -222,6 +348,48 @@
       "revId": "fa14ce43f37740b9e6ff4c78a74f5c3a43802641",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86d7ad58_e0b71215",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 2462,
+      "author": {
+        "id": 1160144
+      },
+      "writtenOn": "2017-12-16T02:14:43Z",
+      "side": 1,
+      "message": "I added RelocationTime.\n\nTotaltime do you mean the time of verification + [relocation]? If this is the case, then the Verification time means exactly total time. Would you prefer to record the verification time separately?",
+      "parentUuid": "926e867b_49b4862e",
+      "revId": "fa14ce43f37740b9e6ff4c78a74f5c3a43802641",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4831d1c6_e0eb7e4e",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 2462,
+      "author": {
+        "id": 1160144
+      },
+      "writtenOn": "2017-12-16T02:14:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "672b71cc_9c7f2332",
+      "range": {
+        "startLine": 2462,
+        "startChar": 30,
+        "endLine": 2462,
+        "endChar": 34
+      },
+      "revId": "fa14ce43f37740b9e6ff4c78a74f5c3a43802641",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
