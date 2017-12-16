@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "fb3b0f60_29401c32",
+        "filename": "extensions/renderer/resources/platform_app.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-16T02:44:59Z",
+      "side": 0,
+      "message": "I\u0027m not sure I agree with this change.  While this change is striving to meet the spec, I\u0027m not sure it sits well with me that the result here is that we\u0027d be opening up platform apps to using an API that\u0027s been deprecated for years that currently has no usage.  It seems like we\u0027d be causing ourselves a bigger problem.\n\nCould we instead have document.all access throw an error in these contexts, or similar?",
+      "revId": "40ae69e207a3e0960cd8690fb190c8fede585979",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "304192ef_b4b15774",
         "filename": "third_party/WebKit/LayoutTests/virtual/stable/webexposed/global-interface-listing-expected.txt",
         "patchSetId": 7
