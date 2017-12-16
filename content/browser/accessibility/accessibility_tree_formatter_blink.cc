@@ -2,6 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include <math.h>
 #include <stddef.h>
 
 #include <utility>
@@ -190,7 +191,7 @@ void AccessibilityTreeFormatterBlink::AddProperties(
        attr_index <= ui::AX_FLOAT_ATTRIBUTE_LAST;
        ++attr_index) {
     auto attr = static_cast<ui::AXFloatAttribute>(attr_index);
-    if (node.HasFloatAttribute(attr))
+    if (node.HasFloatAttribute(attr) && isfinite(node.GetFloatAttribute(attr)))
       dict->SetDouble(ui::ToString(attr), node.GetFloatAttribute(attr));
   }
 
