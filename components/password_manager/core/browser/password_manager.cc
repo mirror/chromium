@@ -486,6 +486,12 @@ void PasswordManager::OnPasswordFormSubmitted(
   pending_login_managers_.clear();
 }
 
+void PasswordManager::OnPasswordFormSubmittedNoChecks(
+    password_manager::PasswordManagerDriver* driver,
+    const autofill::PasswordForm& password_form) {
+  OnInPageNavigation(driver, password_form);
+}
+
 void PasswordManager::OnPasswordFormForceSaveRequested(
     password_manager::PasswordManagerDriver* driver,
     const PasswordForm& password_form) {
