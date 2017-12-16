@@ -1,0 +1,19 @@
+WebKit sets a custom xslt sort function with the expectation that libxslt passes
+strings directly from the input. If POSIX locale support is enabled, libxslt
+will transform the string using strxfrm_l() into something WebKit does not
+expect. This will break third_party/WebKit/LayoutTests/fast/xsl/sort-locale.xml.
+By disabling XSLT_LOCALE_POSIX, we preserve the behavior WebKit expects in
+XsltUnicodeSortFunction.
+
+diff --git a/src/libxslt/xsltlocale.h b/src/libxslt/xsltlocale.h
+--- src/libxslt/xsltlocale.h
++++ src/libxslt/xsltlocale.h
+@@ -14,7 +14,7 @@
+ #include <libxml/xmlstring.h>
+ #include "xsltexports.h"
+ 
+-#ifdef HAVE_STRXFRM_L
++#if 0
+ 
+ /*
+  * XSLT_LOCALE_POSIX:
