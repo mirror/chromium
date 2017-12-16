@@ -71,7 +71,7 @@ scoped_refptr<gpu::GpuChannelHost> EstablishGpuChannelSyncRunLoop() {
 // RunLoop implementation that runs until it observes OnContextLost().
 class ContextLostRunLoop : public viz::ContextLostObserver {
  public:
-  ContextLostRunLoop(viz::ContextProvider* context_provider)
+  ContextLostRunLoop(viz::GLContextProvider* context_provider)
       : context_provider_(context_provider) {
     context_provider_->AddObserver(this);
   }
@@ -83,7 +83,7 @@ class ContextLostRunLoop : public viz::ContextLostObserver {
   // viz::LostContextProvider:
   void OnContextLost() override { run_loop_.Quit(); }
 
-  viz::ContextProvider* const context_provider_;
+  viz::GLContextProvider* const context_provider_;
   base::RunLoop run_loop_;
 
   DISALLOW_COPY_AND_ASSIGN(ContextLostRunLoop);

@@ -27,7 +27,7 @@ GpuBrowserCompositorOutputSurface::GpuBrowserCompositorOutputSurface(
     const UpdateVSyncParametersCallback& update_vsync_parameters_callback,
     std::unique_ptr<viz::CompositorOverlayCandidateValidator>
         overlay_candidate_validator)
-    : BrowserCompositorOutputSurface(std::move(context),
+    : BrowserCompositorOutputSurface(base::MakeRefCounted<viz::GLContextProvider>(context),
                                      update_vsync_parameters_callback,
                                      std::move(overlay_candidate_validator)),
       latency_info_cache_(this) {

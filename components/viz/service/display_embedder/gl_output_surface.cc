@@ -23,7 +23,7 @@ namespace viz {
 GLOutputSurface::GLOutputSurface(
     scoped_refptr<InProcessContextProvider> context_provider,
     SyntheticBeginFrameSource* synthetic_begin_frame_source)
-    : OutputSurface(context_provider),
+    : OutputSurface(base::MakeRefCounted<viz::GLContextProvider>(context_provider)),
       synthetic_begin_frame_source_(synthetic_begin_frame_source),
       latency_tracker_(true),
       latency_info_cache_(this),

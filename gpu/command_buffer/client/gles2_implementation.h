@@ -227,7 +227,7 @@ class GLES2_IMPL_EXPORT GLES2Implementation
   void DeleteTransferCacheEntry(cc::TransferCacheEntryType type,
                                 uint32_t id) override;
 
-  // TODO(danakj): Move to ContextSupport once ContextProvider doesn't need to
+  // TODO(danakj): Move to ContextSupport once GLContextProvider doesn't need to
   // intercept it.
   void SetLostContextCallback(const base::Closure& callback);
 
