@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "896dbd0c_a9c92794",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1202434
+      },
+      "writtenOn": "2017-12-16T00:12:56Z",
+      "side": 1,
+      "message": "How much data do we expect this to use? On chromecast, /tmp/ is a ramfs with a limited size.",
+      "range": {
+        "startLine": 10,
+        "startChar": 25,
+        "endLine": 10,
+        "endChar": 29
+      },
+      "revId": "91fb7788734956b100bb3608d879c527f66107d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
