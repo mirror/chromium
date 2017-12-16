@@ -93,6 +93,9 @@ void FakeArcBridgeHost::OnRotationLockInstanceReady(
 void FakeArcBridgeHost::OnStorageManagerInstanceReady(
     mojom::StorageManagerInstancePtr storage_manager_ptr) {}
 
+void FakeArcBridgeHost::OnTimerInstanceReady(
+    mojom::TimerInstancePtr timer_ptr) {}
+
 void FakeArcBridgeHost::OnTracingInstanceReady(
     mojom::TracingInstancePtr trace_ptr) {}
 
