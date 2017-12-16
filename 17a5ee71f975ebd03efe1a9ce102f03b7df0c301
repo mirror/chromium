@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "db3f4e8d_6e9e68b7",
+        "filename": "services/network/public/interfaces/udp_socket.mojom",
+        "patchSetId": 28
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1140166
+      },
+      "writtenOn": "2017-12-16T00:54:13Z",
+      "side": 1,
+      "message": "Drive by comment:  Some amount of queuing should be supported *if* there is any chance you might use such an interface and care about performance.  \n\nIn my work on QUIC upload performance, I added a batching mechanism somewhat like this to net/socket (not landed yet).   I devised it as a step toward moving UDP writes to a different thread/core.   Even without the threading, I saw big gains just from the queuing/batching.   An important difference between UDP and TCP is that posix writes to UDP are 1:1 with datagrams.   You can do a large write and have the kernel break that up for you into smaller datagrams (unlike TCP which will both fragment and coalesce data into segments).   UDP constrains you to MTU sized datagrams, so batching is the only way to amortize the cost of an expensive boundary.",
+      "parentUuid": "45c1469d_04c92c85",
+      "revId": "17a5ee71f975ebd03efe1a9ce102f03b7df0c301",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "925a0fe0_0d37e3d0",
         "filename": "services/network/public/interfaces/udp_socket.mojom",
         "patchSetId": 28
