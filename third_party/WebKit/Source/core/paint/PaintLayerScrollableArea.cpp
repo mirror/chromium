@@ -573,11 +573,6 @@ IntSize PaintLayerScrollableArea::MaximumScrollOffsetInt() const {
     return ToIntSize(-ScrollOrigin());
 
   IntSize content_size = ContentsSize();
-  IntSize visible_size =
-      PixelSnappedIntRect(
-          Box().OverflowClipRect(Box().Location(),
-                                 kIgnorePlatformAndCSSOverlayScrollbarSize))
-          .Size();
 
   Page* page = GetLayoutBox()->GetDocument().GetPage();
   DCHECK(page);
@@ -587,8 +582,16 @@ IntSize PaintLayerScrollableArea::MaximumScrollOffsetInt() const {
   // The global root scroller should be clipped by the top LocalFrameView rather
   // than it's overflow clipping box. This is to ensure that content exposed by
   // hiding the URL bar at the bottom of the screen is visible.
-  if (this == controller.RootScrollerArea())
+  IntSize visible_size;
+  if (this == controller.RootScrollerArea()) {
     visible_size = controller.RootScrollerVisibleArea();
+  } else {
+    visible_size =
+        PixelSnappedIntRect(
+            Box().OverflowClipRect(Box().Location(),
+                                   kIgnorePlatformAndCSSOverlayScrollbarSize))
+            .Size();
+  }
 
   // TODO(skobes): We should really ASSERT that contentSize >= visibleSize
   // when we are not the root layer, but we can't because contentSize is
