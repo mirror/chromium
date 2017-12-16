@@ -82,28 +82,6 @@ String DispatchBeforeTextInsertedEvent(const String& text,
   return String();
 }
 
-DispatchEventResult DispatchTextInputEvent(LocalFrame* frame,
-                                           const String& text,
-                                           EditingState* editing_state) {
-  const Document& document = *frame->GetDocument();
-  Element* target = document.FocusedElement();
-  if (!target)
-    return DispatchEventResult::kCanceledBeforeDispatch;
-
-  // Send TextInputEvent. Unlike BeforeTextInsertedEvent, there is no need to
-  // update text for TextInputEvent as it doesn't have the API to modify text.
-  TextEvent* event = TextEvent::Create(frame->DomWindow(), text,
-                                       kTextEventInputIncrementalInsertion);
-  event->SetUnderlyingEvent(nullptr);
-  DispatchEventResult result = target->DispatchEvent(event);
-  if (IsValidDocument(document))
-    return result;
-  // editing/inserting/insert-text-remove-iframe-on-textInput-event.html
-  // reaches here.
-  editing_state->Abort();
-  return result;
-}
-
 PlainTextRange GetSelectionOffsets(const SelectionInDOMTree& selection) {
   const VisibleSelection visible_selection = CreateVisibleSelection(selection);
   const EphemeralRange range = FirstEphemeralRangeOf(visible_selection);
@@ -364,18 +342,6 @@ void TypingCommand::InsertText(
                                                editing_state);
     if (editing_state->IsAborted())
       return;
-  }
-
-  if (composition_type == kTextCompositionConfirm) {
-    if (DispatchTextInputEvent(frame, new_text, editing_state) !=
-        DispatchEventResult::kNotCanceled)
-      return;
-    // event handler might destroy document.
-    if (editing_state->IsAborted())
-      return;
-    // editing/inserting/insert-text-nodes-disconnect-on-textinput-event.html
-    // hits true for ABORT_EDITING_COMMAND_IF macro.
-    ABORT_EDITING_COMMAND_IF(!selection_for_insertion.IsValidFor(document));
   }
 
   // Do nothing if no need to delete and insert.
