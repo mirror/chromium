@@ -85,6 +85,7 @@ def main():
 
 def run_benchmark(args, rest_args):
   env = os.environ.copy()
+
   # Assume we want to set up the sandbox environment variables all the
   # time; doing so is harmless on non-Linux platforms and is needed
   # all the time on Linux.
@@ -112,6 +113,7 @@ def run_benchmark(args, rest_args):
       '--output-format=json-test-results',
     ]
     if args.xvfb:
+      env['CHROME_HEADLESS'] = '1'
       rc = xvfb.run_executable(cmd, env)
     else:
       rc = common.run_command(cmd, env=env)

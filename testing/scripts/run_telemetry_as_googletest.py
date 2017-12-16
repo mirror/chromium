@@ -72,6 +72,7 @@ def main():
   total_shards = None
   shard_index = None
   env = os.environ.copy()
+
   if 'GTEST_TOTAL_SHARDS' in env:
     total_shards = int(env['GTEST_TOTAL_SHARDS'])
     del env['GTEST_TOTAL_SHARDS']
@@ -87,6 +88,7 @@ def main():
   cmd = [sys.executable] + rest_args + sharding_args + [
       '--write-full-results-to', args.isolated_script_test_output]
   if args.xvfb:
+    env['CHROME_HEADLESS'] = '1'
     return xvfb.run_executable(cmd, env)
   else:
     return common.run_command(cmd, env=env)
