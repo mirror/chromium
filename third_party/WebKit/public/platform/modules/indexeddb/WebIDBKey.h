@@ -26,6 +26,8 @@
 #ifndef WebIDBKey_h
 #define WebIDBKey_h
 
+#include <memory>
+
 #include "public/platform/WebCommon.h"
 #include "public/platform/WebData.h"
 #include "public/platform/WebPrivatePtr.h"
@@ -39,12 +41,7 @@ class IDBKey;
 
 class WebIDBKey {
  public:
-  // Please use one of the factory methods. This is public only to allow
-  // WebVector.
-  WebIDBKey() {}
-  ~WebIDBKey() { Reset(); }
-
-  BLINK_EXPORT static WebIDBKey CreateArray(const WebVector<WebIDBKey>&);
+  BLINK_EXPORT static WebIDBKey CreateArray(WebVector<WebIDBKey>);
   BLINK_EXPORT static WebIDBKey CreateBinary(const WebData&);
   BLINK_EXPORT static WebIDBKey CreateString(const WebString&);
   BLINK_EXPORT static WebIDBKey CreateDate(double);
@@ -52,46 +49,41 @@ class WebIDBKey {
   BLINK_EXPORT static WebIDBKey CreateInvalid();
   BLINK_EXPORT static WebIDBKey CreateNull();
 
-  WebIDBKey(const WebIDBKey& e) { Assign(e); }
-  WebIDBKey& operator=(const WebIDBKey& e) {
-    Assign(e);
-    return *this;
-  }
+  WebIDBKey(WebIDBKey&&);
+  WebIDBKey& operator=(WebIDBKey&&);
 
-  BLINK_EXPORT void Assign(const WebIDBKey&);
-  BLINK_EXPORT void AssignArray(const WebVector<WebIDBKey>&);
-  BLINK_EXPORT void AssignBinary(const WebData&);
-  BLINK_EXPORT void AssignString(const WebString&);
-  BLINK_EXPORT void AssignDate(double);
-  BLINK_EXPORT void AssignNumber(double);
-  BLINK_EXPORT void AssignInvalid();
-  BLINK_EXPORT void AssignNull();
-  BLINK_EXPORT void Reset();
+  ~WebIDBKey();
 
   BLINK_EXPORT WebIDBKeyType KeyType() const;
   BLINK_EXPORT bool IsValid() const;
   // Only valid for ArrayType.
-  BLINK_EXPORT WebVector<WebIDBKey> Array() const;
+  BLINK_EXPORT WebVector<WebIDBKey> TakeArray() &&;
   // Only valid for BinaryType.
-  BLINK_EXPORT WebData Binary() const;
+  BLINK_EXPORT WebData TakeBinary() &&;
   // Only valid for StringType.
-  BLINK_EXPORT WebString GetString() const;
+  BLINK_EXPORT WebString TakeString() &&;
   // Only valid for DateType.
-  BLINK_EXPORT double Date() const;
+  BLINK_EXPORT double TakeDate() &&;
   // Only valid for NumberType.
-  BLINK_EXPORT double Number() const;
+  BLINK_EXPORT double TakeNumber() &&;
 
 #if INSIDE_BLINK
-  WebIDBKey(IDBKey* value) : private_(value) {}
-  WebIDBKey& operator=(IDBKey* value) {
-    private_ = value;
+  WebIDBKey(std::unique_ptr<IDBKey> value) : private_(std::move(value)) {}
+  WebIDBKey& operator=(std::unique_ptr<IDBKey> value) {
+    private_ = std::move(value);
     return *this;
   }
-  operator IDBKey*() const { return private_.Get(); }
+  operator IDBKey*() const { return private_.get(); }
+
+  // TODO(pwnall): This requires approval from C++ OWNERS.
+  operator std::unique_ptr<IDBKey>() && { return std::move(private_); }
 #endif
 
  private:
-  WebPrivatePtr<IDBKey> private_;
+  friend class WebVector<WebIDBKey>;
+  WebIDBKey();
+
+  std::unique_ptr<IDBKey> private_;
 };
 
 }  // namespace blink

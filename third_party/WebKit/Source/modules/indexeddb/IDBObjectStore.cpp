@@ -61,8 +61,9 @@ namespace blink {
 
 namespace {
 
-using IndexKeys = HeapVector<Member<IDBKey>>;
-}
+using IndexKeys = Vector<std::unique_ptr<IDBKey>>;
+
+}  // anonymous namespace
 
 IDBObjectStore::IDBObjectStore(scoped_refptr<IDBObjectStoreMetadata> metadata,
                                IDBTransaction* transaction)
@@ -299,17 +300,16 @@ IDBRequest* IDBObjectStore::getAllKeys(ScriptState* script_state,
   return request;
 }
 
-static void GenerateIndexKeysForValue(v8::Isolate* isolate,
-                                      const IDBIndexMetadata& index_metadata,
-                                      const ScriptValue& object_value,
-                                      IndexKeys* index_keys) {
-  DCHECK(index_keys);
+static IndexKeys GenerateIndexKeysForValue(
+    v8::Isolate* isolate,
+    const IDBIndexMetadata& index_metadata,
+    const ScriptValue& object_value) {
   NonThrowableExceptionState exception_state;
-  IDBKey* index_key = ScriptValue::To<IDBKey*>(
+  std::unique_ptr<IDBKey> index_key = ScriptValue::To<std::unique_ptr<IDBKey>>(
       isolate, object_value, exception_state, index_metadata.key_path);
 
   if (!index_key)
-    return;
+    return IndexKeys();
 
   DEFINE_THREAD_SAFE_STATIC_LOCAL(
       EnumerationHistogram, key_type_histogram,
@@ -319,17 +319,20 @@ static void GenerateIndexKeysForValue(v8::Isolate* isolate,
   if (!index_metadata.multi_entry ||
       index_key->GetType() != IDBKey::kArrayType) {
     if (!index_key->IsValid())
-      return;
+      return IndexKeys();
 
-    index_keys->push_back(index_key);
+    IndexKeys index_keys;
+    index_keys.emplace_back(std::move(index_key));
     key_type_histogram.Count(static_cast<int>(index_key->GetType()));
+    return index_keys;
   } else {
     DCHECK(index_metadata.multi_entry);
     DCHECK_EQ(index_key->GetType(), IDBKey::kArrayType);
-    IDBKey::KeyArray array = index_key->ToMultiEntryArray();
-    for (const IDBKey* key : array)
+    IDBKey::KeyArray index_keys =
+        IDBKey::ToMultiEntryArray(std::move(index_key));
+    for (const std::unique_ptr<IDBKey>& key : index_keys)
       key_type_histogram.Count(static_cast<int>(key->GetType()));
-    index_keys->AppendVector(array);
+    return index_keys;
   }
 }
 
@@ -516,9 +519,8 @@ IDBRequest* IDBObjectStore::put(ScriptState* script_state,
   for (const auto& it : Metadata().indexes) {
     if (clone.IsEmpty())
       value_wrapper.Clone(script_state, &clone);
-    IndexKeys keys;
-    GenerateIndexKeysForValue(script_state->GetIsolate(), *it.value, clone,
-                              &keys);
+    IndexKeys keys =
+        GenerateIndexKeysForValue(script_state->GetIsolate(), *it.value, clone);
     index_ids.push_back(it.key);
     index_keys.push_back(keys);
   }

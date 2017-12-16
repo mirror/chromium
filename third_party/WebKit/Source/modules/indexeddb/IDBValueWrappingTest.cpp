@@ -482,11 +482,12 @@ TEST(IDBValueUnwrapperTest, IsWrapped) {
       wrapper.TakeBlobDataHandles();
   Vector<WebBlobInfo> blob_infos = wrapper.TakeBlobInfo();
   scoped_refptr<SharedBuffer> wrapped_marker_buffer = wrapper.TakeWireBytes();
-  IDBKey* key = IDBKey::CreateNumber(42.0);
+  std::unique_ptr<IDBKey> key = ;
   IDBKeyPath key_path(String("primaryKey"));
 
-  std::unique_ptr<IDBValue> wrapped_value = IDBValue::Create(
-      wrapped_marker_buffer, blob_data_handles, blob_infos, key, key_path);
+  std::unique_ptr<IDBValue> wrapped_value =
+      IDBValue::Create(wrapped_marker_buffer, blob_data_handles, blob_infos,
+                       IDBKey::CreateNumber(42.0), key_path);
   EXPECT_TRUE(IDBValueUnwrapper::IsWrapped(wrapped_value.get()));
 
   Vector<char> wrapped_marker_bytes(wrapped_marker_buffer->size());
@@ -498,9 +499,9 @@ TEST(IDBValueUnwrapperTest, IsWrapped) {
   // return false.
   ASSERT_LT(3U, wrapped_marker_bytes.size());
   for (size_t i = 0; i < 3; ++i) {
-    std::unique_ptr<IDBValue> mutant_value =
-        IDBValue::Create(SharedBuffer::Create(wrapped_marker_bytes.data(), i),
-                         blob_data_handles, blob_infos, key, key_path);
+    std::unique_ptr<IDBValue> mutant_value = IDBValue::Create(
+        SharedBuffer::Create(wrapped_marker_bytes.data(), i), blob_data_handles,
+        blob_infos, IDBKey::CreateNumber(42.0), key_path);
 
     EXPECT_FALSE(IDBValueUnwrapper::IsWrapped(mutant_value.get()));
   }
@@ -512,10 +513,10 @@ TEST(IDBValueUnwrapperTest, IsWrapped) {
     for (int j = 0; j < 8; ++j) {
       char mask = 1 << j;
       wrapped_marker_bytes[i] ^= mask;
-      std::unique_ptr<IDBValue> mutant_value =
-          IDBValue::Create(SharedBuffer::Create(wrapped_marker_bytes.data(),
-                                                wrapped_marker_bytes.size()),
-                           blob_data_handles, blob_infos, key, key_path);
+      std::unique_ptr<IDBValue> mutant_value = IDBValue::Create(
+          SharedBuffer::Create(wrapped_marker_bytes.data(),
+                               wrapped_marker_bytes.size()),
+          blob_data_handles, blob_infos, IDBKey::CreateNumber(42), key_path);
       EXPECT_FALSE(IDBValueUnwrapper::IsWrapped(mutant_value.get()));
 
       wrapped_marker_bytes[i] ^= mask;

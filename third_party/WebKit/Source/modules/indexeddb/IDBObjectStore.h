@@ -118,12 +118,12 @@ class MODULES_EXPORT IDBObjectStore final : public ScriptWrappable {
   IDBRequest* count(ScriptState*, const ScriptValue& range, ExceptionState&);
 
   // Used by IDBCursor::update():
-  IDBRequest* put(ScriptState*,
-                  WebIDBPutMode,
-                  IDBAny* source,
-                  const ScriptValue&,
-                  IDBKey*,
-                  ExceptionState&);
+  IDBRequest* PutFromCursor(ScriptState*,
+                            WebIDBPutMode,
+                            IDBAny* source,
+                            const ScriptValue&,
+                            std::unique_ptr<IDBKey>,
+                            ExceptionState&);
 
   // Used internally and by InspectorIndexedDBAgent:
   IDBRequest* openCursor(
