@@ -37,7 +37,7 @@ class PLATFORM_EXPORT VideoFrameResourceProvider {
   virtual ~VideoFrameResourceProvider();
 
   virtual void ObtainContextProvider();
-  virtual void Initialize(viz::ContextProvider*);
+  virtual void Initialize(viz::GLContextProvider*);
   virtual void AppendQuads(viz::RenderPass*, scoped_refptr<media::VideoFrame>);
   virtual void ReleaseFrameResources();
 
@@ -54,7 +54,7 @@ class PLATFORM_EXPORT VideoFrameResourceProvider {
   cc::LayerTreeSettings settings_;
   std::unique_ptr<cc::VideoResourceUpdater> resource_updater_;
   std::unique_ptr<cc::LayerTreeResourceProvider> resource_provider_;
-  viz::ContextProvider* context_provider_ = nullptr;
+  viz::GLContextProvider* context_provider_ = nullptr;
   base::WeakPtrFactory<VideoFrameResourceProvider> weak_ptr_factory_;
 };
 

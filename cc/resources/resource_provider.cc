@@ -119,7 +119,7 @@ base::AtomicSequenceNumber g_next_resource_provider_tracing_id;
 }  // namespace
 
 ResourceProvider::Settings::Settings(
-    viz::ContextProvider* compositor_context_provider,
+    viz::GLContextProvider* compositor_context_provider,
     bool delegated_sync_points_required,
     const viz::ResourceSettings& resource_settings)
     : yuv_highbit_resource_format(resource_settings.high_bit_for_testing
@@ -163,7 +163,7 @@ ResourceProvider::Settings::Settings(
 }
 
 ResourceProvider::ResourceProvider(
-    viz::ContextProvider* compositor_context_provider,
+    viz::GLContextProvider* compositor_context_provider,
     viz::SharedBitmapManager* shared_bitmap_manager,
     gpu::GpuMemoryBufferManager* gpu_memory_buffer_manager,
     bool delegated_sync_points_required,
@@ -1065,7 +1065,7 @@ GLenum ResourceProvider::GetImageTextureTarget(
 }
 
 GLES2Interface* ResourceProvider::ContextGL() const {
-  viz::ContextProvider* context_provider = compositor_context_provider_;
+  viz::GLContextProvider* context_provider = compositor_context_provider_;
   return context_provider ? context_provider->ContextGL() : nullptr;
 }
 

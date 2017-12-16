@@ -34,7 +34,7 @@ class Sender;
 namespace viz {
 class BeginFrameSource;
 class CompositorFrameSinkSupport;
-class ContextProvider;
+class GLContextProvider;
 class Display;
 class FrameSinkManagerImpl;
 class ParentLocalSurfaceIdAllocator;
@@ -69,8 +69,8 @@ class SynchronousLayerTreeFrameSink
       public viz::mojom::CompositorFrameSinkClient {
  public:
   SynchronousLayerTreeFrameSink(
-      scoped_refptr<viz::ContextProvider> context_provider,
-      scoped_refptr<viz::ContextProvider> worker_context_provider,
+      scoped_refptr<viz::GLContextProvider> context_provider,
+      scoped_refptr<viz::RasterContextProvider> worker_context_provider,
       scoped_refptr<base::SingleThreadTaskRunner> compositor_task_runner,
       gpu::GpuMemoryBufferManager* gpu_memory_buffer_manager,
       int routing_id,

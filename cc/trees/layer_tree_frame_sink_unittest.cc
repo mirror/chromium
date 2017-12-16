@@ -11,6 +11,7 @@
 #include "cc/test/test_web_graphics_context_3d.h"
 #include "components/viz/common/quads/compositor_frame.h"
 #include "gpu/GLES2/gl2extchromium.h"
+#include "gpu/command_buffer/client/raster_interface.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace cc {
@@ -19,8 +20,8 @@ namespace {
 class TestLayerTreeFrameSink : public LayerTreeFrameSink {
  public:
   explicit TestLayerTreeFrameSink(
-      scoped_refptr<TestContextProvider> context_provider,
-      scoped_refptr<TestContextProvider> worker_context_provider,
+      scoped_refptr<viz::GLContextProvider> context_provider,
+      scoped_refptr<viz::RasterContextProvider> worker_context_provider,
       scoped_refptr<base::SingleThreadTaskRunner> compositor_task_runner)
       : LayerTreeFrameSink(std::move(context_provider),
                            std::move(worker_context_provider),
@@ -36,8 +37,8 @@ class TestLayerTreeFrameSink : public LayerTreeFrameSink {
 
 TEST(LayerTreeFrameSinkTest, ContextLossInformsClient) {
   scoped_refptr<TestContextProvider> provider = TestContextProvider::Create();
-  scoped_refptr<TestContextProvider> worker_provider =
-      TestContextProvider::CreateWorker();
+  scoped_refptr<TestRasterContextProvider> worker_provider =
+      TestRasterContextProvider::CreateWorker();
   auto task_runner = base::MakeRefCounted<base::TestSimpleTaskRunner>();
   TestLayerTreeFrameSink layer_tree_frame_sink(provider, worker_provider,
                                                task_runner);
@@ -58,8 +59,8 @@ TEST(LayerTreeFrameSinkTest, ContextLossInformsClient) {
 TEST(LayerTreeFrameSinkTest, ContextLossFailsBind) {
   scoped_refptr<TestContextProvider> context_provider =
       TestContextProvider::Create();
-  scoped_refptr<TestContextProvider> worker_provider =
-      TestContextProvider::CreateWorker();
+  scoped_refptr<TestRasterContextProvider> worker_provider =
+      TestRasterContextProvider::CreateWorker();
 
   // Lose the context so BindToClient fails.
   context_provider->UnboundTestContext3d()->set_context_lost(true);
@@ -76,8 +77,8 @@ TEST(LayerTreeFrameSinkTest, ContextLossFailsBind) {
 
 TEST(LayerTreeFrameSinkTest, WorkerContextLossInformsClient) {
   scoped_refptr<TestContextProvider> provider = TestContextProvider::Create();
-  scoped_refptr<TestContextProvider> worker_provider =
-      TestContextProvider::CreateWorker();
+  scoped_refptr<TestRasterContextProvider> worker_provider =
+      TestRasterContextProvider::CreateWorker();
   auto task_runner = base::MakeRefCounted<base::TestSimpleTaskRunner>();
   TestLayerTreeFrameSink layer_tree_frame_sink(provider, worker_provider,
                                                task_runner);
@@ -90,11 +91,11 @@ TEST(LayerTreeFrameSinkTest, WorkerContextLossInformsClient) {
   // Verify DidLoseLayerTreeFrameSink callback is hooked up correctly.
   EXPECT_FALSE(client.did_lose_layer_tree_frame_sink_called());
   {
-    viz::ContextProvider::ScopedContextLock context_lock(
+    viz::RasterContextProvider::ScopedContextLockRaster context_lock(
         layer_tree_frame_sink.worker_context_provider());
-    context_lock.ContextGL()->LoseContextCHROMIUM(
+    context_lock.RasterInterface()->LoseContextCHROMIUM(
         GL_GUILTY_CONTEXT_RESET_ARB, GL_INNOCENT_CONTEXT_RESET_ARB);
-    context_lock.ContextGL()->Flush();
+    context_lock.RasterInterface()->Flush();
   }
   task_runner->RunPendingTasks();
   EXPECT_TRUE(client.did_lose_layer_tree_frame_sink_called());
@@ -103,8 +104,8 @@ TEST(LayerTreeFrameSinkTest, WorkerContextLossInformsClient) {
 TEST(LayerTreeFrameSinkTest, WorkerContextLossFailsBind) {
   scoped_refptr<TestContextProvider> context_provider =
       TestContextProvider::Create();
-  scoped_refptr<TestContextProvider> worker_provider =
-      TestContextProvider::CreateWorker();
+  scoped_refptr<TestRasterContextProvider> worker_provider =
+      TestRasterContextProvider::CreateWorker();
 
   // Lose the context so BindToClient fails.
   worker_provider->UnboundTestContext3d()->set_context_lost(true);

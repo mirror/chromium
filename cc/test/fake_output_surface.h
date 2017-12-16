@@ -32,7 +32,7 @@ class FakeOutputSurface : public viz::OutputSurface {
   }
 
   static std::unique_ptr<FakeOutputSurface> Create3d(
-      scoped_refptr<viz::ContextProvider> context_provider) {
+      scoped_refptr<viz::GLContextProvider> context_provider) {
     return base::WrapUnique(new FakeOutputSurface(context_provider));
   }
 
@@ -42,7 +42,7 @@ class FakeOutputSurface : public viz::OutputSurface {
   }
 
   static std::unique_ptr<FakeOutputSurface> CreateOffscreen(
-      scoped_refptr<viz::ContextProvider> context_provider) {
+      scoped_refptr<viz::GLContextProvider> context_provider) {
     auto surface =
         base::WrapUnique(new FakeOutputSurface(std::move(context_provider)));
     surface->capabilities_.uses_default_gl_framebuffer = false;
@@ -108,7 +108,7 @@ class FakeOutputSurface : public viz::OutputSurface {
 
  protected:
   explicit FakeOutputSurface(
-      scoped_refptr<viz::ContextProvider> context_provider);
+      scoped_refptr<viz::GLContextProvider> context_provider);
   explicit FakeOutputSurface(
       std::unique_ptr<viz::SoftwareOutputDevice> software_device);
 

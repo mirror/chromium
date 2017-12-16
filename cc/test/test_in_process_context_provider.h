@@ -35,30 +35,29 @@ std::unique_ptr<gpu::GLInProcessContext> CreateTestInProcessContext(
     gpu::GLInProcessContext* shared_context,
     scoped_refptr<base::SingleThreadTaskRunner> task_runner);
 
-class TestInProcessContextProvider : public viz::ContextProvider {
+class TestInProcessContextProviderBase {
  public:
-  explicit TestInProcessContextProvider(
-      TestInProcessContextProvider* shared_context);
+  explicit TestInProcessContextProviderBase(
+      TestInProcessContextProviderBase* shared_context);
 
-  gpu::ContextResult BindToCurrentThread() override;
-  gpu::gles2::GLES2Interface* ContextGL() override;
-  gpu::raster::RasterInterface* RasterContext() override;
-  gpu::ContextSupport* ContextSupport() override;
-  class GrContext* GrContext() override;
-  viz::ContextCacheController* CacheController() override;
-  void InvalidateGrContext(uint32_t state) override;
-  base::Lock* GetLock() override;
-  const gpu::Capabilities& ContextCapabilities() const override;
-  const gpu::GpuFeatureInfo& GetGpuFeatureInfo() const override;
-  void AddObserver(viz::ContextLostObserver* obs) override {}
-  void RemoveObserver(viz::ContextLostObserver* obs) override {}
+  gpu::ContextResult BindToCurrentThread();
+  gpu::gles2::GLES2Interface* ContextGL();
+  gpu::raster::RasterInterface* RasterInterface();
+  gpu::ContextSupport* ContextSupport();
+  class GrContext* GrContext();
+  viz::ContextCacheController* CacheController();
+  void InvalidateGrContext(uint32_t state);
+  base::Lock* GetLock();
+  const gpu::Capabilities& ContextCapabilities() const;
+  const gpu::GpuFeatureInfo& GetGpuFeatureInfo() const;
+  void AddObserver(viz::ContextLostObserver* obs) {}
+  void RemoveObserver(viz::ContextLostObserver* obs) {}
   void SetSupportTextureNorm16(bool support) {
     capabilities_texture_norm16_ = support;
   }
 
  protected:
-  friend class base::RefCountedThreadSafe<TestInProcessContextProvider>;
-  ~TestInProcessContextProvider() override;
+  virtual ~TestInProcessContextProviderBase();
 
  private:
   viz::TestGpuMemoryBufferManager gpu_memory_buffer_manager_;
@@ -71,6 +70,57 @@ class TestInProcessContextProvider : public viz::ContextProvider {
   bool capabilities_texture_norm16_ = false;
   gpu::Capabilities capabilities_;
   gpu::GpuFeatureInfo gpu_feature_info_;
+};
+
+class TestInProcessContextProvider : public viz::GLContextProvider,
+                                     public TestInProcessContextProviderBase {
+ public:
+  explicit TestInProcessContextProvider(
+      TestInProcessContextProviderBase* shared_context);
+
+  // viz::CommonContextProvider implementation.
+  gpu::ContextResult BindToCurrentThread() override;
+  const gpu::Capabilities& ContextCapabilities() const override;
+  const gpu::GpuFeatureInfo& GetGpuFeatureInfo() const override;
+  gpu::ContextSupport* ContextSupport() override;
+  class GrContext* GrContext() override;
+  viz::ContextCacheController* CacheController() override;
+  void InvalidateGrContext(uint32_t state) override;
+  base::Lock* GetLock() override;
+  void AddObserver(viz::ContextLostObserver* obs) override;
+  void RemoveObserver(viz::ContextLostObserver* obs) override;
+
+  // viz::GLContextProvider implementation.
+  gpu::gles2::GLES2Interface* ContextGL() override;
+
+ protected:
+  ~TestInProcessContextProvider() override{};
+};
+
+class TestInProcessRasterContextProvider
+    : public viz::RasterContextProvider,
+      public TestInProcessContextProviderBase {
+ public:
+  explicit TestInProcessRasterContextProvider(
+      TestInProcessContextProviderBase* shared_context);
+
+  // viz::CommonContextProvider implementation.
+  gpu::ContextResult BindToCurrentThread() override;
+  const gpu::Capabilities& ContextCapabilities() const override;
+  const gpu::GpuFeatureInfo& GetGpuFeatureInfo() const override;
+  gpu::ContextSupport* ContextSupport() override;
+  class GrContext* GrContext() override;
+  viz::ContextCacheController* CacheController() override;
+  void InvalidateGrContext(uint32_t state) override;
+  base::Lock* GetLock() override;
+  void AddObserver(viz::ContextLostObserver* obs) override;
+  void RemoveObserver(viz::ContextLostObserver* obs) override;
+
+  // viz::RasterContextProvider implementation.
+  gpu::raster::RasterInterface* RasterInterface() override;
+
+ protected:
+  ~TestInProcessRasterContextProvider() override{};
 };
 
 }  // namespace cc

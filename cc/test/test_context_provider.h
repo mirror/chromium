@@ -30,38 +30,23 @@ namespace cc {
 class TestWebGraphicsContext3D;
 class TestGLES2Interface;
 
-class TestContextProvider : public viz::ContextProvider {
+class TestContextProviderBase {
  public:
   typedef base::Callback<std::unique_ptr<TestWebGraphicsContext3D>(void)>
       CreateCallback;
 
-  static scoped_refptr<TestContextProvider> Create();
-  // Creates a worker context provider that can be used on any thread. This is
-  // equivalent to: Create(); BindToCurrentThread().
-  static scoped_refptr<TestContextProvider> CreateWorker();
-  static scoped_refptr<TestContextProvider> Create(
-      std::unique_ptr<TestWebGraphicsContext3D> context);
-  static scoped_refptr<TestContextProvider> Create(
-      std::unique_ptr<TestWebGraphicsContext3D> context,
-      std::unique_ptr<TestContextSupport> support);
-  static scoped_refptr<TestContextProvider> CreateWorker(
-      std::unique_ptr<TestWebGraphicsContext3D> context,
-      std::unique_ptr<TestContextSupport> support);
-  static scoped_refptr<TestContextProvider> Create(
-      std::unique_ptr<TestGLES2Interface> gl);
-
-  gpu::ContextResult BindToCurrentThread() override;
-  const gpu::Capabilities& ContextCapabilities() const override;
-  const gpu::GpuFeatureInfo& GetGpuFeatureInfo() const override;
-  gpu::gles2::GLES2Interface* ContextGL() override;
-  gpu::raster::RasterInterface* RasterContext() override;
-  gpu::ContextSupport* ContextSupport() override;
-  class GrContext* GrContext() override;
-  viz::ContextCacheController* CacheController() override;
-  void InvalidateGrContext(uint32_t state) override;
-  base::Lock* GetLock() override;
-  void AddObserver(viz::ContextLostObserver* obs) override;
-  void RemoveObserver(viz::ContextLostObserver* obs) override;
+  gpu::ContextResult BindToCurrentThread();
+  const gpu::Capabilities& ContextCapabilities() const;
+  const gpu::GpuFeatureInfo& GetGpuFeatureInfo() const;
+  gpu::gles2::GLES2Interface* ContextGL();
+  gpu::raster::RasterInterface* RasterInterface();
+  gpu::ContextSupport* ContextSupport();
+  class GrContext* GrContext();
+  viz::ContextCacheController* CacheController();
+  void InvalidateGrContext(uint32_t state);
+  base::Lock* GetLock();
+  void AddObserver(viz::ContextLostObserver* obs);
+  void RemoveObserver(viz::ContextLostObserver* obs);
 
   TestWebGraphicsContext3D* TestContext3d();
 
@@ -75,12 +60,12 @@ class TestContextProvider : public viz::ContextProvider {
   TestContextSupport* support() { return support_.get(); }
 
  protected:
-  explicit TestContextProvider(
+  explicit TestContextProviderBase(
       std::unique_ptr<TestContextSupport> support,
       std::unique_ptr<TestGLES2Interface> gl,
       std::unique_ptr<TestWebGraphicsContext3D> context,
       bool support_locking);
-  ~TestContextProvider() override;
+  virtual ~TestContextProviderBase();
 
  private:
   void OnLostContext();
@@ -112,9 +97,83 @@ class TestContextProvider : public viz::ContextProvider {
 
   base::ObserverList<viz::ContextLostObserver> observers_;
 
-  base::WeakPtrFactory<TestContextProvider> weak_ptr_factory_;
+  base::WeakPtrFactory<TestContextProviderBase> weak_ptr_factory_;
 
-  DISALLOW_COPY_AND_ASSIGN(TestContextProvider);
+  DISALLOW_COPY_AND_ASSIGN(TestContextProviderBase);
+};
+
+class TestContextProvider : public viz::GLContextProvider,
+                            public TestContextProviderBase {
+ public:
+  typedef base::Callback<std::unique_ptr<TestWebGraphicsContext3D>(void)>
+      CreateCallback;
+
+  static scoped_refptr<TestContextProvider> Create();
+  static scoped_refptr<TestContextProvider> Create(
+      std::unique_ptr<TestWebGraphicsContext3D> context);
+  static scoped_refptr<TestContextProvider> Create(
+      std::unique_ptr<TestWebGraphicsContext3D> context,
+      std::unique_ptr<TestContextSupport> support);
+  static scoped_refptr<TestContextProvider> Create(
+      std::unique_ptr<TestGLES2Interface> gl);
+
+  // viz::CommonContextProvider implementation.
+  gpu::ContextResult BindToCurrentThread() override;
+  const gpu::Capabilities& ContextCapabilities() const override;
+  const gpu::GpuFeatureInfo& GetGpuFeatureInfo() const override;
+  gpu::ContextSupport* ContextSupport() override;
+  class GrContext* GrContext() override;
+  viz::ContextCacheController* CacheController() override;
+  void InvalidateGrContext(uint32_t state) override;
+  base::Lock* GetLock() override;
+  void AddObserver(viz::ContextLostObserver* obs) override;
+  void RemoveObserver(viz::ContextLostObserver* obs) override;
+
+  // viz::GLContextProvider implementation.
+  gpu::gles2::GLES2Interface* ContextGL() override;
+
+ protected:
+  explicit TestContextProvider(
+      std::unique_ptr<TestContextSupport> support,
+      std::unique_ptr<TestGLES2Interface> gl,
+      std::unique_ptr<TestWebGraphicsContext3D> context,
+      bool support_locking);
+  ~TestContextProvider() override{};
+};
+
+class TestRasterContextProvider : public viz::RasterContextProvider,
+                                  public TestContextProviderBase {
+ public:
+  typedef base::Callback<std::unique_ptr<TestWebGraphicsContext3D>(void)>
+      CreateCallback;
+
+  static scoped_refptr<TestRasterContextProvider> CreateWorker();
+  static scoped_refptr<TestRasterContextProvider> CreateWorker(
+      std::unique_ptr<TestWebGraphicsContext3D> context,
+      std::unique_ptr<TestContextSupport> support);
+
+  // viz::CommonContextProvider implementation.
+  gpu::ContextResult BindToCurrentThread() override;
+  const gpu::Capabilities& ContextCapabilities() const override;
+  const gpu::GpuFeatureInfo& GetGpuFeatureInfo() const override;
+  gpu::ContextSupport* ContextSupport() override;
+  class GrContext* GrContext() override;
+  viz::ContextCacheController* CacheController() override;
+  void InvalidateGrContext(uint32_t state) override;
+  base::Lock* GetLock() override;
+  void AddObserver(viz::ContextLostObserver* obs) override;
+  void RemoveObserver(viz::ContextLostObserver* obs) override;
+
+  // viz::RasterContextProvider implementation.
+  gpu::raster::RasterInterface* RasterInterface() override;
+
+ protected:
+  explicit TestRasterContextProvider(
+      std::unique_ptr<TestContextSupport> support,
+      std::unique_ptr<TestGLES2Interface> gl,
+      std::unique_ptr<TestWebGraphicsContext3D> context,
+      bool support_locking);
+  ~TestRasterContextProvider() override{};
 };
 
 }  // namespace cc

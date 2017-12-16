@@ -31,7 +31,7 @@ class WebMediaPlayerCast : public RendererMediaPlayerInterface {
  public:
   WebMediaPlayerCast(WebMediaPlayerImpl* impl,
                      blink::WebMediaPlayerClient* client,
-                     scoped_refptr<viz::ContextProvider> context_provider);
+                     scoped_refptr<viz::GLContextProvider> context_provider);
   ~WebMediaPlayerCast();
 
   void Initialize(const GURL& url,
@@ -95,7 +95,7 @@ class WebMediaPlayerCast : public RendererMediaPlayerInterface {
  private:
   WebMediaPlayerImpl* webmediaplayer_;
   blink::WebMediaPlayerClient* client_;
-  scoped_refptr<viz::ContextProvider> context_provider_;
+  scoped_refptr<viz::GLContextProvider> context_provider_;
 
   // Manages this object and delegates player calls to the browser process.
   // Owned by RenderFrameImpl.
