@@ -110,7 +110,6 @@ bool RequiresEvenSizeAllocation(VideoPixelFormat format) {
     case PIXEL_FORMAT_XRGB:
     case PIXEL_FORMAT_RGB24:
     case PIXEL_FORMAT_RGB32:
-    case PIXEL_FORMAT_Y8:
     case PIXEL_FORMAT_Y16:
       return false;
     case PIXEL_FORMAT_NV12:
@@ -517,7 +516,6 @@ size_t VideoFrame::NumPlanes(VideoPixelFormat format) {
     case PIXEL_FORMAT_RGB24:
     case PIXEL_FORMAT_RGB32:
     case PIXEL_FORMAT_MJPEG:
-    case PIXEL_FORMAT_Y8:
     case PIXEL_FORMAT_Y16:
       return 1;
     case PIXEL_FORMAT_NV12:
@@ -849,7 +847,6 @@ int VideoFrame::BitsPerChannel(VideoPixelFormat format) {
     case media::PIXEL_FORMAT_RGB32:
     case media::PIXEL_FORMAT_MJPEG:
     case media::PIXEL_FORMAT_MT21:
-    case media::PIXEL_FORMAT_Y8:
       bits_per_channel = 8;
       break;
     case media::PIXEL_FORMAT_YUV420P9:
@@ -1130,7 +1127,6 @@ gfx::Size VideoFrame::SampleSize(VideoPixelFormat format, size_t plane) {
         case PIXEL_FORMAT_RGB24:
         case PIXEL_FORMAT_RGB32:
         case PIXEL_FORMAT_MJPEG:
-        case PIXEL_FORMAT_Y8:
           break;
       }
   }
@@ -1173,7 +1169,6 @@ int VideoFrame::BytesPerElement(VideoPixelFormat format, size_t plane) {
     case PIXEL_FORMAT_YV16:
     case PIXEL_FORMAT_YV12A:
     case PIXEL_FORMAT_YV24:
-    case PIXEL_FORMAT_Y8:
       return 1;
     case PIXEL_FORMAT_MJPEG:
       return 0;
