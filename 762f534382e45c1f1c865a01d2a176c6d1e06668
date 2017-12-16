@@ -88,6 +88,24 @@
       "revId": "762f534382e45c1f1c865a01d2a176c6d1e06668",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a507471_c6d1f4f4",
+        "filename": "gpu/command_buffer/client/gles2_implementation.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3333,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-12-16T00:04:21Z",
+      "side": 1,
+      "message": "gpu::Capabilities (cached as capabilities_) has max_texture_size. Note that the max group size is 16 bytes (GL_RGBA32F etc.).\n\nStill I think doing \u003e1 rows is important, even (especially) for large textures.",
+      "parentUuid": "20bba532_fac94ef5",
+      "revId": "762f534382e45c1f1c865a01d2a176c6d1e06668",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
