@@ -96,7 +96,7 @@ WebMouseEvent WebMouseEventFromGestureEvent(const WebGestureEvent& gesture) {
 
   WebMouseEvent mouse(type,
                       gesture.GetModifiers() | WebInputEvent::kLeftButtonDown,
-                      gesture.TimeStampSeconds());
+                      gesture.TimeStamp());
   mouse.button = WebMouseEvent::Button::kLeft;
   mouse.click_count = (mouse.GetType() == WebInputEvent::kMouseDown ||
                        mouse.GetType() == WebInputEvent::kMouseUp);
@@ -172,7 +172,7 @@ class PepperWidget : public WebWidget {
         case WebInputEvent::kGestureTap: {
           WebMouseEvent mouse(WebInputEvent::kMouseMove,
                               gesture_event->GetModifiers(),
-                              gesture_event->TimeStampSeconds());
+                              gesture_event->TimeStamp());
           mouse.SetPositionInWidget(gesture_event->x, gesture_event->y);
           mouse.SetPositionInScreen(gesture_event->global_x,
                                     gesture_event->global_y);

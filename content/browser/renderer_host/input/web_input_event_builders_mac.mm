@@ -37,6 +37,7 @@
 
 #include "base/mac/sdk_forward_declarations.h"
 #include "base/strings/string_util.h"
+#include "base/time/time.h"
 #include "third_party/WebKit/public/platform/WebInputEvent.h"
 #include "ui/base/cocoa/cocoa_base_utils.h"
 #include "ui/events/blink/blink_event_util.h"
@@ -529,7 +530,8 @@ blink::WebGestureEvent WebGestureEventBuilder::Build(NSEvent* event,
   result.global_y = temp.PositionInScreen().y;
 
   result.SetModifiers(ModifiersFromEvent(event));
-  result.SetTimeStampSeconds([event timestamp]);
+  result.SetTimeStamp(base::TimeTicks() +
+                      base::TimeDelta::FromSecondsD([event timestamp]));
 
   result.source_device = blink::kWebGestureDeviceTouchpad;
   switch ([event type]) {
