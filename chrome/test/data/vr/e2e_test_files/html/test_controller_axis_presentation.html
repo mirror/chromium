@@ -1,0 +1,30 @@
+<!doctype html>
+<!--
+Tests that Gamepad devices have their axes updated during presentation.
+-->
+<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="../resources/webvr_e2e.css">
+  </head>
+  <body>
+    <canvas id="webgl-canvas"></canvas>
+    <script src="../../../../../../third_party/WebKit/LayoutTests/resources/testharness.js"></script>
+    <script src="../resources/webvr_e2e.js"></script>
+    <script src="../resources/webvr_boilerplate.js"></script>
+    <script>
+      var t = async_test("Gamepad axes update during presentation");
+      
+      function stepGetGamepadAndCheckInitialValue() {
+        let gamepads = navigator.getGamepads();
+        t.step( () => {
+          assert_unreached(JSON.stringify(gamepads));
+          assert_equals(gamepads.length, 1);
+        });
+        let gamepad = gamepads[0];
+        t.step( () => {
+            assert_unreached(JSON.stringify(gamepad.axes));
+        });
+      }
+    </script>
+  </body>
+</html>
