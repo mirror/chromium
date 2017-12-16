@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "384773b9_e66d58f1",
+        "filename": "chrome/browser/chromeos/login/signin/merge_session_resource_throttle.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-16T00:17:17Z",
+      "side": 1,
+      "message": "Nit: Would it be better to make `MaybeDeferLoading()` return a bool? The it would be:\n\n*defer \u003d MaybeDeferLoading(redirect_info.new_url);",
+      "range": {
+        "startLine": 80,
+        "startChar": 2,
+        "endLine": 80,
+        "endChar": 19
+      },
+      "revId": "05f440d3a0fb8796e03b0b0e560d1a4e8008f3ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
