@@ -795,7 +795,8 @@ void MessageService::OnOpenChannelAllowed(
     return;
   }
 
-  BrowserContext* context = source->GetProcess()->GetBrowserContext();
+  content::RenderProcessHost* source_process = source->GetProcess();
+  BrowserContext* context = source_process->GetBrowserContext();
 
   // Note: we use the source's profile here. If the source is an incognito
   // process, we will use the incognito EPM to find the right extension process,
@@ -820,7 +821,7 @@ void MessageService::OnOpenChannelAllowed(
     // Capture this reference before params is invalidated by base::Passed().
     const GURL& source_url = params->source_url;
     property_provider_.GetChannelID(
-        context, source_url,
+        source_process->GetStoragePartition(), source_url,
         base::Bind(&MessageService::GotChannelID, weak_factory_.GetWeakPtr(),
                    base::Passed(&params)));
     return;
