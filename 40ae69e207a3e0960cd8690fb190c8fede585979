@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b1522e43_359e02fd",
+        "filename": "extensions/renderer/resources/platform_app.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1242274
+      },
+      "writtenOn": "2017-12-16T06:15:41Z",
+      "side": 0,
+      "message": "AFAIU here document properties like \u0027alinkColor\u0027, \u0027all\u0027, \u0027bgColor\u0027, \u0027fgColor\u0027, \u0027linkColor\u0027, \u0027vlinkColor\u0027 log \u0027not available\u0027 warnings to the console and return undefined when accessed because of disableGetters(). Also with this change, behavior would be same because disableGetters() is called for all above properties.\n\nSince with this patch document.all can not be overwritten to match the spec (Mozilla, Edge behaves same). So, \u0027document.all \u003d undefined;\u0027 would throw error \"Cannot assign to read only property \u0027all\u0027 of object\" which cause javascript to stop without executing disableGetters().\nAlso document.all is undefined by default here, so I removed this statement.\nPlease suggest if I understand incorrectly. Thanks!",
+      "parentUuid": "fb3b0f60_29401c32",
+      "revId": "40ae69e207a3e0960cd8690fb190c8fede585979",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "304192ef_b4b15774",
         "filename": "third_party/WebKit/LayoutTests/virtual/stable/webexposed/global-interface-listing-expected.txt",
         "patchSetId": 7
