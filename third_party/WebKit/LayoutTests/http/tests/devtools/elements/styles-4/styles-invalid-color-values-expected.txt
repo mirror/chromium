@@ -250,9 +250,11 @@ SUCCESS: parsed invalid color rgb(a,b,c,d) to null
 
 SUCCESS: parsed invalid color rgb(1,1,1.2) to null
 
-SUCCESS: parsed invalid color rgba(0,0,0,1%) to null
+SUCCESS: parsed invalid color rgba(0 0 0 1%) to null
 
 SUCCESS: parsed invalid color rgba(0,0,0,) to null
+
+SUCCESS: parsed invalid color rgba(0 0, 0) to null
 
 SUCCESS: parsed invalid color hsl(0,0,0) to null
 
@@ -265,6 +267,8 @@ SUCCESS: parsed invalid color hsl(0, 0%, 0) to null
 SUCCESS: parsed invalid color hsl(a,b,c) to null
 
 SUCCESS: parsed invalid color hsla(0,0,0,0) to null
+
+SUCCESS: parsed invalid color hsla(0 0% 0% 0) to null
 
 SUCCESS: parsed invalid color hsla to null
 
