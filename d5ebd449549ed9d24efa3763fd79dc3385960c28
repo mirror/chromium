@@ -329,6 +329,30 @@
       "revId": "d5ebd449549ed9d24efa3763fd79dc3385960c28",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a5b31495_c82ccc55",
+        "filename": "chrome/browser/component_updater/cros_component_installer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1178302
+      },
+      "writtenOn": "2017-12-16T01:07:56Z",
+      "side": 1,
+      "message": "Or I can remove LoadComponentDownload/LoadComponentNoDownload unittest since the thing it is testing is trivial and compatibility check is already covering part of this (Download if no component is installed, or load directly if already installed). The rest of CrOSComponent has many thread affinity dcheck, IO operations and callbacks which are not ideal for unittest.",
+      "parentUuid": "d3728877_2cba9f20",
+      "range": {
+        "startLine": 129,
+        "startChar": 2,
+        "endLine": 129,
+        "endChar": 10
+      },
+      "revId": "d5ebd449549ed9d24efa3763fd79dc3385960c28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
