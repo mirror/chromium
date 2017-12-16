@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "65fc8ea2_8f9ff0ed",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebApkInstaller.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-12-16T00:50:33Z",
+      "side": 1,
+      "message": "Nit: Delete the new line. I think that the norm is not to have new lines between native functions (e.g. WebApkUpdateManager.java)",
+      "revId": "8333a7c2f3445548aa0a0f5dd3f6d320b43bea17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3283eac_66ef44d0",
+        "filename": "chrome/browser/android/webapk/webapk_installer.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 512,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-12-16T00:50:33Z",
+      "side": 1,
+      "message": "Nit: Move this function just above WebApkInstaller::OnGotPrimaryIconMurmur2Hash(). In this file, I like keeping the functions in the order that they are called. This is non-obvious because there is an install path and an update path which share some but not all functions.",
+      "revId": "8333a7c2f3445548aa0a0f5dd3f6d320b43bea17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df9591fb_0107f879",
+        "filename": "chrome/browser/android/webapk/webapk_installer.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-12-16T00:50:33Z",
+      "side": 1,
+      "message": "Technically, this entire file runs the installation process.\n\nHow about: \"Called once there is sufficient space on the user\u0027s device to install a WebAPK. The user may already have had sufficient space on their device prior to initiating the install process. This method might be called as a result of freeing up memory by clearing Chrome\u0027s cache.\"",
+      "revId": "8333a7c2f3445548aa0a0f5dd3f6d320b43bea17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
