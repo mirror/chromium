@@ -1,0 +1,187 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "22fb84b1_f053510e",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2218,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-12-16T04:19:33Z",
+      "side": 1,
+      "message": "x? We should probably start using the new name for new things.",
+      "range": {
+        "startLine": 2218,
+        "startChar": 9,
+        "endLine": 2218,
+        "endChar": 10
+      },
+      "revId": "577f6d2ca3a7b89cae0a97ccb7ebb864e07ad06b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a8e8fd1_731c19e9",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2218,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-12-16T04:19:33Z",
+      "side": 1,
+      "message": "Should it be orientation-sensor-device?",
+      "range": {
+        "startLine": 2218,
+        "startChar": 12,
+        "endLine": 2218,
+        "endChar": 30
+      },
+      "revId": "577f6d2ca3a7b89cae0a97ccb7ebb864e07ad06b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0df37231_06f33405",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2219,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-12-16T04:19:33Z",
+      "side": 1,
+      "message": "Whatever we decide on the naming will need to be applied to all these constants, etc. too.",
+      "revId": "577f6d2ca3a7b89cae0a97ccb7ebb864e07ad06b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d51f004_47cbd53e",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1620,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-12-16T04:19:33Z",
+      "side": 1,
+      "message": "X",
+      "range": {
+        "startLine": 1620,
+        "startChar": 47,
+        "endLine": 1620,
+        "endChar": 48
+      },
+      "revId": "577f6d2ca3a7b89cae0a97ccb7ebb864e07ad06b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f937387_f8bb8a33",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1622,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-12-16T04:19:33Z",
+      "side": 1,
+      "message": "Suggestion:\n\"When no VR platform device is available, expose a non-presenting device based on the device\u0027s orientation sensors if available.\"",
+      "revId": "577f6d2ca3a7b89cae0a97ccb7ebb864e07ad06b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "615834f0_af1cfcdd",
+        "filename": "content/public/common/content_features.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 471,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-12-16T04:19:33Z",
+      "side": 1,
+      "message": "As in the description, I\u0027d avoid \"fallback\" and \"backup\". Here, \"orientation-based\" may be sufficient.",
+      "range": {
+        "startLine": 471,
+        "startChar": 24,
+        "endLine": 471,
+        "endChar": 30
+      },
+      "revId": "577f6d2ca3a7b89cae0a97ccb7ebb864e07ad06b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbb9b0ed_35cee930",
+        "filename": "content/public/common/content_features.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 473,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-12-16T04:19:33Z",
+      "side": 1,
+      "message": "Does this change the default value for Android?\nIf you want Android enabled by default, you can #ifdef this value. There are examples in this file I believe.",
+      "range": {
+        "startLine": 473,
+        "startChar": 58,
+        "endLine": 473,
+        "endChar": 66
+      },
+      "revId": "577f6d2ca3a7b89cae0a97ccb7ebb864e07ad06b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e197f7f0_fc242aee",
+        "filename": "third_party/WebKit/Source/platform/runtime_enabled_features.json5",
+        "patchSetId": 6
+      },
+      "lineNbr": 1155,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-12-16T04:19:33Z",
+      "side": 1,
+      "message": "or \"WebXR\"",
+      "revId": "577f6d2ca3a7b89cae0a97ccb7ebb864e07ad06b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8490d898_c9e23f4c",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 26001,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-12-16T04:19:33Z",
+      "side": 1,
+      "message": "If you rename it, you\u0027ll need to remove these two lines and add two more.",
+      "revId": "577f6d2ca3a7b89cae0a97ccb7ebb864e07ad06b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
