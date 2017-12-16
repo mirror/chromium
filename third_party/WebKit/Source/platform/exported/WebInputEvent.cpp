@@ -81,4 +81,6 @@ static_assert(sizeof(WebGestureEvent) == sizeof(SameSizeAsWebGestureEvent),
 static_assert(sizeof(WebTouchEvent) == sizeof(SameSizeAsWebTouchEvent),
               "WebTouchEvent should not have gaps");
 
+constexpr base::TimeTicks WebInputEvent::kTimeStampForTesting;
+
 }  // namespace blink
