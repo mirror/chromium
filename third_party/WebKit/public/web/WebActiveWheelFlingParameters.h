@@ -26,6 +26,7 @@
 #ifndef WebActiveWheelFlingParameters_h
 #define WebActiveWheelFlingParameters_h
 
+#include "base/time/time.h"
 #include "public/platform/WebCommon.h"
 #include "public/platform/WebFloatPoint.h"
 #include "public/platform/WebGestureDevice.h"
@@ -41,10 +42,10 @@ struct WebActiveWheelFlingParameters {
   int modifiers;
   WebGestureDevice source_device;
   WebSize cumulative_scroll;
-  double start_time;
+  base::TimeTicks start_time;
 
   WebActiveWheelFlingParameters()
-      : modifiers(0), source_device(kWebGestureDeviceTouchpad), start_time(0) {}
+      : modifiers(0), source_device(kWebGestureDeviceTouchpad) {}
 };
 }
 

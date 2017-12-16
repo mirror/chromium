@@ -82,7 +82,9 @@ NativeWebKeyboardEvent::NativeWebKeyboardEvent(
   os_event = [[NSEvent keyEventWithType:type
                                location:NSZeroPoint
                           modifierFlags:flags
-                              timestamp:web_event.TimeStampSeconds()
+                              timestamp:web_event.TimeStamp()
+                                            .since_origin()
+                                            .InSecondsF()
                            windowNumber:[[native_view window] windowNumber]
                                 context:nil
                              characters:text
