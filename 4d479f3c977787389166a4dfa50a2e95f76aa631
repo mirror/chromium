@@ -143,6 +143,24 @@
     },
     {
       "key": {
+        "uuid": "f650fa37_8f084030",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/scripting-1/the-script-element/module/instantiation-error-1.html",
+        "patchSetId": 20
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-12-16T04:50:29Z",
+      "side": 1,
+      "message": "Sorry for delay.\n\nIn the context of this CL, I\u0027d like to land the tests without checking the error object identity, and do the spec discussion separately.\n\nSplit out my responses and thoughts, and summarized the discussion in a doc:\nhttps://docs.google.com/a/chromium.org/document/d/1MUnJ1Cp4l1yGNDxrRRV-35odkoqALrqhutBL_15Hlfc/edit?usp\u003dsharing\n\n\u003e Hiroshige\u0027s comment sounds like it\u0027s fundamentally hard to implement the specified behavior in blink. Is that right?\n\nYes. Because this is like a race condition.\nWe have to make the behaviors spec-conformant everywhere (not only in module-related code but also in loading/parsing), because the race condition can be broken by a single sync/async difference.",
+      "parentUuid": "62bc4936_671b3953",
+      "revId": "4d479f3c977787389166a4dfa50a2e95f76aa631",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "72eff9c6_5a5a8a9c",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/scripting-1/the-script-element/module/instantiation-error-5.html",
         "patchSetId": 20
