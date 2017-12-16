@@ -78,7 +78,7 @@ public class ChromeActivityTestRule<T extends ChromeActivity> extends ActivityTe
     private static final int ACTIVITY_START_TIMEOUT_MS = 1000;
 
     public static final String DISABLE_NETWORK_PREDICTION_FLAG =
-            "--disable-features=NetworkPrediction";
+            "notarealflag";
 
     private static final long OMNIBOX_FIND_SUGGESTION_TIMEOUT_MS = 10 * 1000;
 
