@@ -182,6 +182,8 @@ class AutofillAgent : public content::RenderFrameObserver,
   void DidCompleteFocusChangeInFrame() override;
   void DidReceiveLeftMouseDownOrGestureTapInNode(
       const blink::WebNode& node) override;
+  void SelectFieldOptionsChanged(
+      const blink::WebFormControlElement& element) override;
 
   void HandleFocusChangeComplete();
 
@@ -314,6 +316,8 @@ class AutofillAgent : public content::RenderFrameObserver,
   mojo::Binding<mojom::AutofillAgent> binding_;
 
   mojom::AutofillDriverPtr autofill_driver_;
+
+  bool testing_value_ = false;
 
   base::WeakPtrFactory<AutofillAgent> weak_ptr_factory_;
 
