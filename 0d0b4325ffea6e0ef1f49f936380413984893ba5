@@ -53,6 +53,24 @@
     },
     {
       "key": {
+        "uuid": "54cc2b70_d2fafd98",
+        "filename": "third_party/WebKit/Source/core/dom/ModulePendingScript.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-12-16T01:25:26Z",
+      "side": 0,
+      "message": "As discussed there, this DCHECK() was removed.",
+      "parentUuid": "1ee8110c_bd3ba859",
+      "revId": "0d0b4325ffea6e0ef1f49f936380413984893ba5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a993851b_3885e8a2",
         "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleTreeLinkerTest.cpp",
         "patchSetId": 20
@@ -85,6 +103,24 @@
       "revId": "0d0b4325ffea6e0ef1f49f936380413984893ba5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cb7c67a_b8f9a866",
+        "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleTreeLinkerTest.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-12-16T01:25:26Z",
+      "side": 0,
+      "message": "Removed.",
+      "parentUuid": "9203082e_c20b7d72",
+      "revId": "0d0b4325ffea6e0ef1f49f936380413984893ba5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

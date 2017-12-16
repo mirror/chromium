@@ -194,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "c1bb9166_9599d061",
+        "filename": "third_party/WebKit/Source/core/dom/ModulatorImplBase.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-12-16T01:25:26Z",
+      "side": 1,
+      "message": "If we want to do this, we should do it separately because there are many other locations we should check.\n(I don\u0027t have immediate motivations to do that though)",
+      "parentUuid": "c9b30abd_c6000828",
+      "revId": "4d479f3c977787389166a4dfa50a2e95f76aa631",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "12da42e0_d55a4d50",
         "filename": "third_party/WebKit/Source/core/dom/ModuleScript.cpp",
         "patchSetId": 20
@@ -217,6 +235,30 @@
     },
     {
       "key": {
+        "uuid": "3cdae832_5f8d33cb",
+        "filename": "third_party/WebKit/Source/core/dom/ModuleScript.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-12-16T01:25:26Z",
+      "side": 1,
+      "message": "I\u0027ll do in a separete CL.",
+      "parentUuid": "12da42e0_d55a4d50",
+      "range": {
+        "startLine": 25,
+        "startChar": 10,
+        "endLine": 25,
+        "endChar": 11
+      },
+      "revId": "4d479f3c977787389166a4dfa50a2e95f76aa631",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "78a7fc1e_67f6c73d",
         "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleTreeLinker.cpp",
         "patchSetId": 20
@@ -231,6 +273,24 @@
       "revId": "4d479f3c977787389166a4dfa50a2e95f76aa631",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd6e3238_9d3a29a9",
+        "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleTreeLinker.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-12-16T01:25:26Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "78a7fc1e_67f6c73d",
+      "revId": "4d479f3c977787389166a4dfa50a2e95f76aa631",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -269,6 +329,24 @@
     },
     {
       "key": {
+        "uuid": "9d7697bc_b27b448d",
+        "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleTreeLinker.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-12-16T01:25:26Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "6b12ae61_b7a5d30d",
+      "revId": "4d479f3c977787389166a4dfa50a2e95f76aa631",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4892af2b_a650d364",
         "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleTreeLinker.cpp",
         "patchSetId": 20
@@ -283,6 +361,24 @@
       "revId": "4d479f3c977787389166a4dfa50a2e95f76aa631",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "410a9a42_8cf49266",
+        "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleTreeLinker.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-12-16T01:25:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4892af2b_a650d364",
+      "revId": "4d479f3c977787389166a4dfa50a2e95f76aa631",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -315,6 +411,24 @@
       "side": 1,
       "message": "Should this be a generic Error or does this need to be a specific type of error?",
       "parentUuid": "9c0720e7_33fa5068",
+      "revId": "4d479f3c977787389166a4dfa50a2e95f76aa631",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9229e09a_0ab5561c",
+        "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleTreeLinkerTest.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-12-16T01:25:26Z",
+      "side": 1,
+      "message": "The unit tests don\u0027t check the specific type of errors.\nAccording to the spec, the parse error can be SyntaxError or ReferenceError (errors caused in ECMAscript-side ParseModule()) or TypeError (when \"resolving a module specifier\" fails).\nI feel it\u0027s OK to leave as a generic Error unless we want to test specific error cases, but it\u0027s also fine with me to change this into e.g. SyntaxError. Do you have preferences for using specific error types?",
+      "parentUuid": "28bc956f_c82d7447",
       "revId": "4d479f3c977787389166a4dfa50a2e95f76aa631",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
