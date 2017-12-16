@@ -70,6 +70,30 @@
       "revId": "009cc8973247ba06712a651c42ea7e2dcb8bfe96",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "193f581e_90b3eab6",
+        "filename": "third_party/WebKit/Source/devtools/front_end/security/SecurityPanel.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 773,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-12-16T00:51:17Z",
+      "side": 1,
+      "message": "You now need to template all user readable strings as ls`Origin` in DevTools. Previously we were using UIString() for that.",
+      "parentUuid": "fac2dae2_f7a7db84",
+      "range": {
+        "startLine": 773,
+        "startChar": 74,
+        "endLine": 773,
+        "endChar": 82
+      },
+      "revId": "009cc8973247ba06712a651c42ea7e2dcb8bfe96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
