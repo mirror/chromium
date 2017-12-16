@@ -22,6 +22,30 @@
       "revId": "f4ca028d9d9972e6022c8705261d8dc593c5cf79",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c8fdffa_cc328b68",
+        "filename": "chrome/browser/extensions/extension_service_test_with_install.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-16T02:22:56Z",
+      "side": 1,
+      "message": "Good catch!  Done.",
+      "parentUuid": "5fa59a90_86bf7a86",
+      "range": {
+        "startLine": 346,
+        "startChar": 48,
+        "endLine": 346,
+        "endChar": 50
+      },
+      "revId": "f4ca028d9d9972e6022c8705261d8dc593c5cf79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
