@@ -24,7 +24,8 @@ class GpuMemoryBufferManager;
 }
 
 namespace viz {
-class ContextProvider;
+class GLContextProvider;
+class RasterContextProvider;
 }
 
 namespace content {
@@ -39,8 +40,8 @@ class CONTENT_EXPORT LayoutTestDependencies {
   virtual std::unique_ptr<cc::LayerTreeFrameSink> CreateLayerTreeFrameSink(
       int32_t routing_id,
       scoped_refptr<gpu::GpuChannelHost> gpu_channel,
-      scoped_refptr<viz::ContextProvider> compositor_context_provider,
-      scoped_refptr<viz::ContextProvider> worker_context_provider,
+      scoped_refptr<viz::GLContextProvider> compositor_context_provider,
+      scoped_refptr<viz::RasterContextProvider> worker_context_provider,
       gpu::GpuMemoryBufferManager* gpu_memory_buffer_manager,
       CompositorDependencies* deps) = 0;
 

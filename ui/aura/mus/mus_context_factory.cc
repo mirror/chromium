@@ -39,7 +39,7 @@ void MusContextFactory::OnEstablishedGpuChannel(
   WindowPortMus* window_port = WindowPortMus::Get(host->window());
   DCHECK(window_port);
 
-  scoped_refptr<viz::ContextProvider> context_provider =
+  scoped_refptr<viz::GLContextProvider> context_provider =
       gpu_->CreateContextProvider(std::move(gpu_channel));
   // If the binding fails, then we need to return early since the compositor
   // expects a successfully initialized/bound provider.
@@ -60,7 +60,7 @@ void MusContextFactory::CreateLayerTreeFrameSink(
                  weak_ptr_factory_.GetWeakPtr(), compositor));
 }
 
-scoped_refptr<viz::ContextProvider>
+scoped_refptr<viz::GLContextProvider>
 MusContextFactory::SharedMainThreadContextProvider() {
   if (!shared_main_thread_context_provider_) {
     scoped_refptr<gpu::GpuChannelHost> gpu_channel =

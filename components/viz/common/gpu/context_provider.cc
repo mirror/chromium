@@ -6,14 +6,49 @@
 
 namespace viz {
 
-ContextProvider::ScopedContextLock::ScopedContextLock(
-    ContextProvider* context_provider)
+CommonContextProvider::CommonContextProvider(scoped_refptr<viz::MultiContextProvider> context_provider)
+ : cp_(context_provider) {}
+
+RasterContextProvider::ScopedContextLockRaster::ScopedContextLockRaster(
+    RasterContextProvider* context_provider)
     : context_provider_(context_provider),
       context_lock_(*context_provider_->GetLock()) {
   busy_ = context_provider_->CacheController()->ClientBecameBusy();
 }
 
-ContextProvider::ScopedContextLock::~ScopedContextLock() {
+RasterContextProvider::ScopedContextLockRaster::~ScopedContextLockRaster() {
+  // Let ContextCacheController know we are no longer busy.
+  context_provider_->CacheController()->ClientBecameNotBusy(std::move(busy_));
+}
+
+RasterContextProvider::RasterContextProvider(scoped_refptr<viz::MultiContextProvider> context_provider)
+ : CommonContextProvider(context_provider) {}
+RasterContextProvider::~RasterContextProvider() {}
+
+GLContextProvider::ScopedContextLockGL::ScopedContextLockGL(
+    GLContextProvider* context_provider)
+    : context_provider_(context_provider),
+      context_lock_(*context_provider_->GetLock()) {
+  busy_ = context_provider_->CacheController()->ClientBecameBusy();
+}
+
+GLContextProvider::ScopedContextLockGL::~ScopedContextLockGL() {
+  // Let ContextCacheController know we are no longer busy.
+  context_provider_->CacheController()->ClientBecameNotBusy(std::move(busy_));
+}
+
+GLContextProvider::GLContextProvider(scoped_refptr<viz::MultiContextProvider> context_provider)
+ : CommonContextProvider(context_provider) {}
+GLContextProvider::~GLContextProvider() {}
+
+MultiContextProvider::ScopedContextLock::ScopedContextLock(
+    MultiContextProvider* context_provider)
+    : context_provider_(context_provider),
+      context_lock_(*context_provider_->GetLock()) {
+  busy_ = context_provider_->CacheController()->ClientBecameBusy();
+}
+
+MultiContextProvider::ScopedContextLock::~ScopedContextLock() {
   // Let ContextCacheController know we are no longer busy.
   context_provider_->CacheController()->ClientBecameNotBusy(std::move(busy_));
 }

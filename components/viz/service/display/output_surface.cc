@@ -20,7 +20,7 @@
 
 namespace viz {
 
-OutputSurface::OutputSurface(scoped_refptr<ContextProvider> context_provider)
+OutputSurface::OutputSurface(scoped_refptr<GLContextProvider> context_provider)
     : context_provider_(std::move(context_provider)) {
   DCHECK(context_provider_);
 }

@@ -1464,10 +1464,10 @@ media::GpuVideoAcceleratorFactories* RenderThreadImpl::GetGpuFactories() {
   DCHECK(IsMainThread());
 
   if (!gpu_factories_.empty()) {
-    scoped_refptr<ui::ContextProviderCommandBuffer> shared_context_provider =
-        gpu_factories_.back()->ContextProviderMainThread();
+    scoped_refptr<viz::GLContextProvider> shared_context_provider =
+        base::MakeRefCounted<viz::GLContextProvider>(gpu_factories_.back()->ContextProviderMainThread());
     if (shared_context_provider) {
-      viz::ContextProvider::ScopedContextLock lock(
+      viz::GLContextProvider::ScopedContextLockGL lock(
           shared_context_provider.get());
       if (lock.ContextGL()->GetGraphicsResetStatusKHR() == GL_NO_ERROR) {
         return gpu_factories_.back().get();
@@ -2142,8 +2142,8 @@ void RenderThreadImpl::RequestNewLayerTreeFrameSink(
 
   if (layout_test_deps_) {
     callback.Run(layout_test_deps_->CreateLayerTreeFrameSink(
-        routing_id, std::move(gpu_channel_host), std::move(context_provider),
-        std::move(worker_context_provider), GetGpuMemoryBufferManager(), this));
+        routing_id, std::move(gpu_channel_host), base::MakeRefCounted<viz::GLContextProvider>(context_provider),
+        base::MakeRefCounted<viz::RasterContextProvider>(worker_context_provider), GetGpuMemoryBufferManager(), this));
     return;
   }
 
@@ -2154,7 +2154,7 @@ void RenderThreadImpl::RequestNewLayerTreeFrameSink(
             ? std::move(params.synthetic_begin_frame_source)
             : CreateExternalBeginFrameSource(routing_id);
     callback.Run(std::make_unique<SynchronousLayerTreeFrameSink>(
-        std::move(context_provider), std::move(worker_context_provider),
+        base::MakeRefCounted<viz::GLContextProvider>(context_provider), base::MakeRefCounted<viz::RasterContextProvider>(worker_context_provider),
         compositor_task_runner_, GetGpuMemoryBufferManager(), routing_id,
         g_next_layer_tree_frame_sink_id++, std::move(begin_frame_source),
         sync_compositor_message_filter_.get(),
@@ -2428,10 +2428,9 @@ RenderThreadImpl::SharedCompositorWorkerContextProvider() {
   // Try to reuse existing shared worker context provider.
   if (shared_worker_context_provider_) {
     // Note: If context is lost, delete reference after releasing the lock.
-    viz::ContextProvider::ScopedContextLock lock(
+    viz::RasterContextProvider::ScopedContextLockRaster lock(
         shared_worker_context_provider_.get());
-    if (shared_worker_context_provider_->RasterContext()
-            ->GetGraphicsResetStatusKHR() == GL_NO_ERROR)
+    if (lock.RasterInterface()->GetGraphicsResetStatusKHR() == GL_NO_ERROR)
       return shared_worker_context_provider_;
   }
 

@@ -94,7 +94,7 @@ gpu::gles2::GLES2Interface* TestInProcessContextProvider::ContextGL() {
   return context_->GetImplementation();
 }
 
-gpu::raster::RasterInterface* TestInProcessContextProvider::RasterContext() {
+gpu::raster::RasterInterface* TestInProcessContextProvider::RasterInterface() {
   return raster_context_.get();
 }
 
