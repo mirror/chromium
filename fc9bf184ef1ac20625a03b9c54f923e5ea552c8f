@@ -611,6 +611,30 @@
     },
     {
       "key": {
+        "uuid": "0e189094_11abd346",
+        "filename": "components/arc/test/fake_timer_instance.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-12-16T01:00:19Z",
+      "side": 1,
+      "message": "I don\u0027t use it again in the new way the test is written. So this shouldn\u0027t be required now.",
+      "parentUuid": "3347ea35_5be1a70b",
+      "range": {
+        "startLine": 153,
+        "startChar": 45,
+        "endLine": 153,
+        "endChar": 62
+      },
+      "revId": "fc9bf184ef1ac20625a03b9c54f923e5ea552c8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6da1578b_cdfc1195",
         "filename": "components/arc/test/fake_timer_instance.cc",
         "patchSetId": 20
