@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "45c1469d_04c92c85",
+        "filename": "services/network/public/interfaces/udp_socket.mojom",
+        "patchSetId": 28
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1118144
+      },
+      "writtenOn": "2017-12-16T00:14:43Z",
+      "side": 1,
+      "message": "Are you retaining this? I thought we agreed that this wouldn\u0027t be necessary anymore.",
+      "revId": "17a5ee71f975ebd03efe1a9ce102f03b7df0c301",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "925a0fe0_0d37e3d0",
+        "filename": "services/network/public/interfaces/udp_socket.mojom",
+        "patchSetId": 28
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1118144
+      },
+      "writtenOn": "2017-12-16T00:14:43Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "17a5ee71f975ebd03efe1a9ce102f03b7df0c301",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
