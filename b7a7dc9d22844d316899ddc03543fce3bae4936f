@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b527d313_edc07366",
+        "filename": "chrome/browser/ui/views/device_chooser_content_view.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-12-16T01:29:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8a467bd1_cb267eea",
+      "revId": "b7a7dc9d22844d316899ddc03543fce3bae4936f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e0eb1d13_f5597340",
         "filename": "chrome/browser/ui/views/device_chooser_content_view.h",
         "patchSetId": 11
@@ -33,6 +51,24 @@
       "revId": "b7a7dc9d22844d316899ddc03543fce3bae4936f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b74b3ea_7b23e0ac",
+        "filename": "chrome/browser/ui/views/device_chooser_content_view.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-12-16T01:29:12Z",
+      "side": 1,
+      "message": "The problem is that the throbber/scanning label need to occupy the same space as the re-scan button, but when they\u0027re not visible they still take up space (i.e. they\u0027re visibility:hidden, instead of display:none). So I was removing them from the hierarchy instead.\n\nBut you\u0027re right, it\u0027s weird, and probably causes a lot of re-layouts. So I restructured this to use a custom container that can lay things out correctly once and then just toggle the visibility. What do you think?",
+      "parentUuid": "e0eb1d13_f5597340",
+      "revId": "b7a7dc9d22844d316899ddc03543fce3bae4936f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
