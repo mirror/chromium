@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a2ec9efc_d71bb46b",
+        "filename": "services/network/public/interfaces/cookie_manager.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-12-16T01:03:01Z",
+      "side": 1,
+      "message": "Sorry, I need to write the emacs macro to do this for me automatically.  Done.",
+      "parentUuid": "968a758e_9e0e5039",
+      "revId": "74118983e227ff7cd7b77254a66a3b8fc64860a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1e6befb3_f9b35051",
         "filename": "services/network/public/interfaces/cookie_manager.mojom",
         "patchSetId": 10
@@ -33,6 +51,24 @@
       "revId": "74118983e227ff7cd7b77254a66a3b8fc64860a8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f18e61b_e305a686",
+        "filename": "services/network/public/interfaces/cookie_manager.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-12-16T01:03:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e6befb3_f9b35051",
+      "revId": "74118983e227ff7cd7b77254a66a3b8fc64860a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
