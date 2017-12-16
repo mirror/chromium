@@ -305,6 +305,30 @@
       "revId": "d5ebd449549ed9d24efa3763fd79dc3385960c28",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d3728877_2cba9f20",
+        "filename": "chrome/browser/component_updater/cros_component_installer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1178302
+      },
+      "writtenOn": "2017-12-16T00:30:32Z",
+      "side": 1,
+      "message": "I tried to create abstract class CrOSComponentUtilityInterface and its subclass CrOSComponentUtility. But I couldn\u0027t create a CrOSComponentUtilityInterface unique_ptr in CrOSComponent and ask it to point to CrOSComponentUtility(subclass) object. Can you please advise more?",
+      "parentUuid": "11ed66be_25c8240b",
+      "range": {
+        "startLine": 129,
+        "startChar": 2,
+        "endLine": 129,
+        "endChar": 10
+      },
+      "revId": "d5ebd449549ed9d24efa3763fd79dc3385960c28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
