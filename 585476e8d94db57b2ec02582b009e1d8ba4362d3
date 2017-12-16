@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "c0d1baf8_6430cb86",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 3713,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2017-12-16T00:12:56Z",
+      "side": 1,
+      "message": "I updated the other call in this function as well to use the variable directly.",
+      "parentUuid": "500e8ad7_7833e5ca",
+      "range": {
+        "startLine": 3713,
+        "startChar": 2,
+        "endLine": 3713,
+        "endChar": 23
+      },
+      "revId": "585476e8d94db57b2ec02582b009e1d8ba4362d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aae1d198_293aa6dc",
         "filename": "content/browser/frame_host/render_frame_host_impl.h",
         "patchSetId": 22
@@ -477,6 +501,30 @@
       "revId": "585476e8d94db57b2ec02582b009e1d8ba4362d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f9db791_01796f86",
+        "filename": "content/renderer/input/input_target_client_impl.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2017-12-16T00:12:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c6e2ff5d_3f87d761",
+      "range": {
+        "startLine": 22,
+        "startChar": 2,
+        "endLine": 22,
+        "endChar": 10
+      },
+      "revId": "585476e8d94db57b2ec02582b009e1d8ba4362d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
