@@ -22,6 +22,30 @@
       "revId": "91fb7788734956b100bb3608d879c527f66107d8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5f958a3_b381de1a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001794
+      },
+      "writtenOn": "2017-12-16T01:38:19Z",
+      "side": 1,
+      "message": "Depends on duration and load but is bounded by internal buffer sizes. I ran it for 60 seconds without doing anything in particular (but with cameras on) and ended up with 4M of compressed data. I expect \u003c10M to be typical, and \u003e15M is getting really large. Those generate 200M+ of uncompressed trace data and start to hit performance problems in trace-viewer.\n\nJust now I tried to capture as much as the internal buffers would allow, and ended up with 27M after 10 minutes. So it seems we can still get pretty close to filling the /tmp budget of 30M. However, that trace is so huge that trace viewer cannot even open it--the tab just runs out of memory and crashes--so I\u0027m not sure it\u0027s worth worrying about this case. We might be able to tweak the internal buffer sizes so such a large amounts of data won\u0027t be generated. Or we could bump the /tmp size limit to 50M, given that it is an arbitrary limit.\n\nA final option would be to not use /tmp, but that seems like the wrong answer to me - /tmp should be set up in a way that\u0027s usable for storing temporary data. This data is legitimately temporary - it exists in the filesystem for under a minute.",
+      "parentUuid": "896dbd0c_a9c92794",
+      "range": {
+        "startLine": 10,
+        "startChar": 25,
+        "endLine": 10,
+        "endChar": 29
+      },
+      "revId": "91fb7788734956b100bb3608d879c527f66107d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
