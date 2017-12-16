@@ -39,6 +39,24 @@
       "revId": "4e5b5fcca17c7e886c46347ca72560fbd2d58b1b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd34e14c_c4fb6dea",
+        "filename": "chrome/browser/autofill/autofill_provider_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1000825
+      },
+      "writtenOn": "2017-12-16T06:41:29Z",
+      "side": 1,
+      "message": "The test has its own timeout mechanism and will not be hung on. There are a lot of tests use similar code https://cs.chromium.org/search/?q\u003dmessage_queue.WaitForMessage\u0026sq\u003dpackage:chromium\u0026type\u003dcs",
+      "parentUuid": "0b0fb895_f4551540",
+      "revId": "4e5b5fcca17c7e886c46347ca72560fbd2d58b1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
