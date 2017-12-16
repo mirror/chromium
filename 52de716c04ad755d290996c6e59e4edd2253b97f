@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "511eceef_0d4000c7",
+        "filename": "components/printing/service/pdf_compositor_impl.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-16T01:16:46Z",
+      "side": 1,
+      "message": "It\u0027s really hard to figure out what second.second is. Is it the parent frame id, or its own frame id? How about we make |content_to_frame_id_map_|\u0027s value, which is current std::pair\u003cint, int\u003e into a struct, so it becomes more readable.\n\nMaybe also |pending_requests_|\u0027s key, which is another pair of numbers.",
+      "revId": "52de716c04ad755d290996c6e59e4edd2253b97f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf1703d0_8dd44cb3",
+        "filename": "components/printing/service/pdf_compositor_impl.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-16T01:16:46Z",
+      "side": 1,
+      "message": "Just use: !base::ContainsKey(frame_info_map_, frame_id)",
+      "revId": "52de716c04ad755d290996c6e59e4edd2253b97f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "28356f7b_540419b8",
         "filename": "components/printing/service/pdf_compositor_impl.h",
         "patchSetId": 21

@@ -750,6 +750,24 @@
     },
     {
       "key": {
+        "uuid": "7aca7962_fa10ed01",
+        "filename": "components/printing/service/public/cpp/pdf_compositor_client.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-16T01:16:46Z",
+      "side": 1,
+      "message": "Can we add documentation to the PDF compositor mojom file to give guidance on the appropriate call order, and enforce that here by maing this DCHECK(compositor_);",
+      "parentUuid": "64be8439_4d81557b",
+      "revId": "0deb43fd345155f5cb0b0e4e3ab2b4e4abcc66a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "74f1c4d6_3438a9ab",
         "filename": "components/printing/service/public/interfaces/pdf_compositor.mojom",
         "patchSetId": 18
