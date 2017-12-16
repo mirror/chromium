@@ -22,6 +22,30 @@
       "revId": "d6e6a85e7eb47b1313bda0b442892b01c02c447d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a923b2bf_784ddbb5",
+        "filename": "chromeos/attestation/attestation_constants.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1161144
+      },
+      "writtenOn": "2017-12-16T00:04:42Z",
+      "side": 1,
+      "message": "Code used to use a variable named \"success\" and now it is \"status\" so all relevant places have been found and changed.",
+      "parentUuid": "43c21bd5_287c7b21",
+      "range": {
+        "startLine": 50,
+        "startChar": 5,
+        "endLine": 50,
+        "endChar": 22
+      },
+      "revId": "d6e6a85e7eb47b1313bda0b442892b01c02c447d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
