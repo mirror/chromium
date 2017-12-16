@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "f6bb6a0a_4b27007e",
+        "filename": "ash/shelf/shelf_view.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1881,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-12-16T01:03:37Z",
+      "side": 1,
+      "message": "Added \"... not including the body of the shelf.\" to the description. Thanks!",
+      "parentUuid": "461d278d_e4232944",
+      "revId": "1680f892a00e528bed9c99c52c6600f6ba6d6a3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "04827b65_fdce1a49",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 10
@@ -327,6 +345,30 @@
       "side": 1,
       "message": "I don\u0027t understand the flow around here.  It sounds like this kind of restriction should be expressed in histograms.xml.\n\"Will not be logged if ...\"\nand please make that \"...\" actually reflect something about user behavior / features.  Histogram descriptions should be understandable to everyone, no deep knowledge of code structure required.\nhttps://chromium.googlesource.com/chromium/src.git/+/HEAD/tools/metrics/histograms/README.md#Understandable-to-Everyone",
       "parentUuid": "efeb77f0_278cc5aa",
+      "range": {
+        "startLine": 466,
+        "startChar": 30,
+        "endLine": 466,
+        "endChar": 0
+      },
+      "revId": "1680f892a00e528bed9c99c52c6600f6ba6d6a3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "281fa729_8f6ebf54",
+        "filename": "ui/base/models/simple_menu_model.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 466,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-12-16T01:03:37Z",
+      "side": 1,
+      "message": "SimpleMenuModel is a model that is used by a lot of parts of CrOS and Chrome (not just apps). \n\nThis functionality allows other users to easily create their own histogram by supplying the histogram name to their instance of SimpleMenuModel. If their instance doesn\u0027t have a histogram name, then the data is not logged.\n\nI think it\u0027s not relevant to the histogram description, because it\u0027s an implementation detail of how to make the model record a histogram (and in this CL and the next one, every app in CrOS will log their context menu command executions so it won\u0027t be relevant). Does that make sense?",
+      "parentUuid": "cdb8a29a_39127a00",
       "range": {
         "startLine": 466,
         "startChar": 30,
