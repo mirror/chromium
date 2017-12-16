@@ -1,0 +1,231 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b64ccc1c_a6eb1953",
+        "filename": "chrome/browser/browser_process_platform_part_chromeos.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-16T07:24:16Z",
+      "side": 1,
+      "message": "nit: should there also be a DCHECK(!cros_component_) at the top of this method to make sure it doesn\u0027t get called twice?",
+      "revId": "ac04be4ab0ab5f0dff7447c8ab7ab3ae4d7247ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1377012e_c1f9ba5a",
+        "filename": "chrome/browser/component_updater/cros_component_installer.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-16T07:24:16Z",
+      "side": 1,
+      "message": "nit: you don\u0027t need \u0027static\u0027 for any of these functions, since they\u0027re already in an anonymous namespace.",
+      "revId": "ac04be4ab0ab5f0dff7447c8ab7ab3ae4d7247ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43888cbf_43facfa2",
+        "filename": "chrome/browser/component_updater/cros_component_installer.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-16T07:24:16Z",
+      "side": 1,
+      "message": "nit: \"CleanUp\" (\"clean up\" is verb, \"cleanup\" is noun)",
+      "range": {
+        "startLine": 64,
+        "startChar": 12,
+        "endLine": 64,
+        "endChar": 19
+      },
+      "revId": "ac04be4ab0ab5f0dff7447c8ab7ab3ae4d7247ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ed54d50_2ec08ae6",
+        "filename": "chrome/browser/component_updater/cros_component_installer.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-16T07:24:16Z",
+      "side": 1,
+      "message": "nit: please reorder the methods in this .cc file to match the order in the .h file",
+      "revId": "ac04be4ab0ab5f0dff7447c8ab7ab3ae4d7247ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b0f91c9_ae4e298e",
+        "filename": "chrome/browser/component_updater/cros_component_installer.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-16T07:24:16Z",
+      "side": 1,
+      "message": "this name feels like it could be a bit clearer -- right now, it sounds like it corresponds to an individual component. do any of these sounds more accurate?\n\n  CrOSComponentInstaller\n  CrOSComponentManager\n  CrOSComponentLoader\n  CrOSComponentRegistry\n  etc.",
+      "revId": "ac04be4ab0ab5f0dff7447c8ab7ab3ae4d7247ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ace00485_43eb748b",
+        "filename": "chrome/browser/component_updater/cros_component_installer.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-16T07:24:16Z",
+      "side": 1,
+      "message": "nit: add blank line after this one",
+      "revId": "ac04be4ab0ab5f0dff7447c8ab7ab3ae4d7247ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d04ac460_378f56c3",
+        "filename": "chrome/browser/component_updater/cros_component_installer.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-16T07:24:16Z",
+      "side": 1,
+      "message": "nit: please move this below all private methods -- see https://google.github.io/styleguide/cppguide.html#Declaration_Order",
+      "revId": "ac04be4ab0ab5f0dff7447c8ab7ab3ae4d7247ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a172e2ec_2e616ed0",
+        "filename": "chrome/browser/component_updater/cros_component_installer.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-16T07:24:16Z",
+      "side": 1,
+      "message": "nit: mind documenting what this string is? if it\u0027s a path, can you use const base::FilePath\u0026 instead?",
+      "revId": "ac04be4ab0ab5f0dff7447c8ab7ab3ae4d7247ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "693f2614_5a451394",
+        "filename": "chrome/browser/component_updater/cros_component_installer.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-16T07:24:16Z",
+      "side": 1,
+      "message": "nit: \"It calls\" -\u003e \"Calls\"",
+      "revId": "ac04be4ab0ab5f0dff7447c8ab7ab3ae4d7247ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "622c10a3_646a7d50",
+        "filename": "chrome/browser/component_updater/cros_component_installer.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-16T07:24:16Z",
+      "side": 1,
+      "message": "can you document what this id is? is it the same as the \"name\" args that are passed elsewhere?",
+      "revId": "ac04be4ab0ab5f0dff7447c8ab7ab3ae4d7247ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b89151b_d2479973",
+        "filename": "chrome/browser/component_updater/cros_component_installer.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-16T07:24:16Z",
+      "side": 1,
+      "message": "nit: \"It calls\" -\u003e \"Calls\"",
+      "revId": "ac04be4ab0ab5f0dff7447c8ab7ab3ae4d7247ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d16ba72_36966dff",
+        "filename": "chrome/browser/component_updater/cros_component_installer.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-16T07:24:16Z",
+      "side": 1,
+      "message": "nit: \"It calls\" -\u003e \"Calls\", \"pass in\" -\u003e \"passes\"",
+      "revId": "ac04be4ab0ab5f0dff7447c8ab7ab3ae4d7247ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d69bb0a1_c0af4e28",
+        "filename": "chrome/browser/component_updater/cros_component_installer.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-16T07:24:16Z",
+      "side": 1,
+      "message": "if the result is a mount point, should it be base::Optional\u003cbase::FilePath\u003e instead?\n\nand sorry if this came up before, but do you actually need base::Optional here, or can you just use an empty path/string to convey an unset value?",
+      "revId": "ac04be4ab0ab5f0dff7447c8ab7ab3ae4d7247ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
