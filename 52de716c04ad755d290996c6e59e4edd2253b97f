@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "28356f7b_540419b8",
+        "filename": "components/printing/service/pdf_compositor_impl.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-16T00:58:41Z",
+      "side": 1,
+      "message": "So we\u0027ve switch this one to base::flat_map. Can you look at the other std::map / std::set usage and also switch them if they are expected to be small?",
+      "revId": "52de716c04ad755d290996c6e59e4edd2253b97f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

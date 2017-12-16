@@ -108,6 +108,24 @@
     },
     {
       "key": {
+        "uuid": "8da273bd_d6a95f49",
+        "filename": "components/printing/service/pdf_compositor_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-16T00:58:41Z",
+      "side": 1,
+      "message": "I agree (1) and (2) should be rare, but it would be nice to handle them gracefully. We can probably detect (1) easily. Not sure about (2). Maybe add a TODO for this?\n\nFor (3), one way to accomodate slow machines is to have a per-page timeout instead of a per-print-job timeout. Since the time it takes to generate print data corrolates with the number of pages. If the renderer can send a keep-alive message after each page to reset the timeout, then the timeout won\u0027t have to be too large. If we do this, the compositor needs to know to expect N pages from a renderer, and the keep-alive messages need to have their page numbers in order.",
+      "parentUuid": "d01efce0_bedf58b7",
+      "revId": "b5518d9b9ea27c39e91aa840d117bce93729348c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "67016c24_00ddd4d3",
         "filename": "components/printing/service/pdf_compositor_impl.cc",
         "patchSetId": 12
