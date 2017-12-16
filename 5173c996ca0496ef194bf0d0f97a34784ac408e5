@@ -142,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "ba6f8f48_a32ddb14",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/png/PNGImageDecoder.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-12-16T00:24:06Z",
+      "side": 1,
+      "message": "Are we talking about the function signature?\n(BTW this code review tool has a cool feature where you can select a bunch of text before pressing \u0027c\u0027 to highlight exactly the text you are commenting on.)\n\nIf we are talking about the function signature, it is definitely too long to fit on one line for the Google \u0026 Chromium style guide and should be split into multiple lines. And after being split up, sometimes the parameters get bumped down into their own line and indentation level if the parameters themselves are too long as well. But that isn\u0027t the case here.",
+      "parentUuid": "6df2957c_fa02a01f",
+      "revId": "5173c996ca0496ef194bf0d0f97a34784ac408e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "48188928_6e8d2478",
         "filename": "third_party/WebKit/Source/platform/image-decoders/png/PNGImageDecoder.cpp",
         "patchSetId": 1
@@ -171,6 +189,29 @@
       "side": 1,
       "message": "Ack",
       "parentUuid": "48188928_6e8d2478",
+      "revId": "5173c996ca0496ef194bf0d0f97a34784ac408e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4396f027_3e574151",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/png/PNGImageDecoder.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-12-16T00:24:06Z",
+      "side": 1,
+      "message": "These comments are so helpful.\nOn normal code this would be wasteful. But as soon as things get tricky (like with SIMD), this helps keep the sanity and context reasonable.\nThank you.",
+      "range": {
+        "startLine": 309,
+        "startChar": 4,
+        "endLine": 309,
+        "endChar": 60
+      },
       "revId": "5173c996ca0496ef194bf0d0f97a34784ac408e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false

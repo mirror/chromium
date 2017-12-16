@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7789b65_c24bf47c",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/png/PNGImageDecoder.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 510,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-12-16T00:24:06Z",
+      "side": 1,
+      "message": "I am okay with this. But I would like to propose another idea and see if you like it. It would add a lot of boiler plate, but might reduce compiles and simplify.\n\nWhat we could do is remove this #if (platform) and just have it always call a new function named SetRGBARawRow16() similar to the NEON version you have now.\nThen, we define 2 versions of that function in 2 separate files. There is the NEON version in the NEON file, and the normal equivalent.\nThen the BUILD.gn file includes the correct one based on if NEON is available.\n\n\nThe benefit to this method is we pull platform details out of the source file.\nFor example, suppose I am building on Mac and am not going down the NEON path. If someone checks in a change to the NEON code, I still need to rebuild this source file even though nothing changed for my platform.\n\nIt also draws a clear line between platform-specific details and generic code.\n\nUp to you if you want to do it.",
+      "range": {
+        "startLine": 501,
+        "startChar": 0,
+        "endLine": 510,
+        "endChar": 6
+      },
+      "revId": "9ffc11e7625ed0ab35bb9097113783b2f838c6a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23a0459d_b70b0e97",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/png/PNGImageDecoder.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 546,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-12-16T00:24:06Z",
+      "side": 1,
+      "message": "Same here.",
+      "range": {
+        "startLine": 538,
+        "startChar": 0,
+        "endLine": 546,
+        "endChar": 6
+      },
+      "revId": "9ffc11e7625ed0ab35bb9097113783b2f838c6a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
