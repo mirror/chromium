@@ -47,6 +47,7 @@ class ASH_EXPORT LoginShelfView : public views::View,
       LockScreenActionBackgroundController* lock_screen_action_background);
   ~LoginShelfView() override;
 
+  views::View* Hack();
   // ShelfWidget observes SessionController for higher-level UI changes and
   // then notifies LoginShelfView to update its own UI.
   void UpdateAfterSessionStateChange(session_manager::SessionState state);
