@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "14177a0e_38016a76",
+        "filename": "ui/base/l10n/l10n_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-12-16T01:16:18Z",
+      "side": 1,
+      "message": "I also see some strange English(150) .\nCould we also filter it?",
+      "revId": "9d4817837db56520737ea5a9a494dd8b365c0b86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
