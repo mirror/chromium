@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "212448fb_ddf475f4",
+        "filename": "extensions/browser/content_verifier/content_hash.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-12-16T03:33:08Z",
+      "side": 1,
+      "message": "This function is directly moved from ContentHashFetcher, with the exception of |cancellation_status|.",
+      "revId": "01e6c1c6f2744c3fe3159a165467ffe8f70852e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
