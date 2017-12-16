@@ -118,6 +118,24 @@
     },
     {
       "key": {
+        "uuid": "1efd3379_87eec264",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 1332,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-12-16T05:42:55Z",
+      "side": 1,
+      "message": "Yes, but then \"OTA\" seems too short. The string appears in the UMA dashboard as-is, so maybe something like \"OOBE boot or the first boot after OTA\" ?",
+      "parentUuid": "ceadb483_a9e693bb",
+      "revId": "fa14ce43f37740b9e6ff4c78a74f5c3a43802641",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "22b4fcc7_ea59a3ec",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 1
@@ -390,6 +408,24 @@
       "revId": "fa14ce43f37740b9e6ff4c78a74f5c3a43802641",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "811fe89c_780310ff",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 2462,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-12-16T05:42:55Z",
+      "side": 1,
+      "message": "\u003e Totaltime do you mean the time of verification + [relocation]?\n\nYes, actually, verification + [relocation + signing].\n\n\u003e Would you prefer to record the verification time separately?\n\nYes, personally I\u0027d prefer that. So verification, relocation, sign, and total? WDYT?\n\nI\u0027d prefer tracking them separately because last time we tried, verification and relocation slowed down for a completely different reason (D-Bus timeout and /dev/[u]random glitch, respectively). I think we\u0027ll want to know which phase exactly is slow (in case we detect any performance issue in the feature.)",
+      "parentUuid": "86d7ad58_e0b71215",
+      "revId": "fa14ce43f37740b9e6ff4c78a74f5c3a43802641",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

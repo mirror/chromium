@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d45fc039_d5f897fb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-12-16T05:42:55Z",
+      "side": 1,
+      "message": "b:...? Does \u0027/\u0027 work here?",
+      "range": {
+        "startLine": 12,
+        "startChar": 6,
+        "endLine": 12,
+        "endChar": 7
+      },
+      "revId": "733f87f1587c4c104fd6b6d518c9b26d50cc8e88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0a09d16_7c71e5cd",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 1335,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-12-16T05:42:55Z",
+      "side": 1,
+      "message": "Can you use value\u003d\"1\" for this to be consistent with RelocationResult?",
+      "revId": "733f87f1587c4c104fd6b6d518c9b26d50cc8e88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "681bf9a3_e38fe24c",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 2451,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-12-16T05:42:55Z",
+      "side": 1,
+      "message": "ARC",
+      "range": {
+        "startLine": 2451,
+        "startChar": 40,
+        "endLine": 2451,
+        "endChar": 43
+      },
+      "revId": "733f87f1587c4c104fd6b6d518c9b26d50cc8e88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "542a73bf_3c95e6c7",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 2463,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-12-16T05:42:55Z",
+      "side": 1,
+      "message": "boot*.art ?",
+      "range": {
+        "startLine": 2463,
+        "startChar": 35,
+        "endLine": 2463,
+        "endChar": 43
+      },
+      "revId": "733f87f1587c4c104fd6b6d518c9b26d50cc8e88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
