@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "800551d1_0cd0c3ca",
+        "filename": "ios/chrome/browser/web/external_app_launcher_tab_helper.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-12-16T03:33:19Z",
+      "side": 1,
+      "message": "presubmit now bans base::Callback, in favor of more specific Once or Repeating. I don\u0027t fully understand the difference between the two flavors. I did try to use OnceCallback, but got the error \"call to deleted constructor\". The documentation says that base::Callback is aliased to RepeatingCallback, so I used RepeatingCallback here.\nI was also concerned about the lifetime of the bound parameters (url, source_page_url), but I found that the copy constructors are invoked, so we can trust they will be around when the callback is run.",
+      "range": {
+        "startLine": 310,
+        "startChar": 12,
+        "endLine": 310,
+        "endChar": 29
+      },
+      "revId": "e1e4d627a52177686403ca2e431a292ab8461fbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
