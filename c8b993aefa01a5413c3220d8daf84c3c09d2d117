@@ -16,6 +16,24 @@
       "revId": "c8b993aefa01a5413c3220d8daf84c3c09d2d117",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2c268e8a_a6abe8eb",
+        "filename": "chrome/renderer/extensions/automation_ax_tree_wrapper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-16T06:25:47Z",
+      "side": 1,
+      "message": "OK, removed mention of ChromeVox. I think the other\ncomments are reasonable and generic.",
+      "parentUuid": "17cf8187_62662a6d",
+      "revId": "c8b993aefa01a5413c3220d8daf84c3c09d2d117",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
