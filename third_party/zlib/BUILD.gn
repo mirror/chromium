@@ -57,6 +57,57 @@ source_set("zlib_adler32_simd") {
   public_configs = [ ":zlib_adler32_simd_config" ]
 }
 
+config("zlib_arm_crc32_config") {
+  defines = []
+  if (current_cpu == "arm" || current_cpu == "arm64") {
+    # iPhones lack the crc32 instruction and ChromeOS has
+    # wrapper scripts that are messing up with the compiler flags
+    # needed to use the ARMv8 crc32 instruction.
+    # TODO(cavalcantii): figure it out a way to make CrOS build fine.
+    if (!is_ios && !is_chromeos) {
+      defines += [ "USE_ARMV8_CRC32" ]
+    }
+
+    if (is_android) {
+      defines += [ "ARMV8_OS_ANDROID" ]
+    } else if (is_linux || is_chromeos) {
+      defines += [ "ARMV8_OS_LINUX" ]
+    }
+  }
+}
+
+if (current_cpu == "arm" || current_cpu == "arm64") {
+  static_library("zlib_arm_crc32") {
+    # It seems that ChromeOS has a wrapper script messing with compiler flags.
+    if (!is_ios && !is_chromeos) {
+      sources = []
+      include_dirs = [ "." ]
+      deps = []
+      if (is_android) {
+        import("//build/config/android/config.gni")
+        if (defined(android_ndk_root) && android_ndk_root != "") {
+          deps += [ "//third_party/android_tools:cpu_features" ]
+        }
+      }
+
+      sources += [
+        "contrib/optimizations/arm/arm_features.c",
+        "contrib/optimizations/arm/arm_features.h",
+        "contrib/optimizations/arm/armv8_crc32.c",
+        "contrib/optimizations/arm/armv8_crc32.h",
+      ]
+
+      if (!is_win || is_clang) {
+        cflags_c = [ "-march=armv8-a+crc" ]
+      }
+    }
+
+    configs -= [ "//build/config/compiler:chromium_code" ]
+    configs += [ "//build/config/compiler:no_chromium_code" ]
+    public_configs = [ ":zlib_arm_crc32_config" ]
+  }
+}
+
 config("zlib_inflate_chunk_simd_config") {
   if (!is_ios && (current_cpu == "x86" || current_cpu == "x64")) {
     defines = [ "INFLATE_CHUNK_SIMD_SSE2" ]
@@ -177,8 +228,10 @@ static_library("zlib") {
 
   defines = []
   deps = []
+  include_dirs = []
 
   if (!is_ios && (current_cpu == "x86" || current_cpu == "x64")) {
+    # TODO(cavalcantii): set deps only once.
     deps += [ ":zlib_adler32_simd" ]
     sources += [ "x86.c" ]
 
@@ -188,9 +241,12 @@ static_library("zlib") {
 
   if (current_cpu == "arm" || current_cpu == "arm64") {
     if (arm_use_neon) {
-      deps += [ ":zlib_adler32_simd" ]
-
-      deps += [ ":zlib_inflate_chunk_simd" ]
+      include_dirs += [ "contrib/optimizations/arm" ]
+      deps += [
+        ":zlib_adler32_simd",
+        ":zlib_arm_crc32",
+        ":zlib_inflate_chunk_simd",
+      ]
       sources -= [ "inflate.c" ]
     }
   }
