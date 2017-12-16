@@ -37,8 +37,9 @@ WebKeyboardEvent CreateFakeWebKeyboardEvent(JNIEnv* env,
                                           key_code);
 
   WebKeyboardEvent web_event = content::WebKeyboardEventBuilder::Build(
-      env, keydown_event, WebKeyboardEvent::kKeyDown, web_modifier, 0, key_code,
-      0, unicode_character, false);
+      env, keydown_event, WebKeyboardEvent::kKeyDown, web_modifier,
+      blink::WebInputEvent::kTimeStampForTesting, key_code, 0,
+      unicode_character, false);
   return web_event;
 }
 
@@ -161,8 +162,9 @@ TEST(WebInputEventBuilderAndroidTest, LastChannelKey) {
 // Synthetic key event should produce DomKey::UNIDENTIFIED.
 TEST(WebInputEventBuilderAndroidTest, DomKeySyntheticEvent) {
   WebKeyboardEvent web_event = content::WebKeyboardEventBuilder::Build(
-      nullptr, nullptr, WebKeyboardEvent::kKeyDown, 0, 0, kCompositionKeyCode,
-      0, 0, false);
+      nullptr, nullptr, WebKeyboardEvent::kKeyDown, 0,
+      blink::WebInputEvent::kTimeStampForTesting, kCompositionKeyCode, 0, 0,
+      false);
   EXPECT_EQ(kCompositionKeyCode, web_event.native_key_code);
   EXPECT_EQ(ui::KeyboardCode::VKEY_UNKNOWN, web_event.windows_key_code);
   EXPECT_EQ(static_cast<int>(ui::DomCode::NONE), web_event.dom_code);

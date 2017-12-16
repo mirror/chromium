@@ -2,6 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include "base/time/time.h"
 #include "core/dom/Document.h"
 #include "core/dom/events/EventListener.h"
 #include "core/html/HTMLElement.h"
@@ -85,7 +86,8 @@ TEST_F(PointerEventManagerTest, PointerCancelsOfAllTypes) {
 
   WebMouseEvent mouse_down_event(
       WebInputEvent::kMouseDown, WebFloatPoint(100, 100),
-      WebFloatPoint(100, 100), WebPointerProperties::Button::kLeft, 0, 0, 0);
+      WebFloatPoint(100, 100), WebPointerProperties::Button::kLeft, 0, 0,
+      base::TimeTicks());
   mouse_down_event.SetFrameScale(1);
   EventHandler().HandleMousePressEvent(mouse_down_event);
 
@@ -111,7 +113,8 @@ TEST_F(PointerEventManagerTest, PointerCancelsOfAllTypes) {
 
   WebMouseEvent mouse_move_event(
       WebInputEvent::kMouseMove, WebFloatPoint(200, 200),
-      WebFloatPoint(200, 200), WebPointerProperties::Button::kLeft, 0, 0, 0);
+      WebFloatPoint(200, 200), WebPointerProperties::Button::kLeft, 0, 0,
+      base::TimeTicks());
   mouse_move_event.SetFrameScale(1);
   EventHandler().HandleMouseMoveEvent(mouse_move_event,
                                       Vector<WebMouseEvent>());

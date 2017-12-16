@@ -86,7 +86,7 @@ class PLATFORM_EXPORT TimerBase {
   double RepeatInterval() const { return RepeatIntervalDelta().InSecondsF(); }
 
   void AugmentRepeatInterval(TimeDelta delta) {
-    TimeTicks now = TimerCurrentTimeTicksInSeconds();
+    TimeTicks now = TimerCurrentTimeTicks();
     SetNextFireTime(now, std::max(next_fire_time_ - now + delta, TimeDelta()));
     repeat_interval_ += delta;
   }
@@ -111,7 +111,7 @@ class PLATFORM_EXPORT TimerBase {
   NO_SANITIZE_ADDRESS
   virtual bool CanFire() const { return true; }
 
-  TimeTicks TimerCurrentTimeTicksInSeconds() const;
+  TimeTicks TimerCurrentTimeTicks() const;
 
   void SetNextFireTime(TimeTicks now, TimeDelta delay);
 

@@ -31,7 +31,7 @@ class WebPointerEvent : public WebInputEvent, public WebPointerProperties {
                                         const WebMouseEvent&);
   // Creates a PointerCausedUaAction pointer event.
   BLINK_PLATFORM_EXPORT WebPointerEvent(WebPointerProperties::PointerType,
-                                        double time_stamp_seconds);
+                                        base::TimeTicks time_stamp);
 
   // ------------ Touch Point Specific ------------
 

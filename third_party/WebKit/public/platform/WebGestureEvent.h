@@ -163,11 +163,8 @@ class WebGestureEvent : public WebInputEvent {
     } pinch_update;
   } data;
 
-  WebGestureEvent(Type type, int modifiers, double time_stamp_seconds)
-      : WebInputEvent(sizeof(WebGestureEvent),
-                      type,
-                      modifiers,
-                      time_stamp_seconds),
+  WebGestureEvent(Type type, int modifiers, base::TimeTicks time_stamp)
+      : WebInputEvent(sizeof(WebGestureEvent), type, modifiers, time_stamp),
         source_device(kWebGestureDeviceUninitialized),
         resending_plugin_id(-1) {}
 

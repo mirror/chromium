@@ -6,6 +6,7 @@
 
 #include "base/i18n/char_iterator.h"
 #include "content/common/input_messages.h"
+#include "mojo/common/time_struct_traits.h"
 #include "third_party/WebKit/public/platform/WebKeyboardEvent.h"
 #include "ui/latency/mojo/latency_info_struct_traits.h"
 
@@ -88,13 +89,17 @@ bool StructTraits<content::mojom::EventDataView, InputEventUniquePtr>::Read(
   if (!event.ReadType(&type))
     return false;
 
+  base::TimeTicks timestamp;
+  if (!event.ReadTimestamp(&timestamp))
+    return false;
+
   if (blink::WebInputEvent::IsKeyboardEventType(type)) {
     content::mojom::KeyDataPtr key_data;
     if (!event.ReadKeyData<content::mojom::KeyDataPtr>(&key_data))
       return false;
 
-    (*out)->web_event.reset(new blink::WebKeyboardEvent(
-        type, event.modifiers(), event.timestamp_seconds()));
+    (*out)->web_event.reset(
+        new blink::WebKeyboardEvent(type, event.modifiers(), timestamp));
 
     blink::WebKeyboardEvent* key_event =
         static_cast<blink::WebKeyboardEvent*>((*out)->web_event.get());
@@ -110,8 +115,8 @@ bool StructTraits<content::mojom::EventDataView, InputEventUniquePtr>::Read(
     content::mojom::GestureDataPtr gesture_data;
     if (!event.ReadGestureData<content::mojom::GestureDataPtr>(&gesture_data))
       return false;
-    (*out)->web_event.reset(new blink::WebGestureEvent(
-        type, event.modifiers(), event.timestamp_seconds()));
+    (*out)->web_event.reset(
+        new blink::WebGestureEvent(type, event.modifiers(), timestamp));
 
     blink::WebGestureEvent* gesture_event =
         static_cast<blink::WebGestureEvent*>((*out)->web_event.get());
@@ -259,8 +264,8 @@ bool StructTraits<content::mojom::EventDataView, InputEventUniquePtr>::Read(
     if (!event.ReadTouchData<content::mojom::TouchDataPtr>(&touch_data))
       return false;
 
-    (*out)->web_event.reset(new blink::WebTouchEvent(
-        type, event.modifiers(), event.timestamp_seconds()));
+    (*out)->web_event.reset(
+        new blink::WebTouchEvent(type, event.modifiers(), timestamp));
 
     blink::WebTouchEvent* touch_event =
         static_cast<blink::WebTouchEvent*>((*out)->web_event.get());
@@ -287,11 +292,11 @@ bool StructTraits<content::mojom::EventDataView, InputEventUniquePtr>::Read(
       return false;
 
     if (blink::WebInputEvent::IsMouseEventType(type)) {
-      (*out)->web_event.reset(new blink::WebMouseEvent(
-          type, event.modifiers(), event.timestamp_seconds()));
+      (*out)->web_event.reset(
+          new blink::WebMouseEvent(type, event.modifiers(), timestamp));
     } else {
-      (*out)->web_event.reset(new blink::WebMouseWheelEvent(
-          type, event.modifiers(), event.timestamp_seconds()));
+      (*out)->web_event.reset(
+          new blink::WebMouseWheelEvent(type, event.modifiers(), timestamp));
     }
 
     blink::WebMouseEvent* mouse_event =
