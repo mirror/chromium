@@ -3706,6 +3706,7 @@ void RenderFrameHostImpl::SetUpMojoIfNeeded() {
   } else {
     legacy_frame_input_handler_.reset(new LegacyIPCFrameInputHandler(this));
   }
+  remote_interfaces_->GetInterface(&input_target_client_);
 }
 
 void RenderFrameHostImpl::InvalidateMojoConnection() {
