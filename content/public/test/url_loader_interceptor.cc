@@ -69,21 +69,21 @@ class URLLoaderInterceptor::Interceptor : public mojom::URLLoaderFactory {
   DISALLOW_COPY_AND_ASSIGN(Interceptor);
 };
 
-class URLLoaderInterceptor::IOThreadWrapper {
+class URLLoaderInterceptor::IOSubresourceWrapper {
  public:
-  IOThreadWrapper(mojom::URLLoaderFactoryRequest factory_request,
+  IOSubresourceWrapper(mojom::URLLoaderFactoryRequest factory_request,
                   int process_id,
                   URLLoaderInterceptor* parent,
                   mojom::URLLoaderFactoryPtrInfo original_factory)
       : interceptor_(
             parent,
             base::Bind([](int process_id) { return process_id; }, process_id),
-            base::Bind(&IOThreadWrapper::GetOriginalFactory,
+            base::Bind(&IOSubresourceWrapper::GetOriginalFactory,
                        base::Unretained(this))),
         binding_(&interceptor_, std::move(factory_request)),
         original_factory_(std::move(original_factory)) {}
 
-  ~IOThreadWrapper() {}
+  ~IOSubresourceWrapper() {}
 
  private:
   mojom::URLLoaderFactory* GetOriginalFactory() {
@@ -94,7 +94,7 @@ class URLLoaderInterceptor::IOThreadWrapper {
   mojo::Binding<mojom::URLLoaderFactory> binding_;
   mojom::URLLoaderFactoryPtr original_factory_;
 
-  DISALLOW_COPY_AND_ASSIGN(IOThreadWrapper);
+  DISALLOW_COPY_AND_ASSIGN(IOSubresourceWrapper);
 };
 
 URLLoaderInterceptor::RequestParams::RequestParams() = default;
@@ -223,13 +223,13 @@ void URLLoaderInterceptor::CreateURLLoaderFactoryForSubresources(
     return;
   }
 
-  io_thread_wrappers_.emplace(std::make_unique<IOThreadWrapper>(
+  io_subresource_wrappers_.emplace(std::make_unique<IOSubresourceWrapper>(
       std::move(request), process_id, this, std::move(original_factory)));
 }
 
 void URLLoaderInterceptor::ClearSubresourceWrappers() {
   DCHECK(BrowserThread::CurrentlyOn(BrowserThread::IO));
-  io_thread_wrappers_.clear();
+  io_subresource_wrappers_.clear();
 }
 
 }  // namespace content

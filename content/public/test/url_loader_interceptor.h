@@ -71,7 +71,7 @@ class URLLoaderInterceptor {
 
  private:
   class Interceptor;
-  class IOThreadWrapper;
+  class IOSubresourceWrapper;
 
   // Used to create a factory for subresources in the network service case.
   void CreateURLLoaderFactoryForSubresources(
@@ -79,7 +79,7 @@ class URLLoaderInterceptor {
       int process_id,
       mojom::URLLoaderFactoryPtrInfo original_factory);
 
-  // Used on shutdown to clear |io_thread_wrappers_| on the IO thread.
+  // Used on shutdown to clear |io_subresource_wrappers_| on the IO thread.
   void ClearSubresourceWrappers();
 
   InterceptCallback callback_;
@@ -91,7 +91,7 @@ class URLLoaderInterceptor {
   std::unique_ptr<Interceptor> rmf_interceptor_;
   // For intercepting subresources with network service. Only accessed on IO
   // thread.
-  std::set<std::unique_ptr<IOThreadWrapper>> io_thread_wrappers_;
+  std::set<std::unique_ptr<IOSubresourceWrapper>> io_subresource_wrappers_;
 
   DISALLOW_COPY_AND_ASSIGN(URLLoaderInterceptor);
 };

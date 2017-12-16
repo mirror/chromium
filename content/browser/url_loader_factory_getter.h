@@ -5,6 +5,7 @@
 #ifndef CONTENT_BROWSER_URL_LOADER_FACTORY_GETTER_H_
 #define CONTENT_BROWSER_URL_LOADER_FACTORY_GETTER_H_
 
+#include "base/callback_forward.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "content/common/content_export.h"
@@ -45,6 +46,12 @@ class URLLoaderFactoryGetter
   original_network_factory_for_testing() {
     return &network_factory_;
   }
+
+  // Sets a callback that is called when the next NotificationService is
+  // created. There can only be one callback at a time.
+  // This method should only be called on the IO thread.
+  static void SetCreationCallbackForTesting(
+      const base::RepeatingClosure& callback);
 
  private:
   friend class base::DeleteHelper<URLLoaderFactoryGetter>;
