@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e1159c6b_cfef0843",
+        "filename": "ash/system/system_notifier.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-12-16T01:43:17Z",
+      "side": 1,
+      "message": "still needed?",
+      "revId": "0cb1cb9201128761fc2c093d3956f9e05e5edcbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddcd93f8_73f9153f",
+        "filename": "ash/system/system_notifier.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-12-16T01:43:17Z",
+      "side": 1,
+      "message": "Is this still needed?",
+      "revId": "0cb1cb9201128761fc2c093d3956f9e05e5edcbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
