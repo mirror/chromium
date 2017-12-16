@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5e1d498c_bce6c5c5",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_subpage.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-12-16T00:46:30Z",
+      "side": 1,
+      "message": "I would either put this in each of the two sections above, or use class\u003d\"secondary\" instead (defined in settings_shared_css.html).",
+      "revId": "55772ad563b243738fb69196e453b928300091b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
