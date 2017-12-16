@@ -16,6 +16,8 @@
 #import "base/mac/bind_objc_block.h"
 #include "base/memory/ptr_util.h"
 #import "base/test/ios/wait_util.h"
+#import "ios/web/navigation/navigation_item_impl.h"
+#import "ios/web/navigation/navigation_manager_impl.h"
 #import "ios/web/public/java_script_dialog_presenter.h"
 #include "ios/web/public/load_committed_details.h"
 #import "ios/web/public/test/fakes/fake_navigation_context.h"
@@ -820,6 +822,28 @@ TEST_F(WebStateImplTest, FaviconUpdateForSameDocumentNavigations) {
   context.SetIsSameDocument(true);
   web_state_->OnNavigationFinished(&context);
   EXPECT_FALSE(observer->update_favicon_url_candidates_info());
+}
+
+// Tests that GetTitle() returns the title for the visible NavigationItem.
+TEST_F(WebStateImplTest, GetTitle) {
+  web::NavigationManagerImpl& manager = web_state_->GetNavigationManagerImpl();
+  // Commit a navigation and check that its URL is used for the title.
+  const GURL committed_url("http://committed");
+  manager.AddPendingItem(committed_url, web::Referrer(),
+                         ui::PAGE_TRANSITION_LINK,
+                         NavigationInitiationType::RENDERER_INITIATED,
+                         NavigationManager::UserAgentOverrideOption::INHERIT);
+  manager.CommitPendingItem();
+  EXPECT_EQ(web_state_->GetTitle(),
+            NavigationItemImpl::GetDisplayTitleForURL(committed_url));
+  // Create a user-initiated pending item and check that its URL is used since
+  // it is the visible item.
+  const GURL pending_url("http://pending");
+  manager.AddPendingItem(pending_url, web::Referrer(), ui::PAGE_TRANSITION_LINK,
+                         NavigationInitiationType::USER_INITIATED,
+                         NavigationManager::UserAgentOverrideOption::INHERIT);
+  EXPECT_EQ(web_state_->GetTitle(),
+            NavigationItemImpl::GetDisplayTitleForURL(pending_url));
 }
 
 }  // namespace web
