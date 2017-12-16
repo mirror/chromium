@@ -39,7 +39,8 @@ class MEDIA_EXPORT VideoFramePool {
                                         const gfx::Size& coded_size,
                                         const gfx::Rect& visible_rect,
                                         const gfx::Size& natural_size,
-                                        base::TimeDelta timestamp);
+                                        base::TimeDelta timestamp,
+                                        size_t bit_depth = 8);
 
  protected:
   friend class VideoFramePoolTest;

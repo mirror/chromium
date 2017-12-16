@@ -307,16 +307,18 @@ void VideoCaptureImpl::OnBufferReady(int32_t buffer_id,
                        (reference_time - base::TimeTicks()).InMicroseconds(),
                        "time_delta", info->timestamp.InMicroseconds());
 
+  auto pixel_format = static_cast<media::VideoPixelFormat>(info->pixel_format);
   const auto& iter = client_buffers_.find(buffer_id);
   DCHECK(iter != client_buffers_.end());
   const scoped_refptr<ClientBuffer> buffer = iter->second;
   scoped_refptr<media::VideoFrame> frame =
       media::VideoFrame::WrapExternalSharedMemory(
-          static_cast<media::VideoPixelFormat>(info->pixel_format),
-          info->coded_size, info->visible_rect, info->visible_rect.size(),
+          pixel_format, info->coded_size, info->visible_rect,
+          info->visible_rect.size(),
           reinterpret_cast<uint8_t*>(buffer->buffer()->memory()),
           buffer->buffer_size(), buffer->buffer()->handle(),
-          0 /* shared_memory_offset */, info->timestamp);
+          0 /* shared_memory_offset */, info->timestamp,
+          GetBitDepth(pixel_format));
   if (!frame) {
     GetVideoCaptureHost()->ReleaseBuffer(device_id_, buffer_id, -1.0);
     return;
