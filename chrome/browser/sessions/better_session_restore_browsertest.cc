@@ -18,7 +18,6 @@
 #include "build/build_config.h"
 #include "chrome/browser/background/background_mode_manager.h"
 #include "chrome/browser/browser_process.h"
-#include "chrome/browser/chrome_notification_types.h"
 #include "chrome/browser/content_settings/cookie_settings_factory.h"
 #include "chrome/browser/defaults.h"
 #include "chrome/browser/infobars/infobar_service.h"
@@ -47,9 +46,6 @@
 #include "components/keep_alive_registry/keep_alive_types.h"
 #include "components/keep_alive_registry/scoped_keep_alive.h"
 #include "components/prefs/pref_service.h"
-#include "content/public/browser/notification_details.h"
-#include "content/public/browser/notification_service.h"
-#include "content/public/browser/notification_source.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/common/content_features.h"
 #include "content/public/common/url_constants.h"
@@ -162,8 +158,7 @@ class FakeBackgroundModeManager : public BackgroundModeManager {
 
 }  // namespace
 
-class BetterSessionRestoreTest : public InProcessBrowserTest,
-                                 public content::NotificationObserver {
+class BetterSessionRestoreTest : public InProcessBrowserTest {
  public:
   BetterSessionRestoreTest()
       : fake_server_address_("http://www.test.com/"),
@@ -186,11 +181,53 @@ class BetterSessionRestoreTest : public InProcessBrowserTest,
     test_file_dir_ =
         test_file_dir_.AppendASCII("chrome/test/data").AppendASCII(test_path_);
 
+    // Need to hook this early because on session restore, the restored tab
+    // comes up before SetUpOnMainThread(). Also here it's too early because
+    // we don't have a profile yet.
     if (base::FeatureList::IsEnabled(features::kNetworkService)) {
-      content::NotificationService::SetCreationCallbackForTesting(
-          base::BindRepeating(
-              &BetterSessionRestoreTest::NotificationServiceCreated,
-              base::Unretained(this)));
+      url_loader_interceptor_ = std::make_unique<content::URLLoaderInterceptor>(
+          base::BindLambdaForTesting(
+              [&](content::URLLoaderInterceptor::RequestParams* params) {
+                std::string path = params->url_request.url.path();
+                std::string path_prefix = std::string("/") + test_path_;
+                for (auto& it : test_files_) {
+                  std::string file = path_prefix + it;
+                  if (path == file) {
+                    base::ScopedAllowBlockingForTesting allow_io;
+                    base::FilePath file_path = test_file_dir_.AppendASCII(it);
+                    std::string contents;
+                    CHECK(base::ReadFileToString(file_path, &contents));
+
+                    content::URLLoaderInterceptor::WriteResponse(
+                        net::URLRequestTestJob::test_headers(), contents,
+                        params->client.get());
+
+                    return true;
+                  }
+                }
+                if (path == path_prefix + "posted.php") {
+                  last_upload_bytes_.clear();
+                  if (params->url_request.request_body) {
+                    auto* elements =
+                        params->url_request.request_body->elements();
+                    DCHECK_EQ(elements->size(), 1u);
+                    auto& element = (*elements)[0];
+                    DCHECK_EQ(
+                        element.type(),
+                        content::ResourceRequestBody::Element::TYPE_BYTES);
+                    last_upload_bytes_ =
+                        std::string(element.bytes(), element.length());
+                  }
+                  content::URLLoaderInterceptor::WriteResponse(
+                      net::URLRequestTestJob::test_headers(),
+                      "<html><head><title>PASS</title></head><body>Data posted"
+                      "</body></html>",
+                      params->client.get());
+                  return true;
+                }
+                return false;
+              }),
+          true, true);
       return;
     }
 
@@ -212,68 +249,6 @@ class BetterSessionRestoreTest : public InProcessBrowserTest,
   }
 
  protected:
-  void NotificationServiceCreated() {
-    // Need to hook this early because on session restore, the restored tab
-    // comes up before SetUpOnMainThread(). Also here it's too early because
-    // we don't have a profile yet.
-    registrar_.Add(this, chrome::NOTIFICATION_PROFILE_CREATED,
-                   content::NotificationService::AllSources());
-    content::NotificationService::SetCreationCallbackForTesting(
-        base::RepeatingClosure());
-  }
-
-  // content::NotificationObserver:
-  void Observe(int type,
-               const content::NotificationSource& source,
-               const content::NotificationDetails& details) override {
-    DCHECK_EQ(chrome::NOTIFICATION_PROFILE_CREATED, type);
-
-    Profile* profile = content::Source<Profile>(source).ptr();
-    content::StoragePartition* storage_partition =
-        content::BrowserContext::GetDefaultStoragePartition(profile);
-    url_loader_interceptor_ = std::make_unique<content::URLLoaderInterceptor>(
-        base::BindLambdaForTesting(
-            [&](content::URLLoaderInterceptor::RequestParams* params) {
-              std::string path = params->url_request.url.path();
-              std::string path_prefix = std::string("/") + test_path_;
-              for (auto& it : test_files_) {
-                std::string file = path_prefix + it;
-                if (path == file) {
-                  base::ScopedAllowBlockingForTesting allow_io;
-                  base::FilePath file_path = test_file_dir_.AppendASCII(it);
-                  std::string contents;
-                  CHECK(base::ReadFileToString(file_path, &contents));
-
-                  content::URLLoaderInterceptor::WriteResponse(
-                      net::URLRequestTestJob::test_headers(), contents,
-                      params->client.get());
-
-                  return true;
-                }
-              }
-              if (path == path_prefix + "posted.php") {
-                last_upload_bytes_.clear();
-                if (params->url_request.request_body) {
-                  auto* elements = params->url_request.request_body->elements();
-                  DCHECK_EQ(elements->size(), 1u);
-                  auto& element = (*elements)[0];
-                  DCHECK_EQ(element.type(),
-                            content::ResourceRequestBody::Element::TYPE_BYTES);
-                  last_upload_bytes_ =
-                      std::string(element.bytes(), element.length());
-                }
-                content::URLLoaderInterceptor::WriteResponse(
-                    net::URLRequestTestJob::test_headers(),
-                    "<html><head><title>PASS</title></head><body>Data posted"
-                    "</body></html>",
-                    params->client.get());
-                return true;
-              }
-              return false;
-            }),
-        storage_partition, true, true);
-  }
-
   void SetUpOnMainThread() override {
     SessionServiceTestHelper helper(
         SessionServiceFactory::GetForProfile(browser()->profile()));
@@ -450,7 +425,6 @@ class BetterSessionRestoreTest : public InProcessBrowserTest,
 
  private:
   std::string last_upload_bytes_;
-  content::NotificationRegistrar registrar_;
   const std::string fake_server_address_;
   std::vector<std::string> test_files_;
   base::FilePath test_file_dir_;
