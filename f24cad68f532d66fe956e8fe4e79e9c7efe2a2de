@@ -108,6 +108,24 @@
     },
     {
       "key": {
+        "uuid": "2ac2ba7c_7a490c78",
+        "filename": "base/files/file_util_posix.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-16T00:03:12Z",
+      "side": 1,
+      "message": "Or add a comment to explain why, so readers won\u0027t have to look for this conversation.",
+      "parentUuid": "e295bb98_e62449d3",
+      "revId": "f24cad68f532d66fe956e8fe4e79e9c7efe2a2de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "93972c62_a71255ca",
         "filename": "base/files/file_util_unittest.cc",
         "patchSetId": 3
