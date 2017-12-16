@@ -435,10 +435,11 @@ metrics::OmniboxInputType AutocompleteInput::Parse(
   if (canonicalized_url->has_username() && desired_tld.empty())
     return metrics::OmniboxInputType::UNKNOWN;
 
-  // If the host has a known TLD or a port, it's probably a URL.  Note that we
-  // special-case "localhost" as a known hostname.
-  if (has_known_tld || (canonicalized_url->host() == "localhost") ||
-      canonicalized_url->has_port())
+  // If the host has a known TLD or a port, it's probably a URL.  Note that both
+  // "test" and "localhost" TLDs are considered a URL as well even though they
+  // are not recognized with |has_known_tld| (see rfc6761).
+  if (has_known_tld || canonicalized_url->DomainIs("localhost") ||
+      canonicalized_url->DomainIs("test") || canonicalized_url->has_port())
     return metrics::OmniboxInputType::URL;
 
   // No scheme, username, port, and no known TLD on the host.
