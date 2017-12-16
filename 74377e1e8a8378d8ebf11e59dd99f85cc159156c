@@ -353,6 +353,24 @@
     },
     {
       "key": {
+        "uuid": "dac4c5aa_1f206cf0",
+        "filename": "chrome/browser/chromeos/arc/notification/arc_provision_notification_service_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-16T00:22:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe1c9deb_a357694e",
+      "revId": "74377e1e8a8378d8ebf11e59dd99f85cc159156c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6efc678c_fcf8c6ee",
         "filename": "chrome/browser/chromeos/arc/notification/arc_provision_notification_service_unittest.cc",
         "patchSetId": 2
@@ -406,6 +424,24 @@
     },
     {
       "key": {
+        "uuid": "6bf018f1_699ed589",
+        "filename": "chrome/browser/chromeos/arc/notification/arc_provision_notification_service_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-16T00:22:24Z",
+      "side": 1,
+      "message": "https://github.com/google/googletest/blob/master/googletest/docs/Primer.md#test-fixtures-using-the-same-data-configuration-for-multiple-tests\n\n\"Derive a class from ::testing::Test. Start its body with protected: or public: as we\u0027ll want to access fixture members from sub-classes.\"",
+      "parentUuid": "8396437e_4f993d44",
+      "revId": "74377e1e8a8378d8ebf11e59dd99f85cc159156c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c0cea48d_c6cea5b8",
         "filename": "chrome/browser/chromeos/arc/notification/arc_provision_notification_service_unittest.cc",
         "patchSetId": 2
@@ -453,6 +489,24 @@
       "side": 1,
       "message": "I meant sharing the constant defined in production to make it easy to catch up constant change.",
       "parentUuid": "8742ab28_00058663",
+      "revId": "74377e1e8a8378d8ebf11e59dd99f85cc159156c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fb6d760_706d5036",
+        "filename": "chrome/browser/chromeos/arc/notification/arc_provision_notification_service_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-16T00:22:24Z",
+      "side": 1,
+      "message": "I dislike sharing things in the production code just for tests to see, because it\u0027s not readily apparent why that constant/member/etc. is public in the production code. The reader might assume other prod code uses it until they investigate further. I don\u0027t think sharing helps catch any more bugs (these tests are no more effective) and it\u0027s only marginally easier to notice you have to change something in this file after changing something in the prod file (compile time instead of test running time).",
+      "parentUuid": "78807fbd_aa772c66",
       "revId": "74377e1e8a8378d8ebf11e59dd99f85cc159156c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
