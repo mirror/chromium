@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "21c29d0c_1106cbea",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-12-16T00:46:40Z",
+      "side": 1,
+      "message": "What is this? A crbug? A crrev?",
+      "range": {
+        "startLine": 9,
+        "startChar": 7,
+        "endLine": 9,
+        "endChar": 13
+      },
+      "revId": "c6f6959d72f21d8656756ec8759d24f8f2a45078",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20dbca31_262fa81f",
+        "filename": "ios/chrome/browser/ui/history/history_collection_view_controller.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-12-16T00:46:40Z",
+      "side": 1,
+      "message": "Nit: lowercase a.",
+      "range": {
+        "startLine": 206,
+        "startChar": 11,
+        "endLine": 206,
+        "endChar": 17
+      },
+      "revId": "c6f6959d72f21d8656756ec8759d24f8f2a45078",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a132c816_efdc3ca3",
+        "filename": "ios/chrome/browser/ui/history/history_collection_view_controller.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 662,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-12-16T00:46:40Z",
+      "side": 1,
+      "message": "if *it* exists?",
+      "range": {
+        "startLine": 662,
+        "startChar": 46,
+        "endLine": 662,
+        "endChar": 52
+      },
+      "revId": "c6f6959d72f21d8656756ec8759d24f8f2a45078",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b824d4d0_530eec90",
+        "filename": "ios/chrome/browser/ui/history/history_collection_view_controller.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 663,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-12-16T00:46:40Z",
+      "side": 1,
+      "message": "idem.",
+      "range": {
+        "startLine": 663,
+        "startChar": 13,
+        "endLine": 663,
+        "endChar": 19
+      },
+      "revId": "c6f6959d72f21d8656756ec8759d24f8f2a45078",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0562d223_60a0b955",
+        "filename": "ios/chrome/browser/ui/history/history_entries_status_item.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-12-16T00:46:40Z",
+      "side": 1,
+      "message": "Optional nit: This entire method could be removed.",
+      "revId": "c6f6959d72f21d8656756ec8759d24f8f2a45078",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
