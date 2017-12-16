@@ -6,6 +6,7 @@
 #define InteractiveDetector_h
 
 #include "base/macros.h"
+#include "base/time/time.h"
 #include "core/CoreExport.h"
 #include "platform/LongTaskDetector.h"
 #include "platform/PODInterval.h"
@@ -54,10 +55,12 @@ class CORE_EXPORT InteractiveDetector
   void OnResourceLoadBegin(WTF::Optional<double> load_begin_time);
   void OnResourceLoadEnd(WTF::Optional<double> load_finish_time);
 
+  // TODO(dcheng): Likely all these members should be base::TimeTicks of some
+  // sort?
   void SetNavigationStartTime(double navigation_start_time);
   void OnFirstMeaningfulPaintDetected(double fmp_time);
   void OnDomContentLoadedEnd(double dcl_time);
-  void OnInvalidatingInputEvent(double timestamp_seconds);
+  void OnInvalidatingInputEvent(base::TimeTicks timestamp);
 
   // Returns Interactive Time if already detected, or 0.0 otherwise.
   double GetInteractiveTime() const;
