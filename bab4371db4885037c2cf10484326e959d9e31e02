@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "27e0f005_8cecb4da",
+        "filename": "chrome/browser/resources/md_extensions/pack_dialog.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-12-16T01:34:03Z",
+      "side": 1,
+      "message": "Sorry didn\u0027t see this, will address in a new CL.",
+      "parentUuid": "a4010284_9e5ee30d",
+      "range": {
+        "startLine": 99,
+        "startChar": 14,
+        "endLine": 99,
+        "endChar": 21
+      },
+      "revId": "bab4371db4885037c2cf10484326e959d9e31e02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cacdf0d3_bc6504fd",
         "filename": "chrome/browser/resources/md_extensions/pack_dialog.js",
         "patchSetId": 7
@@ -45,6 +69,30 @@
       "revId": "bab4371db4885037c2cf10484326e959d9e31e02",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f38cc11f_1c0849d4",
+        "filename": "chrome/browser/resources/md_extensions/pack_dialog.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-12-16T01:34:03Z",
+      "side": 1,
+      "message": "Sorry didn\u0027t see this, will address in a new CL.",
+      "parentUuid": "cacdf0d3_bc6504fd",
+      "range": {
+        "startLine": 112,
+        "startChar": 6,
+        "endLine": 112,
+        "endChar": 9
+      },
+      "revId": "bab4371db4885037c2cf10484326e959d9e31e02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
