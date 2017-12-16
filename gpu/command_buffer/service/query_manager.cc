@@ -100,7 +100,7 @@ void AbstractIntegerQuery::Destroy(bool have_context) {
   }
 }
 
-AbstractIntegerQuery::~AbstractIntegerQuery() = default;
+AbstractIntegerQuery::~AbstractIntegerQuery() {}
 
 bool AbstractIntegerQuery::AreAllResultsAvailable() {
   GLuint available = 0;
@@ -127,7 +127,7 @@ BooleanQuery::BooleanQuery(QueryManager* manager,
                            QuerySync* sync)
     : AbstractIntegerQuery(manager, target, std::move(buffer), sync) {}
 
-BooleanQuery::~BooleanQuery() = default;
+BooleanQuery::~BooleanQuery() {}
 
 void BooleanQuery::Process(bool did_finish) {
   if (!AreAllResultsAvailable())
@@ -161,7 +161,7 @@ SummedIntegerQuery::SummedIntegerQuery(QueryManager* manager,
                                        QuerySync* sync)
     : AbstractIntegerQuery(manager, target, std::move(buffer), sync) {}
 
-SummedIntegerQuery::~SummedIntegerQuery() = default;
+SummedIntegerQuery::~SummedIntegerQuery() {}
 
 void SummedIntegerQuery::Process(bool did_finish) {
   if (!AreAllResultsAvailable())
@@ -236,7 +236,7 @@ void CommandsIssuedQuery::Destroy(bool /* have_context */) {
   }
 }
 
-CommandsIssuedQuery::~CommandsIssuedQuery() = default;
+CommandsIssuedQuery::~CommandsIssuedQuery() {}
 
 class CommandLatencyQuery : public QueryManager::Query {
  public:
@@ -295,7 +295,7 @@ void CommandLatencyQuery::Destroy(bool /* have_context */) {
   }
 }
 
-CommandLatencyQuery::~CommandLatencyQuery() = default;
+CommandLatencyQuery::~CommandLatencyQuery() {}
 
 class AsyncReadPixelsCompletedQuery
     : public QueryManager::Query,
@@ -364,7 +364,7 @@ void AsyncReadPixelsCompletedQuery::Destroy(bool /* have_context */) {
   }
 }
 
-AsyncReadPixelsCompletedQuery::~AsyncReadPixelsCompletedQuery() = default;
+AsyncReadPixelsCompletedQuery::~AsyncReadPixelsCompletedQuery() {}
 
 class GetErrorQuery : public QueryManager::Query {
  public:
@@ -424,7 +424,7 @@ void GetErrorQuery::Destroy(bool /* have_context */) {
   }
 }
 
-GetErrorQuery::~GetErrorQuery() = default;
+GetErrorQuery::~GetErrorQuery() {}
 
 class CommandsCompletedQuery : public QueryManager::Query {
  public:
@@ -499,12 +499,10 @@ void CommandsCompletedQuery::Destroy(bool have_context) {
   if (have_context && !IsDeleted()) {
     fence_.reset();
     MarkAsDeleted();
-  } else if (fence_ && !have_context) {
-    fence_->Invalidate();
   }
 }
 
-CommandsCompletedQuery::~CommandsCompletedQuery() = default;
+CommandsCompletedQuery::~CommandsCompletedQuery() {}
 
 class TimeElapsedQuery : public QueryManager::Query {
  public:
@@ -579,7 +577,7 @@ void TimeElapsedQuery::Destroy(bool have_context) {
   gpu_timer_->Destroy(have_context);
 }
 
-TimeElapsedQuery::~TimeElapsedQuery() = default;
+TimeElapsedQuery::~TimeElapsedQuery() {}
 
 class TimeStampQuery : public QueryManager::Query {
  public:
@@ -665,7 +663,7 @@ void TimeStampQuery::Destroy(bool have_context) {
   }
 }
 
-TimeStampQuery::~TimeStampQuery() = default;
+TimeStampQuery::~TimeStampQuery() {}
 
 QueryManager::QueryManager(
     GLES2Decoder* decoder,

@@ -36,8 +36,8 @@ ClientLayerTreeFrameSink::UnboundMessagePipes::UnboundMessagePipes(
     UnboundMessagePipes&& other) = default;
 
 ClientLayerTreeFrameSink::ClientLayerTreeFrameSink(
-    scoped_refptr<ContextProvider> context_provider,
-    scoped_refptr<ContextProvider> worker_context_provider,
+    scoped_refptr<GLContextProvider> context_provider,
+    scoped_refptr<RasterContextProvider> worker_context_provider,
     InitParams* params)
     : cc::LayerTreeFrameSink(std::move(context_provider),
                              std::move(worker_context_provider),

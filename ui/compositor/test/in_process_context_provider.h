@@ -30,53 +30,38 @@ class GrContextForGLES2Interface;
 
 namespace ui {
 
-class InProcessContextProvider : public viz::ContextProvider {
+class InProcessContextProviderBase {
  public:
-  static scoped_refptr<InProcessContextProvider> Create(
-      const gpu::gles2::ContextCreationAttribHelper& attribs,
-      InProcessContextProvider* shared_context,
-      gpu::GpuMemoryBufferManager* gpu_memory_buffer_manager,
-      gpu::ImageFactory* image_factory,
-      gpu::SurfaceHandle window,
-      const std::string& debug_name,
-      bool support_locking);
-
-  // Uses default attributes for creating an offscreen context.
-  static scoped_refptr<InProcessContextProvider> CreateOffscreen(
-      gpu::GpuMemoryBufferManager* gpu_memory_buffer_manager,
-      gpu::ImageFactory* image_factory,
-      InProcessContextProvider* shared_context,
-      bool support_locking);
-
-  // cc::ContextProvider implementation.
-  gpu::ContextResult BindToCurrentThread() override;
-  const gpu::Capabilities& ContextCapabilities() const override;
-  const gpu::GpuFeatureInfo& GetGpuFeatureInfo() const override;
-  gpu::gles2::GLES2Interface* ContextGL() override;
-  gpu::raster::RasterInterface* RasterContext() override;
-  gpu::ContextSupport* ContextSupport() override;
-  class GrContext* GrContext() override;
-  viz::ContextCacheController* CacheController() override;
-  void InvalidateGrContext(uint32_t state) override;
-  base::Lock* GetLock() override;
-  void AddObserver(viz::ContextLostObserver* obs) override;
-  void RemoveObserver(viz::ContextLostObserver* obs) override;
+  // cc::GLContextProvider implementation.
+  gpu::ContextResult BindToCurrentThread();
+  const gpu::Capabilities& ContextCapabilities() const;
+  const gpu::GpuFeatureInfo& GetGpuFeatureInfo() const;
+  gpu::gles2::GLES2Interface* ContextGL();
+  gpu::raster::RasterInterface* RasterInterface();
+  gpu::ContextSupport* ContextSupport();
+  class GrContext* GrContext();
+  viz::ContextCacheController* CacheController();
+  void InvalidateGrContext(uint32_t state);
+  base::Lock* GetLock();
+  void AddObserver(viz::ContextLostObserver* obs);
+  void RemoveObserver(viz::ContextLostObserver* obs);
 
   // Gives the GL internal format that should be used for calling CopyTexImage2D
   // on the default framebuffer.
   uint32_t GetCopyTextureInternalFormat();
 
- private:
-  InProcessContextProvider(
+ protected:
+  InProcessContextProviderBase(
       const gpu::gles2::ContextCreationAttribHelper& attribs,
-      InProcessContextProvider* shared_context,
+      InProcessContextProviderBase* shared_context,
       gpu::GpuMemoryBufferManager* gpu_memory_buffer_manager,
       gpu::ImageFactory* image_factory,
       gpu::SurfaceHandle window,
       const std::string& debug_name,
       bool support_locking);
-  ~InProcessContextProvider() override;
+  virtual ~InProcessContextProviderBase();
 
+ private:
   void CheckValidThreadOrLockAcquired() const {
 #if DCHECK_IS_ON()
     if (support_locking_) {
@@ -100,7 +85,7 @@ class InProcessContextProvider : public viz::ContextProvider {
   gpu::ContextResult bind_result_;
 
   gpu::gles2::ContextCreationAttribHelper attribs_;
-  InProcessContextProvider* shared_context_;
+  InProcessContextProviderBase* shared_context_;
   gpu::GpuMemoryBufferManager* gpu_memory_buffer_manager_;
   gpu::ImageFactory* image_factory_;
   gpu::SurfaceHandle window_;
@@ -108,7 +93,90 @@ class InProcessContextProvider : public viz::ContextProvider {
 
   base::Lock context_lock_;
 
-  DISALLOW_COPY_AND_ASSIGN(InProcessContextProvider);
+  DISALLOW_COPY_AND_ASSIGN(InProcessContextProviderBase);
+};
+
+class InProcessContextProvider : public viz::GLContextProvider,
+                                 public InProcessContextProviderBase {
+ public:
+  static scoped_refptr<InProcessContextProvider> Create(
+      const gpu::gles2::ContextCreationAttribHelper& attribs,
+      InProcessContextProviderBase* shared_context,
+      gpu::GpuMemoryBufferManager* gpu_memory_buffer_manager,
+      gpu::ImageFactory* image_factory,
+      gpu::SurfaceHandle window,
+      const std::string& debug_name,
+      bool support_locking);
+
+  // Uses default attributes for creating an offscreen context.
+  static scoped_refptr<InProcessContextProvider> CreateOffscreen(
+      gpu::GpuMemoryBufferManager* gpu_memory_buffer_manager,
+      gpu::ImageFactory* image_factory,
+      InProcessContextProviderBase* shared_context,
+      bool support_locking);
+
+  // viz::CommonContextProvider implementation.
+  gpu::ContextResult BindToCurrentThread() override;
+  const gpu::Capabilities& ContextCapabilities() const override;
+  const gpu::GpuFeatureInfo& GetGpuFeatureInfo() const override;
+  gpu::ContextSupport* ContextSupport() override;
+  class GrContext* GrContext() override;
+  viz::ContextCacheController* CacheController() override;
+  void InvalidateGrContext(uint32_t state) override;
+  base::Lock* GetLock() override;
+  void AddObserver(viz::ContextLostObserver* obs) override;
+  void RemoveObserver(viz::ContextLostObserver* obs) override;
+
+  // viz::GLContextProvider implementation.
+  gpu::gles2::GLES2Interface* ContextGL() override;
+
+ protected:
+  InProcessContextProvider(
+      const gpu::gles2::ContextCreationAttribHelper& attribs,
+      InProcessContextProviderBase* shared_context,
+      gpu::GpuMemoryBufferManager* gpu_memory_buffer_manager,
+      gpu::ImageFactory* image_factory,
+      gpu::SurfaceHandle window,
+      const std::string& debug_name,
+      bool support_locking);
+  ~InProcessContextProvider() override{};
+};
+
+class InProcessRasterContextProvider : public viz::RasterContextProvider,
+                                       public InProcessContextProviderBase {
+ public:
+  // Uses default attributes for creating an offscreen context.
+  static scoped_refptr<InProcessRasterContextProvider> CreateOffscreen(
+      gpu::GpuMemoryBufferManager* gpu_memory_buffer_manager,
+      gpu::ImageFactory* image_factory,
+      InProcessContextProviderBase* shared_context,
+      bool support_locking);
+
+  // viz::CommonContextProvider implementation.
+  gpu::ContextResult BindToCurrentThread() override;
+  const gpu::Capabilities& ContextCapabilities() const override;
+  const gpu::GpuFeatureInfo& GetGpuFeatureInfo() const override;
+  gpu::ContextSupport* ContextSupport() override;
+  class GrContext* GrContext() override;
+  viz::ContextCacheController* CacheController() override;
+  void InvalidateGrContext(uint32_t state) override;
+  base::Lock* GetLock() override;
+  void AddObserver(viz::ContextLostObserver* obs) override;
+  void RemoveObserver(viz::ContextLostObserver* obs) override;
+
+  // viz::RasterContextProvider implementation.
+  gpu::raster::RasterInterface* RasterInterface() override;
+
+ protected:
+  InProcessRasterContextProvider(
+      const gpu::gles2::ContextCreationAttribHelper& attribs,
+      InProcessContextProviderBase* shared_context,
+      gpu::GpuMemoryBufferManager* gpu_memory_buffer_manager,
+      gpu::ImageFactory* image_factory,
+      gpu::SurfaceHandle window,
+      const std::string& debug_name,
+      bool support_locking);
+  ~InProcessRasterContextProvider() override{};
 };
 
 }  // namespace ui

@@ -80,9 +80,60 @@ class PerfGLES2Interface : public gpu::gles2::GLES2InterfaceStub {
   }
 };
 
-class PerfContextProvider : public viz::ContextProvider {
+class PerfContextProvider : public viz::GLContextProvider {
  public:
   PerfContextProvider()
+      : context_gl_(new PerfGLES2Interface),
+        cache_controller_(&support_, nullptr) {
+    capabilities_.sync_query = true;
+  }
+
+  gpu::ContextResult BindToCurrentThread() override {
+    return gpu::ContextResult::kSuccess;
+  }
+  const gpu::Capabilities& ContextCapabilities() const override {
+    return capabilities_;
+  }
+  const gpu::GpuFeatureInfo& GetGpuFeatureInfo() const override {
+    return gpu_feature_info_;
+  }
+  gpu::gles2::GLES2Interface* ContextGL() override { return context_gl_.get(); }
+  gpu::ContextSupport* ContextSupport() override { return &support_; }
+  class GrContext* GrContext() override {
+    if (gr_context_)
+      return gr_context_.get();
+
+    sk_sp<const GrGLInterface> null_interface(GrGLCreateNullInterface());
+    gr_context_ = GrContext::MakeGL(std::move(null_interface));
+    cache_controller_.SetGrContext(gr_context_.get());
+    return gr_context_.get();
+  }
+  viz::ContextCacheController* CacheController() override {
+    return &cache_controller_;
+  }
+  void InvalidateGrContext(uint32_t state) override {
+    if (gr_context_)
+      gr_context_.get()->resetContext(state);
+  }
+  base::Lock* GetLock() override { return &context_lock_; }
+  void AddObserver(viz::ContextLostObserver* obs) override {}
+  void RemoveObserver(viz::ContextLostObserver* obs) override {}
+
+ private:
+  ~PerfContextProvider() override = default;
+
+  std::unique_ptr<PerfGLES2Interface> context_gl_;
+  sk_sp<class GrContext> gr_context_;
+  TestContextSupport support_;
+  viz::ContextCacheController cache_controller_;
+  base::Lock context_lock_;
+  gpu::Capabilities capabilities_;
+  gpu::GpuFeatureInfo gpu_feature_info_;
+};
+
+class PerfRasterContextProvider : public viz::RasterContextProvider {
+ public:
+  PerfRasterContextProvider()
       : context_gl_(new PerfGLES2Interface),
         cache_controller_(&support_, nullptr) {
     capabilities_.sync_query = true;
@@ -100,8 +151,7 @@ class PerfContextProvider : public viz::ContextProvider {
   const gpu::GpuFeatureInfo& GetGpuFeatureInfo() const override {
     return gpu_feature_info_;
   }
-  gpu::gles2::GLES2Interface* ContextGL() override { return context_gl_.get(); }
-  gpu::raster::RasterInterface* RasterContext() override {
+  gpu::raster::RasterInterface* RasterInterface() override {
     return raster_context_.get();
   }
   gpu::ContextSupport* ContextSupport() override { return &support_; }
@@ -126,7 +176,7 @@ class PerfContextProvider : public viz::ContextProvider {
   void RemoveObserver(viz::ContextLostObserver* obs) override {}
 
  private:
-  ~PerfContextProvider() override = default;
+  ~PerfRasterContextProvider() override = default;
 
   std::unique_ptr<PerfGLES2Interface> context_gl_;
   std::unique_ptr<gpu::raster::RasterInterface> raster_context_;
@@ -230,7 +280,8 @@ class RasterBufferProviderPerfTestBase {
   RasterBufferProviderPerfTestBase()
       : compositor_context_provider_(
             base::MakeRefCounted<PerfContextProvider>()),
-        worker_context_provider_(base::MakeRefCounted<PerfContextProvider>()),
+        worker_context_provider_(
+            base::MakeRefCounted<PerfRasterContextProvider>()),
         task_runner_(new base::TestSimpleTaskRunner),
         task_graph_runner_(new SynchronousTaskGraphRunner),
         timer_(kWarmupRuns,
@@ -314,8 +365,8 @@ class RasterBufferProviderPerfTestBase {
   }
 
  protected:
-  scoped_refptr<viz::ContextProvider> compositor_context_provider_;
-  scoped_refptr<viz::ContextProvider> worker_context_provider_;
+  scoped_refptr<viz::GLContextProvider> compositor_context_provider_;
+  scoped_refptr<viz::RasterContextProvider> worker_context_provider_;
   std::unique_ptr<LayerTreeResourceProvider> resource_provider_;
   scoped_refptr<base::TestSimpleTaskRunner> task_runner_;
   std::unique_ptr<SynchronousTaskGraphRunner> task_graph_runner_;

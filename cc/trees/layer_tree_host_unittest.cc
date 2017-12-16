@@ -451,18 +451,19 @@ class LayerTreeHostContextCacheTest : public LayerTreeHostTest {
   std::unique_ptr<viz::TestLayerTreeFrameSink> CreateLayerTreeFrameSink(
       const viz::RendererSettings& renderer_settings,
       double refresh_rate,
-      scoped_refptr<viz::ContextProvider> compositor_context_provider,
-      scoped_refptr<viz::ContextProvider> worker_context_provider) override {
-    // Create the main viz::ContextProvider with a MockContextSupport.
+      scoped_refptr<viz::GLContextProvider> compositor_context_provider,
+      scoped_refptr<viz::RasterContextProvider> worker_context_provider)
+      override {
+    // Create the main viz::GLContextProvider with a MockContextSupport.
     auto main_support = std::make_unique<MockContextSupport>();
     mock_main_context_support_ = main_support.get();
     auto test_main_context_provider = TestContextProvider::Create(
         TestWebGraphicsContext3D::Create(), std::move(main_support));
 
-    // Create the main viz::ContextProvider with a MockContextSupport.
+    // Create the main viz::GLContextProvider with a MockContextSupport.
     auto worker_support = std::make_unique<MockContextSupport>();
     mock_worker_context_support_ = worker_support.get();
-    auto test_worker_context_provider = TestContextProvider::CreateWorker(
+    auto test_worker_context_provider = TestRasterContextProvider::CreateWorker(
         TestWebGraphicsContext3D::Create(), std::move(worker_support));
 
     // At init, visibility is set to true, so SetAggressivelyFreeResources will
@@ -3408,8 +3409,8 @@ class LayerTreeHostTestAbortedCommitDoesntStall : public LayerTreeHostTest {
 class OnDrawLayerTreeFrameSink : public viz::TestLayerTreeFrameSink {
  public:
   OnDrawLayerTreeFrameSink(
-      scoped_refptr<viz::ContextProvider> compositor_context_provider,
-      scoped_refptr<viz::ContextProvider> worker_context_provider,
+      scoped_refptr<viz::GLContextProvider> compositor_context_provider,
+      scoped_refptr<viz::RasterContextProvider> worker_context_provider,
       viz::SharedBitmapManager* shared_bitmap_manager,
       gpu::GpuMemoryBufferManager* gpu_memory_buffer_manager,
       const viz::RendererSettings& renderer_settings,
@@ -3452,8 +3453,9 @@ class LayerTreeHostTestAbortedCommitDoesntStallSynchronousCompositor
   std::unique_ptr<viz::TestLayerTreeFrameSink> CreateLayerTreeFrameSink(
       const viz::RendererSettings& renderer_settings,
       double refresh_rate,
-      scoped_refptr<viz::ContextProvider> compositor_context_provider,
-      scoped_refptr<viz::ContextProvider> worker_context_provider) override {
+      scoped_refptr<viz::GLContextProvider> compositor_context_provider,
+      scoped_refptr<viz::RasterContextProvider> worker_context_provider)
+      override {
     auto on_draw_callback = base::Bind(
         &LayerTreeHostTestAbortedCommitDoesntStallSynchronousCompositor::
             CallOnDraw,
@@ -5640,15 +5642,15 @@ class LayerTreeHostWithGpuRasterizationTest : public LayerTreeHostTest {
   std::unique_ptr<viz::TestLayerTreeFrameSink> CreateLayerTreeFrameSink(
       const viz::RendererSettings& renderer_settings,
       double refresh_rate,
-      scoped_refptr<viz::ContextProvider> ignored_compositor_context_provider,
-      scoped_refptr<viz::ContextProvider> ignored_worker_context_provider)
+      scoped_refptr<viz::GLContextProvider> ignored_compositor_context_provider,
+      scoped_refptr<viz::RasterContextProvider> ignored_worker_context_provider)
       override {
     auto context_provider = TestContextProvider::Create();
     context_provider->UnboundTestContext3d()->SetMaxSamples(4);
     context_provider->UnboundTestContext3d()
         ->set_support_multisample_compatibility(false);
     context_provider->UnboundTestContext3d()->set_gpu_rasterization(true);
-    auto worker_context_provider = TestContextProvider::CreateWorker();
+    auto worker_context_provider = TestRasterContextProvider::CreateWorker();
     worker_context_provider->UnboundTestContext3d()->SetMaxSamples(4);
     worker_context_provider->UnboundTestContext3d()
         ->set_support_multisample_compatibility(false);
@@ -6177,8 +6179,9 @@ class LayerTreeHostTestSynchronousCompositeSwapPromise
   std::unique_ptr<viz::TestLayerTreeFrameSink> CreateLayerTreeFrameSink(
       const viz::RendererSettings& renderer_settings,
       double refresh_rate,
-      scoped_refptr<viz::ContextProvider> compositor_context_provider,
-      scoped_refptr<viz::ContextProvider> worker_context_provider) override {
+      scoped_refptr<viz::GLContextProvider> compositor_context_provider,
+      scoped_refptr<viz::RasterContextProvider> worker_context_provider)
+      override {
     constexpr bool disable_display_vsync = false;
     bool synchronous_composite =
         !HasImplThread() &&
@@ -6503,7 +6506,7 @@ class LayerTreeHostTestCrispUpAfterPinchEndsWithOneCopy
     : public LayerTreeHostTestCrispUpAfterPinchEnds {
  protected:
   std::unique_ptr<viz::OutputSurface> CreateDisplayOutputSurfaceOnThread(
-      scoped_refptr<viz::ContextProvider> compositor_context_provider)
+      scoped_refptr<viz::GLContextProvider> compositor_context_provider)
       override {
     scoped_refptr<TestContextProvider> display_context_provider =
         TestContextProvider::Create();
@@ -7658,10 +7661,10 @@ class GpuRasterizationSucceedsWithLargeImage : public LayerTreeHostTest {
     // this here to ensure that our otuput surface exists.
 
     // Retrieve max texture size from Skia.
-    viz::ContextProvider* context_provider =
+    viz::GLContextProvider* context_provider =
         host_impl->layer_tree_frame_sink()->context_provider();
     ASSERT_TRUE(context_provider);
-    viz::ContextProvider::ScopedContextLock context_lock(context_provider);
+    viz::GLContextProvider::ScopedContextLockGL context_lock(context_provider);
 
     GrContext* gr_context = context_provider->GrContext();
     ASSERT_TRUE(gr_context);

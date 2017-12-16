@@ -49,7 +49,7 @@ base::UnguessableToken SourceOf(const CopyOutputRequest& request) {
 }  // namespace
 
 GLRendererCopier::GLRendererCopier(
-    scoped_refptr<ContextProvider> context_provider,
+    scoped_refptr<GLContextProvider> context_provider,
     TextureDeleter* texture_deleter,
     ComputeWindowRectCallback window_rect_callback)
     : context_provider_(std::move(context_provider)),
@@ -311,7 +311,7 @@ class ReadPixelsWorkflow {
   ReadPixelsWorkflow(std::unique_ptr<CopyOutputRequest> copy_request,
                      const gfx::Rect& copy_rect,
                      const gfx::Rect& result_rect,
-                     scoped_refptr<ContextProvider> context_provider,
+                     scoped_refptr<GLContextProvider> context_provider,
                      GLenum readback_format)
       : copy_request_(std::move(copy_request)),
         result_rect_(result_rect),
@@ -394,7 +394,7 @@ class ReadPixelsWorkflow {
  private:
   const std::unique_ptr<CopyOutputRequest> copy_request_;
   const gfx::Rect result_rect_;
-  const scoped_refptr<ContextProvider> context_provider_;
+  const scoped_refptr<GLContextProvider> context_provider_;
   const GLenum readback_format_;
   GLuint transfer_buffer_ = 0;
   GLuint query_ = 0;
@@ -478,7 +478,7 @@ namespace {
 class GLPixelBufferI420Result : public CopyOutputResult {
  public:
   GLPixelBufferI420Result(const gfx::Rect& result_rect,
-                          scoped_refptr<ContextProvider> context_provider,
+                          scoped_refptr<GLContextProvider> context_provider,
                           GLuint transfer_buffer,
                           int y_stride,
                           int chroma_stride)
@@ -533,7 +533,7 @@ class GLPixelBufferI420Result : public CopyOutputResult {
   }
 
  private:
-  const scoped_refptr<ContextProvider> context_provider_;
+  const scoped_refptr<GLContextProvider> context_provider_;
   const GLuint transfer_buffer_;
   const int y_stride_;
   const int chroma_stride_;
@@ -556,7 +556,7 @@ class ReadI420PlanesWorkflow
  public:
   ReadI420PlanesWorkflow(std::unique_ptr<CopyOutputRequest> copy_request,
                          const gfx::Rect& result_rect,
-                         scoped_refptr<ContextProvider> context_provider)
+                         scoped_refptr<GLContextProvider> context_provider)
       : copy_request_(std::move(copy_request)),
         result_rect_(result_rect),
         context_provider_(std::move(context_provider)),
@@ -641,7 +641,7 @@ class ReadI420PlanesWorkflow
 
   const std::unique_ptr<CopyOutputRequest> copy_request_;
   const gfx::Rect result_rect_;
-  const scoped_refptr<ContextProvider> context_provider_;
+  const scoped_refptr<GLContextProvider> context_provider_;
   const gfx::Size y_texture_size_;
   const gfx::Size chroma_texture_size_;
   GLuint transfer_buffer_;

@@ -41,6 +41,8 @@ class GpuChannelEstablishFactory;
 
 namespace ui {
 class ContextProviderCommandBuffer;
+class ContextProviderCommandBufferBase;
+class RasterContextProviderCommandBuffer;
 }
 
 namespace viz {
@@ -67,7 +69,7 @@ class GpuProcessTransportFactory : public ui::ContextFactory,
   // ui::ContextFactory implementation.
   void CreateLayerTreeFrameSink(
       base::WeakPtr<ui::Compositor> compositor) override;
-  scoped_refptr<viz::ContextProvider> SharedMainThreadContextProvider()
+  scoped_refptr<viz::GLContextProvider> SharedMainThreadContextProvider()
       override;
   double GetRefreshRate() const override;
   gpu::GpuMemoryBufferManager* GetGpuMemoryBufferManager() override;
@@ -140,7 +142,17 @@ class GpuProcessTransportFactory : public ui::ContextFactory,
       bool support_locking,
       bool support_gles2_interface,
       bool support_raster_interface,
-      ui::ContextProviderCommandBuffer* shared_context_provider,
+      ui::ContextProviderCommandBufferBase* shared_context_provider,
+      ui::command_buffer_metrics::ContextType type);
+
+  scoped_refptr<ui::RasterContextProviderCommandBuffer>
+  CreateRasterContextCommon(
+      scoped_refptr<gpu::GpuChannelHost> gpu_channel_host,
+      gpu::SurfaceHandle surface_handle,
+      bool need_alpha_channel,
+      bool need_stencil_bits,
+      bool support_locking,
+      ui::ContextProviderCommandBufferBase* shared_context_provider,
       ui::command_buffer_metrics::ContextType type);
 
   viz::FrameSinkIdAllocator frame_sink_id_allocator_;
@@ -161,7 +173,7 @@ class GpuProcessTransportFactory : public ui::ContextFactory,
   base::ObserverList<ui::ContextFactoryObserver> observer_list_;
   scoped_refptr<base::SingleThreadTaskRunner> resize_task_runner_;
   std::unique_ptr<cc::SingleThreadTaskGraphRunner> task_graph_runner_;
-  scoped_refptr<ui::ContextProviderCommandBuffer>
+  scoped_refptr<ui::RasterContextProviderCommandBuffer>
       shared_worker_context_provider_;
 
   bool is_gpu_compositing_disabled_ = false;

@@ -30,6 +30,7 @@ class HostFrameSinkManager;
 
 namespace ui {
 class InProcessContextProvider;
+class InProcessRasterContextProvider;
 
 class InProcessContextFactory : public ContextFactory,
                                 public ContextFactoryPrivate {
@@ -63,7 +64,7 @@ class InProcessContextFactory : public ContextFactory,
                                              Layer* mirroring_layer) override;
   void RemoveReflector(Reflector* reflector) override;
 
-  scoped_refptr<viz::ContextProvider> SharedMainThreadContextProvider()
+  scoped_refptr<viz::GLContextProvider> SharedMainThreadContextProvider()
       override;
   void RemoveCompositor(Compositor* compositor) override;
   double GetRefreshRate() const override;
@@ -102,7 +103,7 @@ class InProcessContextFactory : public ContextFactory,
   PerCompositorData* CreatePerCompositorData(ui::Compositor* compositor);
 
   scoped_refptr<InProcessContextProvider> shared_main_thread_contexts_;
-  scoped_refptr<InProcessContextProvider> shared_worker_context_provider_;
+  scoped_refptr<InProcessRasterContextProvider> shared_worker_context_provider_;
   cc::TestSharedBitmapManager shared_bitmap_manager_;
   viz::TestGpuMemoryBufferManager gpu_memory_buffer_manager_;
   cc::TestImageFactory image_factory_;

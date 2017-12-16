@@ -35,6 +35,9 @@ source_set("internal") {
     "client_gpu_memory_buffer_manager.h",
     "command_buffer_metrics.cc",
     "context_provider_command_buffer.cc",
+    "context_provider_command_buffer.h",
+    "context_provider_command_buffer_base.cc",
+    "context_provider_command_buffer_base.h",
     "gpu.cc",
   ]
 

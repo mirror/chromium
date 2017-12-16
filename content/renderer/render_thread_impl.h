@@ -109,7 +109,9 @@ class GpuVideoAcceleratorFactories;
 
 namespace ui {
 class ContextProviderCommandBuffer;
+class ContextProviderCommandBufferBase;
 class Gpu;
+class RasterContextProviderCommandBuffer;
 }
 
 namespace v8 {
@@ -428,7 +430,7 @@ class CONTENT_EXPORT RenderThreadImpl
 
   // Returns a worker context provider that will be bound on the compositor
   // thread.
-  scoped_refptr<ui::ContextProviderCommandBuffer>
+  scoped_refptr<ui::RasterContextProviderCommandBuffer>
   SharedCompositorWorkerContextProvider();
 
   // Causes the idle handler to skip sending idle notifications
@@ -756,7 +758,7 @@ class CONTENT_EXPORT RenderThreadImpl
 
   base::ObserverList<RenderThreadObserver> observers_;
 
-  scoped_refptr<ui::ContextProviderCommandBuffer>
+  scoped_refptr<ui::RasterContextProviderCommandBuffer>
       shared_worker_context_provider_;
 
   std::unique_ptr<AudioRendererMixerManager> audio_renderer_mixer_manager_;

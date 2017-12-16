@@ -55,25 +55,27 @@ class FakeLayerTreeFrameSink : public LayerTreeFrameSink {
 
    private:
     scoped_refptr<TestContextProvider> compositor_context_provider_;
-    scoped_refptr<TestContextProvider> worker_context_provider_;
+    scoped_refptr<TestRasterContextProvider> worker_context_provider_;
   };
 
   ~FakeLayerTreeFrameSink() override;
 
   static std::unique_ptr<FakeLayerTreeFrameSink> Create3d() {
-    return base::WrapUnique(new FakeLayerTreeFrameSink(
-        TestContextProvider::Create(), TestContextProvider::CreateWorker()));
+    return base::WrapUnique(
+        new FakeLayerTreeFrameSink(TestContextProvider::Create(),
+                                   TestRasterContextProvider::CreateWorker()));
   }
 
   static std::unique_ptr<FakeLayerTreeFrameSink> Create3d(
       scoped_refptr<TestContextProvider> context_provider) {
-    return base::WrapUnique(new FakeLayerTreeFrameSink(
-        std::move(context_provider), TestContextProvider::CreateWorker()));
+    return base::WrapUnique(
+        new FakeLayerTreeFrameSink(std::move(context_provider),
+                                   TestRasterContextProvider::CreateWorker()));
   }
 
   static std::unique_ptr<FakeLayerTreeFrameSink> Create3d(
       scoped_refptr<TestContextProvider> context_provider,
-      scoped_refptr<TestContextProvider> worker_context_provider) {
+      scoped_refptr<TestRasterContextProvider> worker_context_provider) {
     return base::WrapUnique(new FakeLayerTreeFrameSink(
         std::move(context_provider), std::move(worker_context_provider)));
   }
@@ -82,7 +84,7 @@ class FakeLayerTreeFrameSink : public LayerTreeFrameSink {
       std::unique_ptr<TestWebGraphicsContext3D> context) {
     return base::WrapUnique(new FakeLayerTreeFrameSink(
         TestContextProvider::Create(std::move(context)),
-        TestContextProvider::CreateWorker()));
+        TestRasterContextProvider::CreateWorker()));
   }
 
   static std::unique_ptr<FakeLayerTreeFrameSink> Create3dForGpuRasterization(
@@ -118,8 +120,8 @@ class FakeLayerTreeFrameSink : public LayerTreeFrameSink {
 
  protected:
   FakeLayerTreeFrameSink(
-      scoped_refptr<viz::ContextProvider> context_provider,
-      scoped_refptr<viz::ContextProvider> worker_context_provider);
+      scoped_refptr<viz::GLContextProvider> context_provider,
+      scoped_refptr<viz::RasterContextProvider> worker_context_provider);
 
   viz::TestGpuMemoryBufferManager test_gpu_memory_buffer_manager_;
   TestSharedBitmapManager test_shared_bitmap_manager_;

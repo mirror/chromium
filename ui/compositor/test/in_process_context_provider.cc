@@ -26,7 +26,7 @@ namespace ui {
 // static
 scoped_refptr<InProcessContextProvider> InProcessContextProvider::Create(
     const gpu::gles2::ContextCreationAttribHelper& attribs,
-    InProcessContextProvider* shared_context,
+    InProcessContextProviderBase* shared_context,
     gpu::GpuMemoryBufferManager* gpu_memory_buffer_manager,
     gpu::ImageFactory* image_factory,
     gpu::SurfaceHandle window,
@@ -42,7 +42,7 @@ scoped_refptr<InProcessContextProvider>
 InProcessContextProvider::CreateOffscreen(
     gpu::GpuMemoryBufferManager* gpu_memory_buffer_manager,
     gpu::ImageFactory* image_factory,
-    InProcessContextProvider* shared_context,
+    InProcessContextProviderBase* shared_context,
     bool support_locking) {
   gpu::gles2::ContextCreationAttribHelper attribs;
   attribs.alpha_size = 8;
@@ -60,9 +60,32 @@ InProcessContextProvider::CreateOffscreen(
       gpu::kNullSurfaceHandle, "Offscreen", support_locking);
 }
 
-InProcessContextProvider::InProcessContextProvider(
+// static
+scoped_refptr<InProcessRasterContextProvider>
+InProcessRasterContextProvider::CreateOffscreen(
+    gpu::GpuMemoryBufferManager* gpu_memory_buffer_manager,
+    gpu::ImageFactory* image_factory,
+    InProcessContextProviderBase* shared_context,
+    bool support_locking) {
+  gpu::gles2::ContextCreationAttribHelper attribs;
+  attribs.alpha_size = 8;
+  attribs.blue_size = 8;
+  attribs.green_size = 8;
+  attribs.red_size = 8;
+  attribs.depth_size = 0;
+  attribs.stencil_size = 8;
+  attribs.samples = 0;
+  attribs.sample_buffers = 0;
+  attribs.fail_if_major_perf_caveat = false;
+  attribs.bind_generates_resource = false;
+  return new InProcessRasterContextProvider(
+      attribs, shared_context, gpu_memory_buffer_manager, image_factory,
+      gpu::kNullSurfaceHandle, "Offscreen", support_locking);
+}
+
+InProcessContextProviderBase::InProcessContextProviderBase(
     const gpu::gles2::ContextCreationAttribHelper& attribs,
-    InProcessContextProvider* shared_context,
+    InProcessContextProviderBase* shared_context,
     gpu::GpuMemoryBufferManager* gpu_memory_buffer_manager,
     gpu::ImageFactory* image_factory,
     gpu::SurfaceHandle window,
@@ -79,12 +102,12 @@ InProcessContextProvider::InProcessContextProvider(
   context_thread_checker_.DetachFromThread();
 }
 
-InProcessContextProvider::~InProcessContextProvider() {
+InProcessContextProviderBase::~InProcessContextProviderBase() {
   DCHECK(main_thread_checker_.CalledOnValidThread() ||
          context_thread_checker_.CalledOnValidThread());
 }
 
-gpu::ContextResult InProcessContextProvider::BindToCurrentThread() {
+gpu::ContextResult InProcessContextProviderBase::BindToCurrentThread() {
   // This is called on the thread the context will be used.
   DCHECK(context_thread_checker_.CalledOnValidThread());
 
@@ -120,35 +143,37 @@ gpu::ContextResult InProcessContextProvider::BindToCurrentThread() {
   return bind_result_;
 }
 
-const gpu::Capabilities& InProcessContextProvider::ContextCapabilities() const {
+const gpu::Capabilities& InProcessContextProviderBase::ContextCapabilities()
+    const {
   CheckValidThreadOrLockAcquired();
   return context_->GetImplementation()->capabilities();
 }
 
-const gpu::GpuFeatureInfo& InProcessContextProvider::GetGpuFeatureInfo() const {
+const gpu::GpuFeatureInfo& InProcessContextProviderBase::GetGpuFeatureInfo()
+    const {
   CheckValidThreadOrLockAcquired();
   return context_->GetGpuFeatureInfo();
 }
 
-gpu::gles2::GLES2Interface* InProcessContextProvider::ContextGL() {
+gpu::gles2::GLES2Interface* InProcessContextProviderBase::ContextGL() {
   CheckValidThreadOrLockAcquired();
 
   return context_->GetImplementation();
 }
 
-gpu::raster::RasterInterface* InProcessContextProvider::RasterContext() {
+gpu::raster::RasterInterface* InProcessContextProviderBase::RasterInterface() {
   CheckValidThreadOrLockAcquired();
 
   return raster_context_.get();
 }
 
-gpu::ContextSupport* InProcessContextProvider::ContextSupport() {
+gpu::ContextSupport* InProcessContextProviderBase::ContextSupport() {
   CheckValidThreadOrLockAcquired();
 
   return context_->GetImplementation();
 }
 
-class GrContext* InProcessContextProvider::GrContext() {
+class GrContext* InProcessContextProviderBase::GrContext() {
   CheckValidThreadOrLockAcquired();
 
   if (gr_context_)
@@ -166,37 +191,145 @@ class GrContext* InProcessContextProvider::GrContext() {
   return gr_context_->get();
 }
 
-viz::ContextCacheController* InProcessContextProvider::CacheController() {
+viz::ContextCacheController* InProcessContextProviderBase::CacheController() {
   CheckValidThreadOrLockAcquired();
   return cache_controller_.get();
 }
 
-void InProcessContextProvider::InvalidateGrContext(uint32_t state) {
+void InProcessContextProviderBase::InvalidateGrContext(uint32_t state) {
   CheckValidThreadOrLockAcquired();
 
   if (gr_context_)
     gr_context_->ResetContext(state);
 }
 
-base::Lock* InProcessContextProvider::GetLock() {
+base::Lock* InProcessContextProviderBase::GetLock() {
   return &context_lock_;
 }
 
-void InProcessContextProvider::AddObserver(viz::ContextLostObserver* obs) {
+void InProcessContextProviderBase::AddObserver(viz::ContextLostObserver* obs) {
   // Pixel tests do not test lost context.
 }
 
-void InProcessContextProvider::RemoveObserver(viz::ContextLostObserver* obs) {
+void InProcessContextProviderBase::RemoveObserver(
+    viz::ContextLostObserver* obs) {
   // Pixel tests do not test lost context.
 }
 
-uint32_t InProcessContextProvider::GetCopyTextureInternalFormat() {
+uint32_t InProcessContextProviderBase::GetCopyTextureInternalFormat() {
   if (attribs_.alpha_size > 0)
     return GL_RGBA;
   DCHECK_NE(attribs_.red_size, 0);
   DCHECK_NE(attribs_.green_size, 0);
   DCHECK_NE(attribs_.blue_size, 0);
   return GL_RGB;
+}
+
+InProcessContextProvider::InProcessContextProvider(
+    const gpu::gles2::ContextCreationAttribHelper& attribs,
+    InProcessContextProviderBase* shared_context,
+    gpu::GpuMemoryBufferManager* gpu_memory_buffer_manager,
+    gpu::ImageFactory* image_factory,
+    gpu::SurfaceHandle window,
+    const std::string& debug_name,
+    bool support_locking)
+    : InProcessContextProviderBase(attribs,
+                                   shared_context,
+                                   gpu_memory_buffer_manager,
+                                   image_factory,
+                                   window,
+                                   debug_name,
+                                   support_locking) {}
+
+gpu::ContextResult InProcessContextProvider::BindToCurrentThread() {
+  return InProcessContextProviderBase::BindToCurrentThread();
+}
+gpu::ContextSupport* InProcessContextProvider::ContextSupport() {
+  return InProcessContextProviderBase::ContextSupport();
+}
+class GrContext* InProcessContextProvider::GrContext() {
+  return InProcessContextProviderBase::GrContext();
+}
+viz::ContextCacheController* InProcessContextProvider::CacheController() {
+  return InProcessContextProviderBase::CacheController();
+}
+void InProcessContextProvider::InvalidateGrContext(uint32_t state) {
+  return InProcessContextProviderBase::InvalidateGrContext(state);
+}
+base::Lock* InProcessContextProvider::GetLock() {
+  return InProcessContextProviderBase::GetLock();
+}
+const gpu::Capabilities& InProcessContextProvider::ContextCapabilities() const {
+  return InProcessContextProviderBase::ContextCapabilities();
+}
+const gpu::GpuFeatureInfo& InProcessContextProvider::GetGpuFeatureInfo() const {
+  return InProcessContextProviderBase::GetGpuFeatureInfo();
+}
+void InProcessContextProvider::AddObserver(viz::ContextLostObserver* obs) {
+  return InProcessContextProviderBase::AddObserver(obs);
+}
+void InProcessContextProvider::RemoveObserver(viz::ContextLostObserver* obs) {
+  return InProcessContextProviderBase::RemoveObserver(obs);
+}
+
+gpu::gles2::GLES2Interface* InProcessContextProvider::ContextGL() {
+  return InProcessContextProviderBase::ContextGL();
+}
+
+InProcessRasterContextProvider::InProcessRasterContextProvider(
+    const gpu::gles2::ContextCreationAttribHelper& attribs,
+    InProcessContextProviderBase* shared_context,
+    gpu::GpuMemoryBufferManager* gpu_memory_buffer_manager,
+    gpu::ImageFactory* image_factory,
+    gpu::SurfaceHandle window,
+    const std::string& debug_name,
+    bool support_locking)
+    : InProcessContextProviderBase(attribs,
+                                   shared_context,
+                                   gpu_memory_buffer_manager,
+                                   image_factory,
+                                   window,
+                                   debug_name,
+                                   support_locking) {}
+
+gpu::ContextResult InProcessRasterContextProvider::BindToCurrentThread() {
+  return InProcessContextProviderBase::BindToCurrentThread();
+}
+gpu::ContextSupport* InProcessRasterContextProvider::ContextSupport() {
+  return InProcessContextProviderBase::ContextSupport();
+}
+class GrContext* InProcessRasterContextProvider::GrContext() {
+  return InProcessContextProviderBase::GrContext();
+}
+viz::ContextCacheController* InProcessRasterContextProvider::CacheController() {
+  return InProcessContextProviderBase::CacheController();
+}
+void InProcessRasterContextProvider::InvalidateGrContext(uint32_t state) {
+  return InProcessContextProviderBase::InvalidateGrContext(state);
+}
+base::Lock* InProcessRasterContextProvider::GetLock() {
+  return InProcessContextProviderBase::GetLock();
+}
+const gpu::Capabilities& InProcessRasterContextProvider::ContextCapabilities()
+    const {
+  return InProcessContextProviderBase::ContextCapabilities();
+}
+const gpu::GpuFeatureInfo& InProcessRasterContextProvider::GetGpuFeatureInfo()
+    const {
+  return InProcessContextProviderBase::GetGpuFeatureInfo();
+}
+void InProcessRasterContextProvider::AddObserver(
+    viz::ContextLostObserver* obs) {
+  return InProcessContextProviderBase::AddObserver(obs);
+}
+void InProcessRasterContextProvider::RemoveObserver(
+    viz::ContextLostObserver* obs) {
+  return InProcessContextProviderBase::RemoveObserver(obs);
+}
+
+gpu::raster::RasterInterface*
+InProcessRasterContextProvider::RasterInterface() {
+  return InProcessContextProviderBase::RasterInterface();
 }
 
 }  // namespace ui

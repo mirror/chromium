@@ -15,7 +15,7 @@
 namespace cc {
 
 TEST(StagingBufferPoolTest, ShutdownImmediatelyAfterCreation) {
-  auto context_provider = TestContextProvider::CreateWorker();
+  auto context_provider = TestRasterContextProvider::CreateWorker();
   ResourceProvider* resource_provider = nullptr;
   bool use_partial_raster = false;
   int max_staging_buffer_usage_in_bytes = 1024;
