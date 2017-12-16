@@ -119,6 +119,24 @@
     },
     {
       "key": {
+        "uuid": "b47f46c0_c436b2ae",
+        "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1991,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2017-12-16T19:22:07Z",
+      "side": 1,
+      "message": "On a second thought. What line are you referring to? The check or the creation of pointerevent? This constructor always created kPointerCausedUaAction. So no need to explicit set of the type. Also check is correct as we will be getting touch events as the input to this function",
+      "parentUuid": "2479b573_41007896",
+      "revId": "d9eab7e6b24cb0cf9c20ab989f0f3f9a219b5df4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fd13cf2b_df6b8e23",
         "filename": "third_party/WebKit/public/platform/WebPointerEvent.h",
         "patchSetId": 2
@@ -130,6 +148,24 @@
       "writtenOn": "2017-12-15T17:08:53Z",
       "side": 1,
       "message": "Please also pass on a type, to avoid the ability to create a \"filled\" instance with automatic \"kUndefined\".\n\nHopefully some tests will catch this.  If not, we need more DCHECKs.",
+      "revId": "d9eab7e6b24cb0cf9c20ab989f0f3f9a219b5df4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45235a87_e07b8a6f",
+        "filename": "third_party/WebKit/public/platform/WebPointerEvent.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2017-12-16T19:22:07Z",
+      "side": 1,
+      "message": "Good point. I just realized the test I have modified does fail with the debug build as it checks the type of the pointer with DCHECKs. I was running it in release mode and didn\u0027t realize it was hitting the DCHECK.",
+      "parentUuid": "fd13cf2b_df6b8e23",
       "revId": "d9eab7e6b24cb0cf9c20ab989f0f3f9a219b5df4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
