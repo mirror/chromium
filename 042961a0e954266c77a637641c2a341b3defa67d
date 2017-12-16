@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "83c5ef49_68b40725",
+        "filename": "chrome/browser/accessibility/interstitial_accessibility_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-12-16T15:32:56Z",
+      "side": 1,
+      "message": "unused?",
+      "range": {
+        "startLine": 59,
+        "startChar": 0,
+        "endLine": 59,
+        "endChar": 47
+      },
+      "revId": "042961a0e954266c77a637641c2a341b3defa67d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
