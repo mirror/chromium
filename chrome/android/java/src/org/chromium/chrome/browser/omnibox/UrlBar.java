@@ -35,6 +35,7 @@ import android.widget.TextView;
 
 import org.chromium.base.ApiCompatibilityUtils;
 import org.chromium.base.Log;
+import org.chromium.base.ObserverList;
 import org.chromium.base.SysUtils;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.chrome.R;
@@ -50,6 +51,7 @@ import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.Iterator;
 
 /**
  * The URL text entry view for the Omnibox.
@@ -115,6 +117,7 @@ public class UrlBar extends AutocompleteEditText {
     private Boolean mUseDarkColors;
 
     private OmniboxLivenessListener mOmniboxLivenessListener;
+    private ObserverList<ActionItemObserver> mActionItemObservers;
 
     private long mFirstFocusTimeMs;
 
@@ -176,6 +179,13 @@ public class UrlBar extends AutocompleteEditText {
         void backKeyPressed();
     }
 
+    /**
+     * Observer to get notifications on action item selections.
+     */
+    public interface ActionItemObserver {
+        void onOptionPasteClicked(String rawText, String sanitizedText);
+    }
+
     public UrlBar(Context context, AttributeSet attrs) {
         super(context, attrs);
 
@@ -231,6 +241,7 @@ public class UrlBar extends AutocompleteEditText {
         });
 
         ApiCompatibilityUtils.disableSmartSelectionTextClassifier(this);
+        mActionItemObservers = new ObserverList<>();
     }
 
     /**
@@ -530,6 +541,22 @@ public class UrlBar extends AutocompleteEditText {
         mOmniboxLivenessListener = listener;
     }
 
+    /**
+     * Adds a new observer that gets notified about interactions with action items.
+     * @param actionItemObserver An instance of {@link ActionItemObserver}.
+     */
+    public void addActionItemObserver(ActionItemObserver actionItemObserver) {
+        mActionItemObservers.addObserver(actionItemObserver);
+    }
+
+    /**
+     * Removes an observer that gets notified about interactions with action items.
+     * @param actionItemObserver An instance of {@link ActionItemObserver}.
+     */
+    public void removeActionItemObserver(ActionItemObserver actionItemObserver) {
+        mActionItemObservers.removeObserver(actionItemObserver);
+    }
+
     public void onNativeLibraryReady() {
         if (mOmniboxLivenessListener != null) mOmniboxLivenessListener.onOmniboxFullyFunctional();
     }
@@ -545,7 +572,8 @@ public class UrlBar extends AutocompleteEditText {
                 for (int i = 0; i < clipData.getItemCount(); i++) {
                     builder.append(clipData.getItemAt(i).coerceToText(getContext()));
                 }
-                String pasteString = OmniboxViewUtil.sanitizeTextForPaste(builder.toString());
+                String rawString = builder.toString();
+                String pasteString = OmniboxViewUtil.sanitizeTextForPaste(rawString);
 
                 int min = 0;
                 int max = getText().length();
@@ -561,6 +589,10 @@ public class UrlBar extends AutocompleteEditText {
                 Selection.setSelection(getText(), max);
                 getText().replace(min, max, pasteString);
                 onPaste();
+                Iterator<ActionItemObserver> iterator = mActionItemObservers.iterator();
+                while (iterator.hasNext()) {
+                    iterator.next().onOptionPasteClicked(rawString, pasteString);
+                }
                 return true;
             }
         }

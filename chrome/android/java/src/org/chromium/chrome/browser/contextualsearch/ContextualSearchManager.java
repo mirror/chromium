@@ -33,6 +33,7 @@ import org.chromium.chrome.browser.externalnav.ExternalNavigationParams;
 import org.chromium.chrome.browser.feature_engagement.TrackerFactory;
 import org.chromium.chrome.browser.gsa.GSAContextDisplaySelection;
 import org.chromium.chrome.browser.infobar.InfoBarContainer;
+import org.chromium.chrome.browser.omnibox.UrlBar;
 import org.chromium.chrome.browser.profiles.Profile;
 import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.chrome.browser.tab.TabRedirectHandler;
@@ -51,6 +52,8 @@ import org.chromium.components.feature_engagement.Tracker;
 import org.chromium.components.feature_engagement.TriggerState;
 import org.chromium.components.navigation_interception.NavigationParams;
 import org.chromium.content.browser.ContentViewCore;
+import org.chromium.content.browser.SelectionPopupController;
+import org.chromium.content_public.browser.ActionModeCallbackHelper;
 import org.chromium.content_public.browser.GestureStateListener;
 import org.chromium.content_public.browser.LoadUrlParams;
 import org.chromium.content_public.browser.NavigationEntry;
@@ -121,6 +124,7 @@ public class ContextualSearchManager
     private ContextualSearchNetworkCommunicator mNetworkCommunicator;
     private ContextualSearchPolicy mPolicy;
     private ContextualSearchInternalStateController mInternalStateController;
+    private ContextualSearchClipboardTracker mContextualSearchClipboardTracker;
 
     @VisibleForTesting
     protected ContextualSearchTranslateController mTranslateController;
@@ -250,6 +254,7 @@ public class ContextualSearchManager
         mTapSuppressionRankerLogger = new ContextualSearchRankerLoggerImpl();
         mContextualSearchSelectionClient = new ContextualSearchSelectionClient();
         mInProductHelp = new ContextualSearchIPH();
+        mContextualSearchClipboardTracker = new ContextualSearchClipboardTracker();
     }
 
     /**
@@ -274,7 +279,8 @@ public class ContextualSearchManager
 
         mInternalStateController.reset(StateChangeReason.UNKNOWN);
 
-        listenForTabModelSelectorNotifications();
+//        listenForTabModelSelectorNotifications();
+//        listenForClipboardNotifications();
     }
 
     /**
@@ -312,6 +318,7 @@ public class ContextualSearchManager
         mParentView.getViewTreeObserver().removeOnGlobalFocusChangeListener(mOnFocusChangeListener);
         nativeDestroy(mNativeContextualSearchManagerPtr);
         stopListeningForHideNotifications();
+        stopListeningForClipboardNotifications();
         mTabRedirectHandler.clear();
         if (mFindToolbarManager != null) {
             mFindToolbarManager.removeObserver(mFindToolbarObserver);
@@ -589,6 +596,41 @@ public class ContextualSearchManager
             for (TabModel tabModel : selector.getModels()) {
                 tabModel.removeObserver(mTabModelObserver);
             }
+        }
+    }
+
+    /**
+     * Listens for notifications for copying the selected text and pasting text into the clipboard.
+     */
+    private void listenForClipboardNotifications() {
+        UrlBar urlBar = getChromeActivity().findViewById(R.id.url_bar);
+        urlBar.addActionItemObserver(mContextualSearchClipboardTracker);
+
+        ContentViewCore contentViewCore = getChromeActivity().getCurrentContentViewCore();
+        ActionModeCallbackHelper actionModeCallbackHelper =
+                contentViewCore.getActionModeCallbackHelper();
+        if (actionModeCallbackHelper instanceof SelectionPopupController) {
+            ((SelectionPopupController) actionModeCallbackHelper)
+                    .addActionItemObserver(mContextualSearchClipboardTracker);
+        }
+    }
+
+    /**
+     * Stops listening for notifications for copying the selected text and pasting text into the
+     * clipboard.
+     */
+    private void stopListeningForClipboardNotifications() {
+        ContentViewCore contentViewCore = getChromeActivity().getCurrentContentViewCore();
+        if (contentViewCore == null) return;
+
+        UrlBar urlBar = getChromeActivity().findViewById(R.id.url_bar);
+        urlBar.removeActionItemObserver(mContextualSearchClipboardTracker);
+
+        ActionModeCallbackHelper actionModeCallbackHelper =
+                contentViewCore.getActionModeCallbackHelper();
+        if (actionModeCallbackHelper instanceof SelectionPopupController) {
+            ((SelectionPopupController) actionModeCallbackHelper)
+                    .removeActionItemObserver(mContextualSearchClipboardTracker);
         }
     }
 

@@ -131,6 +131,11 @@ public final class EventConstants {
     public static final String WEB_SEARCH_PERFORMED = "web_search_performed";
 
     /**
+     * User copied and pasted a text into the omnibox, presumably for searching it.
+     */
+    public static final String COPY_PASTE_SEARCH_PERFORMED = "copy_paste_search_performed";
+
+    /**
      * Contextual Search showed an entity result for the searched query.
      */
     public static final String CONTEXTUAL_SEARCH_ENTITY_RESULT = "contextual_search_entity_result";

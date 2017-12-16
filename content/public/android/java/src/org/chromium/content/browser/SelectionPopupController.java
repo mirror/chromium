@@ -33,6 +33,7 @@ import android.view.ViewConfiguration;
 import android.view.WindowManager;
 
 import org.chromium.base.Log;
+import org.chromium.base.ObserverList;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
@@ -52,6 +53,7 @@ import org.chromium.ui.base.MenuSourceType;
 import org.chromium.ui.base.WindowAndroid;
 import org.chromium.ui.touch_selection.SelectionEventType;
 
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -94,6 +96,7 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
     private final WindowAndroid mWindowAndroid;
     private final WebContentsImpl mWebContents;
     private ActionMode.Callback mCallback;
+    private ObserverList<ActionItemObserver> mActionItemObservers;
 
     private SelectionClient.ResultCallback mResultCallback;
 
@@ -151,6 +154,11 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
     private boolean mScrollInProgress;
 
     /**
+     * Observer to get notifications about action item selections.
+     */
+    public interface ActionItemObserver { void onOptionCopyClicked(String selectedText); }
+
+    /**
      * Create {@link SelectionPopupController} instance.
      * @param context Context for action mode.
      * @param window WindowAndroid instance.
@@ -197,6 +205,7 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
         };
 
         mResultCallback = new SmartSelectionCallback();
+        mActionItemObservers = new ObserverList<>();
 
         mLastSelectedText = "";
 
@@ -223,6 +232,22 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
      */
     void setCallback(ActionMode.Callback callback) {
         mCallback = callback;
+    }
+
+    /**
+     * Adds a new observer that gets notified about interactions with action items.
+     * @param actionItemObserver An instance of {@link SelectionPopupController.ActionItemObserver}.
+     */
+    public void addActionItemObserver(ActionItemObserver actionItemObserver) {
+        mActionItemObservers.addObserver(actionItemObserver);
+    }
+
+    /**
+     * Removes an observer that gets notified about interactions with action items.
+     * @param actionItemObserver An instance of {@link SelectionPopupController.ActionItemObserver}.
+     */
+    public void removeActionItemObserver(ActionItemObserver actionItemObserver) {
+        mActionItemObservers.removeObserver(actionItemObserver);
     }
 
     void setNonSelectionCallback(ActionMode.Callback callback) {
@@ -727,6 +752,7 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
                     getActionType(id), mClassificationResult);
         }
 
+        notifyActionItemObservers(id);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && id == android.R.id.textAssist) {
             doAssistAction();
             mode.finish();
@@ -766,6 +792,19 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
         if (mUnselectAllOnDismiss) {
             mWebContents.dismissTextHandles();
             clearSelection();
+        }
+    }
+
+    /**
+     * Notifies all observers in {@link #mActionItemObservers} that an action item has been
+     * selected.
+     * @param itemId
+     */
+    private void notifyActionItemObservers(int itemId) {
+        Iterator<ActionItemObserver> iterator = mActionItemObservers.iterator();
+        while (iterator.hasNext()) {
+            if (itemId == R.id.select_action_menu_copy)
+                iterator.next().onOptionCopyClicked(mLastSelectedText);
         }
     }
 
