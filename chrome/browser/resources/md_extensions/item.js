@@ -101,6 +101,11 @@ cr.define('extensions', function() {
       'observeIdVisibility_(inDevMode, showingDetails_, data.id)',
     ],
 
+    /** @private string */
+    a11yAssociation_: function() {
+      return loadTimeData.getStringF('extensionAssociation', this.data.name);
+    },
+
     /** @private */
     observeIdVisibility_: function(inDevMode, showingDetails, id) {
       Polymer.dom.flush();
