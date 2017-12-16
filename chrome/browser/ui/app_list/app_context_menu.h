@@ -22,22 +22,26 @@ class AppContextMenuDelegate;
 class AppContextMenu : public ui::SimpleMenuModel::Delegate {
  public:
   // Defines command ids, used in context menu of all types.
+  // These are used in histograms, do not remove/renumber entries. Only add at
+  // the end just before USE_LAUNCH_TYPE_COMMAND_END or after INSTALL and before
+  // USE_LAUNCH_TYPE_COMMAND_START. Also remember to update the CommandId enum
+  // listing in tools/metrics/histograms/enums.xml.
   enum CommandId {
     LAUNCH_NEW = 100,
-    TOGGLE_PIN,
-    SHOW_APP_INFO,
-    OPTIONS,
-    UNINSTALL,
-    REMOVE_FROM_FOLDER,
-    MENU_NEW_WINDOW,
-    MENU_NEW_INCOGNITO_WINDOW,
-    INSTALL,
+    TOGGLE_PIN = 101,
+    SHOW_APP_INFO = 102,
+    OPTIONS = 103,
+    UNINSTALL = 104,
+    REMOVE_FROM_FOLDER = 105,
+    MENU_NEW_WINDOW = 106,
+    MENU_NEW_INCOGNITO_WINDOW = 107,
+    INSTALL = 108,
     // Order matters in USE_LAUNCH_TYPE_* and must match the LaunchType enum.
     USE_LAUNCH_TYPE_COMMAND_START = 200,
     USE_LAUNCH_TYPE_PINNED = USE_LAUNCH_TYPE_COMMAND_START,
-    USE_LAUNCH_TYPE_REGULAR,
-    USE_LAUNCH_TYPE_FULLSCREEN,
-    USE_LAUNCH_TYPE_WINDOW,
+    USE_LAUNCH_TYPE_REGULAR = 201,
+    USE_LAUNCH_TYPE_FULLSCREEN = 202,
+    USE_LAUNCH_TYPE_WINDOW = 203,
     USE_LAUNCH_TYPE_COMMAND_END,
   };
 
