@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6f9c4cfc_df953c15",
+        "filename": "tools/mb/mb.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-12-16T00:26:57Z",
+      "side": 1,
+      "message": "Yup.",
+      "parentUuid": "b5c364ee_124ef983",
+      "range": {
+        "startLine": 359,
+        "startChar": 17,
+        "endLine": 359,
+        "endChar": 43
+      },
+      "revId": "ab183f4d2642334dfae3049db4a46f998bccd2d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4592ae81_60d24ae9",
         "filename": "tools/mb/mb.py",
         "patchSetId": 7
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "31557273_278c9953",
+        "filename": "tools/mb/mb.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-12-16T00:26:57Z",
+      "side": 1,
+      "message": "Ack, fixed.",
+      "parentUuid": "4592ae81_60d24ae9",
+      "revId": "ab183f4d2642334dfae3049db4a46f998bccd2d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa95a980_6cd97053",
         "filename": "tools/mb/mb.py",
         "patchSetId": 7
@@ -56,6 +98,24 @@
       "revId": "ab183f4d2642334dfae3049db4a46f998bccd2d2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91e350ca_704c0fe0",
+        "filename": "tools/mb/mb.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-12-16T00:26:57Z",
+      "side": 1,
+      "message": "Ah, you\u0027re right, I could\u0027ve sworn I double-checked this.",
+      "parentUuid": "fa95a980_6cd97053",
+      "revId": "ab183f4d2642334dfae3049db4a46f998bccd2d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -79,6 +139,30 @@
       "revId": "ab183f4d2642334dfae3049db4a46f998bccd2d2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "553d95fd_98624ccc",
+        "filename": "tools/mb/mb.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-12-16T00:26:57Z",
+      "side": 1,
+      "message": "Yeah, we could eventually be smart enough to default to the host CPU arch.\n\nFor now, --no-default-dimensions gives you the needed escape hatch.",
+      "parentUuid": "47542031_2061230f",
+      "range": {
+        "startLine": 394,
+        "startChar": 21,
+        "endLine": 394,
+        "endChar": 27
+      },
+      "revId": "ab183f4d2642334dfae3049db4a46f998bccd2d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
