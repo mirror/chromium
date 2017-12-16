@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "219b8821_4ebfdbd6",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_subpage.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-12-16T00:14:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f9d4c52d_6d554003",
+      "revId": "bc0fb8c742429b90badd848fac9a6444ab85b7fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8f8ad5ec_2dd241cf",
         "filename": "chrome/browser/resources/settings/internet_page/internet_subpage.html",
         "patchSetId": 5
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "0b124afd_b2690acf",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_subpage.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-12-16T00:14:12Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "8f8ad5ec_2dd241cf",
+      "revId": "bc0fb8c742429b90badd848fac9a6444ab85b7fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b4deeac0_c63897aa",
         "filename": "chrome/browser/resources/settings/internet_page/internet_subpage.html",
         "patchSetId": 5
@@ -50,6 +86,24 @@
       "revId": "bc0fb8c742429b90badd848fac9a6444ab85b7fb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "881dcd89_297063bd",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_subpage.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-12-16T00:14:12Z",
+      "side": 1,
+      "message": "It\u0027s down here because it is not a child of #networkListDiv.",
+      "parentUuid": "b4deeac0_c63897aa",
+      "revId": "bc0fb8c742429b90badd848fac9a6444ab85b7fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
