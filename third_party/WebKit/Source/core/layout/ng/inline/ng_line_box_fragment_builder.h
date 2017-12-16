@@ -51,8 +51,31 @@ class CORE_EXPORT NGLineBoxFragmentBuilder final
     scoped_refptr<NGLayoutResult> layout_result;
     scoped_refptr<NGPhysicalFragment> fragment;
     NGLogicalOffset offset;
+    LayoutUnit inline_size;
+    unsigned box_data_index = 0;
+    UBiDiLevel bidi_level;
+
+    Child(NGLogicalOffset offset) : offset(offset), bidi_level(0xff) {}
+    Child(UBiDiLevel bidi_level) : bidi_level(bidi_level) {}
+    Child(scoped_refptr<NGLayoutResult> layout_result,
+          NGLogicalOffset offset,
+          LayoutUnit inline_size,
+          UBiDiLevel bidi_level)
+        : layout_result(std::move(layout_result)),
+          offset(offset),
+          inline_size(inline_size),
+          bidi_level(bidi_level) {}
+    Child(scoped_refptr<NGPhysicalFragment> fragment,
+          LayoutUnit block_offset,
+          LayoutUnit inline_size,
+          UBiDiLevel bidi_level)
+        : fragment(std::move(fragment)),
+          offset({LayoutUnit(), block_offset}),
+          inline_size(inline_size),
+          bidi_level(bidi_level) {}
 
     bool HasFragment() const { return layout_result || fragment; }
+    bool HasBidiLevel() const { return bidi_level != 0xff; }
     const NGPhysicalFragment* PhysicalFragment() const;
   };
 
@@ -84,12 +107,20 @@ class CORE_EXPORT NGLineBoxFragmentBuilder final
     const_iterator begin() const { return children_.begin(); }
     const_iterator end() const { return children_.end(); }
 
-    void AddChild(scoped_refptr<NGLayoutResult>, const NGLogicalOffset&);
-    void AddChild(scoped_refptr<NGPhysicalFragment>, const NGLogicalOffset&);
+    void AddChild(Child&& child) { children_.push_back(std::move(child)); }
+    void AddChild(scoped_refptr<NGLayoutResult>,
+                  const NGLogicalOffset&,
+                  LayoutUnit inline_size,
+                  UBiDiLevel);
+    void AddChild(scoped_refptr<NGPhysicalFragment>,
+                  LayoutUnit block_offset,
+                  LayoutUnit inline_size,
+                  UBiDiLevel);
     // nullptr child is a placeholder until enclosing inline boxes are closed
     // and we know the final box structure and their positions. This variant
     // helps to avoid needing static_cast when adding a nullptr.
-    void AddChild(std::nullptr_t, const NGLogicalOffset&);
+    void AddChild(const NGLogicalOffset&);
+    void AddChild(UBiDiLevel);
 
     void MoveInBlockDirection(LayoutUnit);
     void MoveInBlockDirection(LayoutUnit, unsigned start, unsigned end);
