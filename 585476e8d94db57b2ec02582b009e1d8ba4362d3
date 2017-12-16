@@ -456,6 +456,30 @@
     },
     {
       "key": {
+        "uuid": "c6e2ff5d_3f87d761",
+        "filename": "content/renderer/input/input_target_client_impl.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2017-12-16T00:02:53Z",
+      "side": 1,
+      "message": "No. This was completely fair. I wanted to address it with the next patch I\u0027m going to upload. Just wanted to make sure if there will be any other actionable item from the other comments before uploading the next patch. From the looks of it there is no other items for this very CL. So I\u0027m going to upload the patch now.",
+      "parentUuid": "2bc3b0cd_2e5475d4",
+      "range": {
+        "startLine": 22,
+        "startChar": 2,
+        "endLine": 22,
+        "endChar": 10
+      },
+      "revId": "585476e8d94db57b2ec02582b009e1d8ba4362d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "431d8d20_0d644ba4",
         "filename": "content/renderer/input/input_target_client_impl.cc",
         "patchSetId": 22
