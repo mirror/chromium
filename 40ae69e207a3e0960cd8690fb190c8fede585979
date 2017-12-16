@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "f656afe6_798f545d",
+        "filename": "extensions/renderer/resources/platform_app.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1242274
+      },
+      "writtenOn": "2017-12-16T06:56:02Z",
+      "side": 0,
+      "message": "one change in above description: document.all is not undefined but [object HTMLAllCollection].\nThanks!",
+      "parentUuid": "b1522e43_359e02fd",
+      "revId": "40ae69e207a3e0960cd8690fb190c8fede585979",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "304192ef_b4b15774",
         "filename": "third_party/WebKit/LayoutTests/virtual/stable/webexposed/global-interface-listing-expected.txt",
         "patchSetId": 7
