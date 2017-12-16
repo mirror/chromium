@@ -108,6 +108,30 @@
     },
     {
       "key": {
+        "uuid": "53b48c87_759dff58",
+        "filename": "content/browser/webauth/collected_client_data.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-12-16T00:22:48Z",
+      "side": 1,
+      "message": "Hm, I use this in authenticator_impl_unittest. Declaring it as an \"extern const...\" means that I\u0027d have to include the .cc file for the test, which seems worse than having the string copied.",
+      "parentUuid": "a484dda0_a0bc5ad4",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 28
+      },
+      "revId": "6c24693bca1d330bcbaccbb13ac200f6c1b7b698",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "25450864_a6f93fa7",
         "filename": "device/u2f/attestation_object.cc",
         "patchSetId": 1
