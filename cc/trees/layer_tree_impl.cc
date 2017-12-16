@@ -1320,7 +1320,7 @@ const LayerTreeDebugState& LayerTreeImpl::debug_state() const {
   return host_impl_->debug_state();
 }
 
-viz::ContextProvider* LayerTreeImpl::context_provider() const {
+viz::GLContextProvider* LayerTreeImpl::context_provider() const {
   return host_impl_->layer_tree_frame_sink()->context_provider();
 }
 

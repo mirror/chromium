@@ -596,7 +596,7 @@ void PepperGraphics2DHost::ReleaseSoftwareCallback(
 // static
 void PepperGraphics2DHost::ReleaseTextureCallback(
     base::WeakPtr<PepperGraphics2DHost> host,
-    scoped_refptr<viz::ContextProvider> context,
+    scoped_refptr<viz::GLContextProvider> context,
     uint32_t id,
     const gpu::SyncToken& sync_token,
     bool lost) {
@@ -643,7 +643,7 @@ bool PepperGraphics2DHost::PrepareTransferableResource(
       is_gpu_compositing_disabled_ = rti->IsGpuCompositingDisabled();
       if (!is_gpu_compositing_disabled_) {
         // Using gpu compositing.
-        main_thread_context_ = rti->SharedMainThreadContextProvider();
+        main_thread_context_ = base::MakeRefCounted<viz::GLContextProvider>(rti->SharedMainThreadContextProvider());
       } else {
         // Just switched to software compositing. Force us to send the
         // frame to the compositor again even if not changed.

@@ -30,7 +30,7 @@ namespace cc {
 class TestWebGraphicsContext3D;
 class TestGLES2Interface;
 
-class TestContextProvider : public viz::ContextProvider {
+class TestContextProvider : public viz::MultiContextProvider {
  public:
   typedef base::Callback<std::unique_ptr<TestWebGraphicsContext3D>(void)>
       CreateCallback;
@@ -54,7 +54,7 @@ class TestContextProvider : public viz::ContextProvider {
   const gpu::Capabilities& ContextCapabilities() const override;
   const gpu::GpuFeatureInfo& GetGpuFeatureInfo() const override;
   gpu::gles2::GLES2Interface* ContextGL() override;
-  gpu::raster::RasterInterface* RasterContext() override;
+  gpu::raster::RasterInterface* RasterInterface() override;
   gpu::ContextSupport* ContextSupport() override;
   class GrContext* GrContext() override;
   viz::ContextCacheController* CacheController() override;

@@ -45,8 +45,8 @@ namespace {
 class SynchronousLayerTreeFrameSink : public viz::TestLayerTreeFrameSink {
  public:
   SynchronousLayerTreeFrameSink(
-      scoped_refptr<viz::ContextProvider> compositor_context_provider,
-      scoped_refptr<viz::ContextProvider> worker_context_provider,
+      scoped_refptr<viz::GLContextProvider> compositor_context_provider,
+      scoped_refptr<viz::RasterContextProvider> worker_context_provider,
       viz::SharedBitmapManager* shared_bitmap_manager,
       gpu::GpuMemoryBufferManager* gpu_memory_buffer_manager,
       const viz::RendererSettings& renderer_settings,
@@ -560,7 +560,7 @@ class LayerTreeTestLayerTreeFrameSinkClient
 
   // viz::TestLayerTreeFrameSinkClient implementation.
   std::unique_ptr<viz::OutputSurface> CreateDisplayOutputSurface(
-      scoped_refptr<viz::ContextProvider> compositor_context_provider)
+      scoped_refptr<viz::GLContextProvider> compositor_context_provider)
       override {
     return hooks_->CreateDisplayOutputSurfaceOnThread(
         std::move(compositor_context_provider));
@@ -966,8 +966,8 @@ std::unique_ptr<viz::TestLayerTreeFrameSink>
 LayerTreeTest::CreateLayerTreeFrameSink(
     const viz::RendererSettings& renderer_settings,
     double refresh_rate,
-    scoped_refptr<viz::ContextProvider> compositor_context_provider,
-    scoped_refptr<viz::ContextProvider> worker_context_provider) {
+    scoped_refptr<viz::GLContextProvider> compositor_context_provider,
+    scoped_refptr<viz::RasterContextProvider> worker_context_provider) {
   constexpr bool disable_display_vsync = false;
   bool synchronous_composite =
       !HasImplThread() &&
@@ -992,7 +992,7 @@ LayerTreeTest::CreateLayerTreeFrameSink(
 
 std::unique_ptr<viz::OutputSurface>
 LayerTreeTest::CreateDisplayOutputSurfaceOnThread(
-    scoped_refptr<viz::ContextProvider> compositor_context_provider) {
+    scoped_refptr<viz::GLContextProvider> compositor_context_provider) {
   // By default the Display shares a context with the LayerTreeHostImpl.
   return FakeOutputSurface::Create3d(std::move(compositor_context_provider));
 }

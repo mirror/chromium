@@ -34,7 +34,7 @@ class ContextProviderCommandBuffer;
 }
 
 namespace viz {
-class ContextProvider;
+class GLContextProvider;
 }
 
 namespace content {
@@ -102,7 +102,7 @@ class CONTENT_EXPORT GpuVideoAcceleratorFactoriesImpl
   std::vector<media::VideoEncodeAccelerator::SupportedProfile>
   GetVideoEncodeAcceleratorSupportedProfiles() override;
 
-  viz::ContextProvider* GetMediaContextProvider() override;
+  viz::GLContextProvider* GetMediaContextProvider() override;
 
   void ReleaseContextProvider();
   scoped_refptr<ui::ContextProviderCommandBuffer> ContextProviderMainThread();

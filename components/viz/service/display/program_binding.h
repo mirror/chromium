@@ -169,7 +169,7 @@ class VIZ_SERVICE_EXPORT Program : public ProgramBindingBase {
  public:
   Program() {}
 
-  void Initialize(ContextProvider* context_provider, const ProgramKey& key) {
+  void Initialize(GLContextProvider* context_provider, const ProgramKey& key) {
     // Set parameters that are common to all sub-classes.
     vertex_shader_.aa_mode_ = key.aa_mode_;
     fragment_shader_.aa_mode_ = key.aa_mode_;
@@ -418,7 +418,7 @@ class VIZ_SERVICE_EXPORT Program : public ProgramBindingBase {
     fragment_shader_.uv_texture_mode_ = key.uv_texture_mode_;
   }
 
-  void InitializeInternal(ContextProvider* context_provider) {
+  void InitializeInternal(GLContextProvider* context_provider) {
     DCHECK(context_provider);
     DCHECK(!initialized_);
 

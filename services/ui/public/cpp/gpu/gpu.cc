@@ -185,7 +185,7 @@ std::unique_ptr<Gpu> Gpu::Create(
   return base::WrapUnique(new Gpu(std::move(factory), std::move(task_runner)));
 }
 
-scoped_refptr<viz::ContextProvider> Gpu::CreateContextProvider(
+scoped_refptr<viz::GLContextProvider> Gpu::CreateContextProvider(
     scoped_refptr<gpu::GpuChannelHost> gpu_channel) {
   int32_t stream_id = 0;
   gpu::SchedulingPriority stream_priority = gpu::SchedulingPriority::kNormal;
@@ -202,11 +202,12 @@ scoped_refptr<viz::ContextProvider> Gpu::CreateContextProvider(
   attributes.bind_generates_resource = false;
   attributes.lose_context_when_out_of_memory = true;
   ContextProviderCommandBuffer* shared_context_provider = nullptr;
-  return base::MakeRefCounted<ContextProviderCommandBuffer>(
+  return base::MakeRefCounted<viz::GLContextProvider>(
+      base::MakeRefCounted<ContextProviderCommandBuffer>(
       std::move(gpu_channel), stream_id, stream_priority,
       gpu::kNullSurfaceHandle, GURL("chrome://gpu/MusContextFactory"),
       automatic_flushes, support_locking, gpu::SharedMemoryLimits(), attributes,
-      shared_context_provider, command_buffer_metrics::MUS_CLIENT_CONTEXT);
+      shared_context_provider, command_buffer_metrics::MUS_CLIENT_CONTEXT));
 }
 
 void Gpu::CreateJpegDecodeAccelerator(
