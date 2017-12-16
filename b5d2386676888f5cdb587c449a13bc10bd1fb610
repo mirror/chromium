@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "47872ce2_4bd9c7db",
+        "filename": "components/offline_pages/core/model/get_pages_task.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-16T00:35:14Z",
+      "side": 1,
+      "message": "\u003e It took me a while to realize that this is the code that selects items that are already marked to be upgraded. I was initially incorrectly assuming this was what selected items that would then be marked to be upgraded. Its name and comment could be updated to make this clearer.\n\u003e \n\nDone. Updated name and documentation.\n\n\u003e As such, I don\u0027t think this method should do much more than select items that have remaining upgrade attempts \u003e 0. There should be no namespace filtering and possibly not even the directory filtering (it would be moved to the caller code). It should though already order them properly (as described in the design doc). At this point a better name would be CreateTaskSelectingItemsMarkedForUpgrading. This could even be reused in potential future upgrades.\n\u003e \n\nDone. Good catch on namespaces not being necessary and proper ordering.\nI was having second thoughts about removing the path check here, as the caller is not suitable for doing that (on UI thread), but we can postpone that step to the actual upgrade task, which would properly set upgrade_attempts to 0 for items in proper folder already. Good catch.\n\n\u003e All remaining filtering should be taken care by the logic that have previously set their upgrade attempts.",
+      "parentUuid": "421e7db0_0d134eca",
+      "range": {
+        "startLine": 101,
+        "startChar": 39,
+        "endLine": 101,
+        "endChar": 73
+      },
+      "revId": "b5d2386676888f5cdb587c449a13bc10bd1fb610",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c536c606_c94939e0",
         "filename": "components/offline_pages/core/model/get_pages_task_unittest.cc",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "b5d2386676888f5cdb587c449a13bc10bd1fb610",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a62b3832_f2ce3d72",
+        "filename": "components/offline_pages/core/model/get_pages_task_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-16T00:35:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c536c606_c94939e0",
+      "range": {
+        "startLine": 314,
+        "startChar": 18,
+        "endLine": 314,
+        "endChar": 22
+      },
+      "revId": "b5d2386676888f5cdb587c449a13bc10bd1fb610",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "2ca3c7d2_f530e0c7",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-16T00:35:14Z",
+      "side": 1,
+      "message": "Yes, but this is best to happen within \u003c20 seconds from the other delayed task to not spin down and spin up the DB...",
+      "parentUuid": "cf0a5c3b_2a0d2ed5",
+      "range": {
+        "startLine": 44,
+        "startChar": 33,
+        "endLine": 44,
+        "endChar": 35
+      },
+      "revId": "b5d2386676888f5cdb587c449a13bc10bd1fb610",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9e8d9dc6_f40a016a",
         "filename": "components/offline_pages/core/model/offline_page_model_taskified.cc",
         "patchSetId": 1
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "f7dc4523_2641de27",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 489,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-16T00:35:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9e8d9dc6_f40a016a",
+      "range": {
+        "startLine": 479,
+        "startChar": 0,
+        "endLine": 489,
+        "endChar": 26
+      },
+      "revId": "b5d2386676888f5cdb587c449a13bc10bd1fb610",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cd9c7df6_9714a1a5",
         "filename": "components/offline_pages/core/model/offline_page_model_taskified.cc",
         "patchSetId": 1
@@ -114,6 +210,30 @@
       "revId": "b5d2386676888f5cdb587c449a13bc10bd1fb610",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8479b63a_64ad3c95",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 505,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-16T00:35:14Z",
+      "side": 1,
+      "message": "We definitely will, once that something is implemented.",
+      "parentUuid": "cd9c7df6_9714a1a5",
+      "range": {
+        "startLine": 505,
+        "startChar": 60,
+        "endLine": 505,
+        "endChar": 62
+      },
+      "revId": "b5d2386676888f5cdb587c449a13bc10bd1fb610",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
