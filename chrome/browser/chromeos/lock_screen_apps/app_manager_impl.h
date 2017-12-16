@@ -75,6 +75,10 @@ class AppManagerImpl : public AppManager,
     // The manager is started, and there is no available lock screen enabled
     // app.
     kAppUnavailable,
+    // The manager has been started, but it encountered an error - for example,
+    // the app in the lock screen app profile got unloaded. This state will be
+    // reset when the app manager is stopped.
+    kError,
   };
 
   // Called when lock screen apps profile is ready to be used. Calling this will
@@ -112,6 +116,12 @@ class AppManagerImpl : public AppManager,
   // Uninstalls lock screen note taking app from the lock screen profile.
   void RemoveAppFromLockScreenProfile(const std::string& app_id);
 
+  // Returns note taking app that should be sent lock screen app launch event.
+  // If the app is disabled due to app getting terminated, this will attempt to
+  // reload the app (if allowed).
+  // Returns null if the extension is not enabled, or cannot be enabled.
+  const extensions::Extension* GetAppForLockScreenAppLaunch();
+
   Profile* primary_profile_ = nullptr;
   Profile* lock_screen_profile_ = nullptr;
   LockScreenProfileCreator* lock_screen_profile_creator_ = nullptr;
@@ -124,6 +134,9 @@ class AppManagerImpl : public AppManager,
   ScopedObserver<extensions::ExtensionRegistry,
                  extensions::ExtensionRegistryObserver>
       extensions_observer_;
+  ScopedObserver<extensions::ExtensionRegistry,
+                 extensions::ExtensionRegistryObserver>
+      lock_screen_profile_extensions_observer_;
 
   ScopedObserver<chromeos::NoteTakingHelper,
                  chromeos::NoteTakingHelper::Observer>
@@ -134,6 +147,12 @@ class AppManagerImpl : public AppManager,
   // Counts app installs. Passed to app install callback as install request
   // identifier to determine whether the completed install is stale.
   int install_count_ = 0;
+
+  // Number of times the lock screen app will be allowed to be relaoded  in the
+  // lock screen apps profile after extension termination (e.g. due to extension
+  // crash).
+  // This counter is reset when the AppManager is restarted.
+  int available_lock_screen_app_reloads_ = 0;
 
   base::WeakPtrFactory<AppManagerImpl> weak_ptr_factory_;
 
