@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2920ba29_8e954055",
+        "filename": "components/arc/timer/arc_timer.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-12-16T00:05:13Z",
+      "side": 1,
+      "message": "elide {}",
+      "revId": "2845cdd05bba3c48d3d50f3527a51b03b1517905",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54547603_9180a71f",
+        "filename": "components/arc/timer/arc_timer_bridge.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-12-16T00:05:13Z",
+      "side": 1,
+      "message": "private:",
+      "revId": "2845cdd05bba3c48d3d50f3527a51b03b1517905",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c55fb4d9_25b64743",
+        "filename": "components/arc/timer/arc_timer_bridge.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-12-16T00:05:13Z",
+      "side": 1,
+      "message": "remove",
+      "revId": "2845cdd05bba3c48d3d50f3527a51b03b1517905",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3897b2b_1a6a8863",
+        "filename": "components/arc/timer/arc_timer_unittest.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-12-16T00:05:13Z",
+      "side": 1,
+      "message": "delete",
+      "revId": "2845cdd05bba3c48d3d50f3527a51b03b1517905",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "163b6567_c176c132",
+        "filename": "components/arc/timer/arc_timer_unittest.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-12-16T00:05:13Z",
+      "side": 1,
+      "message": "Please move this to L83.",
+      "revId": "2845cdd05bba3c48d3d50f3527a51b03b1517905",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
