@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "a761169e_77b6f32f",
+        "filename": "extensions/renderer/dispatcher.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 492,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-16T02:36:17Z",
+      "side": 1,
+      "message": "What if this releases the script context for a context other than the main world?  In practice, I think all script contexts will be released in sequence when the frame is removed, so we likely don\u0027t care, but it\u0027s a bit of an interesting case.",
+      "revId": "ccf7a489f9b28b4de6f792334920fd016a5a8e94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "56fc587b_641660b2",
         "filename": "extensions/renderer/dispatcher.cc",
         "patchSetId": 1
@@ -36,6 +53,41 @@
       "writtenOn": "2017-12-15T19:08:00Z",
       "side": 1,
       "message": "I\u0027m not sure about the subtleties involved with this, Devlin do you know?",
+      "revId": "ccf7a489f9b28b4de6f792334920fd016a5a8e94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2727c94f_80c18298",
+        "filename": "extensions/renderer/dispatcher.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 503,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-16T02:36:17Z",
+      "side": 1,
+      "message": "I think this just ensures that the document has a main world script context (which wouldn\u0027t be true if e.g. there weren\u0027t any scripts running).  If the main world exists, this should largely be a no-op.\n\nI am a bit puzzled by the choice of putting it in DidClearWindowObject(), though - is this the right spot?\n\n+jbroman, who might also have thoughts on this.",
+      "parentUuid": "255be8ca_f50d9b1c",
+      "revId": "ccf7a489f9b28b4de6f792334920fd016a5a8e94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0443d4c_e9c4eeb5",
+        "filename": "extensions/renderer/dispatcher.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1423,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-16T02:36:17Z",
+      "side": 1,
+      "message": "Are we worried about the case of OOPIFs here?",
       "revId": "ccf7a489f9b28b4de6f792334920fd016a5a8e94",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
