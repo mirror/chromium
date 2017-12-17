@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fb021448_7e836913",
+        "filename": "ios/chrome/browser/ui/tabs/tab_strip_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 631,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-12-17T20:37:37Z",
+      "side": 1,
+      "message": "alternatively, you could call a method here and above around line 625.",
+      "revId": "1c56491a4f03b61ba26b2bfc97faee8337b06bc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
