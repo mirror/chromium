@@ -83,7 +83,7 @@ void AutofillCounter::Count() {
   // and increment the counter only if all entries with the given value are
   // contained in the interval [start, base::Time::Max()).
   suggestions_query_ = web_data_service_->GetCountOfValuesContainedBetween(
-      start, base::Time::Max(), this);
+      start, GetPeriodEnd(), this);
 
   // Count the credit cards.
   credit_cards_query_ = web_data_service_->GetCreditCards(this);
