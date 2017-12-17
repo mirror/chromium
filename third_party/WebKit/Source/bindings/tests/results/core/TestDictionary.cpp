@@ -53,6 +53,15 @@ void TestDictionary::setDictionaryMember(Dictionary value) {
   dictionary_member_ = value;
 }
 
+void TestDictionary::setDoubleOrNullOrDoubleOrNullSequenceMember(const DoubleOrDoubleOrNullSequence& value) {
+  double_or_null_or_double_or_null_sequence_member_ = value;
+}
+
+void TestDictionary::setDoubleOrNullSequenceMember(const Vector<Optional<double>>& value) {
+  double_or_null_sequence_member_ = value;
+  has_double_or_null_sequence_member_ = true;
+}
+
 void TestDictionary::setDoubleOrStringMember(const DoubleOrString& value) {
   double_or_string_member_ = value;
 }
@@ -144,6 +153,7 @@ void TestDictionary::setUnionWithTypedefs(const FloatOrBoolean& value) {
 }
 
 void TestDictionary::Trace(blink::Visitor* visitor) {
+  visitor->Trace(double_or_null_or_double_or_null_sequence_member_);
   visitor->Trace(double_or_string_member_);
   visitor->Trace(double_or_string_sequence_member_);
   visitor->Trace(element_or_null_member_);
