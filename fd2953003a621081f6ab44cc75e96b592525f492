@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c5fbcbc1_bbb1278b",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/templates/CSSProperty.cpp.tmpl",
+        "patchSetId": 29
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2017-12-17T14:53:53Z",
+      "side": 1,
+      "message": "I think it would be weird to call CSSUnresolvedProperty::Get to get a resolved CSSProperty. I want to constrain the use of CSSUnresolvedProperty to just alias-related stuff if possible.",
+      "parentUuid": "a73951f0_bf323178",
+      "revId": "fd2953003a621081f6ab44cc75e96b592525f492",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9418b863_ffc53daf",
         "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/templates/CSSUnresolvedProperty.cpp.tmpl",
         "patchSetId": 29
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-14T03:47:14Z",
       "side": 1,
       "message": "why switch statement here? aliases are all next to each other in terms of corresponding CSSPropertyID, seems like an array implementation similar to GetNonAliasProperty would be faster",
+      "revId": "fd2953003a621081f6ab44cc75e96b592525f492",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d82b2a7_a72b6a5c",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/templates/CSSUnresolvedProperty.cpp.tmpl",
+        "patchSetId": 29
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2017-12-17T14:53:53Z",
+      "side": 1,
+      "message": "I don\u0027t think they are? They seem to have holes in the sequence.",
+      "parentUuid": "9418b863_ffc53daf",
       "revId": "fd2953003a621081f6ab44cc75e96b592525f492",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "abf3e094_9ba8841c",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/templates/CSSUnresolvedProperty.cpp.tmpl",
+        "patchSetId": 29
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2017-12-17T14:53:53Z",
+      "side": 1,
+      "message": "I guess I can, but I don\u0027t really see the benefit. I think it\u0027s nice to keep the two classes as separate as possible.",
+      "parentUuid": "182250db_c26fed9f",
+      "revId": "fd2953003a621081f6ab44cc75e96b592525f492",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dee6b14a_ec5b7d23",
         "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/templates/CSSUnresolvedProperty.h.tmpl",
         "patchSetId": 29
@@ -64,6 +118,24 @@
       "writtenOn": "2017-12-14T03:47:14Z",
       "side": 1,
       "message": "are these CSSPropertyID accessor methods required for aliases?",
+      "revId": "fd2953003a621081f6ab44cc75e96b592525f492",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "805362ea_e13c3d73",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/templates/CSSUnresolvedProperty.h.tmpl",
+        "patchSetId": 29
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2017-12-17T14:53:53Z",
+      "side": 1,
+      "message": "I don\u0027t think so. I\u0027ll move them in a later CL to avoid rebase pain, if that\u0027s OK.",
+      "parentUuid": "dee6b14a_ec5b7d23",
       "revId": "fd2953003a621081f6ab44cc75e96b592525f492",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "b599fae2_79f8453a",
+        "filename": "third_party/WebKit/Source/core/css/CSSProperties.json5",
+        "patchSetId": 29
+      },
+      "lineNbr": 2935,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2017-12-17T14:53:53Z",
+      "side": 1,
+      "message": "This was needed because it has an alias",
+      "parentUuid": "6f898f20_a39c8147",
+      "revId": "fd2953003a621081f6ab44cc75e96b592525f492",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "de1d79ff_05ca3b62",
         "filename": "third_party/WebKit/Source/core/css/CSSProperties.json5",
         "patchSetId": 29
@@ -98,6 +188,24 @@
       "writtenOn": "2017-12-14T03:47:14Z",
       "side": 1,
       "message": "nit: this change seems to belong in the next patch set",
+      "revId": "fd2953003a621081f6ab44cc75e96b592525f492",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d9adca9_5960c793",
+        "filename": "third_party/WebKit/Source/core/css/CSSProperties.json5",
+        "patchSetId": 29
+      },
+      "lineNbr": 3214,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2017-12-17T14:53:53Z",
+      "side": 1,
+      "message": "This was needed because it has an alias",
+      "parentUuid": "de1d79ff_05ca3b62",
       "revId": "fd2953003a621081f6ab44cc75e96b592525f492",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "46979b0c_1a45cbb8",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyBaseCustom.cpp",
+        "patchSetId": 29
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2017-12-17T14:53:53Z",
+      "side": 1,
+      "message": "Good idea. I will do this in the next CL (the one that adds a CSSProperty for every property).",
+      "parentUuid": "fb02b789_fcbb77a9",
+      "revId": "fd2953003a621081f6ab44cc75e96b592525f492",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "922631f5_042cb2a7",
         "filename": "third_party/WebKit/Source/core/testing/Internals.cpp",
         "patchSetId": 29
@@ -135,6 +261,24 @@
       "revId": "fd2953003a621081f6ab44cc75e96b592525f492",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9c1a0ea_dc792d0f",
+        "filename": "third_party/WebKit/Source/core/testing/Internals.cpp",
+        "patchSetId": 29
+      },
+      "lineNbr": 3465,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2017-12-17T14:53:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "922631f5_042cb2a7",
+      "revId": "fd2953003a621081f6ab44cc75e96b592525f492",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
