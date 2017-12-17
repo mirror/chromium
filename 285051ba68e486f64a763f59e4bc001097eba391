@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "3463b8f7_96403620",
+        "filename": "chrome/installer/zucchini/encoded_view.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-12-17T18:23:11Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "99ea7be1_6a64c93b",
+      "range": {
+        "startLine": 44,
+        "startChar": 5,
+        "endLine": 44,
+        "endChar": 67
+      },
+      "revId": "285051ba68e486f64a763f59e4bc001097eba391",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3932861f_4aeb8568",
         "filename": "chrome/installer/zucchini/encoded_view.cc",
         "patchSetId": 21
@@ -319,6 +343,24 @@
     },
     {
       "key": {
+        "uuid": "13bdb799_b099337b",
+        "filename": "chrome/installer/zucchini/encoded_view.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-12-17T18:23:11Z",
+      "side": 1,
+      "message": "Ack. There should be comment in the interface then.",
+      "parentUuid": "42d127d8_abb59280",
+      "revId": "285051ba68e486f64a763f59e4bc001097eba391",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b7afeb00_dae8aa62",
         "filename": "chrome/installer/zucchini/encoded_view.h",
         "patchSetId": 21
@@ -460,6 +502,30 @@
     },
     {
       "key": {
+        "uuid": "d0e08fd0_a88e83ab",
+        "filename": "chrome/installer/zucchini/equivalence_map.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-12-17T18:23:11Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "35945d1e_1e8d7ee9",
+      "range": {
+        "startLine": 44,
+        "startChar": 1,
+        "endLine": 44,
+        "endChar": 22
+      },
+      "revId": "285051ba68e486f64a763f59e4bc001097eba391",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "edf8f1ca_ab4867e3",
         "filename": "chrome/installer/zucchini/equivalence_map.h",
         "patchSetId": 21
@@ -527,6 +593,30 @@
       "revId": "285051ba68e486f64a763f59e4bc001097eba391",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e201f62b_badfc5c1",
+        "filename": "chrome/installer/zucchini/equivalence_map.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-12-17T18:23:11Z",
+      "side": 1,
+      "message": "Renewing this as new comment.",
+      "parentUuid": "69d3afa1_afac6201",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 54
+      },
+      "revId": "285051ba68e486f64a763f59e4bc001097eba391",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -809,6 +899,30 @@
       "revId": "285051ba68e486f64a763f59e4bc001097eba391",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "901b19aa_d86ef1d3",
+        "filename": "chrome/installer/zucchini/equivalence_map_unittest.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-12-17T18:23:11Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "0f2b0631_17d221be",
+      "range": {
+        "startLine": 116,
+        "startChar": 49,
+        "endLine": 116,
+        "endChar": 50
+      },
+      "revId": "285051ba68e486f64a763f59e4bc001097eba391",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -1129,6 +1243,30 @@
     },
     {
       "key": {
+        "uuid": "3e449d92_8164192d",
+        "filename": "chrome/installer/zucchini/reference_set.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-12-17T18:23:11Z",
+      "side": 1,
+      "message": "Ah right.  Add comment at end:\n // Iterators.\n?",
+      "parentUuid": "cea1ed6a_69e07b51",
+      "range": {
+        "startLine": 49,
+        "startChar": 2,
+        "endLine": 49,
+        "endChar": 8
+      },
+      "revId": "285051ba68e486f64a763f59e4bc001097eba391",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "04d6ae1b_c8153c94",
         "filename": "chrome/installer/zucchini/reference_set.h",
         "patchSetId": 21
@@ -1173,6 +1311,30 @@
       "revId": "285051ba68e486f64a763f59e4bc001097eba391",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "760d2c86_f2bbf52b",
+        "filename": "chrome/installer/zucchini/reference_set.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-12-17T18:23:11Z",
+      "side": 1,
+      "message": "I\u0027d replace \"a single\" with \"one\" then?",
+      "parentUuid": "93dfcdeb_b1732366",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 79
+      },
+      "revId": "285051ba68e486f64a763f59e4bc001097eba391",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
@@ -1384,6 +1546,30 @@
       "revId": "285051ba68e486f64a763f59e4bc001097eba391",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1664c29e_9eb20a4c",
+        "filename": "chrome/installer/zucchini/reference_set.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-12-17T18:23:11Z",
+      "side": 1,
+      "message": "Ah my bad.  Resolved!",
+      "parentUuid": "0a649ed0_548f05a6",
+      "range": {
+        "startLine": 52,
+        "startChar": 9,
+        "endLine": 52,
+        "endChar": 13
+      },
+      "revId": "285051ba68e486f64a763f59e4bc001097eba391",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -1680,6 +1866,30 @@
       "side": 1,
       "message": "It seems similar to ReferenceSet\u0027s case, though I admit it becomes more ambiguous here, because a list of reference types is also stored. However, I\u0027m using this class primarily as a container for targets, as functions begin()/end() suggest, so size() is consistent with this interface.\n\nPerhaps I should update class comment accordingly? Something like\n// Ordered container of distinct targets that have the same semantics, along with\n// a list of associated reference types.",
       "parentUuid": "337dab0a_0a7b3161",
+      "range": {
+        "startLine": 50,
+        "startChar": 9,
+        "endLine": 50,
+        "endChar": 13
+      },
+      "revId": "285051ba68e486f64a763f59e4bc001097eba391",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f1d899a_17e8c236",
+        "filename": "chrome/installer/zucchini/target_pool.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-12-17T18:23:11Z",
+      "side": 1,
+      "message": "Hmm, weird that I got confused. You can update the comment if you\u0027d like. Thanks!",
+      "parentUuid": "47393729_9c134692",
       "range": {
         "startLine": 50,
         "startChar": 9,

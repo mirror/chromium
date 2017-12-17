@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e7a779c1_d29609ac",
+        "filename": "chrome/installer/zucchini/encoded_view.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-12-17T18:23:11Z",
+      "side": 1,
+      "message": "|ref_set| ?",
+      "range": {
+        "startLine": 36,
+        "startChar": 37,
+        "endLine": 36,
+        "endChar": 60
+      },
+      "revId": "a0800d3b66f6492df1e6498b11520f2bc5d903ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb877356_9fd6edf2",
+        "filename": "chrome/installer/zucchini/encoded_view.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-12-17T18:23:11Z",
+      "side": 1,
+      "message": ", replacing previous association.",
+      "range": {
+        "startLine": 136,
+        "startChar": 54,
+        "endLine": 136,
+        "endChar": 55
+      },
+      "revId": "a0800d3b66f6492df1e6498b11520f2bc5d903ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1c9e9dd_2b5a8180",
+        "filename": "chrome/installer/zucchini/equivalence_map.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-12-17T18:23:11Z",
+      "side": 1,
+      "message": "(Copied from old unaddressed comment)\n\nPerhaps |*_image| should be renamed |*_image_index| -- unless ImageIndex should henceforth be the main \"image\" data, in which the case the old ConstBufferView images should be |*_raw_image|?",
+      "range": {
+        "startLine": 30,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 32
+      },
+      "revId": "a0800d3b66f6492df1e6498b11520f2bc5d903ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
