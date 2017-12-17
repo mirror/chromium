@@ -7,7 +7,9 @@
 
 #include <memory>
 #include <string>
+#include <vector>
 
+#include "base/values.h"
 #include "chrome/browser/extensions/chrome_extension_function_details.h"
 #include "chrome/common/extensions/api/cryptotoken_private.h"
 #include "extensions/browser/extension_function.h"
@@ -36,6 +38,27 @@ class CryptotokenPrivateCanOriginAssertAppIdFunction
 
   private:
     ChromeExtensionFunctionDetails chrome_details_;
+};
+
+class CryptotokenPrivateIsAppIdHashInEnterpriseContextFunction
+    : public UIThreadExtensionFunction {
+ public:
+  CryptotokenPrivateIsAppIdHashInEnterpriseContextFunction();
+  DECLARE_EXTENSION_FUNCTION(
+      "cryptotokenPrivate.isAppIdHashInEnterpriseContext",
+      CRYPTOTOKENPRIVATE_ISAPPIDHASHINENTERPRISECONTEXT)
+
+ protected:
+  ~CryptotokenPrivateIsAppIdHashInEnterpriseContextFunction() override {}
+  ResponseAction Run() override;
+
+ private:
+  ChromeExtensionFunctionDetails chrome_details_;
+
+  // ContainsAppIdByHash returns true iff the SHA-256 hash of one of the
+  // elements of |list| equals |hash|.
+  static bool ContainsAppIdByHash(const base::ListValue& list,
+                                  const std::vector<char>& hash);
 };
 
 }  // namespace api
