@@ -537,9 +537,7 @@ void NGInlineNode::CollectInlines(NGInlineNodeData* data) {
   NGInlineItemsBuilder builder(&data->items_);
   CollectInlinesInternal(block, &builder);
   data->text_content_ = builder.ToString();
-  data->is_bidi_enabled_ =
-      !data->text_content_.IsEmpty() &&
-      !(data->text_content_.Is8Bit() && !builder.HasBidiControls());
+  data->is_bidi_enabled_ = builder.HasBidiControls();
   data->is_empty_inline_ = builder.IsEmptyInline();
 }
 
