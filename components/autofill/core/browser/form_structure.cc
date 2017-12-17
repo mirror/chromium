@@ -1270,7 +1270,11 @@ void FormStructure::EncodeFormForUpload(AutofillUploadContents* upload) const {
         added_field->set_form_classifier_outcome(
             field->form_classifier_outcome());
       }
-
+      if (field_type == autofill::USERNAME) {
+        LOG(ERROR) << "username vote for " << field->name
+                   << " type=" << field->username_vote_type();
+        DCHECK(field->username_vote_type());
+      }
       if (field->username_vote_type())
         added_field->set_username_vote_type(field->username_vote_type());
 
