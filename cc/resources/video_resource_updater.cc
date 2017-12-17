@@ -179,7 +179,7 @@ VideoFrameExternalResources& VideoFrameExternalResources::operator=(
     VideoFrameExternalResources&& other) = default;
 
 VideoResourceUpdater::VideoResourceUpdater(
-    viz::ContextProvider* context_provider,
+    viz::GLContextProvider* context_provider,
     LayerTreeResourceProvider* resource_provider,
     bool use_stream_video_draw_quad)
     : context_provider_(context_provider),
@@ -928,7 +928,7 @@ void VideoResourceUpdater::RecycleResource(
   if (resource_it == updater->all_resources_.end())
     return;
 
-  viz::ContextProvider* context_provider = updater->context_provider_;
+  viz::GLContextProvider* context_provider = updater->context_provider_;
   if (context_provider && sync_token.HasData()) {
     context_provider->ContextGL()->WaitSyncTokenCHROMIUM(
         sync_token.GetConstData());

@@ -36,7 +36,7 @@ struct SyncToken;
 };
 
 namespace viz {
-class ContextProvider;
+class GLContextProvider;
 }
 
 namespace media {
@@ -133,7 +133,7 @@ class MEDIA_EXPORT GpuVideoAcceleratorFactories {
   virtual VideoEncodeAccelerator::SupportedProfiles
   GetVideoEncodeAcceleratorSupportedProfiles() = 0;
 
-  virtual viz::ContextProvider* GetMediaContextProvider() = 0;
+  virtual viz::GLContextProvider* GetMediaContextProvider() = 0;
 
  protected:
   friend class base::RefCounted<GpuVideoAcceleratorFactories>;

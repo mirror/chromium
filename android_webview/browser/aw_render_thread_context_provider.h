@@ -30,7 +30,7 @@ class GLES2TraceImplementation;
 
 namespace android_webview {
 
-class AwRenderThreadContextProvider : public viz::ContextProvider {
+class AwRenderThreadContextProvider : public viz::GLContextProvider {
  public:
   static scoped_refptr<AwRenderThreadContextProvider> Create(
       scoped_refptr<gl::GLSurface> surface,
@@ -46,12 +46,10 @@ class AwRenderThreadContextProvider : public viz::ContextProvider {
       scoped_refptr<gpu::InProcessCommandBuffer::Service> service);
   ~AwRenderThreadContextProvider() override;
 
-  // viz::ContextProvider:
+  // viz::CommonContextProvider:
   gpu::ContextResult BindToCurrentThread() override;
   const gpu::Capabilities& ContextCapabilities() const override;
   const gpu::GpuFeatureInfo& GetGpuFeatureInfo() const override;
-  gpu::gles2::GLES2Interface* ContextGL() override;
-  gpu::raster::RasterInterface* RasterContext() override;
   gpu::ContextSupport* ContextSupport() override;
   class GrContext* GrContext() override;
   viz::ContextCacheController* CacheController() override;
@@ -59,6 +57,9 @@ class AwRenderThreadContextProvider : public viz::ContextProvider {
   base::Lock* GetLock() override;
   void AddObserver(viz::ContextLostObserver* obs) override;
   void RemoveObserver(viz::ContextLostObserver* obs) override;
+
+  // viz::GLContextProvider:
+  gpu::gles2::GLES2Interface* ContextGL() override;
 
   void OnLostContext();
 

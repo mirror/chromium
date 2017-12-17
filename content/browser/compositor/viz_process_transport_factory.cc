@@ -46,7 +46,7 @@ scoped_refptr<ui::ContextProviderCommandBuffer> CreateContextProviderImpl(
     bool support_locking,
     bool support_gles2_interface,
     bool support_raster_interface,
-    ui::ContextProviderCommandBuffer* shared_context_provider,
+    ui::ContextProviderCommandBufferBase* shared_context_provider,
     ui::command_buffer_metrics::ContextType type) {
   constexpr bool kAutomaticFlushes = false;
 
@@ -70,7 +70,36 @@ scoped_refptr<ui::ContextProviderCommandBuffer> CreateContextProviderImpl(
       shared_context_provider, type);
 }
 
-bool CheckContextLost(viz::ContextProvider* context_provider) {
+scoped_refptr<ui::RasterContextProviderCommandBuffer>
+CreateRasterContextProviderImpl(
+    scoped_refptr<gpu::GpuChannelHost> gpu_channel_host,
+    bool support_locking,
+    ui::ContextProviderCommandBufferBase* shared_context_provider,
+    ui::command_buffer_metrics::ContextType type) {
+  constexpr bool kAutomaticFlushes = false;
+
+  gpu::gles2::ContextCreationAttribHelper attributes;
+  attributes.alpha_size = -1;
+  attributes.depth_size = 0;
+  attributes.stencil_size = 0;
+  attributes.samples = 0;
+  attributes.sample_buffers = 0;
+  attributes.bind_generates_resource = false;
+  attributes.lose_context_when_out_of_memory = true;
+  attributes.buffer_preserved = false;
+  attributes.enable_gles2_interface = false;
+  attributes.enable_raster_interface = true;
+
+  GURL url(
+      "chrome://gpu/VizProcessTransportFactory::CreateRasterContextProvider");
+  return base::MakeRefCounted<ui::RasterContextProviderCommandBuffer>(
+      std::move(gpu_channel_host), kGpuStreamIdDefault, kGpuStreamPriorityUI,
+      gpu::kNullSurfaceHandle, std::move(url), kAutomaticFlushes,
+      support_locking, gpu::SharedMemoryLimits(), attributes,
+      shared_context_provider, type);
+}
+
+bool CheckContextLost(viz::GLContextProvider* context_provider) {
   if (!context_provider)
     return false;
 
@@ -171,7 +200,7 @@ void VizProcessTransportFactory::CreateLayerTreeFrameSink(
                  weak_ptr_factory_.GetWeakPtr(), compositor));
 }
 
-scoped_refptr<viz::ContextProvider>
+scoped_refptr<viz::GLContextProvider>
 VizProcessTransportFactory::SharedMainThreadContextProvider() {
   NOTIMPLEMENTED();
   return nullptr;
@@ -462,12 +491,13 @@ void VizProcessTransportFactory::OnEstablishedGpuChannel(
   params.enable_surface_synchronization =
       features::IsSurfaceSynchronizationEnabled();
 
-  scoped_refptr<ui::ContextProviderCommandBuffer> compositor_context;
-  scoped_refptr<ui::ContextProviderCommandBuffer> worker_context;
+  scoped_refptr<viz::GLContextProvider> compositor_context;
+  scoped_refptr<viz::RasterContextProvider> worker_context;
   if (gpu_compositing) {
     // Only pass the contexts to the compositor if it will use gpu compositing.
     compositor_context = compositor_context_provider_;
-    worker_context = shared_worker_context_provider_;
+    if (shared_worker_context_provider_)
+      worker_context = shared_worker_context_provider_;
   }
   compositor->SetLayerTreeFrameSink(
       std::make_unique<viz::ClientLayerTreeFrameSink>(
@@ -482,8 +512,6 @@ void VizProcessTransportFactory::OnEstablishedGpuChannel(
 bool VizProcessTransportFactory::CreateContextProviders(
     scoped_refptr<gpu::GpuChannelHost> gpu_channel_host) {
   constexpr bool kSharedWorkerContextSupportsLocking = true;
-  constexpr bool kSharedWorkerContextSupportsGLES2 = true;
-  constexpr bool kSharedWorkerContextSupportsRaster = true;
   constexpr bool kCompositorContextSupportsLocking = false;
   constexpr bool kCompositorContextSupportsGLES2 = true;
   constexpr bool kCompositorContextSupportsRaster = false;
@@ -495,10 +523,9 @@ bool VizProcessTransportFactory::CreateContextProviders(
   }
 
   if (!shared_worker_context_provider_) {
-    shared_worker_context_provider_ = CreateContextProviderImpl(
-        gpu_channel_host, kSharedWorkerContextSupportsLocking,
-        kSharedWorkerContextSupportsGLES2, kSharedWorkerContextSupportsRaster,
-        nullptr, ui::command_buffer_metrics::BROWSER_WORKER_CONTEXT);
+    shared_worker_context_provider_ = CreateRasterContextProviderImpl(
+        gpu_channel_host, kSharedWorkerContextSupportsLocking, nullptr,
+        ui::command_buffer_metrics::BROWSER_WORKER_CONTEXT);
 
     auto result = shared_worker_context_provider_->BindToCurrentThread();
     if (result != gpu::ContextResult::kSuccess) {

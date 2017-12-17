@@ -34,6 +34,7 @@ class GpuChannelEstablishFactory;
 
 namespace ui {
 class ContextProviderCommandBuffer;
+class RasterContextProviderCommandBuffer;
 }
 
 namespace viz {
@@ -64,7 +65,7 @@ class VizProcessTransportFactory : public ui::ContextFactory,
   // ui::ContextFactory implementation.
   void CreateLayerTreeFrameSink(
       base::WeakPtr<ui::Compositor> compositor) override;
-  scoped_refptr<viz::ContextProvider> SharedMainThreadContextProvider()
+  scoped_refptr<viz::GLContextProvider> SharedMainThreadContextProvider()
       override;
   void RemoveCompositor(ui::Compositor* compositor) override;
   double GetRefreshRate() const override;
@@ -160,7 +161,7 @@ class VizProcessTransportFactory : public ui::ContextFactory,
   base::ObserverList<ui::ContextFactoryObserver> observer_list_;
 
   std::unique_ptr<viz::ClientSharedBitmapManager> shared_bitmap_manager_;
-  scoped_refptr<ui::ContextProviderCommandBuffer>
+  scoped_refptr<ui::RasterContextProviderCommandBuffer>
       shared_worker_context_provider_;
   scoped_refptr<ui::ContextProviderCommandBuffer> compositor_context_provider_;
 

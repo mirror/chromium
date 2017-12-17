@@ -54,7 +54,7 @@ class VIZ_SERVICE_EXPORT OutputSurface {
   };
 
   // Constructor for GL-based compositing.
-  explicit OutputSurface(scoped_refptr<ContextProvider> context_provider);
+  explicit OutputSurface(scoped_refptr<GLContextProvider> context_provider);
   // Constructor for software compositing.
   explicit OutputSurface(std::unique_ptr<SoftwareOutputDevice> software_device);
   // Constructor for Vulkan-based compositing.
@@ -69,7 +69,9 @@ class VIZ_SERVICE_EXPORT OutputSurface {
   // surface. Either of these may return a null pointer, but not both.
   // In the event of a lost context, the entire output surface should be
   // recreated.
-  ContextProvider* context_provider() const { return context_provider_.get(); }
+  GLContextProvider* context_provider() const {
+    return context_provider_.get();
+  }
   VulkanContextProvider* vulkan_context_provider() const {
     return vulkan_context_provider_.get();
   }
@@ -180,7 +182,7 @@ class VIZ_SERVICE_EXPORT OutputSurface {
 
  protected:
   struct OutputSurface::Capabilities capabilities_;
-  scoped_refptr<ContextProvider> context_provider_;
+  scoped_refptr<GLContextProvider> context_provider_;
   scoped_refptr<VulkanContextProvider> vulkan_context_provider_;
   std::unique_ptr<SoftwareOutputDevice> software_device_;
 

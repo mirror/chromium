@@ -9403,11 +9403,11 @@ TEST_F(LayerTreeHostImplTest,
 class FrameSinkClient : public viz::TestLayerTreeFrameSinkClient {
  public:
   explicit FrameSinkClient(
-      scoped_refptr<viz::ContextProvider> display_context_provider)
+      scoped_refptr<viz::GLContextProvider> display_context_provider)
       : display_context_provider_(std::move(display_context_provider)) {}
 
   std::unique_ptr<viz::OutputSurface> CreateDisplayOutputSurface(
-      scoped_refptr<viz::ContextProvider> compositor_context_provider)
+      scoped_refptr<viz::GLContextProvider> compositor_context_provider)
       override {
     return FakeOutputSurface::Create3d(std::move(display_context_provider_));
   }
@@ -9422,7 +9422,7 @@ class FrameSinkClient : public viz::TestLayerTreeFrameSinkClient {
   void DisplayDidDrawAndSwap() override {}
 
  private:
-  scoped_refptr<viz::ContextProvider> display_context_provider_;
+  scoped_refptr<viz::GLContextProvider> display_context_provider_;
 };
 
 TEST_F(LayerTreeHostImplTest, ShutdownReleasesContext) {
@@ -9434,9 +9434,10 @@ TEST_F(LayerTreeHostImplTest, ShutdownReleasesContext) {
   constexpr bool disable_display_vsync = false;
   constexpr double refresh_rate = 60.0;
   auto layer_tree_frame_sink = std::make_unique<viz::TestLayerTreeFrameSink>(
-      context_provider, TestContextProvider::CreateWorker(), nullptr, nullptr,
-      viz::RendererSettings(), base::ThreadTaskRunnerHandle::Get().get(),
-      synchronous_composite, disable_display_vsync, refresh_rate);
+      context_provider, TestRasterContextProvider::CreateWorker(), nullptr,
+      nullptr, viz::RendererSettings(),
+      base::ThreadTaskRunnerHandle::Get().get(), synchronous_composite,
+      disable_display_vsync, refresh_rate);
   layer_tree_frame_sink->SetClient(&test_client);
 
   CreateHostImpl(DefaultSettings(), std::move(layer_tree_frame_sink));
@@ -9461,8 +9462,8 @@ TEST_F(LayerTreeHostImplTest, ShutdownReleasesContext) {
   host_impl_->DrawLayers(&frame);
   host_impl_->DidDrawAllLayers(frame);
 
-  // The CopyOutputResult has a ref on the viz::ContextProvider and a texture in
-  // a texture mailbox.
+  // The CopyOutputResult has a ref on the viz::GLContextProvider and a texture
+  // in a texture mailbox.
   ASSERT_TRUE(helper.unprocessed_result);
   EXPECT_FALSE(context_provider->HasOneRef());
   EXPECT_EQ(1u, context_provider->TestContext3d()->NumTextures());

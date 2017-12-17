@@ -38,6 +38,7 @@
 #include "components/viz/common/resources/platform_color.h"
 #include "components/viz/test/test_gpu_memory_buffer_manager.h"
 #include "gpu/GLES2/gl2extchromium.h"
+#include "gpu/command_buffer/client/raster_interface.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/gfx/geometry/axis_transform2d.h"
 
@@ -277,13 +278,22 @@ class RasterBufferProviderTest
     return completed_tasks_;
   }
 
-  void LoseContext(viz::ContextProvider* context_provider) {
+  void LoseContext(viz::GLContextProvider* context_provider) {
     if (!context_provider)
       return;
-    viz::ContextProvider::ScopedContextLock lock(context_provider);
+    viz::GLContextProvider::ScopedContextLockGL lock(context_provider);
     context_provider->ContextGL()->LoseContextCHROMIUM(
         GL_GUILTY_CONTEXT_RESET_ARB, GL_INNOCENT_CONTEXT_RESET_ARB);
     context_provider->ContextGL()->Flush();
+  }
+
+  void LoseContext(viz::RasterContextProvider* context_provider) {
+    if (!context_provider)
+      return;
+    viz::RasterContextProvider::ScopedContextLockRaster lock(context_provider);
+    context_provider->RasterInterface()->LoseContextCHROMIUM(
+        GL_GUILTY_CONTEXT_RESET_ARB, GL_INNOCENT_CONTEXT_RESET_ARB);
+    context_provider->RasterInterface()->Flush();
   }
 
   void OnRasterTaskCompleted(unsigned id, bool was_canceled) override {
@@ -297,7 +307,7 @@ class RasterBufferProviderTest
   void Create3dResourceProvider() {
     context_provider_ = TestContextProvider::Create();
     context_provider_->BindToCurrentThread();
-    worker_context_provider_ = TestContextProvider::CreateWorker();
+    worker_context_provider_ = TestRasterContextProvider::CreateWorker();
     TestWebGraphicsContext3D* context3d = context_provider_->TestContext3d();
     context3d->set_support_sync_query(true);
     resource_provider_ = FakeResourceProvider::CreateLayerTreeResourceProvider(
@@ -317,7 +327,7 @@ class RasterBufferProviderTest
 
  protected:
   scoped_refptr<TestContextProvider> context_provider_;
-  scoped_refptr<TestContextProvider> worker_context_provider_;
+  scoped_refptr<TestRasterContextProvider> worker_context_provider_;
   std::unique_ptr<LayerTreeResourceProvider> resource_provider_;
   std::unique_ptr<TileTaskManager> tile_task_manager_;
   std::unique_ptr<RasterBufferProvider> raster_buffer_provider_;
@@ -386,8 +396,9 @@ TEST_P(RasterBufferProviderTest, FalseThrottling) {
 }
 
 TEST_P(RasterBufferProviderTest, LostContext) {
-  LoseContext(context_provider_.get());
-  LoseContext(worker_context_provider_.get());
+  LoseContext(static_cast<viz::GLContextProvider*>(context_provider_.get()));
+  LoseContext(
+      static_cast<viz::RasterContextProvider*>(worker_context_provider_.get()));
 
   AppendTask(0u);
   AppendTask(1u);

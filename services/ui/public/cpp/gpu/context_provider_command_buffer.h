@@ -22,6 +22,7 @@
 #include "gpu/command_buffer/common/scheduling_priority.h"
 #include "gpu/ipc/common/surface_handle.h"
 #include "services/ui/public/cpp/gpu/command_buffer_metrics.h"
+#include "services/ui/public/cpp/gpu/context_provider_command_buffer_base.h"
 #include "ui/gl/gpu_preference.h"
 #include "url/gurl.h"
 
@@ -29,28 +30,14 @@ namespace gpu {
 class CommandBufferProxyImpl;
 class GpuChannelHost;
 struct GpuFeatureInfo;
-class TransferBuffer;
-namespace gles2 {
-class GLES2CmdHelper;
-class GLES2Implementation;
-class GLES2TraceImplementation;
-}
-namespace raster {
-class RasterImplementationGLES;
-}
-}
-
-namespace skia_bindings {
-class GrContextForGLES2Interface;
 }
 
 namespace ui {
 
-// Implementation of viz::ContextProvider that provides a GL implementation over
-// command buffer to the GPU process.
-class ContextProviderCommandBuffer
-    : public viz::ContextProvider,
-      public base::trace_event::MemoryDumpProvider {
+// Implementation of viz::GLContextProvider that provides a GL implementation
+// over command buffer to the GPU process.
+class ContextProviderCommandBuffer : public viz::GLContextProvider,
+                                     public ContextProviderCommandBufferBase {
  public:
   ContextProviderCommandBuffer(
       scoped_refptr<gpu::GpuChannelHost> channel,
@@ -62,18 +49,11 @@ class ContextProviderCommandBuffer
       bool support_locking,
       const gpu::SharedMemoryLimits& memory_limits,
       const gpu::gles2::ContextCreationAttribHelper& attributes,
-      ContextProviderCommandBuffer* shared_context_provider,
+      ContextProviderCommandBufferBase* shared_context_provider,
       command_buffer_metrics::ContextType type);
 
-  gpu::CommandBufferProxyImpl* GetCommandBufferProxy();
-  // Gives the GL internal format that should be used for calling CopyTexImage2D
-  // on the default framebuffer.
-  uint32_t GetCopyTextureInternalFormat();
-
-  // viz::ContextProvider implementation.
+  // viz::CommonContextProvider implementation.
   gpu::ContextResult BindToCurrentThread() override;
-  gpu::gles2::GLES2Interface* ContextGL() override;
-  gpu::raster::RasterInterface* RasterContext() override;
   gpu::ContextSupport* ContextSupport() override;
   class GrContext* GrContext() override;
   viz::ContextCacheController* CacheController() override;
@@ -84,73 +64,47 @@ class ContextProviderCommandBuffer
   void AddObserver(viz::ContextLostObserver* obs) override;
   void RemoveObserver(viz::ContextLostObserver* obs) override;
 
-  // base::trace_event::MemoryDumpProvider implementation.
-  bool OnMemoryDump(const base::trace_event::MemoryDumpArgs& args,
-                    base::trace_event::ProcessMemoryDump* pmd) override;
-
-  // Set the default task runner for command buffers to use for handling IPCs.
-  // If not specified, this will be the ThreadTaskRunner for the thread on
-  // which BindToThread is called.
-  void SetDefaultTaskRunner(
-      scoped_refptr<base::SingleThreadTaskRunner> default_task_runner);
+  // viz::GLContextProvider implementation.
+  gpu::gles2::GLES2Interface* ContextGL() override;
 
  protected:
   ~ContextProviderCommandBuffer() override;
+};
 
-  void OnLostContext();
+class RasterContextProviderCommandBuffer
+    : public viz::RasterContextProvider,
+      public ui::ContextProviderCommandBufferBase {
+ public:
+  RasterContextProviderCommandBuffer(
+      scoped_refptr<gpu::GpuChannelHost> channel,
+      int32_t stream_id,
+      gpu::SchedulingPriority stream_priority,
+      gpu::SurfaceHandle surface_handle,
+      const GURL& active_url,
+      bool automatic_flushes,
+      bool support_locking,
+      const gpu::SharedMemoryLimits& memory_limits,
+      const gpu::gles2::ContextCreationAttribHelper& attributes,
+      ContextProviderCommandBufferBase* shared_context_provider,
+      command_buffer_metrics::ContextType type);
 
- private:
-  struct SharedProviders : public base::RefCountedThreadSafe<SharedProviders> {
-    base::Lock lock;
-    std::vector<ContextProviderCommandBuffer*> list;
+  // viz::CommonContextProvider implementation.
+  gpu::ContextResult BindToCurrentThread() override;
+  gpu::ContextSupport* ContextSupport() override;
+  class GrContext* GrContext() override;
+  viz::ContextCacheController* CacheController() override;
+  void InvalidateGrContext(uint32_t state) override;
+  base::Lock* GetLock() override;
+  const gpu::Capabilities& ContextCapabilities() const override;
+  const gpu::GpuFeatureInfo& GetGpuFeatureInfo() const override;
+  void AddObserver(viz::ContextLostObserver* obs) override;
+  void RemoveObserver(viz::ContextLostObserver* obs) override;
 
-    SharedProviders();
+  // viz::RasterContextProvider implementation.
+  gpu::raster::RasterInterface* RasterInterface() override;
 
-   private:
-    friend class base::RefCountedThreadSafe<SharedProviders>;
-    ~SharedProviders();
-  };
-  void CheckValidThreadOrLockAcquired() const {
-#if DCHECK_IS_ON()
-    if (support_locking_) {
-      context_lock_.AssertAcquired();
-    } else {
-      DCHECK(context_thread_checker_.CalledOnValidThread());
-    }
-#endif
-  }
-
-  base::ThreadChecker main_thread_checker_;
-  base::ThreadChecker context_thread_checker_;
-
-  bool bind_tried_ = false;
-  gpu::ContextResult bind_result_;
-
-  const int32_t stream_id_;
-  const gpu::SchedulingPriority stream_priority_;
-  const gpu::SurfaceHandle surface_handle_;
-  const GURL active_url_;
-  const bool automatic_flushes_;
-  const bool support_locking_;
-  const gpu::SharedMemoryLimits memory_limits_;
-  const gpu::gles2::ContextCreationAttribHelper attributes_;
-  const command_buffer_metrics::ContextType context_type_;
-
-  scoped_refptr<SharedProviders> shared_providers_;
-  scoped_refptr<gpu::GpuChannelHost> channel_;
-  scoped_refptr<base::SingleThreadTaskRunner> default_task_runner_;
-
-  base::Lock context_lock_;  // Referenced by command_buffer_.
-  std::unique_ptr<gpu::CommandBufferProxyImpl> command_buffer_;
-  std::unique_ptr<gpu::gles2::GLES2CmdHelper> gles2_helper_;
-  std::unique_ptr<gpu::TransferBuffer> transfer_buffer_;
-  std::unique_ptr<gpu::gles2::GLES2Implementation> gles2_impl_;
-  std::unique_ptr<gpu::gles2::GLES2TraceImplementation> trace_impl_;
-  std::unique_ptr<gpu::raster::RasterImplementationGLES> raster_impl_;
-  std::unique_ptr<skia_bindings::GrContextForGLES2Interface> gr_context_;
-  std::unique_ptr<viz::ContextCacheController> cache_controller_;
-
-  base::ObserverList<viz::ContextLostObserver> observers_;
+ protected:
+  ~RasterContextProviderCommandBuffer() override;
 };
 
 }  // namespace ui

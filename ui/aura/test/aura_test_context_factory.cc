@@ -15,12 +15,12 @@ namespace {
 class FrameSinkClient : public viz::TestLayerTreeFrameSinkClient {
  public:
   explicit FrameSinkClient(
-      scoped_refptr<viz::ContextProvider> display_context_provider)
+      scoped_refptr<viz::GLContextProvider> display_context_provider)
       : display_context_provider_(std::move(display_context_provider)) {}
 
   // viz::TestLayerTreeFrameSinkClient:
   std::unique_ptr<viz::OutputSurface> CreateDisplayOutputSurface(
-      scoped_refptr<viz::ContextProvider> compositor_context_provider)
+      scoped_refptr<viz::GLContextProvider> compositor_context_provider)
       override {
     return cc::FakeOutputSurface::Create3d(
         std::move(display_context_provider_));
@@ -35,7 +35,7 @@ class FrameSinkClient : public viz::TestLayerTreeFrameSinkClient {
   void DisplayDidDrawAndSwap() override {}
 
  private:
-  scoped_refptr<viz::ContextProvider> display_context_provider_;
+  scoped_refptr<viz::GLContextProvider> display_context_provider_;
 
   DISALLOW_COPY_AND_ASSIGN(FrameSinkClient);
 };
@@ -56,7 +56,7 @@ void AuraTestContextFactory::CreateLayerTreeFrameSink(
   constexpr bool disable_display_vsync = false;
   const double refresh_rate = GetRefreshRate();
   auto frame_sink = std::make_unique<viz::TestLayerTreeFrameSink>(
-      context_provider, cc::TestContextProvider::CreateWorker(), nullptr,
+      context_provider, cc::TestRasterContextProvider::CreateWorker(), nullptr,
       GetGpuMemoryBufferManager(), renderer_settings(),
       base::ThreadTaskRunnerHandle::Get().get(), synchronous_composite,
       disable_display_vsync, refresh_rate);

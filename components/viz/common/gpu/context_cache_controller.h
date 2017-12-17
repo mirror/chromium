@@ -26,10 +26,10 @@ class ContextSupport;
 
 namespace viz {
 
-// ContextCacheController manages clearing cached data on ContextProvider when
+// ContextCacheController manages clearing cached data on GLContextProvider when
 // appropriate. Currently, cache clearing is triggered when the Context
 // provider transitions from Visible to Not Visible, or from Busy to Idle. As a
-// ContextProvider may have multiple clients, ContextCacheController tracks
+// GLContextProvider may have multiple clients, ContextCacheController tracks
 // visibility and idle status across all clients and only cleans up when
 // appropriate.
 class VIZ_COMMON_EXPORT ContextCacheController {
@@ -56,7 +56,7 @@ class VIZ_COMMON_EXPORT ContextCacheController {
   void SetGrContext(GrContext* gr_context);
   void SetLock(base::Lock* lock);
 
-  // Clients of the owning ContextProvider should call this function when they
+  // Clients of the owning GLContextProvider should call this function when they
   // become visible. The returned ScopedVisibility pointer must be passed back
   // to ClientBecameNotVisible or it will DCHECK in its destructor.
   virtual std::unique_ptr<ScopedVisibility> ClientBecameVisible();
@@ -67,7 +67,7 @@ class VIZ_COMMON_EXPORT ContextCacheController {
   virtual void ClientBecameNotVisible(
       std::unique_ptr<ScopedVisibility> scoped_visibility);
 
-  // Clients of the owning ContextProvider may call this function when they
+  // Clients of the owning GLContextProvider may call this function when they
   // become busy. The returned ScopedBusy pointer must be passed back
   // to ClientBecameNotBusy or it will DCHECK in its destructor.
   std::unique_ptr<ScopedBusy> ClientBecameBusy();

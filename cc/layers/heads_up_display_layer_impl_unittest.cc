@@ -18,7 +18,7 @@ namespace {
 
 void CheckDrawLayer(HeadsUpDisplayLayerImpl* layer,
                     LayerTreeResourceProvider* resource_provider,
-                    viz::ContextProvider* context_provider,
+                    viz::GLContextProvider* context_provider,
                     DrawMode draw_mode) {
   std::unique_ptr<viz::RenderPass> render_pass = viz::RenderPass::Create();
   AppendQuadsData data;
