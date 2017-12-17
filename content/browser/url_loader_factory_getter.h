@@ -5,6 +5,7 @@
 #ifndef CONTENT_BROWSER_URL_LOADER_FACTORY_GETTER_H_
 #define CONTENT_BROWSER_URL_LOADER_FACTORY_GETTER_H_
 
+#include "base/callback_forward.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "content/common/content_export.h"
@@ -45,6 +46,16 @@ class URLLoaderFactoryGetter
   original_network_factory_for_testing() {
     return &network_factory_;
   }
+
+  // When this global function is set, every call to GetNetworkFactory when
+  // |test_factory_| is not set will run the callback.
+  // GetNetworkFactory will call the callback.
+  // This method must be called either on the IO thread or before threads start.
+  // This callback is run on the IO thread.
+  using GetNetworkFactoryCallback = base::RepeatingCallback<void(
+      URLLoaderFactoryGetter* url_loader_factory_getter)>;
+  CONTENT_EXPORT static void SetGetNetworkFactoryCallbackForTesting(
+      const GetNetworkFactoryCallback& get_network_factory_callback);
 
  private:
   friend class base::DeleteHelper<URLLoaderFactoryGetter>;
