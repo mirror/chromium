@@ -143,6 +143,7 @@ void Ui::SetExitVrPromptEnabled(bool enabled, UiUnsupportedMode reason) {
       model_->active_modal_prompt_type = kModalPromptTypeExitVRForSiteInfo;
       return;
     case UiUnsupportedMode::kVoiceSearchNeedsRecordAudioOsPermission:
+      model_->voice_search_active = false;
       model_->active_modal_prompt_type =
           kModalPromptTypeExitVRForVoiceSearchRecordAudioOsPermission;
       return;

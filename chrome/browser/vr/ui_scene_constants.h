@@ -189,6 +189,7 @@ static constexpr float kOmniboxHeightDMM = 0.088f;
 static constexpr float kOmniboxVerticalOffsetDMM = -0.2f;
 static constexpr float kOmniboxTextHeightDMM = 0.032f;
 static constexpr float kOmniboxTextMarginDMM = 0.024f;
+static constexpr float kOmniboxTextFieldIconSizeDMM = 0.05f;
 static constexpr float kOmniboxCloseButtonDiameterDMM = kButtonDiameterDMM;
 static constexpr float kOmniboxCloseButtonVerticalOffsetDMM = -0.75f;
 static constexpr float kOmniboxCornerRadiusDMM = 0.006f;
