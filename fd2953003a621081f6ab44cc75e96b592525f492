@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "0a144115_64f486c0",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/templates/CSSProperty.cpp.tmpl",
+        "patchSetId": 29
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-12-17T23:35:34Z",
+      "side": 1,
+      "message": "I\u0027m confused. You wouldn\u0027t be using it to get a resolved property, right? \nDoesn\u0027t CSSUnresolvedProperty::GetNonAliasProperty *only* return resolved properties? I agree that they should be more clearly separated though, and it\u0027s weird to me that CSSUnresolvedProperty::GetNonAliasProperty exists at all. I would suggest removing that method entirely and implementing it here in CSSProperty instead. Also I would change the terminology from \u0027NonAlias\u0027 to \u0027Resolved\u0027 for consistency with the rest of the code base",
+      "parentUuid": "c5fbcbc1_bbb1278b",
+      "revId": "fd2953003a621081f6ab44cc75e96b592525f492",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9418b863_ffc53daf",
         "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/templates/CSSUnresolvedProperty.cpp.tmpl",
         "patchSetId": 29
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "I don\u0027t think they are? They seem to have holes in the sequence.",
       "parentUuid": "9418b863_ffc53daf",
+      "revId": "fd2953003a621081f6ab44cc75e96b592525f492",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "deccb5ff_abd8c032",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/templates/CSSUnresolvedProperty.cpp.tmpl",
+        "patchSetId": 29
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-12-17T23:35:34Z",
+      "side": 1,
+      "message": "Oh you\u0027re right! I thought they were cause they are listed sequentially in CSSPropertyID struct. Not only are there holes in the sequence but they are also out of order. Is there a reason for this? I feel like they should be sequential like the rest of the CSSPropertyIDs. I would add a TODO to fix that and remove the switch statement here if there isn\u0027t a good reason for it",
+      "parentUuid": "0d82b2a7_a72b6a5c",
       "revId": "fd2953003a621081f6ab44cc75e96b592525f492",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -107,6 +143,24 @@
     },
     {
       "key": {
+        "uuid": "fac4d4aa_633c39b8",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/templates/CSSUnresolvedProperty.cpp.tmpl",
+        "patchSetId": 29
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-12-17T23:35:34Z",
+      "side": 1,
+      "message": "I agree that we should keep the 2 classes as separate and distinct as possible, and also think that it should be clear when you\u0027re working with an alias and when you\u0027re working with a not-alias, which is why I think that when you\u0027re getting a not-alias you should know. But I think that this problem disappears with my previous suggestion to move this implementation to CSSProperty",
+      "parentUuid": "abf3e094_9ba8841c",
+      "revId": "fd2953003a621081f6ab44cc75e96b592525f492",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dee6b14a_ec5b7d23",
         "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/templates/CSSUnresolvedProperty.h.tmpl",
         "patchSetId": 29
@@ -136,6 +190,24 @@
       "side": 1,
       "message": "I don\u0027t think so. I\u0027ll move them in a later CL to avoid rebase pain, if that\u0027s OK.",
       "parentUuid": "dee6b14a_ec5b7d23",
+      "revId": "fd2953003a621081f6ab44cc75e96b592525f492",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33856edb_f6b3f01a",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/templates/CSSUnresolvedProperty.h.tmpl",
+        "patchSetId": 29
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-12-17T23:35:34Z",
+      "side": 1,
+      "message": "I\u0027m a bit concerned about the risk of forgetting about it, this sequence of changes is very large and might take a long time to land. Can you at lease add a TODO to move them in this patch?",
+      "parentUuid": "805362ea_e13c3d73",
       "revId": "fd2953003a621081f6ab44cc75e96b592525f492",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -244,6 +316,24 @@
       "revId": "fd2953003a621081f6ab44cc75e96b592525f492",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30a300c2_f2369e0c",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyBaseCustom.cpp",
+        "patchSetId": 29
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-12-17T23:35:34Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "46979b0c_1a45cbb8",
+      "revId": "fd2953003a621081f6ab44cc75e96b592525f492",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
