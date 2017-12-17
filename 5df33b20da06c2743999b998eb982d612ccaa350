@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e9709ddf_c1d392c5",
+        "filename": "chrome/browser/loader/chrome_resource_dispatcher_host_delegate.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-12-17T02:21:24Z",
+      "side": 0,
+      "message": "you should have the original author of this code review this change. i\u0027m not familiar with it.",
+      "revId": "5df33b20da06c2743999b998eb982d612ccaa350",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "554943b8_b4e7ee5e",
+        "filename": "chrome/browser/loader/chrome_resource_dispatcher_host_delegate.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-12-17T02:21:24Z",
+      "side": 0,
+      "message": "will this result in a behavior change? you now only do this if prerender_manager is not nul; that wasn\u0027t the case before",
+      "revId": "5df33b20da06c2743999b998eb982d612ccaa350",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
