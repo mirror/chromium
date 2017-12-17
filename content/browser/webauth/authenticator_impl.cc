@@ -35,20 +35,19 @@ bool HasValidAlgorithm(
   return false;
 }
 
-webauth::mojom::PublicKeyCredentialInfoPtr CreatePublicKeyCredentialInfo(
+webauth::mojom::MakeCredentialResponsePtr CreateMakeCredentialResponse(
     std::unique_ptr<CollectedClientData> client_data,
     std::unique_ptr<device::RegisterResponseData> response_data) {
-  auto credential_info = webauth::mojom::PublicKeyCredentialInfo::New();
+  auto response = webauth::mojom::MakeCredentialResponse::New();
+  auto common_info = webauth::mojom::CommonCredentialInfo::New();
   std::string client_data_json = client_data->SerializeToJson();
-  credential_info->client_data_json =
+  common_info->client_data_json =
       std::vector<uint8_t>(client_data_json.begin(), client_data_json.end());
-  credential_info->raw_id = response_data->raw_id();
-  credential_info->id = response_data->GetId();
-  auto response = webauth::mojom::AuthenticatorResponse::New();
+  common_info->raw_id = response_data->raw_id();
+  common_info->id = response_data->GetId();
   response->attestation_object =
       response_data->GetCBOREncodedAttestationObject();
-  credential_info->response = std::move(response);
-  return credential_info;
+  return response;
 }
 }  // namespace
 
@@ -188,8 +187,8 @@ void AuthenticatorImpl::OnRegisterResponse(
       DCHECK(response_data);
       std::move(make_credential_response_callback_)
           .Run(webauth::mojom::AuthenticatorStatus::SUCCESS,
-               CreatePublicKeyCredentialInfo(std::move(client_data_),
-                                             std::move(response_data)));
+               CreateMakeCredentialResponse(std::move(client_data_),
+                                            std::move(response_data)));
       break;
   }
   Cleanup();

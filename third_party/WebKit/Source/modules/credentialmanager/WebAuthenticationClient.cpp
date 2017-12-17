@@ -24,7 +24,7 @@ using PublicKeyCallbacks = WebAuthenticationClient::PublicKeyCallbacks;
 void RespondToPublicKeyCallback(
     std::unique_ptr<PublicKeyCallbacks> callbacks,
     webauth::mojom::blink::AuthenticatorStatus status,
-    webauth::mojom::blink::PublicKeyCredentialInfoPtr credential) {
+    webauth::mojom::blink::MakeCredentialResponsePtr credential) {
   if (status != webauth::mojom::AuthenticatorStatus::SUCCESS) {
     DCHECK(!credential);
     callbacks->OnError(mojo::ConvertTo<WebCredentialManagerError>(status));
@@ -33,8 +33,8 @@ void RespondToPublicKeyCallback(
 
   // Ensure we have an AuthenticatorAttestationResponse
   DCHECK(credential);
-  DCHECK(!credential->client_data_json.IsEmpty());
-  DCHECK(!credential->response->attestation_object.IsEmpty());
+  DCHECK(!credential->info->client_data_json.IsEmpty());
+  DCHECK(!credential->attestation_object.IsEmpty());
   callbacks->OnSuccess(std::move(credential));
 }
 }  // namespace

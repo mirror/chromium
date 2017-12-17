@@ -21,7 +21,7 @@ class WebAuthenticationClient final
     : public GarbageCollectedFinalized<WebAuthenticationClient> {
  public:
   // Used by calls to authenticator.mojom.
-  typedef WebCallbacks<webauth::mojom::blink::PublicKeyCredentialInfoPtr,
+  typedef WebCallbacks<webauth::mojom::blink::MakeCredentialResponsePtr,
                        WebCredentialManagerError>
       PublicKeyCallbacks;
 

@@ -234,7 +234,7 @@ class PublicKeyCallbacks : public WebAuthenticationClient::PublicKeyCallbacks {
   }
 
   void OnSuccess(
-      webauth::mojom::blink::PublicKeyCredentialInfoPtr credential) override {
+      webauth::mojom::blink::MakeCredentialResponsePtr credential) override {
     ExecutionContext* context =
         ExecutionContext::From(resolver_->GetScriptState());
     if (!context)
@@ -247,22 +247,22 @@ class PublicKeyCallbacks : public WebAuthenticationClient::PublicKeyCallbacks {
       return;
     }
 
-    if (!credential || credential->client_data_json.IsEmpty() ||
-        credential->response->attestation_object.IsEmpty()) {
+    if (!credential || credential->info->client_data_json.IsEmpty() ||
+        credential->attestation_object.IsEmpty()) {
       resolver_->Resolve(v8::Null(resolver_->GetScriptState()->GetIsolate()));
       return;
     }
 
     DOMArrayBuffer* client_data_buffer =
-        VectorToDOMArrayBuffer(std::move(credential->client_data_json));
-    DOMArrayBuffer* attestation_buffer = VectorToDOMArrayBuffer(
-        std::move(credential->response->attestation_object));
+        VectorToDOMArrayBuffer(std::move(credential->info->client_data_json));
+    DOMArrayBuffer* attestation_buffer =
+        VectorToDOMArrayBuffer(std::move(credential->attestation_object));
     DOMArrayBuffer* raw_id =
-        VectorToDOMArrayBuffer(std::move(credential->raw_id));
+        VectorToDOMArrayBuffer(std::move(credential->info->raw_id));
     AuthenticatorAttestationResponse* authenticator_response =
         AuthenticatorAttestationResponse::Create(client_data_buffer,
                                                  attestation_buffer);
-    resolver_->Resolve(PublicKeyCredential::Create(credential->id, raw_id,
+    resolver_->Resolve(PublicKeyCredential::Create(credential->info->id, raw_id,
                                                    authenticator_response));
   }
 

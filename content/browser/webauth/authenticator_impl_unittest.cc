@@ -13,7 +13,7 @@
 #include "base/test/test_mock_time_task_runner.h"
 #include "base/time/tick_clock.h"
 #include "base/time/time.h"
-#include "content/browser/webauth/collected_client_data.h"
+#include "content/browser/webauth/collected_client_data.cc"
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/test/navigation_simulator.h"
@@ -37,7 +37,7 @@ using webauth::mojom::PublicKeyCredentialRpEntity;
 using webauth::mojom::PublicKeyCredentialRpEntityPtr;
 using webauth::mojom::PublicKeyCredentialUserEntity;
 using webauth::mojom::PublicKeyCredentialUserEntityPtr;
-using webauth::mojom::PublicKeyCredentialInfoPtr;
+using webauth::mojom::MakeCredentialResponsePtr;
 using webauth::mojom::PublicKeyCredentialParameters;
 using webauth::mojom::PublicKeyCredentialParametersPtr;
 
@@ -156,29 +156,28 @@ class TestMakeCredentialCallback {
   ~TestMakeCredentialCallback() {}
 
   void ReceivedCallback(AuthenticatorStatus status,
-                        PublicKeyCredentialInfoPtr credential) {
+                        MakeCredentialResponsePtr credential) {
     response_ = std::make_pair(status, std::move(credential));
     closure_.Run();
   }
 
-  std::pair<AuthenticatorStatus, PublicKeyCredentialInfoPtr>&
-  WaitForCallback() {
+  std::pair<AuthenticatorStatus, MakeCredentialResponsePtr>& WaitForCallback() {
     closure_ = run_loop_.QuitClosure();
     run_loop_.Run();
     return response_;
   }
 
   const base::Callback<void(AuthenticatorStatus status,
-                            PublicKeyCredentialInfoPtr credential)>&
+                            MakeCredentialResponsePtr credential)>&
   callback() {
     return callback_;
   }
 
  private:
-  std::pair<AuthenticatorStatus, PublicKeyCredentialInfoPtr> response_;
+  std::pair<AuthenticatorStatus, MakeCredentialResponsePtr> response_;
   base::Closure closure_;
   base::Callback<void(AuthenticatorStatus status,
-                      PublicKeyCredentialInfoPtr credential)>
+                      MakeCredentialResponsePtr credential)>
       callback_;
   base::RunLoop run_loop_;
 };
@@ -196,7 +195,7 @@ TEST_F(AuthenticatorImplTest, MakeCredentialOpaqueOrigin) {
   TestMakeCredentialCallback cb;
   authenticator->MakeCredential(std::move(options), cb.callback());
   std::pair<webauth::mojom::AuthenticatorStatus,
-            webauth::mojom::PublicKeyCredentialInfoPtr>& response =
+            webauth::mojom::MakeCredentialResponsePtr>& response =
       cb.WaitForCallback();
   EXPECT_EQ(webauth::mojom::AuthenticatorStatus::NOT_ALLOWED_ERROR,
             response.first);
@@ -215,7 +214,7 @@ TEST_F(AuthenticatorImplTest, MakeCredentialNoSupportedAlgorithm) {
   TestMakeCredentialCallback cb;
   authenticator->MakeCredential(std::move(options), cb.callback());
   std::pair<webauth::mojom::AuthenticatorStatus,
-            webauth::mojom::PublicKeyCredentialInfoPtr>& response =
+            webauth::mojom::MakeCredentialResponsePtr>& response =
       cb.WaitForCallback();
   EXPECT_EQ(webauth::mojom::AuthenticatorStatus::NOT_SUPPORTED_ERROR,
             response.first);
@@ -261,7 +260,7 @@ TEST_F(AuthenticatorImplTest, TestTimeout) {
   base::RunLoop().RunUntilIdle();
   task_runner->FastForwardBy(base::TimeDelta::FromMinutes(1));
   std::pair<webauth::mojom::AuthenticatorStatus,
-            webauth::mojom::PublicKeyCredentialInfoPtr>& response =
+            webauth::mojom::MakeCredentialResponsePtr>& response =
       cb.WaitForCallback();
   EXPECT_EQ(webauth::mojom::AuthenticatorStatus::NOT_ALLOWED_ERROR,
             response.first);
