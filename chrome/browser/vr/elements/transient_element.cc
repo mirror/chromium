@@ -62,6 +62,8 @@ bool SimpleTransientElement::OnBeginFrame(
 
   if (!set_visible_time_.is_null() && duration >= timeout_) {
     super::SetVisible(false);
+    if (!callback_.is_null())
+      callback_.Run(TransientElementHideReason::kTimeout);
     return true;
   }
   return false;
@@ -70,8 +72,9 @@ bool SimpleTransientElement::OnBeginFrame(
 ShowUntilSignalTransientElement::ShowUntilSignalTransientElement(
     const base::TimeDelta& min_duration,
     const base::TimeDelta& timeout,
-    const base::Callback<void(TransientElementHideReason)>& callback)
-    : super(timeout), min_duration_(min_duration), callback_(callback) {
+    const TransientElement::Callback& callback)
+    : super(timeout), min_duration_(min_duration) {
+  super::set_callback(callback);
   SetVisibleImmediately(false);
 }
 

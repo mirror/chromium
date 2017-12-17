@@ -34,8 +34,6 @@ struct Model {
   bool can_navigate_back = false;
   ToolbarState toolbar_state;
   std::vector<OmniboxSuggestion> omnibox_suggestions;
-  bool omnibox_input_active = false;
-  SpeechRecognitionModel speech;
   const ColorScheme& color_scheme() const;
   gfx::Transform projection_matrix;
   unsigned int content_texture_id = 0;
@@ -63,7 +61,13 @@ struct Model {
 
   // Focused text state.
   bool editing_input = false;
+  bool omnibox_input_active = false;
   TextInputInfo omnibox_text_field_info;
+
+  // Voice search state.
+  SpeechRecognitionModel speech;
+  bool voice_search_active = false;
+  bool omnibox_initiated_voice_search = false;
 
   // Controller state.
   ControllerModel controller;
