@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2b5f07b7_38006eec",
+        "filename": "build/android/gyp/process_resources.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-12-17T02:01:53Z",
+      "side": 1,
+      "message": "nit: 2 blank lines on either side.",
+      "revId": "57fcc17641db0a2b98130d7d6cdcc3755357fcd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
