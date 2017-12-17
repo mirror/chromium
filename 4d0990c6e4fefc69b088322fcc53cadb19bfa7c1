@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "54496ba6_7c3874b3",
+        "filename": "chrome/browser/extensions/api/cryptotoken_private/cryptotoken_private_api.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1002270
+      },
+      "writtenOn": "2017-12-17T19:28:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f3de8d78_a9a7b986",
+      "revId": "4d0990c6e4fefc69b088322fcc53cadb19bfa7c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9dc68f20_d35d05e0",
         "filename": "chrome/browser/resources/cryptotoken/usbenrollhandler.js",
         "patchSetId": 7
@@ -39,6 +57,30 @@
       "revId": "4d0990c6e4fefc69b088322fcc53cadb19bfa7c1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6395f62_5dc0c1ef",
+        "filename": "chrome/browser/resources/cryptotoken/usbenrollhandler.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1002270
+      },
+      "writtenOn": "2017-12-17T19:28:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9dc68f20_d35d05e0",
+      "range": {
+        "startLine": 225,
+        "startChar": 17,
+        "endLine": 227,
+        "endChar": 7
+      },
+      "revId": "4d0990c6e4fefc69b088322fcc53cadb19bfa7c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

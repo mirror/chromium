@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "127ce438_bbfeb885",
+        "filename": "chrome/browser/extensions/api/cryptotoken_private/cryptotoken_private_api.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1002270
+      },
+      "writtenOn": "2017-12-17T19:28:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a08752cb_6761245d",
+      "range": {
+        "startLine": 137,
+        "startChar": 32,
+        "endLine": 137,
+        "endChar": 48
+      },
+      "revId": "34017e581b8a3bf1bca07285962129a4881902c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fdb56b5e_d1acdfdd",
         "filename": "chrome/browser/extensions/api/cryptotoken_private/cryptotoken_private_api.h",
         "patchSetId": 5
@@ -166,6 +190,30 @@
       "side": 1,
       "message": "It seems that you already base64 decode the value in Javascript (in the callback to this method)\n\nand I\u0027m a little concerned that apparently Chrome\u0027s base64 decoder and the one used in the app have different assumptions about the padding.",
       "parentUuid": "9ff348f2_09cc041c",
+      "range": {
+        "startLine": 28,
+        "startChar": 47,
+        "endLine": 28,
+        "endChar": 56
+      },
+      "revId": "34017e581b8a3bf1bca07285962129a4881902c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "109bf540_ae4a606e",
+        "filename": "chrome/common/extensions/api/cryptotoken_private.idl",
+        "patchSetId": 5
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002270
+      },
+      "writtenOn": "2017-12-17T19:28:48Z",
+      "side": 1,
+      "message": "Fair enough. Changed to take an ArrayBuffer here and base64-decoding is now done in Javascript.",
+      "parentUuid": "da17630c_8e024850",
       "range": {
         "startLine": 28,
         "startChar": 47,
