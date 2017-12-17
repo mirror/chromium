@@ -39,7 +39,8 @@ void OnReleaseTexture(
   gl->ShallowFlushCHROMIUM();
 }
 
-GLES2Interface* GLCBShim(scoped_refptr<viz::ContextProvider> context_provider) {
+GLES2Interface* GLCBShim(
+    scoped_refptr<viz::GLContextProvider> context_provider) {
   return context_provider->ContextGL();
 }
 
@@ -150,7 +151,7 @@ scoped_refptr<VideoFrame> MakeTextFrameForCast(
 WebMediaPlayerCast::WebMediaPlayerCast(
     WebMediaPlayerImpl* impl,
     blink::WebMediaPlayerClient* client,
-    scoped_refptr<viz::ContextProvider> context_provider)
+    scoped_refptr<viz::GLContextProvider> context_provider)
     : webmediaplayer_(impl),
       client_(client),
       context_provider_(context_provider) {}

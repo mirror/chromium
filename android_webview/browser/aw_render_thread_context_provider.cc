@@ -121,11 +121,6 @@ gpu::gles2::GLES2Interface* AwRenderThreadContextProvider::ContextGL() {
   return context_->GetImplementation();
 }
 
-gpu::raster::RasterInterface* AwRenderThreadContextProvider::RasterContext() {
-  NOTIMPLEMENTED();
-  return nullptr;
-}
-
 gpu::ContextSupport* AwRenderThreadContextProvider::ContextSupport() {
   DCHECK(main_thread_checker_.CalledOnValidThread());
 

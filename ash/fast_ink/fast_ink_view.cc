@@ -58,7 +58,7 @@ struct FastInkView::Resource {
     if (image)
       gles2->DestroyImageCHROMIUM(image);
   }
-  scoped_refptr<viz::ContextProvider> context_provider;
+  scoped_refptr<viz::GLContextProvider> context_provider;
   uint32_t texture = 0;
   uint32_t image = 0;
   gpu::Mailbox mailbox;

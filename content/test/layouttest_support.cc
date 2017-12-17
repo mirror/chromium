@@ -311,8 +311,8 @@ class LayoutTestDependenciesImpl : public LayoutTestDependencies,
   std::unique_ptr<cc::LayerTreeFrameSink> CreateLayerTreeFrameSink(
       int32_t routing_id,
       scoped_refptr<gpu::GpuChannelHost> gpu_channel,
-      scoped_refptr<viz::ContextProvider> compositor_context_provider,
-      scoped_refptr<viz::ContextProvider> worker_context_provider,
+      scoped_refptr<viz::GLContextProvider> compositor_context_provider,
+      scoped_refptr<viz::RasterContextProvider> worker_context_provider,
       gpu::GpuMemoryBufferManager* gpu_memory_buffer_manager,
       CompositorDependencies* deps) override {
     // This could override the GpuChannel for a LayerTreeFrameSink that was
@@ -361,7 +361,7 @@ class LayoutTestDependenciesImpl : public LayoutTestDependencies,
 
   // TestLayerTreeFrameSinkClient implementation.
   std::unique_ptr<viz::OutputSurface> CreateDisplayOutputSurface(
-      scoped_refptr<viz::ContextProvider> compositor_context_provider)
+      scoped_refptr<viz::GLContextProvider> compositor_context_provider)
       override {
     // This is for an offscreen context for the compositor. So the default
     // framebuffer doesn't need alpha, depth, stencil, antialiasing.

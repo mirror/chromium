@@ -35,7 +35,7 @@ class Transform;
 }  // namespace gfx
 
 namespace viz {
-class ContextProvider;
+class GLContextProvider;
 class RenderPass;
 }
 
@@ -81,7 +81,7 @@ class CC_EXPORT VideoFrameExternalResources {
 // resources consumable by the compositor.
 class CC_EXPORT VideoResourceUpdater {
  public:
-  VideoResourceUpdater(viz::ContextProvider* context_provider,
+  VideoResourceUpdater(viz::GLContextProvider* context_provider,
                        LayerTreeResourceProvider* resource_provider,
                        bool use_stream_video_draw_quad);
   ~VideoResourceUpdater();
@@ -196,7 +196,7 @@ class CC_EXPORT VideoResourceUpdater {
                             const gpu::SyncToken& sync_token,
                             bool lost_resource);
 
-  viz::ContextProvider* context_provider_;
+  viz::GLContextProvider* context_provider_;
   LayerTreeResourceProvider* resource_provider_;
   const bool use_stream_video_draw_quad_;
   std::unique_ptr<media::PaintCanvasVideoRenderer> video_renderer_;

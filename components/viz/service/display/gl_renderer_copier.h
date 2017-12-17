@@ -26,7 +26,7 @@ class Size;
 
 namespace viz {
 
-class ContextProvider;
+class GLContextProvider;
 class CopyOutputRequest;
 class TextureDeleter;
 
@@ -53,7 +53,7 @@ class VIZ_SERVICE_EXPORT GLRendererCopier {
       base::RepeatingCallback<gfx::Rect(const gfx::Rect&)>;
 
   // |texture_deleter| must outlive this instance.
-  GLRendererCopier(scoped_refptr<ContextProvider> context_provider,
+  GLRendererCopier(scoped_refptr<GLContextProvider> context_provider,
                    TextureDeleter* texture_deleter,
                    ComputeWindowRectCallback window_rect_callback);
 
@@ -206,7 +206,7 @@ class VIZ_SERVICE_EXPORT GLRendererCopier {
   GLenum GetOptimalReadbackFormat();
 
   // Injected dependencies.
-  const scoped_refptr<ContextProvider> context_provider_;
+  const scoped_refptr<GLContextProvider> context_provider_;
   TextureDeleter* const texture_deleter_;
   const ComputeWindowRectCallback window_rect_callback_;
 

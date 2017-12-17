@@ -59,8 +59,8 @@ std::unique_ptr<gpu::GLInProcessContext> CreateTestInProcessContext() {
                                     base::ThreadTaskRunnerHandle::Get());
 }
 
-TestInProcessContextProvider::TestInProcessContextProvider(
-    TestInProcessContextProvider* shared_context) {
+TestInProcessContextProviderBase::TestInProcessContextProviderBase(
+    TestInProcessContextProviderBase* shared_context) {
   context_ = CreateTestInProcessContext(
       &gpu_memory_buffer_manager_, &image_factory_,
       (shared_context ? shared_context->context_.get() : nullptr),
@@ -84,25 +84,26 @@ TestInProcessContextProvider::TestInProcessContextProvider(
       context_->GetImplementation(), capabilities_);
 }
 
-TestInProcessContextProvider::~TestInProcessContextProvider() = default;
+TestInProcessContextProviderBase::~TestInProcessContextProviderBase() = default;
 
-gpu::ContextResult TestInProcessContextProvider::BindToCurrentThread() {
+gpu::ContextResult TestInProcessContextProviderBase::BindToCurrentThread() {
   return gpu::ContextResult::kSuccess;
 }
 
-gpu::gles2::GLES2Interface* TestInProcessContextProvider::ContextGL() {
+gpu::gles2::GLES2Interface* TestInProcessContextProviderBase::ContextGL() {
   return context_->GetImplementation();
 }
 
-gpu::raster::RasterInterface* TestInProcessContextProvider::RasterContext() {
+gpu::raster::RasterInterface*
+TestInProcessContextProviderBase::RasterInterface() {
   return raster_context_.get();
 }
 
-gpu::ContextSupport* TestInProcessContextProvider::ContextSupport() {
+gpu::ContextSupport* TestInProcessContextProviderBase::ContextSupport() {
   return context_->GetImplementation();
 }
 
-class GrContext* TestInProcessContextProvider::GrContext() {
+class GrContext* TestInProcessContextProviderBase::GrContext() {
   if (gr_context_)
     return gr_context_->get();
 
@@ -117,27 +118,115 @@ class GrContext* TestInProcessContextProvider::GrContext() {
   return gr_context_->get();
 }
 
-viz::ContextCacheController* TestInProcessContextProvider::CacheController() {
+viz::ContextCacheController*
+TestInProcessContextProviderBase::CacheController() {
   return cache_controller_.get();
 }
 
-void TestInProcessContextProvider::InvalidateGrContext(uint32_t state) {
+void TestInProcessContextProviderBase::InvalidateGrContext(uint32_t state) {
   if (gr_context_)
     gr_context_->ResetContext(state);
 }
 
-base::Lock* TestInProcessContextProvider::GetLock() {
+base::Lock* TestInProcessContextProviderBase::GetLock() {
   return &context_lock_;
 }
 
-const gpu::Capabilities& TestInProcessContextProvider::ContextCapabilities()
+const gpu::Capabilities& TestInProcessContextProviderBase::ContextCapabilities()
     const {
   return capabilities_;
 }
 
-const gpu::GpuFeatureInfo& TestInProcessContextProvider::GetGpuFeatureInfo()
+const gpu::GpuFeatureInfo& TestInProcessContextProviderBase::GetGpuFeatureInfo()
     const {
   return gpu_feature_info_;
+}
+
+TestInProcessContextProvider::TestInProcessContextProvider(
+    TestInProcessContextProviderBase* shared_context)
+    : TestInProcessContextProviderBase(shared_context) {}
+
+gpu::ContextResult TestInProcessContextProvider::BindToCurrentThread() {
+  return TestInProcessContextProviderBase::BindToCurrentThread();
+}
+gpu::ContextSupport* TestInProcessContextProvider::ContextSupport() {
+  return TestInProcessContextProviderBase::ContextSupport();
+}
+class GrContext* TestInProcessContextProvider::GrContext() {
+  return TestInProcessContextProviderBase::GrContext();
+}
+viz::ContextCacheController* TestInProcessContextProvider::CacheController() {
+  return TestInProcessContextProviderBase::CacheController();
+}
+void TestInProcessContextProvider::InvalidateGrContext(uint32_t state) {
+  return TestInProcessContextProviderBase::InvalidateGrContext(state);
+}
+base::Lock* TestInProcessContextProvider::GetLock() {
+  return TestInProcessContextProviderBase::GetLock();
+}
+const gpu::Capabilities& TestInProcessContextProvider::ContextCapabilities()
+    const {
+  return TestInProcessContextProviderBase::ContextCapabilities();
+}
+const gpu::GpuFeatureInfo& TestInProcessContextProvider::GetGpuFeatureInfo()
+    const {
+  return TestInProcessContextProviderBase::GetGpuFeatureInfo();
+}
+void TestInProcessContextProvider::AddObserver(viz::ContextLostObserver* obs) {
+  return TestInProcessContextProviderBase::AddObserver(obs);
+}
+void TestInProcessContextProvider::RemoveObserver(
+    viz::ContextLostObserver* obs) {
+  return TestInProcessContextProviderBase::RemoveObserver(obs);
+}
+
+gpu::gles2::GLES2Interface* TestInProcessContextProvider::ContextGL() {
+  return TestInProcessContextProviderBase::ContextGL();
+}
+
+TestInProcessRasterContextProvider::TestInProcessRasterContextProvider(
+    TestInProcessContextProviderBase* shared_context)
+    : TestInProcessContextProviderBase(shared_context) {}
+
+gpu::ContextResult TestInProcessRasterContextProvider::BindToCurrentThread() {
+  return TestInProcessContextProviderBase::BindToCurrentThread();
+}
+gpu::ContextSupport* TestInProcessRasterContextProvider::ContextSupport() {
+  return TestInProcessContextProviderBase::ContextSupport();
+}
+class GrContext* TestInProcessRasterContextProvider::GrContext() {
+  return TestInProcessContextProviderBase::GrContext();
+}
+viz::ContextCacheController*
+TestInProcessRasterContextProvider::CacheController() {
+  return TestInProcessContextProviderBase::CacheController();
+}
+void TestInProcessRasterContextProvider::InvalidateGrContext(uint32_t state) {
+  return TestInProcessContextProviderBase::InvalidateGrContext(state);
+}
+base::Lock* TestInProcessRasterContextProvider::GetLock() {
+  return TestInProcessContextProviderBase::GetLock();
+}
+const gpu::Capabilities&
+TestInProcessRasterContextProvider::ContextCapabilities() const {
+  return TestInProcessContextProviderBase::ContextCapabilities();
+}
+const gpu::GpuFeatureInfo&
+TestInProcessRasterContextProvider::GetGpuFeatureInfo() const {
+  return TestInProcessContextProviderBase::GetGpuFeatureInfo();
+}
+void TestInProcessRasterContextProvider::AddObserver(
+    viz::ContextLostObserver* obs) {
+  return TestInProcessContextProviderBase::AddObserver(obs);
+}
+void TestInProcessRasterContextProvider::RemoveObserver(
+    viz::ContextLostObserver* obs) {
+  return TestInProcessContextProviderBase::RemoveObserver(obs);
+}
+
+gpu::raster::RasterInterface*
+TestInProcessRasterContextProvider::RasterInterface() {
+  return TestInProcessContextProviderBase::RasterInterface();
 }
 
 }  // namespace cc

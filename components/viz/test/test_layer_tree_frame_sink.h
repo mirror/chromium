@@ -32,10 +32,10 @@ class TestLayerTreeFrameSinkClient {
  public:
   virtual ~TestLayerTreeFrameSinkClient() {}
 
-  // This passes the ContextProvider being used by LayerTreeHostImpl which
+  // This passes the GLContextProvider being used by LayerTreeHostImpl which
   // can be used for the OutputSurface optionally.
   virtual std::unique_ptr<OutputSurface> CreateDisplayOutputSurface(
-      scoped_refptr<ContextProvider> compositor_context_provider) = 0;
+      scoped_refptr<GLContextProvider> compositor_context_provider) = 0;
 
   virtual void DisplayReceivedLocalSurfaceId(
       const LocalSurfaceId& local_surface_id) = 0;
@@ -54,8 +54,8 @@ class TestLayerTreeFrameSink : public cc::LayerTreeFrameSink,
   // Pass true for |force_disable_reclaim_resources| to act like the Display
   // is out-of-process and can't return resources synchronously.
   TestLayerTreeFrameSink(
-      scoped_refptr<ContextProvider> compositor_context_provider,
-      scoped_refptr<ContextProvider> worker_context_provider,
+      scoped_refptr<GLContextProvider> compositor_context_provider,
+      scoped_refptr<RasterContextProvider> worker_context_provider,
       SharedBitmapManager* shared_bitmap_manager,
       gpu::GpuMemoryBufferManager* gpu_memory_buffer_manager,
       const RendererSettings& renderer_settings,
