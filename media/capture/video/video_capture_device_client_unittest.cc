@@ -18,6 +18,7 @@
 #include "media/capture/video/video_capture_buffer_tracker_factory_impl.h"
 #include "media/capture/video/video_capture_jpeg_decoder.h"
 #include "media/capture/video/video_frame_receiver.h"
+#include "mojo/edk/embedder/embedder.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -35,6 +36,16 @@ std::unique_ptr<VideoCaptureJpegDecoder> ReturnNullPtrAsJpecDecoder() {
   return nullptr;
 }
 
+class MojoInitializer {
+ public:
+  MojoInitializer() { mojo::edk::Init(); }
+};
+
+void EnsureMojoInitialized() {
+  CR_DEFINE_STATIC_LOCAL(MojoInitializer, initializer, ());
+  ALLOW_UNUSED_LOCAL(initializer);
+}
+
 }  // namespace
 
 // Test fixture for testing a unit consisting of an instance of
@@ -45,6 +56,7 @@ std::unique_ptr<VideoCaptureJpegDecoder> ReturnNullPtrAsJpecDecoder() {
 class VideoCaptureDeviceClientTest : public ::testing::Test {
  public:
   VideoCaptureDeviceClientTest() {
+    EnsureMojoInitialized();
     scoped_refptr<VideoCaptureBufferPoolImpl> buffer_pool(
         new VideoCaptureBufferPoolImpl(
             base::MakeUnique<VideoCaptureBufferTrackerFactoryImpl>(), 1));
