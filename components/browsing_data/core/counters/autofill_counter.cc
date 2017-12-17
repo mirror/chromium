@@ -83,7 +83,7 @@ void AutofillCounter::Count() {
   // and increment the counter only if all entries with the given value are
   // contained in the interval [start, base::Time::Max()).
   suggestions_query_ = web_data_service_->GetCountOfValuesContainedBetween(
-      start, base::Time::Max(), this);
+      start, GetPeriodEnd(), this);
 
   // Count the credit cards.
   credit_cards_query_ = web_data_service_->GetCreditCards(this);
@@ -117,6 +117,7 @@ void AutofillCounter::OnWebDataServiceRequestDone(
   const base::Time start = period_start_for_testing_.is_null()
                                ? GetPeriodStart()
                                : period_start_for_testing_;
+  const base::Time end = GetPeriodEnd();
 
   if (handle == suggestions_query_) {
     // Autocomplete suggestions.
@@ -136,8 +137,9 @@ void AutofillCounter::OnWebDataServiceRequestDone(
 
     num_credit_cards_ = std::count_if(
         credit_cards.begin(), credit_cards.end(),
-        [start](const std::unique_ptr<autofill::CreditCard>& card) {
-          return card->modification_date() >= start;
+        [start, end](const std::unique_ptr<autofill::CreditCard>& card) {
+          return (card->modification_date() >= start &&
+                  card->modification_date() <= end);
         });
     credit_cards_query_ = 0;
 
@@ -152,8 +154,10 @@ void AutofillCounter::OnWebDataServiceRequestDone(
 
     num_addresses_ = std::count_if(
         addresses.begin(), addresses.end(),
-        [start](const std::unique_ptr<autofill::AutofillProfile>& address) {
-          return address->modification_date() >= start;
+        [start,
+         end](const std::unique_ptr<autofill::AutofillProfile>& address) {
+          return (address->modification_date() >= start &&
+                  address->modification_date() <= end);
         });
     addresses_query_ = 0;
 
