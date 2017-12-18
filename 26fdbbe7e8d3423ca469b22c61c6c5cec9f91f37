@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "08ba723c_6abb9918",
+        "filename": "testing/buildbot/waterfalls.pyl",
+        "patchSetId": 1
+      },
+      "lineNbr": 1968,
+      "author": {
+        "id": 1002301
+      },
+      "writtenOn": "2017-12-18T15:20:58Z",
+      "side": 1,
+      "message": "... Or should I have\n\n        \u0027additional_compile_targets\u0027: [\n          \u0027all\u0027,\n        ],\n\nhere?",
+      "range": {
+        "startLine": 1968,
+        "startChar": 23,
+        "endLine": 1968,
+        "endChar": 26
+      },
+      "revId": "26fdbbe7e8d3423ca469b22c61c6c5cec9f91f37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
