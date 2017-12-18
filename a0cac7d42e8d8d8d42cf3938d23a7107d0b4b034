@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "24080d74_a2decbc0",
+        "filename": "chrome/browser/repost_form_warning_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-18T03:51:25Z",
+      "side": 1,
+      "message": "nit: // DialogBrowserTest:",
+      "revId": "a0cac7d42e8d8d8d42cf3938d23a7107d0b4b034",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e3a3792_3db4a866",
+        "filename": "chrome/browser/repost_form_warning_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-18T03:51:25Z",
+      "side": 1,
+      "message": "can the 9 lines above move to an override of SetUpOnMainThread()?",
+      "revId": "a0cac7d42e8d8d8d42cf3938d23a7107d0b4b034",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97e29479_515d1678",
+        "filename": "chrome/browser/repost_form_warning_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-18T03:51:25Z",
+      "side": 1,
+      "message": "These 4 lines can probably be a helper method, e.g. TryReload()",
+      "revId": "a0cac7d42e8d8d8d42cf3938d23a7107d0b4b034",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fafbc408_11c28253",
+        "filename": "chrome/browser/repost_form_warning_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-18T03:51:25Z",
+      "side": 1,
+      "message": "It\u0027s possible we are not showing the views dialog on Mac yet, which could explain the failures. There\u0027s a class of javascript dialogs that we can\u0027t switch to toolkit-views since they need to be app-modal... However, I don\u0027t think this is one of those.\n\nWe should switch this over to views on Mac.\n\nDisabling the test on mac and citing the bug is fine, but the issue is still a blocker.",
+      "revId": "a0cac7d42e8d8d8d42cf3938d23a7107d0b4b034",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
