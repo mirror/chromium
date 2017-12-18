@@ -25,7 +25,6 @@
 #include "ui/accessibility/ax_text_utils.h"
 #include "ui/accessibility/ax_tree_data.h"
 #include "ui/accessibility/platform/ax_platform_node_delegate.h"
-#include "ui/accessibility/platform/ax_platform_unique_id.h"
 #include "ui/base/win/atl_module.h"
 #include "ui/gfx/geometry/rect_conversions.h"
 
@@ -355,8 +354,7 @@ AXPlatformNode* AXPlatformNodeWin::GetFromUniqueId(int32_t unique_id) {
 // AXPlatformNodeWin
 //
 
-AXPlatformNodeWin::AXPlatformNodeWin()
-    : unique_id_(GetNextAXPlatformNodeUniqueId()) {
+AXPlatformNodeWin::AXPlatformNodeWin() {
   g_unique_id_map.Get()[unique_id_] = this;
 }
 
