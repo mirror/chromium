@@ -34,6 +34,24 @@
       "revId": "04316c30d1b24f6c109ec6c801f79be43ff12377",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ff3cf8e_f65efd49",
+        "filename": "chrome/browser/ui/app_list/chrome_app_list_item_list.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-18T19:43:21Z",
+      "side": 1,
+      "message": "Find/update by id are in the model updater\u0027s interface. Theoretically, the model updater should handle the id mapping to index. And probably can do it more efficiently with a\n  std::map\u003cstd::string, std::unique_ptr\u003cChromeAppListItem\u003e.",
+      "parentUuid": "396915d9_6f084ddc",
+      "revId": "04316c30d1b24f6c109ec6c801f79be43ff12377",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
