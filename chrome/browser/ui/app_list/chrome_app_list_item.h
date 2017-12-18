@@ -25,6 +25,7 @@ class ImageSkia;
 // Base class of all chrome app list items.
 class ChromeAppListItem : public app_list::AppListItem {
  public:
+  ~ChromeAppListItem() override;
   // AppListControllerDelegate is not properly implemented in tests. Use mock
   // |controller| for unit_tests.
   static void OverrideAppListControllerDelegateForTesting(
@@ -34,7 +35,6 @@ class ChromeAppListItem : public app_list::AppListItem {
 
  protected:
   ChromeAppListItem(Profile* profile, const std::string& app_id);
-  ~ChromeAppListItem() override;
 
   Profile* profile() const { return profile_; }
 

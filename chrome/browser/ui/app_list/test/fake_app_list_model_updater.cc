@@ -12,12 +12,13 @@ FakeAppListModelUpdater::FakeAppListModelUpdater() {}
 
 FakeAppListModelUpdater::~FakeAppListModelUpdater() {}
 
-void FakeAppListModelUpdater::AddItem(std::unique_ptr<AppListItem> item) {
+void FakeAppListModelUpdater::AddItem(std::unique_ptr<ChromeAppListItem> item) {
   items_.push_back(std::move(item));
 }
 
-void FakeAppListModelUpdater::AddItemToFolder(std::unique_ptr<AppListItem> item,
-                                              const std::string& folder_id) {
+void FakeAppListModelUpdater::AddItemToFolder(
+    std::unique_ptr<ChromeAppListItem> item,
+    const std::string& folder_id) {
   items_.push_back(std::move(item));
 }
 
@@ -35,7 +36,7 @@ void FakeAppListModelUpdater::SetSearchEngineIsGoogle(bool is_google) {
   search_engine_is_google_ = is_google;
 }
 
-AppListItem* FakeAppListModelUpdater::FindItem(const std::string& id) {
+ChromeAppListItem* FakeAppListModelUpdater::FindItem(const std::string& id) {
   size_t index;
   if (FindItemIndex(id, &index))
     return items_[index].get();
@@ -46,7 +47,7 @@ size_t FakeAppListModelUpdater::ItemCount() {
   return items_.size();
 }
 
-AppListItem* FakeAppListModelUpdater::ItemAt(size_t index) {
+ChromeAppListItem* FakeAppListModelUpdater::ItemAt(size_t index) {
   return index < items_.size() ? items_[index].get() : nullptr;
 }
 

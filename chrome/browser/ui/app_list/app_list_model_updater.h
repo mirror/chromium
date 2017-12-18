@@ -9,8 +9,8 @@
 #include <string>
 
 #include "ash/app_list/model/app_list_folder_item.h"
-#include "ash/app_list/model/app_list_item.h"
 #include "ash/app_list/model/app_list_model.h"
+#include "chrome/browser/ui/app_list/chrome_app_list_item.h"
 
 namespace app_list {
 
@@ -18,8 +18,8 @@ namespace app_list {
 class AppListModelUpdater {
  public:
   // For AppListModel:
-  virtual void AddItem(std::unique_ptr<AppListItem> item) {}
-  virtual void AddItemToFolder(std::unique_ptr<AppListItem> item,
+  virtual void AddItem(std::unique_ptr<ChromeAppListItem> item) {}
+  virtual void AddItemToFolder(std::unique_ptr<ChromeAppListItem> item,
                                const std::string& folder_id) {}
   virtual void RemoveItem(const std::string& id) {}
   virtual void RemoveUninstalledItem(const std::string& id) {}
@@ -37,9 +37,9 @@ class AppListModelUpdater {
 
   // TODO(hejq): Remove these methods and access the model in a mojo way.
   // For AppListModel:
-  virtual AppListItem* FindItem(const std::string& id) = 0;
+  virtual ChromeAppListItem* FindItem(const std::string& id) = 0;
   virtual size_t ItemCount() = 0;
-  virtual AppListItem* ItemAt(size_t index) = 0;
+  virtual ChromeAppListItem* ItemAt(size_t index) = 0;
   virtual AppListFolderItem* FindFolderItem(const std::string& folder_id) = 0;
   virtual bool FindItemIndex(const std::string& id, size_t* index) = 0;
   virtual app_list::AppListViewState StateFullscreen() = 0;

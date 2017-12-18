@@ -516,13 +516,18 @@ void AppListSyncableService::AddItem(std::unique_ptr<AppListItem> app_item) {
   if (AppIsOem(app_item->id())) {
     VLOG(2) << this << ": AddItem to OEM folder: " << sync_item->ToString();
     model_updater_->AddItemToOemFolder(
-        std::move(app_item), FindSyncItem(kOemFolderId), kOemFolderId,
-        oem_folder_name_, GetPreferredOemFolderPos());
+        std::unique_ptr<ChromeAppListItem>(
+            static_cast<ChromeAppListItem*>(app_item.release())),
+        FindSyncItem(kOemFolderId), kOemFolderId, oem_folder_name_,
+        GetPreferredOemFolderPos());
   } else {
     std::string folder_id = sync_item->parent_id;
     VLOG(2) << this << ": AddItem: " << sync_item->ToString() << " Folder: '"
             << folder_id << "'";
-    model_updater_->AddItemToFolder(std::move(app_item), folder_id);
+    model_updater_->AddItemToFolder(
+        std::unique_ptr<ChromeAppListItem>(
+            static_cast<ChromeAppListItem*>(app_item.release())),
+        folder_id);
   }
 }
 

@@ -13,7 +13,6 @@
 #include <unordered_set>
 #include <utility>
 
-#include "ash/app_list/model/app_list_item.h"
 #include "ash/app_list/model/search/tokenized_string.h"
 #include "ash/app_list/model/search/tokenized_string_match.h"
 #include "base/bind.h"

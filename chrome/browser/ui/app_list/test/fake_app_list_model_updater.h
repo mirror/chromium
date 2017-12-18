@@ -20,8 +20,8 @@ class FakeAppListModelUpdater : public AppListModelUpdater {
 
   // AppListModelUpdater:
   // For AppListModel:
-  void AddItem(std::unique_ptr<AppListItem> item) override;
-  void AddItemToFolder(std::unique_ptr<AppListItem> item,
+  void AddItem(std::unique_ptr<ChromeAppListItem> item) override;
+  void AddItemToFolder(std::unique_ptr<ChromeAppListItem> item,
                        const std::string& folder_id) override;
   void RemoveItem(const std::string& id) override;
   void RemoveUninstalledItem(const std::string& id) override;
@@ -29,9 +29,9 @@ class FakeAppListModelUpdater : public AppListModelUpdater {
   void SetSearchEngineIsGoogle(bool is_google) override;
 
   // For AppListModel:
-  AppListItem* FindItem(const std::string& id) override;
+  ChromeAppListItem* FindItem(const std::string& id) override;
   size_t ItemCount() override;
-  AppListItem* ItemAt(size_t index) override;
+  ChromeAppListItem* ItemAt(size_t index) override;
   AppListFolderItem* FindFolderItem(const std::string& folder_id) override;
   bool FindItemIndex(const std::string& id, size_t* index) override;
   app_list::AppListViewState StateFullscreen() override;
@@ -41,7 +41,7 @@ class FakeAppListModelUpdater : public AppListModelUpdater {
 
  private:
   bool search_engine_is_google_ = false;
-  std::vector<std::unique_ptr<AppListItem>> items_;
+  std::vector<std::unique_ptr<ChromeAppListItem>> items_;
 
   DISALLOW_COPY_AND_ASSIGN(FakeAppListModelUpdater);
 };
