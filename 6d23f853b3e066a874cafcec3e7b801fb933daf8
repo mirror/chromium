@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b3cb5fb8_e1a73820",
+        "filename": "chrome/browser/download/chrome_download_manager_delegate.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 648,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-12-18T18:20:29Z",
+      "side": 1,
+      "message": "A little bit worry of this, since IsDone will return false for an interrupted download that can resume.",
+      "range": {
+        "startLine": 647,
+        "startChar": 3,
+        "endLine": 648,
+        "endChar": 19
+      },
+      "revId": "6d23f853b3e066a874cafcec3e7b801fb933daf8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
