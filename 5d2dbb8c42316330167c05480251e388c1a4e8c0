@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "22b476fc_ae48f1ff",
+        "filename": "content/shell/browser/layout_test/blink_test_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 785,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-12-18T22:46:15Z",
+      "side": 1,
+      "message": "Is this also part of the bug fix, or an unrelated fix for another potential UaF?  If the latter, is this also needed on lines 792 or 603?",
+      "range": {
+        "startLine": 785,
+        "startChar": 21,
+        "endLine": 785,
+        "endChar": 47
+      },
+      "revId": "5d2dbb8c42316330167c05480251e388c1a4e8c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
