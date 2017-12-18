@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "0f6f12de_b2f0f232",
+        "filename": "third_party/WebKit/Source/modules/sensor/Sensor.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-12-18T18:32:01Z",
+      "side": 1,
+      "message": "IsSupportedInFeaturePolicy was important for features which needed to be behind the featurePolicyExperimentalFeatures flag -- that is, for features which are already shipped, in order to determine whether to use FP to gate them or not.\n\nIf the generic sensors API is not going to ship without FP, then this call isn\u0027t necessary.\n\n(We should update the doc to make that clear, and possibly change the name of the function too)",
+      "parentUuid": "5b4d2c85_862be945",
+      "revId": "ee7fa07128af93ee5e5de37351786638dbf295e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a16ec176_59057078",
         "filename": "third_party/WebKit/Source/platform/feature_policy/FeaturePolicy.cpp",
         "patchSetId": 5
