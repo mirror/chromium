@@ -16,6 +16,24 @@
       "revId": "85162c435d3b1875731e9088cc21b16df95a85b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb308435_365f2d2e",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/common/system/filesystem.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-12-18T18:43:39Z",
+      "side": 0,
+      "message": "You\u0027re right, good catch.",
+      "parentUuid": "dcd41054_f5f52550",
+      "revId": "85162c435d3b1875731e9088cc21b16df95a85b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
