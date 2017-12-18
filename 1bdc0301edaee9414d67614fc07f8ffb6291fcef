@@ -22,6 +22,30 @@
       "revId": "1bdc0301edaee9414d67614fc07f8ffb6291fcef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aba68239_ae3be68e",
+        "filename": "mojo/edk/embedder/platform_shared_buffer.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1001352
+      },
+      "writtenOn": "2017-12-18T16:02:31Z",
+      "side": 1,
+      "message": "I see your point, but I\u0027d rather remove all uses of DuplicatePlatformHandle() and replace that with saner APIs in the long term, so having a different entry point makes it slightly easier to identify which client code will need to be modified in the future.",
+      "parentUuid": "a2641d30_553a9b47",
+      "range": {
+        "startLine": 183,
+        "startChar": 66,
+        "endLine": 183,
+        "endChar": 72
+      },
+      "revId": "1bdc0301edaee9414d67614fc07f8ffb6291fcef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
