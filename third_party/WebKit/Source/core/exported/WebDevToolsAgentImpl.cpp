@@ -429,10 +429,6 @@ void WebDevToolsAgentImpl::Detach(int session_id) {
   DestroySession(session_id);
 }
 
-void WebDevToolsAgentImpl::ContinueProgram() {
-  ClientMessageLoopAdapter::ContinueProgram();
-}
-
 void WebDevToolsAgentImpl::DidCommitLoadForLocalFrame(LocalFrame* frame) {
   resource_container_->DidCommitLoadForLocalFrame(frame);
   resource_content_loader_->DidCommitLoadForLocalFrame(frame);
@@ -609,6 +605,14 @@ bool WebDevToolsAgentImpl::CacheDisabled() {
       return true;
   }
   return false;
+}
+
+void WebDevToolsAgentImpl::DetachAllSessionsForTesting() {
+  Vector<int> session_ids;
+  for (auto& it : sessions_)
+    session_ids.push_back(it.key);
+  for (int session_id : session_ids)
+    DestroySession(session_id);
 }
 
 void WebDevToolsAgentImpl::FlushProtocolNotifications() {
