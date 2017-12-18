@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5fb781df_002ccc86",
+        "filename": "chrome/test/data/policy/policy_test_cases.json",
+        "patchSetId": 5
+      },
+      "lineNbr": 907,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2017-12-18T16:37:14Z",
+      "side": 1,
+      "message": "Please create the policy indicator tests for this policy. Especially given the rather complex behavior in the UI this needs to be \"documented\" in this test so that future refactorings of the UI don\u0027t break it without noticing.",
+      "range": {
+        "startLine": 907,
+        "startChar": 6,
+        "endLine": 907,
+        "endChar": 48
+      },
+      "revId": "843317677c55861d78438de25096a142f0f24def",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "564cfe31_0c9db210",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 5
+      },
+      "lineNbr": 10852,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2017-12-18T16:37:14Z",
+      "side": 1,
+      "message": "s/configured/set/",
+      "range": {
+        "startLine": 10852,
+        "startChar": 39,
+        "endLine": 10852,
+        "endChar": 49
+      },
+      "revId": "843317677c55861d78438de25096a142f0f24def",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
