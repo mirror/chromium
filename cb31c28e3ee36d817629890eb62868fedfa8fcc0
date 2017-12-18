@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "32eee573_42e9fb23",
+        "filename": "net/nqe/network_quality_estimator_params.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-12-18T17:57:14Z",
+      "side": 1,
+      "message": "nit: I think it would be more readable as:\n\nif (forced_effective_connection_type_on_cellular_only_ \u0026\u0026 net::NetworkChangeNotifier::IsConnectionCellular(connection_type)) {\n  return base::Optional\u003cEffectiveConnectionType\u003e(\n                   EFFECTIVE_CONNECTION_TYPE_SLOW_2G);\n}\n\nreturn base::nullopt;\n\n\nI think ternary operators can be hard to visually parse, so should be used sparingly, and using is_cellular as a variable seems like an unnecessary step.",
+      "revId": "cb31c28e3ee36d817629890eb62868fedfa8fcc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
