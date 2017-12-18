@@ -432,7 +432,9 @@ PdfConverterImpl::PdfConverterImpl(
                      weak_ptr_factory_.GetWeakPtr()));
 }
 
-PdfConverterImpl::~PdfConverterImpl() {}
+PdfConverterImpl::~PdfConverterImpl() {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+}
 
 void PdfConverterImpl::OnTempPdfReady(ScopedTempFile pdf) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
@@ -509,6 +511,7 @@ void PdfConverterImpl::OnTempFileReady(GetPageCallbackData* callback_data,
 
 void PdfConverterImpl::OnPageDone(bool success, float scale_factor) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
+
   if (get_page_callbacks_.empty())
     return OnFailed(std::string("No get_page callbacks."));
   GetPageCallbackData& data = get_page_callbacks_.front();
@@ -521,7 +524,11 @@ void PdfConverterImpl::OnPageDone(bool success, float scale_factor) {
     file = GetFileFromTemp(std::move(temp_file));
   }
 
+  base::WeakPtr<PdfConverterImpl> weak_this = weak_ptr_factory_.GetWeakPtr();
   data.callback().Run(data.page_number(), scale_factor, std::move(file));
+  // WARNING: the callback might have deleted |this|!
+  if (!weak_this)
+    return;
   get_page_callbacks_.pop();
 }
 
@@ -535,11 +542,22 @@ void PdfConverterImpl::Stop() {
 void PdfConverterImpl::OnFailed(const std::string& error_message) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   LOG(ERROR) << "Failed to convert PDF: " << error_message;
+  base::WeakPtr<PdfConverterImpl> weak_this = weak_ptr_factory_.GetWeakPtr();
   if (!start_callback_.is_null()) {
     OnPageCount(mojom::PdfToEmfConverterPtr(), 0);
+    if (!weak_this)
+      return;  // Protect against the |start_callback_| deleting |this|.
   }
-  while (!get_page_callbacks_.empty())
+
+  while (!get_page_callbacks_.empty()) {
     OnPageDone(false, 0.0f);
+    if (!weak_this) {
+      // OnPageDone invokes the GetPageCallback which might end up deleting
+      // this.
+      return;
+    }
+  }
+
   Stop();
 }
 
