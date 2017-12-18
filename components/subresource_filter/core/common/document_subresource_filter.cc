@@ -31,6 +31,15 @@ DocumentSubresourceFilter::DocumentSubresourceFilter(
 
 DocumentSubresourceFilter::~DocumentSubresourceFilter() = default;
 
+const url_pattern_index::flat::UrlRule*
+DocumentSubresourceFilter::FindMatchingRule(
+    const GURL& subresource_url,
+    url_pattern_index::proto::ElementType subresource_type) {
+  return ruleset_matcher_.MatchedRule(
+      subresource_url, *document_origin_, subresource_type,
+      activation_state_.generic_blocking_rules_disabled);
+}
+
 LoadPolicy DocumentSubresourceFilter::GetLoadPolicy(
     const GURL& subresource_url,
     url_pattern_index::proto::ElementType subresource_type) {

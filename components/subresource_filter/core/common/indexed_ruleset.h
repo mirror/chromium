@@ -104,6 +104,12 @@ class IndexedRulesetMatcher {
       url_pattern_index::proto::ElementType element_type,
       bool disable_generic_rules) const;
 
+  const url_pattern_index::flat::UrlRule* MatchedRule(
+      const GURL& url,
+      const FirstPartyOrigin& first_party,
+      url_pattern_index::proto::ElementType element_type,
+      bool disable_generic_rules) const;
+
  private:
   const flat::IndexedRuleset* root_;
 

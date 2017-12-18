@@ -52,6 +52,10 @@ class DocumentSubresourceFilter {
   // TODO(pkalinnikov): Find a better way to achieve this.
   DocumentLoadStatistics& statistics() { return statistics_; }
 
+  const url_pattern_index::flat::UrlRule* FindMatchingRule(
+      const GURL& subresource_url,
+      url_pattern_index::proto::ElementType subresource_type);
+
   LoadPolicy GetLoadPolicy(
       const GURL& subresource_url,
       url_pattern_index::proto::ElementType subresource_type);
