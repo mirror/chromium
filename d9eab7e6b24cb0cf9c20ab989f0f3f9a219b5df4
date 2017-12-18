@@ -241,6 +241,24 @@
       "revId": "d9eab7e6b24cb0cf9c20ab989f0f3f9a219b5df4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cea8ac1b_2f3f2692",
+        "filename": "third_party/WebKit/public/platform/WebPointerEvent.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2017-12-18T19:48:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "45235a87_e07b8a6f",
+      "revId": "d9eab7e6b24cb0cf9c20ab989f0f3f9a219b5df4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
