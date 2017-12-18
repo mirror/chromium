@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8a172200_6a41853b",
+        "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-12-18T20:23:22Z",
+      "side": 1,
+      "message": "nit: I think there are a couple extra copies/object creations when building |point_in_root|. You could maybe do something like:\n\ngfx::Point point_in_root \u003d gfx::ToFlooredPoint(point_in_screen) - root_view-\u003eGetBoundsInRootWindow().OffsetFromOrigin();",
+      "revId": "f031c0ec2cc0b875fc543159d8625288a4109385",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
