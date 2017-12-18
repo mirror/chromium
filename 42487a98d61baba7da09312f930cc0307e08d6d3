@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "33cd43ab_04c50112",
+        "filename": "content/browser/BUILD.gn",
+        "patchSetId": 7
+      },
+      "lineNbr": 2127,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-12-18T23:30:04Z",
+      "side": 1,
+      "message": "Not sure if we should move ui/compositor/compositor_lock.* to a different, more common directory (ui/base?), it doesn\u0027t have any dependencies on the rest of ui/compositor, and makes us take this dependency in two places.",
+      "range": {
+        "startLine": 2127,
+        "startChar": 12,
+        "endLine": 2127,
+        "endChar": 22
+      },
+      "revId": "42487a98d61baba7da09312f930cc0307e08d6d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "375db8d0_c943ffdd",
+        "filename": "content/browser/renderer_host/compositor_impl_android.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 955,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-12-18T23:30:04Z",
+      "side": 1,
+      "message": "Ported/simplified from ui/compositor.cc",
+      "range": {
+        "startLine": 955,
+        "startChar": 52,
+        "endLine": 955,
+        "endChar": 69
+      },
+      "revId": "42487a98d61baba7da09312f930cc0307e08d6d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
