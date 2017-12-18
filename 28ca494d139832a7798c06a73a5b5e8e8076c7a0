@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8ae0c2be_fb4c2c18",
+        "filename": "docs/speed/perf_bot_sheriffing.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1123010
+      },
+      "writtenOn": "2017-12-18T10:39:03Z",
+      "side": 1,
+      "message": "From the rendered output [1] it looks like you don\u0027t need to escape the `_`s within large code blocks.\n\n[1]: In case you haven\u0027t seen it, you can click on the file name on the patch, then there is a \"gitiles\" link pointing to, e.g.:\nhttps://chromium.googlesource.com/chromium/src/+/refs/changes/74/818074/6/docs/speed/perf_bot_sheriffing.md#Disabling-Telemetry-Tests",
+      "revId": "28ca494d139832a7798c06a73a5b5e8e8076c7a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
