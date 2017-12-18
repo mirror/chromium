@@ -221,13 +221,16 @@ class WatchTimeReporterTest
     if (wtr_ && IsMonitoring())
       EXPECT_WATCH_TIME_FINALIZED();
 
+    // TODO(hajimehoshi): Replace base::SequencedTaskRunnerHandle::Get() with
+    // blink::scheduler::GetSequencedTaskRunnerForTesting() after crrev/822350
+    // is committed.
     wtr_.reset(new WatchTimeReporter(
         mojom::PlaybackProperties::New(kUnknownAudioCodec, kUnknownVideoCodec,
                                        has_audio_, has_video_, false, is_mse,
                                        is_encrypted, false, initial_video_size),
         base::Bind(&WatchTimeReporterTest::GetCurrentMediaTime,
                    base::Unretained(this)),
-        &fake_metrics_provider_));
+        &fake_metrics_provider_, base::SequencedTaskRunnerHandle::Get()));
 
     // Setup the reporting interval to be immediate to avoid spinning real time
     // within the unit test.
