@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7ce770d_6dcf257c",
+        "filename": "third_party/WebKit/Source/platform/wtf/Vector.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-12-18T17:48:22Z",
+      "side": 1,
+      "message": "As a side note: I am not convinced that this method should be here. If we cannot move using memcpy or memmove, then we probably also shouldn\u0027t swap using swap_ranges, but rather do a regular swap. \n\n(I am not sure this one ever gets called.)",
+      "range": {
+        "startLine": 176,
+        "startChar": 14,
+        "endLine": 176,
+        "endChar": 18
+      },
+      "revId": "e766ecb5cff9776f76da3360299c62d6a22f9177",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
