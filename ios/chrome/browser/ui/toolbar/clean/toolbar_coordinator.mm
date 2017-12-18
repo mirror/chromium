@@ -25,10 +25,10 @@
 #import "ios/chrome/browser/ui/fullscreen/fullscreen_controller_factory.h"
 #import "ios/chrome/browser/ui/fullscreen/fullscreen_features.h"
 #import "ios/chrome/browser/ui/fullscreen/fullscreen_ui_updater.h"
+#import "ios/chrome/browser/ui/location_bar/location_bar_coordinator.h"
 #include "ios/chrome/browser/ui/omnibox/location_bar_controller.h"
 #include "ios/chrome/browser/ui/omnibox/location_bar_controller_impl.h"
 #include "ios/chrome/browser/ui/omnibox/location_bar_delegate.h"
-#include "ios/chrome/browser/ui/omnibox/location_bar_view.h"
 #import "ios/chrome/browser/ui/omnibox/omnibox_popup_positioner.h"
 #include "ios/chrome/browser/ui/omnibox/omnibox_popup_view_ios.h"
 #import "ios/chrome/browser/ui/omnibox/omnibox_text_field_ios.h"
@@ -39,8 +39,6 @@
 #import "ios/chrome/browser/ui/toolbar/clean/toolbar_style.h"
 #import "ios/chrome/browser/ui/toolbar/clean/toolbar_tools_menu_button.h"
 #import "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.h"
-#import "ios/chrome/browser/ui/toolbar/keyboard_assist/toolbar_assistive_keyboard_delegate.h"
-#import "ios/chrome/browser/ui/toolbar/keyboard_assist/toolbar_assistive_keyboard_views.h"
 #import "ios/chrome/browser/ui/toolbar/public/web_toolbar_controller_constants.h"
 #include "ios/chrome/browser/ui/toolbar/toolbar_model_ios.h"
 #import "ios/chrome/browser/ui/toolbar/tools_menu_button_observer_bridge.h"
@@ -50,7 +48,6 @@
 #import "ios/chrome/browser/web_state_list/web_state_list.h"
 #import "ios/chrome/common/material_timing.h"
 #import "ios/public/provider/chrome/browser/chrome_browser_provider.h"
-#import "ios/third_party/material_components_ios/src/components/Typography/src/MaterialTypography.h"
 #import "ios/web/public/navigation_item.h"
 #import "ios/web/public/navigation_manager.h"
 #import "ios/web/public/web_state/web_state.h"
@@ -71,17 +68,13 @@
 @property(nonatomic, strong) ToolbarViewController* toolbarViewController;
 // The mediator owned by this coordinator.
 @property(nonatomic, strong) ToolbarMediator* mediator;
-// LocationBarView containing the omnibox. At some point, this property and the
-// |_locationBar| should become a LocationBarCoordinator.
-@property(nonatomic, strong) LocationBarView* locationBarView;
-// Object taking care of adding the accessory views to the keyboard.
-@property(nonatomic, strong)
-    ToolbarAssistiveKeyboardDelegateImpl* keyboardDelegate;
 // Whether this coordinator has been started.
 @property(nonatomic, assign) BOOL started;
 // Button observer for the ToolsMenu button.
 @property(nonatomic, strong)
     ToolsMenuButtonObserverBridge* toolsMenuButtonObserverBridge;
+// The coordinator for the location bar in the toolbar.
+@property(nonatomic, strong) LocationBarCoordinator* locationBarCoordinator;
 
 @end
 
@@ -90,14 +83,13 @@
 @synthesize browserState = _browserState;
 @synthesize buttonUpdater = _buttonUpdater;
 @synthesize dispatcher = _dispatcher;
-@synthesize keyboardDelegate = _keyboardDelegate;
-@synthesize locationBarView = _locationBarView;
 @synthesize mediator = _mediator;
 @synthesize started = _started;
 @synthesize toolbarViewController = _toolbarViewController;
 @synthesize toolsMenuButtonObserverBridge = _toolsMenuButtonObserverBridge;
 @synthesize URLLoader = _URLLoader;
 @synthesize webStateList = _webStateList;
+@synthesize locationBarCoordinator = _locationBarCoordinator;
 
 - (instancetype)init {
   if ((self = [super init])) {
@@ -132,42 +124,17 @@
 
   self.started = YES;
   BOOL isIncognito = self.browserState->IsOffTheRecord();
+
+  self.locationBarCoordinator = [[LocationBarCoordinator alloc] init];
+  self.locationBarCoordinator.browserState = self.browserState;
+  self.locationBarCoordinator.dispatcher = self.dispatcher;
+  [self.locationBarCoordinator start];
+
   // TODO(crbug.com/785253): Move this to the LocationBarCoordinator once it is
   // created.
-  UIColor* textColor =
-      isIncognito
-          ? [UIColor whiteColor]
-          : [UIColor colorWithWhite:0 alpha:[MDCTypography body1FontOpacity]];
-  UIColor* tintColor = isIncognito ? textColor : nil;
-  self.locationBarView =
-      [[LocationBarView alloc] initWithFrame:CGRectZero
-                                        font:[MDCTypography subheadFont]
-                                   textColor:textColor
-                                   tintColor:tintColor];
   _locationBar = base::MakeUnique<LocationBarControllerImpl>(
-      self.locationBarView, self.browserState, self, self.dispatcher);
-  self.locationBarView.incognito = isIncognito;
-  self.locationBarView.textField.incognito = isIncognito;
-  if (isIncognito) {
-    [_locationBarView.textField
-        setSelectedTextBackgroundColor:[UIColor colorWithWhite:1 alpha:0.1]];
-    [_locationBarView.textField
-        setPlaceholderTextColor:[UIColor colorWithWhite:1 alpha:0.5]];
-  } else if (!IsIPadIdiom()) {
-    // Set placeholder text color to match fakebox placeholder text color when
-    // on iPhone.
-    UIColor* placeholderTextColor =
-        [UIColor colorWithWhite:kiPhoneOmniboxPlaceholderColorBrightness
-                          alpha:1.0];
-    [_locationBarView.textField setPlaceholderTextColor:placeholderTextColor];
-  }
-
-  self.keyboardDelegate = [[ToolbarAssistiveKeyboardDelegateImpl alloc] init];
-  self.keyboardDelegate.dispatcher = self.dispatcher;
-  self.keyboardDelegate.omniboxTextField = self.locationBarView.textField;
-  ConfigureAssistiveKeyboardViews(self.locationBarView.textField, kDotComTLD,
-                                  self.keyboardDelegate);
-
+      self.locationBarCoordinator.locationBarView, self.browserState, self,
+      self.dispatcher);
   _popupView = _locationBar->CreatePopupView(self);
   // End of TODO(crbug.com/785253):.
 
@@ -181,7 +148,8 @@
       [[ToolbarViewController alloc] initWithDispatcher:self.dispatcher
                                           buttonFactory:factory
                                           buttonUpdater:self.buttonUpdater];
-  self.toolbarViewController.locationBarView = self.locationBarView;
+  self.toolbarViewController.locationBarView =
+      self.locationBarCoordinator.locationBarView;
   self.toolbarViewController.dispatcher = self.dispatcher;
 
   if (base::FeatureList::IsEnabled(fullscreen::features::kNewFullscreen)) {
@@ -215,7 +183,7 @@
   // The popup has to be destroyed before the location bar.
   _popupView.reset();
   _locationBar.reset();
-  self.locationBarView = nil;
+  [self.locationBarCoordinator stop];
   [self stopObservingTTSNotifications];
 
   if (base::FeatureList::IsEnabled(fullscreen::features::kNewFullscreen)) {
@@ -256,19 +224,19 @@
 
   // Don't do anything for a live non-ntp tab.
   if (webState == [self getWebState] && !isNTP) {
-    [_locationBarView setHidden:NO];
+    [self.locationBarCoordinator.locationBarView setHidden:NO];
     return;
   }
 
   self.viewController.view.hidden = NO;
-  [_locationBarView setHidden:YES];
+  [self.locationBarCoordinator.locationBarView setHidden:YES];
   [self.mediator updateConsumerForWebState:webState];
   [self.toolbarViewController updateForSideSwipeSnapshotOnNTP:isNTP];
 }
 
 - (void)resetToolbarAfterSideSwipeSnapshot {
   [self.mediator updateConsumerForWebState:[self getWebState]];
-  [_locationBarView setHidden:NO];
+  [self.locationBarCoordinator.locationBarView setHidden:NO];
   [self.toolbarViewController resetAfterSideSwipeSnapshot];
 }
 
@@ -293,7 +261,8 @@
 }
 
 - (BOOL)isOmniboxFirstResponder {
-  return [_locationBarView.textField isFirstResponder];
+  return
+      [self.locationBarCoordinator.locationBarView.textField isFirstResponder];
 }
 
 - (BOOL)showingOmniboxPopup {
@@ -318,8 +287,9 @@
   if (IsIPadIdiom()) {
     // For iPad, the omnibox is displayed between the location bar and the
     // bottom of the toolbar.
-    CGRect fieldFrame = [parent convertRect:[_locationBarView bounds]
-                                   fromView:_locationBarView];
+    CGRect fieldFrame =
+        [parent convertRect:[self.locationBarCoordinator.locationBarView bounds]
+                   fromView:self.locationBarCoordinator.locationBarView];
     CGFloat maxY = CGRectGetMaxY(fieldFrame);
     frame.origin.y = maxY + kiPadOmniboxPopupVerticalOffset;
     frame.size.height = height;
@@ -400,7 +370,7 @@
 #pragma mark - OmniboxFocuser
 
 - (void)focusOmnibox {
-  [_locationBarView.textField becomeFirstResponder];
+  [self.locationBarCoordinator.locationBarView.textField becomeFirstResponder];
 }
 
 - (void)cancelOmniboxEdit {
@@ -455,14 +425,16 @@
     [self loadURLForQuery:result];
   } else {
     [self focusOmnibox];
-    [_locationBarView.textField insertTextWhileEditing:result];
+    [self.locationBarCoordinator.locationBarView.textField
+        insertTextWhileEditing:result];
     // The call to |setText| shouldn't be needed, but without it the "Go" button
     // of the keyboard is disabled.
-    [_locationBarView.textField setText:result];
+    [self.locationBarCoordinator.locationBarView.textField setText:result];
     // Notify the accessibility system to start reading the new contents of the
     // Omnibox.
-    UIAccessibilityPostNotification(UIAccessibilityScreenChangedNotification,
-                                    _locationBarView.textField);
+    UIAccessibilityPostNotification(
+        UIAccessibilityScreenChangedNotification,
+        self.locationBarCoordinator.locationBarView.textField);
   }
 }
 
@@ -574,7 +546,8 @@
             animations:^{
             }];
 
-  [self.locationBarView addExpandOmniboxAnimations:animator];
+  [self.locationBarCoordinator.locationBarView
+      addExpandOmniboxAnimations:animator];
   [self.toolbarViewController addToolbarExpansionAnimations:animator];
   [animator startAnimation];
 
@@ -594,7 +567,8 @@
                  curve:UIViewAnimationCurveEaseInOut
             animations:^{
             }];
-  [self.locationBarView addContractOmniboxAnimations:animator];
+  [self.locationBarCoordinator.locationBarView
+      addContractOmniboxAnimations:animator];
   [self.toolbarViewController addToolbarContractionAnimations:animator];
   [animator startAnimation];
 }
