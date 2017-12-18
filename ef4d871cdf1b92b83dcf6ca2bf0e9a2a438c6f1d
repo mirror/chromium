@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "997f638a_be374106",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialsContainer.cpp",
+        "patchSetId": 23
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-12-18T14:33:56Z",
+      "side": 1,
+      "message": "When would this happen?",
+      "revId": "ef4d871cdf1b92b83dcf6ca2bf0e9a2a438c6f1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9847bf1_bb6799c8",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialsContainer.cpp",
+        "patchSetId": 23
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-12-18T14:33:56Z",
+      "side": 1,
+      "message": "Can we reject here anyway, just to be safe? :)",
+      "revId": "ef4d871cdf1b92b83dcf6ca2bf0e9a2a438c6f1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f5ddc73_ee1ac6e0",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialsContainer.cpp",
+        "patchSetId": 23
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-12-18T14:33:56Z",
+      "side": 1,
+      "message": "Does this need a `Document`? Or would an `ExecutionContext` be alright? Some folks have asked for the APIs to be exposed in Workers; we\u0027d reject for existing credential types, but maybe not for magical future credential types.  See https://github.com/w3c/webappsec-credential-management/issues/87 and https://github.com/w3c/ServiceWorker/issues/1231 and https://github.com/w3c/webauthn/issues/199.",
+      "revId": "ef4d871cdf1b92b83dcf6ca2bf0e9a2a438c6f1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6457c2ca_dcf43b5f",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialsContainer.cpp",
+        "patchSetId": 23
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-12-18T14:33:56Z",
+      "side": 1,
+      "message": "Hrm. Should we leak the fact that the user has disabled their credential manager? Perhaps we can fold this into \"PASSWORD_STORE_UNAVAILABLE\", at least with regard to the web-visible error message?\n\nIf we take that route, please put it in a constant with a note about ensuring that it\u0027s the same for these cases. Maybe we can just use \"unknown error\" for everything here?",
+      "revId": "ef4d871cdf1b92b83dcf6ca2bf0e9a2a438c6f1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aaa4698b_9df43421",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialsContainer.cpp",
+        "patchSetId": 23
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-12-18T14:33:56Z",
+      "side": 1,
+      "message": "What cases don\u0027t we allow?",
+      "revId": "ef4d871cdf1b92b83dcf6ca2bf0e9a2a438c6f1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19c9ac1c_1df102ab",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialsContainer.cpp",
+        "patchSetId": 23
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-12-18T14:33:56Z",
+      "side": 1,
+      "message": "When is this triggered?",
+      "revId": "ef4d871cdf1b92b83dcf6ca2bf0e9a2a438c6f1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3910bdff_58c4e202",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialsContainer.cpp",
+        "patchSetId": 23
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-12-18T14:33:56Z",
+      "side": 1,
+      "message": "Is this the secure context check? If so, let\u0027s be explicit about that, perhaps by using `SecurityOrigin::IsPotentiallyTrustworthyErrorMessage()`.\n\nOr is this triggered by the secure URL check for things like icons? If so, we need a better message.",
+      "revId": "ef4d871cdf1b92b83dcf6ca2bf0e9a2a438c6f1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7e0b6c6_e63602c0",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialsContainer.cpp",
+        "patchSetId": 23
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-12-18T14:33:56Z",
+      "side": 1,
+      "message": "Is this the user cancelling the operation? Or the caller cancelling the operation via the `authenticatorCancel` operation (https://www.w3.org/TR/webauthn/#op-cancel)? If the former, we\u0027ve thus far avoided telling the website that the user had credentials but chose not to share them. If the latter, we need a new error message.",
+      "revId": "ef4d871cdf1b92b83dcf6ca2bf0e9a2a438c6f1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bc5f81f_2a50eabd",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialsContainer.cpp",
+        "patchSetId": 23
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-12-18T14:33:56Z",
+      "side": 1,
+      "message": "What about `data:`? What about `blob:` and `filesystem:`? Do we block those?",
+      "revId": "ef4d871cdf1b92b83dcf6ca2bf0e9a2a438c6f1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c76bb244_ec617051",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/PublicKeyCredential.cpp",
+        "patchSetId": 23
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-12-18T14:33:56Z",
+      "side": 1,
+      "message": "Hrm. Does this end up being web-exposed via `credential.type`? I would have expected `publicKey`, since it ends up as a JavaScript object\u0027s property name via the configuration objects in https://www.w3.org/TR/credential-management-1/#credentialrequestoptions-relevant-credential-interface-objects.",
+      "revId": "ef4d871cdf1b92b83dcf6ca2bf0e9a2a438c6f1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
