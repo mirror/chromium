@@ -260,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "2de127c4_929e66d8",
+        "filename": "net/quic/chromium/quic_stream_factory.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-12-18T22:17:14Z",
+      "side": 1,
+      "message": "As per offline discussion, I\u0027ll wait to review until the next patchset post-discussion.",
+      "parentUuid": "b7af0fa6_2a19370e",
+      "range": {
+        "startLine": 132,
+        "startChar": 62,
+        "endLine": 132,
+        "endChar": 0
+      },
+      "revId": "0014b6150ce499259ac1d7ff561fff838d395433",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0f390f70_f176f5dc",
         "filename": "net/quic/chromium/quic_stream_factory.h",
         "patchSetId": 18
