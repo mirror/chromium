@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "52532194_bdc1ab11",
+        "filename": "components/download/downloader/in_progress/download_entry.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-12-18T16:38:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9275d3b9_77293f0b",
+      "range": {
+        "startLine": 39,
+        "startChar": 9,
+        "endLine": 42,
+        "endChar": 46
+      },
+      "revId": "72372832e4491ad720a0fcba486cb75c063750c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bd00a0ab_6bc983f7",
         "filename": "components/download/downloader/in_progress/in_progress_cache_impl.cc",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "72372832e4491ad720a0fcba486cb75c063750c9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f5ece60_b5b32b1a",
+        "filename": "components/download/downloader/in_progress/in_progress_cache_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-12-18T16:38:30Z",
+      "side": 1,
+      "message": "In most implementations, this should be the same. But I\u0027m just making this method input-agnostic in case we get different cases where the entry is constructed/not coming from DB.",
+      "parentUuid": "bd00a0ab_6bc983f7",
+      "range": {
+        "startLine": 31,
+        "startChar": 32,
+        "endLine": 31,
+        "endChar": 58
+      },
+      "revId": "72372832e4491ad720a0fcba486cb75c063750c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -95,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "383a4867_078e2a83",
+        "filename": "components/download/downloader/in_progress/proto/download_entry.proto",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-12-18T16:38:30Z",
+      "side": 1,
+      "message": "The source id has to be persisted from where it\u0027s constructed with webcontents to where UKM will be taken (DownloadResourceHandler -\u003e DownloadManager -\u003e DownloadItem), so this storage of source id was more for the purpose of passing it along this way and less for future uses of the source id. Open to other suggestions!",
+      "parentUuid": "12f3ad23_fa8a4032",
+      "range": {
+        "startLine": 19,
+        "startChar": 17,
+        "endLine": 19,
+        "endChar": 30
+      },
+      "revId": "72372832e4491ad720a0fcba486cb75c063750c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c632b1b9_8f63fe65",
         "filename": "content/browser/download/download_manager_impl.cc",
         "patchSetId": 4
@@ -115,6 +187,30 @@
       "revId": "72372832e4491ad720a0fcba486cb75c063750c9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1555c3d4_8c63a0cc",
+        "filename": "content/browser/download/download_manager_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 554,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-12-18T16:38:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c632b1b9_8f63fe65",
+      "range": {
+        "startLine": 554,
+        "startChar": 29,
+        "endLine": 554,
+        "endChar": 35
+      },
+      "revId": "72372832e4491ad720a0fcba486cb75c063750c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -141,6 +237,30 @@
     },
     {
       "key": {
+        "uuid": "28950cae_b04d2bcf",
+        "filename": "content/browser/download/download_manager_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1043,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-12-18T16:38:30Z",
+      "side": 1,
+      "message": "So this path is for the specific downloads that don\u0027t go through the above code path and we want to track the request_origin/download_source from. That being said, we probably won\u0027t hit UKM with this pathway, but I don\u0027t think it hurts to add the UKM id in case we do?",
+      "parentUuid": "3ff18a48_a1987ded",
+      "range": {
+        "startLine": 1039,
+        "startChar": 2,
+        "endLine": 1043,
+        "endChar": 3
+      },
+      "revId": "72372832e4491ad720a0fcba486cb75c063750c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "97307f81_1c41b26e",
         "filename": "content/browser/download/download_resource_handler.cc",
         "patchSetId": 4
@@ -161,6 +281,30 @@
       "revId": "72372832e4491ad720a0fcba486cb75c063750c9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8147fef_66815cfa",
+        "filename": "content/browser/download/download_resource_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-12-18T16:38:30Z",
+      "side": 1,
+      "message": "So I chatted with holte@ about this offline, the other method, GetSourceIdForWebContentsDocument, can\u0027t be used from content/, so he has agreed this is a reasonable substitute. Based on print statements, this seems to work out (the lastcommittedurl is the one we want).",
+      "parentUuid": "97307f81_1c41b26e",
+      "range": {
+        "startLine": 111,
+        "startChar": 6,
+        "endLine": 112,
+        "endChar": 59
+      },
+      "revId": "72372832e4491ad720a0fcba486cb75c063750c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
