@@ -227,7 +227,7 @@ class WatchTimeReporterTest
                                        is_encrypted, false, initial_video_size),
         base::Bind(&WatchTimeReporterTest::GetCurrentMediaTime,
                    base::Unretained(this)),
-        &fake_metrics_provider_));
+        &fake_metrics_provider_, base::SequencedTaskRunnerHandle::Get()));
 
     // Setup the reporting interval to be immediate to avoid spinning real time
     // within the unit test.
