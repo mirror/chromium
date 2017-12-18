@@ -1689,10 +1689,11 @@ ScopedTraceBinaryEfficient::ScopedTraceBinaryEfficient(
     const char* name) {
   // The single atom works because for now the category_group can only be "gpu".
   DCHECK_EQ(strcmp(category_group, "gpu"), 0);
-  static TRACE_EVENT_API_ATOMIC_WORD atomic = 0;
-  INTERNAL_TRACE_EVENT_GET_CATEGORY_INFO_CUSTOM_VARIABLES(
-      category_group, atomic, category_group_enabled_);
+  static CategoryEnabledPtrInternal<IsKnownCategory(category_group)>
+      INTERNAL_TRACE_EVENT_UID(enabled_ptr);
   name_ = name;
+  category_group_enabled_ =
+      INTERNAL_TRACE_EVENT_UID(enabled_ptr).value(category_group);
   if (*category_group_enabled_) {
     event_handle_ =
         TRACE_EVENT_API_ADD_TRACE_EVENT_WITH_THREAD_ID_AND_TIMESTAMP(
