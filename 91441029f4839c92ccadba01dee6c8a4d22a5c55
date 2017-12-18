@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9c6f9b3f_650b0762",
+        "filename": "third_party/WebKit/Source/devtools/front_end/common/Color.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1119169
+      },
+      "writtenOn": "2017-12-18T21:57:58Z",
+      "side": 1,
+      "message": "Done. I made it so that we split when matching, since even though it makes the regex a little more verbose, I think it makes the flow of the code more readable.",
+      "parentUuid": "6f5ca989_48d62c4e",
+      "revId": "91441029f4839c92ccadba01dee6c8a4d22a5c55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "19bf9cfc_33ff9597",
         "filename": "third_party/WebKit/Source/devtools/front_end/common/Color.js",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "91441029f4839c92ccadba01dee6c8a4d22a5c55",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8700c2c_e1b8f3c5",
+        "filename": "third_party/WebKit/Source/devtools/front_end/common/Color.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1119169
+      },
+      "writtenOn": "2017-12-18T21:57:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "19bf9cfc_33ff9597",
+      "revId": "91441029f4839c92ccadba01dee6c8a4d22a5c55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
