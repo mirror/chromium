@@ -39,8 +39,8 @@ class {{property_classname}} final : public {{property.namespace_group}} {
     static const WTF::AtomicString& name = WTF::AtomicString("{{property.name}}\0");
     return name;
   }
-  CSSPropertyID PropertyID() const override { return {{property.property_id}}; }
   {% if property.alias_for == None %}
+  CSSPropertyID PropertyID() const override { return {{property.property_id}}; }
   {% for property_method in property.property_methods %}
   {{property_method.return_type}} {{property_method.name}}{{property_method.parameters}} const override;
   {% endfor %}
