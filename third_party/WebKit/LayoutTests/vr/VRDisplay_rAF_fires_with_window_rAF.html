@@ -5,14 +5,20 @@
 <script src="file:///gen/layout_test_data/mojo/public/js/mojo_bindings.js"></script>
 <script src="file:///gen/device/vr/vr_service.mojom.js"></script>
 <script src="resources/mock-vr-service.js"></script>
+<script src="resources/test-constants.js"></script>
 <script>
 let fakeDisplays = fakeVRDisplays();
 
 vr_test( (t) => {
   return navigator.getVRDisplays().then( (displays) => {
     let display = displays[0];
+    var synthetic_pose = VALID_POSE;
     let counter = 0;
     let rAFTime = 0;
+    // Ensure that there's a non-null pose available for the mock framework to
+    // return. Do this before calling vrdisplay.rAF to avoid a delayed
+    // callback.
+    mock_service.mockVRDisplays_[0].setPose(synthetic_pose);
 
     function onWindowAnimationFrame1(time) {
       window.requestAnimationFrame(onWindowAnimationFrame1);
