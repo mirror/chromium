@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4178b4e2_82cb38c6",
+        "filename": "third_party/WebKit/LayoutTests/webexposed/global-interface-listing-expected.txt",
+        "patchSetId": 11
+      },
+      "lineNbr": 2772,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-12-18T20:51:26Z",
+      "side": 1,
+      "message": "Does this need to be added to the WebView webexposed test expectations, too? (I remember that document.policy was added, but somehow that file isn\u0027t used on the try bots, maybe?)",
+      "revId": "b2e402e72dcb4c192b0891aff8b8a5ac1025c976",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6c749a5_ba1298b4",
+        "filename": "third_party/WebKit/Source/core/policy/BUILD.gn",
+        "patchSetId": 11
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-12-18T20:51:26Z",
+      "side": 1,
+      "message": "Does removing this line cause compiler warnings? Are there conversions that we can fix in our code?",
+      "revId": "b2e402e72dcb4c192b0891aff8b8a5ac1025c976",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab99e62e_5f57616a",
+        "filename": "third_party/WebKit/Source/core/policy/DocumentPolicy.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-12-18T20:51:26Z",
+      "side": 1,
+      "message": "Could this default (empty) implementation be moved to the Policy class? Then we wouldn\u0027t have to define it here at all.",
+      "revId": "b2e402e72dcb4c192b0891aff8b8a5ac1025c976",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e3103ea_609a27ee",
+        "filename": "third_party/WebKit/Source/core/policy/FramePolicy.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-12-18T20:51:26Z",
+      "side": 1,
+      "message": "I think this class should be CORE_EXPORTed like Policy",
+      "revId": "b2e402e72dcb4c192b0891aff8b8a5ac1025c976",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cade8c4a_d57ac602",
+        "filename": "third_party/WebKit/Source/core/policy/FramePolicy.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-12-18T20:51:26Z",
+      "side": 1,
+      "message": "Much investigation has brought me to the conclusion that the name of this class is the root cause of the memory leak we\u0027re seeing. There is another blink::FramePolicy class, and it looks like the linker is picking up the destructor for that class instead, and not releasing the unique_ptr to policy_ when objects of this class are destroyed.",
+      "revId": "b2e402e72dcb4c192b0891aff8b8a5ac1025c976",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be8fd98e_db8be6e7",
+        "filename": "third_party/WebKit/Source/core/policy/FramePolicy.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-12-18T20:51:26Z",
+      "side": 1,
+      "message": "I think that we can eliminate this factory method as well.",
+      "revId": "b2e402e72dcb4c192b0891aff8b8a5ac1025c976",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26f47379_b824e3fc",
+        "filename": "third_party/WebKit/Source/core/policy/FramePolicy.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-12-18T20:51:26Z",
+      "side": 1,
+      "message": "Nit: \u0027explicit\u0027 isn\u0027t needed here, if there\u0027s more than one argument to the constructor.",
+      "revId": "b2e402e72dcb4c192b0891aff8b8a5ac1025c976",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7eea42b_1caa1efb",
+        "filename": "third_party/WebKit/Source/core/policy/Policy.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-12-18T20:51:26Z",
+      "side": 1,
+      "message": "If we remove the factories (see below,) we should be able to delete this enum as well.",
+      "revId": "b2e402e72dcb4c192b0891aff8b8a5ac1025c976",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2db0e8b6_eb7a6395",
+        "filename": "third_party/WebKit/Source/core/policy/Policy.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-12-18T20:51:26Z",
+      "side": 1,
+      "message": "I think that the code could be cleaner if we were to eliminate all of the \u0027Create\u0027 factory functions, and just make the constructors public. There isn\u0027t substantial logic in the create methods, except this one, which is really a switch, and any caller of this function already needs to know which kind of object it is going to require.",
+      "revId": "b2e402e72dcb4c192b0891aff8b8a5ac1025c976",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
