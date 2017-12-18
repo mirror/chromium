@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "9fb1b78f_2f272cd3",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_popup_presenter.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-12-18T14:29:48Z",
+      "side": 1,
+      "message": "This method is pretty hard to read now. Could you restructure/add comments/breakdown to increase readability?",
+      "revId": "4cc7a197c46f9ec3e293836686cd58133123b75f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cdbed74_6e77f79b",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_popup_presenter.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-12-18T14:29:48Z",
+      "side": 1,
+      "message": "Why is this necessary?",
+      "revId": "4cc7a197c46f9ec3e293836686cd58133123b75f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c20f08e6_cc26cb3f",
         "filename": "ios/chrome/browser/ui/omnibox/omnibox_popup_presenter.mm",
         "patchSetId": 7
@@ -13,6 +47,108 @@
       "writtenOn": "2017-12-18T14:13:18Z",
       "side": 1,
       "message": "I guess we are only converting popupContainerView to autolayout?  And popup continues to need autoresizing masks?",
+      "revId": "4cc7a197c46f9ec3e293836686cd58133123b75f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56876cc4_9946c73a",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_popup_presenter.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-12-18T14:29:48Z",
+      "side": 1,
+      "message": "Instead, use FindNamedGuide/AddNamedGuide from named_guide.h",
+      "revId": "4cc7a197c46f9ec3e293836686cd58133123b75f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c08edbcc_3ae035bd",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_popup_presenter.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-12-18T14:29:48Z",
+      "side": 1,
+      "message": "This if statement is equivalent to: self.heightConstraint.active \u003d NO;",
+      "revId": "4cc7a197c46f9ec3e293836686cd58133123b75f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "054af0a6_8da563b1",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_popup_presenter.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-12-18T14:29:48Z",
+      "side": 1,
+      "message": "Why is this not required?",
+      "revId": "4cc7a197c46f9ec3e293836686cd58133123b75f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c3f214e_440b99bc",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_popup_presenter.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-12-18T14:29:48Z",
+      "side": 1,
+      "message": "Is it enough to do superview layoutIfNeeded?",
+      "revId": "4cc7a197c46f9ec3e293836686cd58133123b75f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4586f4dd_1dad03c3",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_popup_presenter.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-12-18T14:29:48Z",
+      "side": 1,
+      "message": "Since this method consists of one call, just inline it",
+      "revId": "4cc7a197c46f9ec3e293836686cd58133123b75f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edf9055f_824d54de",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_popup_presenter.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-12-18T14:29:48Z",
+      "side": 1,
+      "message": "You can probably use existing kOmniboxGuide named guide (although it was probably only ever setup in clean, so you\u0027ll need to make it work in bling)",
       "revId": "4cc7a197c46f9ec3e293836686cd58133123b75f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
