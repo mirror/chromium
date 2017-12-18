@@ -9,6 +9,10 @@
 #include "base/memory/weak_ptr.h"
 #include "ui/compositor/compositor_export.h"
 
+namespace content {
+class CompositorImpl;
+}
+
 namespace ui {
 
 class Compositor;
@@ -51,6 +55,7 @@ class COMPOSITOR_EXPORT CompositorLock {
 
  private:
   friend class Compositor;
+  friend class content::CompositorImpl;
   friend class FakeCompositorLock;
 
   // Causes the CompositorLock to end due to a timeout.
