@@ -4,11 +4,12 @@
 
 package org.chromium.chrome.browser.compositor.layouts.phone;
 
+import android.animation.AnimatorSet;
 import android.content.Context;
 import android.graphics.RectF;
-import android.view.animation.Interpolator;
 
 import org.chromium.chrome.browser.compositor.LayerTitleCache;
+import org.chromium.chrome.browser.compositor.animation.CompositorAnimationHandler;
 import org.chromium.chrome.browser.compositor.animation.CompositorAnimator;
 import org.chromium.chrome.browser.compositor.layouts.Layout;
 import org.chromium.chrome.browser.compositor.layouts.LayoutRenderHost;
@@ -36,6 +37,12 @@ import java.util.LinkedList;
 public class SimpleAnimationLayout extends Layout {
     /** Animation for discarding a tab. */
     private CompositorAnimator mDiscardAnimator;
+
+    /** The animation for a tab being created in the foreground. */
+    private AnimatorSet mTabCreatedForegroundAnimation;
+
+    /** The animation for a tab being created in the background. */
+    private AnimatorSet mTabCreatedBackgroundAnimation;
 
     /** Duration of the first step of the background animation: zooming out, rotating in */
     private static final long BACKGROUND_STEP1_DURATION = 300;
@@ -180,15 +187,21 @@ public class SimpleAnimationLayout extends Layout {
 
         forceAnimationToFinish();
 
-        Interpolator interpolator = BakedBezierInterpolator.TRANSFORM_CURVE;
-        addToAnimation(newLayoutTab, LayoutTab.Property.SCALE, 0.f, 1.f,
-                FOREGROUND_ANIMATION_DURATION, 0, false, interpolator);
-        addToAnimation(newLayoutTab, LayoutTab.Property.ALPHA, 0.f, 1.f,
-                FOREGROUND_ANIMATION_DURATION, 0, false, interpolator);
-        addToAnimation(newLayoutTab, LayoutTab.Property.X, originX, 0.f,
-                FOREGROUND_ANIMATION_DURATION, 0, false, interpolator);
-        addToAnimation(newLayoutTab, LayoutTab.Property.Y, originY, 0.f,
-                FOREGROUND_ANIMATION_DURATION, 0, false, interpolator);
+        CompositorAnimationHandler handler = getAnimationHandler();
+        CompositorAnimator scaleAnimation = CompositorAnimator.ofFloatProperty(
+                handler, newLayoutTab, LayoutTab.SCALE, 0f, 1f, FOREGROUND_ANIMATION_DURATION);
+        CompositorAnimator alphaAnimation = CompositorAnimator.ofFloatProperty(
+                handler, newLayoutTab, LayoutTab.ALPHA, 0f, 1f, FOREGROUND_ANIMATION_DURATION);
+        CompositorAnimator xAnimation = CompositorAnimator.ofFloatProperty(
+                handler, newLayoutTab, LayoutTab.X, originX, 0f, FOREGROUND_ANIMATION_DURATION);
+        CompositorAnimator yAnimation = CompositorAnimator.ofFloatProperty(
+                handler, newLayoutTab, LayoutTab.Y, originY, 0f, FOREGROUND_ANIMATION_DURATION);
+
+        mTabCreatedForegroundAnimation = new AnimatorSet();
+        mTabCreatedForegroundAnimation.setInterpolator(BakedBezierInterpolator.TRANSFORM_CURVE);
+        mTabCreatedForegroundAnimation.playTogether(
+                scaleAnimation, alphaAnimation, xAnimation, yAnimation);
+        mTabCreatedForegroundAnimation.start();
 
         mTabModelSelector.selectModel(newIsIncognito);
         startHiding(id, false);
@@ -220,17 +233,24 @@ public class SimpleAnimationLayout extends Layout {
         final float scale = StackAnimation.SCALE_AMOUNT;
         final float margin = Math.min(getWidth(), getHeight()) * (1.0f - scale) / 2.0f;
 
+        CompositorAnimationHandler handler = getAnimationHandler();
+
         // Step 1: zoom out the source tab and bring in the new tab
-        addToAnimation(sourceLayoutTab, LayoutTab.Property.SCALE, 1.0f, scale,
-                BACKGROUND_STEP1_DURATION, 0, false, BakedBezierInterpolator.TRANSFORM_CURVE);
-        addToAnimation(sourceLayoutTab, LayoutTab.Property.X, 0.0f, margin,
-                BACKGROUND_STEP1_DURATION, 0, false, BakedBezierInterpolator.TRANSFORM_CURVE);
-        addToAnimation(sourceLayoutTab, LayoutTab.Property.Y, 0.0f, margin,
-                BACKGROUND_STEP1_DURATION, 0, false, BakedBezierInterpolator.TRANSFORM_CURVE);
-        addToAnimation(sourceLayoutTab, LayoutTab.Property.BORDER_SCALE, 1.0f / scale, 1.0f,
-                BACKGROUND_STEP1_DURATION, 0, false, BakedBezierInterpolator.TRANSFORM_CURVE);
-        addToAnimation(sourceLayoutTab, LayoutTab.Property.BORDER_ALPHA, 0.0f, 1.0f,
-                BACKGROUND_STEP1_DURATION, 0, false, BakedBezierInterpolator.TRANSFORM_CURVE);
+        CompositorAnimator scaleAnimation = CompositorAnimator.ofFloatProperty(
+                handler, newLayoutTab, LayoutTab.SCALE, 1f, scale, BACKGROUND_STEP1_DURATION);
+        CompositorAnimator xAnimation = CompositorAnimator.ofFloatProperty(
+                handler, newLayoutTab, LayoutTab.X, 0f, margin, BACKGROUND_STEP1_DURATION);
+        CompositorAnimator yAnimation = CompositorAnimator.ofFloatProperty(
+                handler, newLayoutTab, LayoutTab.Y, 0f, margin, BACKGROUND_STEP1_DURATION);
+        CompositorAnimator borderScaleAnimation = CompositorAnimator.ofFloatProperty(handler,
+                newLayoutTab, LayoutTab.BORDER_SCALE, 1f / scale, 1f, BACKGROUND_STEP1_DURATION);
+        CompositorAnimator borderAlphaAnimation = CompositorAnimator.ofFloatProperty(
+                handler, newLayoutTab, LayoutTab.BORDER_ALPHA, 0f, 1f, BACKGROUND_STEP1_DURATION);
+
+        AnimatorSet sourceTabStep1 = new AnimatorSet();
+        sourceTabStep1.setInterpolator(BakedBezierInterpolator.TRANSFORM_CURVE);
+        sourceTabStep1.playTogether(
+                scaleAnimation, xAnimation, yAnimation, borderScaleAnimation, borderAlphaAnimation);
 
         float pauseX = margin;
         float pauseY = margin;
@@ -240,45 +260,53 @@ public class SimpleAnimationLayout extends Layout {
             pauseX = BACKGROUND_COVER_PCTG * getWidth();
         }
 
-        addToAnimation(newLayoutTab, LayoutTab.Property.ALPHA, 0.0f, 1.0f,
-                BACKGROUND_STEP1_DURATION / 2, 0, false, BakedBezierInterpolator.FADE_IN_CURVE);
-        addToAnimation(newLayoutTab, LayoutTab.Property.SCALE, 0.f, scale,
-                BACKGROUND_STEP1_DURATION, 0, false, BakedBezierInterpolator.FADE_IN_CURVE);
-        addToAnimation(newLayoutTab, LayoutTab.Property.X, originX, pauseX,
-                BACKGROUND_STEP1_DURATION, 0, false, BakedBezierInterpolator.FADE_IN_CURVE);
-        addToAnimation(newLayoutTab, LayoutTab.Property.Y, originY, pauseY,
-                BACKGROUND_STEP1_DURATION, 0, false, BakedBezierInterpolator.FADE_IN_CURVE);
+        CompositorAnimator alphaAnimation = CompositorAnimator.ofFloatProperty(
+                handler, newLayoutTab, LayoutTab.ALPHA, 0f, 1f, BACKGROUND_STEP1_DURATION / 2);
+        scaleAnimation = CompositorAnimator.ofFloatProperty(
+                handler, newLayoutTab, LayoutTab.SCALE, 0f, scale, BACKGROUND_STEP1_DURATION);
+        xAnimation = CompositorAnimator.ofFloatProperty(
+                handler, newLayoutTab, LayoutTab.X, originX, pauseX, BACKGROUND_STEP1_DURATION);
+        yAnimation = CompositorAnimator.ofFloatProperty(
+                handler, newLayoutTab, LayoutTab.Y, originY, pauseY, BACKGROUND_STEP1_DURATION);
+
+        AnimatorSet newTabStep1 = new AnimatorSet();
+        newTabStep1.setInterpolator(BakedBezierInterpolator.FADE_IN_CURVE);
+        newTabStep1.playTogether(alphaAnimation, scaleAnimation, xAnimation, yAnimation);
 
         // step 2: pause and admire the nice tabs
 
         // step 3: zoom in the source tab and slide down the new tab
-        addToAnimation(sourceLayoutTab, LayoutTab.Property.SCALE, scale, 1.0f,
-                BACKGROUND_STEP3_DURATION, BACKGROUND_STEP3_START, true,
-                BakedBezierInterpolator.TRANSFORM_CURVE);
-        addToAnimation(sourceLayoutTab, LayoutTab.Property.X, margin, 0.0f,
-                BACKGROUND_STEP3_DURATION, BACKGROUND_STEP3_START, true,
-                BakedBezierInterpolator.TRANSFORM_CURVE);
-        addToAnimation(sourceLayoutTab, LayoutTab.Property.Y, margin, 0.0f,
-                BACKGROUND_STEP3_DURATION, BACKGROUND_STEP3_START, true,
-                BakedBezierInterpolator.TRANSFORM_CURVE);
-        addToAnimation(sourceLayoutTab, LayoutTab.Property.BORDER_SCALE, 1.0f, 1.0f / scale,
-                BACKGROUND_STEP3_DURATION, BACKGROUND_STEP3_START, true,
-                BakedBezierInterpolator.TRANSFORM_CURVE);
-        addToAnimation(sourceLayoutTab, LayoutTab.Property.BORDER_ALPHA, 1.0f, 0.0f,
-                BACKGROUND_STEP3_DURATION, BACKGROUND_STEP3_START, true,
-                BakedBezierInterpolator.TRANSFORM_CURVE);
+        scaleAnimation = CompositorAnimator.ofFloatProperty(
+                handler, sourceLayoutTab, LayoutTab.SCALE, 1f, scale, BACKGROUND_STEP3_DURATION);
+        xAnimation = CompositorAnimator.ofFloatProperty(
+                handler, sourceLayoutTab, LayoutTab.X, margin, 0f, BACKGROUND_STEP3_DURATION);
+        yAnimation = CompositorAnimator.ofFloatProperty(
+                handler, sourceLayoutTab, LayoutTab.Y, margin, 0f, BACKGROUND_STEP3_DURATION);
+        borderScaleAnimation = CompositorAnimator.ofFloatProperty(handler, sourceLayoutTab,
+                LayoutTab.BORDER_SCALE, 1f, 1f / scale, BACKGROUND_STEP3_DURATION);
+        borderAlphaAnimation = CompositorAnimator.ofFloatProperty(handler, sourceLayoutTab,
+                LayoutTab.BORDER_ALPHA, 1f, 0f, BACKGROUND_STEP3_DURATION);
 
-        addToAnimation(newLayoutTab, LayoutTab.Property.ALPHA, 1.f, 0.f, BACKGROUND_STEP3_DURATION,
-                BACKGROUND_STEP3_START, true, BakedBezierInterpolator.FADE_OUT_CURVE);
+        alphaAnimation = CompositorAnimator.ofFloatProperty(
+                handler, newLayoutTab, LayoutTab.ALPHA, 1f, 0f, BACKGROUND_STEP3_DURATION);
+        CompositorAnimator extraAnimation;
         if (getOrientation() == Orientation.PORTRAIT) {
-            addToAnimation(newLayoutTab, LayoutTab.Property.Y, pauseY, getHeight(),
-                    BACKGROUND_STEP3_DURATION, BACKGROUND_STEP3_START, true,
-                    BakedBezierInterpolator.FADE_OUT_CURVE);
+            extraAnimation = CompositorAnimator.ofFloatProperty(handler, newLayoutTab, LayoutTab.Y,
+                    pauseY, getHeight(), BACKGROUND_STEP3_DURATION);
         } else {
-            addToAnimation(newLayoutTab, LayoutTab.Property.X, pauseX, getWidth(),
-                    BACKGROUND_STEP3_DURATION, BACKGROUND_STEP3_START, true,
-                    BakedBezierInterpolator.FADE_OUT_CURVE);
+            extraAnimation = CompositorAnimator.ofFloatProperty(handler, newLayoutTab, LayoutTab.X,
+                    pauseX, getWidth(), BACKGROUND_STEP3_DURATION);
         }
+
+        AnimatorSet newTabStep3 = new AnimatorSet();
+        newTabStep3.setInterpolator(BakedBezierInterpolator.TRANSFORM_CURVE);
+        newTabStep3.setStartDelay(BACKGROUND_STEP3_START);
+        newTabStep3.playTogether(scaleAnimation, xAnimation, yAnimation, borderScaleAnimation,
+                borderAlphaAnimation, alphaAnimation, extraAnimation);
+
+        mTabCreatedBackgroundAnimation = new AnimatorSet();
+        mTabCreatedBackgroundAnimation.playTogether(sourceTabStep1, newTabStep1, newTabStep3);
+        mTabCreatedBackgroundAnimation.start();
 
         mTabModelSelector.selectModel(newIsIncognito);
         startHiding(sourceId, false);
@@ -379,6 +407,8 @@ public class SimpleAnimationLayout extends Layout {
     protected void forceAnimationToFinish() {
         super.forceAnimationToFinish();
         if (mDiscardAnimator != null) mDiscardAnimator.end();
+        if (mTabCreatedForegroundAnimation != null) mTabCreatedForegroundAnimation.end();
+        if (mTabCreatedBackgroundAnimation != null) mTabCreatedBackgroundAnimation.end();
     }
 
     /**
