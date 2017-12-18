@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "55607e3b_9a3e110c",
+        "filename": "content/browser/media/session/media_session_controllers_manager_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-12-18T23:32:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "84d04e86_b9c63851",
+      "revId": "7005e63472caa195b8b48c0eb511eea5526e7317",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "36129b16_06bebaa0",
         "filename": "content/browser/media/session/media_session_controllers_manager_unittest.cc",
         "patchSetId": 6
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "e661fe6e_b8951e05",
+        "filename": "content/browser/media/session/media_session_controllers_manager_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-12-18T23:32:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "36129b16_06bebaa0",
+      "revId": "7005e63472caa195b8b48c0eb511eea5526e7317",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1f55a619_8e588d46",
         "filename": "content/browser/media/session/media_session_controllers_manager_unittest.cc",
         "patchSetId": 6
@@ -50,6 +86,24 @@
       "revId": "7005e63472caa195b8b48c0eb511eea5526e7317",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a459be3e_285da554",
+        "filename": "content/browser/media/session/media_session_controllers_manager_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-12-18T23:32:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1f55a619_8e588d46",
+      "revId": "7005e63472caa195b8b48c0eb511eea5526e7317",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
