@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "880fe3b7_dbeafd35",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1195,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-12-18T22:06:50Z",
+      "side": 1,
+      "message": "In the case \"policy-enforced \u003d false, user logs in, policy arrives with policy-enforced true\", the wallpaper is guaranteed to change to device policy wallpaper if no error occurs (like download failure/decoding failure). WallpaperPolicyHandler observes the change and fetches the data and saves it to local file system and then notify WallpaperControllerClient about the change which then calls into WallpaperController::SetDeviceWallpaperPolicyEnforced() function to change the wallpaper.\n\nWe do have user wallpaper policy that can override the user\u0027s wallpaper and once that\u0027s enforced, the user could not set his own custom wallpaper. User wallpaper policy is different with device wallpaper policy. Device policy controlled wallpaper only shows on login screen and should not leak to the user\u0027s session, and when it\u0027s specified, it must be used as the wallpaper on the login screen for all users. User policy controlled wallpaper shows inside a user\u0027s session (can\u0027t be overwritten by other wallpapers) or on the login screen if device policy controlled wallpaper is not specified.",
+      "parentUuid": "a280b3ba_afa53d19",
+      "revId": "3ec88e8254923ceb5f856952e1ea4ceab29b398e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "71b13a6b_5af4bdbb",
         "filename": "chrome/browser/ui/ash/wallpaper_controller_client.cc",
         "patchSetId": 9
@@ -105,6 +123,24 @@
       "revId": "3ec88e8254923ceb5f856952e1ea4ceab29b398e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c20db794_c3528d5e",
+        "filename": "chrome/browser/ui/ash/wallpaper_controller_client.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-12-18T22:06:50Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "11f598aa_30097bc2",
+      "revId": "3ec88e8254923ceb5f856952e1ea4ceab29b398e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -263,6 +299,24 @@
       "side": 1,
       "message": "The latter idea sounds good. I filed a bug to track it as part of the refactoring. Thank you!",
       "parentUuid": "3dab3f80_e70d8954",
+      "revId": "3ec88e8254923ceb5f856952e1ea4ceab29b398e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44dbffa2_f99b99aa",
+        "filename": "chrome/browser/ui/ash/wallpaper_policy_handler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-12-18T22:06:50Z",
+      "side": 1,
+      "message": "Thank you both for the suggestion! Modified it.",
+      "parentUuid": "473864fb_5a556308",
       "revId": "3ec88e8254923ceb5f856952e1ea4ceab29b398e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
