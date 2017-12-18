@@ -12,6 +12,7 @@
 #import "ios/chrome/browser/ui/commands/history_popup_commands.h"
 #import "ios/chrome/browser/ui/commands/start_voice_search_command.h"
 #import "ios/chrome/browser/ui/fullscreen/fullscreen_scroll_end_animator.h"
+#import "ios/chrome/browser/ui/omnibox/omnibox_popup_presenter.h"
 #include "ios/chrome/browser/ui/rtl_geometry.h"
 #import "ios/chrome/browser/ui/toolbar/clean/omnibox_focuser.h"
 #import "ios/chrome/browser/ui/toolbar/clean/toolbar_button.h"
@@ -584,6 +585,27 @@
                                     .leadingAnchor],
     locationBarContainerStackViewTopConstraint,
   ]];
+
+  UILayoutGuide* omniboxPopupGuide = [[UILayoutGuide alloc] init];
+  omniboxPopupGuide.identifier = [OmniboxPopupPresenter layoutGuideIdentifier];
+  [self.view addLayoutGuide:omniboxPopupGuide];
+  [NSLayoutConstraint activateConstraints:@[
+    [self.view.leadingAnchor
+        constraintEqualToAnchor:omniboxPopupGuide.leadingAnchor],
+    [self.view.trailingAnchor
+        constraintEqualToAnchor:omniboxPopupGuide.trailingAnchor],
+    [self.view.topAnchor constraintEqualToAnchor:omniboxPopupGuide.topAnchor]
+  ]];
+  if (IsIPadIdiom()) {
+    [omniboxPopupGuide.bottomAnchor
+        constraintEqualToAnchor:self.locationBarContainer.bottomAnchor
+                       constant:kiPadOmniboxPopupVerticalOffset]
+        .active = YES;
+  } else {
+    [omniboxPopupGuide.bottomAnchor
+        constraintEqualToAnchor:self.view.bottomAnchor]
+        .active = YES;
+  }
   [self.regularToolbarConstraints
       addObject:locationBarContainerStackViewTopConstraint];
 }
