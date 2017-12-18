@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "850bd998_6f80c7f3",
+        "filename": "chrome/browser/resources/gaia_auth_host/authenticator.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 873,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-18T16:51:06Z",
+      "side": 1,
+      "message": "There is only one webview used for gaia and saml in cros login webui so one UMA is good enough.\n\nLet\u0027s keep this one and put it under a \"if authMode \u003d\u003d DEFAULT\" to only report it for cros gaia case (the other two are used for offline case and desktop chrome gaia).\n\ni.e.\n  if (this.authMode \u003d\u003d AuthMode.DEFAULT) {\n    chrome.send(...);\n  }",
+      "revId": "ac8852cad9a1d1af82c938e4c139dd76180ed450",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3433db4_f77fea48",
+        "filename": "chrome/browser/resources/gaia_auth_host/saml_handler.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-18T16:51:06Z",
+      "side": 1,
+      "message": "Drop this since there is only one webview for sign-in in cros login webui. SamlHandler is a class to wrap saml related logic and is part of Authenticator.",
+      "revId": "ac8852cad9a1d1af82c938e4c139dd76180ed450",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
