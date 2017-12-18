@@ -87,6 +87,24 @@
       "revId": "145f1616678a1fae7918ef8910c1026c2a0833e1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e31182c_46de4096",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8ScriptRunner.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1002763
+      },
+      "writtenOn": "2017-12-18T13:57:16Z",
+      "side": 0,
+      "message": "We might change the logic for when we streaming parse a script in the future though - e.g., with background compilation it might be worth streaming parse / compile a script even if it comes from the http cache.",
+      "parentUuid": "7e104cf1_00ed8af3",
+      "revId": "145f1616678a1fae7918ef8910c1026c2a0833e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
