@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "05b2f5f0_2d7ec26a",
+        "filename": "third_party/WebKit/public/platform/modules/locks/lock_manager.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-18T02:08:53Z",
+      "side": 1,
+      "message": "Nit: can this have a brief description of what it\u0027s supposed to do? Maybe this could link to the web spec and briefly describe what web locks are.",
+      "revId": "f4b790bc151c16dd41211ea5df6bbd3911c84f52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1935acd_d975a305",
+        "filename": "third_party/WebKit/public/platform/modules/locks/lock_manager.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-18T02:08:53Z",
+      "side": 1,
+      "message": "Nit: wrap at 80 please.",
+      "revId": "f4b790bc151c16dd41211ea5df6bbd3911c84f52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
