@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a8ed8b94_dcdda09d",
+        "filename": "chrome/common/chrome_render_frame.mojom",
+        "patchSetId": 14
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-18T07:48:05Z",
+      "side": 1,
+      "message": "Rephrase as: \"Requests the web application info from the renderer.\"",
+      "range": {
+        "startLine": 48,
+        "startChar": 0,
+        "endLine": 49,
+        "endChar": 61
+      },
+      "revId": "af393ff39f2c5e7b69cdfc33537f22a1f408b5c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36f737c7_0b48f15c",
+        "filename": "chrome/common/common_message_generator.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-18T07:48:05Z",
+      "side": 1,
+      "message": "This #include should be in render_messages.h.",
+      "revId": "af393ff39f2c5e7b69cdfc33537f22a1f408b5c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
