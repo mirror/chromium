@@ -148,6 +148,10 @@ class CONTENT_EXPORT CrossSiteDocumentResourceHandler
   // completed, and thus it is safe to cancel or detach on the next read.
   bool blocked_read_completed_ = false;
 
+  // The HTTP response code (e.g. 200 or 404) received in response to this
+  // resource request.
+  int http_response_code_ = 0;
+
   DISALLOW_COPY_AND_ASSIGN(CrossSiteDocumentResourceHandler);
 };
 
