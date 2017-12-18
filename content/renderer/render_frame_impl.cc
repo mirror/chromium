@@ -4350,7 +4350,10 @@ bool RenderFrameImpl::ShouldUseClientLoFiForRequest(
   if (request.GetPreviewsState() != WebURLRequest::kPreviewsUnspecified)
     return request.GetPreviewsState() & WebURLRequest::kClientLoFiOn;
 
-  if (!IsClientLoFiActiveForFrame())
+  if (previews_state_ & (PREVIEWS_OFF | PREVIEWS_NO_TRANSFORM))
+    return false;
+
+  if (!(previews_state_ & CLIENT_LOFI_ON))
     return false;
 
   // Even if this frame is using Server Lo-Fi, https:// images won't be handled
@@ -4361,13 +4364,9 @@ bool RenderFrameImpl::ShouldUseClientLoFiForRequest(
   return true;
 }
 
-bool RenderFrameImpl::IsClientLoFiActiveForFrame() {
-  if (!(previews_state_ & CLIENT_LOFI_ON))
-    return false;
-  if (previews_state_ & (PREVIEWS_OFF | PREVIEWS_NO_TRANSFORM)) {
-    return false;
-  }
-  return true;
+blink::WebURLRequest::PreviewsState RenderFrameImpl::GetPreviewsStateForFrame()
+    const {
+  return static_cast<WebURLRequest::PreviewsState>(previews_state_);
 }
 
 void RenderFrameImpl::DidBlockFramebust(const WebURL& url) {

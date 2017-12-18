@@ -641,7 +641,7 @@ class CONTENT_EXPORT RenderFrameImpl
   blink::WebEffectiveConnectionType GetEffectiveConnectionType() override;
   void SetEffectiveConnectionTypeForTesting(
       blink::WebEffectiveConnectionType) override;
-  bool IsClientLoFiActiveForFrame() override;
+  blink::WebURLRequest::PreviewsState GetPreviewsStateForFrame() const override;
   bool ShouldUseClientLoFiForRequest(const blink::WebURLRequest&) override;
   void DidBlockFramebust(const blink::WebURL& url) override;
   blink::WebString GetInstrumentationToken() override;
