@@ -22,6 +22,30 @@
       "revId": "5d2dbb8c42316330167c05480251e388c1a4e8c0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a4161e0_0a827b68",
+        "filename": "content/shell/browser/layout_test/blink_test_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 785,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-12-18T22:56:37Z",
+      "side": 1,
+      "message": "It is unrelated fix (it was meant to try to speculatively address https://crbug.com/760445 [which despite ClusterFuzz\u0027s claims is not really fixed and keeps reoccurring from time to time - e.g. https://crbug.com/768091]).  But you\u0027re right - it will be best to replace all |base::Unretained(this)| with |weak_factory_.GetWeakPtr()| - done.",
+      "parentUuid": "22b476fc_ae48f1ff",
+      "range": {
+        "startLine": 785,
+        "startChar": 21,
+        "endLine": 785,
+        "endChar": 47
+      },
+      "revId": "5d2dbb8c42316330167c05480251e388c1a4e8c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
