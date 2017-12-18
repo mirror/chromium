@@ -291,7 +291,9 @@ class CONTENT_EXPORT RenderWidgetHostViewAndroid
   void ShowContextMenuAtPoint(const gfx::Point& point, ui::MenuSourceType);
   void DismissTextHandles();
   void SetTextHandlesTemporarilyHidden(bool hidden);
-  void OnShowUnhandledTapUIIfNeeded(int x_dip, int y_dip);
+  // |x| and |y| are in DIP scale if --use-zoom-for-dsf is disabled. Otherwise,
+  // they are in physical pixel scale.
+  void OnShowUnhandledTapUIIfNeeded(int x, int y);
   void OnSelectWordAroundCaretAck(bool did_select,
                                   int start_adjust,
                                   int end_adjust);

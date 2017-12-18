@@ -76,6 +76,7 @@
 #include "content/public/browser/render_widget_host_iterator.h"
 #include "content/public/common/content_features.h"
 #include "content/public/common/content_switches.h"
+#include "content/public/common/use_zoom_for_dsf_policy.h"
 #include "gpu/command_buffer/client/gles2_implementation.h"
 #include "gpu/command_buffer/client/gles2_interface.h"
 #include "ipc/ipc_message_macros.h"
@@ -671,12 +672,13 @@ bool RenderWidgetHostViewAndroid::IsShowing() {
   return is_showing_ && content_view_core_;
 }
 
-void RenderWidgetHostViewAndroid::OnShowUnhandledTapUIIfNeeded(int x_dip,
-                                                               int y_dip) {
+void RenderWidgetHostViewAndroid::OnShowUnhandledTapUIIfNeeded(int x, int y) {
   if (!selection_popup_controller_ || !content_view_core_)
     return;
-  selection_popup_controller_->OnShowUnhandledTapUIIfNeeded(
-      x_dip, y_dip, view_.GetDipScale());
+  float dip_scale = view_.GetDipScale();
+  float x_px = UseZoomForDSFEnabled() ? x : x * dip_scale;
+  float y_px = UseZoomForDSFEnabled() ? y : y * dip_scale;
+  selection_popup_controller_->OnShowUnhandledTapUIIfNeeded(x_px, y_px);
 }
 
 void RenderWidgetHostViewAndroid::OnSelectWordAroundCaretAck(bool did_select,

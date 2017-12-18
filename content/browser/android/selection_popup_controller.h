@@ -37,7 +37,8 @@ class SelectionPopupController : public RenderWidgetHostConnector {
                         const gfx::RectF& selection_rect);
   void OnSelectionChanged(const std::string& text);
   bool ShowSelectionMenu(const ContextMenuParams& params, int handle_height);
-  void OnShowUnhandledTapUIIfNeeded(int x_dip, int y_dip, float dip_scale);
+  // |x| and |y| are in physical pixel scale.
+  void OnShowUnhandledTapUIIfNeeded(int x_px, int y_px);
   void OnSelectWordAroundCaretAck(bool did_select,
                                   int start_adjust,
                                   int end_adjust);
