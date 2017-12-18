@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "20db8ae2_3366f4eb",
+        "filename": "third_party/WebKit/Source/core/layout/TextAutosizer.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1130,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-12-18T18:38:59Z",
+      "side": 1,
+      "message": "The device scale factor should be used to compute the font size in physical pixels, but it\u0027s hard to see how it makes sense to scale the text autosizing multiplier.\n\nConsider DSF \u003d\u003d 2.0, specified size of 16 CSS pixels, and 100% zoom level.  If multiplier \u003d\u003d 1 (no autosizing), the size in physical pixels should be 32.  If multiplier \u003d\u003d 1.5 (increase size by 50%), the size should be 48.  But your change would cause the size to be 96 (32 * 1.5 * 2.0), which is incorrect.",
+      "range": {
+        "startLine": 1130,
+        "startChar": 55,
+        "endLine": 1130,
+        "endChar": 59
+      },
+      "revId": "c1bced5570c392658b2a482dcb4d0145658b6342",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
