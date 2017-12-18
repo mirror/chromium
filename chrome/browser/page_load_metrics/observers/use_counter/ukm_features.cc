@@ -18,6 +18,7 @@ bool IsAllowedUkmFeature(blink::mojom::WebFeature feature) {
           WebFeature::kVibrateWithoutUserGesture,
           WebFeature::kTouchEventPreventedNoTouchAction,
           WebFeature::kTouchEventPreventedForcedDocumentPassiveNoTouchAction,
+          WebFeature::kDataUriHasOctothorpe,
       }));
   return opt_in_features.count(feature);
 }
