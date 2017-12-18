@@ -11,6 +11,7 @@
 #include "bindings/core/v8/V8BindingForCore.h"
 #include "core/CoreExport.h"
 #include "platform/heap/Handle.h"
+#include "platform/wtf/Optional.h"
 #include "platform/wtf/TypeTraits.h"
 #include "platform/wtf/text/WTFString.h"
 
@@ -101,6 +102,24 @@ struct IDLRecord final : public IDLBase {
           std::is_class<typename V8TypeOf<ValueCppType>::Type>::value,
       HeapVector<std::pair<String, MaybeMemberValueCppType>>,
       Vector<std::pair<String, ValueCppType>>>::type;
+};
+
+// Nullable (T?). Maps to Optional<T>, except for pointers to GC objects, for
+// which using nullptr instead is typical.
+// https://heycam.github.io/webidl/#idl-nullable-type
+template <typename InnerType, typename = void>
+struct IDLNullable final : public IDLBase {
+ public:
+  using ImplType =
+      WTF::Optional<typename NativeValueTraits<InnerType>::ImplType>;
+};
+template <typename InnerType>
+struct IDLNullable<
+    InnerType,
+    std::enable_if_t<WTF::IsGarbageCollectedType<InnerType>::value>>
+    final : public IDLBase {
+ public:
+  using ImplType = typename NativeValueTraits<InnerType>::ImplType;
 };
 
 }  // namespace blink
