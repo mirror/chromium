@@ -151,23 +151,23 @@ CSSCrossfadeValue* CSSCrossfadeValue::ValueWithURLsMadeAbsolute() {
   return CSSCrossfadeValue::Create(from_value, to_value, percentage_value_);
 }
 
-IntSize CSSCrossfadeValue::FixedSize(const Document& document,
-                                     const FloatSize& default_object_size) {
+LayoutSize CSSCrossfadeValue::FixedSize(const Document& document,
+                                        const FloatSize& default_object_size) {
   Image* from_image = RenderableImageForCSSValue(from_value_.Get(), document);
   Image* to_image = RenderableImageForCSSValue(to_value_.Get(), document);
 
   if (!from_image || !to_image)
-    return IntSize();
+    return LayoutSize();
 
-  IntSize from_image_size = from_image->Size();
-  IntSize to_image_size = to_image->Size();
+  LayoutSize from_image_size(from_image->Size());
+  LayoutSize to_image_size(to_image->Size());
 
   if (from_image->IsSVGImage())
-    from_image_size = RoundedIntSize(
+    from_image_size = RoundedLayoutSize(
         ToSVGImage(from_image)->ConcreteObjectSize(default_object_size));
 
   if (to_image->IsSVGImage())
-    to_image_size = RoundedIntSize(
+    to_image_size = RoundedLayoutSize(
         ToSVGImage(to_image)->ConcreteObjectSize(default_object_size));
 
   // Rounding issues can cause transitions between images of equal size to
@@ -179,10 +179,10 @@ IntSize CSSCrossfadeValue::FixedSize(const Document& document,
   float percentage = percentage_value_->GetFloatValue();
   float inverse_percentage = 1 - percentage;
 
-  return IntSize(from_image_size.Width() * inverse_percentage +
-                     to_image_size.Width() * percentage,
-                 from_image_size.Height() * inverse_percentage +
-                     to_image_size.Height() * percentage);
+  return LayoutSize(from_image_size.Width() * inverse_percentage +
+                        to_image_size.Width() * percentage,
+                    from_image_size.Height() * inverse_percentage +
+                        to_image_size.Height() * percentage);
 }
 
 bool CSSCrossfadeValue::IsPending() const {
@@ -224,7 +224,7 @@ scoped_refptr<Image> CSSCrossfadeValue::GetImage(
     const ImageResourceObserver& client,
     const Document& document,
     const ComputedStyle&,
-    const IntSize& size) {
+    const LayoutSize& size) {
   if (size.IsEmpty())
     return nullptr;
 

@@ -34,8 +34,8 @@ CrossfadeGeneratedImage::CrossfadeGeneratedImage(
     scoped_refptr<Image> from_image,
     scoped_refptr<Image> to_image,
     float percentage,
-    IntSize crossfade_size,
-    const IntSize& size)
+    LayoutSize crossfade_size,
+    const LayoutSize& size)
     : GeneratedImage(size),
       from_image_(std::move(from_image)),
       to_image_(std::move(to_image)),
