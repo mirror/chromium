@@ -34,6 +34,23 @@
       "revId": "1473c6fa4b88e8d2bfa1538578de8f6132dd39a2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6547b26_3539a1a1",
+        "filename": "content/public/browser/render_widget_host_view.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-12-18T14:37:33Z",
+      "side": 1,
+      "message": "content/ public API methods should be used outside content/, which is not the case in this CL. Please provide at least one usage of the method outside of content/ in this CL. If you plan to use it outside of content/ in another CL, then please make this a method of the impl inside content/. Then expose it to the public API in the CL where you need to use it outside of content.\n\ncontent/ public API methods should not be declared const (see https://www.chromium.org/developers/content-module/content-api for the reasoning). Please remove the const qualifier from this method.",
+      "revId": "1473c6fa4b88e8d2bfa1538578de8f6132dd39a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
