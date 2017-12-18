@@ -17,8 +17,6 @@ size_t RegisterCastCrashKeys() {
       // remove these and refactor as necessary.
 
       {"url-chunk", ::crash_keys::kLargeSize},
-      {::crash_keys::kNumVariations, ::crash_keys::kSmallSize},
-      {::crash_keys::kVariations, ::crash_keys::kHugeSize},
 
       // TODO(sunnyps): Remove after fixing crbug.com/724999.
       {"gl-context-set-current-stack-trace", ::crash_keys::kMediumSize},
