@@ -57,7 +57,7 @@ ui::AXPlatformNode* FromNativeWindow(gfx::NativeWindow native_window) {
 }  // namespace
 
 NativeViewAccessibilityBase::NativeViewAccessibilityBase(View* view)
-    : view_(view) {
+    : ViewAccessibility(view) {
   ax_node_ = ui::AXPlatformNode::Create(this);
   DCHECK(ax_node_);
 
@@ -85,42 +85,7 @@ void NativeViewAccessibilityBase::NotifyAccessibilityEvent(
 // ui::AXPlatformNodeDelegate
 
 const ui::AXNodeData& NativeViewAccessibilityBase::GetData() const {
-  data_ = ui::AXNodeData();
-
-  // Views may misbehave if their widget is closed; return an unknown role
-  // rather than possibly crashing.
-  if (!view_->GetWidget() || view_->GetWidget()->IsClosed()) {
-    data_.role = ui::AX_ROLE_UNKNOWN;
-    data_.AddIntAttribute(ui::AX_ATTR_RESTRICTION, ui::AX_RESTRICTION_DISABLED);
-    return data_;
-  }
-
-  view_->GetAccessibleNodeData(&data_);
-  data_.location = GetBoundsInScreen();
-  base::string16 description;
-  view_->GetTooltipText(gfx::Point(), &description);
-  data_.AddStringAttribute(ui::AX_ATTR_DESCRIPTION,
-                           base::UTF16ToUTF8(description));
-
-  if (view_->IsAccessibilityFocusable())
-    data_.AddState(ui::AX_STATE_FOCUSABLE);
-
-  if (!view_->enabled()) {
-    data_.AddIntAttribute(ui::AX_ATTR_RESTRICTION, ui::AX_RESTRICTION_DISABLED);
-  }
-
-  if (!view_->IsDrawn())
-    data_.AddState(ui::AX_STATE_INVISIBLE);
-
-  if (view_->context_menu_controller())
-    data_.AddAction(ui::AX_ACTION_SHOW_CONTEXT_MENU);
-
-  // Make sure this element is excluded from the a11y tree if there's a
-  // focusable parent. All keyboard focusable elements should be leaf nodes.
-  // Exceptions to this rule will themselves be accessibility focusable.
-  if (IsViewUnfocusableChildOfFocusableAncestor(view_))
-    data_.role = ui::AX_ROLE_IGNORED;
-  return data_;
+  data_ = GetAccessibleNodeData();
 }
 
 const ui::AXTreeData& NativeViewAccessibilityBase::GetTreeData() const {

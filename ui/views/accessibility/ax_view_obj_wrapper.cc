@@ -9,6 +9,7 @@
 #include "ui/accessibility/ax_node_data.h"
 #include "ui/events/event_utils.h"
 #include "ui/views/accessibility/ax_aura_obj_cache.h"
+#include "ui/views/accessibility/view_accessibility.h"
 #include "ui/views/view.h"
 #include "ui/views/widget/widget.h"
 
@@ -46,7 +47,7 @@ void AXViewObjWrapper::GetChildren(
 }
 
 void AXViewObjWrapper::Serialize(ui::AXNodeData* out_node_data) {
-  view_->GetAccessibleNodeData(out_node_data);
+  *out_node_data = view_->GetViewAccessibility().GetAccessibleNodeData();
 
   out_node_data->id = GetID();
 

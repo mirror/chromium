@@ -2,14 +2,13 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "ui/views/accessibility/native_view_accessibility.h"
+#include "ui/views/accessibility/view_accessibility.h"
 
 namespace views {
 
 // static
-std::unique_ptr<NativeViewAccessibility> NativeViewAccessibility::Create(
-    View* view) {
-  return nullptr;
+std::unique_ptr<ViewAccessibility> ViewAccessibility::Create(View* view) {
+  return std::make_unique<ViewAccessibility>(view);
 }
 
 }  // namespace views
