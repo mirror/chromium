@@ -28,6 +28,7 @@
 #include "modules/EventModules.h"
 #include "modules/storage/Storage.h"
 #include "modules/storage/StorageEventInit.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
@@ -63,7 +64,7 @@ StorageEvent::StorageEvent(const AtomicString& type,
       key_(key),
       old_value_(old_value),
       new_value_(new_value),
-      url_(url),
+      url_(String::ReplaceUnmatchedSurrogates(url)),
       storage_area_(storage_area) {}
 
 StorageEvent::StorageEvent(const AtomicString& type,
@@ -76,7 +77,7 @@ StorageEvent::StorageEvent(const AtomicString& type,
   if (initializer.hasNewValue())
     new_value_ = initializer.newValue();
   if (initializer.hasURL())
-    url_ = initializer.url();
+    url_ = String::ReplaceUnmatchedSurrogates(initializer.url());
   if (initializer.hasStorageArea())
     storage_area_ = initializer.storageArea();
 }
@@ -97,7 +98,7 @@ void StorageEvent::initStorageEvent(const AtomicString& type,
   key_ = key;
   old_value_ = old_value;
   new_value_ = new_value;
-  url_ = url;
+  url_ = String::ReplaceUnmatchedSurrogates(url);
   storage_area_ = storage_area;
 }
 

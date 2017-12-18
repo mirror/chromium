@@ -282,6 +282,9 @@ class WTF_EXPORT String {
     return *this;
   }
 
+  // Replace unmatched surrogates with REPLACEMENT CHARACTER U+FFFD.
+  static String ReplaceUnmatchedSurrogates(const String&);
+
   void Fill(UChar c) {
     if (impl_)
       impl_ = impl_->Fill(c);

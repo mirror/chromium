@@ -821,4 +821,106 @@ void String::Show() const {
 }
 #endif
 
+static bool HasUnmatchedSurrogates(const String& string) {
+  // By definition, 8-bit strings are confined to the Latin-1 code page and
+  // have no surrogates, matched or otherwise.
+  if (string.Is8Bit())
+    return false;
+
+  const UChar* characters = string.Characters16();
+  const unsigned length = string.length();
+
+  for (unsigned i = 0; i < length; ++i) {
+    UChar c = characters[i];
+    if (U16_IS_SINGLE(c))
+      continue;
+    if (U16_IS_TRAIL(c))
+      return true;
+    DCHECK(U16_IS_LEAD(c));
+    if (i == length - 1)
+      return true;
+    UChar d = characters[i + 1];
+    if (!U16_IS_TRAIL(d))
+      return true;
+    ++i;
+  }
+  return false;
+}
+
+// Replace unmatched surrogates with REPLACEMENT CHARACTER U+FFFD.
+String String::ReplaceUnmatchedSurrogates(const String& string) {
+  // This roughly implements http://heycam.github.io/webidl/#dfn-obtain-unicode
+  // but since Blink strings are 16-bits internally, the output is simply
+  // re-encoded to UTF-16.
+
+  // The concept of surrogate pairs is explained at:
+  // http://www.unicode.org/versions/Unicode6.2.0/ch03.pdf#G2630
+
+  // Blink-specific optimization to avoid making an unnecessary copy.
+  if (!HasUnmatchedSurrogates(string))
+    return string;
+  DCHECK(!string.Is8Bit());
+
+  // 1. Let S be the DOMString value.
+  const UChar* s = string.Characters16();
+
+  // 2. Let n be the length of S.
+  const unsigned n = string.length();
+
+  // 3. Initialize i to 0.
+  unsigned i = 0;
+
+  // 4. Initialize U to be an empty sequence of Unicode characters.
+  StringBuilder u;
+  u.ReserveCapacity(n);
+
+  // 5. While i < n:
+  while (i < n) {
+    // 1. Let c be the code unit in S at index i.
+    UChar c = s[i];
+    // 2. Depending on the value of c:
+    if (U16_IS_SINGLE(c)) {
+      // c < 0xD800 or c > 0xDFFF
+      // Append to U the Unicode character with code point c.
+      u.Append(c);
+    } else if (U16_IS_TRAIL(c)) {
+      // 0xDC00 <= c <= 0xDFFF
+      // Append to U a U+FFFD REPLACEMENT CHARACTER.
+      u.Append(kReplacementCharacter);
+    } else {
+      // 0xD800 <= c <= 0xDBFF
+      DCHECK(U16_IS_LEAD(c));
+      if (i == n - 1) {
+        // 1. If i = n-1, then append to U a U+FFFD REPLACEMENT CHARACTER.
+        u.Append(kReplacementCharacter);
+      } else {
+        // 2. Otherwise, i < n-1:
+        DCHECK_LT(i, n - 1);
+        // ....1. Let d be the code unit in S at index i+1.
+        UChar d = s[i + 1];
+        if (U16_IS_TRAIL(d)) {
+          // 2. If 0xDC00 <= d <= 0xDFFF, then:
+          // ..1. Let a be c & 0x3FF.
+          // ..2. Let b be d & 0x3FF.
+          // ..3. Append to U the Unicode character with code point
+          //      2^16+2^10*a+b.
+          u.Append(U16_GET_SUPPLEMENTARY(c, d));
+          // Blink: This is equivalent to u.append(c); u.append(d);
+          ++i;
+        } else {
+          // 3. Otherwise, d < 0xDC00 or d > 0xDFFF. Append to U a U+FFFD
+          //    REPLACEMENT CHARACTER.
+          u.Append(kReplacementCharacter);
+        }
+      }
+    }
+    // 3. Set i to i+1.
+    ++i;
+  }
+
+  // 6. Return U.
+  DCHECK_EQ(u.length(), string.length());
+  return u.ToString();
+}
+
 }  // namespace WTF
