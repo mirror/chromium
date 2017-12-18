@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "029a1a94_b769358f",
+        "filename": "chrome/browser/ui/app_list/chrome_app_list_item_list.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-18T19:26:09Z",
+      "side": 1,
+      "message": "Can we just use ui::ListModel\u003cChromeAppListItem\u003e ?\n\nThe reason we have a AppListItemList is so that we can sort by ordinals. But if we don\u0027t need to do that, we can just use ui::ListModel.",
+      "revId": "04316c30d1b24f6c109ec6c801f79be43ff12377",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
