@@ -256,10 +256,22 @@ Element* TreeScope::HitTestPoint(double x,
     return nullptr;
   if (node->IsPseudoElement() || node->IsTextNode())
     node = node->ParentOrShadowHostNode();
-  DCHECK(!node || node->IsElementNode() || node->IsShadowRoot());
-  node = AncestorInThisScope(node);
-  if (!node || !node->IsElementNode())
+  if (!node) {
     return nullptr;
+  }
+  DCHECK(node->IsElementNode() || node->IsShadowRoot());
+  while (node) {
+    if (node->TreeRoot().IsShadowIncludingInclusiveAncestorOf(&RootNode())) {
+      break;
+    }
+    node = node->OwnerShadowHost();
+  }
+  if (node && node->IsShadowRoot()) {
+    node = node->OwnerShadowHost();
+  }
+  if (!node || !node->IsElementNode()) {
+    return nullptr;
+  }
   return ToElement(node);
 }
 
