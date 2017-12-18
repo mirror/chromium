@@ -64,6 +64,7 @@ component("cpp") {
 
   deps = [
     "//components/prefs",
+    "//components/sync:sync",
     "//mojo/common:common_custom_types",
     "//skia/public/interfaces",
     "//ui/aura",
