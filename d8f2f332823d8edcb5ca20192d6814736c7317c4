@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "cb4de3b4_478a5bca",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1004,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-12-18T22:27:55Z",
+      "side": 1,
+      "message": "During a warm start, this prevents us from covering the tab switcher entirely if it was last visible. We never hit this through cold-start. I\u0027ve never seen isInOverviewMode be true on a cold-start.\n\nYou can be in overview mode still on a warm start with no tabs, in which case I just want to let the NTP expand as always, although maybe I\u0027m wrong in recording the startup reason here.",
+      "parentUuid": "9a8c0a96_e324f5b5",
+      "range": {
+        "startLine": 1003,
+        "startChar": 24,
+        "endLine": 1004,
+        "endChar": 95
+      },
+      "revId": "d8f2f332823d8edcb5ca20192d6814736c7317c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7f80626_c7947ef5",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
         "patchSetId": 1
@@ -69,6 +93,30 @@
       "revId": "d8f2f332823d8edcb5ca20192d6814736c7317c4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd75003e_87c03205",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1011,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-12-18T22:27:55Z",
+      "side": 1,
+      "message": "No, we end up in the scenario below instead, where we return false. We\u0027re never in overview mode on a cold-start.",
+      "parentUuid": "a7f80626_c7947ef5",
+      "range": {
+        "startLine": 1011,
+        "startChar": 20,
+        "endLine": 1011,
+        "endChar": 31
+      },
+      "revId": "d8f2f332823d8edcb5ca20192d6814736c7317c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
