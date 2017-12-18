@@ -52,6 +52,24 @@
       "revId": "71bb9274dcc99666657d402dea9f661558094a11",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45a1e5ab_2833e281",
+        "filename": "storage/browser/blob/blob_registry_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 563,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-12-18T15:44:20Z",
+      "side": 1,
+      "message": "\u003e Hrm. It needs to be impossible for a renderer to create a blob with arbitrary content and assign it to a distinct origin. \n\nTo be precise, blobs and their content don\u0027t belong to any particular origin, it\u0027s only blob URLs that are associated with a distinct origin.\n\n\u003e If we can\u0027t do that, it will end up being a hole in site isolation\u0027s process separation mechanics (as origin1 can frame the fake-origin2, causing JS execution and therefore UXSS).\n\nThis should not be a problem, especially with site isolation. The browser process can and will still check that the origin of the URLs associated with blobs is something the particular renderer process is allowed to commit. Currently that\u0027s done when the actual URL is created, but in the future I\u0027m hoping to move that check here as a check on the requested origin. I just kept it this way for now since that exactly matches the current behavior. If you prefer I could just not pass the origin from the renderer to the browser at all at this point, since it\u0027s not used yet, and instead re-introduce that parameter when I make the browser process responsible for creating the actual blob URLs (or I could add the extra checks now, and make sure the URLs a renderer tries to create match the origin it says it was going to create URLs for).\n\nAlso not that pretty much any storage API (or really any API that modifies state in the browser process in an observable manner) is going to have similar ordering issues where independent non-associated pipes per frame can\u0027t provide a web-compatible implementation, as it would allow modifications made from one script context but through different frames to be reordered in observable ways.",
+      "parentUuid": "dd510620_4b7773b9",
+      "revId": "71bb9274dcc99666657d402dea9f661558094a11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
