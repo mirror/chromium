@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "cb79f36a_630a7f9e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 13
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-12-18T22:46:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e3d3104b_d853bdab",
+      "revId": "cf90fce66786f0b0d05b6f1fe65175b45f24301a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8f878d04_174433a1",
         "filename": "/COMMIT_MSG",
         "patchSetId": 13
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "79d19324_b289e565",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 13
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-12-18T22:46:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8f878d04_174433a1",
+      "revId": "cf90fce66786f0b0d05b6f1fe65175b45f24301a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "26eebcfa_76dc91ad",
         "filename": "content/browser/gpu/browser_gpu_channel_host_factory.cc",
         "patchSetId": 13
@@ -50,6 +86,24 @@
       "revId": "cf90fce66786f0b0d05b6f1fe65175b45f24301a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e015258_e7b5b696",
+        "filename": "content/browser/gpu/browser_gpu_channel_host_factory.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-12-18T22:46:24Z",
+      "side": 1,
+      "message": "Discussed offline: querying with IsNativeGpuMemoryBufferConfiguration\nmakes sense but is missing a BufferFormat, adding it.",
+      "parentUuid": "26eebcfa_76dc91ad",
+      "revId": "cf90fce66786f0b0d05b6f1fe65175b45f24301a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
