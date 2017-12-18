@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eac1308d_c02191f5",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_popup_presenter.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-12-18T17:21:44Z",
+      "side": 1,
+      "message": "I think it\u0027s better to have this as required, and not enable this constraint at all on iPhone since it\u0027s always broken on iPhone",
+      "range": {
+        "startLine": 65,
+        "startChar": 4,
+        "endLine": 65,
+        "endChar": 21
+      },
+      "revId": "4b10c97dd55624765110d05ffee7ec35fcddab97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff1a7891_7d8b19d3",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_popup_presenter.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-12-18T17:21:44Z",
+      "side": 1,
+      "message": "nit: add parenthesis ([popup superview] \u003d\u003d nil);",
+      "revId": "4b10c97dd55624765110d05ffee7ec35fcddab97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36c8bcf9_8225982b",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_popup_presenter.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-12-18T17:21:44Z",
+      "side": 1,
+      "message": "maybe you could do setNeedsLayout/layoutIfNeeded instead",
+      "revId": "4b10c97dd55624765110d05ffee7ec35fcddab97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "332dfd0c_03aa8161",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 827,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-12-18T17:21:44Z",
+      "side": 1,
+      "message": "AddSameConstraints() from constraints_ui_util",
+      "revId": "4b10c97dd55624765110d05ffee7ec35fcddab97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "438351dd_3e664c32",
+        "filename": "ios/chrome/browser/ui/toolbar/web_toolbar_controller.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 572,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-12-18T17:21:44Z",
+      "side": 1,
+      "message": "Same, please use AddSameConstraints()",
+      "revId": "4b10c97dd55624765110d05ffee7ec35fcddab97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
