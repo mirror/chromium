@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f0db8548_e9b2c0e7",
+        "filename": "components/favicon/core/favicon_handler.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-12-18T15:25:17Z",
+      "side": 1,
+      "message": "This member can be deleted now?",
+      "revId": "68a850de774c27464ab0e2079a82570d4192ba26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
