@@ -17,6 +17,7 @@
 #include "chrome/browser/media/media_engagement_session.h"
 #include "chrome/test/base/chrome_render_view_host_test_harness.h"
 #include "chrome/test/base/testing_profile.h"
+#include "components/ukm/content/source_url_recorder.h"
 #include "components/ukm/test_ukm_recorder.h"
 #include "components/ukm/ukm_source.h"
 #include "content/public/browser/navigation_handle.h"
@@ -43,6 +44,7 @@ class MediaEngagementContentsObserverTest
     service_ =
         base::WrapUnique(new MediaEngagementService(profile(), &test_clock_));
     contents_observer_ = CreateContentsObserverFor(web_contents());
+    ukm::InitializeSourceUrlRecorderForWebContents(web_contents());
 
     // Navigate to an initial URL to setup the |session|.
     content::WebContentsTester::For(web_contents())
@@ -213,7 +215,8 @@ class MediaEngagementContentsObserverTest
   scoped_refptr<MediaEngagementSession> GetOrCreateSession(
       const url::Origin& origin,
       content::WebContents* opener) {
-    return contents_observer_->GetOrCreateSession(origin, opener);
+    return contents_observer_->GetOrCreateSession(origin, opener,
+                                                  ukm::kInvalidSourceId);
   }
 
   scoped_refptr<MediaEngagementSession> GetSessionFor(

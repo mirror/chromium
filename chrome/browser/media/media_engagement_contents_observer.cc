@@ -10,6 +10,7 @@
 #include "chrome/browser/media/media_engagement_service.h"
 #include "chrome/browser/media/media_engagement_session.h"
 #include "chrome/browser/profiles/profile.h"
+#include "components/ukm/content/source_url_recorder.h"
 #include "content/public/browser/navigation_handle.h"
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/web_contents.h"
@@ -155,10 +156,15 @@ void MediaEngagementContentsObserver::DidFinishNavigation(
   ClearPlayerStates();
 
   url::Origin new_origin = url::Origin::Create(navigation_handle->GetURL());
-  if (session_ && session_->IsSameOriginWith(new_origin))
-    return;
+  const ukm::SourceId source_id = ukm::ConvertToSourceId(
+      navigation_handle->GetNavigationId(), ukm::SourceIdType::NAVIGATION_ID);
 
-  session_ = GetOrCreateSession(new_origin, GetOpener());
+  if (session_ && session_->IsSameOriginWith(new_origin)) {
+    session_->SetUkmSourceId(source_id);
+    return;
+  }
+
+  session_ = GetOrCreateSession(new_origin, GetOpener(), source_id);
 }
 
 MediaEngagementContentsObserver::PlayerState::PlayerState(base::Clock* clock)
@@ -520,7 +526,8 @@ content::WebContents* MediaEngagementContentsObserver::GetOpener() const {
 scoped_refptr<MediaEngagementSession>
 MediaEngagementContentsObserver::GetOrCreateSession(
     const url::Origin& origin,
-    content::WebContents* opener) const {
+    content::WebContents* opener,
+    ukm::SourceId source_id) const {
   GURL url = origin.GetURL();
   if (!url.is_valid())
     return nullptr;
@@ -533,8 +540,9 @@ MediaEngagementContentsObserver::GetOrCreateSession(
 
   if (opener_observer && opener_observer->session_ &&
       opener_observer->session_->IsSameOriginWith(origin)) {
+    opener_observer->session_->SetUkmSourceId(source_id);
     return opener_observer->session_;
   }
 
-  return new MediaEngagementSession(service_, origin);
+  return new MediaEngagementSession(service_, origin, source_id);
 }
