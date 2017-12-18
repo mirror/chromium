@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e418947e_92bb4766",
+        "filename": "chrome/browser/ui/webui/quota_internals/quota_internals_handler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-12-18T23:09:46Z",
+      "side": 1,
+      "message": "Good find! Done.",
+      "parentUuid": "e4662c43_3f51a4e5",
+      "revId": "cc51371b24c368beadd3bb07e2c1c0d216434e5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6c5af969_4610f459",
         "filename": "storage/browser/quota/quota_manager.h",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "483b4ec3_76ab7151",
+        "filename": "storage/browser/quota/quota_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-12-18T23:09:46Z",
+      "side": 1,
+      "message": "Thanks; added and removed from cpp file",
+      "parentUuid": "6c5af969_4610f459",
+      "revId": "cc51371b24c368beadd3bb07e2c1c0d216434e5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "883cd240_a5126a54",
         "filename": "storage/browser/test/mock_quota_manager_proxy.h",
         "patchSetId": 2
@@ -47,6 +83,24 @@
       "writtenOn": "2017-12-15T01:13:29Z",
       "side": 1,
       "message": "huh... how is this building w/o the namespace?",
+      "revId": "cc51371b24c368beadd3bb07e2c1c0d216434e5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bf3ae8f_028dc06c",
+        "filename": "storage/browser/test/mock_quota_manager_proxy.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-12-18T23:09:46Z",
+      "side": 1,
+      "message": "It includes mock_quota_manager which has \u0027using blink::StorageType\u0027 in it. I guess this is why you shouldn\u0027t have \u0027using\u0027 declarations in header files.\n\nAdded blink:: in front of everything in this file \u0026 cpp file anyway, otherwise it\u0027s too unclear I agree.",
+      "parentUuid": "883cd240_a5126a54",
       "revId": "cc51371b24c368beadd3bb07e2c1c0d216434e5c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "2fd0b933_4929efc4",
+        "filename": "storage/browser/test/mock_storage_client.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-12-18T23:09:46Z",
+      "side": 1,
+      "message": "Yup. Left it for now but added blink:: in that other file.",
+      "parentUuid": "3f7a3156_f680bc3e",
+      "revId": "cc51371b24c368beadd3bb07e2c1c0d216434e5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2e0f711b_b0ce88ea",
         "filename": "third_party/WebKit/common/quota/storage_type.h",
         "patchSetId": 2
@@ -90,6 +162,30 @@
       "revId": "cc51371b24c368beadd3bb07e2c1c0d216434e5c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59756716_822b0398",
+        "filename": "third_party/WebKit/common/quota/storage_type.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-12-18T23:09:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2e0f711b_b0ce88ea",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "cc51371b24c368beadd3bb07e2c1c0d216434e5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
