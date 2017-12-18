@@ -22,6 +22,30 @@
       "revId": "72ad3b6053d1ab1210e6a40d5349b6c5f665b430",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae3e24c8_03a5279d",
+        "filename": "chrome/browser/resources/interventions_internals/index.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-12-18T22:07:18Z",
+      "side": 1,
+      "message": "The method existing method produces extra info that can be hard to read such as time zone.",
+      "parentUuid": "5521a744_e8bff1f5",
+      "range": {
+        "startLine": 46,
+        "startChar": 9,
+        "endLine": 46,
+        "endChar": 74
+      },
+      "revId": "72ad3b6053d1ab1210e6a40d5349b6c5f665b430",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
