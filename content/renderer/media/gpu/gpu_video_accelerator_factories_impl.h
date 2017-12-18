@@ -59,6 +59,7 @@ class CONTENT_EXPORT GpuVideoAcceleratorFactoriesImpl
       const scoped_refptr<base::SingleThreadTaskRunner>& task_runner,
       const scoped_refptr<ui::ContextProviderCommandBuffer>& context_provider,
       bool enable_gpu_memory_buffer_video_frames,
+      bool disable_gpu_memory_buffer_for_multiplanar_video_frames,
       const viz::BufferUsageAndFormatList& texture_target_exception_list,
       bool enable_video_accelerator,
       media::mojom::VideoEncodeAcceleratorProviderPtrInfo unbound_vea_provider);
@@ -117,6 +118,7 @@ class CONTENT_EXPORT GpuVideoAcceleratorFactoriesImpl
       const scoped_refptr<base::SingleThreadTaskRunner>& task_runner,
       const scoped_refptr<ui::ContextProviderCommandBuffer>& context_provider,
       bool enable_gpu_memory_buffer_video_frames,
+      bool disable_gpu_memory_buffer_for_multiplanar_video_frames,
       const viz::BufferUsageAndFormatList& texture_target_exception_list,
       bool enable_video_accelerator,
       media::mojom::VideoEncodeAcceleratorProviderPtrInfo unbound_vea_provider);
@@ -138,7 +140,8 @@ class CONTENT_EXPORT GpuVideoAcceleratorFactoriesImpl
   base::UnguessableToken channel_token_;
 
   // Whether gpu memory buffers should be used to hold video frames data.
-  bool enable_gpu_memory_buffer_video_frames_;
+  const bool enable_gpu_memory_buffer_video_frames_;
+  const bool disable_gpu_memory_buffer_for_multiplanar_video_frames_;
   const viz::BufferUsageAndFormatList texture_target_exception_list_;
   // Whether video acceleration encoding/decoding should be enabled.
   const bool video_accelerator_enabled_;
