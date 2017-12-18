@@ -3912,6 +3912,10 @@ crbug.com/749965 [ Win7 Debug ] media/controls/controls-video-keynav.html [ Fail
 #This was previously skipped on Windows in the section for crbug.com/757165
 crbug.com/775957 virtual/gpu/fast/canvas/canvas-incremental-repaint.html [ Skip ]
 
+# Suppressing failures temporarily until after Skia roll and rebaseline.
+crbug.com/756823 virtual/gpu/fast/canvas/canvas-ellipse-circumference-fill.html [ Failure ]
+crbug.com/756823 virtual/gpu/fast/canvas/canvas-arc-circumference-fill.html [ Failure ]
+
 # Sheriff failures 2017-09-20
 # Timeouts flakily on chromium.webkit/WebKit Win7 and WebKit Win10
 crbug.com/767012 [ Win7 Win10 ] virtual/mojo-loading/http/tests/devtools/startup/console-log-before-frame-navigation.html [ Pass Timeout ]
