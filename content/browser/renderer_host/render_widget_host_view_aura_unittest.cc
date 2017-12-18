@@ -614,8 +614,7 @@ class RenderWidgetHostViewAuraTest : public testing::Test {
 
   void SetUpEnvironment() {
     mojo_feature_list_.InitAndEnableFeature(features::kMojoInputMessages);
-    ImageTransportFactory::SetFactory(
-        std::make_unique<NoTransportImageTransportFactory>());
+    ImageTransportFactory::SetFactory(CreateTestImageTransportFactory());
     aura_test_helper_.reset(new aura::test::AuraTestHelper());
     aura_test_helper_->SetUp(
         ImageTransportFactory::GetInstance()->GetContextFactory(),

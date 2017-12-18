@@ -29,6 +29,9 @@ class ContextProvider;
 
 namespace content {
 
+// Creates an appropriate ImageTransportFactory implementation for tests.
+std::unique_ptr<ImageTransportFactory> CreateTestImageTransportFactory();
+
 // An ImageTransportFactory that disables transport.
 class NoTransportImageTransportFactory : public ImageTransportFactory {
  public:

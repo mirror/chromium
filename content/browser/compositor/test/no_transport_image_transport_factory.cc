@@ -12,14 +12,23 @@
 #include "build/build_config.h"
 #include "components/viz/common/gl_helper.h"
 #include "components/viz/common/gpu/context_provider.h"
+#include "components/viz/common/switches.h"
 #include "components/viz/service/surfaces/surface_manager.h"
 #include "content/browser/compositor/surface_utils.h"
+#include "content/browser/compositor/test/test_process_transport_factory.h"
 #include "gpu/command_buffer/client/gles2_interface.h"
 #include "ui/compositor/compositor.h"
 #include "ui/compositor/compositor_switches.h"
 #include "ui/gl/gl_implementation.h"
 
 namespace content {
+
+std::unique_ptr<ImageTransportFactory> CreateTestImageTransportFactory() {
+  if (base::CommandLine::ForCurrentProcess()->HasSwitch(switches::kEnableViz))
+    return std::make_unique<TestProcessTransportFactory>();
+
+  return std::make_unique<NoTransportImageTransportFactory>();
+}
 
 NoTransportImageTransportFactory::NoTransportImageTransportFactory()
     : context_factory_(&host_frame_sink_manager_, &frame_sink_manager_) {
