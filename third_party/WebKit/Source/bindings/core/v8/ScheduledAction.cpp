@@ -158,10 +158,29 @@ void ScheduledAction::Execute(LocalFrame* frame) {
   } else {
     DVLOG(1) << "ScheduledAction::execute " << this
              << ": executing from source";
+
+    // "Let initiating script be the active script." [spec text]
+    // "Let base URL be initiating script's base URL." [spec text]
+    // AAAAAAAAAAAAAAAAAA We don't have the "active script" impl yet!!!!
+
+    // Note: We currently override ScriptOrigin url for "script's base URL"
+    //       and "where the source text came from". While they are mostly
+    //       the same value, they can be different for ScheduledAction case.
+    //       For instance, a function containing setTimeout was called from
+    //       other file.
+    const KURL& url = ExecutionContext::From(script_state_.Get())->Url();
+
+    // In addition to the circumstance documented at the above comment,
+    // we currently don't have a way to reliably track the source text position.
+    // document->GetScriptableDocumentParser()->GetTextPosition() sometimes
+    // work, but unreliable.
+    TextPosition text_position = TextPosition::BelowRangePosition();
+
     frame->GetScriptController().ExecuteScriptAndReturnValue(
         script_state_->GetContext(),
         ScriptSourceCode(code_,
-                         ScriptSourceLocationType::kEvalForScheduledAction));
+                         ScriptSourceLocationType::kEvalForScheduledAction,
+                         /* cache_handler = */ nullptr, url, text_position));
   }
 
   // The frame might be invalid at this point because JavaScript could have
