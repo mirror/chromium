@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "183037c2_662ef2d4",
+        "filename": "ash/public/interfaces/app_list.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-18T20:08:06Z",
+      "side": 1,
+      "message": "What kind of ids are these? Would it make sense to represent this folders as array of items, rather than (presumably) requiring them to be linked by matching up ids? Or is this too different from how the rest of Chrome currently works?\n\n(This might also obviate the need for |position| as well, since the array of items would implicitly have position associated with it)",
+      "revId": "e545b300b9f2d7ab919aa2b7ea50e4b63cf0e63e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
