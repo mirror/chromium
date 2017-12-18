@@ -22,6 +22,30 @@
       "revId": "a0ecbdb090ba50a33e3906faf5f27a17e4c81b96",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa981341_6167ea8f",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-12-18T22:19:35Z",
+      "side": 1,
+      "message": "LGTM other than the i18nPolymer needs quotes:\n\nsub-label\u003d\"[[getSubLabel_(\n    \u0027$i18nPolymer{chromeCleanupTitleLogsPermissionExplanation}\u0027,\n    userInitiatedCleanupsEnabled_)]]\"",
+      "parentUuid": "d160ac90_6cc29ba2",
+      "range": {
+        "startLine": 121,
+        "startChar": 21,
+        "endLine": 121,
+        "endChar": 47
+      },
+      "revId": "a0ecbdb090ba50a33e3906faf5f27a17e4c81b96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
