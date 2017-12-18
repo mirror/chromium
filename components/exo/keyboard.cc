@@ -165,6 +165,10 @@ Keyboard::~Keyboard() {
   helper->RemoveInputDeviceEventObserver(this);
 }
 
+KeyboardDelegate* Keyboard::delegate() const {
+  return delegate_;
+}
+
 bool Keyboard::HasDeviceConfigurationDelegate() const {
   return !!device_configuration_delegate_;
 }

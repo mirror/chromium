@@ -9,6 +9,7 @@
 #include <gaming-input-unstable-v1-server-protocol.h>
 #include <gaming-input-unstable-v2-server-protocol.h>
 #include <grp.h>
+#include <input-timestamps-unstable-v1-server-protocol.h>
 #include <keyboard-configuration-unstable-v1-server-protocol.h>
 #include <keyboard-extension-unstable-v1-server-protocol.h>
 #include <linux/input.h>
@@ -192,6 +193,17 @@ uint32_t TimeTicksToMilliseconds(base::TimeTicks ticks) {
 
 uint32_t NowInMilliseconds() {
   return TimeTicksToMilliseconds(base::TimeTicks::Now());
+}
+
+struct WaylandTimespec {
+  uint32_t tv_sec_hi;
+  uint32_t tv_sec_lo;
+  uint32_t tv_nsec;
+};
+
+WaylandTimespec TimeTicksToWaylandTimespec(base::TimeTicks ticks) {
+  timespec ts = (ticks - base::TimeTicks()).ToTimeSpec();
+  return {(uint64_t)ts.tv_sec >> 32, ts.tv_sec & 0xffffffff, ts.tv_nsec};
 }
 
 uint32_t WaylandDataDeviceManagerDndAction(DndAction action) {
@@ -2998,6 +3010,11 @@ class WaylandPointerDelegate : public PointerDelegate {
   explicit WaylandPointerDelegate(wl_resource* pointer_resource)
       : pointer_resource_(pointer_resource) {}
 
+  void set_input_timestamps_callback(
+      base::RepeatingCallback<void(base::TimeTicks)> callback) {
+    input_timestamps_callback_ = callback;
+  }
+
   // Overridden from PointerDelegate:
   void OnPointerDestroying(Pointer* pointer) override { delete this; }
   bool CanAcceptPointerEventsForSurface(Surface* surface) const override {
@@ -3025,6 +3042,7 @@ class WaylandPointerDelegate : public PointerDelegate {
   }
   void OnPointerMotion(base::TimeTicks time_stamp,
                        const gfx::PointF& location) override {
+    NotifyInputTimestamp(time_stamp);
     wl_pointer_send_motion(
         pointer_resource_, TimeTicksToMilliseconds(time_stamp),
         wl_fixed_from_double(location.x()), wl_fixed_from_double(location.y()));
@@ -3045,6 +3063,7 @@ class WaylandPointerDelegate : public PointerDelegate {
     uint32_t serial = next_serial();
     for (auto button : buttons) {
       if (button_flags & button.flag) {
+        NotifyInputTimestamp(time_stamp);
         wl_pointer_send_button(
             pointer_resource_, serial, TimeTicksToMilliseconds(time_stamp),
             button.value, pressed ? WL_POINTER_BUTTON_STATE_PRESSED
@@ -3066,11 +3085,13 @@ class WaylandPointerDelegate : public PointerDelegate {
     }
 
     double x_value = offset.x() * kAxisStepDistance;
+    NotifyInputTimestamp(time_stamp);
     wl_pointer_send_axis(pointer_resource_, TimeTicksToMilliseconds(time_stamp),
                          WL_POINTER_AXIS_HORIZONTAL_SCROLL,
                          wl_fixed_from_double(-x_value));
 
     double y_value = offset.y() * kAxisStepDistance;
+    NotifyInputTimestamp(time_stamp);
     wl_pointer_send_axis(pointer_resource_, TimeTicksToMilliseconds(time_stamp),
                          WL_POINTER_AXIS_VERTICAL_SCROLL,
                          wl_fixed_from_double(-y_value));
@@ -3078,9 +3099,11 @@ class WaylandPointerDelegate : public PointerDelegate {
   void OnPointerScrollStop(base::TimeTicks time_stamp) override {
     if (wl_resource_get_version(pointer_resource_) >=
         WL_POINTER_AXIS_STOP_SINCE_VERSION) {
+      NotifyInputTimestamp(time_stamp);
       wl_pointer_send_axis_stop(pointer_resource_,
                                 TimeTicksToMilliseconds(time_stamp),
                                 WL_POINTER_AXIS_HORIZONTAL_SCROLL);
+      NotifyInputTimestamp(time_stamp);
       wl_pointer_send_axis_stop(pointer_resource_,
                                 TimeTicksToMilliseconds(time_stamp),
                                 WL_POINTER_AXIS_VERTICAL_SCROLL);
@@ -3105,8 +3128,15 @@ class WaylandPointerDelegate : public PointerDelegate {
     return wl_display_next_serial(wl_client_get_display(client()));
   }
 
+  void NotifyInputTimestamp(base::TimeTicks time_stamp) {
+    if (input_timestamps_callback_)
+      input_timestamps_callback_.Run(time_stamp);
+  }
+
   // The pointer resource associated with the pointer.
   wl_resource* const pointer_resource_;
+
+  base::RepeatingCallback<void(base::TimeTicks)> input_timestamps_callback_;
 
   DISALLOW_COPY_AND_ASSIGN(WaylandPointerDelegate);
 };
@@ -3168,6 +3198,11 @@ class WaylandKeyboardDelegate
   }
 #endif
 
+  void set_input_timestamps_callback(
+      base::RepeatingCallback<void(base::TimeTicks)> callback) {
+    input_timestamps_callback_ = callback;
+  }
+
   // Overridden from KeyboardDelegate:
   void OnKeyboardDestroying(Keyboard* keyboard) override { delete this; }
   bool CanAcceptKeyboardEventsForSurface(Surface* surface) const override {
@@ -3205,6 +3240,7 @@ class WaylandKeyboardDelegate
                          ui::DomCode key,
                          bool pressed) override {
     uint32_t serial = next_serial();
+    NotifyInputTimestamp(time_stamp);
     wl_keyboard_send_key(keyboard_resource_, serial,
                          TimeTicksToMilliseconds(time_stamp), DomCodeToKey(key),
                          pressed ? WL_KEYBOARD_KEY_STATE_PRESSED
@@ -3314,6 +3350,11 @@ class WaylandKeyboardDelegate
     return wl_display_next_serial(wl_client_get_display(client()));
   }
 
+  void NotifyInputTimestamp(base::TimeTicks time_stamp) {
+    if (input_timestamps_callback_)
+      input_timestamps_callback_.Run(time_stamp);
+  }
+
   // The keyboard resource associated with the keyboard.
   wl_resource* const keyboard_resource_;
 
@@ -3321,6 +3362,8 @@ class WaylandKeyboardDelegate
   std::unique_ptr<xkb_context, ui::XkbContextDeleter> xkb_context_;
   std::unique_ptr<xkb_keymap, ui::XkbKeymapDeleter> xkb_keymap_;
   std::unique_ptr<xkb_state, ui::XkbStateDeleter> xkb_state_;
+
+  base::RepeatingCallback<void(base::TimeTicks)> input_timestamps_callback_;
 
   DISALLOW_COPY_AND_ASSIGN(WaylandKeyboardDelegate);
 };
@@ -3343,6 +3386,11 @@ class WaylandTouchDelegate : public TouchDelegate {
   explicit WaylandTouchDelegate(wl_resource* touch_resource)
       : touch_resource_(touch_resource) {}
 
+  void set_input_timestamps_callback(
+      base::RepeatingCallback<void(base::TimeTicks)> callback) {
+    input_timestamps_callback_ = callback;
+  }
+
   // Overridden from TouchDelegate:
   void OnTouchDestroying(Touch* touch) override { delete this; }
   bool CanAcceptTouchEventsForSurface(Surface* surface) const override {
@@ -3358,18 +3406,21 @@ class WaylandTouchDelegate : public TouchDelegate {
                    const gfx::PointF& location) override {
     wl_resource* surface_resource = GetSurfaceResource(surface);
     DCHECK(surface_resource);
+    NotifyInputTimestamp(time_stamp);
     wl_touch_send_down(touch_resource_, next_serial(),
                        TimeTicksToMilliseconds(time_stamp), surface_resource,
                        id, wl_fixed_from_double(location.x()),
                        wl_fixed_from_double(location.y()));
   }
   void OnTouchUp(base::TimeTicks time_stamp, int id) override {
+    NotifyInputTimestamp(time_stamp);
     wl_touch_send_up(touch_resource_, next_serial(),
                      TimeTicksToMilliseconds(time_stamp), id);
   }
   void OnTouchMotion(base::TimeTicks time_stamp,
                      int id,
                      const gfx::PointF& location) override {
+    NotifyInputTimestamp(time_stamp);
     wl_touch_send_motion(touch_resource_, TimeTicksToMilliseconds(time_stamp),
                          id, wl_fixed_from_double(location.x()),
                          wl_fixed_from_double(location.y()));
@@ -3401,8 +3452,15 @@ class WaylandTouchDelegate : public TouchDelegate {
     return wl_display_next_serial(wl_client_get_display(client()));
   }
 
+  void NotifyInputTimestamp(base::TimeTicks time_stamp) {
+    if (input_timestamps_callback_)
+      input_timestamps_callback_.Run(time_stamp);
+  }
+
   // The touch resource associated with the touch.
   wl_resource* const touch_resource_;
+
+  base::RepeatingCallback<void(base::TimeTicks)> input_timestamps_callback_;
 
   DISALLOW_COPY_AND_ASSIGN(WaylandTouchDelegate);
 };
@@ -4500,6 +4558,128 @@ void bind_keyboard_extension(wl_client* client,
                                  data, nullptr);
 }
 
+////////////////////////////////////////////////////////////////////////////////
+// input_timestamps_v1 interface:
+//
+
+class WaylandInputTimestamps
+    : public base::SupportsWeakPtr<WaylandInputTimestamps> {
+ public:
+  explicit WaylandInputTimestamps(wl_resource* resource)
+      : resource_(resource) {}
+  void SendTimestamp(base::TimeTicks time_stamp) {
+    WaylandTimespec wt = TimeTicksToWaylandTimespec(time_stamp);
+    zwp_input_timestamps_v1_send_timestamp(resource_, wt.tv_sec_hi,
+                                           wt.tv_sec_lo, wt.tv_nsec);
+  }
+
+ private:
+  wl_resource* const resource_;
+};
+
+void input_timestamps_destroy(struct wl_client* client,
+                              struct wl_resource* resource) {
+  wl_resource_destroy(resource);
+}
+
+const struct zwp_input_timestamps_v1_interface input_timestamps_implementation =
+    {input_timestamps_destroy};
+
+////////////////////////////////////////////////////////////////////////////////
+// input_timestamps_manager_v1 interface:
+//
+
+void input_timestamps_manager_destroy(struct wl_client* client,
+                                      struct wl_resource* resource) {
+  wl_resource_destroy(resource);
+}
+
+void input_timestamps_manager_get_keyboard_timestamps(
+    wl_client* client,
+    wl_resource* resource,
+    uint32_t id,
+    wl_resource* keyboard_resource) {
+#if BUILDFLAG(USE_XKBCOMMON)
+  auto* delegate = static_cast<WaylandKeyboardDelegate*>(
+      GetUserDataAs<Keyboard>(keyboard_resource)->delegate());
+
+  wl_resource* input_timestamps_resource =
+      wl_resource_create(client, &zwp_input_timestamps_v1_interface, 1, id);
+
+  auto input_timestamps =
+      std::make_unique<WaylandInputTimestamps>(input_timestamps_resource);
+
+  delegate->set_input_timestamps_callback(base::BindRepeating(
+      &WaylandInputTimestamps::SendTimestamp, input_timestamps->AsWeakPtr()));
+
+  SetImplementation(input_timestamps_resource, &input_timestamps_implementation,
+                    std::move(input_timestamps));
+#else
+  NOTIMPLEMENTED();
+#endif
+}
+
+void input_timestamps_manager_get_pointer_timestamps(
+    wl_client* client,
+    wl_resource* resource,
+    uint32_t id,
+    wl_resource* pointer_resource) {
+  auto* delegate = static_cast<WaylandPointerDelegate*>(
+      GetUserDataAs<Pointer>(pointer_resource)->delegate());
+
+  wl_resource* input_timestamps_resource =
+      wl_resource_create(client, &zwp_input_timestamps_v1_interface, 1, id);
+
+  auto input_timestamps =
+      std::make_unique<WaylandInputTimestamps>(input_timestamps_resource);
+
+  delegate->set_input_timestamps_callback(base::BindRepeating(
+      &WaylandInputTimestamps::SendTimestamp, input_timestamps->AsWeakPtr()));
+
+  SetImplementation(input_timestamps_resource, &input_timestamps_implementation,
+                    std::move(input_timestamps));
+}
+
+void input_timestamps_manager_get_touch_timestamps(
+    wl_client* client,
+    wl_resource* resource,
+    uint32_t id,
+    wl_resource* touch_resource) {
+  auto* delegate = static_cast<WaylandTouchDelegate*>(
+      GetUserDataAs<Touch>(touch_resource)->delegate());
+
+  wl_resource* input_timestamps_resource =
+      wl_resource_create(client, &zwp_input_timestamps_v1_interface, 1, id);
+
+  auto input_timestamps =
+      std::make_unique<WaylandInputTimestamps>(input_timestamps_resource);
+
+  delegate->set_input_timestamps_callback(base::BindRepeating(
+      &WaylandInputTimestamps::SendTimestamp, input_timestamps->AsWeakPtr()));
+
+  SetImplementation(input_timestamps_resource, &input_timestamps_implementation,
+                    std::move(input_timestamps));
+}
+
+const struct zwp_input_timestamps_manager_v1_interface
+    input_timestamps_manager_implementation = {
+        input_timestamps_manager_destroy,
+        input_timestamps_manager_get_keyboard_timestamps,
+        input_timestamps_manager_get_pointer_timestamps,
+        input_timestamps_manager_get_touch_timestamps,
+};
+
+void bind_input_timestamps_manager(wl_client* client,
+                                   void* data,
+                                   uint32_t version,
+                                   uint32_t id) {
+  wl_resource* resource = wl_resource_create(
+      client, &zwp_input_timestamps_manager_v1_interface, 1, id);
+
+  wl_resource_set_implementation(
+      resource, &input_timestamps_manager_implementation, nullptr, nullptr);
+}
+
 }  // namespace
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -4554,6 +4734,9 @@ Server::Server(Display* display)
                    display_, bind_stylus_tools);
   wl_global_create(wl_display_.get(), &zcr_keyboard_extension_v1_interface, 1,
                    display_, bind_keyboard_extension);
+  wl_global_create(wl_display_.get(),
+                   &zwp_input_timestamps_manager_v1_interface, 1, display_,
+                   bind_input_timestamps_manager);
 }
 
 Server::~Server() {}

@@ -106,6 +106,10 @@ Pointer::~Pointer() {
     root_surface()->RemoveSurfaceObserver(this);
 }
 
+PointerDelegate* Pointer::delegate() const {
+  return delegate_;
+}
+
 void Pointer::SetCursor(Surface* surface, const gfx::Point& hotspot) {
   // Early out if the pointer doesn't have a surface in focus.
   if (!focus_surface_)

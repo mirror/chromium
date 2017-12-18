@@ -54,6 +54,10 @@ Touch::~Touch() {
   WMHelper::GetInstance()->RemovePreTargetHandler(this);
 }
 
+TouchDelegate* Touch::delegate() const {
+  return delegate_;
+}
+
 void Touch::SetStylusDelegate(TouchStylusDelegate* delegate) {
   stylus_delegate_ = delegate;
 }
