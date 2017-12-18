@@ -2049,8 +2049,7 @@ void Element::RecalcStyle(StyleRecalcChange change) {
     UpdatePseudoElement(kPseudoIdBefore, change);
 
     if (change > kUpdatePseudoElements || ChildNeedsStyleRecalc()) {
-      for (ShadowRoot* root = YoungestShadowRoot(); root;
-           root = root->OlderShadowRoot()) {
+      if (ShadowRoot* root = GetShadowRoot()) {
         if (root->ShouldCallRecalcStyle(change))
           root->RecalcStyle(change);
       }
@@ -2210,10 +2209,8 @@ void Element::RecalcShadowIncludingDescendantStylesForReattach() {
 }
 
 void Element::RecalcShadowRootStylesForReattach() {
-  for (ShadowRoot* root = YoungestShadowRoot(); root;
-       root = root->OlderShadowRoot()) {
+  if (ShadowRoot* root = GetShadowRoot())
     root->RecalcStylesForReattach();
-  }
 }
 
 void Element::RebuildLayoutTree(WhitespaceAttacher& whitespace_attacher) {
@@ -2264,10 +2261,8 @@ void Element::RebuildLayoutTree(WhitespaceAttacher& whitespace_attacher) {
 void Element::RebuildShadowRootLayoutTree(
     WhitespaceAttacher& whitespace_attacher) {
   DCHECK(Shadow());
-  for (ShadowRoot* root = YoungestShadowRoot(); root;
-       root = root->OlderShadowRoot()) {
+  if (ShadowRoot* root = GetShadowRoot())
     root->RebuildLayoutTree(whitespace_attacher);
-  }
   RebuildNonDistributedChildren();
 }
 
