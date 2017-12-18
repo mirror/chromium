@@ -15,6 +15,7 @@
 #include "ash/shell.h"
 #include "base/memory/ptr_util.h"
 #include "chrome/browser/chrome_browser_main.h"
+#include "chrome/browser/chromeos/policy/off_hours/device_off_hours_controller.h"
 #include "chrome/browser/ui/ash/accessibility/accessibility_controller_client.h"
 #include "chrome/browser/ui/ash/ash_init.h"
 #include "chrome/browser/ui/ash/ash_util.h"
@@ -120,7 +121,11 @@ void ChromeBrowserMainExtraPartsAsh::PreProfileInit() {
         std::move(user_activity_monitor), user_activity_detector_.get());
   }
 
-  session_controller_client_ = base::MakeUnique<SessionControllerClient>();
+  device_off_hours_controller_ =
+      std::make_unique<policy::off_hours::DeviceOffHoursController>(
+          chromeos::DeviceSettingsService::Get());
+  session_controller_client_ = std::make_unique<SessionControllerClient>(
+      device_off_hours_controller_.get());
   session_controller_client_->Init();
 
   // Must be available at login screen, so initialize before profile.
@@ -186,6 +191,7 @@ void ChromeBrowserMainExtraPartsAsh::PostMainMessageLoopRun() {
   media_client_.reset();
   cast_config_client_media_router_.reset();
   session_controller_client_.reset();
+  device_off_hours_controller_.reset();
 
   ash_init_.reset();
 }
