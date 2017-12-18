@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cac765c5_6c7983be",
+        "filename": "components/proximity_auth/bluetooth_low_energy_connection_finder_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-12-18T17:48:26Z",
+      "side": 1,
+      "message": "nit: Parameter name in comment:\n\n{} /* manufacturer_data */",
+      "range": {
+        "startLine": 208,
+        "startChar": 73,
+        "endLine": 208,
+        "endChar": 75
+      },
+      "revId": "4e1eec2b9714c772aba66c6fc02f15e942840358",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
