@@ -250,7 +250,7 @@ void Component::Uninstall(const base::Version& version, int reason) {
   DCHECK_EQ(ComponentState::kNew, state());
 
   previous_version_ = version;
-  next_version_ = base::Version("0");
+  next_version_ = version;
   extra_code1_ = reason;
 
   state_ = base::MakeUnique<StateUninstalled>(this);

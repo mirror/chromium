@@ -2392,8 +2392,8 @@ TEST_F(UpdateClientTest, SendUninstallPing) {
       const auto ping_data = FakePingManagerImpl::ping_data();
       EXPECT_EQ(1u, ping_data.size());
       EXPECT_EQ("jebgalgnebhfojomionfpkfelancnnkf", ping_data[0].id);
-      EXPECT_EQ(base::Version("1.0"), ping_data[0].previous_version);
-      EXPECT_EQ(base::Version("0.0"), ping_data[0].next_version);
+      EXPECT_EQ(base::Version("1.2.3.4"), ping_data[0].previous_version);
+      EXPECT_EQ(base::Version("1.2.3.4"), ping_data[0].next_version);
       EXPECT_EQ(10, ping_data[0].extra_code1);
     }
   };
@@ -2404,7 +2404,7 @@ TEST_F(UpdateClientTest, SendUninstallPing) {
           &FakeUpdateChecker::Create, &FakeCrxDownloader::Create);
 
   update_client->SendUninstallPing(
-      "jebgalgnebhfojomionfpkfelancnnkf", base::Version("1.0"), 10,
+      "jebgalgnebhfojomionfpkfelancnnkf", base::Version("1.2.3.4"), 10,
       base::BindOnce(&CompletionCallbackFake::Callback, quit_closure()));
 
   RunThreads();
