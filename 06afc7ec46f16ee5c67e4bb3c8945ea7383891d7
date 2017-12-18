@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a6ea9bc7_029aa66d",
+        "filename": "chrome/browser/chromeos/login/session/user_session_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1008,
+      "author": {
+        "id": 1149149
+      },
+      "writtenOn": "2017-12-18T22:18:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6eb27ff4_b899426e",
+      "range": {
+        "startLine": 1008,
+        "startChar": 54,
+        "endLine": 1008,
+        "endChar": 58
+      },
+      "revId": "06afc7ec46f16ee5c67e4bb3c8945ea7383891d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0e9bbb77_3086b709",
         "filename": "chrome/browser/chromeos/login/session/user_session_manager.cc",
         "patchSetId": 1
@@ -60,6 +84,24 @@
     },
     {
       "key": {
+        "uuid": "8044509d_5f00688c",
+        "filename": "chrome/browser/chromeos/login/session/user_session_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1012,
+      "author": {
+        "id": 1149149
+      },
+      "writtenOn": "2017-12-18T22:18:21Z",
+      "side": 1,
+      "message": "Took a bit of tweaking, but added this suggestion in to the latest version.",
+      "parentUuid": "71ef4724_94984492",
+      "revId": "06afc7ec46f16ee5c67e4bb3c8945ea7383891d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "da6dd6d5_6d7af7fa",
         "filename": "chrome/browser/ui/webui/chromeos/login/gaia_screen_handler.cc",
         "patchSetId": 1
@@ -71,6 +113,24 @@
       "writtenOn": "2017-12-12T19:38:25Z",
       "side": 1,
       "message": "What\u0027s the reason to duplicate this? Are there cases where Key is not the password?\n\nie. Why can\u0027t we use reuse wherever SetKey stores the password?",
+      "revId": "06afc7ec46f16ee5c67e4bb3c8945ea7383891d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27376ee1_c62fe42e",
+        "filename": "chrome/browser/ui/webui/chromeos/login/gaia_screen_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 658,
+      "author": {
+        "id": 1149149
+      },
+      "writtenOn": "2017-12-18T22:18:21Z",
+      "side": 1,
+      "message": "Mainly because the Key is transformed into the hash almost immediately and the plaintext is thrown away. The Key class is written in such a way that it\u0027s expected to only hold one type of key (plaintext or some variant of hashed) -- https://cs.chromium.org/chromium/src/chromeos/login/auth/key.h?q\u003dkey.h\u0026sq\u003dpackage:chromium\u0026dr\u003dCSs\u0026l\u003d18",
+      "parentUuid": "da6dd6d5_6d7af7fa",
       "revId": "06afc7ec46f16ee5c67e4bb3c8945ea7383891d7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -100,6 +160,30 @@
     },
     {
       "key": {
+        "uuid": "25503135_c9307b18",
+        "filename": "chromeos/dbus/session_manager_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1149149
+      },
+      "writtenOn": "2017-12-18T22:18:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c72f292c_5c80ee3b",
+      "range": {
+        "startLine": 170,
+        "startChar": 15,
+        "endLine": 170,
+        "endChar": 30
+      },
+      "revId": "06afc7ec46f16ee5c67e4bb3c8945ea7383891d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2d369a91_53e81d7d",
         "filename": "chromeos/dbus/session_manager_client.cc",
         "patchSetId": 1
@@ -114,6 +198,24 @@
       "revId": "06afc7ec46f16ee5c67e4bb3c8945ea7383891d7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75db755a_47859309",
+        "filename": "chromeos/dbus/session_manager_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1149149
+      },
+      "writtenOn": "2017-12-18T22:18:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2d369a91_53e81d7d",
+      "revId": "06afc7ec46f16ee5c67e4bb3c8945ea7383891d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -152,6 +254,24 @@
     },
     {
       "key": {
+        "uuid": "9f528fef_1a8656e0",
+        "filename": "chromeos/dbus/session_manager_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1149149
+      },
+      "writtenOn": "2017-12-18T22:18:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "02defc31_497d3945",
+      "revId": "06afc7ec46f16ee5c67e4bb3c8945ea7383891d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "344d69d1_f6d7f058",
         "filename": "chromeos/dbus/session_manager_client.cc",
         "patchSetId": 1
@@ -166,6 +286,24 @@
       "revId": "06afc7ec46f16ee5c67e4bb3c8945ea7383891d7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97b7c2e2_6097065d",
+        "filename": "chromeos/dbus/session_manager_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1149149
+      },
+      "writtenOn": "2017-12-18T22:18:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "344d69d1_f6d7f058",
+      "revId": "06afc7ec46f16ee5c67e4bb3c8945ea7383891d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -186,6 +324,24 @@
     },
     {
       "key": {
+        "uuid": "f1593e6a_b01eed83",
+        "filename": "chromeos/dbus/session_manager_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1149149
+      },
+      "writtenOn": "2017-12-18T22:18:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9f5f2822_d18b5c7c",
+      "revId": "06afc7ec46f16ee5c67e4bb3c8945ea7383891d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b98b2b6a_f874ab7f",
         "filename": "chromeos/dbus/session_manager_client.h",
         "patchSetId": 1
@@ -203,6 +359,24 @@
     },
     {
       "key": {
+        "uuid": "c0dc56f3_edb30c85",
+        "filename": "chromeos/dbus/session_manager_client.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1149149
+      },
+      "writtenOn": "2017-12-18T22:18:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b98b2b6a_f874ab7f",
+      "revId": "06afc7ec46f16ee5c67e4bb3c8945ea7383891d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4debc9d8_4e9e5a5c",
         "filename": "chromeos/login/auth/user_context.h",
         "patchSetId": 1
@@ -214,6 +388,24 @@
       "writtenOn": "2017-12-12T19:38:25Z",
       "side": 1,
       "message": "As above - when is this ever different to key_?",
+      "revId": "06afc7ec46f16ee5c67e4bb3c8945ea7383891d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f7c8e85_bd65ebfc",
+        "filename": "chromeos/login/auth/user_context.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1149149
+      },
+      "writtenOn": "2017-12-18T22:18:21Z",
+      "side": 1,
+      "message": "key_ holds a hashed Key for most of the time this process is running.",
+      "parentUuid": "4debc9d8_4e9e5a5c",
       "revId": "06afc7ec46f16ee5c67e4bb3c8945ea7383891d7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
