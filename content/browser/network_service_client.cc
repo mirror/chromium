@@ -8,6 +8,9 @@
 #include "content/browser/ssl/ssl_manager.h"
 #include "content/browser/web_contents/web_contents_impl.h"
 
+#include "content/browser/ssl/ssl_client_auth_handler.h"
+#include "net/ssl/client_cert_store.h"
+
 namespace content {
 namespace {
 
@@ -32,6 +35,49 @@ class SSLDelegate : public SSLErrorHandler::Delegate {
   base::WeakPtrFactory<SSLDelegate> weak_factory_;
 };
 
+class SSLClientDelegate : public SSLClientAuthHandler::Delegate {
+ public:
+  SSLClientDelegate(
+      NetworkServiceClient::OnCertificateRequestedCallback callback,
+      scoped_refptr<net::SSLCertRequestInfo> cert_info)
+      : callback_(std::move(callback)),
+        cert_info_(cert_info),
+        weak_factory_(this) {
+    std::unique_ptr<net::ClientCertStore> client_cert_store;
+    ssl_client_auth_handler_.reset(new SSLClientAuthHandler(
+        std::move(client_cert_store), nullptr /* net::URLRequest* */,
+        cert_info_.get(), this));
+  }
+  ~SSLClientDelegate() override {}
+
+  // SSLClientAuthHandler::Delegate:
+  void ContinueWithCertificate(
+      scoped_refptr<net::X509Certificate> cert,
+      scoped_refptr<net::SSLPrivateKey> private_key) override {
+    std::move(callback_).Run(cert, nullptr);
+    ssl_client_auth_handler_->SelectCertificate();
+    delete this;
+  }
+
+  // SSLClientAuthHandler::Delegate:
+  void CancelCertificateSelection() override {
+    std::move(callback_).Run(nullptr, nullptr);
+    delete this;
+  }
+
+  base::WeakPtr<SSLClientDelegate> GetWeakPtr() {
+    return weak_factory_.GetWeakPtr();
+  }
+
+ private:
+  NetworkServiceClient::OnCertificateRequestedCallback callback_;
+  scoped_refptr<net::SSLCertRequestInfo> cert_info_;
+  // maybe need to move the |ssl_client_auth_handler_| to the url_loader.cc,
+  // similar to resource_loader.cc.
+  std::unique_ptr<SSLClientAuthHandler> ssl_client_auth_handler_;
+  base::WeakPtrFactory<SSLClientDelegate> weak_factory_;
+};
+
 }  // namespace
 
 NetworkServiceClient::NetworkServiceClient(
@@ -39,6 +85,16 @@ NetworkServiceClient::NetworkServiceClient(
     : binding_(this, std::move(network_service_client_request)) {}
 
 NetworkServiceClient::~NetworkServiceClient() = default;
+
+void NetworkServiceClient::OnCertificateRequested(
+    ResourceType resource_type,
+    const GURL& url,
+    uint32_t process_id,
+    uint32_t routing_id,
+    const scoped_refptr<net::SSLCertRequestInfo>& cert_info,
+    OnCertificateRequestedCallback callback) {
+  new SSLClientDelegate(std::move(callback), cert_info);  // deletes self
+}
 
 void NetworkServiceClient::OnSSLCertificateError(
     ResourceType resource_type,

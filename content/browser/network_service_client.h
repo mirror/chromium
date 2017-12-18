@@ -9,6 +9,8 @@
 #include "content/public/common/network_service.mojom.h"
 #include "mojo/public/cpp/bindings/binding.h"
 
+#include "content/common/native_types.mojom.h"
+
 namespace content {
 
 class NetworkServiceClient : public mojom::NetworkServiceClient {
@@ -18,6 +20,13 @@ class NetworkServiceClient : public mojom::NetworkServiceClient {
   ~NetworkServiceClient() override;
 
   // mojom::NetworkServiceClient implementation:
+  void OnCertificateRequested(
+      ResourceType resource_type,
+      const GURL& url,
+      uint32_t process_id,
+      uint32_t routing_id,
+      const scoped_refptr<net::SSLCertRequestInfo>& cert_info,
+      OnCertificateRequestedCallback callback) override;
   void OnSSLCertificateError(ResourceType resource_type,
                              const GURL& url,
                              uint32_t process_id,

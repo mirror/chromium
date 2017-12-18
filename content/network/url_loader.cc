@@ -29,6 +29,8 @@
 #include "net/url_request/url_request_context.h"
 #include "services/network/public/cpp/net_adapters.h"
 
+#include "net/ssl/client_cert_store.h"
+
 namespace content {
 
 namespace {
@@ -474,8 +476,23 @@ void URLLoader::OnAuthRequired(net::URLRequest* unused,
 
 void URLLoader::OnCertificateRequested(net::URLRequest* unused,
                                        net::SSLCertRequestInfo* cert_info) {
-  NOTIMPLEMENTED() << "http://crbug.com/756654";
-  net::URLRequest::Delegate::OnCertificateRequested(unused, cert_info);
+  // The network service can be null in tests.
+  if (!context_->network_service()) {
+    return;
+  }
+
+  DCHECK_EQ(url_request_.get(), unused);
+
+  if (url_request_->load_flags() & net::LOAD_PREFETCH) {
+    url_request_->Cancel();
+    return;
+  }
+
+  context_->network_service()->client()->OnCertificateRequested(
+      resource_type_, url_request_->url(), process_id_, render_frame_id_,
+      cert_info,
+      base::Bind(&URLLoader::OnCertificateRequestedResponse,
+                 weak_ptr_factory_.GetWeakPtr()));
 }
 
 void URLLoader::OnSSLCertificateError(net::URLRequest* request,
@@ -787,6 +804,15 @@ void URLLoader::OnSSLCertificateErrorResponse(const net::SSLInfo& ssl_info,
   }
 
   url_request_->CancelWithSSLError(net_error, ssl_info);
+}
+
+void URLLoader::OnCertificateRequestedResponse(
+    const scoped_refptr<net::X509Certificate>& cert,
+    mojo::StructPtr<mojo::native::NativeStruct> private_key) {
+  if (cert)
+    url_request_->ContinueWithCertificate(cert, nullptr);
+  else
+    url_request_->CancelWithError(net::ERR_SSL_CLIENT_AUTH_CERT_NEEDED);
 }
 
 }  // namespace content

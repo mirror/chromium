@@ -91,6 +91,10 @@ class CONTENT_EXPORT URLLoader : public mojom::URLLoader,
   void OnSSLCertificateErrorResponse(const net::SSLInfo& ssl_info,
                                      int net_error);
 
+  void OnCertificateRequestedResponse(
+      const scoped_refptr<net::X509Certificate>&,
+      mojo::StructPtr<mojo::native::NativeStruct>);
+
   NetworkContext* context_;
   int32_t options_;
   ResourceType resource_type_;
