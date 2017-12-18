@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1ac100c7_22ec9898",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 2
+      },
+      "lineNbr": 5181,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-12-18T17:03:58Z",
+      "side": 1,
+      "message": "As mentioned in my top-level comment, VR should be using the Android string at this point.  It\u0027d be better to not fork this for VR.  The only reason there\u0027s an \"or enable_vr\" here is to let VR use this string in our Linux-compiled VR UI testapp and tests.",
+      "revId": "f60c33c110ff91bba4bc89c5b3c05ea88d6c741f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
