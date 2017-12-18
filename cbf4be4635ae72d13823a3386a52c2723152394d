@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2ae21eb7_2e3a0de0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-12-18T19:06:22Z",
+      "side": 1,
+      "message": "nit: Shorten to fit in 72 cols",
+      "revId": "cbf4be4635ae72d13823a3386a52c2723152394d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "282409db_d20d597f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-12-18T19:06:22Z",
+      "side": 1,
+      "message": "Ditto",
+      "revId": "cbf4be4635ae72d13823a3386a52c2723152394d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
