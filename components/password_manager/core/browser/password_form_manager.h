@@ -600,7 +600,8 @@ class PasswordFormManager : public FormFetcher::Consumer {
   // Set if the user has edited username value in prompt. The value is the
   // matched field name from |PasswordForm.other_possible_usernames| if the
   // match found.
-  base::Optional<base::string16> corrected_username_element_;
+  bool has_username_edited_vote_ = false;
+  //  base::Optional<base::string16> corrected_username_element_;
 
   // Tracks if a form with same origin as |observed_form_| found in blacklisted
   // forms.

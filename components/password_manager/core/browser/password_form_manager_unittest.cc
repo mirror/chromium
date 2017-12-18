@@ -2358,19 +2358,23 @@ TEST_F(PasswordFormManagerTest, TestUpdateNoUsernameTextfieldPresent) {
 
 // Test that when user updates username, the pending credentials is updated
 // accordingly.
-TEST_F(PasswordFormManagerTest, TestUpdateUsernameMethod) {
+TEST_F(PasswordFormManagerTest, UpdateUsername_ValueOfAnotherField) {
   fake_form_fetcher()->SetNonFederated(std::vector<const PasswordForm*>(), 0u);
 
   // User enters credential in the form.
   PasswordForm credential(*observed_form());
   credential.username_value = ASCIIToUTF16("oldusername");
   credential.password_value = ASCIIToUTF16("password");
+  credential.other_possible_usernames.push_back(PossibleUsernamePair(
+      ASCIIToUTF16("newusername"), ASCIIToUTF16("new_username_element")));
   form_manager()->ProvisionallySave(
       credential, PasswordFormManager::IGNORE_OTHER_POSSIBLE_USERNAMES);
   // User edits username in a prompt.
   form_manager()->UpdateUsername(ASCIIToUTF16("newusername"));
   EXPECT_EQ(form_manager()->pending_credentials().username_value,
             ASCIIToUTF16("newusername"));
+  EXPECT_EQ(form_manager()->pending_credentials().username_element,
+            ASCIIToUTF16("new_username_element"));
   EXPECT_EQ(form_manager()->pending_credentials().password_value,
             ASCIIToUTF16("password"));
   EXPECT_EQ(form_manager()->IsNewLogin(), true);
@@ -2381,12 +2385,14 @@ TEST_F(PasswordFormManagerTest, TestUpdateUsernameMethod) {
       .WillOnce(SaveArg<0>(&saved_result));
   form_manager()->Save();
   EXPECT_EQ(ASCIIToUTF16("newusername"), saved_result.username_value);
+  EXPECT_EQ(ASCIIToUTF16("new_username_element"),
+            saved_result.username_element);
   EXPECT_EQ(ASCIIToUTF16("password"), saved_result.password_value);
 }
 
 // Test that when user updates username to an already existing one, is_new_login
 // status is false.
-TEST_F(PasswordFormManagerTest, TestUpdateUsernameToExisting) {
+TEST_F(PasswordFormManagerTest, UpdateUsername_ValueSavedInStore) {
   // We have an already existing credential.
   fake_form_fetcher()->SetNonFederated({saved_match()}, 0u);
 
@@ -2406,15 +2412,18 @@ TEST_F(PasswordFormManagerTest, TestUpdateUsernameToExisting) {
             form_manager()->pending_credentials().username_value);
   EXPECT_EQ(ASCIIToUTF16("different_pass"),
             form_manager()->pending_credentials().password_value);
+  LOG(ERROR) << form_manager()->pending_credentials().username_element;
   EXPECT_EQ(form_manager()->IsNewLogin(), false);
 
   // Create the expected variables for the test.
   PasswordForm expected_pending(credential);
+  expected_pending.origin = saved_match()->origin;
+  expected_pending.form_data = saved_match()->form_data;
   expected_pending.times_used = 1;
   expected_pending.username_value = saved_match()->username_value;
 
   // User clicks save, edited username is saved, password updated.
-  PasswordForm saved_result;
+  LOG(ERROR) << "expected password " << expected_pending.password_value;
   EXPECT_CALL(MockFormSaver::Get(form_manager()),
               Update(expected_pending,
                      ElementsAre(Pair(saved_match()->username_value,
@@ -3205,7 +3214,7 @@ TEST_F(PasswordFormManagerTest, ProbablyAccountCreationUpload) {
   // A user submits a form and edits the username in the prompt.
   form_manager.ProvisionallySave(
       form_to_save, PasswordFormManager::IGNORE_OTHER_POSSIBLE_USERNAMES);
-  form_manager.UpdateUsername(ASCIIToUTF16(" test2@gmail.com"));
+  form_manager.UpdateUsername(ASCIIToUTF16("test2@gmail.com"));
 
   autofill::FormStructure pending_structure(form_to_save.form_data);
   autofill::ServerFieldTypeSet expected_available_field_types;
