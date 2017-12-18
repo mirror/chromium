@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5c65f859_11ef057c",
+        "filename": "third_party/WebKit/LayoutTests/webexposed/global-interface-listing-expected.txt",
+        "patchSetId": 11
+      },
+      "lineNbr": 2772,
+      "author": {
+        "id": 1221384
+      },
+      "writtenOn": "2017-12-18T21:43:09Z",
+      "side": 1,
+      "message": "I think it does. \nAnd I did add that in this patch.\nWe should do the same for frame policy to match document policy.",
+      "parentUuid": "4178b4e2_82cb38c6",
+      "revId": "b2e402e72dcb4c192b0891aff8b8a5ac1025c976",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e6c749a5_ba1298b4",
         "filename": "third_party/WebKit/Source/core/policy/BUILD.gn",
         "patchSetId": 11
@@ -33,6 +51,24 @@
       "revId": "b2e402e72dcb4c192b0891aff8b8a5ac1025c976",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef47bbc0_57d8fe1c",
+        "filename": "third_party/WebKit/Source/core/policy/BUILD.gn",
+        "patchSetId": 11
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1221384
+      },
+      "writtenOn": "2017-12-18T21:43:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e6c749a5_ba1298b4",
+      "revId": "b2e402e72dcb4c192b0891aff8b8a5ac1025c976",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "edec84a2_2dc6f247",
+        "filename": "third_party/WebKit/Source/core/policy/DocumentPolicy.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1221384
+      },
+      "writtenOn": "2017-12-18T21:43:09Z",
+      "side": 1,
+      "message": "I did that to enforce the correct impl was called. But yea I will move this to Policy class.",
+      "parentUuid": "ab99e62e_5f57616a",
+      "revId": "b2e402e72dcb4c192b0891aff8b8a5ac1025c976",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9e3103ea_609a27ee",
         "filename": "third_party/WebKit/Source/core/policy/FramePolicy.h",
         "patchSetId": 11
@@ -67,6 +121,24 @@
       "revId": "b2e402e72dcb4c192b0891aff8b8a5ac1025c976",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a458bc1_cd2e50b1",
+        "filename": "third_party/WebKit/Source/core/policy/FramePolicy.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1221384
+      },
+      "writtenOn": "2017-12-18T21:43:09Z",
+      "side": 1,
+      "message": "It is not required since this class is not used outside. But I will add it just in case in the future we will be using it elsewhere.",
+      "parentUuid": "9e3103ea_609a27ee",
+      "revId": "b2e402e72dcb4c192b0891aff8b8a5ac1025c976",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "896f0a42_ccbb6221",
+        "filename": "third_party/WebKit/Source/core/policy/FramePolicy.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1221384
+      },
+      "writtenOn": "2017-12-18T21:43:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cade8c4a_d57ac602",
+      "revId": "b2e402e72dcb4c192b0891aff8b8a5ac1025c976",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "be8fd98e_db8be6e7",
         "filename": "third_party/WebKit/Source/core/policy/FramePolicy.h",
         "patchSetId": 11
@@ -101,6 +191,24 @@
       "revId": "b2e402e72dcb4c192b0891aff8b8a5ac1025c976",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90d0a135_8607157c",
+        "filename": "third_party/WebKit/Source/core/policy/FramePolicy.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1221384
+      },
+      "writtenOn": "2017-12-18T21:43:09Z",
+      "side": 1,
+      "message": "It was eliminated in the most recent patch.",
+      "parentUuid": "be8fd98e_db8be6e7",
+      "revId": "b2e402e72dcb4c192b0891aff8b8a5ac1025c976",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -138,6 +246,24 @@
     },
     {
       "key": {
+        "uuid": "d976048f_e448af6a",
+        "filename": "third_party/WebKit/Source/core/policy/Policy.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1221384
+      },
+      "writtenOn": "2017-12-18T21:43:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f7eea42b_1caa1efb",
+      "revId": "b2e402e72dcb4c192b0891aff8b8a5ac1025c976",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2db0e8b6_eb7a6395",
         "filename": "third_party/WebKit/Source/core/policy/Policy.h",
         "patchSetId": 11
@@ -152,6 +278,24 @@
       "revId": "b2e402e72dcb4c192b0891aff8b8a5ac1025c976",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8c9dba8_fce06fa2",
+        "filename": "third_party/WebKit/Source/core/policy/Policy.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1221384
+      },
+      "writtenOn": "2017-12-18T21:43:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2db0e8b6_eb7a6395",
+      "revId": "b2e402e72dcb4c192b0891aff8b8a5ac1025c976",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
