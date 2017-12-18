@@ -16,6 +16,24 @@
       "revId": "1769a16d5ee3a6fc2b2f380f6cb7c7b9c34e6263",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90acc9b8_85bcd5df",
+        "filename": "third_party/WebKit/Source/devtools/front_end/object_ui/JavaScriptAutocomplete.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2017-12-18T21:18:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "28546ce5_a656fb6e",
+      "revId": "1769a16d5ee3a6fc2b2f380f6cb7c7b9c34e6263",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
