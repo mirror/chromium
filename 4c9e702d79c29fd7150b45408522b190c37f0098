@@ -16,6 +16,24 @@
       "revId": "4c9e702d79c29fd7150b45408522b190c37f0098",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cb4e89f_e21a05f7",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleViewMessage.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1369,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-12-18T20:55:50Z",
+      "side": 1,
+      "message": "The null character isn\u0027t a valid URL code point.  The intent was to exclude all control codes, so I\u0027ll change the regex to make this more explicit.",
+      "parentUuid": "915cd5a8_c7c63907",
+      "revId": "4c9e702d79c29fd7150b45408522b190c37f0098",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
