@@ -34,6 +34,24 @@
       "revId": "925e0c32ba02ff4c2dd57b2fcab28c9d0466308b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6eb81f03_9f5b3b8c",
+        "filename": "chrome/browser/android/vr_shell/autocomplete_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-12-18T20:04:41Z",
+      "side": 1,
+      "message": "Consider when you type the first character into the box.  You might get 2 initial suggestions, then 3 more soon after - here, we\u0027d just draw 4 after a bit of delay.  But what if you initially get 4, then 5 soon after, where one of the original 4 is displaced?  That\u0027s all I meant.",
+      "parentUuid": "5bff5ec1_af607c28",
+      "revId": "925e0c32ba02ff4c2dd57b2fcab28c9d0466308b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
