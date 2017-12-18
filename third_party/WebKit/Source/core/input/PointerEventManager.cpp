@@ -10,6 +10,7 @@
 #include "core/events/MouseEvent.h"
 #include "core/frame/EventHandlerRegistry.h"
 #include "core/frame/LocalFrameView.h"
+#include "core/frame/Settings.h"
 #include "core/frame/UseCounter.h"
 #include "core/html/HTMLCanvasElement.h"
 #include "core/input/EventHandler.h"
@@ -25,6 +26,8 @@
 namespace blink {
 
 namespace {
+
+const float kMaxAdjustmentRadiusInDips = 16.f;
 
 size_t ToPointerTypeIndex(WebPointerProperties::PointerType t) {
   return static_cast<size_t>(t);
@@ -47,6 +50,11 @@ Vector<WebPointerEvent> GetCoalescedWebPointerEventsWithNoTransformation(
     }
   }
   return related_pointer_events;
+}
+
+LayoutSize GetHitTestRectForAdjustment(const LayoutSize& touch_area) {
+  LayoutSize maxSize(kMaxAdjustmentRadiusInDips, kMaxAdjustmentRadiusInDips);
+  return touch_area.ShrunkTo(maxSize);
 }
 
 }  // namespace
@@ -338,8 +346,15 @@ WebInputEventResult PointerEventManager::HandleTouchEvents(
   // Do the first point target calculation to create the user gesture.
   EventHandlingUtil::PointerEventTarget first_pointer_event_target;
   if (event.touches_length) {
-    first_pointer_event_target =
-        ComputePointerEventTarget(event.TouchPointInRootFrame(0));
+    if (ShouldAdjustTouchEvent(event)) {
+      WebTouchPoint first_touch_point = event.TouchPointInRootFrame(0);
+      adjusted_result.touch_start_id = event.unique_touch_event_id;
+      AdjustPointForTouchStart(&first_touch_point);
+      first_pointer_event_target = ComputePointerEventTarget(first_touch_point);
+    } else {
+      first_pointer_event_target =
+          ComputePointerEventTarget(event.TouchPointInRootFrame(0));
+    }
   }
 
   // Any finger lifting is a user gesture only when it wasn't associated with a
@@ -386,6 +401,47 @@ WebInputEventResult PointerEventManager::HandleTouchEvents(
   // class. It will be called before rAF and also whenever we run in low latency
   // mode as mentioned in crbug.com/728250.
   return touch_event_manager_->FlushEvents();
+}
+
+bool PointerEventManager::ShouldAdjustTouchEvent(const WebTouchEvent& event) {
+  if (frame_->GetSettings() &&
+      !frame_->GetSettings()->GetTouchAdjustmentEnabled())
+    return false;
+
+  return RuntimeEnabledFeatures::UnifiedTouchAdjustmentEnabled() &&
+         event.GetType() == WebInputEvent::kTouchStart &&
+         event.touches_length == 1 &&
+         event.TouchPointInRootFrame(0).pointer_type ==
+             WebPointerProperties::PointerType::kTouch;
+}
+
+void PointerEventManager::AdjustPointForTouchStart(WebTouchPoint* touch_point) {
+  DCHECK(touch_point);
+  LayoutSize padding = GetHitTestRectForAdjustment(
+      LayoutSize(touch_point->radius_x, touch_point->radius_y));
+  if (padding.IsEmpty())
+    return;
+
+  HitTestRequest::HitTestRequestType hit_type =
+      HitTestRequest::kTouchEvent | HitTestRequest::kReadOnly |
+      HitTestRequest::kActive | HitTestRequest::kListBased;
+  IntPoint hit_test_point = frame_->View()->RootFrameToContents(
+      FlooredIntPoint(touch_point->PositionInWidget()));
+  HitTestResult hit_test_result =
+      frame_->GetEventHandler().HitTestResultAtPoint(hit_test_point, hit_type,
+                                                     padding);
+
+  Node* adjusted_node = nullptr;
+  IntPoint adjusted_point;
+  adjusted_result.adjusted =
+      frame_->GetEventHandler().BestClickableNodeForHitTestResult(
+          hit_test_result, adjusted_point, adjusted_node);
+
+  if (!adjusted_result.adjusted)
+    return;
+
+  adjusted_result.adjusted_point = adjusted_point;
+  touch_point->SetPositionInWidget(adjusted_point.X(), adjusted_point.Y());
 }
 
 EventHandlingUtil::PointerEventTarget
