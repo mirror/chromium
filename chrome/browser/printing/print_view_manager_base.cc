@@ -298,7 +298,7 @@ void PrintViewManagerBase::OnDidPrintDocument(
   if (!document)
     return;
 
-  if (!base::SharedMemory::IsHandleValid(params.metafile_data_handle)) {
+  if (!base::SharedMemory::IsHandleValid(params.content.metafile_data_handle)) {
     NOTREACHED() << "invalid memory handle";
     web_contents()->Stop();
     return;
@@ -309,14 +309,16 @@ void PrintViewManagerBase::OnDidPrintDocument(
       !document->settings().is_modifiable()) {
     client->DoCompositeToPdf(
         render_frame_host->GetRoutingID(), mojom::kNonApplicablePageNum,
-        params.metafile_data_handle, params.data_size, std::vector<uint32_t>(),
+        params.content.metafile_data_handle, params.content.data_size,
+        params.content.subframe_content_ids,
         base::BindOnce(&PrintViewManagerBase::OnComposePdfDone,
                        weak_ptr_factory_.GetWeakPtr(), params));
     return;
   }
   std::unique_ptr<base::SharedMemory> shared_buf =
-      std::make_unique<base::SharedMemory>(params.metafile_data_handle, true);
-  if (!shared_buf->Map(params.data_size)) {
+      std::make_unique<base::SharedMemory>(params.content.metafile_data_handle,
+                                           true);
+  if (!shared_buf->Map(params.content.data_size)) {
     NOTREACHED() << "couldn't map";
     web_contents()->Stop();
     return;
