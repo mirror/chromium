@@ -137,3 +137,5 @@
 # https://crbug.com/790933
 -ServiceWorkerNavigationPreloadTest.RespondWithNavigationPreload
 -ServiceWorkerNavigationPreloadTest.RedirectAndRespondWithNavigationPreload
+-ServiceWorkerNavigationPreloadTest.SetHeaderValue
+-ServiceWorkerNavigationPreloadTest.GetResponseText
