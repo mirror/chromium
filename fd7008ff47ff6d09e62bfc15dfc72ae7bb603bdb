@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "425e9afd_aa2c6c9c",
+        "filename": "third_party/WebKit/Source/devtools/front_end/help/Help.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-12-18T19:43:18Z",
+      "side": 1,
+      "message": "You can just return moduleSetting - no need to cache it.\nActually, just inline at the call sites.",
+      "revId": "fd7008ff47ff6d09e62bfc15dfc72ae7bb603bdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "135b1aa7_dc1add52",
+        "filename": "third_party/WebKit/Source/devtools/front_end/help/module.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-12-18T19:43:18Z",
+      "side": 1,
+      "message": "Let\u0027s reverse it and check by default.",
+      "revId": "fd7008ff47ff6d09e62bfc15dfc72ae7bb603bdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
