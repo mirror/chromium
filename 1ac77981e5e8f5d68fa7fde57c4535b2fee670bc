@@ -16,6 +16,24 @@
       "revId": "1ac77981e5e8f5d68fa7fde57c4535b2fee670bc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c51901b_972b2250",
+        "filename": "third_party/WebKit/Source/platform/audio/VectorMath.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1140189
+      },
+      "writtenOn": "2017-12-18T15:38:10Z",
+      "side": 1,
+      "message": "If we had only one namespace Impl, there would be a conflict with the one defined in VectorMathNEON.h/VectorMathMSA.h/VectorMathX86.h and the one defined in VectorMathScalar.h which is included by VectorMathNEON.h, VectorMathMSA.h and VectorMathX86.h.",
+      "parentUuid": "5c135322_d37e5eae",
+      "revId": "1ac77981e5e8f5d68fa7fde57c4535b2fee670bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
