@@ -193,6 +193,30 @@
     },
     {
       "key": {
+        "uuid": "ed1b1c85_dd7105f3",
+        "filename": "content/browser/payments/payment_app_info_fetcher.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-12-18T20:29:06Z",
+      "side": 1,
+      "message": "Agreed that reducing crossing variables is better. Sorry for insisting on this. I just do not see the necessary of singleton.\n\nCould you only make PaymentAppInfoFetcher::Start static?\n\nCould you change FetcherImpl to be reference count class to queue the fetch requests without using \u0027PaymentAppInfoFetcher::GetInstance()-\u003efetcher_\u0027? or make it self deleting as here (https://cs.chromium.org/chromium/src/components/payments/content/service_worker_payment_app_factory.cc?rcl\u003d1f18e14e81546a0676f5852f58f5d7b229741ea2\u0026l\u003d127). This will solve \"the same problem will occur when a request from b.com comes in when a.com\u0027s request is not over\". Previously, PaymentAppInfoFetcher is a reference count class which should have no problem.\n\nWDYT?",
+      "parentUuid": "6102199a_2718873e",
+      "range": {
+        "startLine": 122,
+        "startChar": 2,
+        "endLine": 122,
+        "endChar": 56
+      },
+      "revId": "554431fc71e1b4380c46edb062b7a8a1116f0a8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1b5a3219_0313f679",
         "filename": "content/browser/payments/payment_app_info_fetcher.h",
         "patchSetId": 4
