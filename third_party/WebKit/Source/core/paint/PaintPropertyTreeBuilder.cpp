@@ -1315,9 +1315,8 @@ void FragmentPaintPropertyTreeBuilder::UpdatePaintOffset() {
     DCHECK(enclosing_pagination_layer);
 
     // Set fragment visual paint offset.
-    LayoutPoint paint_offset =
-        BoundingBoxInPaginationContainer(object_, *enclosing_pagination_layer)
-            .Location();
+    LayoutPoint paint_offset = LayoutPoint(object_.LocalToAncestorPoint(
+        FloatPoint(), &enclosing_pagination_layer->GetLayoutObject()));
 
     paint_offset.MoveBy(fragment_data_.PaginationOffset());
     paint_offset.MoveBy(
