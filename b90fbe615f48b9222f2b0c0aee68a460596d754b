@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c129da22_5ab26893",
+        "filename": "chrome/browser/chromeos/printing/external_printers.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-12-18T20:48:16Z",
+      "side": 1,
+      "message": "I can\u0027t assert that in particular.  But I can assert that the thread allows blocking.  Which the UI thread does not.",
+      "parentUuid": "f269fcb8_81d6c9dd",
+      "revId": "b90fbe615f48b9222f2b0c0aee68a460596d754b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1d77b74f_266787dc",
         "filename": "chrome/browser/chromeos/printing/external_printers.cc",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "001a696f_2e676888",
+        "filename": "chrome/browser/chromeos/printing/external_printers.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-12-18T20:48:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1d77b74f_266787dc",
+      "revId": "b90fbe615f48b9222f2b0c0aee68a460596d754b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a8ef760e_ebcfd515",
         "filename": "chrome/browser/chromeos/printing/external_printers.cc",
         "patchSetId": 1
@@ -50,6 +86,24 @@
       "revId": "b90fbe615f48b9222f2b0c0aee68a460596d754b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5100f78a_a06de204",
+        "filename": "chrome/browser/chromeos/printing/external_printers.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-12-18T20:48:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a8ef760e_ebcfd515",
+      "revId": "b90fbe615f48b9222f2b0c0aee68a460596d754b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +141,24 @@
     },
     {
       "key": {
+        "uuid": "fc9f5303_99c5524c",
+        "filename": "chrome/browser/chromeos/printing/external_printers.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-12-18T20:48:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "80934af8_a12a75a7",
+      "revId": "b90fbe615f48b9222f2b0c0aee68a460596d754b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "78b118a5_0b458bd5",
         "filename": "chrome/browser/chromeos/printing/external_printers.cc",
         "patchSetId": 1
@@ -101,6 +173,24 @@
       "revId": "b90fbe615f48b9222f2b0c0aee68a460596d754b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8c740a5_ee1e6d66",
+        "filename": "chrome/browser/chromeos/printing/external_printers.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-12-18T20:48:16Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "78b118a5_0b458bd5",
+      "revId": "b90fbe615f48b9222f2b0c0aee68a460596d754b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +211,24 @@
     },
     {
       "key": {
+        "uuid": "35e5e693_e7772f17",
+        "filename": "chrome/browser/chromeos/printing/external_printers.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-12-18T20:48:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "82b04a94_85c5caa0",
+      "revId": "b90fbe615f48b9222f2b0c0aee68a460596d754b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c3a28698_16855c41",
         "filename": "chrome/browser/chromeos/printing/external_printers.cc",
         "patchSetId": 1
@@ -138,6 +246,24 @@
     },
     {
       "key": {
+        "uuid": "f1edec91_2c41442c",
+        "filename": "chrome/browser/chromeos/printing/external_printers.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-12-18T20:48:16Z",
+      "side": 1,
+      "message": "The computing state has been removed along with the guarantee of a notification.",
+      "parentUuid": "c3a28698_16855c41",
+      "revId": "b90fbe615f48b9222f2b0c0aee68a460596d754b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "879cb4eb_b466de81",
         "filename": "chrome/browser/chromeos/printing/external_printers.cc",
         "patchSetId": 1
@@ -152,6 +278,24 @@
       "revId": "b90fbe615f48b9222f2b0c0aee68a460596d754b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afdb9ee0_ed16d542",
+        "filename": "chrome/browser/chromeos/printing/external_printers.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-12-18T20:48:16Z",
+      "side": 1,
+      "message": "With the ownership change, this is less mysterious.",
+      "parentUuid": "879cb4eb_b466de81",
+      "revId": "b90fbe615f48b9222f2b0c0aee68a460596d754b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -175,6 +319,30 @@
       "revId": "b90fbe615f48b9222f2b0c0aee68a460596d754b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "944cf41b_61b01f5d",
+        "filename": "chrome/browser/chromeos/printing/external_printers.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-12-18T20:48:16Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "4fd3fa45_4708570d",
+      "range": {
+        "startLine": 187,
+        "startChar": 0,
+        "endLine": 187,
+        "endChar": 67
+      },
+      "revId": "b90fbe615f48b9222f2b0c0aee68a460596d754b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -212,6 +380,24 @@
     },
     {
       "key": {
+        "uuid": "572c0175_734613ef",
+        "filename": "chrome/browser/chromeos/printing/external_printers.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-12-18T20:48:16Z",
+      "side": 1,
+      "message": "No?  I set printers_cache_ to nullptr before I build the Closure.",
+      "parentUuid": "ede321bc_629fb99e",
+      "revId": "b90fbe615f48b9222f2b0c0aee68a460596d754b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "93494cfb_e7d542ab",
         "filename": "chrome/browser/chromeos/printing/external_printers.h",
         "patchSetId": 1
@@ -232,6 +418,30 @@
       "revId": "b90fbe615f48b9222f2b0c0aee68a460596d754b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bc88dfc_49fbb891",
+        "filename": "chrome/browser/chromeos/printing/external_printers.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-12-18T20:48:16Z",
+      "side": 1,
+      "message": "Fixed IT! :D",
+      "parentUuid": "93494cfb_e7d542ab",
+      "range": {
+        "startLine": 38,
+        "startChar": 39,
+        "endLine": 38,
+        "endChar": 43
+      },
+      "revId": "b90fbe615f48b9222f2b0c0aee68a460596d754b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -258,6 +468,30 @@
     },
     {
       "key": {
+        "uuid": "a5990382_325e3088",
+        "filename": "chrome/browser/chromeos/printing/external_printers.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-12-18T20:48:16Z",
+      "side": 1,
+      "message": "Structure changed. Comment obsolete.",
+      "parentUuid": "ca18d14b_ab8e827f",
+      "range": {
+        "startLine": 67,
+        "startChar": 55,
+        "endLine": 68,
+        "endChar": 32
+      },
+      "revId": "b90fbe615f48b9222f2b0c0aee68a460596d754b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ebfd4fef_206c4ca0",
         "filename": "chrome/browser/chromeos/printing/external_printers.h",
         "patchSetId": 1
@@ -269,6 +503,30 @@
       "writtenOn": "2017-12-14T22:45:01Z",
       "side": 1,
       "message": "I can see why you did vector-of-pointers, but it\u0027s also true that this is a bit of the implementation leaking through to the API, which is unfortunate.  It would be more natural, I think, to return const std::vector\u003cPrinter\u003e* here.\n\nIt\u0027s plausible to do, I think -- you\u0027d have to change your storage strategy from cache-with-pointer-references to something like included_ and excluded_ vectors, but it\u0027s also a fair bit of work for not a lot of API gain, so your call if you want to do it.",
+      "range": {
+        "startLine": 71,
+        "startChar": 0,
+        "endLine": 71,
+        "endChar": 69
+      },
+      "revId": "b90fbe615f48b9222f2b0c0aee68a460596d754b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "86280ccb_c3c57c65",
+        "filename": "chrome/browser/chromeos/printing/external_printers.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-12-18T20:48:16Z",
+      "side": 1,
+      "message": "I considered writing my own container that implemented [] and the iterator methods.  The abstraction is leaky but given the usage I didn\u0027t think it\u0027s necessary.  Also, since they\u0027re obviously pointers, I hope nobody will try to retain them without copying it. But who knows.",
+      "parentUuid": "ebfd4fef_206c4ca0",
       "range": {
         "startLine": 71,
         "startChar": 0,
@@ -295,6 +553,24 @@
       "revId": "b90fbe615f48b9222f2b0c0aee68a460596d754b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e560b598_a8c0e03b",
+        "filename": "chrome/browser/chromeos/printing/external_printers_pref_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-12-18T20:48:16Z",
+      "side": 1,
+      "message": "You pose good questions.",
+      "parentUuid": "b4ead19c_1b2ef75b",
+      "revId": "b90fbe615f48b9222f2b0c0aee68a460596d754b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
