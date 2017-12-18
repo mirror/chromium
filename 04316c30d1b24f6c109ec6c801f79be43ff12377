@@ -16,6 +16,24 @@
       "revId": "04316c30d1b24f6c109ec6c801f79be43ff12377",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "396915d9_6f084ddc",
+        "filename": "chrome/browser/ui/app_list/chrome_app_list_item_list.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2017-12-18T19:38:22Z",
+      "side": 1,
+      "message": "Just checked.\nui::ListModel only works with item index, but in many cases we want to query/modify items with ids. So I think we still need some wrapper to use ui::ListModel, right?",
+      "parentUuid": "029a1a94_b769358f",
+      "revId": "04316c30d1b24f6c109ec6c801f79be43ff12377",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
