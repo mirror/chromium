@@ -2,6 +2,75 @@
   "comments": [
     {
       "key": {
+        "uuid": "3b28f46d_5e65eb98",
+        "filename": "net/http/http_stream_factory_impl_job.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-12-18T18:28:28Z",
+      "side": 1,
+      "message": "How about just \"OnQuicHostResolution\".",
+      "range": {
+        "startLine": 323,
+        "startChar": 7,
+        "endLine": 323,
+        "endChar": 38
+      },
+      "revId": "0014b6150ce499259ac1d7ff561fff838d395433",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af86f008_d9685489",
+        "filename": "net/http/http_stream_factory_impl_job.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 471,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-12-18T18:28:28Z",
+      "side": 1,
+      "message": "Can you comment on these members? (Perhaps we can find a shorter name for the latter)",
+      "range": {
+        "startLine": 471,
+        "startChar": 68,
+        "endLine": 471,
+        "endChar": 0
+      },
+      "revId": "0014b6150ce499259ac1d7ff561fff838d395433",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d71ff1bc_2c8affae",
+        "filename": "net/quic/chromium/quic_stream_factory.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-12-18T18:28:28Z",
+      "side": 1,
+      "message": "Can you add a comment to explain this method?",
+      "range": {
+        "startLine": 355,
+        "startChar": 37,
+        "endLine": 355,
+        "endChar": 0
+      },
+      "revId": "0014b6150ce499259ac1d7ff561fff838d395433",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c4d63db9_b297cd4b",
         "filename": "net/quic/chromium/quic_stream_factory.cc",
         "patchSetId": 18
@@ -30,6 +99,29 @@
       "writtenOn": "2017-12-18T03:33:03Z",
       "side": 1,
       "message": "We have a state for host resolution completion: STATE_RESOLVE_HOST_COMPLETE, and call DoResolveHostComplete. This might not so obvious to me, but is there any reason we couldn\u0027t notify requests in that state? DoLoop doesn\u0027t seem to be a good place to handle host resolution results and notify requests.",
+      "revId": "0014b6150ce499259ac1d7ff561fff838d395433",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd819d49_35195468",
+        "filename": "net/quic/chromium/quic_stream_factory.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-12-18T18:28:28Z",
+      "side": 1,
+      "message": "(I\u0027m confused. I swear I commented on this on Friday but I don\u0027t see my comments! :/)\n\nI don\u0027t think I understand the difference between the |result| argument of this method and the |rv| argument of |callback|.\n\nCould this method simply be:\n\nint WaitForHostResolution(const CompletionCallback\u0026 callback)",
+      "range": {
+        "startLine": 132,
+        "startChar": 62,
+        "endLine": 132,
+        "endChar": 0
+      },
       "revId": "0014b6150ce499259ac1d7ff561fff838d395433",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
