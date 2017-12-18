@@ -126,6 +126,10 @@ jumbo_source_set("scheduler") {
     "utility/webthread_impl_for_utility_thread.h",
   ]
 
+  public_deps = [
+    "//third_party/WebKit/common:blink_common",
+  ]
+
   deps = [
     "//base",
     "//cc",
