@@ -27,6 +27,7 @@ class SingleThreadTaskRunner;
 namespace media {
 
 class AudioDebugRecordingHelper;
+class FileWrapper;
 
 // A manager for audio debug recording that handles registration of data
 // sources and hands them a recorder (AudioDebugRecordingHelper) to feed data
@@ -99,6 +100,12 @@ class MEDIA_EXPORT AudioDebugRecordingManager {
       int,
       std::pair<AudioDebugRecordingHelper*, base::FilePath::StringType>>;
 
+  // Callback posted on file thread to create files and enable recorders in
+  // debug_recording_helpers_.
+  void DoEnableDebugRecordingSource(scoped_refptr<FileWrapper> file_wrapper,
+                                    int id);
+  // Creates file for |recording_helper| source, must be run on file thread.
+  // Posts on audio thread EnableDebugRecording for |recording_helper|.
   // Unregisters a source.
   void UnregisterDebugRecordingSource(int id);
 
@@ -110,6 +117,12 @@ class MEDIA_EXPORT AudioDebugRecordingManager {
   // The base file name for debug recording files. If this is non-empty, debug
   // recording is enabled.
   base::FilePath debug_recording_base_file_name_;
+
+  // The task runner to do file output operations on.
+  scoped_refptr<base::SequencedTaskRunner> file_task_runner_ =
+      base::CreateSequencedTaskRunnerWithTraits(
+          {base::MayBlock(), base::TaskPriority::BACKGROUND,
+           base::TaskShutdownBehavior::BLOCK_SHUTDOWN});
 
   base::WeakPtrFactory<AudioDebugRecordingManager> weak_factory_;
   DISALLOW_COPY_AND_ASSIGN(AudioDebugRecordingManager);

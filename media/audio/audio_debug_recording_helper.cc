@@ -5,7 +5,7 @@
 #include "media/audio/audio_debug_recording_helper.h"
 
 #include "base/bind.h"
-#include "base/files/file_path.h"
+#include "base/files/file.h"
 #include "base/memory/ptr_util.h"
 #include "base/single_thread_task_runner.h"
 #include "media/audio/audio_debug_file_writer.h"
@@ -27,15 +27,13 @@ AudioDebugRecordingHelper::~AudioDebugRecordingHelper() {
     std::move(on_destruction_closure_).Run();
 }
 
-void AudioDebugRecordingHelper::EnableDebugRecording(
-    const base::FilePath& file_name) {
+void AudioDebugRecordingHelper::EnableDebugRecording(base::File file) {
   DCHECK(task_runner_->BelongsToCurrentThread());
   DCHECK(!debug_writer_);
-  DCHECK(!file_name.empty());
+  DCHECK(file.IsValid());
 
   debug_writer_ = CreateAudioDebugFileWriter(params_);
-  debug_writer_->Start(
-      file_name.AddExtension(debug_writer_->GetFileNameExtension()));
+  debug_writer_->Start(std::move(file));
 
   base::subtle::NoBarrier_Store(&recording_enabled_, 1);
 }
