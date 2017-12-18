@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e38463e1_31dcad77",
+        "filename": "mojo/public/cpp/test_support/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-12-18T17:03:09Z",
+      "side": 1,
+      "message": "I would prefer not to add this, and it\u0027s probably overkill for your use case anyway. You shouldn\u0027t need all the IPC support stuff, just a single call to mojo::edk::Init() per process.\n\nThe IPC stuff is only necessary if you actually need multiprocess support.\n\nPlease see what I did in my own CL here: https://chromium-review.googlesource.com/c/chromium/src/+/818282/10/media/capture/video/video_capture_device_client_unittest.cc",
+      "revId": "4531ee9d5738622e030f47c7c1e2cbc473ed3ddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
