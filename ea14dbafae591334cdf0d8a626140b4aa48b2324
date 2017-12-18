@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fc247680_2fe3b8e6",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 1158,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-12-18T21:24:18Z",
+      "side": 1,
+      "message": "Should we skip this condition entirely, and try to make cursor visible instead?",
+      "revId": "ea14dbafae591334cdf0d8a626140b4aa48b2324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
