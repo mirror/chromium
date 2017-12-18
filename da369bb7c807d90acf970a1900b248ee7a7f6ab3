@@ -16,6 +16,24 @@
       "revId": "da369bb7c807d90acf970a1900b248ee7a7f6ab3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab0203a4_f72dc913",
+        "filename": "build/android/gyp/write_build_config.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 618,
+      "author": {
+        "id": 1002869
+      },
+      "writtenOn": "2017-12-18T21:14:43Z",
+      "side": 1,
+      "message": "Right! Nice catch.",
+      "parentUuid": "d61a6f2f_fddd35da",
+      "revId": "da369bb7c807d90acf970a1900b248ee7a7f6ab3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
