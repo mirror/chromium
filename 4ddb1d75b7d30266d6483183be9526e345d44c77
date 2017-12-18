@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fd809596_9f8f0bb2",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-12-18T19:12:51Z",
+      "side": 1,
+      "message": "Why do we need to keep it around until that occurs?",
+      "revId": "4ddb1d75b7d30266d6483183be9526e345d44c77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55cfb779_809bfb95",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-12-18T19:12:51Z",
+      "side": 1,
+      "message": "This is a layering problem - the code in chrome/browser/media/router shouldn\u0027t depend on code in chrome/browser/ui.",
+      "revId": "4ddb1d75b7d30266d6483183be9526e345d44c77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61f5256b_7d01b9cf",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-12-18T19:12:51Z",
+      "side": 1,
+      "message": "Does this need to be public?  Is it referred to outside the .cc?",
+      "revId": "4ddb1d75b7d30266d6483183be9526e345d44c77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd632ac5_76b4fff4",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-12-18T19:12:51Z",
+      "side": 1,
+      "message": "PresentationReceiverWindowController is also a WebContentsObserver; could PRWC have an API to set the callback, instead of adding a second observer to the WebContents?",
+      "revId": "4ddb1d75b7d30266d6483183be9526e345d44c77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ccdc0de_4d2f67f5",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-12-18T19:12:51Z",
+      "side": 1,
+      "message": "Which profile is this?",
+      "revId": "4ddb1d75b7d30266d6483183be9526e345d44c77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
