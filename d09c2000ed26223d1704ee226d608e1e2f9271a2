@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d39fc57f_4a3de6a9",
+        "filename": "net/extras/sqlite/sqlite_persistent_cookie_store.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1152,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-18T14:30:48Z",
+      "side": 1,
+      "message": "I think the fix to this is to add a pending_writes variable, also protected by the lock, and base the signal logic on that.  Only set the signal when it starts from zero, only reset it when it reaches zero (Protected by a lock).  That also means that signalling/resetting the event must also be protected by lock.",
+      "parentUuid": "f211d6dc_d5ddf841",
+      "range": {
+        "startLine": 1152,
+        "startChar": 27,
+        "endLine": 1152,
+        "endChar": 28
+      },
+      "revId": "d09c2000ed26223d1704ee226d608e1e2f9271a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "654de9e4_ce29905a",
         "filename": "net/extras/sqlite/sqlite_persistent_cookie_store.cc",
         "patchSetId": 2
