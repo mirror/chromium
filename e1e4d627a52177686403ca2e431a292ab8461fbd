@@ -22,6 +22,30 @@
       "revId": "e1e4d627a52177686403ca2e431a292ab8461fbd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e712495e_d484df9c",
+        "filename": "ios/chrome/browser/web/external_app_launcher_tab_helper.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-18T18:52:46Z",
+      "side": 1,
+      "message": "Once means that callback can only be called once. And that\u0027s appropriate callback for this case. std::move on URLs should invoke move constructors instead of copy constructors.",
+      "parentUuid": "800551d1_0cd0c3ca",
+      "range": {
+        "startLine": 310,
+        "startChar": 12,
+        "endLine": 310,
+        "endChar": 29
+      },
+      "revId": "e1e4d627a52177686403ca2e431a292ab8461fbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

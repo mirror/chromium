@@ -1,0 +1,624 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "332aa91f_d110066a",
+        "filename": "ios/chrome/browser/web/external_app_launcher_tab_helper.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-18T18:52:46Z",
+      "side": 1,
+      "message": "s/gURL/url/\n\nSame comment for the other variables",
+      "revId": "8d2ee7d7cd001b7e0a4ccc46f8c52ddefb0c6090",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8187856c_1a445b83",
+        "filename": "ios/chrome/browser/web/external_app_launcher_tab_helper.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-18T18:52:46Z",
+      "side": 1,
+      "message": "nit: s/BOOL/bool\n\nBOOL has own pitfalls and it is better to use bool in C++ code.",
+      "range": {
+        "startLine": 30,
+        "startChar": 7,
+        "endLine": 30,
+        "endChar": 23
+      },
+      "revId": "8d2ee7d7cd001b7e0a4ccc46f8c52ddefb0c6090",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b3f860e_468a2161",
+        "filename": "ios/chrome/browser/web/external_app_launcher_tab_helper.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-18T18:52:46Z",
+      "side": 1,
+      "message": "Please add comments. Explaining the arguments would be very useful.",
+      "range": {
+        "startLine": 38,
+        "startChar": 7,
+        "endLine": 38,
+        "endChar": 37
+      },
+      "revId": "8d2ee7d7cd001b7e0a4ccc46f8c52ddefb0c6090",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afe1a4c1_66983873",
+        "filename": "ios/chrome/browser/web/external_app_launcher_tab_helper.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-18T18:52:46Z",
+      "side": 1,
+      "message": "How about |bool is_prompt_active;| ?",
+      "range": {
+        "startLine": 46,
+        "startChar": 7,
+        "endLine": 46,
+        "endChar": 21
+      },
+      "revId": "8d2ee7d7cd001b7e0a4ccc46f8c52ddefb0c6090",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5aff043_e39f1783",
+        "filename": "ios/chrome/browser/web/external_app_launcher_tab_helper.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-18T18:52:46Z",
+      "side": 1,
+      "message": "I would drop \"Weak pointer to self.\", because factory is not a weak pointer to self.",
+      "range": {
+        "startLine": 48,
+        "startChar": 21,
+        "endLine": 48,
+        "endChar": 25
+      },
+      "revId": "8d2ee7d7cd001b7e0a4ccc46f8c52ddefb0c6090",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "728b79ad_766ceae9",
+        "filename": "ios/chrome/browser/web/external_app_launcher_tab_helper.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-18T18:52:46Z",
+      "side": 1,
+      "message": "Do we need this include?",
+      "range": {
+        "startLine": 7,
+        "startChar": 15,
+        "endLine": 7,
+        "endChar": 27
+      },
+      "revId": "8d2ee7d7cd001b7e0a4ccc46f8c52ddefb0c6090",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db83c7e6_0a3286bb",
+        "filename": "ios/chrome/browser/web/external_app_launcher_tab_helper.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-18T18:52:46Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 10,
+        "startChar": 19,
+        "endLine": 10,
+        "endChar": 34
+      },
+      "revId": "8d2ee7d7cd001b7e0a4ccc46f8c52ddefb0c6090",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4af6bd6_5b6f8e1e",
+        "filename": "ios/chrome/browser/web/external_app_launcher_tab_helper.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-18T18:52:46Z",
+      "side": 1,
+      "message": "Optional nit: GetItmsSchemes",
+      "revId": "8d2ee7d7cd001b7e0a4ccc46f8c52ddefb0c6090",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5cba82d_b737a796",
+        "filename": "ios/chrome/browser/web/external_app_launcher_tab_helper.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-18T18:52:46Z",
+      "side": 1,
+      "message": "Do we need to keep this optimization? Time for creating NSSet is negligible comparing to efforts required to launch iOS application.",
+      "range": {
+        "startLine": 38,
+        "startChar": 2,
+        "endLine": 38,
+        "endChar": 15
+      },
+      "revId": "8d2ee7d7cd001b7e0a4ccc46f8c52ddefb0c6090",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a75d723_2dc8c84c",
+        "filename": "ios/chrome/browser/web/external_app_launcher_tab_helper.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-18T18:52:46Z",
+      "side": 1,
+      "message": "nit: Do we need this local variable?",
+      "range": {
+        "startLine": 50,
+        "startChar": 7,
+        "endLine": 50,
+        "endChar": 13
+      },
+      "revId": "8d2ee7d7cd001b7e0a4ccc46f8c52ddefb0c6090",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e8a8b38_c71c9bb6",
+        "filename": "ios/chrome/browser/web/external_app_launcher_tab_helper.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-18T18:52:46Z",
+      "side": 1,
+      "message": "Can we change this method or UrlHasAppStoreScheme to have consistent way to check the scheme (set lookup v.s. compare/or)?",
+      "range": {
+        "startLine": 56,
+        "startChar": 22,
+        "endLine": 56,
+        "endChar": 23
+      },
+      "revId": "8d2ee7d7cd001b7e0a4ccc46f8c52ddefb0c6090",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14ccc258_d39dad18",
+        "filename": "ios/chrome/browser/web/external_app_launcher_tab_helper.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-18T18:52:46Z",
+      "side": 1,
+      "message": "nit: GetPromptActionString",
+      "range": {
+        "startLine": 61,
+        "startChar": 10,
+        "endLine": 61,
+        "endChar": 28
+      },
+      "revId": "8d2ee7d7cd001b7e0a4ccc46f8c52ddefb0c6090",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2cb5ea6_f4e2f242",
+        "filename": "ios/chrome/browser/web/external_app_launcher_tab_helper.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-18T18:52:46Z",
+      "side": 1,
+      "message": "else if ([scheme isEqualTo:@\"tel\"] || [scheme isEqualTo:@\"facetime-audio\"])\n  return l10n_util::GetNSString(IDS_IOS_PHONE_CALL_BUTTON);\n\nor add braces, because if statement is multiline",
+      "revId": "8d2ee7d7cd001b7e0a4ccc46f8c52ddefb0c6090",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "400d679d_6ff88eef",
+        "filename": "ios/chrome/browser/web/external_app_launcher_tab_helper.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-18T18:52:46Z",
+      "side": 1,
+      "message": "Should we use the same code for a check? (launch_url !\u003d nil vs. [launch_url length])",
+      "range": {
+        "startLine": 75,
+        "startChar": 24,
+        "endLine": 75,
+        "endChar": 34
+      },
+      "revId": "8d2ee7d7cd001b7e0a4ccc46f8c52ddefb0c6090",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b595ff2_bf0818a0",
+        "filename": "ios/chrome/browser/web/external_app_launcher_tab_helper.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-18T18:52:46Z",
+      "side": 1,
+      "message": "Can we update the comments? They look outdated.",
+      "range": {
+        "startLine": 89,
+        "startChar": 15,
+        "endLine": 89,
+        "endChar": 20
+      },
+      "revId": "8d2ee7d7cd001b7e0a4ccc46f8c52ddefb0c6090",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "942adbec_e62b0506",
+        "filename": "ios/chrome/browser/web/external_app_launcher_tab_helper.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-18T18:52:46Z",
+      "side": 1,
+      "message": "How about GetLaunchPrompt for the name?",
+      "range": {
+        "startLine": 90,
+        "startChar": 10,
+        "endLine": 90,
+        "endChar": 28
+      },
+      "revId": "8d2ee7d7cd001b7e0a4ccc46f8c52ddefb0c6090",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b4d9ec0_1c390f02",
+        "filename": "ios/chrome/browser/web/external_app_launcher_tab_helper.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-18T18:52:46Z",
+      "side": 1,
+      "message": "Is it ok for url to be nil? Should we add a DCHECK?",
+      "range": {
+        "startLine": 90,
+        "startChar": 36,
+        "endLine": 90,
+        "endChar": 39
+      },
+      "revId": "8d2ee7d7cd001b7e0a4ccc46f8c52ddefb0c6090",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cf56ade_8fac2d73",
+        "filename": "ios/chrome/browser/web/external_app_launcher_tab_helper.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-18T18:52:46Z",
+      "side": 1,
+      "message": "Can we move this closer to the call place?",
+      "range": {
+        "startLine": 91,
+        "startChar": 18,
+        "endLine": 91,
+        "endChar": 26
+      },
+      "revId": "8d2ee7d7cd001b7e0a4ccc46f8c52ddefb0c6090",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cb63748_51345602",
+        "filename": "ios/chrome/browser/web/external_app_launcher_tab_helper.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-18T18:52:46Z",
+      "side": 1,
+      "message": "Can we modernize this code and use dot syntax for the properties?",
+      "range": {
+        "startLine": 93,
+        "startChar": 31,
+        "endLine": 93,
+        "endChar": 47
+      },
+      "revId": "8d2ee7d7cd001b7e0a4ccc46f8c52ddefb0c6090",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83c31a21_4cb20b75",
+        "filename": "ios/chrome/browser/web/external_app_launcher_tab_helper.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-18T18:52:46Z",
+      "side": 1,
+      "message": "Do we need this check? I have hard time understanding the logic behind it.",
+      "range": {
+        "startLine": 95,
+        "startChar": 27,
+        "endLine": 95,
+        "endChar": 28
+      },
+      "revId": "8d2ee7d7cd001b7e0a4ccc46f8c52ddefb0c6090",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a9e53d2_e45934b7",
+        "filename": "ios/chrome/browser/web/external_app_launcher_tab_helper.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-18T18:52:46Z",
+      "side": 1,
+      "message": "Do we need to reference \"Material Design\" here? The comment does not have munch value and will likely rot if UI changes.",
+      "range": {
+        "startLine": 107,
+        "startChar": 30,
+        "endLine": 107,
+        "endChar": 36
+      },
+      "revId": "8d2ee7d7cd001b7e0a4ccc46f8c52ddefb0c6090",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f27e3f8_f8adfec3",
+        "filename": "ios/chrome/browser/web/external_app_launcher_tab_helper.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-18T18:52:46Z",
+      "side": 1,
+      "message": "nit: /*accept_label\u003d*/open_label\n\nSame comments for other places",
+      "range": {
+        "startLine": 173,
+        "startChar": 28,
+        "endLine": 173,
+        "endChar": 40
+      },
+      "revId": "8d2ee7d7cd001b7e0a4ccc46f8c52ddefb0c6090",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64bbe40c_e862e418",
+        "filename": "ios/chrome/browser/web/external_app_launcher_tab_helper.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-18T18:52:46Z",
+      "side": 1,
+      "message": "base::BindRepeating does not look correct here. Can we figure out why compiler complains about BindOnce?",
+      "range": {
+        "startLine": 175,
+        "startChar": 12,
+        "endLine": 175,
+        "endChar": 25
+      },
+      "revId": "8d2ee7d7cd001b7e0a4ccc46f8c52ddefb0c6090",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dab27993_1216f65c",
+        "filename": "ios/chrome/browser/web/external_app_launcher_tab_helper.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-18T18:52:46Z",
+      "side": 1,
+      "message": "Can we use @available instead and remove ios_util.h include?",
+      "range": {
+        "startLine": 190,
+        "startChar": 17,
+        "endLine": 190,
+        "endChar": 35
+      },
+      "revId": "8d2ee7d7cd001b7e0a4ccc46f8c52ddefb0c6090",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "389be52c_d5a6a748",
+        "filename": "ios/chrome/browser/web/external_app_launcher_tab_helper.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-18T18:52:46Z",
+      "side": 1,
+      "message": "handler_id",
+      "range": {
+        "startLine": 223,
+        "startChar": 14,
+        "endLine": 223,
+        "endChar": 23
+      },
+      "revId": "8d2ee7d7cd001b7e0a4ccc46f8c52ddefb0c6090",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc7b768b_3abd691b",
+        "filename": "ios/chrome/browser/web/external_app_launcher_tab_helper.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-18T18:52:46Z",
+      "side": 1,
+      "message": "Can we use initialization list here?",
+      "range": {
+        "startLine": 248,
+        "startChar": 22,
+        "endLine": 248,
+        "endChar": 53
+      },
+      "revId": "8d2ee7d7cd001b7e0a4ccc46f8c52ddefb0c6090",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f26224b6_996fbd21",
+        "filename": "ios/chrome/browser/web/external_app_launcher_tab_helper.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-18T18:52:46Z",
+      "side": 1,
+      "message": "s/BOOL/bool",
+      "range": {
+        "startLine": 256,
+        "startChar": 9,
+        "endLine": 256,
+        "endChar": 16
+      },
+      "revId": "8d2ee7d7cd001b7e0a4ccc46f8c52ddefb0c6090",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cde7c01f_ada8d485",
+        "filename": "ios/chrome/browser/web/external_app_launcher_tab_helper.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-18T18:52:46Z",
+      "side": 1,
+      "message": "We should try to figure out how to use BindOnce here",
+      "revId": "8d2ee7d7cd001b7e0a4ccc46f8c52ddefb0c6090",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

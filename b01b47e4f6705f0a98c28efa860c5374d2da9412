@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2ccd83b8_9c392ed3",
+        "filename": "ios/chrome/browser/web/external_app_launcher.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-18T18:52:46Z",
+      "side": 0,
+      "message": "This file had tests. So we should convert the tests as well.",
+      "range": {
+        "startLine": 14,
+        "startChar": 11,
+        "endLine": 14,
+        "endChar": 30
+      },
+      "revId": "b01b47e4f6705f0a98c28efa860c5374d2da9412",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
