@@ -76,14 +76,15 @@ public class SwipeRecognizer extends SimpleOnGestureListener {
     /**
      * The internal {@GestureDetector} used to recognize swipe gestures.
      */
-    private final GestureDetector mGestureDetector;
+    private GestureDetector mGestureDetector;
+    private final Context mContext;
 
     /**
      * @param context The current Android {@link Context}.
      */
     public SwipeRecognizer(Context context) {
+        mContext = context;
         mPxToDp = 1.f / context.getResources().getDisplayMetrics().density;
-        mGestureDetector = new GestureDetector(context, this);
     }
 
     /**
@@ -103,6 +104,9 @@ public class SwipeRecognizer extends SimpleOnGestureListener {
      * @return Whether the event has been consumed.
      */
     public boolean onTouchEvent(MotionEvent event) {
+        if (mGestureDetector == null) {
+            mGestureDetector = new GestureDetector(mContext, this);
+        }
         boolean consumed = mGestureDetector.onTouchEvent(event);
 
         if (mSwipeHandler != null) {

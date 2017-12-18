@@ -28,6 +28,7 @@ import android.widget.FrameLayout;
 import org.chromium.base.ApiCompatibilityUtils;
 import org.chromium.base.ObserverList;
 import org.chromium.base.SysUtils;
+import org.chromium.base.ThreadUtils;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.base.library_loader.LibraryProcessType;
 import org.chromium.base.metrics.RecordHistogram;
@@ -446,16 +447,17 @@ public class BottomSheet
 
         mGestureDetector = new BottomSheetSwipeDetector(context, this);
 
-        BrowserStartupController.get(LibraryProcessType.PROCESS_BROWSER)
-                .addStartupCompletedObserver(new BrowserStartupController.StartupCallback() {
-                    @Override
-                    public void onSuccess(boolean alreadyStarted) {
-                        mIsTouchEnabled = true;
-                    }
+        ThreadUtils.runOnUiThread(() ->
+            BrowserStartupController.get(LibraryProcessType.PROCESS_BROWSER)
+                    .addStartupCompletedObserver(new BrowserStartupController.StartupCallback() {
+                        @Override
+                        public void onSuccess(boolean alreadyStarted) {
+                            mIsTouchEnabled = true;
+                        }
 
-                    @Override
-                    public void onFailure() {}
-                });
+                        @Override
+                        public void onFailure() {}
+                    }));
 
         // An observer for recording metrics.
         this.addObserver(new EmptyBottomSheetObserver() {

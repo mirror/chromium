@@ -1559,13 +1559,19 @@ public class ChromeTabbedActivity
         getWindow().setSoftInputMode(
                 WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN
                 | WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+    }
+
+    @Override
+    public void completePostInflationStartup() {
+        try (TraceEvent te = TraceEvent.scoped("ChromeTabbedActivity.completePostInflationStartup")) {
+        super.completePostInflationStartup();
 
         mContentContainer = (ViewGroup) findViewById(android.R.id.content);
         mControlContainer = (ToolbarControlContainer) findViewById(R.id.control_container);
 
         mUndoBarPopupController = new UndoBarController(this, mTabModelSelectorImpl,
                 getSnackbarManager());
-    }
+    }}
 
     @Override
     protected void initializeToolbar() {
