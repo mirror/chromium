@@ -2,7 +2,7 @@ Name: harfbuzz-ng
 Short Name: harfbuzz-ng
 URL: http://harfbuzz.org
 Version: 1.7.2
-Date: 20171204
+Date: 20171217
 Security Critical: yes
 License: MIT
 License File: COPYING
@@ -19,8 +19,7 @@ for removed or added files and update our build recipes in BUILD.gn and
 harfbuzz.gyp accordingly, update the NEWS file from HarfBuzz' release notes, and
 bump the version numbers in README.chromium.
 
-Locally patch hb-private.hh to silence unusued variable warnings in MSVC.
-
-Locally patch PAGE_BITS to 8192 in hb-set-private to see whether larger page
-sizes help avoid the set performance regressions we are observing in issue
-782220.
+Cherry-pick 0fd89dc6..1245395a to incorporate hb_set changes which improve
+dealing with fonts containing incorrectly sorted range information, such as the
+Chandas Devanagari font part of the ttf-devanagari-fonts package, as identified
+in https://bugs.chromium.org/p/chromium/issues/detail?id=794896
