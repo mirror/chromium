@@ -3,6 +3,7 @@
 // found in the LICENSE file.
 
 (async function() {
+  setTimeout(() => { TestRunner.completeTest(); }, 5000);
   TestRunner.addResult(`Tests that User-Agent override works for requests from Service Workers.\n`);
   await TestRunner.loadModule('application_test_runner');
     // Note: every test that uses a storage API must manually clean-up state from previous tests.

@@ -3,6 +3,7 @@
 // found in the LICENSE file.
 
 (async function() {
+  setTimeout(() => { TestRunner.completeTest(); }, 5000);
   TestRunner.addResult(`Tests V8 cache information of Service Worker Cache Storage in timeline\n`);
   await TestRunner.loadModule('performance_test_runner');
   await TestRunner.loadModule('application_test_runner');
