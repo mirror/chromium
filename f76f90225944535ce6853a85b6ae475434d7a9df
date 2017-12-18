@@ -70,6 +70,30 @@
       "revId": "f76f90225944535ce6853a85b6ae475434d7a9df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf32cbc7_8781012e",
+        "filename": "services/device/battery/battery_monitor_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1244341
+      },
+      "writtenOn": "2017-12-18T13:14:30Z",
+      "side": 1,
+      "message": "Thanks.",
+      "parentUuid": "cb90ba97_ef8113c9",
+      "range": {
+        "startLine": 42,
+        "startChar": 6,
+        "endLine": 42,
+        "endChar": 30
+      },
+      "revId": "f76f90225944535ce6853a85b6ae475434d7a9df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
