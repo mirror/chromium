@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4c0414f3_d3c1fd63",
+        "filename": "components/autofill/content/renderer/PRESUBMIT.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-12-18T15:50:09Z",
+      "side": 1,
+      "message": "Yes, exactly. I want to be able to show a warning if somebody accidentally uses the wrong function.",
+      "parentUuid": "e8fdb80d_37e0e483",
+      "revId": "f8e18657030f5c17d410d2fbe8d79784e7afd83f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7459daf0_d482647e",
         "filename": "components/autofill/content/renderer/autofill_agent.cc",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "011775a0_f94d1063",
+        "filename": "components/autofill/content/renderer/autofill_agent.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 598,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-12-18T15:50:09Z",
+      "side": 1,
+      "message": "Do you have a suggestion for how to fix this?",
+      "parentUuid": "7459daf0_d482647e",
+      "revId": "f8e18657030f5c17d410d2fbe8d79784e7afd83f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "78d46fa6_54b15289",
         "filename": "components/autofill/content/renderer/password_autofill_agent.cc",
         "patchSetId": 2
@@ -47,6 +83,24 @@
       "writtenOn": "2017-12-18T15:46:19Z",
       "side": 1,
       "message": "I suspect this name change was use the compiler to find places that needed to change? \n\nIs this still needed? The name doesn\u0027t match the conventions of the other helpers.",
+      "revId": "f8e18657030f5c17d410d2fbe8d79784e7afd83f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8f40d84_d3378dfb",
+        "filename": "components/autofill/content/renderer/password_autofill_agent.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-12-18T15:50:09Z",
+      "side": 1,
+      "message": "Yes, I have renamed this specifically to make sure that PRESUBMIT.py catches exactly the concerning changes.",
+      "parentUuid": "78d46fa6_54b15289",
       "revId": "f8e18657030f5c17d410d2fbe8d79784e7afd83f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
