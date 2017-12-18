@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1c14235c_ae8e08cc",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/editing/editing-0/autocapitalization/OWNERS",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-12-18T21:41:45Z",
+      "side": 1,
+      "message": "Ah, ok...seems like the other OWNERS files for the editing tests should be changed then?",
+      "parentUuid": "0c05e2c0_cd12f57f",
+      "revId": "84df3921d048100cf16ed34e40005cc4f242a231",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fa7afc68_cf5e8e2b",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/html/editing/editing-0/autocapitalization/autocapitalize.html",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-18T21:05:27Z",
       "side": 1,
       "message": "It might be worth testing `e.autocapitalize \u003d \u0027\u0027` as another invalid value.",
+      "revId": "84df3921d048100cf16ed34e40005cc4f242a231",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7536025f_17d01c46",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/editing/editing-0/autocapitalization/autocapitalize.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-12-18T21:41:45Z",
+      "side": 1,
+      "message": "Oh yeah, we need that, but the empty string is treated differently than other invalid values (it\u0027s treated the same as a missing attribute).",
+      "parentUuid": "fa7afc68_cf5e8e2b",
       "revId": "84df3921d048100cf16ed34e40005cc4f242a231",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
