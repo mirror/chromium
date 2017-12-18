@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "e2b591e3_53b2c861",
+        "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-12-18T15:53:12Z",
+      "side": 1,
+      "message": "Can you cache this result instead of checking for every event?",
+      "revId": "8c4dc1bc05edc2a6cec6c5cba3f0ac82fa270a01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e55eac90_3c8f4790",
         "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
         "patchSetId": 3
@@ -13,6 +30,46 @@
       "writtenOn": "2017-12-15T18:18:18Z",
       "side": 1,
       "message": "Is this right, that we want the point to be in the coordinates of the window? I think this adjustment is correct for doing that, but I also notice that FindTargetForLocation never returns a valid FrameSinkId (maybe that is okay? The renderer doesn\u0027t supply a HitTestRegionList yet, AFAIK).",
+      "revId": "8c4dc1bc05edc2a6cec6c5cba3f0ac82fa270a01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0602858_4abf55c3",
+        "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-12-18T15:53:12Z",
+      "side": 1,
+      "message": "This should probably happen after the early return since the value isn\u0027t needed in that case.",
+      "revId": "8c4dc1bc05edc2a6cec6c5cba3f0ac82fa270a01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1141b287_11f5dd81",
+        "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-12-18T15:53:12Z",
+      "side": 1,
+      "message": "Can just build a gfx::Point in the first place?",
+      "range": {
+        "startLine": 210,
+        "startChar": 16,
+        "endLine": 210,
+        "endChar": 50
+      },
       "revId": "8c4dc1bc05edc2a6cec6c5cba3f0ac82fa270a01",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
