@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "72dd7c3b_f47ed3ab",
+        "filename": "ui/touch_selection/touch_selection_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-12-18T19:21:44Z",
+      "side": 1,
+      "message": "Done\n\nThanks for the detailed explanation!",
+      "parentUuid": "7c2d79d7_87cc8f81",
+      "revId": "b3ed7693cdc72e61cb35a4b830a2b51dbb91069b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7bb1e3f3_96fd05f4",
         "filename": "ui/touch_selection/touch_selection_controller.h",
         "patchSetId": 2
