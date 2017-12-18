@@ -207,6 +207,11 @@ const char kDisableLowLatencyDxva[]         = "disable-low-latency-dxva";
 // Dont use a Mojo-based LocalStorage implementation.
 const char kDisableMojoLocalStorage[] = "disable-mojo-local-storage";
 
+// Disable using a single multiplanar GpuMemoryBuffer to store multiplanar
+// VideoFrames (e.g. NV12 or I420), see https://crbug.com/791676.
+const char kDisableMultiplanarGpuMemoryBuffersForVideoFrames[] =
+    "disable-multiple-gpu-memory-buffers-for-video-frames";
+
 // Disables usage of the namespace sandbox.
 const char kDisableNamespaceSandbox[]       = "disable-namespace-sandbox";
 
