@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "374ccb2f_74b05024",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1141499
+      },
+      "writtenOn": "2017-12-18T22:24:33Z",
+      "side": 1,
+      "message": "No-Try: True\n(for this CL only, since only presubmit is useful for doc change like yours)",
+      "revId": "6454d1768a5a8069603be9e30630c991e134874e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bf44950e_d8ce248a",
         "filename": "docs/tour_of_luci_ui.md",
         "patchSetId": 1
