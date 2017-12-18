@@ -4,16 +4,29 @@
 
 #include "base/test/scoped_feature_list.h"
 #include "build/build_config.h"
+#include "content/browser/frame_host/navigation_request_info.h"
+#include "content/browser/loader/navigation_url_loader.h"
 #include "content/browser/storage_partition_impl.h"
+#include "content/browser/url_loader_factory_getter.h"
+#include "content/common/navigation_params.h"
+#include "content/common/navigation_params.mojom.h"
 #include "content/public/browser/browser_context.h"
+#include "content/public/browser/navigation_ui_data.h"
 #include "content/public/browser/network_service_instance.h"
+#include "content/public/browser/resource_context.h"
+#include "content/public/browser/stream_handle.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/common/content_features.h"
 #include "content/public/common/network_service.mojom.h"
 #include "content/public/test/browser_test_utils.h"
 #include "content/public/test/content_browser_test.h"
 #include "content/public/test/content_browser_test_utils.h"
+#include "content/public/test/test_utils.h"
 #include "content/shell/browser/shell.h"
+#include "content/test/test_navigation_url_loader_delegate.h"
+#include "net/base/load_flags.h"
+#include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
+#include "net/url_request/url_request_test_util.h"
 
 namespace content {
 
@@ -26,6 +39,51 @@ mojom::NetworkContextPtr CreateNetworkContext() {
   GetNetworkService()->CreateNetworkContext(mojo::MakeRequest(&network_context),
                                             std::move(context_params));
   return network_context;
+}
+
+void TestBasicRequestOnIOThread(
+    URLLoaderFactoryGetter* url_loader_factory_getter,
+    const GURL& url) {
+  base::RunLoop run_loop;
+  BrowserThread::PostTask(
+      BrowserThread::IO, FROM_HERE,
+      base::BindOnce(
+          [](URLLoaderFactoryGetter* url_loader_factory_getter_,
+             const GURL& url_, base::OnceClosure callback) {
+            EXPECT_EQ(
+                net::OK,
+                LoadBasicRequest(
+                    url_loader_factory_getter_->GetNetworkFactory(), url_));
+            std::move(callback).Run();
+          },
+          base::Unretained(url_loader_factory_getter), url,
+          run_loop.QuitClosure()));
+  RunThisRunLoop(&run_loop);
+}
+
+std::unique_ptr<NavigationURLLoader> MakeTestNavigationURLLoader(
+    const GURL& url,
+    NavigationURLLoaderDelegate* delegate,
+    BrowserContext* browser_context) {
+  mojom::BeginNavigationParamsPtr begin_params =
+      mojom::BeginNavigationParams::New(
+          std::string() /* headers */, net::LOAD_NORMAL,
+          false /* skip_service_worker */, REQUEST_CONTEXT_TYPE_LOCATION,
+          blink::WebMixedContentContextType::kBlockable,
+          false /* is_form_submission */, GURL() /* searchable_form_url */,
+          std::string() /* searchable_form_encoding */,
+          url::Origin::Create(url), GURL() /* client_side_redirect_url */);
+  CommonNavigationParams common_params;
+  common_params.url = url;
+  common_params.allow_download = false;
+
+  std::unique_ptr<NavigationRequestInfo> request_info(new NavigationRequestInfo(
+      common_params, std::move(begin_params), url, true, false, false, -1,
+      false, false, blink::mojom::PageVisibilityState::kVisible));
+  return NavigationURLLoader::Create(
+      browser_context->GetResourceContext(),
+      BrowserContext::GetDefaultStoragePartition(browser_context),
+      std::move(request_info), nullptr, nullptr, nullptr, delegate);
 }
 
 }  // namespace
@@ -56,6 +114,11 @@ class NetworkServiceRestartBrowserTest
     // Use '/echoheader' instead of '/echo' to avoid a disk_cache bug.
     // See https://crbug.com/792255.
     return embedded_test_server()->GetURL("/echoheader");
+  }
+
+ protected:
+  BrowserContext* browser_context() {
+    return shell()->web_contents()->GetBrowserContext();
   }
 
  private:
@@ -97,8 +160,7 @@ IN_PROC_BROWSER_TEST_F(NetworkServiceRestartBrowserTest,
 IN_PROC_BROWSER_TEST_F(NetworkServiceRestartBrowserTest,
                        StoragePartitionImplGetNetworkContext) {
   StoragePartitionImpl* partition = static_cast<StoragePartitionImpl*>(
-      BrowserContext::GetDefaultStoragePartition(
-          shell()->web_contents()->GetBrowserContext()));
+      BrowserContext::GetDefaultStoragePartition(browser_context()));
   partition->AddNetworkContextObserver(this);
 
   mojom::NetworkContext* old_network_context = partition->GetNetworkContext();
@@ -127,8 +189,7 @@ IN_PROC_BROWSER_TEST_F(NetworkServiceRestartBrowserTest,
 IN_PROC_BROWSER_TEST_F(NetworkServiceRestartBrowserTest,
                        StoragePartitionImplGetNetworkContextMultipleCrash) {
   StoragePartitionImpl* partition = static_cast<StoragePartitionImpl*>(
-      BrowserContext::GetDefaultStoragePartition(
-          shell()->web_contents()->GetBrowserContext()));
+      BrowserContext::GetDefaultStoragePartition(browser_context()));
   partition->AddNetworkContextObserver(this);
 
   EXPECT_EQ(net::OK,
@@ -168,8 +229,7 @@ IN_PROC_BROWSER_TEST_F(NetworkServiceRestartBrowserTest,
 IN_PROC_BROWSER_TEST_F(NetworkServiceRestartBrowserTest,
                        StoragePartitionImplNetworkContextObserver) {
   StoragePartitionImpl* partition = static_cast<StoragePartitionImpl*>(
-      BrowserContext::GetDefaultStoragePartition(
-          shell()->web_contents()->GetBrowserContext()));
+      BrowserContext::GetDefaultStoragePartition(browser_context()));
   partition->AddNetworkContextObserver(this);
 
   mojom::NetworkContext* old_network_context = partition->GetNetworkContext();
@@ -206,6 +266,58 @@ IN_PROC_BROWSER_TEST_F(NetworkServiceRestartBrowserTest,
   run_loop.Run();
 
   partition->RemoveNetworkContextObserver(this);
+}
+
+// Make sure |URLLoaderFactoryGetter| returns valid interface after crash.
+IN_PROC_BROWSER_TEST_F(NetworkServiceRestartBrowserTest,
+                       URLLoaderFactoryGetterGetNetworkFactory) {
+  StoragePartitionImpl* partition = static_cast<StoragePartitionImpl*>(
+      BrowserContext::GetDefaultStoragePartition(browser_context()));
+  scoped_refptr<URLLoaderFactoryGetter> url_loader_factory_getter =
+      partition->url_loader_factory_getter();
+  TestBasicRequestOnIOThread(url_loader_factory_getter.get(), GetTestURL());
+  // Crash the NetworkService process. Existing interfaces should receive error
+  // notifications at some point.
+  SimulateNetworkServiceCrash();
+  // Flush the interface to make sure the error notification was received.
+  partition->FlushNetworkInterfaceForTesting();
+
+  // |url_loader_factory_getter| should be able to get a valid new pointer after
+  // crash.
+  TestBasicRequestOnIOThread(url_loader_factory_getter.get(), GetTestURL());
+}
+
+// Make sure basic navigation works after crash.
+IN_PROC_BROWSER_TEST_F(NetworkServiceRestartBrowserTest,
+                       NavigationURLLoaderBasic) {
+  StoragePartitionImpl* partition = static_cast<StoragePartitionImpl*>(
+      BrowserContext::GetDefaultStoragePartition(browser_context()));
+
+  // Make sure the environment was setup correctly.
+  TestNavigationURLLoaderDelegate delegate;
+  std::unique_ptr<NavigationURLLoader> loader =
+      MakeTestNavigationURLLoader(GetTestURL(), &delegate, browser_context());
+  delegate.WaitForResponseStarted();
+  loader->ProceedWithResponse();
+  // Check the response is correct.
+  EXPECT_EQ("text/plain", delegate.response()->head.mime_type);
+  EXPECT_EQ(200, delegate.response()->head.headers->response_code());
+
+  // Crash the NetworkService process. Existing interfaces should receive error
+  // notifications at some point.
+  SimulateNetworkServiceCrash();
+  // Flush the interface to make sure the error notification was received.
+  partition->FlushNetworkInterfaceForTesting();
+
+  // Do the navigation again.
+  TestNavigationURLLoaderDelegate delegate2;
+  std::unique_ptr<NavigationURLLoader> loader2 =
+      MakeTestNavigationURLLoader(GetTestURL(), &delegate2, browser_context());
+  delegate2.WaitForResponseStarted();
+  loader2->ProceedWithResponse();
+  // Check the response is correct.
+  EXPECT_EQ("text/plain", delegate2.response()->head.mime_type);
+  EXPECT_EQ(200, delegate2.response()->head.headers->response_code());
 }
 
 }  // namespace content

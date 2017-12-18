@@ -7,6 +7,7 @@
 #include "base/bind.h"
 #include "base/callback.h"
 #include "base/logging.h"
+#include "content/public/test/test_utils.h"
 
 namespace content {
 
@@ -26,7 +27,7 @@ SimpleURLLoader::BodyAsStringCallback SimpleURLLoaderTestHelper::GetCallback() {
 void SimpleURLLoaderTestHelper::WaitForCallback() {
   DCHECK(!wait_started_);
   wait_started_ = true;
-  run_loop_.Run();
+  RunThisRunLoop(&run_loop_);
 }
 
 void SimpleURLLoaderTestHelper::OnCompleteCallback(
