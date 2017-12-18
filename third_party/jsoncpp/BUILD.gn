@@ -27,7 +27,7 @@ source_set("jsoncpp") {
     "source/src/lib_json/json_writer.cpp",
   ]
 
-  public_configs = [ ":jsoncpp_config" ]
+  all_dependent_configs = [ ":jsoncpp_config" ]
 
   defines = [ "JSON_USE_EXCEPTION=0" ]
 
