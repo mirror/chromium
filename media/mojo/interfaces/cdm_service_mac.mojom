@@ -18,8 +18,7 @@ import "services/service_manager/public/interfaces/interface_provider.mojom";
 // when this service runs as an standalone CDM service (see gn build flag
 // |enable_standalone_cdm_service| for details). The service is always connected
 // from the browser process.
-// TODO(crbug.com/771791): Separate CdmService from MediaService.
-interface MediaService {
+interface CdmService {
   // Loads the CDM at |cdm_path| into the process.
   // Since the client will not know whether LoadCdm() has been called by a
   // previous MediaService instance, the client should always call it after
