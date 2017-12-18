@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5c041b28_aeb513ea",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebApkInstaller.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-12-18T18:56:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "65fc8ea2_8f9ff0ed",
+      "revId": "8333a7c2f3445548aa0a0f5dd3f6d320b43bea17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c3283eac_66ef44d0",
         "filename": "chrome/browser/android/webapk/webapk_installer.cc",
         "patchSetId": 16
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "6c1f20d3_03a4ace6",
+        "filename": "chrome/browser/android/webapk/webapk_installer.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 512,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-12-18T18:56:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c3283eac_66ef44d0",
+      "revId": "8333a7c2f3445548aa0a0f5dd3f6d320b43bea17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "df9591fb_0107f879",
         "filename": "chrome/browser/android/webapk/webapk_installer.h",
         "patchSetId": 16
@@ -50,6 +86,24 @@
       "revId": "8333a7c2f3445548aa0a0f5dd3f6d320b43bea17",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "851915d8_d9b129bf",
+        "filename": "chrome/browser/android/webapk/webapk_installer.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-12-18T18:56:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "df9591fb_0107f879",
+      "revId": "8333a7c2f3445548aa0a0f5dd3f6d320b43bea17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
