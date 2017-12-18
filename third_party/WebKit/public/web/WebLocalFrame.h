@@ -456,6 +456,12 @@ class WebLocalFrame : public WebFrame {
   // Logs to the console associated with this frame.
   virtual void AddMessageToConsole(const WebConsoleMessage&) = 0;
 
+  // Resumes execution if paused in debugger.
+  virtual void ResumeExecutionOnDebuggerPause() = 0;
+
+  // Whether any DevTools session is attached to this frame.
+  virtual bool HasDevToolsAttached() = 0;
+
   // Editing -------------------------------------------------------------
 
   virtual void SetMarkedText(const WebString& text,
@@ -847,6 +853,11 @@ class WebLocalFrame : public WebFrame {
   // not be transformed itself. If no selection is present, the rect will be
   // empty ((0,0), (0,0)).
   virtual WebRect GetSelectionBoundsRectForTesting() const = 0;
+
+  // Detaches all attached sessions.
+  // TODO(dgozman): this should be removed together with
+  // old inspector testing harness.
+  virtual void DetachAllDevToolsSessionsForTesting() = 0;
 
  protected:
   explicit WebLocalFrame(WebTreeScopeType scope) : WebFrame(scope) {}

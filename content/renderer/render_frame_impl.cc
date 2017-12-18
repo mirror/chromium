@@ -1846,8 +1846,7 @@ void RenderFrameImpl::OnNavigate(
   DCHECK(!IsBrowserSideNavigationEnabled());
   TRACE_EVENT2("navigation,rail", "RenderFrameImpl::OnNavigate", "id",
                routing_id_, "url", common_params.url.possibly_invalid_spec());
-  if (devtools_agent_)
-    devtools_agent_->ContinueProgram();
+  frame_->ResumeExecutionOnDebuggerPause();
   NavigateInternal(common_params, start_params, request_params,
                    std::unique_ptr<StreamOverrideParameters>(),
                    /*subresource_loader_factories=*/base::nullopt,
@@ -2999,8 +2998,7 @@ void RenderFrameImpl::AddMessageToConsole(ConsoleMessageLevel level,
 }
 
 void RenderFrameImpl::DetachDevToolsForTest() {
-  if (devtools_agent_)
-    devtools_agent_->DetachAllSessions();
+  frame_->DetachAllDevToolsSessionsForTesting();
 }
 
 void RenderFrameImpl::SetPreviewsState(PreviewsState previews_state) {
@@ -4209,7 +4207,7 @@ void RenderFrameImpl::RunScriptsAtDocumentReady(bool document_is_empty) {
 
   // Do not show error page when DevTools is attached.
   const RenderFrameImpl* localRoot = GetLocalRoot();
-  if (localRoot->devtools_agent_ && localRoot->devtools_agent_->IsAttached())
+  if (localRoot->frame_->HasDevToolsAttached())
     return;
 
   // Display error page instead of a blank page, if appropriate.

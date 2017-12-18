@@ -718,6 +718,15 @@ void WebLocalFrameImpl::AddMessageToConsole(const WebConsoleMessage& message) {
   GetFrame()->GetDocument()->AddConsoleMessage(console_message);
 }
 
+void WebLocalFrameImpl::ResumeExecutionOnDebuggerPause() {
+  if (dev_tools_agent_)
+    dev_tools_agent_->ContinueProgram();
+}
+
+bool WebLocalFrameImpl::HasDevToolsAttached() {
+  return dev_tools_agent_ ? dev_tools_agent_->HasAttachedSessions() : false;
+}
+
 void WebLocalFrameImpl::CollectGarbage() {
   if (!GetFrame())
     return;
@@ -1578,6 +1587,11 @@ WebRect WebLocalFrameImpl::GetSelectionBoundsRectForTesting() const {
   return HasSelection()
              ? WebRect(IntRect(GetFrame()->Selection().UnclippedBounds()))
              : WebRect();
+}
+
+void WebLocalFrameImpl::DetachAllDevToolsSessionsForTesting() {
+  if (dev_tools_agent_)
+    dev_tools_agent_->DetachAllSessionsForTesting();
 }
 
 WebString WebLocalFrameImpl::GetLayerTreeAsTextForTesting(

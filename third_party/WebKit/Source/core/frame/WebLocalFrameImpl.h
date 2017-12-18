@@ -109,6 +109,8 @@ class CORE_EXPORT WebLocalFrameImpl final
   void SetIsolatedWorldHumanReadableName(int world_id,
                                          const WebString&) override;
   void AddMessageToConsole(const WebConsoleMessage&) override;
+  void ResumeExecutionOnDebuggerPause() override;
+  bool HasDevToolsAttached() override;
   void CollectGarbage() override;
   v8::Local<v8::Value> ExecuteScriptAndReturnValue(
       const WebScriptSource&) override;
@@ -236,6 +238,7 @@ class CORE_EXPORT WebLocalFrameImpl final
       const WebDOMEvent&) override;
 
   WebRect GetSelectionBoundsRectForTesting() const override;
+  void DetachAllDevToolsSessionsForTesting() override;
 
   WebString GetLayerTreeAsTextForTesting(
       bool show_debug_info = false) const override;
