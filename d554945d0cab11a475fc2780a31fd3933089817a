@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ffdcfe88_812204bb",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioParamTimeline.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 592,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-12-18T18:14:06Z",
+      "side": 1,
+      "message": "Commented adjusted to reflect reality.",
+      "parentUuid": "2b61d59a_a9c0c06b",
+      "range": {
+        "startLine": 591,
+        "startChar": 4,
+        "endLine": 592,
+        "endChar": 19
+      },
+      "revId": "d554945d0cab11a475fc2780a31fd3933089817a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2e4be941_ca4574cc",
         "filename": "third_party/WebKit/Source/modules/webaudio/AudioParamTimeline.h",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-12-15T17:45:35Z",
       "side": 1,
       "message": "This comment contradicts the method name. No?",
+      "range": {
+        "startLine": 96,
+        "startChar": 5,
+        "endLine": 96,
+        "endChar": 59
+      },
+      "revId": "d554945d0cab11a475fc2780a31fd3933089817a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b8f3495_9220d357",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioParamTimeline.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-12-18T18:14:06Z",
+      "side": 1,
+      "message": "Oops.  Reworded.",
+      "parentUuid": "2e4be941_ca4574cc",
       "range": {
         "startLine": 96,
         "startChar": 5,
