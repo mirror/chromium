@@ -385,9 +385,15 @@ def main(argv):
 
   if options.use_errorprone_path:
     javac_path = options.use_errorprone_path
+    # Required for error prone 2.1.3 in order to avoid passing in the full
+    # classpath.
+    additional_args = ['-Xep:FunctionalInterfaceClash:OFF']
   else:
     javac_path = distutils.spawn.find_executable('javac')
+    additional_args = []
+
   javac_cmd = [javac_path]
+  javac_cmd.extend(additional_args)
 
   javac_cmd.extend((
       '-g',
