@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ebac0159_3978c35f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1002,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-12-18T23:13:53Z",
+      "side": 1,
+      "message": "Removed this scenario since we always want to show the NTP full height.",
+      "parentUuid": "d06c8137_3b59c91a",
+      "range": {
+        "startLine": 1002,
+        "startChar": 27,
+        "endLine": 1002,
+        "endChar": 35
+      },
+      "revId": "d8f2f332823d8edcb5ca20192d6814736c7317c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6da424a9_df0750e7",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
         "patchSetId": 1
@@ -117,6 +141,30 @@
       "revId": "d8f2f332823d8edcb5ca20192d6814736c7317c4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99e8c816_07b8defd",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1004,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-12-18T23:13:53Z",
+      "side": 1,
+      "message": "Nope, no UX feedback, I was mistaken in thinking we wanted it at half here. I removed that scenario.",
+      "parentUuid": "2dc541b5_8c2ea43a",
+      "range": {
+        "startLine": 1003,
+        "startChar": 24,
+        "endLine": 1004,
+        "endChar": 95
+      },
+      "revId": "d8f2f332823d8edcb5ca20192d6814736c7317c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
