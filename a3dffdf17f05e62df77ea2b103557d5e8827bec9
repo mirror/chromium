@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9e21be31_9ca06a25",
+        "filename": "third_party/WebKit/public/platform/modules/webauth/authenticator.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-18T07:53:27Z",
+      "side": 1,
+      "message": "Nit: user_handle",
+      "range": {
+        "startLine": 59,
+        "startChar": 16,
+        "endLine": 59,
+        "endChar": 26
+      },
+      "revId": "a3dffdf17f05e62df77ea2b103557d5e8827bec9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
