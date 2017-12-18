@@ -10,6 +10,8 @@
 #include "content/browser/interface_provider_filtering.h"
 #include "content/browser/renderer_interface_binders.h"
 #include "content/public/browser/render_process_host.h"
+#include "content/public/browser/web_interface_broker.h"
+#include "content/public/browser/web_interface_filter.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
 #include "mojo/public/cpp/system/message_pipe.h"
 #include "services/service_manager/public/interfaces/interface_provider.mojom.h"
@@ -33,8 +35,10 @@ class DedicatedWorkerHost : public service_manager::mojom::InterfaceProvider {
     if (!process)
       return;
 
-    BindWorkerInterface(interface_name, std::move(interface_pipe), process,
-                        origin_);
+    GetWebInterfaceBroker().BindInterfaceForWorker(
+        WebContextType::kDedicatedWorker, interface_name,
+        std::move(interface_pipe), process, origin_,
+        mojo::GetBadMessageCallback());
   }
 
  private:
