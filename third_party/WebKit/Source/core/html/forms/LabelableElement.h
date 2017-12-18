@@ -50,6 +50,7 @@ class CORE_EXPORT LabelableElement : public HTMLElement {
 
  protected:
   LabelableElement(const QualifiedName& tag_name, Document&);
+  void InvalidateList();
 
  private:
   bool IsLabelable() const final { return true; }
