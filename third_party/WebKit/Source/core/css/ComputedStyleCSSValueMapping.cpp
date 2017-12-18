@@ -1890,8 +1890,8 @@ CSSValue* ComputedStyleCSSValueMapping::ValueForShadowData(
   CSSIdentifierValue* shadow_style =
       shadow.Style() == kNormal ? nullptr
                                 : CSSIdentifierValue::Create(CSSValueInset);
-  CSSValue* color =
-      CSSColorValue::Create(shadow.GetColor().Resolve(style.GetColor()).Rgb());
+  CSSValue* color = CSSColorValue::Create(
+      shadow.GetColor().Resolve(style.ColorIgnoringVisited()).Rgb());
   return CSSShadowValue::Create(x, y, blur, spread, shadow_style, color);
 }
 
@@ -3706,7 +3706,7 @@ const CSSValue* ComputedStyleCSSValueMapping::Get(
     case CSSPropertyFill:
       return AdjustSVGPaintForCurrentColor(
           svg_style.FillPaintType(), svg_style.FillPaintUri(),
-          svg_style.FillPaintColor(), style.GetColor());
+          svg_style.FillPaintColor(), style.ColorIgnoringVisited());
     case CSSPropertyMarkerEnd:
       if (!svg_style.MarkerEndResource().IsEmpty())
         return CSSURIValue::Create(
@@ -3725,7 +3725,7 @@ const CSSValue* ComputedStyleCSSValueMapping::Get(
     case CSSPropertyStroke:
       return AdjustSVGPaintForCurrentColor(
           svg_style.StrokePaintType(), svg_style.StrokePaintUri(),
-          svg_style.StrokePaintColor(), style.GetColor());
+          svg_style.StrokePaintColor(), style.ColorIgnoringVisited());
     case CSSPropertyStrokeDasharray:
       return StrokeDashArrayToCSSValueList(*svg_style.StrokeDashArray(), style);
     case CSSPropertyStrokeDashoffset:
