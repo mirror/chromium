@@ -155,6 +155,11 @@ const char kDisableGpuEarlyInit[]           = "disable-gpu-early-init";
 const char kDisableGpuMemoryBufferCompositorResources[] =
     "disable-gpu-memory-buffer-compositor-resources";
 
+// Disable explicitly GpuMemoryBuffer for multi planar (i.e. pixel formats with
+// several planes e.g. NV12 or I420) VideoFrames, see https://crbug.com/791676.
+const char kDisableGpuMemoryBufferForMultiplanarVideoFrames[] =
+    "disable-gpu-memory-buffer-for-multiplanar-video-frames";
+
 // Disable GpuMemoryBuffer backed VideoFrames.
 const char kDisableGpuMemoryBufferVideoFrames[] =
     "disable-gpu-memory-buffer-video-frames";
