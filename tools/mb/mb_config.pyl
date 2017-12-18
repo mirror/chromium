@@ -15,20 +15,20 @@
   'masters': {
     'chromeos.chrome': {
       'chrome-tot-chromeos-amd64-generic': 'cros_chrome_sdk',
-      'Chrome4CROS Packages': 'chromeos_with_codecs_release_bot',
-      'Linux ChromeOS Buildspec Tests': 'chromeos_with_codecs_release_bot',
+      'Chrome4CROS Packages': 'chromeos_ffmpeg_branding_chromeos_release_bot',
+      'Linux ChromeOS Buildspec Tests': 'chromeos_ffmpeg_branding_chromeos_release_bot',
     },
 
     # Take care when changing any of these builders to ensure that you do not
-    # include a configuration with 'chrome_with_codecs' since these builders
-    # generated publicly advertised non-Official builds which are not allowed
-    # to have proprietary codecs enabled.
+    # have proprietary_codecs enabled, since these builders generate publicly
+    # advertised non-Official builds, and those aren't allowed to include those
+    # codecs.
     'chromium': {
       'Android': 'android_without_codecs_release_bot_minimal_symbols',
-      'Linux x64': 'release_bot',
-      'Mac': 'release_bot_mac_strip',
-      'Win': 'release_bot_x86_minimal_symbols',
-      'Win x64': 'release_bot_minimal_symbols',
+      'Linux x64': 'without_codecs_release_bot',
+      'Mac': 'without_codecs_release_bot_mac_strip',
+      'Win': 'without_codecs_release_bot_x86_minimal_symbols',
+      'Win x64': 'without_codecs_release_bot_minimal_symbols',
     },
 
     'chromium.android': {
@@ -97,14 +97,14 @@
     'chromium.chromiumos': {
       'ChromiumOS amd64-generic Compile': 'cros_chrome_sdk',
       'ChromiumOS daisy Compile': 'cros_chrome_sdk',
-      'Linux ChromiumOS Builder': 'chromeos_with_codecs_release_bot',
-      'Linux ChromiumOS Builder (dbg)': 'chromeos_with_codecs_debug_bot',
-      'Linux ChromiumOS Full': 'chromeos_with_codecs_release_bot',
+      'Linux ChromiumOS Builder': 'chromeos_ffmpeg_branding_chromeos_release_bot',
+      'Linux ChromiumOS Builder (dbg)': 'chromeos_ffmpeg_branding_chromeos_debug_bot',
+      'Linux ChromiumOS Full': 'chromeos_ffmpeg_branding_chromeos_release_bot',
 
       'chromeos-amd64-generic-rel': 'cros_chrome_sdk',
       'chromeos-daisy-rel': 'cros_chrome_sdk',
-      'linux-chromeos-rel': 'chromeos_with_codecs_release_bot',
-      'linux-chromeos-dbg': 'chromeos_with_codecs_debug_bot',
+      'linux-chromeos-rel': 'chromeos_ffmpeg_branding_chromeos_release_bot',
+      'linux-chromeos-dbg': 'chromeos_ffmpeg_branding_chromeos_debug_bot',
     },
 
     'chromium.clang': {
@@ -165,7 +165,7 @@
 
       'Android Builder (dbg) Goma Canary': 'android_debug_static_bot_vrdata',
 
-      'Android deterministic': 'android_without_codecs_release_bot_minimal_symbols',
+      'Android deterministic': 'android_release_bot_minimal_symbols',
       'Android deterministic (dbg)': 'android_debug_bot',
       'Browser Side Navigation Linux': 'release_bot',
       'CFI Linux CF': 'cfi_full_cfi_diag_recover_release_static',
@@ -220,8 +220,8 @@
       'Jumbo Linux x64': 'jumbo_release_bot',
       'Jumbo Mac': 'jumbo_release_bot',
       'Jumbo Win x64': 'jumbo_release_bot',
-      'MD Top Chrome ChromeOS material-hybrid': 'chromeos_with_codecs_debug_bot',
-      'MD Top Chrome ChromeOS non-material': 'chromeos_with_codecs_debug_bot',
+      'MD Top Chrome ChromeOS material-hybrid': 'chromeos_ffmpeg_branding_chromeos_debug_bot',
+      'MD Top Chrome ChromeOS non-material': 'chromeos_ffmpeg_branding_chromeos_debug_bot',
       'MD Top Chrome Win material': 'debug_bot_minimal_symbols',
       'MD Top Chrome Linux material': 'debug_bot',
       'Leak Detection Linux': 'release_bot',
@@ -242,7 +242,7 @@
       'Linux Viz': 'release_trybot',
       'Mac deterministic': 'release_bot_mac_strip',
       'Mac deterministic (dbg)': 'debug_bot',
-      'Mojo ChromiumOS': 'chromeos_with_codecs_release_trybot',
+      'Mojo ChromiumOS': 'chromeos_ffmpeg_branding_chromeos_release_trybot',
       'Mojo Linux': 'release_trybot',
       'Mojo Windows': 'release_bot_x86_minimal_symbols',
       'Ozone Linux': 'ozone_linux_release_bot',
@@ -345,22 +345,22 @@
 
     'chromium.lkgr': {
       'ASAN Debug': 'asan_lsan_edge_debug_bot',
-      'ASAN Release Media': 'asan_lsan_edge_fuzzer_v8_heap_chromeos_codecs_release_bot',
+      'ASAN Release Media': 'asan_lsan_edge_fuzzer_v8_heap_chromeos_ffmpeg_branding_chromeos_release_bot',
       'ASAN Release': 'asan_lsan_edge_fuzzer_v8_heap_release_bot',
       'ASan Debug (32-bit x86 with V8-ARM)': 'asan_edge_v8_heap_debug_bot_hybrid',
       'ASan Release (32-bit x86 with V8-ARM)': 'asan_edge_fuzzer_v8_heap_release_bot_hybrid',
-      'ASan Release Media (32-bit x86 with V8-ARM)': 'asan_edge_fuzzer_v8_heap_chromeos_codecs_release_bot_hybrid',
+      'ASan Release Media (32-bit x86 with V8-ARM)': 'asan_edge_fuzzer_v8_heap_chromeos_ffmpeg_branding_chromeos_release_bot_hybrid',
       'ChromiumOS ASAN Release': 'chromeos_asan_lsan_edge_fuzzer_v8_heap_release_bot',
       'MSAN Release (chained origins)': 'msan_edge_release_bot',
       'MSAN Release (no origins)': 'msan_no_origins_edge_release_bot',
       'Mac ASAN Debug': 'asan_disable_nacl_edge_fuzzer_v8_heap_debug_symbols_static_bot',
-      'Mac ASAN Release Media': 'asan_disable_nacl_edge_fuzzer_v8_heap_chrome_with_codecs_release_bot',
+      'Mac ASAN Release Media': 'asan_disable_nacl_edge_fuzzer_v8_heap_ffmpeg_branding_chrome_release_bot',
       'Mac ASAN Release': 'asan_disable_nacl_edge_fuzzer_v8_heap_release_bot',
       'TSAN Debug': 'tsan_disable_nacl_debug_bot',
       'TSAN Release': 'tsan_disable_nacl_release_bot',
       'UBSan Release': 'ubsan_release_bot',
       'UBSan vptr Release': 'ubsan_vptr_edge_release_bot',
-      'Win ASan Release Media': 'asan_fuzzer_v8_heap_chrome_with_codecs_release_bot_x86',
+      'Win ASan Release Media': 'asan_fuzzer_v8_heap_ffmpeg_branding_chrome_release_bot_x86',
       'Win ASan Release': 'asan_fuzzer_v8_heap_release_bot',
       'Win SyzyASAN LKGR': 'syzyasan_no_pch_release_x86',
     },
@@ -475,8 +475,8 @@
     },
 
     'chromium.webrtc': {
-      'Linux Builder': 'release_bot_chrome_with_codecs',
-      'Mac Builder': 'release_bot_chrome_with_codecs',
+      'Linux Builder': 'release_bot_ffmpeg_branding_chrome',
+      'Mac Builder': 'release_bot_ffmpeg_branding_chrome',
       'Win Builder': 'release_bot_x86_minimal_symbols_no_com_init_hooks',
     },
 
@@ -484,9 +484,9 @@
       'Android Builder': 'android_release_bot_minimal_symbols',
       'Android Builder (dbg)': 'android_debug_static_bot',
       'Android Builder ARM64 (dbg)': 'android_debug_static_bot_arm64',
-      'Linux Builder': 'release_bot_chrome_with_codecs',
+      'Linux Builder': 'release_bot_ffmpeg_branding_chrome',
       'Linux Builder (dbg)': 'debug_bot',
-      'Mac Builder': 'release_bot_chrome_with_codecs',
+      'Mac Builder': 'release_bot_ffmpeg_branding_chrome',
       'Mac Builder (dbg)': 'debug_bot',
       'Win Builder': 'release_bot_x86_minimal_symbols_no_com_init_hooks',
       'Win Builder (dbg)': 'debug_bot_x86_minimal_symbols_no_com_init_hooks',
@@ -592,9 +592,9 @@
     'tryserver.chromium.chromiumos': {
       'chromeos-amd64-generic-rel': 'cros_chrome_sdk',
       'chromeos-daisy-rel': 'cros_chrome_sdk',
-      'linux-chromeos-rel': 'chromeos_with_codecs_release_trybot',
-      'linux-chromeos-compile-dbg': 'chromeos_with_codecs_debug_bot',
-      'linux-chromeos-dbg': 'chromeos_with_codecs_debug_bot',
+      'linux-chromeos-rel': 'chromeos_ffmpeg_branding_chromeos_release_trybot',
+      'linux-chromeos-compile-dbg': 'chromeos_ffmpeg_branding_chromeos_debug_bot',
+      'linux-chromeos-dbg': 'chromeos_ffmpeg_branding_chromeos_debug_bot',
     },
 
     'tryserver.chromium.linux': {
@@ -619,11 +619,11 @@
       'linux_chromium_browser_side_navigation_rel': 'release_trybot',
       'linux_chromium_cfi_rel_ng': 'cfi_full_cfi_diag_thin_lto_release_static_dcheck_always_on_goma',
       'linux_chromium_chromeos_asan_rel_ng': 'asan_lsan_chromeos_release_trybot',
-      'linux_chromium_chromeos_compile_dbg_ng': 'chromeos_with_codecs_debug_trybot',
-      'linux_chromium_chromeos_compile_rel_ng': 'chromeos_with_codecs_release_trybot',
-      'linux_chromium_chromeos_dbg_ng': 'chromeos_with_codecs_debug_trybot',
+      'linux_chromium_chromeos_compile_dbg_ng': 'chromeos_ffmpeg_branding_chromeos_debug_trybot',
+      'linux_chromium_chromeos_compile_rel_ng': 'chromeos_ffmpeg_branding_chromeos_release_trybot',
+      'linux_chromium_chromeos_dbg_ng': 'chromeos_ffmpeg_branding_chromeos_debug_trybot',
       'linux_chromium_chromeos_msan_rel_ng': 'chromeos_msan_release_bot',
-      'linux_chromium_chromeos_rel_ng': 'chromeos_with_codecs_release_trybot',
+      'linux_chromium_chromeos_rel_ng': 'chromeos_ffmpeg_branding_chromeos_release_trybot',
       'linux_chromium_clobber_deterministic': 'release_trybot',
       'linux_chromium_clobber_rel_ng': 'release_trybot',
       'linux_chromium_compile_dbg_32_ng': 'debug_trybot_x86',
@@ -648,7 +648,7 @@
       'linux_layout_tests_root_layer_scrolls': 'release_trybot',
       'linux_layout_tests_slimming_paint_v2': 'release_trybot',
       'linux_mojo': 'release_trybot',
-      'linux_mojo_chromeos': 'chromeos_with_codecs_release_trybot',
+      'linux_mojo_chromeos': 'chromeos_ffmpeg_branding_chromeos_release_trybot',
       'linux_nacl_sdk_build': 'release_bot',
       'linux_nacl_sdk': 'release_bot',
       'linux_optional_gpu_tests_rel': 'gpu_fyi_tests_release_trybot',
@@ -788,29 +788,29 @@
     ],
 
     'android_clang_tot_asan': [
-      'android_without_codecs', 'clang_tot', 'asan', 'shared', 'debug', 'minimal_symbols',
-      'strip_debug_info',
+      'android', 'clang_tot', 'asan', 'shared', 'debug',
+      'minimal_symbols', 'strip_debug_info',
     ],
 
     'android_clang_tot_cfi_full_cfi_diag_thin_lto_release_static_dcheck_always_on': [
-      'android_without_codecs', 'clang_tot', 'cfi_full', 'cfi_diag', 'thin_lto', 'release',
+      'android', 'clang_tot', 'cfi_full', 'cfi_diag', 'thin_lto', 'release',
       'static', 'dcheck_always_on',
     ],
 
     'android_clang_tot_dbg': [
-      'android_without_codecs', 'clang_tot', 'shared', 'debug',
+      'android', 'clang_tot', 'shared', 'debug',
     ],
 
     'android_clang_tot_release': [
-      'android_without_codecs', 'clang_tot', 'release',
+      'android', 'clang_tot', 'release',
     ],
 
     'android_clang_tot_release_arm64': [
-      'android_without_codecs', 'clang_tot', 'release', 'arm64',
+      'android', 'clang_tot', 'release', 'arm64',
     ],
 
     'android_clang_tot_x64': [
-      'android_without_codecs', 'clang_tot', 'shared', 'x64', 'release',
+      'android', 'clang_tot', 'shared', 'x64', 'release',
       'dcheck_always_on',
     ],
 
@@ -981,7 +981,7 @@
     ],
 
     'android_shared_release_bot_x64': [
-      'android_without_codecs', 'shared_release_bot', 'x64', 'dcheck_always_on',
+      'android', 'shared_release_bot', 'x64', 'dcheck_always_on',
     ],
 
     'android_release_trybot': [
@@ -993,7 +993,7 @@
     ],
 
     'android_without_codecs_release_bot_minimal_symbols': [
-      'android_without_codecs', 'release_bot', 'minimal_symbols', 'strip_debug_info',
+      'android', 'without_codecs', 'release_bot', 'minimal_symbols', 'strip_debug_info',
     ],
 
     'asan_clang_edge_fuzzer_static_v8_heap_x86_full_symbols_release': [
@@ -1016,8 +1016,8 @@
       'asan', 'disable_nacl', 'clang_tot', 'full_symbols', 'static', 'release',
     ],
 
-    'asan_disable_nacl_edge_fuzzer_v8_heap_chrome_with_codecs_release_bot': [
-      'asan', 'disable_nacl', 'edge', 'fuzzer', 'v8_heap', 'chrome_with_codecs', 'release_bot',
+    'asan_disable_nacl_edge_fuzzer_v8_heap_ffmpeg_branding_chrome_release_bot': [
+      'asan', 'disable_nacl', 'edge', 'fuzzer', 'v8_heap', 'ffmpeg_branding_chrome', 'release_bot',
     ],
 
     'asan_disable_nacl_edge_fuzzer_v8_heap_debug_symbols_static_bot': [
@@ -1028,8 +1028,8 @@
       'asan', 'disable_nacl', 'edge', 'fuzzer', 'v8_heap', 'release_bot',
     ],
 
-    'asan_edge_fuzzer_v8_heap_chromeos_codecs_release_bot_hybrid': [
-      'asan', 'edge', 'fuzzer', 'v8_heap', 'chromeos_codecs', 'release_bot', 'hybrid',
+    'asan_edge_fuzzer_v8_heap_chromeos_ffmpeg_branding_chromeos_release_bot_hybrid': [
+      'asan', 'edge', 'fuzzer', 'v8_heap', 'chromeos', 'ffmpeg_branding_chromeos', 'release_bot', 'hybrid',
     ],
 
     'asan_edge_fuzzer_v8_heap_release_bot_hybrid': [
@@ -1044,8 +1044,8 @@
       'asan', 'full_symbols', 'disable_nacl', 'release_bot', 'dcheck_always_on',
     ],
 
-    'asan_fuzzer_v8_heap_chrome_with_codecs_release_bot_x86': [
-      'clang', 'asan', 'fuzzer', 'v8_heap', 'chrome_with_codecs', 'release_bot', 'x86',
+    'asan_fuzzer_v8_heap_ffmpeg_branding_chrome_release_bot_x86': [
+      'clang', 'asan', 'fuzzer', 'v8_heap', 'ffmpeg_branding_chrome', 'release_bot', 'x86',
     ],
 
     'asan_fuzzer_v8_heap_release_bot': [
@@ -1060,8 +1060,8 @@
       'asan', 'lsan', 'edge', 'debug_bot',
     ],
 
-    'asan_lsan_edge_fuzzer_v8_heap_chromeos_codecs_release_bot': [
-      'asan', 'lsan', 'edge', 'v8_heap', 'chromeos_codecs', 'release_bot',
+    'asan_lsan_edge_fuzzer_v8_heap_chromeos_ffmpeg_branding_chromeos_release_bot': [
+      'asan', 'lsan', 'edge', 'v8_heap', 'chromeos', 'ffmpeg_branding_chromeos', 'release_bot',
     ],
 
     'asan_lsan_edge_fuzzer_v8_heap_release_bot': [
@@ -1112,20 +1112,20 @@
       'chromeos', 'msan', 'release_bot',
     ],
 
-    'chromeos_with_codecs_debug_bot': [
-      'chromeos_with_codecs', 'debug_bot', 'use_vaapi',
+    'chromeos_ffmpeg_branding_chromeos_debug_bot': [
+      'chromeos', 'ffmpeg_branding_chromeos', 'debug_bot', 'use_vaapi',
     ],
 
-    'chromeos_with_codecs_debug_trybot': [
-      'chromeos_with_codecs', 'debug_trybot', 'use_vaapi',
+    'chromeos_ffmpeg_branding_chromeos_debug_trybot': [
+      'chromeos', 'ffmpeg_branding_chromeos', 'debug_trybot', 'use_vaapi',
     ],
 
-    'chromeos_with_codecs_release_bot': [
-      'chromeos_with_codecs', 'release_bot', 'use_vaapi',
+    'chromeos_ffmpeg_branding_chromeos_release_bot': [
+      'chromeos', 'ffmpeg_branding_chromeos', 'release_bot', 'use_vaapi',
     ],
 
-    'chromeos_with_codecs_release_trybot': [
-      'chromeos_with_codecs', 'release_trybot', 'use_vaapi',
+    'chromeos_ffmpeg_branding_chromeos_release_trybot': [
+      'chromeos', 'ffmpeg_branding_chromeos', 'release_trybot', 'use_vaapi',
     ],
 
     'clang_debug_trybot_x86': [
@@ -1233,7 +1233,7 @@
     ],
 
     'codesearch_gen_chromium_android_bot': [
-      'goma', 'clang', 'shared', 'debug', 'minimal_symbols', 'arm', 'android_without_codecs',
+      'goma', 'clang', 'shared', 'debug', 'minimal_symbols', 'arm', 'android',
     ],
 
     'codesearch_gen_chromium_chromiumos_bot': [
@@ -1282,7 +1282,7 @@
     ],
 
     'debug_libfuzzer_asan': [
-      'debug', 'libfuzzer', 'asan', 'chromeos_codecs', 'pdf_xfa', 'disable_nacl',
+      'debug', 'libfuzzer', 'asan', 'chromeos', 'ffmpeg_branding_chromeos', 'pdf_xfa', 'disable_nacl',
     ],
 
     'debug_trybot': [
@@ -1500,7 +1500,7 @@
     ],
 
     'release_afl_asan': [
-      'release', 'afl', 'asan', 'chromeos_codecs', 'pdf_xfa', 'disable_nacl', 'optimize_for_fuzzing',
+      'release', 'afl', 'asan', 'chromeos', 'ffmpeg_branding_chromeos', 'pdf_xfa', 'disable_nacl', 'optimize_for_fuzzing',
     ],
 
     'release_bot': [
@@ -1515,8 +1515,8 @@
       'release_bot', 'arm64',
     ],
 
-    'release_bot_chrome_with_codecs': [
-      'release_bot', 'chrome_with_codecs',
+    'release_bot_ffmpeg_branding_chrome': [
+      'release_bot', 'ffmpeg_branding_chrome',
     ],
 
     'release_bot_fuchsia': [
@@ -1563,23 +1563,23 @@
     ],
 
     'release_libfuzzer_asan': [
-      'release', 'libfuzzer', 'asan', 'chromeos_codecs', 'pdf_xfa', 'disable_nacl', 'optimize_for_fuzzing',
+      'release', 'libfuzzer', 'asan', 'chromeos', 'ffmpeg_branding_chromeos', 'pdf_xfa', 'disable_nacl', 'optimize_for_fuzzing',
     ],
 
     'release_libfuzzer_asan_clang_tot': [
-      'clang_tot', 'release', 'libfuzzer', 'asan', 'chromeos_codecs', 'pdf_xfa', 'disable_nacl',
+      'clang_tot', 'release', 'libfuzzer', 'asan', 'chromeos', 'ffmpeg_branding_chromeos', 'pdf_xfa', 'disable_nacl',
     ],
 
     'release_libfuzzer_mac_asan': [
-      'release', 'libfuzzer', 'asan', 'chrome_with_codecs', 'pdf_xfa', 'disable_nacl', 'optimize_for_fuzzing',
+      'release', 'libfuzzer', 'asan', 'ffmpeg_branding_chrome', 'pdf_xfa', 'disable_nacl', 'optimize_for_fuzzing',
     ],
 
     'release_libfuzzer_msan': [
-      'release', 'libfuzzer', 'msan', 'chromeos_codecs', 'pdf_xfa', 'disable_nacl', 'optimize_for_fuzzing',
+      'release', 'libfuzzer', 'msan', 'chromeos', 'ffmpeg_branding_chromeos', 'pdf_xfa', 'disable_nacl', 'optimize_for_fuzzing',
     ],
 
     'release_libfuzzer_ubsan': [
-      'release', 'libfuzzer', 'ubsan_security', 'chromeos_codecs', 'pdf_xfa', 'disable_nacl', 'optimize_for_fuzzing',
+      'release', 'libfuzzer', 'ubsan_security', 'chromeos', 'ffmpeg_branding_chromeos', 'pdf_xfa', 'disable_nacl', 'optimize_for_fuzzing',
     ],
 
     'release_trybot': [
@@ -1720,6 +1720,22 @@
     'windows_analyze': [
       'no_symbols', 'no_pch', 'shared', 'x86', 'win_analyze',
     ],
+
+    'without_codecs_release_bot': [
+      'without_codecs', 'release_bot',
+    ],
+ 
+    'without_codecs_release_bot_mac_strip': [
+      'without_codecs', 'release_bot', 'mac_strip',
+    ],
+
+    'without_codecs_release_bot_x86_minimal_symbols': [
+      'without_codecs', 'release_bot', 'x86', 'minimal_symbols',
+    ],
+
+    'without_codecs_release_bot_minimal_symbols': [
+      'without_codecs', 'release_bot', 'minimal_symbols',
+    ],
   },
 
   # This is a dict mapping a given 'mixin' name to a dict of settings that
@@ -1729,15 +1745,7 @@
 
     'analysis': { 'gn_args': 'use_clang_static_analyzer=true'},
 
-    # We build Android with codecs on most bots to ensure maximum test
-    # coverage, but use 'android_without_codecs' on bots responsible for
-    # building publicly advertised non-Official Android builds --
-    # which are not allowed to have proprietary codecs enabled.
     'android': {
-      'mixins': ['android_without_codecs', 'chrome_with_codecs'],
-    },
-
-    'android_without_codecs': {
       'gn_args': 'target_os="android"',
     },
 
@@ -1810,20 +1818,8 @@
       'gn_args': 'chrome_pgo_phase=2 is_clang=false',
     },
 
-    'chrome_with_codecs': {
-      'mixins': ['ffmpeg_branding_chrome', 'proprietary_codecs'],
-    },
-
     'chromeos': {
       'gn_args': 'target_os="chromeos"',
-    },
-
-    'chromeos_codecs': {
-      'mixins': ['ffmpeg_branding_chromeos', 'proprietary_codecs'],
-    },
-
-    'chromeos_with_codecs': {
-      'mixins': ['chromeos', 'chromeos_codecs'],
     },
 
     'clang_tot': {
@@ -1901,6 +1897,10 @@
       'gn_args': 'error',
     },
 
+    'ffmpeg_branding_chrome': {
+      'gn_args': 'ffmpeg_branding="Chrome"',
+    },
+
     'ffmpeg_branding_chromeos': {
       'gn_args': 'ffmpeg_branding="ChromeOS"',
     },
@@ -1935,7 +1935,7 @@
     },
 
     'gpu_tests': {
-      'mixins': ['chrome_with_codecs'],
+      'mixins': ['ffmpeg_branding_chrome'],
     },
 
     'mac_new_sdk': {
@@ -2052,12 +2052,6 @@
       'gn_args': 'pdf_enable_xfa=true',
     },
 
-    # Note: This is probably not what you want to use. Instead use one of the
-    # chrome_with_codecs or chromeos_with_codecs mixins.
-    'proprietary_codecs': {
-      'gn_args': 'proprietary_codecs=true',
-    },
-
     'release': {
       'gn_args': 'is_debug=false',
     },
@@ -2154,6 +2148,10 @@
 
     'win_analyze': {
       'gn_args': 'use_vs_code_analysis=true',
+    },
+
+    'without_codecs': {
+      'gn_args': 'proprietary_codecs=false',
     },
 
     'x64': {
