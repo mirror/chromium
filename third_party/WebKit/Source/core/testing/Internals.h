@@ -61,6 +61,7 @@ class HTMLInputElement;
 class HTMLMediaElement;
 class HTMLSelectElement;
 class HTMLVideoElement;
+class InternalDictionary;
 class InternalRuntimeFlags;
 class InternalSettings;
 class LayerRectList;
@@ -601,6 +602,8 @@ class Internals final : public ScriptWrappable {
   void simulateRasterUnderInvalidations(bool enable);
 
   void BypassLongCompileThresholdOnce(ExceptionState&);
+
+  Vector<double> channelStephenMcGruer(const InternalDictionary& options);
 
  private:
   explicit Internals(ExecutionContext*);

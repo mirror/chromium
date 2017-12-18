@@ -35,4 +35,6 @@ dictionary InternalDictionary {
     EventTarget? eventTargetOrNullMember = null;
     Dictionary dictionaryMember;
     (InternalEnum or sequence<InternalEnum>) internalEnumOrInternalEnumSequenceMember;
+    sequence<double?> offsetsSequence;
+    (double or sequence<double?>)? offsetsUnion;
 };

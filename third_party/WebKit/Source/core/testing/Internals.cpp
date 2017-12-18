@@ -125,6 +125,7 @@
 #include "core/testing/CallbackFunctionTest.h"
 #include "core/testing/DictionaryTest.h"
 #include "core/testing/GCObservation.h"
+#include "core/testing/InternalDictionary.h"
 #include "core/testing/InternalRuntimeFlags.h"
 #include "core/testing/InternalSettings.h"
 #include "core/testing/LayerRect.h"
@@ -3579,4 +3580,29 @@ void Internals::BypassLongCompileThresholdOnce(
   }
   return performance_monitor->BypassLongCompileThresholdOnceForTesting();
 }
+
+Vector<double> Internals::channelStephenMcGruer(const InternalDictionary& options) {
+  auto double_or_nan = [](const Optional<double>& d) {
+    return d ? *d : std::numeric_limits<double>::quiet_NaN();
+  };
+
+  Vector<double> result;
+  if (options.hasOffsetsSequence()) {
+    for (const auto& offset : options.offsetsSequence())
+      result.push_back(double_or_nan(offset));
+  }
+  if (options.hasOffsetsUnion()) {
+    const auto& u = options.offsetsUnion();
+    if (u.IsDouble())
+      result.push_back(u.GetAsDouble());
+    else if (u.IsNull())  // TODO(jbroman): This case doesn't seem to work?
+      result.push_back(std::numeric_limits<double>::quiet_NaN());
+    else if (u.IsDoubleOrNullSequence()) {
+      for (const auto& offset : u.GetAsDoubleOrNullSequence())
+        result.push_back(double_or_nan(offset));
+    }
+  }
+  return result;
+}
+
 }  // namespace blink

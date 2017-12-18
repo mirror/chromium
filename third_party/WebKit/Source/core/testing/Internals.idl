@@ -413,4 +413,6 @@ enum EffectiveConnectionType {
     // PerformanceMonitor for testing. "PerformanceObserver should be observing
     // 'longtask' while calling BypassLongCompileThresholdOnce.
     [RaisesException] void BypassLongCompileThresholdOnce();
+
+    sequence<double> channelStephenMcGruer(InternalDictionary options);
 };
