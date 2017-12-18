@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "c7ab6673_29c6cc09",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-12-18T23:14:08Z",
+      "side": 1,
+      "message": "Steven, would it be possible to use UKM to associate an event with a URL of a subframe?  Based on what I wrote, I assume the answer is \"no\", but I still wanted to double-check.  Having the subframe URL might make it easier to find a repro of undesirable XSDB, but hopefully having the main frame URL will also be sufficient for the XSDB debugging efforts.",
+      "parentUuid": "e443b8c7_074ea44f",
+      "revId": "fa01af2a8ad28d9a190c4bd5e9cbd17489dbe456",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "616c6f09_a20746c2",
         "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
         "patchSetId": 2
