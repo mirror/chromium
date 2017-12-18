@@ -7,7 +7,9 @@
 
 #include "base/optional.h"
 #include "content/common/service_worker/service_worker_types.h"
+#include "net/http/http_request_headers.h"
 #include "net/url_request/redirect_info.h"
+#include "third_party/WebKit/common/blob/blob.mojom.h"
 
 namespace content {
 
@@ -37,6 +39,12 @@ class ServiceWorkerLoaderHelpers {
       const ResourceRequest& original_request,
       const ResourceResponseHead& response_head,
       bool token_binding_negotiated);
+
+  static int ReadNetworkRequestBlobToPipe(
+      blink::mojom::BlobPtr* blob,
+      const net::HttpRequestHeaders& headers,
+      base::OnceCallback<void(int)> on_blob_read_complete,
+      mojo::ScopedDataPipeConsumerHandle* handle_out);
 };
 
 }  // namespace content
