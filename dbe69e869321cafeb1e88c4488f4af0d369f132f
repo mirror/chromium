@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a9954b7b_5ae55c8f",
+        "filename": "chrome/browser/extensions/api/cryptotoken_private/cryptotoken_private_api.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-12-18T20:43:16Z",
+      "side": 1,
+      "message": "nit: can you put this in an anonymous namespace in cryptotoken_private_api.cc?",
+      "revId": "dbe69e869321cafeb1e88c4488f4af0d369f132f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
