@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "84faefb1_c54b34c1",
+        "filename": "ios/chrome/browser/chrome_coordinator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-12-18T17:55:37Z",
+      "side": 1,
+      "message": "Prefer not to have multiple designated inits, especially in a class that\u0027s designed to be subclassed. Make one the designit, and implement the other in terms of it.",
+      "range": {
+        "startLine": 22,
+        "startChar": 47,
+        "endLine": 22,
+        "endChar": 72
+      },
+      "revId": "320b2075fe0edb4832dd2aa25d84341ce6bc1391",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
