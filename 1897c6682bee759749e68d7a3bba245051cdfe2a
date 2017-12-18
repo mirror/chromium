@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8f19e838_12badf26",
+        "filename": "services/network/public/interfaces/cookie_manager.mojom",
+        "patchSetId": 12
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-12-18T17:15:59Z",
+      "side": 1,
+      "message": "nit: can this really match more than one cookie?",
+      "range": {
+        "startLine": 120,
+        "startChar": 12,
+        "endLine": 120,
+        "endChar": 19
+      },
+      "revId": "1897c6682bee759749e68d7a3bba245051cdfe2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef1c7762_8c4ffc18",
+        "filename": "services/network/public/interfaces/cookie_manager.mojom",
+        "patchSetId": 12
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-12-18T17:15:59Z",
+      "side": 1,
+      "message": "nit: I didn\u0027t grok this, did you mean \"for secure cookies to apply to htpps urls\"",
+      "range": {
+        "startLine": 125,
+        "startChar": 44,
+        "endLine": 125,
+        "endChar": 71
+      },
+      "revId": "1897c6682bee759749e68d7a3bba245051cdfe2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
