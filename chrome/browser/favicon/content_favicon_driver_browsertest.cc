@@ -565,7 +565,9 @@ IN_PROC_BROWSER_TEST_F(
 }
 
 // Test that a page which uses JavaScript to override document.location.hash
-// gets associated favicons.
+// gets associated favicons. We specifically test a second visit to the same
+// page because the first might visit is harder to support (the icon download
+// might be interrupted due to the URL hash override).
 IN_PROC_BROWSER_TEST_F(ContentFaviconDriverTest,
                        AssociateIconWithInitialPageDespiteHashOverride) {
   ASSERT_TRUE(embedded_test_server()->Start());
@@ -573,6 +575,22 @@ IN_PROC_BROWSER_TEST_F(ContentFaviconDriverTest,
       embedded_test_server()->GetURL("/favicon/page_with_hash_override.html");
   GURL landing_url = embedded_test_server()->GetURL(
       "/favicon/page_with_hash_override.html#foo");
+
+  // Test fixture: mimic a previous page visit to actually exercise and test
+  // a second visit to the same page.
+  {
+    PendingTaskWaiter waiter(web_contents());
+    waiter.AlsoRequireUrl(landing_url);
+    ui_test_utils::NavigateToURLWithDisposition(
+        browser(), url, WindowOpenDisposition::CURRENT_TAB,
+        ui_test_utils::BROWSER_TEST_NONE);
+    waiter.Wait();
+
+    // This seems to prevent test flakiness, because otherwise the later page
+    // loads (including javascript execution) can be faster than the DB lookup
+    // for |url|, which is not very realistic.
+    ui_test_utils::NavigateToURL(browser(), GURL(url::kAboutBlankURL));
+  }
 
   PendingTaskWaiter waiter(web_contents());
   waiter.AlsoRequireUrl(landing_url);
