@@ -155,6 +155,30 @@
     },
     {
       "key": {
+        "uuid": "1d33b089_15ff6e11",
+        "filename": "extensions/common/extension.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 572,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-12-18T19:42:36Z",
+      "side": 1,
+      "message": "My concern was that if you change the name here, would it cause any mismatch related to sync? Consider:\n\n- Chrome before this change installs an extension named \" space\"\n- User chooses to sync all extension\n- Chrome updates with your CL\n  a) User creates a new profile and signs in, extension syncs\n  b) User uses existing profile\n\nWould everything work OK in this scenario? Sorry I\u0027m not super familiar with sync code. Can you make sure that this simple scenario doesn\u0027t break.\n\nHowever, I also found the following in ExtensionSyncData:\n  // Used only for debugging.\n  const std::string\u0026 name() const { return name_; }\n\nWhich makes me think this might be okay. So ensure the above scenario works to be safe.",
+      "parentUuid": "a8324f6f_fefc997c",
+      "range": {
+        "startLine": 572,
+        "startChar": 2,
+        "endLine": 572,
+        "endChar": 21
+      },
+      "revId": "7ef928e634bec8419f6bbe7cc374c0819d22942c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2ace4843_5b1d7354",
         "filename": "extensions/common/extension.cc",
         "patchSetId": 2
