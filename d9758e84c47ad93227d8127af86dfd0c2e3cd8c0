@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "977129fb_520abc78",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-18T06:15:43Z",
+      "side": 1,
+      "message": "nit: let\u0027s just remove this TODO. (from patchset 6: Let\u0027s just remove the TODO to keep the code smaller as we\u0027ve had a similar one for years. I think it\u0027d be something testable in WPT tests anyway so it might be a spec issue: \"should the response have Content-Length if the SW didn\u0027t add one itself\"?)",
+      "revId": "d9758e84c47ad93227d8127af86dfd0c2e3cd8c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9f4f81a_e67b3d04",
+        "filename": "content/common/service_worker/service_worker_loader_helpers.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-18T06:15:43Z",
+      "side": 1,
+      "message": "nit: adding \"NetworkRequest\" seems to make the name a bit complex. how about something like ReadBlobResponseBody()?",
+      "revId": "d9758e84c47ad93227d8127af86dfd0c2e3cd8c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7fcb51d_a275f565",
+        "filename": "content/common/service_worker/service_worker_loader_helpers.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-18T06:15:43Z",
+      "side": 1,
+      "message": "I\u0027d move 155-165 to the top of the function, as we don\u0027t need to do the data pipe creation/strong binding thing if this returns.",
+      "revId": "d9758e84c47ad93227d8127af86dfd0c2e3cd8c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d23a0d7f_5e2fd028",
+        "filename": "content/common/service_worker/service_worker_utils.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-18T06:15:43Z",
+      "side": 1,
+      "message": "nit from ps6: I\u0027m not sure I understand the meaning/significance of this comment... what other headers might we care about?\n\nAlso I slightly prefer:\n\nif (!headers.GetHeader(net::HttpRequestHeaders::kRange, \u0026range_header))\n  return true;\n// Do the rest here...\n\nMakes it clearer that if we don\u0027t get into this if, then we\u0027re returning immediately, and saves some indent.",
+      "revId": "d9758e84c47ad93227d8127af86dfd0c2e3cd8c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6b79259_6e55ca0e",
+        "filename": "content/common/service_worker/service_worker_utils.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-18T06:15:43Z",
+      "side": 1,
+      "message": "nits from patch set 6: Maybe also explain the outputs: \"Otherwise, sets |has_range| if there was one range, and |offset| and |size| to the range if so.\"",
+      "revId": "d9758e84c47ad93227d8127af86dfd0c2e3cd8c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60e11ba8_023f23e1",
+        "filename": "content/common/service_worker/service_worker_utils.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-18T06:15:43Z",
+      "side": 1,
+      "message": "offset_out, size_out, and has_range_out?",
+      "revId": "d9758e84c47ad93227d8127af86dfd0c2e3cd8c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc79ffb5_cf4496b3",
+        "filename": "content/renderer/service_worker/service_worker_subresource_loader.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-18T06:15:43Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "d9758e84c47ad93227d8127af86dfd0c2e3cd8c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c9b79c4_2fc2a551",
+        "filename": "content/renderer/service_worker/service_worker_subresource_loader.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-18T06:15:43Z",
+      "side": 1,
+      "message": "think we can just simplify this now to: \"|default_loader_factory_getter| is used to get the associated loading context\u0027s default URLLoaderFactory for network fallback\"\n\n(I wonder if we can now just pass the network fallback URLLoaderFactory directly? anyway, beyond the scope of this CL.)",
+      "revId": "d9758e84c47ad93227d8127af86dfd0c2e3cd8c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b26561d0_7f572e23",
+        "filename": "third_party/WebKit/LayoutTests/FlagExpectations/enable-features\u003dNetworkService",
+        "patchSetId": 12
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-18T06:15:43Z",
+      "side": 1,
+      "message": "This bug number change isn\u0027t needed.",
+      "revId": "d9758e84c47ad93227d8127af86dfd0c2e3cd8c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
