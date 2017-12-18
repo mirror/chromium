@@ -999,6 +999,16 @@
       "../../",
     ],
   },
+  "chromedriver_py_tests": {
+    "label": "//chrome/test:chromedriver_py_tests",
+    "type": "script",
+    "script": "//chrome/test/chromedriver/test/run_py_tests.py",
+    "args": [
+      "--chromedriver=chromedriver",
+      "--log-path='${ISOLATED_OUTDIR}/chromedriver.log'",
+      "--filter=*testSwitchToStaleFrame",
+    ],
+  },
   "traffic_annotation_auditor_unittests": {
     "label":
       "//tools/traffic_annotation/auditor:traffic_annotation_auditor_unittests",
