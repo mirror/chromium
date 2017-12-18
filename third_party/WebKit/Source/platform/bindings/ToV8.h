@@ -16,6 +16,7 @@
 #include "platform/bindings/V8Binding.h"
 #include "platform/heap/Handle.h"
 #include "platform/wtf/Forward.h"
+#include "platform/wtf/Optional.h"
 #include "v8/include/v8.h"
 
 namespace blink {
@@ -158,6 +159,17 @@ inline v8::Local<v8::Value> ToV8(const ToV8UndefinedGenerator& value,
                                  v8::Local<v8::Object> creation_context,
                                  v8::Isolate* isolate) {
   return v8::Undefined(isolate);
+}
+
+// Nullable
+
+template <typename InnerType>
+inline v8::Local<v8::Value> ToV8(const base::Optional<InnerType>& value,
+                                 v8::Local<v8::Object> creation_context,
+                                 v8::Isolate* isolate) {
+  if (!value)
+    return v8::Null(isolate);
+  return ToV8(*value, creation_context, isolate);
 }
 
 // Array

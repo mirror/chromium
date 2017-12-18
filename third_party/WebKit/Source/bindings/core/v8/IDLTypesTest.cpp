@@ -140,6 +140,14 @@ static_assert(
         HeapVector<std::pair<String, DictionarySequenceOrDictionary>>>::value,
     "IDLRecord<IDLString, union type> produces a HeapVector with no Member<>");
 
+static_assert(std::is_base_of<IDLBase, IDLNullable<IDLDouble>>::value,
+              "IDLNullable should have IDLBase as a base class");
+static_assert(std::is_same<IDLNullable<IDLDouble>::ImplType,
+                           WTF::Optional<double>>::value,
+              "double? corresponds to Optional<double>");
+static_assert(std::is_same<IDLNullable<Element>::ImplType, Element>::value,
+              "Element? doesn't require an Optional<> wrapper");
+
 }  // namespace
 
 }  // namespace blink
