@@ -24,6 +24,8 @@
 #include "extensions/common/extension_l10n_util.h"
 #include "extensions/common/file_util.h"
 
+//#include "extensions/browser/content_verify_job.h"  // VerifierData.
+
 namespace extensions {
 
 namespace {
@@ -81,11 +83,160 @@ ContentVerifier::ContentVerifier(
               ->GetURLRequestContext(),
           delegate_.get(),
           base::Bind(&ContentVerifier::OnFetchComplete, this))),
+      request_context_(
+          content::BrowserContext::GetDefaultStoragePartition(context)
+              ->GetURLRequestContext()),
       observer_(this),
       io_data_(new ContentVerifierIOData) {}
 
 ContentVerifier::~ContentVerifier() {
 }
+
+/*
+void ContentVerifier::DoVerify(
+    const std::string& extension_id,
+    // Maybe no callback needed? ContentVerifier can decide itself.
+    VerifyCallback callback) {
+  DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
+  // TODO: What about version.
+  if (inflight_.find(extension_id) != inflight_.end()) {
+    inflight_[extension_id].callbacks_.push_back(std::move(callback));
+    return;
+  }
+  io_checker_.Check(extension_id,
+                    base::BindOnce(&ContentVerifier::DoneVerify, this));
+}
+void ContentVerifier::DoVerify2(
+    const std::string& extension_id, FilePath& relative_path,
+    VerifyCallback callback) {
+  // TRICKY, need to go to FILE thread for single relative_path.
+  // That is the common case.
+}
+
+void ContentVerifier::DoneVerify(VerifyResult result,
+                                 std::unique_ptr<VerifyData> data) {
+  // Process each callback, prefer calling verify failed once.
+}
+
+// TODO: bool create?
+// TODO: const CVHashes might be important.
+using GotHash =
+    base::OnceCallback<void(CVHResult result, scoped_refptr<const CVHashes> data)>;
+void ContentVerifier::GetContentVerificationHash(
+    const std::string& extension_id,
+    const base::Version& extension_version,
+    const base::FilePath& extension_root,
+    GotHashCallback callback) {
+  if (!IO) PostTask(IO); OR: DCHECK(IO);
+  // TODO: How to make |container| strong owned?
+  Key key(extension_id, extension_version, extension_root);
+  if (!inflight) {
+    auto loader = std::make_unique<ContentHashLoader>(extension_id,
+        // WeakPtr would be better for CV::Shutdown.
+        base::Bind(&GotHashHelper, this/WeakPtr),
+        ...);
+    loader->Load();
+    container[key].loader = std::move(loader);
+  } else {
+    // container[key].callbacks.push_back(std::move(callback));
+  }
+}
+
+void GotHashHelper(result, unique_ptr<CVHashes> hashes) {
+  // WARNING: Consider extension unload.
+  // Utilize callbacks in container[key], hashes.
+  container.erase(key);
+}
+
+ContentHashLoader::ContentHashLoader(done_callback)
+    : weak_factory_(this), done_callback_(std::move(done_callback)) {
+  // sequence_checker AND/OR GetCurrentThreadIdentifier().
+}
+ContentHashLoader::Load() {
+  DCHECK_CURRENTLY_ON(IO);
+  base::PostTaskWithTraitsAndReply(
+      FROM_HERE, {base;:MayBlock(), USER_VISIBLE},
+      base::Bind(&ReadContentHash, extension_root_),
+      base::BindOnce(&ContentHashLoader::Loaded, weak_factory_.GetWeakPtr()));
+}
+void ContentHashLoader::ReadContentHash() {
+  // Assert IO allowed.
+  // READ (no create) verified contents and computed hashes, return false.
+  enum Result {
+    NO_VERIFIED_CONTENTS,
+    INVALID_VERIFIED_CONTENTS,
+    NO_COMPUTED_HASHES,
+    INVALID_COMPUTED_HASHES,
+    OK,
+  };
+  return result, etc.;
+}
+void ContentHashLoader::Loaded(result) {
+  if (result == NO_VERIFIED_CONTENTS || result == INVALID_VERIFIED_CONTENTS) {
+    Fetch(VERIFIED_CONTENTS);
+  } else if (result == NO_COMPUTED_HASHES || result == INVALID_COMPUTED_HASHES) {
+    Compute(result.verified_contents, COMPUTED_HASHES);
+  } else if (result == OK) {
+    std::move(done_callback_).Run(result);
+  }
+}
+void Fetch() {
+  // How to manage URLFetcherDelegate lifetime?
+}
+void ContentHashLoader::Fetch() {
+  // TODO: Do we need this post task?
+  base::PostTaskAndReply(
+      FROM_HERE,
+      content::BrowserThread::UI,
+      base::Bind(&Fetch),
+      base::BindOnce(&ContentHashLoader::FetchDone, weak_ptr_.GetWeakPtr()));
+  url_fetcher_ = URLFetcher::Create(.., this);
+  // Will call callback_.
+}
+void ContentHashLoader::OnURLFetchComplete(..) {
+  std::unique_ptr<URLFetcher> url_fetcher = std::move(url_fetcher_);
+  // We are in the same sequence as ContentHashLoader::Fetch().
+
+  // Got verified_contents.json's contents.
+  // valid_verified_contents = JSONReader::Read().
+  if (!valid_verified_contents) {
+    callback_.Run(FAILED_HASHES);
+    return;
+  } else {
+    auto result = std::make_unique<Result>(verified_contents, null);
+    base::PostTaskWithTraitsAndReplyWithResult(
+        FROM_HERE,
+        {MayBlock()},
+        base::Bind(&WriteFile, ..., base::Unretained(result.get())),
+        base::BindOnce(&OnWriteFileComplete, this, base::Passed(&result)));
+  }
+  // |url_fetcher_| destroyed.
+}
+void ContentHashLoader::OnWriteFileComplete(bool success, unique_ptr<Result> result) {
+  // sequence_checker.
+  if (!success) {
+    // DROP VerifiedContents?
+    std::move(callback_).Run();
+    return;
+  }
+  // MaybeCreateHashes() -> CreateHashes().
+  bool created = MaybeCreateHashes(result.get());
+  if (!created) {
+    std::move(callback_).Run(ERROR);
+    return;
+  }
+  std::move(callback_).Run(std::move(result));
+}
+bool ContentHashFetcher::CreateHashes(Result* result) {
+  ...;
+  return true/false;
+}
+
+// OK
+// q: file_missing_from_verified_contents_
+// q: hash_mismatch_unix_paths
+
+*/
 
 void ContentVerifier::Start() {
   ExtensionRegistry* registry = ExtensionRegistry::Get(context_);
@@ -120,7 +271,6 @@ ContentVerifyJob* ContentVerifier::CreateJobFor(
   unix_paths.insert(normalized_unix_path);
   if (!ShouldVerifyAnyPaths(extension_id, extension_root, unix_paths))
     return NULL;
-
   // TODO(asargent) - we can probably get some good performance wins by having
   // a cache of ContentHashReader's that we hold onto past the end of each job.
   return new ContentVerifyJob(
@@ -129,6 +279,12 @@ ContentVerifyJob* ContentVerifier::CreateJobFor(
       base::BindOnce(&ContentVerifier::VerifyFailed, this, extension_id));
 }
 
+void ContentVerifier::Fail() {
+  printf("Fail\n");
+  DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
+}
+
+// ContentVerifyJob::failure_callback_.
 void ContentVerifier::VerifyFailed(const std::string& extension_id,
                                    ContentVerifyJob::FailureReason reason) {
   if (!content::BrowserThread::CurrentlyOn(content::BrowserThread::UI)) {
@@ -211,6 +367,8 @@ void ContentVerifier::OnExtensionUnloaded(
 void ContentVerifier::OnFetchCompleteHelper(
     const std::string& extension_id,
     bool should_verify_any_paths_result) {
+  printf("OnFetchCompleteHelper, extension_id: %s, should_verify_any_paths_result: %d\n",
+         extension_id.c_str(), should_verify_any_paths_result);
   if (should_verify_any_paths_result)
     delegate_->VerifyFailed(extension_id, ContentVerifyJob::MISSING_ALL_HASHES);
 }
@@ -241,6 +399,8 @@ void ContentVerifier::OnFetchComplete(
     // hashes.
     delegate_->VerifyFailed(extension_id, ContentVerifyJob::MISSING_ALL_HASHES);
   } else {
+    printf("OnFetchComplete, ext = %s, success = %d, num hashes mismatch: %d\n",
+           extension_id.c_str(), success, (int)hash_mismatch_unix_paths.size());
     content::BrowserThread::PostTaskAndReplyWithResult(
         content::BrowserThread::IO, FROM_HERE,
         base::Bind(&ContentVerifier::ShouldVerifyAnyPaths, this, extension_id,
@@ -303,6 +463,91 @@ bool ContentVerifier::ShouldVerifyAnyPaths(
     return true;
   }
   return false;
+}
+
+VerifierData* ContentVerifier::CreateVerifierDataFor(
+    const std::string& extension_id,
+    const base::FilePath& extension_root,
+    const base::FilePath& relative_path) {
+  DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
+
+  const ContentVerifierIOData::ExtensionData* data =
+      io_data_->GetData(extension_id);
+  if (!data)
+    return nullptr;
+
+  base::FilePath normalized_unix_path = NormalizeRelativePath(relative_path);
+
+  std::set<base::FilePath> unix_paths;
+  unix_paths.insert(normalized_unix_path);
+  if (!ShouldVerifyAnyPaths(extension_id, extension_root, unix_paths))
+    return nullptr;
+
+  return new VerifierData(extension_id,
+                          data->version,
+                          extension_root,
+                          normalized_unix_path,
+                          delegate_->GetPublicKey(),
+                          this);
+}
+
+ContentVerifier::ContentHashLoaderData::ContentHashLoaderData() {}
+ContentVerifier::ContentHashLoaderData::~ContentHashLoaderData() {}
+
+void ContentVerifier::GetContentVerificationHash(
+    const std::string& extension_id,
+    const base::Version& extension_version,
+    const base::FilePath& extension_root,
+    const base::FilePath& relative_path,
+    const ContentVerifierKey& key,
+    ContentHashLoaderCallback callback) {
+  DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
+
+  printf("CV::GetContentVerificationHash, extension_id = %s\n",
+         extension_id.c_str());
+
+  ContentHashLoaderData& loader_data = loaders_[extension_id];
+  printf("Callbacks: %d\n",
+         (int)loader_data.callbacks.size());
+  //const bool should_start = loader_data.callbacks.empty();
+  const bool should_start = !loader_data.loader;
+  if (!loader_data.loader) {
+    loader_data.loader = std::make_unique<ContentHashLoader>(
+        delegate_.get(),
+        request_context_,
+        extension_id,
+        extension_version,
+        extension_root,
+        relative_path,
+        key
+        );
+  }
+  loader_data.callbacks.push_back(std::move(callback));
+  if (should_start) {
+    loader_data.loader->Load(
+        base::BindOnce(&ContentVerifier::GotHashHelper, this,
+                       extension_id));
+  } else {
+    printf("Skip\n");
+  }
+}
+void ContentVerifier::GotHashHelper(
+    const std::string& extension_id,
+    ContentHashLoader::LoadResult result,
+    scoped_refptr<ContentHash> hash) {
+  DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
+  // WARNING: Consider extension unload.
+  // Utilize callbacks in container[key], hashes.
+  printf("**** Test: ContentVerifier::GotHashHelper: extension_id: %s ****\n",
+         extension_id.c_str());
+  DCHECK_GT(loaders_.count(extension_id), 0u);
+  ContentHashLoaderData& loader_data = loaders_[extension_id];
+  printf("Num callbacks found: %d\n", (int)loader_data.callbacks.size());
+  // TODO: Short circuit failure here, global from ContentVerifier?
+  for (auto& callback : loader_data.callbacks) {
+    std::move(callback).Run(result, hash);
+  }
+  loaders_.erase(extension_id);
 }
 
 }  // namespace extensions

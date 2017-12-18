@@ -79,6 +79,8 @@
 #include "services/network/public/cpp/url_loader_completion_status.h"
 #include "url/url_util.h"
 
+#include "content/public/browser/browser_thread.h"
+
 using content::ResourceRequestInfo;
 using extensions::Extension;
 using extensions::SharedModuleInfo;
@@ -192,7 +194,10 @@ class URLRequestExtensionJob : public net::URLRequestFileJob {
                          const std::string& content_security_policy,
                          bool send_cors_header,
                          bool follow_symlinks_anywhere,
-                         ContentVerifyJob* verify_job)
+                         ContentVerifyJob* verify_job,
+                         //bool needs_verification
+                         ContentVerifier* content_verifier
+                         )
       : net::URLRequestFileJob(
             request,
             network_delegate,
@@ -200,7 +205,9 @@ class URLRequestExtensionJob : public net::URLRequestFileJob {
             base::CreateTaskRunnerWithTraits(
                 {base::MayBlock(), base::TaskPriority::BACKGROUND,
                  base::TaskShutdownBehavior::SKIP_ON_SHUTDOWN})),
+        // ...
         verify_job_(verify_job),
+        //needs_verification_(needs_verification),
         seek_position_(0),
         bytes_read_(0),
         directory_path_(directory_path),
@@ -213,6 +220,11 @@ class URLRequestExtensionJob : public net::URLRequestFileJob {
     if (follow_symlinks_anywhere) {
       resource_.set_follow_symlinks_anywhere();
     }
+    DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
+    verifier_data_ = content_verifier->CreateVerifierDataFor(
+        extension_id, directory_path, relative_path);
+    if (verifier_data_.get())
+      verifier_data_->Start();
   }
 
   void GetResponseInfo(net::HttpResponseInfo* info) override {
@@ -256,6 +268,11 @@ class URLRequestExtensionJob : public net::URLRequestFileJob {
     if (headers.GetHeader(net::HttpRequestHeaders::kRange, &range_header)) {
       if (verify_job_.get())
         verify_job_ = NULL;
+
+      // ???
+      // Verification not possible.
+      //verifier_data_.reset();
+      verifier_data_ = nullptr;
     }
     URLRequestFileJob::SetExtraRequestHeaders(headers);
   }
@@ -271,6 +288,13 @@ class URLRequestExtensionJob : public net::URLRequestFileJob {
         verify_job_->BytesRead(0, base::string_as_array(&tmp));
         verify_job_->DoneReading();
       }
+      DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
+      if (verifier_data_.get()) {
+        std::string tmp;
+        verifier_data_->BytesRead(0, base::string_as_array(&tmp));
+        verifier_data_->DoneReading();
+        verifier_data_ = nullptr;
+      }
     }
   }
 
@@ -281,6 +305,11 @@ class URLRequestExtensionJob : public net::URLRequestFileJob {
     // crbug.com/369895.
     if (result > 0 && verify_job_.get())
       verify_job_ = NULL;
+    DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
+    if (result > 0 && verifier_data_.get()) {
+      // We could have deleted here :(
+      verifier_data_ = nullptr;
+    }
   }
 
   void OnReadComplete(net::IOBuffer* buffer, int result) override {
@@ -293,6 +322,9 @@ class URLRequestExtensionJob : public net::URLRequestFileJob {
       bytes_read_ += result;
       if (verify_job_.get())
         verify_job_->BytesRead(result, buffer->data());
+      DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
+      if (verifier_data_)
+        verifier_data_->BytesRead(result, buffer->data());
     }
   }
 
@@ -300,6 +332,11 @@ class URLRequestExtensionJob : public net::URLRequestFileJob {
     URLRequestFileJob::DoneReading();
     if (verify_job_.get())
       verify_job_->DoneReading();
+    DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
+    if (verifier_data_) {
+      verifier_data_->DoneReading();
+      verifier_data_ = nullptr;
+    }
   }
 
  private:
@@ -329,6 +366,8 @@ class URLRequestExtensionJob : public net::URLRequestFileJob {
   }
 
   scoped_refptr<ContentVerifyJob> verify_job_;
+  //bool needs_verification_;
+  scoped_refptr<VerifierData> verifier_data_;
 
   std::unique_ptr<base::ElapsedTimer> request_timer_;
 
@@ -649,7 +688,10 @@ ExtensionProtocolHandler::MaybeCreateJob(
                                     content_security_policy,
                                     send_cors_header,
                                     follow_symlinks_anywhere,
-                                    verify_job);
+                                    verify_job,
+                                    //needs_verification
+                                    verifier
+                                    );
 }
 
 void LoadExtensionResourceFromFileOnBackgroundSequence(

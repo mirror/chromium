@@ -179,6 +179,9 @@ std::set<base::FilePath> ChromeContentVerifierDelegate::GetBrowserImagePaths(
 void ChromeContentVerifierDelegate::VerifyFailed(
     const std::string& extension_id,
     ContentVerifyJob::FailureReason reason) {
+  printf("VerifyFailed, extension_id: %s, reason = %d\n",
+         extension_id.c_str(),
+         reason);
   ExtensionRegistry* registry = ExtensionRegistry::Get(context_);
   const Extension* extension =
       registry->enabled_extensions().GetByID(extension_id);
@@ -187,6 +190,7 @@ void ChromeContentVerifierDelegate::VerifyFailed(
   ExtensionSystem* system = ExtensionSystem::Get(context_);
   ExtensionService* service = system->extension_service();
   Mode mode = ShouldBeVerified(*extension);
+  printf("Got mode = %d\n", mode);
   if (mode >= ContentVerifierDelegate::ENFORCE) {
     if (ContentVerifier::ShouldRepairIfCorrupted(system->management_policy(),
                                                  extension)) {

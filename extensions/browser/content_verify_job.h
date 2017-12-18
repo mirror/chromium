@@ -15,6 +15,10 @@
 #include "base/memory/ref_counted.h"
 #include "base/threading/thread_checker.h"
 
+//
+//#include "extensions/browser/content_verifier/content_hash_loader.h"
+//#include "extensions/browser/content_verifier_delegate.h"
+
 namespace base {
 class FilePath;
 }
@@ -26,6 +30,7 @@ class SecureHash;
 namespace extensions {
 
 class ContentHashReader;
+class ContentVerifier;
 
 // Objects of this class are responsible for verifying that the actual content
 // read from an extension file matches an expected set of hashes. This class

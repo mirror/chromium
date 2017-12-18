@@ -99,6 +99,15 @@ bool ComputedHashes::Reader::InitFromFile(const base::FilePath& path) {
   return true;
 }
 
+// static.
+std::unique_ptr<ComputedHashes::Reader> ComputedHashes::Reader::CreateFromFile(
+    const base::FilePath& path) {
+  auto reader = std::make_unique<ComputedHashes::Reader>();
+  if (!reader->InitFromFile(path))
+    return nullptr;
+  return reader;
+}
+
 bool ComputedHashes::Reader::GetHashes(const base::FilePath& relative_path,
                                        int* block_size,
                                        std::vector<std::string>* hashes) const {

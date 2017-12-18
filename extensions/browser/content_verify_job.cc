@@ -14,6 +14,9 @@
 #include "crypto/sha2.h"
 #include "extensions/browser/content_hash_reader.h"
 
+#include "extensions/browser/content_verifier.h"
+
+
 namespace extensions {
 
 namespace {
@@ -59,6 +62,14 @@ ContentVerifyJob::~ContentVerifyJob() {
   UMA_HISTOGRAM_COUNTS("ExtensionContentVerifyJob.TimeSpentUS",
                        time_spent_.InMicroseconds());
 }
+
+/*
+ContentVerifyJob::Start() {
+  PostTaskAndReply(
+      GetOrCreateHashes,
+      GotHashes);
+}
+*/
 
 void ContentVerifyJob::Start() {
   DCHECK(thread_checker_.CalledOnValidThread());
@@ -177,6 +188,8 @@ void ContentVerifyJob::OnHashesReady(bool success) {
     // to digest and will avoid future bugs from creeping up.
     if (!hash_reader_->has_content_hashes()) {
       DispatchFailureCallback(MISSING_ALL_HASHES);
+      printf("**** Missing all hashes for: %s\n",
+             hash_reader_->extension_id().c_str());
       return;
     }
 
@@ -236,5 +249,6 @@ void ContentVerifyJob::DispatchFailureCallback(FailureReason reason) {
                                  hash_reader_->relative_path(), reason);
   }
 }
+
 
 }  // namespace extensions

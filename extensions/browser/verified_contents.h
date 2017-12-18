@@ -31,6 +31,11 @@ class VerifiedContents {
   // |path| and validated the enclosed signature. The
   bool InitFrom(const base::FilePath& path);
 
+  static std::unique_ptr<VerifiedContents> CreateFromFile(
+      const uint8_t* public_key,
+      size_t public_key_size,
+      const base::FilePath& path);
+
   int block_size() const { return block_size_; }
   const std::string& extension_id() const { return extension_id_; }
   const base::Version& version() const { return version_; }

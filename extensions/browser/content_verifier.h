@@ -17,6 +17,8 @@
 #include "extensions/browser/content_verify_job.h"
 #include "extensions/browser/extension_registry_observer.h"
 
+#include "extensions/browser/content_verifier/content_hash_loader.h"
+
 namespace base {
 class FilePath;
 }
@@ -31,6 +33,7 @@ class Extension;
 class ContentHashFetcher;
 class ContentVerifierIOData;
 class ManagementPolicy;
+class VerifierData;
 
 // Used for managing overall content verification - both fetching content
 // hashes as needed, and supplying job objects to verify file contents as they
@@ -61,6 +64,27 @@ class ContentVerifier : public base::RefCountedThreadSafe<ContentVerifier>,
   ContentVerifyJob* CreateJobFor(const std::string& extension_id,
                                  const base::FilePath& extension_root,
                                  const base::FilePath& relative_path);
+  bool ResourceNeedsVerification(const std::string& extension_id,
+                                 const base::FilePath& extension_root,
+                                 const base::FilePath& relative_path);
+  VerifierData* CreateVerifierDataFor(
+      const std::string& extension_id,
+      const base::FilePath& extension_root,
+      const base::FilePath& relative_path);
+  void Fail();
+  using ContentHashLoaderCallback =
+      base::OnceCallback<void(ContentHashLoader::LoadResult /*result*/,
+                              scoped_refptr<ContentHash> /* content_hash */)>;
+  void GetContentVerificationHash(
+      const std::string& extension_id,
+      const base::Version& extension_version,
+      const base::FilePath& extension_root,
+      const base::FilePath& relative_path,
+      const ContentVerifierKey& key,
+      ContentHashLoaderCallback callback);
+  void GotHashHelper(const std::string& extension_id,
+                     ContentHashLoader::LoadResult result,
+                     scoped_refptr<ContentHash> hash);
 
   // Called (typically by a verification job) to indicate that verification
   // failed while reading some file in |extension_id|.
@@ -107,6 +131,18 @@ class ContentVerifier : public base::RefCountedThreadSafe<ContentVerifier>,
 
   // For fetching content hash signatures.
   std::unique_ptr<ContentHashFetcher> fetcher_;
+
+  // extension id -> ContentHashLoader.
+  struct ContentHashLoaderData {
+    ContentHashLoaderData();
+    ~ContentHashLoaderData();
+    std::unique_ptr<ContentHashLoader> loader;
+    //ContentHashLoader loader;
+    std::vector<ContentHashLoaderCallback> callbacks;
+  };
+  std::map<std::string, ContentHashLoaderData> loaders_;
+
+  net::URLRequestContextGetter* const request_context_;
 
   // For observing the ExtensionRegistry.
   ScopedObserver<ExtensionRegistry, ExtensionRegistryObserver> observer_;

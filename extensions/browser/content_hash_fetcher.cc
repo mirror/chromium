@@ -251,6 +251,9 @@ void ContentHashFetcherJob::DoneCheckingForVerifiedContents(bool found) {
   } else {
     VLOG(1) << "Missing verified contents for " << extension_id_
             << ", fetching...";
+    printf("Missing fetch\n");
+    printf("IS_IO: %d\n", content::BrowserThread::CurrentlyOn(content::BrowserThread::IO));
+    printf("IS_UI: %d\n", content::BrowserThread::CurrentlyOn(content::BrowserThread::UI));
     net::NetworkTrafficAnnotationTag traffic_annotation =
         net::DefineNetworkTrafficAnnotation("content_hash_verification_job", R"(
           semantics {
@@ -301,6 +304,9 @@ void ContentHashFetcherJob::OnURLFetchComplete(const net::URLFetcher* source) {
   VLOG(1) << "URLFetchComplete for " << extension_id_
           << " is_success:" << url_fetcher_->GetStatus().is_success() << " "
           << fetch_url_.possibly_invalid_spec();
+  printf("URLFetchComplete...\n");
+  printf("IS_IO: %d\n", content::BrowserThread::CurrentlyOn(content::BrowserThread::IO));
+  printf("IS_UI: %d\n", content::BrowserThread::CurrentlyOn(content::BrowserThread::UI));
   // Delete |url_fetcher_| once we no longer need it.
   std::unique_ptr<net::URLFetcher> url_fetcher = std::move(url_fetcher_);
 
@@ -481,6 +487,7 @@ void ContentHashFetcher::DoFetch(const Extension* extension, bool force) {
   JobMap::iterator found = jobs_.find(key);
   if (found != jobs_.end()) {
     if (!force || found->second->force()) {
+      printf("DoFetch: force = %d, extension_id: %s, SKIP\n", force, extension->id().c_str());
       // Just let the existing job keep running.
       return;
     } else {

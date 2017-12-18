@@ -76,6 +76,8 @@ source_set("browser_sources") {
     "content_hash_reader.h",
     "content_hash_tree.cc",
     "content_hash_tree.h",
+    "content_verifier/content_hash_loader.cc",
+    "content_verifier/content_hash_loader.h",
     "content_verifier.cc",
     "content_verifier.h",
     "content_verifier_delegate.h",

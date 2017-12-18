@@ -30,6 +30,9 @@ class ComputedHashes {
     ~Reader();
     bool InitFromFile(const base::FilePath& path);
 
+    static std::unique_ptr<ComputedHashes::Reader> CreateFromFile(
+        const base::FilePath& path);
+
     // The block size and hashes for |relative_path| will be copied into the
     // out parameters.
     bool GetHashes(const base::FilePath& relative_path,

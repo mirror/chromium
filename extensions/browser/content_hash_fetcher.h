@@ -65,6 +65,7 @@ class ContentHashFetcher {
 
   net::URLRequestContextGetter* context_getter_;
   ContentVerifierDelegate* delegate_;
+  // ContentVerifier::OnFetchComplete().
   FetchCallback fetch_callback_;
 
   // We keep around pointers to in-progress jobs, both so we can avoid

@@ -168,6 +168,18 @@ bool VerifiedContents::InitFrom(const base::FilePath& path) {
   return true;
 }
 
+// static.
+std::unique_ptr<VerifiedContents> VerifiedContents::CreateFromFile(
+    const uint8_t* public_key,
+    size_t public_key_size,
+    const base::FilePath& path) {
+  auto verified_contents = std::make_unique<VerifiedContents>(public_key,
+                                                              public_key_size);
+  if (!verified_contents->InitFrom(path))
+    return nullptr;
+  return verified_contents;
+}
+
 bool VerifiedContents::HasTreeHashRoot(
     const base::FilePath& relative_path) const {
   base::FilePath::StringType path = base::ToLowerASCII(

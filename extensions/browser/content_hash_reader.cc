@@ -30,7 +30,8 @@ ContentHashReader::ContentHashReader(const std::string& extension_id,
                                      const base::FilePath& relative_path,
                                      const ContentVerifierKey& key)
     : extension_id_(extension_id),
-      extension_version_(extension_version.GetString()),
+      //extension_version_(extension_version.GetString()),
+      extension_version_(extension_version),
       extension_root_(extension_root),
       relative_path_(relative_path),
       key_(key) {}
