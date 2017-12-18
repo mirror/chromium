@@ -27,7 +27,7 @@ class CORE_EXPORT DictionaryIterator {
  public:
   DictionaryIterator(std::nullptr_t) : isolate_(nullptr), done_(true) {}
 
-  DictionaryIterator(v8::Local<v8::Object> iterator, v8::Isolate*);
+  DictionaryIterator(v8::Isolate*, v8::Local<v8::Object> iterator);
 
   bool IsNull() const { return iterator_.IsEmpty(); }
 
