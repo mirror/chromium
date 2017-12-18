@@ -1,0 +1,215 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "61c210a6_76e836b0",
+        "filename": "chrome/browser/chromeos/printing/external_printers.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-12-18T21:13:09Z",
+      "side": 1,
+      "message": "Nit:  If the is_list check fails, the error line is probably not going to be what you want.",
+      "range": {
+        "startLine": 48,
+        "startChar": 36,
+        "endLine": 48,
+        "endChar": 46
+      },
+      "revId": "a530f3d0d1526a1cee2abc79888b727e342aa983",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "375f9cc8_32a97542",
+        "filename": "chrome/browser/chromeos/printing/external_printers.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-12-18T21:13:09Z",
+      "side": 1,
+      "message": "Did you mean to do this twice?",
+      "range": {
+        "startLine": 59,
+        "startChar": 0,
+        "endLine": 59,
+        "endChar": 32
+      },
+      "revId": "a530f3d0d1526a1cee2abc79888b727e342aa983",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf8dec5e_217536eb",
+        "filename": "chrome/browser/chromeos/printing/external_printers.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-12-18T21:13:09Z",
+      "side": 1,
+      "message": "Maybe assert blocking is ok here, too; if nothing else, it helps the reader understand this is not on the UI thread.",
+      "revId": "a530f3d0d1526a1cee2abc79888b727e342aa983",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1b429bc_3b4ec46d",
+        "filename": "chrome/browser/chromeos/printing/external_printers.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-12-18T21:13:09Z",
+      "side": 1,
+      "message": "It\u0027s a little unclear to me what the intended state is after ClearData is called.  We have no printers, but is the effective state like we haven\u0027t yet received a list, or like we\u0027ve received an empty list?",
+      "revId": "a530f3d0d1526a1cee2abc79888b727e342aa983",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07519358_6d865d30",
+        "filename": "chrome/browser/chromeos/printing/external_printers.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-12-18T21:13:09Z",
+      "side": 1,
+      "message": "The fact that this returns a vector make the naming here is a little weird, I think.",
+      "range": {
+        "startLine": 107,
+        "startChar": 31,
+        "endLine": 107,
+        "endChar": 44
+      },
+      "revId": "a530f3d0d1526a1cee2abc79888b727e342aa983",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8529abf2_8242241d",
+        "filename": "chrome/browser/chromeos/printing/external_printers.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-12-18T21:13:09Z",
+      "side": 1,
+      "message": "DeleteSoon has a boolean return value, consider checking it and logging if it returns false.",
+      "revId": "a530f3d0d1526a1cee2abc79888b727e342aa983",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81cc5c49_fa3b2a18",
+        "filename": "chrome/browser/chromeos/printing/external_printers.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-12-18T21:13:09Z",
+      "side": 1,
+      "message": "This smells fishy to me. \n\nif we have something like\n\nSetData(...)\nClearData()\n\nthen the ClearData will clear the printers possibly before the SetData completes the background task, which means the SetData will take effect *after* the ClearData.\n\nAm I getting that wrong?  I think you need to punt this operation through the restrictions runner sequence to keep the effects in order.",
+      "revId": "a530f3d0d1526a1cee2abc79888b727e342aa983",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36b39313_2c34f9ff",
+        "filename": "chrome/browser/chromeos/printing/external_printers.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-12-18T21:13:09Z",
+      "side": 1,
+      "message": "You *could* have a helper function that just takes the bound function-to-call as an argument here, and reuse it for all of these delegate-to-Restrictions calls.  However, I\u0027m not entirely sure if the readability will improve with that or not.",
+      "revId": "a530f3d0d1526a1cee2abc79888b727e342aa983",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c1af72f9_9132179a",
+        "filename": "chrome/browser/chromeos/printing/external_printers.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-12-18T21:13:09Z",
+      "side": 1,
+      "message": "This seems like a weird optimization.  I think this means we only skip notification if the existing set of printers is empty and the new set is an error.  \n\nI could see going for empty-\u003eempty skips notifications, but even that seems like it may be not worth the complexity.",
+      "revId": "a530f3d0d1526a1cee2abc79888b727e342aa983",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03200b48_337e94da",
+        "filename": "chrome/browser/chromeos/printing/external_printers.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-12-18T21:13:09Z",
+      "side": 1,
+      "message": "If I\u0027m reading this correctly, an error in parsing a new policy will wipe out the existing printers, if any.  Is that what you want?",
+      "revId": "a530f3d0d1526a1cee2abc79888b727e342aa983",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efed9e83_e2dcc95d",
+        "filename": "chrome/browser/chromeos/printing/external_printers.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-12-18T21:13:09Z",
+      "side": 1,
+      "message": "Is there a reason *not* to pass through the new vector here?",
+      "range": {
+        "startLine": 40,
+        "startChar": 16,
+        "endLine": 40,
+        "endChar": 38
+      },
+      "revId": "a530f3d0d1526a1cee2abc79888b727e342aa983",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
