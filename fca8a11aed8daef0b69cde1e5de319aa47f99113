@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aca6dbfe_eb2efb96",
+        "filename": "ui/views/widget/root_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 599,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-18T23:30:24Z",
+      "side": 1,
+      "message": "would it be better to put a check in NativeViewAccessibilityBase::GetData()?\n\nthere are already checks for !view_-\u003eGetWidget() and view_-\u003eGetWidget()-\u003eIsClosed() -- can we just add a check for widget_delegate() there as well?\n\nthis way all views in the hierarchy benefit, not just RootView, and we put some placeholder attributes on the AXNodeData, like a role.\n\nAlso is there a way to get test coverage for this?",
+      "revId": "fca8a11aed8daef0b69cde1e5de319aa47f99113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
