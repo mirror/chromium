@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "61e462f0_24bd0f42",
+        "filename": "content/browser/renderer_host/compositor_impl_android.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 955,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-12-18T23:58:39Z",
+      "side": 1,
+      "message": "I\u0027d sort-of-vaguely prefer this to be encapsulated in some sort of class that manages the call to SetDeferCommits, like ...\nclass ui::CompositorLockManager {\n  LayerTreeHost* host_ // weak owned by owner\n  std::vector\u003cCompositorLock*\u003e active_locks_;\n}\nto avoid the copy-pasting (and also cause it may help to remove more functionality from being in the body of ui::Compositor).\n\nBut if you\u0027ve already ruminated on that and think it doesn\u0027t help or overly-complicates things, that\u0027s fine.",
+      "parentUuid": "375db8d0_c943ffdd",
+      "range": {
+        "startLine": 955,
+        "startChar": 52,
+        "endLine": 955,
+        "endChar": 69
+      },
+      "revId": "42487a98d61baba7da09312f930cc0307e08d6d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "48ee8875_4fbb36d7",
         "filename": "content/browser/renderer_host/compositor_impl_android.cc",
         "patchSetId": 7
@@ -65,6 +89,23 @@
         "endLine": 967,
         "endChar": 25
       },
+      "revId": "42487a98d61baba7da09312f930cc0307e08d6d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a82d887a_d4093a67",
+        "filename": "ui/android/delegated_frame_host_android.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-12-18T23:58:39Z",
+      "side": 1,
+      "message": "Nit: Add a comment saying what the lock is for (and maybe use a name like compositor_frame_after_attach_lock_), for future archeology.",
       "revId": "42487a98d61baba7da09312f930cc0307e08d6d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
