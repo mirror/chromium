@@ -48,6 +48,54 @@
     },
     {
       "key": {
+        "uuid": "7fd5b867_ccf516c1",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2218,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2017-12-18T20:42:48Z",
+      "side": 1,
+      "message": "This is a webVR device, it doesn\u0027t do AR, so I called it webvr-orientation-device. Is there a good rationale behind calling it a webxr device? Or is it just for consistency?",
+      "parentUuid": "22fb84b1_f053510e",
+      "range": {
+        "startLine": 2218,
+        "startChar": 9,
+        "endLine": 2218,
+        "endChar": 10
+      },
+      "revId": "577f6d2ca3a7b89cae0a97ccb7ebb864e07ad06b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8e32bec_4f1ea089",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2218,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2017-12-18T20:42:48Z",
+      "side": 1,
+      "message": "Done. I\u0027ve renamed all the variables to match, as I think it\u0027s clearer, but it might be a bit too long. What do you think?",
+      "parentUuid": "8a8e8fd1_731c19e9",
+      "range": {
+        "startLine": 2218,
+        "startChar": 12,
+        "endLine": 2218,
+        "endChar": 30
+      },
+      "revId": "577f6d2ca3a7b89cae0a97ccb7ebb864e07ad06b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0df37231_06f33405",
         "filename": "chrome/browser/about_flags.cc",
         "patchSetId": 6
@@ -59,6 +107,24 @@
       "writtenOn": "2017-12-16T04:19:33Z",
       "side": 1,
       "message": "Whatever we decide on the naming will need to be applied to all these constants, etc. too.",
+      "revId": "577f6d2ca3a7b89cae0a97ccb7ebb864e07ad06b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "981bdad6_005a8ebc",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2219,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2017-12-18T20:42:48Z",
+      "side": 1,
+      "message": "Agreed.",
+      "parentUuid": "0df37231_06f33405",
       "revId": "577f6d2ca3a7b89cae0a97ccb7ebb864e07ad06b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -105,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "00dec920_f1e41b31",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1622,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2017-12-18T20:42:48Z",
+      "side": 1,
+      "message": "Also affected by the VR/XR question",
+      "parentUuid": "4f937387_f8bb8a33",
+      "revId": "577f6d2ca3a7b89cae0a97ccb7ebb864e07ad06b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "615834f0_af1cfcdd",
         "filename": "content/public/common/content_features.cc",
         "patchSetId": 6
@@ -128,6 +212,30 @@
     },
     {
       "key": {
+        "uuid": "364fffdc_f03b1fef",
+        "filename": "content/public/common/content_features.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 471,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2017-12-18T20:42:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "615834f0_af1cfcdd",
+      "range": {
+        "startLine": 471,
+        "startChar": 24,
+        "endLine": 471,
+        "endChar": 30
+      },
+      "revId": "577f6d2ca3a7b89cae0a97ccb7ebb864e07ad06b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cbb9b0ed_35cee930",
         "filename": "content/public/common/content_features.cc",
         "patchSetId": 6
@@ -148,6 +256,30 @@
       "revId": "577f6d2ca3a7b89cae0a97ccb7ebb864e07ad06b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d655f8ca_1e78f241",
+        "filename": "content/public/common/content_features.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 473,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2017-12-18T20:42:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cbb9b0ed_35cee930",
+      "range": {
+        "startLine": 473,
+        "startChar": 58,
+        "endLine": 473,
+        "endChar": 66
+      },
+      "revId": "577f6d2ca3a7b89cae0a97ccb7ebb864e07ad06b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -179,6 +311,24 @@
       "writtenOn": "2017-12-16T04:19:33Z",
       "side": 1,
       "message": "If you rename it, you\u0027ll need to remove these two lines and add two more.",
+      "revId": "577f6d2ca3a7b89cae0a97ccb7ebb864e07ad06b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f24a551_c33766ff",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 26001,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2017-12-18T20:42:48Z",
+      "side": 1,
+      "message": "Will do when naming is finalized.",
+      "parentUuid": "8490d898_c9e23f4c",
       "revId": "577f6d2ca3a7b89cae0a97ccb7ebb864e07ad06b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
