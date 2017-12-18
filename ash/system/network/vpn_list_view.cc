@@ -40,6 +40,8 @@
 #include "ui/views/layout/fill_layout.h"
 #include "ui/views/view.h"
 
+#include "base/debug/stack_trace.h"
+
 namespace ash {
 namespace tray {
 namespace {
@@ -98,6 +100,11 @@ class VPNListProviderEntry : public views::ButtonListener, public views::View {
     add_vpn_button->SetInkDropColor(image_color);
     add_vpn_button->SetEnabled(true);
     tri_view->AddView(TriView::Container::END, add_vpn_button);
+    LOG(ERROR) << "VPN List Provider Entry";
+  }
+
+  const char* GetClassName() const override {
+    return "VPNListProviderEntry";
   }
 
  protected:
@@ -145,6 +152,10 @@ class VPNListNetworkEntry : public HoverHighlightView,
   // views::ButtonListener:
   void ButtonPressed(Button* sender, const ui::Event& event) override;
 
+  const char* GetClassName() const override {
+    return "VPNListNetworkEntry";
+  }
+
  private:
   void UpdateFromNetworkState(const chromeos::NetworkState* network);
 
@@ -160,6 +171,7 @@ VPNListNetworkEntry::VPNListNetworkEntry(VPNListView* owner,
                                          const chromeos::NetworkState* network)
     : HoverHighlightView(owner), owner_(owner), guid_(network->guid()) {
   UpdateFromNetworkState(network);
+  LOG(ERROR) << "VPN List Network Entry";
 }
 
 VPNListNetworkEntry::~VPNListNetworkEntry() {
@@ -178,7 +190,7 @@ void VPNListNetworkEntry::ButtonPressed(Button* sender,
     HoverHighlightView::ButtonPressed(sender, event);
     return;
   }
-
+  owner_->OnVPNProvidersChanged();
   chromeos::NetworkConnect::Get()->DisconnectFromNetworkId(guid_);
 }
 
@@ -202,7 +214,8 @@ void VPNListNetworkEntry::UpdateFromNetworkState(
   base::string16 label = network_icon::GetLabelForNetwork(
       network, network_icon::ICON_TYPE_MENU_LIST);
   AddIconAndLabel(image, label);
-  if (network->IsConnectedState()) {
+  /*if (network->IsConnectedState()) { */
+
     owner_->SetupConnectedScrollListItem(this);
     disconnect_button_ = TrayPopupUtils::CreateTrayPopupButton(
         this, l10n_util::GetStringUTF16(IDS_ASH_STATUS_TRAY_VPN_DISCONNECT));
@@ -212,9 +225,11 @@ void VPNListNetworkEntry::UpdateFromNetworkState(
         views::CreateEmptyBorder(
             0, kTrayPopupButtonEndMargin - kTrayPopupLabelHorizontalPadding, 0,
             kTrayPopupButtonEndMargin));
+    /*
   } else if (network->IsConnectingState()) {
     owner_->SetupConnectingScrollListItem(this);
   }
+    */
 
   Layout();
 }

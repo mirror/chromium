@@ -38,6 +38,8 @@
 #include "ui/gfx/geometry/size_conversions.h"
 #include "ui/gfx/interpolated_transform.h"
 
+#include "base/debug/stack_trace.h"
+
 namespace {
 
 const ui::Layer* GetRoot(const ui::Layer* layer) {

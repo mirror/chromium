@@ -919,6 +919,33 @@ void FakeShillManagerClient::SetupDefaultEnvironment() {
                          add_to_visible);
     services->SetServiceProperty(
         "/service/vpn2", shill::kProviderProperty, provider_properties_l2tp);
+
+    services->AddService("/service/vpn3",
+                         "vpn3_guid",
+                         "vpn3" /* nam */,
+                         shill::kTypeVPN,
+                         shill::kStateIdle,
+                         add_to_visible);
+    services->SetServiceProperty(
+        "/service/vpn3", shill::kProviderProperty, provider_properties_l2tp);
+
+    services->AddService("/service/vpn4",
+                         "vpn4_guid",
+                         "vpn4" /* nam */,
+                         shill::kTypeVPN,
+                         shill::kStateIdle,
+                         add_to_visible);
+    services->SetServiceProperty(
+        "/service/vpn4", shill::kProviderProperty, provider_properties_l2tp);
+
+    services->AddService("/service/vpn5",
+                         "vpn5_guid",
+                         "vpn5" /* nam */,
+                         shill::kTypeVPN,
+                         shill::kStateIdle,
+                         add_to_visible);
+    services->SetServiceProperty(
+        "/service/vpn5", shill::kProviderProperty, provider_properties_l2tp);
   }
 
   // Additional device states

@@ -65,6 +65,8 @@
 #include "ui/native_theme/native_theme_win.h"
 #endif
 
+#include "base/debug/stack_trace.h"
+
 namespace views {
 
 namespace {
@@ -1616,8 +1618,22 @@ void View::UpdateParentLayer() {
     offset +=
         parent_->CalculateOffsetToAncestorWithLayer(&parent_layer).offset();
   }
+  if (GetClassName() == std::string("ScrollView::Viewport")) {
+    LOG(ERROR) << "UpdateParentLayer: BEFORE";
+    int i = 0;
+    for (auto* l : layer()->children()) {
+      LOG(ERROR) << "[" << (i++) << "] = " << l << ":" << l->name();
+    }
+  }
 
   ReparentLayer(offset, parent_layer);
+  if (GetClassName() == std::string("ScrollView::Viewport")) {
+    LOG(ERROR) << "UpdateParentLayer: AFTER";
+    int i = 0;
+    for (auto* l : layer()->children()) {
+      LOG(ERROR) << "[" << (i++) << "] = " << l << ":" << l->name();
+    }
+  }
 }
 
 void View::MoveLayerToParent(ui::Layer* parent_layer,
