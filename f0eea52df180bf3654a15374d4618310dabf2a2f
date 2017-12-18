@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8a8dd01b_1b97c2d7",
+        "filename": "base/metrics/statistics_recorder.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1224759
+      },
+      "writtenOn": "2017-12-18T19:49:27Z",
+      "side": 1,
+      "message": "do we want to keep the DCHECK from before?",
+      "range": {
+        "startLine": 135,
+        "startChar": 37,
+        "endLine": 135,
+        "endChar": 0
+      },
+      "revId": "f0eea52df180bf3654a15374d4618310dabf2a2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
