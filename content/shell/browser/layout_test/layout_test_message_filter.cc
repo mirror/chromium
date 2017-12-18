@@ -187,6 +187,8 @@ void LayoutTestMessageFilter::OnSetPermission(
     type = PermissionType::BACKGROUND_SYNC;
   } else if (name == "accessibility-events") {
     type = PermissionType::ACCESSIBILITY_EVENTS;
+  } else if (name == "clipboard-read") {
+    type = PermissionType::CLIPBOARD_READ;
   } else {
     NOTREACHED();
     type = PermissionType::NOTIFICATIONS;
