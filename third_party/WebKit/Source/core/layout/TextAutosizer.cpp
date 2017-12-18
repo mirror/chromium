@@ -594,8 +594,7 @@ void TextAutosizer::UpdatePageInfo() {
              ->GetViewportDescription()
              .IsSpecifiedByAuthor()) {
       page_info_.device_scale_adjustment_ =
-          document_->GetPage()->GetChromeClient().WindowToViewportScalar(
-              document_->GetSettings()->GetDeviceScaleAdjustment());
+          document_->GetSettings()->GetDeviceScaleAdjustment();
     } else {
       page_info_.device_scale_adjustment_ = 1.0f;
     }
@@ -1126,6 +1125,13 @@ void TextAutosizer::ApplyMultiplier(LayoutObject* layout_object,
   } else if (multiplier < 1) {
     // Unlike text-size-adjust, the text autosizer should only inflate fonts.
     multiplier = 1;
+  }
+
+  // When --use-zoom-for-dsf is enabled, the font size must be scaled by device
+  // scale factor.
+  if (document_->GetPage()) {
+    multiplier = document_->GetPage()->GetChromeClient().WindowToViewportScalar(
+        multiplier);
   }
 
   if (current_style.TextAutosizingMultiplier() == multiplier)
