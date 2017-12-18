@@ -14,6 +14,7 @@
 #include "bindings/core/v8/Dictionary.h"
 #include "bindings/core/v8/IDLDictionaryBase.h"
 #include "bindings/core/v8/ScriptValue.h"
+#include "bindings/core/v8/double_or_double_or_null_sequence.h"
 #include "bindings/core/v8/double_or_double_sequence.h"
 #include "bindings/core/v8/double_or_string.h"
 #include "bindings/core/v8/float_or_boolean.h"
@@ -99,6 +100,19 @@ class CORE_EXPORT TestDictionary : public IDLDictionaryBase {
   inline void setDoubleOrNullMember(double);
   inline void setDoubleOrNullMemberToNull();
 
+  bool hasDoubleOrNullOrDoubleOrNullSequenceMember() const { return !double_or_null_or_double_or_null_sequence_member_.IsNull(); }
+  const DoubleOrDoubleOrNullSequence& doubleOrNullOrDoubleOrNullSequenceMember() const {
+    return double_or_null_or_double_or_null_sequence_member_;
+  }
+  void setDoubleOrNullOrDoubleOrNullSequenceMember(const DoubleOrDoubleOrNullSequence&);
+
+  bool hasDoubleOrNullSequenceMember() const { return has_double_or_null_sequence_member_; }
+  const Vector<Optional<double>>& doubleOrNullSequenceMember() const {
+    DCHECK(has_double_or_null_sequence_member_);
+    return double_or_null_sequence_member_;
+  }
+  void setDoubleOrNullSequenceMember(const Vector<Optional<double>>&);
+
   bool hasDoubleOrStringMember() const { return !double_or_string_member_.IsNull(); }
   const DoubleOrString& doubleOrStringMember() const {
     return double_or_string_member_;
@@ -118,6 +132,13 @@ class CORE_EXPORT TestDictionary : public IDLDictionaryBase {
   }
   inline void setElementOrNullMember(Element*);
   inline void setElementOrNullMemberToNull();
+
+  bool hasElementOrNullSequenceMember() const { return has_element_or_null_sequence_member_; }
+  const HeapVector<Member<Element>>& elementOrNullSequenceMember() const {
+    DCHECK(has_element_or_null_sequence_member_);
+    return element_or_null_sequence_member_;
+  }
+  void setElementOrNullSequenceMember(const HeapVector<Member<Element>>&);
 
   bool hasEnumMember() const { return !enum_member_.IsNull(); }
   const String& enumMember() const {
@@ -354,7 +375,9 @@ class CORE_EXPORT TestDictionary : public IDLDictionaryBase {
   bool has_boolean_member_ = false;
   bool has_create_member_ = false;
   bool has_double_or_null_member_ = false;
+  bool has_double_or_null_sequence_member_ = false;
   bool has_double_or_string_sequence_member_ = false;
+  bool has_element_or_null_sequence_member_ = false;
   bool has_enum_sequence_member_ = false;
   bool has_garbage_collected_record_member_ = false;
   bool has_internal_dictionary_sequence_member_ = false;
@@ -382,9 +405,12 @@ class CORE_EXPORT TestDictionary : public IDLDictionaryBase {
   bool create_member_;
   Dictionary dictionary_member_;
   double double_or_null_member_;
+  DoubleOrDoubleOrNullSequence double_or_null_or_double_or_null_sequence_member_;
+  Vector<Optional<double>> double_or_null_sequence_member_;
   DoubleOrString double_or_string_member_;
   HeapVector<DoubleOrString> double_or_string_sequence_member_;
   Member<Element> element_or_null_member_;
+  HeapVector<Member<Element>> element_or_null_sequence_member_;
   String enum_member_;
   Vector<String> enum_sequence_member_;
   Member<EventTarget> event_target_member_;

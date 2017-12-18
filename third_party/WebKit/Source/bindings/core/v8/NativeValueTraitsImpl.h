@@ -551,6 +551,24 @@ struct NativeValueTraits<
   }
 };
 
+// Nullable
+template <typename InnerType>
+struct NativeValueTraits<IDLNullable<InnerType>>
+    : public NativeValueTraitsBase<IDLNullable<InnerType>> {
+  // Nondependent types need to be explicitly qualified to be accessible.
+  using typename NativeValueTraitsBase<IDLNullable<InnerType>>::ImplType;
+
+  // https://heycam.github.io/webidl/#es-nullable-type
+  static ImplType NativeValue(v8::Isolate* isolate,
+                              v8::Local<v8::Value> v8_value,
+                              ExceptionState& exception_state) {
+    if (v8_value->IsNullOrUndefined())
+      return ImplType();
+    return NativeValueTraits<InnerType>::NativeValue(isolate, v8_value,
+                                                     exception_state);
+  }
+};
+
 }  // namespace blink
 
 #endif  // NativeValueTraitsImpl_h
