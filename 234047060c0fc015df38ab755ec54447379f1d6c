@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e1ae9cc3_0a9b07b3",
+        "filename": "cc/scheduler/scheduler.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1244969
+      },
+      "writtenOn": "2017-12-18T19:42:53Z",
+      "side": 1,
+      "message": "Yes! I screwed up the upstream dependency - it\u0027s fixed now.",
+      "parentUuid": "f23f755e_3bcf3415",
+      "revId": "234047060c0fc015df38ab755ec54447379f1d6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6ec65766_acc4f8ed",
         "filename": "cc/trees/layer_tree_host_unittest.cc",
         "patchSetId": 15
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "0524401c_2c41189d",
+        "filename": "cc/trees/layer_tree_host_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 1101,
+      "author": {
+        "id": 1244969
+      },
+      "writtenOn": "2017-12-18T19:42:53Z",
+      "side": 1,
+      "message": "Not sure why this test still worked if it made CanDraw return false -- but I changed this to a 10x10 viewport. The idea is that the root layer is translated off-viewport.",
+      "parentUuid": "6ec65766_acc4f8ed",
+      "revId": "234047060c0fc015df38ab755ec54447379f1d6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f1ad0b99_e02e5ad1",
         "filename": "cc/trees/layer_tree_host_unittest.cc",
         "patchSetId": 15
@@ -47,6 +83,24 @@
       "writtenOn": "2017-12-15T23:16:14Z",
       "side": 1,
       "message": "doesn\u0027t this actually cause damage for frame 1?",
+      "revId": "234047060c0fc015df38ab755ec54447379f1d6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5951102_090c9b2e",
+        "filename": "cc/trees/layer_tree_host_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 1116,
+      "author": {
+        "id": 1244969
+      },
+      "writtenOn": "2017-12-18T19:42:53Z",
+      "side": 1,
+      "message": "I think it shouldn\u0027t since root_ is translated past the viewport?",
+      "parentUuid": "f1ad0b99_e02e5ad1",
       "revId": "234047060c0fc015df38ab755ec54447379f1d6c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
