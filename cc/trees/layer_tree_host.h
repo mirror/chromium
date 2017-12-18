@@ -520,6 +520,8 @@ class CC_EXPORT LayerTreeHost : public viz::SurfaceReferenceOwner,
 
   void SetURLForUkm(const GURL& url);
 
+  const viz::FrameSinkId& frame_sink_id() { return frame_sink_id_; }
+
  protected:
   LayerTreeHost(InitParams* params, CompositorMode mode);
 
@@ -686,6 +688,8 @@ class CC_EXPORT LayerTreeHost : public viz::SurfaceReferenceOwner,
       queued_image_decodes_;
   std::unordered_map<int, base::OnceCallback<void(bool)>>
       pending_image_decodes_;
+
+  viz::FrameSinkId frame_sink_id_;
 
   // Presentation time callbacks requested for the next frame are initially
   // added here.

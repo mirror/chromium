@@ -230,6 +230,11 @@ void SurfaceManager::AssignTemporaryReference(const SurfaceId& surface_id,
   if (!HasTemporaryReference(surface_id))
     return;
 
+  // The initial owner of this temporary reference might have already assigned
+  // it to someone else. Don't override that assignment.
+  if (temporary_references_[surface_id].owner)
+    return;
+
   temporary_references_[surface_id].owner = owner;
 }
 
@@ -679,6 +684,17 @@ bool SurfaceManager::IsOwnerAmongFallbackParents(
 void SurfaceManager::SurfaceWillBeDrawn(Surface* surface) {
   for (auto& observer : observer_list_)
     observer.OnSurfaceWillBeDrawn(surface);
+}
+
+void SurfaceManager::AddTemporaryReferenceIfNecessary(
+    const SurfaceId& surface_id,
+    const FrameSinkId& owner) {
+  for (auto& parent : GetSurfacesThatReferenceChild(surface_id))
+    if (parent.frame_sink_id() == owner)
+      return;
+  if (!HasTemporaryReference(surface_id))
+    AddTemporaryReference(surface_id);
+  temporary_references_[surface_id].owner = owner;
 }
 
 }  // namespace viz

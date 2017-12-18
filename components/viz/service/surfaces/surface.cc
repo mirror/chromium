@@ -150,6 +150,14 @@ bool Surface::QueueFrame(
 
   TakeLatencyInfoFromPendingFrame(&frame.metadata.latency_info);
 
+  if (pending_frame_data_) {
+    frame.metadata.references_to_transfer.insert(
+        frame.metadata.references_to_transfer.end(),
+        pending_frame_data_->frame.metadata.references_to_transfer.begin(),
+        pending_frame_data_->frame.metadata.references_to_transfer.end());
+    pending_frame_data_->frame.metadata.references_to_transfer.clear();
+  }
+
   base::Optional<FrameData> previous_pending_frame_data =
       std::move(pending_frame_data_);
   pending_frame_data_.reset();
