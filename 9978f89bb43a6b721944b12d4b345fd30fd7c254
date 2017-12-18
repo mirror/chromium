@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "02ff56b6_317f5079",
+        "filename": "chrome/browser/ui/search/local_ntp_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-12-18T11:18:34Z",
+      "side": 1,
+      "message": "This class is moved verbatim.",
+      "range": {
+        "startLine": 58,
+        "startChar": 63,
+        "endLine": 58,
+        "endChar": 0
+      },
+      "revId": "9978f89bb43a6b721944b12d4b345fd30fd7c254",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
