@@ -24,19 +24,34 @@ Help.releaseNoteVersionSetting = function() {
   return Help._releaseNoteVersionSetting;
 };
 
+/**
+ * @return {!Common.Setting}
+ */
+Help.ignoreReleaseNoteSetting = function() {
+  if (!Help._ignoreReleaseNoteSetting) {
+    /** @type {!Common.Setting} */
+    Help._ignoreReleaseNoteSetting = Common.settings.moduleSetting('help.ignore-release-note');
+  }
+  return Help._ignoreReleaseNoteSetting;
+};
+
 Help.showReleaseNoteIfNeeded = function() {
-  Help._showReleaseNoteIfNeeded(Help.releaseNoteVersionSetting().get(), Help.latestReleaseNote().version);
+  Help._showReleaseNoteIfNeeded(
+      Help.releaseNoteVersionSetting().get(), Help.latestReleaseNote().version, Help.ignoreReleaseNoteSetting().get());
 };
 
 /**
  * @param {number} lastSeenVersion
  * @param {number} latestVersion
+ * @param {boolean} ignoreReleaseNote
  */
-Help._showReleaseNoteIfNeeded = function(lastSeenVersion, latestVersion) {
+Help._showReleaseNoteIfNeeded = function(lastSeenVersion, latestVersion, ignoreReleaseNote) {
   if (!lastSeenVersion) {
     Help.releaseNoteVersionSetting().set(latestVersion);
     return;
   }
+  if (ignoreReleaseNote)
+    return;
   if (lastSeenVersion >= latestVersion)
     return;
   Help.releaseNoteVersionSetting().set(latestVersion);

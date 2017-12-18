@@ -12,12 +12,12 @@
     {version: 5},
   ];
 
-  function testMaybeShowInDrawer(lastSeenVersion) {
+  function testMaybeShowInDrawer(lastSeenVersion, ignoreReleaseNote = false) {
     TestRunner.addResult(`Last seen version: ${lastSeenVersion}`);
     TestRunner.addSniffer(UI.viewManager, 'showView', onShowView);
     var showedReleaseNote = false;
 
-    Help._showReleaseNoteIfNeeded(lastSeenVersion, Help.latestReleaseNote().version);
+    Help._showReleaseNoteIfNeeded(lastSeenVersion, Help.latestReleaseNote().version, ignoreReleaseNote);
 
     function onShowView() {
       showedReleaseNote = true;
@@ -48,6 +48,16 @@
       var lastSeenVersion = 0;
       testMaybeShowInDrawer(lastSeenVersion);
       TestRunner.addResult(`Release note version in setting: ${Help.releaseNoteVersionSetting().get()}`);
+      next();
+    },
+    function ignoreReleaseNoteSetting(next) {
+      TestRunner.addResult('\nEnabled ignoreReleaseNote setting');
+      var lastSeenVersion = 4;
+      var ignoreReleaseNote = true;
+      testMaybeShowInDrawer(lastSeenVersion, ignoreReleaseNote);
+
+      TestRunner.addResult('\nDisabled ignoreReleaseNote setting');
+      testMaybeShowInDrawer(lastSeenVersion);
       next();
     },
   ]);
