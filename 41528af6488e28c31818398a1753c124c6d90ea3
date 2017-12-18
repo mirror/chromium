@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7e374abd_2e270d25",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 821,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-12-18T15:23:36Z",
+      "side": 1,
+      "message": "Unrelated: Is there a reason why all the doodle functions use \"var myfunc \u003d function() {..}\" instead of just \"function myfunc() {..}\"?",
+      "range": {
+        "startLine": 821,
+        "startChar": 38,
+        "endLine": 821,
+        "endChar": 0
+      },
+      "revId": "41528af6488e28c31818398a1753c124c6d90ea3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
