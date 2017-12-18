@@ -101,7 +101,7 @@ class IdentityProxyTest : public testing::Test {
 
     signin_manager()->SetAuthenticatedAccountInfo(kTestGaiaId, kTestEmail);
 
-    identity_proxy_.reset(new IdentityProxy(&signin_manager_));
+    identity_proxy_.reset(new IdentityProxy(&signin_manager_, &token_service_));
     identity_proxy_observer_.reset(
         new TestIdentityProxyObserver(identity_proxy_.get()));
   }
@@ -182,5 +182,16 @@ TEST_F(IdentityProxyTest, PrimaryAccountInfoAfterSigninAndSignout) {
   EXPECT_EQ("", primary_account_info.email);
 }
 #endif  // !defined(OS_CHROMEOS)
+
+TEST_F(IdentityProxyTest, CreateAccessTokenFetcherForPrimaryAccount) {
+  std::set<std::string> scopes{"scope"};
+  PrimaryAccountTokenFetcher::TokenCallback callback =
+      base::BindOnce([](const GoogleServiceAuthError& error,
+                        const std::string& access_token) {});
+  std::unique_ptr<PrimaryAccountTokenFetcher> token_fetcher =
+      identity_proxy()->CreateAccessTokenFetcherForPrimaryAccount(
+          "dummy_consumer", scopes, std::move(callback));
+  EXPECT_TRUE(token_fetcher);
+}
 
 }  // namespace identity
