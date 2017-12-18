@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "862a7b38_d60e585c",
+        "filename": "chrome/app/md_extensions_strings.grdp",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-18T18:56:14Z",
+      "side": 1,
+      "message": "Nit: Let\u0027s add A11Y somewhere in the name to make it even more obvious that this is done for accessibility. Something like IDS_MD_EXTENSIONS_EXTENSION_A11Y_ASSOCIATION",
+      "range": {
+        "startLine": 64,
+        "startChar": 17,
+        "endLine": 64,
+        "endChar": 56
+      },
+      "revId": "b38078dc7eb33007b7fc67a87f3cbbfa74cbe755",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e583086_2628d3d6",
+        "filename": "chrome/browser/resources/md_extensions/item.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-18T18:56:14Z",
+      "side": 1,
+      "message": "No need for the .invisible class, since an ID exists already.\n\n#a11yAssociation {\n  height: 0;\n  opacity: 0;\n}",
+      "range": {
+        "startLine": 199,
+        "startChar": 7,
+        "endLine": 199,
+        "endChar": 16
+      },
+      "revId": "b38078dc7eb33007b7fc67a87f3cbbfa74cbe755",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "229410e4_7483061c",
+        "filename": "chrome/browser/resources/md_extensions/item.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-18T18:56:14Z",
+      "side": 1,
+      "message": "Can this element be actually hidden with \"display: none\"? Will the screen reader not read the description in those cases? Found some resources on the Web that suggest that visibility should not matter for such elements, see for example https://developer.paciellogroup.com/blog/2015/05/short-note-on-aria-labelledby-and-aria-describedby/.",
+      "range": {
+        "startLine": 204,
+        "startChar": 9,
+        "endLine": 204,
+        "endChar": 30
+      },
+      "revId": "b38078dc7eb33007b7fc67a87f3cbbfa74cbe755",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af5808b4_cc96b7b9",
+        "filename": "chrome/browser/resources/md_extensions/item.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-18T18:56:14Z",
+      "side": 1,
+      "message": "This element already inherits the I18NBehavior. Can we just use\n\nthis.i18n(\u0027extensionAssociation\u0027, this.data.name)\n\nSimilar to line 115?",
+      "range": {
+        "startLine": 106,
+        "startChar": 13,
+        "endLine": 106,
+        "endChar": 36
+      },
+      "revId": "b38078dc7eb33007b7fc67a87f3cbbfa74cbe755",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
