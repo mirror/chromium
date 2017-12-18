@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e079bd71_2de087a6",
+        "filename": "chrome/browser/ui/views/translate/translate_bubble_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-12-18T23:50:46Z",
+      "side": 1,
+      "message": "Will address in follow-up.",
+      "parentUuid": "53c05b91_7c63ef68",
+      "range": {
+        "startLine": 49,
+        "startChar": 7,
+        "endLine": 49,
+        "endChar": 22
+      },
+      "revId": "2438c84a7e481d50566f38206f8cdd366ca402aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e9aae0cc_288cde1a",
         "filename": "chrome/browser/ui/views/translate/translate_bubble_view.h",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "2438c84a7e481d50566f38206f8cdd366ca402aa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc52a957_bd6f653d",
+        "filename": "chrome/browser/ui/views/translate/translate_bubble_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-12-18T23:50:46Z",
+      "side": 1,
+      "message": "Ditto.",
+      "parentUuid": "e9aae0cc_288cde1a",
+      "range": {
+        "startLine": 176,
+        "startChar": 27,
+        "endLine": 176,
+        "endChar": 59
+      },
+      "revId": "2438c84a7e481d50566f38206f8cdd366ca402aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
