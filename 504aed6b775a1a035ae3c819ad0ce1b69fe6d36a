@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1d52d7ac_2f7b0a7a",
+        "filename": "chrome/utility/importer/firefox_importer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1133169
+      },
+      "writtenOn": "2017-12-18T10:30:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b89590b_d1850250",
+      "range": {
+        "startLine": 228,
+        "startChar": 46,
+        "endLine": 228,
+        "endChar": 51
+      },
+      "revId": "504aed6b775a1a035ae3c819ad0ce1b69fe6d36a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6f5a85e8_4971b6f7",
         "filename": "chrome/utility/importer/firefox_importer.h",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "504aed6b775a1a035ae3c819ad0ce1b69fe6d36a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4dc70721_3239cf7e",
+        "filename": "chrome/utility/importer/firefox_importer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1133169
+      },
+      "writtenOn": "2017-12-18T10:30:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6f5a85e8_4971b6f7",
+      "range": {
+        "startLine": 52,
+        "startChar": 4,
+        "endLine": 52,
+        "endChar": 21
+      },
+      "revId": "504aed6b775a1a035ae3c819ad0ce1b69fe6d36a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "168017c3_789c0395",
+        "filename": "chrome/utility/importer/firefox_importer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1133169
+      },
+      "writtenOn": "2017-12-18T10:30:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3b7b1586_bd1293ef",
+      "range": {
+        "startLine": 90,
+        "startChar": 0,
+        "endLine": 91,
+        "endChar": 24
+      },
+      "revId": "504aed6b775a1a035ae3c819ad0ce1b69fe6d36a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fcff4e3b_318162e8",
         "filename": "chrome/utility/importer/firefox_importer.h",
         "patchSetId": 3
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "61d4cb07_b5520074",
+        "filename": "chrome/utility/importer/firefox_importer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1133169
+      },
+      "writtenOn": "2017-12-18T10:30:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fcff4e3b_318162e8",
+      "range": {
+        "startLine": 100,
+        "startChar": 42,
+        "endLine": 100,
+        "endChar": 50
+      },
+      "revId": "504aed6b775a1a035ae3c819ad0ce1b69fe6d36a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e59b209e_1d0c07a7",
         "filename": "chrome/utility/importer/firefox_importer.h",
         "patchSetId": 3
@@ -114,6 +210,30 @@
       "revId": "504aed6b775a1a035ae3c819ad0ce1b69fe6d36a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ef03000_5de5184e",
+        "filename": "chrome/utility/importer/firefox_importer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1133169
+      },
+      "writtenOn": "2017-12-18T10:30:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e59b209e_1d0c07a7",
+      "range": {
+        "startLine": 107,
+        "startChar": 28,
+        "endLine": 107,
+        "endChar": 33
+      },
+      "revId": "504aed6b775a1a035ae3c819ad0ce1b69fe6d36a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
