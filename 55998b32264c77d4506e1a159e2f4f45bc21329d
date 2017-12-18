@@ -22,6 +22,30 @@
       "revId": "55998b32264c77d4506e1a159e2f4f45bc21329d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3752e5d9_224ffbd1",
+        "filename": "testing/buildbot/waterfalls.pyl",
+        "patchSetId": 4
+      },
+      "lineNbr": 577,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-12-18T18:48:39Z",
+      "side": 1,
+      "message": "That\u0027s fine.",
+      "parentUuid": "e9647070_d529c66c",
+      "range": {
+        "startLine": 577,
+        "startChar": 10,
+        "endLine": 577,
+        "endChar": 15
+      },
+      "revId": "55998b32264c77d4506e1a159e2f4f45bc21329d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
