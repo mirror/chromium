@@ -22,6 +22,80 @@
       "revId": "8600a63dad5c280141c38db7da7dc41354601b46",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "683e492e_4b92fea3",
+        "filename": "chrome/browser/ui/tab_helpers.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-12-18T13:55:45Z",
+      "side": 1,
+      "message": "Can you link to a bug?",
+      "revId": "8600a63dad5c280141c38db7da7dc41354601b46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1cff0c76_ae1828b3",
+        "filename": "chrome/browser/ui/tab_helpers.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-12-18T13:55:45Z",
+      "side": 1,
+      "message": "style: drop { }",
+      "revId": "8600a63dad5c280141c38db7da7dc41354601b46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "961086d8_45022f10",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 2765,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-12-18T13:55:45Z",
+      "side": 1,
+      "message": "I think you could drop this.",
+      "revId": "8600a63dad5c280141c38db7da7dc41354601b46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b08efebb_de702d95",
+        "filename": "content/common/frame_messages.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 1041,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-12-18T13:55:45Z",
+      "side": 1,
+      "message": "Do you mean `FrameMsg_SetHasReceivedUserGesture`?",
+      "range": {
+        "startLine": 1041,
+        "startChar": 20,
+        "endLine": 1041,
+        "endChar": 51
+      },
+      "revId": "8600a63dad5c280141c38db7da7dc41354601b46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
