@@ -97465,6 +97465,17 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="WebRTC.MediaRecorder.HwEncodeUsed"
+    enum="MediaRecorderHwEncodeUsed">
+  <owner>shenghao@chromium.org</owner>
+  <summary>Whether HW video encode is used in MediaRecorder.</summary>
+</histogram>
+
+<histogram name="WebRTC.MediaRecorder.VEAError" enum="MediaRecorderVEAError">
+  <owner>shenghao@chromium.org</owner>
+  <summary>Whether HW video encode encounters errors in MediaRecorder.</summary>
+</histogram>
+
 <histogram name="WebRTC.NAT.Metrics" enum="NatTypeCounters">
   <owner>guoweis@chromium.org</owner>
   <summary>
