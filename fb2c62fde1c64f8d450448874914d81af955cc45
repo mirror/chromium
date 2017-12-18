@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "165e7146_89b92627",
+        "filename": "components/data_reduction_proxy/core/common/data_reduction_proxy_params.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-12-18T23:44:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "44bc2cb5_c21559d3",
+      "range": {
+        "startLine": 71,
+        "startChar": 18,
+        "endLine": 71,
+        "endChar": 24
+      },
+      "revId": "fb2c62fde1c64f8d450448874914d81af955cc45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "97f3a3ca_c2459dfc",
         "filename": "components/data_reduction_proxy/core/common/data_reduction_proxy_params.h",
         "patchSetId": 14
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "bb4c1a9d_2da6ce87",
+        "filename": "components/data_reduction_proxy/core/common/data_reduction_proxy_params.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-12-18T23:44:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "97f3a3ca_c2459dfc",
+      "range": {
+        "startLine": 72,
+        "startChar": 5,
+        "endLine": 72,
+        "endChar": 36
+      },
+      "revId": "fb2c62fde1c64f8d450448874914d81af955cc45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "de1cf68a_2f71ad86",
         "filename": "tools/chrome_proxy/integration_tests/chrome_proxy_measurements.py",
         "patchSetId": 14
@@ -68,6 +116,30 @@
       "revId": "fb2c62fde1c64f8d450448874914d81af955cc45",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d01a94b9_83bd5028",
+        "filename": "tools/chrome_proxy/integration_tests/chrome_proxy_measurements.py",
+        "patchSetId": 14
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-12-18T23:44:39Z",
+      "side": 1,
+      "message": "Reversed this file.",
+      "parentUuid": "de1cf68a_2f71ad86",
+      "range": {
+        "startLine": 298,
+        "startChar": 43,
+        "endLine": 298,
+        "endChar": 48
+      },
+      "revId": "fb2c62fde1c64f8d450448874914d81af955cc45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
