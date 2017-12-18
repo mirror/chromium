@@ -31,7 +31,7 @@
 #include "platform/heap/Handle.h"
 #include "platform/wtf/Forward.h"
 #include "platform/wtf/text/WTFString.h"
-#include "public/platform/WebClipboard.h"
+#include "third_party/WebKit/Source/core/clipboard/ClipboardClient.h"
 
 namespace blink {
 
@@ -75,6 +75,7 @@ class CORE_EXPORT Pasteboard {
   Pasteboard();
 
   mojom::ClipboardBuffer buffer_;
+  ClipboardClient clipboard_client_;
   DISALLOW_COPY_AND_ASSIGN(Pasteboard);
 };
 

@@ -6,6 +6,8 @@ import("//third_party/WebKit/Source/core/core.gni")
 
 blink_core_sources("clipboard") {
   sources = [
+    "ClipboardClient.cpp",
+    "ClipboardClient.h",
     "DataObject.cpp",
     "DataObject.h",
     "DataObjectItem.cpp",
@@ -26,5 +28,9 @@ blink_core_sources("clipboard") {
   configs += [
     # TODO(jschuh): crbug.com/167187 fix size_t to int truncations.
     "//build/config/compiler:no_size_t_to_int_warning",
+  ]
+
+  deps = [
+    "//third_party/WebKit/public:blink_headers",
   ]
 }

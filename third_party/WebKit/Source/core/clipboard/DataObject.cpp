@@ -35,24 +35,23 @@
 #include "platform/clipboard/ClipboardMimeTypes.h"
 #include "platform/clipboard/ClipboardUtilities.h"
 #include "platform/wtf/HashSet.h"
-#include "public/platform/Platform.h"
-#include "public/platform/WebClipboard.h"
 #include "public/platform/WebDragData.h"
+#include "third_party/WebKit/Source/core/clipboard/ClipboardClient.h"
 
 namespace blink {
 
 DataObject* DataObject::CreateFromPasteboard(PasteMode paste_mode) {
   DataObject* data_object = Create();
+  ClipboardClient clipboard_client_;
 #if DCHECK_IS_ON()
   HashSet<String> types_seen;
 #endif
   mojom::ClipboardBuffer buffer = Pasteboard::GeneralPasteboard()->GetBuffer();
-  uint64_t sequence_number =
-      Platform::Current()->Clipboard()->SequenceNumber(buffer);
+  uint64_t sequence_number = clipboard_client_.SequenceNumber(buffer);
   bool ignored;
-  WebVector<WebString> web_types =
-      Platform::Current()->Clipboard()->ReadAvailableTypes(buffer, &ignored);
-  for (const WebString& type : web_types) {
+  Vector<String> web_types =
+      clipboard_client_.ReadAvailableTypes(buffer, &ignored);
+  for (const String& type : web_types) {
     if (paste_mode == kPlainTextOnly && type != kMimeTypeTextPlain)
       continue;
     data_object->item_list_.push_back(
@@ -81,6 +80,12 @@ size_t DataObject::length() const {
 }
 
 DataObjectItem* DataObject::Item(unsigned long index) {
+  if (index >= length())
+    return nullptr;
+  return item_list_[index];
+}
+
+const DataObjectItem* DataObject::Item(unsigned long index) const {
   if (index >= length())
     return nullptr;
   return item_list_[index];
