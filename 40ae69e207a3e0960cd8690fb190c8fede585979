@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "10420dbc_53ce73e6",
+        "filename": "extensions/renderer/resources/platform_app.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-18T12:04:02Z",
+      "side": 0,
+      "message": "Thanks for the extra information!  A few thoughts.\n\nBhagirathi: I (think I) understand what the new behavior would be, but the end result is that it would be possible for platform apps to access document.all, which is something we want to avoid.  Additionally, while I understand that this would (somewhat) violate the spec, there are plenty of times this is already the case for platform app contexts (which are *not* part of the open web).  As such, I think there\u0027s more value in ensuring that platform apps cannot access document.all than satisfying the standard for a non-standard, non-web platform.\n\nYuki: I\u0027m not a 100% sure I follow - while\n\nObject.getOwnPropertyDescriptor(Document.prototype, \u0027all\u0027).get.call(document)\n\nwill return the value of document.all, since we set document.all to undefined above, it just returns undefined, right?  So in today\u0027s world, it is impossible for platform apps to use the document.all API, is my understanding?\n\nAdditionally, will the \"delete document.all\" approach still work with this patch, or would that also violate the spec (since then document.all would not return HTMLAllCollection)?  If the latter, is deleting document.all something we\u0027d also remove support for?\n\n---\n\nAt a higher level, my main priority is ensuring that we don\u0027t *increase* usage of a deprecated API by opening it up unnecessarily to platform apps.  If using the `delete document.all` approach above works, I\u0027d be fine with that.  Otherwise, I\u0027d want to find some other way to guard against this.",
+      "parentUuid": "0969b577_e9a8f91c",
+      "revId": "40ae69e207a3e0960cd8690fb190c8fede585979",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "304192ef_b4b15774",
         "filename": "third_party/WebKit/LayoutTests/virtual/stable/webexposed/global-interface-listing-expected.txt",
         "patchSetId": 7
