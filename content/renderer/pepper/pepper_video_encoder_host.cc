@@ -24,9 +24,6 @@
 #include "media/base/bind_to_current_loop.h"
 #include "media/base/video_frame.h"
 #include "media/gpu/gpu_video_accelerator_util.h"
-#include "media/gpu/ipc/client/gpu_video_encode_accelerator_host.h"
-#include "media/video/gpu_video_accelerator_factories.h"
-#include "media/video/video_encode_accelerator.h"
 #include "ppapi/c/pp_codecs.h"
 #include "ppapi/c/pp_errors.h"
 #include "ppapi/c/pp_graphics_3d.h"
@@ -90,40 +87,6 @@ media::VideoCodecProfile PP_ToMediaVideoProfile(PP_VideoProfile profile) {
   return media::VIDEO_CODEC_PROFILE_UNKNOWN;
 }
 
-PP_VideoProfile PP_FromMediaVideoProfile(media::VideoCodecProfile profile) {
-  switch (profile) {
-    case media::H264PROFILE_BASELINE:
-      return PP_VIDEOPROFILE_H264BASELINE;
-    case media::H264PROFILE_MAIN:
-      return PP_VIDEOPROFILE_H264MAIN;
-    case media::H264PROFILE_EXTENDED:
-      return PP_VIDEOPROFILE_H264EXTENDED;
-    case media::H264PROFILE_HIGH:
-      return PP_VIDEOPROFILE_H264HIGH;
-    case media::H264PROFILE_HIGH10PROFILE:
-      return PP_VIDEOPROFILE_H264HIGH10PROFILE;
-    case media::H264PROFILE_HIGH422PROFILE:
-      return PP_VIDEOPROFILE_H264HIGH422PROFILE;
-    case media::H264PROFILE_HIGH444PREDICTIVEPROFILE:
-      return PP_VIDEOPROFILE_H264HIGH444PREDICTIVEPROFILE;
-    case media::H264PROFILE_SCALABLEBASELINE:
-      return PP_VIDEOPROFILE_H264SCALABLEBASELINE;
-    case media::H264PROFILE_SCALABLEHIGH:
-      return PP_VIDEOPROFILE_H264SCALABLEHIGH;
-    case media::H264PROFILE_STEREOHIGH:
-      return PP_VIDEOPROFILE_H264STEREOHIGH;
-    case media::H264PROFILE_MULTIVIEWHIGH:
-      return PP_VIDEOPROFILE_H264MULTIVIEWHIGH;
-    case media::VP8PROFILE_ANY:
-      return PP_VIDEOPROFILE_VP8_ANY;
-    case media::VP9PROFILE_PROFILE0:
-      return PP_VIDEOPROFILE_VP9_ANY;
-    default:
-      NOTREACHED();
-      return static_cast<PP_VideoProfile>(-1);
-  }
-}
-
 media::VideoPixelFormat PP_ToMediaVideoFormat(PP_VideoFrame_Format format) {
   switch (format) {
     case PP_VIDEOFRAME_FORMAT_UNKNOWN:
@@ -152,32 +115,6 @@ PP_VideoFrame_Format PP_FromMediaVideoFormat(media::VideoPixelFormat format) {
   }
 }
 
-PP_VideoProfileDescription PP_FromVideoEncodeAcceleratorSupportedProfile(
-    media::VideoEncodeAccelerator::SupportedProfile profile,
-    PP_Bool hardware_accelerated) {
-  PP_VideoProfileDescription pp_profile;
-  pp_profile.profile = PP_FromMediaVideoProfile(profile.profile);
-  pp_profile.max_resolution = PP_FromGfxSize(profile.max_resolution);
-  pp_profile.max_framerate_numerator = profile.max_framerate_numerator;
-  pp_profile.max_framerate_denominator = profile.max_framerate_denominator;
-  pp_profile.hardware_accelerated = hardware_accelerated;
-  return pp_profile;
-}
-
-bool PP_HardwareAccelerationCompatibleVideo(bool accelerated,
-                                            PP_HardwareAcceleration requested) {
-  switch (requested) {
-    case PP_HARDWAREACCELERATION_ONLY:
-      return accelerated;
-    case PP_HARDWAREACCELERATION_NONE:
-      return !accelerated;
-    case PP_HARDWAREACCELERATION_WITHFALLBACK:
-      return true;
-    // No default case, to catch unhandled PP_HardwareAcceleration values.
-  }
-  return false;
-}
-
 }  // namespace
 
 PepperVideoEncoderHost::ShmBuffer::ShmBuffer(
@@ -187,8 +124,7 @@ PepperVideoEncoderHost::ShmBuffer::ShmBuffer(
   DCHECK(this->shm);
 }
 
-PepperVideoEncoderHost::ShmBuffer::~ShmBuffer() {
-}
+PepperVideoEncoderHost::ShmBuffer::~ShmBuffer() {}
 
 media::BitstreamBuffer PepperVideoEncoderHost::ShmBuffer::ToBitstreamBuffer() {
   return media::BitstreamBuffer(id, shm->handle(), shm->mapped_size());
@@ -285,20 +221,7 @@ int32_t PepperVideoEncoderHost::OnHostMsgInitialize(
   if (input_size.IsEmpty())
     return PP_ERROR_BADARGUMENT;
 
-  if (!IsInitializationValid(input_visible_size, output_profile, acceleration))
-    return PP_ERROR_NOTSUPPORTED;
-
   int32_t error = PP_ERROR_NOTSUPPORTED;
-  initialize_reply_context_ = context->MakeReplyMessageContext();
-
-  if (acceleration != PP_HARDWAREACCELERATION_NONE) {
-    if (InitializeHardware(media_input_format_, input_size, media_profile,
-                           initial_bitrate))
-      return PP_OK_COMPLETIONPENDING;
-
-    if (acceleration == PP_HARDWAREACCELERATION_ONLY)
-      error = PP_ERROR_FAILED;
-  }
 
 #if defined(OS_ANDROID)
   initialize_reply_context_ = ppapi::host::ReplyMessageContext();
@@ -468,98 +391,20 @@ void PepperVideoEncoderHost::GetSupportedProfiles(
     std::vector<PP_VideoProfileDescription>* pp_profiles) {
   DCHECK(RenderThreadImpl::current());
 
-  media::VideoEncodeAccelerator::SupportedProfiles profiles;
+  const PP_VideoProfile vpx_profiles[] = {PP_VIDEOPROFILE_VP8_ANY,
+                                          PP_VIDEOPROFILE_VP9_ANY};
 
-  if (EnsureGpuChannel()) {
-    profiles = media::GpuVideoAcceleratorUtil::ConvertGpuToMediaEncodeProfiles(
-        command_buffer_->channel()
-            ->gpu_info()
-            .video_encode_accelerator_supported_profiles);
-    for (media::VideoEncodeAccelerator::SupportedProfile profile : profiles) {
-      if (profile.profile == media::VP9PROFILE_PROFILE1 ||
-          profile.profile == media::VP9PROFILE_PROFILE2 ||
-          profile.profile == media::VP9PROFILE_PROFILE3) {
-        continue;
-      }
-      pp_profiles->push_back(
-          PP_FromVideoEncodeAcceleratorSupportedProfile(profile, PP_TRUE));
-    }
+  for (const auto vpx_profile : vpx_profiles) {
+    // TODO(mcasas): move to VideoEncoderShim
+    PP_VideoProfileDescription profile;
+    profile.profile = vpx_profile;
+    profile.max_resolution.width = 4096;
+    profile.max_resolution.height = 4096;
+    profile.max_framerate_numerator = 30;
+    profile.max_framerate_denominator = 1;
+    profile.hardware_accelerated = PP_FALSE;
+    pp_profiles->push_back(profile);
   }
-
-#if !defined(OS_ANDROID)
-  VideoEncoderShim software_encoder(this);
-  profiles = software_encoder.GetSupportedProfiles();
-  for (media::VideoEncodeAccelerator::SupportedProfile profile : profiles) {
-    pp_profiles->push_back(
-        PP_FromVideoEncodeAcceleratorSupportedProfile(profile, PP_FALSE));
-  }
-#endif
-}
-
-bool PepperVideoEncoderHost::IsInitializationValid(
-    const PP_Size& input_size,
-    PP_VideoProfile output_profile,
-    PP_HardwareAcceleration acceleration) {
-  DCHECK(RenderThreadImpl::current());
-
-  std::vector<PP_VideoProfileDescription> profiles;
-  GetSupportedProfiles(&profiles);
-
-  for (const PP_VideoProfileDescription& profile : profiles) {
-    if (output_profile == profile.profile &&
-        input_size.width <= profile.max_resolution.width &&
-        input_size.height <= profile.max_resolution.height &&
-        PP_HardwareAccelerationCompatibleVideo(
-            profile.hardware_accelerated == PP_TRUE, acceleration))
-      return true;
-  }
-
-  return false;
-}
-
-bool PepperVideoEncoderHost::EnsureGpuChannel() {
-  DCHECK(RenderThreadImpl::current());
-
-  if (command_buffer_)
-    return true;
-
-  // There is no guarantee that we have a 3D context to work with. So
-  // we create a dummy command buffer to communicate with the gpu process.
-  scoped_refptr<gpu::GpuChannelHost> channel =
-      RenderThreadImpl::current()->EstablishGpuChannelSync();
-  if (!channel)
-    return false;
-
-  command_buffer_ = std::make_unique<gpu::CommandBufferProxyImpl>(
-      std::move(channel), kGpuStreamIdDefault,
-      base::ThreadTaskRunnerHandle::Get());
-  auto result = command_buffer_->Initialize(
-      gpu::kNullSurfaceHandle, nullptr, kGpuStreamPriorityDefault,
-      gpu::gles2::ContextCreationAttribHelper(), GURL::EmptyGURL());
-  if (result != gpu::ContextResult::kSuccess) {
-    Close();
-    return false;
-  }
-
-  command_buffer_->SetGpuControlClient(this);
-
-  return true;
-}
-
-bool PepperVideoEncoderHost::InitializeHardware(
-    media::VideoPixelFormat input_format,
-    const gfx::Size& input_visible_size,
-    media::VideoCodecProfile output_profile,
-    uint32_t initial_bitrate) {
-  DCHECK(RenderThreadImpl::current());
-
-  if (!EnsureGpuChannel())
-    return false;
-
-  encoder_.reset(
-      new media::GpuVideoEncodeAcceleratorHost(command_buffer_.get()));
-  return encoder_->Initialize(input_format, input_visible_size, output_profile,
-                              initial_bitrate, this);
 }
 
 void PepperVideoEncoderHost::Close() {
