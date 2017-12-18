@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "070e1ad5_59c9a015",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoController.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-12-18T09:50:05Z",
+      "side": 1,
+      "message": "Can you add a TODO to remove this method and the now dead code?",
+      "range": {
+        "startLine": 73,
+        "startChar": 4,
+        "endLine": 73,
+        "endChar": 56
+      },
+      "revId": "9245030e31af4529d6a0760ff3bc63edc0b42979",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
