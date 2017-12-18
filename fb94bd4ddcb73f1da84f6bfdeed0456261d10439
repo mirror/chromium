@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0fd8220b_7a119506",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-12-18T19:47:33Z",
+      "side": 1,
+      "message": "Let\u0027s tag this to bug 770343.",
+      "revId": "fb94bd4ddcb73f1da84f6bfdeed0456261d10439",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
