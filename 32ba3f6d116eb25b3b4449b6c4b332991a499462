@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ef464ab0_ecdb8b8f",
+        "filename": "ios/chrome/browser/ui/fullscreen/chrome_coordinator+fullscreen_disabling.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-12-18T18:25:19Z",
+      "side": 1,
+      "message": "I had named it this way to kinda match the activation state stuff in BrowserCoordinator+Internal (e.g. |-viewControllerWasActivated|).  It seemed a better naming convention than explicit enable/disable calls because these are idempotent.  Calling |-disableFullscreen| twice would just replace the existing ScopedFullscreenDisabler, resulting in the same disabled count in the FullscreenModel.",
+      "parentUuid": "eb255e2b_f167fe6c",
+      "range": {
+        "startLine": 16,
+        "startChar": 8,
+        "endLine": 16,
+        "endChar": 37
+      },
+      "revId": "32ba3f6d116eb25b3b4449b6c4b332991a499462",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b3e037cb_011a9c68",
         "filename": "ios/chrome/browser/ui/fullscreen/chrome_coordinator+fullscreen_disabling.mm",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-12-18T18:04:53Z",
       "side": 1,
       "message": "Please just subclass ChromeCoordinator rather than using the runtime to build a mixin, which is what this feels like.",
+      "range": {
+        "startLine": 69,
+        "startChar": 4,
+        "endLine": 69,
+        "endChar": 28
+      },
+      "revId": "32ba3f6d116eb25b3b4449b6c4b332991a499462",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "156b3c8f_ca4af59b",
+        "filename": "ios/chrome/browser/ui/fullscreen/chrome_coordinator+fullscreen_disabling.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-12-18T18:25:19Z",
+      "side": 1,
+      "message": "Subclassing ChromeCoordinator will work here, but will not work as well once we move to BrowserCoordinator.  For example, we already use subclassing in OverlayCoordinator to get hooks into coordinator lifecycle events that affect the overlay scheduler.  Since multiple inheritance doesn\u0027t work in ObjC, how do you think we should solve situations like this in the future?  I could envision adding BrowserCoordinator+Internal helper methods to add arbitrary didStart/wasActivated/didStop/wasDeactivated actions, which could be used for both overlay scheduling + fullscreen disabling/enabling.  However, this potentially can add a lot of complexity to the coordinator layer, as we\u0027d be passing around blocks and allowing for arbitrary (and very flexible) manipulation of the base class.",
+      "parentUuid": "b3e037cb_011a9c68",
       "range": {
         "startLine": 69,
         "startChar": 4,
