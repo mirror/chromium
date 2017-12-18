@@ -1,0 +1,135 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b11d62e6_e2b166e8",
+        "filename": "content/browser/devtools/devtools_agent_host_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-12-18T17:22:04Z",
+      "side": 1,
+      "message": "Let\u0027s pass non-null DevToolsAgentHostImpl to this function instead.",
+      "range": {
+        "startLine": 43,
+        "startChar": 21,
+        "endLine": 43,
+        "endChar": 38
+      },
+      "revId": "39c1674d146c4cc1efc0db695b49e1c587e416cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c98b1c1_c7464d38",
+        "filename": "content/browser/devtools/devtools_agent_host_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-12-18T17:22:04Z",
+      "side": 1,
+      "message": "NotifySecurityError",
+      "range": {
+        "startLine": 43,
+        "startChar": 5,
+        "endLine": 43,
+        "endChar": 20
+      },
+      "revId": "39c1674d146c4cc1efc0db695b49e1c587e416cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a99a69a9_bde236dc",
+        "filename": "content/browser/devtools/devtools_agent_host_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-12-18T17:22:04Z",
+      "side": 1,
+      "message": "Since this is only used internally, let\u0027s not expose it just yet and keep in cc file?",
+      "revId": "39c1674d146c4cc1efc0db695b49e1c587e416cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "103a78cc_b11bc855",
+        "filename": "content/public/browser/devtools_agent_host.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-12-18T17:22:04Z",
+      "side": 1,
+      "message": "Move this to DevToolsAgentHostImpl instead - it\u0027s not used outside of content.",
+      "revId": "39c1674d146c4cc1efc0db695b49e1c587e416cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57e9551e_e4c7b62c",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 5
+      },
+      "lineNbr": 10722,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-12-18T17:22:04Z",
+      "side": 1,
+      "message": "Mark it as experimental.",
+      "revId": "39c1674d146c4cc1efc0db695b49e1c587e416cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a868fce9_fee4c85f",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 5
+      },
+      "lineNbr": 10764,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-12-18T17:22:04Z",
+      "side": 1,
+      "message": "Mark this as deprecated.",
+      "revId": "39c1674d146c4cc1efc0db695b49e1c587e416cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efd198f6_86534841",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 5
+      },
+      "lineNbr": 10783,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-12-18T17:22:04Z",
+      "side": 1,
+      "message": "Not needed anymore?",
+      "revId": "39c1674d146c4cc1efc0db695b49e1c587e416cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
