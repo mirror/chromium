@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4f6e0c41_379f38dc",
+        "filename": "gpu/command_buffer/tests/gl_ext_window_rectangles_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-12-18T17:47:33Z",
+      "side": 1,
+      "message": "If the original condition returns true when ES3 isn\u0027t supported, we need to fix that.\n\nI am not saying this CL is wrong, but we should look into the mess and clean it up.",
+      "range": {
+        "startLine": 30,
+        "startChar": 13,
+        "endLine": 30,
+        "endChar": 18
+      },
+      "revId": "792280289c3a4d0a660e35e08b95d489321d04ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
