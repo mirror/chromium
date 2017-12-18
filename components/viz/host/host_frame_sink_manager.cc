@@ -94,6 +94,13 @@ void HostFrameSinkManager::SetFrameSinkDebugLabel(
   frame_sink_manager_->SetFrameSinkDebugLabel(frame_sink_id, debug_label);
 }
 
+void HostFrameSinkManager::SetInputTargetClient(
+    const FrameSinkId& frame_sink_id,
+    mojom::InputTargetClientPtr input_target_client) {
+  frame_sink_data_map_[frame_sink_id].input_target_client =
+      std::move(input_target_client);
+}
+
 void HostFrameSinkManager::CreateRootCompositorFrameSink(
     const FrameSinkId& frame_sink_id,
     gpu::SurfaceHandle surface_handle,

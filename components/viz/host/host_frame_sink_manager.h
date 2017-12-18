@@ -22,6 +22,7 @@
 #include "components/viz/service/frame_sinks/compositor_frame_sink_support_manager.h"
 #include "mojo/public/cpp/bindings/binding.h"
 #include "services/viz/privileged/interfaces/compositing/frame_sink_manager.mojom.h"
+#include "services/viz/public/interfaces/hit_test/input_target_client.mojom.h"
 
 namespace base {
 class SingleThreadTaskRunner;
@@ -85,6 +86,9 @@ class VIZ_HOST_EXPORT HostFrameSinkManager
   // which clients are contributing which surfaces.
   void SetFrameSinkDebugLabel(const FrameSinkId& frame_sink_id,
                               const std::string& debug_label);
+
+  void SetInputTargetClient(const FrameSinkId& frame_sink_id,
+                            mojom::InputTargetClientPtr input_target_client);
 
   // Creates a connection for a display root to viz. Provides the same
   // interfaces as CreateCompositorFramesink() plus the priviledged
@@ -174,6 +178,8 @@ class VIZ_HOST_EXPORT HostFrameSinkManager
     // Track frame sink hierarchy in both directions.
     std::vector<FrameSinkId> parents;
     std::vector<FrameSinkId> children;
+
+    mojom::InputTargetClientPtr input_target_client;
 
    private:
     DISALLOW_COPY_AND_ASSIGN(FrameSinkData);
