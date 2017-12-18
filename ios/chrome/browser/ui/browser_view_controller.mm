@@ -3470,16 +3470,12 @@ bubblePresenterForFeature:(const base::Feature&)feature
 
 #pragma mark - TabSnapshottingDelegate methods.
 
-- (CGRect)snapshotContentAreaForTab:(Tab*)tab {
-  CGRect pageContentArea = _contentArea.bounds;
-  if ([_model webUsageEnabled])
-    pageContentArea = tab.view.bounds;
+- (UIEdgeInsets)snapshotEdgeInsetsForTab:(Tab*)tab {
   CGFloat headerHeight = [self headerHeightForTab:tab];
   id nativeController = [self nativeControllerForTab:tab];
   if ([nativeController respondsToSelector:@selector(toolbarHeight)])
     headerHeight += [nativeController toolbarHeight];
-  UIEdgeInsets contentInsets = UIEdgeInsetsMake(headerHeight, 0.0, 0.0, 0.0);
-  return UIEdgeInsetsInsetRect(pageContentArea, contentInsets);
+  return UIEdgeInsetsMake(headerHeight, 0.0, 0.0, 0.0);
 }
 
 #pragma mark - NewTabPageObserver methods.
