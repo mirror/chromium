@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "53b0277b_d5827942",
+        "filename": "services/service_manager/embedder/embedded_instance_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-12-18T18:52:33Z",
+      "side": 1,
+      "message": "I\u0027m assuming that when joining on a background thread, you will actually pass ownership of the base::Thread object over to the task which will join it. As long as that\u0027s the case, we should be fine.",
+      "parentUuid": "6f4ae12c_c326b324",
+      "revId": "9e87bb3197de014c418b6e1e29ea6a0b797214a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7144fd99_3babb145",
         "filename": "services/service_manager/embedder/embedded_instance_manager_unittest.cc",
         "patchSetId": 1
@@ -66,6 +84,24 @@
       "writtenOn": "2017-12-14T23:46:34Z",
       "side": 1,
       "message": "rockot@: Could you help clarify what the intended behavior should be here? It is unclear to me whether or not the test assumed that the quit closure really never gets called. With my additions I verified that it does get called, but is posted to the end of the current message queue.",
+      "revId": "9e87bb3197de014c418b6e1e29ea6a0b797214a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11e9d735_ae7240fd",
+        "filename": "services/service_manager/embedder/embedded_instance_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-12-18T18:52:33Z",
+      "side": 1,
+      "message": "I have no idea why it was written this way, but I assume it was a mistake. We might as well fix it.\n\nPlease do not use RunUntilIdle though, and you don\u0027t need quit_called: just have a local RunLoop and make the quit callback its QuitClosure(). Then you can simply Run() the loop and no need to rely on dubious \"idle\" semantics.",
+      "parentUuid": "7144fd99_3babb145",
       "revId": "9e87bb3197de014c418b6e1e29ea6a0b797214a8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
