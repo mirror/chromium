@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "65c03f16_c0871435",
+        "filename": "ash/public/cpp/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2017-12-18T19:12:05Z",
+      "side": 1,
+      "message": "Actually we can also get rid of this.",
+      "revId": "febae9900c35f39d721f262cf87953d5369faef4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
