@@ -128,8 +128,8 @@ void DispatchInputEventEditableContentChanged(
     InputEvent::EventIsComposing is_composing) {
   if (start_root)
     DispatchInputEvent(start_root, input_type, data, is_composing);
-  if (end_root && end_root != start_root)
-    DispatchInputEvent(end_root, input_type, data, is_composing);
+  //  if (end_root && end_root != start_root)
+  //    DispatchInputEvent(end_root, input_type, data, is_composing);
 }
 
 InputEvent::EventIsComposing IsComposingFromCommand(
