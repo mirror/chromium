@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "5bf197b0_da469404",
+        "filename": "chrome/browser/ui/views/try_chrome_dialog_win/button_layout.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-12-18T20:13:28Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "718bfcf2_47a5bffb",
+      "range": {
+        "startLine": 17,
+        "startChar": 49,
+        "endLine": 17,
+        "endChar": 59
+      },
+      "revId": "0f4bfe9991cbfd037a6b0fa4670fb2198ca5a676",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e6ef8300_d2713999",
         "filename": "chrome/browser/ui/views/try_chrome_dialog_win/button_layout.cc",
         "patchSetId": 3
@@ -93,6 +117,30 @@
       "revId": "0f4bfe9991cbfd037a6b0fa4670fb2198ca5a676",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54d79d9a_fab96d2f",
+        "filename": "chrome/browser/ui/views/try_chrome_dialog_win/button_layout.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-12-18T20:13:28Z",
+      "side": 1,
+      "message": "(Just re-read my comment and realized it sounded a little aggressive. Was meant to be tongue in cheek.)\n\nThanks for the explanation.",
+      "parentUuid": "c258cb41_2949718a",
+      "range": {
+        "startLine": 19,
+        "startChar": 8,
+        "endLine": 19,
+        "endChar": 24
+      },
+      "revId": "0f4bfe9991cbfd037a6b0fa4670fb2198ca5a676",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -143,6 +191,30 @@
     },
     {
       "key": {
+        "uuid": "7164e425_91dfe723",
+        "filename": "chrome/browser/ui/views/try_chrome_dialog_win/button_layout.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-12-18T20:13:28Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f4f40fd0_57033ac4",
+      "range": {
+        "startLine": 30,
+        "startChar": 24,
+        "endLine": 30,
+        "endChar": 26
+      },
+      "revId": "0f4bfe9991cbfd037a6b0fa4670fb2198ca5a676",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "af16414a_16bfbfab",
         "filename": "chrome/browser/ui/views/try_chrome_dialog_win/button_layout.cc",
         "patchSetId": 3
@@ -187,6 +259,30 @@
       "revId": "0f4bfe9991cbfd037a6b0fa4670fb2198ca5a676",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57bf2dff_6baa40c0",
+        "filename": "chrome/browser/ui/views/try_chrome_dialog_win/button_layout.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-12-18T20:13:28Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "bfee619b_12d7cf62",
+      "range": {
+        "startLine": 35,
+        "startChar": 26,
+        "endLine": 35,
+        "endChar": 35
+      },
+      "revId": "0f4bfe9991cbfd037a6b0fa4670fb2198ca5a676",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -237,6 +333,30 @@
     },
     {
       "key": {
+        "uuid": "e471824d_785a3fec",
+        "filename": "chrome/browser/ui/views/try_chrome_dialog_win/button_layout.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-12-18T20:13:28Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ee57fb49_b51890a1",
+      "range": {
+        "startLine": 69,
+        "startChar": 10,
+        "endLine": 69,
+        "endChar": 21
+      },
+      "revId": "0f4bfe9991cbfd037a6b0fa4670fb2198ca5a676",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d7ad475f_dc5813d6",
         "filename": "chrome/browser/ui/views/try_chrome_dialog_win/button_layout.cc",
         "patchSetId": 3
@@ -284,6 +404,30 @@
     },
     {
       "key": {
+        "uuid": "808ea885_970f836d",
+        "filename": "chrome/browser/ui/views/try_chrome_dialog_win/button_layout.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-12-18T20:13:28Z",
+      "side": 1,
+      "message": "Nope, works for me!",
+      "parentUuid": "f99596f6_07637131",
+      "range": {
+        "startLine": 78,
+        "startChar": 23,
+        "endLine": 78,
+        "endChar": 25
+      },
+      "revId": "0f4bfe9991cbfd037a6b0fa4670fb2198ca5a676",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "11c6d78c_375b4433",
         "filename": "chrome/browser/ui/views/try_chrome_dialog_win/button_layout.h",
         "patchSetId": 3
@@ -328,6 +472,30 @@
       "revId": "0f4bfe9991cbfd037a6b0fa4670fb2198ca5a676",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5531649_02e6c830",
+        "filename": "chrome/browser/ui/views/try_chrome_dialog_win/button_layout.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-12-18T20:13:28Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "95762990_21428e05",
+      "range": {
+        "startLine": 32,
+        "startChar": 47,
+        "endLine": 32,
+        "endChar": 51
+      },
+      "revId": "0f4bfe9991cbfd037a6b0fa4670fb2198ca5a676",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
