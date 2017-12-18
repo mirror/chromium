@@ -16,6 +16,24 @@
       "revId": "c2dc66dff7170cb992da46ef506fd4e620ce8e46",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29d531f4_55d5ed64",
+        "filename": "testing/buildbot/test_suite_exceptions.pyl",
+        "patchSetId": 3
+      },
+      "lineNbr": 604,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-12-18T20:14:04Z",
+      "side": 0,
+      "message": "SGTM",
+      "parentUuid": "e6f091d9_2034e6f9",
+      "revId": "c2dc66dff7170cb992da46ef506fd4e620ce8e46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
