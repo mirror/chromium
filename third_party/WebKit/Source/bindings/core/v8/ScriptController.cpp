@@ -131,11 +131,19 @@ v8::Local<v8::Value> ScriptController::ExecuteScriptAndReturnValue(
 
     v8::Local<v8::Script> script;
 
+    std::pair<v8::ScriptCompiler::CompileOptions,
+              v8::ScriptCompiler::NoCacheReason>
+        compile_opt_pair =
+            V8ScriptRunner::GetCompileOptions(v8_cache_options, source);
+    v8::ScriptCompiler::CompileOptions compile_options = compile_opt_pair.first;
+    v8::ScriptCompiler::NoCacheReason no_cache_reason = compile_opt_pair.second;
     if (!V8ScriptRunner::CompileScript(ScriptState::From(context), source,
-                                       access_control_status, v8_cache_options,
-                                       referrer_info)
+                                       access_control_status, compile_options,
+                                       no_cache_reason, referrer_info)
              .ToLocal(&script))
       return result;
+
+    V8ScriptRunner::ProduceCache(GetIsolate(), script, source, no_cache_reason);
 
     if (!V8ScriptRunner::RunCompiledScript(GetIsolate(), script,
                                            GetFrame()->GetDocument())
