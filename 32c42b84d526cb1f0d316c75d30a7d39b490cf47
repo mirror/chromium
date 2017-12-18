@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f1335ef0_c51d96f2",
+        "filename": "chrome/browser/chromeos/login/session/user_session_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1016,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-18T22:26:01Z",
+      "side": 1,
+      "message": "should this check live within the send_password block below?",
+      "revId": "32c42b84d526cb1f0d316c75d30a7d39b490cf47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc6b9f4e_00326c93",
+        "filename": "chrome/browser/chromeos/policy/user_network_configuration_updater.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-18T22:26:01Z",
+      "side": 1,
+      "message": "nit: rename this variable to send_password?",
+      "revId": "32c42b84d526cb1f0d316c75d30a7d39b490cf47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
