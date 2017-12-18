@@ -3678,6 +3678,27 @@
             ]
         }
     ],
+    "TabMetricsLogging": [
+        {
+            "platforms": [
+                "chromeos",
+                "mac",
+                "linux",
+                "win"
+            ],
+            "experiments": [
+                {
+                    "name": "PerSourceLogTimeout0ms",
+                    "params": {
+                        "per_source_log_timeout_msec": "0"
+                    },
+                    "enable_features": [
+                        "TabMetricsLogging"
+                    ]
+                }
+            ]
+        }
+    ],
     "TabSyncByRecency": [
         {
             "platforms": [
