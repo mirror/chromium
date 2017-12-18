@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a2641d30_553a9b47",
+        "filename": "mojo/edk/embedder/platform_shared_buffer.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-12-18T14:45:40Z",
+      "side": 1,
+      "message": "Nit: Might be better to use an argument to DuplicatePlatformHandle rather than a separate function in order to force users to consider which one is correct in their context. There looks to be very few callers, so would be feasible. Up to you.",
+      "range": {
+        "startLine": 183,
+        "startChar": 66,
+        "endLine": 183,
+        "endChar": 72
+      },
+      "revId": "1bdc0301edaee9414d67614fc07f8ffb6291fcef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
