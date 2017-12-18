@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8bdb8d7c_a05a8559",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/dom/usvstring-reflection.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-12-18T08:11:34Z",
+      "side": 1,
+      "message": "Is this really working as we expect?  The JavaScript code should run in a new opened window, where |assert_equals| is not available.\n\nAlso, this test case checks nothing in itself (in this window), so we cannot detect any errors even if |open| ended to open an unrelated / meaningless window.",
+      "revId": "a1ca25d1d4f634386549ac8723e28d879abb6893",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
