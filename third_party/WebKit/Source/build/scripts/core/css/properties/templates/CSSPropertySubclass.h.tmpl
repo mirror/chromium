@@ -41,6 +41,7 @@ class {{property_classname}} final : public {{property.namespace_group}} {
     return name;
   }
   {% if property.alias_for == None %}
+  CSSPropertyID PropertyID() const override { return {{property.property_id}}; }
   {% for property_method in property.property_methods %}
   {{property_method.return_type}} {{property_method.name}}{{property_method.parameters}} const override;
   {% endfor %}
