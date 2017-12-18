@@ -169,6 +169,30 @@
     },
     {
       "key": {
+        "uuid": "6102199a_2718873e",
+        "filename": "content/browser/payments/payment_app_info_fetcher.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1114659
+      },
+      "writtenOn": "2017-12-18T19:32:56Z",
+      "side": 1,
+      "message": "Thank you for reply!\n\nThis CL is a patch that prevents TSAN errors, especially race conditions.\nIMHO, to minimize race conditions, we should minimize the sharing of variables between threads.\nThis patch is aiming at isolating the crossing variables between threads(IO thread \u003c--\u003e UI thread).\n\nBefore this patch, for example, fetched_payment_app_info_ member is intialized as empty object on IO thread and then set(newly created) the fetched data to it on UI thread and then it destroyed on IO thread again.\n\nBut after this patch, the fetched data is initialized/created on UI thread and then destroyed on UI thread.\n\nIn the previous implementation, there were multiple crossing variables. They might cause another race conditions and TSAN errors. But now, there is no crossing variable.",
+      "parentUuid": "dcc45aeb_d380e4ad",
+      "range": {
+        "startLine": 122,
+        "startChar": 2,
+        "endLine": 122,
+        "endChar": 56
+      },
+      "revId": "554431fc71e1b4380c46edb062b7a8a1116f0a8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1b5a3219_0313f679",
         "filename": "content/browser/payments/payment_app_info_fetcher.h",
         "patchSetId": 4
