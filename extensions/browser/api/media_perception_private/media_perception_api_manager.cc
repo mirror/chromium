@@ -131,7 +131,7 @@ void MediaPerceptionAPIManager::SetAnalyticsComponent(
 
 void MediaPerceptionAPIManager::LoadComponentCallback(
     APISetAnalyticsComponentCallback callback,
-    const std::string& mount_point) {
+    const base::FilePath& mount_point) {
   media_perception::ComponentState component_state;
   if (mount_point.empty()) {
     component_state.status =
@@ -141,7 +141,7 @@ void MediaPerceptionAPIManager::LoadComponentCallback(
   }
 
   // If the new component is loaded, override the mount point.
-  mount_point_ = mount_point;
+  mount_point_ = mount_point.value();
   component_state.status = media_perception::COMPONENT_STATUS_INSTALLED;
   std::move(callback).Run(std::move(component_state));
   return;
