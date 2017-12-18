@@ -18,6 +18,8 @@
 #include "content/public/browser/download_manager.h"
 #include "content/public/browser/download_save_info.h"
 #include "content/public/browser/download_url_parameters.h"
+#include "content/public/browser/web_contents.h"
+#include "services/metrics/public/cpp/ukm_recorder.h"
 
 namespace net {
 class URLRequest;
@@ -87,6 +89,12 @@ class CONTENT_EXPORT DownloadResourceHandler
   void CancelRequest();
 
   std::string DebugString() const;
+
+  // Friended Helper for recording main frame URLs to UKM.
+  // TOOD(jming): Move to DownloadUkmHelper when that exists.
+  static void UpdateSourceURL(ukm::UkmRecorder* ukm_recorder,
+                              ukm::SourceId source_id,
+                              WebContents* web_contents);
 
  private:
   ~DownloadResourceHandler() override;
