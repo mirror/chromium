@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d27c35d9_72a11013",
+        "filename": "third_party/WebKit/Source/core/html/forms/TextControlElement.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-12-18T19:17:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0d18e5cc_a6771296",
+      "range": {
+        "startLine": 166,
+        "startChar": 10,
+        "endLine": 166,
+        "endChar": 71
+      },
+      "revId": "a3db08ddda9606374347cc2683a7071b987343c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "308f6d89_fabbfe53",
         "filename": "third_party/WebKit/Source/core/html/forms/TextControlInnerElements.cpp",
         "patchSetId": 5
@@ -68,6 +92,30 @@
       "revId": "a3db08ddda9606374347cc2683a7071b987343c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2fca916_50e27284",
+        "filename": "third_party/WebKit/Source/core/html/forms/TextControlInnerElements.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-12-18T19:17:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9ec342c6_f52113e1",
+      "range": {
+        "startLine": 62,
+        "startChar": 26,
+        "endLine": 62,
+        "endChar": 35
+      },
+      "revId": "a3db08ddda9606374347cc2683a7071b987343c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
