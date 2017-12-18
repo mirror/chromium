@@ -37,7 +37,6 @@
 #include "ui/app_list/views/search_box_view.h"
 #include "ui/app_list/views/search_result_tile_item_view.h"
 #include "ui/app_list/views/suggestions_container_view.h"
-#include "ui/app_list/views/tile_item_view.h"
 #include "ui/app_list/views/top_icon_animation_view.h"
 #include "ui/aura/window.h"
 #include "ui/aura/window_event_dispatcher.h"
@@ -1016,7 +1015,7 @@ bool AppsGridView::OnKeyPressed(const ui::KeyEvent& event) {
   if (suggestions_container_ &&
       suggestions_container_->selected_index() != -1) {
     int selected_suggested_index = suggestions_container_->selected_index();
-    handled = suggestions_container_->GetTileItemView(selected_suggested_index)
+    handled = suggestions_container_->GetTileViewAt(selected_suggested_index)
                   ->OnKeyPressed(event);
   }
 
