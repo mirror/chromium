@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "53c05b91_7c63ef68",
+        "filename": "chrome/browser/ui/views/translate/translate_bubble_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-12-18T20:12:29Z",
+      "side": 1,
+      "message": "Should rename this too.",
+      "range": {
+        "startLine": 49,
+        "startChar": 7,
+        "endLine": 49,
+        "endChar": 22
+      },
+      "revId": "2438c84a7e481d50566f38206f8cdd366ca402aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9aae0cc_288cde1a",
+        "filename": "chrome/browser/ui/views/translate/translate_bubble_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-12-18T20:12:29Z",
+      "side": 1,
+      "message": "And these three tests.",
+      "range": {
+        "startLine": 176,
+        "startChar": 27,
+        "endLine": 176,
+        "endChar": 59
+      },
+      "revId": "2438c84a7e481d50566f38206f8cdd366ca402aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
