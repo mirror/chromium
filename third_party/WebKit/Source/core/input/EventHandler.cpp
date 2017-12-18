@@ -929,6 +929,13 @@ WebInputEventResult EventHandler::HandleMouseMoveOrLeaveEvent(
   if (event_result != WebInputEventResult::kNotHandled)
     return event_result;
 
+  // For fake mouse move events, skip updating internal states and dispatching
+  // events to DOM.
+  if (mev.Event().GetModifiers() &
+      WebInputEvent::Modifiers::kRelativeMotionEvent) {
+    return WebInputEventResult::kHandledSuppressed;
+  }
+
   event_result = UpdatePointerTargetAndDispatchEvents(
       EventTypeNames::mousemove, mev.InnerNode(), mev.CanvasRegionId(),
       mev.Event(), coalesced_events);
@@ -960,7 +967,7 @@ WebInputEventResult EventHandler::HandleMouseReleaseEvent(
     }
   }
 
-  mouse_event_manager_->SetMousePressed(false);
+  mouse_event_manager_->ReleaseMousePress();
   mouse_event_manager_->SetLastKnownMousePosition(mouse_event);
   mouse_event_manager_->HandleSvgPanIfNeeded(true);
 
@@ -1763,7 +1770,7 @@ WebInputEventResult EventHandler::SendContextMenuEvent(
 
   // Clear mouse press state to avoid initiating a drag while context menu is
   // up.
-  mouse_event_manager_->SetMousePressed(false);
+  mouse_event_manager_->ReleaseMousePress();
   LayoutPoint position_in_contents =
       v->RootFrameToContents(FlooredIntPoint(event.PositionInRootFrame()));
   HitTestRequest request(HitTestRequest::kActive);
