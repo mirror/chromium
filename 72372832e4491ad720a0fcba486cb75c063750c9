@@ -49,6 +49,29 @@
     },
     {
       "key": {
+        "uuid": "1eb49c88_aea267d0",
+        "filename": "components/download/downloader/in_progress/download_entry.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-12-18T21:18:18Z",
+      "side": 1,
+      "message": "Can you comment on what would be a valid/invalid id?  Should we use int64 or int here?  Should it be effectively uint since rand is between 0 -\u003e max (and we can treat 0 as invalid)?",
+      "range": {
+        "startLine": 43,
+        "startChar": 2,
+        "endLine": 43,
+        "endChar": 22
+      },
+      "revId": "72372832e4491ad720a0fcba486cb75c063750c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bd00a0ab_6bc983f7",
         "filename": "components/download/downloader/in_progress/in_progress_cache_impl.cc",
         "patchSetId": 4
@@ -84,6 +107,30 @@
       "side": 1,
       "message": "In most implementations, this should be the same. But I\u0027m just making this method input-agnostic in case we get different cases where the entry is constructed/not coming from DB.",
       "parentUuid": "bd00a0ab_6bc983f7",
+      "range": {
+        "startLine": 31,
+        "startChar": 32,
+        "endLine": 31,
+        "endChar": 58
+      },
+      "revId": "72372832e4491ad720a0fcba486cb75c063750c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8a56d2d9_7f94c0fa",
+        "filename": "components/download/downloader/in_progress/in_progress_cache_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-12-18T21:18:18Z",
+      "side": 1,
+      "message": "That feels non-deterministic from the caller standpoint?  It\u0027s odd having some variables technically be ignored.  We shouldn\u0027t be creating new DownloadEntry values directly except when adding brand new downloads right?  We should be hitting the storage layer whenever we need to access the data.",
+      "parentUuid": "2f5ece60_b5b32b1a",
       "range": {
         "startLine": 31,
         "startChar": 32,
@@ -167,6 +214,30 @@
     },
     {
       "key": {
+        "uuid": "773df27b_d70526a6",
+        "filename": "components/download/downloader/in_progress/proto/download_entry.proto",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-12-18T21:18:18Z",
+      "side": 1,
+      "message": "Ah IIUC that happens through the DownloadCreateInfo struct, not the in progress cache?  We shouldn\u0027t persist it if it isn\u0027t supposed to be used after restarts right?",
+      "parentUuid": "383a4867_078e2a83",
+      "range": {
+        "startLine": 19,
+        "startChar": 17,
+        "endLine": 19,
+        "endChar": 30
+      },
+      "revId": "72372832e4491ad720a0fcba486cb75c063750c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c632b1b9_8f63fe65",
         "filename": "content/browser/download/download_manager_impl.cc",
         "patchSetId": 4
@@ -214,6 +285,30 @@
     },
     {
       "key": {
+        "uuid": "b12de189_47fabe4e",
+        "filename": "content/browser/download/download_manager_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 554,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-12-18T21:18:18Z",
+      "side": 1,
+      "message": "base/rand_util.h: RandUint64() or RandInt()?",
+      "parentUuid": "1555c3d4_8c63a0cc",
+      "range": {
+        "startLine": 554,
+        "startChar": 29,
+        "endLine": 554,
+        "endChar": 35
+      },
+      "revId": "72372832e4491ad720a0fcba486cb75c063750c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3ff18a48_a1987ded",
         "filename": "content/browser/download/download_manager_impl.cc",
         "patchSetId": 4
@@ -249,6 +344,30 @@
       "side": 1,
       "message": "So this path is for the specific downloads that don\u0027t go through the above code path and we want to track the request_origin/download_source from. That being said, we probably won\u0027t hit UKM with this pathway, but I don\u0027t think it hurts to add the UKM id in case we do?",
       "parentUuid": "3ff18a48_a1987ded",
+      "range": {
+        "startLine": 1039,
+        "startChar": 2,
+        "endLine": 1043,
+        "endChar": 3
+      },
+      "revId": "72372832e4491ad720a0fcba486cb75c063750c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e775b46b_b689238a",
+        "filename": "content/browser/download/download_manager_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1043,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-12-18T21:18:18Z",
+      "side": 1,
+      "message": "Huh it looked like this path cascaded back through the above change when it builds the request.  I would just check and then also confirm what happens if we\u0027re offline and queue up a download.",
+      "parentUuid": "28950cae_b04d2bcf",
       "range": {
         "startLine": 1039,
         "startChar": 2,
