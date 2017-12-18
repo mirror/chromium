@@ -16,6 +16,24 @@
       "revId": "adbc074a8922dc6eb97c6d7dac3d2d49bc556849",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "755e2498_e71c3688",
+        "filename": "tools/perf/expectations.config",
+        "patchSetId": 3
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1132400
+      },
+      "writtenOn": "2017-12-18T21:10:06Z",
+      "side": 1,
+      "message": "Ah. Their strange format of mac:crbug.com/123 caused my converter to not see it as being in the correct format. Fixed.",
+      "parentUuid": "17affb04_81913686",
+      "revId": "adbc074a8922dc6eb97c6d7dac3d2d49bc556849",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
