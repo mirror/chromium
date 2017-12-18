@@ -12,10 +12,10 @@
 
 #include "base/format_macros.h"
 #import "base/ios/block_types.h"
+#include "base/ios/ios_util.h"
 #include "base/logging.h"
 #import "base/mac/bundle_locations.h"
 #import "base/mac/foundation_util.h"
-
 #include "base/mac/scoped_block.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/metrics/user_metrics.h"
@@ -3198,12 +3198,18 @@ NSString* const kTransitionToolbarAnimationKey =
 }
 
 - (void)alignDisplayViewsToViewport {
-  DCHECK(CGSizeEqualToSize(
-      AlignRectOriginAndSizeToPixels([_mainCardSet displayView].frame).size,
-      [_scrollView frame].size));
-  DCHECK(CGSizeEqualToSize(
-      AlignRectOriginAndSizeToPixels([_otrCardSet displayView].frame).size,
-      [_scrollView frame].size));
+  // TODO(crbug.com/789975): The iPhoneX iOS 11.0.0 simulator was a beta release
+  // and has a bug that causes this DCHECK to fire incorrectly.  Disable the
+  // DCHECK on iPhoneX 11.0.0, until the bots are updated to a newer simulator
+  // version.
+  if (!IsIPhoneX() || base::ios::IsRunningOnOrLater(11, 0, 1)) {
+    DCHECK(CGSizeEqualToSize(
+        AlignRectOriginAndSizeToPixels([_mainCardSet displayView].frame).size,
+        [_scrollView frame].size));
+    DCHECK(CGSizeEqualToSize(
+        AlignRectOriginAndSizeToPixels([_otrCardSet displayView].frame).size,
+        [_scrollView frame].size));
+  }
   CGRect newDisplayViewFrame = CGRectMake(
       [_scrollView contentOffset].x, [_scrollView contentOffset].y,
       [_scrollView frame].size.width, [_scrollView frame].size.height);
