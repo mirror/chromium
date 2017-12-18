@@ -23,6 +23,8 @@ enum class TracenessMemberConfiguration {
   kUntraced,
 };
 
+enum class WriteBarrierConfiguration { kRequiresWriteBarrier };
+
 template <typename T,
           TracenessMemberConfiguration tracenessConfiguration =
               TracenessMemberConfiguration::kTraced>
@@ -196,6 +198,12 @@ class Member : public MemberBase<T, TracenessMemberConfiguration::kTraced> {
  public:
   Member() : Parent() {}
   Member(std::nullptr_t) : Parent(nullptr) {}
+  Member(T* raw, WriteBarrierConfiguration) : Parent(raw) {
+    WriteBarrier(this->raw_);
+  }
+  Member(T& raw, WriteBarrierConfiguration) : Parent(raw) {
+    WriteBarrier(this->raw_);
+  }
   Member(T* raw) : Parent(raw) {
     // No write barrier for initializing stores.
   }
@@ -249,8 +257,6 @@ class Member : public MemberBase<T, TracenessMemberConfiguration::kTraced> {
 
  protected:
   ALWAYS_INLINE void WriteBarrier(const T* value) const {
-// TODO(mlippautz): Replace with proper build flag.
-#if 0
     if (value) {
       // The following method for retrieving a page works as allocation of
       // mixins on large object pages is prohibited.
@@ -260,7 +266,6 @@ class Member : public MemberBase<T, TracenessMemberConfiguration::kTraced> {
         ThreadState::Current()->Heap().WriteBarrierInternal(page, value);
       }
     }
-#endif
   }
 };
 
@@ -572,6 +577,18 @@ template <typename T>
 struct IsTraceable<blink::TraceWrapperMember<T>> {
   STATIC_ONLY(IsTraceable);
   static const bool value = true;
+};
+
+template <typename T, typename Allocator>
+class ConstructTraits<blink::Member<T>, Allocator, true, true>
+    : public ConstructTraitsBase<blink::Member<T>> {
+ public:
+  template <typename... Args>
+  static blink::Member<T>* ConstructElement(void* location, Args&&... args) {
+    return new (NotNull, location) blink::Member<T>(
+        std::forward<Args>(args)...,
+        blink::WriteBarrierConfiguration::kRequiresWriteBarrier);
+  }
 };
 
 }  // namespace WTF
