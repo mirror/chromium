@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0bcb462c_dd0d512c",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 7
+      },
+      "lineNbr": 10849,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2017-12-18T14:27:45Z",
+      "side": 1,
+      "message": "I would expand this to inject executable code or inject dlls or something else that would be manageable by the translators. As it is now is understandable for me but I am afraid what would be the state of translated strings.",
+      "range": {
+        "startLine": 10849,
+        "startChar": 92,
+        "endLine": 10849,
+        "endChar": 99
+      },
+      "revId": "e28c1243eed4fe9dc520c43d1eff34b2c1546f15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
