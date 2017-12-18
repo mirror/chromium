@@ -545,6 +545,11 @@ void HTMLInputElement::UpdateType() {
       formOwner() && isConnected())
     formOwner()->InvalidateDefaultButtonStyle();
   NotifyFormStateChanged();
+
+  // Type may have changed from a type which supports labels to a type that
+  // doesn't (and vice-versa), so we invalidate the labels list to force a
+  // recomputation the next time the LiveNodeList is accessed.
+  LabelableElement::InvalidateList();
 }
 
 void HTMLInputElement::SubtreeHasChanged() {

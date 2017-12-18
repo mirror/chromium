@@ -46,4 +46,11 @@ void LabelableElement::Trace(blink::Visitor* visitor) {
   HTMLElement::Trace(visitor);
 }
 
+void LabelableElement::InvalidateList() {
+  if (LabelsNodeList* labels_node_list =
+          CachedCollection<LabelsNodeList>(kLabelsNodeListType)) {
+    labels_node_list->InvalidateCache();
+  }
+}
+
 }  // namespace blink
