@@ -46,6 +46,29 @@
       "revId": "d8f2f332823d8edcb5ca20192d6814736c7317c4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7f80626_c7947ef5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1011,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-18T21:41:32Z",
+      "side": 1,
+      "message": "Will this return true; ever happen during a cold-start?",
+      "range": {
+        "startLine": 1011,
+        "startChar": 20,
+        "endLine": 1011,
+        "endChar": 31
+      },
+      "revId": "d8f2f332823d8edcb5ca20192d6814736c7317c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
