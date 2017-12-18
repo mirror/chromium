@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "e8da6b50_d21ed790",
+        "filename": "third_party/WebKit/Source/core/css/resolver/StyleAdjuster.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 576,
+      "author": {
+        "id": 1251514
+      },
+      "writtenOn": "2017-12-18T08:27:53Z",
+      "side": 1,
+      "message": "Would it be more correct to use SVGElement::IsOutermostSVGSVGElement() here?\n\nThe current check does not cover the foreignObject-\u003esvg case, for instance:\n\n\u003cforeignObject\u003e\n  \u003csvg\u003e",
+      "parentUuid": "3933424c_4daf2f9e",
+      "range": {
+        "startLine": 575,
+        "startChar": 8,
+        "endLine": 576,
+        "endChar": 45
+      },
+      "revId": "bfe746b7897017bdc9bfb216bd8b6310ea186ff4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "652cbe0f_de858c6d",
         "filename": "third_party/WebKit/Source/core/css/resolver/StyleAdjuster.cpp",
         "patchSetId": 2
@@ -60,6 +84,30 @@
       "writtenOn": "2017-12-15T16:20:19Z",
       "side": 1,
       "message": "I find it a bit odd that \u003ctspan\u003e gets this treatment, but not \u003ctextpath\u003e, since they are both \"inline level\" text content elements - that\u0027s a spec issue though...",
+      "range": {
+        "startLine": 585,
+        "startChar": 20,
+        "endLine": 585,
+        "endChar": 27
+      },
+      "revId": "bfe746b7897017bdc9bfb216bd8b6310ea186ff4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92c9f7c5_0af8ddf1",
+        "filename": "third_party/WebKit/Source/core/css/resolver/StyleAdjuster.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 585,
+      "author": {
+        "id": 1251514
+      },
+      "writtenOn": "2017-12-18T08:27:53Z",
+      "side": 1,
+      "message": "I\u0027ll file an issue.",
+      "parentUuid": "652cbe0f_de858c6d",
       "range": {
         "startLine": 585,
         "startChar": 20,
@@ -106,6 +154,30 @@
       "writtenOn": "2017-12-15T16:20:19Z",
       "side": 1,
       "message": "I suspect this should get that same treatment as \u0027none\u0027 for the reason stated in the comment, i.e something like:\n\n\u003csvg\u003e\n  \u003cg style\u003d\"display: contents\"\u003e\n    \u003clinearGradient id\u003d\"l\"\u003e\u003cstop stop-color\u003d\"green\"/\u003e\u003c/linearGradient\u003e\n  \u003c/g\u003e\n  \u003crect width\u003d\"100\" height\u003d\"100\" fill\u003d\"url(#l) red\"/\u003e\n\u003c/svg\u003e",
+      "range": {
+        "startLine": 43,
+        "startChar": 6,
+        "endLine": 43,
+        "endChar": 44
+      },
+      "revId": "bfe746b7897017bdc9bfb216bd8b6310ea186ff4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c446801_f6006885",
+        "filename": "third_party/WebKit/Source/core/svg/SVGGElement.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1251514
+      },
+      "writtenOn": "2017-12-18T08:27:53Z",
+      "side": 1,
+      "message": "I\u0027m not sure what you\u0027re proposing here. The reason why I use nullptr instead of LayoutSVGHiddenContainer for display:contents is that I need to paint the children for the display:contents case. You test-case paints a green rect with this CL.",
+      "parentUuid": "c9384f9a_1fade567",
       "range": {
         "startLine": 43,
         "startChar": 6,
