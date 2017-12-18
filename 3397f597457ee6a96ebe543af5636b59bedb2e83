@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a384227_407a04bc",
+        "filename": "chrome/browser/vr/elements/ui_element_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-12-18T21:32:47Z",
+      "side": 1,
+      "message": "Is this alternative too picky?\n\n./test/constants.h: constexpr float kEpsilon \u003d 1e-5f;",
+      "revId": "3397f597457ee6a96ebe543af5636b59bedb2e83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
