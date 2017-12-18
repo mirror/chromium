@@ -26,7 +26,7 @@ namespace gpu {
 struct GpuPreferences;
 
 namespace gles2 {
-class GLES2Decoder;
+class ContextGroup;
 }
 }
 
@@ -53,9 +53,9 @@ class MEDIA_GPU_EXPORT GpuVideoDecodeAcceleratorFactory {
                           const scoped_refptr<gl::GLImage>& image,
                           bool can_bind_to_sampler)>;
 
-  // Return a WeakPtr to a GLES2Decoder, if one is available.
-  using GetGLES2DecoderCallback =
-      base::Callback<base::WeakPtr<gpu::gles2::GLES2Decoder>(void)>;
+  // Return a ContextGroup*, if one is available.
+  using GetContextGroupCallback =
+      base::Callback<gpu::gles2::ContextGroup*(void)>;
 
   static std::unique_ptr<GpuVideoDecodeAcceleratorFactory> Create(
       const GetGLContextCallback& get_gl_context_cb,
@@ -67,7 +67,7 @@ class MEDIA_GPU_EXPORT GpuVideoDecodeAcceleratorFactory {
       const GetGLContextCallback& get_gl_context_cb,
       const MakeGLContextCurrentCallback& make_context_current_cb,
       const BindGLImageCallback& bind_image_cb,
-      const GetGLES2DecoderCallback& get_gles2_decoder_cb,
+      const GetContextGroupCallback& get_context_group_cb,
       const AndroidOverlayMojoFactoryCB& overlay_factory_cb);
 
   static std::unique_ptr<GpuVideoDecodeAcceleratorFactory> CreateWithNoGL();
@@ -87,7 +87,7 @@ class MEDIA_GPU_EXPORT GpuVideoDecodeAcceleratorFactory {
       const GetGLContextCallback& get_gl_context_cb,
       const MakeGLContextCurrentCallback& make_context_current_cb,
       const BindGLImageCallback& bind_image_cb,
-      const GetGLES2DecoderCallback& get_gles2_decoder_cb,
+      const GetContextGroupCallback& get_context_group_cb,
       const AndroidOverlayMojoFactoryCB& overlay_factory_cb);
 
 #if defined(OS_WIN)
@@ -125,7 +125,7 @@ class MEDIA_GPU_EXPORT GpuVideoDecodeAcceleratorFactory {
   const GetGLContextCallback get_gl_context_cb_;
   const MakeGLContextCurrentCallback make_context_current_cb_;
   const BindGLImageCallback bind_image_cb_;
-  const GetGLES2DecoderCallback get_gles2_decoder_cb_;
+  const GetContextGroupCallback get_context_group_cb_;
   const AndroidOverlayMojoFactoryCB overlay_factory_cb_;
 
   base::ThreadChecker thread_checker_;
