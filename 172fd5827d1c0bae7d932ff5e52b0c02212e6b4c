@@ -239,6 +239,30 @@
     },
     {
       "key": {
+        "uuid": "a64aa63f_a9bf179d",
+        "filename": "content/network/data_pipe_element_reader.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-12-18T20:03:49Z",
+      "side": 1,
+      "message": "\u003e \"I\u0027m a bit concerned that such cases won\u0027t end up being tested, though.\"\nThat is a fair point. I think a lot of error handling code paths are not well tested. And that is a pretty general issue.",
+      "parentUuid": "14379ed3_39131679",
+      "range": {
+        "startLine": 94,
+        "startChar": 18,
+        "endLine": 94,
+        "endChar": 30
+      },
+      "revId": "172fd5827d1c0bae7d932ff5e52b0c02212e6b4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a172f978_3dabec5f",
         "filename": "content/network/data_pipe_element_reader.h",
         "patchSetId": 5
