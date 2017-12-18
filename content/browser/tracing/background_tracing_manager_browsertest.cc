@@ -16,6 +16,7 @@
 #include "base/run_loop.h"
 #include "base/strings/pattern.h"
 #include "base/trace_event/trace_event.h"
+#include "build/build_config.h"
 #include "content/browser/tracing/background_tracing_manager_impl.h"
 #include "content/browser/tracing/background_tracing_rule.h"
 #include "content/public/common/content_switches.h"
@@ -389,8 +390,8 @@ IN_PROC_BROWSER_TEST_F(BackgroundTracingManagerBrowserTest,
   EXPECT_FALSE(upload_config_wrapper.TraceHasMatchingString("this_not_found"));
 }
 
-#if defined(OS_ANDROID) || defined(OS_CHROMEOS)
-// Flaky on android, chromeos: https://crbug.com/639706
+#if defined(OS_ANDROID) || defined(OS_CHROMEOS) || defined(OS_LINUX)
+// Flaky on several platforms: https://crbug.com/639706
 #define MAYBE_TraceMetadataInTrace DISABLED_TraceMetadataInTrace
 #else
 #define MAYBE_TraceMetadataInTrace TraceMetadataInTrace
