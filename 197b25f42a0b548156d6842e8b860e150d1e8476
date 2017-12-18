@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d080f2a1_ceeb69a2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-12-18T08:28:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7963dcf4_7530788d",
+      "revId": "197b25f42a0b548156d6842e8b860e150d1e8476",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9c045c33_5857c0a3",
         "filename": "ios/chrome/browser/ui/toolbar/clean/omnibox_focuser.h",
         "patchSetId": 3
@@ -39,6 +57,30 @@
       "revId": "197b25f42a0b548156d6842e8b860e150d1e8476",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c1246ee_5d0bd7ed",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/omnibox_focuser.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-12-18T08:28:46Z",
+      "side": 1,
+      "message": "No, it is because I don\u0027t want the clean toolbar_ui target to depend on the non-clean target.",
+      "parentUuid": "9c045c33_5857c0a3",
+      "range": {
+        "startLine": 6,
+        "startChar": 8,
+        "endLine": 6,
+        "endChar": 62
+      },
+      "revId": "197b25f42a0b548156d6842e8b860e150d1e8476",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "22f5d261_30e287a6",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 613,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-12-18T08:28:46Z",
+      "side": 1,
+      "message": "I did not see it for the WebToolbar. So I guess we don\u0027t need it.",
+      "parentUuid": "ca782c1d_cf4a482e",
+      "range": {
+        "startLine": 613,
+        "startChar": 35,
+        "endLine": 613,
+        "endChar": 50
+      },
+      "revId": "197b25f42a0b548156d6842e8b860e150d1e8476",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "36cc603b_a1cbe947",
         "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.mm",
         "patchSetId": 3
@@ -85,6 +151,30 @@
       "revId": "197b25f42a0b548156d6842e8b860e150d1e8476",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6562a40d_cb17c220",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 729,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-12-18T08:28:46Z",
+      "side": 1,
+      "message": "Yes but it is expected :)",
+      "parentUuid": "36cc603b_a1cbe947",
+      "range": {
+        "startLine": 729,
+        "startChar": 24,
+        "endLine": 729,
+        "endChar": 25
+      },
+      "revId": "197b25f42a0b548156d6842e8b860e150d1e8476",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -125,6 +215,48 @@
       "revId": "197b25f42a0b548156d6842e8b860e150d1e8476",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54a25340_f5f81e93",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 1160,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-12-18T08:28:46Z",
+      "side": 1,
+      "message": "Sorry I don\u0027t understand you comment. Is it about adding the cancelMethod? Why would it be a problem?\nI changed the method name, if this was the problem.",
+      "parentUuid": "a79e4c8d_eaae09da",
+      "range": {
+        "startLine": 1160,
+        "startChar": 35,
+        "endLine": 1160,
+        "endChar": 52
+      },
+      "revId": "197b25f42a0b548156d6842e8b860e150d1e8476",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e21f744_7ce94958",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 1160,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-12-18T08:28:46Z",
+      "side": 1,
+      "message": "No it should be fine.",
+      "parentUuid": "d9d15fa9_2a857537",
+      "revId": "197b25f42a0b548156d6842e8b860e150d1e8476",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
