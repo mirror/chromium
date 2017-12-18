@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9b246b19_8838b329",
+        "filename": "ash/app_list/model/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2017-12-18T19:06:06Z",
+      "side": 1,
+      "message": "It\u0027s an error in //components/sync/mojo. The new PS will fix this.",
+      "parentUuid": "b48ede29_e92067ea",
+      "revId": "324b08b2c0379aaee9f12921e71d747b031d8e1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1924cbaa_847604e6",
         "filename": "ash/app_list/model/app_list_item.h",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "324b08b2c0379aaee9f12921e71d747b031d8e1f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce93f98a_a0d8bef1",
+        "filename": "ash/app_list/model/app_list_item.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2017-12-18T19:06:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1924cbaa_847604e6",
+      "revId": "324b08b2c0379aaee9f12921e71d747b031d8e1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "504fe041_ec0b2479",
+        "filename": "ash/app_list/model/app_list_item.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2017-12-18T19:06:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6a5a0d8b_0a38ecf7",
+      "revId": "324b08b2c0379aaee9f12921e71d747b031d8e1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "942f995f_36675f9f",
         "filename": "ash/public/cpp/BUILD.gn",
         "patchSetId": 4
@@ -64,6 +118,24 @@
       "writtenOn": "2017-12-18T18:44:37Z",
       "side": 1,
       "message": "I wonder whether this should in public_deps of\n  components/sync/mojo/syncer.typemap",
+      "revId": "324b08b2c0379aaee9f12921e71d747b031d8e1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "968a191b_00b11718",
+        "filename": "ash/public/cpp/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2017-12-18T19:06:06Z",
+      "side": 1,
+      "message": "It seems that deps is enough.",
+      "parentUuid": "942f995f_36675f9f",
       "revId": "324b08b2c0379aaee9f12921e71d747b031d8e1f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -84,6 +156,24 @@
       "revId": "324b08b2c0379aaee9f12921e71d747b031d8e1f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "739a71b4_2c4db772",
+        "filename": "ash/public/interfaces/app_list.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2017-12-18T19:06:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "17312e3c_a49d6c60",
+      "revId": "324b08b2c0379aaee9f12921e71d747b031d8e1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
