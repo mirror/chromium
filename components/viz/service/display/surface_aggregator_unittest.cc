@@ -448,9 +448,6 @@ TEST_F(SurfaceAggregatorValidSurfaceTest, SimpleFrame) {
             aggregated_damage_result.last_damage_rect());
   EXPECT_EQ(root_local_surface_id_,
             aggregated_damage_result.last_local_surface_id());
-
-  // Check that SurfaceObserver::OnSurfaceSubtreeDamaged was called.
-  EXPECT_TRUE(observer_.IsSurfaceSubtreeDamaged(root_surface_id));
 }
 
 TEST_F(SurfaceAggregatorValidSurfaceTest, OpacityCopied) {
@@ -692,13 +689,6 @@ TEST_F(SurfaceAggregatorValidSurfaceTest, FallbackSurfaceReference) {
   // The damage should be equal to whole size of the primary SurfaceDrawQuad.
   EXPECT_EQ(surface_quad_rect, aggregated_damage_result.last_damage_rect());
 
-  // Check that SurfaceObserver::OnSurfaceSubtreeDamaged was called only
-  // for the fallback surface.
-  EXPECT_FALSE(observer_.IsSurfaceSubtreeDamaged(primary_child_surface_id));
-  EXPECT_TRUE(observer_.IsSurfaceSubtreeDamaged(fallback_child_surface_id));
-
-  observer_.Reset();
-
   Quad primary_child_quads[] = {
       Quad::SolidColorQuad(SK_ColorGREEN, gfx::Rect(5, 5))};
   constexpr gfx::Size primary_surface_size(5, 5);
@@ -728,11 +718,6 @@ TEST_F(SurfaceAggregatorValidSurfaceTest, FallbackSurfaceReference) {
   // surface.
   EXPECT_EQ(primary_surface_size,
             aggregated_damage_result.last_damage_rect().size());
-
-  // Check that SurfaceObserver::OnSurfaceSubtreeDamaged was called only
-  // for the primary surface.
-  EXPECT_TRUE(observer_.IsSurfaceSubtreeDamaged(primary_child_surface_id));
-  EXPECT_FALSE(observer_.IsSurfaceSubtreeDamaged(fallback_child_surface_id));
 
   primary_child_support->EvictCurrentSurface();
   fallback_child_support->EvictCurrentSurface();
