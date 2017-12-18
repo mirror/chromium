@@ -16,6 +16,24 @@
       "revId": "b3c7950c982e69c416903441c315013e40816db9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13b230e5_6a20aa3f",
+        "filename": "chrome/browser/chromeos/login/lock/webui_screen_locker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-12-18T22:48:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "88fbcf09_44c98b33",
+      "revId": "b3c7950c982e69c416903441c315013e40816db9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
