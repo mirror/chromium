@@ -22,6 +22,30 @@
       "revId": "68f3dd750da1835eb4b80e375749dc654350c443",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f718d4ad_672ced7d",
+        "filename": "sandbox/win/src/target_process.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1149139
+      },
+      "writtenOn": "2017-12-18T09:00:40Z",
+      "side": 0,
+      "message": "I suppose I could have replaced \"run outside the job\" with \"setting the thread token\" but as not setting the token will just mean it\u0027s likely to die starting up and won\u0027t cause a security issue no part of the comment now makes any sense.",
+      "parentUuid": "debb408d_8426adc6",
+      "range": {
+        "startLine": 141,
+        "startChar": 9,
+        "endLine": 141,
+        "endChar": 18
+      },
+      "revId": "68f3dd750da1835eb4b80e375749dc654350c443",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

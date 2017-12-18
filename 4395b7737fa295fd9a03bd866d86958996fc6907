@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "65da7908_e72f80ea",
+        "filename": "sandbox/win/src/target_process.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1149139
+      },
+      "writtenOn": "2017-12-18T09:00:40Z",
+      "side": 1,
+      "message": "Setting the token will take an implicit reference on the token object we don\u0027t need it anymore. And while initial_token_ didn\u0027t go out of scope initial_token_ is closed immediately afterwards.",
+      "parentUuid": "3aaac07b_e4496a28",
+      "range": {
+        "startLine": 189,
+        "startChar": 28,
+        "endLine": 189,
+        "endChar": 47
+      },
+      "revId": "4395b7737fa295fd9a03bd866d86958996fc6907",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "535f2dff_57d98c07",
         "filename": "sandbox/win/tests/common/test_utils.cc",
         "patchSetId": 7
@@ -71,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "bee4a9b7_d9f96345",
+        "filename": "sandbox/win/tests/common/test_utils.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1149139
+      },
+      "writtenOn": "2017-12-18T09:00:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "535f2dff_57d98c07",
+      "range": {
+        "startLine": 77,
+        "startChar": 5,
+        "endLine": 77,
+        "endChar": 32
+      },
+      "revId": "4395b7737fa295fd9a03bd866d86958996fc6907",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5db2c7dd_55017e11",
         "filename": "sandbox/win/tests/common/test_utils.cc",
         "patchSetId": 7
@@ -82,6 +130,30 @@
       "writtenOn": "2017-12-15T18:53:17Z",
       "side": 1,
       "message": "will this ever fail?",
+      "range": {
+        "startLine": 112,
+        "startChar": 10,
+        "endLine": 112,
+        "endChar": 35
+      },
+      "revId": "4395b7737fa295fd9a03bd866d86958996fc6907",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3580a53c_6eedaac3",
+        "filename": "sandbox/win/tests/common/test_utils.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1149139
+      },
+      "writtenOn": "2017-12-18T09:00:40Z",
+      "side": 1,
+      "message": "It shouldn\u0027t, I could just cast it away but you never know what lies ahead.",
+      "parentUuid": "5db2c7dd_55017e11",
       "range": {
         "startLine": 112,
         "startChar": 10,
@@ -114,6 +186,30 @@
       "revId": "4395b7737fa295fd9a03bd866d86958996fc6907",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "230f0b65_456fe59b",
+        "filename": "sandbox/win/tests/common/test_utils.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1149139
+      },
+      "writtenOn": "2017-12-18T09:00:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5dac1ce6_e012e8bc",
+      "range": {
+        "startLine": 123,
+        "startChar": 36,
+        "endLine": 123,
+        "endChar": 39
+      },
+      "revId": "4395b7737fa295fd9a03bd866d86958996fc6907",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
