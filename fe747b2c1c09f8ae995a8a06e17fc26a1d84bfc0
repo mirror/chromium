@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "58b96974_7288deb6",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/ScriptController.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-12-18T22:58:34Z",
+      "side": 1,
+      "message": "L134-139 to:\nv8::ScriptCompiler::CompileOptions compile_options;\nv8::ScriptCompiler::NoCacheReason no_cache_reason;\nstd::tie(compile_options, no_cache_reason) \u003d V8ScriptRunner::GetCompileOptions(...);",
+      "revId": "fe747b2c1c09f8ae995a8a06e17fc26a1d84bfc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "916a4d34_f513948b",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/WorkerOrWorkletScriptController.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-12-18T22:58:34Z",
+      "side": 1,
+      "message": "Ditto",
+      "range": {
+        "startLine": 279,
+        "startChar": 0,
+        "endLine": 279,
+        "endChar": 78
+      },
+      "revId": "fe747b2c1c09f8ae995a8a06e17fc26a1d84bfc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
