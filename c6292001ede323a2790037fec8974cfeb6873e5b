@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bd90a66f_c548932f",
+        "filename": "chrome/browser/banners/app_banner_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 1003006
+      },
+      "writtenOn": "2017-12-18T17:34:10Z",
+      "side": 1,
+      "message": "This looks like use-after-move. MSVC evaluates the callee last, I believe, so \u0027controller\u0027 is nulled out by the time \u0027controller-\u003eBannerPromptRequest\u0027 is evaluated. I think this is causing redness on the MSVC bots:\nhttps://ci.chromium.org/buildbot/chromium.clang/CrWinClang/1067\n\nI\u0027m not sure why it passed the msvc-rel try bot.",
+      "revId": "c6292001ede323a2790037fec8974cfeb6873e5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
