@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4c29f625_3b4048be",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1014,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-12-18T17:36:46Z",
+      "side": 1,
+      "message": "Instead of adding this boolean, could you use `ShouldHideMedaiControls()`? It\u0027s possible to pass flags of things to ignore. Sounds like here we would like to ignore the timer. It should take into account the fact that the mouse is hovering.",
+      "range": {
+        "startLine": 1014,
+        "startChar": 22,
+        "endLine": 1014,
+        "endChar": 54
+      },
+      "revId": "e80234f3b7abe3259f83cd41ceb9c93386628db9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
