@@ -124,6 +124,42 @@
     },
     {
       "key": {
+        "uuid": "c3def439_9782867b",
+        "filename": "components/viz/service/display/scoped_render_pass_texture.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2017-12-18T14:19:47Z",
+      "side": 1,
+      "message": "This is used in the move constructor and BindForSampling.",
+      "parentUuid": "da16835a_a9e2a760",
+      "revId": "658caacc431ee01439523cb1dcb630a2d78f5108",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62d4aec1_c4faf1a4",
+        "filename": "components/viz/service/display/scoped_render_pass_texture.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2017-12-18T14:19:47Z",
+      "side": 1,
+      "message": "We need to use it in move constructor.",
+      "parentUuid": "da16835a_a9e2a760",
+      "revId": "658caacc431ee01439523cb1dcb630a2d78f5108",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "717b8c75_15015a15",
         "filename": "components/viz/service/display/scoped_render_pass_texture.cc",
         "patchSetId": 31
@@ -141,6 +177,24 @@
     },
     {
       "key": {
+        "uuid": "2080b0cc_fa6ea752",
+        "filename": "components/viz/service/display/scoped_render_pass_texture.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2017-12-18T14:19:47Z",
+      "side": 1,
+      "message": "Used in operator\u003d.",
+      "parentUuid": "717b8c75_15015a15",
+      "revId": "658caacc431ee01439523cb1dcb630a2d78f5108",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "930f3e8b_766a3948",
         "filename": "components/viz/service/display/scoped_render_pass_texture.cc",
         "patchSetId": 31
@@ -152,6 +206,24 @@
       "writtenOn": "2017-12-15T00:26:46Z",
       "side": 1,
       "message": "Doesn\u0027t this delete the GL texture when you assign it to another object?",
+      "revId": "658caacc431ee01439523cb1dcb630a2d78f5108",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbe66154_7cee8f1a",
+        "filename": "components/viz/service/display/scoped_render_pass_texture.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2017-12-18T14:19:47Z",
+      "side": 1,
+      "message": "Yes, other will be deleted automatically here. \nUnder below circumstance, \nScopedRenderPassTexture contents_texture_updated \u003d std::move(contents_texture); \nrender_pass_textures_.insert(\nFree is useless. Because contents_texture_updated is constructed by contents_texture.\n\nHowever, if contents_texture_updated was constructed before like this:\nScopedRenderPassTexture contents_texture_updated(...); \ncontents_texture_updated \u003d std::move(contents_texture_other); \nThen Free will work.",
+      "parentUuid": "930f3e8b_766a3948",
       "revId": "658caacc431ee01439523cb1dcb630a2d78f5108",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -239,6 +311,24 @@
       "writtenOn": "2017-12-15T00:26:46Z",
       "side": 1,
       "message": "Can we specify the mipmap stuff when we create the texture, and do all this when we first allocate it, instead of storing state on the class to allow us to do it later when we go to use it?",
+      "revId": "658caacc431ee01439523cb1dcb630a2d78f5108",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba4f5f78_33fa5256",
+        "filename": "components/viz/service/display/scoped_render_pass_texture.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2017-12-18T14:19:47Z",
+      "side": 1,
+      "message": "The mipmap_state_ maybe changed by set_generate_mipmap. But during my test, I didn\u0027t see set_generate_mipmap being called. So remove this.",
+      "parentUuid": "8ef57944_98cee037",
       "revId": "658caacc431ee01439523cb1dcb630a2d78f5108",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

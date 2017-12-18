@@ -89,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "9154ac76_7a4a6fbb",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 1332,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2017-12-18T14:19:47Z",
+      "side": 1,
+      "message": "Add TODO for this.",
+      "parentUuid": "d42a01c0_206fdd51",
+      "revId": "768cbe3e4119794e7f3ab34942d71f94e088dfe9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "314281ea_44cd0eec",
         "filename": "components/viz/service/display/gl_renderer.cc",
         "patchSetId": 29
@@ -388,6 +406,24 @@
     },
     {
       "key": {
+        "uuid": "32bca978_9ee5678d",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 3604,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2017-12-18T14:19:47Z",
+      "side": 1,
+      "message": "For some case, whose size/hint changed, need to get the size/hint info.\n\nBTW, the erase in AllocateRenderPassResourceIfNeeded is to replace texture  for specific render pass.",
+      "parentUuid": "e2794108_fcd51b9f",
+      "revId": "768cbe3e4119794e7f3ab34942d71f94e088dfe9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f046ac99_3bc3236f",
         "filename": "components/viz/service/display/gl_renderer.cc",
         "patchSetId": 29
@@ -474,6 +510,24 @@
       "revId": "768cbe3e4119794e7f3ab34942d71f94e088dfe9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bcb4517_7a8dd857",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 3653,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2017-12-18T14:19:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e5470113_68135ef1",
+      "revId": "768cbe3e4119794e7f3ab34942d71f94e088dfe9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
