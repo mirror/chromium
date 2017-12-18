@@ -6,6 +6,7 @@
 
 #include "build/build_config.h"
 #include "chrome/browser/profiles/profile.h"
+#include "chrome/browser/signin/profile_oauth2_token_service_factory.h"
 #include "chrome/browser/signin/signin_manager_factory.h"
 #include "components/keyed_service/content/browser_context_dependency_manager.h"
 #include "components/keyed_service/core/keyed_service.h"
@@ -18,7 +19,9 @@
 class IdentityProxyHolder : public KeyedService {
  public:
   explicit IdentityProxyHolder(Profile* profile)
-      : identity_proxy_(SigninManagerFactory::GetForProfile(profile)) {}
+      : identity_proxy_(
+            SigninManagerFactory::GetForProfile(profile),
+            ProfileOAuth2TokenServiceFactory::GetForProfile(profile)) {}
 
   identity::IdentityProxy* identity_proxy() { return &identity_proxy_; }
 
@@ -30,6 +33,7 @@ IdentityProxyFactory::IdentityProxyFactory()
     : BrowserContextKeyedServiceFactory(
           "IdentityProxy",
           BrowserContextDependencyManager::GetInstance()) {
+  DependsOn(ProfileOAuth2TokenServiceFactory::GetInstance());
   DependsOn(SigninManagerFactory::GetInstance());
 }
 

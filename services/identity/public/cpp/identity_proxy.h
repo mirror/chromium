@@ -8,6 +8,9 @@
 #include "base/observer_list.h"
 #include "components/signin/core/browser/account_info.h"
 #include "components/signin/core/browser/signin_manager_base.h"
+#include "services/identity/public/cpp/primary_account_token_fetcher.h"
+
+class ProfileOAuth2TokenService;
 
 namespace identity {
 
@@ -34,12 +37,20 @@ class IdentityProxy : public SigninManagerBase::Observer {
     virtual ~Observer() {}
   };
 
-  IdentityProxy(SigninManagerBase* signin_manager);
+  IdentityProxy(SigninManagerBase* signin_manager,
+                ProfileOAuth2TokenService* token_service);
   ~IdentityProxy() override;
 
   // Provides access to the latest cached information of the user's primary
   // account.
   AccountInfo GetPrimaryAccountInfo();
+
+  // Creates a PrimaryAccountTokenFetcher given the passed-in information.
+  std::unique_ptr<PrimaryAccountTokenFetcher>
+  CreateAccessTokenFetcherForPrimaryAccount(
+      const std::string& oauth_consumer_name,
+      const OAuth2TokenService::ScopeSet& scopes,
+      PrimaryAccountTokenFetcher::TokenCallback callback);
 
   // Methods to register or remove observers.
   void AddObserver(Observer* observer);
@@ -60,11 +71,12 @@ class IdentityProxy : public SigninManagerBase::Observer {
   // receiving this call asynchronously from the Identity Service.
   void OnPrimaryAccountLogout(const AccountInfo& account_info);
 
-  // Backing SigninManagerBase. NOTE: We strive to limit synchronous access to
-  // this class in the IdentityProxy implementation, as all such synchronous
+  // Backing signin classes. NOTE: We strive to limit synchronous access to
+  // these classes in the IdentityProxy implementation, as all such synchronous
   // access will become impossible when IdentityProxy is backed by the Identity
   // Service.
   SigninManagerBase* signin_manager_;
+  ProfileOAuth2TokenService* token_service_;
 
   // The latest (cached) value of the primary account.
   AccountInfo primary_account_info_;
