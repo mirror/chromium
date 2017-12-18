@@ -70,6 +70,29 @@
       "revId": "9b8d00bbb994bf11ab3630f29c5c2d43da844841",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9919d1ee_0e1191fd",
+        "filename": "chrome/browser/chrome_content_browser_manifest_overlay.json",
+        "patchSetId": 7
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-18T06:55:38Z",
+      "side": 1,
+      "message": "Please replaces tabs with spaces.",
+      "range": {
+        "startLine": 36,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 1
+      },
+      "revId": "9b8d00bbb994bf11ab3630f29c5c2d43da844841",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
