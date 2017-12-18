@@ -9,7 +9,6 @@
 #include "gpu/GLES2/gl2extchromium.h"
 #include "gpu/command_buffer/client/gpu_memory_buffer_manager.h"
 #include "platform/graphics/CanvasResourceProvider.h"
-#include "platform/graphics/StaticBitmapImage.h"
 #include "platform/graphics/gpu/SharedGpuContext.h"
 #include "public/platform/Platform.h"
 #include "skia/ext/texture_handle.h"
@@ -18,9 +17,13 @@
 
 namespace blink {
 
-CanvasResource::CanvasResource(base::WeakPtr<CanvasResourceProvider> provider,
-                               SkFilterQuality filter_quality)
-    : provider_(std::move(provider)), filter_quality_(filter_quality) {}
+CanvasResource::CanvasResource(
+    base::WeakPtr<WebGraphicsContext3DProviderWrapper> context_provider_wrapper,
+    base::WeakPtr<CanvasResourceProvider> provider,
+    SkFilterQuality filter_quality)
+    : context_provider_wrapper_(std::move(context_provider_wrapper)),
+      provider_(std::move(provider)),
+      filter_quality_(filter_quality) {}
 
 CanvasResource::~CanvasResource() {
   // Sync token should have been waited on in sub-class implementation of
@@ -29,9 +32,24 @@ CanvasResource::~CanvasResource() {
 }
 
 gpu::gles2::GLES2Interface* CanvasResource::ContextGL() const {
-  if (!ContextProviderWrapper())
+  if (!context_provider_wrapper_)
     return nullptr;
-  return ContextProviderWrapper()->ContextProvider()->ContextGL();
+  return context_provider_wrapper_->ContextProvider()->ContextGL();
+}
+
+const gpu::Mailbox& CanvasResource::GetOrCreateGpuMailbox() {
+  if (gpu_mailbox_.IsZero()) {
+    auto gl = ContextGL();
+    DCHECK(gl);  // caller should already have early exited if !gl.
+    if (gl) {
+      gl->GenMailboxCHROMIUM(gpu_mailbox_.name);
+    }
+  }
+  return gpu_mailbox_;
+}
+
+bool CanvasResource::HasGpuMailbox() const {
+  return !gpu_mailbox_.IsZero();
 }
 
 void CanvasResource::SetSyncTokenForRelease(const gpu::SyncToken& token) {
@@ -60,12 +78,11 @@ static void ReleaseFrameResources(
   }
 }
 
-bool CanvasResource::PrepareTransferableResource(
+void CanvasResource::PrepareTransferableResource(
     viz::TransferableResource* out_resource,
     std::unique_ptr<viz::SingleReleaseCallback>* out_callback) {
-  DCHECK(IsValid());
-
   // This should never be called on unaccelerated canvases (for now).
+  DCHECK(TextureId());
 
   // Gpu compositing is a prerequisite for accelerated 2D canvas
   // TODO: For WebGL to use this, we must add software composing support.
@@ -73,101 +90,115 @@ bool CanvasResource::PrepareTransferableResource(
   auto gl = ContextGL();
   DCHECK(gl);
 
-  const gpu::Mailbox& mailbox = GetOrCreateGpuMailbox();
-  if (mailbox.IsZero())
-    return false;
+  GLuint filter =
+      filter_quality_ == kNone_SkFilterQuality ? GL_NEAREST : GL_LINEAR;
+  GLenum target = TextureTarget();
+  GLint texture_id = TextureId();
+
+  gl->BindTexture(target, texture_id);
+  gl->TexParameteri(target, GL_TEXTURE_MAG_FILTER, filter);
+  gl->TexParameteri(target, GL_TEXTURE_MIN_FILTER, filter);
+  gl->TexParameteri(target, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+  gl->TexParameteri(target, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+
+  gl->ProduceTextureDirectCHROMIUM(texture_id, GetOrCreateGpuMailbox().name);
+  const GLuint64 fence_sync = gl->InsertFenceSyncCHROMIUM();
+  gl->ShallowFlushCHROMIUM();
+  gpu::SyncToken sync_token;
+  gl->GenUnverifiedSyncTokenCHROMIUM(fence_sync, sync_token.GetData());
 
   *out_resource = viz::TransferableResource::MakeGLOverlay(
-      mailbox, GLFilter(), TextureTarget(), GetSyncToken(), gfx::Size(Size()),
+      GetOrCreateGpuMailbox(), filter, target, sync_token, gfx::Size(Size()),
       IsOverlayCandidate());
+
+  gl->BindTexture(target, 0);
+
+  // Because we are changing the texture binding without going through skia,
+  // we must dirty the context.
+  GrContext* gr = GetGrContext();
+  if (gr)
+    gr->resetContext(kTextureBinding_GrGLBackendState);
 
   scoped_refptr<CanvasResource> this_ref(this);
   auto func = WTF::Bind(&ReleaseFrameResources, provider_,
                         WTF::Passed(std::move(this_ref)));
   *out_callback = viz::SingleReleaseCallback::Create(std::move(func));
-  return true;
 }
 
 GrContext* CanvasResource::GetGrContext() const {
-  if (!ContextProviderWrapper())
+  if (!context_provider_wrapper_)
     return nullptr;
-  return ContextProviderWrapper()->ContextProvider()->GetGrContext();
+  return context_provider_wrapper_->ContextProvider()->GetGrContext();
 }
 
-GLenum CanvasResource::GLFilter() const {
-  return filter_quality_ == kNone_SkFilterQuality ? GL_NEAREST : GL_LINEAR;
-}
-
-// CanvasResource_Bitmap
+// CanvasResource_Skia
 //==============================================================================
 
-CanvasResource_Bitmap::CanvasResource_Bitmap(
-    scoped_refptr<StaticBitmapImage> image,
+CanvasResource_Skia::CanvasResource_Skia(
+    sk_sp<SkImage> image,
+    base::WeakPtr<WebGraphicsContext3DProviderWrapper> context_provider_wrapper,
     base::WeakPtr<CanvasResourceProvider> provider,
     SkFilterQuality filter_quality)
-    : CanvasResource(std::move(provider), filter_quality),
+    : CanvasResource(std::move(context_provider_wrapper),
+                     std::move(provider),
+                     filter_quality),
       image_(std::move(image)) {}
 
-scoped_refptr<CanvasResource_Bitmap> CanvasResource_Bitmap::Create(
-    scoped_refptr<StaticBitmapImage> image,
+scoped_refptr<CanvasResource_Skia> CanvasResource_Skia::Create(
+    sk_sp<SkImage> image,
+    base::WeakPtr<WebGraphicsContext3DProviderWrapper> context_provider_wrapper,
     base::WeakPtr<CanvasResourceProvider> provider,
     SkFilterQuality filter_quality) {
-  scoped_refptr<CanvasResource_Bitmap> resource =
-      AdoptRef(new CanvasResource_Bitmap(std::move(image), std::move(provider),
-                                         filter_quality));
+  scoped_refptr<CanvasResource_Skia> resource =
+      AdoptRef(new CanvasResource_Skia(std::move(image),
+                                       std::move(context_provider_wrapper),
+                                       std::move(provider), filter_quality));
   if (resource->IsValid())
     return resource;
   return nullptr;
 }
 
-bool CanvasResource_Bitmap::IsValid() const {
+bool CanvasResource_Skia::IsValid() const {
   if (!image_)
     return false;
-  return image_->IsValid();
+  if (!image_->isTextureBacked())
+    return true;
+  return !!context_provider_wrapper_;
 }
 
-void CanvasResource_Bitmap::TearDown() {
+void CanvasResource_Skia::TearDown() {
   WaitSyncTokenBeforeRelease();
   auto gl = ContextGL();
   if (gl && HasGpuMailbox()) {
-    DCHECK(image_->IsTextureBacked());
+    DCHECK(image_->isTextureBacked());
     // To avoid leaking Mailbox records, we must disassociate the mailbox
     // before image_ goes out of scope because skia might recycle the texture.
-    gl->ProduceTextureDirectCHROMIUM(0, GetOrCreateGpuMailbox().name);
+    gl->ProduceTextureDirectCHROMIUM(0, GpuMailbox().name);
   }
   image_ = nullptr;
+  context_provider_wrapper_ = nullptr;
 }
 
-IntSize CanvasResource_Bitmap::Size() const {
-  if (!image_)
-    return IntSize(0, 0);
+IntSize CanvasResource_Skia::Size() const {
   return IntSize(image_->width(), image_->height());
 }
 
-GLenum CanvasResource_Bitmap::TextureTarget() const {
+GLuint CanvasResource_Skia::TextureId() const {
+  DCHECK(image_->isTextureBacked());
+  return skia::GrBackendObjectToGrGLTextureInfo(image_->getTextureHandle(true))
+      ->fID;
+}
+
+GLenum CanvasResource_Skia::TextureTarget() const {
   return GL_TEXTURE_2D;
 }
 
-const gpu::Mailbox& CanvasResource_Bitmap::GetOrCreateGpuMailbox() {
-  DCHECK(image_);  // Calling code should check IsValid() before calling this.
-  image_->EnsureMailbox(kUnverifiedSyncToken, GLFilter());
-  return image_->GetMailbox();
-}
-
-bool CanvasResource_Bitmap::HasGpuMailbox() const {
-  return image_ && image_->HasMailbox();
-}
-
-const gpu::SyncToken& CanvasResource_Bitmap::GetSyncToken() const {
-  DCHECK(image_);  // Calling code should check IsValid() before calling this.
-  return image_->GetSyncToken();
-}
-
-base::WeakPtr<WebGraphicsContext3DProviderWrapper>
-CanvasResource_Bitmap::ContextProviderWrapper() const {
-  if (!image_)
-    return nullptr;
-  return image_->ContextProviderWrapper();
+void CanvasResource_Skia::PrepareTransferableResource(
+    viz::TransferableResource* out_resource,
+    std::unique_ptr<viz::SingleReleaseCallback>* out_callback) {
+  DCHECK(image_->isTextureBacked());
+  CanvasResource::PrepareTransferableResource(out_resource, out_callback);
+  image_->getTexture()->textureParamsModified();
 }
 
 // CanvasResource_GpuMemoryBuffer
@@ -179,8 +210,9 @@ CanvasResource_GpuMemoryBuffer::CanvasResource_GpuMemoryBuffer(
     base::WeakPtr<WebGraphicsContext3DProviderWrapper> context_provider_wrapper,
     base::WeakPtr<CanvasResourceProvider> provider,
     SkFilterQuality filter_quality)
-    : CanvasResource(provider, filter_quality),
-      context_provider_wrapper_(std::move(context_provider_wrapper)),
+    : CanvasResource(std::move(context_provider_wrapper),
+                     provider,
+                     filter_quality),
       color_params_(color_params) {
   if (!context_provider_wrapper_)
     return;
@@ -236,9 +268,9 @@ CanvasResource_GpuMemoryBuffer::Create(
     base::WeakPtr<CanvasResourceProvider> provider,
     SkFilterQuality filter_quality) {
   scoped_refptr<CanvasResource_GpuMemoryBuffer> resource =
-      AdoptRef(new CanvasResource_GpuMemoryBuffer(
-          size, color_params, std::move(context_provider_wrapper), provider,
-          filter_quality));
+      AdoptRef(new CanvasResource_GpuMemoryBuffer(size, color_params,
+                                                  context_provider_wrapper,
+                                                  provider, filter_quality));
   if (resource->IsValid())
     return resource;
   return nullptr;
@@ -251,7 +283,7 @@ void CanvasResource_GpuMemoryBuffer::TearDown() {
   auto gl = context_provider_wrapper_->ContextProvider()->ContextGL();
   auto gr = context_provider_wrapper_->ContextProvider()->GetGrContext();
   if (gl && texture_id_) {
-    GLenum target = TextureTarget();
+    GLenum target = GL_TEXTURE_RECTANGLE_ARB;
     gl->BindTexture(target, texture_id_);
     gl->ReleaseTexImage2DCHROMIUM(target, image_id_);
     gl->DestroyImageCHROMIUM(image_id_);
@@ -264,44 +296,6 @@ void CanvasResource_GpuMemoryBuffer::TearDown() {
   image_id_ = 0;
   texture_id_ = 0;
   gpu_memory_buffer_ = nullptr;
-}
-
-const gpu::Mailbox& CanvasResource_GpuMemoryBuffer::GetOrCreateGpuMailbox() {
-  auto gl = ContextGL();
-  DCHECK(gl);  // caller should already have early exited if !gl.
-  if (gpu_mailbox_.IsZero() && gl) {
-    gl->GenMailboxCHROMIUM(gpu_mailbox_.name);
-    gl->ProduceTextureDirectCHROMIUM(texture_id_, gpu_mailbox_.name);
-    const GLuint64 fence_sync = gl->InsertFenceSyncCHROMIUM();
-    gl->ShallowFlushCHROMIUM();
-    gl->GenUnverifiedSyncTokenCHROMIUM(fence_sync, sync_token_.GetData());
-  }
-  return gpu_mailbox_;
-}
-
-bool CanvasResource_GpuMemoryBuffer::HasGpuMailbox() const {
-  return !gpu_mailbox_.IsZero();
-}
-
-const gpu::SyncToken& CanvasResource_GpuMemoryBuffer::GetSyncToken() const {
-  return sync_token_;
-}
-
-void CanvasResource_GpuMemoryBuffer::CopyFromTexture(GLuint source_texture,
-                                                     GLenum format,
-                                                     GLenum type) {
-  if (!IsValid())
-    return;
-
-  ContextGL()->CopyTextureCHROMIUM(
-      source_texture, 0 /*sourceLevel*/, TextureTarget(), texture_id_,
-      0 /*destLevel*/, format, type, false /*unpackFlipY*/,
-      false /*unpackPremultiplyAlpha*/, false /*unpackUnmultiplyAlpha*/);
-}
-
-base::WeakPtr<WebGraphicsContext3DProviderWrapper>
-CanvasResource_GpuMemoryBuffer::ContextProviderWrapper() const {
-  return context_provider_wrapper_;
 }
 
 }  // namespace blink

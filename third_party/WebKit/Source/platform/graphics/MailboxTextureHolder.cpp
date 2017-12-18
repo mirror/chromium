@@ -51,8 +51,7 @@ MailboxTextureHolder::MailboxTextureHolder(
 }
 
 MailboxTextureHolder::MailboxTextureHolder(
-    std::unique_ptr<TextureHolder> texture_holder,
-    GLenum filter)
+    std::unique_ptr<TextureHolder> texture_holder)
     : TextureHolder(texture_holder->ContextProviderWrapper()),
       texture_id_(0),
       is_converted_from_skia_texture_(true),
@@ -65,8 +64,7 @@ MailboxTextureHolder::MailboxTextureHolder(
   if (!ContextProviderWrapper())
     return;
 
-  ContextProviderWrapper()->Utils()->GetMailboxForSkImage(mailbox_, image,
-                                                          filter);
+  ContextProviderWrapper()->Utils()->GetMailboxForSkImage(mailbox_, image);
 
   InitCommon();
 }

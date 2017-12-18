@@ -63,16 +63,13 @@ class CanvasResourceProvider_Texture : public CanvasResourceProvider {
           SkSurface::kRetain_ContentChangeMode);
     }
 
-    sk_sp<SkImage> skia_image = GetSkSurface()->makeImageSnapshot();
-    if (!skia_image)
+    sk_sp<SkImage> image = GetSkSurface()->makeImageSnapshot();
+    if (!image)
       return nullptr;
-    DCHECK(skia_image->isTextureBacked());
+    DCHECK(image->isTextureBacked());
 
-    scoped_refptr<StaticBitmapImage> image =
-        StaticBitmapImage::Create(skia_image, ContextProviderWrapper());
-
-    scoped_refptr<CanvasResource> resource =
-        CanvasResource_Bitmap::Create(image, CreateWeakPtr(), FilterQuality());
+    scoped_refptr<CanvasResource> resource = CanvasResource_Skia::Create(
+        image, ContextProviderWrapper(), CreateWeakPtr(), FilterQuality());
     if (!resource)
       return nullptr;
 
@@ -138,6 +135,10 @@ class CanvasResourceProvider_Texture_GpuMemoryBuffer final
       return CanvasResourceProvider_Texture::ProduceFrame();
     }
 
+    auto gl = ContextGL();
+    auto gr = GetGrContext();
+    DCHECK(gl && gr);
+
     sk_sp<SkImage> image = GetSkSurface()->makeImageSnapshot();
     if (!image)
       return nullptr;
@@ -147,9 +148,14 @@ class CanvasResourceProvider_Texture_GpuMemoryBuffer final
         skia::GrBackendObjectToGrGLTextureInfo(image->getTextureHandle(true))
             ->fID;
 
-    output_resource->CopyFromTexture(skia_texture_id,
-                                     ColorParams().GLInternalFormat(),
-                                     ColorParams().GLType());
+    GLenum target = GL_TEXTURE_RECTANGLE_ARB;
+
+    gl->CopyTextureCHROMIUM(skia_texture_id, 0 /*sourceLevel*/, target,
+                            output_resource->TextureId(), 0 /*destLevel*/,
+                            ColorParams().GLInternalFormat(),
+                            ColorParams().GLType(), false /*unpackFlipY*/,
+                            false /*unpackPremultiplyAlpha*/,
+                            false /*unpackUnmultiplyAlpha*/);
 
     return output_resource;
   }

@@ -30,14 +30,12 @@ class PLATFORM_EXPORT TextureHolder {
   virtual bool IsValid() const = 0;
 
   // Methods overrided by MailboxTextureHolder
-  virtual const gpu::Mailbox& GetMailbox() const {
+  virtual gpu::Mailbox GetMailbox() {
     NOTREACHED();
-    static const gpu::Mailbox mailbox;
-    return mailbox;
+    return gpu::Mailbox();
   }
-  virtual const gpu::SyncToken& GetSyncToken() const {
-    static const gpu::SyncToken sync_token;
-    return sync_token;
+  virtual gpu::SyncToken GetSyncToken() {
+    return gpu::SyncToken();
   }
   virtual void UpdateSyncToken(gpu::SyncToken) { NOTREACHED(); }
   virtual void Sync(MailboxSyncMode) { NOTREACHED(); }
