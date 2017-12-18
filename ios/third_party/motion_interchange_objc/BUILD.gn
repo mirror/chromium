@@ -2,23 +2,46 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
-config("config") {
-  include_dirs = [ "src/src" ]
-  visibility = [ ":motion_interchange_objc" ]
-}
+import("//build/config/ios/rules.gni")
+import("//ios/build/chrome_build.gni")
 
-source_set("motion_interchange_objc") {
+ios_framework_bundle("motion_interchange_objc") {
+  output_name = "MotionInterchange"
   sources = [
+    "src/src/CAMediaTimingFunction+MDMTimingCurve.h",
+    "src/src/CAMediaTimingFunction+MDMTimingCurve.m",
+    "src/src/MDMAnimationTraits.h",
+    "src/src/MDMAnimationTraits.m",
     "src/src/MDMMotionCurve.h",
     "src/src/MDMMotionCurve.m",
     "src/src/MDMMotionRepetition.h",
     "src/src/MDMMotionTiming.h",
+    "src/src/MDMRepetition.h",
+    "src/src/MDMRepetition.m",
+    "src/src/MDMRepetitionOverTime.h",
+    "src/src/MDMRepetitionOverTime.m",
+    "src/src/MDMRepetitionTraits.h",
+    "src/src/MDMSpringTimingCurve.h",
+    "src/src/MDMSpringTimingCurve.m",
+    "src/src/MDMSpringTimingCurveGenerator.h",
+    "src/src/MDMSpringTimingCurveGenerator.m",
+    "src/src/MDMSubclassingRestricted.h",
+    "src/src/MDMTimingCurve.h",
     "src/src/MotionInterchange.h",
   ]
-  public = [
+  public_headers = [
+    "src/src/CAMediaTimingFunction+MDMTimingCurve.h",
+    "src/src/MDMAnimationTraits.h",
     "src/src/MDMMotionCurve.h",
     "src/src/MDMMotionRepetition.h",
     "src/src/MDMMotionTiming.h",
+    "src/src/MDMRepetition.h",
+    "src/src/MDMRepetitionOverTime.h",
+    "src/src/MDMRepetitionTraits.h",
+    "src/src/MDMSpringTimingCurve.h",
+    "src/src/MDMSpringTimingCurveGenerator.h",
+    "src/src/MDMSubclassingRestricted.h",
+    "src/src/MDMTimingCurve.h",
     "src/src/MotionInterchange.h",
   ]
 
@@ -26,12 +49,25 @@ source_set("motion_interchange_objc") {
     "CoreGraphics.framework",
     "Foundation.framework",
     "QuartzCore.framework",
+    "UIKit.framework",
   ]
-  configs -= [ "//build/config/compiler:chromium_code" ]
+  configs -= [
+    "//build/config/gcc:symbol_visibility_hidden",
+    "//build/config/compiler:chromium_code",
+  ]
   configs += [
-    ":config",
     "//build/config/compiler:enable_arc",
     "//build/config/compiler:no_chromium_code",
+    "//build/config/gcc:symbol_visibility_default",
   ]
-  public_configs = [ ":config" ]
+
+  _project_version = "1.0"
+  _bundle_identifier =
+      "$ios_app_bundle_id_prefix.$chromium_bundle_id.$output_name"
+
+  info_plist = "src/resources/Info.plist"
+  extra_substitutions = [
+    "PRODUCT_BUNDLE_IDENTIFIER=$_bundle_identifier",
+    "CURRENT_PROJECT_VERSION=$_project_version",
+  ]
 }

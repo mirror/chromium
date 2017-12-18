@@ -2,15 +2,16 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
-config("config") {
-  include_dirs = [ "src/src" ]
-  visibility = [ ":motion_transitioning_objc" ]
-}
+import("//build/config/ios/ios_sdk.gni")
+import("//build/config/ios/rules.gni")
+import("//ios/build/chrome_build.gni")
 
-source_set("motion_transitioning_objc") {
+ios_framework_bundle("motion_transitioning_objc") {
+  output_name = "MotionTransitioning"
   sources = [
     "src/src/MDMTransition.h",
     "src/src/MDMTransitionContext.h",
+    "src/src/MDMTransitionController.h",
     "src/src/MDMTransitionNavigationControllerDelegate.h",
     "src/src/MDMTransitionNavigationControllerDelegate.m",
     "src/src/MDMTransitionPresentationController.h",
@@ -25,9 +26,10 @@ source_set("motion_transitioning_objc") {
     "src/src/private/MDMViewControllerTransitionCoordinator.h",
     "src/src/private/MDMViewControllerTransitionCoordinator.m",
   ]
-  public = [
+  public_headers = [
     "src/src/MDMTransition.h",
     "src/src/MDMTransitionContext.h",
+    "src/src/MDMTransitionController.h",
     "src/src/MDMTransitionNavigationControllerDelegate.h",
     "src/src/MDMTransitionPresentationController.h",
     "src/src/MDMTransitionViewSnapshotter.h",
@@ -36,14 +38,27 @@ source_set("motion_transitioning_objc") {
   ]
 
   libs = [
-    "CoreGraphics.framework",
     "Foundation.framework",
+    "QuartzCore.framework",
+    "UIKit.framework",
   ]
-  configs -= [ "//build/config/compiler:chromium_code" ]
+  configs -= [
+    "//build/config/gcc:symbol_visibility_hidden",
+    "//build/config/compiler:chromium_code",
+  ]
   configs += [
-    ":config",
     "//build/config/compiler:enable_arc",
     "//build/config/compiler:no_chromium_code",
+    "//build/config/gcc:symbol_visibility_default",
   ]
-  public_configs = [ ":config" ]
+
+  _project_version = "1.0"
+  _bundle_identifier =
+      "$ios_app_bundle_id_prefix.$chromium_bundle_id.$output_name"
+
+  info_plist = "src/resources/Info.plist"
+  extra_substitutions = [
+    "PRODUCT_BUNDLE_IDENTIFIER=$_bundle_identifier",
+    "CURRENT_PROJECT_VERSION=$_project_version",
+  ]
 }

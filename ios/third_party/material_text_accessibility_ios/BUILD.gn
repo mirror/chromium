@@ -2,12 +2,11 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
-config("material_text_accessibility_ios_config") {
-  include_dirs = [ "src/src" ]
-  visibility = [ ":material_text_accessibility_ios" ]
-}
+import("//build/config/ios/rules.gni")
+import("//ios/build/chrome_build.gni")
 
-source_set("material_text_accessibility_ios") {
+ios_framework_bundle("material_text_accessibility_ios") {
+  output_name = "MDFTextAccessibility"
   sources = [
     "src/src/MDFTextAccessibility-Bridging-Header.h",
     "src/src/MDFTextAccessibility.h",
@@ -19,11 +18,32 @@ source_set("material_text_accessibility_ios") {
     "src/src/private/NSArray+MDFUtils.h",
     "src/src/private/NSArray+MDFUtils.m",
   ]
-  public_configs = [ ":material_text_accessibility_ios_config" ]
-  configs -= [ "//build/config/compiler:chromium_code" ]
+  public_headers = [
+    "src/src/MDFTextAccessibility-Bridging-Header.h",
+    "src/src/MDFTextAccessibility.h",
+  ]
+
+  libs = [
+    "Foundation.framework",
+    "UIKit.framework",
+  ]
+  configs -= [
+    "//build/config/gcc:symbol_visibility_hidden",
+    "//build/config/compiler:chromium_code",
+  ]
   configs += [
-    ":material_text_accessibility_ios_config",
     "//build/config/compiler:enable_arc",
     "//build/config/compiler:no_chromium_code",
+    "//build/config/gcc:symbol_visibility_default",
+  ]
+
+  _project_version = "1.0"
+  _bundle_identifier =
+      "$ios_app_bundle_id_prefix.$chromium_bundle_id.$output_name"
+
+  info_plist = "src/resources/Info.plist"
+  extra_substitutions = [
+    "PRODUCT_BUNDLE_IDENTIFIER=$_bundle_identifier",
+    "CURRENT_PROJECT_VERSION=$_project_version",
   ]
 }
