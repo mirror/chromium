@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "33091f89_b45c61cb",
+        "filename": "chrome/browser/chromeos/policy/off_hours/device_off_hours_controller.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-12-18T22:23:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9e4c0ed0_58cf3939",
+      "revId": "969d0f9e53918ca5f027a816cd8129d351fa80c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d0349858_8278adca",
         "filename": "chrome/browser/chromeos/policy/off_hours/device_off_hours_controller_unittest.cc",
         "patchSetId": 5
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "cf00c4c2_21a24839",
+        "filename": "chrome/browser/chromeos/policy/off_hours/device_off_hours_controller_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-12-18T22:23:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d0349858_8278adca",
+      "range": {
+        "startLine": 115,
+        "startChar": 8,
+        "endLine": 115,
+        "endChar": 24
+      },
+      "revId": "969d0f9e53918ca5f027a816cd8129d351fa80c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7b7a6357_758f0ad5",
         "filename": "chrome/browser/chromeos/settings/device_settings_service.h",
         "patchSetId": 5
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "0614f0d1_ecb7af46",
+        "filename": "chrome/browser/chromeos/settings/device_settings_service.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-12-18T22:23:17Z",
+      "side": 1,
+      "message": "It\u0027s confusing, but \u0027STORE_SUCCESS\u0027 is returned on Load or Store success (see enum Status above).",
+      "parentUuid": "7b7a6357_758f0ad5",
+      "revId": "969d0f9e53918ca5f027a816cd8129d351fa80c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "826da6b6_0f2555fc",
         "filename": "chrome/browser/chromeos/settings/device_settings_service.h",
         "patchSetId": 5
@@ -70,6 +130,24 @@
       "writtenOn": "2017-12-18T21:46:17Z",
       "side": 1,
       "message": "I might be paranoid but this could get abused. Normally, the settings are from policy blob and there is no way to change it since only DM server holds the private key to sign the policy blob. But this allows code to change arbitrary policy without the need to touch policy blob.\n\nIMHO, we should have an explicit/limited ApplyOffHoursPolicy method here for DeviceOffHoursController instead of this powerful api.",
+      "revId": "969d0f9e53918ca5f027a816cd8129d351fa80c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d72e6b83_5586ec38",
+        "filename": "chrome/browser/chromeos/settings/device_settings_service.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-12-18T22:23:17Z",
+      "side": 1,
+      "message": "Well, in order to do that, DeviceSettingsService pretty much needs to depend on the off_hours policy code and we shouldn\u0027t try to make this layering change.\n\nIn the associated issue, mnissler@ suggested that we should separate out policy from DeviceSettingsService, so that is the approach I was taking, but maybe this needs to be part of a larger / more thought out plan about where the policy code should live. I am happy to put this change on the backburner in the meanwhile.",
+      "parentUuid": "826da6b6_0f2555fc",
       "revId": "969d0f9e53918ca5f027a816cd8129d351fa80c4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -96,6 +174,30 @@
       "revId": "969d0f9e53918ca5f027a816cd8129d351fa80c4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb4830d8_6461e202",
+        "filename": "chrome/browser/ui/views/ash/chrome_browser_main_extra_parts_ash.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-12-18T22:23:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bd3b984e_ca757349",
+      "range": {
+        "startLine": 125,
+        "startChar": 6,
+        "endLine": 125,
+        "endChar": 22
+      },
+      "revId": "969d0f9e53918ca5f027a816cd8129d351fa80c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
