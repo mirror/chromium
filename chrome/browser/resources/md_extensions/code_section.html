@@ -30,6 +30,7 @@
         background: var(--paper-grey-300);
         border-right: 1px solid var(--paper-grey-500);
         display: flex;
+        flex-direction: column;
         padding: 0 8px;
         text-align: right;
       }
@@ -44,14 +45,22 @@
         color: var(--paper-grey-800);
         text-align: center;
       }
+
+      #source {
+        overflow-x: auto;
+      }
     </style>
     <div id="scroll-container" hidden="[[!codeText_]]">
       <div id="main">
         <div id="line-numbers">
-          <span>[[computeLineNumbersContent_(codeText_)]]</span>
+          <div hidden="[[!truncatedBefore_]]">...</div>
+          <span>[[lineNumbers_]]</span>
+          <div hidden="[[!truncatedAfter_]]">...</div>
         </div>
         <div id="source">
+          <div hidden="[[!truncatedBefore_]]">&nbsp;</div>
           <span>[[codeText_]]</span>
+          <div hidden="[[!truncatedAfter_]]">&nbsp;</div>
         </div>
       </div>
     </div>
