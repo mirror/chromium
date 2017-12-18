@@ -34,6 +34,24 @@
       "revId": "e1d0ebac8250dd95c37455ab729ead1d077aec62",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcd485f9_8bdbe358",
+        "filename": "chrome/browser/chromeos/arc/wallpaper/arc_wallpaper_service.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-12-18T07:09:48Z",
+      "side": 1,
+      "message": "SGTM. Thank you very much for your support from Wallpaper perspective!",
+      "parentUuid": "49662bbd_3a072878",
+      "revId": "e1d0ebac8250dd95c37455ab729ead1d077aec62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
