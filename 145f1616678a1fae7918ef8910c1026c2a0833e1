@@ -51,6 +51,24 @@
       "revId": "145f1616678a1fae7918ef8910c1026c2a0833e1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6137158_237b000d",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8ScriptRunner.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-12-18T03:01:16Z",
+      "side": 0,
+      "message": "Does V8 support the code cache generation from StreamedSource? If so, we can remove these restrictions.",
+      "parentUuid": "b087bd56_a8bc8dbe",
+      "revId": "145f1616678a1fae7918ef8910c1026c2a0833e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
