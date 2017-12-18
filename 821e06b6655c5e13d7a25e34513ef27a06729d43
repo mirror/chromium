@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fe3e5a80_8f0e99d8",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 9510,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-12-18T19:22:41Z",
+      "side": 1,
+      "message": "This is only emitted when AuthMode is DEFAULT.  Should that be mentioned here?  (Is it a meaningful restrictions?)",
+      "revId": "821e06b6655c5e13d7a25e34513ef27a06729d43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
