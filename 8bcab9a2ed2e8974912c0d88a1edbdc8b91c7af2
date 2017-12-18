@@ -34,6 +34,24 @@
       "revId": "8bcab9a2ed2e8974912c0d88a1edbdc8b91c7af2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36eabeee_caa04b19",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetNavigateTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-12-18T19:48:51Z",
+      "side": 0,
+      "message": "I like that idea. I updated the code to call endAnimations() inside the two calls to runOnUiThread in this method, and switched them both to asserts. I looked at other examples in doing this, and tested locally. If there is anything else you\u0027d like me to look at, let me know.",
+      "parentUuid": "de5c96a9_5767dc89",
+      "revId": "8bcab9a2ed2e8974912c0d88a1edbdc8b91c7af2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
