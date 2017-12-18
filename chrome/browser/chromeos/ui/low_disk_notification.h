@@ -15,8 +15,6 @@
 #include "base/time/time.h"
 #include "chromeos/dbus/cryptohome_client.h"
 
-class Profile;
-
 namespace message_center {
 class Notification;
 }
@@ -51,8 +49,7 @@ class LowDiskNotification : public CryptohomeClient::Observer {
   // Creates a notification for the specified severity.  If the severity does
   // not match a known value MEDIUM is used by default.
   std::unique_ptr<message_center::Notification> CreateNotification(
-      Severity severity,
-      Profile* profile);
+      Severity severity);
 
   // Gets the severity of the low disk status based on the amount of free space
   // left on the disk.
