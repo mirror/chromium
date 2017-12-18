@@ -5,8 +5,8 @@
 module printing.mojom;
 
 const string kServiceName = "pdf_compositor";
+const uint32 kNonApplicablePageNum = 4294967295;  // UINT_MAX
 
-// TODO(weili): Add support for printing frames from different processes.
 interface PdfCompositor {
   // The status of CompositePdf execution.
   enum Status {
@@ -16,10 +16,46 @@ interface PdfCompositor {
     COMPOSTING_FAILURE,
   };
 
-  // Currently directly convert passed in page data to a PDF file.
-  // |sk_handle| points to a buffer of a Skia MultiPictureDocument.
+  // Add the mapping between frame's id and its content unique id.
+  AddSubframeMap(int32 frame_id, uint32 content_id);
+
+  // Add the content of a subframe for composition.
+  // |frame_id| is this subframe's id.
+  // |sk_handle| points to a buffer of a serialized Skia picture which has
+  //             the drawing content of this frame.
+  // |subframe_content_ids| is an array of this frame's out-of-process
+  //                        subframes' content unique ids.
+  AddSubframeContent(int32 frame_id, handle<shared_buffer> sk_handle,
+                     array<uint32> subframe_content_ids);
+
+  // Query whether it is ready to composite a frame or its page: that is
+  // when all its related subframes are painted.
+  // or a timeout is reached.
+  // |frame_id| is the id of the frame to be composited and converted.
+  // |page_num| is zero-based number of page to be composited if it is not
+  //            for the entire frame.
+  //            Use UINT_MAX to indicate the entire frame.
+  // |subframe_content_ids| is an array of the dependent out-of-process
+  //                        subframes' content unique ids.
+  IsReadyToComposite(int32 frame_id, uint32 page_num,
+                     array<uint32> subframe_content_ids)
+      => (bool is_ready);
+
+  // Composite the content of a frame or one of its pages and convert it
+  // into a PDF file. This should be done when the content is ready by
+  // checking IsReadyToComposite().
+  // |frame_id| is the id of the frame to being composited.
+  // |page_num| is zero-based number of page to be composited if it is not for
+  //            the entire frame.
+  //            Use UINT_MAX to indicate the entire frame.
+  // |sk_handle| points to a buffer of a Skia MultiPictureDocument which has
+  //             the drawing content of this frame or a page of this frame.
+  // |subframe_content_ids| is an array of the dependent out-of-process
+  //                        subframes' content unique ids.
   // |status| records the function execution status.
   // |pdf_handle| points to the generated PDF file buffer upon success.
-  CompositePdf(handle<shared_buffer> sk_handle)
+  CompositeToPdf(int32 frame_id, uint32 page_num,
+                 handle<shared_buffer> sk_handle,
+                 array<uint32> subframe_content_ids)
       => (Status status, handle<shared_buffer>? pdf_handle);
 };
