@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c99de958_85a3ffa7",
+        "filename": "components/browsing_data/core/counters/autofill_counter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-12-18T09:15:17Z",
+      "side": 1,
+      "message": "Please add a test to AutofillCounterTest.TimeRanges",
+      "revId": "f42ea06f0a3f7361c37526faa777f5a0e742864c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9176085_f0f8da0f",
+        "filename": "components/browsing_data/core/counters/autofill_counter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-12-18T09:15:17Z",
+      "side": 1,
+      "message": "The intervals are usually [start, end). So this should be date() \u003c end.",
+      "revId": "f42ea06f0a3f7361c37526faa777f5a0e742864c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
