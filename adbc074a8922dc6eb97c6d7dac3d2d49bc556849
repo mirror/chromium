@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "17affb04_81913686",
+        "filename": "tools/perf/expectations.config",
+        "patchSetId": 3
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-12-18T21:01:34Z",
+      "side": 1,
+      "message": "Why are we missing the reason on this one? It\u0027s crbug.com/728576",
+      "revId": "adbc074a8922dc6eb97c6d7dac3d2d49bc556849",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
