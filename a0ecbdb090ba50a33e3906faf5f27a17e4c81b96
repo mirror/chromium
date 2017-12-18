@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d160ac90_6cc29ba2",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-18T22:10:22Z",
+      "side": 1,
+      "message": "Could this be changed to leverage C++ i18n substitution? As follows:\n\nsub-label\u003d\"[[getSubLabel_(\n    $i18nPolymer{chromeCleanupTitleLogsPermissionExplanation}.\n    userInitiatedCleanupsEnabled_)]]\"\n\nThen in JS\n\ngetSubLabel_(label) {\n  return this.userInitiatedCleanupsEnabled_ ? label : \u0027\u0027;\n}\n\nSee similar examples at https://cs.chromium.org/search/?q\u003di18nPolymer\u0026sq\u003dpackage:chromium\u0026type\u003dcs.",
+      "range": {
+        "startLine": 121,
+        "startChar": 21,
+        "endLine": 121,
+        "endChar": 47
+      },
+      "revId": "a0ecbdb090ba50a33e3906faf5f27a17e4c81b96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
