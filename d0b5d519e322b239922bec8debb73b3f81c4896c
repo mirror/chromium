@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7eb1db4f_f25fe0e5",
+        "filename": "components/exo/keyboard.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1250511
+      },
+      "writtenOn": "2017-12-18T16:08:39Z",
+      "side": 1,
+      "message": "Sure, the alternative you propose to expose the delegate works nicely for this.",
+      "parentUuid": "72cfa991_908550e9",
+      "revId": "d0b5d519e322b239922bec8debb73b3f81c4896c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "68c36f77_292651cd",
         "filename": "components/exo/wayland/server.cc",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-15T20:38:27Z",
       "side": 1,
       "message": "could we implement this using a simple weak pointer callback instead?\n\nsomething like:\n\nclass WaylandInputTimestamps\n    : public base::SupportsWeakPtr\u003cWaylandInputTimestamps\u003e {\n public: \n  void SendTimestamp(base::TimeTicks time) {\n   zwp_input_timestamps_v1_send_timestamp(resource_, ...);\n  }\n private:\n  wl_resource* const resource_;\n};\n\nand then\n\nwayland_pointer_delegate-\u003eset_input_timestamp_callback(\n    base::Bind(\u0026WaylandInputTimestamps::SendTimestamp,\n               timestamps-\u003eAsWeakPtr()));\n\nNote: we know that the delegate type of all pointer resources is WaylandPointerDelegate so adding a Pointer::delegate() function and using a static cast in server.cc is fine and keeps the logic simple.",
+      "revId": "d0b5d519e322b239922bec8debb73b3f81c4896c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4aaae5e9_48f46d54",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3137,
+      "author": {
+        "id": 1250511
+      },
+      "writtenOn": "2017-12-18T16:08:39Z",
+      "side": 1,
+      "message": "I have implemented this in Patch Set 2 as a starting point, but it\u0027s good enough only if:\n\n1. We want to support a single input-timestamps instances per object\n2. If we want later input-timestamps instances to overwrite older ones and render them inert\n\nIf we want to be strictly conformant and support multiple input-timestamps instances, then we need a more capable add/remove mechanism on the delegate.\n\nI think such an add/remove mechanism may also be required if we want new input-timestamps instances to fail if there is an existing one on the same object. Can we check if a callback which holds a WeakPtr to an object is still valid (i.e. the object has not been freed)?",
+      "parentUuid": "68c36f77_292651cd",
       "revId": "d0b5d519e322b239922bec8debb73b3f81c4896c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "6d090fe4_5b17ee9f",
+        "filename": "third_party/wayland-protocols/README.chromium",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1250511
+      },
+      "writtenOn": "2017-12-18T16:08:39Z",
+      "side": 1,
+      "message": "Ideally yes, although it may be be some time until the next official release, so we may not want to wait until then and just pull an intermediate commit in the meantime (in this RFC I just pulled in the files manually to get something working since they are not yet upstream, hence no version update).",
+      "parentUuid": "a8ff28cf_ef4207e3",
+      "range": {
+        "startLine": 3,
+        "startChar": 9,
+        "endLine": 3,
+        "endChar": 3
+      },
+      "revId": "d0b5d519e322b239922bec8debb73b3f81c4896c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "40b117d4_34e8df9a",
         "filename": "third_party/wayland-protocols/include/protocol/input-timestamps-unstable-v1-client-protocol.h",
         "patchSetId": 1
@@ -70,6 +130,24 @@
       "writtenOn": "2017-12-15T20:38:27Z",
       "side": 1,
       "message": "does the protocol need to support multiple input_timestamps instances per wl_keyboard/pointer/touch? it would simplify the implementation a lot if second call to this function for the same wl_keyboard would generate an error.",
+      "revId": "d0b5d519e322b239922bec8debb73b3f81c4896c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59af5b1b_eec895a3",
+        "filename": "third_party/wayland-protocols/include/protocol/input-timestamps-unstable-v1-client-protocol.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1250511
+      },
+      "writtenOn": "2017-12-18T16:08:39Z",
+      "side": 1,
+      "message": "The convention is that wayland protocols don\u0027t disallow multiple instances of objects for informational objects, i.e., ones don\u0027t affect the server\u0027s logical state. The input-timestamps protocol follows this convention.\n\nIn practice you are right that not many clients will need to subscribe multiple times. So, I guess that if it\u0027s OK to have a non-strictly conforming implementation (e.g. because the main Exo consumer, Android, doesn\u0027t need multiple instances) we could get away with a single instance. Note that Exo already does this for the pointer-gestures protocol, which it effectively restricts to one instance while the protocol allows multiple instances.",
+      "parentUuid": "40b117d4_34e8df9a",
       "revId": "d0b5d519e322b239922bec8debb73b3f81c4896c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
