@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6f5ca989_48d62c4e",
+        "filename": "third_party/WebKit/Source/devtools/front_end/common/Color.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-12-18T17:49:49Z",
+      "side": 1,
+      "message": "Can we make this code readable by parsing in phases: first split the type (rgb/hsl/etc), then split by spaces, slashes or commas for arguments, and then parse the values?",
+      "revId": "91441029f4839c92ccadba01dee6c8a4d22a5c55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19bf9cfc_33ff9597",
+        "filename": "third_party/WebKit/Source/devtools/front_end/common/Color.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-12-18T17:49:49Z",
+      "side": 1,
+      "message": "nit: I\u0027d inline returns instead:\n\nreturn parseFloat(number) % 1\nreturn (parseFloat(number) / 400) % 1\nreturn (parseFloat(number) / (2 * Math.PI)) % 1\nreturn (parseFloat(number) / 360) %1",
+      "revId": "91441029f4839c92ccadba01dee6c8a4d22a5c55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
