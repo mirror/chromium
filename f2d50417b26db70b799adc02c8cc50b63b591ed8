@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b04cad93_e09613e0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/BaseMediaRouteProvider.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2017-12-18T20:56:47Z",
+      "side": 1,
+      "message": "See my earlier comment: https://chromium-review.googlesource.com/c/chromium/src/+/794711/6/chrome/android/java/src/org/chromium/chrome/browser/media/router/cast/remoting/RemotingMediaRouteProvider.java#13\n\nBasically we\u0027d have WebSDK and Remoting providers using Cast as an implementation detail (as some or all of them could also use other underlying protocols like OpenScreen in theory/future)",
+      "parentUuid": "28fd90dc_5ef80a0f",
+      "revId": "f2d50417b26db70b799adc02c8cc50b63b591ed8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4b770917_2ac80ca1",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/BaseMediaRouteProvider.java",
         "patchSetId": 11
