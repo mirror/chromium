@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "28a501cd_626c7f9f",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/make_css_property_base.py",
+        "patchSetId": 38
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-12-18T03:42:15Z",
+      "side": 1,
+      "message": "this was confusing to me, can you please add a comment as to what types of properties this filters out?",
+      "revId": "41a3a86f556ff35a897c851d239b0bf0fd975228",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d19cc1be_0343c422",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/make_css_property_headers.py",
+        "patchSetId": 38
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-12-18T03:42:15Z",
+      "side": 1,
+      "message": "this isn\u0027t connected to the svg attribute so much as converter. i\u0027d say just add this include for all properties with should_implement_apply_functions (all properties have a converter).",
+      "revId": "41a3a86f556ff35a897c851d239b0bf0fd975228",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
