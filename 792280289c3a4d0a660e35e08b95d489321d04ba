@@ -22,6 +22,30 @@
       "revId": "792280289c3a4d0a660e35e08b95d489321d04ba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6ead479_d6d40b1f",
+        "filename": "gpu/command_buffer/tests/gl_ext_window_rectangles_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1172235
+      },
+      "writtenOn": "2017-12-18T17:51:23Z",
+      "side": 1,
+      "message": "I agree. But since this is the same exact change from the other linked CL, LGTM and I\u0027ll file a bug to look into this.",
+      "parentUuid": "4f6e0c41_379f38dc",
+      "range": {
+        "startLine": 30,
+        "startChar": 13,
+        "endLine": 30,
+        "endChar": 18
+      },
+      "revId": "792280289c3a4d0a660e35e08b95d489321d04ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
