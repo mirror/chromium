@@ -1,0 +1,14 @@
+Name: Android SDK
+URL: http://developer.android.com/sdk/index.html
+Version: 16
+  SDK API level 16
+Security Critical: no
+License: Apache Version 2.0
+
+Description:
+The Android SDK/NDK provide API libraries and developer tools necessary to
+build, test and debug for Android. This is a the private repo for SDK's that
+have yet to be released to the public.
+
+Local Modifications:
+None

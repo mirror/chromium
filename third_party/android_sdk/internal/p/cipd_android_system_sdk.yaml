@@ -1,0 +1,11 @@
+# Copyright 2017 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+# To create CIPD package run the following command.
+# cipd create --pkg-def cipd_android_system_sdk.yaml -tag version:$(cat version.txt)
+package: chromium/third_party/android_system_sdk/p
+description: android_system.jar System SDK stubs for compiling Android Webview and Monochrome targets.
+data:
+  - file: android_system.jar
+  - file: andorid-stubs-src.jar
