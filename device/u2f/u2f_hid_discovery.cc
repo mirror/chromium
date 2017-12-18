@@ -57,7 +57,7 @@ void U2fHidDiscovery::OnGetDevices(
     std::vector<device::mojom::HidDeviceInfoPtr> device_infos) {
   std::for_each(
       device_infos.begin(), device_infos.end(),
-      [this](auto& device_info) { DeviceAdded(std::move(device_info)); });
+      [this](auto& device_info) { this->DeviceAdded(std::move(device_info)); });
   NotifyDiscoveryStarted(true);
 }
 
