@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "44bc2cb5_c21559d3",
+        "filename": "components/data_reduction_proxy/core/common/data_reduction_proxy_params.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-12-18T23:00:19Z",
+      "side": 1,
+      "message": "no more prefer-lite-page",
+      "range": {
+        "startLine": 71,
+        "startChar": 18,
+        "endLine": 71,
+        "endChar": 24
+      },
+      "revId": "fb2c62fde1c64f8d450448874914d81af955cc45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97f3a3ca_c2459dfc",
+        "filename": "components/data_reduction_proxy/core/common/data_reduction_proxy_params.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-12-18T23:00:19Z",
+      "side": 1,
+      "message": "nit: AreServerPreviewsEnabledViaFlags (similarly Are...Disabled... below)",
+      "range": {
+        "startLine": 72,
+        "startChar": 5,
+        "endLine": 72,
+        "endChar": 36
+      },
+      "revId": "fb2c62fde1c64f8d450448874914d81af955cc45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de1cf68a_2f71ad86",
+        "filename": "tools/chrome_proxy/integration_tests/chrome_proxy_measurements.py",
+        "patchSetId": 14
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-12-18T23:00:19Z",
+      "side": 1,
+      "message": "This code is removed from the waterfall I think (right tbansal?), so don\u0027t change it. We\u0027ll remove all of it at some point.",
+      "range": {
+        "startLine": 298,
+        "startChar": 43,
+        "endLine": 298,
+        "endChar": 48
+      },
+      "revId": "fb2c62fde1c64f8d450448874914d81af955cc45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
