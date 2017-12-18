@@ -11,6 +11,7 @@ stories as memory ones, only with fewer actions (no memory dumping).
 
 import unittest
 
+from core import path_util
 from core import perf_benchmark
 
 from telemetry import benchmark as benchmark_module
@@ -20,6 +21,7 @@ from telemetry.testing import options_for_unittests
 from telemetry.testing import progress_reporter
 
 from py_utils import discover
+from py_utils import expectations_parser
 
 from benchmarks import system_health
 
@@ -94,6 +96,12 @@ def _GenerateSmokeTestCase(benchmark_class, story_to_smoke_test):
         assert story_set.stories
         return story_set
 
+      def AugmentExpectationsWithParser(self, data):
+        parser = expectations_parser.TestExpectationParser(data)
+        for b in GetSystemHealthBenchmarksToSmokeTest():
+          self._expectations.GetBenchmarkExpectationsFromParser(
+              parser.expectations, b.Name())
+
     options = GenerateBenchmarkOptions(benchmark_class)
 
     # Prevent benchmarks from accidentally trying to upload too much data to the
@@ -114,7 +122,11 @@ def _GenerateSmokeTestCase(benchmark_class, story_to_smoke_test):
     if self.id() in _DISABLED_TESTS:
       self.skipTest('Test is explicitly disabled')
 
-    self.assertEqual(0, SinglePageBenchmark().Run(options),
+    single_page_benchmark = SinglePageBenchmark()
+    with open(path_util.GetExpectationsPath()) as fp:
+      single_page_benchmark.AugmentExpectationsWithParser(fp.read())
+
+    self.assertEqual(0, single_page_benchmark.Run(options),
                      msg='Failed: %s' % benchmark_class)
 
   # We attach the test method to SystemHealthBenchmarkSmokeTest dynamically
