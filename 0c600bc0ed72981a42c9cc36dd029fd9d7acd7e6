@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a721cb37_3845fcee",
+        "filename": "ui/touch_selection/touch_selection_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1002242
+      },
+      "writtenOn": "2017-12-18T20:02:16Z",
+      "side": 1,
+      "message": "optional nit: To be more consistent with the rest of the code in this file, you can drop curly brackets for one-line if statements (here and in the following if-else statement).",
+      "revId": "0c600bc0ed72981a42c9cc36dd029fd9d7acd7e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79f3050f_11bd6570",
+        "filename": "ui/touch_selection/touch_selection_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1002242
+      },
+      "writtenOn": "2017-12-18T20:02:16Z",
+      "side": 1,
+      "message": "nit: Use 0.f or just simply gfx::PointF().",
+      "revId": "0c600bc0ed72981a42c9cc36dd029fd9d7acd7e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
