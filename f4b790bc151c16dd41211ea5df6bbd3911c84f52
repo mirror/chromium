@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "56451549_b5f06ff9",
+        "filename": "third_party/WebKit/public/platform/modules/locks/lock_manager.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-12-18T21:17:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "05b2f5f0_2d7ec26a",
+      "revId": "f4b790bc151c16dd41211ea5df6bbd3911c84f52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b1935acd_d975a305",
         "filename": "third_party/WebKit/public/platform/modules/locks/lock_manager.mojom",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "f4b790bc151c16dd41211ea5df6bbd3911c84f52",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d40ecda_ddec4017",
+        "filename": "third_party/WebKit/public/platform/modules/locks/lock_manager.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-12-18T21:17:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b1935acd_d975a305",
+      "revId": "f4b790bc151c16dd41211ea5df6bbd3911c84f52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
