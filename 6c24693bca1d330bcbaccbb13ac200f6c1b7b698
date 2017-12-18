@@ -132,6 +132,30 @@
     },
     {
       "key": {
+        "uuid": "17bf41c2_5f970ea2",
+        "filename": "content/browser/webauth/collected_client_data.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-18T13:34:43Z",
+      "side": 1,
+      "message": "Are you sure about this? Wouldn\u0027t including collected_client_data.h be enough? It should find the strings during the linking stage.",
+      "parentUuid": "53b48c87_759dff58",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 28
+      },
+      "revId": "6c24693bca1d330bcbaccbb13ac200f6c1b7b698",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "25450864_a6f93fa7",
         "filename": "device/u2f/attestation_object.cc",
         "patchSetId": 1
@@ -214,6 +238,30 @@
       "side": 1,
       "message": "Hm. No, there won\u0027t be any derived classes. It was a unique_ptr simply to avoid copies. Should it just be an instance and passed by const ref? The other thing is it holds unique_ptr\u003cPublicKey\u003e.",
       "parentUuid": "149cb1e6_3eafde41",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 48
+      },
+      "revId": "6c24693bca1d330bcbaccbb13ac200f6c1b7b698",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a35bd3c_1ae6246e",
+        "filename": "device/u2f/attested_credential_data.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-18T13:34:43Z",
+      "side": 1,
+      "message": "Using unique_ptrs to avoid copies shouldn\u0027t work, given that each unique_ptr owns the pointed to object. \"Copying\" a unique_ptr would always require an explicit deep copy of the underlying object.\n\nTo answer your question: If this operation could ever fail (e.g. you do some verification logic and want to be able to indicate errors) I would return a base::Optional\u003cAttestedCredentialData\u003e. In case it can\u0027t fail (which I think is the case here), I\u0027d simply return a AttestedCredentialData by value.",
+      "parentUuid": "922bfb53_08ebb082",
       "range": {
         "startLine": 25,
         "startChar": 0,

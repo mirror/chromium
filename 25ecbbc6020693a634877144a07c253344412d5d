@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "93c87509_64735f65",
+        "filename": "device/u2f/u2f_register_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-18T13:34:43Z",
+      "side": 1,
+      "message": "Sorry about the noise on this part, but I did some more research and I\u0027m pretty sure this is in violation of the styleguide :/ The Google Styleguide only allows static PODs (https://google.github.io/styleguide/cppguide.html#Static_and_Global_Variables), and I didn\u0027t find anything in the Chromium style guide that makes an exception to this.\n\nThis means you have two options here:\n1) Turn this into a POD by using a C-style uint8_t[] array or a C++11 std::array\u003cuint8_t\u003e as return type.\n   + Maximally efficient, does not need dynamic initialization.\n   - A bit cumbersome to initialize and inconvenient to use, as there is no operator\u003d\u003d between an array and an vector.\n2) Return to the version of Patchset #1, i.e. use a non-static vector.\n   + Easier to initialize, more convenient to use.\n   - Not maximally efficient. However, given that this is a unit test, it should not matter too much.\n\nThe same applies below and to the GetTest* methods defined above.",
+      "range": {
+        "startLine": 57,
+        "startChar": 0,
+        "endLine": 66,
+        "endChar": 0
+      },
+      "revId": "25ecbbc6020693a634877144a07c253344412d5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
