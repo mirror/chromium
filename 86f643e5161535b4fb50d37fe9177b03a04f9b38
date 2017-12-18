@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "8d61231c_04709fdb",
+        "filename": "content/browser/service_manager/service_manager_context.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 1108829
+      },
+      "writtenOn": "2017-12-18T20:49:47Z",
+      "side": 1,
+      "message": "I was actually referring to the \"driver\" layer code for the underlying video capture, for example, https://cs.corp.google.com/eureka_internal/chromium/src/media/capture/video/linux/video_capture_device_linux.cc?l\u003d41. My thinking is that the service code is fairly lightweight, so maybe it can just run on the thread that the service is created on (https://cs.corp.google.com/eureka_internal/chromium/src/services/service_manager/embedder/embedded_instance_manager.cc?l\u003d28), to avoid threading issues.\n\nI don\u0027t know enough to know if that would work or not :)",
+      "parentUuid": "9e335c30_9a69518f",
+      "range": {
+        "startLine": 482,
+        "startChar": 40,
+        "endLine": 482,
+        "endChar": 44
+      },
+      "revId": "86f643e5161535b4fb50d37fe9177b03a04f9b38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3abcdcbe_afee9c7a",
         "filename": "services/service_manager/embedder/embedded_instance_manager.cc",
         "patchSetId": 8
