@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "825478b9_52e2dc80",
+        "filename": "third_party/WebKit/LayoutTests/media/autoplay/media-document-autoplay-enabled.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-12-18T13:15:23Z",
+      "side": 1,
+      "message": "If the video isn\u0027t playing, would it make sense to call `play()` and check the result? That way, we could guarantee that a failure would come from autoplay restrictions and not timing.",
+      "revId": "1eac6fad9aa0efb4fc8226cf8dbe564272e6ed96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebc1c637_dc7960aa",
+        "filename": "third_party/WebKit/Source/core/html/media/MediaDocument.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-12-18T13:15:23Z",
+      "side": 1,
+      "message": "That sounds fine but now that we have easy access to autoplay policy, could we override the autoplay policy of the `Document` before inserting the video and drop the event listener adding the gesture to the stack?",
+      "revId": "1eac6fad9aa0efb4fc8226cf8dbe564272e6ed96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
