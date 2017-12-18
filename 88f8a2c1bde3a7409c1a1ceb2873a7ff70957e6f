@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "92fb0824_5987b6e9",
+        "filename": "third_party/WebKit/Source/devtools/front_end/ui/UIUtils.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2017-12-18T19:33:26Z",
+      "side": 1,
+      "message": "Is the point of this just to check against NaN and +/-Infinity? You can just use Number.isFinite",
+      "revId": "88f8a2c1bde3a7409c1a1ceb2873a7ff70957e6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
