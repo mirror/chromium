@@ -8,11 +8,12 @@
 
 #include "base/bind.h"
 #include "base/files/file_path.h"
+#include "base/files/file_util.h"
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
 #include "base/single_thread_task_runner.h"
 #include "base/strings/string_number_conversions.h"
-#include "base/test/test_message_loop.h"
+#include "base/test/scoped_task_environment.h"
 #include "media/audio/audio_debug_recording_helper.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -64,7 +65,7 @@ class MockAudioDebugRecordingHelper : public AudioDebugRecordingHelper {
                                   base::OnceClosure()),
         on_destruction_closure_in_mock_(std::move(on_destruction_closure)) {
     if (g_expect_enable_after_create_helper)
-      EXPECT_CALL(*this, EnableDebugRecording(_));
+      EXPECT_CALL(*this, DoEnableDebugRecording(_));
   }
 
   ~MockAudioDebugRecordingHelper() override {
@@ -72,7 +73,10 @@ class MockAudioDebugRecordingHelper : public AudioDebugRecordingHelper {
       std::move(on_destruction_closure_in_mock_).Run();
   }
 
-  MOCK_METHOD1(EnableDebugRecording, void(const base::FilePath&));
+  MOCK_METHOD1(DoEnableDebugRecording, void(int64_t length));
+  void EnableDebugRecording(base::File file) {
+    DoEnableDebugRecording(file.GetLength());
+  }
   MOCK_METHOD0(DisableDebugRecording, void());
 
  private:
@@ -108,7 +112,7 @@ class AudioDebugRecordingManagerUnderTest : public AudioDebugRecordingManager {
 class AudioDebugRecordingManagerTest : public ::testing::Test {
  public:
   AudioDebugRecordingManagerTest()
-      : manager_(message_loop_.task_runner()),
+      : manager_(scoped_task_environment_.GetMainThreadTaskRunner()),
         base_file_path_(base::FilePath::FromUTF8Unsafe("base_path")) {}
 
   ~AudioDebugRecordingManagerTest() override = default;
@@ -120,11 +124,10 @@ class AudioDebugRecordingManagerTest : public ::testing::Test {
     return manager_.RegisterDebugRecordingSource(kFileNameExtension, params);
   }
 
- private:
-  // Must come before |manager_|, so that it's inialized before it.
-  base::TestMessageLoop message_loop_;
-
  protected:
+  // The test task environment.
+  base::test::ScopedTaskEnvironment scoped_task_environment_;
+
   AudioDebugRecordingManagerUnderTest manager_;
   base::FilePath base_file_path_;
 
@@ -142,6 +145,7 @@ int AudioDebugRecordingManagerTest::expected_next_source_id_ = 1;
 // Shouldn't do anything but store the path, i.e. no calls to recorders.
 TEST_F(AudioDebugRecordingManagerTest, EnableDisable) {
   manager_.EnableDebugRecording(base_file_path_);
+  scoped_task_environment_.RunUntilIdle();
   manager_.DisableDebugRecording();
 }
 
@@ -183,12 +187,15 @@ TEST_F(AudioDebugRecordingManagerTest, RegisterEnableDisable) {
     base::FilePath expected_file_path =
         base_file_path_.AddExtension(kFileNameExtension)
             .AddExtension(IntToStringType(expected_id++));
+    base::File file(expected_file_path,
+                    base::File::FLAG_OPEN_ALWAYS | base::File::FLAG_WRITE);
     EXPECT_CALL(*mock_recording_helper,
-                EnableDebugRecording(expected_file_path));
+                DoEnableDebugRecording(file.GetLength()));
     EXPECT_CALL(*mock_recording_helper, DisableDebugRecording());
   }
 
   manager_.EnableDebugRecording(base_file_path_);
+  scoped_task_environment_.RunUntilIdle();
   manager_.DisableDebugRecording();
 }
 
@@ -202,6 +209,7 @@ TEST_F(AudioDebugRecordingManagerTest, EnableRegisterDisable) {
   ScopedExpectEnableAfterCreateHelper scoped_enable_after_create_helper;
 
   manager_.EnableDebugRecording(base_file_path_);
+  scoped_task_environment_.RunUntilIdle();
 
   const AudioParameters params;
   std::vector<std::unique_ptr<AudioDebugRecorder>> recorders;
@@ -210,6 +218,12 @@ TEST_F(AudioDebugRecordingManagerTest, EnableRegisterDisable) {
   recorders.push_back(RegisterDebugRecordingSource(params));
   EXPECT_EQ(3ul, recorders.size());
   EXPECT_EQ(recorders.size(), manager_.debug_recording_helpers_.size());
+
+  // Need to block until done because RegisterDebugRecordingSource posts debug
+  // recording file creation on a background thread. Once the file is created,
+  // EnableDebugRecording is called on audio thread for the newly created
+  // recording source.
+  scoped_task_environment_.RunUntilIdle();
 
   for (const auto& recorder : recorders) {
     MockAudioDebugRecordingHelper* mock_recording_helper =

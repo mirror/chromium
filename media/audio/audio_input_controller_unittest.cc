@@ -6,10 +6,10 @@
 #include "base/bind.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
-#include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
 #include "base/single_thread_task_runner.h"
 #include "base/synchronization/waitable_event.h"
+#include "base/test/scoped_task_environment.h"
 #include "base/test/test_timeouts.h"
 #include "base/threading/thread.h"
 #include "media/audio/audio_device_description.h"
@@ -124,7 +124,7 @@ class AudioInputControllerTest : public testing::Test {
   void WaitForResume() { suspend_event_.Wait(); }
 
  protected:
-  base::MessageLoop message_loop_;
+  base::test::ScopedTaskEnvironment scoped_task_environment_;
   MockUserInputMonitor user_input_monitor_;
   std::unique_ptr<AudioManager> audio_manager_;
   WaitableEvent suspend_event_;
@@ -169,8 +169,8 @@ TEST_F(AudioInputControllerTest, RecordAndClose) {
   // Write() should be called ten times.
   EXPECT_CALL(sync_writer, Write(NotNull(), _, _, _))
       .Times(AtLeast(10))
-      .WillRepeatedly(
-          CheckCountAndPostQuitTask(&count, 10, message_loop_.task_runner()));
+      .WillRepeatedly(CheckCountAndPostQuitTask(
+          &count, 10, scoped_task_environment_.GetMainThreadTaskRunner()));
 
   EXPECT_CALL(event_handler, OnLog(_)).Times(AnyNumber());
   EXPECT_CALL(sync_writer, Close()).Times(Exactly(1));
