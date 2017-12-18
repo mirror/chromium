@@ -73,6 +73,8 @@ CONTENT_EXPORT extern const char kDisableKillAfterBadIPC[];
 CONTENT_EXPORT extern const char kDisableLocalStorage[];
 CONTENT_EXPORT extern const char kDisableLogging[];
 CONTENT_EXPORT extern const char kDisableMojoLocalStorage[];
+CONTENT_EXPORT extern const char
+    kDisableMultiplanarGpuMemoryBuffersForVideoFrames[];
 CONTENT_EXPORT extern const char kDisableNamespaceSandbox[];
 CONTENT_EXPORT extern const char kDisableNewContentRenderingTimeout[];
 CONTENT_EXPORT extern const char kDisableNotifications[];
