@@ -11,7 +11,7 @@ namespace blink {
 MockFontResourceClient::MockFontResourceClient(Resource* resource)
     : font_load_short_limit_exceeded_called_(false),
       font_load_long_limit_exceeded_called_(false) {
-  SetResource(resource);
+  SetResource(resource, nullptr);
 }
 
 MockFontResourceClient::~MockFontResourceClient() {}

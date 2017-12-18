@@ -686,7 +686,7 @@ void Resource::WillAddClientOrObserver() {
   }
 }
 
-void Resource::AddClient(ResourceClient* client) {
+void Resource::AddClient(ResourceClient* client, WebTaskRunner* task_runner) {
   CHECK(!is_add_remove_client_prohibited_);
 
   WillAddClientOrObserver();
@@ -702,14 +702,9 @@ void Resource::AddClient(ResourceClient* client) {
       !TypeNeedsSynchronousCacheHit(GetType())) {
     clients_awaiting_callback_.insert(client);
     if (!async_finish_pending_clients_task_.IsActive()) {
-      async_finish_pending_clients_task_ =
-          Platform::Current()
-              ->CurrentThread()
-              ->Scheduler()
-              ->LoadingTaskRunner()
-              ->PostCancellableTask(BLINK_FROM_HERE,
-                                    WTF::Bind(&Resource::FinishPendingClients,
-                                              WrapWeakPersistent(this)));
+      async_finish_pending_clients_task_ = task_runner->PostCancellableTask(
+          BLINK_FROM_HERE,
+          WTF::Bind(&Resource::FinishPendingClients, WrapWeakPersistent(this)));
     }
     return;
   }
