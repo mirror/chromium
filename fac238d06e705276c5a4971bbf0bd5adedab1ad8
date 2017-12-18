@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9767c524_eec30cf4",
+        "filename": "chrome/browser/chromeos/accessibility/accessibility_manager.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-18T19:50:33Z",
+      "side": 1,
+      "message": "Please add a comment/TODO here indicating that this gesture came\nfrom ui::ToString() on a AXGesture.",
+      "revId": "fac238d06e705276c5a4971bbf0bd5adedab1ad8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
