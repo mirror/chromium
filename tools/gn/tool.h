@@ -5,12 +5,14 @@
 #ifndef TOOLS_GN_TOOL_H_
 #define TOOLS_GN_TOOL_H_
 
+#include <set>
 #include <string>
 
 #include "base/logging.h"
 #include "base/macros.h"
 #include "tools/gn/label.h"
 #include "tools/gn/label_ptr.h"
+#include "tools/gn/source_file.h"
 #include "tools/gn/substitution_list.h"
 #include "tools/gn/substitution_pattern.h"
 
@@ -35,6 +37,14 @@ class Tool {
 
   const ParseNode* defined_from() const { return defined_from_; }
   void set_defined_from(const ParseNode* df) { defined_from_ = df; }
+
+  const std::set<const SourceFile>& affected_files() { return affected_files_; }
+
+  void SetAffectedFiles(const std::set<const SourceFile>& affected_files) {
+    for (const auto& source_file : affected_files) {
+      affected_files_.insert(source_file);
+    }
+  }
 
   // Getters/setters ----------------------------------------------------------
   //
@@ -206,6 +216,7 @@ class Tool {
 
  private:
   const ParseNode* defined_from_;
+  std::set<const SourceFile> affected_files_;
 
   SubstitutionPattern command_;
   std::string default_output_extension_;

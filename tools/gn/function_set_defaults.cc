@@ -4,8 +4,10 @@
 
 #include "tools/gn/err.h"
 #include "tools/gn/functions.h"
+#include "tools/gn/input_file.h"
 #include "tools/gn/parse_tree.h"
 #include "tools/gn/scope.h"
+#include "tools/gn/source_file.h"
 
 namespace functions {
 
@@ -61,6 +63,8 @@ Value RunSetDefaults(Scope* scope,
 
   // Run the block for the rule invocation.
   Scope block_scope(scope);
+  block_scope.AddAffectedFile(function->function().location().file()->name());
+
   block->Execute(&block_scope, err);
   if (err->has_error())
     return Value();

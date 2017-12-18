@@ -6,6 +6,7 @@
 #define TOOLS_GN_ARGS_H_
 
 #include <map>
+#include <set>
 
 #include "base/containers/hash_tables.h"
 #include "base/macros.h"
@@ -13,6 +14,7 @@
 #include "tools/gn/scope.h"
 
 class Err;
+class SourceFile;
 
 extern const char kBuildArgs_Help[];
 
@@ -82,6 +84,11 @@ class Args {
   // map instead of a hash map so the arguements are sorted alphabetically.
   ValueWithOverrideMap GetAllArguments() const;
 
+  const std::set<const SourceFile>& affected_files() const {
+    return affected_files_;
+  }
+  void SetAffectedFiles(const std::set<const SourceFile>& affected_files);
+
  private:
   using ArgumentsPerToolchain =
       base::hash_map<const Settings*, Scope::KeyValueMap>;
@@ -125,6 +132,8 @@ class Args {
   // can apply the correct override for the current toolchain, once
   // we see an argument declaration.
   mutable ArgumentsPerToolchain toolchain_overrides_;
+
+  std::set<const SourceFile> affected_files_;
 
   DISALLOW_ASSIGN(Args);
 };

@@ -55,7 +55,9 @@ class Target : public Item {
   typedef std::vector<SourceFile> FileList;
   typedef std::vector<std::string> StringVector;
 
-  Target(const Settings* settings, const Label& label);
+  Target(const Settings* settings,
+         const Label& label,
+         const std::set<const SourceFile>& affected_files);
   ~Target() override;
 
   // Returns a string naming the output type.

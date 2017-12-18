@@ -10,9 +10,15 @@
 #include <vector>
 
 #include "tools/gn/builder.h"
+#include "tools/gn/item.h"
 #include "tools/gn/label.h"
 #include "tools/gn/source_file.h"
 #include "tools/gn/target.h"
+
+using LabelSet = std::set<Label>;
+using SourceFileSet = std::set<const SourceFile*>;
+using TargetSet = std::set<const Target*>;
+using ItemSet = std::set<const Item*>;
 
 // An Analyzer can answer questions about a build graph. It is used
 // to answer queries for the `refs` and `analyze` commands, where we
@@ -20,11 +26,10 @@
 // from just a single Target.
 class Analyzer {
  public:
-  using LabelSet = std::set<Label>;
-  using SourceFileSet = std::set<const SourceFile*>;
-  using TargetSet = std::set<const Target*>;
-
-  explicit Analyzer(const Builder& builder);
+  Analyzer(const Builder& builder,
+           const SourceFile& build_config_file,
+           const SourceFile& dot_file,
+           const std::set<const SourceFile>& affected_build_args_files);
   ~Analyzer();
 
   // Figures out from a Buider and a JSON-formatted string containing lists
@@ -35,13 +40,9 @@ class Analyzer {
   std::string Analyze(const std::string& input, Err* err) const;
 
  private:
-  // Returns the roots of the build graph: the set of targets that
-  // no other target depends on.
-  TargetSet& roots() { return roots_; };
-
   // Returns the set of all targets that might be affected, directly or
   // indirectly, by modifications to the given source files.
-  TargetSet AllAffectedTargets(const SourceFileSet& source_files) const;
+  ItemSet AllAffectedItems(const SourceFileSet& source_files) const;
 
   // Returns the set of labels that do not refer to objects in the graph.
   LabelSet InvalidLabels(const LabelSet& labels) const;
@@ -76,20 +77,30 @@ class Analyzer {
   // (see Filter(), above).
   void FilterTarget(const Target*, TargetSet* seen, TargetSet* filtered) const;
 
-  bool TargetRefersToFile(const Target* target, const SourceFile* file) const;
+  bool ItemRefersToFile(const Item* item, const SourceFile* file) const;
 
-  void AddTargetsDirectlyReferringToFileTo(const SourceFile* file,
-                                           TargetSet* matches) const;
+  void AddItemsDirectlyReferringToFileTo(
+      const SourceFile* file,
+      ItemSet* directly_affected_items) const;
 
-  void AddAllRefsTo(const Target* target, TargetSet* matches) const;
+  void AddAllItemsReferringTo(const Item* affected_item,
+                              ItemSet* all_affected_items) const;
 
-  std::vector<const Target*> all_targets_;
-  std::map<const Label, const Target*> labels_to_targets_;
+  bool WereMainGNFilesModified(const SourceFileSet& source_files) const;
+
+  bool WereBuildArgsFilesModified(const SourceFileSet& source_files) const;
+
+  std::vector<const Item*> all_items_;
+  std::map<const Label, const Item*> labels_to_items_;
+
+  // Maps Items to the list of Items that depend on them.
+  std::multimap<const Item*, const Item*> dep_map_;
+
   Label default_toolchain_;
-  std::set<const Target*> roots_;
 
-  // Maps targets to the list of targets that depend on them.
-  std::multimap<const Target*, const Target*> dep_map_;
+  const SourceFile build_config_file_;
+  const SourceFile dot_file_;
+  const std::set<const SourceFile> affected_build_args_files_;
 };
 
 #endif  // TOOLS_GN_ANALYZER_H_

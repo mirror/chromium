@@ -6,6 +6,7 @@
 
 #include <stdint.h>
 
+#include <iostream>
 #include <memory>
 #include <string>
 #include <tuple>
@@ -539,6 +540,7 @@ Value ListNode::Execute(Scope* scope, Err* err) const {
       return Value();
     }
   }
+
   return result_value;
 }
 

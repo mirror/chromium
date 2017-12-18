@@ -488,6 +488,7 @@ bool Setup::FillArgsFromArgsInputFile() {
   Scope::KeyValueMap overrides;
   arg_scope.GetCurrentScopeValues(&overrides);
   build_settings_.build_args().AddArgOverrides(overrides);
+  build_settings_.build_args().SetAffectedFiles(arg_scope.affected_files());
   return true;
 }
 
@@ -669,6 +670,7 @@ bool Setup::RunConfigFile() {
   if (scheduler_.verbose_logging())
     scheduler_.Log("Got dotfile", FilePathToUTF8(dotfile_name_));
 
+  dotfile_scope_.AddAffectedFile(SourceFile(FilePathToUTF8(dotfile_name_)));
   dotfile_input_file_ = std::make_unique<InputFile>(SourceFile("//.gn"));
   if (!dotfile_input_file_->Load(dotfile_name_)) {
     Err(Location(), "Could not load dotfile.",
