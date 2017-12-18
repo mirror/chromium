@@ -10,6 +10,7 @@
 #include "base/logging.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/task_runner_util.h"
 #include "base/threading/thread.h"
 #include "base/threading/thread_task_runner_handle.h"
@@ -83,6 +84,18 @@ static_assert(arraysize(kPreferredCodecIdAndVEAProfiles) ==
 // encoder implementation.
 const int kMaxNumberOfFramesInEncode = 10;
 
+// UMA result that indicates whether HW encode is used.
+enum MediaRecorderHwEncodeUsed {
+  HW_ENCODE_NOT_USED = 0,
+  HW_ENCODE_USED,
+  HW_ENCODE_USED_MAX = HW_ENCODE_USED,
+};
+
+static void ReportToUMA(MediaRecorderHwEncodeUsed result) {
+  UMA_HISTOGRAM_ENUMERATION("WebRTC.MediaRecorder.HwEncodeUsed", result,
+                            MediaRecorderHwEncodeUsed::HW_ENCODE_USED_MAX + 1);
+}
+
 // Class to encapsulate the enumeration of CodecIds/VideoCodecProfiles supported
 // by the VEA underlying platform. Provides methods to query the preferred
 // CodecId and to check if a given CodecId is supported.
@@ -112,11 +125,6 @@ CodecEnumerator* GetCodecEnumerator() {
 }
 
 CodecEnumerator::CodecEnumerator() {
-#if defined(OS_CHROMEOS)
-  // See https://crbug.com/616659.
-  return;
-#endif
-
   content::RenderThreadImpl* const render_thread_impl =
       content::RenderThreadImpl::current();
   if (!render_thread_impl) {
@@ -453,8 +461,10 @@ void VideoTrackRecorder::InitializeEncoder(
   MediaStreamVideoSink::DisconnectFromTrack();
 
   const gfx::Size& input_size = frame->visible_rect().size();
+
   if (allow_vea_encoder && CanUseAcceleratedEncoder(codec, input_size.width(),
                                                     input_size.height())) {
+    ReportToUMA(HW_ENCODE_USED);
     const auto vea_profile = GetCodecEnumerator()->CodecIdToVEAProfile(codec);
     encoder_ = new VEAEncoder(
         on_encoded_video_callback,
@@ -462,6 +472,7 @@ void VideoTrackRecorder::InitializeEncoder(
                                             weak_ptr_factory_.GetWeakPtr())),
         bits_per_second, vea_profile, input_size);
   } else {
+    ReportToUMA(HW_ENCODE_NOT_USED);
     switch (codec) {
 #if BUILDFLAG(RTC_USE_H264)
       case CodecId::H264:

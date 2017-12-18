@@ -27485,6 +27485,25 @@ Called by update_use_counter_css.py.-->
   <int value="1" label="Has errors"/>
 </enum>
 
+<enum name="MediaRecorderHwEncodeUsed">
+  <int value="0" label="Not used"/>
+  <int value="1" label="Used"/>
+</enum>
+
+<enum name="MediaRecorderVEAError">
+  <int value="1" label="Illegal state">
+    An operation was attempted during an incompatible encoder state.
+  </int>
+  <int value="2" label="Invalid argument">
+    Invalid argument was passed to an API method.
+  </int>
+  <int value="3" label="Platform failure">
+    A failure occurred at the browser layer or lower. Examples of such failures
+    include GPU hardware failures, GPU driver failures, GPU library failures,
+    browser programming errors, and so on.
+  </int>
+</enum>
+
 <enum name="MediaRouteProviderResult">
   <int value="0" label="UnknownError"/>
   <int value="1" label="Ok"/>
