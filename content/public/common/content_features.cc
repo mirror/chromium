@@ -460,6 +460,16 @@ const base::Feature kKeepAliveRendererForKeepaliveRequests{
 const base::Feature kWebVrExperimentalRendering{
     "WebVRExperimentalRendering", base::FEATURE_DISABLED_BY_DEFAULT};
 
+// Controls whether the orientation sensor based device is enabled.
+const base::Feature kWebVrOrientationSensorDevice {
+  "WebVROrientationSensorDevice",
+#if defined(OS_ANDROID)
+      base::FEATURE_ENABLED_BY_DEFAULT
+#else
+      base::FEATURE_DISABLED_BY_DEFAULT
+#endif
+};
+
 // Controls whether WebVR VSync-aligned render loop timing is enabled.
 const base::Feature kWebVrVsyncAlign{"WebVrVsyncAlign",
                                      base::FEATURE_ENABLED_BY_DEFAULT};

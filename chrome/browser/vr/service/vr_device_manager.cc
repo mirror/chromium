@@ -7,17 +7,19 @@
 #include <utility>
 
 #include "base/bind.h"
+#include "base/feature_list.h"
 #include "base/memory/ptr_util.h"
 #include "base/memory/singleton.h"
 #include "build/build_config.h"
 #include "chrome/common/chrome_features.h"
+#include "content/public/common/content_features.h"
 #include "content/public/common/service_manager_connection.h"
 #include "device/vr/features/features.h"
+#include "device/vr/orientation/orientation_device_provider.h"
 #include "device/vr/vr_device_provider.h"
 
 #if defined(OS_ANDROID)
 #include "device/vr/android/gvr/gvr_device_provider.h"
-#include "device/vr/orientation/orientation_device_provider.h"
 #endif
 
 #if BUILDFLAG(ENABLE_OPENVR)
@@ -37,20 +39,23 @@ VRDeviceManager* VRDeviceManager::GetInstance() {
 
 #if defined(OS_ANDROID)
     providers.emplace_back(std::make_unique<device::GvrDeviceProvider>());
-
-    content::ServiceManagerConnection* connection =
-        content::ServiceManagerConnection::GetForProcess();
-    if (connection) {
-      providers.emplace_back(
-          std::make_unique<device::VROrientationDeviceProvider>(
-              connection->GetConnector()));
-    }
 #endif
 
 #if BUILDFLAG(ENABLE_OPENVR)
     if (base::FeatureList::IsEnabled(features::kOpenVR))
       providers.emplace_back(std::make_unique<device::OpenVRDeviceProvider>());
 #endif
+
+    if (base::FeatureList::IsEnabled(features::kWebVrOrientationSensorDevice)) {
+      content::ServiceManagerConnection* connection =
+          content::ServiceManagerConnection::GetForProcess();
+      if (connection) {
+        providers.emplace_back(
+            std::make_unique<device::VROrientationDeviceProvider>(
+                connection->GetConnector()));
+      }
+    }
+
     new VRDeviceManager(std::move(providers));
   }
   return g_vr_device_manager;

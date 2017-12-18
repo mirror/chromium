@@ -984,6 +984,9 @@ extern const char kWebvrDescription[];
 extern const char kWebVrExperimentalRenderingName[];
 extern const char kWebVrExperimentalRenderingDescription[];
 
+extern const char kWebVrOrientationSensorDeviceName[];
+extern const char kWebVrOrientationSensorDeviceDescription[];
+
 extern const char kWebXrName[];
 extern const char kWebXrDescription[];
 
