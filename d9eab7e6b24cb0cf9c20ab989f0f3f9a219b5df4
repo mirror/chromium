@@ -84,6 +84,24 @@
     },
     {
       "key": {
+        "uuid": "1fb28d39_24d0d7c5",
+        "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1976,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2017-12-18T15:15:58Z",
+      "side": 1,
+      "message": "I meant this check and the check-plus-DCEHCK in Line 2014.  Remove both of these, instead put the block around Line 1986.",
+      "parentUuid": "91ea40ce_6d9fed20",
+      "revId": "d9eab7e6b24cb0cf9c20ab989f0f3f9a219b5df4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ab3edcda_a92271dc",
         "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.cpp",
         "patchSetId": 2
@@ -131,6 +149,24 @@
       "side": 1,
       "message": "On a second thought. What line are you referring to? The check or the creation of pointerevent? This constructor always created kPointerCausedUaAction. So no need to explicit set of the type. Also check is correct as we will be getting touch events as the input to this function",
       "parentUuid": "2479b573_41007896",
+      "revId": "d9eab7e6b24cb0cf9c20ab989f0f3f9a219b5df4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9ceb85a_daf759a3",
+        "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1991,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2017-12-18T15:15:58Z",
+      "side": 1,
+      "message": "Hmm, I placed the comment a line below!  Yes, I meant the constructor call.  I The type is hardcoded to kPointerCausedUaAction in this event ctor, which is misleading (sorry if I missed it in past reviews).  Please pass the type from caller as the ctor param.",
+      "parentUuid": "b47f46c0_c436b2ae",
       "revId": "d9eab7e6b24cb0cf9c20ab989f0f3f9a219b5df4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
