@@ -579,6 +579,27 @@
                                     .leadingAnchor],
     locationBarContainerStackViewTopConstraint,
   ]];
+
+  UILayoutGuide* omniboxPopupGuide = [[UILayoutGuide alloc] init];
+  omniboxPopupGuide.identifier = @"omniboxPopupLayoutGuide";
+  [self.view addLayoutGuide:omniboxPopupGuide];
+  [NSLayoutConstraint activateConstraints:@[
+    [self.view.leadingAnchor
+        constraintEqualToAnchor:omniboxPopupGuide.leadingAnchor],
+    [self.view.trailingAnchor
+        constraintEqualToAnchor:omniboxPopupGuide.trailingAnchor],
+    [self.view.topAnchor constraintEqualToAnchor:omniboxPopupGuide.topAnchor]
+  ]];
+  if (IsIPadIdiom()) {
+    [omniboxPopupGuide.bottomAnchor
+        constraintEqualToAnchor:self.locationBarContainer.bottomAnchor
+                       constant:kiPadOmniboxPopupVerticalOffset]
+        .active = YES;
+  } else {
+    [omniboxPopupGuide.bottomAnchor
+        constraintEqualToAnchor:self.view.bottomAnchor]
+        .active = YES;
+  }
   [self.regularToolbarConstraints
       addObject:locationBarContainerStackViewTopConstraint];
 }
