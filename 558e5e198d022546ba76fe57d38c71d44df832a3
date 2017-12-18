@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e54c985d_dc017726",
+        "filename": "ui/keyboard/keyboard_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 710,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-12-18T01:59:31Z",
+      "side": 1,
+      "message": "nit: You can remove this parens",
+      "range": {
+        "startLine": 710,
+        "startChar": 78,
+        "endLine": 710,
+        "endChar": 79
+      },
+      "revId": "558e5e198d022546ba76fe57d38c71d44df832a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
