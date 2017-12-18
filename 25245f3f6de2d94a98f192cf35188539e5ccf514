@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fc539158_8bb5be4c",
+        "filename": "chrome/browser/resources/md_extensions/item.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-12-18T19:32:09Z",
+      "side": 1,
+      "message": "Noticed this was being read in chrome vox. This is not necessary since #source-indicator is already labelled with this text. I can make a separate CL if you want, but it seemed trivial enough to include here.",
+      "range": {
+        "startLine": 235,
+        "startChar": 51,
+        "endLine": 235,
+        "endChar": 69
+      },
+      "revId": "25245f3f6de2d94a98f192cf35188539e5ccf514",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

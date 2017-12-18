@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "538412cc_62592430",
+        "filename": "chrome/app/md_extensions_strings.grdp",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-12-18T19:32:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "862a7b38_d60e585c",
+      "range": {
+        "startLine": 64,
+        "startChar": 17,
+        "endLine": 64,
+        "endChar": 56
+      },
+      "revId": "b38078dc7eb33007b7fc67a87f3cbbfa74cbe755",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7e583086_2628d3d6",
         "filename": "chrome/browser/resources/md_extensions/item.html",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "0202a134_e73978f2",
+        "filename": "chrome/browser/resources/md_extensions/item.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-12-18T19:32:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7e583086_2628d3d6",
+      "range": {
+        "startLine": 199,
+        "startChar": 7,
+        "endLine": 199,
+        "endChar": 16
+      },
+      "revId": "b38078dc7eb33007b7fc67a87f3cbbfa74cbe755",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "229410e4_7483061c",
         "filename": "chrome/browser/resources/md_extensions/item.html",
         "patchSetId": 2
@@ -59,6 +107,30 @@
       "writtenOn": "2017-12-18T18:56:14Z",
       "side": 1,
       "message": "Can this element be actually hidden with \"display: none\"? Will the screen reader not read the description in those cases? Found some resources on the Web that suggest that visibility should not matter for such elements, see for example https://developer.paciellogroup.com/blog/2015/05/short-note-on-aria-labelledby-and-aria-describedby/.",
+      "range": {
+        "startLine": 204,
+        "startChar": 9,
+        "endLine": 204,
+        "endChar": 30
+      },
+      "revId": "b38078dc7eb33007b7fc67a87f3cbbfa74cbe755",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2d56852_c3f252cd",
+        "filename": "chrome/browser/resources/md_extensions/item.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-12-18T19:32:09Z",
+      "side": 1,
+      "message": "VoiceOver refuses to read the text if it\u0027s |hidden| or |display: none| when referenced by aria attributes.\n\nI\u0027ve updated the comment that this is done for VoiceOver.\n\nhttps://www.powermapper.com/tests/screen-readers/media/object-aria-labelledby/",
+      "parentUuid": "229410e4_7483061c",
       "range": {
         "startLine": 204,
         "startChar": 9,
