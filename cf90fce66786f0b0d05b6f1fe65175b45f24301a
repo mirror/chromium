@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e3d3104b_d853bdab",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 13
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-12-18T21:14:53Z",
+      "side": 1,
+      "message": "This would be misleading for R8 RG88 video frames, that\u0027d still be enabled, right?\n\nMaybe DisableMultiplanarGpuMemoryBufferForVideoFrames ?",
+      "revId": "cf90fce66786f0b0d05b6f1fe65175b45f24301a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f878d04_174433a1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 13
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-12-18T21:14:53Z",
+      "side": 1,
+      "message": "GpuemmoryBuffer!",
+      "revId": "cf90fce66786f0b0d05b6f1fe65175b45f24301a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
