@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "cd4a7ea1_a4ce00a1",
+        "filename": "media/remoting/rpc.proto",
+        "patchSetId": 7
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-12-18T21:56:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "de98f7ef_9fb3d61a",
+      "range": {
+        "startLine": 217,
+        "startChar": 4,
+        "endLine": 217,
+        "endChar": 43
+      },
+      "revId": "e6ef2e61d8baa411040d08245e308a9d19430d77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ecca5cbe_b1460fc4",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 7
@@ -45,6 +69,30 @@
       "revId": "e6ef2e61d8baa411040d08245e308a9d19430d77",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f82492b_91c8f6cd",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 43283,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-12-18T21:56:03Z",
+      "side": 1,
+      "message": "It could, I just followed other examples of deprecated (labels,\nnot whole enums), where the deprecation message is embedded\nin the label text (search for \"(deprecated)\" w/o the quotes).",
+      "parentUuid": "ecca5cbe_b1460fc4",
+      "range": {
+        "startLine": 43283,
+        "startChar": 27,
+        "endLine": 43283,
+        "endChar": 47
+      },
+      "revId": "e6ef2e61d8baa411040d08245e308a9d19430d77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

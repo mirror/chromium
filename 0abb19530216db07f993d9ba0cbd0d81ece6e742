@@ -22,6 +22,30 @@
       "revId": "0abb19530216db07f993d9ba0cbd0d81ece6e742",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cadeecd_b2e80510",
+        "filename": "media/base/video_frame_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-12-18T21:56:03Z",
+      "side": 0,
+      "message": "It\u0027s because we have now gaps in the VideoPixelFormat enum,\nwhich makes AllocationSize fail, and I didn\u0027t want to change \nthe aspect of this for() loop. Ideas?",
+      "parentUuid": "58fe39dc_df5a4047",
+      "range": {
+        "startLine": 446,
+        "startChar": 4,
+        "endLine": 446,
+        "endChar": 76
+      },
+      "revId": "0abb19530216db07f993d9ba0cbd0d81ece6e742",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
