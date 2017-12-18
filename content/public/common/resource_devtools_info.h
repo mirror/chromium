@@ -25,12 +25,13 @@ struct ResourceDevToolsInfo : base::RefCounted<ResourceDevToolsInfo> {
 
   scoped_refptr<ResourceDevToolsInfo> DeepCopy() const;
 
-  int32_t http_status_code;
+  int32_t http_status_code = 0;
   std::string http_status_text;
   HeadersVector request_headers;
   HeadersVector response_headers;
   std::string request_headers_text;
   std::string response_headers_text;
+  bool blocked_cross_site_document_load = false;
 
  private:
   friend class base::RefCounted<ResourceDevToolsInfo>;

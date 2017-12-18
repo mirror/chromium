@@ -226,6 +226,7 @@ void ParamTraits<scoped_refptr<content::ResourceDevToolsInfo>>::Write(
     WriteParam(m, p->response_headers);
     WriteParam(m, p->request_headers_text);
     WriteParam(m, p->response_headers_text);
+    WriteParam(m, p->blocked_cross_site_document_load);
   }
 }
 
@@ -239,13 +240,13 @@ bool ParamTraits<scoped_refptr<content::ResourceDevToolsInfo>>::Read(
   if (!has_object)
     return true;
   *r = new content::ResourceDevToolsInfo();
-  return
-      ReadParam(m, iter, &(*r)->http_status_code) &&
-      ReadParam(m, iter, &(*r)->http_status_text) &&
-      ReadParam(m, iter, &(*r)->request_headers) &&
-      ReadParam(m, iter, &(*r)->response_headers) &&
-      ReadParam(m, iter, &(*r)->request_headers_text) &&
-      ReadParam(m, iter, &(*r)->response_headers_text);
+  return ReadParam(m, iter, &(*r)->http_status_code) &&
+         ReadParam(m, iter, &(*r)->http_status_text) &&
+         ReadParam(m, iter, &(*r)->request_headers) &&
+         ReadParam(m, iter, &(*r)->response_headers) &&
+         ReadParam(m, iter, &(*r)->request_headers_text) &&
+         ReadParam(m, iter, &(*r)->response_headers_text) &&
+         ReadParam(m, iter, &(*r)->blocked_cross_site_document_load);
 }
 
 void ParamTraits<scoped_refptr<content::ResourceDevToolsInfo> >::Log(

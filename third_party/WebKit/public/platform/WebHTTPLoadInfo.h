@@ -73,6 +73,9 @@ class WebHTTPLoadInfo {
   BLINK_PLATFORM_EXPORT WebString NpnNegotiatedProtocol() const;
   BLINK_PLATFORM_EXPORT void SetNPNNegotiatedProtocol(const WebString&);
 
+  BLINK_PLATFORM_EXPORT bool BlockedSiteDocumentLoad();
+  BLINK_PLATFORM_EXPORT void SetBlockedSiteDocumentLoad(bool value);
+
 #if INSIDE_BLINK
   BLINK_PLATFORM_EXPORT WebHTTPLoadInfo(scoped_refptr<ResourceLoadInfo>);
   BLINK_PLATFORM_EXPORT operator scoped_refptr<ResourceLoadInfo>() const;

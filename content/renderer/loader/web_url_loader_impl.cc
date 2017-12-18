@@ -1212,6 +1212,8 @@ void WebURLLoaderImpl::PopulateURLResponse(const WebURL& url,
     }
     load_info.SetNPNNegotiatedProtocol(
         WebString::FromLatin1(info.alpn_negotiated_protocol));
+    load_info.SetBlockedSiteDocumentLoad(
+        info.devtools_info->blocked_cross_site_document_load);
     response->SetHTTPLoadInfo(load_info);
   }
 

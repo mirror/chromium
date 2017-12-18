@@ -129,4 +129,13 @@ void WebHTTPLoadInfo::SetNPNNegotiatedProtocol(
   private_->npn_negotiated_protocol = npn_negotiated_protocol;
 }
 
+bool WebHTTPLoadInfo::BlockedSiteDocumentLoad() {
+  DCHECK(!private_.IsNull());
+  return private_->blocked_cross_site_document_load;
+}
+
+void WebHTTPLoadInfo::SetBlockedSiteDocumentLoad(bool value) {
+  private_->blocked_cross_site_document_load = value;
+}
+
 }  // namespace blink

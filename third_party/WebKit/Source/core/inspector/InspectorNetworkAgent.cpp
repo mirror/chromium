@@ -450,15 +450,20 @@ BuildObjectForResourceResponse(const ResourceResponse& response,
         BuildObjectForTiming(*response.GetResourceLoadTiming()));
 
   if (response.GetResourceLoadInfo()) {
-    if (!response.GetResourceLoadInfo()->response_headers_text.IsEmpty())
+    if (response.GetResourceLoadInfo()->blocked_cross_site_document_load)
+      response_object->setBlockedCrossSiteDocumentLoad(true);
+    if (!response.GetResourceLoadInfo()->response_headers_text.IsEmpty()) {
       response_object->setHeadersText(
           response.GetResourceLoadInfo()->response_headers_text);
-    if (response.GetResourceLoadInfo()->request_headers.size())
+    }
+    if (response.GetResourceLoadInfo()->request_headers.size()) {
       response_object->setRequestHeaders(BuildObjectForHeaders(
           response.GetResourceLoadInfo()->request_headers));
-    if (!response.GetResourceLoadInfo()->request_headers_text.IsEmpty())
+    }
+    if (!response.GetResourceLoadInfo()->request_headers_text.IsEmpty()) {
       response_object->setRequestHeadersText(
           response.GetResourceLoadInfo()->request_headers_text);
+    }
   }
 
   String remote_ip_address = response.RemoteIPAddress();

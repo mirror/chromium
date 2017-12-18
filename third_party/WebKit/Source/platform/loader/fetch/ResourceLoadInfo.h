@@ -32,15 +32,16 @@
 namespace blink {
 
 struct ResourceLoadInfo : RefCounted<ResourceLoadInfo> {
-  ResourceLoadInfo() : http_status_code(0) {}
+  ResourceLoadInfo() {}
 
-  int http_status_code;
+  int http_status_code = 0;
   String http_status_text;
   HTTPHeaderMap request_headers;
   HTTPHeaderMap response_headers;
   String request_headers_text;
   String response_headers_text;
   String npn_negotiated_protocol;
+  bool blocked_cross_site_document_load = false;
 };
 
 }  // namespace blink

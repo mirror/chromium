@@ -6,9 +6,7 @@
 
 namespace content {
 
-ResourceDevToolsInfo::ResourceDevToolsInfo()
-    : http_status_code(0) {
-}
+ResourceDevToolsInfo::ResourceDevToolsInfo() {}
 
 ResourceDevToolsInfo::~ResourceDevToolsInfo() {
 }

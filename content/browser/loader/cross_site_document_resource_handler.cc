@@ -108,7 +108,7 @@ CrossSiteDocumentResourceHandler::~CrossSiteDocumentResourceHandler() {}
 void CrossSiteDocumentResourceHandler::OnResponseStarted(
     ResourceResponse* response,
     std::unique_ptr<ResourceController> controller) {
-  has_response_started_ = true;
+  response_ = response;
   LogCrossSiteDocumentAction(
       CrossSiteDocumentResourceHandler::Action::kResponseStarted);
 
@@ -120,7 +120,7 @@ void CrossSiteDocumentResourceHandler::OnWillRead(
     scoped_refptr<net::IOBuffer>* buf,
     int* buf_size,
     std::unique_ptr<ResourceController> controller) {
-  DCHECK(has_response_started_);
+  DCHECK(response_);
 
   // On the next read attempt after the response was blocked, either cancel the
   // rest of the request or allow it to proceed in a detached state.
@@ -189,7 +189,7 @@ void CrossSiteDocumentResourceHandler::ResumeOnWillRead(
 void CrossSiteDocumentResourceHandler::OnReadCompleted(
     int bytes_read,
     std::unique_ptr<ResourceController> controller) {
-  DCHECK(has_response_started_);
+  DCHECK(response_);
   DCHECK(!blocked_read_completed_);
 
   // If we intended to block the response and haven't sniffed yet, try to
@@ -235,6 +235,8 @@ void CrossSiteDocumentResourceHandler::OnReadCompleted(
       // Block the response and throw away the data.  Report zero bytes read.
       bytes_read = 0;
       blocked_read_completed_ = true;
+      if (response_->head.devtools_info)
+        response_->head.devtools_info->blocked_cross_site_document_load = true;
 
       // Log the blocking event.  Inline the Serialize call to avoid it when
       // tracing is disabled.

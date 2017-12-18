@@ -7276,6 +7276,12 @@
                             "description": "Security details for the request.",
                             "optional": true,
                             "$ref": "SecurityDetails"
+                        },
+                        {
+                            "name": "blockedCrossSiteDocumentLoad",
+                            "description": "Set when response was blocked due to being cross-site document load.",
+                            "optional": true,
+                            "type": "boolean"
                         }
                     ]
                 },

@@ -3322,6 +3322,8 @@ domain Network
       Security.SecurityState securityState
       # Security details for the request.
       optional SecurityDetails securityDetails
+      # Set when response was blocked due to being cross-site document load.
+      optional boolean blockedCrossSiteDocumentLoad
 
   # WebSocket request data.
   type WebSocketRequest extends object

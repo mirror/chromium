@@ -123,9 +123,10 @@ class CONTENT_EXPORT CrossSiteDocumentResourceHandler
   // the plugin has universal access.
   bool is_nocors_plugin_request_;
 
-  // Tracks whether OnResponseStarted has been called, to ensure that it happens
-  // before OnWillRead and OnReadCompleted.
-  bool has_response_started_ = false;
+  // Assigned in OnResponseStarted, ensures that it happens before OnWillRead
+  // and OnReadCompleted. Is also used to mark blocked_cross_side_document_load
+  // in OnReadCompleted.
+  ResourceResponse* response_ = nullptr;
 
   // Whether this response is a cross-site document that should be blocked,
   // pending the outcome of sniffing the content.  Set in OnResponseStarted and

@@ -335,6 +335,14 @@ SDK.NetworkDispatcher = class {
 
     networkRequest.setSecurityState(response.securityState);
 
+    if (response.blockedCrossSiteDocumentLoad) {
+      var message = Common.UIString(
+          `Blocked current origin from receiving cross-site document at %s with MIME type %s.`, networkRequest.url(),
+          networkRequest.mimeType);
+      this._manager.dispatchEventToListeners(
+          SDK.NetworkManager.Events.MessageGenerated,
+          {message: message, requestId: networkRequest.requestId(), warning: true});
+    }
     if (!this._mimeTypeIsConsistentWithType(networkRequest)) {
       var message = Common.UIString(
           'Resource interpreted as %s but transferred with MIME type %s: "%s".', networkRequest.resourceType().title(),
