@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0e72291d_c6ed37cc",
+        "filename": "content/browser/renderer_host/render_widget_host_view_android.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 674,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-12-18T17:13:26Z",
+      "side": 1,
+      "message": "Should we instead adjust in the render process (RenderWidget::ShowUnhandledTapUIIfNeeded)? The less browser process cares about this flag the better.",
+      "revId": "275fa616304be516b928152628953b1752497392",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
