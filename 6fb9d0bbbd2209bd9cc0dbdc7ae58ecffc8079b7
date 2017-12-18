@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "06614322_d430a04c",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1164963
+      },
+      "writtenOn": "2017-12-18T17:00:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "297e130e_33e276f8",
+      "range": {
+        "startLine": 279,
+        "startChar": 22,
+        "endLine": 279,
+        "endChar": 45
+      },
+      "revId": "6fb9d0bbbd2209bd9cc0dbdc7ae58ecffc8079b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a57f8fb8_4cf98d5b",
         "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.cpp",
         "patchSetId": 7
@@ -36,6 +60,30 @@
       "writtenOn": "2017-12-18T15:35:35Z",
       "side": 1,
       "message": "I don\u0027t understand why you need this. If the |area| coordinates are independent\nof writing mode, then when they are translated to container then the \nwriting mode should not affect it.\n\nAlso what about IsFlippedLinesWritingMode()?",
+      "range": {
+        "startLine": 288,
+        "startChar": 21,
+        "endLine": 288,
+        "endChar": 50
+      },
+      "revId": "6fb9d0bbbd2209bd9cc0dbdc7ae58ecffc8079b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd86793b_22ae9462",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1164963
+      },
+      "writtenOn": "2017-12-18T17:00:42Z",
+      "side": 1,
+      "message": "Seems the |area| coordinates are not independent of writing mode. This is not a ScrollPosition. It is a transform of a point from the local\u0027s coordinate to the ancestor\u0027s coordinate. However, if the writing mode is vertical-rl, the origins of both coordinates are the top-right corner. So things inside the scrollable_area actually have negative x-offsets.\n\nI wasn\u0027t able to find a method that does the transform in the coordinate of the scrollable_area\u0027s top-left corner. Please point me to the code if you know one. Or perhaps bokan@ has better solution for this?\n\nLayoutObject::HasFlippedBlocksWritingMode() is actually ComputedStyle::IsFlippedLinesWritingMode().",
+      "parentUuid": "a57f8fb8_4cf98d5b",
       "range": {
         "startLine": 288,
         "startChar": 21,
@@ -68,6 +116,30 @@
       "revId": "6fb9d0bbbd2209bd9cc0dbdc7ae58ecffc8079b7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15b6cf05_3df1a3f8",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1164963
+      },
+      "writtenOn": "2017-12-18T17:00:42Z",
+      "side": 1,
+      "message": "We only have horizontal-tb, vertical-lr and vertical-rl as writing modes, so there is no FlippedHorizontal mode that needs to be dealt with.",
+      "parentUuid": "70aed38f_4d1cc372",
+      "range": {
+        "startLine": 318,
+        "startChar": 0,
+        "endLine": 325,
+        "endChar": 3
+      },
+      "revId": "6fb9d0bbbd2209bd9cc0dbdc7ae58ecffc8079b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
