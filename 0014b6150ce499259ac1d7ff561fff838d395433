@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c4d63db9_b297cd4b",
+        "filename": "net/quic/chromium/quic_stream_factory.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2017-12-18T03:33:03Z",
+      "side": 1,
+      "message": "We used to only add the request to |stream_requests_| via AddRequest when QSF::Job::Run() can not finish synchronously or there is already a QSF::Job running for the same server id and we want to bind the request to that Job.\n\nThis change seems cleaner, have you make sure if the Job finishes synchronously, requests are cleaned up?",
+      "revId": "0014b6150ce499259ac1d7ff561fff838d395433",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bbce359_27a43fc2",
+        "filename": "net/quic/chromium/quic_stream_factory.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 471,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2017-12-18T03:33:03Z",
+      "side": 1,
+      "message": "We have a state for host resolution completion: STATE_RESOLVE_HOST_COMPLETE, and call DoResolveHostComplete. This might not so obvious to me, but is there any reason we couldn\u0027t notify requests in that state? DoLoop doesn\u0027t seem to be a good place to handle host resolution results and notify requests.",
+      "revId": "0014b6150ce499259ac1d7ff561fff838d395433",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f390f70_f176f5dc",
+        "filename": "net/quic/chromium/quic_stream_factory.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2017-12-18T03:33:03Z",
+      "side": 1,
+      "message": "comment please",
+      "range": {
+        "startLine": 163,
+        "startChar": 31,
+        "endLine": 163,
+        "endChar": 0
+      },
+      "revId": "0014b6150ce499259ac1d7ff561fff838d395433",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3051394_e2aaf7da",
+        "filename": "net/quic/chromium/quic_stream_factory.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2017-12-18T03:33:03Z",
+      "side": 1,
+      "message": "nit: can you add a comment on what the boolean will be used and when the boolean will be changed?",
+      "revId": "0014b6150ce499259ac1d7ff561fff838d395433",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
