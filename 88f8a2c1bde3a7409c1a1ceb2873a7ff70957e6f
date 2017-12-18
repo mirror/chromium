@@ -16,6 +16,24 @@
       "revId": "88f8a2c1bde3a7409c1a1ceb2873a7ff70957e6f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bed29107_0b1ac200",
+        "filename": "third_party/WebKit/Source/devtools/front_end/ui/UIUtils.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-12-18T21:45:42Z",
+      "side": 1,
+      "message": "It does help us check for Infinity, but the original intent was to prevent scientific notation (e.g. 1e20)\n\nRegex introduced here: https://chromium.googlesource.com/chromium/src/+/c902094e072a9f4d15087aa0276bd6b989df83ff\nOriginal bug: https://bugs.chromium.org/p/chromium/issues/detail?id\u003d81165",
+      "parentUuid": "92fb0824_5987b6e9",
+      "revId": "88f8a2c1bde3a7409c1a1ceb2873a7ff70957e6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
