@@ -13,6 +13,8 @@ ProductRegistry.BadgePool = class {
     if (!forceShow) {
       this._setting = Common.settings.moduleSetting('product_registry.badges-visible');
       this._setting.addChangeListener(this._settingUpdated.bind(this));
+      if (this._setting.get())
+        Host.userMetrics.actionTaken(Host.UserMetrics.Action.ShowedThirdPartyBadges);
     }
   }
 
@@ -115,6 +117,8 @@ ProductRegistry.BadgePool = class {
   _settingUpdated() {
     for (var badgeElement of this._badgeElements.keys())
       this._renderBadge(badgeElement);
+    if (this._setting.get())
+      Host.userMetrics.actionTaken(Host.UserMetrics.Action.ShowedThirdPartyBadges);
   }
 
   /**
