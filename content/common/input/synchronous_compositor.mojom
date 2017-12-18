@@ -1,0 +1,61 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+module content.mojom;
+
+import "mojo/common/time.mojom";
+import "ui/gfx/geometry/mojo/geometry.mojom";
+import "services/viz/public/interfaces/compositing/compositor_frame.mojom";
+import "services/viz/public/interfaces/compositing/compositor_frame_metadata.mojom";
+import "services/viz/public/interfaces/compositing/returned_resource.mojom";
+
+[Native]
+struct SyncCompositorDemandDrawHwParams;
+
+[Native]
+struct SyncCompositorSetSharedMemoryParams;
+
+[Native]
+struct SyncCompositorDemandDrawSwParams;
+
+[Native]
+struct SyncCompositorCommonRendererParams;
+
+interface SynchronousCompositor {
+  SynchronizeState();
+  ComputeScroll(mojo.common.mojom.TimeTicks time);
+  DemandDrawHwAsync(SyncCompositorDemandDrawHwParams draw_params);
+  [Sync]
+  DemandDrawHw(SyncCompositorDemandDrawHwParams draw_params) => (SyncCompositorCommonRendererParams result, uint32 layer_tree_frame_sink_id,
+                           viz.mojom.CompositorFrame? frame);
+  [Sync]
+  SetSharedMemory(SyncCompositorSetSharedMemoryParams params) => (bool success, SyncCompositorCommonRendererParams result);
+  [Sync]
+  DemandDrawSw(SyncCompositorDemandDrawSwParams draw_params) => (SyncCompositorCommonRendererParams result,
+                           viz.mojom.CompositorFrameMetadata? meta_data);
+  ZeroSharedMemory();
+  [Sync]
+  ZoomBy(float delta, gfx.mojom.Point anchor) => (SyncCompositorCommonRendererParams result);
+  SetMemoryPolicy(uint32 bytes_limit);
+  ReclaimResources(uint32 layer_tree_frame_sink_id,
+                   array<viz.mojom.ReturnedResource> resources);
+  SetScroll(gfx.mojom.ScrollOffset offset);
+};
+
+interface SynchronousCompositorHost {
+  LayerTreeFrameSinkCreated();
+  UpdateState(SyncCompositorCommonRendererParams params);
+};
+
+// Interface that runs on the IO thread of the browser. To be used
+// for responses to messages requires events to block the UI thread of the
+// browser.
+interface SynchronousCompositorControlHost {
+  // Response from DrawHwAsync.
+  ReturnFrame(uint32 layer_tree_frame_sink_id,
+              viz.mojom.CompositorFrame? frame);
+
+  // Response from SynchronizeState.
+  SynchronizeStateResponse(SyncCompositorCommonRendererParams params);
+};
