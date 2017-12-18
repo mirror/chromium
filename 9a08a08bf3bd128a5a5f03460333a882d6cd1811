@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "586c0c2a_72f7a561",
+        "filename": "ios/web/web_state/web_state_impl_unittest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-12-18T17:03:30Z",
+      "side": 1,
+      "message": "-triggerPendingLoad is also a private method of CRWWebController. I used -loadCurrentURLIfNecessary instead.",
+      "parentUuid": "acf3ddf4_41b12b65",
+      "range": {
+        "startLine": 53,
+        "startChar": 8,
+        "endLine": 53,
+        "endChar": 29
+      },
+      "revId": "9a08a08bf3bd128a5a5f03460333a882d6cd1811",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b5756e7c_257d9c01",
         "filename": "ios/web/web_state/web_state_impl_unittest.mm",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "9a08a08bf3bd128a5a5f03460333a882d6cd1811",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8973e4ec_356f6e2c",
+        "filename": "ios/web/web_state/web_state_impl_unittest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 841,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-12-18T17:03:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b5756e7c_257d9c01",
+      "range": {
+        "startLine": 841,
+        "startChar": 40,
+        "endLine": 841,
+        "endChar": 46
+      },
+      "revId": "9a08a08bf3bd128a5a5f03460333a882d6cd1811",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
