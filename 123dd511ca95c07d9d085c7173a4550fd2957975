@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "6d197647_aa400dfe",
+        "filename": "chrome/browser/ui/views/frame/immersive_mode_controller_ash_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-12-18T20:04:13Z",
+      "side": 1,
+      "message": "ash is chromeos only, so you shouldn\u0027t need this.",
+      "revId": "123dd511ca95c07d9d085c7173a4550fd2957975",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e1a0b55_722283f9",
+        "filename": "chrome/browser/ui/views/frame/immersive_mode_controller_ash_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-12-18T20:04:13Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "123dd511ca95c07d9d085c7173a4550fd2957975",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e8148b77_e5ec5ff0",
         "filename": "chrome/browser/ui/views/frame/immersive_mode_controller_ash_unittest.cc",
         "patchSetId": 2
@@ -13,6 +47,30 @@
       "writtenOn": "2017-12-18T13:55:19Z",
       "side": 1,
       "message": "This test crashes without the fix in the other file, and passes normally with the fix applied. Just not sure whether it\u0027s fine to have a test like this that doesn\u0027t have any ASSERT/EXPECT.",
+      "range": {
+        "startLine": 294,
+        "startChar": 39,
+        "endLine": 294,
+        "endChar": 74
+      },
+      "revId": "123dd511ca95c07d9d085c7173a4550fd2957975",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c05f7ff0_ed3d954a",
+        "filename": "chrome/browser/ui/views/frame/immersive_mode_controller_ash_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-12-18T20:04:13Z",
+      "side": 1,
+      "message": "This is fine. Just update the description like\n// Make sure that going from regular fullscreen to locked fullscreen does not\n// cause a crash. crbug.com/XXXXX.",
+      "parentUuid": "e8148b77_e5ec5ff0",
       "range": {
         "startLine": 294,
         "startChar": 39,
