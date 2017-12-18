@@ -247,6 +247,7 @@ std::ostream& operator<<(std::ostream& out, const UrlPattern& pattern) {
   out << pattern.url_pattern();
   if (pattern.anchor_right() == proto::ANCHOR_TYPE_BOUNDARY)
     out << '|';
+
   if (pattern.match_case())
     out << "$match-case";
 
