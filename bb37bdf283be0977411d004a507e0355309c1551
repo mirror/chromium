@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "454355b6_5624534e",
+        "filename": "media/blink/webmediaplayer_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 529,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-12-18T17:11:56Z",
+      "side": 1,
+      "message": "the WebMediaPlayer interface could be improved because this is basically the creation start time :)",
+      "revId": "bb37bdf283be0977411d004a507e0355309c1551",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf878d91_38701dac",
+        "filename": "media/blink/webmediaplayer_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1467,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-12-18T17:11:56Z",
+      "side": 1,
+      "message": "Here and below, I was multiple times told by UMA folks to restrict UMA histograms calls because they generate a lot of code. Would it make sense to have a generic method taking MSE/SRC/EME as an argument and doing one call to the macro?",
+      "revId": "bb37bdf283be0977411d004a507e0355309c1551",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "305a5bd4_d1231c5e",
+        "filename": "media/blink/webmediaplayer_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1603,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-12-18T17:11:56Z",
+      "side": 1,
+      "message": "How can we end up in this state?",
+      "range": {
+        "startLine": 1603,
+        "startChar": 9,
+        "endLine": 1603,
+        "endChar": 42
+      },
+      "revId": "bb37bdf283be0977411d004a507e0355309c1551",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53be72a4_e663b623",
+        "filename": "media/mojo/services/media_metrics_provider.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-12-18T17:11:56Z",
+      "side": 1,
+      "message": "Here and below, I believe that it should be `DCHECK_EQ(kNoTimestamp, ...);`",
+      "revId": "bb37bdf283be0977411d004a507e0355309c1551",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
