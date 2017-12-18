@@ -1,0 +1,642 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "26595d3f_434b1e65",
+        "filename": "components/arc/common/timer.mojom",
+        "patchSetId": 23
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-12-18T22:09:48Z",
+      "side": 1,
+      "message": "on success.",
+      "range": {
+        "startLine": 55,
+        "startChar": 77,
+        "endLine": 55,
+        "endChar": 78
+      },
+      "revId": "393c112aa1552bffc09276c14f202206f64c00c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "113bfd25_0afa060e",
+        "filename": "components/arc/test/fake_timer_instance.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-12-18T22:09:48Z",
+      "side": 1,
+      "message": "EXPECT or ADD_FAILURE instead of LOG (see details at line 165)",
+      "range": {
+        "startLine": 59,
+        "startChar": 3,
+        "endLine": 60,
+        "endChar": 66
+      },
+      "revId": "393c112aa1552bffc09276c14f202206f64c00c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5956c5a8_38233294",
+        "filename": "components/arc/test/fake_timer_instance.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-12-18T22:09:48Z",
+      "side": 1,
+      "message": "EXPECT or ADD_FAILURE instead of LOG (see details at line 165)",
+      "range": {
+        "startLine": 69,
+        "startChar": 4,
+        "endLine": 70,
+        "endChar": 51
+      },
+      "revId": "393c112aa1552bffc09276c14f202206f64c00c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bb5fdfc_59229092",
+        "filename": "components/arc/test/fake_timer_instance.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-12-18T22:09:48Z",
+      "side": 1,
+      "message": "EXPECT or ADD_FAILURE instead of LOG (see details at line 165)",
+      "range": {
+        "startLine": 95,
+        "startChar": 2,
+        "endLine": 96,
+        "endChar": 66
+      },
+      "revId": "393c112aa1552bffc09276c14f202206f64c00c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f57a1a0b_6709678a",
+        "filename": "components/arc/test/fake_timer_instance.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-12-18T22:09:48Z",
+      "side": 1,
+      "message": "EXPECT or ADD_FAILURE instead of LOG (see details at line 165)",
+      "range": {
+        "startLine": 113,
+        "startChar": 2,
+        "endLine": 114,
+        "endChar": 39
+      },
+      "revId": "393c112aa1552bffc09276c14f202206f64c00c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f68534b_bd8b898d",
+        "filename": "components/arc/test/fake_timer_instance.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-12-18T22:09:48Z",
+      "side": 1,
+      "message": "EXPECT or ADD_FAILURE instead of LOG",
+      "range": {
+        "startLine": 142,
+        "startChar": 2,
+        "endLine": 143,
+        "endChar": 71
+      },
+      "revId": "393c112aa1552bffc09276c14f202206f64c00c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2b2661c_1921a6e4",
+        "filename": "components/arc/test/fake_timer_instance.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-12-18T22:09:48Z",
+      "side": 1,
+      "message": "EXPECT or ADD_FAILURE instead of LOG",
+      "range": {
+        "startLine": 157,
+        "startChar": 4,
+        "endLine": 157,
+        "endChar": 54
+      },
+      "revId": "393c112aa1552bffc09276c14f202206f64c00c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c33a995_e2f9101d",
+        "filename": "components/arc/test/fake_timer_instance.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-12-18T22:09:48Z",
+      "side": 1,
+      "message": "In test code, you can use\nEXPECT_EQ(responses.size(), arc_timers_.size()) \u003c\u003c \"Incorrect number of timer objects returned\" to guarantee that the test will fail if the condition isn\u0027t met.\n\nIf you really want to clear |arc_timers_| (but is it necessary if the test fails anyways?), you can write:\n\nif (responses.size() !\u003d arc_timers_.size()) {\n  ADD_FAILURE() \u003c\u003c \"Incorrect number of timer objects returned: \"\n                \u003c\u003c responses.size();\n  arc_timers_.clear();\n}",
+      "range": {
+        "startLine": 164,
+        "startChar": 4,
+        "endLine": 165,
+        "endChar": 35
+      },
+      "revId": "393c112aa1552bffc09276c14f202206f64c00c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b91ef851_8bf359e0",
+        "filename": "components/arc/test/fake_timer_instance.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-12-18T22:09:48Z",
+      "side": 1,
+      "message": "EXPECT or ADD_FAILURE instead of LOG",
+      "range": {
+        "startLine": 175,
+        "startChar": 6,
+        "endLine": 175,
+        "endChar": 78
+      },
+      "revId": "393c112aa1552bffc09276c14f202206f64c00c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "577ee413_bc1ce424",
+        "filename": "components/arc/test/fake_timer_instance.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-12-18T22:09:48Z",
+      "side": 1,
+      "message": "and waits until timer creation is complete.",
+      "range": {
+        "startLine": 27,
+        "startChar": 41,
+        "endLine": 27,
+        "endChar": 42
+      },
+      "revId": "393c112aa1552bffc09276c14f202206f64c00c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "381c9669_51b42ea0",
+        "filename": "components/arc/test/fake_timer_instance.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-12-18T22:09:48Z",
+      "side": 1,
+      "message": "absolute_expiration_time",
+      "range": {
+        "startLine": 31,
+        "startChar": 9,
+        "endLine": 31,
+        "endChar": 29
+      },
+      "revId": "393c112aa1552bffc09276c14f202206f64c00c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "479b8d7b_974eb647",
+        "filename": "components/arc/test/fake_timer_instance.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-12-18T22:09:48Z",
+      "side": 1,
+      "message": "You don\u0027t wait for the timer to expire. Shouldn\u0027t this be \"Returns true if the timer was started successfully.\"?",
+      "range": {
+        "startLine": 30,
+        "startChar": 41,
+        "endLine": 31,
+        "endChar": 30
+      },
+      "revId": "393c112aa1552bffc09276c14f202206f64c00c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ddcb2a0_3b2dca1d",
+        "filename": "components/arc/test/fake_timer_instance.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-12-18T22:09:48Z",
+      "side": 1,
+      "message": "Is this used?",
+      "revId": "393c112aa1552bffc09276c14f202206f64c00c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d381a6f3_5ac83836",
+        "filename": "components/arc/timer/arc_timer.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-12-18T22:09:48Z",
+      "side": 1,
+      "message": "not used",
+      "range": {
+        "startLine": 11,
+        "startChar": 9,
+        "endLine": 11,
+        "endChar": 17
+      },
+      "revId": "393c112aa1552bffc09276c14f202206f64c00c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffd34994_2df796ca",
+        "filename": "components/arc/timer/arc_timer.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-12-18T22:09:48Z",
+      "side": 1,
+      "message": "not used",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 42
+      },
+      "revId": "393c112aa1552bffc09276c14f202206f64c00c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "612a8097_dffdb301",
+        "filename": "components/arc/timer/arc_timer.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-12-18T22:09:48Z",
+      "side": 1,
+      "message": "can just be \"absolute_expiration_time - current_time_ticks\".",
+      "range": {
+        "startLine": 41,
+        "startChar": 12,
+        "endLine": 41,
+        "endChar": 75
+      },
+      "revId": "393c112aa1552bffc09276c14f202206f64c00c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2833fea_0313e16c",
+        "filename": "components/arc/timer/arc_timer.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-12-18T22:09:48Z",
+      "side": 1,
+      "message": "You can use base::Unretained(this). Comment that the base::Unretained() is safe because the timer is canceled and the callback can\u0027t be invoked once |timer_| is destroyed.\nhttps://cs.chromium.org/chromium/src/components/timers/alarm_timer_chromeos.cc?l\u003d30\u0026rcl\u003d0402541097268de100e753152d6698e25fed586f",
+      "range": {
+        "startLine": 46,
+        "startChar": 51,
+        "endLine": 46,
+        "endChar": 77
+      },
+      "revId": "393c112aa1552bffc09276c14f202206f64c00c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0eed12ce_cf8c3065",
+        "filename": "components/arc/timer/arc_timer.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-12-18T22:09:48Z",
+      "side": 1,
+      "message": "Is it useful to land this log statement, or is it mostly useful when developing this patch?",
+      "range": {
+        "startLine": 56,
+        "startChar": 2,
+        "endLine": 56,
+        "endChar": 36
+      },
+      "revId": "393c112aa1552bffc09276c14f202206f64c00c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77e7e648_da20aec8",
+        "filename": "components/arc/timer/arc_timer.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-12-18T22:09:48Z",
+      "side": 1,
+      "message": "This looks like an arbitrary value, not a number of expirations.\nhttps://chromium-review.googlesource.com/c/chromium/src/+/826566/1/components/arc/timer/arc_timer.cc#70",
+      "range": {
+        "startLine": 60,
+        "startChar": 2,
+        "endLine": 60,
+        "endChar": 37
+      },
+      "revId": "393c112aa1552bffc09276c14f202206f64c00c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5044375_a2fc80cc",
+        "filename": "components/arc/timer/arc_timer.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-12-18T22:09:48Z",
+      "side": 1,
+      "message": "This is false. Like other members, it is only accessed from the sequence on which this ArcTimer is initialized.",
+      "range": {
+        "startLine": 50,
+        "startChar": 39,
+        "endLine": 50,
+        "endChar": 74
+      },
+      "revId": "393c112aa1552bffc09276c14f202206f64c00c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1a581b3_e43f94d5",
+        "filename": "components/arc/timer/arc_timer.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-12-18T22:09:48Z",
+      "side": 1,
+      "message": "Incomplete comment.",
+      "range": {
+        "startLine": 53,
+        "startChar": 72,
+        "endLine": 53,
+        "endChar": 79
+      },
+      "revId": "393c112aa1552bffc09276c14f202206f64c00c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f30eeca2_90b2ebd2",
+        "filename": "components/arc/timer/arc_timer_bridge.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-12-18T22:09:48Z",
+      "side": 1,
+      "message": "class\nhttps://google.github.io/styleguide/cppguide.html#Structs_vs._Classes",
+      "range": {
+        "startLine": 102,
+        "startChar": 0,
+        "endLine": 102,
+        "endChar": 6
+      },
+      "revId": "393c112aa1552bffc09276c14f202206f64c00c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac42414c_b52081a9",
+        "filename": "components/arc/timer/arc_timer_bridge.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-12-18T22:09:48Z",
+      "side": 1,
+      "message": "Instead of passing this by argument, you can just use base::SequencedTaskRunnerHandle::Get() below to get the \"current\" sequence.",
+      "range": {
+        "startLine": 135,
+        "startChar": 4,
+        "endLine": 135,
+        "endChar": 64
+      },
+      "revId": "393c112aa1552bffc09276c14f202206f64c00c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23101954_bf344ee0",
+        "filename": "components/arc/timer/arc_timer_bridge.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-12-18T22:09:48Z",
+      "side": 1,
+      "message": "nice!",
+      "range": {
+        "startLine": 179,
+        "startChar": 8,
+        "endLine": 179,
+        "endChar": 44
+      },
+      "revId": "393c112aa1552bffc09276c14f202206f64c00c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "572e5c2d_06efe289",
+        "filename": "components/arc/timer/arc_timer_bridge.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-12-18T22:09:48Z",
+      "side": 1,
+      "message": "Instead of DCHECK(... \u0026\u0026 ... \u0026\u0026 ...), you could have 3 DCHECK_EQ. That way, the logs will indicate exactly what is wrong on failure.",
+      "range": {
+        "startLine": 192,
+        "startChar": 2,
+        "endLine": 195,
+        "endChar": 79
+      },
+      "revId": "393c112aa1552bffc09276c14f202206f64c00c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bd88f72_4315c8ce",
+        "filename": "components/arc/timer/arc_timer_bridge_unittest.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-12-18T22:09:48Z",
+      "side": 1,
+      "message": "Do you really need a TestBrowserThreadBundle? Using a base::test::ScopedTaskEnvironment would remove the dependency on content/.",
+      "range": {
+        "startLine": 51,
+        "startChar": 2,
+        "endLine": 51,
+        "endChar": 50
+      },
+      "revId": "393c112aa1552bffc09276c14f202206f64c00c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b41ff80b_7cdd9e9f",
+        "filename": "components/arc/timer/arc_timer_bridge_unittest.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-12-18T22:09:48Z",
+      "side": 1,
+      "message": "Since the timers are created on a separate sequence, you don\u0027t need this on the main thread.",
+      "range": {
+        "startLine": 62,
+        "startChar": 2,
+        "endLine": 63,
+        "endChar": 41
+      },
+      "revId": "393c112aa1552bffc09276c14f202206f64c00c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbd48ee3_73148b9e",
+        "filename": "components/arc/timer/arc_timer_bridge_unittest.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-12-18T22:09:48Z",
+      "side": 1,
+      "message": "FromSeconds(5)\n\nBut do you really want to wait 5 seconds in a test?",
+      "range": {
+        "startLine": 72,
+        "startChar": 23,
+        "endLine": 72,
+        "endChar": 80
+      },
+      "revId": "393c112aa1552bffc09276c14f202206f64c00c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
