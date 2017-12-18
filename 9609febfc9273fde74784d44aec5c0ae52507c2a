@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5c6f818c_17186f1e",
+        "filename": "chrome/browser/signin/identity_proxy_factory.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-12-18T16:29:12Z",
+      "side": 1,
+      "message": "disable copy and assign.",
+      "range": {
+        "startLine": 35,
+        "startChar": 15,
+        "endLine": 35,
+        "endChar": 29
+      },
+      "revId": "9609febfc9273fde74784d44aec5c0ae52507c2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
