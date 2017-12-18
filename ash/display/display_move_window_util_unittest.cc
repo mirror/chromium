@@ -22,6 +22,7 @@
 #include "ui/display/manager/display_manager.h"
 #include "ui/display/screen.h"
 #include "ui/display/test/display_manager_test_api.h"
+#include "ui/wm/core/window_util.h"
 
 namespace ash {
 
@@ -411,6 +412,32 @@ TEST_F(DisplayMoveWindowUtilTest, AutoManaged) {
   EXPECT_EQ(gfx::Rect(100, 20, 200, 100), window1->GetBoundsInScreen());
   // Window 2 is positioned by |pre_added_to_workspace_window_bounds()|.
   EXPECT_EQ(gfx::Rect(410, 20, 200, 100), window2->GetBoundsInScreen());
+}
+
+TEST_F(DisplayMoveWindowUtilTest, WindowWithTransientChild) {
+  UpdateDisplay("400x300,400x300");
+  aura::Window* window =
+      CreateTestWindowInShellWithBounds(gfx::Rect(10, 20, 200, 100));
+  wm::ActivateWindow(window);
+
+  // Create a |child| window and make it a transient child of |window|.
+  std::unique_ptr<aura::Window> child =
+      CreateChildWindow(window, gfx::Rect(20, 30, 40, 50));
+  ::wm::AddTransientChild(window, child.get());
+  display::Screen* screen = display::Screen::GetScreen();
+  EXPECT_EQ(display_manager()->GetDisplayAt(0).id(),
+            screen->GetDisplayNearestWindow(window).id());
+  EXPECT_EQ(display_manager()->GetDisplayAt(0).id(),
+            screen->GetDisplayNearestWindow(child.get()).id());
+
+  // Operate moving window to right display. Check display and bounds.
+  HandleMoveWindowToDisplay(DisplayMoveWindowDirection::kRight);
+  EXPECT_EQ(display_manager()->GetDisplayAt(1).id(),
+            screen->GetDisplayNearestWindow(window).id());
+  EXPECT_EQ(display_manager()->GetDisplayAt(1).id(),
+            screen->GetDisplayNearestWindow(child.get()).id());
+  EXPECT_EQ(gfx::Rect(410, 20, 200, 100), window->GetBoundsInScreen());
+  EXPECT_EQ(gfx::Rect(430, 50, 40, 50), child->GetBoundsInScreen());
 }
 
 }  // namespace ash
