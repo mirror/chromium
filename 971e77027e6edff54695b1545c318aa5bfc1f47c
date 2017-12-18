@@ -212,6 +212,24 @@
     },
     {
       "key": {
+        "uuid": "74ee5370_8ef515a5",
+        "filename": "third_party/WebKit/Source/modules/clipboard/ClipboardPromise.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-12-18T23:14:46Z",
+      "side": 1,
+      "message": "It wouldn\u0027t actually be design change for Chrome\u0027s implementation - it would never trigger a permission prompt in Chrome because we auto-grant access. But it would give other content embedders the option to trigger a permission prompt if they chose. That is what I\u0027m thinking of.",
+      "parentUuid": "d55f0724_8f5ec7b8",
+      "revId": "971e77027e6edff54695b1545c318aa5bfc1f47c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3aa0c9fc_f92969f7",
         "filename": "third_party/WebKit/Source/modules/clipboard/ClipboardPromise.cpp",
         "patchSetId": 9
@@ -282,6 +300,24 @@
     },
     {
       "key": {
+        "uuid": "4297c4f0_ea73b6e9",
+        "filename": "third_party/WebKit/Source/modules/clipboard/ClipboardPromise.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-12-18T23:14:46Z",
+      "side": 1,
+      "message": "I disagree. ASK implies that the permission has not yet been granted and that the user should first be prompted. Conceptually this is confusing and different to other permission code. If a permission is not allowed, it should not be granted. I don\u0027t see any strong reason not to have this be !\u003d allow?",
+      "parentUuid": "44a641dc_374074ec",
+      "revId": "971e77027e6edff54695b1545c318aa5bfc1f47c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d76fd99c_900d76e5",
         "filename": "third_party/WebKit/Source/modules/clipboard/ClipboardPromise.cpp",
         "patchSetId": 9
@@ -311,6 +347,24 @@
       "side": 1,
       "message": "With them broken out, the calling structure is clearer. If someone else needs to modify this code, they won\u0027t have to figure out what needs to be untangled before making changes. Less change of someone making a change and not realizing that it affects something else as well. \n\nSo there\u0027s no real benefit (other than maybe a temporary saving of ~20bytes of code) to merging them.",
       "parentUuid": "d76fd99c_900d76e5",
+      "revId": "971e77027e6edff54695b1545c318aa5bfc1f47c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "608f6663_289870f3",
+        "filename": "third_party/WebKit/Source/modules/clipboard/ClipboardPromise.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-12-18T23:14:46Z",
+      "side": 1,
+      "message": "I don\u0027t think personally I agree that this is clearer - there\u0027s code duplication and it requires careful inspection . But perhaps this is a stylistic question I\u0027m not an OWNER of this code anyway so feel free to leave it as is.",
+      "parentUuid": "2f5a091d_7bab3591",
       "revId": "971e77027e6edff54695b1545c318aa5bfc1f47c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
