@@ -191,6 +191,30 @@
     },
     {
       "key": {
+        "uuid": "27c16279_ccdd25bb",
+        "filename": "content/network/data_pipe_element_reader.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-12-18T19:31:48Z",
+      "side": 1,
+      "message": "My understanding is that the underlying Mojo API doesn\u0027t make the guarantee that after emitting a readable signal, the next read will be definitely a success:\n\n- The Mojo system API is thread safe, there could be multiple readers for a pipe. Therefore, someone might have consumed the data. (I understand this is not relevant here.)\n\n- It shouldn\u0027t be something surprising. Things like condition variables could have spurious events. I believe watching a OS socket to become readable could have spurious events as well.\n\nWDYT?",
+      "parentUuid": "16541ac7_716cb6c4",
+      "range": {
+        "startLine": 94,
+        "startChar": 18,
+        "endLine": 94,
+        "endChar": 30
+      },
+      "revId": "172fd5827d1c0bae7d932ff5e52b0c02212e6b4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a172f978_3dabec5f",
         "filename": "content/network/data_pipe_element_reader.h",
         "patchSetId": 5
