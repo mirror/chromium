@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bf44950e_d8ce248a",
+        "filename": "docs/tour_of_luci_ui.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-12-18T17:27:15Z",
+      "side": 1,
+      "message": "Nit: Please remove the end-of-line trailing spaces.",
+      "revId": "6454d1768a5a8069603be9e30630c991e134874e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "349fd59a_5152870e",
+        "filename": "docs/tour_of_luci_ui.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-12-18T17:27:15Z",
+      "side": 1,
+      "message": "Nit: try to wrap lines at 80 cols where possible; see http://google.github.io/styleguide/docguide/style.html if you haven\u0027t already.",
+      "revId": "6454d1768a5a8069603be9e30630c991e134874e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52a9e69c_20cb0149",
+        "filename": "docs/tour_of_luci_ui.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-12-18T17:27:15Z",
+      "side": 1,
+      "message": "\"ordered\"?",
+      "revId": "6454d1768a5a8069603be9e30630c991e134874e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
