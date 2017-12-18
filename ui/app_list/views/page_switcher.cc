@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "ui/app_list/views/page_switcher_horizontal.h"
+#include "ui/app_list/views/page_switcher.h"
 
 #include <algorithm>
 
@@ -129,7 +129,7 @@ PageSwitcherButton* GetButtonByIndex(views::View* buttons, int index) {
 
 }  // namespace
 
-PageSwitcherHorizontal::PageSwitcherHorizontal(PaginationModel* model)
+PageSwitcher::PageSwitcher(PaginationModel* model)
     : model_(model), buttons_(new views::View) {
   SetPaintToLayer();
   layer()->SetFillsBoundsOpaquely(false);
@@ -141,11 +141,11 @@ PageSwitcherHorizontal::PageSwitcherHorizontal(PaginationModel* model)
   model_->AddObserver(this);
 }
 
-PageSwitcherHorizontal::~PageSwitcherHorizontal() {
+PageSwitcher::~PageSwitcher() {
   model_->RemoveObserver(this);
 }
 
-int PageSwitcherHorizontal::GetPageForPoint(const gfx::Point& point) const {
+int PageSwitcher::GetPageForPoint(const gfx::Point& point) const {
   if (!buttons_->bounds().Contains(point))
     return -1;
 
@@ -161,7 +161,7 @@ int PageSwitcherHorizontal::GetPageForPoint(const gfx::Point& point) const {
   return -1;
 }
 
-void PageSwitcherHorizontal::UpdateUIForDragPoint(const gfx::Point& point) {
+void PageSwitcher::UpdateUIForDragPoint(const gfx::Point& point) {
   int page = GetPageForPoint(point);
 
   const int button_count = buttons_->child_count();
@@ -179,17 +179,17 @@ void PageSwitcherHorizontal::UpdateUIForDragPoint(const gfx::Point& point) {
   }
 }
 
-gfx::Rect PageSwitcherHorizontal::GetButtonsBoundsInScreen() {
+gfx::Rect PageSwitcher::GetButtonsBoundsInScreen() {
   return buttons_->GetBoundsInScreen();
 }
 
-gfx::Size PageSwitcherHorizontal::CalculatePreferredSize() const {
+gfx::Size PageSwitcher::CalculatePreferredSize() const {
   // Always return a size with correct height so that container resize is not
   // needed when more pages are added.
   return gfx::Size(buttons_->GetPreferredSize().width(), kPreferredHeight);
 }
 
-void PageSwitcherHorizontal::Layout() {
+void PageSwitcher::Layout() {
   gfx::Rect rect(GetContentsBounds());
 
   CalculateButtonWidthAndSpacing(rect.width());
@@ -201,8 +201,7 @@ void PageSwitcherHorizontal::Layout() {
   buttons_->SetBoundsRect(gfx::IntersectRects(rect, buttons_bounds));
 }
 
-void PageSwitcherHorizontal::CalculateButtonWidthAndSpacing(
-    int contents_width) {
+void PageSwitcher::CalculateButtonWidthAndSpacing(int contents_width) {
   const int button_count = buttons_->child_count();
   if (!button_count)
     return;
@@ -233,8 +232,8 @@ void PageSwitcherHorizontal::CalculateButtonWidthAndSpacing(
   }
 }
 
-void PageSwitcherHorizontal::ButtonPressed(views::Button* sender,
-                                           const ui::Event& event) {
+void PageSwitcher::ButtonPressed(views::Button* sender,
+                                 const ui::Event& event) {
   for (int i = 0; i < buttons_->child_count(); ++i) {
     if (sender == static_cast<views::Button*>(buttons_->child_at(i))) {
       model_->SelectPage(i, true /* animate */);
@@ -243,7 +242,7 @@ void PageSwitcherHorizontal::ButtonPressed(views::Button* sender,
   }
 }
 
-void PageSwitcherHorizontal::TotalPagesChanged() {
+void PageSwitcher::TotalPagesChanged() {
   buttons_->RemoveAllChildViews(true);
   for (int i = 0; i < model_->total_pages(); ++i) {
     PageSwitcherButton* button = new PageSwitcherButton(this);
@@ -254,17 +253,16 @@ void PageSwitcherHorizontal::TotalPagesChanged() {
   Layout();
 }
 
-void PageSwitcherHorizontal::SelectedPageChanged(int old_selected,
-                                                 int new_selected) {
+void PageSwitcher::SelectedPageChanged(int old_selected, int new_selected) {
   if (old_selected >= 0 && old_selected < buttons_->child_count())
     GetButtonByIndex(buttons_, old_selected)->SetSelectedRange(0);
   if (new_selected >= 0 && new_selected < buttons_->child_count())
     GetButtonByIndex(buttons_, new_selected)->SetSelectedRange(1);
 }
 
-void PageSwitcherHorizontal::TransitionStarted() {}
+void PageSwitcher::TransitionStarted() {}
 
-void PageSwitcherHorizontal::TransitionChanged() {
+void PageSwitcher::TransitionChanged() {
   const int current_page = model_->selected_page();
   const int target_page = model_->transition().target_page;
 
@@ -281,6 +279,6 @@ void PageSwitcherHorizontal::TransitionChanged() {
     GetButtonByIndex(buttons_, target_page)->SetSelectedRange(progress);
 }
 
-void PageSwitcherHorizontal::TransitionEnded() {}
+void PageSwitcher::TransitionEnded() {}
 
 }  // namespace app_list
