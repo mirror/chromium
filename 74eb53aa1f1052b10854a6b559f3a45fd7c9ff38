@@ -16,6 +16,24 @@
       "revId": "74eb53aa1f1052b10854a6b559f3a45fd7c9ff38",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05486783_8e4bc0e2",
+        "filename": "chrome/browser/resources/settings/people_page/users_page.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2017-12-18T22:00:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "68aee7f4_8e789938",
+      "revId": "74eb53aa1f1052b10854a6b559f3a45fd7c9ff38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
