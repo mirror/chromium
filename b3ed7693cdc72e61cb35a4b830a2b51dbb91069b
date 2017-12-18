@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "7c2d79d7_87cc8f81",
+        "filename": "ui/touch_selection/touch_selection_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1002242
+      },
+      "writtenOn": "2017-12-18T18:48:17Z",
+      "side": 1,
+      "message": "I think selection bound is not necessarily vertical; for example, when a transform is applied to the element containing the text. That\u0027s why in the first place selection bound was updated from a rect to be two points (see https://crrev.com/495673003).",
+      "parentUuid": "96336d2b_c20750b2",
+      "revId": "b3ed7693cdc72e61cb35a4b830a2b51dbb91069b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7bb1e3f3_96fd05f4",
         "filename": "ui/touch_selection/touch_selection_controller.h",
         "patchSetId": 2
