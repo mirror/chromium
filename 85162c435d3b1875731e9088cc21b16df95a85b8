@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dcd41054_f5f52550",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/common/system/filesystem.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2017-12-18T18:23:49Z",
+      "side": 0,
+      "message": "This empty line should be kept. https://www.python.org/dev/peps/pep-0008/#blank-lines\n\"Surround top-level function and class definitions with two blank lines.\"",
+      "revId": "85162c435d3b1875731e9088cc21b16df95a85b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

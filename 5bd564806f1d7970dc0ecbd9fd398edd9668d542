@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "77dd450b_cf669040",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/common/system/filesystem.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2017-12-18T18:23:49Z",
+      "side": 1,
+      "message": "Ahh, the second sentence was added by me, and it\u0027s totally unrelated to the FIXME. Perhaps put it in a separate paragraph? Or to be clearer, before the FIXME:\n\n__file__ is ...\nFIXME: ...",
+      "revId": "5bd564806f1d7970dc0ecbd9fd398edd9668d542",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cea0521a_60ed9358",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/common/system/filesystem.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2017-12-18T18:23:49Z",
+      "side": 1,
+      "message": "Forgot to remove \"at\"?",
+      "revId": "5bd564806f1d7970dc0ecbd9fd398edd9668d542",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
