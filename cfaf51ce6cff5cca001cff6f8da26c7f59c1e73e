@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a0aa37cb_75b31cc2",
+        "filename": "chrome/browser/extensions/api/cryptotoken_private/cryptotoken_private_api.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-12-18T19:29:17Z",
+      "side": 1,
+      "message": "optional nit:\nI\u0027d consider extracting this to a standalone function:\nbool ContainsAppIdWithHash(const base::ListValue\u0026 list, const std::vector\u003cchar\u003e\u0026 hash);",
+      "range": {
+        "startLine": 117,
+        "startChar": 0,
+        "endLine": 117,
+        "endChar": 22
+      },
+      "revId": "cfaf51ce6cff5cca001cff6f8da26c7f59c1e73e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac23a41f_0163e893",
+        "filename": "chrome/browser/extensions/api/cryptotoken_private/cryptotoken_private_api.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-12-18T19:29:17Z",
+      "side": 1,
+      "message": "nit: would .data() work here?",
+      "range": {
+        "startLine": 125,
+        "startChar": 74,
+        "endLine": 125,
+        "endChar": 77
+      },
+      "revId": "cfaf51ce6cff5cca001cff6f8da26c7f59c1e73e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a1a1098_08a034b2",
+        "filename": "chrome/browser/extensions/api/cryptotoken_private/cryptotoken_private_api_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-12-18T19:29:17Z",
+      "side": 1,
+      "message": "I\u0027d replace these with ADD_FAILURE()",
+      "range": {
+        "startLine": 37,
+        "startChar": 6,
+        "endLine": 37,
+        "endChar": 17
+      },
+      "revId": "cfaf51ce6cff5cca001cff6f8da26c7f59c1e73e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "472c01bc_4eec8ac6",
+        "filename": "chrome/browser/extensions/api/cryptotoken_private/cryptotoken_private_api_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-12-18T19:29:17Z",
+      "side": 1,
+      "message": "app_id",
+      "range": {
+        "startLine": 72,
+        "startChar": 58,
+        "endLine": 72,
+        "endChar": 63
+      },
+      "revId": "cfaf51ce6cff5cca001cff6f8da26c7f59c1e73e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7612c948_aee65274",
+        "filename": "chrome/browser/extensions/api/cryptotoken_private/cryptotoken_private_api_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-12-18T19:29:17Z",
+      "side": 1,
+      "message": "auto args \u003d std::make_unique\u003cbase::Value\u003e(base::Value::Type::LIST);\n(and pass base::ListValue::From(std::move(args)) to RunFunction)",
+      "range": {
+        "startLine": 79,
+        "startChar": 0,
+        "endLine": 79,
+        "endChar": 72
+      },
+      "revId": "cfaf51ce6cff5cca001cff6f8da26c7f59c1e73e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6423dd97_3706a39e",
+        "filename": "chrome/browser/extensions/api/cryptotoken_private/cryptotoken_private_api_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-12-18T19:29:17Z",
+      "side": 1,
+      "message": "this should be app_id_vector, though, I\u0027m not sure you really need this;\nThis should work fine:\nargs()-\u003eGetList().emplace_back(app_id.begin(), app_id.end());",
+      "range": {
+        "startLine": 81,
+        "startChar": 22,
+        "endLine": 81,
+        "endChar": 33
+      },
+      "revId": "cfaf51ce6cff5cca001cff6f8da26c7f59c1e73e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41003ad2_7d33da89",
+        "filename": "chrome/browser/extensions/api/cryptotoken_private/cryptotoken_private_api_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-12-18T19:29:17Z",
+      "side": 1,
+      "message": "Can we avoid crashing here if possible?\n\nWDYT about returning result as a  GetAppIdHashInEnterpriseContext argument, and use GetAppIdHashInEnterpriseContext return value as \"the function was run successfully\"?\nThat way this error would not cause a crash - you could have\nreturn GetSingleBooleanResult(function.get(), result);\n\nand in test:\n\nbool result \u003d false;\nASSERT_TRUE(GetAppIdHashInEnterpriseContext(\"app_id\",\u0026result));\nEXPECT_TRUE(result);\n\n\nAlternatively, you could change GetAppIdHashInEnterpriceContext to\nbool IsAppIdInEnterpriseContextEquals(app_id, expected_result);\n// return type could also be changed to testing::AssertionResult, which can be used for better error messages\n\nAnd in tests:\nEXPECT_TRUE(IsAppIdInEnterpriseContextEquals(\"app_id\", true));",
+      "range": {
+        "startLine": 89,
+        "startChar": 4,
+        "endLine": 89,
+        "endChar": 9
+      },
+      "revId": "cfaf51ce6cff5cca001cff6f8da26c7f59c1e73e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfdd7f58_f9a2fb31",
+        "filename": "chrome/common/extensions/api/cryptotoken_private.idl",
+        "patchSetId": 10
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-12-18T19:29:17Z",
+      "side": 1,
+      "message": "can you clarify this a little? It\u0027s not clear to what \"it\" refers (I assume token).",
+      "range": {
+        "startLine": 26,
+        "startChar": 52,
+        "endLine": 27,
+        "endChar": 36
+      },
+      "revId": "cfaf51ce6cff5cca001cff6f8da26c7f59c1e73e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
