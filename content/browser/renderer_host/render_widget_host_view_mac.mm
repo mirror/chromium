@@ -400,6 +400,10 @@ void RenderWidgetHostViewMac::OnFrameTokenChanged(uint32_t frame_token) {
   OnFrameTokenChangedForView(frame_token);
 }
 
+void RenderWidgetHostViewMac::WasEvicted() {
+  render_widget_host_->WasEvicted();
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 // AcceleratedWidgetMacNSView, public:
 

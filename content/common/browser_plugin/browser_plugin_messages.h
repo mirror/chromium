@@ -171,6 +171,9 @@ IPC_MESSAGE_ROUTED3(BrowserPluginHostMsg_RequireSequence,
                     viz::SurfaceId /* surface_id */,
                     viz::SurfaceSequence /* sequence */)
 
+IPC_MESSAGE_CONTROL1(BrowserPluginHostMsg_WasEvicted,
+                     int /* browser_plugin_instance_id */)
+
 // -----------------------------------------------------------------------------
 // These messages are from the browser process to the embedder.
 

@@ -100,6 +100,7 @@ struct DidOverscrollParams;
 }
 
 namespace content {
+class BrowserPlugin;
 class CompositorDependencies;
 class ExternalPopupMenu;
 class FrameSwapMessageQueue;
@@ -230,6 +231,9 @@ class CONTENT_EXPORT RenderWidget
   // RenderWidget.
   void RegisterRenderFrame(RenderFrameImpl* frame);
   void UnregisterRenderFrame(RenderFrameImpl* frame);
+
+  void RegisterBrowserPlugin(BrowserPlugin* browser_plugin);
+  void UnregisterBrowserPlugin(BrowserPlugin* browser_plugin);
 
   // IPC::Listener
   bool OnMessageReceived(const IPC::Message& msg) override;
@@ -665,6 +669,8 @@ class CONTENT_EXPORT RenderWidget
   // Sends an ACK to the browser process during the next compositor frame.
   void OnWaitNextFrameForTests(int routing_id);
 
+  void OnWasEvicted();
+
   // Routing ID that allows us to communicate to the parent browser process
   // RenderWidgetHost.
   const int32_t routing_id_;
@@ -825,6 +831,8 @@ class CONTENT_EXPORT RenderWidget
   // are sent to each frame in the list for events such as changing
   // visibility state for example.
   base::ObserverList<RenderFrameImpl> render_frames_;
+
+  base::ObserverList<BrowserPlugin> browser_plugins_;
 
   bool has_host_context_menu_location_;
   gfx::Point host_context_menu_location_;

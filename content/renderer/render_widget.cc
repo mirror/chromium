@@ -44,6 +44,7 @@
 #include "content/public/common/drop_data.h"
 #include "content/public/common/service_names.mojom.h"
 #include "content/public/renderer/content_renderer_client.h"
+#include "content/renderer/browser_plugin/browser_plugin.h"
 #include "content/renderer/browser_plugin/browser_plugin_manager.h"
 #include "content/renderer/cursor_utils.h"
 #include "content/renderer/devtools/render_widget_screen_metrics_emulator.h"
@@ -683,6 +684,7 @@ bool RenderWidget::OnMessageReceived(const IPC::Message& message) {
                         OnUpdateRenderThrottlingStatus)
     IPC_MESSAGE_HANDLER(ViewMsg_WaitForNextFrameForTests,
                         OnWaitNextFrameForTests)
+    IPC_MESSAGE_HANDLER(ViewMsg_WasEvicted, OnWasEvicted)
     IPC_MESSAGE_HANDLER(InputMsg_RequestCompositionUpdates,
                         OnRequestCompositionUpdates)
     IPC_MESSAGE_HANDLER(DragMsg_TargetDragEnter, OnDragTargetDragEnter)
@@ -2463,9 +2465,26 @@ void RenderWidget::UnregisterRenderFrame(RenderFrameImpl* frame) {
   render_frames_.RemoveObserver(frame);
 }
 
+void RenderWidget::RegisterBrowserPlugin(BrowserPlugin* browser_plugin) {
+  browser_plugins_.AddObserver(browser_plugin);
+}
+
+void RenderWidget::UnregisterBrowserPlugin(BrowserPlugin* browser_plugin) {
+  browser_plugins_.RemoveObserver(browser_plugin);
+}
+
 void RenderWidget::OnWaitNextFrameForTests(int routing_id) {
   QueueMessage(new ViewHostMsg_WaitForNextFrameForTests_ACK(routing_id),
                MESSAGE_DELIVERY_POLICY_WITH_VISUAL_STATE);
+}
+
+void RenderWidget::OnWasEvicted() {
+  if (compositor_)
+    compositor_->SetNeedsRedrawIntoNewSurface();
+  for (auto& observer : render_frame_proxies_)
+    observer.WasEvicted();
+  for (auto& observer : browser_plugins_)
+    observer.WasEvicted();
 }
 
 float RenderWidget::GetOriginalDeviceScaleFactor() const {

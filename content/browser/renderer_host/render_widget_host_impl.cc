@@ -2903,4 +2903,8 @@ void RenderWidgetHostImpl::ProgressFling(base::TimeTicks current_time) {
     input_router_->ProgressFling(current_time);
 }
 
+void RenderWidgetHostImpl::WasEvicted() {
+  Send(new ViewMsg_WasEvicted(routing_id_));
+}
+
 }  // namespace content

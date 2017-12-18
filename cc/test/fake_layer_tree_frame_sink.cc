@@ -98,4 +98,8 @@ void FakeLayerTreeFrameSink::ReturnResourcesHeldByParent() {
   }
 }
 
+void FakeLayerTreeFrameSink::SetNeedsNewSurface() {
+  needs_new_surface_ = true;
+}
+
 }  // namespace cc

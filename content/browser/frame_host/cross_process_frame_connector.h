@@ -140,6 +140,7 @@ class CONTENT_EXPORT CrossProcessFrameConnector
   void OnSatisfySequence(const viz::SurfaceSequence& sequence);
   void OnRequireSequence(const viz::SurfaceId& id,
                          const viz::SurfaceSequence& sequence);
+  void OnWasEvicted();
 
   // The RenderFrameProxyHost that routes messages to the parent frame's
   // renderer process.

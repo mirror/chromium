@@ -63,6 +63,8 @@ class CONTENT_EXPORT ChildFrameCompositingHelper {
 
   const viz::SurfaceId& surface_id() const { return last_primary_surface_id_; }
 
+  void WasEvicted();
+
  protected:
   // Friend RefCounted so that the dtor can be non-public.
   friend class base::RefCounted<ChildFrameCompositingHelper>;

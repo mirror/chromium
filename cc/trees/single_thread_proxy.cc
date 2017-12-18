@@ -844,4 +844,8 @@ void SingleThreadProxy::DidReceiveCompositorFrameAck() {
   layer_tree_host_->DidReceiveCompositorFrameAck();
 }
 
+void SingleThreadProxy::SetNeedsRedrawIntoNewSurface() {
+  host_impl_->SetNeedsRedrawIntoNewSurface();
+}
+
 }  // namespace cc

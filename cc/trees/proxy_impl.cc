@@ -750,4 +750,8 @@ void ProxyImpl::SetURLForUkm(const GURL& url) {
   host_impl_->ukm_manager()->SetSourceURL(url);
 }
 
+void ProxyImpl::SetNeedsRedrawIntoNewSurface() {
+  host_impl_->SetNeedsRedrawIntoNewSurface();
+}
+
 }  // namespace cc

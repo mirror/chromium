@@ -520,6 +520,11 @@ class CC_EXPORT LayerTreeHost : public viz::SurfaceReferenceOwner,
 
   void SetURLForUkm(const GURL& url);
 
+  // Signals that the Surface containing the last CompositorFrame might be lost
+  // and next time we are visible a new CompositorFrame must be submitted to a
+  // new Surface.
+  void SetNeedsRedrawIntoNewSurface();
+
  protected:
   LayerTreeHost(InitParams* params, CompositorMode mode);
 

@@ -629,6 +629,8 @@ class CONTENT_EXPORT RenderWidgetHostImpl
 
   void ProgressFling(base::TimeTicks current_time);
 
+  void WasEvicted();
+
  protected:
   // ---------------------------------------------------------------------------
   // The following method is overridden by RenderViewHost to send upwards to

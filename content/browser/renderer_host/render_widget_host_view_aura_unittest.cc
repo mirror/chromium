@@ -3364,6 +3364,9 @@ TEST_F(RenderWidgetHostViewAuraTest, DiscardDelegatedFrames) {
 
   // Make each renderer visible, and swap a frame on it, then make it invisible.
   for (size_t i = 0; i < renderer_count; ++i) {
+    // At this point no tab should be evicted yet.
+    EXPECT_FALSE(sink_->GetUniqueMessageMatching(ViewMsg_WasEvicted::ID));
+
     views[i]->Show();
     views[i]->SubmitCompositorFrame(
         kArbitraryLocalSurfaceId,
@@ -3377,6 +3380,9 @@ TEST_F(RenderWidgetHostViewAuraTest, DiscardDelegatedFrames) {
   EXPECT_FALSE(views[0]->HasFallbackSurface());
   for (size_t i = 1; i < renderer_count; ++i)
     EXPECT_TRUE(views[i]->HasFallbackSurface());
+
+  // The renderer should have been notified about getting evicted.
+  EXPECT_TRUE(sink_->GetUniqueMessageMatching(ViewMsg_WasEvicted::ID));
 
   // LRU renderer is [0], make it visible, it shouldn't evict anything yet.
   views[0]->Show();

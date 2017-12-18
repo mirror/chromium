@@ -537,4 +537,8 @@ ui::Compositor* BrowserCompositorMac::CompositorForTesting() const {
   return nullptr;
 }
 
+void BrowserCompositorMac::WasEvicted() {
+  client_->WasEvicted();
+}
+
 }  // namespace content

@@ -569,4 +569,11 @@ void ProxyMain::SetURLForUkm(const GURL& url) {
                                 base::Unretained(proxy_impl_.get()), url));
 }
 
+void ProxyMain::SetNeedsRedrawIntoNewSurface() {
+  DCHECK(IsMainThread());
+  ImplThreadTaskRunner()->PostTask(
+      FROM_HERE, base::BindOnce(&ProxyImpl::SetNeedsRedrawIntoNewSurface,
+                                base::Unretained(proxy_impl_.get())));
+}
+
 }  // namespace cc
