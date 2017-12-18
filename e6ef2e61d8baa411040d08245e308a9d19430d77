@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "de98f7ef_9fb3d61a",
+        "filename": "media/remoting/rpc.proto",
+        "patchSetId": 7
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-12-18T21:30:18Z",
+      "side": 1,
+      "message": "For protobufs, please use:\n\n  PIXEL_FORMAT_Y8 \u003d 25 [deprecated \u003d true];",
+      "range": {
+        "startLine": 217,
+        "startChar": 4,
+        "endLine": 217,
+        "endChar": 43
+      },
+      "revId": "e6ef2e61d8baa411040d08245e308a9d19430d77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecca5cbe_b1460fc4",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 43283,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-12-18T21:30:18Z",
+      "side": 1,
+      "message": "Should this be a label change? Seems like this line should be:\n\n  \u003cint value\u003d\"25\" label\u003d\"Y8\"/\u003e\u003c!-- Deprecated as of M65. --\u003e",
+      "range": {
+        "startLine": 43283,
+        "startChar": 27,
+        "endLine": 43283,
+        "endChar": 47
+      },
+      "revId": "e6ef2e61d8baa411040d08245e308a9d19430d77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
