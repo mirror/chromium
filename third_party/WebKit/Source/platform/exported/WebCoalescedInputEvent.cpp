@@ -7,6 +7,7 @@
 #include "public/platform/WebGestureEvent.h"
 #include "public/platform/WebKeyboardEvent.h"
 #include "public/platform/WebMouseWheelEvent.h"
+#include "public/platform/WebPointerEvent.h"
 #include "public/platform/WebTouchEvent.h"
 
 namespace blink {
@@ -36,6 +37,8 @@ bool Apply(Operator op, WebInputEvent::Type type, const ArgIn& arg_in) {
     return op.template Execute<WebTouchEvent>(arg_in);
   if (WebInputEvent::IsGestureEventType(type))
     return op.template Execute<WebGestureEvent>(arg_in);
+  if (WebInputEvent::IsPointerEventType(type))
+    return op.template Execute<WebPointerEvent>(arg_in);
 
   NOTREACHED() << "Unknown webkit event type " << type;
   return false;
@@ -119,6 +122,10 @@ WebCoalescedInputEvent::MakeWebScopedInputEvent(
   if (blink::WebInputEvent::IsKeyboardEventType(event.GetType())) {
     return WebScopedInputEvent(new blink::WebKeyboardEvent(
         static_cast<const blink::WebKeyboardEvent&>(event)));
+  }
+  if (blink::WebInputEvent::IsPointerEventType(event.GetType())) {
+    return WebScopedInputEvent(new blink::WebPointerEvent(
+        static_cast<const blink::WebPointerEvent&>(event)));
   }
   NOTREACHED();
   return WebScopedInputEvent();
