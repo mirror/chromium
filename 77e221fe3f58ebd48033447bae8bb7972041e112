@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a939281c_3c1de3d0",
+        "filename": "components/metrics/file_metrics_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-12-18T22:08:16Z",
+      "side": 1,
+      "message": "Update comment?",
+      "range": {
+        "startLine": 301,
+        "startChar": 27,
+        "endLine": 301,
+        "endChar": 49
+      },
+      "revId": "77e221fe3f58ebd48033447bae8bb7972041e112",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03d45e9c_22112b6c",
+        "filename": "components/metrics/file_metrics_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-12-18T22:08:16Z",
+      "side": 1,
+      "message": "Maybe combine these to IsPmaFile()?",
+      "range": {
+        "startLine": 301,
+        "startChar": 6,
+        "endLine": 317,
+        "endChar": 7
+      },
+      "revId": "77e221fe3f58ebd48033447bae8bb7972041e112",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "759d85bf_2d35eccb",
+        "filename": "components/metrics/file_metrics_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-12-18T22:08:16Z",
+      "side": 1,
+      "message": "Suggest breaking this into a helper function, maybe ScanDirectory?",
+      "range": {
+        "startLine": 293,
+        "startChar": 4,
+        "endLine": 339,
+        "endChar": 41
+      },
+      "revId": "77e221fe3f58ebd48033447bae8bb7972041e112",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
