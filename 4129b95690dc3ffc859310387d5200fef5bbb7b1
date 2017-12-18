@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5d3f0218_34c713ca",
+        "filename": "services/network/public/cpp/network_param_ipc_traits.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-12-18T17:18:32Z",
+      "side": 1,
+      "message": "and here too (several places).",
+      "range": {
+        "startLine": 192,
+        "startChar": 25,
+        "endLine": 192,
+        "endChar": 57
+      },
+      "revId": "4129b95690dc3ffc859310387d5200fef5bbb7b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2604d21_a55f00ad",
+        "filename": "services/network/public/cpp/network_param_ipc_traits.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-12-18T17:18:32Z",
+      "side": 1,
+      "message": "Update header guard?",
+      "range": {
+        "startLine": 5,
+        "startChar": 17,
+        "endLine": 5,
+        "endChar": 58
+      },
+      "revId": "4129b95690dc3ffc859310387d5200fef5bbb7b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
