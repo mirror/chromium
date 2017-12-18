@@ -90,9 +90,12 @@ class Ui : public BrowserUiInterface, public KeyboardUiInterface {
       std::unique_ptr<OmniboxSuggestions> suggestions) override;
 
   bool ShouldRenderWebVr();
-  void OnGlInitialized(unsigned int content_texture_id,
-                       UiElementRenderer::TextureLocation content_location,
-                       bool use_ganesh);
+  void OnGlInitialized(
+      unsigned int content_texture_id,
+      UiElementRenderer::TextureLocation content_location,
+      unsigned int content_overlay_texture_id,
+      UiElementRenderer::TextureLocation content_overlay_location,
+      bool use_ganesh);
   void OnAppButtonClicked();
   void OnAppButtonGesturePerformed(
       PlatformController::SwipeDirection direction);

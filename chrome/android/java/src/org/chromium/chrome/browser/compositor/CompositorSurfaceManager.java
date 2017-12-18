@@ -7,6 +7,7 @@ package org.chromium.chrome.browser.compositor;
 import android.content.Context;
 import android.graphics.PixelFormat;
 import android.graphics.drawable.Drawable;
+import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
@@ -35,10 +36,10 @@ import android.widget.FrameLayout;
  */
 class CompositorSurfaceManager implements SurfaceHolder.Callback2 {
     public interface SurfaceHolderCallbackTarget {
-        public void surfaceRedrawNeededAsync(SurfaceHolder holder, Runnable drawingFinished);
-        public void surfaceChanged(SurfaceHolder holder, int format, int width, int height);
-        public void surfaceCreated(SurfaceHolder holder);
-        public void surfaceDestroyed(SurfaceHolder holder);
+        public void surfaceRedrawNeededAsync(Surface surface, Runnable drawingFinished);
+        public void surfaceChanged(Surface surface, int format, int width, int height);
+        public void surfaceCreated(Surface surface);
+        public void surfaceDestroyed();
     }
 
     private static class SurfaceState {
@@ -133,6 +134,11 @@ class CompositorSurfaceManager implements SurfaceHolder.Callback2 {
      * Turn off everything.
      */
     public void shutDown() {
+        mRequestedByClient = null;
+        mOwnedByClient = null;
+        detachSurfaceNow(mTranslucent);
+        detachSurfaceNow(mOpaque);
+
         mTranslucent.surfaceHolder().removeCallback(this);
         mOpaque.surfaceHolder().removeCallback(this);
     }
@@ -181,12 +187,12 @@ class CompositorSurfaceManager implements SurfaceHolder.Callback2 {
 
         // The client now owns |mRequestedByClient|.  Notify it that it's ready.
         mOwnedByClient = mRequestedByClient;
-        mClient.surfaceCreated(mOwnedByClient.surfaceHolder());
+        mClient.surfaceCreated(mOwnedByClient.surfaceHolder().getSurface());
 
         // See if we're expecting a surfaceChanged.  If not, then send a synthetic one.
         if (mOwnedByClient.format != PixelFormat.UNKNOWN) {
-            mClient.surfaceChanged(mOwnedByClient.surfaceHolder(), mOwnedByClient.format,
-                    mOwnedByClient.width, mOwnedByClient.height);
+            mClient.surfaceChanged(mOwnedByClient.surfaceHolder().getSurface(),
+                    mOwnedByClient.format, mOwnedByClient.width, mOwnedByClient.height);
         }
     }
 
@@ -237,7 +243,7 @@ class CompositorSurfaceManager implements SurfaceHolder.Callback2 {
             public void run() {
                 if (mOwnedByClient == null) return;
                 SurfaceState owned = mOwnedByClient;
-                mClient.surfaceDestroyed(mOwnedByClient.surfaceHolder());
+                mClient.surfaceDestroyed();
                 mOwnedByClient = null;
                 detachSurfaceNow(owned);
             }
@@ -256,7 +262,7 @@ class CompositorSurfaceManager implements SurfaceHolder.Callback2 {
             state.width = width;
             state.height = height;
             state.format = format;
-            mClient.surfaceChanged(holder, format, width, height);
+            mClient.surfaceChanged(holder.getSurface(), format, width, height);
         }
     }
 
@@ -267,7 +273,7 @@ class CompositorSurfaceManager implements SurfaceHolder.Callback2 {
 
     @Override
     public void surfaceRedrawNeededAsync(SurfaceHolder holder, Runnable drawingFinished) {
-        mClient.surfaceRedrawNeededAsync(holder, drawingFinished);
+        mClient.surfaceRedrawNeededAsync(holder.getSurface(), drawingFinished);
     }
 
     @Override
@@ -299,7 +305,7 @@ class CompositorSurfaceManager implements SurfaceHolder.Callback2 {
 
         // The client now owns this surface, so notify it.
         mOwnedByClient = mRequestedByClient;
-        mClient.surfaceCreated(mOwnedByClient.surfaceHolder());
+        mClient.surfaceCreated(mOwnedByClient.surfaceHolder().getSurface());
     }
 
     @Override
@@ -421,7 +427,7 @@ class CompositorSurfaceManager implements SurfaceHolder.Callback2 {
     private void disownClientSurface(SurfaceState state) {
         if (mOwnedByClient != state || state == null) return;
 
-        mClient.surfaceDestroyed(mOwnedByClient.surfaceHolder());
+        mClient.surfaceDestroyed();
         mOwnedByClient = null;
     }
 

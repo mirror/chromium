@@ -12,8 +12,6 @@ import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.view.MotionEvent;
 import android.view.Surface;
-import android.view.SurfaceHolder;
-import android.view.SurfaceView;
 import android.view.View;
 import android.widget.FrameLayout;
 
@@ -50,7 +48,7 @@ public class CompositorView
     private final Rect mCacheAppRect = new Rect();
     private final int[] mCacheViewPosition = new int[2];
 
-    private final CompositorSurfaceManager mCompositorSurfaceManager;
+    private CompositorSurfaceManager mCompositorSurfaceManager;
     private boolean mOverlayVideoEnabled;
     private boolean mAlwaysTranslucent;
 
@@ -207,17 +205,11 @@ public class CompositorView
     }
 
     /**
-     * @see SurfaceView#getHolder
-     */
-    SurfaceHolder getHolder() {
-        return mCompositorSurfaceManager.getHolder();
-    }
-
-    /**
      * Enables/disables overlay video mode. Affects alpha blending on this view.
      * @param enabled Whether to enter or leave overlay video mode.
      */
     public void setOverlayVideoMode(boolean enabled) {
+        assert mCompositorSurfaceManager != null;
         nativeSetOverlayVideoMode(mNativeCompositorView, enabled);
 
         mOverlayVideoEnabled = enabled;
@@ -234,22 +226,22 @@ public class CompositorView
     }
 
     @Override
-    public void surfaceRedrawNeededAsync(SurfaceHolder holder, Runnable drawingFinished) {
+    public void surfaceRedrawNeededAsync(Surface surface, Runnable drawingFinished) {
         if (mDrawingFinishedCallbacks == null) mDrawingFinishedCallbacks = new ArrayList<>();
         mDrawingFinishedCallbacks.add(drawingFinished);
         if (mNativeCompositorView != 0) nativeSetNeedsComposite(mNativeCompositorView);
     }
 
     @Override
-    public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
+    public void surfaceChanged(Surface surface, int format, int width, int height) {
         if (mNativeCompositorView == 0) return;
 
-        nativeSurfaceChanged(mNativeCompositorView, format, width, height, holder.getSurface());
+        nativeSurfaceChanged(mNativeCompositorView, format, width, height, surface);
         mRenderHost.onSurfaceResized(width, height);
     }
 
     @Override
-    public void surfaceCreated(SurfaceHolder holder) {
+    public void surfaceCreated(Surface surface) {
         if (mNativeCompositorView == 0) return;
 
         nativeSurfaceCreated(mNativeCompositorView);
@@ -258,7 +250,7 @@ public class CompositorView
     }
 
     @Override
-    public void surfaceDestroyed(SurfaceHolder holder) {
+    public void surfaceDestroyed() {
         if (mNativeCompositorView == 0) return;
 
         nativeSurfaceDestroyed(mNativeCompositorView);
@@ -293,6 +285,7 @@ public class CompositorView
      */
     @CalledByNative
     private void onJellyBeanSurfaceDisconnectWorkaround(boolean inOverlayMode) {
+        assert mCompositorSurfaceManager != null;
         mCompositorSurfaceManager.recreateSurfaceForJellyBean();
     }
 
@@ -321,7 +314,9 @@ public class CompositorView
             // We can hide the outgoing surface, since the incoming one has a frame.  It's okay if
             // we've don't have an unowned surface.
             mFramesUntilHideBackground = 0;
-            mCompositorSurfaceManager.doneWithUnownedSurface();
+            if (mCompositorSurfaceManager != null) {
+                mCompositorSurfaceManager.doneWithUnownedSurface();
+            }
         }
 
         runDrawFinishedCallbacks();
@@ -368,11 +363,13 @@ public class CompositorView
 
     @Override
     public void setWillNotDraw(boolean willNotDraw) {
+        assert mCompositorSurfaceManager != null;
         mCompositorSurfaceManager.setWillNotDraw(willNotDraw);
     }
 
     @Override
     public void setBackgroundDrawable(Drawable background) {
+        if (mCompositorSurfaceManager == null) return;
         // We override setBackgroundDrawable since that's the common entry point from all the
         // setBackground* calls in View.  We still call to setBackground on the SurfaceView because
         // SetBackgroundDrawable is deprecated, and the semantics are the same I think.
@@ -386,6 +383,7 @@ public class CompositorView
         // Also set the visibility on any child SurfaceViews, since that hides
         // the surface as well.  Otherwise, the surface is kept, which can
         // interfere with VR.
+        assert mCompositorSurfaceManager != null;
         mCompositorSurfaceManager.setVisibility(visibility);
         // Clear out any outstanding callbacks that won't run if set to invisible.
         if (visibility == View.INVISIBLE) {
@@ -402,7 +400,26 @@ public class CompositorView
         }
     }
 
-    // Implemented in native
+    public void detachForVr() {
+        mCompositorSurfaceManager.shutDown();
+        mCompositorSurfaceManager = null;
+        nativeSurfaceDestroyed(mNativeCompositorView);
+    }
+
+    public void replaceCompositorWindowForVr(long nativeWindow) {
+        nativeSetCompositorWindow(mNativeCompositorView, nativeWindow);
+    }
+
+    public void onExitVr() {
+        if (mCompositorSurfaceManager != null) return;
+        nativeSurfaceDestroyed(mNativeCompositorView);
+        mCompositorSurfaceManager = new CompositorSurfaceManager(this, this);
+        nativeSetCompositorWindow(mNativeCompositorView, mWindowAndroid.getNativePointer());
+
+        mCompositorSurfaceManager.requestSurface(getSurfacePixelFormat());
+        nativeSetNeedsComposite(mNativeCompositorView);
+    }
+
     private native long nativeInit(boolean lowMemDevice, long nativeWindowAndroid,
             LayerTitleCache layerTitleCache, TabContentManager tabContentManager);
     private native void nativeDestroy(long nativeCompositorView);
@@ -418,4 +435,5 @@ public class CompositorView
     private native void nativeSetLayoutBounds(long nativeCompositorView);
     private native void nativeSetOverlayVideoMode(long nativeCompositorView, boolean enabled);
     private native void nativeSetSceneLayer(long nativeCompositorView, SceneLayer sceneLayer);
+    private native void nativeSetCompositorWindow(long nativeCompositorView, long nativeWindow);
 }
