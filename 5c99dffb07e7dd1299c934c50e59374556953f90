@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0a1985a3_a5dac010",
+        "filename": "third_party/WebKit/LayoutTests/media/controls/modern/tap-to-hide-controls.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-12-18T17:28:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9c66fc08_24f6095b",
+      "revId": "5c99dffb07e7dd1299c934c50e59374556953f90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b3ec0880_862c5072",
         "filename": "third_party/WebKit/LayoutTests/media/controls/modern/tap-to-hide-controls.html",
         "patchSetId": 2
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "4fb7dedd_6d8149d3",
+        "filename": "third_party/WebKit/LayoutTests/media/controls/modern/tap-to-hide-controls.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-12-18T17:28:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b3ec0880_862c5072",
+      "range": {
+        "startLine": 23,
+        "startChar": 17,
+        "endLine": 23,
+        "endChar": 20
+      },
+      "revId": "5c99dffb07e7dd1299c934c50e59374556953f90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bcb099c2_0b801e2f",
         "filename": "third_party/WebKit/LayoutTests/media/controls/modern/tap-to-hide-controls.html",
         "patchSetId": 2
@@ -56,6 +98,24 @@
       "revId": "5c99dffb07e7dd1299c934c50e59374556953f90",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d6165fe_fece11e0",
+        "filename": "third_party/WebKit/LayoutTests/media/controls/modern/tap-to-hide-controls.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-12-18T17:28:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bcb099c2_0b801e2f",
+      "revId": "5c99dffb07e7dd1299c934c50e59374556953f90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "166da730_e1be42db",
+        "filename": "third_party/WebKit/LayoutTests/media/controls/modern/tap-to-hide-controls.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-12-18T17:28:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "70669cd2_12c24378",
+      "range": {
+        "startLine": 29,
+        "startChar": 17,
+        "endLine": 29,
+        "endChar": 19
+      },
+      "revId": "5c99dffb07e7dd1299c934c50e59374556953f90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1bf6f01a_0188f55c",
         "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.cpp",
         "patchSetId": 2
@@ -105,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "522f6dce_e97abc44",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-12-18T17:28:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1bf6f01a_0188f55c",
+      "range": {
+        "startLine": 109,
+        "startChar": 73,
+        "endLine": 109,
+        "endChar": 76
+      },
+      "revId": "5c99dffb07e7dd1299c934c50e59374556953f90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9093c15a_268fd844",
         "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.cpp",
         "patchSetId": 2
@@ -122,6 +230,24 @@
     },
     {
       "key": {
+        "uuid": "c2f0f068_2af942b9",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1012,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-12-18T17:28:58Z",
+      "side": 1,
+      "message": "I have refactored it to remove the timer.",
+      "parentUuid": "9093c15a_268fd844",
+      "revId": "5c99dffb07e7dd1299c934c50e59374556953f90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "659b94e0_ffd7ca18",
         "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.cpp",
         "patchSetId": 2
@@ -136,6 +262,24 @@
       "revId": "5c99dffb07e7dd1299c934c50e59374556953f90",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b36c57f_a776c722",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1054,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-12-18T17:28:58Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "659b94e0_ffd7ca18",
+      "revId": "5c99dffb07e7dd1299c934c50e59374556953f90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
