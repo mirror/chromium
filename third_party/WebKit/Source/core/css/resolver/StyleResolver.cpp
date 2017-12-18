@@ -137,11 +137,9 @@ static void CollectScopedResolversForHostedShadowTrees(
     return;
 
   // Adding scoped resolver for active shadow roots for shadow host styling.
-  for (ShadowRoot* shadow_root = &shadow->YoungestShadowRoot(); shadow_root;
-       shadow_root = shadow_root->OlderShadowRoot()) {
-    if (ScopedStyleResolver* resolver = shadow_root->GetScopedStyleResolver())
-      resolvers.push_back(resolver);
-  }
+  ShadowRoot& shadow_root = shadow->GetShadowRoot();
+  if (ScopedStyleResolver* resolver = shadow_root.GetScopedStyleResolver())
+    resolvers.push_back(resolver);
 }
 
 StyleResolver::StyleResolver(Document& document) : document_(document) {

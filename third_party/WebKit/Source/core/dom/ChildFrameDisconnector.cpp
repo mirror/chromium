@@ -46,7 +46,7 @@ void ChildFrameDisconnector::CollectFrameOwners(Node& root) {
   ElementShadow* shadow =
       root.IsElementNode() ? ToElement(root).Shadow() : nullptr;
   if (shadow)
-    CollectFrameOwners(*shadow);
+    CollectFrameOwners(shadow->GetShadowRoot());
 }
 
 void ChildFrameDisconnector::DisconnectCollectedFrameOwners() {
@@ -61,12 +61,6 @@ void ChildFrameDisconnector::DisconnectCollectedFrameOwners() {
     if (!i || Root().IsShadowIncludingInclusiveAncestorOf(owner))
       owner->DisconnectContentFrame();
   }
-}
-
-void ChildFrameDisconnector::CollectFrameOwners(ElementShadow& shadow) {
-  for (ShadowRoot* root = &shadow.YoungestShadowRoot(); root;
-       root = root->OlderShadowRoot())
-    CollectFrameOwners(*root);
 }
 
 #if DCHECK_IS_ON()
