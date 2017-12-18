@@ -109,6 +109,24 @@
     },
     {
       "key": {
+        "uuid": "96169a03_194c6006",
+        "filename": "extensions/renderer/resources/platform_app.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1242274
+      },
+      "writtenOn": "2017-12-18T14:56:10Z",
+      "side": 0,
+      "message": "Modified platform_app.js as suggested. I need to rebase some files as they are changed now.\nPlease take a look.\nThanks!",
+      "parentUuid": "920813c7_678e9012",
+      "revId": "40ae69e207a3e0960cd8690fb190c8fede585979",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "304192ef_b4b15774",
         "filename": "third_party/WebKit/LayoutTests/virtual/stable/webexposed/global-interface-listing-expected.txt",
         "patchSetId": 7
