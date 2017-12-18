@@ -10,6 +10,10 @@
 Polymer({
   is: 'settings-users-page',
 
+  behaviors: [
+    WebUIListenerBehavior,
+  ],
+
   properties: {
     /**
      * Preferences state.
@@ -30,6 +34,15 @@ Polymer({
       type: Boolean,
       value: false,
     },
+
+    /**
+     * True if the current profile manages supervised users.
+     * @private
+     */
+    profileManagesSupervisedUsers_: {
+      type: Boolean,
+      value: false,
+    },
   },
 
   /** @override */
@@ -41,6 +54,16 @@ Polymer({
     chrome.usersPrivate.isWhitelistManaged(isWhitelistManaged => {
       this.isWhitelistManaged_ = isWhitelistManaged;
     });
+  },
+
+  /** @override */
+  attached: function() {
+    var profileInfoProxy = settings.ProfileInfoBrowserProxyImpl.getInstance();
+    profileInfoProxy.getProfileManagesSupervisedUsers().then(
+        this.handleProfileManagesSupervisedUsers_.bind(this));
+    this.addWebUIListener(
+        'profile-manages-supervised-users-changed',
+        this.handleProfileManagesSupervisedUsers_.bind(this));
   },
 
   /**
@@ -76,5 +99,14 @@ Polymer({
    */
   isEditingUsersDisabled_: function(isOwner, isWhitelistManaged, allowGuest) {
     return !isOwner || isWhitelistManaged || allowGuest;
+  },
+
+  /**
+   * Handler for when the profile starts or stops managing supervised users.
+   * @private
+   * @param {boolean} managesSupervisedUsers
+   */
+  handleProfileManagesSupervisedUsers_: function(managesSupervisedUsers) {
+    this.profileManagesSupervisedUsers_ = managesSupervisedUsers;
   }
 });

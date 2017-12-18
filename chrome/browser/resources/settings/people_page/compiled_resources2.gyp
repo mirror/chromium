@@ -239,7 +239,9 @@
       'target_name': 'users_page',
       'dependencies': [
         '<(DEPTH)/ui/webui/resources/js/compiled_resources2.gyp:assert',
+        '<(DEPTH)/ui/webui/resources/js/compiled_resources2.gyp:web_ui_listener_behavior',
         '<(DEPTH)/ui/webui/resources/js/cr/ui/compiled_resources2.gyp:focus_without_ink',
+        'profile_info_browser_proxy',
         'user_list',
         'users_add_user_dialog',
       ],
