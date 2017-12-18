@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "686d625a_a9201ee9",
+        "filename": "chrome/browser/net/system_network_context_manager.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-18T21:22:56Z",
+      "side": 1,
+      "message": "Why did you switch this to being done in this file?  I\u0027d like to try and keep what this class does on the IO thread to a minimum, so that we don\u0027t have a lot of legacy code to rip out when we finally make the switch to using the network service - just delete IOThread/ProfileIOData (And by that point, almost all consumers will be using other classes), and we\u0027re done.\n\nAlso worth noting that nothing outside of IOThread initialization currently directly adds/removes objects in IOThread::Globals, so this is a bit unusual.",
+      "range": {
+        "startLine": 70,
+        "startChar": 5,
+        "endLine": 70,
+        "endChar": 0
+      },
+      "revId": "78eb43d80936d76a46759473177faa672e90a1aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

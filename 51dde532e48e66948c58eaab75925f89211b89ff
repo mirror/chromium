@@ -237,6 +237,30 @@
     },
     {
       "key": {
+        "uuid": "9d7047b9_5201965b",
+        "filename": "chrome/browser/io_thread.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-18T21:22:56Z",
+      "side": 1,
+      "message": "Sorry, I was confused by the fact it\u0027s not used in io_thread.cc (Which is where I think it should be initialized, per other comment)",
+      "parentUuid": "4be8f384_472ea8b3",
+      "range": {
+        "startLine": 139,
+        "startChar": 36,
+        "endLine": 139,
+        "endChar": 50
+      },
+      "revId": "51dde532e48e66948c58eaab75925f89211b89ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "413716c7_b53d8a2e",
         "filename": "chrome/browser/net/system_network_context_manager.cc",
         "patchSetId": 12
@@ -272,6 +296,30 @@
       "side": 1,
       "message": "Done (For 1, I don\u0027t think there wasn\u0027t a bug before, per the comment there, but I did it since it simplifies this file)",
       "parentUuid": "413716c7_b53d8a2e",
+      "range": {
+        "startLine": 131,
+        "startChar": 34,
+        "endLine": 131,
+        "endChar": 35
+      },
+      "revId": "51dde532e48e66948c58eaab75925f89211b89ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bf4cbb70_046e0763",
+        "filename": "chrome/browser/net/system_network_context_manager.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-18T21:22:56Z",
+      "side": 1,
+      "message": "I\u0027m still not seeing how we ended up disabling QUIC in the NetworkService disabled route without this - it just doesn\u0027t seem like there\u0027s any code to disable QUIC in existing URLRequestContexts.  IOThread::DisableQuic() only does it on new URLRequestContexts, so where were we doing it in already created ones?",
+      "parentUuid": "39292f9f_5cc7a18e",
       "range": {
         "startLine": 131,
         "startChar": 34,
@@ -519,6 +567,30 @@
     },
     {
       "key": {
+        "uuid": "5809bc61_481c888d",
+        "filename": "content/browser/storage_partition_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-18T21:22:56Z",
+      "side": 1,
+      "message": "Right...But that doesn\u0027t explain why the NetworkContext doesn\u0027t just own the URLRequestContext in both cases.  I\u0027m not understanding the need for the new ownership model, or what we get from it.  I get that you want to make it so we can not have a NetworkService in-process when the NetworkService is disabled (Though I think the code would be simpler if we still did that, and just had the IOThread own it in that case), but that doesn\u0027t mean the NetworkContext can\u0027t still own the URLREquestContext, since we always create a NetworkContext.",
+      "parentUuid": "2754f670_9e5fe1dd",
+      "range": {
+        "startLine": 269,
+        "startChar": 8,
+        "endLine": 269,
+        "endChar": 23
+      },
+      "revId": "51dde532e48e66948c58eaab75925f89211b89ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a23ee1f2_db1fd622",
         "filename": "content/network/url_request_context_builder_mojo.cc",
         "patchSetId": 12
@@ -554,6 +626,30 @@
       "side": 1,
       "message": "\u003e Disconnecting NetworkContext initialization from the in-process NetworkService seems like it may cause some problems down the line - namely, we can\u0027t get rid of Chrome\u0027s in-process NetLog or HostResolver (Or make quic disabling go through the NetworkServicePtr) in the network service disabled case.  I guess we can (in the future) make this some sort of callback using NetworkServiceInstance, which will hook those up in the in-process case, and bypass that logic otherwise?\n\n\nI\u0027m not sure I follow. Currently, in the network service disabled case we still use NetworkService to disable quic (per my other comment). The main purpose here is to avoid creating NetworkContext C++ class in the browser process when the network service is enabled. If the network service is disabled, we do create NetworkContext in the browser process per URLLRequestContext, which should satisfy the goals you listed above?",
       "parentUuid": "a23ee1f2_db1fd622",
+      "range": {
+        "startLine": 37,
+        "startChar": 53,
+        "endLine": 37,
+        "endChar": 66
+      },
+      "revId": "51dde532e48e66948c58eaab75925f89211b89ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eaffa086_e01f1281",
+        "filename": "content/network/url_request_context_builder_mojo.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-18T21:22:56Z",
+      "side": 1,
+      "message": "Suppose NetworkServiceImpl has a NetLog and HostResolver, and we want to use that to populate the URLRequestContext builder parameter, so we can remove Chrome\u0027s ChromeNetLog and HostResolver.  I\u0027m not seeing how to do it if we use this path, instead of having the NetworkService create the NetworkContext.",
+      "parentUuid": "50b00cd7_291a2319",
       "range": {
         "startLine": 37,
         "startChar": 53,
