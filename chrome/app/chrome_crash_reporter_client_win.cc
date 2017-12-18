@@ -47,8 +47,6 @@ size_t RegisterCrashKeysHelper() {
   // chrome/common/crash_keys.cc::RegisterChromeCrashKeys().
   static constexpr base::debug::CrashKey kFixedKeys[] = {
       {kActiveURL, kLargeSize},
-      {kNumVariations, kSmallSize},
-      {kVariations, kHugeSize},
 
       // TODO(sunnyps): Remove after fixing crbug.com/724999.
       {"gl-context-set-current-stack-trace", kMediumSize},

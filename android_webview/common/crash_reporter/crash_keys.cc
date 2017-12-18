@@ -23,8 +23,6 @@ const char kAndroidSdkInt[] = "android-sdk-int";
 size_t RegisterWebViewCrashKeys() {
   base::debug::CrashKey fixed_keys[] = {
       {kActiveURL, kLargeSize},
-      {kNumVariations, kSmallSize},
-      {kVariations, kHugeSize},
 
       // TODO(sunnyps): Remove after fixing crbug.com/724999.
       {"gl-context-set-current-stack-trace", kMediumSize},

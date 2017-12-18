@@ -26,9 +26,6 @@ namespace crash_keys {
 void SetMetricsClientIdFromGUID(const std::string& metrics_client_guid);
 void ClearMetricsClientId();
 
-// Sets the list of active experiment/variations info.
-void SetVariationsList(const std::vector<std::string>& variations);
-
 // A function returning true if |flag| is a switch that should be filtered out
 // of crash keys.
 using SwitchFilterFunction = bool (*)(const std::string& flag);
@@ -65,15 +62,6 @@ const size_t kLargeSize = kSmallSize * 16;
 // A very large crash key, which will be chunked on all platforms. This should
 // be used very sparingly.
 const size_t kHugeSize = kLargeSize * 2;
-
-// Crash Key Name Constants ////////////////////////////////////////////////////
-
-// The total number of experiments the instance has.
-extern const char kNumVariations[];
-
-// The experiments chunk. Hashed experiment names separated by |,|. This is
-// typically set by SetExperimentList.
-extern const char kVariations[];
 
 }  // namespace crash_keys
 
