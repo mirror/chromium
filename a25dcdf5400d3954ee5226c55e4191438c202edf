@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ce4e4957_e7ab0898",
+        "filename": "android_webview/browser/tracing/aw_tracing_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1109505
+      },
+      "writtenOn": "2017-12-18T20:08:23Z",
+      "side": 1,
+      "message": "Are you just relying on the constant values used in the Android framework being the same as the ones used in base here? That doesn\u0027t seem like it\u0027s ideal; we should probably be using the Java enum generation support here and mapping from one to the other..",
+      "revId": "a25dcdf5400d3954ee5226c55e4191438c202edf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de74d37b_95ac779f",
+        "filename": "android_webview/browser/tracing/aw_tracing_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1109505
+      },
+      "writtenOn": "2017-12-18T20:08:23Z",
+      "side": 1,
+      "message": "Are you planning to do this in the near future? The current implementation here looks like it probably copies the entire data multiple times, which seems like the memory usage is going to be really high for a large trace buffer since it may have to have 2-4 copies in ram at once..",
+      "revId": "a25dcdf5400d3954ee5226c55e4191438c202edf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
