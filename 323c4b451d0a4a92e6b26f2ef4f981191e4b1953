@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0b80b4ef_64c1dd92",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3668,
+      "author": {
+        "id": 1214309
+      },
+      "writtenOn": "2017-12-18T17:14:11Z",
+      "side": 1,
+      "message": "It is not clear to me if we need to pass all of the URLLoaderFactories like in CommitNavigation(). I would expect the RenderFrameImpl only have to handle loads related to the linkdoctor (e.g NetErrorHelper) after a failed navigation.",
+      "revId": "323c4b451d0a4a92e6b26f2ef4f981191e4b1953",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03b3a371_3de39315",
+        "filename": "content/common/frame.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1214309
+      },
+      "writtenOn": "2017-12-18T17:14:11Z",
+      "side": 1,
+      "message": "Add comment.",
+      "range": {
+        "startLine": 83,
+        "startChar": 2,
+        "endLine": 83,
+        "endChar": 24
+      },
+      "revId": "323c4b451d0a4a92e6b26f2ef4f981191e4b1953",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
