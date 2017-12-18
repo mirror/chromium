@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0c05e2c0_cd12f57f",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/editing/editing-0/autocapitalization/OWNERS",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1197619
+      },
+      "writtenOn": "2017-12-18T21:05:27Z",
+      "side": 1,
+      "message": "The OWNERS files in WPT are meant to contain GitHub usernames of people who are notified (on GitHub) to review any incoming PRs. Random example: https://github.com/w3c/web-platform-tests/blob/master/cors/OWNERS",
+      "revId": "84df3921d048100cf16ed34e40005cc4f242a231",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa7afc68_cf5e8e2b",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/editing/editing-0/autocapitalization/autocapitalize.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1197619
+      },
+      "writtenOn": "2017-12-18T21:05:27Z",
+      "side": 1,
+      "message": "It might be worth testing `e.autocapitalize \u003d \u0027\u0027` as another invalid value.",
+      "revId": "84df3921d048100cf16ed34e40005cc4f242a231",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
