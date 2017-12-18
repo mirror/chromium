@@ -16,6 +16,24 @@
       "revId": "26dd4950cfe55db0fc07408f41961df8b9036b09",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8629e692_8dea3c44",
+        "filename": "third_party/WebKit/Source/core/paint/compositing/CompositedLayerMapping.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1119,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-12-18T18:30:10Z",
+      "side": 1,
+      "message": "I think the cases of offset change relative to ancestors has been covered by SetNeedsPaintPropertyUpdateIfNeeded() in PaintPropertyTreeBuilder.cpp.\n\nSquashing layer\u0027s offset change is special because it can be affected by the squashed layers which may be descendants or descendants of siblings of the owning layer of the grouped mapping. Updated CL description to include this explanation.",
+      "parentUuid": "df591ca4_6d55ccde",
+      "revId": "26dd4950cfe55db0fc07408f41961df8b9036b09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
