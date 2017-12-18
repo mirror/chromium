@@ -34,6 +34,24 @@
       "revId": "71bb9274dcc99666657d402dea9f661558094a11",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd510620_4b7773b9",
+        "filename": "storage/browser/blob/blob_registry_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 563,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-12-18T14:44:39Z",
+      "side": 1,
+      "message": "Hrm. It needs to be impossible for a renderer to create a blob with arbitrary content and assign it to a distinct origin. If we can\u0027t do that, it will end up being a hole in site isolation\u0027s process separation mechanics (as origin1 can frame the fake-origin2, causing JS execution and therefore UXSS).\n\nI\u0027m unfortunately OOO this week; CCing Charlie and Alex, who will be able to give you feedback on the design.",
+      "parentUuid": "e513ac20_1b53f0fe",
+      "revId": "71bb9274dcc99666657d402dea9f661558094a11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
