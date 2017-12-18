@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cb5ab83e_3dd35d49",
+        "filename": "build/android/gyp/javac.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-12-18T21:31:16Z",
+      "side": 1,
+      "message": "missed updating this, but I think we should rather just use the existing --classpath and --interface-classpath flags and change what\u0027s passed in via GN.",
+      "revId": "2dc83763eca4c4c6880cf43769d0e4fbffda565b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06781bd4_5681baf9",
+        "filename": "build/android/gyp/write_build_config.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 641,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-12-18T21:31:16Z",
+      "side": 1,
+      "message": "nit: super unlikely for a jar to appear in interface jars. Change this to \"not in javac_full_classpath\"",
+      "range": {
+        "startLine": 641,
+        "startChar": 42,
+        "endLine": 641,
+        "endChar": 72
+      },
+      "revId": "2dc83763eca4c4c6880cf43769d0e4fbffda565b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c835ceb_9e89c488",
+        "filename": "build/android/gyp/write_build_config.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 680,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-12-18T21:31:16Z",
+      "side": 1,
+      "message": "nit: I don\u0027t think it\u0027s possible for this to ever be false. Plus we don\u0027t guard javac_classpath, so remove this if.",
+      "revId": "2dc83763eca4c4c6880cf43769d0e4fbffda565b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
