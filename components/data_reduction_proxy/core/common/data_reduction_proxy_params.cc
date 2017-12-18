@@ -184,46 +184,20 @@ GetMissingViaHeaderBypassDurationRange(bool connection_is_cellular) {
   return {bypass_min, bypass_max};
 }
 
-bool IsLoFiOnViaFlags() {
-  return IsLoFiAlwaysOnViaFlags() || IsLoFiCellularOnlyViaFlags() ||
-         IsLoFiSlowConnectionsOnlyViaFlags();
-}
-
-bool IsLoFiAlwaysOnViaFlags() {
-  const std::string& lo_fi_value =
+bool AreServerPreviewsEnabledViaFlags() {
+  const std::string& server_previews =
       base::CommandLine::ForCurrentProcess()->GetSwitchValueASCII(
-          data_reduction_proxy::switches::kDataReductionProxyLoFi);
-  return lo_fi_value ==
-         data_reduction_proxy::switches::kDataReductionProxyLoFiValueAlwaysOn;
+          data_reduction_proxy::switches::kDataReductionProxyServerPreviews);
+  return server_previews == data_reduction_proxy::switches::
+                                kDataReductionProxyServerPreviewsEnabled;
 }
 
-bool IsLoFiCellularOnlyViaFlags() {
-  const std::string& lo_fi_value =
+bool AreServerPreviewsDisabledViaFlags() {
+  const std::string& server_previews =
       base::CommandLine::ForCurrentProcess()->GetSwitchValueASCII(
-          data_reduction_proxy::switches::kDataReductionProxyLoFi);
-  return lo_fi_value == data_reduction_proxy::switches::
-                            kDataReductionProxyLoFiValueCellularOnly;
-}
-
-bool IsLoFiSlowConnectionsOnlyViaFlags() {
-  const std::string& lo_fi_value =
-      base::CommandLine::ForCurrentProcess()->GetSwitchValueASCII(
-          data_reduction_proxy::switches::kDataReductionProxyLoFi);
-  return lo_fi_value == data_reduction_proxy::switches::
-                            kDataReductionProxyLoFiValueSlowConnectionsOnly;
-}
-
-bool IsLoFiDisabledViaFlags() {
-  const std::string& lo_fi_value =
-      base::CommandLine::ForCurrentProcess()->GetSwitchValueASCII(
-          data_reduction_proxy::switches::kDataReductionProxyLoFi);
-  return lo_fi_value ==
-         data_reduction_proxy::switches::kDataReductionProxyLoFiValueDisabled;
-}
-
-bool AreLitePagesEnabledViaFlags() {
-  return base::CommandLine::ForCurrentProcess()->HasSwitch(
-      data_reduction_proxy::switches::kEnableDataReductionProxyLitePage);
+          data_reduction_proxy::switches::kDataReductionProxyServerPreviews);
+  return server_previews == data_reduction_proxy::switches::
+                                kDataReductionProxyServerPreviewsDisabled;
 }
 
 bool IsForcePingbackEnabledViaFlags() {
