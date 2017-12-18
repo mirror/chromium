@@ -16,6 +16,24 @@
       "revId": "86df16e216911935b060c168940e205113c2ff0b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31c893e1_93d57d73",
+        "filename": "ui/ozone/platform/test/mock_platform_window_delegate.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-12-18T18:19:06Z",
+      "side": 0,
+      "message": "1. I agree (ui/platform_window).\n2. Note that ui/platform_window is one of the places where gmock is not used.",
+      "parentUuid": "a280f4b1_9b8cb2d9",
+      "revId": "86df16e216911935b060c168940e205113c2ff0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
