@@ -9,8 +9,8 @@
 #include <utility>
 
 #include "base/time/time.h"
+#include "chrome/browser/chromeos/profiles/profile_helper.h"
 #include "chrome/browser/notifications/notification_display_service_tester.h"
-#include "chrome/browser/profiles/profile_manager.h"
 #include "chrome/grit/generated_resources.h"
 #include "chrome/test/base/browser_with_test_window_test.h"
 #include "chrome/test/base/testing_profile_manager.h"
@@ -42,7 +42,7 @@ class LowDiskNotificationTest : public BrowserWithTestWindowTest {
     BrowserWithTestWindowTest::SetUp();
 
     tester_ = std::make_unique<NotificationDisplayServiceTester>(
-        profile_manager()->profile_manager()->GetLastUsedProfile());
+        ProfileHelper::GetSigninProfile());
     tester_->SetNotificationAddedClosure(base::Bind(
         &LowDiskNotificationTest::OnNotificationAdded, base::Unretained(this)));
     low_disk_notification_.reset(new LowDiskNotification());

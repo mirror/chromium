@@ -69,17 +69,15 @@ void LowDiskNotification::LowDiskSpace(uint64_t free_disk_bytes) {
   if (severity != last_notification_severity_ ||
       (severity == HIGH &&
        now - last_notification_time_ > notification_interval_)) {
-    Profile* profile = ProfileManager::GetLastUsedProfile();
-    NotificationDisplayService::GetForProfile(profile)->Display(
-        NotificationHandler::Type::TRANSIENT,
-        *CreateNotification(severity, profile));
+    NotificationDisplayService::GetForSystemNotifications()->Display(
+        NotificationHandler::Type::TRANSIENT, *CreateNotification(severity));
     last_notification_time_ = now;
     last_notification_severity_ = severity;
   }
 }
 
 std::unique_ptr<message_center::Notification>
-LowDiskNotification::CreateNotification(Severity severity, Profile* profile) {
+LowDiskNotification::CreateNotification(Severity severity) {
   base::string16 title;
   base::string16 message;
   gfx::Image icon;
@@ -112,14 +110,13 @@ LowDiskNotification::CreateNotification(Severity severity, Profile* profile) {
       message_center::NotifierId::SYSTEM_COMPONENT,
       ash::system_notifier::kNotifierDisk);
 
-  auto on_click = base::Bind(
-      [](Profile* profile, base::Optional<int> button_index) {
-        if (button_index) {
-          DCHECK_EQ(0, *button_index);
-          chrome::ShowSettingsSubPageForProfile(profile, kStoragePage);
-        }
-      },
-      profile);
+  auto on_click = base::BindRepeating([](base::Optional<int> button_index) {
+    if (button_index) {
+      DCHECK_EQ(0, *button_index);
+      chrome::ShowSettingsSubPageForProfile(
+          ProfileManager::GetActiveUserProfile(), kStoragePage);
+    }
+  });
   std::unique_ptr<message_center::Notification> notification =
       ash::system_notifier::CreateSystemNotification(
           message_center::NOTIFICATION_TYPE_SIMPLE, kLowDiskId, title, message,
