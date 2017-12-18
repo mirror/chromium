@@ -1962,4 +1962,13 @@
     'name': 'client.v8.branches',
     'machines': {},
   },
+  {
+    'name': 'tryserver.webrtc',
+    'machines': {
+      'Linux Builder': {},
+      'Win Builder': {},
+      'Mac Builder': {},
+      'Android x64 Builder (dbg)': {},
+    },
+  },
 ]
