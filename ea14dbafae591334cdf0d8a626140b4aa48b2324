@@ -16,6 +16,24 @@
       "revId": "ea14dbafae591334cdf0d8a626140b4aa48b2324",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "926d7490_d490b01c",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 1158,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-12-18T22:19:46Z",
+      "side": 1,
+      "message": "Done.\n\nWe could try to be smarter, and manually move to the cursor\u0027s position, but codemirror+browser already do a good job in most cases by default.\nBad case: pressing shift+Enter in the prompt sometimes doesn\u0027t stick to bottom (especially with a rapid, setInterval)",
+      "parentUuid": "fc247680_2fe3b8e6",
+      "revId": "ea14dbafae591334cdf0d8a626140b4aa48b2324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
