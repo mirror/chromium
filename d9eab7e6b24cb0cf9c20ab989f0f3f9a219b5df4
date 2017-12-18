@@ -102,6 +102,24 @@
     },
     {
       "key": {
+        "uuid": "0b90db1e_44d92db0",
+        "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1976,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2017-12-18T15:59:43Z",
+      "side": 1,
+      "message": "I see. I prefer not to do that. I would like to remove the whole HandleInputEvent function I added here in the next CL while keeping DispatchPendingTouchEvents and HandleInputEventInternal (-\u003e HandleInputEvent) the same as is in this CL.",
+      "parentUuid": "1fb28d39_24d0d7c5",
+      "revId": "d9eab7e6b24cb0cf9c20ab989f0f3f9a219b5df4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ab3edcda_a92271dc",
         "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.cpp",
         "patchSetId": 2
@@ -167,6 +185,24 @@
       "side": 1,
       "message": "Hmm, I placed the comment a line below!  Yes, I meant the constructor call.  I The type is hardcoded to kPointerCausedUaAction in this event ctor, which is misleading (sorry if I missed it in past reviews).  Please pass the type from caller as the ctor param.",
       "parentUuid": "b47f46c0_c436b2ae",
+      "revId": "d9eab7e6b24cb0cf9c20ab989f0f3f9a219b5df4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "408f70db_ae384839",
+        "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1991,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2017-12-18T15:59:43Z",
+      "side": 1,
+      "message": "Isn\u0027t it better not to let the code generate something that is not supposed to? At this time there shouldn\u0027t be any code constructing PointerEvents from scratch with any type. If I change the constructor as you are suggesting that will allow code to generate anything they want. However, if you still insist I can change it.",
+      "parentUuid": "e9ceb85a_daf759a3",
       "revId": "d9eab7e6b24cb0cf9c20ab989f0f3f9a219b5df4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
