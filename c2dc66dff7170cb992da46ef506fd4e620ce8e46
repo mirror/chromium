@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e6f091d9_2034e6f9",
+        "filename": "testing/buildbot/test_suite_exceptions.pyl",
+        "patchSetId": 3
+      },
+      "lineNbr": 604,
+      "author": {
+        "id": 1170419
+      },
+      "writtenOn": "2017-12-18T20:12:08Z",
+      "side": 0,
+      "message": "Each bot doesn\u0027t really need its own special timeout, so I\u0027ve removed all these exceptions and set it to 10min everywhere. Hopefully the new generator scripts will prevent this type of config skew.",
+      "revId": "c2dc66dff7170cb992da46ef506fd4e620ce8e46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
