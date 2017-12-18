@@ -6,6 +6,8 @@ source_set("cpp") {
   sources = [
     "identity_proxy.cc",
     "identity_proxy.h",
+    "primary_account_token_fetcher.cc",
+    "primary_account_token_fetcher.h",
   ]
 
   public_deps = [
