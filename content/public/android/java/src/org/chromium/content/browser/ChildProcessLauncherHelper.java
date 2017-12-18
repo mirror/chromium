@@ -85,6 +85,9 @@ public class ChildProcessLauncherHelper {
     // Whether the created process should be sandboxed.
     private final boolean mSandboxed;
 
+    // The type of process as determined by the command line.
+    private final String mProcessType;
+
     private final ChildProcessLauncher.Delegate mLauncherDelegate =
             new ChildProcessLauncher.Delegate() {
                 @Override
@@ -120,6 +123,7 @@ public class ChildProcessLauncherHelper {
                     int pid = connection.getPid();
                     assert pid > 0;
 
+                    System.out.println("dtrainor: Thread: " + ThreadUtils.runningOnUiThread());
                     sLauncherByPid.put(pid, ChildProcessLauncherHelper.this);
 
                     if (mUseBindingManager) {
@@ -443,6 +447,16 @@ public class ChildProcessLauncherHelper {
         mLauncher = new ChildProcessLauncher(LauncherThread.getHandler(), mLauncherDelegate,
                 commandLine, filesToBeMapped, connectionAllocator,
                 binderCallback == null ? null : Arrays.asList(binderCallback));
+        mProcessType =
+                ContentSwitches.getSwitchValue(commandLine, ContentSwitches.SWITCH_PROCESS_TYPE);
+    }
+
+    /**
+     * @return The type of process as specified in the command line at
+     * {@link ContentSwitches#SWITCH_PROCESS_TYPE}.
+     */
+    public String getProcessType() {
+        return TextUtils.isEmpty(mProcessType) ? "" : mProcessType;
     }
 
     public int getPid() {
@@ -605,6 +619,15 @@ public class ChildProcessLauncherHelper {
 
     public static ChildProcessLauncherHelper getByPid(int pid) {
         return sLauncherByPid.get(pid);
+    }
+
+    /** @return A map of pid -> process type as specified in the command line. */
+    public static Map<Integer, String> getAllProcessTypes() {
+        Map<Integer, String> map = new HashMap<>();
+        for (Map.Entry<Integer, ChildProcessLauncherHelper> entry : sLauncherByPid.entrySet()) {
+            map.put(entry.getKey(), entry.getValue().getProcessType());
+        }
+        return map;
     }
 
     // Testing only related methods.
