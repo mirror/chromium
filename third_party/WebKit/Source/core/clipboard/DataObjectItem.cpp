@@ -36,6 +36,7 @@
 #include "platform/network/mime/MIMETypeRegistry.h"
 #include "public/platform/Platform.h"
 #include "public/platform/WebClipboard.h"
+#include "third_party/WebKit/Source/core/clipboard/ClipboardClient.h"
 
 namespace blink {
 
@@ -127,14 +128,18 @@ File* DataObjectItem::GetAsFile() const {
 
   DCHECK_EQ(source_, kPasteboardSource);
   if (GetType() == kMimeTypeImagePng) {
-    WebBlobInfo blob_info = Platform::Current()->Clipboard()->ReadImage(
-        mojom::ClipboardBuffer::kStandard);
-    if (blob_info.size() < 0)
-      return nullptr;
-    return File::Create(
-        "image.png", CurrentTimeMS(),
-        BlobDataHandle::Create(blob_info.Uuid(), blob_info.GetType(),
-                               blob_info.size()));
+    ClipboardClient clipboard_client_;
+    String blob_uuid;
+    String mime_type;
+    int64_t size;
+
+    if (clipboard_client_.ReadImage(mojom::ClipboardBuffer::kStandard,
+                                    &blob_uuid, &mime_type, &size)) {
+      if (size < 0)
+        return nullptr;
+      return File::Create("image.png", CurrentTimeMS(),
+                          BlobDataHandle::Create(blob_uuid, mime_type, size));
+    }
   }
 
   return nullptr;
@@ -149,23 +154,23 @@ String DataObjectItem::GetAsString() const {
   DCHECK_EQ(source_, kPasteboardSource);
 
   mojom::ClipboardBuffer buffer = Pasteboard::GeneralPasteboard()->GetBuffer();
+  ClipboardClient clipboard_client_;
   String data;
   // This is ugly but there's no real alternative.
   if (type_ == kMimeTypeTextPlain) {
-    data = Platform::Current()->Clipboard()->ReadPlainText(buffer);
+    data = clipboard_client_.ReadPlainText(buffer);
   } else if (type_ == kMimeTypeTextRTF) {
-    data = Platform::Current()->Clipboard()->ReadRTF(buffer);
+    data = clipboard_client_.ReadRTF(buffer);
   } else if (type_ == kMimeTypeTextHTML) {
-    WebURL ignored_source_url;
+    KURL ignored_source_url;
     unsigned ignored;
-    data = Platform::Current()->Clipboard()->ReadHTML(
-        buffer, &ignored_source_url, &ignored, &ignored);
+    data = clipboard_client_.ReadHTML(buffer, &ignored_source_url, &ignored,
+                                      &ignored);
   } else {
-    data = Platform::Current()->Clipboard()->ReadCustomData(buffer, type_);
+    data = clipboard_client_.ReadCustomData(buffer, type_);
   }
 
-  return Platform::Current()->Clipboard()->SequenceNumber(buffer) ==
-                 sequence_number_
+  return clipboard_client_.SequenceNumber(buffer) == sequence_number_
              ? data
              : String();
 }
