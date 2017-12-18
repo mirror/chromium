@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b27fec44_2bbbf59c",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 588,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-18T20:00:59Z",
+      "side": 1,
+      "message": "Here are some official guidelines:\n\nhttps://www.w3.org/TR/WCAG21/#enough-time\n\nI\u0027m not sure if any of these is easy to achieve. We might need a\nproduct decision on how to address this. Until then, 30 seconds\nsounds reasonable.\n\nHow hard would it be to ensure that the timeout is not reached\nif the user focuses the \"Undo\" link but doesn\u0027t press it?",
+      "parentUuid": "e9785aa3_e26bb39e",
+      "range": {
+        "startLine": 588,
+        "startChar": 63,
+        "endLine": 588,
+        "endChar": 0
+      },
+      "revId": "cd9ec1bc45546bb212d94315a166dfcb9aef9d08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "33ece036_8731a425",
         "filename": "chrome/browser/search/local_ntp_source.cc",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-12-18T13:27:11Z",
       "side": 1,
       "message": "Is this flag already exposed to the web page somehow? Then I could remove this special plumbing.",
+      "range": {
+        "startLine": 171,
+        "startChar": 80,
+        "endLine": 171,
+        "endChar": 0
+      },
+      "revId": "cd9ec1bc45546bb212d94315a166dfcb9aef9d08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edf81788_9bd13005",
+        "filename": "chrome/browser/search/local_ntp_source.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-18T20:00:59Z",
+      "side": 1,
+      "message": "It\u0027s not exposed to the open web, so this sounds fine for now.",
+      "parentUuid": "33ece036_8731a425",
       "range": {
         "startLine": 171,
         "startChar": 80,
