@@ -32,43 +32,15 @@ class APP_LIST_EXPORT TileItemView : public views::Button,
                                      public views::ButtonListener,
                                      public ImageShadowAnimator::Delegate {
  public:
-  enum HoverStyle {
-    HOVER_STYLE_ANIMATE_SHADOW,
-    HOVER_STYLE_DARKEN_BACKGROUND,
-  };
-
   TileItemView();
   ~TileItemView() override;
 
-  bool selected() { return selected_; }
-  void SetSelected(bool selected);
-
-  // Informs the TileItemView of its parent's background color. The controls
-  // within the TileItemView will adapt to suit the given color.
-  void SetParentBackgroundColor(SkColor color);
-  SkColor parent_background_color() { return parent_background_color_; }
-
-  // Sets the behavior of the tile item on mouse hover.
-  void SetHoverStyle(HoverStyle hover_style);
-
-  // Overridden from views::Button:
-  void StateChanged(ButtonState old_state) override;
-  void PaintButtonContents(gfx::Canvas* canvas) override;
-
   // Overridden from views::View:
   void Layout() override;
-  const char* GetClassName() const override;
-  void OnFocus() override;
-  void OnBlur() override;
-
-  // Overridden from ImageShadowAnimator::Delegate:
-  void ImageShadowAnimationProgressed(ImageShadowAnimator* animator) override;
 
  protected:
   // Overridden from views::View:
   gfx::Size CalculatePreferredSize() const override;
-  bool GetTooltipText(const gfx::Point& p,
-                      base::string16* tooltip) const override;
 
   views::ImageView* icon() const { return icon_; }
   void SetIcon(const gfx::ImageSkia& icon);
