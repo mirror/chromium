@@ -4691,3 +4691,41 @@ IN_PROC_BROWSER_TEST_P(IsolatedOriginWebViewTest,
       &cookie_is_correct));
   EXPECT_TRUE(cookie_is_correct);
 }
+
+// Test isolated origins inside a WebView, and make sure that it can access
+// localStorage - this is a regression test for https://crbug.com/792500.
+IN_PROC_BROWSER_TEST_P(IsolatedOriginWebViewTest, LocalStorageAccess) {
+  LoadAppWithGuest("web_view/simple");
+  content::WebContents* guest = GetGuestWebContents();
+
+  // Navigate <webview> to an isolated origin.
+  GURL isolated_url(
+      embedded_test_server()->GetURL("isolated.com", "/title1.html"));
+  {
+    content::TestNavigationObserver load_observer(guest);
+    EXPECT_TRUE(
+        ExecuteScript(guest, "location.href = '" + isolated_url.spec() + "';"));
+    load_observer.Wait();
+  }
+
+  // TODO(alexmos, creis): The isolated origin currently has to use the
+  // chrome-guest:// SiteInstance, rather than a SiteInstance with its own
+  // meaningful site URL.  This should be fixed as part of
+  // https://crbug.com/734722.
+  EXPECT_TRUE(guest->GetMainFrame()->GetSiteInstance()->GetSiteURL().SchemeIs(
+      content::kGuestScheme));
+
+  // Check that accessing a foo.com cookie from the WebView doesn't result in a
+  // renderer kill. This might happen if we erroneously applied an isolated.com
+  // origin lock to the WebView process when committing isolated.com.
+  std::string local_storage_value;
+  EXPECT_TRUE(ExecuteScriptAndExtractString(
+      guest,
+      "localStorage['foo'] = 'bar';\n"
+      "window.domAutomationController.send(localStorage['foo']);\n",
+      &local_storage_value));
+  EXPECT_EQ("bar", local_storage_value);
+
+  // Check that the guest process hasn't crashed.
+  EXPECT_TRUE(guest->GetMainFrame()->IsRenderFrameLive());
+}
