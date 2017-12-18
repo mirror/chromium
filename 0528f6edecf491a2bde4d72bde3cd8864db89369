@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "31906df4_6d359ffa",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view_browsertest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-18T04:57:11Z",
+      "side": 1,
+      "message": "since browser_view.h isn\u0027t available without MAC_VIEWS_BROWSER, I usually put it in a guarded block",
+      "revId": "0528f6edecf491a2bde4d72bde3cd8864db89369",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65f087ff_472b58cc",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view_browsertest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-18T04:57:11Z",
+      "side": 1,
+      "message": "i.e., before this, \n\n#if !defined(OS_MACOSX) || BUILDFLAG(MAC_VIEWS_BROWSER)\n#include \"chrome/browser/ui/views/frame/browser_view.h\"\n#endif\n\n\nThat can help turn things into compile errors which tend to be nicer to deal with than than link errors",
+      "revId": "0528f6edecf491a2bde4d72bde3cd8864db89369",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4c8907c_d9e89423",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view_browsertest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-18T04:57:11Z",
+      "side": 1,
+      "message": "I think this needs to be outside the #if block -- probably at the top of the method. The test may become flaky without it.",
+      "revId": "0528f6edecf491a2bde4d72bde3cd8864db89369",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c69efb76_e0f2c845",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view_browsertest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-18T04:57:11Z",
+      "side": 1,
+      "message": "I wouldn\u0027t bother with the TODO -- when MAC_VIEWS_BROWSER becomes default the #define will be deleted and this will get auto-cleaned. But it might be worth filing a bug for this for the Cocoa browser,and citing it here -- GetSSLConfigService seems like an unusual thing to fail at this point.\n\nJust putting the crash stack or error output in the bug description should be fine.",
+      "revId": "0528f6edecf491a2bde4d72bde3cd8864db89369",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acb3b409_0c6ef3ff",
+        "filename": "chrome/test/BUILD.gn",
+        "patchSetId": 11
+      },
+      "lineNbr": 1363,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-18T04:57:11Z",
+      "side": 1,
+      "message": "thanks for moving this!",
+      "revId": "0528f6edecf491a2bde4d72bde3cd8864db89369",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
