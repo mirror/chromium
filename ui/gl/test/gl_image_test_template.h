@@ -157,12 +157,28 @@ void DrawTextureQuad(GLenum target, const gfx::Size& size) {
 
 }  // namespace
 
+class GLImageTestDelegateBase {
+ public:
+  virtual ~GLImageTestDelegateBase() {}
+
+  virtual GLImplementation GetPreferedGLImplementation() const {
+    std::vector<GLImplementation> allowed_impls =
+        init::GetAllowedGLImplementations();
+    if (!allowed_impls.empty())
+      return allowed_impls[0];
+    return kGLImplementationNone;
+  }
+  virtual bool SkipTest() const { return false; }
+};
+
 template <typename GLImageTestDelegate>
 class GLImageTest : public testing::Test {
  protected:
   // Overridden from testing::Test:
   void SetUp() override {
-    GLImageTestSupport::InitializeGL();
+    const GLImplementation prefered_impl =
+        delegate_.GetPreferedGLImplementation();
+    GLImageTestSupport::InitializeGL(prefered_impl);
     surface_ = gl::init::CreateOffscreenGLSurface(gfx::Size());
     context_ =
         gl::init::CreateGLContext(nullptr, surface_.get(), GLContextAttribs());
@@ -184,6 +200,9 @@ class GLImageTest : public testing::Test {
 TYPED_TEST_CASE_P(GLImageTest);
 
 TYPED_TEST_P(GLImageTest, Create) {
+  if (this->delegate_.SkipTest())
+    return;
+
   // NOTE: On some drm devices (mediatek) the mininum width/height to add an fb
   // for a bo must be 64.
   const gfx::Size small_image_size(64, 64);
@@ -218,6 +237,9 @@ class GLImageOddSizeTest : public GLImageTest<GLImageTestDelegate> {};
 TYPED_TEST_CASE_P(GLImageOddSizeTest);
 
 TYPED_TEST_P(GLImageOddSizeTest, Create) {
+  if (this->delegate_.SkipTest())
+    return;
+
   const gfx::Size odd_image_size(17, 53);
   const uint8_t* image_color = this->delegate_.GetImageColor();
 
@@ -243,6 +265,9 @@ class GLImageZeroInitializeTest : public GLImageTest<GLImageTestDelegate> {};
 TYPED_TEST_CASE_P(GLImageZeroInitializeTest);
 
 TYPED_TEST_P(GLImageZeroInitializeTest, ZeroInitialize) {
+  if (this->delegate_.SkipTest())
+    return;
+
 #if defined(OS_MACOSX)
   // This functionality is disabled on Mavericks because it breaks PDF
   // rendering. https://crbug.com/594343.
@@ -299,6 +324,9 @@ class GLImageBindTest : public GLImageTest<GLImageTestDelegate> {};
 TYPED_TEST_CASE_P(GLImageBindTest);
 
 TYPED_TEST_P(GLImageBindTest, BindTexImage) {
+  if (this->delegate_.SkipTest())
+    return;
+
   const gfx::Size image_size(256, 256);
   const uint8_t* image_color = this->delegate_.GetImageColor();
 
@@ -346,6 +374,9 @@ class GLImageCopyTest : public GLImageTest<GLImageTestDelegate> {};
 TYPED_TEST_CASE_P(GLImageCopyTest);
 
 TYPED_TEST_P(GLImageCopyTest, CopyTexImage) {
+  if (this->delegate_.SkipTest())
+    return;
+
   const gfx::Size image_size(256, 256);
   const uint8_t* image_color = this->delegate_.GetImageColor();
   const uint8_t texture_color[] = {0, 0, 0xff, 0xff};
