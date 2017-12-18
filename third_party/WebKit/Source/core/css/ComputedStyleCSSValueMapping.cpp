@@ -1292,6 +1292,38 @@ static CSSValue* TouchActionFlagsToCSSValue(TouchAction touch_action) {
   return list;
 }
 
+static CSSValue* ScrollCustomizationFlagsToCSSValue(
+    ScrollCustomizationEnabledDirection scroll_customization) {
+  CSSValueList* list = CSSValueList::CreateSpaceSeparated();
+  if (scroll_customization == ScrollCustomizationEnabledDirection::kAuto) {
+    list->Append(*CSSIdentifierValue::Create(CSSValueAuto));
+  } else if (scroll_customization ==
+             ScrollCustomizationEnabledDirection::kNone) {
+    list->Append(*CSSIdentifierValue::Create(CSSValueNone));
+  } else {
+    if ((scroll_customization & ScrollCustomizationEnabledDirection::kPanX) ==
+        ScrollCustomizationEnabledDirection::kPanX)
+      list->Append(*CSSIdentifierValue::Create(CSSValuePanX));
+    else if (scroll_customization &
+             ScrollCustomizationEnabledDirection::kPanLeft)
+      list->Append(*CSSIdentifierValue::Create(CSSValuePanLeft));
+    else if (scroll_customization &
+             ScrollCustomizationEnabledDirection::kPanRight)
+      list->Append(*CSSIdentifierValue::Create(CSSValuePanRight));
+    if ((scroll_customization & ScrollCustomizationEnabledDirection::kPanY) ==
+        ScrollCustomizationEnabledDirection::kPanY)
+      list->Append(*CSSIdentifierValue::Create(CSSValuePanY));
+    else if (scroll_customization & ScrollCustomizationEnabledDirection::kPanUp)
+      list->Append(*CSSIdentifierValue::Create(CSSValuePanUp));
+    else if (scroll_customization &
+             ScrollCustomizationEnabledDirection::kPanDown)
+      list->Append(*CSSIdentifierValue::Create(CSSValuePanDown));
+  }
+
+  DCHECK(list->length());
+  return list;
+}
+
 static CSSValue* ValueForWillChange(
     const Vector<CSSPropertyID>& will_change_properties,
     bool will_change_contents,
@@ -2920,6 +2952,8 @@ const CSSValue* ComputedStyleCSSValueMapping::Get(
       return CSSIdentifierValue::Create(style.GetRubyPosition());
     case CSSPropertyScrollBehavior:
       return CSSIdentifierValue::Create(style.GetScrollBehavior());
+    case CSSPropertyScrollCustomization:
+      return ScrollCustomizationFlagsToCSSValue(style.ScrollCustomization());
     case CSSPropertyTableLayout:
       return CSSIdentifierValue::Create(style.TableLayout());
     case CSSPropertyTextAlign:

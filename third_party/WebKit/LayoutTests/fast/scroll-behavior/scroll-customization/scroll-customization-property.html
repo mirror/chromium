@@ -1,0 +1,203 @@
+<!doctype html>
+<title> Scroll Customization Property </title>
+<script src="../../../resources/testharness.js"></script>
+<script src="../../../resources/testharnessreport.js"></script>
+<style>
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+*::-webkit-scrollbar {
+  width: 0 !important;
+  height: 0 !important;
+}
+
+.a {
+  height: 400px;
+  width: 400px;
+  overflow: scroll;
+}
+
+</style>
+
+<div class="a">
+</div>
+
+<script>
+  test(function() {
+    assert_true('ScrollState' in window, "'ScrollState' in window");
+  }, 'These tests only work with scroll customization enabled.');
+
+  if (window.internals)
+    internals.settings.setScrollAnimatorEnabled(false);
+
+  var element = document.querySelector('div');
+  test(function() {
+    assert_true('scrollCustomization' in element.style);
+  }, 'Verify "scroll-customization" is part of element\'s style.');
+
+  // Used to track invocation of scroll customization handlers.
+  element.didCallApplyScrollHandler = false;
+  element.didCallScrollCustomizationHandlers = false;
+
+  // Different gesture types/customized scroll directions. They both identify a
+  // gesture as well as a enabled direction for
+  // |element.style.scrollCustomization|.
+  var PAN_RIGHT = 'pan-right';
+  var PAN_LEFT = 'pan-left';
+  var PAN_UP = 'pan-up';
+  var PAN_DOWN = 'pan-down';
+  var ALL_GESTURES = [PAN_RIGHT, PAN_LEFT, PAN_UP, PAN_DOWN];
+
+
+  var testCases = [
+  //  [scroll customization,                gesture,                   scroll customization handler called]
+      ["pan-up pan-x",                      "pan-right",               true],
+      ["pan-up pan-x",                      "pan-left",                true],
+      ["pan-up pan-x",                      "pan-up",                  true],
+      ["pan-up pan-x",                      "pan-down",               false],
+      ["pan-up pan-left",                   "pan-right",              false],
+      ["pan-up pan-left",                   "pan-left",                true],
+      ["pan-up pan-left",                   "pan-up",                  true],
+      ["pan-up pan-left",                   "pan-down",               false],
+      ["pan-up pan-right",                  "pan-right",               true],
+      ["pan-up pan-right",                  "pan-left",               false],
+      ["pan-up pan-right",                  "pan-up",                  true],
+      ["pan-up pan-right",                  "pan-down",               false],
+      ["pan-up",                            "pan-right",              false],
+      ["pan-up",                            "pan-left",               false],
+      ["pan-up",                            "pan-up",                  true],
+      ["pan-up",                            "pan-down",               false],
+      ["pan-x",                             "pan-right",               true],
+      ["pan-x",                             "pan-left",                true],
+      ["pan-x",                             "pan-up",                 false],
+      ["pan-x",                             "pan-down",               false],
+      ["pan-left",                          "pan-right",              false],
+      ["pan-left",                          "pan-left",                true],
+      ["pan-left",                          "pan-up",                 false],
+      ["pan-left",                          "pan-down",               false],
+      ["pan-right",                         "pan-right",               true],
+      ["pan-right",                         "pan-left",               false],
+      ["pan-right",                         "pan-up",                 false],
+      ["pan-right",                         "pan-down",               false],
+      ["none",                              "pan-right",              false],
+      ["none",                              "pan-left",               false],
+      ["none",                              "pan-up",                 false],
+      ["none",                              "pan-down",               false],
+      ["auto",                              "pan-right",               true],
+      ["auto",                              "pan-left",                true],
+      ["auto",                              "pan-up",                  true],
+      ["auto",                              "pan-down",                true],
+      ["pan-left pan-y",                    "pan-right",              false],
+      ["pan-left pan-y",                    "pan-left",                true],
+      ["pan-left pan-y",                    "pan-up",                  true],
+      ["pan-left pan-y",                    "pan-down",                true],
+      ["pan-right pan-y",                   "pan-right",               true],
+      ["pan-right pan-y",                   "pan-left",               false],
+      ["pan-right pan-y",                   "pan-up",                  true],
+      ["pan-right pan-y",                   "pan-down",                true],
+      ["pan-y",                             "pan-right",              false],
+      ["pan-y",                             "pan-left",               false],
+      ["pan-y",                             "pan-up",                  true],
+      ["pan-y",                             "pan-down",                true],
+      ["pan-down pan-x",                    "pan-right",               true],
+      ["pan-down pan-x",                    "pan-left",                true],
+      ["pan-down pan-x",                    "pan-up",                 false],
+      ["pan-down pan-x",                    "pan-down",                true],
+      ["pan-down pan-left",                 "pan-right",              false],
+      ["pan-down pan-left",                 "pan-left",                true],
+      ["pan-down pan-left",                 "pan-up",                 false],
+      ["pan-down pan-left",                 "pan-down",                true],
+      ["pan-down pan-right",                "pan-right",               true],
+      ["pan-down pan-right",                "pan-left",               false],
+      ["pan-down pan-right",                "pan-up",                 false],
+      ["pan-down pan-right",                "pan-down",                true],
+      ["pan-down",                          "pan-right",              false],
+      ["pan-down",                          "pan-left",               false],
+      ["pan-down",                          "pan-up",                 false],
+      ["pan-down",                          "pan-down",                true],
+      // The following cases are invalid and should default to 'none'.
+      ["pan-left pan-right",                "pan-left",               false],
+      ["pan-left pan-right",                "pan-right",              false],
+      ["pan-left pan-right",                "pan-up",                 false],
+      ["pan-left pan-right",                "pan-down",               false],
+      ["pan-y pan-y",                       "pan-left",               false],
+      ["pan-y pan-y",                       "pan-right",              false],
+      ["pan-y pan-y",                       "pan-up",                 false],
+      ["pan-y pan-y",                       "pan-down",               false],
+  ];
+
+  // Simple handlers for apply/distributeControl. We only care whether or not
+  // the handlers get called.
+  element.setApplyScroll(
+      function(unused_ss) { element.didCallApplyScrollHandler = true; },
+      'perform-before-native-scroll');
+
+  element.setDistributeScroll(
+      function(unused_ss) { element.didCallDistributeScrollHandler = true; },
+      'perform-before-native-scroll');
+
+  // Called before each test.
+  function resetState() {
+    element.didCallApplyScrollHandler = false;
+    element.didCallDistributeScrollHandler = false;
+  }
+
+  function didCallScrollCustomizationHandlers() {
+    assert_equals(element.didCallApplyScrollHandler, element.didCallDistributeScrollHandler,
+                  "It is invalid to call only one of the applyScroll" +
+                      " and distributeScroll handler methods.");
+    return element.didCallApplyScrollHandler;
+  }
+
+  // Returns a Promise.
+  function applyGesture(gesture) {
+    var deltaX = 0, deltaY = 0, delta = 100;
+    switch (gesture) {
+      case PAN_LEFT:
+        deltaX = -delta;
+        break;
+      case PAN_RIGHT:
+        deltaX = delta;
+        break;
+      case PAN_DOWN:
+        deltaY = -delta;
+        break;
+      case PAN_UP:
+        deltaY = delta;
+        break;
+    }
+    return new Promise(function(resolve, reject) {
+      if (chrome.gpuBenchmarking) {
+        chrome.gpuBenchmarking.pointerActionSequence(
+            [ {
+              source : 'touch',
+              actions : [
+                {name : 'pointerDown', x : 0, y : 0},
+                {name : 'pointerMove', x : deltaX, y : deltaY},
+                {name : 'pointerUp', x : (deltaX * 2), y : (deltaY * 2)},
+              ]
+            } ],
+            resolve);
+      }
+    });
+  }
+
+  function runTestCase(testCase) {
+    test(function() {
+      resetState();
+      element.scrollCustomization = testCase[0];
+      applyGesture(testCase[1]).then(function() {
+        assert_equals(
+            testCase[2],
+            didCallScrollCustomizationHandlers(),
+            `Invalid behavior for gesture input "${testCase[1]}" and scroll customization "${testCase[0]}".`);
+      });
+    }, `Verify correctness of scroll-customization: ${testCase[0]} when input "${testCase[1]}" is applied.`);
+  }
+
+  // Run all the tests.
+  testCases.forEach(runTestCase);
+  </script>

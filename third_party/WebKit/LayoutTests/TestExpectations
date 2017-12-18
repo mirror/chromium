@@ -935,6 +935,7 @@ crbug.com/761798 [ Mac ] inspector-protocol/emulation/device-emulation-desktop.j
 
 crbug.com/771233 [ Win10 ] http/tests/devtools/audits2/ [ Skip ]
 
+crbug.com/410974 fast/scroll-behavior/scroll-customization/scroll-customization-property.html [ Pass Failure ]
 crbug.com/410974 fast/scroll-behavior/scroll-customization/scrollstate-basic.html [ Pass Failure ]
 crbug.com/410974 fast/scroll-behavior/scroll-customization/scrollstate-consume-deltas.html [ Pass Failure ]
 crbug.com/410974 fast/scroll-behavior/scroll-customization/scrollstate-consume-deltas-throw.html [ Pass Failure ]
@@ -957,6 +958,7 @@ crbug.com/526463 virtual/mouseevent_fractional/fast/events/wheel/wheel-scroll-la
 crbug.com/526463 virtual/mouseevent_fractional/fast/events/wheel/mainthread-touchpad-fling-latching.html [ Failure Timeout ]
 crbug.com/526463 virtual/mouseevent_fractional/fast/events/wheel/latched-scroll-node-removed.html [ Failure ]
 
+crbug.com/410974 virtual/threaded/fast/scroll-behavior/scroll-customization/scroll-customization-property.html [ Pass Failure ]
 crbug.com/410974 virtual/threaded/fast/scroll-behavior/scroll-customization/scrollstate-basic.html [ Pass Failure ]
 crbug.com/410974 virtual/threaded/fast/scroll-behavior/scroll-customization/scrollstate-consume-deltas.html [ Pass Failure ]
 crbug.com/410974 virtual/threaded/fast/scroll-behavior/scroll-customization/scrollstate-consume-deltas-throw.html [ Pass Failure ]

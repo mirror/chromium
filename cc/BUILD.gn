@@ -37,6 +37,8 @@ cc_component("cc") {
     "input/overscroll_behavior.h",
     "input/page_scale_animation.cc",
     "input/page_scale_animation.h",
+    "input/scroll_customization.cc",
+    "input/scroll_customization.h",
     "input/scroll_elasticity_helper.cc",
     "input/scroll_elasticity_helper.h",
     "input/scroll_state.cc",

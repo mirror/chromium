@@ -245,9 +245,16 @@ void ScrollManager::CustomizedScroll(ScrollState& scroll_state) {
     frame_->GetDocument()->UpdateStyleAndLayoutIgnorePendingStylesheets();
 
   DCHECK(!current_scroll_chain_.empty());
+
+  if (scroll_state.isBeginning())
+    NotifyScrollPhaseBeginForCustomizedScroll(scroll_state);
+
   scroll_state.SetScrollChain(current_scroll_chain_);
 
   scroll_state.distributeToScrollChainDescendant();
+
+  if (scroll_state.isEnding())
+    NotifyScrollPhaseEndForCustomizedScroll();
 }
 
 void ScrollManager::ComputeScrollRelatedMetrics(
@@ -731,6 +738,27 @@ WebGestureEvent ScrollManager::SynthesizeGestureScrollBegin(
   scroll_begin.data.scroll_begin.delta_hint_units =
       update_event.data.scroll_update.delta_units;
   return scroll_begin;
+}
+
+void ScrollManager::NotifyScrollPhaseBeginForCustomizedScroll(
+    const ScrollState& scroll_state) {
+  for (auto id : current_scroll_chain_) {
+    Node* node = DOMNodeIds::NodeForId(id);
+    if (node && node->IsElementNode()) {
+      Element* element = static_cast<Element*>(node);
+      element->WillBeginCustomizedScrollPhase(scroll_state);
+    }
+  }
+}
+
+void ScrollManager::NotifyScrollPhaseEndForCustomizedScroll() {
+  for (auto id : current_scroll_chain_) {
+    Node* node = DOMNodeIds::NodeForId(id);
+    if (node && node->IsElementNode()) {
+      Element* element = static_cast<Element*>(node);
+      element->DidEndCustomizedScrollPhase();
+    }
+  }
 }
 
 }  // namespace blink
