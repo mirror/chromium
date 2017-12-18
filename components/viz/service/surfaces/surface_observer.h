@@ -49,7 +49,6 @@ class SurfaceObserver {
   // damaged at aggregation time.
   // TODO(crbug.com/776098): This is only used in tests. We can probably remove
   // it.
-  virtual void OnSurfaceSubtreeDamaged(const SurfaceId& surface_id) = 0;
 
   // Called whenever |surface| will be drawn in the next display frame.
   virtual void OnSurfaceWillBeDrawn(Surface* surface) {}
