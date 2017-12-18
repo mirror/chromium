@@ -288,6 +288,11 @@ def _ParseOptions(argv):
       action='append',
       help='Classpath to use when annotation processors are present.')
   parser.add_option(
+      '--full-classpath',
+      action='append',
+      default=[],
+      help='Full javac classpath (currently used by errorprone).')
+  parser.add_option(
       '--interface-classpath',
       action='append',
       help='Classpath to use when no annotation processors are present.')
@@ -343,6 +348,7 @@ def _ParseOptions(argv):
 
   options.bootclasspath = _ParseAndFlattenGnLists(options.bootclasspath)
   options.classpath = _ParseAndFlattenGnLists(options.classpath)
+  options.full_classpath = _ParseAndFlattenGnLists(options.full_classpath)
   options.interface_classpath = _ParseAndFlattenGnLists(
       options.interface_classpath)
   options.processorpath = _ParseAndFlattenGnLists(options.processorpath)
@@ -387,17 +393,16 @@ def main(argv):
     javac_path = options.use_errorprone_path
   else:
     javac_path = distutils.spawn.find_executable('javac')
-  javac_cmd = [javac_path]
-
-  javac_cmd.extend((
-      '-g',
-      # Chromium only allows UTF8 source files.  Being explicit avoids
-      # javac pulling a default encoding from the user's environment.
-      '-encoding', 'UTF-8',
-      # Prevent compiler from compiling .java files not listed as inputs.
-      # See: http://blog.ltgt.net/most-build-tools-misuse-javac/
-      '-sourcepath', ':',
-  ))
+  javac_cmd = [
+    javac_path,
+    '-g',
+    # Chromium only allows UTF8 source files.  Being explicit avoids
+    # javac pulling a default encoding from the user's environment.
+    '-encoding', 'UTF-8',
+    # Prevent compiler from compiling .java files not listed as inputs.
+    # See: http://blog.ltgt.net/most-build-tools-misuse-javac/
+    '-sourcepath', ':',
+  ]
 
   if options.java_version:
     javac_cmd.extend([
@@ -420,8 +425,12 @@ def main(argv):
     javac_cmd.extend(['-bootclasspath', ':'.join(options.bootclasspath)])
 
   # Annotation processors crash when given interface jars.
-  active_classpath = (
-      options.classpath if options.processors else options.interface_classpath)
+  if options.use_errorprone_path:
+    active_classpath = options.full_classpath
+  elif options.processors:
+    active_classpath = options.classpath
+  else:
+    active_classpath = options.interface_classpath
   if active_classpath:
     javac_cmd.extend(['-classpath', ':'.join(active_classpath)])
 

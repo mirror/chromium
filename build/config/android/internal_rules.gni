@@ -2219,6 +2219,7 @@ if (enable_java_templates) {
           "--use-errorprone-path",
           "bin/errorprone",
           "--processorpath=$_rebased_errorprone_processorpath",
+          "--full-classpath=@FileArg($_rebased_build_config:deps_info:javac_full_classpath)",
         ]
       }
       foreach(e, _provider_configurations) {

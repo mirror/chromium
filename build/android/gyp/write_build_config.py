@@ -614,8 +614,9 @@ def main(argv):
     # rebuilt.
     javac_interface_classpath = [
         c['interface_jar_path'] for c in direct_library_deps]
-    # The classpath used for bytecode-rewritting.
-    javac_full_classpath = [c['unprocessed_jar_path'] for c in all_library_deps]
+    # The classpath used for bytecode-rewritting and error prone.
+    javac_full_classpath = set(
+        c['unprocessed_jar_path'] for c in all_library_deps)
     # The classpath to use to run this target (or as an input to ProGuard).
     java_full_classpath = []
     if options.jar_path:
@@ -634,8 +635,7 @@ def main(argv):
     extra_jars = [p for p in extra_jars if p not in javac_classpath]
     javac_classpath.extend(extra_jars)
     javac_interface_classpath.extend(extra_jars)
-    javac_full_classpath.extend(
-        p for p in extra_jars if p not in javac_full_classpath)
+    javac_full_classpath.update(extra_jars)
     if extra_jars:
       deps_info['extra_classpath_jars'] = extra_jars
 
@@ -672,10 +672,9 @@ def main(argv):
     # Include in the classpath classes that are added directly to the apk under
     # test (those that are not a part of a java_library).
     javac_classpath.append(tested_apk_config['unprocessed_jar_path'])
+    javac_full_classpath.add(tested_apk_config['unprocessed_jar_path'])
     javac_interface_classpath.append(tested_apk_config['interface_jar_path'])
-    javac_full_classpath.extend(
-        p for p in tested_apk_config['javac_full_classpath']
-        if p not in javac_full_classpath)
+    javac_full_classpath.update(tested_apk_config['javac_full_classpath'])
 
     # Exclude dex files from the test apk that exist within the apk under test.
     # TODO(agrieve): When proguard is enabled, this filtering logic happens
@@ -721,7 +720,7 @@ def main(argv):
         c['jar_path'] for c in processor_deps.All('java_library')]
     config['javac']['processor_classes'] = [
         c['main_class'] for c in processor_deps.Direct()]
-    deps_info['javac_full_classpath'] = javac_full_classpath
+    deps_info['javac_full_classpath'] = sorted(javac_full_classpath)
 
     if options.type in (
         'android_apk', 'dist_jar', 'java_binary', 'junit_binary'):
