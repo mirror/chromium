@@ -402,8 +402,13 @@ def Update(force=False):
       # both don't work right, see https://llvm.org/PR34931
       # use_ino doesn't slow down builds, so it seems there's no drawback to
       # just using it always.
-      subprocess.check_call([
-          ciopfs, '-o', 'use_ino', toolchain_dir + '.ciopfs', toolchain_dir])
+      try:
+        out = subprocess.check_output([
+            ciopfs, '-o', 'use_ino', toolchain_dir + '.ciopfs', toolchain_dir])
+      except CalledProcessError as e:
+        print "out: " + out
+        print "CalledProcessError: " + e
+        raise e
 
     # Necessary so that get_toolchain_if_necessary.py will put the VS toolkit
     # in the correct directory.
