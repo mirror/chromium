@@ -915,7 +915,8 @@
     "test_policy": { "SpellcheckEnabled": false },
     "pref_mappings": [
       { "pref": "browser.enable_spellchecking",
-        "indicator_tests": [ { "policy": { "SpellcheckEnabled": false } } ] }
+        "indicator_tests": [ { "policy": { "SpellcheckEnabled": false } } ]
+      }
     ]
   },
 
