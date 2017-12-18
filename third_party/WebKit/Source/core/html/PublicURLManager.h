@@ -67,6 +67,7 @@ class PublicURLManager final
   // Map from URLs to the URLRegistry they are registered with.
   typedef HashMap<URLString, URLRegistry*> URLToRegistryMap;
   URLToRegistryMap url_to_registry_;
+  HashSet<URLString> mojo_urls_;
 
   bool is_stopped_;
 
