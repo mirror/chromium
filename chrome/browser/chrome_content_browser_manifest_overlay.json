@@ -35,8 +35,9 @@
         "content_browser": [ "profiling_client" ],
         "device": [
           "device:fingerprint",
-          "device:geolocation_control"
-        ],
+          "device:geolocation_control",
+	  "device:ip_geolocator"
+	],
         "file_util": [ "analyze_archive", "zip_file" ],
         "identity": [ "identity_manager" ],
         // Only used in classic ash case.
