@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "70079f3b_a8202e82",
+        "filename": "content/browser/service_manager/service_manager_context.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-12-18T21:36:01Z",
+      "side": 1,
+      "message": "It is true that most of the service code is fairly lightweight. I think the thread that the service gets created on in the Browser process when not choosing a dedicated thread or task runner is the \"IO\" thread.\n\nUnfortunately, some implementations, e.g. the one for Linux, do blocking file IO, e.g. when enumerating devices, and this is not allowed on the IO thread. In theory, we could try to find all such blocking calls and refactor things to move them to background tasks. But this would require some API changes at the level of media::VideoCaptureDeviceFactory, where currently all the methods have synchronous signatures.\n\nIt seems the assumption for all implementations of media::VideoCaptureDeviceFactory was that they are allowed to do blocking operations, so it might be quite a bit of work to change that. I was going to shy away from that and go with a dedicated thread instead.",
+      "parentUuid": "8d61231c_04709fdb",
+      "range": {
+        "startLine": 482,
+        "startChar": 40,
+        "endLine": 482,
+        "endChar": 44
+      },
+      "revId": "86f643e5161535b4fb50d37fe9177b03a04f9b38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3abcdcbe_afee9c7a",
         "filename": "services/service_manager/embedder/embedded_instance_manager.cc",
         "patchSetId": 8
