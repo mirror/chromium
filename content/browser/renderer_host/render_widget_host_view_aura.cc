@@ -700,11 +700,15 @@ void RenderWidgetHostViewAura::WasUnOccluded() {
   ui::LatencyInfo renderer_latency_info, browser_latency_info;
   if (has_saved_frame) {
     browser_latency_info.AddLatencyNumber(ui::TAB_SHOW_COMPONENT,
-                                          host_->GetLatencyComponentId(), 0);
+                                          host_->GetLatencyComponentId(),
+                                          ++tab_show_sequence_);
   } else {
     renderer_latency_info.AddLatencyNumber(ui::TAB_SHOW_COMPONENT,
-                                           host_->GetLatencyComponentId(), 0);
+                                           host_->GetLatencyComponentId(),
+                                           ++tab_show_sequence_);
   }
+  TRACE_EVENT_ASYNC_BEGIN0("latency", "TabSwitching::Latency",
+                           tab_show_sequence_);
   host_->WasShown(renderer_latency_info);
 
   aura::Window* root = window_->GetRootWindow();
