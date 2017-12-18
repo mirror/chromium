@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9e4c0ed0_58cf3939",
+        "filename": "chrome/browser/chromeos/policy/off_hours/device_off_hours_controller.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-18T21:46:17Z",
+      "side": 1,
+      "message": "nit: const pointer",
+      "revId": "969d0f9e53918ca5f027a816cd8129d351fa80c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0349858_8278adca",
+        "filename": "chrome/browser/chromeos/policy/off_hours/device_off_hours_controller_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-18T21:46:17Z",
+      "side": 1,
+      "message": "nit: std::make_unique\u003c...\u003e",
+      "range": {
+        "startLine": 115,
+        "startChar": 8,
+        "endLine": 115,
+        "endChar": 24
+      },
+      "revId": "969d0f9e53918ca5f027a816cd8129d351fa80c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b7a6357_758f0ad5",
+        "filename": "chrome/browser/chromeos/settings/device_settings_service.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-18T21:46:17Z",
+      "side": 1,
+      "message": "The impl code seems only notify on \"Store\" operation complete. If that is intended, prefer to rename this to DeviceSettingsStored and update comment.",
+      "revId": "969d0f9e53918ca5f027a816cd8129d351fa80c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "826da6b6_0f2555fc",
+        "filename": "chrome/browser/chromeos/settings/device_settings_service.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-18T21:46:17Z",
+      "side": 1,
+      "message": "I might be paranoid but this could get abused. Normally, the settings are from policy blob and there is no way to change it since only DM server holds the private key to sign the policy blob. But this allows code to change arbitrary policy without the need to touch policy blob.\n\nIMHO, we should have an explicit/limited ApplyOffHoursPolicy method here for DeviceOffHoursController instead of this powerful api.",
+      "revId": "969d0f9e53918ca5f027a816cd8129d351fa80c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd3b984e_ca757349",
+        "filename": "chrome/browser/ui/views/ash/chrome_browser_main_extra_parts_ash.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-18T21:46:17Z",
+      "side": 1,
+      "message": "nit: std::make_unique",
+      "range": {
+        "startLine": 125,
+        "startChar": 6,
+        "endLine": 125,
+        "endChar": 22
+      },
+      "revId": "969d0f9e53918ca5f027a816cd8129d351fa80c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
