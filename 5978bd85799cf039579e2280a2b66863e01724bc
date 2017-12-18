@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c4fbae1e_7a24af4e",
+        "filename": "base/optional.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-12-18T15:51:29Z",
+      "side": 1,
+      "message": "Note: corresponding operator!\u003d(T, U) etc. needs to be used. Otherwise, if operator!\u003d is not the negation of operator\u003d\u003d, older implementation wouldn\u0027t work as expected. Similarly, operator\u003c(T, U) cannot be reused to implement operator\u003e(Optional\u003cT\u003e, Optional\u003cU\u003e) etc.",
+      "revId": "5978bd85799cf039579e2280a2b66863e01724bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a76bf909_703b9f34",
+        "filename": "base/optional.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-12-18T15:51:29Z",
+      "side": 1,
+      "message": "Note: !!opt could work technically, but has_value() is used here for consistency.",
+      "revId": "5978bd85799cf039579e2280a2b66863e01724bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
