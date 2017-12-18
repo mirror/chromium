@@ -1,23 +1,17 @@
-<body>
-<p>Test importScripts for SharedWorkers.</p>
-<div id=result></div>
+<!DOCTYPE html>
+<title>SharedWorker: importScripts</title>
+<script src="/resources/testharness.js"></script>
+<script src="/resources/testharnessreport.js"></script>
+
 <script>
-function log(message)
-{
-    document.getElementById("result").innerHTML += message + "<br>";
-}
-
-if (window.testRunner) {
-    testRunner.dumpAsText();
-    testRunner.waitUntilDone();
-}
-
-var worker = new SharedWorker('resources/worker-importScripts.js', 'importScripts');
-
-worker.port.onmessage = function(evt) {
-    log(evt.data);
-    if (evt.data == "DONE" && window.testRunner)
-        testRunner.notifyDone();
-}
 </script>
-</body>
+
+<script>
+promise_test(t => {
+  const worker = new SharedWorker('resources/worker-importScripts.js', 'importScripts');
+  return new Promise(resolve => worker.port.onmessage = resolve)
+      .then(evt => {
+        assert_equals(evt.data, 'DxONE');
+      });
+}, 'foo');
+</script>
