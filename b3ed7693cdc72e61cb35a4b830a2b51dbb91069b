@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f7f93f04_9235e67f",
+        "filename": "ui/touch_selection/touch_selection_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1002242
+      },
+      "writtenOn": "2017-12-18T17:57:39Z",
+      "side": 1,
+      "message": "I think you need to use a pointer rather than a reference to achieve what you want. When a reference is initialized to refer to an object, it cannot be changed to refer to another object anymore. So, here, |bound| is set to refer to |empty| and it would always refer to it. In line 267, when you assign |start_| to |bound|, you are effectively copying |start_| into |empty| which |bound| refers to.",
+      "revId": "b3ed7693cdc72e61cb35a4b830a2b51dbb91069b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efb5e3a3_ff584c3e",
+        "filename": "ui/touch_selection/touch_selection_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1002242
+      },
+      "writtenOn": "2017-12-18T17:57:39Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be average of top and bottom x\u0027s (similar to y)?",
+      "revId": "b3ed7693cdc72e61cb35a4b830a2b51dbb91069b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bb1e3f3_96fd05f4",
+        "filename": "ui/touch_selection/touch_selection_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1002242
+      },
+      "writtenOn": "2017-12-18T17:57:39Z",
+      "side": 1,
+      "message": "How about something simpler like this: \"Returns the middle point of selection bound corresponding to the active selection or insertion handle. If there is no active handle, returns (0,0).\"?",
+      "revId": "b3ed7693cdc72e61cb35a4b830a2b51dbb91069b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
