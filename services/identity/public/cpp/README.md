@@ -3,16 +3,20 @@ Service. It provides conveniences over the bare Mojo interfaces such as:
 
 - Synchronous access to the information of the primary account (via caching)
 
+PrimaryAccountTokenFetcher is the primary client-side interface for obtaining
+access tokens for the primary account. In particular, it takes care of waiting 
+until the primary account is available.
+
 IMPLEMENTATION NOTES
 
-The IdentityProxy is being developed in parallel with the implementation and
-interfaces of the Identity Service itself. The motivation is to allow clients to
-be converted to use the IdentityProxy in a parallel and pipelined fashion with
-building out the Identity Service as the backing implementation of the
-IdentityProxy.
+The Identity Service client library is being developed in parallel with the
+implementation and interfaces of the Identity Service itself. The motivation is
+to allow clients to be converted to use this client library in a parallel and
+pipelined fashion with building out the Identity Service as the backing
+implementation of the library.
 
-In the near term, IdentityProxy is backed directly by //components/signin
-classes. We are striving to make its interactions with those classes as similar
-as possible to its eventual interaction with the Identity Service. In places
-where those interactions vary significantly from the envisioned eventual
-interaction with the Identity Service, we have placed TODOs.
+In the near term, this library is backed directly by //components/signin
+classes. We are striving to make the interactions of this library with those
+classes as similar as possible to its eventual interaction with the Identity
+Service. In places where those interactions vary significantly from the
+envisioned eventual interaction with the Identity Service, we have placed TODOs.
