@@ -7,6 +7,7 @@
 #include <memory>
 #include <utility>
 
+#include "components/printing/common/print_messages.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/common/service_manager_connection.h"
@@ -17,7 +18,9 @@ DEFINE_WEB_CONTENTS_USER_DATA_KEY(printing::PrintCompositeClient);
 namespace printing {
 
 PrintCompositeClient::PrintCompositeClient(content::WebContents* web_contents)
-    : for_preview_(false), weak_factory_(this) {}
+    : content::WebContentsObserver(web_contents),
+      for_preview_(false),
+      weak_factory_(this) {}
 
 PrintCompositeClient::~PrintCompositeClient() {}
 
@@ -26,6 +29,50 @@ void PrintCompositeClient::CreateConnectorRequest() {
   content::ServiceManagerConnection::GetForProcess()
       ->GetConnector()
       ->BindConnectorRequest(std::move(connector_request_));
+  Connect(connector_.get());
+}
+
+void PrintCompositeClient::PrintChildFrame(content::RenderFrameHost* dst_host,
+                                           const gfx::Rect& rect,
+                                           uint32_t content_id) {
+  int dst_frame_id = dst_host->GetRoutingID();
+
+  if (!connector_)
+    CreateConnectorRequest();
+  // Store the mapping between content id and subframe id.
+  AddSubframeMap(connector_.get(), dst_frame_id, content_id);
+
+  // Check whether this subframe has been requested.
+  if (pending_subframe_ids_.find(dst_frame_id) != pending_subframe_ids_.end())
+    return;
+  pending_subframe_ids_.insert(dst_frame_id);
+
+  // Send the request to remote frame.
+  dst_host->Send(
+      new PrintMsg_PrintFrameContent(dst_frame_id, rect, content_id));
+}
+
+bool PrintCompositeClient::OnMessageReceived(
+    const IPC::Message& message,
+    content::RenderFrameHost* render_frame_host) {
+  bool handled = true;
+  IPC_BEGIN_MESSAGE_MAP_WITH_PARAM(PrintCompositeClient, message,
+                                   render_frame_host)
+    IPC_MESSAGE_HANDLER(PrintHostMsg_DidPrintFrameContent,
+                        OnDidPrintFrameContent)
+    IPC_MESSAGE_UNHANDLED(handled = false)
+  IPC_END_MESSAGE_MAP()
+  return handled;
+}
+
+void PrintCompositeClient::OnDidPrintFrameContent(
+    content::RenderFrameHost* render_frame_host,
+    const PrintHostMsg_DidPrintContent_Params& params) {
+  if (!connector_)
+    CreateConnectorRequest();
+  AddSubframeContent(connector_.get(), render_frame_host->GetRoutingID(),
+                     params.metafile_data_handle, params.data_size,
+                     params.subframe_content_ids);
 }
 
 void PrintCompositeClient::DoCompositeToPdf(
