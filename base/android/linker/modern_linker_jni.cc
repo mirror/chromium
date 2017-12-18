@@ -48,6 +48,7 @@ jstring GetCpuAbi(JNIEnv* env, jclass clazz) {
   static const char* kCurrentAbi = "armeabi-v7a";
 #elif defined(__arm__)
   static const char* kCurrentAbi = "armeabi";
+#error Intentionally broken compilation for armeabi
 #elif defined(__i386__)
   static const char* kCurrentAbi = "x86";
 #elif defined(__mips__)

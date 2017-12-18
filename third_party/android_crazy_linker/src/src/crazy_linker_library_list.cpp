@@ -468,6 +468,7 @@ LibraryView* LibraryList::LoadLibrary(const char* lib_name,
 #define CURRENT_ABI "armeabi-v7a"
 #elif defined(__arm__)
 #define CURRENT_ABI "armeabi"
+#error Intentionally broken compilation for armeabi
 #elif defined(__i386__)
 #define CURRENT_ABI "x86"
 #elif defined(__mips__)
