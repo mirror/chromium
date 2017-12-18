@@ -5,6 +5,7 @@
 #import "ios/chrome/browser/ui/omnibox/omnibox_popup_presenter.h"
 
 #import "ios/chrome/browser/ui/omnibox/omnibox_popup_positioner.h"
+#import "ios/chrome/browser/ui/toolbar/public/toolbar_controller_base_feature.h"
 #include "ios/chrome/browser/ui/ui_util.h"
 #import "ios/chrome/browser/ui/uikit_ui_util.h"
 #include "ios/chrome/grit/ios_theme_resources.h"
@@ -22,10 +23,23 @@ NS_INLINE CGFloat ShadowHeight() {
 }
 }  // namespace
 
+@interface OmniboxPopupPresenter ()
+// Constraint for the height of the popup.
+@property(nonatomic, strong) NSLayoutConstraint* heightConstraint;
+// Constraint for the bottom anchor of the popup.
+@property(nonatomic, strong) NSLayoutConstraint* bottomConstraint;
+
+@property(nonatomic, weak) id<OmniboxPopupPositioner> positioner;
+@property(nonatomic, weak) UITableViewController* viewController;
+@property(nonatomic, strong) UIView* popupContainerView;
+@end
+
 @implementation OmniboxPopupPresenter
 @synthesize viewController = _viewController;
 @synthesize positioner = _positioner;
 @synthesize popupContainerView = _popupContainerView;
+@synthesize heightConstraint = _heightConstraint;
+@synthesize bottomConstraint = _bottomConstraint;
 
 - (instancetype)initWithPopupPositioner:(id<OmniboxPopupPositioner>)positioner
                     popupViewController:(UITableViewController*)viewController {
@@ -49,7 +63,7 @@ NS_INLINE CGFloat ShadowHeight() {
 }
 
 - (void)updateHeightAndAnimateAppearanceIfNecessary {
-  UIView* view = self.popupContainerView;
+  UIView* popup = self.popupContainerView;
   // Show |result.size| on iPad.  Since iPhone can dismiss keyboard, set
   // height to frame height.
   CGFloat height = [[self.viewController tableView] contentSize].height;
@@ -60,77 +74,168 @@ NS_INLINE CGFloat ShadowHeight() {
   // the same.
   CGFloat parentHeight = height + insets.top * 2 + ShadowHeight();
   UIView* siblingView = [self.positioner popupAnchorView];
+  BOOL newlyAdded = [popup superview] == nil;
+
+  // Deactivate animations while adding the popup.
+  [UIView setAnimationsEnabled:NO];
   if (IsIPadIdiom()) {
-    [[siblingView superview] insertSubview:view aboveSubview:siblingView];
+    [[siblingView superview] insertSubview:popup aboveSubview:siblingView];
   } else {
-    [view setAutoresizingMask:UIViewAutoresizingFlexibleWidth |
-                              UIViewAutoresizingFlexibleHeight];
-    [[siblingView superview] insertSubview:view belowSubview:siblingView];
+    [popup setAutoresizingMask:UIViewAutoresizingFlexibleWidth |
+                               UIViewAutoresizingFlexibleHeight];
+    [[siblingView superview] insertSubview:popup belowSubview:siblingView];
   }
+  [UIView setAnimationsEnabled:YES];
 
-  CGFloat currentHeight = view.layer.bounds.size.height;
-  if (currentHeight == 0)
-    [self animateAppearance:parentHeight];
-  else
-    [view setFrame:[self.positioner popupFrame:parentHeight]];
+  if (base::FeatureList::IsEnabled(kCleanToolbar)) {
+    UILayoutGuide* topLayout = nil;
+    for (UILayoutGuide* guide in [self.positioner popupAnchorView]
+             .layoutGuides) {
+      if ([guide.identifier
+              isEqualToString:[self.class layoutGuideIdentifier]]) {
+        topLayout = guide;
+        break;
+      }
+    }
+    if (newlyAdded) {
+      self.popupContainerView.translatesAutoresizingMaskIntoConstraints = NO;
+      [self.popupContainerView.topAnchor
+          constraintEqualToAnchor:topLayout.bottomAnchor]
+          .active = YES;
+      [self.popupContainerView.leadingAnchor
+          constraintEqualToAnchor:topLayout.leadingAnchor]
+          .active = YES;
+      [self.popupContainerView.trailingAnchor
+          constraintEqualToAnchor:topLayout.trailingAnchor]
+          .active = YES;
 
+      // On iPad the height of the popup is fixed.
+      if (self.heightConstraint)
+        self.heightConstraint.active = NO;
+      self.heightConstraint =
+          [self.popupContainerView.heightAnchor constraintEqualToConstant:0];
+      self.heightConstraint.priority = UILayoutPriorityDefaultHigh;
+      self.heightConstraint.active = YES;
+
+      // This constraint will only be activated on iPhone as the popup is taking
+      // the full height.
+      self.bottomConstraint = [self.popupContainerView.bottomAnchor
+          constraintEqualToAnchor:[popup superview].bottomAnchor];
+
+      [self.popupContainerView layoutIfNeeded];
+      [[self.popupContainerView superview] layoutIfNeeded];
+    }
+
+    CGFloat currentHeight = popup.bounds.size.height;
+    if (currentHeight == 0) {
+      [self animateAppearance:parentHeight];
+    } else {
+      if (IsIPadIdiom()) {
+        self.heightConstraint.constant = parentHeight;
+      } else {
+        self.bottomConstraint.active = YES;
+      }
+    }
+
+  } else {
+    CGFloat currentHeight = popup.layer.bounds.size.height;
+    if (currentHeight == 0)
+      [self animateAppearance:parentHeight];
+    else
+      [popup setFrame:[self.positioner popupFrame:parentHeight]];
+  }
   CGRect popupControllerFrame = self.viewController.view.frame;
-  popupControllerFrame.size.height = view.frame.size.height - ShadowHeight();
+  popupControllerFrame.size.height = popup.frame.size.height - ShadowHeight();
   self.viewController.view.frame = popupControllerFrame;
 }
 
 - (void)animateAppearance:(CGFloat)parentHeight {
-  CGRect popupFrame = [self.positioner popupFrame:parentHeight];
-  CALayer* popupLayer = self.popupContainerView.layer;
-  CGRect bounds = popupLayer.bounds;
-  bounds.size.height = popupFrame.size.height;
-  popupLayer.bounds = bounds;
+  if (base::FeatureList::IsEnabled(kCleanToolbar)) {
+    if (IsIPadIdiom()) {
+      self.heightConstraint.constant = parentHeight;
+    } else {
+      self.bottomConstraint.active = YES;
+    }
+    [UIView animateWithDuration:kExpandAnimationDuration
+                          delay:0
+                        options:UIViewAnimationOptionCurveEaseInOut
+                     animations:^{
+                       [[self.popupContainerView superview] layoutIfNeeded];
+                     }
+                     completion:nil];
+  } else {
+    CGRect popupFrame = [self.positioner popupFrame:parentHeight];
+    CALayer* popupLayer = self.popupContainerView.layer;
+    CGRect bounds = popupLayer.bounds;
+    bounds.size.height = popupFrame.size.height;
+    popupLayer.bounds = bounds;
 
-  CGRect frame = self.popupContainerView.frame;
-  frame.size.width = popupFrame.size.width;
-  frame.origin.y = popupFrame.origin.y;
-  self.popupContainerView.frame = frame;
+    CGRect frame = self.popupContainerView.frame;
+    frame.size.width = popupFrame.size.width;
+    frame.origin.y = popupFrame.origin.y;
+    self.popupContainerView.frame = frame;
 
-  CABasicAnimation* growHeight =
-      [CABasicAnimation animationWithKeyPath:@"bounds.size.height"];
-  growHeight.fromValue = @0;
-  growHeight.toValue = [NSNumber numberWithFloat:popupFrame.size.height];
-  growHeight.duration = kExpandAnimationDuration;
-  growHeight.timingFunction =
-      [CAMediaTimingFunction functionWithControlPoints:0.4:0:0.2:1];
-  [popupLayer addAnimation:growHeight forKey:@"growHeight"];
+    CABasicAnimation* growHeight =
+        [CABasicAnimation animationWithKeyPath:@"bounds.size.height"];
+    growHeight.fromValue = @0;
+    growHeight.toValue = [NSNumber numberWithFloat:popupFrame.size.height];
+    growHeight.duration = kExpandAnimationDuration;
+    growHeight.timingFunction =
+        [CAMediaTimingFunction functionWithControlPoints:0.4:0:0.2:1];
+    [popupLayer addAnimation:growHeight forKey:@"growHeight"];
+  }
 }
 
 - (void)animateCollapse {
-  CALayer* popupLayer = self.popupContainerView.layer;
-  CGRect bounds = popupLayer.bounds;
-  CGFloat currentHeight = bounds.size.height;
-  bounds.size.height = 0;
-  popupLayer.bounds = bounds;
+  if (base::FeatureList::IsEnabled(kCleanToolbar)) {
+    UIView* retainedPopupView = self.popupContainerView;
+    self.heightConstraint.constant = 0;
+    [UIView animateWithDuration:kCollapseAnimationDuration
+        animations:^{
+          [[self.popupContainerView superview] layoutIfNeeded];
+        }
+        completion:^(BOOL) {
+          [retainedPopupView removeFromSuperview];
+        }];
+  } else {
+    CALayer* popupLayer = self.popupContainerView.layer;
+    CGRect bounds = popupLayer.bounds;
+    CGFloat currentHeight = bounds.size.height;
+    bounds.size.height = 0;
+    popupLayer.bounds = bounds;
 
-  UIView* retainedPopupView = self.popupContainerView;
-  [CATransaction begin];
-  [CATransaction setCompletionBlock:^{
-    [retainedPopupView removeFromSuperview];
-  }];
-  CABasicAnimation* shrinkHeight =
-      [CABasicAnimation animationWithKeyPath:@"bounds.size.height"];
-  shrinkHeight.fromValue = [NSNumber numberWithFloat:currentHeight];
-  shrinkHeight.toValue = @0;
-  shrinkHeight.duration = kCollapseAnimationDuration;
-  shrinkHeight.timingFunction =
-      [CAMediaTimingFunction functionWithControlPoints:0.4:0:1:1];
-  [popupLayer addAnimation:shrinkHeight forKey:@"shrinkHeight"];
-  [CATransaction commit];
+    UIView* retainedPopupView = self.popupContainerView;
+    [CATransaction begin];
+    [CATransaction setCompletionBlock:^{
+      [retainedPopupView removeFromSuperview];
+    }];
+    CABasicAnimation* shrinkHeight =
+        [CABasicAnimation animationWithKeyPath:@"bounds.size.height"];
+    shrinkHeight.fromValue = [NSNumber numberWithFloat:currentHeight];
+    shrinkHeight.toValue = @0;
+    shrinkHeight.duration = kCollapseAnimationDuration;
+    shrinkHeight.timingFunction =
+        [CAMediaTimingFunction functionWithControlPoints:0.4:0:1:1];
+    [popupLayer addAnimation:shrinkHeight forKey:@"shrinkHeight"];
+    [CATransaction commit];
+  }
 }
+
++ (NSString*)layoutGuideIdentifier {
+  return @"omniboxPopupLayoutGuide";
+}
+
+#pragma mark - Background creation
 
 + (UIView*)newBackgroundViewIpad {
   UIView* view = [[UIView alloc] init];
   [view setClipsToBounds:YES];
 
-  // Adjust popupView_'s anchor point and height so that it animates down
-  // from the top when it appears.
-  view.layer.anchorPoint = CGPointMake(0.5, 0);
+  if (!base::FeatureList::IsEnabled(kCleanToolbar)) {
+    // Adjust popupView_'s anchor point and height so that it animates down
+    // from the top when it appears.
+    view.layer.anchorPoint = CGPointMake(0.5, 0);
+  }
 
   [view setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
   UIImageView* shadowView = [[UIImageView alloc]
@@ -162,9 +267,11 @@ NS_INLINE CGFloat ShadowHeight() {
 + (UIView*)newBackgroundViewIPhone {
   UIView* view = [[UIView alloc] init];
 
-  // Adjust popupView_'s anchor point and height so that it animates down
-  // from the top when it appears.
-  view.layer.anchorPoint = CGPointMake(0.5, 0);
+  if (!base::FeatureList::IsEnabled(kCleanToolbar)) {
+    // Adjust popupView_'s anchor point and height so that it animates down
+    // from the top when it appears.
+    view.layer.anchorPoint = CGPointMake(0.5, 0);
+  }
 
   // Add a white background to prevent seeing the logo scroll through the
   // omnibox.
