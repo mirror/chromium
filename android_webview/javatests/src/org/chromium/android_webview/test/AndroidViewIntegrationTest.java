@@ -226,8 +226,8 @@ public class AndroidViewIntegrationTest {
         final int maxSizeChangeNotificationsToWaitFor = 5;
         for (int i = 1; i <= maxSizeChangeNotificationsToWaitFor; i++) {
             helper.waitForCallback(callCount, i);
-            if ((heightCss == -1 || helper.getHeight() == heightCss)
-                    && (widthCss == -1 || helper.getWidth() == widthCss)) {
+            if ((heightCss == -1 || isErrorSmallEnough(heightCss, helper.getHeight()))
+                    && (widthCss == -1 || isErrorSmallEnough(widthCss, helper.getWidth()))) {
                 break;
             }
             // This means that we hit the max number of iterations but the expected contents size
@@ -353,8 +353,8 @@ public class AndroidViewIntegrationTest {
                 mOnContentSizeChangedHelper, expectedWidthCss, expectedHeightCss, false);
 
         waitForNoLayoutsPending();
-        Assert.assertEquals(expectedWidthCss, mOnContentSizeChangedHelper.getWidth());
-        Assert.assertEquals(expectedHeightCss, mOnContentSizeChangedHelper.getHeight());
+        assertSmallError(expectedWidthCss, mOnContentSizeChangedHelper.getWidth());
+        assertSmallError(expectedHeightCss, mOnContentSizeChangedHelper.getHeight());
     }
 
     @Test
@@ -380,8 +380,8 @@ public class AndroidViewIntegrationTest {
                 mOnContentSizeChangedHelper, expectedWidthCss, contentHeightCss, true);
 
         waitForNoLayoutsPending();
-        Assert.assertEquals(expectedWidthCss, mOnContentSizeChangedHelper.getWidth());
-        Assert.assertEquals(expectedHeightCss, mOnContentSizeChangedHelper.getHeight());
+        assertSmallError(expectedWidthCss, mOnContentSizeChangedHelper.getWidth());
+        assertSmallError(expectedHeightCss, mOnContentSizeChangedHelper.getHeight());
     }
 
     @Test
@@ -426,8 +426,18 @@ public class AndroidViewIntegrationTest {
         // As a result of calling the onSizeChanged method the layout size should be updated to
         // match the width of the webview and the text we previously loaded should reflow making the
         // contents width match the WebView width.
-        Assert.assertEquals(expectedWidthCss, mOnContentSizeChangedHelper.getWidth());
+        assertSmallError(expectedWidthCss, mOnContentSizeChangedHelper.getWidth());
         Assert.assertTrue(mOnContentSizeChangedHelper.getHeight() < narrowLayoutHeight);
         Assert.assertTrue(mOnContentSizeChangedHelper.getHeight() > 0);
+    }
+
+    private static final float SMALL_ERROR = 0.02f;
+
+    private boolean isErrorSmallEnough(float expected, float real) {
+        return (float) Math.abs(real - expected) / (float) real < SMALL_ERROR;
+    }
+
+    private void assertSmallError(float expected, float real) {
+        Assert.assertTrue(isErrorSmallEnough(expected, real));
     }
 }
