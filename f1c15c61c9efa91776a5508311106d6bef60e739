@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ecea5d9c_dd278aec",
+        "filename": "third_party/WebKit/Source/modules/exported/WebEmbeddedWorkerImpl.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-18T00:59:02Z",
+      "side": 1,
+      "message": "We know this argument is a SWContentSettingsProxy, so the /* content_settings_client */ comment isn\u0027t needed. I wanted to annotate the nullptr inside it, i.e.,\n\n  std::move(client), nullptr /* installed_scripts_manager_info */,\n  std::make_unique\u003cServiceWorkerContentSettingsProxy\u003e(\n      nullptr /* host_info */),\n  nullptr /* interface_provider_info);",
+      "revId": "f1c15c61c9efa91776a5508311106d6bef60e739",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78dd9f5b_8dcfacf9",
+        "filename": "third_party/WebKit/public/web/WebEmbeddedWorker.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-18T00:59:02Z",
+      "side": 1,
+      "message": "nit: Addd the types here like below:\n\n// A handle for mojom::ServiceWorkerManagerRequest (don\u0027t copy this verbatim, I didn\u0027t check the type)\nmojo::ScopedMessagePipeHandle manager_request;\n// A handle for mojom::ServiceWorkerManagerHostPtr (ditto)\nmojo::ScopedMessagePipeHandle manager_host_ptr;",
+      "revId": "f1c15c61c9efa91776a5508311106d6bef60e739",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cabc93b4_03c0dd66",
+        "filename": "third_party/WebKit/public/web/WebEmbeddedWorker.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-18T00:59:02Z",
+      "side": 1,
+      "message": "I don\u0027t see the harm in adding the names here too:\n\n// A handle for mojom::blink::WorkerContentSettingsProxyPtrInfo.\nmojo::ScopedMessagePipeHandle content_settings_handle,\n// A handle for service_manager::mojom::blink::InterfaceProviderPtrInfo.\nmojo::ScopedMessagePipeHandle interface_provider\n\n(As in the other file, I don\u0027t think the names need to be in /* comments */.)",
+      "revId": "f1c15c61c9efa91776a5508311106d6bef60e739",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
