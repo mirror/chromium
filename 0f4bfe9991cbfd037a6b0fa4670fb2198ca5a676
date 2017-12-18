@@ -144,6 +144,30 @@
     },
     {
       "key": {
+        "uuid": "6bb9e69e_408efaf5",
+        "filename": "chrome/browser/ui/views/try_chrome_dialog_win/button_layout.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-12-18T22:33:07Z",
+      "side": 1,
+      "message": "No worries. It\u0027s a legitimate sentiment now that we\u0027re so accustomed to std::make_unique and such. I had a similar comment about the views code in try_chrome_dialog.cc. Naked pointers look all cold and prickly to me these days.",
+      "parentUuid": "54d79d9a_fab96d2f",
+      "range": {
+        "startLine": 19,
+        "startChar": 8,
+        "endLine": 19,
+        "endChar": 24
+      },
+      "revId": "0f4bfe9991cbfd037a6b0fa4670fb2198ca5a676",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1e43b104_bb0492fd",
         "filename": "chrome/browser/ui/views/try_chrome_dialog_win/button_layout.cc",
         "patchSetId": 3

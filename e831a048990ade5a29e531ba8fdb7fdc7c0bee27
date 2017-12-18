@@ -22,6 +22,30 @@
       "revId": "e831a048990ade5a29e531ba8fdb7fdc7c0bee27",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "132b245c_46fb500f",
+        "filename": "chrome/browser/ui/views/try_chrome_dialog_win/button_layout_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-12-18T22:33:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7ac4bfcf_928c0485",
+      "range": {
+        "startLine": 147,
+        "startChar": 47,
+        "endLine": 147,
+        "endChar": 53
+      },
+      "revId": "e831a048990ade5a29e531ba8fdb7fdc7c0bee27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
