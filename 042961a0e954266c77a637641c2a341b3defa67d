@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "8ad44915_0f382af6",
+        "filename": "chrome/browser/accessibility/interstitial_accessibility_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1139279
+      },
+      "writtenOn": "2017-12-18T16:31:07Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this file be in a namespace?",
+      "revId": "042961a0e954266c77a637641c2a341b3defa67d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "83c5ef49_68b40725",
         "filename": "chrome/browser/accessibility/interstitial_accessibility_browsertest.cc",
         "patchSetId": 2
@@ -19,6 +36,40 @@
         "endLine": 59,
         "endChar": 47
       },
+      "revId": "042961a0e954266c77a637641c2a341b3defa67d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31ee6101_f74f1a85",
+        "filename": "chrome/browser/accessibility/interstitial_accessibility_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1139279
+      },
+      "writtenOn": "2017-12-18T16:31:07Z",
+      "side": 1,
+      "message": "Wouldn\u0027t this make the bots slower if the test fails, because they have to wait until the test times out? Isn\u0027t it better if we wait for  a document loaded event using accessibility event waiter, if possible?",
+      "revId": "042961a0e954266c77a637641c2a341b3defa67d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e8e5f30_45409b6c",
+        "filename": "chrome/browser/accessibility/interstitial_accessibility_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1139279
+      },
+      "writtenOn": "2017-12-18T16:31:07Z",
+      "side": 1,
+      "message": "Same as above.",
       "revId": "042961a0e954266c77a637641c2a341b3defa67d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
