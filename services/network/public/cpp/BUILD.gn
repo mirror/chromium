@@ -12,6 +12,8 @@ static_library("cpp") {
     "mutable_partial_network_traffic_annotation_tag_struct_traits.h",
     "net_adapters.cc",
     "net_adapters.h",
+    "proxy_resolving_client_socket.cc",
+    "proxy_resolving_client_socket.h",
     "ssl_info_ipc_traits.cc",
     "ssl_info_ipc_traits.h",
     "url_loader_completion_status.cc",
@@ -46,12 +48,15 @@ source_set("tests") {
     "mutable_network_traffic_annotation_tag_struct_traits_unittest.cc",
     "mutable_partial_network_traffic_annotation_tag_struct_traits_unittest.cc",
     "network_struct_traits_unittest.cc",
+    "proxy_resolving_client_socket_unittest.cc",
   ]
   deps = [
+    ":cpp",
     ":test_interfaces",
     "//base",
     "//mojo/public/cpp/bindings",
     "//net",
+    "//net:test_support",
     "//testing/gtest",
   ]
 }
