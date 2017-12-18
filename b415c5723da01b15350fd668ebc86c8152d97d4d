@@ -34,6 +34,24 @@
       "revId": "b415c5723da01b15350fd668ebc86c8152d97d4d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0089ac0f_9a591680",
+        "filename": "content/browser/media/audio_stream_monitor.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-12-18T15:23:56Z",
+      "side": 1,
+      "message": "From the log it looks like a stream is being shut down.\nCould you create a bug entry to figure out what is going on and add it as a TODO here?",
+      "parentUuid": "dffc0427_f38d95f6",
+      "revId": "b415c5723da01b15350fd668ebc86c8152d97d4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
