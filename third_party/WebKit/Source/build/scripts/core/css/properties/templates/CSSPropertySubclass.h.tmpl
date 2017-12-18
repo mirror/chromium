@@ -20,36 +20,30 @@ class CSSValue;
 namespace CSS{{property.namespace_group}} {
 
 {% if property.is_property %}
-  {% if property.unique %}
 // Implements the '{{property.name}}' CSS property
-  {% else %}
-// Implements multiple CSS properties
-  {% endif %}
 {% else %}
-  {% if property.unique %}
 // Implements the '{{property.name}}' CSS descriptor
-  {% else %}
-// Implements multiple CSS descriptors
-  {% endif %}
 {% endif %}
 // See src/third_party/WebKit/Source/core/css/properties/README.md
   {% if property.alias_for != None%}
-class {{property_classname}} : public CSSUnresolvedProperty {
+class {{property_classname}} final : public CSSUnresolvedProperty {
  public:
-  constexpr {{property_classname}}(CSSPropertyID id) : CSSUnresolvedProperty(id) {}
+  constexpr {{property_classname}}() : CSSUnresolvedProperty() {}
   {% else %}
-class {{property_classname}} : public {{property.namespace_group}} {
+class {{property_classname}} final : public {{property.namespace_group}} {
  public:
-  constexpr {{property_classname}}(CSSPropertyID id) : {{property.namespace_group}}(id) {}
+  constexpr {{property_classname}}() : {{property.namespace_group}}() {}
   {% endif %}
-  {% if property.unique %}
   const char* GetPropertyName() const override { return "{{property.name}}\0"; }
   const WTF::AtomicString& GetPropertyNameAtomicString() const override {
     static const WTF::AtomicString& name = WTF::AtomicString("{{property.name}}\0");
     return name;
   }
-  {% endif %}
   {% if property.alias_for == None %}
+  const WTF::String GetJSPropertyName() const override {
+    return WTF::String("{{property_classname}}\0");
+  }
+  CSSPropertyID PropertyID() const override { return {{property.property_id}}; }
   {% for property_method in property.property_methods %}
   {{property_method.return_type}} {{property_method.name}}{{property_method.parameters}} const override;
   {% endfor %}
@@ -86,6 +80,17 @@ class {{property_classname}} : public {{property.namespace_group}} {
   bool IsAffectedByAll() const override { return false; }
   {% endif %}
   {% if property.direction_aware_options %}
+  const CSSValue* CSSValueFromComputedStyleInternal(
+      const ComputedStyle& ,
+      const SVGComputedStyle&,
+      const LayoutObject*,
+      Node*,
+      bool allow_visited_style) const override {
+    // Directional properties are resolved by resolveDirectionAwareProperty()
+    // before calling CSSValueFromComputedStyleInternal.
+    NOTREACHED();
+    return nullptr;
+  }
     {% if property.direction_aware_options.logical_side == "width" %}
   const CSSProperty& ResolveDirectionAwareProperty(
       TextDirection direction,
