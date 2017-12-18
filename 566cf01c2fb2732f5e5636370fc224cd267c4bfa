@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a2f2907_38a3c7e3",
+        "filename": "components/navigation_interception/intercept_navigation_throttle_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1000825
+      },
+      "writtenOn": "2017-12-18T16:24:48Z",
+      "side": 1,
+      "message": "extend \"SimulateNavigation\" and call it here?",
+      "range": {
+        "startLine": 158,
+        "startChar": 0,
+        "endLine": 165,
+        "endChar": 56
+      },
+      "revId": "566cf01c2fb2732f5e5636370fc224cd267c4bfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8520d548_c0ffda94",
+        "filename": "components/navigation_interception/intercept_navigation_throttle_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1000825
+      },
+      "writtenOn": "2017-12-18T16:24:48Z",
+      "side": 1,
+      "message": "could you use \"SimulateNavigation\" here?",
+      "range": {
+        "startLine": 178,
+        "startChar": 2,
+        "endLine": 184,
+        "endChar": 56
+      },
+      "revId": "566cf01c2fb2732f5e5636370fc224cd267c4bfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
