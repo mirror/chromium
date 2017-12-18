@@ -19,6 +19,7 @@
 #include "base/timer/timer.h"
 #include "chromeos/cryptohome/cryptohome_parameters.h"
 #include "chromeos/dbus/cryptohome/key.pb.h"
+#include "chromeos/dbus/cryptohome/rpc.pb.h"
 #include "chromeos/dbus/cryptohome_client.h"
 
 namespace chromeos {
@@ -28,6 +29,7 @@ class CHROMEOS_EXPORT FakeCryptohomeClient : public CryptohomeClient {
   FakeCryptohomeClient();
   ~FakeCryptohomeClient() override;
 
+  // CryptohomeClient overrides
   void Init(dbus::Bus* bus) override;
   void AddObserver(Observer* observer) override;
   void RemoveObserver(Observer* observer) override;
@@ -176,7 +178,7 @@ class CHROMEOS_EXPORT FakeCryptohomeClient : public CryptohomeClient {
   void MountEx(const cryptohome::Identification& cryptohome_id,
                const cryptohome::AuthorizationRequest& auth,
                const cryptohome::MountRequest& request,
-               DBusMethodCallback<cryptohome::BaseReply> callback) override;
+               MountCallback callback) override;
   void AddKeyEx(const cryptohome::Identification& cryptohome_id,
                 const cryptohome::AuthorizationRequest& auth,
                 const cryptohome::AddKeyRequest& request,
@@ -210,6 +212,8 @@ class CHROMEOS_EXPORT FakeCryptohomeClient : public CryptohomeClient {
   void NeedsDircryptoMigration(const cryptohome::Identification& cryptohome_id,
                                DBusMethodCallback<bool> callback) override;
 
+  /////////// Test helpers ////////////
+
   // Changes the behavior of WaitForServiceToBeAvailable(). This method runs
   // pending callbacks if is_available is true.
   void SetServiceIsAvailable(bool is_available);
@@ -234,6 +238,9 @@ class CHROMEOS_EXPORT FakeCryptohomeClient : public CryptohomeClient {
   void set_needs_dircrypto_migration(bool needs_migration) {
     needs_dircrypto_migration_ = needs_migration;
   }
+
+  // Sets the MountError value to return.
+  void set_mount_error(cryptohome::MountError error) { mount_error_ = error; }
 
   void set_tpm_attestation_is_enrolled(bool enrolled) {
     tpm_attestation_is_enrolled_ = enrolled;
@@ -266,6 +273,23 @@ class CHROMEOS_EXPORT FakeCryptohomeClient : public CryptohomeClient {
       cryptohome::DircryptoMigrationStatus status,
       uint64_t current,
       uint64_t total);
+
+  // MountEx getters.
+  const cryptohome::MountRequest& get_last_mount_request() const {
+    return last_mount_request_;
+  }
+  const cryptohome::Identification& get_last_mount_id() const {
+    return last_mount_id_;
+  }
+
+  // MigrateToDircrypto getters.
+  const cryptohome::Identification& get_last_migrate_to_dircrypto_id() const {
+    return last_migrate_to_dircrypto_id_;
+  }
+  const cryptohome::MigrateToDircryptoRequest&
+  get_last_migrate_to_dircrypto_request() const {
+    return last_migrate_to_dircrypto_request_;
+  }
 
  private:
   void ReturnProtobufMethodCallback(
@@ -338,6 +362,15 @@ class CHROMEOS_EXPORT FakeCryptohomeClient : public CryptohomeClient {
   bool tpm_attestation_is_enrolled_ = true;
   bool tpm_attestation_is_prepared_ = true;
   bool tpm_attestation_does_key_exist_should_succeed_ = true;
+
+  // MountEx fields.
+  cryptohome::MountError mount_error_ = cryptohome::MOUNT_ERROR_NONE;
+  cryptohome::MountRequest last_mount_request_;
+  cryptohome::Identification last_mount_id_;
+
+  // MigrateToDircrypto fields.
+  cryptohome::Identification last_migrate_to_dircrypto_id_;
+  cryptohome::MigrateToDircryptoRequest last_migrate_to_dircrypto_request_;
 
   base::WeakPtrFactory<FakeCryptohomeClient> weak_ptr_factory_;
 

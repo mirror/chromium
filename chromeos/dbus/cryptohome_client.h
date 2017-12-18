@@ -14,6 +14,7 @@
 #include "base/macros.h"
 #include "chromeos/attestation/attestation_constants.h"
 #include "chromeos/chromeos_export.h"
+#include "chromeos/cryptohome/cryptohome_parameters.h"
 #include "chromeos/dbus/dbus_client.h"
 #include "chromeos/dbus/dbus_method_call_status.h"
 #include "third_party/cros_system_api/dbus/service_constants.h"
@@ -79,9 +80,16 @@ class CHROMEOS_EXPORT CryptohomeClient : public DBusClient {
 
   // Callback for the methods initiate asynchronous operations.
   // On success (i.e. the asynchronous operation is started), an |async_id|
-  // is returned, so the user code can identify the corresponding singal
+  // is returned, so the user code can identify the corresponding signal
   // handler invocation later.
   using AsyncMethodCallback = DBusMethodCallback<int /* async_id */>;
+
+  // Callback for Mount methods.
+  // On failure, an empty |mount_hash| is returned.
+  using MountCallback =
+      base::OnceCallback<void(bool success,
+                              cryptohome::MountError return_code,
+                              const std::string& mount_hash)>;
 
   // Represents the result to obtain the data related to TPM attestation.
   struct TpmAttestationDataResult {
@@ -507,14 +515,14 @@ class CHROMEOS_EXPORT CryptohomeClient : public DBusClient {
       const cryptohome::CheckKeyRequest& request,
       DBusMethodCallback<cryptohome::BaseReply> callback) = 0;
 
-  // Asynchronously calls MountEx method. |callback| is called after method
-  // call, and with reply protobuf.
-  // MountEx attempts to mount home dir using given authorization, and can
-  // create new home dir if necessary values are specified in |request|.
+  // Asynchronously calls MountEx method. Afterward, |callback| is called with
+  // the success value and the mount hash. MountEx attempts to mount home dir
+  // using given authorization, and can create new home dir if necessary values
+  // are specified in |request|.
   virtual void MountEx(const cryptohome::Identification& cryptohome_id,
                        const cryptohome::AuthorizationRequest& auth,
                        const cryptohome::MountRequest& request,
-                       DBusMethodCallback<cryptohome::BaseReply> callback) = 0;
+                       MountCallback callback) = 0;
 
   // Asynchronously calls AddKeyEx method. |callback| is called after method
   // call, and with reply protobuf.

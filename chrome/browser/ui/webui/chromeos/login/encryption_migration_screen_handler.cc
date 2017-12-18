@@ -567,14 +567,14 @@ void EncryptionMigrationScreenHandler::StartMigration() {
   mount.set_to_migrate_from_ecryptfs(true);
   if (IsArcKiosk()) {
     mount.set_public_mount(true);
-    cryptohome::HomedirMethods::GetInstance()->MountEx(
+    DBusThreadManager::Get()->GetCryptohomeClient()->MountEx(
         cryptohome::Identification(user_context_.GetAccountId()),
         cryptohome::AuthorizationRequest(), mount,
         base::Bind(&EncryptionMigrationScreenHandler::OnMountExistingVault,
                    weak_ptr_factory_.GetWeakPtr()));
 
   } else {
-    cryptohome::HomedirMethods::GetInstance()->MountEx(
+    DBusThreadManager::Get()->GetCryptohomeClient()->MountEx(
         cryptohome::Identification(user_context_.GetAccountId()),
         CreateAuthorizationRequest(), mount,
         base::Bind(&EncryptionMigrationScreenHandler::OnMountExistingVault,

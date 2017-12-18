@@ -14,6 +14,7 @@
 #include "base/bind_helpers.h"
 #include "base/command_line.h"
 #include "base/location.h"
+#include "base/logging.h"
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "base/message_loop/message_loop.h"
@@ -25,6 +26,7 @@
 #include "chromeos/dbus/blocking_method_caller.h"
 #include "chromeos/dbus/cryptohome/key.pb.h"
 #include "chromeos/dbus/cryptohome/rpc.pb.h"
+#include "components/device_event_log/device_event_log.h"
 #include "dbus/bus.h"
 #include "dbus/message.h"
 #include "dbus/object_path.h"
@@ -65,6 +67,43 @@ static attestation::VerifiedAccessType GetVerifiedAccessType() {
   LOG(WARNING) << "Invalid Verified Access server value: " << value
                << ". Using default.";
   return attestation::DEFAULT_VA;
+}
+
+cryptohome::MountError MapError(cryptohome::CryptohomeErrorCode code) {
+  switch (code) {
+    case cryptohome::CRYPTOHOME_ERROR_NOT_SET:
+      return cryptohome::MOUNT_ERROR_NONE;
+    case cryptohome::CRYPTOHOME_ERROR_ACCOUNT_NOT_FOUND:
+      return cryptohome::MOUNT_ERROR_USER_DOES_NOT_EXIST;
+    case cryptohome::CRYPTOHOME_ERROR_NOT_IMPLEMENTED:
+    case cryptohome::CRYPTOHOME_ERROR_MOUNT_FATAL:
+    case cryptohome::CRYPTOHOME_ERROR_KEY_QUOTA_EXCEEDED:
+    case cryptohome::CRYPTOHOME_ERROR_BACKING_STORE_FAILURE:
+      return cryptohome::MOUNT_ERROR_FATAL;
+    case cryptohome::CRYPTOHOME_ERROR_AUTHORIZATION_KEY_NOT_FOUND:
+    case cryptohome::CRYPTOHOME_ERROR_KEY_NOT_FOUND:
+    case cryptohome::CRYPTOHOME_ERROR_AUTHORIZATION_KEY_FAILED:
+      return cryptohome::MOUNT_ERROR_KEY_FAILURE;
+    case cryptohome::CRYPTOHOME_ERROR_TPM_COMM_ERROR:
+      return cryptohome::MOUNT_ERROR_TPM_COMM_ERROR;
+    case cryptohome::CRYPTOHOME_ERROR_TPM_DEFEND_LOCK:
+      return cryptohome::MOUNT_ERROR_TPM_DEFEND_LOCK;
+    case cryptohome::CRYPTOHOME_ERROR_MOUNT_MOUNT_POINT_BUSY:
+      return cryptohome::MOUNT_ERROR_MOUNT_POINT_BUSY;
+    case cryptohome::CRYPTOHOME_ERROR_TPM_NEEDS_REBOOT:
+      return cryptohome::MOUNT_ERROR_TPM_NEEDS_REBOOT;
+    case cryptohome::CRYPTOHOME_ERROR_AUTHORIZATION_KEY_DENIED:
+    case cryptohome::CRYPTOHOME_ERROR_KEY_LABEL_EXISTS:
+    case cryptohome::CRYPTOHOME_ERROR_UPDATE_SIGNATURE_INVALID:
+      return cryptohome::MOUNT_ERROR_KEY_FAILURE;
+    case cryptohome::CRYPTOHOME_ERROR_MOUNT_OLD_ENCRYPTION:
+      return cryptohome::MOUNT_ERROR_OLD_ENCRYPTION;
+    case cryptohome::CRYPTOHOME_ERROR_MOUNT_PREVIOUS_MIGRATION_INCOMPLETE:
+      return cryptohome::MOUNT_ERROR_PREVIOUS_MIGRATION_INCOMPLETE;
+    default:
+      NOTREACHED();
+      return cryptohome::MOUNT_ERROR_FATAL;
+  }
 }
 
 // The CryptohomeClient implementation.
@@ -802,7 +841,7 @@ class CryptohomeClientImpl : public CryptohomeClient {
   void MountEx(const cryptohome::Identification& id,
                const cryptohome::AuthorizationRequest& auth,
                const cryptohome::MountRequest& request,
-               DBusMethodCallback<cryptohome::BaseReply> callback) override {
+               MountCallback callback) override {
     const char* method_name = cryptohome::kCryptohomeMountEx;
     dbus::MethodCall method_call(cryptohome::kCryptohomeInterface,
                                  method_name);
@@ -817,7 +856,7 @@ class CryptohomeClientImpl : public CryptohomeClient {
 
     proxy_->CallMethod(
         &method_call, kTpmDBusTimeoutMs,
-        base::BindOnce(&CryptohomeClientImpl::OnBaseReplyMethod,
+        base::BindOnce(&CryptohomeClientImpl::OnMountEx,
                        weak_ptr_factory_.GetWeakPtr(), std::move(callback)));
   }
 
@@ -1137,6 +1176,36 @@ class CryptohomeClientImpl : public CryptohomeClient {
       return;
     }
     std::move(callback).Run(std::move(result));
+  }
+
+  void OnMountEx(MountCallback callback, dbus::Response* response) {
+    if (!response) {
+      std::move(callback).Run(false, cryptohome::MOUNT_ERROR_FATAL,
+                              std::string());
+      return;
+    }
+    cryptohome::BaseReply reply;
+    dbus::MessageReader reader(response);
+    if (!reader.PopArrayOfBytesAsProto(&reply)) {
+      std::move(callback).Run(false, cryptohome::MOUNT_ERROR_FATAL,
+                              std::string());
+      return;
+    }
+    if (reply.has_error() &&
+        reply.error() != cryptohome::CRYPTOHOME_ERROR_NOT_SET) {
+      LOGIN_LOG(ERROR) << "MountEx error (CryptohomeErrorCode): "
+                       << reply.error();
+      std::move(callback).Run(false, MapError(reply.error()), std::string());
+      return;
+    }
+    if (!reply.HasExtension(cryptohome::MountReply::reply)) {
+      std::move(callback).Run(false, cryptohome::MOUNT_ERROR_FATAL,
+                              std::string());
+      return;
+    }
+    std::move(callback).Run(
+        true, cryptohome::MOUNT_ERROR_NONE,
+        reply.GetExtension(cryptohome::MountReply::reply).sanitized_username());
   }
 
   // Handles responses for Pkcs11GetTpmTokenInfo and

@@ -102,15 +102,10 @@ void ExtendedAuthenticatorImpl::CreateMount(
     auth_key->mutable_data()->set_label(key.GetLabel());
   }
   auth_key->set_secret(key.GetSecret());
-  cryptohome::HomedirMethods::GetInstance()->MountEx(
-      id,
-      auth,
-      mount,
-      base::Bind(&ExtendedAuthenticatorImpl::OnMountComplete,
-                 this,
-                 "MountEx",
-                 context,
-                 success_callback));
+  DBusThreadManager::Get()->GetCryptohomeClient()->MountEx(
+      id, auth, mount,
+      base::BindOnce(&ExtendedAuthenticatorImpl::OnMountComplete, this,
+                     "MountEx", context, success_callback));
 }
 
 void ExtendedAuthenticatorImpl::AddKey(const UserContext& context,
@@ -188,12 +183,12 @@ void ExtendedAuthenticatorImpl::DoAuthenticateToMount(
     const UserContext& user_context) {
   RecordStartMarker("MountEx");
   const Key* const key = user_context.GetKey();
-  cryptohome::HomedirMethods::GetInstance()->MountEx(
+  DBusThreadManager::Get()->GetCryptohomeClient()->MountEx(
       cryptohome::Identification(user_context.GetAccountId()),
       cryptohome::CreateAuthorizationRequest(key->GetLabel(), key->GetSecret()),
       cryptohome::MountRequest(),
-      base::Bind(&ExtendedAuthenticatorImpl::OnMountComplete, this, "MountEx",
-                 user_context, success_callback));
+      base::BindOnce(&ExtendedAuthenticatorImpl::OnMountComplete, this,
+                     "MountEx", user_context, success_callback));
 }
 
 void ExtendedAuthenticatorImpl::DoAuthenticateToCheck(
