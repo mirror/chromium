@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "be14ea77_a7834465",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-12-18T22:16:05Z",
+      "side": 1,
+      "message": "Yes, borrowed from the extension. If foreground use do not come from cache, we can get rid of cache time.",
+      "parentUuid": "817e2551_b47a0822",
+      "revId": "50ac6aae18620806d8aa6b4cd13667b15806cc9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3e3b1e34_de1773bb",
         "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service.cc",
         "patchSetId": 5
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "e7b7d3b3_3c9b034a",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-12-18T22:16:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3e3b1e34_de1773bb",
+      "revId": "50ac6aae18620806d8aa6b4cd13667b15806cc9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "70d98659_1d58a362",
         "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service.cc",
         "patchSetId": 5
@@ -47,6 +83,24 @@
       "writtenOn": "2017-11-14T01:11:38Z",
       "side": 1,
       "message": "What about pending callbacks?",
+      "revId": "50ac6aae18620806d8aa6b4cd13667b15806cc9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9b0019e_64ddb668",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-12-18T22:16:05Z",
+      "side": 1,
+      "message": "Pending callbacks wont be invoked. Pending URL fetch request will be cancelled when DialAppInfoFetcher instances are destroyed.",
+      "parentUuid": "70d98659_1d58a362",
       "revId": "50ac6aae18620806d8aa6b4cd13667b15806cc9d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "5b490189_3ba52e09",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-12-18T22:16:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "884ebba9_aff6a651",
+      "revId": "50ac6aae18620806d8aa6b4cd13667b15806cc9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9770a55d_551bedf7",
         "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service.cc",
         "patchSetId": 5
@@ -81,6 +153,24 @@
       "writtenOn": "2017-11-14T01:11:38Z",
       "side": 1,
       "message": "If the app_url changes for a device, the cached availability won\u0027t go with it.",
+      "revId": "50ac6aae18620806d8aa6b4cd13667b15806cc9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97662bbb_e07e8463",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-12-18T22:16:05Z",
+      "side": 1,
+      "message": "No, it wont. I am thinking of decoupling DialAppDiscoveryService with sinks, devices, etc. \n\nDialAppDiscoveryService holds a \u003capp_url, app_info\u003e cache.\n\nDialMediaSinkServiceImpl handles sink query (patch 3) with a \u003capp_name, list of available sink ids\u003e map.",
+      "parentUuid": "9770a55d_551bedf7",
       "revId": "50ac6aae18620806d8aa6b4cd13667b15806cc9d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "ad9657dc_ab72b7c4",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-12-18T22:16:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0ad6a6b0_32c57166",
+      "revId": "50ac6aae18620806d8aa6b4cd13667b15806cc9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2da5c0f7_452a9fb4",
         "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service.cc",
         "patchSetId": 5
@@ -115,6 +223,24 @@
       "writtenOn": "2017-11-14T01:11:38Z",
       "side": 1,
       "message": "Do we want to evict the oldest entry?",
+      "revId": "50ac6aae18620806d8aa6b4cd13667b15806cc9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "346c71ca_38defb25",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-12-18T22:16:05Z",
+      "side": 1,
+      "message": "256 seems to be large enough and LRU cache seems unnecessary.\n\nCache is keyed by full app url so the expected # of cache entries is # of devices * # of apps. users usually have \u003c 5 devices and \u003c 20 apps.",
+      "parentUuid": "2da5c0f7_452a9fb4",
       "revId": "50ac6aae18620806d8aa6b4cd13667b15806cc9d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "72371439_5242c5eb",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-12-18T22:16:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c46e3ab9_12d7f3a0",
+      "revId": "50ac6aae18620806d8aa6b4cd13667b15806cc9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "524af7e9_25aea696",
         "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service.cc",
         "patchSetId": 5
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "fc2bb298_c0cf6c2e",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-12-18T22:16:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "524af7e9_25aea696",
+      "revId": "50ac6aae18620806d8aa6b4cd13667b15806cc9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3fb6f404_98cbdd08",
         "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service.h",
         "patchSetId": 5
@@ -166,6 +328,24 @@
       "writtenOn": "2017-11-14T01:11:38Z",
       "side": 1,
       "message": "Does this class get instantiated once per device, per app, or per fetch?",
+      "revId": "50ac6aae18620806d8aa6b4cd13667b15806cc9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29e425a9_388a2db4",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-12-18T22:16:05Z",
+      "side": 1,
+      "message": "(patch 3) DialMediaSinkServiceImpl holds a unique_ptr to instance of this class. It is instantiated once for all app_url fetch requests.\n\nDialAppInfoFetcher object is created per fetch.",
+      "parentUuid": "3fb6f404_98cbdd08",
       "revId": "50ac6aae18620806d8aa6b4cd13667b15806cc9d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "ef5ad8a6_e02f57e8",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-12-18T22:16:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "07e9f7f5_a8b42756",
+      "revId": "50ac6aae18620806d8aa6b4cd13667b15806cc9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "288eb956_bffa4af3",
         "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service.h",
         "patchSetId": 5
@@ -203,6 +401,24 @@
       "revId": "50ac6aae18620806d8aa6b4cd13667b15806cc9d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d44f7c56_c8160fe5",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-12-18T22:16:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "288eb956_bffa4af3",
+      "revId": "50ac6aae18620806d8aa6b4cd13667b15806cc9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -223,6 +439,24 @@
     },
     {
       "key": {
+        "uuid": "09438b30_cc4baa49",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-12-18T22:16:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "abe652e8_740ce2cc",
+      "revId": "50ac6aae18620806d8aa6b4cd13667b15806cc9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "399f0ee4_e736f0dd",
         "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service.h",
         "patchSetId": 5
@@ -237,6 +471,24 @@
       "revId": "50ac6aae18620806d8aa6b4cd13667b15806cc9d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80fc0776_25c01d28",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-12-18T22:16:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "399f0ee4_e736f0dd",
+      "revId": "50ac6aae18620806d8aa6b4cd13667b15806cc9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -257,6 +509,24 @@
     },
     {
       "key": {
+        "uuid": "b5e77ccd_38fc078f",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-12-18T22:16:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5cd0376a_27f8fc2d",
+      "revId": "50ac6aae18620806d8aa6b4cd13667b15806cc9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d0224197_0d7c1836",
         "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service.h",
         "patchSetId": 5
@@ -268,6 +538,24 @@
       "writtenOn": "2017-11-14T01:11:38Z",
       "side": 1,
       "message": "What verifies that app_url belongs to the device that was discovered by DIAL?\n(By checking IP addresses.)",
+      "revId": "50ac6aae18620806d8aa6b4cd13667b15806cc9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40afd8a5_19a01021",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-12-18T22:16:05Z",
+      "side": 1,
+      "message": "Will do this in DialMediaSinkServiceImpl (patch 3). Prefer to make DialAppDiscoveryService unaware of devices or sinks.\n\nDialMediaSinkServiceImpl invokes FetchDialAppInfo() for all known devices.\n\nWhen DialAppInfoParseSuccessCallback is invoked, DialMediaSinkServiceImpl will search current sink list and find a sink with |app_url|\u0027s IP address.",
+      "parentUuid": "d0224197_0d7c1836",
       "revId": "50ac6aae18620806d8aa6b4cd13667b15806cc9d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -291,6 +579,24 @@
     },
     {
       "key": {
+        "uuid": "4eb33a91_a24a1588",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-12-18T22:16:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8d9b3eef_7653a464",
+      "revId": "50ac6aae18620806d8aa6b4cd13667b15806cc9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ae4357e8_7e97fb33",
         "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service.h",
         "patchSetId": 5
@@ -302,6 +608,24 @@
       "writtenOn": "2017-11-14T01:11:38Z",
       "side": 1,
       "message": "How does the caller keep track of which device\u0027s callback was invoked?  The app_url is specific to a particular request.",
+      "revId": "50ac6aae18620806d8aa6b4cd13667b15806cc9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33b80122_e6101616",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-12-18T22:16:05Z",
+      "side": 1,
+      "message": "Caller (DialMediaSinkServiceImpl) will search through its sink list for a sink with app_url\u0027s IP address.",
+      "parentUuid": "ae4357e8_7e97fb33",
       "revId": "50ac6aae18620806d8aa6b4cd13667b15806cc9d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -325,6 +649,24 @@
     },
     {
       "key": {
+        "uuid": "a3057eb2_7649332f",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-12-18T22:16:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0d431db7_ef897c10",
+      "revId": "50ac6aae18620806d8aa6b4cd13667b15806cc9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7d20bd75_aeba1884",
         "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service.h",
         "patchSetId": 5
@@ -339,6 +681,24 @@
       "revId": "50ac6aae18620806d8aa6b4cd13667b15806cc9d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "453810b0_2b579845",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-12-18T22:16:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7d20bd75_aeba1884",
+      "revId": "50ac6aae18620806d8aa6b4cd13667b15806cc9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -359,6 +719,24 @@
     },
     {
       "key": {
+        "uuid": "24d37994_a7f4e987",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-12-18T22:16:05Z",
+      "side": 1,
+      "message": "It seems not necessary now since the new SafeXMLParser handles batching multiple parsing request into a single utility process.",
+      "parentUuid": "5c157fcc_da2301f2",
+      "revId": "50ac6aae18620806d8aa6b4cd13667b15806cc9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d72fb67b_c501a022",
         "filename": "chrome/browser/media/router/discovery/dial/dial_app_info_fetcher.cc",
         "patchSetId": 5
@@ -370,6 +748,24 @@
       "writtenOn": "2017-11-14T01:11:38Z",
       "side": 1,
       "message": "Does this have to be defined anew for every request?",
+      "revId": "50ac6aae18620806d8aa6b4cd13667b15806cc9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3239a0f1_d4e4670e",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_app_info_fetcher.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-12-18T22:16:05Z",
+      "side": 1,
+      "message": "Seems like so. Most net::URLFetcher::Create() calls have their own |traffic_annotation| instead of a shared one.\n\nShall we create a shared annotation for both device description and app info?",
+      "parentUuid": "d72fb67b_c501a022",
       "revId": "50ac6aae18620806d8aa6b4cd13667b15806cc9d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

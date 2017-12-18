@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0c9c69e9_c4baa49d",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-12-18T22:16:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "36868ce3_6ce2b742",
+      "range": {
+        "startLine": 30,
+        "startChar": 5,
+        "endLine": 30,
+        "endChar": 13
+      },
+      "revId": "680c5f80a54ef81d39544d827ebadf8d968bc3ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bbccabfb_6c3ef58e",
         "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service.cc",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "31692141_a09d86e3",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-12-18T22:16:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bbccabfb_6c3ef58e",
+      "range": {
+        "startLine": 102,
+        "startChar": 26,
+        "endLine": 102,
+        "endChar": 33
+      },
+      "revId": "680c5f80a54ef81d39544d827ebadf8d968bc3ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0843e4c2_89cdbaa8",
         "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service.cc",
         "patchSetId": 3
@@ -65,6 +113,24 @@
     },
     {
       "key": {
+        "uuid": "371ccb61_3c45037f",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-12-18T22:16:05Z",
+      "side": 1,
+      "message": "Yes, stop adding to cache if it reaches kCacheMaxEntries. We do not think we would ever hit this because normally people have 1-2 devices, rarely has \u003e\u003d10 , cache size 256 should be enough. There is no need for an LRU cache. Put a limit here just in case of extreme cases (attack?)",
+      "parentUuid": "0843e4c2_89cdbaa8",
+      "revId": "680c5f80a54ef81d39544d827ebadf8d968bc3ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f3d3020b_429cef3b",
         "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service.cc",
         "patchSetId": 3
@@ -76,6 +142,24 @@
       "writtenOn": "2017-11-07T19:28:05Z",
       "side": 1,
       "message": "I\u0027m not very familiar with C++ Time libraries and in this case it probably isn\u0027t a big deal either way as DIAL isn\u0027t critical, but isn\u0027t there something like TimeDelta that would fit better (in case of unexpected time changes etc).",
+      "revId": "680c5f80a54ef81d39544d827ebadf8d968bc3ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bd2edbd_c630b6f3",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-12-18T22:16:05Z",
+      "side": 1,
+      "message": "Sure, will change it to a clock.",
+      "parentUuid": "f3d3020b_429cef3b",
       "revId": "680c5f80a54ef81d39544d827ebadf8d968bc3ba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -102,6 +186,30 @@
       "revId": "680c5f80a54ef81d39544d827ebadf8d968bc3ba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e455ad0a_15d12992",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_app_info_fetcher.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-12-18T22:16:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cee4921f_b981987f",
+      "range": {
+        "startLine": 52,
+        "startChar": 38,
+        "endLine": 52,
+        "endChar": 46
+      },
+      "revId": "680c5f80a54ef81d39544d827ebadf8d968bc3ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
