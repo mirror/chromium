@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "449ddeb2_941bdbe0",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/IDLTypes.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1111977
+      },
+      "writtenOn": "2017-12-18T10:24:53Z",
+      "side": 1,
+      "message": "Instead of doing some SFINAE here, I think you can follow what IDLSequence and IDLRecord do: use std::conditional to determine whether you\u0027re dealing with an garbage-collected type and have a single IDLNullable that determines whether to wrap `InnerType` in  WTF::Optional based on another std::conditional.",
+      "revId": "ec93a008b0d45f13b4a3af18e0e821833e2ee5c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
