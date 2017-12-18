@@ -3102,8 +3102,6 @@ crbug.com/763597 external/wpt/html/semantics/scripting-1/the-script-element/modu
 crbug.com/717643 external/wpt/html/semantics/scripting-1/the-script-element/module/module-in-xhtml.xhtml [ Failure ]
 
 # known bug: import() inside set{Timeout,Interval}
-crbug.com/773622 external/wpt/html/semantics/scripting-1/the-script-element/module/dynamic-import/string-compilation-base-url-classic.html [ Failure ]
-crbug.com/773622 external/wpt/html/semantics/scripting-1/the-script-element/module/dynamic-import/string-compilation-base-url-module.html [ Failure ]
 
 # import.meta.url is under development.
 crbug.com/773713 external/wpt/html/semantics/scripting-1/the-script-element/module/import-meta [ Skip ]
