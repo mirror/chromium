@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0426438c_51cce08f",
+        "filename": "chrome/renderer/content_settings_observer_browsertest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-18T20:51:52Z",
+      "side": 1,
+      "message": "This feels pretty unusual in the Mojo world; I would have expected this to just register the mock interface on top of the original interface. That way, individual tests probably don\u0027t need to install their own mocks as well. Could we try that in a followup?",
+      "revId": "e67cb7b7450e486db18828bc9fc823446f9509ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
