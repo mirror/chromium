@@ -206,6 +206,30 @@
       "revId": "0088678200eb7a04900c2d505518acd014d8a8f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc816e07_c08ea2c3",
+        "filename": "components/autofill/core/browser/autofill_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1000825
+      },
+      "writtenOn": "2017-12-18T19:22:38Z",
+      "side": 1,
+      "message": "You might think OnFormSubmitted() will be called twice? this will not be the case, it will only be called one times when form has submitted.\n\nThe WillSendSubmitEvent() is used to save the form in AutofillAgent, and the WillSubmitForm() is used to fire the FormSubmitted(). The known_success indicates whether the AutofillAgent knows the submission is successful or not by checking whether the submitted form disappears.  The form is the one hasn\u0027t been modified by Javascript,\n\nYou may refer to https://docs.google.com/document/d/13jozq16vwLMBsxnCYeB2jOIBAUn-qV-8yM2OlHGt7Q0/edit for detail.",
+      "parentUuid": "8ba8abad_223a3b82",
+      "range": {
+        "startLine": 363,
+        "startChar": 0,
+        "endLine": 386,
+        "endChar": 71
+      },
+      "revId": "0088678200eb7a04900c2d505518acd014d8a8f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
