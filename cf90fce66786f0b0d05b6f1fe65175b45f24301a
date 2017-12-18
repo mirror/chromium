@@ -33,6 +33,23 @@
       "revId": "cf90fce66786f0b0d05b6f1fe65175b45f24301a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26eebcfa_76dc91ad",
+        "filename": "content/browser/gpu/browser_gpu_channel_host_factory.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-12-18T21:24:17Z",
+      "side": 1,
+      "message": "Maybe we can use AreNativeGpuMemoryBuffersEnabled directly?\nWould it make sense to add this flag somewhere else if we use that?",
+      "revId": "cf90fce66786f0b0d05b6f1fe65175b45f24301a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
