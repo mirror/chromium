@@ -22,6 +22,30 @@
       "revId": "d8f2f332823d8edcb5ca20192d6814736c7317c4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a8c0a96_e324f5b5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1004,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-18T21:41:07Z",
+      "side": 1,
+      "message": "\u003e Perhaps when hasTabs is false we shouldn\u0027t do anything at all since an NTP should be created later in the startup flow anyway?\n\nTo expand on this -- if hasTabs is false and this is hit through a cold-start, perhaps we should skip. I think we still need this if hasTabs is false and this is hit through a warm-start.\n\nCan isInOverviewMode() be true during cold-start if hasTabs is true?",
+      "parentUuid": "6da424a9_df0750e7",
+      "range": {
+        "startLine": 1003,
+        "startChar": 24,
+        "endLine": 1004,
+        "endChar": 95
+      },
+      "revId": "d8f2f332823d8edcb5ca20192d6814736c7317c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
