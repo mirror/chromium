@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "88fbcf09_44c98b33",
+        "filename": "chrome/browser/chromeos/login/lock/webui_screen_locker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-18T22:44:47Z",
+      "side": 1,
+      "message": "nit: The sentence feels incomplete. :)\n\nHow about:\n  // Only preload webui lock screen when it is used.",
+      "revId": "b3c7950c982e69c416903441c315013e40816db9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
