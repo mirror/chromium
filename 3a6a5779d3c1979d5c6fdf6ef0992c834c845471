@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1bc8f45b_7690f4f3",
+        "filename": "ios/chrome/browser/ui/tools_menu/tools_menu_coordinator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-12-18T18:07:35Z",
+      "side": 1,
+      "message": "Wouldn\u0027t it be easier to put this conditional inside the category/superclass method?",
+      "range": {
+        "startLine": 74,
+        "startChar": 6,
+        "endLine": 74,
+        "endChar": 10
+      },
+      "revId": "3a6a5779d3c1979d5c6fdf6ef0992c834c845471",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
