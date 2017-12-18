@@ -1,0 +1,33 @@
+;;
+;; Copyright (c) 2012 The Chromium Authors. All rights reserved.
+;; Use of this source code is governed by a BSD-style license that can be
+;; found in the LICENSE file.
+;;
+
+; TODO(viettrungluu): Confirm that the exceptions below are needed.
+
+; *** The contents of common.sb are implicitly included here. ***
+
+; Needed for Fonts.
+(allow file-read* (subpath "/System/Library/Fonts"))
+(allow file-read* (subpath "/Library/Fonts"))
+(allow mach-lookup (global-name "com.apple.FontObjectsServer"))
+(allow mach-lookup (global-name "com.apple.FontServer"))
+(allow mach-lookup (global-name "com.apple.fonts"))
+
+; https://crbug.com/11269
+(allow file-read* (subpath (user-homedir-path "/Library/Fonts")))
+
+; IOKit
+(allow iokit-open
+  (iokit-registry-entry-class "IOSurfaceRootUserClient"))
+
+; Reads from home dir.
+(allow file-read-data
+  (path (user-homedir-path "/Library/Preferences/com.apple.universalaccess.plist")))
+
+; Reads from /System.
+(allow file-read-data
+  (subpath "/System/Library/CoreServices/SystemAppearance.bundle")
+  (path "/System/Library/Colors/System.clr/System.clr"))
+

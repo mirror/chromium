@@ -26,7 +26,6 @@
 
 ; Reads from /System.
 (allow file-read-data
-  (path "/System/Library/CoreServices/checkfixlist")
   (path "/System/Library/CoreServices/CoreTypes.bundle/Contents/Library/AppExceptions.bundle/Exceptions.plist")
   (path "/System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/Exceptions.plist")
   (path "/System/Library/Preferences/Logging/Subsystems/com.apple.SkyLight.plist")
