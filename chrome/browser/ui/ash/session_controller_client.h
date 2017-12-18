@@ -176,6 +176,10 @@ class SessionControllerClient
   ash::mojom::SessionInfoPtr last_sent_session_info_;
   ash::mojom::UserSessionPtr last_sent_user_session_;
 
+  // This class observes DeviceSettingService and manages off hours policy.
+  std::unique_ptr<policy::off_hours::DeviceOffHoursController>
+      device_off_hours_controller_;
+
   base::WeakPtrFactory<SessionControllerClient> weak_ptr_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(SessionControllerClient);

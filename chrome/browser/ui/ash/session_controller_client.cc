@@ -21,6 +21,7 @@
 #include "chrome/browser/chromeos/login/user_flow.h"
 #include "chrome/browser/chromeos/login/users/chrome_user_manager.h"
 #include "chrome/browser/chromeos/login/users/multi_profile_user_controller.h"
+#include "chrome/browser/chromeos/policy/off_hours/device_off_hours_controller.h"
 #include "chrome/browser/chromeos/profiles/profile_helper.h"
 #include "chrome/browser/chromeos/settings/device_settings_service.h"
 #include "chrome/browser/lifetime/application_lifetime.h"
@@ -172,9 +173,12 @@ SessionControllerClient::SessionControllerClient()
       prefs::kSessionLengthLimit,
       base::Bind(&SessionControllerClient::SendSessionLengthLimit,
                  base::Unretained(this)));
-  chromeos::DeviceSettingsService::Get()
-      ->device_off_hours_controller()
-      ->AddObserver(this);
+
+  device_off_hours_controller_ =
+      base::MakeUnique<policy::off_hours::DeviceOffHoursController>(
+          chromeos::DeviceSettingsService::Get());
+  device_off_hours_controller_->AddObserver(this);
+
   DCHECK(!g_instance);
   g_instance = this;
 }
@@ -191,9 +195,7 @@ SessionControllerClient::~SessionControllerClient() {
   SessionManager::Get()->RemoveObserver(this);
   UserManager::Get()->RemoveObserver(this);
   UserManager::Get()->RemoveSessionStateObserver(this);
-  chromeos::DeviceSettingsService::Get()
-      ->device_off_hours_controller()
-      ->RemoveObserver(this);
+  device_off_hours_controller_->RemoveObserver(this);
 }
 
 void SessionControllerClient::Init() {
@@ -596,10 +598,8 @@ void SessionControllerClient::SendSessionLengthLimit() {
         local_state->GetInt64(prefs::kSessionStartTime));
   }
 
-  policy::off_hours::DeviceOffHoursController* off_hours_controller =
-      chromeos::DeviceSettingsService::Get()->device_off_hours_controller();
   base::TimeTicks policy_off_hours_end_time =
-      off_hours_controller->GetOffHoursEndTime();
+      device_off_hours_controller_->GetOffHoursEndTime();
 
   // If |session_length_limit| is zero or |session_start_time| is null then
   // "SessionLengthLimit" policy is unset.
