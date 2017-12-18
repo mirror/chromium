@@ -280,12 +280,14 @@ bool HaveConsistentPhase(const WebMouseWheelEvent& event_to_coalesce,
   if (event.has_synthetic_phase != event_to_coalesce.has_synthetic_phase)
     return false;
 
-  if (event.phase == event_to_coalesce.phase &&
-      event.momentum_phase == event_to_coalesce.momentum_phase) {
-    return true;
-  }
-
   if (event.has_synthetic_phase) {
+    // Wheel events with synthetic phase information don't have momentum_phase.
+    DCHECK_EQ(WebMouseWheelEvent::kPhaseNone, event.momentum_phase);
+    DCHECK_EQ(WebMouseWheelEvent::kPhaseNone, event_to_coalesce.momentum_phase);
+
+    if (event.phase == event_to_coalesce.phase)
+      return true;
+
     // Synthetic phase information is added based on a timer in
     // MouseWheelPhaseHandler. This information is for simulating scroll
     // sequences when the beginning and end of scrolls are not available. It is
@@ -298,8 +300,10 @@ bool HaveConsistentPhase(const WebMouseWheelEvent& event_to_coalesce,
             event_to_coalesce.phase == WebMouseWheelEvent::kPhaseBegan) ||
            (event.phase == WebMouseWheelEvent::kPhaseBegan &&
             event_to_coalesce.phase == WebMouseWheelEvent::kPhaseChanged);
+  } else {
+    return event.phase == event_to_coalesce.phase &&
+           event.momentum_phase == event_to_coalesce.momentum_phase;
   }
-  return false;
 }
 
 bool CanCoalesce(const WebMouseWheelEvent& event_to_coalesce,

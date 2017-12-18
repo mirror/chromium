@@ -612,7 +612,7 @@ void DelegatedFrameHost::OnFrameTokenChanged(uint32_t frame_token) {
 void DelegatedFrameHost::OnBeginFrame(const viz::BeginFrameArgs& args) {
   if (renderer_compositor_frame_sink_)
     renderer_compositor_frame_sink_->OnBeginFrame(args);
-  client_->OnBeginFrame(args.frame_time);
+  client_->OnBeginFrame();
 }
 
 void DelegatedFrameHost::EvictDelegatedFrame() {

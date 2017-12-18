@@ -40,6 +40,8 @@ class InputHandlerWrapper : public ui::InputHandlerProxyClient {
 
   // InputHandlerProxyClient implementation.
   void WillShutdown() override;
+  void TransferActiveWheelFlingAnimation(
+      const blink::WebActiveWheelFlingParameters& params) override;
   void DispatchNonBlockingEventToMainThread(
       ui::WebScopedInputEvent event,
       const ui::LatencyInfo& latency_info) override;

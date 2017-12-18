@@ -518,7 +518,7 @@ BrowserCompositorMac::DelegatedFrameHostCreateResizeLock() {
   return nullptr;
 }
 
-void BrowserCompositorMac::OnBeginFrame(base::TimeTicks frame_time) {
+void BrowserCompositorMac::OnBeginFrame() {
   client_->BrowserCompositorMacOnBeginFrame();
 }
 
