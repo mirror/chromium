@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9877d133_040986c3",
+        "filename": "base/android/java/src/org/chromium/base/metrics/RecordHistogram.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-12-18T19:14:51Z",
+      "side": 1,
+      "message": "We still have to convert all durations to the single TimeUnit. recordCustomTimesHistogram() implies that |duration|, |min| and |max| are given in the same TimeUnit but it\u0027s not what we have for all other record*TimeHistogram*() (there are 4 such functions in total).\n\nCompare\n\n    recordCustomTimesHistogramMilliseconds(name, timeUnit.toMillis(duration), 1, TimeUnit.HOURS.toMillis(1), 100);\n\nto\n\n    recordCustomTimesHistogram(name, timeUnit.toMillis(duration), 1, TimeUnit.HOURS.toMillis(1), TimeUnit.MILLISECONDS, 100);\n\nI\u0027d keep using recordCustomTimesHistogramMilliseconds().",
+      "parentUuid": "b29fef10_fada4a38",
+      "range": {
+        "startLine": 221,
+        "startChar": 23,
+        "endLine": 221,
+        "endChar": 50
+      },
+      "revId": "ae0f5b437de826e709b8b03167c26f1b31500680",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2b9674b1_36279664",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/metrics/PageLoadMetricsTest.java",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "ae0f5b437de826e709b8b03167c26f1b31500680",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa35094b_d660656a",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/metrics/PageLoadMetricsTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-12-18T19:14:51Z",
+      "side": 1,
+      "message": "Yes, otherwise we have an unhandled java.util.concurrent.ExecutionException error.\nPageLoadMetrics.removeObserver() returns boolean. If we don\u0027t cast it to Runnable, ThreadUtils.runOnUiThreadBlocking(Callable\u003cT\u003e c) overload is called and this overload throws ExecutionException.\n\nAlternatively, we could either use braces in lambda expression\n\n    ThreadUtils.runOnUiThreadBlocking(() -\u003e {PageLoadMetrics.removeObserver(metricsObserver);});\n\nor we could change the method throw specification to \n\n    throws InterruptedException, ExecutionException\n\nor simply\n\n    throws Exception\n\nI just chose the way that Android Studio has suggested.",
+      "parentUuid": "2b9674b1_36279664",
+      "range": {
+        "startLine": 148,
+        "startChar": 16,
+        "endLine": 148,
+        "endChar": 27
+      },
+      "revId": "ae0f5b437de826e709b8b03167c26f1b31500680",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
