@@ -91,6 +91,24 @@
     },
     {
       "key": {
+        "uuid": "920813c7_678e9012",
+        "filename": "extensions/renderer/resources/platform_app.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-12-18T13:57:15Z",
+      "side": 0,
+      "message": "Yes, Devlin, you\u0027re right.\n\nWith the current implementation without this patch, |document.all| is set to |undefined| as expected.  So the above getOwnPropertyDescriptor hack returns |undefined|.\n\nHowever, other properties such as \u0027alinkColor\u0027, \u0027bgColor\u0027, etc. are just hidden.  So it\u0027s possible to access them with the same hack.  Only |document.all| is set to |undefined| (this is a little different from the complete removal, though).\n\nLet me summarize our situation.\n\na) As we\u0027re going to remove [Replaceable] from document.all\u0027s declaration in the IDL file, we can no longer set document.all to undefined.\nb) However, we *can* remove the property.  This is close to the current implementation (not completely equivalent, but it\u0027s true that the platform apps cannot access the original document.all).\nc) Other properties such as \u0027alinkColor\u0027, \u0027bgColor\u0027, etc. are NOT removed nor set to undefined, regardless of this patch.  We can improve disableGetters/disableMethods to re-define the properties.  Then, the platform apps will no longer be able to access these properties of the original values.\n\nI\u0027d suggest to remove Document.prototype.all in this patch so that the behavior will be close to the current implementation.  We can update disableGetters/disableMethods in a follow-up patch as a separate issue.\n\nI think that this approach meets the goal.",
+      "parentUuid": "10420dbc_53ce73e6",
+      "revId": "40ae69e207a3e0960cd8690fb190c8fede585979",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "304192ef_b4b15774",
         "filename": "third_party/WebKit/LayoutTests/virtual/stable/webexposed/global-interface-listing-expected.txt",
         "patchSetId": 7
