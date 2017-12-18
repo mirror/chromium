@@ -48,6 +48,54 @@
     },
     {
       "key": {
+        "uuid": "c68d11d5_60e38afe",
+        "filename": "chrome/browser/sync/test/integration/sync_app_list_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2017-12-18T22:30:35Z",
+      "side": 1,
+      "message": "Good idea.",
+      "parentUuid": "426fc109_e927345c",
+      "range": {
+        "startLine": 66,
+        "startChar": 57,
+        "endLine": 66,
+        "endChar": 63
+      },
+      "revId": "01ae5bd7f528103c07147f3dcf53c4c5fdfd413c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9e46f66c_5179ee9b",
+        "filename": "chrome/browser/sync/test/integration/sync_app_list_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2017-12-18T22:30:35Z",
+      "side": 1,
+      "message": "Applied to everywhere.",
+      "parentUuid": "9fa9460e_17c24cee",
+      "range": {
+        "startLine": 66,
+        "startChar": 8,
+        "endLine": 66,
+        "endChar": 28
+      },
+      "revId": "01ae5bd7f528103c07147f3dcf53c4c5fdfd413c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ee67c7c2_6b2ed1b3",
         "filename": "chrome/browser/sync/test/integration/sync_app_list_helper.cc",
         "patchSetId": 2
@@ -59,6 +107,24 @@
       "writtenOn": "2017-12-18T19:51:26Z",
       "side": 1,
       "message": "Why do we need to shuffle this code?",
+      "revId": "01ae5bd7f528103c07147f3dcf53c4c5fdfd413c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e94af141_3e9fe7d0",
+        "filename": "chrome/browser/sync/test/integration/sync_app_list_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2017-12-18T22:30:35Z",
+      "side": 1,
+      "message": "The code was also checking the order of two app lists.",
+      "parentUuid": "ee67c7c2_6b2ed1b3",
       "revId": "01ae5bd7f528103c07147f3dcf53c4c5fdfd413c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "deb0d0f0_97d60885",
+        "filename": "chrome/browser/sync/test/integration/sync_app_list_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2017-12-18T22:30:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a847f735_6ad2c27a",
+      "range": {
+        "startLine": 123,
+        "startChar": 6,
+        "endLine": 123,
+        "endChar": 26
+      },
+      "revId": "01ae5bd7f528103c07147f3dcf53c4c5fdfd413c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "63218e83_7f31fcd5",
         "filename": "chrome/browser/sync/test/integration/sync_app_list_helper.cc",
         "patchSetId": 2
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "4a1fe5e7_8ac1daa6",
+        "filename": "chrome/browser/sync/test/integration/sync_app_list_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2017-12-18T22:30:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "63218e83_7f31fcd5",
+      "range": {
+        "startLine": 138,
+        "startChar": 8,
+        "endLine": 138,
+        "endChar": 28
+      },
+      "revId": "01ae5bd7f528103c07147f3dcf53c4c5fdfd413c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9e5e35bb_ccabacd7",
         "filename": "chrome/browser/sync/test/integration/sync_app_list_helper.cc",
         "patchSetId": 2
@@ -122,6 +236,24 @@
       "writtenOn": "2017-12-18T19:51:26Z",
       "side": 1,
       "message": "nit: for (const auto* child_item : child_items)",
+      "revId": "01ae5bd7f528103c07147f3dcf53c4c5fdfd413c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "941a1b22_59920982",
+        "filename": "chrome/browser/sync/test/integration/sync_app_list_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2017-12-18T22:30:35Z",
+      "side": 1,
+      "message": "How about the |j| used in L156?",
+      "parentUuid": "9e5e35bb_ccabacd7",
       "revId": "01ae5bd7f528103c07147f3dcf53c4c5fdfd413c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -148,6 +280,30 @@
       "revId": "01ae5bd7f528103c07147f3dcf53c4c5fdfd413c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6f76e64_7a7df551",
+        "filename": "chrome/browser/ui/app_list/app_list_service_impl_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2017-12-18T22:30:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2357fb00_5784adb0",
+      "range": {
+        "startLine": 115,
+        "startChar": 6,
+        "endLine": 115,
+        "endChar": 26
+      },
+      "revId": "01ae5bd7f528103c07147f3dcf53c4c5fdfd413c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
