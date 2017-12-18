@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "97f01162_0c86187d",
+        "filename": "chrome/browser/android/vr_shell/autocomplete_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-12-18T19:50:10Z",
+      "side": 1,
+      "message": "Why have this condition?  Even if you have 4 suggestions, the top-ranked 4 suggestions could change with a subsequent update, causing a UI change/flicker.  Was this intentional?",
+      "revId": "925e0c32ba02ff4c2dd57b2fcab28c9d0466308b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
