@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "47283296_8da879c6",
+        "filename": "chrome/browser/lifetime/application_lifetime.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-18T18:15:57Z",
+      "side": 1,
+      "message": "This only runs for android before the CL, right? If yes, it should then be in application_lifetime_android.cc. And we don\u0027t need the callback arg of platform::AttemptUserExit.",
+      "revId": "6c2403d5b8844e722319acbcb3a004b6b197f176",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47b7a2da_c2af9864",
+        "filename": "chrome/browser/lifetime/application_lifetime.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-18T18:15:57Z",
+      "side": 1,
+      "message": "This was not called for chromeos before the CL.",
+      "revId": "6c2403d5b8844e722319acbcb3a004b6b197f176",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
