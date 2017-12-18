@@ -803,6 +803,31 @@
       "revId": "51dde532e48e66948c58eaab75925f89211b89ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "682e6b74_ef0b3487",
+        "filename": "content/network/url_request_context_builder_mojo.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-18T22:38:47Z",
+      "side": 1,
+      "message": "Sorry, I meant in the NetworkService-enabled route, we\u0027d need them to be created and owned by the IOThread.  I\u0027d really like to be able to reduce IOThread to nothing other than initialization of the in-process NetworkService (In both the enabled and disabled cases).\n\nBut then there\u0027s the case where there is no in-process NetworkService.",
+      "parentUuid": "eb9b31d9_4b1d1056",
+      "range": {
+        "startLine": 37,
+        "startChar": 53,
+        "endLine": 37,
+        "endChar": 66
+      },
+      "tag": "mailMessageId\u003d\u003cCAEK7mvoxXZKVYf9LP4eu5bUDVp3eXHu42RsP6BMcAdTa+P7oxg@mail.gmail.com\u003e",
+      "revId": "51dde532e48e66948c58eaab75925f89211b89ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
