@@ -206,6 +206,11 @@ class ConfigSingleton {
   const std::string MatchKnownMITMSoftware(
       const scoped_refptr<net::X509Certificate> cert);
 
+  // Returns a DynamicInterstitialInfo object that matches with |ssl_info|. If
+  // is no match, return null.
+  DynamicInterstitialInfo* MatchDynamicInterstitial(
+      const net::SSLInfo& ssl_info);
+
   // Testing methods:
   void ResetForTesting();
   void SetInterstitialDelayForTesting(const base::TimeDelta& delay);
@@ -381,6 +386,11 @@ const std::string ConfigSingleton::MatchKnownMITMSoftware(
   return ssl_error_assistant_->MatchKnownMITMSoftware(cert);
 }
 
+DynamicInterstitialInfo* ConfigSingleton::MatchDynamicInterstitial(
+    const net::SSLInfo& ssl_info) {
+  return ssl_error_assistant_->MatchDynamicInterstitial(ssl_info);
+}
+
 class SSLErrorHandlerDelegateImpl : public SSLErrorHandler::Delegate {
  public:
   SSLErrorHandlerDelegateImpl(
@@ -421,7 +431,7 @@ class SSLErrorHandlerDelegateImpl : public SSLErrorHandler::Delegate {
   void ShowCaptivePortalInterstitial(const GURL& landing_url) override;
   void ShowMITMSoftwareInterstitial(const std::string& mitm_software_name,
                                     bool is_enterprise_managed) override;
-  void ShowSSLInterstitial() override;
+  void ShowSSLInterstitial(GURL support_url = GURL()) override;
   void ShowBadClockInterstitial(const base::Time& now,
                                 ssl_errors::ClockState clock_state) override;
 
@@ -517,12 +527,12 @@ void SSLErrorHandlerDelegateImpl::ShowMITMSoftwareInterstitial(
       decision_callback_));
 }
 
-void SSLErrorHandlerDelegateImpl::ShowSSLInterstitial() {
+void SSLErrorHandlerDelegateImpl::ShowSSLInterstitial(GURL support_url) {
   // Show SSL blocking page. The interstitial owns the blocking page.
   OnBlockingPageReady(SSLBlockingPage::Create(
       web_contents_, cert_error_, ssl_info_, request_url_, options_mask_,
-      base::Time::NowFromSystemTime(), std::move(ssl_cert_reporter_),
-      is_superfish_, decision_callback_));
+      base::Time::NowFromSystemTime(), support_url,
+      std::move(ssl_cert_reporter_), is_superfish_, decision_callback_));
 }
 
 void SSLErrorHandlerDelegateImpl::ShowBadClockInterstitial(
@@ -711,6 +721,13 @@ void SSLErrorHandler::StartHandlingError() {
     return;
   }
 
+  DynamicInterstitialInfo* dynamic_interstitial =
+      g_config.Pointer()->MatchDynamicInterstitial(ssl_info_);
+  if (dynamic_interstitial) {
+    ShowDynamicInterstitial(dynamic_interstitial);
+    return;
+  }
+
   // Ideally, a captive portal interstitial should only be displayed if the only
   // SSL error is a name mismatch error. However, captive portal detector always
   // opens a new tab if it detects a portal ignoring the types of SSL errors. To
@@ -858,6 +875,24 @@ void SSLErrorHandler::ShowBadClockInterstitial(
   // Once an interstitial is displayed, no need to keep the handler around.
   // This is the equivalent of "delete this".
   web_contents_->RemoveUserData(UserDataKey());
+}
+
+void SSLErrorHandler::ShowDynamicInterstitial(
+    DynamicInterstitialInfo* dynamic_interstitial) {
+  switch (dynamic_interstitial->interstitial_type) {
+    case DynamicInterstitialPageType::NONE:
+      NOTREACHED();
+    case DynamicInterstitialPageType::SSL:
+      delegate_->ShowSSLInterstitial(dynamic_interstitial->support_url);
+      return;
+    case DynamicInterstitialPageType::CAPTIVE_PORTAL:
+      delegate_->ShowCaptivePortalInterstitial(GURL());
+      return;
+    case DynamicInterstitialPageType::MITM_SOFTWARE:
+      // TODO(spqchan): Implement support for MitM dynamic interstitials.
+      NOTREACHED();
+      return;
+  }
 }
 
 void SSLErrorHandler::CommonNameMismatchHandlerCallback(

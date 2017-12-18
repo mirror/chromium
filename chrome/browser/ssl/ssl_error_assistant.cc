@@ -52,6 +52,81 @@ std::unique_ptr<std::vector<MITMSoftwareType>> LoadMITMSoftwareList(
   return mitm_software_list;
 }
 
+std::vector<std::unique_ptr<DynamicInterstitialInfo>>
+LoadDynamicInterstitialList(
+    const chrome_browser_ssl::SSLErrorAssistantConfig& proto) {
+  std::vector<std::unique_ptr<DynamicInterstitialInfo>>
+      dynamic_interstitial_list;
+  for (const chrome_browser_ssl::DynamicInterstitial& entry :
+       proto.dynamic_interstitial()) {
+    dynamic_interstitial_list.push_back(
+        base::MakeUnique<DynamicInterstitialInfo>(entry));
+  }
+
+  return dynamic_interstitial_list;
+}
+
+DynamicInterstitialPageType MapToDynamicInterstialPageType(
+    chrome_browser_ssl::DynamicInterstitial::InterstitialPageType type) {
+  switch (type) {
+    case chrome_browser_ssl::DynamicInterstitial::INTERSTITIAL_PAGE_NONE:
+      return DynamicInterstitialPageType::NONE;
+    case chrome_browser_ssl::DynamicInterstitial::INTERSTITIAL_PAGE_SSL:
+      return DynamicInterstitialPageType::SSL;
+    case chrome_browser_ssl::DynamicInterstitial::
+        INTERSTITIAL_PAGE_CAPTIVE_PORTAL:
+      return DynamicInterstitialPageType::CAPTIVE_PORTAL;
+    case chrome_browser_ssl::DynamicInterstitial::
+        INTERSTITIAL_PAGE_MITM_SOFTWARE:
+      return DynamicInterstitialPageType::MITM_SOFTWARE;
+  }
+
+  NOTREACHED();
+  return DynamicInterstitialPageType::NONE;
+}
+
+net::CertStatus MapToCertStatus(
+    chrome_browser_ssl::DynamicInterstitial::CertError error) {
+  switch (error) {
+    case chrome_browser_ssl::DynamicInterstitial::ERR_CERT_COMMON_NAME_INVALID:
+      return net::CERT_STATUS_COMMON_NAME_INVALID;
+    case chrome_browser_ssl::DynamicInterstitial::ERR_CERT_DATE_INVALID:
+      return net::CERT_STATUS_DATE_INVALID;
+    case chrome_browser_ssl::DynamicInterstitial::ERR_CERT_AUTHORITY_INVALID:
+      return net::CERT_STATUS_AUTHORITY_INVALID;
+    case chrome_browser_ssl::DynamicInterstitial::
+        ERR_CERT_NO_REVOCATION_MECHANISM:
+      return net::CERT_STATUS_NO_REVOCATION_MECHANISM;
+    case chrome_browser_ssl::DynamicInterstitial::
+        ERR_CERT_UNABLE_TO_CHECK_REVOCATION:
+      return net::CERT_STATUS_UNABLE_TO_CHECK_REVOCATION;
+    case chrome_browser_ssl::DynamicInterstitial::
+        ERR_CERTIFICATE_TRANSPARENCY_REQUIRED:
+      return net::CERT_STATUS_CERTIFICATE_TRANSPARENCY_REQUIRED;
+    case chrome_browser_ssl::DynamicInterstitial::ERR_CERT_REVOKED:
+      return net::CERT_STATUS_REVOKED;
+    case chrome_browser_ssl::DynamicInterstitial::ERR_CERT_INVALID:
+      return net::CERT_STATUS_INVALID;
+    case chrome_browser_ssl::DynamicInterstitial::
+        ERR_CERT_WEAK_SIGNATURE_ALGORITHM:
+      return net::CERT_STATUS_WEAK_SIGNATURE_ALGORITHM;
+    case chrome_browser_ssl::DynamicInterstitial::ERR_CERT_NON_UNIQUE_NAME:
+      return net::CERT_STATUS_NON_UNIQUE_NAME;
+    case chrome_browser_ssl::DynamicInterstitial::ERR_CERT_WEAK_KEY:
+      return net::CERT_STATUS_WEAK_KEY;
+    case chrome_browser_ssl::DynamicInterstitial::
+        ERR_SSL_PINNED_KEY_NOT_IN_CERT_CHAIN:
+      return net::CERT_STATUS_PINNED_KEY_MISSING;
+    case chrome_browser_ssl::DynamicInterstitial::
+        ERR_CERT_NAME_CONSTRAINT_VIOLATION:
+      return net::CERT_STATUS_NAME_CONSTRAINT_VIOLATION;
+    case chrome_browser_ssl::DynamicInterstitial::ERR_CERT_VALIDITY_TOO_LONG:
+      return net::CERT_STATUS_VALIDITY_TOO_LONG;
+    default:
+      return 0;
+  }
+}
+
 // Reads the SSL error assistant configuration from the resource bundle.
 std::unique_ptr<chrome_browser_ssl::SSLErrorAssistantConfig>
 ReadErrorAssistantProtoFromResourceBundle() {
@@ -76,6 +151,30 @@ bool RegexMatchesAny(const std::vector<std::string>& organization_names,
   return false;
 }
 
+// Returns true if a hash in |ssl_info| is found in |spki_hashes|, a list of
+// hashes.
+bool MatchSSLInfoWithHashes(const net::SSLInfo& ssl_info,
+                            std::unordered_set<std::string> spki_hashes) {
+  for (const net::HashValue& hash_value : ssl_info.public_key_hashes) {
+    if (hash_value.tag != net::HASH_VALUE_SHA256)
+      continue;
+
+    if (spki_hashes.find(hash_value.ToString()) != spki_hashes.end())
+      return true;
+  }
+
+  return false;
+}
+
+std::unordered_set<std::string> HashesFromDynamicInterstitial(
+    const chrome_browser_ssl::DynamicInterstitial& entry) {
+  std::unordered_set<std::string> hashes;
+  for (const std::string hash : entry.sha256_hash())
+    hashes.insert(hash);
+
+  return hashes;
+}
+
 }  // namespace
 
 MITMSoftwareType::MITMSoftwareType(const std::string& name,
@@ -84,6 +183,16 @@ MITMSoftwareType::MITMSoftwareType(const std::string& name,
     : name(name),
       issuer_common_name_regex(issuer_common_name_regex),
       issuer_organization_regex(issuer_organization_regex) {}
+
+DynamicInterstitialInfo::DynamicInterstitialInfo(
+    const chrome_browser_ssl::DynamicInterstitial& entry)
+    : spki_hashes(HashesFromDynamicInterstitial(entry)),
+      interstitial_type(
+          MapToDynamicInterstialPageType(entry.interstitial_type())),
+      cert_error(MapToCertStatus(entry.cert_error())),
+      support_url(GURL(entry.support_url())) {}
+
+DynamicInterstitialInfo::~DynamicInterstitialInfo() {}
 
 SSLErrorAssistant::SSLErrorAssistant() {}
 
@@ -99,16 +208,33 @@ bool SSLErrorAssistant::IsKnownCaptivePortalCertificate(
         LoadCaptivePortalCertHashes(*error_assistant_proto_);
   }
 
-  for (const net::HashValue& hash_value : ssl_info.public_key_hashes) {
-    if (hash_value.tag != net::HASH_VALUE_SHA256) {
-      continue;
-    }
-    if (captive_portal_spki_hashes_->find(hash_value.ToString()) !=
-        captive_portal_spki_hashes_->end()) {
-      return true;
-    }
+  return MatchSSLInfoWithHashes(ssl_info, *(captive_portal_spki_hashes_.get()));
+}
+
+DynamicInterstitialInfo* SSLErrorAssistant::MatchDynamicInterstitial(
+    const net::SSLInfo& ssl_info) {
+  // Load the dynamic interstitial data from SSL error assistant proto if it's
+  // not already loaded.
+  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+  if (dynamic_interstitial_list_.empty()) {
+    if (!error_assistant_proto_)
+      error_assistant_proto_ = ReadErrorAssistantProtoFromResourceBundle();
+
+    DCHECK(error_assistant_proto_);
+    dynamic_interstitial_list_ =
+        LoadDynamicInterstitialList(*error_assistant_proto_);
   }
-  return false;
+
+  for (std::unique_ptr<DynamicInterstitialInfo>& data :
+       dynamic_interstitial_list_) {
+    if (data->cert_error && !(ssl_info.cert_status & data->cert_error))
+      continue;
+
+    if (MatchSSLInfoWithHashes(ssl_info, data->spki_hashes))
+      return data.get();
+  }
+
+  return nullptr;
 }
 
 const std::string SSLErrorAssistant::MatchKnownMITMSoftware(
@@ -201,12 +327,16 @@ void SSLErrorAssistant::SetErrorAssistantProto(
 
   captive_portal_spki_hashes_ =
       LoadCaptivePortalCertHashes(*error_assistant_proto_);
+
+  dynamic_interstitial_list_ =
+      LoadDynamicInterstitialList(*error_assistant_proto_);
 }
 
 void SSLErrorAssistant::ResetForTesting() {
   error_assistant_proto_.reset();
   mitm_software_list_.reset();
   captive_portal_spki_hashes_.reset();
+  dynamic_interstitial_list_.clear();
 }
 
 int SSLErrorAssistant::GetErrorAssistantProtoVersionIdForTesting() const {
