@@ -68,6 +68,11 @@ class CC_EXPORT SurfaceLayer : public Layer {
   bool stretch_content_to_fill_bounds_ = false;
   SkColor default_background_color_ = SK_ColorWHITE;
 
+  // We keep track of the last LayerTreeHost that this SurfaceLayer belonged to,
+  // so that if this SurfaceLayer is attached to a new tree we can notify the
+  // old tree.
+  LayerTreeHost* last_layer_tree_host_ = nullptr;
+
   DISALLOW_COPY_AND_ASSIGN(SurfaceLayer);
 };
 
