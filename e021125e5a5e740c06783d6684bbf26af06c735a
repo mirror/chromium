@@ -22,6 +22,30 @@
       "revId": "e021125e5a5e740c06783d6684bbf26af06c735a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebec7d09_c51c6b20",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-12-18T15:46:48Z",
+      "side": 1,
+      "message": "https://chromium.googlesource.com/chromium/src/+/3c2310f2e9e0947e390c25911b61cfe69e162a78",
+      "parentUuid": "f47268b6_9a52beb6",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 40
+      },
+      "revId": "e021125e5a5e740c06783d6684bbf26af06c735a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
