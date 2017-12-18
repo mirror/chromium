@@ -70,6 +70,30 @@
       "revId": "c1bced5570c392658b2a482dcb4d0145658b6342",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08253899_c43323c9",
+        "filename": "third_party/WebKit/Source/core/layout/TextAutosizer.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1130,
+      "author": {
+        "id": 1237911
+      },
+      "writtenOn": "2017-12-18T23:51:11Z",
+      "side": 1,
+      "message": "Current implementation for the absence of autosizing does not have any problem. DSF is applied even in the absence of autosizing. The default font without autosizing has 16 as its specified font size and 32 as its computed font size.\n\ncomputed font size \u003d\u003d zoom factor * specified font size \u003d\u003d 2.0 * 16 \u003d\u003d 32\n(because zoom factor is page zoom factor * DSF when --use-zoom-for-dsf is enabled)\n\nWithout scaling multiplier by DSF, the font with autosizing has 16 as its specified font size and 24 as its computed font size if multiplier \u003d\u003d 1.5.\n\ncomputed font size \u003d\u003d multiplier * specified font size \u003d\u003d 1.5 * 16 \u003d\u003d 24 (not 48)\n\nIn the correct implementation, it must be\n\ncomputed font size \u003d\u003d multiplier * zoom factor * specified font size \u003d\u003d 1.5 * 2.0 * 16 \u003d\u003d 48\n\nI just realized we must scale the multiplier by the zoom factor rather than DSF. (the zoom factor includes DSF when --use-zoom-for-dsf is enabled)",
+      "parentUuid": "355eab89_ba024e93",
+      "range": {
+        "startLine": 1130,
+        "startChar": 55,
+        "endLine": 1130,
+        "endChar": 59
+      },
+      "revId": "c1bced5570c392658b2a482dcb4d0145658b6342",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
