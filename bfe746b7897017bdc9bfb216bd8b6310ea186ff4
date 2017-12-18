@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "eebd4802_0570053d",
+        "filename": "third_party/WebKit/Source/core/css/resolver/StyleAdjuster.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 576,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-12-18T09:25:25Z",
+      "side": 1,
+      "message": "Yes, it probably would.",
+      "parentUuid": "e8da6b50_d21ed790",
+      "range": {
+        "startLine": 575,
+        "startChar": 8,
+        "endLine": 576,
+        "endChar": 45
+      },
+      "revId": "bfe746b7897017bdc9bfb216bd8b6310ea186ff4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "652cbe0f_de858c6d",
         "filename": "third_party/WebKit/Source/core/css/resolver/StyleAdjuster.cpp",
         "patchSetId": 2
@@ -187,6 +211,30 @@
       "revId": "bfe746b7897017bdc9bfb216bd8b6310ea186ff4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21fb0732_79e04525",
+        "filename": "third_party/WebKit/Source/core/svg/SVGGElement.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-12-18T09:25:25Z",
+      "side": 1,
+      "message": "Then all should be fine here.",
+      "parentUuid": "4c446801_f6006885",
+      "range": {
+        "startLine": 43,
+        "startChar": 6,
+        "endLine": 43,
+        "endChar": 44
+      },
+      "revId": "bfe746b7897017bdc9bfb216bd8b6310ea186ff4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
