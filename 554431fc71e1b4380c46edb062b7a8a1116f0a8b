@@ -145,6 +145,30 @@
     },
     {
       "key": {
+        "uuid": "dcc45aeb_d380e4ad",
+        "filename": "content/browser/payments/payment_app_info_fetcher.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-12-18T18:52:29Z",
+      "side": 1,
+      "message": "FYI, in previous implementation, PaymentAppInfoFetcher is thread safe reference count class, reset of payment_app_info_fetcher_ in PaymentAppDatabase is not necessary cause this object to be released.",
+      "parentUuid": "5a69bfcd_f3261f98",
+      "range": {
+        "startLine": 122,
+        "startChar": 2,
+        "endLine": 122,
+        "endChar": 56
+      },
+      "revId": "554431fc71e1b4380c46edb062b7a8a1116f0a8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1b5a3219_0313f679",
         "filename": "content/browser/payments/payment_app_info_fetcher.h",
         "patchSetId": 4
