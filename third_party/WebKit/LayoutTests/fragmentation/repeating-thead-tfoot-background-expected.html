@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<style>
+table {
+    border-collapse: collapse;
+}
+td, th {
+    border: 1px solid black;
+}
+tr {
+    break-inside: avoid;
+}
+.header {
+    font-weight: bold;
+    text-align: center;
+    background: green;
+}
+tbody {
+  background: yellow;
+}
+</style>
+<p>crbug.com/656232: A table header and footer group repeats on each page.</p>
+<div style="-webkit-columns:3; line-height: 20px; column-fill: auto; height:190px;">
+    <table>
+        <tr><td class="header">Col 1</td><td class="header">Col 2</td></tr>
+        <tr><td>Te</td><td>xt</td></tr>
+        <tr><td style="height: 117px;"></td><td></td></tr>
+        <tr><td class="header">Ft 1</td><td class="header">Ft 2</td></tr>
+        <tr><td class="header">Col 1</td><td class="header">Col 2</td></tr>
+        <tr><td style="height: 140px;"></td><td></td></tr>
+        <tr><td class="header">Ft 1</td><td class="header">Ft 2</td></tr>
+        <tr><td class="header">Col 1</td><td class="header">Col 2</td></tr>
+        <tr><td style="height: 43px;"></td><td></td></tr>
+        <tr><td class="header">Ft 1</td><td class="header">Ft 2</td></tr>
+        </tbody>
+    </table>
+</div>
+
