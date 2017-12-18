@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "28fd90dc_5ef80a0f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/BaseMediaRouteProvider.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-12-18T19:55:22Z",
+      "side": 1,
+      "message": "Super nit:\n\nWhen I reviewed this class I was a bit surprised to see Cast-specific logic, but now I remember this is a base class for the flinging and remote playback providers (both using Cast).\n\nMaybe this comment would be more explicit as \"common implementation for Cast MediaRouteProviders.\"",
+      "revId": "f2d50417b26db70b799adc02c8cc50b63b591ed8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b770917_2ac80ca1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/BaseMediaRouteProvider.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-12-18T19:55:22Z",
+      "side": 1,
+      "message": "Is there a situation where mSession \u003d\u003d null and mRoutes is non-empty (or vice-versa)?  When would these two be out of sync?",
+      "revId": "f2d50417b26db70b799adc02c8cc50b63b591ed8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
