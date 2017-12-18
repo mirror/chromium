@@ -22,6 +22,30 @@
       "revId": "731ee15c5ab4b70802e36bb9882aac9733e1e19b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b740618_12de3b3b",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2017-12-18T19:25:40Z",
+      "side": 1,
+      "message": "Can we make it invalidate constraints before restoring scrollTop? That sounds like a bug with the widget system.",
+      "parentUuid": "e30324a4_ff3e476e",
+      "range": {
+        "startLine": 354,
+        "startChar": 4,
+        "endLine": 354,
+        "endChar": 50
+      },
+      "revId": "731ee15c5ab4b70802e36bb9882aac9733e1e19b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
