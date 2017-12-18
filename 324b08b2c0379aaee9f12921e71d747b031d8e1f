@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b48ede29_e92067ea",
+        "filename": "ash/app_list/model/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-18T18:44:37Z",
+      "side": 1,
+      "message": "move to public_deps for fix build error?",
+      "revId": "324b08b2c0379aaee9f12921e71d747b031d8e1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1924cbaa_847604e6",
+        "filename": "ash/app_list/model/app_list_item.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-18T18:44:37Z",
+      "side": 1,
+      "message": "Move this to cc file since it is not a trivial getter.\n\nAnd think we can use Clone method instead of doing it field by field.\ni.e.\n  metadata_ \u003d metadata-\u003eClone();",
+      "revId": "324b08b2c0379aaee9f12921e71d747b031d8e1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a5a0d8b_0a38ecf7",
+        "filename": "ash/app_list/model/app_list_item.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-18T18:44:37Z",
+      "side": 1,
+      "message": "nit: const method",
+      "revId": "324b08b2c0379aaee9f12921e71d747b031d8e1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "942f995f_36675f9f",
+        "filename": "ash/public/cpp/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-18T18:44:37Z",
+      "side": 1,
+      "message": "I wonder whether this should in public_deps of\n  components/sync/mojo/syncer.typemap",
+      "revId": "324b08b2c0379aaee9f12921e71d747b031d8e1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17312e3c_a49d6c60",
+        "filename": "ash/public/interfaces/app_list.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-18T18:44:37Z",
+      "side": 1,
+      "message": "Document what is struct used for. And brielfly document each field.",
+      "revId": "324b08b2c0379aaee9f12921e71d747b031d8e1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
