@@ -49,7 +49,8 @@ TEST_F(FontResourceTest,
   // Fetch to cache a resource.
   ResourceRequest request1(url);
   FetchParameters fetch_params1(request1);
-  Resource* resource1 = FontResource::Fetch(fetch_params1, fetcher, nullptr);
+  Resource* resource1 =
+      fetcher->RequestResource(fetch_params1, FontResource::Factory());
   ASSERT_TRUE(resource1);
   fetcher->StartLoad(resource1);
   Platform::Current()->GetURLLoaderMockFactory()->ServeAsynchronousRequests();
@@ -63,7 +64,8 @@ TEST_F(FontResourceTest,
   ResourceRequest request2(url);
   request2.SetCacheMode(mojom::FetchCacheMode::kValidateCache);
   FetchParameters fetch_params2(request2);
-  Resource* resource2 = FontResource::Fetch(fetch_params2, fetcher, nullptr);
+  Resource* resource2 =
+      fetcher->RequestResource(fetch_params2, FontResource::Factory());
   ASSERT_TRUE(resource2);
   EXPECT_EQ(resource1, resource2);
   EXPECT_TRUE(resource2->IsCacheValidator());
@@ -73,7 +75,8 @@ TEST_F(FontResourceTest,
   ResourceRequest request3(url);
   request3.SetCacheMode(mojom::FetchCacheMode::kValidateCache);
   FetchParameters fetch_params3(request3);
-  Resource* resource3 = FontResource::Fetch(fetch_params3, fetcher, nullptr);
+  Resource* resource3 =
+      fetcher->RequestResource(fetch_params3, FontResource::Factory());
   ASSERT_TRUE(resource3);
   EXPECT_EQ(resource2, resource3);
   EXPECT_TRUE(resource3->IsCacheValidator());
@@ -106,7 +109,8 @@ TEST_F(FontResourceTest, CacheAwareFontLoading) {
 
   FetchParameters fetch_params{ResourceRequest(url)};
   fetch_params.SetCacheAwareLoadingEnabled(kIsCacheAwareLoadingEnabled);
-  FontResource* resource = FontResource::Fetch(fetch_params, fetcher, nullptr);
+  FontResource* resource = ToFontResource(
+      fetcher->RequestResource(fetch_params, FontResource::Factory()));
   ASSERT_TRUE(resource);
 
   Persistent<MockFontResourceClient> client =

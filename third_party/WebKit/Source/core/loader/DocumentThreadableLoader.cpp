@@ -1202,12 +1202,12 @@ void DocumentThreadableLoader::LoadRequestAsync(
   ResourceFetcher* fetcher = loading_context_->GetResourceFetcher();
   if (request.GetRequestContext() == WebURLRequest::kRequestContextVideo ||
       request.GetRequestContext() == WebURLRequest::kRequestContextAudio) {
-    RawResource::FetchMedia(new_params, fetcher, this);
+    Fetch(new_params, fetcher, RawResource::Factory(Resource::kMedia));
   } else if (request.GetRequestContext() ==
              WebURLRequest::kRequestContextManifest) {
-    RawResource::FetchManifest(new_params, fetcher, this);
+    Fetch(new_params, fetcher, RawResource::Factory(Resource::kManifest));
   } else {
-    RawResource::Fetch(new_params, fetcher, this);
+    Fetch(new_params, fetcher, RawResource::Factory(Resource::kRaw));
   }
   if (GetResource())
     checker_.WillAddClient();
@@ -1247,8 +1247,9 @@ void DocumentThreadableLoader::LoadRequestSync(
   if (request.GetFetchRequestMode() ==
       network::mojom::FetchRequestMode::kNoCORS)
     fetch_params.SetOriginRestriction(FetchParameters::kNoOriginRestriction);
-  Resource* resource = RawResource::FetchSynchronously(
-      fetch_params, loading_context_->GetResourceFetcher());
+  fetch_params.MakeSynchronous();
+  Resource* resource = loading_context_->GetResourceFetcher()->RequestResource(
+      fetch_params, RawResource::Factory());
   ResourceResponse response =
       resource ? resource->GetResponse() : ResourceResponse();
   unsigned long identifier = resource

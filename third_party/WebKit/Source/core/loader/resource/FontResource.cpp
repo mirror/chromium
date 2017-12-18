@@ -75,16 +75,6 @@ static void RecordPackageFormatHistogram(FontPackageFormat format) {
   package_format_histogram.Count(format);
 }
 
-FontResource* FontResource::Fetch(FetchParameters& params,
-                                  ResourceFetcher* fetcher,
-                                  ResourceClient* client) {
-  DCHECK_EQ(params.GetResourceRequest().GetFrameType(),
-            network::mojom::RequestContextFrameType::kNone);
-  params.SetRequestContext(WebURLRequest::kRequestContextFont);
-  return ToFontResource(
-      fetcher->RequestResource(params, FontResourceFactory(), client));
-}
-
 FontResource::FontResource(const ResourceRequest& resource_request,
                            const ResourceLoaderOptions& options)
     : Resource(resource_request, kFont, options),

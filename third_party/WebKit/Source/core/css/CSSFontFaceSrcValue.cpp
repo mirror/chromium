@@ -103,7 +103,8 @@ FontResource* CSSFontFaceSrcValue::Fetch(ExecutionContext* context) const {
     if (context->IsWorkerGlobalScope()) {
       ToWorkerGlobalScope(context)->EnsureFetcher();
     }
-    fetched_ = FontResource::Fetch(params, context->Fetcher(), nullptr);
+    fetched_ = ToFontResource(
+        context->Fetcher()->RequestResource(params, FontResource::Factory()));
   } else {
     // FIXME: CSSFontFaceSrcValue::Fetch is invoked when @font-face rule
     // is processed by StyleResolver / StyleEngine.

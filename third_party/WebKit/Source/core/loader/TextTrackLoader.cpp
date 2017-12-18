@@ -146,9 +146,8 @@ bool TextTrackLoader::Load(const KURL& url,
     CorsPolicyPreventedLoad(GetDocument().GetSecurityOrigin(), url);
     return false;
   }
-
-  ResourceFetcher* fetcher = GetDocument().Fetcher();
-  return RawResource::FetchTextTrack(cue_fetch_params, fetcher, this);
+  return Fetch(cue_fetch_params, GetDocument().Fetcher(),
+               RawResource::Factory(Resource::kTextTrack));
 }
 
 void TextTrackLoader::NewCuesParsed() {

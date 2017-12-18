@@ -36,32 +36,9 @@ namespace blink {
 class WebDataConsumerHandle;
 class FetchParameters;
 class RawResourceClient;
-class ResourceFetcher;
-class SubstituteData;
 
 class PLATFORM_EXPORT RawResource final : public Resource {
  public:
-  static RawResource* FetchSynchronously(FetchParameters&, ResourceFetcher*);
-  static RawResource* Fetch(FetchParameters&,
-                            ResourceFetcher*,
-                            RawResourceClient*);
-  static RawResource* FetchMainResource(FetchParameters&,
-                                        ResourceFetcher*,
-                                        RawResourceClient*,
-                                        const SubstituteData&);
-  static RawResource* FetchImport(FetchParameters&,
-                                  ResourceFetcher*,
-                                  RawResourceClient*);
-  static RawResource* FetchMedia(FetchParameters&,
-                                 ResourceFetcher*,
-                                 RawResourceClient*);
-  static RawResource* FetchTextTrack(FetchParameters&,
-                                     ResourceFetcher*,
-                                     RawResourceClient*);
-  static RawResource* FetchManifest(FetchParameters&,
-                                    ResourceFetcher*,
-                                    RawResourceClient*);
-
   // Exposed for testing
   static RawResource* CreateForTest(ResourceRequest request, Type type) {
     ResourceLoaderOptions options;
@@ -80,10 +57,9 @@ class PLATFORM_EXPORT RawResource final : public Resource {
   bool WillFollowRedirect(const ResourceRequest&,
                           const ResourceResponse&) override;
 
- private:
-  class RawResourceFactory : public NonTextResourceFactory {
+  class Factory : public NonTextResourceFactory {
    public:
-    explicit RawResourceFactory(Resource::Type type)
+    explicit Factory(Resource::Type type = kRaw)
         : NonTextResourceFactory(type) {}
 
     Resource* Create(const ResourceRequest& request,
@@ -92,6 +68,7 @@ class PLATFORM_EXPORT RawResource final : public Resource {
     }
   };
 
+ private:
   RawResource(const ResourceRequest&, Type, const ResourceLoaderOptions&);
 
   // Resource implementation

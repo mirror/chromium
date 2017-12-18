@@ -36,16 +36,11 @@
 
 namespace blink {
 
-class FetchParameters;
-class ResourceFetcher;
 class FontCustomPlatformData;
 class FontResourceClient;
 
 class CORE_EXPORT FontResource final : public Resource {
  public:
-  static FontResource* Fetch(FetchParameters&,
-                             ResourceFetcher*,
-                             ResourceClient*);
   ~FontResource() override;
 
   void DidAddClient(ResourceClient*) override;
@@ -69,16 +64,17 @@ class CORE_EXPORT FontResource final : public Resource {
   void OnMemoryDump(WebMemoryDumpLevelOfDetail,
                     WebProcessMemoryDump*) const override;
 
- private:
-  class FontResourceFactory : public NonTextResourceFactory {
+  class Factory : public NonTextResourceFactory {
    public:
-    FontResourceFactory() : NonTextResourceFactory(Resource::kFont) {}
+    Factory() : NonTextResourceFactory(Resource::kFont) {}
 
     Resource* Create(const ResourceRequest& request,
                      const ResourceLoaderOptions& options) const override {
       return new FontResource(request, options);
     }
   };
+
+ private:
   FontResource(const ResourceRequest&, const ResourceLoaderOptions&);
 
   void NotifyFinished() override;
