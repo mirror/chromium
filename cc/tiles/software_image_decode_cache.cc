@@ -925,6 +925,16 @@ SoftwareImageDecodeCache::CacheEntry::CacheEntry(
 
 SoftwareImageDecodeCache::CacheEntry::~CacheEntry() {
   DCHECK(!is_locked);
+
+  // We create temporary CacheEntries as a party of decoding. However, we move
+  // the memory to cache entries that actually live in the cache. Destroying the
+  // temporaries should not cause any of the stats to be recorded. Specifically,
+  // if allowed to report, they would report every single temporary entry as
+  // wasted, which is misleading. As a fix, don't report on a cache entry that
+  // doesn't have any memory.
+  if (!memory)
+    return;
+
   // lock_count | used  | last lock failed | result state
   // ===========+=======+==================+==================
   //  1         | false | false            | WASTED
