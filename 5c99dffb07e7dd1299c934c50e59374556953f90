@@ -1,0 +1,141 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9c66fc08_24f6095b",
+        "filename": "third_party/WebKit/LayoutTests/media/controls/modern/tap-to-hide-controls.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-12-18T13:48:50Z",
+      "side": 1,
+      "message": "Maybe worth documenting where these numbers are coming from?",
+      "revId": "5c99dffb07e7dd1299c934c50e59374556953f90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3ec0880_862c5072",
+        "filename": "third_party/WebKit/LayoutTests/media/controls/modern/tap-to-hide-controls.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-12-18T13:48:50Z",
+      "side": 1,
+      "message": "`t.step_func`?",
+      "range": {
+        "startLine": 23,
+        "startChar": 17,
+        "endLine": 23,
+        "endChar": 20
+      },
+      "revId": "5c99dffb07e7dd1299c934c50e59374556953f90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcb099c2_0b801e2f",
+        "filename": "third_party/WebKit/LayoutTests/media/controls/modern/tap-to-hide-controls.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-12-18T13:48:50Z",
+      "side": 1,
+      "message": "I would say that we might want to test what happens if you tap between 300ms and 400ms as currently, it would do probably nothing but I think ideally, we should have one value from which the behaviour changes instead of having a \"no action\" zone.",
+      "revId": "5c99dffb07e7dd1299c934c50e59374556953f90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70669cd2_12c24378",
+        "filename": "third_party/WebKit/LayoutTests/media/controls/modern/tap-to-hide-controls.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-12-18T13:48:50Z",
+      "side": 1,
+      "message": "`t.step_func`?",
+      "range": {
+        "startLine": 29,
+        "startChar": 17,
+        "endLine": 29,
+        "endChar": 19
+      },
+      "revId": "5c99dffb07e7dd1299c934c50e59374556953f90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bf6f01a_0188f55c",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-12-18T13:48:50Z",
+      "side": 1,
+      "message": "We use 300ms for double tap detection, why 400ms and not 300ms? Would 301ms work if the goal is just to be sure that we are above the 300ms double tap timing?",
+      "range": {
+        "startLine": 109,
+        "startChar": 73,
+        "endLine": 109,
+        "endChar": 76
+      },
+      "revId": "5c99dffb07e7dd1299c934c50e59374556953f90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9093c15a_268fd844",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1012,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-12-18T13:48:50Z",
+      "side": 1,
+      "message": "Mentioned that in a couple of other places but it\u0027s not clear to me why this timer is needed especially given that we know that the calls will be 300ms apart.",
+      "revId": "5c99dffb07e7dd1299c934c50e59374556953f90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "659b94e0_ffd7ca18",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1054,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-12-18T13:48:50Z",
+      "side": 1,
+      "message": "Excited that we will be able to remove this code :)",
+      "revId": "5c99dffb07e7dd1299c934c50e59374556953f90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
