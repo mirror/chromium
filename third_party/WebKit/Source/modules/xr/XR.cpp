@@ -10,10 +10,10 @@
 #include "core/frame/LocalFrame.h"
 #include "modules/EventTargetModules.h"
 #include "modules/xr/XRDevice.h"
-#include "modules/xr/XRDeviceEvent.h"
 #include "platform/feature_policy/FeaturePolicy.h"
 #include "public/platform/InterfaceProvider.h"
 #include "services/service_manager/public/cpp/interface_provider.h"
+#include "third_party/WebKit/Source/core/dom/events/Event.h"
 
 namespace blink {
 
@@ -121,8 +121,7 @@ void XR::OnDisplayConnected(
 
   devices_.push_back(xr_device);
 
-  DispatchEvent(
-      XRDeviceEvent::Create(EventTypeNames::deviceconnect, xr_device));
+  DispatchEvent(blink::Event::Create(EventTypeNames::devicechange));
 }
 
 // Called when the XRService has called OnDevicesConnected for all active

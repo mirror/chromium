@@ -8905,10 +8905,6 @@ interface XRDevice : EventTarget
     method constructor
     method requestSession
     method supportsSession
-interface XRDeviceEvent : Event
-    attribute @@toStringTag
-    getter device
-    method constructor
 interface XRDevicePose
     attribute @@toStringTag
     getter poseModelMatrix
