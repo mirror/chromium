@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e9647070_d529c66c",
+        "filename": "testing/buildbot/waterfalls.pyl",
+        "patchSetId": 4
+      },
+      "lineNbr": 577,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-12-18T18:43:20Z",
+      "side": 1,
+      "message": "It looks like \u0027all\u0027 is not compile-clean on ChromeOS yet; how do you feel about putting \n\u0027gn_all\u0027 here for now?",
+      "range": {
+        "startLine": 577,
+        "startChar": 10,
+        "endLine": 577,
+        "endChar": 15
+      },
+      "revId": "55998b32264c77d4506e1a159e2f4f45bc21329d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
