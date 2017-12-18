@@ -91,8 +91,7 @@ class RenderWidgetHostViewChildFrameTest : public testing::Test {
 
 // ImageTransportFactory doesn't exist on Android.
 #if !defined(OS_ANDROID)
-    ImageTransportFactory::SetFactory(
-        std::make_unique<NoTransportImageTransportFactory>());
+    ImageTransportFactory::SetFactory(CreateTestImageTransportFactory());
 #endif
 
     MockRenderProcessHost* process_host =
