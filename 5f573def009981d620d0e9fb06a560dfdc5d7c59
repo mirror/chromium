@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8313015f_01fc2421",
+        "filename": "content/browser/appcache/appcache_url_loader_job.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-12-18T15:10:01Z",
+      "side": 1,
+      "message": "Add a TODO to implement this if AppCache starts using the AppCacheURLLoader before the Network Service has shipped.",
+      "revId": "5f573def009981d620d0e9fb06a560dfdc5d7c59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c45d5c6_3d88a636",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1159,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-12-18T15:10:01Z",
+      "side": 1,
+      "message": "nit: s/need to to/need to",
+      "revId": "5f573def009981d620d0e9fb06a560dfdc5d7c59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e948e857_ec3b21a8",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1164,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-12-18T15:10:01Z",
+      "side": 1,
+      "message": "nit: s/NavigationURLLoader/NavigationURLLoaderImpl.\n\nI think it would be easier to understand if you split according to whether MojoNavigationResponse is enabled or not.",
+      "revId": "5f573def009981d620d0e9fb06a560dfdc5d7c59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2ef3894_c6bb92b2",
+        "filename": "content/browser/loader/mojo_async_resource_handler_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-12-18T15:10:01Z",
+      "side": 1,
+      "message": "Could you add a test here for defer_on_response_started true?",
+      "revId": "5f573def009981d620d0e9fb06a560dfdc5d7c59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d4e8191_84213947",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-12-18T15:10:01Z",
+      "side": 1,
+      "message": "Could you add a TODO to implement this for navigation requests if the ServiceWorker service is enabled before the Network Service?",
+      "revId": "5f573def009981d620d0e9fb06a560dfdc5d7c59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f15422f_68b7daae",
+        "filename": "content/public/common/url_loader.mojom",
+        "patchSetId": 13
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-12-18T15:10:01Z",
+      "side": 1,
+      "message": "I would rephrase this as\nNote: this can only be used if the associated request has |*name of configuration option*| set to true. By default, it is false and the request is not paused.",
+      "revId": "5f573def009981d620d0e9fb06a560dfdc5d7c59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80fe74ad_f9d4d1bf",
+        "filename": "content/public/common/url_loader.mojom",
+        "patchSetId": 13
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-12-18T15:10:01Z",
+      "side": 1,
+      "message": "We can remove this before. What we need is for InterceptingResourceHandler to be removed. This will happen when downloads and blob URLs switch to using their own URLLoader (and normally this should ship before the network service).",
+      "revId": "5f573def009981d620d0e9fb06a560dfdc5d7c59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
