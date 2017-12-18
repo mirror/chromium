@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "672b93dd_1ff6b37c",
+        "filename": "media/filters/chunk_demuxer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-12-18T21:22:59Z",
+      "side": 1,
+      "message": "Note: CDS::UpdateAudioConfig can occur many times during the lifetime of a particular stream.\nIf logged here, it happens on every initialization segment in the associated bytestream, even if there is no config change actually included in that init segment, and does not mean that such a config is ever even used during playback (it\u0027s in the buffering, not the demux-\u003erendering path). This means the resulting histogram can be difficult to correllate to actual playbacks (or playback duration using that specific audio config). At minimum, a note to this effect in the histogram\u0027s description text seems appropriate.",
+      "revId": "32c1a36b202d031309092fe521de8feaf36ecc1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
