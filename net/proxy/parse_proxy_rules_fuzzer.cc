@@ -6,11 +6,12 @@
 #include <stdint.h>
 
 #include "net/proxy/proxy_config.h"
+#include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
 
 // Entry point for LibFuzzer.
 extern "C" int LLVMFuzzerTestOneInput(const uint8_t* data, size_t size) {
   net::ProxyConfig::ProxyRules rules;
   std::string input(data, data + size);
-  rules.ParseFromString(input);
+  rules.ParseFromString(input, PARTIAL_TRAFFIC_ANNOTATION_FOR_TESTS);
   return 0;
 }

@@ -17,6 +17,7 @@
 #include "components/proxy_config/proxy_config_pref_names.h"
 #include "net/proxy/proxy_info.h"
 #include "net/proxy/proxy_list.h"
+#include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "url/gurl.h"
@@ -130,7 +131,8 @@ TEST_F(PrefProxyConfigTrackerImplTest, DynamicPrefOverrides) {
             actual_config.proxy_rules().type);
   EXPECT_EQ(actual_config.proxy_rules().single_proxies.Get(),
             net::ProxyServer::FromURI("http://example.com:3128",
-                                      net::ProxyServer::SCHEME_HTTP));
+                                      net::ProxyServer::SCHEME_HTTP,
+                                      PARTIAL_TRAFFIC_ANNOTATION_FOR_TESTS));
 
   pref_service_->SetManagedPref(proxy_config::prefs::kProxy,
                                 ProxyConfigDictionary::CreateAutoDetect());
@@ -178,7 +180,8 @@ TEST_F(PrefProxyConfigTrackerImplTest, Observers) {
 
   // Since there are pref overrides, delegate changes should be ignored.
   net::ProxyConfig config3;
-  config3.proxy_rules().ParseFromString("http=config3:80");
+  config3.proxy_rules().ParseFromString("http=config3:80",
+                                        PARTIAL_TRAFFIC_ANNOTATION_FOR_TESTS);
   EXPECT_CALL(observer, OnProxyConfigChanged(_, _)).Times(0);
   fixed_config_.set_auto_detect(true);
   delegate_service_->SetProxyConfig(config3, CONFIG_VALID);
@@ -194,7 +197,8 @@ TEST_F(PrefProxyConfigTrackerImplTest, Observers) {
 
   // Delegate service notifications should show up again.
   net::ProxyConfig config4;
-  config4.proxy_rules().ParseFromString("socks:config4");
+  config4.proxy_rules().ParseFromString("socks:config4",
+                                        PARTIAL_TRAFFIC_ANNOTATION_FOR_TESTS);
   EXPECT_CALL(observer, OnProxyConfigChanged(ProxyConfigMatches(config4),
                                              CONFIG_VALID)).Times(1);
   delegate_service_->SetProxyConfig(config4, CONFIG_VALID);

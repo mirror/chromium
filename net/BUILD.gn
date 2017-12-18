@@ -5827,6 +5827,7 @@ fuzzer_test("net_parse_proxy_list_pac_fuzzer") {
   deps = [
     ":net_fuzzer_test_support",
     "//net",
+    "//net:test_support",
   ]
 }
 
@@ -5837,6 +5838,7 @@ fuzzer_test("net_parse_proxy_list_fuzzer") {
   deps = [
     ":net_fuzzer_test_support",
     "//net",
+    "//net:test_support",
   ]
 }
 
@@ -5857,6 +5859,7 @@ fuzzer_test("net_parse_proxy_rules_fuzzer") {
   deps = [
     ":net_fuzzer_test_support",
     "//net",
+    "//net:test_support",
   ]
   dict = "data/fuzzer_dictionaries/net_parse_proxy_bypass_rules_fuzzer.dict"
 }

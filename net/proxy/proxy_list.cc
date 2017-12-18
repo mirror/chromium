@@ -25,12 +25,15 @@ ProxyList::ProxyList(const ProxyList& other) = default;
 
 ProxyList::~ProxyList() = default;
 
-void ProxyList::Set(const std::string& proxy_uri_list) {
+void ProxyList::Set(
+    const std::string& proxy_uri_list,
+    const PartialNetworkTrafficAnnotationTag& traffic_annotation) {
   proxies_.clear();
   base::StringTokenizer str_tok(proxy_uri_list, ";");
   while (str_tok.GetNext()) {
-    ProxyServer uri = ProxyServer::FromURI(
-        str_tok.token_begin(), str_tok.token_end(), ProxyServer::SCHEME_HTTP);
+    ProxyServer uri =
+        ProxyServer::FromURI(str_tok.token_begin(), str_tok.token_end(),
+                             ProxyServer::SCHEME_HTTP, traffic_annotation);
     // Silently discard malformed inputs.
     if (uri.is_valid())
       proxies_.push_back(uri);
@@ -116,12 +119,14 @@ const std::vector<ProxyServer>& ProxyList::GetAll() const {
   return proxies_;
 }
 
-void ProxyList::SetFromPacString(const std::string& pac_string) {
+void ProxyList::SetFromPacString(
+    const std::string& pac_string,
+    const PartialNetworkTrafficAnnotationTag& traffic_annotation) {
   base::StringTokenizer entry_tok(pac_string, ";");
   proxies_.clear();
   while (entry_tok.GetNext()) {
     ProxyServer uri = ProxyServer::FromPacString(
-        entry_tok.token_begin(), entry_tok.token_end());
+        entry_tok.token_begin(), entry_tok.token_end(), traffic_annotation);
     // Silently discard malformed inputs.
     if (uri.is_valid())
       proxies_.push_back(uri);
