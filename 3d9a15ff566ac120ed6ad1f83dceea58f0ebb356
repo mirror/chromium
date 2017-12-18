@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4e942ad9_694025ff",
+        "filename": "content/public/browser/navigation_handle.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-12-18T16:16:57Z",
+      "side": 1,
+      "message": "content/ public API forbids using the const qualifier for methods. Please remove the const qualifier.",
+      "revId": "3d9a15ff566ac120ed6ad1f83dceea58f0ebb356",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2058e31e_eae70f5f",
+        "filename": "content/public/browser/resource_dispatcher_host_delegate.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-12-18T16:16:57Z",
+      "side": 1,
+      "message": "content/ punlic API forbids using the const qualifier in methods. Please remove the const qualifier.",
+      "revId": "3d9a15ff566ac120ed6ad1f83dceea58f0ebb356",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
