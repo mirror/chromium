@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3df51e3d_dde342be",
+        "filename": "media/base/video_types.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-12-18T20:08:21Z",
+      "side": 1,
+      "message": "Oops, done.",
+      "parentUuid": "49926b96_74287b62",
+      "range": {
+        "startLine": 28,
+        "startChar": 36,
+        "endLine": 28,
+        "endChar": 39
+      },
+      "revId": "ad5a4f49befa69590d6fa6bb58760ed0b627c33e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9c00a169_c6a3e16e",
         "filename": "media/base/video_types.h",
         "patchSetId": 7
@@ -71,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "7cc1751a_e362ce00",
+        "filename": "media/base/video_types.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-12-18T20:08:21Z",
+      "side": 1,
+      "message": "Hmm in so far as YV12 actually means I420 (YU12, if you want) e.g. [1,2],\nI guess YV12A means... I420A? I has too many characters, but so does\nYU12A.  I\u0027d say let\u0027s do it in a separate follow up CL where s/YV12/I420/.\n\n[1] https://cs.chromium.org/chromium/src/media/ffmpeg/ffmpeg_common.cc?q\u003dPIXEL_FORMAT_YV12A\u0026l\u003d704\u0026dr\u003dC\n[2] https://cs.chromium.org/chromium/src/media/formats/webm/webm_video_client.cc?type\u003dcs\u0026q\u003dPIXEL_FORMAT_YV12A\u0026l\u003d81",
+      "parentUuid": "9c00a169_c6a3e16e",
+      "range": {
+        "startLine": 29,
+        "startChar": 59,
+        "endLine": 29,
+        "endChar": 61
+      },
+      "revId": "ad5a4f49befa69590d6fa6bb58760ed0b627c33e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "52397b85_8e07fb3c",
         "filename": "media/ffmpeg/ffmpeg_common.cc",
         "patchSetId": 7
@@ -82,6 +130,30 @@
       "writtenOn": "2017-12-18T19:53:25Z",
       "side": 1,
       "message": "Separate CL?",
+      "range": {
+        "startLine": 696,
+        "startChar": 26,
+        "endLine": 696,
+        "endChar": 43
+      },
+      "revId": "ad5a4f49befa69590d6fa6bb58760ed0b627c33e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22a7352f_bae17247",
+        "filename": "media/ffmpeg/ffmpeg_common.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 696,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-12-18T20:08:21Z",
+      "side": 1,
+      "message": "Ah, yes :-)\nI wanted to leave this CL for a single use, so it might be easy(er)\nto trace back.",
+      "parentUuid": "52397b85_8e07fb3c",
       "range": {
         "startLine": 696,
         "startChar": 26,
@@ -114,6 +186,30 @@
       "revId": "ad5a4f49befa69590d6fa6bb58760ed0b627c33e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "689af08f_b4c0ca46",
+        "filename": "media/ffmpeg/ffmpeg_common.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 739,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-12-18T20:08:21Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "14c5f41b_bcd7c71b",
+      "range": {
+        "startLine": 739,
+        "startChar": 9,
+        "endLine": 739,
+        "endChar": 26
+      },
+      "revId": "ad5a4f49befa69590d6fa6bb58760ed0b627c33e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
