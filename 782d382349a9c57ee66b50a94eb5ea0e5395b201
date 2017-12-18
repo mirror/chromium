@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c41bd106_0d51fe5a",
+        "filename": "components/viz/service/display/surface_aggregator_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 695,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2017-12-18T17:08:07Z",
+      "side": 0,
+      "message": "This is an important check and we shouldn\u0027t get rid of it. We need to make sure AggregatedDamageResult::OnAggregatedDamage is only called once with primary_child_local_surface_id and not fallback_child_local_surface_id. The preferred way to do this is turning AggregatedDamageResult::OnAggregatedDamage into a mock method. If you\u0027re unfamiliar with gmock please take a look at this doc.\nhttps://github.com/google/googletest/blob/master/googlemock/docs/ForDummies.md\nYou can also find several examples of mock methods in viz tests. For example:\nhttps://cs.chromium.org/chromium/src/components/viz/host/host_frame_sink_manager_unittest.cc?rcl\u003d191cb44b4b52c3e014923b58e3b5b6c7c138faea\u0026l\u003d87\nhttps://cs.chromium.org/chromium/src/components/viz/host/host_frame_sink_manager_unittest.cc?rcl\u003d191cb44b4b52c3e014923b58e3b5b6c7c138faea\u0026l\u003d432",
+      "revId": "782d382349a9c57ee66b50a94eb5ea0e5395b201",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
