@@ -160,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "3f40dcbe_8b826fcc",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerInstalledScriptsManager.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-12-18T00:20:00Z",
+      "side": 1,
+      "message": "Done and Thanks!",
+      "parentUuid": "0d5f38c6_c049891b",
+      "revId": "dd1c9daab1ddb23f818e74b2aff76566e22d76d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8aba0d93_d230f85b",
         "filename": "third_party/WebKit/Source/modules/serviceworkers/ThreadSafeScriptContainer.h",
         "patchSetId": 11

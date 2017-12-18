@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0463a383_4bf3d829",
+        "filename": "third_party/WebKit/Source/modules/exported/WebEmbeddedWorkerImpl.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-12-18T00:20:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "44eced4f_0ae204f6",
+      "revId": "4a2ce6857de0941453a2c16b1e1c1028906f5f16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a1608ce8_415c7a78",
         "filename": "third_party/WebKit/Source/modules/exported/WebEmbeddedWorkerImpl.h",
         "patchSetId": 14
@@ -33,6 +51,24 @@
       "revId": "4a2ce6857de0941453a2c16b1e1c1028906f5f16",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72f5e08d_a8ceec16",
+        "filename": "third_party/WebKit/Source/modules/exported/WebEmbeddedWorkerImpl.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-12-18T00:20:00Z",
+      "side": 1,
+      "message": "Done and Thanks!",
+      "parentUuid": "a1608ce8_415c7a78",
+      "revId": "4a2ce6857de0941453a2c16b1e1c1028906f5f16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "fad81364_21512c56",
+        "filename": "third_party/WebKit/public/web/WebEmbeddedWorker.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-12-18T00:20:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "321765bd_681da0e4",
+      "revId": "4a2ce6857de0941453a2c16b1e1c1028906f5f16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "65bc8e9e_c8ed2388",
         "filename": "third_party/WebKit/public/web/WebEmbeddedWorker.h",
         "patchSetId": 14
@@ -67,6 +121,24 @@
       "revId": "4a2ce6857de0941453a2c16b1e1c1028906f5f16",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c27d047e_9553111e",
+        "filename": "third_party/WebKit/public/web/WebEmbeddedWorker.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-12-18T00:20:00Z",
+      "side": 1,
+      "message": "Done and Thanks! Changed to use the later one option which I think is clearer;-)",
+      "parentUuid": "65bc8e9e_c8ed2388",
+      "revId": "4a2ce6857de0941453a2c16b1e1c1028906f5f16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
