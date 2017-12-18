@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0fea49ca_7e19531d",
+        "filename": "chrome/browser/ui/views/autofill/save_card_bubble_views.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-18T17:04:28Z",
+      "side": 1,
+      "message": "still need these casts?",
+      "range": {
+        "startLine": 102,
+        "startChar": 25,
+        "endLine": 102,
+        "endChar": 42
+      },
+      "revId": "e609bd0e336caf4b956aaf6155b93d12620ff0cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
