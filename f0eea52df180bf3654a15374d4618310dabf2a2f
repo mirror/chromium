@@ -22,6 +22,30 @@
       "revId": "f0eea52df180bf3654a15374d4618310dabf2a2f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddf5034d_1561e3f2",
+        "filename": "base/metrics/statistics_recorder.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1248153
+      },
+      "writtenOn": "2017-12-18T23:10:11Z",
+      "side": 1,
+      "message": "I\u0027m not sure what this DCHECK was supposed to check.\n\nThe error message associated to the DCHECK was misleading. It was reporting a \"hash collision\" when it was dealing with an ordered container which doesn\u0027t involve any hash.\n\nWith this refactoring, we now use a hash-based container, but I still don\u0027t see how a hash collision would be a problem. Hash-based containers such as std::unordered_map do handle hash collisions correctly.",
+      "parentUuid": "8a8dd01b_1b97c2d7",
+      "range": {
+        "startLine": 135,
+        "startChar": 37,
+        "endLine": 135,
+        "endChar": 0
+      },
+      "revId": "f0eea52df180bf3654a15374d4618310dabf2a2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
