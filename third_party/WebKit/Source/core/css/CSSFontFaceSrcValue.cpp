@@ -76,7 +76,7 @@ String CSSFontFaceSrcValue::CustomCSSText() const {
 }
 
 bool CSSFontFaceSrcValue::HasFailedOrCanceledSubresources() const {
-  return fetched_ && fetched_->GetResource()->LoadFailedOrCanceled();
+  return fetched_ && fetched_->LoadFailedOrCanceled();
 }
 
 FontResource* CSSFontFaceSrcValue::Fetch(ExecutionContext* context) const {
@@ -103,16 +103,13 @@ FontResource* CSSFontFaceSrcValue::Fetch(ExecutionContext* context) const {
     if (context->IsWorkerGlobalScope()) {
       ToWorkerGlobalScope(context)->EnsureFetcher();
     }
-    FontResource* resource = FontResource::Fetch(params, context->Fetcher());
-    if (!resource)
-      return nullptr;
-    fetched_ = FontResourceHelper::Create(resource);
+    fetched_ = FontResource::Fetch(params, context->Fetcher(), nullptr);
   } else {
     // FIXME: CSSFontFaceSrcValue::Fetch is invoked when @font-face rule
     // is processed by StyleResolver / StyleEngine.
     RestoreCachedResourceIfNeeded(context);
   }
-  return ToFontResource(fetched_->GetResource());
+  return fetched_;
 }
 
 void CSSFontFaceSrcValue::RestoreCachedResourceIfNeeded(
@@ -123,10 +120,10 @@ void CSSFontFaceSrcValue::RestoreCachedResourceIfNeeded(
 
   const String resource_url = context->CompleteURL(absolute_resource_);
   DCHECK_EQ(should_check_content_security_policy_,
-            fetched_->GetResource()->Options().content_security_policy_option);
+            fetched_->Options().content_security_policy_option);
   context->Fetcher()->EmulateLoadStartedForInspector(
-      fetched_->GetResource(), KURL(resource_url),
-      WebURLRequest::kRequestContextFont, FetchInitiatorTypeNames::css);
+      fetched_.Get(), KURL(resource_url), WebURLRequest::kRequestContextFont,
+      FetchInitiatorTypeNames::css);
 }
 
 bool CSSFontFaceSrcValue::Equals(const CSSFontFaceSrcValue& other) const {

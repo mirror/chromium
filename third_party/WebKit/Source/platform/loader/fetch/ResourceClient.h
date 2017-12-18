@@ -74,20 +74,27 @@ class PLATFORM_EXPORT ResourceClient : public GarbageCollectedMixin {
  protected:
   ResourceClient() {}
 
-  // TODO(japhet): Eventually, ResourceFetcher will hopefully be the only caller
-  // of SetResource(), at which point SetResource() can be private and
-  // ResourceFetcher will be the only friend. In the meantime, SetResource() is
-  // protected so that subclasses can use it as needed.
-  friend class ResourceFetcher;
+  void ClearResource() { SetResource(nullptr, nullptr); }
+
+ private:
   // TODO(japhet): There isn't a clean way for SVGResourceClients to determine
   // whether SVGElementProxy is holding a Resource that it should register with,
   // so SVGElementProxy handles it for those clients. SVGResourceClients should
   // have a better way to register themselves as clients. crbug.com/789198
   friend class SVGElementProxy;
+  // ResourceFetcher::RequestResource() is the primary case.
+  // CSSStyleSheetResource and ScriptResource both have CreateForTest() methods
+  //    that want to set up clients.
+  // CSSFontFaceSrcValue has a quasi-cache for fonts and short-circuits the
+  //    usual fetch process when it is triggered.
+  friend class CSSStyleSheetResource;
+  friend class CSSPreloaderResourceClient;
+  friend class MockFontResourceClient;
+  friend class RemoteFontFaceSource;
+  friend class ResourceFetcher;
+  friend class ScriptResource;
 
-  void ClearResource() { SetResource(nullptr); }
-
-  void SetResource(Resource* new_resource) {
+  void SetResource(Resource* new_resource, WebTaskRunner* task_runner) {
     if (new_resource == resource_)
       return;
 
@@ -97,10 +104,8 @@ class PLATFORM_EXPORT ResourceClient : public GarbageCollectedMixin {
       old_resource->RemoveClient(this);
     resource_ = new_resource;
     if (resource_)
-      resource_->AddClient(this);
+      resource_->AddClient(this, task_runner);
   }
-
- private:
   Member<Resource> resource_;
 };
 
