@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2015 The Chromium Authors. All rights reserved.
+     Use of this source code is governed by a BSD-style license that can be
+     found in the LICENSE file. -->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RadioGroup
+        android:id="@+id/download_location_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <android.support.v7.widget.AppCompatRadioButton
+            android:id="@+id/download_location_internal"
+            android:checked="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="Internal"
+            android:textColor="@color/default_text_color"
+            android:textSize="17sp" />
+        <android.support.v7.widget.AppCompatRadioButton
+            android:id="@+id/download_location_external"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="External"
+            android:textColor="@color/default_text_color"
+            android:textSize="17sp"
+            android:visibility="gone" />
+    </RadioGroup>
+
+</LinearLayout>

@@ -5,6 +5,7 @@
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <Preference
+        android:fragment="org.chromium.chrome.browser.preferences.download.DownloadLocationPreference"
         android:key="location_change"
         android:title="@string/download_location_title" />
 </PreferenceScreen>
