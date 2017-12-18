@@ -11,6 +11,11 @@
 #include "platform/wtf/HashFunctions.h"
 #include "platform/wtf/HashTraits.h"
 
+namespace WTF {
+template <typename P, typename Allocator, bool, bool>
+class ConstructTraits;
+}  // namespace WTF
+
 namespace blink {
 
 template <typename T>
@@ -249,8 +254,6 @@ class Member : public MemberBase<T, TracenessMemberConfiguration::kTraced> {
 
  protected:
   ALWAYS_INLINE void WriteBarrier(const T* value) const {
-// TODO(mlippautz): Replace with proper build flag.
-#if 0
     if (value) {
       // The following method for retrieving a page works as allocation of
       // mixins on large object pages is prohibited.
@@ -260,8 +263,10 @@ class Member : public MemberBase<T, TracenessMemberConfiguration::kTraced> {
         ThreadState::Current()->Heap().WriteBarrierInternal(page, value);
       }
     }
-#endif
   }
+
+  template <typename P, typename Allocator, bool, bool>
+  friend class WTF::ConstructTraits;
 };
 
 // A checked version of Member<>, verifying that only same-thread references
@@ -572,6 +577,27 @@ template <typename T>
 struct IsTraceable<blink::TraceWrapperMember<T>> {
   STATIC_ONLY(IsTraceable);
   static const bool value = true;
+};
+
+template <typename T, typename Allocator>
+class ConstructTraits<blink::Member<T>, Allocator, true, true>
+    : public ConstructTraitsBase<blink::Member<T>> {
+ public:
+  template <typename... Args>
+  static blink::Member<T>* ConstructElement(void* location, Args&&... args) {
+    blink::Member<T>* tmp =
+        new (NotNull, location) blink::Member<T>(std::forward<Args>(args)...);
+    tmp->WriteBarrier(tmp->raw_);
+    return tmp;
+  }
+
+  static void NewInitializedElements(blink::Member<T>* begin,
+                                     blink::Member<T>* end) {
+    while (begin != end) {
+      begin->WriteBarrier(begin->raw_);
+      begin++;
+    }
+  }
 };
 
 }  // namespace WTF

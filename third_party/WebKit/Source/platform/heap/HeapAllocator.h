@@ -11,6 +11,7 @@
 #include "platform/heap/TraceTraits.h"
 #include "platform/wtf/Allocator.h"
 #include "platform/wtf/Assertions.h"
+#include "platform/wtf/ConstructTraits.h"
 #include "platform/wtf/Deque.h"
 #include "platform/wtf/DoublyLinkedList.h"
 #include "platform/wtf/HashCountedSet.h"
@@ -226,6 +227,31 @@ class PLATFORM_EXPORT HeapAllocator {
 
   static void LeaveGCForbiddenScope() {
     ThreadState::Current()->LeaveGCForbiddenScope();
+  }
+
+  template <typename T, typename Traits>
+  static void NotifyNewObject(T* object) {
+    // The object may have been in-place constructed as part of a large object.
+    // It is not safe to retrieve the page from the object here.
+    if (ThreadState::Current()->IsIncrementalMarking()) {
+      DCHECK(ThreadState::Current()->CurrentVisitor());
+      HeapAllocator::template Trace<Visitor*, T, Traits>(
+          ThreadState::Current()->CurrentVisitor(), *object);
+    }
+  }
+
+  template <typename T, typename Traits>
+  static void NotifyNewObjects(T* begin, T* end) {
+    // The object may have been in-place constructed as part of a large object.
+    // It is not safe to retrieve the page from the object here.
+    if (ThreadState::Current()->IsIncrementalMarking()) {
+      DCHECK(ThreadState::Current()->CurrentVisitor());
+      while (begin != end) {
+        HeapAllocator::template Trace<Visitor*, T, Traits>(
+            ThreadState::Current()->CurrentVisitor(), *begin);
+        begin++;
+      }
+    }
   }
 
  private:
