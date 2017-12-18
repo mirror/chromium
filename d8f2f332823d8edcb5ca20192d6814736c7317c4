@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "d06c8137_3b59c91a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1002,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-18T22:43:48Z",
+      "side": 1,
+      "message": "nit: \"startup\" here makes me think cold-start. Let\u0027s be explicit about warm start.",
+      "range": {
+        "startLine": 1002,
+        "startChar": 27,
+        "endLine": 1002,
+        "endChar": 35
+      },
+      "revId": "d8f2f332823d8edcb5ca20192d6814736c7317c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6da424a9_df0750e7",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
         "patchSetId": 1
@@ -73,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "2dc541b5_8c2ea43a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1004,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-18T22:43:48Z",
+      "side": 1,
+      "message": "The NTP always opens at full-height now (since the search provider logo takes up quite a bit of space), so I think we should let it open at full-height on warm start even if there were previously tabs. Did we get (user or UX) feedback that we should only open at half height?",
+      "parentUuid": "cb4de3b4_478a5bca",
+      "range": {
+        "startLine": 1003,
+        "startChar": 24,
+        "endLine": 1004,
+        "endChar": 95
+      },
+      "revId": "d8f2f332823d8edcb5ca20192d6814736c7317c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a7f80626_c7947ef5",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
         "patchSetId": 1
@@ -108,6 +155,30 @@
       "side": 1,
       "message": "No, we end up in the scenario below instead, where we return false. We\u0027re never in overview mode on a cold-start.",
       "parentUuid": "a7f80626_c7947ef5",
+      "range": {
+        "startLine": 1011,
+        "startChar": 20,
+        "endLine": 1011,
+        "endChar": 31
+      },
+      "revId": "d8f2f332823d8edcb5ca20192d6814736c7317c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7e893468_234be6f8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1011,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-18T22:43:48Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "cd75003e_87c03205",
       "range": {
         "startLine": 1011,
         "startChar": 20,
