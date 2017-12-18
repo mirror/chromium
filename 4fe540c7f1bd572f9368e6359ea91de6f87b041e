@@ -1,0 +1,225 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dc11c8c7_0e01cfc2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-12-18T07:17:48Z",
+      "side": 1,
+      "message": "Can you have a test that leaks the node without this fix?\n\n(I thought in that case elementFromPoint() returns null, but sometimes it may leak?)",
+      "revId": "4fe540c7f1bd572f9368e6359ea91de6f87b041e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8093985a_02fceba0",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/shadow-dom/DocumentOrShadowRoot-prototype-elementFromPoint.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-12-18T07:17:48Z",
+      "side": 1,
+      "message": "Isn\u0027t this |#container|, not |container|? \n\n(It seems the original had the bug, but shouldn\u0027t affect the result, though)",
+      "revId": "4fe540c7f1bd572f9368e6359ea91de6f87b041e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0dbe67ca_efd2fec0",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/shadow-dom/DocumentOrShadowRoot-prototype-elementFromPoint.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-12-18T07:17:48Z",
+      "side": 1,
+      "message": "What\u0027s the expected return value for\n |document.elementFromPoint(...pointInElement(host))|\n?",
+      "revId": "4fe540c7f1bd572f9368e6359ea91de6f87b041e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19081e0e_40111e97",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/shadow-dom/DocumentOrShadowRoot-prototype-elementFromPoint.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-12-18T07:17:48Z",
+      "side": 1,
+      "message": "This test looks very similar to the test starting line 34.\nCould you merge these tests into one?\n(e.g. in one test, check both document.elementFromPoint and shadow.elementFromPoint)?\n\nI think also in each test it should make sense to have both document.elementFromPoint\nand shadow.elementFromPoint (or if there are 2 shadow roots, 2 shadow.elementFromPoint\u0027s)\nin one test rather than separating cases for Document and ShadowRoot to separate tests\nfor the same DOM structure / hit-test target.",
+      "revId": "4fe540c7f1bd572f9368e6359ea91de6f87b041e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "726d0b23_8bc0f350",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/shadow-dom/DocumentOrShadowRoot-prototype-elementFromPoint.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-12-18T07:17:48Z",
+      "side": 1,
+      "message": "Ditto, could you merge this test into the test starting at line 46.",
+      "revId": "4fe540c7f1bd572f9368e6359ea91de6f87b041e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7df19dfc_17a680b9",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/shadow-dom/DocumentOrShadowRoot-prototype-elementFromPoint.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-12-18T07:17:48Z",
+      "side": 1,
+      "message": "Ditto, could you merge this test into the test starting at line 59?",
+      "revId": "4fe540c7f1bd572f9368e6359ea91de6f87b041e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90b20f21_7dd06196",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/shadow-dom/DocumentOrShadowRoot-prototype-elementFromPoint.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-12-18T07:17:48Z",
+      "side": 1,
+      "message": "Could you add test cases that slot fallback contents is the real hit test node?",
+      "revId": "4fe540c7f1bd572f9368e6359ea91de6f87b041e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ba4ecd0_24cf3b20",
+        "filename": "third_party/WebKit/Source/core/dom/TreeScope.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-12-18T07:17:48Z",
+      "side": 1,
+      "message": "If |node| can be nullptr at this point, it will eventually return nullptr,\nthus how about adding a shortcut\nif (!node)\n  return nullptr;\nabove?\n(then, of course the DCHECK should not have |!node|)",
+      "revId": "4fe540c7f1bd572f9368e6359ea91de6f87b041e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c66ea10e_5388f27b",
+        "filename": "third_party/WebKit/Source/core/dom/TreeScope.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-12-18T07:17:48Z",
+      "side": 1,
+      "message": "I see, for some histroical reason the TreeRoot::Retarget() is not the true implementation\nof WHATWG DOM retargeting algorithm.\nYou can remove this comment.",
+      "revId": "4fe540c7f1bd572f9368e6359ea91de6f87b041e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "555ce229_901f3a12",
+        "filename": "third_party/WebKit/Source/core/dom/TreeScope.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-12-18T07:17:48Z",
+      "side": 1,
+      "message": "It looks you can write this loop without introducing a new variable |retargeted_node|.",
+      "revId": "4fe540c7f1bd572f9368e6359ea91de6f87b041e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3554ea00_537e1b5a",
+        "filename": "third_party/WebKit/Source/core/dom/TreeScope.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-12-18T07:17:48Z",
+      "side": 1,
+      "message": "To implement the algorithm as the spec is described, you need this, but\nin reality I think this condition is not needed.",
+      "revId": "4fe540c7f1bd572f9368e6359ea91de6f87b041e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51d7c841_444f7fe6",
+        "filename": "third_party/WebKit/Source/core/dom/TreeScope.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-12-18T07:17:48Z",
+      "side": 1,
+      "message": "When |node| is a shadow root here, can it be a result of the loop above (I guess not)?\n\nIf not, they you\u0027d try inserting this ShadowRoot -\u003e host conversion before the loop?",
+      "revId": "4fe540c7f1bd572f9368e6359ea91de6f87b041e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebdab49c_42af91f9",
+        "filename": "third_party/WebKit/Source/core/dom/TreeScope.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-12-18T07:17:48Z",
+      "side": 1,
+      "message": "Can this case really happen?\nIf so, could you have a test case for this?",
+      "revId": "4fe540c7f1bd572f9368e6359ea91de6f87b041e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
