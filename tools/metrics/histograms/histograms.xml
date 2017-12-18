@@ -9503,6 +9503,14 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="ChromeOS.GAIA.AuthenticatorContentWindowNull" enum="Boolean">
+  <owner>wjmaclean@chromium.org</owner>
+  <summary>
+    Whether the GAIA Authenticator unexpectedly encountered a null contentWindow
+    value while handling WebView's onContentLoad event.
+  </summary>
+</histogram>
+
 <histogram name="ChromeOS.GAIA.WebViewFlow" enum="BooleanGAIAWebViewFlow">
   <owner>achuith@chromium.org</owner>
   <summary>
