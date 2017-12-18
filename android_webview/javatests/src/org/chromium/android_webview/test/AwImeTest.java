@@ -150,6 +150,7 @@ public class AwImeTest {
     @SmallTest
     public void testImeDpadMovesFocusOutOfWebView() throws Throwable {
         loadContentEditableBody();
+        focusOnEditTextAndShowKeyboard();
         focusOnWebViewAndEnableEditing();
         waitForNonNullInputConnection();
 
@@ -174,6 +175,7 @@ public class AwImeTest {
     @SmallTest
     public void testDpadDispatchKeyEventMovesFocusOutOfWebView() throws Throwable {
         loadContentEditableBody();
+        focusOnEditTextAndShowKeyboard();
         focusOnWebViewAndEnableEditing();
         waitForNonNullInputConnection();
 
