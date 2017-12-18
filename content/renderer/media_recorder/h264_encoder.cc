@@ -7,6 +7,7 @@
 #include <string>
 
 #include "base/bind.h"
+#include "base/sys_info.h"
 #include "base/threading/thread.h"
 #include "base/trace_event/trace_event.h"
 #include "media/base/video_frame.h"
@@ -48,6 +49,11 @@ H264Encoder::~H264Encoder() {
                  base::Passed(&openh264_encoder_)));
 }
 
+bool H264Encoder::EncodeFrame(SSourcePicture* picture, SFrameBSInfo* info) {
+  TRACE_EVENT0("video", "H264Encoder::EncodeFrame");
+  return openh264_encoder_->EncodeFrame(picture, info) == cmResultSuccess;
+}
+
 void H264Encoder::EncodeOnEncodingTaskRunner(
     scoped_refptr<VideoFrame> frame,
     base::TimeTicks capture_timestamp) {
@@ -74,7 +80,7 @@ void H264Encoder::EncodeOnEncodingTaskRunner(
   picture.pData[2] = frame->visible_data(VideoFrame::kVPlane);
 
   SFrameBSInfo info = {};
-  if (openh264_encoder_->EncodeFrame(&picture, &info) != cmResultSuccess) {
+  if (!EncodeFrame(&picture, &info)) {
     NOTREACHED() << "OpenH264 encoding failed";
     return;
   }
@@ -109,6 +115,7 @@ void H264Encoder::EncodeOnEncodingTaskRunner(
 }
 
 void H264Encoder::ConfigureEncoderOnEncodingTaskRunner(const gfx::Size& size) {
+  TRACE_EVENT0("video", "H264Encoder::ConfigureEncoderOnEncodingTaskRunner");
   DCHECK(encoding_task_runner_->BelongsToCurrentThread());
   ISVCEncoder* temp_encoder = nullptr;
   if (WelsCreateSVCEncoder(&temp_encoder) != 0) {
@@ -118,14 +125,23 @@ void H264Encoder::ConfigureEncoderOnEncodingTaskRunner(const gfx::Size& size) {
   openh264_encoder_.reset(temp_encoder);
   configured_size_ = size;
 
-#if DCHECK_IS_ON()
+  //#if DCHECK_IS_ON()
   int trace_level = WELS_LOG_INFO;
   openh264_encoder_->SetOption(ENCODER_OPTION_TRACE_LEVEL, &trace_level);
-#endif
+  //#endif
 
   SEncParamExt init_params;
   openh264_encoder_->GetDefaultParams(&init_params);
+  // memset(&init_params, 0, sizeof(SEncParamBase));
   init_params.iUsageType = CAMERA_VIDEO_REAL_TIME;
+
+  /*
+  init_params.iPicWidth = size.width();
+  init_params.iPicHeight = size.height();
+  init_params.iRCMode = RC_BITRATE_MODE;
+  init_params.iTargetBitrate = 2560000;
+  LOG(ERROR) << "rrrr bitrate = " << bits_per_second_;
+  init_params.fMaxFrameRate = 60;*/
 
   DCHECK_EQ(AUTO_REF_PIC_COUNT, init_params.iNumRefFrame);
   DCHECK(!init_params.bSimulcastAVC);
@@ -134,6 +150,9 @@ void H264Encoder::ConfigureEncoderOnEncodingTaskRunner(const gfx::Size& size) {
   init_params.iPicWidth = size.width();
   init_params.iPicHeight = size.height();
 
+  //  init_params.iMinQp = 21;
+  //  init_params.iMaxQp = 35;
+
   DCHECK_EQ(RC_QUALITY_MODE, init_params.iRCMode);
   DCHECK_EQ(0, init_params.iPaddingFlag);
   DCHECK_EQ(UNSPECIFIED_BIT_RATE, init_params.iTargetBitrate);
@@ -141,12 +160,24 @@ void H264Encoder::ConfigureEncoderOnEncodingTaskRunner(const gfx::Size& size) {
   if (bits_per_second_ > 0) {
     init_params.iRCMode = RC_BITRATE_MODE;
     init_params.iTargetBitrate = bits_per_second_;
+
+    LOG(ERROR) << "rrrr bitrate = " << init_params.iTargetBitrate;
+
   } else {
+    LOG(ERROR) << "rrrr no bitrate info";
+
     init_params.iRCMode = RC_OFF_MODE;
   }
 
   // Threading model: Set to 1 due to https://crbug.com/583348.
-  init_params.iMultipleThreadIdc = 1;
+  //  init_params.iMultipleThreadIdc = std::min(8,
+  //  (base::SysInfo::NumberOfProcessors() + 1) / 2);
+  init_params.iMultipleThreadIdc = 0;
+
+  //  init_params.iEntropyCodingModeFlag = 0;
+  //  init_params.bEnableAdaptiveQuant = 0;
+
+  LOG(ERROR) << "rrrr multi thread = " << init_params.iMultipleThreadIdc;
 
   // TODO(mcasas): consider reducing complexity if there are few CPUs available.
   init_params.iComplexityMode = MEDIUM_COMPLEXITY;
@@ -163,7 +194,7 @@ void H264Encoder::ConfigureEncoderOnEncodingTaskRunner(const gfx::Size& size) {
   // it with cpu core number.
   // TODO(sprang): Set to 0 when we understand why the rate controller borks
   // when uiSliceNum > 1. See https://github.com/cisco/openh264/issues/2591
-  init_params.sSpatialLayers[0].sSliceArgument.uiSliceNum = 1;
+  init_params.sSpatialLayers[0].sSliceArgument.uiSliceNum = 0;
   init_params.sSpatialLayers[0].sSliceArgument.uiSliceMode =
       SM_FIXEDSLCNUM_SLICE;
 

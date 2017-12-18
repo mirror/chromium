@@ -38,6 +38,8 @@ class H264Encoder final : public VideoTrackRecorder::Encoder {
   void EncodeOnEncodingTaskRunner(scoped_refptr<media::VideoFrame> frame,
                                   base::TimeTicks capture_timestamp) override;
 
+  bool EncodeFrame(SSourcePicture* picture, SFrameBSInfo* info);
+
   void ConfigureEncoderOnEncodingTaskRunner(const gfx::Size& size);
 
   // |openh264_encoder_| is a special scoped pointer to guarantee proper
