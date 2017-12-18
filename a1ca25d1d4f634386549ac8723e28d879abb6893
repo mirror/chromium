@@ -16,6 +16,24 @@
       "revId": "a1ca25d1d4f634386549ac8723e28d879abb6893",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "471ccf20_43d3a647",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/dom/usvstring-reflection.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1242274
+      },
+      "writtenOn": "2017-12-18T08:43:49Z",
+      "side": 1,
+      "message": "Please find my observation as below:\nvar w \u003d window.open(\"javascript:if(\u0027\\ud800\u0027 \u003d\u003d \u0027%EF%BF%BD\u0027) alert(\u00271\u0027);\");\n\nDesktop chrome browser: Throw Error \"Unable to open a window with invalid URL\".\nDesktop Firefox browser: Alert \u00271\u0027 without any console error.\n\nLatest chromium debug build with patch : Alert \u00271\u0027 without any console error. \nLatest chromium debug build without patch : DCHECK failed as below call stack.\n\n[1:1:1218/140101.742973:FATAL:KURL.cpp(788)] Check failed: !::blink::ProtocolIsJavaScript(string_) || ProtocolIsJavaScript(). \n#0 0x7f4319e517bd base::debug::StackTrace::StackTrace()\n#1 0x7f4319e4fbfc base::debug::StackTrace::StackTrace()\n#2 0x7f4319ed6b6a logging::LogMessage::~LogMessage()\n#3 0x7f430682f9f8 blink::KURL::Init()\n#4 0x7f4306830068 blink::KURL::KURL()\n#5 0x7f43083295be blink::Document::CompleteURLWithOverride()\n#6 0x7f43083212c9 blink::Document::CompleteURL()\n#7 0x7f4308f7d7cf blink::CreateWindow()\n#8 0x7f430870daaa blink::LocalDOMWindow::open()\n#9 0x7f430870d573 blink::LocalDOMWindow::open()\n#10 0x7f4309716ccc blink::DOMWindowV8Internal::openMethod()\n#11 0x7f4309715fda blink::V8Window::openMethodCallback()\n#12 0x7f430a3c5282 v8::internal::FunctionCallbackArguments::Call()\n#13 0x7f430a4c20c5 v8::internal::(anonymous namespace)::HandleApiCallHelper\u003c\u003e()\n#14 0x7f430a4c01b9 v8::internal::Builtin_Impl_HandleApiCall()\n#15 0x7f430a4bfbfd v8::internal::Builtin_HandleApiCall()\n#16 0x1769ddf043a4 \u003cunknown\u003e\n\n\nSo, I made this test which got passed (with this patch) and got crashed in above callstack (without this patch) on latest debug build.",
+      "parentUuid": "8bdb8d7c_a05a8559",
+      "revId": "a1ca25d1d4f634386549ac8723e28d879abb6893",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
