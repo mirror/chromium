@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ee054872_1026248a",
+        "filename": "third_party/WebKit/Source/core/exported/WebFormControlElement.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-12-18T15:36:45Z",
+      "side": 1,
+      "message": "nit: unnecessary brackets",
+      "range": {
+        "startLine": 64,
+        "startChar": 63,
+        "endLine": 64,
+        "endChar": 64
+      },
+      "revId": "f8e18657030f5c17d410d2fbe8d79784e7afd83f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a9cc5e8_4d57ae09",
+        "filename": "third_party/WebKit/public/web/WebFormControlElement.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-12-18T15:36:45Z",
+      "side": 1,
+      "message": "I would add \"Same as above, but...\"",
+      "range": {
+        "startLine": 60,
+        "startChar": 2,
+        "endLine": 61,
+        "endChar": 26
+      },
+      "revId": "f8e18657030f5c17d410d2fbe8d79784e7afd83f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
