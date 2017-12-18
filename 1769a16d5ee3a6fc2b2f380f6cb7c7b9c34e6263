@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "28546ce5_a656fb6e",
+        "filename": "third_party/WebKit/Source/devtools/front_end/object_ui/JavaScriptAutocomplete.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-12-18T20:55:55Z",
+      "side": 1,
+      "message": "Use a Map.",
+      "revId": "1769a16d5ee3a6fc2b2f380f6cb7c7b9c34e6263",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
