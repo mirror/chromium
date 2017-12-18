@@ -16,6 +16,24 @@
       "revId": "787346f7f846543126680116528f30f1a4bb6c13",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "117d5e1c_9cff3dda",
+        "filename": "extensions/browser/content_verifier.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1115640
+      },
+      "writtenOn": "2017-12-18T20:00:17Z",
+      "side": 1,
+      "message": "Yeah, sorry about that. Naming fixed.\n\nThank you for reviewing!",
+      "parentUuid": "53f054a5_2f3939ac",
+      "revId": "787346f7f846543126680116528f30f1a4bb6c13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
