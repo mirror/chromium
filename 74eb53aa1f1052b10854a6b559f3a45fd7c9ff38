@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "68aee7f4_8e789938",
+        "filename": "chrome/browser/resources/settings/people_page/users_page.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-12-18T19:49:25Z",
+      "side": 1,
+      "message": "Since settins-users-page is owned by people-page, rather than copying this code, just make profileManagesSupervisedUsers public and bind it from people-page, i.e. in people_page.html:\n\n\u003csettings-users-page prefs\u003d\"{{prefs}}\"\n    profile-manages-supervised-users\u003d\"[[profileManagesSupervisedUsers_]]\"\u003e\n\u003c/settings-users-page\u003e",
+      "revId": "74eb53aa1f1052b10854a6b559f3a45fd7c9ff38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
