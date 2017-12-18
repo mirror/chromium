@@ -230,6 +230,30 @@
       "revId": "0088678200eb7a04900c2d505518acd014d8a8f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e71f0701_b741a7a7",
+        "filename": "components/autofill/core/browser/autofill_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-12-18T19:29:45Z",
+      "side": 1,
+      "message": "Ah ok! Thanks for the link to the doc. I understand better now!",
+      "parentUuid": "bc816e07_c08ea2c3",
+      "range": {
+        "startLine": 363,
+        "startChar": 0,
+        "endLine": 386,
+        "endChar": 71
+      },
+      "revId": "0088678200eb7a04900c2d505518acd014d8a8f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
