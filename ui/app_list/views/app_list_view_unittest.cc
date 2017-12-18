@@ -44,7 +44,6 @@
 #include "ui/app_list/views/search_result_view.h"
 #include "ui/app_list/views/suggestions_container_view.h"
 #include "ui/app_list/views/test/apps_grid_view_test_api.h"
-#include "ui/app_list/views/tile_item_view.h"
 #include "ui/compositor/layer_animator.h"
 #include "ui/events/event_utils.h"
 #include "ui/views/controls/textfield/textfield.h"
