@@ -95,6 +95,54 @@ std::vector<base::FilePath> ResourceRequestBody::GetReferencedFiles() const {
   return result;
 }
 
+scoped_refptr<ResourceRequestBody> ResourceRequestBody::DeepClone() const {
+  scoped_refptr<ResourceRequestBody> clone(new ResourceRequestBody());
+
+  clone->identifier_ = identifier_;
+  clone->contains_sensitive_info_ = contains_sensitive_info_;
+  for (const Element& element : elements_) {
+    Element data;
+    switch (element.type()) {
+      case Element::TYPE_UNKNOWN:
+      case Element::TYPE_DISK_CACHE_ENTRY:
+      case Element::TYPE_BYTES_DESCRIPTION:
+        NOTREACHED();
+        continue;
+      case Element::TYPE_DATA_PIPE: {
+        network::mojom::DataPipeGetterPtrInfo clone_ptr_info;
+        element.data_pipe()->Clone(mojo::MakeRequest(&clone_ptr_info));
+        network::mojom::DataPipeGetterPtr clone_ptr(std::move(clone_ptr_info));
+        data.SetToDataPipe(std::move(clone_ptr));
+        break;
+      }
+      case Element::TYPE_RAW_FILE:
+        data.SetToFileRange(element.file().Duplicate(), element.path(),
+                            element.offset(), element.length(),
+                            element.expected_modification_time());
+        break;
+      case Element::TYPE_FILE_FILESYSTEM:
+        data.SetToFileSystemUrlRange(element.filesystem_url(), element.offset(),
+                                     element.length(),
+                                     element.expected_modification_time());
+        break;
+      case Element::TYPE_BLOB:
+        data.SetToBlob(element.blob_uuid());
+        break;
+      case Element::TYPE_FILE:
+        data.SetToFilePathRange(element.path(), element.offset(),
+                                element.length(),
+                                element.expected_modification_time());
+        break;
+      case Element::TYPE_BYTES:
+        data.SetToBytes(element.bytes(), element.length());
+        break;
+    }
+    clone->elements_.push_back(std::move(data));
+  }
+
+  return clone;
+}
+
 ResourceRequestBody::~ResourceRequestBody() {}
 
 }  // namespace content

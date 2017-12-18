@@ -70,6 +70,8 @@ class CONTENT_EXPORT ResourceRequestBody
                                  const base::Time& expected_modification_time);
   void AppendDataPipe(network::mojom::DataPipeGetterPtr data_pipe_getter);
 
+  scoped_refptr<ResourceRequestBody> DeepClone() const;
+
   const std::vector<Element>* elements() const { return &elements_; }
   std::vector<Element>* elements_mutable() { return &elements_; }
   void swap_elements(std::vector<Element>* elements) {
