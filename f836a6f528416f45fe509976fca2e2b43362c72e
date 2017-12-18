@@ -22,6 +22,30 @@
       "revId": "f836a6f528416f45fe509976fca2e2b43362c72e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "716ffef3_bd741767",
+        "filename": "ios/chrome/browser/crash_report/crash_keys.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-12-18T19:37:12Z",
+      "side": 0,
+      "message": "It\u0027s still needed and set (in components/crash/core/common/crash_keys.cc), but the new crash key system does not require pre-registration.",
+      "parentUuid": "b9a77820_2e0b5ce6",
+      "range": {
+        "startLine": 18,
+        "startChar": 7,
+        "endLine": 18,
+        "endChar": 35
+      },
+      "revId": "f836a6f528416f45fe509976fca2e2b43362c72e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
