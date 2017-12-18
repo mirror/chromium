@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b241cd3a_e3b71c55",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1849,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-12-18T21:55:25Z",
+      "side": 1,
+      "message": "I don\u0027t think we need this.",
+      "revId": "6550892e318dd3eeabd717813960f0672106eae0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3df948cf_0349bddd",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3001,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-12-18T21:55:25Z",
+      "side": 1,
+      "message": "I don\u0027t know why, but remove this as well? :)",
+      "revId": "6550892e318dd3eeabd717813960f0672106eae0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b54a0089_6096b137",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 4210,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-12-18T21:55:25Z",
+      "side": 1,
+      "message": "I think this can be removed. Link doctor won\u0027t be mad.",
+      "revId": "6550892e318dd3eeabd717813960f0672106eae0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
