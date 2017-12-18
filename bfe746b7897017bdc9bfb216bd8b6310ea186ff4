@@ -192,6 +192,30 @@
     },
     {
       "key": {
+        "uuid": "b1d8dacb_09a73bfb",
+        "filename": "third_party/WebKit/Source/core/css/resolver/StyleAdjuster.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 585,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-12-18T10:58:10Z",
+      "side": 1,
+      "message": "\u003e https://github.com/w3c/csswg-drafts/issues/2118\n\u003e \n\u003e @fs: I didn\u0027t find your github user.\n\nIt\u0027s fsoder (I subscribed to the thread/issue.)",
+      "parentUuid": "d18b74ec_b67716c1",
+      "range": {
+        "startLine": 585,
+        "startChar": 20,
+        "endLine": 585,
+        "endChar": 27
+      },
+      "revId": "bfe746b7897017bdc9bfb216bd8b6310ea186ff4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4f227037_db7b1675",
         "filename": "third_party/WebKit/Source/core/svg/SVGGElement.cpp",
         "patchSetId": 2
