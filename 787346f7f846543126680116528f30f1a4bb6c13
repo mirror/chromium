@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "53f054a5_2f3939ac",
+        "filename": "extensions/browser/content_verifier.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-12-18T18:30:45Z",
+      "side": 1,
+      "message": "Please follow the style guide and call these g_content_verifier_test_observer and g_content_verify_job_test_observer.",
+      "revId": "787346f7f846543126680116528f30f1a4bb6c13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
