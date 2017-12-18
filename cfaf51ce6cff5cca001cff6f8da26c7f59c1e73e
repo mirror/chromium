@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bbf9cee4_ac42f03e",
+        "filename": "chrome/browser/extensions/api/cryptotoken_private/cryptotoken_private_api.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1002270
+      },
+      "writtenOn": "2017-12-18T20:17:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a0aa37cb_75b31cc2",
+      "range": {
+        "startLine": 117,
+        "startChar": 0,
+        "endLine": 117,
+        "endChar": 22
+      },
+      "revId": "cfaf51ce6cff5cca001cff6f8da26c7f59c1e73e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ac23a41f_0163e893",
         "filename": "chrome/browser/extensions/api/cryptotoken_private/cryptotoken_private_api.cc",
         "patchSetId": 10
@@ -45,6 +69,30 @@
       "revId": "cfaf51ce6cff5cca001cff6f8da26c7f59c1e73e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eab31a63_4987077e",
+        "filename": "chrome/browser/extensions/api/cryptotoken_private/cryptotoken_private_api.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1002270
+      },
+      "writtenOn": "2017-12-18T20:17:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ac23a41f_0163e893",
+      "range": {
+        "startLine": 125,
+        "startChar": 74,
+        "endLine": 125,
+        "endChar": 77
+      },
+      "revId": "cfaf51ce6cff5cca001cff6f8da26c7f59c1e73e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "16093ee8_8e9a2c54",
+        "filename": "chrome/browser/extensions/api/cryptotoken_private/cryptotoken_private_api_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002270
+      },
+      "writtenOn": "2017-12-18T20:17:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a1a1098_08a034b2",
+      "range": {
+        "startLine": 37,
+        "startChar": 6,
+        "endLine": 37,
+        "endChar": 17
+      },
+      "revId": "cfaf51ce6cff5cca001cff6f8da26c7f59c1e73e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "472c01bc_4eec8ac6",
         "filename": "chrome/browser/extensions/api/cryptotoken_private/cryptotoken_private_api_unittest.cc",
         "patchSetId": 10
@@ -91,6 +163,30 @@
       "revId": "cfaf51ce6cff5cca001cff6f8da26c7f59c1e73e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62472504_031038fb",
+        "filename": "chrome/browser/extensions/api/cryptotoken_private/cryptotoken_private_api_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1002270
+      },
+      "writtenOn": "2017-12-18T20:17:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "472c01bc_4eec8ac6",
+      "range": {
+        "startLine": 72,
+        "startChar": 58,
+        "endLine": 72,
+        "endChar": 63
+      },
+      "revId": "cfaf51ce6cff5cca001cff6f8da26c7f59c1e73e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "162b5fc7_e01e14fa",
+        "filename": "chrome/browser/extensions/api/cryptotoken_private/cryptotoken_private_api_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1002270
+      },
+      "writtenOn": "2017-12-18T20:17:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7612c948_aee65274",
+      "range": {
+        "startLine": 79,
+        "startChar": 0,
+        "endLine": 79,
+        "endChar": 72
+      },
+      "revId": "cfaf51ce6cff5cca001cff6f8da26c7f59c1e73e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6423dd97_3706a39e",
         "filename": "chrome/browser/extensions/api/cryptotoken_private/cryptotoken_private_api_unittest.cc",
         "patchSetId": 10
@@ -137,6 +257,30 @@
       "revId": "cfaf51ce6cff5cca001cff6f8da26c7f59c1e73e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e3547c0_2a79ed4a",
+        "filename": "chrome/browser/extensions/api/cryptotoken_private/cryptotoken_private_api_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1002270
+      },
+      "writtenOn": "2017-12-18T20:17:33Z",
+      "side": 1,
+      "message": "Done. (Needs to emplace a Value, not a vector\u003cchar\u003e, but wrapping in BlobStorage made it happy.)",
+      "parentUuid": "6423dd97_3706a39e",
+      "range": {
+        "startLine": 81,
+        "startChar": 22,
+        "endLine": 81,
+        "endChar": 33
+      },
+      "revId": "cfaf51ce6cff5cca001cff6f8da26c7f59c1e73e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "d86150b4_303bb467",
+        "filename": "chrome/browser/extensions/api/cryptotoken_private/cryptotoken_private_api_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1002270
+      },
+      "writtenOn": "2017-12-18T20:17:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "41003ad2_7d33da89",
+      "range": {
+        "startLine": 89,
+        "startChar": 4,
+        "endLine": 89,
+        "endChar": 9
+      },
+      "revId": "cfaf51ce6cff5cca001cff6f8da26c7f59c1e73e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cfdd7f58_f9a2fb31",
         "filename": "chrome/common/extensions/api/cryptotoken_private.idl",
         "patchSetId": 10
@@ -183,6 +351,30 @@
       "revId": "cfaf51ce6cff5cca001cff6f8da26c7f59c1e73e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f3a89be_979a6972",
+        "filename": "chrome/common/extensions/api/cryptotoken_private.idl",
+        "patchSetId": 10
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002270
+      },
+      "writtenOn": "2017-12-18T20:17:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cfdd7f58_f9a2fb31",
+      "range": {
+        "startLine": 26,
+        "startChar": 52,
+        "endLine": 27,
+        "endChar": 36
+      },
+      "revId": "cfaf51ce6cff5cca001cff6f8da26c7f59c1e73e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
