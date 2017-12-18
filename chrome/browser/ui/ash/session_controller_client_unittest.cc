@@ -284,7 +284,7 @@ TEST_F(SessionControllerClientTest, CyclingOneUser) {
 // Cycle three users forwards and backwards to see that it works.
 TEST_F(SessionControllerClientTest, CyclingThreeUsers) {
   // Create an object to test and connect it to our test interface.
-  SessionControllerClient client;
+  SessionControllerClient client(nullptr /* device_off_hours_controller */);
   TestSessionController session_controller;
   client.session_controller_ = session_controller.CreateInterfacePtrAndBind();
   client.Init();
@@ -462,7 +462,7 @@ TEST_F(SessionControllerClientTest,
 
 TEST_F(SessionControllerClientTest, SendUserSession) {
   // Create an object to test and connect it to our test interface.
-  SessionControllerClient client;
+  SessionControllerClient client(nullptr /* device_off_hours_controller */);
   TestSessionController session_controller;
   client.session_controller_ = session_controller.CreateInterfacePtrAndBind();
   client.Init();
@@ -496,7 +496,7 @@ TEST_F(SessionControllerClientTest, SendUserSession) {
 
 TEST_F(SessionControllerClientTest, SupervisedUser) {
   // Create an object to test and connect it to our test interface.
-  SessionControllerClient client;
+  SessionControllerClient client(nullptr /* device_off_hours_controller */);
   TestSessionController session_controller;
   client.session_controller_ = session_controller.CreateInterfacePtrAndBind();
   client.Init();
@@ -559,7 +559,7 @@ TEST_F(SessionControllerClientTest, SupervisedUser) {
 
 TEST_F(SessionControllerClientTest, UserPrefsChange) {
   // Create an object to test and connect it to our test interface.
-  SessionControllerClient client;
+  SessionControllerClient client(nullptr /* device_off_hours_controller */);
   TestSessionController session_controller;
   client.session_controller_ = session_controller.CreateInterfacePtrAndBind();
   client.Init();
@@ -603,7 +603,7 @@ TEST_F(SessionControllerClientTest, UserPrefsChange) {
 
 TEST_F(SessionControllerClientTest, SessionLengthLimit) {
   // Create an object to test and connect it to our test interface.
-  SessionControllerClient client;
+  SessionControllerClient client(nullptr /* device_off_hours_controller */);
   TestSessionController session_controller;
   client.session_controller_ = session_controller.CreateInterfacePtrAndBind();
   client.Init();

@@ -50,9 +50,9 @@
 using session_manager::Session;
 using session_manager::SessionManager;
 using session_manager::SessionState;
-using user_manager::UserManager;
 using user_manager::User;
 using user_manager::UserList;
+using user_manager::UserManager;
 
 namespace {
 
@@ -151,8 +151,11 @@ struct EqualsTraits<gfx::ImageSkia> {
 
 }  // namespace mojo
 
-SessionControllerClient::SessionControllerClient()
-    : binding_(this), weak_ptr_factory_(this) {
+SessionControllerClient::SessionControllerClient(
+    policy::off_hours::DeviceOffHoursController* device_off_hours_controller)
+    : binding_(this),
+      device_off_hours_controller_(device_off_hours_controller),
+      weak_ptr_factory_(this) {
   SessionManager::Get()->AddObserver(this);
   UserManager::Get()->AddSessionStateObserver(this);
   UserManager::Get()->AddObserver(this);
@@ -172,9 +175,11 @@ SessionControllerClient::SessionControllerClient()
       prefs::kSessionLengthLimit,
       base::Bind(&SessionControllerClient::SendSessionLengthLimit,
                  base::Unretained(this)));
-  chromeos::DeviceSettingsService::Get()
-      ->device_off_hours_controller()
-      ->AddObserver(this);
+
+  // May be null in tests.
+  if (device_off_hours_controller_)
+    device_off_hours_controller_->AddObserver(this);
+
   DCHECK(!g_instance);
   g_instance = this;
 }
@@ -191,9 +196,8 @@ SessionControllerClient::~SessionControllerClient() {
   SessionManager::Get()->RemoveObserver(this);
   UserManager::Get()->RemoveObserver(this);
   UserManager::Get()->RemoveSessionStateObserver(this);
-  chromeos::DeviceSettingsService::Get()
-      ->device_off_hours_controller()
-      ->RemoveObserver(this);
+  if (device_off_hours_controller_)
+    device_off_hours_controller_->RemoveObserver(this);
 }
 
 void SessionControllerClient::Init() {
@@ -596,10 +600,11 @@ void SessionControllerClient::SendSessionLengthLimit() {
         local_state->GetInt64(prefs::kSessionStartTime));
   }
 
-  policy::off_hours::DeviceOffHoursController* off_hours_controller =
-      chromeos::DeviceSettingsService::Get()->device_off_hours_controller();
-  base::TimeTicks policy_off_hours_end_time =
-      off_hours_controller->GetOffHoursEndTime();
+  base::TimeTicks policy_off_hours_end_time;
+  if (device_off_hours_controller_) {
+    policy_off_hours_end_time =
+        device_off_hours_controller_->GetOffHoursEndTime();
+  }
 
   // If |session_length_limit| is zero or |session_start_time| is null then
   // "SessionLengthLimit" policy is unset.
