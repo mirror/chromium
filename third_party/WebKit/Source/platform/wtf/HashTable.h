@@ -1614,7 +1614,8 @@ void HashTable<Key,
       }
     }
   }
-  Allocator::FreeHashTableBacking(table);
+  Allocator::FreeHashTableBacking(
+      table, Traits::kWeakHandlingFlag == kWeakHandlingInCollections);
 }
 
 template <typename Key,

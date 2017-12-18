@@ -79,7 +79,27 @@ void PersistentRegion::TracePersistentNodes(Visitor* visitor,
                                             ShouldTraceCallback should_trace) {
   size_t debug_marked_object_size = ProcessHeap::TotalMarkedObjectSize();
   base::debug::Alias(&debug_marked_object_size);
+  int persistent_count = 0;
+  PersistentNodeSlots* slots = slots_;
+  while (slots) {
+    for (int i = 0; i < PersistentNodeSlots::kSlotCount; ++i) {
+      PersistentNode* node = &slots->slot_[i];
+      if (!node->IsUnused()) {
+        ++persistent_count;
+        if (!should_trace(visitor, node))
+          continue;
+        node->TracePersistentNode(visitor);
+        debug_marked_object_size = ProcessHeap::TotalMarkedObjectSize();
+      }
+    }
+    slots = slots->next_;
+  }
+#if DCHECK_IS_ON()
+  DCHECK_EQ(persistent_count, persistent_count_);
+#endif
+}
 
+void PersistentRegion::RebuildFreeList() {
   free_list_head_ = nullptr;
   int persistent_count = 0;
   PersistentNodeSlots** prev_next = &slots_;
@@ -98,10 +118,6 @@ void PersistentRegion::TracePersistentNodes(Visitor* visitor,
         ++free_count;
       } else {
         ++persistent_count;
-        if (!should_trace(visitor, node))
-          continue;
-        node->TracePersistentNode(visitor);
-        debug_marked_object_size = ProcessHeap::TotalMarkedObjectSize();
       }
     }
     if (free_count == PersistentNodeSlots::kSlotCount) {
@@ -194,5 +210,93 @@ void CrossThreadPersistentRegion::UnpoisonCrossThreadPersistents() {
 #endif
 }
 #endif
+
+WeakPersistentRegion::~WeakPersistentRegion() {
+  PersistentNodeSlots* slots = slots_;
+  while (slots) {
+    PersistentNodeSlots* dead_slots = slots;
+    slots = slots->next_;
+    delete dead_slots;
+  }
+}
+
+int WeakPersistentRegion::NumberOfPersistents() {
+  int persistent_count = 0;
+  for (PersistentNodeSlots* slots = slots_; slots; slots = slots->next_) {
+    for (int i = 0; i < PersistentNodeSlots::kSlotCount; ++i) {
+      if (!slots->slot_[i].IsUnused())
+        ++persistent_count;
+    }
+  }
+#if DCHECK_IS_ON()
+  DCHECK_EQ(persistent_count, persistent_count_);
+#endif
+  return persistent_count;
+}
+
+void WeakPersistentRegion::EnsurePersistentNodeSlots(void* self,
+                                                     TraceCallback trace) {
+  DCHECK(!free_list_head_);
+  PersistentNodeSlots* slots = new PersistentNodeSlots;
+  for (int i = 0; i < PersistentNodeSlots::kSlotCount; ++i) {
+    PersistentNode* node = &slots->slot_[i];
+    node->SetFreeListNext(free_list_head_);
+    free_list_head_ = node;
+    DCHECK(node->IsUnused());
+  }
+  slots->next_ = slots_;
+  slots_ = slots;
+}
+
+// This function traces all PersistentNodes. If we encounter
+// a PersistentNodeSlot that contains only freed PersistentNodes,
+// we delete the PersistentNodeSlot. This function rebuilds the free
+// list of PersistentNodes.
+void WeakPersistentRegion::TracePersistentNodes(Visitor* visitor) {
+  size_t debug_marked_object_size = ProcessHeap::TotalMarkedObjectSize();
+  base::debug::Alias(&debug_marked_object_size);
+
+  free_list_head_ = nullptr;
+  int persistent_count = 0;
+  PersistentNodeSlots** prev_next = &slots_;
+  PersistentNodeSlots* slots = slots_;
+  while (slots) {
+    PersistentNode* free_list_next = nullptr;
+    PersistentNode* free_list_last = nullptr;
+    int free_count = 0;
+    for (int i = 0; i < PersistentNodeSlots::kSlotCount; ++i) {
+      PersistentNode* node = &slots->slot_[i];
+      if (node->IsUnused()) {
+        if (!free_list_next)
+          free_list_last = node;
+        node->SetFreeListNext(free_list_next);
+        free_list_next = node;
+        ++free_count;
+      } else {
+        ++persistent_count;
+        node->TracePersistentNode(visitor);
+        debug_marked_object_size = ProcessHeap::TotalMarkedObjectSize();
+      }
+    }
+    if (free_count == PersistentNodeSlots::kSlotCount) {
+      PersistentNodeSlots* dead_slots = slots;
+      *prev_next = slots->next_;
+      slots = slots->next_;
+      delete dead_slots;
+    } else {
+      if (free_list_last) {
+        DCHECK(free_list_next);
+        DCHECK(!free_list_last->FreeListNext());
+        free_list_last->SetFreeListNext(free_list_head_);
+        free_list_head_ = free_list_next;
+      }
+      prev_next = &slots->next_;
+      slots = slots->next_;
+    }
+  }
+#if DCHECK_IS_ON()
+  DCHECK_EQ(persistent_count, persistent_count_);
+#endif
+}
 
 }  // namespace blink

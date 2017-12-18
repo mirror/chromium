@@ -337,6 +337,8 @@ class PLATFORM_EXPORT ThreadState {
   bool IsIncrementalMarking() const { return incremental_marking_; }
   void SetIncrementalMarking(bool value) { incremental_marking_ = value; }
 
+  void CheckObjectNotInCallbackStacks(const void*);
+
   class MainThreadGCForbiddenScope final {
     STACK_ALLOCATED();
 
@@ -468,7 +470,7 @@ class PLATFORM_EXPORT ThreadState {
     accumulated_sweeping_time_ += time;
   }
 
-  void FreePersistentNode(PersistentNode*);
+  void FreePersistentNode(PersistentNode*, bool allow_immediate_reuse);
 
   using PersistentClearCallback = void (*)(void*);
 

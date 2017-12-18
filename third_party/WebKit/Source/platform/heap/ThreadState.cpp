@@ -1157,9 +1157,10 @@ void ThreadState::ReleaseStaticPersistentNodes() {
     persistent_region->ReleasePersistentNode(it.key, it.value);
 }
 
-void ThreadState::FreePersistentNode(PersistentNode* persistent_node) {
+void ThreadState::FreePersistentNode(PersistentNode* persistent_node,
+                                     bool allow_immediate_reuse) {
   PersistentRegion* persistent_region = GetPersistentRegion();
-  persistent_region->FreePersistentNode(persistent_node);
+  persistent_region->FreePersistentNode(persistent_node, allow_immediate_reuse);
   // Do not allow static persistents to be freed before
   // they're all released in releaseStaticPersistentNodes().
   //
@@ -1370,6 +1371,8 @@ void ThreadState::MarkPhaseEpilogue() {
   Heap().PostMarkingProcessing(current_gc_data_.visitor.get());
   Heap().WeakProcessing(current_gc_data_.visitor.get());
   Heap().DecommitCallbackStacks();
+  GetPersistentRegion()->RebuildFreeList();
+  ProcessHeap::GetCrossThreadPersistentRegion().RebuildFreeList();
 
   Heap().HeapStats().SetEstimatedMarkingTimePerByte(
       current_gc_data_.marked_object_size
@@ -1413,6 +1416,15 @@ void ThreadState::CollectAllGarbage() {
       break;
     previous_live_objects = live_objects;
   }
+}
+
+void ThreadState::CheckObjectNotInCallbackStacks(const void* object) {
+#if DCHECK_IS_ON()
+  DCHECK(!Heap().MarkingStack()->HasCallbackForObject(object));
+  DCHECK(!Heap().PostMarkingCallbackStack()->HasCallbackForObject(object));
+  DCHECK(!Heap().WeakCallbackStack()->HasCallbackForObject(object));
+  DCHECK(!Heap().EphemeronStack()->HasCallbackForObject(object));
+#endif
 }
 
 }  // namespace blink

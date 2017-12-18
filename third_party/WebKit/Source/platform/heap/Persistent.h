@@ -174,6 +174,18 @@ class PersistentBase {
     return this;
   }
 
+  template <typename VisitorDispatcher>
+  void TracePersistent(VisitorDispatcher visitor) {
+    static_assert(sizeof(T), "T must be fully defined");
+    static_assert(IsGarbageCollectedType<T>::value,
+                  "T needs to be a garbage collected object");
+    if (weaknessConfiguration == kWeakPersistentConfiguration) {
+      visitor->RegisterWeakCallback(persistent_node_, HandleWeakPersistent);
+    } else {
+      visitor->Mark(raw_);
+    }
+  }
+
  protected:
   NO_SANITIZE_ADDRESS
   T* AtomicGet() {
@@ -200,27 +212,15 @@ class PersistentBase {
     Uninitialize();
   }
 
-  template <typename VisitorDispatcher>
-  void TracePersistent(VisitorDispatcher visitor) {
-    static_assert(sizeof(T), "T must be fully defined");
-    static_assert(IsGarbageCollectedType<T>::value,
-                  "T needs to be a garbage collected object");
-    if (weaknessConfiguration == kWeakPersistentConfiguration) {
-      visitor->RegisterWeakCallback(this, HandleWeakPersistent);
-    } else {
-      visitor->Mark(raw_);
-    }
-  }
-
   NO_SANITIZE_ADDRESS
   void Initialize() {
     DCHECK(!persistent_node_);
     if (!raw_ || IsHashTableDeletedValue())
       return;
 
-    TraceCallback trace_callback =
-        TraceMethodDelegate<PersistentBase,
-                            &PersistentBase::TracePersistent>::Trampoline;
+    TraceCallback trace_callback = TraceMethodDelegate<
+        PersistentNode,
+        &PersistentNode::TracePersistent<PersistentBase>>::Trampoline;
     if (crossThreadnessConfiguration == kCrossThreadPersistentConfiguration) {
       ProcessHeap::GetCrossThreadPersistentRegion().AllocatePersistentNode(
           persistent_node_, this, trace_callback);
@@ -238,9 +238,11 @@ class PersistentBase {
 
   void Uninitialize() {
     if (crossThreadnessConfiguration == kCrossThreadPersistentConfiguration) {
-      if (AcquireLoad(reinterpret_cast<void* volatile*>(&persistent_node_)))
+      if (AcquireLoad(reinterpret_cast<void* volatile*>(&persistent_node_))) {
         ProcessHeap::GetCrossThreadPersistentRegion().FreePersistentNode(
-            persistent_node_);
+            persistent_node_,
+            weaknessConfiguration == kWeakPersistentConfiguration);
+      }
       return;
     }
 
@@ -253,7 +255,9 @@ class PersistentBase {
 #if DCHECK_IS_ON()
     DCHECK_EQ(state_, state);
 #endif
-    state->FreePersistentNode(persistent_node_);
+    state->FreePersistentNode(
+        persistent_node_,
+        weaknessConfiguration == kWeakPersistentConfiguration);
     persistent_node_ = nullptr;
   }
 
@@ -290,11 +294,14 @@ class PersistentBase {
 #endif
   }
 
-  static void HandleWeakPersistent(Visitor* self, void* persistent_pointer) {
+  static void HandleWeakPersistent(Visitor* self,
+                                   void* persistent_node_pointer) {
+    PersistentNode* persistent_node =
+        reinterpret_cast<PersistentNode*>(persistent_node_pointer);
     using Base =
         PersistentBase<typename std::remove_const<T>::type,
                        weaknessConfiguration, crossThreadnessConfiguration>;
-    Base* persistent = reinterpret_cast<Base*>(persistent_pointer);
+    Base* persistent = reinterpret_cast<Base*>(persistent_node->Self());
     T* object = persistent->Get();
     if (object && !ObjectAliveTrait<T>::IsHeapObjectAlive(object))
       persistent->Clear();
@@ -578,13 +585,13 @@ class PersistentHeapCollectionBase : public Collection {
     return this;
   }
 
- private:
   template <typename VisitorDispatcher>
   void TracePersistent(VisitorDispatcher visitor) {
     static_assert(sizeof(Collection), "Collection must be fully defined");
     visitor->Trace(*static_cast<Collection*>(this));
   }
 
+ private:
   // Used when the registered PersistentNode of this object is
   // released during ThreadState shutdown, clearing the association.
   static void ClearPersistentNode(void* self) {
@@ -600,10 +607,10 @@ class PersistentHeapCollectionBase : public Collection {
     ThreadState* state = ThreadState::Current();
     DCHECK(state->CheckThread());
     persistent_node_ = state->GetPersistentRegion()->AllocatePersistentNode(
-        this,
-        TraceMethodDelegate<PersistentHeapCollectionBase<Collection>,
-                            &PersistentHeapCollectionBase<
-                                Collection>::TracePersistent>::Trampoline);
+        this, TraceMethodDelegate<
+                  PersistentNode,
+                  &PersistentNode::TracePersistent<
+                      PersistentHeapCollectionBase<Collection>>>::Trampoline);
 #if DCHECK_IS_ON()
     state_ = state;
 #endif
@@ -618,7 +625,7 @@ class PersistentHeapCollectionBase : public Collection {
 #if DCHECK_IS_ON()
     DCHECK_EQ(state_, state);
 #endif
-    state->FreePersistentNode(persistent_node_);
+    state->FreePersistentNode(persistent_node_, true);
     persistent_node_ = nullptr;
   }
 
