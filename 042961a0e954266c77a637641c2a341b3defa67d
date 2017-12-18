@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f09c7ed0_eb9baa22",
+        "filename": "chrome/browser/accessibility/interstitial_accessibility_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-18T18:44:08Z",
+      "side": 1,
+      "message": "Most code in chrome/ is not in a namespace, I believe that\u0027s\nstill what the style guide recommends.",
+      "parentUuid": "8ad44915_0f382af6",
+      "revId": "042961a0e954266c77a637641c2a341b3defa67d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "83c5ef49_68b40725",
         "filename": "chrome/browser/accessibility/interstitial_accessibility_browsertest.cc",
         "patchSetId": 2
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "6a5a5209_a96f6c73",
+        "filename": "chrome/browser/accessibility/interstitial_accessibility_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-18T18:44:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "83c5ef49_68b40725",
+      "range": {
+        "startLine": 59,
+        "startChar": 0,
+        "endLine": 59,
+        "endChar": 47
+      },
+      "revId": "042961a0e954266c77a637641c2a341b3defa67d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "31ee6101_f74f1a85",
         "filename": "chrome/browser/accessibility/interstitial_accessibility_browsertest.cc",
         "patchSetId": 2
@@ -53,6 +95,24 @@
       "writtenOn": "2017-12-18T16:31:07Z",
       "side": 1,
       "message": "Wouldn\u0027t this make the bots slower if the test fails, because they have to wait until the test times out? Isn\u0027t it better if we wait for  a document loaded event using accessibility event waiter, if possible?",
+      "revId": "042961a0e954266c77a637641c2a341b3defa67d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b0c1ffe_e9f4a033",
+        "filename": "chrome/browser/accessibility/interstitial_accessibility_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-18T18:44:08Z",
+      "side": 1,
+      "message": "I don\u0027t think that\u0027s a big concern, because ideally the test isn\u0027t flaky and\nit should pass very quickly. If it fails, it doesn\u0027t really matter whether\nit fails quickly or slowly, it will be disabled because it\u0027s flaky.\n\nOn a more practical matter, because this code is in chrome and not in content,\nwe don\u0027t have as easy access to accessibility internals without adding a lot of\nextra code. I tried to expose some simpler high-level interfaces for tests\noutside of content to use that don\u0027t rely on understanding things at a low\nlevel.",
+      "parentUuid": "31ee6101_f74f1a85",
       "revId": "042961a0e954266c77a637641c2a341b3defa67d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
