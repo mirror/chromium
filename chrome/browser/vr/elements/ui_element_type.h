@@ -27,6 +27,10 @@ enum UiElementType {
   kTypeTextInputHint,
   kTypeTextInputText,
   kTypeTextInputCursor,
+  kTypeToastBackground,
+  kTypeToastContainer,
+  kTypeToastIcon,
+  kTypeToastText,
 
   // This must be last.
   kNumUiElementTypes,

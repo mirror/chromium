@@ -26,11 +26,11 @@
 #include "chrome/browser/vr/elements/rect.h"
 #include "chrome/browser/vr/elements/reticle.h"
 #include "chrome/browser/vr/elements/scaled_depth_adjuster.h"
-#include "chrome/browser/vr/elements/simple_textured_element.h"
 #include "chrome/browser/vr/elements/spinner.h"
 #include "chrome/browser/vr/elements/text.h"
 #include "chrome/browser/vr/elements/text_input.h"
 #include "chrome/browser/vr/elements/throbber.h"
+#include "chrome/browser/vr/elements/toast.h"
 #include "chrome/browser/vr/elements/transient_element.h"
 #include "chrome/browser/vr/elements/ui_element.h"
 #include "chrome/browser/vr/elements/ui_element_name.h"
@@ -401,21 +401,15 @@ void UiSceneCreator::CreateSystemIndicators() {
   indicator_layout->AddBinding(
       VR_BIND_FUNC(bool, Model, model_, fullscreen == false, UiElement,
                    indicator_layout.get(), SetVisible));
-  scene_->AddUiElement(k2dBrowsingContentGroup, std::move(indicator_layout));
 
   for (const auto& indicator : indicators) {
-    auto element = base::MakeUnique<SystemIndicator>(512);
-    element->GetDerivedTexture()->SetIcon(indicator.icon);
-    element->GetDerivedTexture()->SetMessageId(indicator.resource_string);
+    auto element = base::MakeUnique<Toast>();
     element->SetName(indicator.name);
     element->SetDrawPhase(kPhaseForeground);
-    element->set_requires_layout(false);
-    element->SetSize(0, kIndicatorHeight);
-    element->SetVisible(false);
+    element->set_padding(kIndicatorXPadding, kIndicatorYPadding);
+    element->set_corner_radius(kIndicatorCornerRadius);
     BindColor(model_, element.get(), &ColorScheme::system_indicator_background,
-              &TexturedElement::SetBackgroundColor);
-    BindColor(model_, element.get(), &ColorScheme::system_indicator_foreground,
-              &TexturedElement::SetForegroundColor);
+              &Toast::SetBackgroundColor);
     element->AddBinding(base::MakeUnique<Binding<bool>>(
         base::Bind(
             [](Model* m, bool PermissionsModel::*permission) {
@@ -428,8 +422,22 @@ void UiSceneCreator::CreateSystemIndicators() {
               e->set_requires_layout(v);
             },
             base::Unretained(element.get()))));
-    scene_->AddUiElement(kIndicatorLayout, std::move(element));
+
+    element->SetMargin(kIndicatorMargin);
+    element->ConfigIcon(indicator.icon, kIndicatorIconHeight);
+
+    if (indicator.resource_string != 0) {
+      element->ConfigText(l10n_util::GetStringUTF16(indicator.resource_string),
+                          kIndicatorFontHeightDmm,
+                          TextLayoutMode::kSingleLineFixedHeight);
+    }
+
+    BindColor(model_, element.get(), &ColorScheme::system_indicator_foreground,
+              &Toast::SetForegroundColor);
+
+    indicator_layout->AddChild(std::move(element));
   }
+  scene_->AddUiElement(k2dBrowsingContentGroup, std::move(indicator_layout));
 }
 
 void UiSceneCreator::CreateContentQuad() {
@@ -1464,25 +1472,25 @@ void UiSceneCreator::CreateToasts() {
                                   fullscreen && !model->web_vr_mode, UiElement,
                                   parent, SetVisible));
 
-  auto element = base::MakeUnique<ExclusiveScreenToast>(512);
+  auto scaler = base::MakeUnique<ScaledDepthAdjuster>(kFullscreenToastDistance);
+
+  auto element = base::MakeUnique<Toast>();
   element->SetName(kExclusiveScreenToast);
   element->SetDrawPhase(kPhaseForeground);
-  element->SetSize(kToastWidthDMM, kToastHeightDMM);
-  element->SetTranslate(
-      0,
-      kFullscreenVerticalOffset + kFullscreenHeight / 2 +
-          (kToastOffsetDMM + kToastHeightDMM) * kFullscreenToastDistance,
-      -kFullscreenToastDistance);
-  element->SetScale(kFullscreenToastDistance, kFullscreenToastDistance, 1);
   element->set_hit_testable(false);
-  BindColor(model_, element.get(),
-            &ColorScheme::exclusive_screen_toast_background,
-            &TexturedElement::SetBackgroundColor);
-  BindColor(model_, element.get(),
-            &ColorScheme::exclusive_screen_toast_foreground,
-            &TexturedElement::SetForegroundColor);
-  scene_->AddUiElement(kExclusiveScreenToastTransientParent,
-                       std::move(element));
+  element->SetTranslate(0, kFullScreenToastOffsetDMM, 0);
+  element->set_padding(kToastXPaddingDMM, kToastYPaddingDMM);
+  element->set_corner_radius(kToastCornerRadiusDMM);
+  BindColor(model_, element->background(),
+            &ColorScheme::exclusive_screen_toast_background, &Rect::SetColor);
+  element->ConfigText(l10n_util::GetStringUTF16(IDS_PRESS_APP_TO_EXIT),
+                      kToastTextFontHeightDMM,
+                      TextLayoutMode::kSingleLineFixedHeight);
+  BindColor(model_, element->text(),
+            &ColorScheme::exclusive_screen_toast_foreground, &Text::SetColor);
+
+  scaler->AddChild(std::move(element));
+  scene_->AddUiElement(kExclusiveScreenToastTransientParent, std::move(scaler));
 
   // Create WebVR toast.
   parent = AddTransientParent(kExclusiveScreenToastViewportAwareTransientParent,
@@ -1496,23 +1504,30 @@ void UiSceneCreator::CreateToasts() {
                    web_vr_has_produced_frames() && model->web_vr_show_toast,
                    UiElement, parent, SetVisible));
 
-  element = base::MakeUnique<ExclusiveScreenToast>(512);
+  scaler = base::MakeUnique<ScaledDepthAdjuster>(kWebVrToastDistance);
+
+  element = base::MakeUnique<Toast>();
   element->SetName(kExclusiveScreenToastViewportAware);
   element->SetDrawPhase(kPhaseOverlayForeground);
-  element->SetSize(kToastWidthDMM, kToastHeightDMM);
-  element->SetTranslate(0, kWebVrToastDistance * sin(kWebVrAngleRadians),
-                        -kWebVrToastDistance * cos(kWebVrAngleRadians));
-  element->SetRotate(1, 0, 0, kWebVrAngleRadians);
-  element->SetScale(kWebVrToastDistance, kWebVrToastDistance, 1);
   element->set_hit_testable(false);
+  element->SetTranslate(0, sin(kWebVrAngleRadians),
+                        1.0 - cos(kWebVrAngleRadians));
+  element->SetRotate(1, 0, 0, kWebVrAngleRadians);
+  element->set_padding(kToastXPaddingDMM, kToastYPaddingDMM);
+  element->set_corner_radius(kToastCornerRadiusDMM);
   BindColor(model_, element.get(),
             &ColorScheme::exclusive_screen_toast_background,
-            &TexturedElement::SetBackgroundColor);
+            &Toast::SetBackgroundColor);
+  element->ConfigText(l10n_util::GetStringUTF16(IDS_PRESS_APP_TO_EXIT),
+                      kToastTextFontHeightDMM,
+                      TextLayoutMode::kSingleLineFixedHeight);
   BindColor(model_, element.get(),
             &ColorScheme::exclusive_screen_toast_foreground,
-            &TexturedElement::SetForegroundColor);
+            &Toast::SetForegroundColor);
+
+  scaler->AddChild(std::move(element));
   scene_->AddUiElement(kExclusiveScreenToastViewportAwareTransientParent,
-                       std::move(element));
+                       std::move(scaler));
 }
 
 }  // namespace vr
