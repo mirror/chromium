@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "790c8bd9_f532df98",
+        "filename": "third_party/libpng/arm/palette_neon_intrinsics.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1177474
+      },
+      "writtenOn": "2017-12-18T19:05:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "23439140_34eb2a84",
+      "range": {
+        "startLine": 32,
+        "startChar": 6,
+        "endLine": 32,
+        "endChar": 27
+      },
+      "revId": "643741c4739100b9e8a1fdad44f1b6722b1e18b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f457a950_d32c3684",
         "filename": "third_party/libpng/arm/palette_neon_intrinsics.c",
         "patchSetId": 4
@@ -191,6 +215,30 @@
     },
     {
       "key": {
+        "uuid": "9d686776_7bebdc1f",
+        "filename": "third_party/libpng/arm/palette_neon_intrinsics.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1177474
+      },
+      "writtenOn": "2017-12-18T19:05:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "95e23027_f9e55277",
+      "range": {
+        "startLine": 64,
+        "startChar": 69,
+        "endLine": 64,
+        "endChar": 70
+      },
+      "revId": "643741c4739100b9e8a1fdad44f1b6722b1e18b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4a2f59da_a54fe089",
         "filename": "third_party/libpng/arm/palette_neon_intrinsics.c",
         "patchSetId": 4
@@ -262,6 +310,30 @@
     },
     {
       "key": {
+        "uuid": "8d45db49_55b2928b",
+        "filename": "third_party/libpng/arm/palette_neon_intrinsics.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1177474
+      },
+      "writtenOn": "2017-12-18T19:05:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8324166a_3d9f6530",
+      "range": {
+        "startLine": 68,
+        "startChar": 20,
+        "endLine": 68,
+        "endChar": 22
+      },
+      "revId": "643741c4739100b9e8a1fdad44f1b6722b1e18b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2af56cc1_2e72eeb2",
         "filename": "third_party/libpng/arm/palette_neon_intrinsics.c",
         "patchSetId": 4
@@ -306,6 +378,30 @@
       "revId": "643741c4739100b9e8a1fdad44f1b6722b1e18b5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fc6858a_7e2fcb75",
+        "filename": "third_party/libpng/arm/palette_neon_intrinsics.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1177474
+      },
+      "writtenOn": "2017-12-18T19:05:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fbdfa02f_2ad9b785",
+      "range": {
+        "startLine": 79,
+        "startChar": 47,
+        "endLine": 79,
+        "endChar": 49
+      },
+      "revId": "643741c4739100b9e8a1fdad44f1b6722b1e18b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -356,6 +452,30 @@
     },
     {
       "key": {
+        "uuid": "17c462a5_bf8e6edb",
+        "filename": "third_party/libpng/arm/palette_neon_intrinsics.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1177474
+      },
+      "writtenOn": "2017-12-18T19:05:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ff696927_51ccbd4f",
+      "range": {
+        "startLine": 82,
+        "startChar": 3,
+        "endLine": 84,
+        "endChar": 4
+      },
+      "revId": "643741c4739100b9e8a1fdad44f1b6722b1e18b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "67138c49_da0a4921",
         "filename": "third_party/libpng/arm/palette_neon_intrinsics.c",
         "patchSetId": 4
@@ -376,6 +496,30 @@
       "revId": "643741c4739100b9e8a1fdad44f1b6722b1e18b5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffebfb92_3a08df81",
+        "filename": "third_party/libpng/arm/palette_neon_intrinsics.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1177474
+      },
+      "writtenOn": "2017-12-18T19:05:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67138c49_da0a4921",
+      "range": {
+        "startLine": 101,
+        "startChar": 0,
+        "endLine": 102,
+        "endChar": 24
+      },
+      "revId": "643741c4739100b9e8a1fdad44f1b6722b1e18b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -450,6 +594,30 @@
     },
     {
       "key": {
+        "uuid": "ed0bdb4e_850b7718",
+        "filename": "third_party/libpng/arm/palette_neon_intrinsics.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1177474
+      },
+      "writtenOn": "2017-12-18T19:05:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4c346531_523e8946",
+      "range": {
+        "startLine": 104,
+        "startChar": 20,
+        "endLine": 104,
+        "endChar": 22
+      },
+      "revId": "643741c4739100b9e8a1fdad44f1b6722b1e18b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "203b4271_573ca2d5",
         "filename": "third_party/libpng/arm/palette_neon_intrinsics.c",
         "patchSetId": 4
@@ -521,6 +689,30 @@
     },
     {
       "key": {
+        "uuid": "863e2c42_9ece3ab5",
+        "filename": "third_party/libpng/arm/palette_neon_intrinsics.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1177474
+      },
+      "writtenOn": "2017-12-18T19:05:38Z",
+      "side": 1,
+      "message": "Yeah, I thought hard about using __builtin_prefetch, but I observed that in most PNGs, each row will contain large blocks with a single colour, so prefetching the entire palette is likely unnecessary.",
+      "parentUuid": "3fb0a24c_e44fa506",
+      "range": {
+        "startLine": 107,
+        "startChar": 3,
+        "endLine": 119,
+        "endChar": 4
+      },
+      "revId": "643741c4739100b9e8a1fdad44f1b6722b1e18b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "83830873_83e84b0e",
         "filename": "third_party/libpng/arm/palette_neon_intrinsics.c",
         "patchSetId": 4
@@ -532,6 +724,47 @@
       "writtenOn": "2017-12-13T23:40:09Z",
       "side": 1,
       "message": "Maybe use a const variable to store the value with a descriptive name?",
+      "revId": "643741c4739100b9e8a1fdad44f1b6722b1e18b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f65db3d3_6482e511",
+        "filename": "third_party/libpng/arm/palette_neon_intrinsics.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1177474
+      },
+      "writtenOn": "2017-12-18T19:05:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "83830873_83e84b0e",
+      "revId": "643741c4739100b9e8a1fdad44f1b6722b1e18b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "866b1504_6d6162af",
+        "filename": "third_party/libpng/arm/palette_neon_intrinsics.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1177474
+      },
+      "writtenOn": "2017-12-18T19:05:38Z",
+      "side": 1,
+      "message": "Variable corrected to 8 in the next patchset.",
+      "range": {
+        "startLine": 122,
+        "startChar": 11,
+        "endLine": 122,
+        "endChar": 12
+      },
       "revId": "643741c4739100b9e8a1fdad44f1b6722b1e18b5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
