@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a6180c6_ccb4ea86",
+        "filename": "components/password_manager/core/browser/password_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 492,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-18T18:14:02Z",
+      "side": 1,
+      "message": "nit: Would it be better to call OnPasswordFormSubmittedNoChecks from OnInPageNavigation and move OnInPageNavigation implementation to OnPasswordFormSubmittedNoChecks?",
+      "range": {
+        "startLine": 492,
+        "startChar": 29,
+        "endLine": 492,
+        "endChar": 42
+      },
+      "revId": "4af99a06a9a816d89590577261d2514828203814",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93e77910_f5831b42",
+        "filename": "ios/chrome/browser/passwords/password_controller_unittest.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 1574,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-18T18:14:02Z",
+      "side": 1,
+      "message": "Why do we need to wait for 1 second? Is there a condition for which we can wait for?\n\nWaiting for arbitrary timeout is problematic because it makes tests longer to run and increase flakiness.",
+      "range": {
+        "startLine": 1574,
+        "startChar": 19,
+        "endLine": 1574,
+        "endChar": 42
+      },
+      "revId": "4af99a06a9a816d89590577261d2514828203814",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb3bf0dd_c852aa19",
+        "filename": "ios/chrome/browser/passwords/resources/password_controller.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-18T18:14:02Z",
+      "side": 1,
+      "message": "nit: Remove var. This variable is already declared.",
+      "range": {
+        "startLine": 152,
+        "startChar": 11,
+        "endLine": 152,
+        "endChar": 13
+      },
+      "revId": "4af99a06a9a816d89590577261d2514828203814",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
