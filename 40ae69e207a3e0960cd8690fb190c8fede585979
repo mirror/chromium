@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "0969b577_e9a8f91c",
+        "filename": "extensions/renderer/resources/platform_app.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-12-18T08:28:46Z",
+      "side": 0,
+      "message": "Just FYI,\n\nIf it\u0027s super important to disallow the apps to access document.all, technically it\u0027s possible to remove the property (or re-define the property).\n\n    delete Document.prototype.all  // Delete the property.\n    // document.all \u003d\u003e undefined\n\nAnyway, as Bhagirathi wrote, |all| property is *shadowed* by |disableGetters|.  It\u0027s just shadowed, so you can access it as:\n\n    Object.getOwnPropertyDescriptor(Document.prototype, \u0027all\u0027).get.call(document)\n\nunless you\u0027ve deleted |all| property like the above.\n\nIn other words, we can improve |disableGetters| and |disableMethods| so that they find the original definitions and replace them with whatever we want.  IMHO, it\u0027s a minor improvement, though.",
+      "parentUuid": "f656afe6_798f545d",
+      "revId": "40ae69e207a3e0960cd8690fb190c8fede585979",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "304192ef_b4b15774",
         "filename": "third_party/WebKit/LayoutTests/virtual/stable/webexposed/global-interface-listing-expected.txt",
         "patchSetId": 7
