@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "aba3ed2e_fc7e0ffb",
+        "filename": "chrome/browser/chromeos/login/supervised/supervised_user_test_base.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1206539
+      },
+      "writtenOn": "2017-12-18T10:55:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b7ea02ca_0ecab9a0",
+      "revId": "e1ccba8af82c472fc56c0a4712ba6d0086fe6edf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6a4f41b1_29fcb650",
         "filename": "chromeos/dbus/cryptohome_client.h",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-15T09:40:07Z",
       "side": 1,
       "message": "Could you keep using DBusMethodCallback\u003ccryptohome::BaseReply\u003e to keep CryptohomeClient minimal?\nhttps://chromium.googlesource.com/chromiumos/docs/+/master/dbus_in_chrome.md#Keep-your-class-minimal\n\nI think MapError should be placed in homedir_methods.cc/h as a utility function, and you may add another utility function which converts BaseReply \u0026 hash.",
+      "revId": "e1ccba8af82c472fc56c0a4712ba6d0086fe6edf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "375e8760_fce240e6",
+        "filename": "chromeos/dbus/cryptohome_client.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 525,
+      "author": {
+        "id": 1206539
+      },
+      "writtenOn": "2017-12-18T10:55:33Z",
+      "side": 1,
+      "message": "Is that where you think the shared logic, e.g. MapError and the BaseReply to mount hash conversion should ultimately live? The problem I have is that it still adds an extra layer of indirection for callers; it would be nice if we could get rid of that whole file.\n\nAs an aside it seems like the API has an issue if every caller wants the same thing but we don\u0027t implement the functionality as a contract of the API.\n\nWDYT?",
+      "parentUuid": "6a4f41b1_29fcb650",
       "revId": "e1ccba8af82c472fc56c0a4712ba6d0086fe6edf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "99bc08f7_fa037b84",
+        "filename": "chromeos/dbus/fake_cryptohome_client.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1206539
+      },
+      "writtenOn": "2017-12-18T10:55:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6f05b9b6_6ee97454",
+      "revId": "e1ccba8af82c472fc56c0a4712ba6d0086fe6edf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "204c6964_0018e729",
         "filename": "chromeos/dbus/fake_cryptohome_client.h",
         "patchSetId": 4
@@ -67,6 +121,24 @@
       "revId": "e1ccba8af82c472fc56c0a4712ba6d0086fe6edf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5778c1c1_2cc6642c",
+        "filename": "chromeos/dbus/fake_cryptohome_client.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1206539
+      },
+      "writtenOn": "2017-12-18T10:55:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "204c6964_0018e729",
+      "revId": "e1ccba8af82c472fc56c0a4712ba6d0086fe6edf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "add86fb5_d9c401f0",
+        "filename": "chromeos/dbus/fake_cryptohome_client.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1206539
+      },
+      "writtenOn": "2017-12-18T10:55:33Z",
+      "side": 1,
+      "message": "Done, I know hidehiko@ has some opinions about this but I don\u0027t feel super strongly either way, having tried both. If we have concerns later we can always revisit.",
+      "parentUuid": "b7275c0b_4367e307",
+      "revId": "e1ccba8af82c472fc56c0a4712ba6d0086fe6edf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a852e831_850685b7",
         "filename": "chromeos/dbus/fake_cryptohome_client.h",
         "patchSetId": 4
@@ -101,6 +191,24 @@
       "revId": "e1ccba8af82c472fc56c0a4712ba6d0086fe6edf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8603d4e_222943c3",
+        "filename": "chromeos/dbus/fake_cryptohome_client.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1206539
+      },
+      "writtenOn": "2017-12-18T10:55:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a852e831_850685b7",
+      "revId": "e1ccba8af82c472fc56c0a4712ba6d0086fe6edf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
