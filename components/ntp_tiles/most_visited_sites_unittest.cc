@@ -274,96 +274,97 @@ class MockIconCacher : public IconCacher {
 class PopularSitesFactoryForTest {
  public:
   PopularSitesFactoryForTest(
-      bool enabled,
       sync_preferences::TestingPrefServiceSyncable* pref_service)
       : prefs_(pref_service),
         url_fetcher_factory_(/*default_factory=*/nullptr),
         url_request_context_(new net::TestURLRequestContextGetter(
             base::ThreadTaskRunnerHandle::Get())) {
     PopularSitesImpl::RegisterProfilePrefs(pref_service->registry());
-    if (enabled) {
-      prefs_->SetString(prefs::kPopularSitesOverrideCountry, "IN");
-      prefs_->SetString(prefs::kPopularSitesOverrideVersion, "5");
+  }
 
-      url_fetcher_factory_.SetFakeResponse(
-          GURL("https://www.gstatic.com/chrome/ntp/suggested_sites_IN_5.json"),
-          R"([{
-                "title": "PopularSite1",
-                "url": "http://popularsite1/",
-                "favicon_url": "http://popularsite1/favicon.ico"
-              },
-              {
-                "title": "PopularSite2",
-                "url": "http://popularsite2/",
-                "favicon_url": "http://popularsite2/favicon.ico"
-              },
-             ])",
-          net::HTTP_OK, net::URLRequestStatus::SUCCESS);
+  void SeedWithSampleData() {
+    prefs_->SetString(prefs::kPopularSitesOverrideCountry, "IN");
+    prefs_->SetString(prefs::kPopularSitesOverrideVersion, "5");
 
-      url_fetcher_factory_.SetFakeResponse(
-          GURL("https://www.gstatic.com/chrome/ntp/suggested_sites_US_5.json"),
-          R"([{
-                "title": "ESPN",
-                "url": "http://www.espn.com",
-                "favicon_url": "http://www.espn.com/favicon.ico"
-              }, {
-                "title": "Mobile",
-                "url": "http://www.mobile.de",
-                "favicon_url": "http://www.mobile.de/favicon.ico"
-              }, {
-                "title": "Google News",
-                "url": "http://news.google.com",
-                "favicon_url": "http://news.google.com/favicon.ico"
-              },
-             ])",
-          net::HTTP_OK, net::URLRequestStatus::SUCCESS);
+    url_fetcher_factory_.ClearFakeResponses();
+    url_fetcher_factory_.SetFakeResponse(
+        GURL("https://www.gstatic.com/chrome/ntp/suggested_sites_IN_5.json"),
+        R"([{
+              "title": "PopularSite1",
+              "url": "http://popularsite1/",
+              "favicon_url": "http://popularsite1/favicon.ico"
+            },
+            {
+              "title": "PopularSite2",
+              "url": "http://popularsite2/",
+              "favicon_url": "http://popularsite2/favicon.ico"
+            },
+           ])",
+        net::HTTP_OK, net::URLRequestStatus::SUCCESS);
 
-      url_fetcher_factory_.SetFakeResponse(
-          GURL("https://www.gstatic.com/chrome/ntp/suggested_sites_IN_6.json"),
-          R"([{
-                "section": 1, // PERSONALIZED
+    url_fetcher_factory_.SetFakeResponse(
+        GURL("https://www.gstatic.com/chrome/ntp/suggested_sites_US_5.json"),
+        R"([{
+              "title": "ESPN",
+              "url": "http://www.espn.com",
+              "favicon_url": "http://www.espn.com/favicon.ico"
+            }, {
+              "title": "Mobile",
+              "url": "http://www.mobile.de",
+              "favicon_url": "http://www.mobile.de/favicon.ico"
+            }, {
+              "title": "Google News",
+              "url": "http://news.google.com",
+              "favicon_url": "http://news.google.com/favicon.ico"
+            },
+           ])",
+        net::HTTP_OK, net::URLRequestStatus::SUCCESS);
+
+    url_fetcher_factory_.SetFakeResponse(
+        GURL("https://www.gstatic.com/chrome/ntp/suggested_sites_IN_6.json"),
+        R"([{
+              "section": 1, // PERSONALIZED
+              "sites": [{
+                  "title": "PopularSite1",
+                  "url": "http://popularsite1/",
+                  "favicon_url": "http://popularsite1/favicon.ico"
+                },
+                {
+                  "title": "PopularSite2",
+                  "url": "http://popularsite2/",
+                  "favicon_url": "http://popularsite2/favicon.ico"
+                },
+               ]
+            },
+            {
+                "section": 4,  // NEWS
                 "sites": [{
-                    "title": "PopularSite1",
-                    "url": "http://popularsite1/",
-                    "favicon_url": "http://popularsite1/favicon.ico"
-                  },
-                  {
-                    "title": "PopularSite2",
-                    "url": "http://popularsite2/",
-                    "favicon_url": "http://popularsite2/favicon.ico"
-                  },
-                 ]
-              },
-              {
-                  "section": 4,  // NEWS
-                  "sites": [{
-                      "large_icon_url": "https://news.google.com/icon.ico",
-                      "title": "Google News",
-                      "url": "https://news.google.com/"
-                  },
-                  {
-                      "favicon_url": "https://news.google.com/icon.ico",
-                      "title": "Google News Germany",
-                      "url": "https://news.google.de/"
-                  }]
-              },
-              {
-                  "section": 2,  // SOCIAL
-                  "sites": [{
-                      "large_icon_url": "https://ssl.gstatic.com/icon.png",
-                      "title": "Google+",
-                      "url": "https://plus.google.com/"
-                  }]
-              },
-              {
-                  "section": 3,  // ENTERTAINMENT
-                  "sites": [
-                      // Intentionally empty site list.
-                  ]
-              }
-          ])",
-          net::HTTP_OK, net::URLRequestStatus::SUCCESS);
-    }
+                    "large_icon_url": "https://news.google.com/icon.ico",
+                    "title": "Google News",
+                    "url": "https://news.google.com/"
+                },
+                {
+                    "favicon_url": "https://news.google.com/icon.ico",
+                    "title": "Google News Germany",
+                    "url": "https://news.google.de/"
+                }]
+            },
+            {
+                "section": 2,  // SOCIAL
+                "sites": [{
+                    "large_icon_url": "https://ssl.gstatic.com/icon.png",
+                    "title": "Google+",
+                    "url": "https://plus.google.com/"
+                }]
+            },
+            {
+                "section": 3,  // ENTERTAINMENT
+                "sites": [
+                    // Intentionally empty site list.
+                ]
+            }
+        ])",
+        net::HTTP_OK, net::URLRequestStatus::SUCCESS);
   }
 
   std::unique_ptr<PopularSites> New() {
@@ -410,21 +411,22 @@ class TopSitesCallbackList {
 class MostVisitedSitesTest : public ::testing::TestWithParam<bool> {
  protected:
   MostVisitedSitesTest()
-      : popular_sites_factory_(/*enabled=*/GetParam(), &pref_service_),
+      : popular_sites_factory_(&pref_service_),
         mock_top_sites_(new StrictMock<MockTopSites>()) {
     MostVisitedSites::RegisterProfilePrefs(pref_service_.registry());
 
-    if (IsPopularSitesEnabledViaVariations()) {
-      base::CommandLine::ForCurrentProcess()->AppendSwitch(
-          switches::kEnableNTPPopularSites);
+    // Disable FaviconServer in most tests and override in specific tests.
+    if (IsPopularSitesFeatureEnabled()) {
+      feature_list_.InitWithFeatures(
+          /*enabled_features=*/{kUsePopularSitesSuggestions},
+          /*disabled_features=*/{kNtpMostLikelyFaviconsFromServerFeature});
     } else {
-      base::CommandLine::ForCurrentProcess()->AppendSwitch(
-          switches::kDisableNTPPopularSites);
+      feature_list_.InitWithFeatures(
+          /*enabled_features=*/{},
+          /*disabled_features=*/{kUsePopularSitesSuggestions,
+                                 kNtpMostLikelyFaviconsFromServerFeature});
     }
-
-    // Disable in most tests, this is overriden in a specific test.
-    feature_list_.InitAndDisableFeature(
-        kNtpMostLikelyFaviconsFromServerFeature);
+    MaybeUseSamplePopularSites();
 
     RecreateMostVisitedSites();
   }
@@ -435,7 +437,7 @@ class MostVisitedSitesTest : public ::testing::TestWithParam<bool> {
     auto icon_cacher = base::MakeUnique<StrictMock<MockIconCacher>>();
     icon_cacher_ = icon_cacher.get();
 
-    if (IsPopularSitesEnabledViaVariations()) {
+    if (ShouldTestPopularSites()) {
       // Populate Popular Sites' internal cache by mimicking a past usage of
       // PopularSitesImpl.
       auto tmp_popular_sites = popular_sites_factory_.New();
@@ -469,7 +471,19 @@ class MostVisitedSitesTest : public ::testing::TestWithParam<bool> {
         /*supervisor=*/nullptr);
   }
 
-  bool IsPopularSitesEnabledViaVariations() const { return GetParam(); }
+  bool IsPopularSitesFeatureEnabled() const { return GetParam(); }
+
+  bool ShouldTestPopularSites() const {
+    return IsPopularSitesFeatureEnabled() ||
+           base::CommandLine::ForCurrentProcess()->HasSwitch(
+               switches::kEnableNTPPopularSites);
+  }
+
+  void MaybeUseSamplePopularSites() {
+    if (ShouldTestPopularSites()) {
+      popular_sites_factory_.SeedWithSampleData();
+    }
+  }
 
   bool VerifyAndClearExpectations() {
     base::RunLoop().RunUntilIdle();
@@ -478,7 +492,7 @@ class MostVisitedSitesTest : public ::testing::TestWithParam<bool> {
         Mock::VerifyAndClearExpectations(&mock_suggestions_service_) &&
         Mock::VerifyAndClearExpectations(&mock_observer_);
     // For convenience, restore the expectations for IsBlacklisted().
-    if (IsPopularSitesEnabledViaVariations()) {
+    if (ShouldTestPopularSites()) {
       EXPECT_CALL(*mock_top_sites_, IsBlacklisted(_))
           .WillRepeatedly(Return(false));
     }
@@ -890,6 +904,47 @@ TEST_P(MostVisitedSitesTest, ShouldInformSuggestionSourcesWhenBlacklisting) {
                                                  /*add_url=*/false);
 }
 
+TEST_P(MostVisitedSitesTest, ShouldForceDisablePopularSitesWithFlag) {
+  base::CommandLine::ForCurrentProcess()->AppendSwitch(
+      switches::kDisableNTPPopularSites);
+  RecreateMostVisitedSites();
+  DisableRemoteSuggestions();
+  EXPECT_CALL(*mock_top_sites_, GetMostVisitedURLs(_, false))
+      .WillRepeatedly(InvokeCallbackArgument<0>(MostVisitedURLList{}));
+  EXPECT_CALL(*mock_top_sites_, SyncWithHistory());
+  std::map<SectionType, NTPTilesVector> sections;
+  EXPECT_CALL(mock_observer_, OnURLsAvailable(_))
+      .WillOnce(SaveArg<0>(&sections));
+
+  most_visited_sites_->SetMostVisitedURLsObserver(&mock_observer_,
+                                                  /*num_sites=*/6);
+  base::RunLoop().RunUntilIdle();
+
+  ASSERT_THAT(sections, Contains(Key(SectionType::PERSONALIZED)));
+  EXPECT_THAT(sections.at(SectionType::PERSONALIZED), IsEmpty());
+}
+
+TEST_P(MostVisitedSitesTest, ShouldForceEnablePopularSitesWithFlag) {
+  base::CommandLine::ForCurrentProcess()->AppendSwitch(
+      switches::kEnableNTPPopularSites);
+  MaybeUseSamplePopularSites();
+  RecreateMostVisitedSites();
+  DisableRemoteSuggestions();
+  EXPECT_CALL(*mock_top_sites_, GetMostVisitedURLs(_, false))
+      .WillRepeatedly(InvokeCallbackArgument<0>(MostVisitedURLList{}));
+  EXPECT_CALL(*mock_top_sites_, SyncWithHistory());
+  std::map<SectionType, NTPTilesVector> sections;
+  EXPECT_CALL(mock_observer_, OnURLsAvailable(_))
+      .WillOnce(SaveArg<0>(&sections));
+
+  most_visited_sites_->SetMostVisitedURLsObserver(&mock_observer_,
+                                                  /*num_sites=*/6);
+  base::RunLoop().RunUntilIdle();
+
+  ASSERT_THAT(sections, Contains(Key(SectionType::PERSONALIZED)));
+  EXPECT_THAT(sections.at(SectionType::PERSONALIZED), Not(IsEmpty()));
+}
+
 TEST_P(MostVisitedSitesTest, ShouldContainSiteExplorationsWhenFeatureEnabled) {
   base::test::ScopedFeatureList feature_list;
   std::map<SectionType, NTPTilesVector> sections;
@@ -908,7 +963,7 @@ TEST_P(MostVisitedSitesTest, ShouldContainSiteExplorationsWhenFeatureEnabled) {
                                                   /*num_sites=*/3);
   base::RunLoop().RunUntilIdle();
 
-  if (!IsPopularSitesEnabledViaVariations()) {
+  if (!ShouldTestPopularSites()) {
     EXPECT_THAT(
         sections,
         Contains(Pair(SectionType::PERSONALIZED,
@@ -957,7 +1012,7 @@ TEST_P(MostVisitedSitesTest,
   EXPECT_THAT(sections.at(SectionType::PERSONALIZED),
               Contains(MatchesTile("Google", "http://www.google.com/",
                                    TileSource::TOP_SITES)));
-  if (IsPopularSitesEnabledViaVariations()) {
+  if (ShouldTestPopularSites()) {
     EXPECT_THAT(sections.at(SectionType::PERSONALIZED),
                 Contains(MatchesTile("Google News", "http://news.google.com/",
                                      TileSource::POPULAR)));
@@ -986,7 +1041,7 @@ TEST_P(MostVisitedSitesTest, ShouldHandleTopSitesCacheHit) {
                        &SuggestionsService::ResponseCallbackList::Add));
   EXPECT_CALL(mock_suggestions_service_, GetSuggestionsDataFromCache())
       .WillOnce(Return(SuggestionsProfile()));  // Empty cache.
-  if (IsPopularSitesEnabledViaVariations()) {
+  if (ShouldTestPopularSites()) {
     EXPECT_CALL(
         mock_observer_,
         OnURLsAvailable(Contains(Pair(
@@ -1018,7 +1073,7 @@ TEST_P(MostVisitedSitesTest, ShouldHandleTopSitesCacheHit) {
   EXPECT_CALL(*mock_top_sites_, GetMostVisitedURLs(_, false))
       .WillOnce(InvokeCallbackArgument<0>(
           MostVisitedURLList{MakeMostVisitedURL("Site 2", "http://site2/")}));
-  if (IsPopularSitesEnabledViaVariations()) {
+  if (ShouldTestPopularSites()) {
     EXPECT_CALL(*mock_top_sites_, IsBlacklisted(_))
         .WillRepeatedly(Return(false));
   }
@@ -1083,7 +1138,7 @@ class MostVisitedSitesWithCacheHitTest : public MostVisitedSitesTest {
             MakeSuggestion("Site 3", "http://site3/"),
         })));
 
-    if (IsPopularSitesEnabledViaVariations()) {
+    if (ShouldTestPopularSites()) {
       EXPECT_CALL(
           mock_observer_,
           OnURLsAvailable(Contains(Pair(
@@ -1161,7 +1216,7 @@ TEST_P(MostVisitedSitesWithCacheHitTest, ShouldTruncateList) {
 
 TEST_P(MostVisitedSitesWithCacheHitTest,
        ShouldCompleteWithPopularSitesIffEnabled) {
-  if (IsPopularSitesEnabledViaVariations()) {
+  if (ShouldTestPopularSites()) {
     EXPECT_CALL(
         mock_observer_,
         OnURLsAvailable(Contains(
@@ -1259,7 +1314,7 @@ TEST_P(MostVisitedSitesWithEmptyCacheTest,
 
 TEST_P(MostVisitedSitesWithEmptyCacheTest,
        ShouldCompleteWithPopularSitesIffEnabled) {
-  if (IsPopularSitesEnabledViaVariations()) {
+  if (ShouldTestPopularSites()) {
     EXPECT_CALL(
         mock_observer_,
         OnURLsAvailable(Contains(
@@ -1438,7 +1493,7 @@ TEST_P(MostVisitedSitesWithEmptyCacheTest, ShouldPropagateUpdateByTopSites) {
 
 TEST_P(MostVisitedSitesWithEmptyCacheTest,
        ShouldSendEmptyListIfBothTopSitesAndSuggestionsServiceEmpty) {
-  if (IsPopularSitesEnabledViaVariations()) {
+  if (ShouldTestPopularSites()) {
     EXPECT_CALL(
         mock_observer_,
         OnURLsAvailable(Contains(
