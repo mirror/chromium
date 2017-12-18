@@ -115,15 +115,18 @@ int GetDPI(const PrintMsg_Print_Params* print_params) {
   // on dpi.
   return kPointsPerInch;
 #else
-  return static_cast<int>(print_params->dpi);
+  // Use min to avoid laying out the page into too large an area.
+  return static_cast<int>(
+      std::min(print_params->dpi.width(), print_params->dpi.height()));
 #endif  // defined(OS_MACOSX)
 }
 
 bool PrintMsg_Print_Params_IsValid(const PrintMsg_Print_Params& params) {
   return !params.content_size.IsEmpty() && !params.page_size.IsEmpty() &&
          !params.printable_area.IsEmpty() && params.document_cookie &&
-         params.dpi && params.margin_top >= 0 && params.margin_left >= 0 &&
-         params.dpi > kMinDpi && params.document_cookie != 0;
+         !params.dpi.IsEmpty() && params.margin_top >= 0 &&
+         params.margin_left >= 0 && params.dpi.width() > kMinDpi &&
+         params.dpi.height() > kMinDpi && params.document_cookie != 0;
 }
 
 // Helper function to check for fit to page
@@ -179,7 +182,6 @@ PrintMsg_Print_Params GetCssPrintParams(
   page_css_params.content_size =
       gfx::Size(ConvertUnit(new_content_width, kPixelsPerInch, dpi),
                 ConvertUnit(new_content_height, kPixelsPerInch, dpi));
-
   page_css_params.margin_top =
       ConvertUnit(margin_top_in_pixels, kPixelsPerInch, dpi);
   page_css_params.margin_left =
@@ -1503,7 +1505,8 @@ void PrintRenderFrameHelper::Print(blink::WebLocalFrame* frame,
 
     print_settings.params.print_scaling_option = scaling_option;
     SetPrintPagesParams(print_settings);
-    if (!print_settings.params.dpi || !print_settings.params.document_cookie) {
+    if (!!print_settings.params.dpi.IsEmpty() ||
+        !print_settings.params.document_cookie) {
       DidFinishPrinting(OK);  // Release resources and fail silently on failure.
       return;
     }
@@ -1620,6 +1623,21 @@ bool PrintRenderFrameHelper::PrintPagesNative(blink::WebLocalFrame* frame,
     PrintPageInternal(print_params, printed_pages[i], page_count, frame,
                       &metafile, nullptr, nullptr);
   }
+#if defined(OS_WIN)
+  // Adjust for rectangular DPI as needed. This does not do anything if the
+  // printer has square DPI (most cases).
+  int dpi_x = print_params.dpi.width();
+  int dpi_y = print_params.dpi.height();
+  int dpi = std::min(dpi_x, dpi_y);
+  page_params.page_size =
+      gfx::Size(page_params.page_size.width() * dpi_x / dpi,
+                page_params.page_size.height() * dpi_y / dpi);
+  page_params.content_area =
+      gfx::Rect(page_params.content_area.x() * dpi_x / dpi,
+                page_params.content_area.y() * dpi_y / dpi,
+                page_params.content_area.width() * dpi_x / dpi,
+                page_params.content_area.height() * dpi_y / dpi);
+#endif
 
   // blink::printEnd() for PDF should be called before metafile is closed.
   FinishFramePrinting();
@@ -1634,7 +1652,10 @@ bool PrintRenderFrameHelper::PrintPagesNative(blink::WebLocalFrame* frame,
   page_params.data_size = metafile.GetDataSize();
   page_params.document_cookie = print_params.document_cookie;
 #if defined(OS_WIN)
-  page_params.physical_offsets = printer_printable_area_.origin();
+  page_params.physical_offsets.set_x(printer_printable_area_.origin().x() *
+                                     dpi_x / dpi);
+  page_params.physical_offsets.set_y(printer_printable_area_.origin().y() *
+                                     dpi_y / dpi);
 #endif
   Send(new PrintHostMsg_DidPrintDocument(routing_id(), page_params));
   return true;
@@ -1803,6 +1824,17 @@ bool PrintRenderFrameHelper::UpdatePrintSettings(
     print_preview_context_.set_error(PREVIEW_ERROR_BAD_SETTING);
     return false;
   }
+  settings.params.print_to_pdf = IsPrintToPdfRequested(*job_settings);
+  UpdateFrameMarginsCssInfo(*job_settings);
+  settings.params.print_scaling_option = GetPrintScalingOption(
+      frame, node, source_is_html, *job_settings, settings.params);
+
+  // Set dpi to equal in both dimensions if this is print preview.
+  int min_dpi = GetDPI(&(settings.params));
+  if (min_dpi > 0)
+    settings.params.dpi = gfx::Size(min_dpi, min_dpi);
+  LOG(ERROR) << "Set DPI to " << settings.params.dpi.width() << " X "
+             << settings.params.dpi.height();
 
   settings.params.print_to_pdf = IsPrintToPdfRequested(*job_settings);
   UpdateFrameMarginsCssInfo(*job_settings);
@@ -1904,7 +1936,6 @@ void PrintRenderFrameHelper::PrintPageInternal(
     *content_area_in_dpi =
         gfx::Rect(0, 0, page_size_in_dpi->width(), page_size_in_dpi->height());
   }
-
   gfx::Rect canvas_area =
       params.display_header_footer ? gfx::Rect(page_size) : content_area;
 
