@@ -26,8 +26,8 @@
   {{enum_name}}.validate = function(enumValue) {
     var isExtensible = {% if enum.extensible %}true{% else %}false{% endif %};
     if (isExtensible || this.isKnownEnumValue(enumValue))
-      return validator.validationError.NONE;
+      return mojoRef.internal.validationError.NONE;
 
-    return validator.validationError.UNKNOWN_ENUM_VALUE;
+    return mojoRef.internal.validationError.UNKNOWN_ENUM_VALUE;
   };
 {%- endmacro %}
