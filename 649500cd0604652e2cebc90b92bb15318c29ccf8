@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3716276f_67bee2cb",
+        "filename": "chrome/browser/devtools/device/usb/android_usb_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-18T22:02:08Z",
+      "side": 1,
+      "message": "For later: Maybe find a way to use a StringPiece here?",
+      "revId": "649500cd0604652e2cebc90b92bb15318c29ccf8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
