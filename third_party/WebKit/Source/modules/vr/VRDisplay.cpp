@@ -208,18 +208,12 @@ void VRDisplay::RequestVSync() {
   Document* doc = navigator_vr_->GetDocument();
   if (!doc || !display_)
     return;
-  // If we've switched from magic window to presenting, cancel the Document rAF
-  // and start the VrPresentationProvider VSync.
-  if (is_presenting_ && pending_magic_window_vsync_id_ != -1) {
-    doc->CancelAnimationFrame(pending_magic_window_vsync_id_);
-    pending_magic_window_vsync_ = false;
-    pending_magic_window_vsync_id_ = -1;
-  }
-  if (display_blurred_ || pending_magic_window_vsync_ ||
-      pending_presenting_vsync_)
+  if (display_blurred_)
     return;
 
   if (!is_presenting_) {
+    if (pending_magic_window_vsync_)
+      return;
     magic_window_provider_->GetPose(
         WTF::Bind(&VRDisplay::OnMagicWindowPose, WrapWeakPersistent(this)));
     pending_magic_window_vsync_ = true;
@@ -230,6 +224,9 @@ void VRDisplay::RequestVSync() {
     return;
   }
   DCHECK(vr_presentation_provider_.is_bound());
+
+  if (pending_presenting_vsync_)
+    return;
 
   // The logic here is a bit subtle. We get called from one of the following
   // four contexts:
@@ -1043,6 +1040,8 @@ void VRDisplay::OnMagicWindowVSync(double timestamp) {
   DVLOG(2) << __FUNCTION__;
   pending_magic_window_vsync_ = false;
   pending_magic_window_vsync_id_ = -1;
+  if (is_presenting_)
+    return;
   vr_frame_id_ = -1;
   ProcessScheduledAnimations(timestamp);
 }
