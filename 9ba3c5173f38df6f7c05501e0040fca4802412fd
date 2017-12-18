@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "537350c1_fc91ad62",
+        "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 2468,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-12-18T21:21:57Z",
+      "side": 1,
+      "message": "With my comment in LayoutBox, all you\u0027d have to do is pass zoom_in_to_legible_scale here and make sure it gets propagated across frames.",
+      "range": {
+        "startLine": 2468,
+        "startChar": 39,
+        "endLine": 2468,
+        "endChar": 63
+      },
+      "revId": "9ba3c5173f38df6f7c05501e0040fca4802412fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cd7b1043_d00f55bc",
         "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.cpp",
         "patchSetId": 1
@@ -13,6 +36,75 @@
       "writtenOn": "2017-12-15T22:54:28Z",
       "side": 1,
       "message": "Ideally we should use the element\u0027s dimension (the actual \u003cinput/\u003e) and caret bounds to resovle this. Right now the issue with using the method is that if the user has zoomed in, tapping the input will actually zoom out a bit. Also if the \u003cinput/\u003e is too wide or long, or caret is further away from top-left (or it is a Right-to-Left font) we might have issues here.",
+      "revId": "9ba3c5173f38df6f7c05501e0040fca4802412fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81bfd0f3_a23f533f",
+        "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 3263,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-12-18T21:21:57Z",
+      "side": 1,
+      "message": "Did you notice how this works today? IIRC there was some logic to make sure we don\u0027t zoom again if we\u0027re already zoomed, perhaps somewhere in ComputeScaleAndScrollForBlockRect...this shouldn\u0027t be different for OOPIF vs local.",
+      "range": {
+        "startLine": 3261,
+        "startChar": 34,
+        "endLine": 3263,
+        "endChar": 42
+      },
+      "revId": "9ba3c5173f38df6f7c05501e0040fca4802412fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abedcfe7_00b76f3e",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-12-18T21:21:57Z",
+      "side": 1,
+      "message": "Is this change related to zooming the box or was this just left out from a previous patch?",
+      "range": {
+        "startLine": 172,
+        "startChar": 2,
+        "endLine": 173,
+        "endChar": 51
+      },
+      "revId": "9ba3c5173f38df6f7c05501e0040fca4802412fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56863955_9379827b",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBox.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 763,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-12-18T21:21:57Z",
+      "side": 1,
+      "message": "I think it would be cleaner if this method, if it\u0027s a MainFrame, would now call ZoomInToRect based on a passed in bool (should_zoom). That way it\u0027s naturally agnostic as to whether the scroll is coming from an OOPIF or not. You\u0027d have to add some plumbing to pass that \"should zoom\" bit around but that seems like a reasonable API for this method (we should probably also start thinking of packaging up the parameters on this method into some kind of ScrollIntoViewOptions struct).\n\nBasically, I really don\u0027t like that we\u0027re keeping the \"zoom at end\" state on Frame. That should be an option passed to ScrollIntoView rather than state on the FrameView.",
+      "range": {
+        "startLine": 763,
+        "startChar": 3,
+        "endLine": 763,
+        "endChar": 0
+      },
       "revId": "9ba3c5173f38df6f7c05501e0040fca4802412fd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
