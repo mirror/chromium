@@ -237,12 +237,15 @@ class PLATFORM_EXPORT ThreadHeap {
     // always 'alive'.
     if (!object)
       return true;
+    ThreadState* state = ThreadState::Current();
     // TODO(keishi): some tests create CrossThreadPersistent on non attached
     // threads.
-    if (!ThreadState::Current())
+    if (!state)
       return true;
-    DCHECK(&ThreadState::Current()->Heap() ==
+    DCHECK(&state->Heap() ==
            &PageFromObject(object)->Arena()->GetThreadState()->Heap());
+    if (state->IsIncrementalMarking())
+      return true;
     return ObjectAliveTrait<T>::IsHeapObjectAlive(object);
   }
   template <typename T>
@@ -289,10 +292,11 @@ class PLATFORM_EXPORT ThreadHeap {
     static_assert(IsGarbageCollectedType<T>::value,
                   "only objects deriving from GarbageCollected can be used.");
     BasePage* page = PageFromObject(object_pointer);
+    if (!page->Arena()->GetThreadState()->IsSweepingInProgress())
+      return false;
     // Page has been swept and it is still alive.
     if (page->HasBeenSwept())
       return false;
-    DCHECK(page->Arena()->GetThreadState()->IsSweepingInProgress());
 
     // If marked and alive, the object hasn't yet been swept..and won't
     // be once its page is processed.
