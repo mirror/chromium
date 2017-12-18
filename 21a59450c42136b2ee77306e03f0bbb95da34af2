@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1169afc4_6cc520da",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-12-18T14:54:35Z",
+      "side": 1,
+      "message": "s/PrimaryAccountTokenFetcher/PrimaryAccountAccessTokenFetcher",
+      "range": {
+        "startLine": 7,
+        "startChar": 29,
+        "endLine": 7,
+        "endChar": 55
+      },
+      "revId": "21a59450c42136b2ee77306e03f0bbb95da34af2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
