@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "07d6c26c_f8c4cde5",
+        "filename": "chrome/browser/vr/ui_scene_creator.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1031,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-12-18T19:54:28Z",
+      "side": 0,
+      "message": "Ian, was the removal of the keyboard rotation intentional?",
+      "revId": "4ee9515cb0b592bc9b993cc9b1360efa61bd87c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
