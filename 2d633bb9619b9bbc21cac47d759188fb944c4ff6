@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "396b3bae_6f10e8e1",
+        "filename": "tools/mb/mb_config.pyl",
+        "patchSetId": 1
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-12-18T20:41:13Z",
+      "side": 0,
+      "message": "I\u0027m not sure why this was \u0027without_codecs\u0027; changing it to match the default.",
+      "revId": "2d633bb9619b9bbc21cac47d759188fb944c4ff6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2957ab3_6c13a298",
+        "filename": "tools/mb/mb_config.pyl",
+        "patchSetId": 1
+      },
+      "lineNbr": 791,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-12-18T20:41:13Z",
+      "side": 0,
+      "message": "I\u0027m not sure why these were \u0027without_codecs\u0027, either; changing them to match the default.",
+      "revId": "2d633bb9619b9bbc21cac47d759188fb944c4ff6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
