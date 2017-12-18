@@ -36,31 +36,35 @@ class CSSPropertyHeadersWriter(CSSPropertyWriter):
                 return_type=property_method['return_type'],
                 parameters=property_method['parameters'],
             )
-        self.validate_input()
 
         self._outputs = {}
         output_dir = sys.argv[sys.argv.index('--output_dir') + 1]
         properties = self.css_properties.longhands
-        superclass = 'Longhand'
+        namespace_group = 'Longhand'
         if 'shorthands' in output_dir:
             properties = self.css_properties.shorthands
-            superclass = 'Shorthand'
+            namespace_group = 'Shorthand'
         for property_ in properties:
-            if property_['property_class'] is None:
-                continue
-            property_['unique'] = isinstance(
-                property_['property_class'], types.BooleanType)
             property_['property_methods'] = [
                 self._property_methods[method_name]
                 for method_name in property_['property_methods']
             ]
-            property_['superclass'] = superclass
+            property_['namespace_group'] = namespace_group
             class_data = self.get_class(property_)
             self.calculate_apply_functions_to_declare(property_)
             self.populate_includes(property_)
             self._outputs[class_data.classname + '.h'] = (
                 self.generate_property_h_builder(
                     class_data.classname, property_))
+        for property_ in self.css_properties.aliases:
+            if ('shorthands' in output_dir and property_['longhands']) or \
+               ('longhands' in output_dir and not property_['longhands']):
+                class_data = self.get_class(property_)
+                property_['namespace_group'] = namespace_group
+                self.populate_includes(property_)
+                self._outputs[class_data.classname + '.h'] = (
+                    self.generate_property_h_builder(
+                        class_data.classname, property_))
 
     def generate_property_h_builder(self, property_classname, property_):
         @template_expander.use_jinja(
@@ -75,11 +79,9 @@ class CSSPropertyHeadersWriter(CSSPropertyWriter):
 
     def calculate_apply_functions_to_declare(self, property_):
         # Functions should only be declared on the property classes if they are
-        # implemented and not shared (denoted by property_class = true. Shared
-        # classes are denoted by property_class = "some string").
+        # implemented.
         property_['should_declare_apply_functions'] = \
-            property_['unique'] \
-            and property_['is_property'] \
+            property_['is_property'] \
             and not property_['longhands'] \
             and not property_['direction_aware_options'] \
             and not property_['builder_skip']
@@ -119,61 +121,39 @@ class CSSPropertyHeadersWriter(CSSPropertyWriter):
 
     def populate_includes(self, property_):
         includes = []
-        if property_['direction_aware_options']:
-            includes.append("core/StylePropertyShorthand.h")
-        if property_['runtime_flag']:
-            includes.append("platform/runtime_enabled_features.h")
-        if property_['should_implement_apply_functions']:
-            includes.append("core/css/resolver/StyleResolverState.h")
-            if property_['converter'] == "CSSPrimitiveValue":
-                includes.append("core/css/CSSPrimitiveValue.h")
+        if property_['alias_for']:
+            includes.append("core/css/properties/CSSUnresolvedProperty.h")
+        else:
+            includes.append("core/css/properties/" + property_['namespace_group'] + ".h")
+            if property_['direction_aware_options']:
+                includes.append("core/StylePropertyShorthand.h")
+            if property_['runtime_flag']:
+                includes.append("platform/runtime_enabled_features.h")
+            if property_['should_implement_apply_functions']:
+                includes.append("core/css/resolver/StyleResolverState.h")
                 includes.append("core/css/CSSPrimitiveValueMappings.h")
-            elif property_['converter'] == "CSSIdentifierValue":
-                includes.append("core/css/CSSIdentifierValue.h")
-            elif property_['converter']:
-                includes.append("core/css/CSSPrimitiveValueMappings.h")
-                includes.append("core/css/resolver/StyleBuilderConverter.h")
-            if property_['font']:
-                includes.append("core/css/resolver/FontBuilder.h")
-            elif property_['svg']:
-                includes.append("core/style/ComputedStyle.h")
-                includes.append("core/style/SVGComputedStyle.h")
-            else:
-                includes.append("core/style/ComputedStyle.h")
-            if (property_.get('custom_apply_args') and
-                    property_.get('custom_apply_args').get('modifier_type') in ['Width', 'Slice', 'Outset']):
-                includes.append("core/css/properties/StyleBuildingUtils.h")
+                if property_['converter'] == "CSSPrimitiveValue":
+                    includes.append("core/css/CSSPrimitiveValue.h")
+                    includes.append("core/css/CSSPrimitiveValueMappings.h")
+                elif property_['converter'] == "CSSIdentifierValue":
+                    includes.append("core/css/CSSIdentifierValue.h")
+                elif property_['converter']:
+                    includes.append("core/css/CSSPrimitiveValueMappings.h")
+                    includes.append("core/css/resolver/StyleBuilderConverter.h")
+                if property_['font']:
+                    includes.append("core/css/resolver/FontBuilder.h")
+                elif property_['svg']:
+                    includes.append("core/css/CSSPrimitiveValueMappings.h")
+                    includes.append("core/style/ComputedStyle.h")
+                    includes.append("core/style/SVGComputedStyle.h")
+                else:
+                    includes.append("core/style/ComputedStyle.h")
+                if (property_.get('custom_apply_args') and
+                        property_.get('custom_apply_args').get('modifier_type')
+                        in ['Width', 'Slice', 'Outset']):
+                    includes.append("core/css/properties/StyleBuildingUtils.h")
         includes.sort()
         property_['includes'] = includes
-
-    def validate_input(self):
-        # First collect which classes correspond to which properties.
-        class_names_to_properties = defaultdict(list)
-        for property_ in self.css_properties.properties_including_aliases:
-            if property_['property_class'] is None:
-                continue
-            class_data = self.get_class(property_)
-            class_names_to_properties[class_data.classname].append(property_)
-        # Check that properties that share class names specify the same method
-        # names.
-        for properties in class_names_to_properties.values():
-            if len(properties) == 1:
-                assert properties[0]['property_class'] is True, 'Unique property_class ' \
-                    '{} defined on {}. property_class as a string is reserved for ' \
-                    'use with properties that share logic. Did you mean ' \
-                    'property_class: true?'.format(
-                        properties[0]['property_class'], properties[0]['name'])
-
-            property_methods = set(properties[0]['property_methods'])
-            for property_ in properties[1:]:
-                assert property_methods == set(property_['property_methods']), \
-                    'Properties {} and {} share the same property_class but do ' \
-                    'not declare the same property_methods. Properties sharing ' \
-                    'the same property_class must declare the same list of ' \
-                    'property_methods to ensure deterministic code ' \
-                    'generation.'.format(
-                        properties[0]['name'], property_['name'])
-
 
 if __name__ == '__main__':
     json5_generator.Maker(CSSPropertyHeadersWriter).main()
