@@ -13,8 +13,9 @@ interface DataPipeGetter {
   // |status|.
   Read(handle<data_pipe_producer> pipe) => (int32 status, uint64 size);
 
-  // Makes a clone so there can be multiple handles to this interface. This
-  // doesn't imply the data itself is cloned: this can be an inexpensive
-  // operation.
+  // Makes a clone so there can be multiple handles to this interface. The
+  // content can be read multiple times from multiple handles: each Read() call
+  // writes all content to the given data pipe. This doesn't imply the data
+  // itself is cloned: Clone() can be an inexpensive operation.
   Clone(DataPipeGetter& request);
 };
