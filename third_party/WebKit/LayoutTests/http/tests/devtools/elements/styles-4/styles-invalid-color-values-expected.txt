@@ -112,6 +112,26 @@ color: rgba(0,0,0,0.5)
   hsl: null
   hsla: hsla(0, 0%, 0%, 0.5)
 
+color: rgb(0,0,0,50%)
+  simple: false
+  original: rgb(0,0,0,50%)
+  hexa: #00000080
+  shorthexa: null
+  rgb: null
+  rgba: rgb(0,0,0,50%)
+  hsl: null
+  hsla: hsla(0, 0%, 0%, 0.5)
+
+color: rgb(0  0  0  /  50%)
+  simple: false
+  original: rgb(0  0  0  /  50%)
+  hexa: #00000080
+  shorthexa: null
+  rgb: null
+  rgba: rgb(0  0  0  /  50%)
+  hsl: null
+  hsla: hsla(0, 0%, 0%, 0.5)
+
 color: hsl(-120, 100%, 50%)
   simple: true
   original: hsl(-120, 100%, 50%)
@@ -122,6 +142,17 @@ color: hsl(-120, 100%, 50%)
   shorthexa: #00ff
   rgb: rgb(0, 0, 255)
   hsl: hsl(-120, 100%, 50%)
+
+color: hsl(-120deg, 100%, 50%)
+  simple: true
+  original: hsl(-120deg, 100%, 50%)
+  nickname: blue
+  hex: #0000ff
+  shorthex: #00f
+  hexa: #0000ffff
+  shorthexa: #00ff
+  rgb: rgb(0, 0, 255)
+  hsl: hsl(-120deg, 100%, 50%)
 
 color: hsl(-120, 200%, 200%)
   simple: true
@@ -250,9 +281,11 @@ SUCCESS: parsed invalid color rgb(a,b,c,d) to null
 
 SUCCESS: parsed invalid color rgb(1,1,1.2) to null
 
-SUCCESS: parsed invalid color rgba(0,0,0,1%) to null
+SUCCESS: parsed invalid color rgba(0 0 0 1%) to null
 
 SUCCESS: parsed invalid color rgba(0,0,0,) to null
+
+SUCCESS: parsed invalid color rgba(0 0, 0) to null
 
 SUCCESS: parsed invalid color hsl(0,0,0) to null
 
@@ -265,6 +298,8 @@ SUCCESS: parsed invalid color hsl(0, 0%, 0) to null
 SUCCESS: parsed invalid color hsl(a,b,c) to null
 
 SUCCESS: parsed invalid color hsla(0,0,0,0) to null
+
+SUCCESS: parsed invalid color hsla(0 0% 0% 0) to null
 
 SUCCESS: parsed invalid color hsla to null
 
