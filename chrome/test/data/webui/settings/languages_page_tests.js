@@ -459,6 +459,11 @@ cr.define('languages_page_tests', function() {
 
         // The policy indicator should be present.
         assertTrue(!!triggerRow.querySelector('cr-policy-pref-indicator'));
+
+        // Force-enable spellchecking via policy, and ensure that the policy
+        // indicator is not present.
+        languageHelper.setPrefValue('browser.enable_spellchecking', true);
+        assertFalse(!!triggerRow.querySelector('cr-policy-pref-indicator'));
       }
     });
   });
