@@ -596,6 +596,9 @@ void RootView::SetMouseHandler(View* new_mh) {
 }
 
 void RootView::GetAccessibleNodeData(ui::AXNodeData* node_data) {
+  // The widget delegate can be null when the native widget is destroyed.
+  if (!widget_->widget_delegate())
+    return;
   node_data->SetName(widget_->widget_delegate()->GetAccessibleWindowTitle());
   node_data->role = widget_->widget_delegate()->GetAccessibleWindowRole();
 }
