@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6fc3b8c7_d7d88bea",
+        "filename": "base/optional.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-12-18T15:06:05Z",
+      "side": 0,
+      "message": "note: these are just unused, so removed. Ditto for below.",
+      "revId": "83d37523e3af93d816f70c81f37b5ac1ab7b66c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
