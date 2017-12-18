@@ -6,6 +6,7 @@
 
 #include "base/command_line.h"
 #include "base/metrics/histogram_macros.h"
+#include "base/trace_event/trace_event.h"
 #include "content/browser/child_process_launcher.h"
 #include "content/public/common/content_switches.h"
 #include "content/public/common/sandboxed_process_launcher_delegate.h"
@@ -73,6 +74,7 @@ ChildProcessLauncherHelper::~ChildProcessLauncherHelper() {
 }
 
 void ChildProcessLauncherHelper::StartLaunchOnClientThread() {
+  TRACE_EVENT0("launcher", "ChildProcessLauncherHelper::StartLaunchOnClientThread");
   DCHECK_CURRENTLY_ON(client_thread_id_);
 
   BeforeLaunchOnClientThread();
@@ -91,6 +93,7 @@ void ChildProcessLauncherHelper::StartLaunchOnClientThread() {
 }
 
 void ChildProcessLauncherHelper::LaunchOnLauncherThread() {
+  TRACE_EVENT0("launcher", "ChildProcessLauncherHelper::LaunchOnLauncherThread");
   DCHECK_CURRENTLY_ON(BrowserThread::PROCESS_LAUNCHER);
 
   begin_launch_time_ = base::TimeTicks::Now();
@@ -117,6 +120,10 @@ void ChildProcessLauncherHelper::LaunchOnLauncherThread() {
 void ChildProcessLauncherHelper::PostLaunchOnLauncherThread(
     ChildProcessLauncherHelper::Process process,
     int launch_result) {
+  TRACE_EVENT0("launcher", "ChildProcessLauncherHelper::PostLaunchOnLauncherThread");
+  TRACE_EVENT_INSTANT0(
+      "launcher", "ChildProcessLauncherHelper::PostLaunchOnLauncherThread",
+      TRACE_EVENT_SCOPE_PROCESS);
   // Release the client handle now that the process has been started (the pipe
   // may not signal when the process dies otherwise and we would not detect the
   // child process died).
@@ -150,6 +157,10 @@ void ChildProcessLauncherHelper::PostLaunchOnLauncherThread(
 void ChildProcessLauncherHelper::PostLaunchOnClientThread(
     ChildProcessLauncherHelper::Process process,
     int error_code) {
+  TRACE_EVENT0("launcher", "ChildProcessLauncherHelper::PostLaunchOnClientThread");
+  TRACE_EVENT_INSTANT0(
+      "launcher", "ChildProcessLauncherHelper::PostLaunchOnClientThread",
+      TRACE_EVENT_SCOPE_PROCESS);
   if (child_process_launcher_) {
     child_process_launcher_->Notify(std::move(process), error_code);
   } else if (process.process.IsValid() && terminate_on_shutdown_) {

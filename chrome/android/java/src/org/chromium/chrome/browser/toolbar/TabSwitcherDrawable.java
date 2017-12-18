@@ -15,6 +15,7 @@ import android.graphics.Typeface;
 import android.text.TextPaint;
 
 import org.chromium.base.ApiCompatibilityUtils;
+import org.chromium.base.TraceEvent;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ChromeFeatureList;
@@ -35,6 +36,8 @@ public class TabSwitcherDrawable extends TintedDrawable {
     // Tab Count Label
     private int mTabCount;
     private boolean mIncognito;
+
+    private boolean mFirstDrawComplete;
 
     /**
      * Creates a {@link TabSwitcherDrawable}.
@@ -74,6 +77,11 @@ public class TabSwitcherDrawable extends TintedDrawable {
     @Override
     public void draw(Canvas canvas) {
         super.draw(canvas);
+
+        if (!mFirstDrawComplete) {
+            mFirstDrawComplete = true;
+            TraceEvent.processInstant("TabSwitcherDrawable:FirstDraw");
+        }
 
         String textString = getTabCountString();
         if (!textString.isEmpty()) {

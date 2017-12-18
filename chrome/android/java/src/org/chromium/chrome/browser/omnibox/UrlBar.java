@@ -36,6 +36,7 @@ import android.widget.TextView;
 import org.chromium.base.ApiCompatibilityUtils;
 import org.chromium.base.Log;
 import org.chromium.base.SysUtils;
+import org.chromium.base.TraceEvent;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.WindowDelegate;
@@ -460,6 +461,8 @@ public class UrlBar extends AutocompleteEditText {
             if (mOmniboxLivenessListener != null) {
                 mOmniboxLivenessListener.onOmniboxInteractive();
             }
+
+            TraceEvent.processInstant("UrlBar:FirstDraw");
         }
 
         // Notify listeners if the URL's direction has changed.

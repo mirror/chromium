@@ -300,6 +300,9 @@ public class TraceEvent implements AutoCloseable {
     public static void instant(String name) {
         if (sEnabled) nativeInstant(name, null);
     }
+    public static void processInstant(String name) {
+        if (sEnabled) nativeProcessInstant(name, null);
+    }
 
     /**
      * Triggers the 'instant' native trace event.
@@ -308,6 +311,9 @@ public class TraceEvent implements AutoCloseable {
      */
     public static void instant(String name, String arg) {
         if (sEnabled) nativeInstant(name, arg);
+    }
+    public static void processInstant(String name, String arg) {
+        if (sEnabled) nativeProcessInstant(name, arg);
     }
 
     /**
@@ -368,6 +374,7 @@ public class TraceEvent implements AutoCloseable {
     private static native void nativeStartATrace();
     private static native void nativeStopATrace();
     private static native void nativeInstant(String name, String arg);
+    private static native void nativeProcessInstant(String name, String arg);
     private static native void nativeBegin(String name, String arg);
     private static native void nativeEnd(String name, String arg);
     private static native void nativeBeginToplevel(String target);
