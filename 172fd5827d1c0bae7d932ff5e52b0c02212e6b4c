@@ -215,6 +215,30 @@
     },
     {
       "key": {
+        "uuid": "14379ed3_39131679",
+        "filename": "content/network/data_pipe_element_reader.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-18T19:36:36Z",
+      "side": 1,
+      "message": "In general, there\u0027s only one reader of a pipe (And there can only be one watcher of a pipe, anyways), so I think we can ignore the multiple readers case.\n\nI\u0027m fine with not trusting the result of watching for when a pipe becomes readable, writable.  In that case, the old code should also be considered buggy, in that respect.  I\u0027m a bit concerned that such cases won\u0027t end up being tested, though.",
+      "parentUuid": "27c16279_ccdd25bb",
+      "range": {
+        "startLine": 94,
+        "startChar": 18,
+        "endLine": 94,
+        "endChar": 30
+      },
+      "revId": "172fd5827d1c0bae7d932ff5e52b0c02212e6b4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a172f978_3dabec5f",
         "filename": "content/network/data_pipe_element_reader.h",
         "patchSetId": 5
