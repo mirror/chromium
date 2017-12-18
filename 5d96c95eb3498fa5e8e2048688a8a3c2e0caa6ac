@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "60b3117e_6d249447",
+        "filename": "components/cronet/native/cronet.idl",
+        "patchSetId": 22
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-12-18T20:05:00Z",
+      "side": 1,
+      "message": "the Cronet-\u003eCronet",
+      "range": {
+        "startLine": 50,
+        "startChar": 56,
+        "endLine": 50,
+        "endChar": 66
+      },
+      "revId": "5d96c95eb3498fa5e8e2048688a8a3c2e0caa6ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1973c5e1_c4925923",
+        "filename": "components/cronet/native/executors_test.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-12-18T20:05:00Z",
+      "side": 1,
+      "message": "I think classes are supposed to go public, protected, private.  Perhaps make the constructor and destructor public.\nhttps://google.github.io/styleguide/cppguide.html#Declaration_Order",
+      "range": {
+        "startLine": 18,
+        "startChar": 8,
+        "endLine": 18,
+        "endChar": 0
+      },
+      "revId": "5d96c95eb3498fa5e8e2048688a8a3c2e0caa6ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90af6880_26e0ff46",
+        "filename": "components/cronet/native/executors_test.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-12-18T20:05:00Z",
+      "side": 1,
+      "message": "I feel like this should be private with public accessors",
+      "range": {
+        "startLine": 19,
+        "startChar": 32,
+        "endLine": 19,
+        "endChar": 0
+      },
+      "revId": "5d96c95eb3498fa5e8e2048688a8a3c2e0caa6ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e70a69f8_8ad1caec",
+        "filename": "components/cronet/native/executors_test.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-12-18T20:05:00Z",
+      "side": 1,
+      "message": "I think this should be protected",
+      "range": {
+        "startLine": 21,
+        "startChar": 61,
+        "endLine": 21,
+        "endChar": 0
+      },
+      "revId": "5d96c95eb3498fa5e8e2048688a8a3c2e0caa6ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "763d7812_ca4f6f45",
+        "filename": "components/cronet/native/generated/cronet.idl_impl_interface.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-12-18T20:05:00Z",
+      "side": 1,
+      "message": "Should these all be const?",
+      "range": {
+        "startLine": 86,
+        "startChar": 0,
+        "endLine": 89,
+        "endChar": 41
+      },
+      "revId": "5d96c95eb3498fa5e8e2048688a8a3c2e0caa6ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13f869c1_ee4892f3",
+        "filename": "components/cronet/native/generated/cronet.idl_impl_interface.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-12-18T20:05:00Z",
+      "side": 1,
+      "message": "why the explicit?  I thought we only wanted \"explicit\" when the constructors took one argument?\nhttps://google.github.io/styleguide/cppguide.html#Implicit_Conversions",
+      "range": {
+        "startLine": 316,
+        "startChar": 10,
+        "endLine": 316,
+        "endChar": 11
+      },
+      "revId": "5d96c95eb3498fa5e8e2048688a8a3c2e0caa6ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
