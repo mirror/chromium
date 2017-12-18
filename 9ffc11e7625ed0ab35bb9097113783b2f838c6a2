@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d7c1935a_70f7efa3",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/png/PNGImageDecoder.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 510,
+      "author": {
+        "id": 1247893
+      },
+      "writtenOn": "2017-12-18T15:43:24Z",
+      "side": 1,
+      "message": "I agree that it\u0027s preferable to pull platform-specific details out of the generic source files - I think it\u0027s worth the extra effort here.\n\nI would propose that the new functions be called SetRGBARawRow() and SetRGBARawRowNoAlpha() - the 16 would confuse things for the regular C implementation.",
+      "parentUuid": "a7789b65_c24bf47c",
+      "range": {
+        "startLine": 501,
+        "startChar": 0,
+        "endLine": 510,
+        "endChar": 6
+      },
+      "revId": "9ffc11e7625ed0ab35bb9097113783b2f838c6a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "23a0459d_b70b0e97",
         "filename": "third_party/WebKit/Source/platform/image-decoders/png/PNGImageDecoder.cpp",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "9ffc11e7625ed0ab35bb9097113783b2f838c6a2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d70ee8a2_22be62d3",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/png/PNGImageDecoder.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 546,
+      "author": {
+        "id": 1247893
+      },
+      "writtenOn": "2017-12-18T15:43:24Z",
+      "side": 1,
+      "message": "See reply to previous comment.",
+      "parentUuid": "23a0459d_b70b0e97",
+      "range": {
+        "startLine": 538,
+        "startChar": 0,
+        "endLine": 546,
+        "endChar": 6
+      },
+      "revId": "9ffc11e7625ed0ab35bb9097113783b2f838c6a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
