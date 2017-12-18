@@ -43,7 +43,9 @@ class SessionControllerClient
       public content::NotificationObserver,
       public policy::off_hours::DeviceOffHoursController::Observer {
  public:
-  SessionControllerClient();
+  // |device_off_hours_controller| must outlive SessionControllerClient.
+  explicit SessionControllerClient(
+      policy::off_hours::DeviceOffHoursController* device_off_hours_controller);
   ~SessionControllerClient() override;
 
   void Init();
@@ -120,6 +122,8 @@ class SessionControllerClient
   FRIEND_TEST_ALL_PREFIXES(SessionControllerClientTest, SupervisedUser);
   FRIEND_TEST_ALL_PREFIXES(SessionControllerClientTest, UserPrefsChange);
   FRIEND_TEST_ALL_PREFIXES(SessionControllerClientTest, SessionLengthLimit);
+  FRIEND_TEST_ALL_PREFIXES(SessionControllerClientTest,
+                           OffHoursSessionLengthLimit);
 
   // Called when the login profile is ready.
   void OnLoginUserProfilePrepared(Profile* profile);
@@ -175,6 +179,10 @@ class SessionControllerClient
   // Used to suppress duplicate IPCs to ash.
   ash::mojom::SessionInfoPtr last_sent_session_info_;
   ash::mojom::UserSessionPtr last_sent_user_session_;
+
+  // DeviceOffHoursController observes DeviceSettingService and manages off
+  // hours policy.
+  policy::off_hours::DeviceOffHoursController* device_off_hours_controller_;
 
   base::WeakPtrFactory<SessionControllerClient> weak_ptr_factory_;
 

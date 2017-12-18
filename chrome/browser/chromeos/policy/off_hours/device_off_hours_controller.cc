@@ -14,6 +14,7 @@
 #include "base/time/default_clock.h"
 #include "base/time/tick_clock.h"
 #include "base/time/time.h"
+#include "chrome/browser/chromeos/policy/off_hours/off_hours_policy_applier.h"
 #include "chrome/browser/chromeos/policy/off_hours/off_hours_proto_parser.h"
 #include "chrome/browser/chromeos/policy/off_hours/time_utils.h"
 #include "chrome/browser/chromeos/settings/cros_settings.h"
@@ -25,9 +26,11 @@ namespace em = enterprise_management;
 namespace policy {
 namespace off_hours {
 
-DeviceOffHoursController::DeviceOffHoursController()
+DeviceOffHoursController::DeviceOffHoursController(
+    chromeos::DeviceSettingsService* device_settings_service)
     : timer_(base::MakeUnique<base::OneShotTimer>()),
-      clock_(base::MakeUnique<base::DefaultClock>()) {
+      clock_(base::MakeUnique<base::DefaultClock>()),
+      device_settings_service_(device_settings_service) {
   // IsInitialized() check is used for testing. Otherwise it has to be already
   // initialized.
   if (chromeos::DBusThreadManager::IsInitialized()) {
@@ -41,6 +44,7 @@ DeviceOffHoursController::DeviceOffHoursController()
             base::Bind(&DeviceOffHoursController::SystemClockInitiallyAvailable,
                        weak_ptr_factory_.GetWeakPtr()));
   }
+  device_settings_service_->AddObserver(this);
 }
 
 DeviceOffHoursController::~DeviceOffHoursController() {
@@ -52,6 +56,7 @@ DeviceOffHoursController::~DeviceOffHoursController() {
     chromeos::DBusThreadManager::Get()->GetSystemClockClient()->RemoveObserver(
         this);
   }
+  device_settings_service_->RemoveObserver(this);
 }
 
 void DeviceOffHoursController::AddObserver(Observer* observer) {
@@ -67,6 +72,14 @@ void DeviceOffHoursController::SetClockForTesting(
     base::TickClock* timer_clock) {
   clock_ = std::move(clock);
   timer_ = base::MakeUnique<base::OneShotTimer>(timer_clock);
+}
+
+void DeviceOffHoursController::SetOffHoursEndTimeForTesting(
+    base::TimeTicks off_hours_end_time) {
+  off_hours_mode_ = true;
+  off_hours_end_time_ = off_hours_end_time;
+  OffHoursModeIsChanged();
+  NotifyOffHoursEndTimeChanged();
 }
 
 void DeviceOffHoursController::UpdateOffHoursPolicy(
@@ -101,7 +114,7 @@ void DeviceOffHoursController::NotifyOffHoursEndTimeChanged() const {
 
 void DeviceOffHoursController::OffHoursModeIsChanged() const {
   VLOG(1) << "OffHours mode is changed to " << off_hours_mode_;
-  chromeos::DeviceSettingsService::Get()->Load();
+  device_settings_service_->Load();
 }
 
 void DeviceOffHoursController::UpdateOffHoursMode() {
@@ -169,6 +182,28 @@ void DeviceOffHoursController::SystemClockUpdated() {
   chromeos::DBusThreadManager::Get()->GetSystemClockClient()->GetLastSyncInfo(
       base::Bind(&DeviceOffHoursController::NetworkSynchronizationUpdated,
                  weak_ptr_factory_.GetWeakPtr()));
+}
+
+void DeviceOffHoursController::DeviceSettingsOperationCompleted() {
+  // Update "OffHours" policy state and apply "OffHours" policy to current
+  // proto only during "OffHours" mode.
+  const enterprise_management::ChromeDeviceSettingsProto* device_settings =
+      device_settings_service_->device_settings();
+  if (!device_settings)
+    return;  // May happen if session manager operation fails.
+
+  UpdateOffHoursPolicy(*device_settings);
+  if (!is_off_hours_mode())
+    return;
+
+  // Modify the existing settings and update DeviceSettingService.
+  std::unique_ptr<enterprise_management::ChromeDeviceSettingsProto>
+      off_hours_device_settings =
+          policy::off_hours::ApplyOffHoursPolicyToProto(*device_settings);
+  if (off_hours_device_settings) {
+    device_settings_service_->SetDeviceSettings(
+        std::move(off_hours_device_settings));
+  }
 }
 
 void DeviceOffHoursController::SystemClockInitiallyAvailable(
