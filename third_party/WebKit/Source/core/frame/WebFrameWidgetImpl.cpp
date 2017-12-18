@@ -366,11 +366,57 @@ void WebFrameWidgetImpl::ThemeChanged() {
 
 const WebInputEvent* WebFrameWidgetImpl::current_input_event_ = nullptr;
 
+WebInputEventResult WebFrameWidgetImpl::DispatchPendingTouchEvents() {
+  if (doing_drag_and_drop_)
+    return WebInputEventResult::kHandledSuppressed;
+
+  if (!GetPage())
+    return WebInputEventResult::kNotHandled;
+
+  if (local_root_) {
+    if (WebDevToolsAgentImpl* devtools = local_root_->DevToolsAgentImpl())
+      devtools->DispatchPendingTouchEvents();
+  }
+  if (IgnoreInputEvents())
+    return WebInputEventResult::kNotHandled;
+
+  return PageWidgetDelegate::DispatchPendingTouchEvents(
+      *this, local_root_->GetFrame());
+}
+
 WebInputEventResult WebFrameWidgetImpl::HandleInputEvent(
+    const WebCoalescedInputEvent& coalesced_event) {
+  const WebInputEvent& input_event = coalesced_event.Event();
+  if (WebInputEvent::IsTouchEventType(input_event.GetType())) {
+    if (input_event.GetType() == WebInputEvent::kTouchScrollStarted) {
+      WebPointerEvent pointer_event(WebPointerProperties::PointerType::kUnknown,
+                                    input_event.TimeStampSeconds());
+      return HandleInputEventInternal(WebCoalescedInputEvent(pointer_event));
+    }
+    const WebTouchEvent touch_event =
+        static_cast<const WebTouchEvent&>(input_event);
+    for (unsigned i = 0; i < touch_event.touches_length; ++i) {
+      const WebTouchPoint& touch_point = touch_event.touches[i];
+      if (touch_point.state != blink::WebTouchPoint::kStateStationary) {
+        const WebPointerEvent& pointer_event =
+            WebPointerEvent(touch_event, touch_point);
+        const WebCoalescedInputEvent& coalesced_pointer_event =
+            GetCoalescedWebPointerEventForTouch(
+                pointer_event, coalesced_event.GetCoalescedEventsPointers());
+        HandleInputEventInternal(coalesced_pointer_event);
+      }
+    }
+    return DispatchPendingTouchEvents();
+  }
+  return HandleInputEventInternal(coalesced_event);
+}
+
+WebInputEventResult WebFrameWidgetImpl::HandleInputEventInternal(
     const WebCoalescedInputEvent& coalesced_event) {
   const WebInputEvent& input_event = coalesced_event.Event();
   TRACE_EVENT1("input", "WebFrameWidgetImpl::handleInputEvent", "type",
                WebInputEvent::GetName(input_event.GetType()));
+  DCHECK(!WebInputEvent::IsTouchEventType(input_event.GetType()));
 
   // If a drag-and-drop operation is in progress, ignore input events.
   if (doing_drag_and_drop_)

@@ -1972,7 +1972,43 @@ bool WebViewImpl::HasVerticalScrollbar() {
       ->VerticalScrollbar();
 }
 
+WebInputEventResult WebViewImpl::DispatchPendingTouchEvents() {
+  if (!MainFrameImpl())
+    return WebInputEventResult::kNotHandled;
+  if (WebDevToolsAgentImpl* devtools = MainFrameDevToolsAgentImpl())
+    devtools->DispatchPendingTouchEvents();
+  return PageWidgetDelegate::DispatchPendingTouchEvents(
+      *this, MainFrameImpl()->GetFrame());
+}
+
 WebInputEventResult WebViewImpl::HandleInputEvent(
+    const WebCoalescedInputEvent& coalesced_event) {
+  const WebInputEvent& input_event = coalesced_event.Event();
+  if (WebInputEvent::IsTouchEventType(input_event.GetType())) {
+    if (input_event.GetType() == WebInputEvent::kTouchScrollStarted) {
+      WebPointerEvent pointer_event(WebPointerProperties::PointerType::kUnknown,
+                                    input_event.TimeStampSeconds());
+      return HandleInputEventInternal(WebCoalescedInputEvent(pointer_event));
+    }
+    const WebTouchEvent touch_event =
+        static_cast<const WebTouchEvent&>(input_event);
+    for (unsigned i = 0; i < touch_event.touches_length; ++i) {
+      const WebTouchPoint& touch_point = touch_event.touches[i];
+      if (touch_point.state != blink::WebTouchPoint::kStateStationary) {
+        const WebPointerEvent& pointer_event =
+            WebPointerEvent(touch_event, touch_point);
+        const WebCoalescedInputEvent& coalesced_pointer_event =
+            GetCoalescedWebPointerEventForTouch(
+                pointer_event, coalesced_event.GetCoalescedEventsPointers());
+        HandleInputEventInternal(coalesced_pointer_event);
+      }
+    }
+    return DispatchPendingTouchEvents();
+  }
+  return HandleInputEventInternal(coalesced_event);
+}
+
+WebInputEventResult WebViewImpl::HandleInputEventInternal(
     const WebCoalescedInputEvent& coalesced_event) {
   const WebInputEvent& input_event = coalesced_event.Event();
   // TODO(dcheng): The fact that this is getting called when there is no local
@@ -1980,6 +2016,8 @@ WebInputEventResult WebViewImpl::HandleInputEvent(
   // routing code.
   if (!MainFrameImpl())
     return WebInputEventResult::kNotHandled;
+
+  DCHECK(!WebInputEvent::IsTouchEventType(input_event.GetType()));
 
   GetPage()->GetVisualViewport().StartTrackingPinchStats();
 

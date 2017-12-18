@@ -503,10 +503,47 @@ bool WebPagePopupImpl::IsViewportPointInWindow(int x, int y) {
       .Contains(IntPoint(point_in_window.x, point_in_window.y));
 }
 
+WebInputEventResult WebPagePopupImpl::DispatchPendingTouchEvents() {
+  if (closing_)
+    return WebInputEventResult::kNotHandled;
+  return PageWidgetDelegate::DispatchPendingTouchEvents(
+      *this, page_->DeprecatedLocalMainFrame());
+}
+
 WebInputEventResult WebPagePopupImpl::HandleInputEvent(
+    const WebCoalescedInputEvent& coalesced_event) {
+  if (closing_)
+    return WebInputEventResult::kNotHandled;
+  const WebInputEvent& input_event = coalesced_event.Event();
+  if (WebInputEvent::IsTouchEventType(input_event.GetType())) {
+    if (input_event.GetType() == WebInputEvent::kTouchScrollStarted) {
+      WebPointerEvent pointer_event(WebPointerProperties::PointerType::kUnknown,
+                                    input_event.TimeStampSeconds());
+      return HandleInputEventInternal(WebCoalescedInputEvent(pointer_event));
+    }
+    const WebTouchEvent touch_event =
+        static_cast<const WebTouchEvent&>(input_event);
+    for (unsigned i = 0; i < touch_event.touches_length; ++i) {
+      const WebTouchPoint& touch_point = touch_event.touches[i];
+      if (touch_point.state != blink::WebTouchPoint::kStateStationary) {
+        const WebPointerEvent& pointer_event =
+            WebPointerEvent(touch_event, touch_point);
+        const WebCoalescedInputEvent& coalesced_pointer_event =
+            GetCoalescedWebPointerEventForTouch(
+                pointer_event, coalesced_event.GetCoalescedEventsPointers());
+        HandleInputEventInternal(coalesced_pointer_event);
+      }
+    }
+    return DispatchPendingTouchEvents();
+  }
+  return HandleInputEventInternal(coalesced_event);
+}
+
+WebInputEventResult WebPagePopupImpl::HandleInputEventInternal(
     const WebCoalescedInputEvent& event) {
   if (closing_)
     return WebInputEventResult::kNotHandled;
+  DCHECK(!WebInputEvent::IsTouchEventType(event.Event().GetType()));
   return PageWidgetDelegate::HandleInputEvent(
       *this, event, page_->DeprecatedLocalMainFrame());
 }

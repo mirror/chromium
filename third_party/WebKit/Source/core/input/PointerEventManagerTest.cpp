@@ -67,21 +67,18 @@ TEST_F(PointerEventManagerTest, PointerCancelsOfAllTypes) {
   GetDocument().body()->addEventListener(EventTypeNames::pointercancel,
                                          callback);
 
-  WebTouchEvent event;
-  event.SetFrameScale(1);
-  WebTouchPoint point(
+  WebPointerEvent event(
       WebPointerProperties(1, WebPointerProperties::PointerType::kTouch,
                            WebPointerProperties::Button::kLeft,
-                           WebFloatPoint(100, 100), WebFloatPoint(100, 100)));
-  point.state = WebTouchPoint::State::kStatePressed;
-  event.touches[event.touches_length++] = point;
-  event.SetType(WebInputEvent::kTouchStart);
-  EventHandler().HandleTouchEvent(event, Vector<WebTouchEvent>());
+                           WebFloatPoint(100, 100), WebFloatPoint(100, 100)),
+      WebInputEvent::kPointerDown, 1, 1);
+  event.SetFrameScale(1);
 
-  point.pointer_type = WebPointerProperties::PointerType::kPen;
-  event.touches[0] = point;
-  event.SetType(WebInputEvent::kTouchStart);
-  EventHandler().HandleTouchEvent(event, Vector<WebTouchEvent>());
+  EventHandler().HandlePointerEvent(event, Vector<WebPointerEvent>());
+
+  event.pointer_type = WebPointerProperties::PointerType::kPen;
+  event.SetType(WebInputEvent::kPointerDown);
+  EventHandler().HandlePointerEvent(event, Vector<WebPointerEvent>());
 
   WebMouseEvent mouse_down_event(
       WebInputEvent::kMouseDown, WebFloatPoint(100, 100),
@@ -93,18 +90,16 @@ TEST_F(PointerEventManagerTest, PointerCancelsOfAllTypes) {
   ASSERT_EQ(callback->touchEventCount(), 0);
   ASSERT_EQ(callback->penEventCount(), 0);
 
-  point.pointer_type = WebPointerProperties::PointerType::kPen;
-  event.touches[0] = point;
-  event.SetType(WebInputEvent::kTouchScrollStarted);
-  EventHandler().HandleTouchEvent(event, Vector<WebTouchEvent>());
+  event.pointer_type = WebPointerProperties::PointerType::kPen;
+  event.SetType(WebInputEvent::kPointerCausedUaAction);
+  EventHandler().HandlePointerEvent(event, Vector<WebPointerEvent>());
   ASSERT_EQ(callback->mouseEventCount(), 0);
   ASSERT_EQ(callback->touchEventCount(), 1);
   ASSERT_EQ(callback->penEventCount(), 1);
 
-  point.pointer_type = WebPointerProperties::PointerType::kTouch;
-  event.touches[0] = point;
-  event.SetType(WebInputEvent::kTouchScrollStarted);
-  EventHandler().HandleTouchEvent(event, Vector<WebTouchEvent>());
+  event.pointer_type = WebPointerProperties::PointerType::kTouch;
+  event.SetType(WebInputEvent::kPointerCausedUaAction);
+  EventHandler().HandlePointerEvent(event, Vector<WebPointerEvent>());
   ASSERT_EQ(callback->mouseEventCount(), 0);
   ASSERT_EQ(callback->touchEventCount(), 1);
   ASSERT_EQ(callback->penEventCount(), 1);
