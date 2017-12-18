@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "666860c4_5e9b0c7c",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleViewMessage.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 1370,
+      "author": {
+        "id": 1148820
+      },
+      "writtenOn": "2017-12-18T21:51:55Z",
+      "side": 0,
+      "message": "I don\u0027t think this {2,} is valid any more since we accept \u0027data:\u0027... I think it\u0027d be just \u0027+\u0027",
+      "range": {
+        "startLine": 1370,
+        "startChar": 95,
+        "endLine": 1370,
+        "endChar": 99
+      },
+      "revId": "e923e29452d33a3756563b8e232a34455fdbd53e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "636faff5_6f2e1d54",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleViewMessage.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 1371,
+      "author": {
+        "id": 1148820
+      },
+      "writtenOn": "2017-12-18T21:51:55Z",
+      "side": 1,
+      "message": "It\u0027s worth pointing out that you \"may\" want to pass \u0027u\u0027 as the second argument to the RegExp().",
+      "revId": "13ab0e8da95b547918596c2fb86a2ad0a9ae6819",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
