@@ -311,34 +311,63 @@ class Optional {
   internal::OptionalStorage<T> storage_;
 };
 
-template <class T>
-constexpr bool operator==(const Optional<T>& lhs, const Optional<T>& rhs) {
-  return !!lhs != !!rhs ? false : lhs == nullopt || (*lhs == *rhs);
+// Here after defines comparation operators.
+// The definition follows
+// http://en.cppreference.com/w/cpp/utility/optional/operator_cmp
+// while bool() casting is replaced by has_value() to meet the chromium
+// chromium style guide.
+template <class T, class U>
+constexpr bool operator==(const Optional<T>& lhs, const Optional<U>& rhs) {
+  if (lhs.has_value() != rhs.has_value())
+    return false;
+  if (!lhs.has_value())
+    return true;
+  return *lhs == *rhs;
 }
 
-template <class T>
-constexpr bool operator!=(const Optional<T>& lhs, const Optional<T>& rhs) {
-  return !(lhs == rhs);
+template <class T, class U>
+constexpr bool operator!=(const Optional<T>& lhs, const Optional<U>& rhs) {
+  if (lhs.has_value() != rhs.has_value())
+    return true;
+  if (!lhs.has_value())
+    return false;
+  return *lhs != *rhs;
 }
 
-template <class T>
-constexpr bool operator<(const Optional<T>& lhs, const Optional<T>& rhs) {
-  return rhs == nullopt ? false : (lhs == nullopt ? true : *lhs < *rhs);
+template <class T, class U>
+constexpr bool operator<(const Optional<T>& lhs, const Optional<U>& rhs) {
+  if (!rhs.has_value())
+    return false;
+  if (!lhs.has_value())
+    return true;
+  return *lhs < *rhs;
 }
 
-template <class T>
-constexpr bool operator<=(const Optional<T>& lhs, const Optional<T>& rhs) {
-  return !(rhs < lhs);
+template <class T, class U>
+constexpr bool operator<=(const Optional<T>& lhs, const Optional<U>& rhs) {
+  if (!lhs.has_value())
+    return true;
+  if (!rhs.has_value())
+    return false;
+  return *lhs <= *rhs;
 }
 
-template <class T>
-constexpr bool operator>(const Optional<T>& lhs, const Optional<T>& rhs) {
-  return rhs < lhs;
+template <class T, class U>
+constexpr bool operator>(const Optional<T>& lhs, const Optional<U>& rhs) {
+  if (!lhs.has_value())
+    return false;
+  if (!rhs.has_value())
+    return true;
+  return *lhs > *rhs;
 }
 
-template <class T>
-constexpr bool operator>=(const Optional<T>& lhs, const Optional<T>& rhs) {
-  return !(lhs < rhs);
+template <class T, class U>
+constexpr bool operator>=(const Optional<T>& lhs, const Optional<U>& rhs) {
+  if (!rhs.has_value())
+    return true;
+  if (!lhs.has_value())
+    return false;
+  return *lhs >= *rhs;
 }
 
 template <class T>
@@ -353,12 +382,12 @@ constexpr bool operator==(base::nullopt_t, const Optional<T>& opt) {
 
 template <class T>
 constexpr bool operator!=(const Optional<T>& opt, base::nullopt_t) {
-  return !!opt;
+  return opt.has_value();
 }
 
 template <class T>
 constexpr bool operator!=(base::nullopt_t, const Optional<T>& opt) {
-  return !!opt;
+  return opt.has_value();
 }
 
 template <class T>
@@ -368,7 +397,7 @@ constexpr bool operator<(const Optional<T>& opt, base::nullopt_t) {
 
 template <class T>
 constexpr bool operator<(base::nullopt_t, const Optional<T>& opt) {
-  return !!opt;
+  return opt.has_value();
 }
 
 template <class T>
@@ -383,7 +412,7 @@ constexpr bool operator<=(base::nullopt_t, const Optional<T>& opt) {
 
 template <class T>
 constexpr bool operator>(const Optional<T>& opt, base::nullopt_t) {
-  return !!opt;
+  return opt.has_value();
 }
 
 template <class T>
@@ -401,64 +430,64 @@ constexpr bool operator>=(base::nullopt_t, const Optional<T>& opt) {
   return !opt;
 }
 
-template <class T>
-constexpr bool operator==(const Optional<T>& opt, const T& value) {
-  return opt != nullopt ? *opt == value : false;
+template <class T, class U>
+constexpr bool operator==(const Optional<T>& opt, const U& value) {
+  return opt.has_value() ? *opt == value : false;
 }
 
-template <class T>
-constexpr bool operator==(const T& value, const Optional<T>& opt) {
-  return opt == value;
+template <class T, class U>
+constexpr bool operator==(const U& value, const Optional<T>& opt) {
+  return opt.has_value() ? value == *opt : false;
 }
 
-template <class T>
-constexpr bool operator!=(const Optional<T>& opt, const T& value) {
-  return !(opt == value);
+template <class T, class U>
+constexpr bool operator!=(const Optional<T>& opt, const U& value) {
+  return opt.has_value() ? *opt != value : true;
 }
 
-template <class T>
-constexpr bool operator!=(const T& value, const Optional<T>& opt) {
-  return !(opt == value);
+template <class T, class U>
+constexpr bool operator!=(const U& value, const Optional<T>& opt) {
+  return opt.has_value() ? value != *opt : true;
 }
 
-template <class T>
-constexpr bool operator<(const Optional<T>& opt, const T& value) {
-  return opt != nullopt ? *opt < value : true;
+template <class T, class U>
+constexpr bool operator<(const Optional<T>& opt, const U& value) {
+  return opt.has_value() ? *opt < value : true;
 }
 
-template <class T>
-constexpr bool operator<(const T& value, const Optional<T>& opt) {
-  return opt != nullopt ? value < *opt : false;
+template <class T, class U>
+constexpr bool operator<(const U& value, const Optional<T>& opt) {
+  return opt.has_value() ? value < *opt : false;
 }
 
-template <class T>
-constexpr bool operator<=(const Optional<T>& opt, const T& value) {
-  return !(opt > value);
+template <class T, class U>
+constexpr bool operator<=(const Optional<T>& opt, const U& value) {
+  return opt.has_value() ? *opt <= value : true;
 }
 
-template <class T>
-constexpr bool operator<=(const T& value, const Optional<T>& opt) {
-  return !(value > opt);
+template <class T, class U>
+constexpr bool operator<=(const U& value, const Optional<T>& opt) {
+  return opt.has_value() ? value <= *opt : false;
 }
 
-template <class T>
-constexpr bool operator>(const Optional<T>& opt, const T& value) {
-  return value < opt;
+template <class T, class U>
+constexpr bool operator>(const Optional<T>& opt, const U& value) {
+  return opt.has_value() ? *opt > value : false;
 }
 
-template <class T>
-constexpr bool operator>(const T& value, const Optional<T>& opt) {
-  return opt < value;
+template <class T, class U>
+constexpr bool operator>(const U& value, const Optional<T>& opt) {
+  return opt.has_value() ? value > *opt : true;
 }
 
-template <class T>
-constexpr bool operator>=(const Optional<T>& opt, const T& value) {
-  return !(opt < value);
+template <class T, class U>
+constexpr bool operator>=(const Optional<T>& opt, const U& value) {
+  return opt.has_value() ? *opt >= value : false;
 }
 
-template <class T>
-constexpr bool operator>=(const T& value, const Optional<T>& opt) {
-  return !(value < opt);
+template <class T, class U>
+constexpr bool operator>=(const U& value, const Optional<T>& opt) {
+  return opt.has_value() ? value >= *opt : true;
 }
 
 template <class T>
