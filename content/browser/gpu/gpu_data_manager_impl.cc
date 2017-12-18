@@ -111,6 +111,11 @@ bool GpuDataManagerImpl::IsCompleteGpuInfoAvailable() const {
   return private_->IsCompleteGpuInfoAvailable();
 }
 
+bool GpuDataManagerImpl::IsGpuFeatureInfoAvailable() const {
+  base::AutoLock auto_lock(lock_);
+  return private_->IsGpuFeatureInfoAvailable();
+}
+
 void GpuDataManagerImpl::RequestVideoMemoryUsageStatsUpdate(
     const base::Callback<void(const gpu::VideoMemoryUsageStats& stats)>&
         callback) const {
