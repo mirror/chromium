@@ -121,6 +121,8 @@ class VIZ_COMMON_EXPORT CompositorFrameMetadata {
   // CompositorFrameSinkClient.
   uint32_t presentation_token = 0;
 
+  std::vector<std::pair<SurfaceId, FrameSinkId>> references_to_transfer;
+
  private:
   CompositorFrameMetadata(const CompositorFrameMetadata& other);
   CompositorFrameMetadata operator=(const CompositorFrameMetadata&) = delete;
