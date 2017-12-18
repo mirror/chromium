@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "5a24d4d2_cc8958ad",
+        "filename": "services/network/public/interfaces/udp_socket.mojom",
+        "patchSetId": 28
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-18T17:05:16Z",
+      "side": 1,
+      "message": "Do we need Open and Connect methods?  My general feeling is that sockets should not be re-connectable or re-openable, and the simplest way to do that and make sure not to break consumers is to make an API where that\u0027s impossible.\n\nSo instead we could have:\n\nUDPSocketFactory {\n  // Or could make this return a UDPSocket as well as the result.  Just destroy the receiver to cancel.\n  Open(UDPSocket\u0026, UDPSocketReceiver, net.interfaces.AddressFamily) \u003d\u003e (int32 result);\n\n  // We don\u0027t need the family, since we can grab it from IPEndPoint.\n  OpenAndConnect(UDPSocket\u0026, UDPSocketReceiver, net.interfaces.IPEndPoint) \u003d\u003e (...)\n}",
+      "range": {
+        "startLine": 32,
+        "startChar": 21,
+        "endLine": 32,
+        "endChar": 31
+      },
+      "revId": "17a5ee71f975ebd03efe1a9ce102f03b7df0c301",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "59484fc0_aa7293ca",
         "filename": "services/network/public/interfaces/udp_socket.mojom",
         "patchSetId": 28
