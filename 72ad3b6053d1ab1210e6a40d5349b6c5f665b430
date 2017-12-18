@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5521a744_e8bff1f5",
+        "filename": "chrome/browser/resources/interventions_internals/index.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-12-18T22:04:20Z",
+      "side": 1,
+      "message": "curious...why not use an existing method like toTimeString() or toString()?",
+      "range": {
+        "startLine": 46,
+        "startChar": 9,
+        "endLine": 46,
+        "endChar": 74
+      },
+      "revId": "72ad3b6053d1ab1210e6a40d5349b6c5f665b430",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
