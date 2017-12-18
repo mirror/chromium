@@ -480,7 +480,8 @@ CompositorImpl::CompositorImpl(CompositorClient* client,
       needs_animate_(false),
       pending_frames_(0U),
       layer_tree_frame_sink_request_pending_(false),
-      weak_factory_(this) {
+      weak_factory_(this),
+      lock_timeout_weak_ptr_factory_(this) {
   GetHostFrameSinkManager()->RegisterFrameSinkId(frame_sink_id_, this);
 #if DCHECK_IS_ON()
   GetHostFrameSinkManager()->SetFrameSinkDebugLabel(frame_sink_id_,
@@ -644,10 +645,6 @@ void CompositorImpl::SetWindowBounds(const gfx::Size& size) {
   if (display_)
     display_->Resize(size);
   root_window_->GetLayer()->SetBounds(size);
-}
-
-void CompositorImpl::SetDeferCommits(bool defer_commits) {
-  host_->SetDeferCommits(defer_commits);
 }
 
 void CompositorImpl::SetRequiresAlphaChannel(bool flag) {
@@ -879,6 +876,7 @@ void CompositorImpl::DidReceiveCompositorFrameAck() {
   DCHECK_GT(pending_frames_, 0U);
   pending_frames_--;
   client_->DidSwapFrame(pending_frames_);
+  LOG(ERROR) << "EK: ACK";
 }
 
 void CompositorImpl::DidLoseLayerTreeFrameSink() {
@@ -914,6 +912,7 @@ viz::FrameSinkId CompositorImpl::GetFrameSinkId() {
 }
 
 void CompositorImpl::AddChildFrameSink(const viz::FrameSinkId& frame_sink_id) {
+  LOG(ERROR) << "EK: ADDCHILD";
   if (has_layer_tree_frame_sink_) {
     GetHostFrameSinkManager()->RegisterFrameSinkHierarchy(frame_sink_id_,
                                                           frame_sink_id);
@@ -950,8 +949,57 @@ void CompositorImpl::OnDisplayMetricsChanged(const display::Display& display,
   }
 }
 
+std::unique_ptr<ui::CompositorLock> CompositorImpl::GetCompositorLock(
+    ui::CompositorLockClient* client,
+    base::TimeDelta timeout) {
+  // This uses the main WeakPtrFactory to break the connection from the lock to
+  // the Compositor when the Compositor is destroyed.
+  auto lock =
+      std::make_unique<ui::CompositorLock>(client, weak_factory_.GetWeakPtr());
+  bool was_empty = active_locks_.empty();
+  active_locks_.push_back(lock.get());
+
+  bool should_extend_timeout = false;
+  const base::TimeTicks time_to_timeout = base::TimeTicks::Now() + timeout;
+  // For the first lock, scheduled_timeout.is_null is true,
+  // |time_to_timeout| will always larger than |scheduled_timeout_|. And it
+  // is ok to invalidate the weakptr of |lock_timeout_weak_ptr_factory_|.
+  if (time_to_timeout > scheduled_timeout_) {
+    scheduled_timeout_ = time_to_timeout;
+    should_extend_timeout = true;
+    lock_timeout_weak_ptr_factory_.InvalidateWeakPtrs();
+  }
+
+  if (was_empty)
+    host_->SetDeferCommits(true);
+
+  if (should_extend_timeout) {
+    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+        FROM_HERE,
+        base::BindOnce(&CompositorImpl::TimeoutLocks,
+                       lock_timeout_weak_ptr_factory_.GetWeakPtr()),
+        timeout);
+  }
+
+  return lock;
+}
+
+void CompositorImpl::RemoveCompositorLock(ui::CompositorLock* lock) {
+  base::Erase(active_locks_, lock);
+  if (active_locks_.empty())
+    host_->SetDeferCommits(false);
+}
+
 bool CompositorImpl::HavePendingReadbacks() {
   return !readback_layer_tree_->children().empty();
+}
+
+void CompositorImpl::TimeoutLocks() {
+  // Make a copy, we're going to cause |active_locks_| to become empty.
+  std::vector<ui::CompositorLock*> locks = active_locks_;
+  for (auto* lock : locks)
+    lock->TimeoutLock();
+  DCHECK(active_locks_.empty());
 }
 
 }  // namespace content

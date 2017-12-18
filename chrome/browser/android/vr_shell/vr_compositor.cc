@@ -12,11 +12,13 @@
 #include "content/public/browser/web_contents.h"
 #include "third_party/skia/include/core/SkColor.h"
 #include "ui/android/window_android.h"
+#include "ui/android/window_android_compositor.h"
 
 namespace vr_shell {
 
 VrCompositor::VrCompositor(ui::WindowAndroid* window) {
   compositor_.reset(content::Compositor::Create(this, window));
+  window_compositor_ = window->GetCompositor();
 }
 
 VrCompositor::~VrCompositor() {
@@ -56,8 +58,10 @@ void VrCompositor::SetWindowBounds(gfx::Size size) {
   compositor_->SetWindowBounds(size);
 }
 
-void VrCompositor::SetDeferCommits(bool defer_commits) {
-  compositor_->SetDeferCommits(defer_commits);
+std::unique_ptr<ui::CompositorLock> VrCompositor::GetCompositorLock(
+    ui::CompositorLockClient* client,
+    base::TimeDelta timeout) {
+  return window_compositor_->GetCompositorLock(client, timeout);
 }
 
 void VrCompositor::SurfaceChanged(jobject surface) {

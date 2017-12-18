@@ -84,6 +84,7 @@ void DelegatedFrameHostAndroid::SubmitCompositorFrame(
     const viz::LocalSurfaceId& local_surface_id,
     viz::CompositorFrame frame) {
   if (local_surface_id != surface_info_.id().local_surface_id()) {
+    LOG(ERROR) << "EK: FRAME";
     DestroyDelegatedContent();
     DCHECK(!content_layer_);
 
@@ -102,7 +103,12 @@ void DelegatedFrameHostAndroid::SubmitCompositorFrame(
                            surface_info_, !has_transparent_background_);
     view_->GetLayer()->AddChild(content_layer_);
   } else {
+    LOG(ERROR) << "EK: NO FRAME";
     support_->SubmitCompositorFrame(local_surface_id, std::move(frame));
+  }
+
+  if (lock_) {
+    lock_.reset();
   }
 }
 
@@ -166,6 +172,7 @@ void DelegatedFrameHostAndroid::AttachToCompositor(
     WindowAndroidCompositor* compositor) {
   if (registered_parent_compositor_)
     DetachFromCompositor();
+  lock_ = compositor->GetCompositorLock(this, base::TimeDelta::FromSeconds(1));
   compositor->AddChildFrameSink(frame_sink_id_);
   client_->SetBeginFrameSource(&begin_frame_source_);
   registered_parent_compositor_ = compositor;
@@ -174,6 +181,8 @@ void DelegatedFrameHostAndroid::AttachToCompositor(
 void DelegatedFrameHostAndroid::DetachFromCompositor() {
   if (!registered_parent_compositor_)
     return;
+  if (lock_)
+    lock_.reset();
   client_->SetBeginFrameSource(nullptr);
   support_->SetNeedsBeginFrame(false);
   registered_parent_compositor_->RemoveChildFrameSink(frame_sink_id_);
@@ -221,6 +230,8 @@ void DelegatedFrameHostAndroid::OnFirstSurfaceActivation(
 void DelegatedFrameHostAndroid::OnFrameTokenChanged(uint32_t frame_token) {
   client_->OnFrameTokenChanged(frame_token);
 }
+
+void DelegatedFrameHostAndroid::CompositorLockTimedOut() {}
 
 void DelegatedFrameHostAndroid::CreateNewCompositorFrameSinkSupport() {
   constexpr bool is_root = false;

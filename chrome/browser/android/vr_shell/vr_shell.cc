@@ -148,9 +148,10 @@ VrShell::VrShell(JNIEnv* env,
   g_instance = this;
   j_vr_shell_.Reset(env, obj);
 
-  // Defer applying commits to the renderer until we know the desired
-  // content resolution and DPR.
-  compositor_->SetDeferCommits(true);
+  // Take the compositor lock to defer applying commits to the renderer until we
+  // know the desired content resolution and DPR.
+  compositor_lock_ =
+      compositor_->GetCompositorLock(this, base::TimeDelta::FromSeconds(1));
 
   gl_thread_ = base::MakeUnique<VrGLThread>(
       weak_ptr_factory_.GetWeakPtr(), main_thread_task_runner_, gvr_api,
@@ -762,7 +763,9 @@ void VrShell::OnContentScreenBoundsChanged(const gfx::SizeF& bounds) {
   JNIEnv* env = base::android::AttachCurrentThread();
   Java_VrShellImpl_setContentCssSize(env, j_vr_shell_, window_size.width(),
                                      window_size.height(), dpr);
-  compositor_->SetDeferCommits(false);
+
+  // Now that we have the resolution / DPR, stop deferring commits.
+  compositor_lock_.reset();
 }
 
 void VrShell::SetVoiceSearchActive(bool active) {
@@ -943,6 +946,8 @@ bool VrShell::ShouldDisplayURL() const {
   }
   return ChromeToolbarModelDelegate::ShouldDisplayURL();
 }
+
+void VrShell::CompositorLockTimedOut() {}
 
 void VrShell::OnVoiceResults(const base::string16& result) {
   JNIEnv* env = base::android::AttachCurrentThread();
