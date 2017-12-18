@@ -260,6 +260,24 @@
     },
     {
       "key": {
+        "uuid": "a48eb127_a5d4c917",
+        "filename": "chrome/browser/sync/test/integration/sync_app_list_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-18T23:10:01Z",
+      "side": 1,
+      "message": "Okay. You can keep |j|.\n\nAnother nit: j++ -\u003e ++j",
+      "parentUuid": "941a1b22_59920982",
+      "revId": "01ae5bd7f528103c07147f3dcf53c4c5fdfd413c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2357fb00_5784adb0",
         "filename": "chrome/browser/ui/app_list/app_list_service_impl_browsertest.cc",
         "patchSetId": 2

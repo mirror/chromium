@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ab1b166_9c0ef7b2",
+        "filename": "chrome/browser/ui/app_list/app_list_syncable_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 520,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-18T23:10:01Z",
+      "side": 1,
+      "message": "This looks crazy.\n\nHow complicated to update AppListSyncableService to use ChromeAppListItem. If too muc work, I am okay to do it in a follow up CL. But think we should at least make AppListSyncableService::AddItem to take ChromeAppListItem to avoid this cast.",
+      "range": {
+        "startLine": 519,
+        "startChar": 8,
+        "endLine": 520,
+        "endChar": 43
+      },
+      "revId": "c01c9c48f8135f0679f5a7999c6a4219b78b0f38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
