@@ -16,6 +16,24 @@
       "revId": "28ca494d139832a7798c06a73a5b5e8e8076c7a0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e01efef_23f53b0e",
+        "filename": "docs/speed/perf_bot_sheriffing.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1132400
+      },
+      "writtenOn": "2017-12-18T16:15:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8ae0c2be_fb4c2c18",
+      "revId": "28ca494d139832a7798c06a73a5b5e8e8076c7a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
