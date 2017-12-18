@@ -119,6 +119,21 @@ class NET_EXPORT_PRIVATE QuicStreamRequest {
               NetErrorDetails* net_error_details,
               const CompletionCallback& callback);
 
+  // This function must be called after Request(). It retrieves the next result
+  // that occurs after host resolution completes.
+  // Example: If host resolution succeeds and then crypto handshake gives
+  // ERR_IO_PENDING, then the result would be ERR_IO_PENDING.
+  // If a failure occurs before or during host resolution, then the result will
+  // be the error code of that failure.
+  // If host resolution is not needed, then the result will equal the return
+  // value of Request().
+  // If the result after host resolution is ready when this function is called,
+  // it will return true and set |result|. Otherwise, it will return false and
+  // |callback| will be called asynchronously with the result.
+  bool GetResultAfterHostResolution(int* result,
+                                    const CompletionCallback& callback);
+
+  void OnResultAfterHostResolution(int rv);
   void OnRequestComplete(int rv);
 
   // Helper method that calls |factory_|'s GetTimeDelayForWaitingJob(). It
@@ -144,6 +159,14 @@ class NET_EXPORT_PRIVATE QuicStreamRequest {
   CompletionCallback callback_;
   NetErrorDetails* net_error_details_;  // Unowned.
   std::unique_ptr<QuicChromiumClientSession::Handle> session_;
+
+  // Set in Request(). If true, then host resolution is expected to finish
+  // asynchronously after Request(). Otherwise, host resolution either finished
+  // synchronously or is not necessary.
+  bool expect_host_resolution_;
+  int result_after_host_resolution_;
+  // Callback passed to GetResultAfterHostResolution().
+  CompletionCallback host_resolution_callback_;
 
   DISALLOW_COPY_AND_ASSIGN(QuicStreamRequest);
 };
@@ -233,6 +256,10 @@ class NET_EXPORT_PRIVATE QuicStreamFactory
   // If a matching session already exists, this method will return OK.  If no
   // matching session exists, this will return ERR_IO_PENDING and will invoke
   // OnRequestComplete asynchronously.
+  // |expect_host_resolution| is set to true if host resolution is required for
+  // this Create() call and will finish in the future asynchronously. It is
+  // set to false if host resolution is not required or if host resolution has
+  // already finished.
   int Create(const QuicServerId& server_id,
              const HostPortPair& destination,
              QuicTransportVersion quic_version,
@@ -240,7 +267,8 @@ class NET_EXPORT_PRIVATE QuicStreamFactory
              int cert_verify_flags,
              const GURL& url,
              const NetLogWithSource& net_log,
-             QuicStreamRequest* request);
+             QuicStreamRequest* request,
+             bool* expect_host_resolution);
 
   // Called when the handshake for |session| is confirmed. If QUIC is disabled
   // currently disabled, then it closes the connection and returns true.

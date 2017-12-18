@@ -318,6 +318,10 @@ class HttpStreamFactoryImpl::Job {
   int StartInternal();
   int DoInitConnectionImpl();
 
+  // If this is a QUIC alt job, then this function is called when the first
+  // result after host resolution completes is available.
+  void OnResultAfterQuicHostResolution(int result);
+
   // Each of these methods corresponds to a State value.  Those with an input
   // argument receive the result from the previous state.  If a method returns
   // ERR_IO_PENDING, then the result from OnIOComplete will be passed to the
@@ -463,6 +467,14 @@ class HttpStreamFactoryImpl::Job {
   bool should_reconsider_proxy_;
 
   QuicStreamRequest quic_request_;
+
+  // Only valid for a QUIC job. Set when a QUIC connection is started. If true,
+  // then QUIC host resolution is required and isn't complete yet.
+  bool expect_quic_host_resolution_;
+  // Only valid for a QUIC job. Set when QUIC host resolution is complete.
+  // If true, then the delegate_ will be notified of the next result returned by
+  // DoLoop().
+  bool should_notify_delegate_of_result_after_quic_host_resolution_;
 
   // True if this job used an existing QUIC session.
   bool using_existing_quic_session_;
