@@ -392,7 +392,7 @@ void ChromeBrowsingDataRemoverDelegate::RemoveEmbedderData(
     int remove_mask,
     const BrowsingDataFilterBuilder& filter_builder,
     int origin_type_mask,
-    const base::Closure& callback) {
+    base::OnceClosure callback) {
   DCHECK(((remove_mask & ~FILTERABLE_DATA_TYPES) == 0) ||
          filter_builder.IsEmptyBlacklist());
 
@@ -433,7 +433,7 @@ void ChromeBrowsingDataRemoverDelegate::RemoveEmbedderData(
   //////////////////////////////////////////////////////////////////////////////
   // INITIALIZATION
   synchronous_clear_operations_.Start();
-  callback_ = callback;
+  callback_ = std::move(callback);
 
   delete_begin_ = delete_begin;
   delete_end_ = delete_end;
@@ -1130,36 +1130,7 @@ void ChromeBrowsingDataRemoverDelegate::NotifyIfDone() {
     return;
 
   DCHECK(!callback_.is_null());
-  callback_.Run();
-}
-
-bool ChromeBrowsingDataRemoverDelegate::AllDone() {
-  return !clear_cookies_count_ && !synchronous_clear_operations_.is_pending() &&
-         !clear_autofill_origin_urls_.is_pending() &&
-         !clear_flash_content_licenses_.is_pending() &&
-         !clear_media_drm_licenses_.is_pending() &&
-         !clear_domain_reliability_monitor_.is_pending() &&
-         !clear_form_.is_pending() && !clear_history_.is_pending() &&
-         !clear_hostname_resolution_cache_.is_pending() &&
-         !clear_keyword_data_.is_pending() &&
-#if BUILDFLAG(ENABLE_NACL)
-         !clear_nacl_cache_.is_pending() && !clear_pnacl_cache_.is_pending() &&
-#endif
-         !clear_network_predictor_.is_pending() &&
-         !clear_passwords_.is_pending() &&
-         !clear_passwords_stats_.is_pending() &&
-         !clear_http_auth_cache_.is_pending() &&
-         !clear_platform_keys_.is_pending() &&
-#if defined(OS_ANDROID)
-         !clear_precache_history_.is_pending() &&
-         !clear_offline_page_data_.is_pending() &&
-#endif
-#if BUILDFLAG(ENABLE_WEBRTC)
-         !clear_webrtc_logs_.is_pending() &&
-#endif
-         !clear_auto_sign_in_.is_pending() &&
-         !clear_reporting_cache_.is_pending() &&
-         !clear_video_perf_history_.is_pending() && !clear_plugin_data_count_;
+  std::move(callback_).Run();
 }
 
 #if defined(OS_ANDROID)
