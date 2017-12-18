@@ -34,6 +34,24 @@
       "revId": "c2dc66dff7170cb992da46ef506fd4e620ce8e46",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c01d5c0e_bae283c3",
+        "filename": "testing/buildbot/test_suite_exceptions.pyl",
+        "patchSetId": 3
+      },
+      "lineNbr": 604,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-12-18T20:57:40Z",
+      "side": 0,
+      "message": "Sounds good to me too. Note that this parameter can be specified in three different locations: for the bot itself in waterfalls.py, then for the test in the test suite, and finally on a per-bot basis in the exceptions. The later ones take precedence. I\u0027ll document this in the forthcoming documentation on how to use the .pyl files.",
+      "parentUuid": "29d531f4_55d5ed64",
+      "revId": "c2dc66dff7170cb992da46ef506fd4e620ce8e46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
