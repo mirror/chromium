@@ -52,6 +52,24 @@
       "revId": "1d88eda754852bd9d6404f3595a2187d6201060c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b580593a_81dfd339",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/servers/apache_http.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2017-12-18T16:02:58Z",
+      "side": 1,
+      "message": "Thanks. IIUC, these two redirections are only transient and will not be needed once all bluetooth tests are ported to WPT, correct? Could you please add a comment like \"# TODO(crbug.com/509038): To be removed after bluetooth tests are ported to WPT.\" (And perhaps you can put the two lines together and have just one comment line.)",
+      "parentUuid": "98303c8d_76447f24",
+      "revId": "1d88eda754852bd9d6404f3595a2187d6201060c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
