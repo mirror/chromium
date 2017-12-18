@@ -765,6 +765,49 @@ void UDPSocketPosix::LogWrite(int result,
 int UDPSocketPosix::InternalRecvFrom(IOBuffer* buf,
                                      int buf_len,
                                      IPEndPoint* address) {
+  // If the socket is connected and the remote address is known
+  // use the more efficient method that uses read() instead of recvmsg().
+  if (is_connected_ && remote_address_) {
+    return InternalReceiveFromConnectedSocket(buf, buf_len, address);
+  } else {
+    return InternalReceiveFromNonConnectedSocket(buf, buf_len, address);
+  }
+}
+
+int UDPSocketPosix::InternalReceiveFromConnectedSocket(IOBuffer* buf,
+                                                       int buf_len,
+                                                       IPEndPoint* address) {
+  DCHECK(is_connected_);
+  DCHECK(remote_address_);
+  int bytes_transferred;
+  bytes_transferred = HANDLE_EINTR(read(socket_, buf->data(), buf_len));
+  int result;
+
+  if (bytes_transferred >= 0) {
+    if (bytes_transferred == buf_len) {
+      result = ERR_MSG_TOO_BIG;
+    } else {
+      result = bytes_transferred;
+      if (address)
+        *address = *remote_address_.get();
+    }
+  } else {
+    result = MapSystemError(errno);
+  }
+
+  if (result != ERR_IO_PENDING) {
+    SockaddrStorage sock_addr;
+    bool success =
+        remote_address_->ToSockAddr(sock_addr.addr, &sock_addr.addr_len);
+    DCHECK(success);
+    LogRead(result, buf->data(), sock_addr.addr_len, sock_addr.addr);
+  }
+  return result;
+}
+
+int UDPSocketPosix::InternalReceiveFromNonConnectedSocket(IOBuffer* buf,
+                                                          int buf_len,
+                                                          IPEndPoint* address) {
   int bytes_transferred;
 
   struct iovec iov = {};

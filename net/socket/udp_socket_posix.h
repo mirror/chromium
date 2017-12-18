@@ -299,7 +299,27 @@ class NET_EXPORT UDPSocketPosix {
                     const CompletionCallback& callback);
 
   int InternalConnect(const IPEndPoint& address);
+
+  // Reads data from a UDP socket. Depending whether the socket is connected or
+  // not, the method delegates the call to InternalReceiveFromConnectedSocket()
+  // or InternalReceiveFromNonConnectedSocket() respectively.
+  // For proper detection of truncated reads, the |buf_len| should always be
+  // one byte longer than the expected maximum packet length.
   int InternalRecvFrom(IOBuffer* buf, int buf_len, IPEndPoint* address);
+
+  // A more efficient implementation of the InternalRecvFrom() method for
+  // reading data from connected sockets. Internally the method uses the read()
+  // system call.
+  int InternalReceiveFromConnectedSocket(IOBuffer* buf,
+                                         int buf_len,
+                                         IPEndPoint* address);
+
+  // An implementation of the InternalRecvFrom() method for reading data
+  // from non-connected sockets. Internally the method uses the recvmsg()
+  // system call.
+  int InternalReceiveFromNonConnectedSocket(IOBuffer* buf,
+                                            int buf_len,
+                                            IPEndPoint* address);
   int InternalSendTo(IOBuffer* buf, int buf_len, const IPEndPoint* address);
 
   // Applies |socket_options_| to |socket_|. Should be called before
