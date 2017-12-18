@@ -16,6 +16,24 @@
       "revId": "925e0c32ba02ff4c2dd57b2fcab28c9d0466308b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bff5ec1_af607c28",
+        "filename": "chrome/browser/android/vr_shell/autocomplete_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-12-18T19:54:47Z",
+      "side": 1,
+      "message": "That\u0027s a fair point. It was not intentional -- I\u0027d only been thinking about flicker due to new UI elements appearing in quick succession. That said, the flicker due to a single keypress would usually be new elements, right? Wouldn\u0027t you have to click another button on the kb to set up a new query w/ new results?",
+      "parentUuid": "97f01162_0c86187d",
+      "revId": "925e0c32ba02ff4c2dd57b2fcab28c9d0466308b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
