@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "81c996e0_8420879b",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-12-18T23:52:42Z",
+      "side": 1,
+      "message": "Ok, thanks for the background.",
+      "parentUuid": "1a9798fc_aabe5824",
+      "revId": "fa01af2a8ad28d9a190c4bd5e9cbd17489dbe456",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "616c6f09_a20746c2",
         "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
         "patchSetId": 2
