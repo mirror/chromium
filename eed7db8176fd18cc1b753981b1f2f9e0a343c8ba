@@ -16,6 +16,24 @@
       "revId": "eed7db8176fd18cc1b753981b1f2f9e0a343c8ba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86dc3965_1abb3e13",
+        "filename": "media/video/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-12-18T22:38:59Z",
+      "side": 1,
+      "message": "It includes gles2_interface.h in one of its public header (media/video/gpu_video_accelerator_factories.h).\n\nPractically, not having this as a public dep means that the khronos header include path is not added (was added implicitly before because of other deps), and things fail to compile.",
+      "parentUuid": "17af4a47_c2f76980",
+      "revId": "eed7db8176fd18cc1b753981b1f2f9e0a343c8ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
