@@ -30,7 +30,6 @@
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/test/histogram_tester.h"
-#include "base/test/scoped_feature_list.h"
 #include "base/test/scoped_task_environment.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "build/build_config.h"
@@ -1849,15 +1848,17 @@ TEST_F(HistoryBackendTest, SetFaviconMappingsForPageAndRedirectsWithFragment) {
 
   backend_->SetFavicons({url1}, IconType::kFavicon, icon_url1, bitmaps);
   EXPECT_EQ(1u, NumIconMappingsForPageURL(url1, IconType::kFavicon));
-  EXPECT_EQ(1u, NumIconMappingsForPageURL(url2, IconType::kFavicon));
-  EXPECT_EQ(1u, NumIconMappingsForPageURL(url3, IconType::kFavicon));
+
+  // We used to associate the favicon to the fragment-stripped version of the
+  // page URL, but we stopped doing that to prevent privacy leaks, and because
+  // the desired association should be achieved by client-side redirect handling
+  // logic and in-document navigation handling logic in FaviconHandler.
+  EXPECT_EQ(0u, NumIconMappingsForPageURL(url2, IconType::kFavicon));
+  EXPECT_EQ(0u, NumIconMappingsForPageURL(url3, IconType::kFavicon));
 }
 
 TEST_F(HistoryBackendTest,
        SetFaviconMappingsForPageAndRedirectsWithFragmentWithoutStripping) {
-  base::test::ScopedFeatureList override_features;
-  override_features.InitAndEnableFeature(kAvoidStrippingRefFromFaviconPageUrls);
-
   const GURL url("http://www.google.com#abc");
   const GURL url_without_ref("http://www.google.com");
   const GURL icon_url("http://www.google.com/icon");
