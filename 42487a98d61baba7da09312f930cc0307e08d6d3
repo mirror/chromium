@@ -45,6 +45,29 @@
       "revId": "42487a98d61baba7da09312f930cc0307e08d6d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48ee8875_4fbb36d7",
+        "filename": "content/browser/renderer_host/compositor_impl_android.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 967,
+      "author": {
+        "id": 1129011
+      },
+      "writtenOn": "2017-12-18T23:58:37Z",
+      "side": 1,
+      "message": "This looks fragile - what prevents caller of GetCompositorLock() from destroying CompositorLock too early?",
+      "range": {
+        "startLine": 967,
+        "startChar": 16,
+        "endLine": 967,
+        "endChar": 25
+      },
+      "revId": "42487a98d61baba7da09312f930cc0307e08d6d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
