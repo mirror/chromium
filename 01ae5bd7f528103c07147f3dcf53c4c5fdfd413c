@@ -1,0 +1,153 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9fa9460e_17c24cee",
+        "filename": "chrome/browser/sync/test/integration/sync_app_list_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-18T19:51:26Z",
+      "side": 1,
+      "message": "static_cast\u003c...\u003e",
+      "range": {
+        "startLine": 66,
+        "startChar": 8,
+        "endLine": 66,
+        "endChar": 28
+      },
+      "revId": "01ae5bd7f528103c07147f3dcf53c4c5fdfd413c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "426fc109_e927345c",
+        "filename": "chrome/browser/sync/test/integration/sync_app_list_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-18T19:51:26Z",
+      "side": 1,
+      "message": "Should we make ChromeAppListModelUpdater::ItemAt to return a ChromeAppListItem* ?",
+      "range": {
+        "startLine": 66,
+        "startChar": 57,
+        "endLine": 66,
+        "endChar": 63
+      },
+      "revId": "01ae5bd7f528103c07147f3dcf53c4c5fdfd413c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee67c7c2_6b2ed1b3",
+        "filename": "chrome/browser/sync/test/integration/sync_app_list_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-18T19:51:26Z",
+      "side": 1,
+      "message": "Why do we need to shuffle this code?",
+      "revId": "01ae5bd7f528103c07147f3dcf53c4c5fdfd413c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a847f735_6ad2c27a",
+        "filename": "chrome/browser/sync/test/integration/sync_app_list_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-18T19:51:26Z",
+      "side": 1,
+      "message": "staic_cast\u003c...\u003e",
+      "range": {
+        "startLine": 123,
+        "startChar": 6,
+        "endLine": 123,
+        "endChar": 26
+      },
+      "revId": "01ae5bd7f528103c07147f3dcf53c4c5fdfd413c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63218e83_7f31fcd5",
+        "filename": "chrome/browser/sync/test/integration/sync_app_list_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-18T19:51:26Z",
+      "side": 1,
+      "message": "static_cast here and other places",
+      "range": {
+        "startLine": 138,
+        "startChar": 8,
+        "endLine": 138,
+        "endChar": 28
+      },
+      "revId": "01ae5bd7f528103c07147f3dcf53c4c5fdfd413c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e5e35bb_ccabacd7",
+        "filename": "chrome/browser/sync/test/integration/sync_app_list_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-18T19:51:26Z",
+      "side": 1,
+      "message": "nit: for (const auto* child_item : child_items)",
+      "revId": "01ae5bd7f528103c07147f3dcf53c4c5fdfd413c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2357fb00_5784adb0",
+        "filename": "chrome/browser/ui/app_list/app_list_service_impl_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-18T19:51:26Z",
+      "side": 1,
+      "message": "static_cast",
+      "range": {
+        "startLine": 115,
+        "startChar": 6,
+        "endLine": 115,
+        "endChar": 26
+      },
+      "revId": "01ae5bd7f528103c07147f3dcf53c4c5fdfd413c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
