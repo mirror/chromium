@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ccab35c7_3aa8838f",
+        "filename": "chrome/browser/ui/ash/wallpaper_controller_client.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-12-18T23:57:53Z",
+      "side": 1,
+      "message": "Can you cite Colin\u0027s refactoring bug in the comment here? The code looks a little weird. I would also add something to the comment to say that the reason we do this is so that static utility functions in ash continue to work.\n\n(Now that I see the code I really think these utility functions need to move into //ash/public. Please make sure that happens in a follow-up.)",
+      "revId": "1ad82a0be5f5060d963e85b40b44184b09bf8c16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c8df916_c7a8645f",
+        "filename": "chrome/browser/ui/ash/wallpaper_policy_handler.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-12-18T23:57:53Z",
+      "side": 1,
+      "message": "optional: FYI, I\u0027m OK with \"using chromeos::CrosSettings;\" at file scope for things like this.",
+      "revId": "1ad82a0be5f5060d963e85b40b44184b09bf8c16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
