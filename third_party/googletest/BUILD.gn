@@ -119,7 +119,7 @@ source_set("gmock") {
     "src/googlemock/src/gmock.cc",
   ]
 
-  public_configs = [
+  all_dependent_configs = [
     ":gmock_config",
     ":gtest_config",
   ]

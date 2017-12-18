@@ -16,11 +16,6 @@ source_set("gmock") {
   deps = [
     "//third_party/googletest:gmock",
   ]
-
-  public_configs = [
-    "//third_party/googletest:gmock_config",
-    "//third_party/googletest:gtest_config",
-  ]
 }
 
 # The file/directory layout of Google Test is not yet considered stable. Until
