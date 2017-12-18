@@ -21,6 +21,8 @@
 #include "chrome/browser/subresource_filter/subresource_filter_profile_context_factory.h"
 #include "components/content_settings/core/browser/host_content_settings_map.h"
 #include "components/content_settings/core/common/content_settings_types.h"
+#include "components/content_settings/core/common/pref_names.h"
+#include "components/prefs/pref_service.h"
 #include "components/rappor/public/rappor_parameters.h"
 #include "components/rappor/public/rappor_utils.h"
 #include "components/rappor/rappor_service_impl.h"
@@ -148,8 +150,13 @@ bool ChromeSubresourceFilterClient::OnPageActivationComputed(
   // Return whether the activation should be whitelisted.
   // Note: Could consider skipping this if forcing activation, but it isn't
   // critical.
+  Profile* profile =
+      Profile::FromBrowserContext(web_contents_->GetBrowserContext());
   return whitelisted_hosts_.count(url.host()) ||
-         settings_manager_->GetSitePermission(url) == CONTENT_SETTING_ALLOW;
+         settings_manager_->GetSitePermission(url) == CONTENT_SETTING_ALLOW ||
+         profile->GetPrefs()->GetInteger(prefs::kManagedDefaultAdsSetting) ==
+             CONTENT_SETTING_ALLOW;
+
   // TODO(csharrison): Consider setting the metadata to an empty dict here if
   // the site is activated and not whitelisted. Need to be careful about various
   // edge cases like |should_suppress_notification| and DRYRUN activation.
