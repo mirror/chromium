@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e7a53b24_923e9ff6",
+        "filename": "chrome/browser/extensions/extension_messages_apitest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1421,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-12-18T22:52:12Z",
+      "side": 1,
+      "message": "Can we directly respond with the tlsChannelId received (and wait on it) and prevent another round trip to the renderer?",
+      "range": {
+        "startLine": 1420,
+        "startChar": 11,
+        "endLine": 1421,
+        "endChar": 55
+      },
+      "revId": "305eb0252bcb0a09470c90a70ea16ef5697d34e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02dad88c_4733ee78",
+        "filename": "extensions/browser/api/messaging/message_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 824,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-12-18T22:52:12Z",
+      "side": 1,
+      "message": "I am not that familiar with StoragePartitions and the messaging api. Do normal extension renderers have the default (profile) storage partition?\n\nCan this can also be a request from a web page to connect to an extension? Do normal renderers have a different storage partition?",
+      "range": {
+        "startLine": 824,
+        "startChar": 8,
+        "endLine": 824,
+        "endChar": 22
+      },
+      "revId": "305eb0252bcb0a09470c90a70ea16ef5697d34e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
