@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8af4b507_cac28d4b",
+        "filename": "base/android/java/src/org/chromium/base/library_loader/LibraryLoader.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 1109505
+      },
+      "writtenOn": "2017-12-18T20:15:02Z",
+      "side": 1,
+      "message": "Seems inconsistent to default to something here while just crashing if the reflection above fails. This should probably just be an error?",
+      "revId": "28d3a6f9cf92051d870b19f60e3dab709776c120",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c61d769d_157f4c19",
+        "filename": "base/android/java/src/org/chromium/base/library_loader/LibraryLoader.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 1109505
+      },
+      "writtenOn": "2017-12-18T20:15:02Z",
+      "side": 1,
+      "message": "You don\u0027t really have to use StringBuilder for examples like this. The compiler converts \"foo\" + bar + \"baz\" style expressions into StringBuilder calls automatically; you only need to use it explicitly for loops/conditionals/other cases where it\u0027s not a single expression, and I generally think it\u0027s more readable with just regular concatenation :)",
+      "revId": "28d3a6f9cf92051d870b19f60e3dab709776c120",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
