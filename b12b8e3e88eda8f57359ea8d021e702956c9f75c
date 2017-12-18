@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bfaa2631_2ee10a17",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_view_views.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 772,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-18T03:16:55Z",
+      "side": 1,
+      "message": "I think this is always null on ChromeOS. Does Issue 787860 apply to ChromeOS? If it does, GetNativeViewAccessibility() might not be the right way to solve this problem.\n\nI think on ChromeOS there is AXAuraObjWrapper and AXAuraObjCache. They *also* have an id already, but it\u0027s a different counter.",
+      "revId": "b12b8e3e88eda8f57359ea8d021e702956c9f75c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "376ed7b3_9b03393e",
+        "filename": "ui/views/accessibility/native_view_accessibility_base.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-18T03:16:55Z",
+      "side": 1,
+      "message": "nit: this should be listed with NativeViewAccessibility: overrides (not ui::AXPlatformNodeDelegate), but.. see below.",
+      "revId": "b12b8e3e88eda8f57359ea8d021e702956c9f75c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a9d48fa_0628b8c3",
+        "filename": "ui/views/accessibility/native_view_accessibility_base.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-18T03:16:55Z",
+      "side": 1,
+      "message": "AXPlatformNodeWin already has a |unique_id_| member (created the same way). Now a NativeViewAccessibilityWin will have both an |id_| and a |ax_node_-\u003eunique_id()| for the same object, but with different values.\n\nIs that confusing?\n\nI\u0027m pretty sure AXPlatformNodeWin always has a |delegate_|, except when it\u0027s being torn down. Would it make sense to move `virtual int32_t GetId()` from the NativeViewAccessibility interface to AXPlatformNodeDelegate?\n\nWith that, AXPlatformNodeWin can maybe set its unique_id_ member inside AXPlatformNodeWin::Init() so that they match.",
+      "revId": "b12b8e3e88eda8f57359ea8d021e702956c9f75c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99fd34d6_a6b1ea3a",
+        "filename": "ui/views/view.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 1109,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-18T03:16:55Z",
+      "side": 1,
+      "message": "What\u0027s the plan for the rename?",
+      "revId": "b12b8e3e88eda8f57359ea8d021e702956c9f75c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe1f6816_aafd7d1a",
+        "filename": "ui/views/view.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 1110,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-18T03:16:55Z",
+      "side": 1,
+      "message": "why virtual?",
+      "revId": "b12b8e3e88eda8f57359ea8d021e702956c9f75c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66a6ee44_c78cae95",
+        "filename": "ui/views/view.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 1111,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-18T03:16:55Z",
+      "side": 1,
+      "message": "I\u0027m not sure whether calls to these methods belong under src/chrome, or even anywhere new under ui/views. Currently GetNativeViewAccessible() is only called by the a11y system or by platform-specific code.\n\nThe exception is WebView::GetNativeViewAccessible() which overrides this to return the RenderWidgetHostView.\n\nBut it looks like this change breaks the contract for views::WebView: Calling GetNativeViewAccessibility() on a webview will now create a NativeViewAccessibility which it didn\u0027t before, and the NativeViewAccessibility it creates will have a GetNativeObject() which does not belong to the RenderWidgetHostView",
+      "revId": "b12b8e3e88eda8f57359ea8d021e702956c9f75c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
