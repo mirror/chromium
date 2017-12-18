@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "297e130e_33e276f8",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-12-18T15:35:35Z",
+      "side": 1,
+      "message": "nit: this comment is outdated since you are not using OffsetPoint anymore. Also it \nseems we are not using container_element any more.",
+      "range": {
+        "startLine": 279,
+        "startChar": 22,
+        "endLine": 279,
+        "endChar": 45
+      },
+      "revId": "6fb9d0bbbd2209bd9cc0dbdc7ae58ecffc8079b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a57f8fb8_4cf98d5b",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-12-18T15:35:35Z",
+      "side": 1,
+      "message": "I don\u0027t understand why you need this. If the |area| coordinates are independent\nof writing mode, then when they are translated to container then the \nwriting mode should not affect it.\n\nAlso what about IsFlippedLinesWritingMode()?",
+      "range": {
+        "startLine": 288,
+        "startChar": 21,
+        "endLine": 288,
+        "endChar": 50
+      },
+      "revId": "6fb9d0bbbd2209bd9cc0dbdc7ae58ecffc8079b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70aed38f_4d1cc372",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-12-18T15:35:35Z",
+      "side": 1,
+      "message": "Perhaps this should be a helper function ToPhysicalAlignment. Also we should do the same for \nalignmentY w.r.t. FlippedHorizontal mode.",
+      "range": {
+        "startLine": 318,
+        "startChar": 0,
+        "endLine": 325,
+        "endChar": 3
+      },
+      "revId": "6fb9d0bbbd2209bd9cc0dbdc7ae58ecffc8079b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
