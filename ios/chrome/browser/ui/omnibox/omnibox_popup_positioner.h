@@ -13,6 +13,8 @@
 // adding the popup as a sibling either above or below this view.
 - (UIView*)popupAnchorView;
 
+// TODO(crbug.com/788705): Remove this method when cleaning the old toolbar
+// implementation.
 // Returns the popup's frame, in the coordinate system of the view returned by
 // |popupView|'s superview.  If |height| is too large for the screen, the frame
 // may be shortened.
