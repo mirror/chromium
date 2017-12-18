@@ -26,6 +26,7 @@
 
 #include "core/html/forms/TextControlInnerElements.h"
 
+#include "core/css/StyleChangeReason.h"
 #include "core/css/resolver/StyleAdjuster.h"
 #include "core/dom/Document.h"
 #include "core/dom/NodeComputedStyle.h"
@@ -126,6 +127,12 @@ void TextControlInnerEditorElement::DefaultEventHandler(Event* event) {
     HTMLDivElement::DefaultEventHandler(event);
 }
 
+void TextControlInnerEditorElement::SetVisibility(bool is_visible) {
+  is_visible_ = is_visible;
+  SetNeedsStyleRecalc(kLocalStyleChange, StyleChangeReasonForTracing::Create(
+                                             StyleChangeReason::kControlValue));
+}
+
 LayoutObject* TextControlInnerEditorElement::CreateLayoutObject(
     const ComputedStyle&) {
   return new LayoutTextControlInnerEditor(this);
@@ -144,6 +151,8 @@ TextControlInnerEditorElement::CustomStyleForLayoutObject() {
   // Using StyleAdjuster::adjustComputedStyle updates unwanted style. We'd like
   // to apply only editing-related and alignment-related.
   StyleAdjuster::AdjustStyleForEditing(*inner_editor_style);
+  if (!is_visible_)
+    inner_editor_style->SetOpacity(0);
   return inner_editor_style;
 }
 
