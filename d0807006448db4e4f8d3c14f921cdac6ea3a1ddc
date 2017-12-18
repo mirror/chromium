@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2fad09e0_63a3c15b",
+        "filename": "content/browser/renderer_host/pepper/pepper_tcp_socket_message_filter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 693,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-12-18T18:52:58Z",
+      "side": 1,
+      "message": "This is inaccurate: Flash and PDF are the most important, but there could be others. The TCP socket API is also exposed as a public API for plugins wrapped in Chrome Apps. In that case, they are controlled by the app permissions:\nhttps://developer.chrome.com/apps/app_network",
+      "range": {
+        "startLine": 692,
+        "startChar": 43,
+        "endLine": 693,
+        "endChar": 49
+      },
+      "revId": "d0807006448db4e4f8d3c14f921cdac6ea3a1ddc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25c3c87b_4a575858",
+        "filename": "content/browser/renderer_host/pepper/pepper_tcp_socket_message_filter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 705,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-12-18T18:52:58Z",
+      "side": 1,
+      "message": "Please see my comment above.",
+      "revId": "d0807006448db4e4f8d3c14f921cdac6ea3a1ddc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f16e782_24ba1d02",
+        "filename": "content/browser/renderer_host/pepper/pepper_tcp_socket_message_filter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 718,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-12-18T18:52:58Z",
+      "side": 1,
+      "message": "I don\u0027t know much about the two policies above, so I don\u0027t really know whether that is sufficient.",
+      "revId": "d0807006448db4e4f8d3c14f921cdac6ea3a1ddc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
