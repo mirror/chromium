@@ -731,6 +731,30 @@
       "revId": "51dde532e48e66948c58eaab75925f89211b89ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f4efdd0_c04d5976",
+        "filename": "content/network/url_request_context_builder_mojo.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-18T22:26:11Z",
+      "side": 1,
+      "message": "I have two concerns:\n\n1)  Not having an in-process NetworkService means we have to keep around Chrome initialization of objects owned by the NetworkService, for the NetworkService-disabled path (NetLog, HostResolver, quic_enabled_ - we may be able to get rid of the quic_enabled_ and NetLog, because they have so few consumers, but HostResolver we\u0027ll certainly need as long as we have legacy in-process consumers.  Not sure if there are other things in the same boat).\n\n2)  If we want to use the NetworkService\u0027s objects in the in-process route, we\u0027ll need to hook stuff up from the NetworkService here.  NetworkContext::ApplyContextParamsToBuilder(network_service (possibly null?), this, params, quic_disabled, net_log /* Possibly null when network_service isn\u0027t null? */);",
+      "parentUuid": "e0ea0300_29cdf0c2",
+      "range": {
+        "startLine": 37,
+        "startChar": 53,
+        "endLine": 37,
+        "endChar": 66
+      },
+      "revId": "51dde532e48e66948c58eaab75925f89211b89ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
