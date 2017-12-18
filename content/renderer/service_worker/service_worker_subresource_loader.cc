@@ -409,7 +409,6 @@ void ServiceWorkerSubresourceLoader::StartResponse(
     }
     url_loader_client_->OnStartLoadingResponseBody(std::move(data_pipe));
     // We continue in OnBlobReadingComplete().
-    return;
   }
 
   // The response has no body.

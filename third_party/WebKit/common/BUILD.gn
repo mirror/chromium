@@ -112,6 +112,7 @@ mojom("mojo_platform_bindings") {
   sources = [
     "blob/blob.mojom",
     "blob/blob_registry.mojom",
+    "blob/blob_url_store.mojom",
     "clipboard/clipboard.mojom",
     "feature_policy/feature_policy.mojom",
     "page/page_visibility_state.mojom",
