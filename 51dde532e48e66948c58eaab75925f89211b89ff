@@ -755,6 +755,30 @@
       "revId": "51dde532e48e66948c58eaab75925f89211b89ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59f0ade1_a5856bf6",
+        "filename": "content/network/url_request_context_builder_mojo.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-18T22:30:49Z",
+      "side": 1,
+      "message": "Also, if we use a shared PrefService for settings for multiple objects, that would normally be owned by the NetworkContext itself.  We\u0027d need the pref service for ApplyContextParamsToBuilder for the in-process route, but we don\u0027t have a NetworkContext yet.  I am pretty sure we will want to use the PrefService for other stuff as well.",
+      "parentUuid": "9f4efdd0_c04d5976",
+      "range": {
+        "startLine": 37,
+        "startChar": 53,
+        "endLine": 37,
+        "endChar": 66
+      },
+      "revId": "51dde532e48e66948c58eaab75925f89211b89ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
