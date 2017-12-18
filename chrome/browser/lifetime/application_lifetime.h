@@ -49,12 +49,14 @@ void AttemptExit();
 // If you need to exit or restart in your code on ChromeOS,
 // use AttemptExit or AttemptRestart respectively.
 void ExitCleanly();
-
-// Returns true if any of the above Attempt calls have been called.
-bool IsAttemptingShutdown();
 #endif
 
 #if !defined(OS_ANDROID)
+// Returns true if all browsers can be closed without user interaction.
+// This currently checks if there is pending download, or if it needs to
+// handle unload handler.
+bool AreAllBrowsersCloseable();
+
 // Closes all browsers and if successful, quits.
 void CloseAllBrowsersAndQuit();
 
@@ -63,6 +65,9 @@ void CloseAllBrowsersAndQuit();
 // message. This will quit the application if there is nothing other than
 // browser windows keeping it alive or the application is quitting.
 void CloseAllBrowsers();
+
+// Marks shutdown intented, not a crash.
+void MarkAsCleanShutdown();
 
 // If there are no browsers open and we aren't already shutting down,
 // initiate a shutdown.
