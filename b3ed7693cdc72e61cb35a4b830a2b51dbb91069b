@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "729b7c5f_680fd290",
+        "filename": "ui/touch_selection/touch_selection_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-12-18T18:34:25Z",
+      "side": 1,
+      "message": "Done\n\nThanks for pointing this out, although this way is working, it\u0027s still not as efficient as pointers.",
+      "parentUuid": "f7f93f04_9235e67f",
+      "revId": "b3ed7693cdc72e61cb35a4b830a2b51dbb91069b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "efb5e3a3_ff584c3e",
         "filename": "ui/touch_selection/touch_selection_controller.cc",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-18T17:57:39Z",
       "side": 1,
       "message": "Shouldn\u0027t this be average of top and bottom x\u0027s (similar to y)?",
+      "revId": "b3ed7693cdc72e61cb35a4b830a2b51dbb91069b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96336d2b_c20750b2",
+        "filename": "ui/touch_selection/touch_selection_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-12-18T18:34:25Z",
+      "side": 1,
+      "message": "gfx::SelectionBound is basically a vertical line, so edge_top().x() equals to edge_bottom().x() IIUC?",
+      "parentUuid": "efb5e3a3_ff584c3e",
       "revId": "b3ed7693cdc72e61cb35a4b830a2b51dbb91069b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "b3ed7693cdc72e61cb35a4b830a2b51dbb91069b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cb591c5_79a8edf6",
+        "filename": "ui/touch_selection/touch_selection_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-12-18T18:34:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7bb1e3f3_96fd05f4",
+      "revId": "b3ed7693cdc72e61cb35a4b830a2b51dbb91069b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
