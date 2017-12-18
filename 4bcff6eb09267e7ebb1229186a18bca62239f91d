@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9451307f_9c768749",
+        "filename": "ash/shelf/shelf_widget_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-12-18T23:19:16Z",
+      "side": 1,
+      "message": "nit: spelling TestVisibility",
+      "revId": "4bcff6eb09267e7ebb1229186a18bca62239f91d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b55e8adf_e555a618",
+        "filename": "ash/shelf/shelf_widget_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-12-18T23:19:16Z",
+      "side": 1,
+      "message": "the false/false is a bit hard to read, what about using flags?\n\n  ExpectOnlyVisible(session_manager::SessionState::OOBE, kNone);\n  ExpectOnlyVisible(session_manager::SessionState::FOO, kShelf);\n  ExpectOnlyVisible(session_manager::SessionState::BAR, kLoginShelf);",
+      "revId": "4bcff6eb09267e7ebb1229186a18bca62239f91d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7e8c12f_3941deac",
+        "filename": "chrome/browser/chromeos/login/lock/screen_locker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-12-18T23:19:16Z",
+      "side": 1,
+      "message": "Can you pull this into a separate CL?",
+      "revId": "4bcff6eb09267e7ebb1229186a18bca62239f91d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
