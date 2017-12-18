@@ -22,6 +22,7 @@
 #include "build/build_config.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/chrome_notification_types.h"
+#include "chrome/browser/printing/background_printing_manager.h"
 #include "chrome/browser/printing/print_job.h"
 #include "chrome/browser/printing/print_job_manager.h"
 #include "chrome/browser/printing/printer_query.h"
@@ -75,6 +76,13 @@ void ShowWarningMessageBox(const base::string16& message) {
   base::AutoReset<bool> auto_reset(&is_dialog_shown, true);
 
   chrome::ShowWarningMessageBox(nullptr, base::string16(), message);
+}
+
+void PrintJobReleased(content::WebContents* web_contents) {
+  if (g_browser_process) {
+    g_browser_process->background_printing_manager()->PrintJobReleased(
+        web_contents);
+  }
 }
 
 }  // namespace
@@ -335,11 +343,7 @@ void PrintViewManagerBase::OnPrintingFailed(int cookie) {
 #endif
 
   ReleasePrinterQuery();
-
-  content::NotificationService::current()->Notify(
-      chrome::NOTIFICATION_PRINT_JOB_RELEASED,
-      content::Source<content::WebContents>(web_contents()),
-      content::NotificationService::NoDetails());
+  PrintJobReleased(web_contents());
 }
 
 void PrintViewManagerBase::OnShowInvalidPrinterSettingsError() {
@@ -382,10 +386,7 @@ void PrintViewManagerBase::SystemDialogCancelled() {
   // BackgroundPrintingManager.
   ReleasePrinterQuery();
   TerminatePrintJob(true);
-  content::NotificationService::current()->Notify(
-      chrome::NOTIFICATION_PRINT_JOB_RELEASED,
-      content::Source<content::WebContents>(web_contents()),
-      content::NotificationService::NoDetails());
+  PrintJobReleased(web_contents());
 }
 #endif
 
@@ -415,11 +416,7 @@ void PrintViewManagerBase::OnNotifyPrintJobEvent(
   switch (event_details.type()) {
     case JobEventDetails::FAILED: {
       TerminatePrintJob(true);
-
-      content::NotificationService::current()->Notify(
-          chrome::NOTIFICATION_PRINT_JOB_RELEASED,
-          content::Source<content::WebContents>(web_contents()),
-          content::NotificationService::NoDetails());
+      PrintJobReleased(web_contents());
       break;
     }
     case JobEventDetails::USER_INIT_DONE:
@@ -446,11 +443,7 @@ void PrintViewManagerBase::OnNotifyPrintJobEvent(
       // of object registration.
       printing_succeeded_ = true;
       ReleasePrintJob();
-
-      content::NotificationService::current()->Notify(
-          chrome::NOTIFICATION_PRINT_JOB_RELEASED,
-          content::Source<content::WebContents>(web_contents()),
-          content::NotificationService::NoDetails());
+      PrintJobReleased(web_contents());
       break;
     }
     default: {
