@@ -1,0 +1,245 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "76b07847_09caaa61",
+        "filename": "components/signin/core/browser/signin_manager_base.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-12-18T14:38:38Z",
+      "side": 1,
+      "message": "Suggestion: Let\u0027s mark the old methods as deprecated - new clients should always use the new AccountInfo version of these methods. That way it will be easier for us to convert them to the IdentityProxy.",
+      "range": {
+        "startLine": 63,
+        "startChar": 17,
+        "endLine": 63,
+        "endChar": 38
+      },
+      "revId": "c9be8b7caaff521846dc5287ef5200fc54c6e48f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "690ae8aa_318626f2",
+        "filename": "services/identity/public/cpp/identity_proxy.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-12-18T14:38:38Z",
+      "side": 1,
+      "message": "I would rename this method HandleGoogleSigninSucceded for now. We\u0027ll rename it once we move to the Identity Service.",
+      "revId": "c9be8b7caaff521846dc5287ef5200fc54c6e48f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dffda7c8_a7adfc19",
+        "filename": "services/identity/public/cpp/identity_proxy.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-12-18T14:38:38Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 59,
+        "startChar": 20,
+        "endLine": 59,
+        "endChar": 42
+      },
+      "revId": "c9be8b7caaff521846dc5287ef5200fc54c6e48f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1c7cf52_b8dca06e",
+        "filename": "services/identity/public/cpp/identity_proxy.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-12-18T14:38:38Z",
+      "side": 1,
+      "message": "Should this be primary_account_info_ \u003d account_info ?",
+      "range": {
+        "startLine": 63,
+        "startChar": 26,
+        "endLine": 63,
+        "endChar": 37
+      },
+      "revId": "c9be8b7caaff521846dc5287ef5200fc54c6e48f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af36ae93_a20db2e8",
+        "filename": "services/identity/public/cpp/identity_proxy.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-12-18T14:38:38Z",
+      "side": 1,
+      "message": "One-line for statements do not require a bracket (I think).",
+      "range": {
+        "startLine": 64,
+        "startChar": 41,
+        "endLine": 64,
+        "endChar": 0
+      },
+      "revId": "c9be8b7caaff521846dc5287ef5200fc54c6e48f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9868e0a3_2162a601",
+        "filename": "services/identity/public/cpp/identity_proxy.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-12-18T14:38:38Z",
+      "side": 1,
+      "message": "With DICE enabled and on mobile, the user does not really login / sign-in to their account using the username and password. They just set the primary account by selecting it from a list of available accounts on the device.\nThat is why I think we should probably have a different notion that login/logout.\n\nMaybe we should use something like:\n* DidSetPrimaryAccount(const AccountInfo\u0026 primary_account_info), DidFailSetPrimaryAccount(const AccountInfo\u0026 primary_account_info, error), DidClearPrimaryAccount/DidRemovePrimaryAccount(const AccountInfo\u0026 primary_account_info)\n* OnPrimaryAccountSet(const AccountInfo\u0026 primary_account_info), OnPrimaryAccountSetFailure(const AccountInfo\u0026 primary_account_info, error), OnPrimaryAccountCleared/Removed(const AccountInfo\u0026 primary_account_info)\n\nWDYT?",
+      "range": {
+        "startLine": 22,
+        "startChar": 17,
+        "endLine": 22,
+        "endChar": 38
+      },
+      "revId": "c9be8b7caaff521846dc5287ef5200fc54c6e48f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "875d9ff8_bdfd0b72",
+        "filename": "services/identity/public/cpp/identity_proxy.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-12-18T14:38:38Z",
+      "side": 1,
+      "message": "explicit",
+      "range": {
+        "startLine": 37,
+        "startChar": 16,
+        "endLine": 37,
+        "endChar": 33
+      },
+      "revId": "c9be8b7caaff521846dc5287ef5200fc54c6e48f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18ee173f_9477a5cc",
+        "filename": "services/identity/public/cpp/identity_proxy.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-12-18T14:38:38Z",
+      "side": 1,
+      "message": "DISALLOW_COPY_AND_ASSIGN",
+      "revId": "c9be8b7caaff521846dc5287ef5200fc54c6e48f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b329bd60_e8170d7d",
+        "filename": "services/identity/public/cpp/identity_proxy_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-12-18T14:38:38Z",
+      "side": 1,
+      "message": "explicit",
+      "range": {
+        "startLine": 37,
+        "startChar": 2,
+        "endLine": 37,
+        "endChar": 27
+      },
+      "revId": "c9be8b7caaff521846dc5287ef5200fc54c6e48f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14b7e418_7968db74",
+        "filename": "services/identity/public/cpp/identity_proxy_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-12-18T14:38:38Z",
+      "side": 1,
+      "message": "As suggested in a different file, we should rename this to something else that login/logout. Once we settle on a function name there, these variables need to be updated as well.",
+      "range": {
+        "startLine": 46,
+        "startChar": 4,
+        "endLine": 46,
+        "endChar": 22
+      },
+      "revId": "c9be8b7caaff521846dc5287ef5200fc54c6e48f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9be33c8_ec8cfa88",
+        "filename": "services/identity/public/cpp/identity_proxy_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-12-18T14:38:38Z",
+      "side": 1,
+      "message": "I see that signin_manager_-\u003eInitialize is never called in this test. I am wondering if that is necessary or not.",
+      "range": {
+        "startLine": 100,
+        "startChar": 21,
+        "endLine": 100,
+        "endChar": 31
+      },
+      "revId": "c9be8b7caaff521846dc5287ef5200fc54c6e48f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
