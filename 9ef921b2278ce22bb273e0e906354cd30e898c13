@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a81185f_83e63f41",
+        "filename": "services/service_manager/sandbox/linux/bpf_network_policy_linux.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-12-18T19:27:33Z",
+      "side": 1,
+      "message": "TODO: RestrictFcntlCommands() ?",
+      "revId": "9ef921b2278ce22bb273e0e906354cd30e898c13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79702cad_43642d09",
+        "filename": "services/service_manager/sandbox/linux/bpf_network_policy_linux.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-12-18T19:27:33Z",
+      "side": 1,
+      "message": "We\u0027ll probably want to restrict args to this one too.",
+      "revId": "9ef921b2278ce22bb273e0e906354cd30e898c13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
