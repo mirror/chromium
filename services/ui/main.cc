@@ -8,8 +8,9 @@
 #include "services/ui/service.h"
 
 MojoResult ServiceMain(MojoHandle service_request_handle) {
-  ui::Service* ui_service = new ui::Service;
-  ui_service->set_running_standalone(true);
+  ui::Service::InitParams params;
+  params.is_in_process = false;
+  ui::Service* ui_service = new ui::Service(params);
   service_manager::ServiceRunner runner(ui_service);
   runner.set_message_loop_type(base::MessageLoop::TYPE_UI);
   return runner.Run(service_request_handle);

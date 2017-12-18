@@ -74,13 +74,14 @@ class WindowServer;
 class Service : public service_manager::Service,
                 public ws::WindowServerDelegate {
  public:
-  // Contains the configuration necessary to run the UI Service inside the
-  // Window Manager's process.
-  struct InProcessConfig {
-    InProcessConfig();
-    ~InProcessConfig();
+  struct InitParams {
+    InitParams();
+    ~InitParams();
 
-    // Can be used to load resources.
+    // UI service will run inside another process (e.g. browser or ash).
+    bool is_in_process = false;
+
+    // Can be used to load resources. Must be provided for in-process mode.
     scoped_refptr<base::SingleThreadTaskRunner> resource_runner = nullptr;
 
     // Can only be de-referenced on |resource_runner_|.
@@ -95,16 +96,11 @@ class Service : public service_manager::Service,
     bool should_host_viz = true;
 
    private:
-    DISALLOW_COPY_AND_ASSIGN(InProcessConfig);
+    DISALLOW_COPY_AND_ASSIGN(InitParams);
   };
 
-  // |config| should be null when UI Service runs in it's own separate process,
-  // as opposed to inside the Window Manager's process.
-  explicit Service(const InProcessConfig* config = nullptr);
+  explicit Service(const InitParams& params);
   ~Service() override;
-
-  // Call if the ui::Service is being run as a standalone process.
-  void set_running_standalone(bool value) { running_standalone_ = value; }
 
  private:
   // Holds InterfaceRequests received before the first WindowTreeHost Display
@@ -247,8 +243,6 @@ class Service : public service_manager::Service,
   bool is_gpu_ready_ = false;
 
   bool in_destructor_ = false;
-
-  bool running_standalone_ = false;
 
   DISALLOW_COPY_AND_ASSIGN(Service);
 };
