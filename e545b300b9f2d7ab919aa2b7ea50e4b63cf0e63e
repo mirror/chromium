@@ -16,6 +16,24 @@
       "revId": "e545b300b9f2d7ab919aa2b7ea50e4b63cf0e63e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0013b21_8ec5cd4c",
+        "filename": "ash/public/interfaces/app_list.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-18T20:19:18Z",
+      "side": 1,
+      "message": "This struct is like this so that we can do minimum update (via mojo calls) when an item is moved or re-parented. This is inline with how it currently works when the model data is changed from sync.\n\n* Move an item from position x to position y.\n    If we use an array for the list, then we need to re-send the array. But\n    with the |position| field, we can just send the changed item and let\n    the UI code to sort by the ordinal to get the re-ordered list.\n\n* Reparent (move item from one folder to another).\n    If we use array, then we need to send the array of both the old parent\n    and new parent. With the |folder id|, we can just send the changed item,\n    and UI code would figure out where to put the item.",
+      "parentUuid": "183037c2_662ef2d4",
+      "revId": "e545b300b9f2d7ab919aa2b7ea50e4b63cf0e63e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
