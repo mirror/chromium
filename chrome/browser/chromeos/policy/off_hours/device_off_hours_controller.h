@@ -15,6 +15,7 @@
 #include "base/time/time.h"
 #include "base/timer/timer.h"
 #include "chrome/browser/chromeos/policy/off_hours/off_hours_interval.h"
+#include "chrome/browser/chromeos/settings/device_settings_service.h"
 #include "chromeos/dbus/power_manager_client.h"
 #include "chromeos/dbus/system_clock_client.h"
 #include "components/policy/proto/chrome_device_policy.pb.h"
@@ -37,8 +38,10 @@ namespace off_hours {
 //
 // "OffHours" mode is never on until device time is synchronized with
 // network time because in this case device time could be incorrect.
-class DeviceOffHoursController : public chromeos::SystemClockClient::Observer,
-                                 public chromeos::PowerManagerClient::Observer {
+class DeviceOffHoursController
+    : public chromeos::SystemClockClient::Observer,
+      public chromeos::PowerManagerClient::Observer,
+      public chromeos::DeviceSettingsService::Observer {
  public:
   // Observer interface.
   class Observer {
@@ -50,8 +53,10 @@ class DeviceOffHoursController : public chromeos::SystemClockClient::Observer,
     virtual ~Observer() {}
   };
 
-  // Creates a device off hours controller instance.
-  DeviceOffHoursController();
+  // Creates a device off hours controller instance. |device_settings_service|
+  // must outlive DeviceOffHoursController.
+  explicit DeviceOffHoursController(
+      chromeos::DeviceSettingsService* device_settings_service);
   ~DeviceOffHoursController() override;
 
   void AddObserver(Observer* observer);
@@ -66,9 +71,8 @@ class DeviceOffHoursController : public chromeos::SystemClockClient::Observer,
       const enterprise_management::ChromeDeviceSettingsProto&
           device_settings_proto);
 
-  // Return "OffHours" mode end time during "OffHours" mode is on. Return null
-  // when "OffHours" mode is off.
-  base::TimeTicks GetOffHoursEndTime() const { return off_hours_end_time_; }
+  // Result is null when "OffHours" mode is off.
+  base::TimeTicks off_hours_end_time() const { return off_hours_end_time_; }
 
   // chromeos::PowerManagerClient::Observer:
   void SuspendDone(const base::TimeDelta& sleep_duration) override;
@@ -76,10 +80,16 @@ class DeviceOffHoursController : public chromeos::SystemClockClient::Observer,
   // chromeos::SystemClockClient::Observer:
   void SystemClockUpdated() override;
 
+  // chromeos::DeviceSettingsService::Observer:
+  void DeviceSettingsOperationCompleted() override;
+
   // |timer_clock| is not owned and its lifetime should cover lifetime of
   // DeviceOffHoursContoller.
   void SetClockForTesting(std::unique_ptr<base::Clock> clock,
                           base::TickClock* timer_clock);
+
+  // Sets off_hours_end_time and off_hours_enabled to true.
+  void SetOffHoursEndTimeForTesting(base::TimeTicks off_hours_end_time);
 
  private:
   // Run OnOffHoursEndTimeChanged() for observers.
@@ -136,6 +146,8 @@ class DeviceOffHoursController : public chromeos::SystemClockClient::Observer,
 
   // Current "OffHours" time intervals.
   std::vector<OffHoursInterval> off_hours_intervals_;
+
+  chromeos::DeviceSettingsService* device_settings_service_;
 
   base::WeakPtrFactory<DeviceOffHoursController> weak_ptr_factory_{this};
 

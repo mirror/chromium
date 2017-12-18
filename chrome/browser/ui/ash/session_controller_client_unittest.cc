@@ -284,7 +284,7 @@ TEST_F(SessionControllerClientTest, CyclingOneUser) {
 // Cycle three users forwards and backwards to see that it works.
 TEST_F(SessionControllerClientTest, CyclingThreeUsers) {
   // Create an object to test and connect it to our test interface.
-  SessionControllerClient client;
+  SessionControllerClient client(nullptr /* device_off_hours_controller */);
   TestSessionController session_controller;
   client.session_controller_ = session_controller.CreateInterfacePtrAndBind();
   client.Init();
@@ -462,7 +462,7 @@ TEST_F(SessionControllerClientTest,
 
 TEST_F(SessionControllerClientTest, SendUserSession) {
   // Create an object to test and connect it to our test interface.
-  SessionControllerClient client;
+  SessionControllerClient client(nullptr /* device_off_hours_controller */);
   TestSessionController session_controller;
   client.session_controller_ = session_controller.CreateInterfacePtrAndBind();
   client.Init();
@@ -496,7 +496,7 @@ TEST_F(SessionControllerClientTest, SendUserSession) {
 
 TEST_F(SessionControllerClientTest, SupervisedUser) {
   // Create an object to test and connect it to our test interface.
-  SessionControllerClient client;
+  SessionControllerClient client(nullptr /* device_off_hours_controller */);
   TestSessionController session_controller;
   client.session_controller_ = session_controller.CreateInterfacePtrAndBind();
   client.Init();
@@ -559,7 +559,7 @@ TEST_F(SessionControllerClientTest, SupervisedUser) {
 
 TEST_F(SessionControllerClientTest, UserPrefsChange) {
   // Create an object to test and connect it to our test interface.
-  SessionControllerClient client;
+  SessionControllerClient client(nullptr /* device_off_hours_controller */);
   TestSessionController session_controller;
   client.session_controller_ = session_controller.CreateInterfacePtrAndBind();
   client.Init();
@@ -602,8 +602,12 @@ TEST_F(SessionControllerClientTest, UserPrefsChange) {
 }
 
 TEST_F(SessionControllerClientTest, SessionLengthLimit) {
+  // Create a DeviceOffHoursController instance to ensure correct behavior
+  // with the default DeviceOffHoursController behavior (i.e. no policy set).
+  policy::off_hours::DeviceOffHoursController off_hours_controller(
+      chromeos::DeviceSettingsService::Get());
   // Create an object to test and connect it to our test interface.
-  SessionControllerClient client;
+  SessionControllerClient client(&off_hours_controller);
   TestSessionController session_controller;
   client.session_controller_ = session_controller.CreateInterfacePtrAndBind();
   client.Init();
@@ -623,4 +627,32 @@ TEST_F(SessionControllerClientTest, SessionLengthLimit) {
   SessionControllerClient::FlushForTesting();
   EXPECT_EQ(length_limit, session_controller.last_session_length_limit_);
   EXPECT_EQ(start_time, session_controller.last_session_start_time_);
+}
+
+TEST_F(SessionControllerClientTest, OffHoursSessionLengthLimit) {
+  // Create a DeviceOffHoursController instance to ensure correct behavior
+  // when an off hours time is set.
+  policy::off_hours::DeviceOffHoursController off_hours_controller(
+      chromeos::DeviceSettingsService::Get());
+  // Create an object to test and connect it to our test interface.
+  SessionControllerClient client(&off_hours_controller);
+  TestSessionController session_controller;
+  client.session_controller_ = session_controller.CreateInterfacePtrAndBind();
+  client.Init();
+  SessionControllerClient::FlushForTesting();
+
+  // By default there is no session length limit.
+  EXPECT_TRUE(session_controller.last_session_length_limit_.is_zero());
+
+  // Setting an off hours length limit should limit the session length.
+  const base::TimeDelta off_hours_length_limit = base::TimeDelta::FromHours(1);
+  off_hours_controller.SetOffHoursEndTimeForTesting(base::TimeTicks::Now() +
+                                                    off_hours_length_limit);
+  SessionControllerClient::FlushForTesting();
+
+  // Ensure that the limit is between 0 and off_hours_length_limit.
+  EXPECT_GT(session_controller.last_session_length_limit_,
+            base::TimeDelta::FromMinutes(0));
+  EXPECT_LE(session_controller.last_session_length_limit_,
+            off_hours_length_limit);
 }

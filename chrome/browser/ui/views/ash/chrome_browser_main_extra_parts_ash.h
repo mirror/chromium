@@ -15,6 +15,12 @@ namespace aura {
 class UserActivityForwarder;
 }
 
+namespace policy {
+namespace off_hours {
+class DeviceOffHoursController;
+}
+}  // namespace policy
+
 namespace ui {
 class UserActivityDetector;
 }
@@ -60,6 +66,8 @@ class ChromeBrowserMainExtraPartsAsh : public ChromeBrowserMainExtraParts {
   std::unique_ptr<MediaClient> media_client_;
   std::unique_ptr<ImmersiveHandlerFactoryMus> immersive_handler_factory_;
   std::unique_ptr<ImmersiveContextMus> immersive_context_;
+  std::unique_ptr<policy::off_hours::DeviceOffHoursController>
+      device_off_hours_controller_;
   std::unique_ptr<SessionControllerClient> session_controller_client_;
   std::unique_ptr<SystemTrayClient> system_tray_client_;
   std::unique_ptr<ImeControllerClient> ime_controller_client_;
