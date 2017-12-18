@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b0141e1d_603e9bab",
+        "filename": "chrome/browser/chromeos/net/tether_notification_presenter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-18T22:51:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8c129623_e04cc687",
+      "range": {
+        "startLine": 50,
+        "startChar": 0,
+        "endLine": 50,
+        "endChar": 1
+      },
+      "revId": "9308975a9f173221d8e731f655ff2fd3f601f2ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5328edef_e23d24b7",
         "filename": "chrome/browser/chromeos/net/tether_notification_presenter.cc",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "9308975a9f173221d8e731f655ff2fd3f601f2ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8df7302_44faa921",
+        "filename": "chrome/browser/chromeos/net/tether_notification_presenter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-18T22:51:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5328edef_e23d24b7",
+      "range": {
+        "startLine": 120,
+        "startChar": 60,
+        "endLine": 120,
+        "endChar": 2
+      },
+      "revId": "9308975a9f173221d8e731f655ff2fd3f601f2ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "f5d1e5a6_c1dae910",
+        "filename": "chrome/browser/chromeos/net/tether_notification_presenter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-18T22:51:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d2ba4aaa_1a456581",
+      "range": {
+        "startLine": 160,
+        "startChar": 56,
+        "endLine": 160,
+        "endChar": 58
+      },
+      "revId": "9308975a9f173221d8e731f655ff2fd3f601f2ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bfa8fcfa_1121491e",
         "filename": "chrome/browser/chromeos/net/tether_notification_presenter.cc",
         "patchSetId": 3
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "1ff22ca9_d9768eae",
+        "filename": "chrome/browser/chromeos/net/tether_notification_presenter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-18T22:51:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bfa8fcfa_1121491e",
+      "range": {
+        "startLine": 239,
+        "startChar": 0,
+        "endLine": 239,
+        "endChar": 1
+      },
+      "revId": "9308975a9f173221d8e731f655ff2fd3f601f2ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b85919a1_a54703de",
         "filename": "chrome/browser/chromeos/net/tether_notification_presenter_unittest.cc",
         "patchSetId": 3
@@ -105,6 +201,30 @@
       "writtenOn": "2017-12-18T19:34:06Z",
       "side": 1,
       "message": "Nice - is this what I should be using for future tests which require a test Profile?",
+      "range": {
+        "startLine": 37,
+        "startChar": 47,
+        "endLine": 37,
+        "endChar": 72
+      },
+      "revId": "9308975a9f173221d8e731f655ff2fd3f601f2ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3950a64c_49b5c217",
+        "filename": "chrome/browser/chromeos/net/tether_notification_presenter_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-18T22:51:39Z",
+      "side": 1,
+      "message": "yea",
+      "parentUuid": "b85919a1_a54703de",
       "range": {
         "startLine": 37,
         "startChar": 47,
