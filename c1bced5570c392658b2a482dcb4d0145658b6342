@@ -22,6 +22,30 @@
       "revId": "c1bced5570c392658b2a482dcb4d0145658b6342",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94701e65_a6df27a1",
+        "filename": "third_party/WebKit/Source/core/layout/TextAutosizer.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1130,
+      "author": {
+        "id": 1237911
+      },
+      "writtenOn": "2017-12-18T23:25:10Z",
+      "side": 1,
+      "message": "In your example, If DSF \u003d\u003d 2.0, specified size \u003d\u003d 16 CSS pixels, 100% zoom level, multiplier \u003d\u003d 1.5, the size will be 48 (16 * 1.5 * 2.0) but not 96.\n\nIt is because the default font has 16 CSS pixels as specified size and 32 (\u003d\u003d 16 * 2.0) physical pixels as computed size. ComputedStyle::SetTextAutosizingMultiplier() updates only the computed size by (specified size) * multiplier \u003d\u003d 16 * 3.0 (where 3.0 \u003d\u003d \"multiplier from autosizer\" * DSF \u003d\u003d 1.5 * 2.0) while the specified size is the same as 16 CSS pixels.\n\nI confirmed this in two ways: 1. manual check in the browser 2. unit test named TextAutosizerTest::ScaledbyDSF (this is what I added in the previous CL to check text autosizer works fine with --use-zoom-for-dsf).",
+      "parentUuid": "20db8ae2_3366f4eb",
+      "range": {
+        "startLine": 1130,
+        "startChar": 55,
+        "endLine": 1130,
+        "endChar": 59
+      },
+      "revId": "c1bced5570c392658b2a482dcb4d0145658b6342",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
