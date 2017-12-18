@@ -16,6 +16,24 @@
       "revId": "25518e8daa17a8b0d8fe80ec2269c8fa32f24f24",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db8ff663_6503313b",
+        "filename": "third_party/WebKit/LayoutTests/fast/harness/results.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-12-18T18:21:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8a9c2a44_c7df8c7e",
+      "revId": "25518e8daa17a8b0d8fe80ec2269c8fa32f24f24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
