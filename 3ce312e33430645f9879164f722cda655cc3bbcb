@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "66951543_3a1afa12",
+        "filename": "ash/public/cpp/app_list_item_metadata.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-18T16:58:04Z",
+      "side": 1,
+      "message": "Typemapping is a convenient way to use existing C++ class/struct in mojo interface. If we don\u0027t have a C++ class/struct, we can use the mojom struct directly. Since we don\u0027t want to expose AppListItem and would have a new struct for the meta data, we can use the mojom struct directly without creating a C++ struct IMO.",
+      "parentUuid": "a28544d3_2ae06bb0",
+      "revId": "3ce312e33430645f9879164f722cda655cc3bbcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3c3bfb61_21cf7a92",
         "filename": "ash/public/cpp/app_list_item_metadata.h",
         "patchSetId": 2
