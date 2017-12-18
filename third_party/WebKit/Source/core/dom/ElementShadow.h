@@ -87,16 +87,10 @@ class CORE_EXPORT ElementShadow final : public GarbageCollected<ElementShadow>,
   DISALLOW_COPY_AND_ASSIGN(ElementShadow);
 };
 
-inline ShadowRoot* Node::YoungestShadowRoot() const {
+inline ShadowRoot* Node::GetShadowRoot() const {
   if (!IsElementNode())
     return nullptr;
-  return ToElement(this)->YoungestShadowRoot();
-}
-
-inline ShadowRoot* Element::YoungestShadowRoot() const {
-  if (ElementShadow* shadow = Shadow())
-    return &shadow->GetShadowRoot();
-  return nullptr;
+  return ToElement(this)->GetShadowRoot();
 }
 
 inline ElementShadow* ElementShadow::ContainingShadow() const {
