@@ -448,6 +448,10 @@ bool GpuDataManagerImplPrivate::IsCompleteGpuInfoAvailable() const {
   return IsEssentialGpuInfoAvailable();
 }
 
+bool GpuDataManagerImplPrivate::IsGpuFeatureInfoAvailable() const {
+  return gpu_feature_info_.IsValid();
+}
+
 void GpuDataManagerImplPrivate::RequestVideoMemoryUsageStatsUpdate(
     const base::Callback<void(const gpu::VideoMemoryUsageStats& stats)>&
         callback) const {
@@ -655,11 +659,8 @@ void GpuDataManagerImplPrivate::UpdateGpuInfo(const gpu::GPUInfo& gpu_info) {
 
 void GpuDataManagerImplPrivate::UpdateGpuFeatureInfo(
     const gpu::GpuFeatureInfo& gpu_feature_info) {
-  if (!use_swiftshader_) {
-    gpu_feature_info_ = gpu_feature_info;
-    UpdateDriverBugListStats(gpu_feature_info);
-    NotifyGpuInfoUpdate();
-  }
+  gpu_feature_info_ = gpu_feature_info;
+  UpdateDriverBugListStats(gpu_feature_info);
 }
 
 gpu::GpuFeatureInfo GpuDataManagerImplPrivate::GetGpuFeatureInfo() const {
@@ -778,9 +779,9 @@ void GpuDataManagerImplPrivate::DisableHardwareAcceleration() {
   }
 
   card_blacklisted_ = true;
-
-  for (int i = 0; i < gpu::NUMBER_OF_GPU_FEATURE_TYPES; ++i)
-    blacklisted_features_.insert(i);
+  gpu::GpuFeatureInfo gpu_feature_info =
+      gpu::ComputeGpuFeatureInfoWithHardwareAccelerationDisabled();
+  UpdateGpuFeatureInfo(gpu_feature_info);
 
   EnableSwiftShaderIfNecessary();
   NotifyGpuInfoUpdate();
