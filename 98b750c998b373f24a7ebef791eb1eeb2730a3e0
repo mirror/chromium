@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "587f8ea8_b26e947f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageListBaseAdapter.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1234349
+      },
+      "writtenOn": "2017-12-18T01:04:41Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "0dc6cc73_862dcb69",
+      "range": {
+        "startLine": 82,
+        "startChar": 14,
+        "endLine": 82,
+        "endChar": 51
+      },
+      "revId": "98b750c998b373f24a7ebef791eb1eeb2730a3e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b01f7b48_08d2ba83",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageListBaseAdapter.java",
         "patchSetId": 6
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "fb7545a2_74390164",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageListBaseAdapter.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1234349
+      },
+      "writtenOn": "2017-12-18T01:04:41Z",
+      "side": 1,
+      "message": "Thanks, Done",
+      "parentUuid": "b01f7b48_08d2ba83",
+      "range": {
+        "startLine": 147,
+        "startChar": 16,
+        "endLine": 151,
+        "endChar": 17
+      },
+      "revId": "98b750c998b373f24a7ebef791eb1eeb2730a3e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "921ab14f_20b8a2dc",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageListBaseAdapter.java",
         "patchSetId": 6
@@ -62,6 +110,24 @@
       "revId": "98b750c998b373f24a7ebef791eb1eeb2730a3e0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "382adb22_0e70650b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageListBaseAdapter.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1234349
+      },
+      "writtenOn": "2017-12-18T01:04:41Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "921ab14f_20b8a2dc",
+      "revId": "98b750c998b373f24a7ebef791eb1eeb2730a3e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -85,6 +151,30 @@
       "revId": "98b750c998b373f24a7ebef791eb1eeb2730a3e0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d51bae98_e8011363",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageListPreference.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1234349
+      },
+      "writtenOn": "2017-12-18T01:04:41Z",
+      "side": 1,
+      "message": "Currently when native updates language list, it will always try to add a base language immediately behind its variant(eg. add en for en-US) if the base language is not in front of it. E.g.\n\nen-AU \u003e\u003e en-AU, en (add \"en\" for \"en-AU\")\nen, en-AU \u003e\u003e en, en-AU (\"en\" is already in front of \"en-AU\")\nen-AU, en-US, en \u003e\u003e en-AU, en, en-US (add \"en\" after \"en-AU\" and remove the last \"en\" for duplicated)\n\n\nSo when the user want to change a list from [en-AU, en, en-US] to [en-AU, en-US, en], \nand even Android tells native that \"en\" was moved to the last, however the final list will still be [en-AU, en, en-US] in native. \n\nI have talked to the native code owner and it\u0027s a known issue which happens on all platforms. Put a comment here for me to revisit it when it\u0027s fixed.",
+      "parentUuid": "87b9e0c2_efe6e13c",
+      "range": {
+        "startLine": 114,
+        "startChar": 8,
+        "endLine": 115,
+        "endChar": 83
+      },
+      "revId": "98b750c998b373f24a7ebef791eb1eeb2730a3e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
