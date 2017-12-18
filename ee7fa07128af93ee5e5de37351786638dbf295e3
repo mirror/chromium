@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "d9492978_7e536e20",
+        "filename": "third_party/WebKit/Source/modules/sensor/Sensor.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115688
+      },
+      "writtenOn": "2017-12-18T20:11:21Z",
+      "side": 1,
+      "message": "Thanks for the hint! I\u0027ll remove this call",
+      "parentUuid": "0f6f12de_b2f0f232",
+      "revId": "ee7fa07128af93ee5e5de37351786638dbf295e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a16ec176_59057078",
         "filename": "third_party/WebKit/Source/platform/feature_policy/FeaturePolicy.cpp",
         "patchSetId": 5
