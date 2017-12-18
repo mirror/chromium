@@ -34,6 +34,24 @@
       "revId": "b9589567c7955b139d9acef7d093e6ec69a3dbd1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "783cea06_c9b90bc8",
+        "filename": "third_party/tcmalloc/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-18T17:16:30Z",
+      "side": 0,
+      "message": "Done.",
+      "parentUuid": "b228b81e_f699129d",
+      "revId": "b9589567c7955b139d9acef7d093e6ec69a3dbd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
