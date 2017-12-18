@@ -59,6 +59,8 @@ class CompositorFrameBuilder {
   CompositorFrameBuilder& SetFrameToken(uint32_t frame_token);
   CompositorFrameBuilder& SetContentSourceId(uint32_t content_source_id);
   CompositorFrameBuilder& SetPresentationToken(uint32_t presentation_token);
+  CompositorFrameBuilder& AddReferenceToTransfer(const SurfaceId& surface_id,
+                                                 const FrameSinkId& new_owner);
 
  private:
   base::Optional<CompositorFrame> frame_;

@@ -130,6 +130,14 @@ CompositorFrameBuilder& CompositorFrameBuilder::SetPresentationToken(
   return *this;
 }
 
+CompositorFrameBuilder& CompositorFrameBuilder::AddReferenceToTransfer(
+    const SurfaceId& surface_id,
+    const FrameSinkId& new_owner) {
+  frame_->metadata.references_to_transfer.push_back(
+      std::make_pair(surface_id, new_owner));
+  return *this;
+}
+
 CompositorFrame MakeDefaultCompositorFrame() {
   return CompositorFrameBuilder().AddDefaultRenderPass().Build();
 }

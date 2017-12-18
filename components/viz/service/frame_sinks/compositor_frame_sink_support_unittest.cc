@@ -787,5 +787,74 @@ TEST_F(CompositorFrameSinkSupportTest, FrameIndexCarriedOverToNewSurface) {
   EXPECT_EQ(frame_index + 1, surface2->GetActiveFrameIndex());
 }
 
+// Tests transferring ownership of surfaces from one client to another.
+TEST_F(CompositorFrameSinkSupportTest, TransferSurfaceReference) {
+  constexpr FrameSinkId kParent1FrameSinkId(9, 1);
+  constexpr FrameSinkId kParent2FrameSinkId(2, 7);
+  constexpr FrameSinkId kChildFrameSinkId(5, 5);
+  CompositorFrameSinkSupport parent1(&fake_support_client_, &manager_,
+                                     kParent1FrameSinkId, kIsRoot,
+                                     kNeedsSyncPoints);
+  CompositorFrameSinkSupport parent2(&fake_support_client_, &manager_,
+                                     kParent2FrameSinkId, kIsRoot,
+                                     kNeedsSyncPoints);
+  CompositorFrameSinkSupport child(&fake_support_client_, &manager_,
+                                   kChildFrameSinkId, kIsRoot,
+                                   kNeedsSyncPoints);
+
+  const LocalSurfaceId kArbitraryLocalSurfaceId(1, kArbitraryToken);
+  const SurfaceId kChildSurfaceId(kChildFrameSinkId, kArbitraryLocalSurfaceId);
+
+  // Child submits a frame.
+  {
+    auto frame = CompositorFrameBuilder().AddDefaultRenderPass().Build();
+    child.SubmitCompositorFrame(kArbitraryLocalSurfaceId, std::move(frame));
+  }
+
+  // Parent1 submits a frame referencing Child.
+  {
+    auto frame = CompositorFrameBuilder()
+                     .AddDefaultRenderPass()
+                     .SetReferencedSurfaces({kChildSurfaceId})
+                     .Build();
+    parent1.SubmitCompositorFrame(kArbitraryLocalSurfaceId, std::move(frame));
+  }
+
+  // Parent1 requests the reference to Child to be transferred to Parent2.
+  {
+    auto frame =
+        CompositorFrameBuilder()
+            .AddDefaultRenderPass()
+            .AddReferenceToTransfer(kChildSurfaceId, kParent2FrameSinkId)
+            .Build();
+    parent1.SubmitCompositorFrame(kArbitraryLocalSurfaceId, std::move(frame));
+  }
+
+  // Child should not be destroyed even though Parent1 dropped the reference.
+  child.EvictCurrentSurface();
+  manager_.surface_manager()->GarbageCollectSurfaces();
+  EXPECT_TRUE(manager_.surface_manager()->GetSurfaceForId(kChildSurfaceId));
+
+  // Parent2 submits a frame referncing Child.
+  {
+    auto frame = CompositorFrameBuilder()
+                     .AddDefaultRenderPass()
+                     .SetReferencedSurfaces({kChildSurfaceId})
+                     .Build();
+    parent2.SubmitCompositorFrame(kArbitraryLocalSurfaceId, std::move(frame));
+  }
+
+  // Parent2 drops the reference to Child.
+  {
+    auto frame = CompositorFrameBuilder().AddDefaultRenderPass().Build();
+    parent2.SubmitCompositorFrame(kArbitraryLocalSurfaceId, std::move(frame));
+  }
+
+  // Now Child must be destroyed.
+  child.EvictCurrentSurface();
+  manager_.surface_manager()->GarbageCollectSurfaces();
+  EXPECT_FALSE(manager_.surface_manager()->GetSurfaceForId(kChildSurfaceId));
+}
+
 }  // namespace
 }  // namespace viz
