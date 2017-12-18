@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "42c7f33c_e96b03fb",
+        "filename": "services/network/public/interfaces/data_pipe_getter.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-18T14:04:15Z",
+      "side": 1,
+      "message": "Maybe make it a little clearer that it\u0027s not just cloning handles to \u0027this interface\u0027 but creating and attaching a new pipe \u0027to the source of the content\u0027?",
+      "revId": "0fe79cab11315a2d9b2fa1a696be9785abc290b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb36c55e_ba38e6bd",
+        "filename": "services/network/public/interfaces/data_pipe_getter.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-18T14:04:15Z",
+      "side": 1,
+      "message": "Maybe also note that it doesn\u0027t matter if there\u0027re concurrent or not?",
+      "revId": "0fe79cab11315a2d9b2fa1a696be9785abc290b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
