@@ -166,7 +166,8 @@ void NGOutOfFlowLayoutPart::ComputeInlineContainingBlocks(
     NGLogicalOffset start_fragment_logical_offset =
         block_info.value.start_fragment_offset.ConvertToLogical(
             container_writing_mode, container_direction,
-            start_linebox_fragment->Size(), start_fragment->Size());
+            start_linebox_fragment->Size(),
+            block_info.value.start_fragment_union_size);
     // Text fragments do not include inline-cb borders and padding.
     if (start_fragment->IsText()) {
       start_fragment_logical_offset -= inline_cb_borders.StartOffset();
@@ -188,7 +189,8 @@ void NGOutOfFlowLayoutPart::ComputeInlineContainingBlocks(
     NGLogicalOffset end_fragment_logical_offset =
         block_info.value.end_fragment_offset.ConvertToLogical(
             container_writing_mode, container_direction,
-            end_linebox_fragment->Size(), end_fragment->Size());
+            end_linebox_fragment->Size(),
+            block_info.value.end_fragment_union_size);
     // Text fragments do not include inline-cb borders and padding.
     if (end_fragment->IsText()) {
       end_fragment_logical_offset += NGLogicalOffset(
@@ -198,7 +200,8 @@ void NGOutOfFlowLayoutPart::ComputeInlineContainingBlocks(
     }
     NGLogicalOffset end_fragment_bottom_right =
         end_fragment_logical_offset +
-        end_fragment->Size().ConvertToLogical(container_writing_mode);
+        block_info.value.end_fragment_union_size.ConvertToLogical(
+            container_writing_mode);
     NGPhysicalOffset end_fragment_physical_offset =
         end_fragment_bottom_right.ConvertToPhysical(
             container_writing_mode, container_direction,
@@ -249,8 +252,9 @@ void NGOutOfFlowLayoutPart::ComputeInlineContainingBlocks(
     NGLogicalOffset default_container_offset;
     if (RuntimeEnabledFeatures::LayoutNGPaintFragmentsEnabled()) {
       // NGPaint offset is wrt parent fragment.
-      default_container_offset = start_fragment_logical_offset -
+      default_container_offset = start_fragment_logical_offset_wrt_box -
                                  default_containing_block_.content_offset;
+      default_container_offset += inline_cb_borders.StartOffset();
     } else {
       // Legacy offset is wrt inline container.
       default_container_offset =
