@@ -29,6 +29,7 @@ import android.view.ViewTreeObserver.OnPreDrawListener;
 import android.view.WindowManager;
 
 import org.chromium.base.ApiCompatibilityUtils;
+import org.chromium.base.StrictModeContext;
 import org.chromium.base.TraceEvent;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.base.library_loader.LibraryLoader;
@@ -234,7 +235,10 @@ public abstract class AsyncInitializationActivity extends AppCompatActivity impl
     @SuppressLint("MissingSuperCall")  // Called in onCreateInternal.
     protected final void onCreate(Bundle savedInstanceState) {
         TraceEvent.begin("AsyncInitializationActivity.onCreate()");
-        onCreateInternal(savedInstanceState);
+        // Some Samsung devices load fonts from disk, crbug.com/691706.
+        try (StrictModeContext unused = StrictModeContext.allowDiskReads()) {
+            onCreateInternal(savedInstanceState);
+        }
         TraceEvent.end("AsyncInitializationActivity.onCreate()");
     }
 
