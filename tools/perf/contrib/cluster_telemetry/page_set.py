@@ -1,38 +1,46 @@
 # Copyright 2015 The Chromium Authors. All rights reserved.
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
-
+import logging
 
 from telemetry.page import traffic_setting as traffic_setting_module
 from telemetry.page import page as page_module
 from telemetry.page import shared_page_state
 from telemetry import story
+from telemetry.page import cache_temperature as cache_temperature_module
 
 
 class CTPage(page_module.Page):
 
   def __init__(self, url, page_set, shared_page_state_class, archive_data_file,
                traffic_setting, run_page_interaction_callback,
-               run_navigate_steps_callback):
+               run_navigate_steps_callback, cache_temperature=None):
     super(CTPage, self).__init__(
         url=url,
         page_set=page_set,
         shared_page_state_class=shared_page_state_class,
         traffic_setting=traffic_setting,
+        cache_temperature=cache_temperature,
         name=url)
     self.archive_data_file = archive_data_file
     self._run_navigate_steps_callback = run_navigate_steps_callback
     self._run_page_interaction_callback = run_page_interaction_callback
+    if cache_temperature != cache_temperature_module.ANY:
+      self.grouping_keys['cache_temperature'] = cache_temperature
 
   def RunNavigateSteps(self, action_runner):
+    logging.warning('RunNavigateSteps start')
     if self._run_navigate_steps_callback:
       self._run_navigate_steps_callback(self, action_runner)
     else:
       action_runner.Navigate(self.url)
+    logging.warning('RunNavigateSteps end')
 
   def RunPageInteractions(self, action_runner):
+    logging.warning('RunPageInteractions start')
     if self._run_page_interaction_callback:
       self._run_page_interaction_callback(action_runner)
+    logging.warning('RunPageInteractions end')
 
 
 class CTPageSet(story.StorySet):
@@ -41,7 +49,8 @@ class CTPageSet(story.StorySet):
   def __init__(self, urls_list, user_agent, archive_data_file,
                traffic_setting=traffic_setting_module.NONE,
                run_page_interaction_callback=None,
-               run_navigate_steps_callback=None):
+               run_navigate_steps_callback=None,
+               cache_temperatures=None):
     if user_agent == 'mobile':
       shared_page_state_class = shared_page_state.SharedMobilePageState
     elif user_agent == 'desktop':
@@ -51,10 +60,14 @@ class CTPageSet(story.StorySet):
 
     super(CTPageSet, self).__init__(archive_data_file=archive_data_file)
 
-    for url in urls_list.split(','):
-      self.AddStory(
-          CTPage(url, self, shared_page_state_class=shared_page_state_class,
-                 archive_data_file=archive_data_file,
-                 traffic_setting=traffic_setting,
-                 run_page_interaction_callback=run_page_interaction_callback,
-                 run_navigate_steps_callback=run_navigate_steps_callback,))
+    if not cache_temperatures:
+      cache_temperatures = [cache_temperature_module.COLD]
+    for temperature in cache_temperatures:
+      for url in urls_list.split(','):
+        self.AddStory(
+            CTPage(url, self, shared_page_state_class=shared_page_state_class,
+                  archive_data_file=archive_data_file,
+                  traffic_setting=traffic_setting,
+                  run_page_interaction_callback=run_page_interaction_callback,
+                  run_navigate_steps_callback=run_navigate_steps_callback,
+                  cache_temperature=temperature))
