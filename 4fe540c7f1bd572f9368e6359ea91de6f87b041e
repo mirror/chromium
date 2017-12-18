@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e2bb88ee_6eff995b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1247388
+      },
+      "writtenOn": "2017-12-18T09:41:36Z",
+      "side": 1,
+      "message": "I was wrong, turns out it\u0027s not leaking :D",
+      "parentUuid": "dc11c8c7_0e01cfc2",
+      "revId": "4fe540c7f1bd572f9368e6359ea91de6f87b041e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8093985a_02fceba0",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/shadow-dom/DocumentOrShadowRoot-prototype-elementFromPoint.html",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "4fe540c7f1bd572f9368e6359ea91de6f87b041e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d963ab9_1e6cd8b2",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/shadow-dom/DocumentOrShadowRoot-prototype-elementFromPoint.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1247388
+      },
+      "writtenOn": "2017-12-18T09:41:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8093985a_02fceba0",
+      "revId": "4fe540c7f1bd572f9368e6359ea91de6f87b041e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "47e884b1_35540860",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/shadow-dom/DocumentOrShadowRoot-prototype-elementFromPoint.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1247388
+      },
+      "writtenOn": "2017-12-18T09:41:36Z",
+      "side": 1,
+      "message": "Done (it\u0027s host)",
+      "parentUuid": "0dbe67ca_efd2fec0",
+      "revId": "4fe540c7f1bd572f9368e6359ea91de6f87b041e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "19081e0e_40111e97",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/shadow-dom/DocumentOrShadowRoot-prototype-elementFromPoint.html",
         "patchSetId": 3
@@ -67,6 +121,24 @@
       "revId": "4fe540c7f1bd572f9368e6359ea91de6f87b041e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6856187e_b9c4e09c",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/shadow-dom/DocumentOrShadowRoot-prototype-elementFromPoint.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1247388
+      },
+      "writtenOn": "2017-12-18T09:41:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "19081e0e_40111e97",
+      "revId": "4fe540c7f1bd572f9368e6359ea91de6f87b041e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "0d750f04_fae8efa3",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/shadow-dom/DocumentOrShadowRoot-prototype-elementFromPoint.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1247388
+      },
+      "writtenOn": "2017-12-18T09:41:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "726d0b23_8bc0f350",
+      "revId": "4fe540c7f1bd572f9368e6359ea91de6f87b041e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7df19dfc_17a680b9",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/shadow-dom/DocumentOrShadowRoot-prototype-elementFromPoint.html",
         "patchSetId": 3
@@ -101,6 +191,24 @@
       "revId": "4fe540c7f1bd572f9368e6359ea91de6f87b041e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b747c3ca_18f48b23",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/shadow-dom/DocumentOrShadowRoot-prototype-elementFromPoint.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1247388
+      },
+      "writtenOn": "2017-12-18T09:41:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7df19dfc_17a680b9",
+      "revId": "4fe540c7f1bd572f9368e6359ea91de6f87b041e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "615ad7c2_59df6af3",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/shadow-dom/DocumentOrShadowRoot-prototype-elementFromPoint.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1247388
+      },
+      "writtenOn": "2017-12-18T09:41:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "90b20f21_7dd06196",
+      "revId": "4fe540c7f1bd572f9368e6359ea91de6f87b041e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ba4ecd0_24cf3b20",
         "filename": "third_party/WebKit/Source/core/dom/TreeScope.cpp",
         "patchSetId": 3
@@ -135,6 +261,24 @@
       "revId": "4fe540c7f1bd572f9368e6359ea91de6f87b041e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6add2fa_7dad35db",
+        "filename": "third_party/WebKit/Source/core/dom/TreeScope.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1247388
+      },
+      "writtenOn": "2017-12-18T09:41:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ba4ecd0_24cf3b20",
+      "revId": "4fe540c7f1bd572f9368e6359ea91de6f87b041e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "d3f3483a_418b60f3",
+        "filename": "third_party/WebKit/Source/core/dom/TreeScope.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1247388
+      },
+      "writtenOn": "2017-12-18T09:41:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c66ea10e_5388f27b",
+      "revId": "4fe540c7f1bd572f9368e6359ea91de6f87b041e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "555ce229_901f3a12",
         "filename": "third_party/WebKit/Source/core/dom/TreeScope.cpp",
         "patchSetId": 3
@@ -169,6 +331,24 @@
       "revId": "4fe540c7f1bd572f9368e6359ea91de6f87b041e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66a93d38_e6f7e85e",
+        "filename": "third_party/WebKit/Source/core/dom/TreeScope.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1247388
+      },
+      "writtenOn": "2017-12-18T09:41:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "555ce229_901f3a12",
+      "revId": "4fe540c7f1bd572f9368e6359ea91de6f87b041e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "51ee9273_f2e7710d",
+        "filename": "third_party/WebKit/Source/core/dom/TreeScope.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1247388
+      },
+      "writtenOn": "2017-12-18T09:41:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3554ea00_537e1b5a",
+      "revId": "4fe540c7f1bd572f9368e6359ea91de6f87b041e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "51d7c841_444f7fe6",
         "filename": "third_party/WebKit/Source/core/dom/TreeScope.cpp",
         "patchSetId": 3
@@ -206,6 +404,24 @@
     },
     {
       "key": {
+        "uuid": "4510c8da_1ccab280",
+        "filename": "third_party/WebKit/Source/core/dom/TreeScope.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1247388
+      },
+      "writtenOn": "2017-12-18T09:41:36Z",
+      "side": 1,
+      "message": "Yes, there are some cases where the loop above results in a shadow root, for example:\n\nlet host \u003d document.createElement(\u0027test-element\u0027);\nlet shadow \u003d host.attachShadow({mode: \u0027closed\u0027});\nshadow.innerHTML \u003d \u0027hello\u0027;\ncontainer.appendChild(host);\n\nshadow.elementFromPoint(..pointInElement(host))",
+      "parentUuid": "51d7c841_444f7fe6",
+      "revId": "4fe540c7f1bd572f9368e6359ea91de6f87b041e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ebdab49c_42af91f9",
         "filename": "third_party/WebKit/Source/core/dom/TreeScope.cpp",
         "patchSetId": 3
@@ -217,6 +433,24 @@
       "writtenOn": "2017-12-18T07:17:48Z",
       "side": 1,
       "message": "Can this case really happen?\nIf so, could you have a test case for this?",
+      "revId": "4fe540c7f1bd572f9368e6359ea91de6f87b041e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "292376ec_ae1846d5",
+        "filename": "third_party/WebKit/Source/core/dom/TreeScope.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1247388
+      },
+      "writtenOn": "2017-12-18T09:41:36Z",
+      "side": 1,
+      "message": "will try to find a case",
+      "parentUuid": "ebdab49c_42af91f9",
       "revId": "4fe540c7f1bd572f9368e6359ea91de6f87b041e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

@@ -16,6 +16,24 @@
       "revId": "c219b34aa1bd13aee61fb7c168c006406961b0d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6949931_a33fc4cd",
+        "filename": "third_party/WebKit/Source/devtools/front_end/layers_test_runner/LayersTestRunner.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1247388
+      },
+      "writtenOn": "2017-12-18T09:41:36Z",
+      "side": 0,
+      "message": "I tried searching for a caller of elementFromPoint that\u0027s related to this but failed. Will try again. But the only testcase using this line is https://cs.chromium.org/chromium/src/third_party/WebKit/LayoutTests/http/tests/devtools/layers/layers-panel-mouse-events.js?l\u003d53\n\nAnd it seems to be just an arbitrary point to mouseout to (away from the layers in the testcase)",
+      "parentUuid": "deefe17e_a42cbd21",
+      "revId": "c219b34aa1bd13aee61fb7c168c006406961b0d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
