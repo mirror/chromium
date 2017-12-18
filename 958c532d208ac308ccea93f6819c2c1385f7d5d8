@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f9118d93_95f1fd48",
+        "filename": "components/offline_pages/core/offline_page_metadata_store_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 672,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-12-18T20:00:35Z",
+      "side": 1,
+      "message": "nit: once",
+      "range": {
+        "startLine": 672,
+        "startChar": 5,
+        "endLine": 672,
+        "endChar": 8
+      },
+      "revId": "958c532d208ac308ccea93f6819c2c1385f7d5d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
