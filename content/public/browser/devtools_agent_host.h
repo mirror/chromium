@@ -14,6 +14,7 @@
 #include "base/memory/ref_counted.h"
 #include "base/time/time.h"
 #include "content/common/content_export.h"
+#include "content/public/browser/certificate_request_result_type.h"
 #include "content/public/browser/devtools_agent_host_client.h"
 #include "content/public/browser/devtools_agent_host_observer.h"
 #include "url/gurl.h"
@@ -87,7 +88,7 @@ class CONTENT_EXPORT DevToolsAgentHost
 
   using List = std::vector<scoped_refptr<DevToolsAgentHost>>;
 
-  // Returns all DevToolsAgentHosts content is aware of.
+  // Returns all non-browser target DevToolsAgentHosts content is aware of.
   static List GetOrCreateAll();
 
   // Starts remote debugging.
@@ -102,6 +103,15 @@ class CONTENT_EXPORT DevToolsAgentHost
       const std::string& frontend_url,
       const base::FilePath& active_port_output_directory,
       const base::FilePath& debug_frontend_dir);
+
+  // Asks any interested agents to handle the given certificate error. Returns
+  // |true| if the error was handled, |false| otherwise.
+  using CertErrorCallback =
+      base::RepeatingCallback<void(content::CertificateRequestResultType)>;
+  static bool HandleCertificateError(WebContents* web_contents,
+                                     int cert_error,
+                                     const GURL& request_url,
+                                     CertErrorCallback callback);
 
   // Stops remote debugging.
   static void StopRemoteDebuggingServer();

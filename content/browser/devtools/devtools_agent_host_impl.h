@@ -54,6 +54,9 @@ class CONTENT_EXPORT DevToolsAgentHostImpl : public DevToolsAgentHost {
 
   static bool ShouldForceCreation();
 
+  // Returns a list of all active hosts on browser targets.
+  static List GetBrowserAgentHosts();
+
   virtual void AttachSession(DevToolsSession* session) = 0;
   virtual void DetachSession(int session_id) = 0;
   virtual bool DispatchProtocolMessage(
