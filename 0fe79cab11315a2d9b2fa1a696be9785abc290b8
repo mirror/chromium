@@ -33,6 +33,29 @@
       "revId": "0fe79cab11315a2d9b2fa1a696be9785abc290b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8c95e68_f78a7b2f",
+        "filename": "services/network/public/interfaces/data_pipe_getter.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-18T14:16:50Z",
+      "side": 1,
+      "message": "I\u0027m concerned about the complexity and extra testing this method will add to all implementations.  Hopefully there won\u0027t be many, but if you\u0027re streaming data to the network service, even if you\u0027re not going through ServiceWorker, you\u0027re going to need to implement it.  (And I say this as someone who has a CL out for review that implements a DataPipeGetter, and will have to substantially rewrite the class, and add a lot of unit test infrastructure, just to test the implementation of this method).\n\nIs there a way around this?  Why is it needed?  It basically means Clone() + Read() needs to create a bunch of state in the consumer, to track reads from multiple independent pipes.  Is this behavior expected for Read() without Clone()?  I know for the network service, we\u0027re only doing one read at a time, so I\u0027d planned to cancel previous reads when a new one starts.  Should we update read documentation, too?",
+      "range": {
+        "startLine": 19,
+        "startChar": 41,
+        "endLine": 19,
+        "endChar": 52
+      },
+      "revId": "0fe79cab11315a2d9b2fa1a696be9785abc290b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
