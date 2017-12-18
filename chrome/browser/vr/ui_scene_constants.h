@@ -39,9 +39,13 @@ static constexpr float kBackgroundDistanceMultiplier = 1.414f;
 static constexpr float kFullscreenDistance = 3;
 // Make sure that the aspect ratio for fullscreen is 16:9. Otherwise, we may
 // experience visual artefacts for fullscreened videos.
-static constexpr float kFullscreenHeight = 0.64f * kFullscreenDistance;
+static constexpr float kFullscreenHeightDMM = 0.64f;
+static constexpr float kFullscreenHeight =
+    kFullscreenHeightDMM * kFullscreenDistance;
 static constexpr float kFullscreenWidth = 1.138f * kFullscreenDistance;
-static constexpr float kFullscreenVerticalOffset = -0.1f * kFullscreenDistance;
+static constexpr float kFullscreenVerticalOffsetDMM = -0.1f;
+static constexpr float kFullscreenVerticalOffset =
+    kFullscreenVerticalOffsetDMM * kFullscreenDistance;
 
 static constexpr float kExitPromptWidth = 0.672f * kContentDistance;
 static constexpr float kExitPromptHeight = 0.2f * kContentDistance;
@@ -62,6 +66,12 @@ static constexpr float kAudioPermissionPromptHeight = 0.218f * kUrlBarDistance;
 static constexpr float kAudionPermisionPromptDepth = 0.11f;
 
 static constexpr float kIndicatorHeight = 0.08f;
+static constexpr float kIndicatorXPadding = 0.08f * 0.1f;
+static constexpr float kIndicatorYPadding = 0.08f * 0.15f;
+static constexpr float kIndicatorCornerRadius = 0.08f * 0.1f;
+static constexpr float kIndicatorMargin = 0.08f * 0.2f;
+static constexpr float kIndicatorIconHeight = 0.08f * 0.7f;
+static constexpr float kIndicatorFontHeightDmm = 0.032f;
 static constexpr float kIndicatorGap = 0.05f;
 static constexpr float kIndicatorVerticalOffset = 0.1f;
 static constexpr float kIndicatorDistanceOffset = 0.1f;
@@ -81,6 +91,13 @@ static constexpr float kFullscreenToastDistance = kFullscreenDistance;
 static constexpr float kToastWidthDMM = 0.512f;
 static constexpr float kToastHeightDMM = 0.064f;
 static constexpr float kToastOffsetDMM = 0.004f;
+static constexpr float kFullScreenToastOffsetDMM =
+    kFullscreenVerticalOffsetDMM + kFullscreenHeightDMM / 2 + kToastHeightDMM +
+    0.004f;
+static constexpr float kToastXPaddingDMM = 0.017f;
+static constexpr float kToastYPaddingDMM = 0.02f;
+static constexpr float kToastCornerRadiusDMM = 0.004f;
+static constexpr float kToastTextFontHeightDMM = 0.023f;
 // When changing the value here, make sure it doesn't collide with
 // kWarningAngleRadians.
 static constexpr float kWebVrAngleRadians = 9.88f * base::kPiFloat / 180;
