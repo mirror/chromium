@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8d616d69_c0b7721a",
+        "filename": "cc/input/scroll_snap_data.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-12-18T21:58:07Z",
+      "side": 1,
+      "message": "lets call this position even though CC doesn\u0027t really distinguish between offset/position. It should be clearer in Blink and unambigous in CC.",
+      "range": {
+        "startLine": 103,
+        "startChar": 25,
+        "endLine": 103,
+        "endChar": 31
+      },
+      "revId": "ed6940511d9fcddb5a657262847f68582332f7c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c02dfdc1_a3c0a5a6",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-12-18T21:58:07Z",
+      "side": 1,
+      "message": "Ditto here, use ToScrollPosition and name it max_position",
+      "range": {
+        "startLine": 95,
+        "startChar": 6,
+        "endLine": 95,
+        "endChar": 78
+      },
+      "revId": "ed6940511d9fcddb5a657262847f68582332f7c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0511a620_84827c04",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-12-18T21:58:07Z",
+      "side": 1,
+      "message": "Please help me understand how this works:\n\ne.g. if the writing-mode is vertical-rl, and we have a container (scrolled all the way to the left) that\u0027s 400px wide which a child area at 600px. The total offset width of container\u0027s overflow is 1000px. Is area.x initially at 600px? Or is the layout origin on the right now so it\u0027ll be at -400px?",
+      "range": {
+        "startLine": 301,
+        "startChar": 4,
+        "endLine": 301,
+        "endChar": 33
+      },
+      "revId": "ed6940511d9fcddb5a657262847f68582332f7c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01df9f18_eb9a22d6",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 425,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-12-18T21:58:07Z",
+      "side": 1,
+      "message": "Please add a helper method(s) to ScrollTypes.h, e.g. PositionToOffset(position).",
+      "range": {
+        "startLine": 425,
+        "startChar": 10,
+        "endLine": 425,
+        "endChar": 55
+      },
+      "revId": "ed6940511d9fcddb5a657262847f68582332f7c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2d92a23_dc5cfe8a",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-12-18T21:58:07Z",
+      "side": 1,
+      "message": "Sorry, I realize I made you use blink::ScrollOffset but didn\u0027t think through the writing-mode consequences.\n\nPlease change all the variable/method names to use position instead of offset. We\u0027ve settled on these having very specific meanings (https://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/layout/README.md): offset is relative to the scroll origin (and changes based on writing-mode), position is always relative to the top left (and is invariant based on writing-mode).",
+      "range": {
+        "startLine": 47,
+        "startChar": 55,
+        "endLine": 47,
+        "endChar": 65
+      },
+      "revId": "ed6940511d9fcddb5a657262847f68582332f7c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
