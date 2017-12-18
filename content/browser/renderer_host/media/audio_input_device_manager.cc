@@ -83,15 +83,17 @@ int AudioInputDeviceManager::Open(const MediaStreamDevice& device) {
   // Generate a new id for this device.
   int session_id = next_capture_session_id_++;
 
+  LOG(ERROR) << __PRETTY_FUNCTION__ << ": DEVICE_ID is " << device.id << ", TYPE " << device.type;
   // base::Unretained(this) is safe, because AudioInputDeviceManager is
   // destroyed not earlier than on the IO message loop destruction.
   if (base::CommandLine::ForCurrentProcess()->HasSwitch(
           switches::kUseFakeDeviceForMediaStream)) {
     audio_system_->GetAssociatedOutputDeviceID(
-        device.id, base::BindOnce(&AudioInputDeviceManager::OpenedOnIOThread,
-                                  base::Unretained(this), session_id, device,
-                                  base::TimeTicks::Now(),
-                                  base::Optional<media::AudioParameters>()));
+        device.id,
+        base::BindOnce(&AudioInputDeviceManager::OpenedOnIOThread,
+                       base::Unretained(this), session_id, device,
+                       base::TimeTicks::Now(),
+                       media::AudioParameters::UnavailableDeviceParams()));
   } else {
     // TODO(tommi): As is, we hit this code path when device.type is
     // MEDIA_TAB_AUDIO_CAPTURE and the device id is not a device that
@@ -190,6 +192,8 @@ void AudioInputDeviceManager::OpenedOnIOThread(
     base::TimeTicks start_time,
     const base::Optional<media::AudioParameters>& input_params,
     const std::string& matched_output_device_id) {
+  LOG(ERROR) << __PRETTY_FUNCTION__ << ": INPUT PARAMS HAS VALUE = " << input_params.has_value();
+  LOG(ERROR) << __PRETTY_FUNCTION__ << ": INPUT PARAMS = " << input_params->AsHumanReadableString();
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   DCHECK(GetDevice(session_id) == devices_.end());
   DCHECK(!input_params || input_params->IsValid());
@@ -199,11 +203,8 @@ void AudioInputDeviceManager::OpenedOnIOThread(
 
   MediaStreamDevice media_stream_device(device.type, device.id, device.name);
   media_stream_device.session_id = session_id;
-  media_stream_device.input =
-      input_params.value_or(media::AudioParameters::UnavailableDeviceParams());
+  media_stream_device.input = input_params;
   media_stream_device.matched_output_device_id = matched_output_device_id;
-
-  DCHECK(media_stream_device.input.IsValid());
 
   devices_.push_back(media_stream_device);
 

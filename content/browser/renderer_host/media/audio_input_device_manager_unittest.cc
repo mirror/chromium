@@ -323,7 +323,7 @@ class AudioInputDeviceManagerNoDevicesTest
 };
 
 TEST_F(AudioInputDeviceManagerNoDevicesTest,
-       ParametersValidWithoutAudioDevices) {
+       VerifyInputParametersWithoutAudioDevices) {
   ASSERT_FALSE(devices_.empty());
 
   InSequence s;
@@ -335,9 +335,9 @@ TEST_F(AudioInputDeviceManagerNoDevicesTest,
         .Times(1);
     WaitForOpenCompletion();
 
-    // Expects that device parameters stored by the manager are valid.
+    // Expects that input device parameters stored by the manager are empty.
     const MediaStreamDevice* device = manager_->GetOpenedDeviceById(session_id);
-    EXPECT_TRUE(device->input.IsValid());
+    EXPECT_FALSE(device->input);
 
     manager_->Close(session_id);
     EXPECT_CALL(*audio_input_listener_, Closed(device_request.type, session_id))
