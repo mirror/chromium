@@ -175,6 +175,30 @@
       "revId": "98b750c998b373f24a7ebef791eb1eeb2730a3e0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "71c7ad4e_a5037ac2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageListPreference.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-18T16:13:41Z",
+      "side": 1,
+      "message": "Does that mean when the user leaves the language settings screen with languages in [en-AU, en-US, en], when they come back the languages will be displayed in [en-AU, en, en-US]?",
+      "parentUuid": "d51bae98_e8011363",
+      "range": {
+        "startLine": 114,
+        "startChar": 8,
+        "endLine": 115,
+        "endChar": 83
+      },
+      "revId": "98b750c998b373f24a7ebef791eb1eeb2730a3e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
