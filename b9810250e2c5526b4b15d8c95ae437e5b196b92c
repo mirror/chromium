@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f99dd66a_228e3cb1",
+        "filename": "chrome/browser/chromeos/arc/accessibility/arc_accessibility_helper_bridge.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-12-18T06:50:29Z",
+      "side": 1,
+      "message": "Yes, total count of TYPE_WINDOW_STATE_CHANGED \u003d\u003d total count of OnNotificationSurfaceRemoved. TYPE_WINDOW_STATE_CHANGED is an event when new window or dialog is opened. For notification, an app can build their own UI only via inflation. AFAIK, TYPE_WINDOW_STATE_CHANGED won\u0027t be dispatched expect when a window for the notification is created. But this is based on the assumption. I may add ARC_NOTIFICATION_SURFACE_CREATED event when I add ARC_NOTIFICATION_SURFACE_REMOVED.",
+      "parentUuid": "8bd18b56_09ca61e8",
+      "revId": "b9810250e2c5526b4b15d8c95ae437e5b196b92c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "864f9d2d_b7425d39",
         "filename": "chrome/browser/chromeos/arc/accessibility/arc_accessibility_helper_bridge.cc",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "f983064d_03490a31",
+        "filename": "chrome/browser/chromeos/arc/accessibility/arc_accessibility_helper_bridge.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-12-18T06:50:29Z",
+      "side": 1,
+      "message": "Done. Changed to use struct.",
+      "parentUuid": "864f9d2d_b7425d39",
+      "revId": "b9810250e2c5526b4b15d8c95ae437e5b196b92c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4dc87d78_da529e37",
         "filename": "chrome/browser/chromeos/arc/accessibility/arc_accessibility_helper_bridge.cc",
         "patchSetId": 3
@@ -47,6 +83,24 @@
       "writtenOn": "2017-12-15T23:14:59Z",
       "side": 1,
       "message": "Maybe CHECK(it-\u003esecond.first \u003e\u003d 0) ?",
+      "revId": "b9810250e2c5526b4b15d8c95ae437e5b196b92c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a2043dc5_0009e547",
+        "filename": "chrome/browser/chromeos/arc/accessibility/arc_accessibility_helper_bridge.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 504,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-12-18T06:50:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4dc87d78_da529e37",
       "revId": "b9810250e2c5526b4b15d8c95ae437e5b196b92c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
