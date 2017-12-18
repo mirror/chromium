@@ -3,18 +3,34 @@ Unit test for release note
 
 Running: getLatestReleaseNote
 Last seen version: 4
+Setting ignoreReleaseNote: false
 Showed release note in drawer - version: 5
 
 Running: getReleaseNoteTwoVersionsAhead
 Last seen version: 3
+Setting ignoreReleaseNote: false
 Showed release note in drawer - version: 5
 
 Running: alreadySeenReleaseNote
 Last seen version: 5
+Setting ignoreReleaseNote: false
 Did not show release note drawer
 
 Running: doNotShowReleaseNoteOnFreshProfile
 Last seen version: 0
+Setting ignoreReleaseNote: false
 Did not show release note drawer
 Release note version in setting: 5
+
+Running: ignoreReleaseNoteSetting
+
+Enabled ignoreReleaseNote setting
+Last seen version: 4
+Setting ignoreReleaseNote: true
+Did not show release note drawer
+
+Disabled ignoreReleaseNote setting
+Last seen version: 4
+Setting ignoreReleaseNote: false
+Showed release note in drawer - version: 5
 

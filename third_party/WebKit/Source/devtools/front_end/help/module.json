@@ -8,6 +8,24 @@
       "persistence": "closeable",
       "order": 1,
       "className": "Help.ReleaseNoteView"
+    },
+    {
+      "type": "setting",
+      "category": "Appearance",
+      "title": "Do not show What's New after each update",
+      "settingName": "help.ignore-release-note",
+      "settingType": "boolean",
+      "defaultValue": false,
+      "options": [
+          {
+              "value": true,
+              "title": "Do not show What's New after each update"
+          },
+          {
+              "value": false,
+              "title": "Show What's New after each update"
+          }
+      ]
     }
   ],
   "dependencies": [
