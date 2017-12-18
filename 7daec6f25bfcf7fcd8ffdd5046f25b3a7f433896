@@ -49,6 +49,23 @@
     },
     {
       "key": {
+        "uuid": "7e473e49_92563201",
+        "filename": "chrome/browser/ui/extensions/hosted_app_browser_controller.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-12-18T00:45:20Z",
+      "side": 1,
+      "message": "I\u0027m worried this will be hard to interpret, as the same app will generate many engagement events / log their engagement many times. So it will be hard to figure out e.g. an average engagement for app windows (due to some windows reporting this histogram many times).\n\nAre there any plans to deal with this?",
+      "revId": "7daec6f25bfcf7fcd8ffdd5046f25b3a7f433896",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "59b6a68e_a060775d",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 9
