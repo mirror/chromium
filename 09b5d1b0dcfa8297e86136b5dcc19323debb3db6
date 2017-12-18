@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e6ac79f6_6b4ed12c",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 1370,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-12-18T14:45:21Z",
+      "side": 1,
+      "message": "Could you move this code block above and avoid defining the boolean variable?",
+      "revId": "09b5d1b0dcfa8297e86136b5dcc19323debb3db6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2d6eeb8_6e44253d",
+        "filename": "content/public/browser/render_widget_host_view.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-12-18T14:45:21Z",
+      "side": 1,
+      "message": "content/ public API requires at least one usage outside content/ for any method added to the public API. Please add one in this CL. If you prefer to do it in another CL, please define the method in the impl, and only expose it to the public API in the CL where you add usage outside of content/.",
+      "revId": "09b5d1b0dcfa8297e86136b5dcc19323debb3db6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
