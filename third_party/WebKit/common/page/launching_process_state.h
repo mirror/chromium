@@ -1,0 +1,28 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+#ifndef THIRD_PARTY_WEBKIT_COMMON_PAGE_LAUNCHING_PROCESS_STATE_H_
+#define THIRD_PARTY_WEBKIT_COMMON_PAGE_LAUNCHING_PROCESS_STATE_H_
+
+#include "build/build_config.h"
+#include "third_party/WebKit/common/common_export.h"
+
+namespace blink {
+
+// This file is used to maintain a consistent initial set of state between the
+// RendererProcessHostImpl and the RendererSchedulerImpl.
+#if defined(OS_ANDROID)
+// This matches Android's ChildProcessConnection state before OnProcessLaunched.
+constexpr bool BLINK_COMMON_EXPORT kLaunchingProcessIsBackgrounded = true;
+constexpr bool BLINK_COMMON_EXPORT kLaunchingProcessIsBoostedForPendingView =
+    true;
+#else
+constexpr bool BLINK_COMMON_EXPORT kLaunchingProcessIsBackgrounded = false;
+constexpr bool BLINK_COMMON_EXPORT kLaunchingProcessIsBoostedForPendingView =
+    false;
+#endif
+
+}  // namespace blink
+
+#endif  // THIRD_PARTY_WEBKIT_COMMON_PAGE_LAUNCHING_PROCESS_STATE_H_
