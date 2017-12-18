@@ -111,6 +111,8 @@
 #include "content/public/browser/render_widget_host_view.h"
 #include "content/public/browser/storage_partition.h"
 #include "content/public/browser/stream_handle.h"
+#include "content/public/browser/web_interface_broker.h"
+#include "content/public/browser/web_interface_filter.h"
 #include "content/public/browser/webvr_service_provider.h"
 #include "content/public/common/bindings_policy.h"
 #include "content/public/common/browser_side_navigation_policy.h"
@@ -3137,12 +3139,6 @@ void RenderFrameHostImpl::RegisterMojoInterfaces() {
       base::Bind(&RenderFrameHostImpl::BindMediaInterfaceFactoryRequest,
                  base::Unretained(this)));
 
-  // This is to support usage of WebSockets in cases in which there is an
-  // associated RenderFrame. This is important for showing the correct security
-  // state of the page and also honoring user override of bad certificates.
-  registry_->AddInterface(base::Bind(&WebSocketManager::CreateWebSocket,
-                                     process_->GetID(), routing_id_));
-
   registry_->AddInterface(base::Bind(&SharedWorkerConnectorImpl::Create,
                                      process_->GetID(), routing_id_));
 
@@ -4389,14 +4385,16 @@ void RenderFrameHostImpl::GetInterface(
   // Requests are serviced on |document_scoped_interface_provider_binding_|. It
   // is therefore safe to assume that every incoming interface request is coming
   // from the currently active document in the corresponding RenderFrame.
-  if (!registry_ ||
-      !registry_->TryBindInterface(interface_name, &interface_pipe)) {
-    delegate_->OnInterfaceRequest(this, interface_name, &interface_pipe);
-    if (interface_pipe->is_valid() &&
-        !TryBindFrameInterface(interface_name, &interface_pipe, this)) {
-      GetContentClient()->browser()->BindInterfaceRequestFromFrame(
-          this, interface_name, std::move(interface_pipe));
-    }
+  if (registry_ &&
+      registry_->TryBindInterface(interface_name, &interface_pipe)) {
+    return;
+  }
+
+  delegate_->OnInterfaceRequest(this, interface_name, &interface_pipe);
+  if (interface_pipe->is_valid()) {
+    GetWebInterfaceBroker().BindInterfaceForFrame(
+        interface_name, std::move(interface_pipe), this,
+        mojo::GetBadMessageCallback());
   }
 }
 
