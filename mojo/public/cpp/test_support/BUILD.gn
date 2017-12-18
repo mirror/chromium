@@ -6,12 +6,15 @@ static_library("test_utils") {
   testonly = true
 
   sources = [
+    "lib/test_environment.cc",
     "lib/test_support.cc",
     "lib/test_utils.cc",
+    "test_environment.h",
     "test_utils.h",
   ]
 
   deps = [
+    "//mojo/edk/system",
     "//mojo/public/c/test_support",
     "//mojo/public/cpp/system",
     "//testing/gtest",
