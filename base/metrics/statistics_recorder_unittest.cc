@@ -82,13 +82,11 @@ class StatisticsRecorderTest : public testing::TestWithParam<bool> {
 
   void InitializeStatisticsRecorder() {
     DCHECK(!statistics_recorder_);
-    StatisticsRecorder::UninitializeForTesting();
     statistics_recorder_ = StatisticsRecorder::CreateTemporaryForTesting();
   }
 
   void UninitializeStatisticsRecorder() {
     statistics_recorder_.reset();
-    StatisticsRecorder::UninitializeForTesting();
   }
 
   Histogram* CreateHistogram(const char* name,
