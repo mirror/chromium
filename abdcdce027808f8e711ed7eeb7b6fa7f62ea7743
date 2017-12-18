@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8fb39e23_ba29a658",
+        "filename": "testing/variations/fieldtrial_testing_config.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 819,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-12-18T21:03:14Z",
+      "side": 1,
+      "message": "As far as I know, adding this group doesn\u0027t do anything.  See the README file in this directory:\n\u003e Note: While `experiments` is defined as an array, currently only the first\n\u003e entry is used*\\**. We would love to be able to test all possible study\n\u003e configurations, but don\u0027t currently have the buildbot resources to do so.\n\u003e Hence, the current best-practice is to identify which experiment group is the\n\u003e most likely candidate for ultimate launch, and to test that configuration. If\n\u003e there is a server-side configuration for this study, it\u0027s typically\n\u003e appropriate to copy/paste one of the experiment definitions into this file.\n\n\nCan you fix the other Chrome Home configs here while you\u0027re at it?\n\n\nI\u0027ll remind the config reviewers who\u0027ve been overlooking this issue in past submissions.",
+      "revId": "abdcdce027808f8e711ed7eeb7b6fa7f62ea7743",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
