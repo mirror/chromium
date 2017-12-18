@@ -70,6 +70,30 @@
       "revId": "792280289c3a4d0a660e35e08b95d489321d04ba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4dc4918a_90cc0210",
+        "filename": "gpu/command_buffer/tests/gl_ext_window_rectangles_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-12-18T18:04:50Z",
+      "side": 1,
+      "message": "I did a quick look at GLManager::Initialize code, ContextGroup creation is always ES2 regardless what we request, so that\u0027s definitely some buggy inconsistent testing code there.",
+      "parentUuid": "3db217cf_684933eb",
+      "range": {
+        "startLine": 30,
+        "startChar": 13,
+        "endLine": 30,
+        "endChar": 18
+      },
+      "revId": "792280289c3a4d0a660e35e08b95d489321d04ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
