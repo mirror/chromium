@@ -642,8 +642,29 @@ int SSLClientSocketPool::RequestSocket(const std::string& group_name,
   const scoped_refptr<SSLSocketParams>* casted_socket_params =
       static_cast<const scoped_refptr<SSLSocketParams>*>(socket_params);
 
+  SocketTag socket_tag;
+  switch ((*casted_socket_params)->GetConnectionType()) {
+    case SSLSocketParams::DIRECT:
+      socket_tag =
+          (*casted_socket_params)->GetDirectConnectionParams()->socket_tag();
+      break;
+    case SSLSocketParams::SOCKS_PROXY:
+      socket_tag = (*casted_socket_params)
+                       ->GetSocksProxyConnectionParams()
+                       ->transport_params()
+                       ->socket_tag();
+      break;
+    case SSLSocketParams::HTTP_PROXY:
+      socket_tag = (*casted_socket_params)
+                       ->GetHttpProxyConnectionParams()
+                       ->transport_params()
+                       ->socket_tag();
+      break;
+  }
+
   return base_.RequestSocket(group_name, *casted_socket_params, priority,
-                             respect_limits, handle, callback, net_log);
+                             respect_limits, handle, callback, net_log,
+                             socket_tag);
 }
 
 void SSLClientSocketPool::RequestSockets(
