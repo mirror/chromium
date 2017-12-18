@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bc7dc958_34f722a3",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/test/ScreenShooter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1115854
+      },
+      "writtenOn": "2017-12-18T16:20:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d92e92f9_69bf2eff",
+      "range": {
+        "startLine": 183,
+        "startChar": 8,
+        "endLine": 183,
+        "endChar": 15
+      },
+      "revId": "70046a190c3fe1319390ee72bf28d16e6a1e8c94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7cc78dd7_3d0d190d",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/test/ScreenShooter.java",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "70046a190c3fe1319390ee72bf28d16e6a1e8c94",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2906c3f2_f67849ac",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/test/ScreenShooter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1115854
+      },
+      "writtenOn": "2017-12-18T16:20:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7cc78dd7_3d0d190d",
+      "range": {
+        "startLine": 237,
+        "startChar": 8,
+        "endLine": 237,
+        "endChar": 17
+      },
+      "revId": "70046a190c3fe1319390ee72bf28d16e6a1e8c94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
