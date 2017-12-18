@@ -14,16 +14,15 @@
 - (instancetype)initWithPopupPositioner:(id<OmniboxPopupPositioner>)positioner
                     popupViewController:(UITableViewController*)viewController;
 
-@property(nonatomic, weak) id<OmniboxPopupPositioner> positioner;
-@property(nonatomic, weak) UITableViewController* viewController;
-@property(nonatomic, strong) UIView* popupContainerView;
-
 // Updates appearance depending on the content size of the presented view
 // controller by changing the visible height of the popup. When the popup was
 // not previously shown, it will appear with "expansion" animation.
 - (void)updateHeightAndAnimateAppearanceIfNecessary;
 // Call this to hide the popup with animation.
 - (void)animateCollapse;
+// Returns the NSString identifier used for the layout guide used to position
+// and size the popup.
++ (NSString*)layoutGuideIdentifier;
 
 @end
 
