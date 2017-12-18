@@ -80,8 +80,6 @@ crbug.com/769942 virtual/spv175/paint/invalidation/svg/resource-invalidate-on-ta
 crbug.com/771643 virtual/spv175/compositing/overflow/nested-border-radius-clipping.html [ Failure ]
 crbug.com/771643 virtual/spv175/compositing/visibility/visibility-image-layers.html [ Failure Pass ]
 crbug.com/771643 virtual/spv175/paint/invalidation/forms/select-option-background-color.html [ Failure ]
-crbug.com/771643 virtual/spv175/paint/invalidation/multicol/multicol-with-overflowing-block-rl.html [ Failure ]
-crbug.com/771643 virtual/spv175/paint/invalidation/overflow/paged-with-overflowing-block-rl.html [ Failure ]
 crbug.com/771643 virtual/spv175/paint/invalidation/position/position-change-keeping-geometry.html [ Failure ]
 crbug.com/771643 virtual/spv175/paint/invalidation/svg/absolute-sized-content-with-resources.xhtml [ Failure ]
 crbug.com/771643 virtual/spv175/paint/invalidation/svg/deep-dynamic-updates.svg [ Failure ]

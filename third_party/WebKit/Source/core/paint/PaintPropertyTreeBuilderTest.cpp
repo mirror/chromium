@@ -3404,7 +3404,7 @@ TEST_P(PaintPropertyTreeBuilderTest, PaintOffsetsUnderMultiColumnWithOutline) {
   LayoutObject* target2 = GetLayoutObjectByElementId("target2");
   EXPECT_EQ(LayoutPoint(LayoutUnit(400.5f), LayoutUnit(8.0f)),
             target2->FirstFragment().PaintOffset());
-  // |target1| is only in the second column.
+  // |target2| is only in the second column.
   EXPECT_FALSE(target2->FirstFragment().NextFragment());
 }
 
@@ -3574,6 +3574,35 @@ TEST_P(PaintPropertyTreeBuilderTest, PaintOffsetsUnderMultiColumn) {
   EXPECT_EQ(LayoutPoint(180, 90), GetLayoutObjectByElementId("bottom-right")
                                       ->FirstFragment()
                                       .PaintOffset());
+}
+
+TEST_P(PaintPropertyTreeBuilderTest,
+       PaintOffsetsUnderMultiColumnVerticalRLWithOverflow) {
+  SetBodyInnerHTML(R"HTML(
+    <style>body { margin: 0; }</style>
+    <div id='multicol' style='columns:2; column-fill:auto; column-gap: 0;
+        width: 200px; height: 200px; writing-mode: vertical-rl'>
+      <div style='width: 100px'>
+        <div id='content' style='width: 400px'></div>
+      </div>
+    </div>
+  )HTML");
+
+  LayoutObject* thread =
+      GetLayoutObjectByElementId("multicol")->SlowFirstChild();
+  EXPECT_TRUE(thread->IsLayoutFlowThread());
+  EXPECT_EQ(2u, NumFragments(thread));
+  EXPECT_EQ(LayoutPoint(100, 0), FragmentAt(thread, 0).PaintOffset());
+  EXPECT_EQ(LayoutPoint(0, 0), FragmentAt(thread, 0).PaginationOffset());
+  EXPECT_EQ(LayoutPoint(300, 100), FragmentAt(thread, 1).PaintOffset());
+  EXPECT_EQ(LayoutPoint(200, 100), FragmentAt(thread, 1).PaginationOffset());
+
+  LayoutObject* content = GetLayoutObjectByElementId("content");
+  EXPECT_EQ(2u, NumFragments(content));
+  EXPECT_EQ(LayoutPoint(-200, 0), FragmentAt(content, 0).PaintOffset());
+  EXPECT_EQ(LayoutPoint(0, 0), FragmentAt(content, 0).PaginationOffset());
+  EXPECT_EQ(LayoutPoint(0, 100), FragmentAt(content, 1).PaintOffset());
+  EXPECT_EQ(LayoutPoint(200, 100), FragmentAt(content, 1).PaginationOffset());
 }
 
 // Ensures no crash with multi-column containing relative-position inline with
