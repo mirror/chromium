@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "39e52e49_7f79b4e4",
+        "filename": "testing/variations/fieldtrial_testing_config.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 2431,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-12-18T21:07:33Z",
+      "side": 1,
+      "message": "No need to add the \"Disabled\" entry here.  Only the first entry in this list is tested.",
+      "revId": "07a96b17eb389da8815bced2736e476786a84426",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
