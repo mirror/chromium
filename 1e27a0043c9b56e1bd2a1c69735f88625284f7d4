@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2a99c07d_4098b817",
+        "filename": "base/android/jni_array.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1228829
+      },
+      "writtenOn": "2017-12-18T17:18:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "333b8391_755b9510",
+      "revId": "1e27a0043c9b56e1bd2a1c69735f88625284f7d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "702b9456_ca36b1ab",
         "filename": "components/proximity_auth/bluetooth_low_energy_connection_finder_unittest.cc",
         "patchSetId": 8
@@ -39,6 +57,30 @@
       "revId": "1e27a0043c9b56e1bd2a1c69735f88625284f7d4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "997b838f_dc6d180d",
+        "filename": "components/proximity_auth/bluetooth_low_energy_connection_finder_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1228829
+      },
+      "writtenOn": "2017-12-18T17:18:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "702b9456_ca36b1ab",
+      "range": {
+        "startLine": 210,
+        "startChar": 37,
+        "endLine": 210,
+        "endChar": 58
+      },
+      "revId": "1e27a0043c9b56e1bd2a1c69735f88625284f7d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
