@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1dfea1c4_e5adba5e",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-12-18T21:23:13Z",
+      "side": 1,
+      "message": "I think it does need to reset or it will over-count. Example:\n\n\u003cdiv A style\u003d\"filter\"\u003e\n  \u003cdiv B style\u003d\"transform: ...\"\u003e\n     \u003cdiv C style\u003d\"position: absolute\"\u003e\n\nIn this case, the use counter should not trigger because no element\u0027s containing block changed.",
+      "parentUuid": "5aef9457_b90c9b1b",
+      "revId": "cae0d09d73f993e912513871cbf64d29b33902f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "614eb7f4_b6a9abbb",
         "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
         "patchSetId": 5
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "92f431f1_c309f76f",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1259,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-12-18T21:23:13Z",
+      "side": 1,
+      "message": "Good idea, done.",
+      "parentUuid": "614eb7f4_b6a9abbb",
+      "revId": "cae0d09d73f993e912513871cbf64d29b33902f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8465e24e_2ade1dc2",
         "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilderTest.cpp",
         "patchSetId": 5
@@ -47,6 +83,41 @@
       "writtenOn": "2017-09-13T00:13:09Z",
       "side": 1,
       "message": "Shouldn\u0027t it be EXPECT_TRUE?",
+      "revId": "cae0d09d73f993e912513871cbf64d29b33902f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2e93c11_94f6f455",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilderTest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 3835,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-12-18T21:23:13Z",
+      "side": 1,
+      "message": "Fixed.",
+      "parentUuid": "8465e24e_2ade1dc2",
+      "revId": "cae0d09d73f993e912513871cbf64d29b33902f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70d14848_4e55fa07",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilderTest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 3846,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-12-18T21:23:13Z",
+      "side": 1,
+      "message": "This should also return true, fixed that.",
       "revId": "cae0d09d73f993e912513871cbf64d29b33902f9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
