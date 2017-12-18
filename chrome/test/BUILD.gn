@@ -5325,6 +5325,44 @@ if (!is_android && !is_fuchsia) {
     }
   }
 
+  group("chromedriver_py_tests") {
+    testonly = true
+    deps = [
+      "//tools/perf/chrome_telemetry_build:telemetry_chrome_test",
+    ]
+
+    data = [
+      "//chrome/test/chromedriver/test/run_py_tests.py",
+      "//chrome/test/chromedriver/test/webserver.py",
+      "//chrome/test/chromedriver/chrome_paths.py",
+      "//chrome/test/chromedriver/server/server.py",
+      "//chrome/test/chromedriver/test/unittest_util.py",
+      "//chrome/test/chromedriver/util.py",
+      "//chrome/test/chromedriver/client/chromedriver.py",
+      "//chrome/test/chromedriver/client/webelement.py",
+      "//chrome/test/chromedriver/client/command_executor.py",
+
+      "//third_party/catapult/devil/",
+      "//build/android/",
+
+      # For isolate contract.
+      "//testing/scripts/common.py",
+      "//testing/xvfb.py",
+      "//testing/scripts/run_telemetry_as_googletest.py",
+    ]
+
+    data_deps = [
+      "//chrome",
+      "//chrome/test/chromedriver",
+    ]
+
+    # TODO(crouleau): do we need this?
+    if (enable_mus) {
+      deps += [ "//chrome:chrome_test" ]
+      data_deps += [ "//chrome:chrome_test" ]
+    }
+  }
+
   group("telemetry_gpu_unittests_run") {
     testonly = true
     deps = [
