@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4598a009_c576cacb",
+        "filename": "chrome/browser/vr/elements/toast.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-12-18T21:41:23Z",
+      "side": 1,
+      "message": "hah. Forgot to add my rational about this number.\nI was planning to remove it with a predefined kPixelPerDmm for vector icon. Once we have that, we could calculate the needed texture size from the const and icon size in dmm. So scene-creator don\u0027t need to provide a texture size for vector icon and we could make sure that vector icon has the same resolution in all of our UI.\nThe change is not very trivial though and belongs to a separate CL. So I used 64 here and verified that the icon in system indicator looks the same.\nBut I understand your concern. And I don\u0027t really know when I will start remove the texture size for vector icon. So I added a texture size parameter to this function.",
+      "parentUuid": "13a6e251_8c45d300",
+      "revId": "265e84f8a27b5e95e910403c4d399508533f84ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f2585c5b_8cf336ff",
         "filename": "chrome/browser/vr/elements/toast.cc",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-18T20:48:46Z",
       "side": 1,
       "message": "Why grab the pointer in the middle of all the setters?",
+      "revId": "265e84f8a27b5e95e910403c4d399508533f84ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21879452_6ffaff2b",
+        "filename": "chrome/browser/vr/elements/toast.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-12-18T21:41:23Z",
+      "side": 1,
+      "message": "oops. The following code was in ctor previously. I moved it here and forgot to move this line.",
+      "parentUuid": "f2585c5b_8cf336ff",
       "revId": "265e84f8a27b5e95e910403c4d399508533f84ab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "e2983006_fb7c648f",
+        "filename": "chrome/browser/vr/elements/toast.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-12-18T21:41:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "46b91c19_6f6230bc",
+      "revId": "265e84f8a27b5e95e910403c4d399508533f84ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fb1fdf75_a7f60c3d",
         "filename": "chrome/browser/vr/elements/toast.h",
         "patchSetId": 2
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "332e5e7a_6081c60c",
+        "filename": "chrome/browser/vr/elements/toast.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-12-18T21:41:23Z",
+      "side": 1,
+      "message": "I have switched to AddIcon in my later patch. I used to create an Icon and Text elements in ctor blindly. So I named then ConfigIcon/ConfigText. But now we create these elements in the implementation of this function. So I renamed them to CreateIcon/CreateText. Let me know if you have any concern about the new name.",
+      "parentUuid": "fb1fdf75_a7f60c3d",
+      "revId": "265e84f8a27b5e95e910403c4d399508533f84ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "30471e79_2ed3c7ab",
         "filename": "chrome/browser/vr/ui_scene_constants.h",
         "patchSetId": 2
@@ -81,6 +153,30 @@
       "writtenOn": "2017-12-18T20:48:46Z",
       "side": 1,
       "message": "Why not pre-multiply these?  It\u0027s not clear what you\u0027re multiplying here.",
+      "range": {
+        "startLine": 69,
+        "startChar": 52,
+        "endLine": 69,
+        "endChar": 56
+      },
+      "revId": "265e84f8a27b5e95e910403c4d399508533f84ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed7280ae_0c322884",
+        "filename": "chrome/browser/vr/ui_scene_constants.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-12-18T21:41:23Z",
+      "side": 1,
+      "message": "I was trying to make it consistent with SystemIndicatorTexture. This way, if we ever want to increase the height of indicator, we only need to change one value. In my later patch, I have replaced 0.08 with the correct named const (kIndicatorHeight).",
+      "parentUuid": "30471e79_2ed3c7ab",
       "range": {
         "startLine": 69,
         "startChar": 52,
@@ -116,6 +212,30 @@
     },
     {
       "key": {
+        "uuid": "30440b73_cd911ff5",
+        "filename": "chrome/browser/vr/ui_scene_creator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-12-18T21:41:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ae4c719d_f4a39b3e",
+      "range": {
+        "startLine": 427,
+        "startChar": 40,
+        "endLine": 427,
+        "endChar": 60
+      },
+      "revId": "265e84f8a27b5e95e910403c4d399508533f84ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b815c98e_50a67bbb",
         "filename": "chrome/browser/vr/ui_scene_creator.cc",
         "patchSetId": 2
@@ -130,6 +250,24 @@
       "revId": "265e84f8a27b5e95e910403c4d399508533f84ab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ab2fc15_d0b6af41",
+        "filename": "chrome/browser/vr/ui_scene_creator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-12-18T21:41:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b815c98e_50a67bbb",
+      "revId": "265e84f8a27b5e95e910403c4d399508533f84ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -156,6 +294,30 @@
     },
     {
       "key": {
+        "uuid": "62cb7208_e1c7dc68",
+        "filename": "chrome/browser/vr/ui_scene_creator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-12-18T21:41:23Z",
+      "side": 1,
+      "message": "Switched to AddText.",
+      "parentUuid": "7a381832_9ecb1e4c",
+      "range": {
+        "startLine": 430,
+        "startChar": 15,
+        "endLine": 430,
+        "endChar": 25
+      },
+      "revId": "265e84f8a27b5e95e910403c4d399508533f84ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "593a37d2_38276537",
         "filename": "chrome/browser/vr/ui_scene_creator.cc",
         "patchSetId": 2
@@ -170,6 +332,24 @@
       "revId": "265e84f8a27b5e95e910403c4d399508533f84ab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d2cffd3_67df1650",
+        "filename": "chrome/browser/vr/ui_scene_creator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1517,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-12-18T21:41:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "593a37d2_38276537",
+      "revId": "265e84f8a27b5e95e910403c4d399508533f84ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
