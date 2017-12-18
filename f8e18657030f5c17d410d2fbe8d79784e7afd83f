@@ -2,6 +2,74 @@
   "comments": [
     {
       "key": {
+        "uuid": "e8fdb80d_37e0e483",
+        "filename": "components/autofill/content/renderer/PRESUBMIT.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-12-18T15:46:19Z",
+      "side": 1,
+      "message": "Or, is this why you had to rename to IsFieldPasswordField()?",
+      "revId": "f8e18657030f5c17d410d2fbe8d79784e7afd83f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7459daf0_d482647e",
+        "filename": "components/autofill/content/renderer/autofill_agent.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 598,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-12-18T15:46:19Z",
+      "side": 1,
+      "message": "this line is flawed. The input type being of type password doesn\u0027t mean that it\u0027s a password field. This prevents triggering autofill from CVC or CC-Num fields that happen to be implemented as password fields by the developer.",
+      "revId": "f8e18657030f5c17d410d2fbe8d79784e7afd83f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78d46fa6_54b15289",
+        "filename": "components/autofill/content/renderer/password_autofill_agent.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-12-18T15:46:19Z",
+      "side": 1,
+      "message": "I suspect this name change was use the compiler to find places that needed to change? \n\nIs this still needed? The name doesn\u0027t match the conventions of the other helpers.",
+      "revId": "f8e18657030f5c17d410d2fbe8d79784e7afd83f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a2120e5_1a3828d0",
+        "filename": "components/autofill/content/renderer/password_autofill_agent.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-12-18T15:46:19Z",
+      "side": 1,
+      "message": "for clarity, plz add parens around the inner ?: expression",
+      "revId": "f8e18657030f5c17d410d2fbe8d79784e7afd83f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ee054872_1026248a",
         "filename": "third_party/WebKit/Source/core/exported/WebFormControlElement.cpp",
         "patchSetId": 2
