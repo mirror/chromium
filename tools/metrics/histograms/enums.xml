@@ -17274,6 +17274,7 @@ Called by update_net_error_codes.py.-->
   <int value="2273" label="FileAccessedServiceWorker"/>
   <int value="2274" label="FileAccessedSessionStorage"/>
   <int value="2275" label="FileAccessedSharedWorker"/>
+  <int value="2276" label="FilterAsContainingBlockMayChangeOutput"/>
 </enum>
 
 <enum name="FeedbackSource">
