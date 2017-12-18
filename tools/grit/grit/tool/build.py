@@ -116,11 +116,6 @@ Options:
                     and {numeric_id}. E.g. "#define {textual_id} {numeric_id}"
                     Otherwise it will use the default "#define SYMBOL 1234"
 
-  --output-all-resource-defines
-  --no-output-all-resource-defines  If specified, overrides the value of the
-                    output_all_resource_defines attribute of the root <grit>
-                    element of the input .grd file.
-
   --write-only-new flag
                     If flag is non-0, write output files to a temporary file
                     first, and copy it to the real output only if the new file
@@ -160,7 +155,6 @@ are exported to translation interchange files (e.g. XMB files), etc.
     depfile = None
     depdir = None
     rc_header_format = None
-    output_all_resource_defines = None
     write_only_new = False
     depend_on_stamp = False
     js_minifier = None
@@ -194,10 +188,6 @@ are exported to translation interchange files (e.g. XMB files), etc.
         first_ids_file = val
       elif key == '-w':
         whitelist_filenames.append(val)
-      elif key == '--output-all-resource-defines':
-        output_all_resource_defines = True
-      elif key == '--no-output-all-resource-defines':
-        output_all_resource_defines = False
       elif key == '--no-replace-ellipsis':
         replace_ellipsis = False
       elif key == '-p':
@@ -246,11 +236,6 @@ are exported to translation interchange files (e.g. XMB files), etc.
                                 predetermined_ids_file=predetermined_ids_file,
                                 defines=self.defines,
                                 target_platform=target_platform)
-
-    # If the output_all_resource_defines option is specified, override the value
-    # found in the grd file.
-    if output_all_resource_defines is not None:
-      self.res.SetShouldOutputAllResourceDefines(output_all_resource_defines)
 
     # Set an output context so that conditionals can use defines during the
     # gathering stage; we use a dummy language here since we are not outputting
@@ -357,11 +342,6 @@ are exported to translation interchange files (e.g. XMB files), etc.
         output.output_filename = os.path.abspath(os.path.join(
           self.output_directory, output.GetOutputFilename()))
 
-    # If there are whitelisted names, tag the tree once up front, this way
-    # while looping through the actual output, it is just an attribute check.
-    if self.whitelist_names:
-      self.AddWhitelistTags(self.res, self.whitelist_names)
-
     for output in self.res.GetOutputFiles():
       self.VerboseOut('Creating %s...' % output.GetOutputFilename())
 
@@ -389,7 +369,12 @@ are exported to translation interchange files (e.g. XMB files), etc.
 
       # Assign IDs only once to ensure that all outputs use the same IDs.
       if self.res.GetIdMap() is None:
-        self.res.InitializeIds()
+        self.res.InitializeIds(output.GetOutputFilename())
+
+        # Apply whitelist after assigning IDs so that resource IDs are not
+        # affected by it.
+        if self.whitelist_names:
+          self.AddWhitelistTags(self.res, self.whitelist_names)
 
       # Make the output directory if it doesn't exist.
       self.MakeDirectoriesTo(output.GetOutputFilename())
