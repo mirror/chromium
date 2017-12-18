@@ -66,7 +66,7 @@ Polymer({
           updatesPreview: false,
         },
         layout: {
-          value: false, /* portrait */
+          value: 'portrait',
           valid: true,
           available: true,
           updatesPreview: true,
