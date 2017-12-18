@@ -180,8 +180,23 @@ std::unique_ptr<base::Value> ProxyPrefTransformer::BrowserToExtensionPref(
     }
     case ProxyPrefs::MODE_FIXED_SERVERS: {
       // Build ProxyRules dictionary according to the extension API.
+      net::PartialNetworkTrafficAnnotationTag traffic_annotation =
+          net::DefinePartialNetworkTrafficAnnotation(
+              "proxy_settings_from_extensions_api", "proxy_settings", R"(
+        semantics {
+          description: "..."
+        }
+        policy {
+          setting: "..."
+          chrome_policy {
+            [POLICY_NAME] {
+              [POLICY_NAME]: ... //(value to disable it)
+            }
+          }
+          policy_exception_justification: "..."
+        })");
       std::unique_ptr<base::DictionaryValue> proxy_rules_dict =
-          helpers::CreateProxyRulesDict(config);
+          helpers::CreateProxyRulesDict(config, traffic_annotation);
       if (!proxy_rules_dict)
         return nullptr;
       extension_pref->Set(keys::kProxyConfigRules, std::move(proxy_rules_dict));

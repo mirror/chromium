@@ -189,9 +189,9 @@ int InitSocketPoolHelper(ClientSocketPoolManager::SocketGroupType group_type,
       connection_group = base::StringPrintf(
           "socks%c/%s", socks_version, connection_group.c_str());
 
-      socks_params = new SOCKSSocketParams(proxy_tcp_params,
-                                           socks_version == '5',
-                                           origin_host_port);
+      socks_params = new SOCKSSocketParams(
+          proxy_tcp_params, socks_version == '5', origin_host_port,
+          proxy_server.GetTrafficAnnotation());
     }
   }
 

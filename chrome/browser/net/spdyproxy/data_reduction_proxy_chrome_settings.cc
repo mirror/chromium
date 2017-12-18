@@ -121,6 +121,22 @@ DataReductionProxyChromeSettings::MigrateDataReductionProxyOffProxyPrefsHelper(
     return PROXY_PREF_CLEARED_MODE_SYSTEM;
   }
 
+  net::PartialNetworkTrafficAnnotationTag traffic_annotation =
+      net::DefinePartialNetworkTrafficAnnotation("proxy_settings_...",
+                                                 "proxy_settings", R"(
+        semantics {
+          description: "..."
+        }
+        policy {
+          setting: "..."
+          chrome_policy {
+            [POLICY_NAME] {
+              [POLICY_NAME]: ... //(value to disable it)
+            }
+          }
+          policy_exception_justification: "..."
+        })");
+
   // From M36 to M40, the DRP was configured using MODE_FIXED_SERVERS in the
   // proxy pref.
   if (ProxyModeToString(ProxyPrefs::MODE_FIXED_SERVERS) == mode) {
@@ -128,7 +144,7 @@ DataReductionProxyChromeSettings::MigrateDataReductionProxyOffProxyPrefsHelper(
     if (!dict->GetString("server", &proxy_server))
       return PROXY_PREF_NOT_CLEARED;
     net::ProxyConfig::ProxyRules proxy_rules;
-    proxy_rules.ParseFromString(proxy_server);
+    proxy_rules.ParseFromString(proxy_server, traffic_annotation);
     // Clear the proxy pref if it matches a currently configured Data Reduction
     // Proxy, or if the proxy host ends with ".googlezip.net", in order to
     // ensure that any DRP in the pref is cleared even if the DRP configuration

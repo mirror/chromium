@@ -223,8 +223,12 @@ struct MutableNetworkTrafficAnnotationTag {
   }
 
   explicit operator NetworkTrafficAnnotationTag() const {
-    CHECK_NE(unique_id_hash_code, TRAFFIC_ANNOTATION_UNINITIALIZED);
+    CHECK(has_value());
     return NetworkTrafficAnnotationTag({unique_id_hash_code});
+  }
+
+  bool has_value() const {
+    return unique_id_hash_code != TRAFFIC_ANNOTATION_UNINITIALIZED;
   }
 };
 
@@ -281,6 +285,10 @@ struct MutablePartialNetworkTrafficAnnotationTag {
 #define NO_TRAFFIC_ANNOTATION_BUG_656607                  \
   net::DefineNetworkTrafficAnnotation("undefined-656607", \
                                       "Temporary tag for crbug.com/656607.")
+#define NO_PARTIALTRAFFIC_ANNOTATION_BUG_656607(completing_annotation) \
+  net::DefinePartialNetworkTrafficAnnotation(                          \
+      "undefined-partial-656607", completing_annotation,               \
+      "Temporary partial tag for crbug.com/656607.")
 
 #undef COMPUTE_STRING_HASH
 

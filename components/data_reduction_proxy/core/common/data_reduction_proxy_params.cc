@@ -349,6 +349,23 @@ int GetFieldTrialParameterAsInteger(const std::string& group,
 bool GetOverrideProxiesForHttpFromCommandLine(
     std::vector<DataReductionProxyServer>* override_proxies_for_http) {
   DCHECK(override_proxies_for_http);
+
+  net::PartialNetworkTrafficAnnotationTag traffic_annotation =
+      net::DefinePartialNetworkTrafficAnnotation(
+          "proxy_settings_from_commandline", "proxy_settings", R"(
+        semantics {
+          description: "..."
+        }
+        policy {
+          setting: "..."
+          chrome_policy {
+            [POLICY_NAME] {
+              [POLICY_NAME]: ... //(value to disable it)
+            }
+          }
+          policy_exception_justification: "..."
+        })");
+
   if (base::CommandLine::ForCurrentProcess()->HasSwitch(
           switches::kDataReductionProxyHttpProxies)) {
     // It is illegal to use |kDataReductionProxy| or
@@ -366,11 +383,13 @@ bool GetOverrideProxiesForHttpFromCommandLine(
             switches::kDataReductionProxyHttpProxies);
     std::vector<std::string> proxy_override_values = base::SplitString(
         proxy_overrides, ";", base::TRIM_WHITESPACE, base::SPLIT_WANT_NONEMPTY);
+
     for (const std::string& proxy_override : proxy_override_values) {
       // Overriding proxies have type UNSPECIFIED_TYPE.
       override_proxies_for_http->push_back(DataReductionProxyServer(
           net::ProxyServer::FromURI(proxy_override,
-                                    net::ProxyServer::SCHEME_HTTP),
+                                    net::ProxyServer::SCHEME_HTTP,
+                                    traffic_annotation),
           ProxyServer::UNSPECIFIED_TYPE));
     }
 
@@ -391,13 +410,14 @@ bool GetOverrideProxiesForHttpFromCommandLine(
   // Overriding proxies have type UNSPECIFIED_TYPE.
   if (!origin.empty()) {
     override_proxies_for_http->push_back(DataReductionProxyServer(
-        net::ProxyServer::FromURI(origin, net::ProxyServer::SCHEME_HTTP),
+        net::ProxyServer::FromURI(origin, net::ProxyServer::SCHEME_HTTP,
+                                  traffic_annotation),
         ProxyServer::UNSPECIFIED_TYPE));
   }
   if (!fallback_origin.empty()) {
     override_proxies_for_http->push_back(DataReductionProxyServer(
-        net::ProxyServer::FromURI(fallback_origin,
-                                  net::ProxyServer::SCHEME_HTTP),
+        net::ProxyServer::FromURI(
+            fallback_origin, net::ProxyServer::SCHEME_HTTP, traffic_annotation),
         ProxyServer::UNSPECIFIED_TYPE));
   }
 
@@ -432,14 +452,32 @@ DataReductionProxyParams::DataReductionProxyParams() {
       params::GetOverrideProxiesForHttpFromCommandLine(&proxies_for_http_);
 
   if (!use_override_proxies_for_http) {
+    net::PartialNetworkTrafficAnnotationTag traffic_annotation =
+        net::DefinePartialNetworkTrafficAnnotation(
+            "proxy_settings_for_data_reduction", "proxy_settings", R"(
+        semantics {
+          description: "..."
+        }
+        policy {
+          setting: "..."
+          chrome_policy {
+            [POLICY_NAME] {
+              [POLICY_NAME]: ... //(value to disable it)
+            }
+          }
+          policy_exception_justification: "..."
+        })");
+
     DCHECK(proxies_for_http_.empty());
     proxies_for_http_.push_back(DataReductionProxyServer(
         net::ProxyServer::FromURI("https://proxy.googlezip.net:443",
-                                  net::ProxyServer::SCHEME_HTTP),
+                                  net::ProxyServer::SCHEME_HTTP,
+                                  traffic_annotation),
         ProxyServer::CORE));
     proxies_for_http_.push_back(DataReductionProxyServer(
         net::ProxyServer::FromURI("compress.googlezip.net:80",
-                                  net::ProxyServer::SCHEME_HTTP),
+                                  net::ProxyServer::SCHEME_HTTP,
+                                  traffic_annotation),
         ProxyServer::CORE));
   }
 }

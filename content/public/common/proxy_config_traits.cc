@@ -50,8 +50,25 @@ bool StructTraits<content::mojom::ProxyListDataView, net::ProxyList>::Read(
   std::vector<std::string> proxies;
   if (!data.ReadProxies(&proxies))
     return false;
+  // TODO(This CL): Move to the other side of MOJO.
+  net::PartialNetworkTrafficAnnotationTag traffic_annotation =
+      net::DefinePartialNetworkTrafficAnnotation("proxy_settings_...",
+                                                 "proxy_settings", R"(
+        semantics {
+          description: "..."
+        }
+        policy {
+          setting: "..."
+          chrome_policy {
+            [POLICY_NAME] {
+              [POLICY_NAME]: ... //(value to disable it)
+            }
+          }
+          policy_exception_justification: "..."
+        })");
   for (const auto& proxy : proxies) {
-    net::ProxyServer proxy_server = net::ProxyServer::FromPacString(proxy);
+    net::ProxyServer proxy_server =
+        net::ProxyServer::FromPacString(proxy, traffic_annotation);
     if (!proxy_server.is_valid())
       return false;
     out_proxy_list->AddProxyServer(proxy_server);

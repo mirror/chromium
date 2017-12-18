@@ -26,13 +26,15 @@ void AddProxyListToValue(const char* name,
 }
 
 // Split the |uri_list| on commas and add each entry to |proxy_list| in turn.
-void AddProxyURIListToProxyList(std::string uri_list,
-                                ProxyList* proxy_list,
-                                ProxyServer::Scheme default_scheme) {
+void AddProxyURIListToProxyList(
+    std::string uri_list,
+    ProxyList* proxy_list,
+    ProxyServer::Scheme default_scheme,
+    const net::PartialNetworkTrafficAnnotationTag& traffic_annotation) {
   base::StringTokenizer proxy_uri_list(uri_list, ",");
   while (proxy_uri_list.GetNext()) {
-    proxy_list->AddProxyServer(
-        ProxyServer::FromURI(proxy_uri_list.token(), default_scheme));
+    proxy_list->AddProxyServer(ProxyServer::FromURI(
+        proxy_uri_list.token(), default_scheme, traffic_annotation));
   }
 }
 
@@ -85,7 +87,9 @@ void ProxyConfig::ProxyRules::Apply(const GURL& url, ProxyInfo* result) const {
   }
 }
 
-void ProxyConfig::ProxyRules::ParseFromString(const std::string& proxy_rules) {
+void ProxyConfig::ProxyRules::ParseFromString(
+    const std::string& proxy_rules,
+    const net::PartialNetworkTrafficAnnotationTag& traffic_annotation) {
   // Reset.
   type = TYPE_NO_RULES;
   single_proxies = ProxyList();
@@ -108,9 +112,9 @@ void ProxyConfig::ProxyRules::ParseFromString(const std::string& proxy_rules) {
       if (!proxy_server_for_scheme.GetNext()) {
         if (type == TYPE_PROXY_PER_SCHEME)
           continue;  // Unexpected.
-        AddProxyURIListToProxyList(url_scheme,
-                                   &single_proxies,
-                                   ProxyServer::SCHEME_HTTP);
+        AddProxyURIListToProxyList(url_scheme, &single_proxies,
+                                   ProxyServer::SCHEME_HTTP,
+                                   traffic_annotation);
         type = TYPE_SINGLE_PROXY;
         return;
       }
@@ -135,9 +139,8 @@ void ProxyConfig::ProxyRules::ParseFromString(const std::string& proxy_rules) {
       }
 
       if (entry) {
-        AddProxyURIListToProxyList(proxy_server_for_scheme.token(),
-                                   entry,
-                                   default_scheme);
+        AddProxyURIListToProxyList(proxy_server_for_scheme.token(), entry,
+                                   default_scheme, traffic_annotation);
       }
     }
   }
