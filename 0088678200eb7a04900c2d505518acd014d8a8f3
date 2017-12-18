@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d0655b44_77db8bed",
+        "filename": "components/autofill/android/autofill_provider_android.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-12-18T16:35:29Z",
+      "side": 1,
+      "message": "I\u0027m not sure I understand why this should be fired. Could you add some comments to make it clearer? Thanks!",
+      "range": {
+        "startLine": 247,
+        "startChar": 2,
+        "endLine": 247,
+        "endChar": 26
+      },
+      "revId": "0088678200eb7a04900c2d505518acd014d8a8f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7455f58_68ba4324",
+        "filename": "components/autofill/content/renderer/autofill_agent.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 835,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-12-18T16:35:29Z",
+      "side": 1,
+      "message": "nit: last_interacted_form_",
+      "range": {
+        "startLine": 835,
+        "startChar": 26,
+        "endLine": 835,
+        "endChar": 48
+      },
+      "revId": "0088678200eb7a04900c2d505518acd014d8a8f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d94e1d06_7ecc94d1",
+        "filename": "components/autofill/content/renderer/autofill_agent.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 836,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-12-18T16:35:29Z",
+      "side": 1,
+      "message": "set?",
+      "range": {
+        "startLine": 836,
+        "startChar": 8,
+        "endLine": 836,
+        "endChar": 12
+      },
+      "revId": "0088678200eb7a04900c2d505518acd014d8a8f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be5ecf91_d217bd1f",
+        "filename": "components/autofill/content/renderer/autofill_agent.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-12-18T16:35:29Z",
+      "side": 1,
+      "message": "nit: valid",
+      "range": {
+        "startLine": 277,
+        "startChar": 65,
+        "endLine": 277,
+        "endChar": 71
+      },
+      "revId": "0088678200eb7a04900c2d505518acd014d8a8f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c90f91e_99dbb754",
+        "filename": "components/autofill/content/renderer/autofill_agent.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-12-18T16:35:29Z",
+      "side": 1,
+      "message": "nit: is valid.",
+      "range": {
+        "startLine": 278,
+        "startChar": 46,
+        "endLine": 278,
+        "endChar": 52
+      },
+      "revId": "0088678200eb7a04900c2d505518acd014d8a8f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61f80076_36597536",
+        "filename": "components/autofill/core/browser/autofill_handler.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-12-18T16:35:29Z",
+      "side": 1,
+      "message": "This is not necessarily the case anymore right? Could you expand the comment?",
+      "range": {
+        "startLine": 61,
+        "startChar": 5,
+        "endLine": 61,
+        "endChar": 44
+      },
+      "revId": "0088678200eb7a04900c2d505518acd014d8a8f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1622cf3_0b758c8e",
+        "filename": "components/autofill/core/browser/autofill_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-12-18T16:35:29Z",
+      "side": 1,
+      "message": "nit: PROBABLY_FORM_SUBMITTED",
+      "range": {
+        "startLine": 343,
+        "startChar": 25,
+        "endLine": 343,
+        "endChar": 49
+      },
+      "revId": "0088678200eb7a04900c2d505518acd014d8a8f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7e6c212_5830935a",
+        "filename": "components/autofill/core/browser/autofill_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-12-18T16:35:29Z",
+      "side": 1,
+      "message": "this should be done only if !known_success right?",
+      "range": {
+        "startLine": 350,
+        "startChar": 4,
+        "endLine": 350,
+        "endChar": 58
+      },
+      "revId": "0088678200eb7a04900c2d505518acd014d8a8f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ba8abad_223a3b82",
+        "filename": "components/autofill/core/browser/autofill_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-12-18T16:35:29Z",
+      "side": 1,
+      "message": "This currently calls both implementations, should it be in a if depending on whether the form has been submitted or the form has submitted?",
+      "range": {
+        "startLine": 363,
+        "startChar": 0,
+        "endLine": 386,
+        "endChar": 71
+      },
+      "revId": "0088678200eb7a04900c2d505518acd014d8a8f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
