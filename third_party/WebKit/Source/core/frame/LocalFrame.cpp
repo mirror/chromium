@@ -257,8 +257,10 @@ void LocalFrame::Reload(FrameLoadType load_type,
       return;
     DCHECK(GetDocument());
     FrameLoadRequest request = FrameLoadRequest(
-        GetDocument(), loader_.ResourceRequestForReload(
-                           load_type, NullURL(), client_redirect_policy));
+        nullptr, loader_.ResourceRequestForReload(load_type, NullURL(),
+                                                  client_redirect_policy));
+    request.GetResourceRequest().SetRequestorOrigin(
+        SecurityOrigin::CreateUnique());
     request.SetClientRedirect(client_redirect_policy);
     loader_.Load(request, load_type);
   } else {

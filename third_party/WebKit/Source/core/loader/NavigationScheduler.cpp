@@ -251,7 +251,7 @@ class ScheduledReload final : public ScheduledNavigation {
       return;
     FrameLoadRequest request = FrameLoadRequest(nullptr, resource_request);
     request.GetResourceRequest().SetRequestorOrigin(
-        SecurityOrigin::Create(resource_request.Url()));
+        SecurityOrigin::CreateUnique());
     request.SetClientRedirect(ClientRedirectPolicy::kClientRedirect);
     MaybeLogScheduledNavigationClobber(
         ScheduledNavigationType::kScheduledReload, frame);
