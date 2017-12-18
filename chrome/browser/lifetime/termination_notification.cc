@@ -11,6 +11,8 @@
 
 #if defined(OS_CHROMEOS)
 #include "base/sys_info.h"
+#include "chrome/browser/lifetime/application_lifetime.h"
+#include "chrome/browser/lifetime/application_lifetime_chromeos.h"
 #include "chromeos/dbus/dbus_thread_manager.h"
 #include "chromeos/dbus/power_policy_controller.h"
 #include "chromeos/dbus/session_manager_client.h"
@@ -59,7 +61,7 @@ void NotifyAndTerminate(bool fast_path, RebootPolicy reboot_policy) {
             chromeos::UpdateEngineClient::UPDATE_STATUS_UPDATED_NEED_REBOOT ||
         reboot_policy == RebootPolicy::kForceReboot) {
       update_engine_client->RebootAfterUpdate();
-    } else if (chrome::IsAttemptingShutdown()) {
+    } else if (chromeos::IsAttemptingShutdown()) {
       // Don't ask SessionManager to stop session if the shutdown request comes
       // from session manager.
       chromeos::DBusThreadManager::Get()
@@ -67,11 +69,11 @@ void NotifyAndTerminate(bool fast_path, RebootPolicy reboot_policy) {
           ->StopSession();
     }
   } else {
-    if (chrome::IsAttemptingShutdown()) {
+    if (chromeos::IsAttemptingShutdown()) {
       // If running the Chrome OS build, but we're not on the device, act
       // as if we received signal from SessionManager.
       content::BrowserThread::PostTask(content::BrowserThread::UI, FROM_HERE,
-                                       base::Bind(&chrome::ExitCleanly));
+                                       base::BindOnce(&chrome::ExitCleanly));
     }
   }
 #endif

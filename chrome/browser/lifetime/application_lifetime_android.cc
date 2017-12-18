@@ -19,6 +19,17 @@
 #include "jni/ApplicationLifetime_jni.h"
 
 namespace chrome {
+namespace platform {
+
+void AttemptUserExit(base::OnceClosure attempt_user_exit_finish) {
+  std::move(attempt_user_exit_finish).Run()
+}
+
+void PreAttemptExit() {}
+
+void PreAttemptRelaunch() {}
+
+}  // namespace platform
 
 void AttemptRestart() {
   // Set the flag to restart Chrome after it is shutdown.
@@ -40,4 +51,4 @@ void TerminateAndroid() {
   Java_ApplicationLifetime_terminate(env, restart);
 }
 
-}  // namespace browser
+}  // namespace chrome

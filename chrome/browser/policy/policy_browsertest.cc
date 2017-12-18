@@ -2789,7 +2789,10 @@ IN_PROC_BROWSER_TEST_F(PolicyTest, SessionLengthLimit) {
                POLICY_SCOPE_USER, POLICY_SOURCE_CLOUD,
                base::MakeUnique<base::Value>(kOneHourInMs), nullptr);
   UpdateProviderPolicy(policies);
-  base::RunLoop().RunUntilIdle();
+  content::WindowedNotificationObserver(
+      chrome::NOTIFICATION_APP_TERMINATING,
+      content::NotificationService::AllSources())
+      .Wait();
   Mock::VerifyAndClearExpectations(&observer);
 }
 
@@ -2875,7 +2878,10 @@ IN_PROC_BROWSER_TEST_F(PolicyTest,
                POLICY_SCOPE_USER, POLICY_SOURCE_CLOUD,
                base::MakeUnique<base::Value>(kOneHourInMs), nullptr);
   UpdateProviderPolicy(policies);
-  base::RunLoop().RunUntilIdle();
+  content::WindowedNotificationObserver(
+      chrome::NOTIFICATION_APP_TERMINATING,
+      content::NotificationService::AllSources())
+      .Wait();
   Mock::VerifyAndClearExpectations(&observer);
 }
 
