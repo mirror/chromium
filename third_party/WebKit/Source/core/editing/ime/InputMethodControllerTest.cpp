@@ -2508,4 +2508,67 @@ TEST_F(InputMethodControllerTest, SetCompositionContainingNewline) {
                              Position(div, PositionAnchorType::kAfterAnchor))));
 }
 
+TEST_F(InputMethodControllerTest, AutocapitalizeTextInputFlags) {
+  // This test assumes that the behavior tested in
+  // LayoutTests/fast/forms/autocapitalize.html works properly and tests the
+  // following:
+  // - The autocapitalize IDL states map properly to WebTextInputFlags for
+  //   <input> elements, <textarea> elements, and editable regions
+  // - We ignore the value of the IDL attribute for password/email/URL inputs
+  //   and always send kWebTextInputFlagAutocapitalizeNone for this case.
+  Element* text_input =
+      InsertHTMLElement("<input id='text' type='text'>", "text");
+  Element* search_input =
+      InsertHTMLElement("<input id='search' type='search'>", "search");
+  Element* email_input =
+      InsertHTMLElement("<input id='email' type='email'>", "email");
+  Element* url_input = InsertHTMLElement("<input id='url' type='url'>", "url");
+  Element* password_input =
+      InsertHTMLElement("<input id='password' type='password'>", "password");
+  Element* textarea =
+      InsertHTMLElement("<textarea id='textarea'></textarea>", "textarea");
+  Element* editable = InsertHTMLElement(
+      "<div id='editable' contenteditable></div>", "editable");
+
+  // HeapVector does not support std::initializer_list
+  HeapVector<Member<Element>> elements;
+  elements.push_back(text_input);
+  elements.push_back(search_input);
+  elements.push_back(email_input);
+  elements.push_back(url_input);
+  elements.push_back(password_input);
+  elements.push_back(textarea);
+  elements.push_back(editable);
+
+  Vector<std::pair<AtomicString, int>> attribute_flag_pairs = {
+      {AtomicString(""), 0},
+      {AtomicString("none"), kWebTextInputFlagAutocapitalizeNone},
+      {AtomicString("characters"), kWebTextInputFlagAutocapitalizeCharacters},
+      {AtomicString("words"), kWebTextInputFlagAutocapitalizeWords},
+      {AtomicString("sentences"), kWebTextInputFlagAutocapitalizeSentences},
+  };
+
+  for (const auto& attribute_flag_pair : attribute_flag_pairs) {
+    for (Element* element : elements) {
+      element->setAttribute(HTMLNames::autocapitalizeAttr,
+                            attribute_flag_pair.first);
+      element->focus();
+
+      const int autocapitalize_flags = Controller().TextInputInfo().flags;
+      const int autocapitalize_mask =
+          kWebTextInputFlagAutocapitalizeNone |
+          kWebTextInputFlagAutocapitalizeCharacters |
+          kWebTextInputFlagAutocapitalizeWords |
+          kWebTextInputFlagAutocapitalizeSentences;
+      if (element == email_input || element == url_input ||
+          element == password_input) {
+        EXPECT_EQ(0, autocapitalize_flags & autocapitalize_mask);
+      } else {
+        EXPECT_EQ(attribute_flag_pair.second,
+                  autocapitalize_flags & autocapitalize_flags);
+      }
+    }
+  }
+}
+
 }  // namespace blink
