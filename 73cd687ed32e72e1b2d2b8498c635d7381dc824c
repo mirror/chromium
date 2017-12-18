@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ed1ceb2c_70cb99b6",
+        "filename": "media/base/audio_latency.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1159827
+      },
+      "writtenOn": "2017-12-18T15:44:10Z",
+      "side": 1,
+      "message": "Define it in limits::?",
+      "revId": "73cd687ed32e72e1b2d2b8498c635d7381dc824c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27701e69_3c252daf",
+        "filename": "media/base/audio_latency.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1159827
+      },
+      "writtenOn": "2017-12-18T15:44:10Z",
+      "side": 1,
+      "message": "What are we checking here? Do you mean DCHECK_EQ(max_webaudio_buffer_size % minimum_buffer_size, 0)? Should it be a part of GetMinAudioBufferSizeMacOS()?",
+      "revId": "73cd687ed32e72e1b2d2b8498c635d7381dc824c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5cb9cef_904e23c2",
+        "filename": "media/base/audio_latency.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1159827
+      },
+      "writtenOn": "2017-12-18T15:44:10Z",
+      "side": 1,
+      "message": "Should we have a static assert to make sure max_webaudio_buffer_size % limits::kMaxAudioBufferSize is 0?",
+      "revId": "73cd687ed32e72e1b2d2b8498c635d7381dc824c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "409d6d03_6a0600f4",
+        "filename": "media/base/audio_latency.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1159827
+      },
+      "writtenOn": "2017-12-18T15:44:10Z",
+      "side": 1,
+      "message": "static assert?",
+      "revId": "73cd687ed32e72e1b2d2b8498c635d7381dc824c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
