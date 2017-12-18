@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eb255e2b_f167fe6c",
+        "filename": "ios/chrome/browser/ui/fullscreen/chrome_coordinator+fullscreen_disabling.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-12-18T18:04:53Z",
+      "side": 1,
+      "message": "Nit: the \"didFoo\" naming scheme is usually used in delegates, where the method call reads like \"hey delegate, your delegator did Foo\". But this is just a regular method on the coordinator, so it should just be something like -disableFullscreen/-enableFullscreen.",
+      "range": {
+        "startLine": 16,
+        "startChar": 8,
+        "endLine": 16,
+        "endChar": 37
+      },
+      "revId": "32ba3f6d116eb25b3b4449b6c4b332991a499462",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3e037cb_011a9c68",
+        "filename": "ios/chrome/browser/ui/fullscreen/chrome_coordinator+fullscreen_disabling.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-12-18T18:04:53Z",
+      "side": 1,
+      "message": "Please just subclass ChromeCoordinator rather than using the runtime to build a mixin, which is what this feels like.",
+      "range": {
+        "startLine": 69,
+        "startChar": 4,
+        "endLine": 69,
+        "endChar": 28
+      },
+      "revId": "32ba3f6d116eb25b3b4449b6c4b332991a499462",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
