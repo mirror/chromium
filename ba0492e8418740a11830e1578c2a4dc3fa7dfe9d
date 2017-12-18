@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "613f3233_d9b1120c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-12-18T14:45:14Z",
+      "side": 1,
+      "message": "Only autotests can use this UMA? Maybe the phrasing could be:\n\"This CL adds 2 new MediaRecorder histograms, one for X\nand one for Y. ChromeOS autotest infrastructure will use\nthem to determine if tests are passing correctly, see \ncrrev.com/c/..\" (or crbug.com/...).\n\nRemember that the CL is read by a ton of people that don\u0027t\nhave the same context as you.",
+      "range": {
+        "startLine": 9,
+        "startChar": 42,
+        "endLine": 9,
+        "endChar": 51
+      },
+      "revId": "ba0492e8418740a11830e1578c2a4dc3fa7dfe9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "571a69e6_3fb0c0c2",
+        "filename": "content/renderer/media_recorder/vea_encoder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-12-18T14:45:14Z",
+      "side": 1,
+      "message": "This prefix is wrong, because MediaRecorder can record more\nthan just WebRTC sources. I suggest Media.MediaRecorder.",
+      "range": {
+        "startLine": 123,
+        "startChar": 29,
+        "endLine": 123,
+        "endChar": 36
+      },
+      "revId": "ba0492e8418740a11830e1578c2a4dc3fa7dfe9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00a3d365_fa53c5df",
+        "filename": "content/renderer/media_recorder/video_track_recorder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-12-18T14:45:14Z",
+      "side": 1,
+      "message": "This is absolutely not needed because we\u0027re fully partitioning the \nsample space: instead use a boolean to represent \"Is VEA being \nused or not?\" and give the true/false values an alias to be used for \na UMA_HISTOGRAM_BOOLEAN().\n\nSee for example what\u0027s done with Windows.InCompatibilityMode",
+      "range": {
+        "startLine": 87,
+        "startChar": 0,
+        "endLine": 92,
+        "endChar": 2
+      },
+      "revId": "ba0492e8418740a11830e1578c2a4dc3fa7dfe9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ced83ef5_d94f1105",
+        "filename": "content/renderer/media_recorder/video_track_recorder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-12-18T14:45:14Z",
+      "side": 1,
+      "message": "You called the other UMA \"VEAError\" but here this is called \n\"HwEncodeUsed\". I suggest making the latter \"VEAUsed\" or \"VEAInUse\"\nsince it\u0027ll be red anyway by users of this file and VEA is\nby now a pervasive acronym.",
+      "range": {
+        "startLine": 95,
+        "startChar": 50,
+        "endLine": 95,
+        "endChar": 62
+      },
+      "revId": "ba0492e8418740a11830e1578c2a4dc3fa7dfe9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de3dd8c8_88140c1a",
+        "filename": "content/renderer/media_recorder/video_track_recorder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 471,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-12-18T14:45:14Z",
+      "side": 1,
+      "message": "No need for ReportToUMA(), which is a tiny method only\nmaking it harder to understand what\u0027s happening, forcing\nthe reader to jump to elsewhere in the file. Just do:\nUMA_HISTOGRAM_BOOLEAN(\"Media.MediaRecorder.VEAUsed\", true);\n\nCorrespoding comments for l. 479.",
+      "range": {
+        "startLine": 471,
+        "startChar": 4,
+        "endLine": 471,
+        "endChar": 32
+      },
+      "revId": "ba0492e8418740a11830e1578c2a4dc3fa7dfe9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "041ddc5f_71c7f024",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 27505,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-12-18T14:45:14Z",
+      "side": 1,
+      "message": "This enumeration is exactly the same as\n VideoDecodeAcceleratorError in this same file, reuse\nthe latter.",
+      "range": {
+        "startLine": 27493,
+        "startChar": 0,
+        "endLine": 27505,
+        "endChar": 7
+      },
+      "revId": "ba0492e8418740a11830e1578c2a4dc3fa7dfe9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
