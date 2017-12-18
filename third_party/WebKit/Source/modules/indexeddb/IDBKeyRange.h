@@ -44,23 +44,24 @@ class MODULES_EXPORT IDBKeyRange final : public ScriptWrappable {
   enum LowerBoundType { kLowerBoundOpen, kLowerBoundClosed };
   enum UpperBoundType { kUpperBoundOpen, kUpperBoundClosed };
 
-  static IDBKeyRange* Create(IDBKey* lower,
-                             IDBKey* upper,
+  static IDBKeyRange* Create(std::unique_ptr<IDBKey> lower,
+                             std::unique_ptr<IDBKey> upper,
                              LowerBoundType lower_type,
                              UpperBoundType upper_type) {
     return new IDBKeyRange(lower, upper, lower_type, upper_type);
   }
+
   // Null if the script value is null or undefined, the range if it is one,
   // otherwise tries to convert to a key and throws if it fails.
   static IDBKeyRange* FromScriptValue(ExecutionContext*,
                                       const ScriptValue&,
                                       ExceptionState&);
 
-  void Trace(blink::Visitor*);
+  void Trace(blink::Visitor*) { ScriptWrappable::Trace(visitor); }
 
   // Implement the IDBKeyRange IDL
-  IDBKey* Lower() const { return lower_.Get(); }
-  IDBKey* Upper() const { return upper_.Get(); }
+  IDBKey* Lower() const { return lower_.get(); }
+  IDBKey* Upper() const { return upper_; }
 
   ScriptValue LowerValue(ScriptState*) const;
   ScriptValue UpperValue(ScriptState*) const;
@@ -90,13 +91,42 @@ class MODULES_EXPORT IDBKeyRange final : public ScriptWrappable {
   bool includes(ScriptState*, const ScriptValue& key, ExceptionState&);
 
  private:
-  IDBKeyRange(IDBKey* lower,
+  // IDBKeyRange has two possible internal representations of keys.
+  //
+  // The normal representation uses distinct IDBKey instances for the lower and
+  // upper keys. In this case, upper_if_distinct_ owns the upper key, and upper_
+  // points to it.
+  //
+  // The compressed representation uses the same IDBKey instance for the lower
+  // and upper keys, which are equal. This representation is used in the (fairly
+  // common) case where a range is created out of a single key. In this case,
+  // upper_if_distinct_ is null, and upper_ points to the same IDBKey instance
+  // as lower_.
+  //
+  // The two representations are an implementation detail, and should not be
+  // visible to the class' consumers.
+  //
+  // It may be tempting to think that a nullptr upper_if_distinct_ implies a
+  // compressed representation. However, ranges without an upper key
+  // (open to infinity on the right side) have a null upper_if_distinct_, but
+  // are not considered compressed, as the left key is different from the right
+  // key.
+
+  IDBKeyRange(std::unique_ptr<IDBKey> lower,
               IDBKey* upper,
+              std::unique_ptr<IDBKey> upper_if_distinct,
               LowerBoundType lower_type,
               UpperBoundType upper_type);
 
-  Member<IDBKey> lower_;
-  Member<IDBKey> upper_;
+  // Owns the range's lower key, and possibly the upper key.
+  std::unique_ptr<IDBKey> lower_;
+
+  // Owns the range's upper key, if not null.
+  std::unique_ptr<IDBKey> upper_if_distinct_;
+
+  // Non-owning reference to the range's upper key.
+  IDBKey* upper_;
+
   const LowerBoundType lower_type_;
   const UpperBoundType upper_type_;
 };

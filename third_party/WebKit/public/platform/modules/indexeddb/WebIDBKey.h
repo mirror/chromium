@@ -26,6 +26,8 @@
 #ifndef WebIDBKey_h
 #define WebIDBKey_h
 
+#include <memory>
+
 #include "public/platform/WebCommon.h"
 #include "public/platform/WebData.h"
 #include "public/platform/WebPrivatePtr.h"
@@ -36,15 +38,83 @@
 namespace blink {
 
 class IDBKey;
+class WebIDBKeyView;
 
+// Minimal interface for iterating over an IndexedDB array key.
+//
+// See WebIDBKeyView for the rationale behind this class' existence.
+class WebIDBKeyArrayView {
+ public:
+  BLINK_EXPORT size_t size() const;
+
+  BLINK_EXPORT WebIDBKeyView operator[](size_t index) const;
+
+ private:
+  // Only WebIDBKeyView can vend WebIDBArrayKeyView instances.
+  friend class WebIDBKeyView;
+  explicit WebIDBKeyArrayView(const IDBKey* idb_key) : private_(idb_key) {}
+
+  const IDBKey* const private_;
+};
+
+// Non-owning reference to an IndexedDB key.
+//
+// The Blink object wrapped by WebIDBKey is immutable, so WebIDBKeyView
+// instances are implicitly const references.
+//
+// Having both WebIDBKeyView and WebIDBView is extra complexity, and we pay this
+// price to avoid unnecessary memory copying. Specifically, WebIDBKeyView is
+// used to issue requests to the IndexedDB backing store.
+//
+// For example, IDBCursor.update() must send the cursor's primary key to the
+// backing store. IDBCursor cannot give up the ownership of its primary key,
+// because it might need to satisfy further update() or delete() calls.
+class WebIDBKeyView {
+ public:
+  BLINK_EXPORT WebIDBKeyType KeyType() const;
+
+  BLINK_EXPORT bool IsValid() const;
+
+  // Only valid for ArrayType.
+  //
+  // The caller is responsible for ensuring that the WebIDBKeyView is valid for
+  // the lifetime of the returned WeIDBKeyArrayView.
+  BLINK_EXPORT const WebIDBKeyArrayView ArrayView() const {
+    return WebIDBKeyArrayView(private_);
+  }
+
+  // Only valid for BinaryType.
+  BLINK_EXPORT WebData Binary() const;
+
+  // Only valid for StringType.
+  BLINK_EXPORT WebString GetString() const;
+
+  // Only valid for DateType.
+  BLINK_EXPORT double Date() const;
+
+  // Only valid for NumberType.
+  BLINK_EXPORT double Number() const;
+
+ private:
+  // Only WebIDBKey may vend WebIDBKeyView instances.
+  friend class WebIDBKey;
+  explicit WebIDBKeyView(const IDBKey* idb_key) : private_(idb_key) {}
+
+  const IDBKey* const private_;
+};
+
+// Move-only handler that owns an IndexedDB key.
+//
+// The Blink object wrapped by WebIDBKey is immutable.
+//
+// Having both WebIDBKeyView and WebIDBView is extra complexity, and we pay this
+// price to avoid unnecessary memory copying. Specifically, WebIDBKey is used to
+// receive data from the IndexedDB backing store. Once constructed, a WebIDBKey
+// is moved through the layer cake until the underlying Blink object ends up at
+// its final destination.
 class WebIDBKey {
  public:
-  // Please use one of the factory methods. This is public only to allow
-  // WebVector.
-  WebIDBKey() {}
-  ~WebIDBKey() { Reset(); }
-
-  BLINK_EXPORT static WebIDBKey CreateArray(const WebVector<WebIDBKey>&);
+  BLINK_EXPORT static WebIDBKey CreateArray(WebVector<WebIDBKey>);
   BLINK_EXPORT static WebIDBKey CreateBinary(const WebData&);
   BLINK_EXPORT static WebIDBKey CreateString(const WebString&);
   BLINK_EXPORT static WebIDBKey CreateDate(double);
@@ -52,46 +122,31 @@ class WebIDBKey {
   BLINK_EXPORT static WebIDBKey CreateInvalid();
   BLINK_EXPORT static WebIDBKey CreateNull();
 
-  WebIDBKey(const WebIDBKey& e) { Assign(e); }
-  WebIDBKey& operator=(const WebIDBKey& e) {
-    Assign(e);
-    return *this;
-  }
+  BLINK_EXPORT WebIDBKey(WebIDBKey&&);
+  BLINK_EXPORT WebIDBKey& operator=(WebIDBKey&&);
 
-  BLINK_EXPORT void Assign(const WebIDBKey&);
-  BLINK_EXPORT void AssignArray(const WebVector<WebIDBKey>&);
-  BLINK_EXPORT void AssignBinary(const WebData&);
-  BLINK_EXPORT void AssignString(const WebString&);
-  BLINK_EXPORT void AssignDate(double);
-  BLINK_EXPORT void AssignNumber(double);
-  BLINK_EXPORT void AssignInvalid();
-  BLINK_EXPORT void AssignNull();
-  BLINK_EXPORT void Reset();
+  BLINK_EXPORT ~WebIDBKey();
 
-  BLINK_EXPORT WebIDBKeyType KeyType() const;
-  BLINK_EXPORT bool IsValid() const;
-  // Only valid for ArrayType.
-  BLINK_EXPORT WebVector<WebIDBKey> Array() const;
-  // Only valid for BinaryType.
-  BLINK_EXPORT WebData Binary() const;
-  // Only valid for StringType.
-  BLINK_EXPORT WebString GetString() const;
-  // Only valid for DateType.
-  BLINK_EXPORT double Date() const;
-  // Only valid for NumberType.
-  BLINK_EXPORT double Number() const;
+  BLINK_EXPORT WebIDBKeyView View() { return WebIDBKeyView(private_.get()); }
 
 #if INSIDE_BLINK
-  WebIDBKey(IDBKey* value) : private_(value) {}
-  WebIDBKey& operator=(IDBKey* value) {
-    private_ = value;
+  WebIDBKey(std::unique_ptr<IDBKey> idb_key) : private_(std::move(idb_key)) {}
+  WebIDBKey& operator=(std::unique_ptr<IDBKey> idb_key) {
+    private_ = std::move(idb_key);
     return *this;
   }
-  operator IDBKey*() const { return private_.Get(); }
+  operator IDBKey*() const { return private_.get(); }
+
+  // TODO(pwnall): Ref-qualifier on member function requires C++ style approval.
+  operator std::unique_ptr<IDBKey>() && { return std::move(private_); }
 #endif
 
  private:
-  WebPrivatePtr<IDBKey> private_;
+  // The default constructor is only defined for WebVector's use.
+  friend class WebVector<WebIDBKey>;
+  WebIDBKey();
+
+  std::unique_ptr<IDBKey> private_;
 };
 
 }  // namespace blink
