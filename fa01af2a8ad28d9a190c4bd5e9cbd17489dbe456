@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "1a9798fc_aabe5824",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-12-18T23:32:06Z",
+      "side": 1,
+      "message": "Correct, UpdateSourceURL should only be used with main frame URLs.\n\nSpeaking of, you will probably need to whitelist this use of the API once https://chromium-review.googlesource.com/c/chromium/src/+/820683 lands.",
+      "parentUuid": "c7ab6673_29c6cc09",
+      "revId": "fa01af2a8ad28d9a190c4bd5e9cbd17489dbe456",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "616c6f09_a20746c2",
         "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
         "patchSetId": 2
