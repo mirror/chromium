@@ -22,6 +22,30 @@
       "revId": "e923e29452d33a3756563b8e232a34455fdbd53e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50a7e110_fff3fab9",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleViewMessage.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 1370,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-12-18T23:06:11Z",
+      "side": 0,
+      "message": "This would work, but it looks like the original intent was to avoid linkifying super short URLs, so I\u0027d rather not touch it.  The 2-char minimum was originally 4-char, and existed before we linkified data URLs.\n\n\"Previously we tried to not linkify very short URLs\"\n- https://chromium.googlesource.com/chromium/src/+/37e32079148deec7956d3097485bd190af8178ea%5E%21/",
+      "parentUuid": "666860c4_5e9b0c7c",
+      "range": {
+        "startLine": 1370,
+        "startChar": 95,
+        "endLine": 1370,
+        "endChar": 99
+      },
+      "revId": "e923e29452d33a3756563b8e232a34455fdbd53e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

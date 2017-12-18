@@ -16,6 +16,24 @@
       "revId": "13ab0e8da95b547918596c2fb86a2ad0a9ae6819",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9af78a3_da6280bd",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleViewMessage.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 1371,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-12-18T23:06:11Z",
+      "side": 1,
+      "message": "Done, good catch, I\u0027ve added a test case",
+      "parentUuid": "636faff5_6f2e1d54",
+      "revId": "13ab0e8da95b547918596c2fb86a2ad0a9ae6819",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
