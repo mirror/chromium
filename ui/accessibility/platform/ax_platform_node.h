@@ -69,9 +69,14 @@ class AX_EXPORT AXPlatformNode {
   // Return this object's delegate.
   virtual AXPlatformNodeDelegate* GetDelegate() const = 0;
 
+  // A unique id is used to define the relationships between nodes.
+  int32_t unique_id() const { return unique_id_; }
+
  protected:
   AXPlatformNode();
   virtual ~AXPlatformNode();
+
+  int32_t unique_id_;
 
  private:
   // Global ObserverList for AXMode changes.

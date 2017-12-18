@@ -96,6 +96,7 @@ const ui::AXNodeData& NativeViewAccessibilityBase::GetData() const {
   }
 
   view_->GetAccessibleNodeData(&data_);
+  data_.id = ax_node_->unique_id();
   data_.location = GetBoundsInScreen();
   base::string16 description;
   view_->GetTooltipText(gfx::Point(), &description);
@@ -248,6 +249,10 @@ bool NativeViewAccessibilityBase::ShouldIgnoreHoveredStateForTesting() {
 bool NativeViewAccessibilityBase::IsOffscreen() const {
   // TODO: need to implement.
   return false;
+}
+
+int32_t NativeViewAccessibilityBase::GetId() const {
+  return ax_node_->unique_id();
 }
 
 gfx::RectF NativeViewAccessibilityBase::GetBoundsInScreen() const {
