@@ -8,9 +8,11 @@
 
 #include "ash/app_list/model/app_list_folder_item.h"
 #include "ash/app_list/model/app_list_model.h"
+#include "third_party/skia/include/core/SkColor.h"
 #include "ui/accessibility/ax_node_data.h"
 #include "ui/app_list/app_list_constants.h"
 #include "ui/app_list/app_list_features.h"
+#include "ui/app_list/pagination_model.h"
 #include "ui/app_list/views/app_list_item_view.h"
 #include "ui/app_list/views/app_list_main_view.h"
 #include "ui/app_list/views/apps_container_view.h"
@@ -18,11 +20,14 @@
 #include "ui/app_list/views/contents_view.h"
 #include "ui/app_list/views/folder_background_view.h"
 #include "ui/app_list/views/folder_header_view.h"
+#include "ui/app_list/views/page_switcher_fullscreen.h"
 #include "ui/app_list/views/search_box_view.h"
 #include "ui/compositor/scoped_layer_animation_settings.h"
 #include "ui/events/event.h"
+#include "ui/gfx/canvas.h"
 #include "ui/gfx/geometry/rect_conversions.h"
 #include "ui/strings/grit/ui_strings.h"
+#include "ui/views/background.h"
 #include "ui/views/controls/textfield/textfield.h"
 #include "ui/views/view_model.h"
 #include "ui/views/view_model_utils.h"
@@ -35,14 +40,43 @@ namespace {
 constexpr int kAppsFolderPreferredWidth = 576;
 constexpr int kAppsFolderPreferredHeight = 504;
 
+// Constants for fullscreen app list.
+constexpr int kFullscreenBackgroundCornerRadius = 4;
+constexpr int kFullscreenItemGridsBottomPadding = 24;
+constexpr int kFullscreenFolderPadding = 12;
+
 // Indexes of interesting views in ViewModel of AppListFolderView.
-const int kIndexFolderHeader = 0;
-const int kIndexChildItems = 1;
+const int kIndexChildItems = 0;
+const int kIndexFolderHeader = 1;
+const int kIndexPageSwitcher = 2;
 
 // Threshold for the distance from the center of the item to the circle of the
 // folder container ink bubble, beyond which, the item is considered dragged
 // out of the folder boundary.
 const int kOutOfFolderContainerBubbleDelta = 30;
+
+// A background with rounded corner for fullscreen app list.
+class FolderBackground : public views::Background {
+ public:
+  FolderBackground(SkColor color, int corner_radius)
+      : color_(color), corner_radius_(corner_radius) {}
+  ~FolderBackground() override {}
+
+ private:
+  // views::Background overrides:
+  void Paint(gfx::Canvas* canvas, views::View* view) const override {
+    gfx::Rect bounds = view->GetContentsBounds();
+    cc::PaintFlags flags;
+    flags.setAntiAlias(true);
+    flags.setColor(color_);
+    canvas->DrawRoundRect(bounds, corner_radius_, flags);
+  }
+
+  const SkColor color_;
+  const int corner_radius_;
+
+  DISALLOW_COPY_AND_ASSIGN(FolderBackground);
+};
 
 }  // namespace
 
@@ -56,21 +90,43 @@ AppListFolderView::AppListFolderView(AppsContainerView* container_view,
       model_(model),
       folder_item_(NULL),
       hide_for_reparent_(false),
+      is_fullscreen_app_list_enabled_(features::IsFullscreenAppListEnabled()),
       is_app_list_focus_enabled_(features::IsAppListFocusEnabled()) {
-  AddChildView(folder_header_view_);
-  view_model_->Add(folder_header_view_, kIndexFolderHeader);
+  if (is_fullscreen_app_list_enabled_) {
+    // In fullscreen app list, the items grid is on top of the folder header.
+    items_grid_view_ =
+        new AppsGridView(app_list_main_view_->contents_view(), this);
+    items_grid_view_->SetModel(model);
+    AddChildView(items_grid_view_);
+    view_model_->Add(items_grid_view_, kIndexChildItems);
 
-  items_grid_view_ =
-      new AppsGridView(app_list_main_view_->contents_view(), this);
-  items_grid_view_->SetLayout(
-      container_view->apps_grid_view()->cols(),
-      container_view->apps_grid_view()->rows_per_page());
-  items_grid_view_->SetModel(model);
-  AddChildView(items_grid_view_);
-  view_model_->Add(items_grid_view_, kIndexChildItems);
+    AddChildView(folder_header_view_);
+    view_model_->Add(folder_header_view_, kIndexFolderHeader);
 
-  SetPaintToLayer();
-  layer()->SetFillsBoundsOpaquely(false);
+    page_switcher_fullscreen_ = new PageSwitcherFullscreen(
+        items_grid_view_->pagination_model(), false /* vertical */);
+    AddChildView(page_switcher_fullscreen_);
+    view_model_->Add(page_switcher_fullscreen_, kIndexPageSwitcher);
+
+    SetPaintToLayer();
+    SetBackground(std::make_unique<FolderBackground>(
+        kCardBackgroundColor, kFullscreenBackgroundCornerRadius));
+  } else {
+    AddChildView(folder_header_view_);
+    view_model_->Add(folder_header_view_, kIndexFolderHeader);
+
+    items_grid_view_ =
+        new AppsGridView(app_list_main_view_->contents_view(), this);
+    items_grid_view_->SetLayout(
+        container_view->apps_grid_view()->cols(),
+        container_view->apps_grid_view()->rows_per_page());
+    items_grid_view_->SetModel(model);
+    AddChildView(items_grid_view_);
+    view_model_->Add(items_grid_view_, kIndexChildItems);
+
+    SetPaintToLayer();
+    layer()->SetFillsBoundsOpaquely(false);
+  }
 
   model_->AddObserver(this);
 }
@@ -90,6 +146,7 @@ void AppListFolderView::SetAppListFolderItem(AppListFolderItem* folder) {
 
   folder_item_ = folder;
   items_grid_view_->SetItemList(folder_item_->item_list());
+  items_grid_view_->pagination_model()->SelectPage(0, false);
   folder_header_view_->SetFolderItem(folder_item_);
 }
 
@@ -117,12 +174,19 @@ void AppListFolderView::ScheduleShowHideAnimation(bool show,
       show ? kFolderTransitionInDurationMs : kFolderTransitionOutDurationMs));
 
   layer()->SetOpacity(show ? 1.0f : 0.0f);
-  app_list_main_view_->search_box_view()->ShowBackOrGoogleIcon(show);
+  if (!is_fullscreen_app_list_enabled_)
+    app_list_main_view_->search_box_view()->ShowBackOrGoogleIcon(show);
 }
 
 gfx::Size AppListFolderView::CalculatePreferredSize() const {
-  gfx::Size size(kAppsFolderPreferredWidth, kAppsFolderPreferredHeight);
-  return size;
+  if (is_fullscreen_app_list_enabled_) {
+    gfx::Size size = items_grid_view_->GetTileGridSizeWithoutPadding();
+    size.Enlarge(0, kFullscreenItemGridsBottomPadding +
+                        folder_header_view_->GetPreferredSize().height());
+    size.Enlarge(kFullscreenFolderPadding * 2, kFullscreenFolderPadding * 2);
+    return size;
+  }
+  return gfx::Size(kAppsFolderPreferredWidth, kAppsFolderPreferredHeight);
 }
 
 void AppListFolderView::Layout() {
@@ -195,6 +259,30 @@ void AppListFolderView::CalculateIdealBounds() {
   gfx::Rect rect(GetContentsBounds());
   if (rect.IsEmpty())
     return;
+  if (is_fullscreen_app_list_enabled_) {
+    rect.Inset(kFullscreenFolderPadding, kFullscreenFolderPadding);
+
+    gfx::Rect grid_frame(rect);
+    grid_frame.Inset(items_grid_view_->GetTilePadding());
+    grid_frame.set_size(items_grid_view_->GetPreferredSize());
+    view_model_->set_ideal_bounds(kIndexChildItems, grid_frame);
+
+    gfx::Rect header_frame(rect);
+    header_frame.set_y(grid_frame.bottom() +
+                       items_grid_view_->GetTilePadding().bottom() +
+                       kFullscreenItemGridsBottomPadding);
+    header_frame.set_height(folder_header_view_->GetPreferredSize().height());
+    view_model_->set_ideal_bounds(kIndexFolderHeader, header_frame);
+
+    gfx::Rect page_switcher_frame(rect);
+    page_switcher_frame.set_y(header_frame.y());
+    page_switcher_frame.set_size(page_switcher_fullscreen_->GetPreferredSize());
+    page_switcher_frame.set_x(
+        header_frame.right() -
+        page_switcher_fullscreen_->GetPreferredSize().width());
+    view_model_->set_ideal_bounds(kIndexPageSwitcher, page_switcher_frame);
+    return;
+  }
 
   gfx::Rect header_frame(rect);
   gfx::Size size = folder_header_view_->GetPreferredSize();
@@ -242,13 +330,15 @@ void AppListFolderView::UpdateFolderViewBackground(bool show_bubble) {
   if (hide_for_reparent_)
     return;
 
-  // Before showing the folder container inking bubble, hide the folder name.
-  if (show_bubble)
-    UpdateFolderNameVisibility(false);
+  if (!is_fullscreen_app_list_enabled_) {
+    // Before showing the folder container inking bubble, hide the folder name.
+    if (show_bubble)
+      UpdateFolderNameVisibility(false);
 
-  container_view_->folder_background_view()->UpdateFolderContainerBubble(
-      show_bubble ? FolderBackgroundView::SHOW_BUBBLE
-                  : FolderBackgroundView::HIDE_BUBBLE);
+    container_view_->folder_background_view()->UpdateFolderContainerBubble(
+        show_bubble ? FolderBackgroundView::SHOW_BUBBLE
+                    : FolderBackgroundView::HIDE_BUBBLE);
+  }
 }
 
 void AppListFolderView::UpdateFolderNameVisibility(bool visible) {

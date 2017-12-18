@@ -27,6 +27,8 @@ class AppListFolderView;
 class AppListMainView;
 class AppListModel;
 class FolderBackgroundView;
+class PageSwitcherFullscreen;
+class FolderBackgroundFullscreenView;
 
 // AppsContainerView contains a root level AppsGridView to render the root level
 // app items, and a AppListFolderView to render the app items inside the
@@ -64,6 +66,14 @@ class APP_LIST_EXPORT AppsContainerView : public AppListPage,
 
   // Called to notify the AppsContainerView that a reparent drag has completed.
   void ReparentDragEnded();
+
+  // Updates the visibility of the items in this view according to
+  // |app_list_state| and |is_in_drag|.
+  void UpdateControlVisibility(AppListViewState app_list_state,
+                               bool is_in_drag);
+
+  // Updates the opacity of the items in this view during dragging.
+  void UpdateOpacity();
 
   // views::View overrides:
   gfx::Size CalculatePreferredSize() const override;
@@ -122,6 +132,8 @@ class APP_LIST_EXPORT AppsContainerView : public AppListPage,
   AppsGridView* apps_grid_view_ = nullptr;
   AppListFolderView* app_list_folder_view_ = nullptr;
   FolderBackgroundView* folder_background_view_ = nullptr;
+  PageSwitcherFullscreen* page_switcher_fullscreen_ = nullptr;
+  FolderBackgroundFullscreenView* folder_background_fullscreen_view_ = nullptr;
 
   ShowState show_state_ = SHOW_NONE;
 

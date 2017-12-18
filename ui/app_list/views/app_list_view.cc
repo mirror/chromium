@@ -1168,12 +1168,19 @@ bool AppListView::HandleScroll(int offset, ui::EventType type) {
     return false;
 
   // Let the Apps grid view handle the event first in FULLSCREEN_ALL_APPS.
-  if (app_list_state_ == AppListViewState::FULLSCREEN_ALL_APPS &&
-      GetAppsGridView()->HandleScrollFromAppListView(offset, type)) {
-    // Set the scroll ignore timer to avoid processing the tail end of the
-    // stream of scroll events, which would close the view.
-    SetOrRestartScrollIgnoreTimer();
-    return true;
+  if (app_list_state_ == AppListViewState::FULLSCREEN_ALL_APPS) {
+    AppsContainerView* apps_container_view =
+        app_list_main_view_->contents_view()->apps_container_view();
+    AppsGridView* apps_grid_view =
+        apps_container_view->IsInFolderView()
+            ? apps_container_view->app_list_folder_view()->items_grid_view()
+            : GetAppsGridView();
+    if (apps_grid_view->HandleScrollFromAppListView(offset, type)) {
+      // Set the scroll ignore timer to avoid processing the tail end of the
+      // stream of scroll events, which would close the view.
+      SetOrRestartScrollIgnoreTimer();
+      return true;
+    }
   }
 
   if (ShouldIgnoreScrollEvents())
@@ -1235,7 +1242,6 @@ void AppListView::SetState(AppListViewState new_state) {
   // |app_list_state_|.
   app_list_main_view_->contents_view()
       ->apps_container_view()
-      ->apps_grid_view()
       ->UpdateControlVisibility(app_list_state_, is_in_drag_);
 }
 
@@ -1380,7 +1386,6 @@ void AppListView::SetIsInDrag(bool is_in_drag) {
   is_in_drag_ = is_in_drag;
   app_list_main_view_->contents_view()
       ->apps_container_view()
-      ->apps_grid_view()
       ->UpdateControlVisibility(app_list_state_, is_in_drag_);
 }
 
@@ -1399,7 +1404,7 @@ void AppListView::DraggingLayout() {
 
   // Updates the opacity of the items in the app list.
   search_box_view_->UpdateOpacity();
-  GetAppsGridView()->UpdateOpacity();
+  app_list_main_view_->contents_view()->apps_container_view()->UpdateOpacity();
 
   Layout();
 }
