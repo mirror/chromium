@@ -116,16 +116,19 @@ class NetworkHandler : public DevToolsDomainHandler,
       std::unique_ptr<GetResponseBodyForInterceptionCallback> callback)
       override;
 
-  void NavigationPreloadRequestSent(int worker_version_id,
-                                    const std::string& request_id,
-                                    const ResourceRequest& request);
-  void NavigationPreloadResponseReceived(int worker_version_id,
-                                         const std::string& request_id,
-                                         const GURL& url,
-                                         const ResourceResponseHead& head);
-  void NavigationPreloadCompleted(
+  void NavigationRequestWillBeSent(const std::string& request_id, const std::string& loader_id, const NavigationRequest& nav_request);
+  
+  void NavigationRequestSent(const std::string& request_id,
+                             const std::string& loader_id,
+                                    const ResourceRequest& request, const char* initiator_type);
+  void NavigationResponseReceived(const std::string& request_id,
+                                  const std::string& loader_id,
+                                  const GURL& url,
+                                  const ResourceResponseHead& head);
+  void NavigationLoadingComplete(
       const std::string& request_id,
       const network::URLLoaderCompletionStatus& completion_status);
+
   void NavigationFailed(NavigationRequest* navigation_request);
 
   bool enabled() const { return enabled_; }

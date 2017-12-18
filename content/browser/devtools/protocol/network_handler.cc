@@ -972,18 +972,49 @@ Response NetworkHandler::SetBypassServiceWorker(bool bypass) {
   return Response::FallThrough();
 }
 
-void NetworkHandler::NavigationPreloadRequestSent(
-    int worker_version_id,
-    const std::string& request_id,
-    const ResourceRequest& request) {
+void NetworkHandler::NavigationRequestWillBeSent(const std::string& request_id, const std::string& loader_id, const NavigationRequest& nav_request) {
   if (!enabled_)
     return;
-  const std::string version_id(base::IntToString(worker_version_id));
+  std::unique_ptr<DictionaryValue> headers_dict(DictionaryValue::create());
+  net::HttpRequestHeaders headers;
+  headers.AddHeadersFromString(nav_request.begin_params()->headers);
+  for (net::HttpRequestHeaders::Iterator it(headers); it.GetNext();)
+    headers_dict->setString(it.name(), it.value());
+
+  const CommonNavigationParams& common_params = nav_request.common_params();
+  fprintf(stderr, "WillSendRequest: %s %s\n", request_id.c_str(),  common_params.url.spec().c_str());
+
+  frontend_->RequestWillBeSent(
+      request_id, loader_id, common_params.url.spec(),
+      Network::Request::Create()
+          .SetUrl(common_params.url.spec())
+          .SetMethod(common_params.method)
+          .SetHeaders(Object::fromValue(headers_dict.get(), nullptr))
+          .SetInitialPriority(resourcePriority(net::HIGHEST))
+          .SetReferrerPolicy(referrerPolicy(common_params.referrer.policy))
+          .Build(),
+      base::TimeTicks::Now().ToInternalValue() /
+          static_cast<double>(base::Time::kMicrosecondsPerSecond),
+      base::Time::Now().ToDoubleT(),
+      Network::Initiator::Create()
+          .SetType(Network::Initiator::TypeEnum::Other)
+          .Build(),
+      std::unique_ptr<Network::Response>(),
+      std::string(Page::ResourceTypeEnum::Document));
+}
+
+void NetworkHandler::NavigationRequestSent(
+    const std::string& request_id,
+    const std::string& loader_id,
+    const ResourceRequest& request,
+    const char* initiator_type) {
+  if (!enabled_)
+    return;
   std::unique_ptr<DictionaryValue> headers_dict(DictionaryValue::create());
   for (net::HttpRequestHeaders::Iterator it(request.headers); it.GetNext();)
     headers_dict->setString(it.name(), it.value());
   frontend_->RequestWillBeSent(
-      request_id, "" /* loader_id */, request.url.spec(),
+      request_id, loader_id, request.url.spec(),
       Network::Request::Create()
           .SetUrl(request.url.spec())
           .SetMethod(request.method)
@@ -995,20 +1026,20 @@ void NetworkHandler::NavigationPreloadRequestSent(
           static_cast<double>(base::Time::kMicrosecondsPerSecond),
       base::Time::Now().ToDoubleT(),
       Network::Initiator::Create()
-          .SetType(Network::Initiator::TypeEnum::Preload)
+          .SetType(initiator_type)
           .Build(),
       std::unique_ptr<Network::Response>(),
       std::string(Page::ResourceTypeEnum::Other));
 }
 
-void NetworkHandler::NavigationPreloadResponseReceived(
-    int worker_version_id,
+void NetworkHandler::NavigationResponseReceived(
     const std::string& request_id,
+    const std::string& loader_id,
     const GURL& url,
     const ResourceResponseHead& head) {
   if (!enabled_)
     return;
-  const std::string version_id(base::IntToString(worker_version_id));
+  fprintf(stderr, "ResponseReceived: %s %s\n", request_id.c_str(),  url.spec().c_str());
   std::unique_ptr<DictionaryValue> headers_dict(DictionaryValue::create());
   size_t iterator = 0;
   std::string name;
@@ -1053,25 +1084,34 @@ void NetworkHandler::NavigationPreloadResponseReceived(
   response->SetRemoteIPAddress(head.socket_address.HostForURL());
   response->SetRemotePort(head.socket_address.port());
   frontend_->ResponseReceived(
-      request_id, "" /* loader_id */,
+      request_id, loader_id,
       base::TimeTicks::Now().ToInternalValue() /
           static_cast<double>(base::Time::kMicrosecondsPerSecond),
       Page::ResourceTypeEnum::Other, std::move(response));
 }
 
-void NetworkHandler::NavigationPreloadCompleted(
+void NetworkHandler::NavigationLoadingComplete(
     const std::string& request_id,
     const network::URLLoaderCompletionStatus& status) {
   if (!enabled_)
     return;
+  fprintf(stderr, "LoadingComplete: %s\n", request_id.c_str());
+
   if (status.error_code != net::OK) {
     frontend_->LoadingFailed(
         request_id,
         base::TimeTicks::Now().ToInternalValue() /
             static_cast<double>(base::Time::kMicrosecondsPerSecond),
-        Page::ResourceTypeEnum::Other, net::ErrorToString(status.error_code),
+        Page::ResourceTypeEnum::Document, net::ErrorToString(status.error_code),
         status.error_code == net::Error::ERR_ABORTED);
+    return;
   }
+  frontend_->DataReceived(
+      request_id,
+      status.completion_time.ToInternalValue() /
+          static_cast<double>(base::Time::kMicrosecondsPerSecond),
+      status.decoded_body_length,
+      status.encoded_data_length);
   frontend_->LoadingFinished(
       request_id,
       status.completion_time.ToInternalValue() /

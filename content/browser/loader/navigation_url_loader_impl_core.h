@@ -10,6 +10,7 @@
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "base/memory/weak_ptr.h"
+#include "base/unguessable_token.h"
 #include "content/browser/loader/navigation_url_loader_impl.h"
 
 namespace net {
@@ -68,6 +69,10 @@ class NavigationURLLoaderImplCore
     resource_handler_ = resource_handler;
   }
 
+  const base::UnguessableToken& devtools_navigation_token() const {
+    return devtools_navigation_token_;
+  }
+
   // Notifies |loader_| on the UI thread that the request was redirected.
   void NotifyRequestRedirected(const net::RedirectInfo& redirect_info,
                                ResourceResponse* response);
@@ -92,6 +97,7 @@ class NavigationURLLoaderImplCore
 
   base::WeakPtr<NavigationURLLoaderImpl> loader_;
   NavigationResourceHandler* resource_handler_;
+  base::UnguessableToken devtools_navigation_token_;
 
   base::WeakPtrFactory<NavigationURLLoaderImplCore> weak_factory_;
 

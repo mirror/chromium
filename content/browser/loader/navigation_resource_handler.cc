@@ -13,6 +13,7 @@
 #include "content/browser/loader/resource_controller.h"
 #include "content/browser/loader/resource_loader.h"
 #include "content/browser/loader/resource_request_info_impl.h"
+#include "content/browser/devtools/render_frame_devtools_agent_host.h"
 #include "content/browser/resource_context_impl.h"
 #include "content/browser/streams/stream.h"
 #include "content/browser/streams/stream_context.h"
@@ -37,6 +38,8 @@ NavigationResourceHandler::NavigationResourceHandler(
     std::unique_ptr<StreamHandle> stream_handle)
     : LayeredResourceHandler(request, std::move(next_handler)),
       core_(core),
+      devtools_navigation_token_(core->devtools_navigation_token()),
+      decoded_body_bytes_(0),
       stream_handle_(std::move(stream_handle)),
       resource_dispatcher_host_delegate_(resource_dispatcher_host_delegate) {
   core_->set_resource_handler(this);
@@ -134,6 +137,12 @@ void NavigationResourceHandler::OnResponseStarted(
   response_ = response;
 }
 
+void NavigationResourceHandler::OnReadCompleted(int bytes_read,
+    std::unique_ptr<ResourceController> controller) {
+  decoded_body_bytes_ += bytes_read;
+  LayeredResourceHandler::OnReadCompleted(bytes_read, std::move(controller));
+}
+
 void NavigationResourceHandler::OnResponseCompleted(
     const net::URLRequestStatus& status,
     std::unique_ptr<ResourceController> controller) {
@@ -149,6 +158,14 @@ void NavigationResourceHandler::OnResponseCompleted(
     core_->NotifyRequestFailed(request()->response_info().was_cached, net_error,
                                ssl_info);
     DetachFromCore();
+  } else {
+    network::URLLoaderCompletionStatus status;
+    status.encoded_body_length = request()->GetRawBodyBytes();
+    status.encoded_data_length = request()->GetTotalReceivedBytes();
+    status.decoded_body_length = decoded_body_bytes_;
+    ResourceRequestInfoImpl* info = GetRequestInfo();
+    BrowserThread::PostTask(BrowserThread::UI, FROM_HERE,
+        base::BindOnce(RenderFrameDevToolsAgentHost::OnNavigationLoadingComplete, info->GetFrameTreeNodeId(), devtools_navigation_token_, status));
   }
   next_handler_->OnResponseCompleted(status, std::move(controller));
 }

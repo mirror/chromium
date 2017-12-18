@@ -8,6 +8,7 @@
 #include <string>
 
 #include "base/memory/ref_counted.h"
+#include "base/unguessable_token.h"
 #include "content/common/content_export.h"
 #include "content/common/navigation_params.h"
 #include "content/common/navigation_params.mojom.h"
@@ -32,7 +33,8 @@ struct CONTENT_EXPORT NavigationRequestInfo {
       int frame_tree_node_id,
       bool is_for_guests_only,
       bool report_raw_headers,
-      blink::mojom::PageVisibilityState page_visibility_state);
+      blink::mojom::PageVisibilityState page_visibility_state,
+      const base::UnguessableToken& devtools_navigation_token);
   ~NavigationRequestInfo();
 
   const CommonNavigationParams common_params;
@@ -56,6 +58,8 @@ struct CONTENT_EXPORT NavigationRequestInfo {
   const bool report_raw_headers;
 
   blink::mojom::PageVisibilityState page_visibility_state;
+
+  const base::UnguessableToken devtools_navigation_token;
 };
 
 }  // namespace content

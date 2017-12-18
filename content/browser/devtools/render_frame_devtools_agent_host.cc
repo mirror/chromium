@@ -48,6 +48,7 @@
 #include "content/public/browser/web_contents_delegate.h"
 #include "content/public/common/browser_side_navigation_policy.h"
 #include "content/public/common/content_features.h"
+#include "services/network/public/cpp/url_loader_completion_status.h"
 #include "mojo/public/cpp/bindings/associated_binding.h"
 #include "third_party/WebKit/common/associated_interfaces/associated_interface_provider.h"
 
@@ -336,6 +337,22 @@ void RenderFrameDevToolsAgentHost::FrameHostHolder::Resume() {
     pair.second->Resume();
 }
 
+template<typename Handler, typename... MethodArgs, typename... Args>
+void DispatchToAgents(FrameTreeNode* frame_tree_node, void (Handler::*method)(MethodArgs...), Args&&... args) {
+  RenderFrameDevToolsAgentHost* agent_host = FindAgentHost(frame_tree_node);
+  if (!agent_host)
+    return;
+  for (auto* h : Handler::ForAgentHost(agent_host))
+    (h->*method)(std::forward<Args>(args)...);
+}
+
+template<typename Handler, typename... MethodArgs, typename... Args>
+void DispatchToAgents(int frame_tree_node_id, void (Handler::*method)(MethodArgs...), Args&&... args) {
+  FrameTreeNode* ftn = FrameTreeNode::GloballyFindByID(frame_tree_node_id);
+  if (ftn)
+    DispatchToAgents(ftn, method, std::forward<Args>(args)...);
+}
+
 // RenderFrameDevToolsAgentHost ------------------------------------------------
 
 // static
@@ -447,6 +464,36 @@ void RenderFrameDevToolsAgentHost::OnResetNavigationRequest(
 }
 
 // static
+void RenderFrameDevToolsAgentHost::OnNavigationRequestWillBeSent(
+    const NavigationRequest& nav_request) {
+  FrameTreeNode* ftn = nav_request.frame_tree_node();
+  std::string id = nav_request.devtools_navigation_token().ToString();
+  DispatchToAgents(ftn, &protocol::NetworkHandler::NavigationRequestWillBeSent, id, id, nav_request);
+}
+
+// static
+void RenderFrameDevToolsAgentHost::OnNavigationResponseReceived(const NavigationRequest& nav_request, const ResourceResponse& response) {
+  FrameTreeNode* ftn = nav_request.frame_tree_node();
+  std::string id = nav_request.devtools_navigation_token().ToString();
+  GURL url = nav_request.common_params().url;
+  DispatchToAgents(ftn, &protocol::NetworkHandler::NavigationResponseReceived, id, id, url, response.head);
+}
+
+// static
+void RenderFrameDevToolsAgentHost::OnNavigationRequestFailed(const NavigationRequest& nav_request, int error_code) {
+  FrameTreeNode* ftn = nav_request.frame_tree_node();
+  std::string id = nav_request.devtools_navigation_token().ToString();
+  DispatchToAgents(ftn, &protocol::NetworkHandler::NavigationLoadingComplete, id, network::URLLoaderCompletionStatus(error_code));
+}
+
+// static
+void RenderFrameDevToolsAgentHost::OnNavigationLoadingComplete(int frame_tree_node_id, const base::UnguessableToken& devtools_navigation_token, const network::URLLoaderCompletionStatus& status) {
+  DCHECK(!devtools_navigation_token.is_empty());
+  std::string id = devtools_navigation_token.ToString();
+  DispatchToAgents(frame_tree_node_id, &protocol::NetworkHandler::NavigationLoadingComplete, id, status);
+}
+
+// static
 std::vector<std::unique_ptr<NavigationThrottle>>
 RenderFrameDevToolsAgentHost::CreateNavigationThrottles(
     NavigationHandle* navigation_handle) {
@@ -505,11 +552,7 @@ void RenderFrameDevToolsAgentHost::AppendDevToolsHeaders(
     FrameTreeNode* frame_tree_node,
     net::HttpRequestHeaders* headers) {
   frame_tree_node = GetFrameTreeNodeAncestor(frame_tree_node);
-  RenderFrameDevToolsAgentHost* agent_host = FindAgentHost(frame_tree_node);
-  if (!agent_host)
-    return;
-  for (auto* network : protocol::NetworkHandler::ForAgentHost(agent_host))
-    network->AppendDevToolsHeaders(headers);
+  DispatchToAgents(frame_tree_node, &protocol::NetworkHandler::AppendDevToolsHeaders, headers);
 }
 
 // static

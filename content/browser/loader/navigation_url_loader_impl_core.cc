@@ -46,6 +46,7 @@ void NavigationURLLoaderImplCore::Start(
     std::unique_ptr<NavigationUIData> navigation_ui_data) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
 
+  devtools_navigation_token_ = request_info->devtools_navigation_token;
   base::WeakPtr<NavigationURLLoaderImplCore> weak_this =
       weak_factory_.GetWeakPtr();
 

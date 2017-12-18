@@ -13,6 +13,7 @@
 #include "content/browser/appcache/appcache_navigation_handle.h"
 #include "content/browser/appcache/appcache_request_handler.h"
 #include "content/browser/blob_storage/chrome_blob_storage_context.h"
+#include "content/browser/devtools/render_frame_devtools_agent_host.h"
 #include "content/browser/file_url_loader_factory.h"
 #include "content/browser/frame_host/frame_tree_node.h"
 #include "content/browser/frame_host/navigation_request_info.h"
@@ -224,6 +225,7 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
     DCHECK_CURRENTLY_ON(BrowserThread::IO);
     DCHECK(!started_);
     started_ = true;
+    devtools_navigation_token_ = request_info->devtools_navigation_token;
 
     StartLoaderCallback create_url_loader = base::BindOnce(
         &URLLoaderRequestController::CreateNonNetworkServiceURLLoader,
@@ -255,6 +257,7 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
     DCHECK(!started_);
     frame_tree_node_id_ = frame_tree_node_id;
     started_ = true;
+    devtools_navigation_token_ = request_info->devtools_navigation_token;
     web_contents_getter_ =
         base::Bind(&GetWebContentsFromFrameTreeNodeID, frame_tree_node_id);
     const ResourceType resource_type = request_info->is_main_frame
@@ -568,13 +571,17 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
       if (MaybeCreateLoaderForResponse(ResourceResponseHead()))
         return;
     }
-    status_ = status;
-
     BrowserThread::PostTask(
         BrowserThread::UI, FROM_HERE,
-        base::BindOnce(&NavigationURLLoaderNetworkService::OnComplete, owner_,
-                       status));
+        base::BindOnce(&URLLoaderRequestController::OnCompleteOnUI,
+          owner_, frame_tree_node_id_, devtools_navigation_token_, status));
   }
+
+  static void OnCompleteOnUI(base::WeakPtr<NavigationURLLoaderNetworkService> owner, int frame_tree_node_id, const base::UnguessableToken& devtools_navigation_token, const network::URLLoaderCompletionStatus& status) {
+    RenderFrameDevToolsAgentHost::OnNavigationLoadingComplete(frame_tree_node_id, devtools_navigation_token, status);
+    if (owner)
+      owner->OnComplete(status);
+  };
 
   // Returns true if a handler wants to handle the response, i.e. return a
   // different response. For e.g. AppCache may have fallback content.
@@ -645,11 +652,7 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
   std::map<std::string, mojom::URLLoaderFactoryPtr>
       non_network_url_loader_factories_;
 
-  // The completion status if it has been received. This is needed to handle
-  // the case that the response is intercepted by download, and OnComplete() is
-  // already called while we are transferring the |url_loader_| and response
-  // body to download code.
-  base::Optional<network::URLLoaderCompletionStatus> status_;
+  base::UnguessableToken devtools_navigation_token_;
 
   base::WeakPtrFactory<URLLoaderRequestController> weak_factory_;
 

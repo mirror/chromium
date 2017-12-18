@@ -28,6 +28,10 @@ namespace net {
 class HttpRequestHeaders;
 }
 
+namespace network {
+struct URLLoaderCompletionStatus;
+}
+
 namespace viz {
 class CompositorFrameMetadata;
 }
@@ -42,6 +46,9 @@ class NavigationHandleImpl;
 class NavigationRequest;
 class NavigationThrottle;
 class RenderFrameHostImpl;
+
+struct CommonNavigationParams;
+struct ResourceResponse;
 
 class CONTENT_EXPORT RenderFrameDevToolsAgentHost
     : public DevToolsAgentHostImpl,
@@ -63,8 +70,14 @@ class CONTENT_EXPORT RenderFrameDevToolsAgentHost
                                  RenderFrameHost* pending);
   static void OnResetNavigationRequest(NavigationRequest* navigation_request);
 
+  static void OnNavigationRequestWillBeSent(const NavigationRequest& nav_request);
+  static void OnNavigationResponseReceived(const NavigationRequest& nav_request, const ResourceResponse& response);
+  static void OnNavigationRequestFailed(const NavigationRequest& nav_request, int error_code);
+  static void OnNavigationLoadingComplete(int frame_tree_node_id, const base::UnguessableToken& devtools_navigation_token, const network::URLLoaderCompletionStatus& status);
+
   static std::vector<std::unique_ptr<NavigationThrottle>>
   CreateNavigationThrottles(NavigationHandle* navigation_handle);
+
   static bool IsNetworkHandlerEnabled(FrameTreeNode* frame_tree_node);
   static void AppendDevToolsHeaders(FrameTreeNode* frame_tree_node,
                                     net::HttpRequestHeaders* headers);

@@ -266,6 +266,7 @@ class CORE_EXPORT InspectorNetworkAgent final
   void GetResponseBodyBlob(const String& request_id,
                            std::unique_ptr<GetResponseBodyCallback>);
   void ClearPendingRequestData();
+  static bool IsBrowserSideNavigationEnabled(DocumentLoader* loader);
 
   // This is null while inspecting workers.
   Member<InspectedFrames> inspected_frames_;
