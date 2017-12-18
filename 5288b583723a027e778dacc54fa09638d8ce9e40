@@ -265,6 +265,24 @@
     },
     {
       "key": {
+        "uuid": "82d87cea_c8f0de31",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1067,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-18T04:24:52Z",
+      "side": 1,
+      "message": "\u003e Done\n\nPing?\n -\u003e Can you comment here why the insets can\u0027t be applied to the BoxLayout rather than as borders to the individual views?\n\nNote that I\u0027m asking because I\u0027m not certain we can\u0027t achieve the correct layout by using existing BoxLayout params like set_inside_border_insets/set_minimum_cross_axis_size\n\nIt\u0027s also possible we should add a feature to views::BoxLayout to support the use case here.\n\nBut at the very least there should be a comment why we are not attempting to use BoxLayout params - it\u0027s not obvious to me, so future readers of this code may have an even harder time, or try to simplify the and break something subtle.",
+      "parentUuid": "321172ad_da820e87",
+      "revId": "5288b583723a027e778dacc54fa09638d8ce9e40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d79d0006_cd80c1c2",
         "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
         "patchSetId": 13
@@ -399,6 +417,24 @@
       "side": 1,
       "message": "After talking to Mihai, I moved all this into a new method HoverButton::SetStyle. The code in profile_chooser_view is getting quite complex.\nPlus we need to set the background and the text color not only for the turn-on-sync button but also for the sync-error button, so I think this makes sense.",
       "parentUuid": "8790b5cc_9cd9295e",
+      "revId": "5288b583723a027e778dacc54fa09638d8ce9e40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dc0fe68e_773a59b7",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1117,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-18T04:24:52Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e14724be_8ad0de81",
       "revId": "5288b583723a027e778dacc54fa09638d8ce9e40",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false

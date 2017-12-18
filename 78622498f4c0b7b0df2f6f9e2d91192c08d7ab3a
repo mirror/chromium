@@ -1,0 +1,197 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d62e0efa_c3630bad",
+        "filename": "chrome/browser/ui/views/hover_button.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-18T04:24:52Z",
+      "side": 1,
+      "message": "bg_color -\u003e background_color",
+      "range": {
+        "startLine": 278,
+        "startChar": 10,
+        "endLine": 278,
+        "endChar": 18
+      },
+      "revId": "78622498f4c0b7b0df2f6f9e2d91192c08d7ab3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e76692c_4bf6cdbb",
+        "filename": "chrome/browser/ui/views/hover_button.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-18T04:24:52Z",
+      "side": 1,
+      "message": "text_color -\u003e subtitle_text_color (the title text color is actually determined by STYLE_DIALOG_BUTTON_DEFAULT)",
+      "revId": "78622498f4c0b7b0df2f6f9e2d91192c08d7ab3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1771447_9c62815d",
+        "filename": "chrome/browser/ui/views/hover_button.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-18T04:24:52Z",
+      "side": 1,
+      "message": "SetAutoColorReadabilityEnabled(false)?",
+      "revId": "78622498f4c0b7b0df2f6f9e2d91192c08d7ab3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2fd83a2_2d39c1dc",
+        "filename": "chrome/browser/ui/views/hover_button.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-18T04:24:52Z",
+      "side": 1,
+      "message": "kColorId_TextOnProminentButtonColor",
+      "revId": "78622498f4c0b7b0df2f6f9e2d91192c08d7ab3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d64d5d40_9f325ce4",
+        "filename": "chrome/browser/ui/views/hover_button.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-18T04:24:52Z",
+      "side": 1,
+      "message": "DCHECK_NE?",
+      "revId": "78622498f4c0b7b0df2f6f9e2d91192c08d7ab3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3eb73fd_ccd8deb6",
+        "filename": "chrome/browser/ui/views/hover_button.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-18T04:24:52Z",
+      "side": 1,
+      "message": "nit: comment\n\nit may also be worth considering an enum class. E.g.\n\nenum class Style {\n  NONE, BLUE, ERROR\n};\n\nand refer to these as HoverButton::Style::ERROR etc. Up to you.",
+      "revId": "78622498f4c0b7b0df2f6f9e2d91192c08d7ab3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17a214e3_20414a42",
+        "filename": "chrome/browser/ui/views/hover_button.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-18T04:24:52Z",
+      "side": 1,
+      "message": "Do you need \"NONE\"? (omit?)",
+      "revId": "78622498f4c0b7b0df2f6f9e2d91192c08d7ab3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "693d9c1c_0cb7c6ae",
+        "filename": "chrome/browser/ui/views/hover_button.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-18T04:24:52Z",
+      "side": 1,
+      "message": "nit: \"BUTTON\" doesn\u0027t need to be in this identifier twice. Perhaps ..STYLE_PROMINENT?",
+      "revId": "78622498f4c0b7b0df2f6f9e2d91192c08d7ab3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3006f724_f0be33c7",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 1073,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-18T04:24:52Z",
+      "side": 1,
+      "message": "it\u0027s -\u003e its",
+      "revId": "78622498f4c0b7b0df2f6f9e2d91192c08d7ab3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2939fc76_481831b8",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 1119,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-18T04:24:52Z",
+      "side": 1,
+      "message": "sync_switch_account.icon has CANVAS_DIMENSIONS, 16, -- usually these numbers match exactly, or one is exactly double the other. Or you can even pass a size of 0 in order to use GetDefaultSizeOfVectorIcon(icon);\n\nThe problem with using numbers that are not integer multiples of each other is that you can get unintended antialiasing artifacts when Skia draws the commands at a size that wasn\u0027t in the original image. (Note this can happen anyway when non-integer scale factors are needed for a given display, but 1x and 2x screens should still see crisp lines)",
+      "revId": "78622498f4c0b7b0df2f6f9e2d91192c08d7ab3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d2430d8_b918ddff",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 1156,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-18T04:24:52Z",
+      "side": 1,
+      "message": "Is this the same constant as kSmallIconSize or is it coincidence? (can it be pulled into the anonymous namespace?) Alternatively can they have more descriptive names, like\n\nkAvatarIconSize/kSyncPromoButtonIconSize",
+      "revId": "78622498f4c0b7b0df2f6f9e2d91192c08d7ab3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
