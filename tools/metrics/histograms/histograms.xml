@@ -7270,6 +7270,46 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </details>
 </histogram>
 
+<histogram name="Blink.VisibleLoadTime.Image.2G" units="ms">
+  <owner>rajendrant@chromium.org</owner>
+  <owner>bengr@chromium.org</owner>
+  <summary>
+    Tracks how long the user has to wait for a visible image to completely load,
+    0ms is recorded if the image is already loaded by the time user scrolls to
+    it.
+  </summary>
+</histogram>
+
+<histogram name="Blink.VisibleLoadTime.Image.2GSlow" units="ms">
+  <owner>rajendrant@chromium.org</owner>
+  <owner>bengr@chromium.org</owner>
+  <summary>
+    Tracks how long the user has to wait for a visible image to completely load,
+    0ms is recorded if the image is already loaded by the time user scrolls to
+    it.
+  </summary>
+</histogram>
+
+<histogram name="Blink.VisibleLoadTime.Image.3G" units="ms">
+  <owner>rajendrant@chromium.org</owner>
+  <owner>bengr@chromium.org</owner>
+  <summary>
+    Tracks how long the user has to wait for a visible image to completely load,
+    0ms is recorded if the image is already loaded by the time user scrolls to
+    it.
+  </summary>
+</histogram>
+
+<histogram name="Blink.VisibleLoadTime.Image.4G" units="ms">
+  <owner>rajendrant@chromium.org</owner>
+  <owner>bengr@chromium.org</owner>
+  <summary>
+    Tracks how long the user has to wait for a visible image to completely load,
+    0ms is recorded if the image is already loaded by the time user scrolls to
+    it.
+  </summary>
+</histogram>
+
 <histogram name="Blink.XHR.setRequestHeader.HeaderValueCategoryInRFC7230"
     enum="XMLHttpRequestHeaderValueCategoryInRFC7230">
   <obsolete>
