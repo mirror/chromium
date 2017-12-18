@@ -53,6 +53,24 @@
     },
     {
       "key": {
+        "uuid": "dbec396d_e4f0047b",
+        "filename": "ui/views/accessibility/native_view_accessibility_base.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-12-18T16:17:39Z",
+      "side": 1,
+      "message": "I followed Dominic\u0027s suggestion and move the unique_id from AXPlatformNodeWin up to AXPlatformNode. It now uses the same id in NatvieViewAccessibility.",
+      "parentUuid": "2a9d48fa_0628b8c3",
+      "revId": "b12b8e3e88eda8f57359ea8d021e702956c9f75c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "99fd34d6_a6b1ea3a",
         "filename": "ui/views/view.h",
         "patchSetId": 20
