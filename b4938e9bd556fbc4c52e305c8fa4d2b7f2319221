@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "1f70d853_5873ddbd",
+        "filename": "media/audio/mac/audio_manager_mac.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-12-18T14:54:35Z",
+      "side": 1,
+      "message": "I\u0027ll changed to use the stream format on the AU, instead of the total count for all possible streams. The former should be more accurate and the correct way, since the AUHAL flattens streams for a device to a single non-interleaved stream.\n\nReferences:\nhttps://lists.apple.com/archives/coreaudio-api/2004/Jan/msg00139.html\nhttps://lists.apple.com/archives/coreaudio-api/2004/Jan/msg00141.html\n\nYes, I might check on the list.",
+      "parentUuid": "59960171_d1fd7c64",
+      "revId": "b4938e9bd556fbc4c52e305c8fa4d2b7f2319221",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9acf93db_6f80be30",
         "filename": "media/audio/mac/scoped_audio_unit.cc",
         "patchSetId": 3
