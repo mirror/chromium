@@ -28,6 +28,8 @@
 
 #include "modules/accessibility/AXNodeObject.h"
 
+#include <math.h>
+
 #include "core/dom/AccessibleNode.h"
 #include "core/dom/Element.h"
 #include "core/dom/FlatTreeTraversal.h"
@@ -93,8 +95,8 @@ AXNodeObject::~AXNodeObject() {
   DCHECK(!node_);
 }
 
-void AXNodeObject::AlterSliderValue(bool increase) {
-  if (RoleValue() != kSliderRole)
+void AXNodeObject::AlterSliderOrSpinButtonValue(bool increase) {
+  if (!IsSlider() && !IsSpinButton())
     return;
 
   float value;
@@ -957,9 +959,19 @@ bool AXNodeObject::IsSlider() const {
   return RoleValue() == kSliderRole;
 }
 
+bool AXNodeObject::IsSpinButton() const {
+  return RoleValue() == kSpinButtonRole;
+}
+
 bool AXNodeObject::IsNativeSlider() const {
   if (auto* input = ToHTMLInputElementOrNull(GetNode()))
     return input->type() == InputTypeNames::range;
+  return false;
+}
+
+bool AXNodeObject::IsNativeSpinButton() const {
+  if (auto* input = ToHTMLInputElementOrNull(GetNode()))
+    return input->type() == InputTypeNames::number;
   return false;
 }
 
@@ -1588,8 +1600,10 @@ bool AXNodeObject::MaxValueForRange(float* out_value) const {
     return true;
   }
 
-  if (IsNativeSlider()) {
-    *out_value = ToHTMLInputElement(*GetNode()).Maximum();
+  if (IsNativeSlider() || IsNativeSpinButton()) {
+    *out_value = static_cast<float>(ToHTMLInputElement(*GetNode()).Maximum());
+    if (isinf(*out_value))
+      return false;
     return true;
   }
 
@@ -1621,8 +1635,10 @@ bool AXNodeObject::MinValueForRange(float* out_value) const {
     return true;
   }
 
-  if (IsNativeSlider()) {
-    *out_value = ToHTMLInputElement(*GetNode()).Minimum();
+  if (IsNativeSlider() || IsNativeSpinButton()) {
+    *out_value = static_cast<float>(ToHTMLInputElement(*GetNode()).Minimum());
+    if (isinf(*out_value))
+      return false;
     return true;
   }
 
@@ -1648,11 +1664,14 @@ bool AXNodeObject::MinValueForRange(float* out_value) const {
 }
 
 bool AXNodeObject::StepValueForRange(float* out_value) const {
-  if (IsNativeSlider()) {
+  if (IsNativeSlider() || IsNativeSpinButton()) {
     Decimal step =
         ToHTMLInputElement(*GetNode()).CreateStepRange(kRejectAny).Step();
-    *out_value = step.ToString().ToFloat();
-    return true;
+    if (step.IsFinite()) {
+      *out_value = step.ToString().ToFloat();
+      return true;
+    }
+    return false;
   }
 
   switch (AriaRoleAttribute()) {
@@ -2342,7 +2361,7 @@ bool AXNodeObject::OnNativeIncrementAction() {
   LocalFrame* frame = GetDocument() ? GetDocument()->GetFrame() : nullptr;
   std::unique_ptr<UserGestureIndicator> gesture_indicator =
       Frame::NotifyUserActivation(frame, UserGestureToken::kNewGesture);
-  AlterSliderValue(true);
+  AlterSliderOrSpinButtonValue(true);
   return true;
 }
 
@@ -2350,7 +2369,7 @@ bool AXNodeObject::OnNativeDecrementAction() {
   LocalFrame* frame = GetDocument() ? GetDocument()->GetFrame() : nullptr;
   std::unique_ptr<UserGestureIndicator> gesture_indicator =
       Frame::NotifyUserActivation(frame, UserGestureToken::kNewGesture);
-  AlterSliderValue(false);
+  AlterSliderOrSpinButtonValue(false);
   return true;
 }
 
