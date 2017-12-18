@@ -16,6 +16,29 @@
       "revId": "febae9900c35f39d721f262cf87953d5369faef4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d5b1a743_233ebe1d",
+        "filename": "ash/public/interfaces/app_list.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-18T19:12:15Z",
+      "side": 1,
+      "message": "nit: think we need 2 spaces before the inline comment.",
+      "range": {
+        "startLine": 15,
+        "startChar": 19,
+        "endLine": 15,
+        "endChar": 20
+      },
+      "revId": "febae9900c35f39d721f262cf87953d5369faef4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
