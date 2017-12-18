@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e3238956_4f46d0e3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-12-18T22:47:23Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "9fdd0dbf_71b180c6",
+      "range": {
+        "startLine": 20,
+        "startChar": 37,
+        "endLine": 20,
+        "endChar": 45
+      },
+      "revId": "c0a1e4713b81cfa3e03e2118dc81b6259a2a283e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c81b39ae_87b5a4ed",
         "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-12-18T18:19:14Z",
       "side": 1,
       "message": "Are we guaranteed to call ProcessUrlFragment after the document has fully loaded?  I thought Document::goto_anchor_needed_after_stylesheets_load_ played some role in ensuring this.\n\nIf the document hasn\u0027t finished loading, FindAnchor might return null here because the anchor node isn\u0027t in the DOM yet.",
+      "range": {
+        "startLine": 1921,
+        "startChar": 48,
+        "endLine": 1921,
+        "endChar": 58
+      },
+      "revId": "c0a1e4713b81cfa3e03e2118dc81b6259a2a283e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f50187e_8550b48d",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1921,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-12-18T22:47:23Z",
+      "side": 1,
+      "message": "I\u0027m not an expert in these early lifecycle stages so grain of salt...my read is that this ultimately gets called from FinishedParsing, at which point DOM should already be constructed (we\u0027ve already dispatched DOMContentLoaded). We also call it from LoadInSameDocument but that\u0027s for hash changes to a loaded document so the DOM should also be complete in that case.\n\nI think goto_anchor_needed_after_stylesheets_load_ was used because parsing may have finished, but \"rendering\" might still be blocked on loading external stylesheets. I\u0027m guessing this was purely related to scroll (since we can\u0027t layout yet) rather than getting the DOM node since I think DOM should be complete by now. It\u0027s possible the ordering here used to be different - as I mentioned, this code was added in another era. It\u0027s also possible I\u0027m misunderstanding these parts of the lifecycle.\n\nThe test case I added in the previous CL covers this case where we finish parsing but rendering is blocked and it passes with these changes.",
+      "parentUuid": "c81b39ae_87b5a4ed",
       "range": {
         "startLine": 1921,
         "startChar": 48,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "11a8006b_34836107",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1931,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-12-18T22:47:23Z",
+      "side": 1,
+      "message": "It doesn\u0027t really matter for SVG since in the SVG case we always ignore the return value. For consistency though, it seems wrong that we\u0027d return true here (the meaning of the return value being \"we found a node, don\u0027t try again based on the document\u0027s encoding) when we don\u0027t have an anchor_node.",
+      "parentUuid": "144bc03a_57ac3af6",
+      "range": {
+        "startLine": 1931,
+        "startChar": 15,
+        "endLine": 1931,
+        "endChar": 20
+      },
+      "revId": "c0a1e4713b81cfa3e03e2118dc81b6259a2a283e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9f69519b_0d663bb7",
         "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
         "patchSetId": 2
@@ -91,6 +163,30 @@
       "revId": "c0a1e4713b81cfa3e03e2118dc81b6259a2a283e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50f6b634_6077cafc",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1964,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-12-18T22:47:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9f69519b_0d663bb7",
+      "range": {
+        "startLine": 1964,
+        "startChar": 38,
+        "endLine": 1964,
+        "endChar": 54
+      },
+      "revId": "c0a1e4713b81cfa3e03e2118dc81b6259a2a283e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
