@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6f1bd640_6a660739",
+        "filename": "components/autofill/ios/browser/autofill_agent.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 853,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-12-18T15:48:55Z",
+      "side": 1,
+      "message": "Is this a coding-standard compliant way to name an local var?",
+      "range": {
+        "startLine": 853,
+        "startChar": 41,
+        "endLine": 853,
+        "endChar": 49
+      },
+      "revId": "7ef077fe1d709316bfe422ef45d06c77ef9d5467",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
