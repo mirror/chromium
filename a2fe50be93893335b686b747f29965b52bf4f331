@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2d493775_2eb12a19",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-12-18T01:25:57Z",
+      "side": 1,
+      "message": "Too late now.",
+      "parentUuid": "3212f441_d44d1836",
+      "revId": "a2fe50be93893335b686b747f29965b52bf4f331",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "011cae81_0d91814c",
         "filename": "third_party/WebKit/LayoutTests/http/tests/inspector-protocol/network/resources/cookie.pl",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "b825482b_3aa1c45c",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/inspector-protocol/network/resources/cookie.pl",
+        "patchSetId": 3
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-12-18T01:25:57Z",
+      "side": 1,
+      "message": "It actually was meaningful - I should have tested the Set-Cookie header, the one coming from the server.",
+      "parentUuid": "011cae81_0d91814c",
+      "revId": "a2fe50be93893335b686b747f29965b52bf4f331",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3e5d23fa_962b3953",
         "filename": "third_party/WebKit/LayoutTests/http/tests/inspector-protocol/resources/inspector-protocol-test.js",
         "patchSetId": 3
@@ -47,6 +83,24 @@
       "writtenOn": "2017-12-12T23:01:43Z",
       "side": 1,
       "message": "Is this related to the rest?  Just wondering if it makes merging any trickier.",
+      "revId": "a2fe50be93893335b686b747f29965b52bf4f331",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bd4f26b_95027e17",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/inspector-protocol/resources/inspector-protocol-test.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-12-18T01:25:57Z",
+      "side": 1,
+      "message": "That\u0027s a small error reporting improvement in the inspector protocol harness, should not be hard to merge since this harness is fairly conservative.",
+      "parentUuid": "3e5d23fa_962b3953",
       "revId": "a2fe50be93893335b686b747f29965b52bf4f331",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
