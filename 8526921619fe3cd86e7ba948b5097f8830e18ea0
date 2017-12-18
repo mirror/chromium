@@ -34,6 +34,24 @@
       "revId": "8526921619fe3cd86e7ba948b5097f8830e18ea0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aaf95095_dd52b5f3",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerThread.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-12-18T01:45:42Z",
+      "side": 1,
+      "message": "Thank you for suggestions. I renamed it to EvaluateClassicScript() and updated the comment.",
+      "parentUuid": "02b8c540_3a70a3f0",
+      "revId": "8526921619fe3cd86e7ba948b5097f8830e18ea0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
