@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "09ef6a13_a589b6fa",
+        "filename": "content/browser/media/audio_stream_monitor.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-12-18T14:37:52Z",
+      "side": 1,
+      "message": "When does it happned - could you add a comment? Should we call UpdateStreams() anyways to make sure we take into account the fact that the stream has gone?",
+      "revId": "b415c5723da01b15350fd668ebc86c8152d97d4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
