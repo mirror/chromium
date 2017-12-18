@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5686f721_9967adde",
+        "filename": "third_party/WebKit/Source/core/html/parser/MarkupTokenizerInlines.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-12-18T01:13:57Z",
+      "side": 1,
+      "message": "Would you add document + mapping to the spec comment?",
+      "revId": "346c4dab193bc61845fedfb38af1dc047e52117b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
