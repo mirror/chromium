@@ -24,14 +24,18 @@ SequenceLocalStorageMap::~SequenceLocalStorageMap() = default;
 
 ScopedSetSequenceLocalStorageMapForCurrentThread::
     ScopedSetSequenceLocalStorageMapForCurrentThread(
-        SequenceLocalStorageMap* sequence_local_storage) {
-  DCHECK(!tls_current_sequence_local_storage.Get().Get());
+        SequenceLocalStorageMap* sequence_local_storage)
+    : last_sequence_local_storage_map_(
+          tls_current_sequence_local_storage.Get().Get()) {
+  DCHECK(!last_sequence_local_storage_map_ ||
+         last_sequence_local_storage_map_ == sequence_local_storage);
   tls_current_sequence_local_storage.Get().Set(sequence_local_storage);
 }
 
 ScopedSetSequenceLocalStorageMapForCurrentThread::
     ~ScopedSetSequenceLocalStorageMapForCurrentThread() {
-  tls_current_sequence_local_storage.Get().Set(nullptr);
+  tls_current_sequence_local_storage.Get().Set(
+      last_sequence_local_storage_map_);
 }
 
 SequenceLocalStorageMap& SequenceLocalStorageMap::GetForCurrentThread() {

@@ -123,6 +123,7 @@ class JavaHandlerThread;
 }
 
 namespace internal {
+class ScopedThreadRestrictionsForTask;
 class TaskTracker;
 }
 
@@ -395,6 +396,7 @@ class BASE_EXPORT ThreadRestrictions {
   friend class content::SynchronousCompositorBrowserFilter;
   friend class content::SynchronousCompositorHost;
   friend class ::HistogramSynchronizer;
+  friend class internal::ScopedThreadRestrictionsForTask;
   friend class internal::TaskTracker;
   friend class cc::CompletionEvent;
   friend class cc::SingleThreadTaskGraphRunner;

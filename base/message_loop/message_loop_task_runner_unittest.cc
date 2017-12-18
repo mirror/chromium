@@ -13,6 +13,7 @@
 #include "base/message_loop/message_loop_task_runner.h"
 #include "base/run_loop.h"
 #include "base/synchronization/waitable_event.h"
+#include "base/task_scheduler/task_scheduler.h"
 #include "base/threading/thread.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -23,15 +24,16 @@ namespace base {
 class MessageLoopTaskRunnerTest : public testing::Test {
  public:
   MessageLoopTaskRunnerTest()
-      : current_loop_(new MessageLoop()),
-        task_thread_("task_thread"),
+      : task_thread_("task_thread"),
         thread_sync_(WaitableEvent::ResetPolicy::MANUAL,
                      WaitableEvent::InitialState::NOT_SIGNALED) {}
 
-  void DeleteCurrentMessageLoop() { current_loop_.reset(); }
-
  protected:
   void SetUp() override {
+    TaskScheduler::CreateAndStartWithDefaultParams("MessageLoopTaskRunnerTest");
+
+    current_loop_ = std::make_unique<MessageLoop>();
+
     // Use SetUp() instead of the constructor to avoid posting a task to a
     // partially constructed object.
     task_thread_.Start();
@@ -48,7 +50,11 @@ class MessageLoopTaskRunnerTest : public testing::Test {
     // |thread_sync_| event.
     thread_sync_.Signal();
     task_thread_.Stop();
-    DeleteCurrentMessageLoop();
+    current_loop_.reset();
+    base::TaskScheduler::GetInstance()->FlushForTesting();
+    base::TaskScheduler::GetInstance()->Shutdown();
+    base::TaskScheduler::GetInstance()->JoinForTesting();
+    base::TaskScheduler::SetInstance(nullptr);
   }
 
   // Make LoopRecorder threadsafe so that there is defined behavior even if a
@@ -262,8 +268,8 @@ class MessageLoopTaskRunnerThreadingTest : public testing::Test {
   }
 
   void Quit() const {
-    loop_.task_runner()->PostTask(FROM_HERE,
-                                  MessageLoop::QuitWhenIdleClosure());
+    loop_->task_runner()->PostTask(FROM_HERE,
+                                   MessageLoop::QuitWhenIdleClosure());
   }
 
   void AssertOnIOThread() const {
@@ -278,6 +284,9 @@ class MessageLoopTaskRunnerThreadingTest : public testing::Test {
 
  protected:
   void SetUp() override {
+    TaskScheduler::CreateAndStartWithDefaultParams(
+        "MessageLoopTaskRunnerThreadingTest");
+    loop_ = std::make_unique<MessageLoop>();
     io_thread_.reset(new Thread("MessageLoopTaskRunnerThreadingTest_IO"));
     file_thread_.reset(new Thread("MessageLoopTaskRunnerThreadingTest_File"));
     io_thread_->Start();
@@ -287,6 +296,10 @@ class MessageLoopTaskRunnerThreadingTest : public testing::Test {
   void TearDown() override {
     io_thread_->Stop();
     file_thread_->Stop();
+    base::TaskScheduler::GetInstance()->FlushForTesting();
+    base::TaskScheduler::GetInstance()->Shutdown();
+    base::TaskScheduler::GetInstance()->JoinForTesting();
+    base::TaskScheduler::SetInstance(nullptr);
   }
 
   static void BasicFunction(MessageLoopTaskRunnerThreadingTest* test) {
@@ -314,7 +327,7 @@ class MessageLoopTaskRunnerThreadingTest : public testing::Test {
   std::unique_ptr<Thread> file_thread_;
 
  private:
-  mutable MessageLoop loop_;
+  mutable std::unique_ptr<MessageLoop> loop_;
 };
 
 TEST_F(MessageLoopTaskRunnerThreadingTest, Release) {

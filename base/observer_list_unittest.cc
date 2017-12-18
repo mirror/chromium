@@ -644,15 +644,20 @@ TEST(ObserverListThreadSafeTest, CrossThreadNotifications) {
 }
 
 TEST(ObserverListThreadSafeTest, OutlivesMessageLoop) {
-  MessageLoop* loop = new MessageLoop;
+  TaskScheduler::CreateAndStartWithDefaultParams("ObserverListThreadSafeTest");
+  std::unique_ptr<MessageLoop> loop = std::make_unique<MessageLoop>();
   scoped_refptr<ObserverListThreadSafe<Foo> > observer_list(
       new ObserverListThreadSafe<Foo>);
 
   Adder a(1);
   observer_list->AddObserver(&a);
-  delete loop;
+  loop.reset();
   // Test passes if we don't crash here.
   observer_list->Notify(FROM_HERE, &Foo::Observe, 1);
+  base::TaskScheduler::GetInstance()->FlushForTesting();
+  base::TaskScheduler::GetInstance()->Shutdown();
+  base::TaskScheduler::GetInstance()->JoinForTesting();
+  base::TaskScheduler::SetInstance(nullptr);
 }
 
 namespace {

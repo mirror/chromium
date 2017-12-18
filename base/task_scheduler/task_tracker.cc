@@ -15,6 +15,7 @@
 #include "base/sequence_token.h"
 #include "base/synchronization/condition_variable.h"
 #include "base/task_scheduler/scoped_set_task_priority_for_current_thread.h"
+#include "base/task_scheduler/scoped_thread_restrictions_for_task.h"
 #include "base/threading/sequence_local_storage_map.h"
 #include "base/threading/sequenced_task_runner_handle.h"
 #include "base/threading/thread_restrictions.h"
@@ -31,6 +32,51 @@ namespace {
 constexpr char kParallelExecutionMode[] = "parallel";
 constexpr char kSequencedExecutionMode[] = "sequenced";
 constexpr char kSingleThreadExecutionMode[] = "single thread";
+
+// Manages setting up the necessary task environment.
+class ScopedTaskExecutionEnvironment {
+ public:
+  ScopedTaskExecutionEnvironment(const Task& task, Sequence* sequence)
+      : scoped_thread_restrictions_(task),
+        scoped_set_sequence_token_for_current_thread_(sequence->token()),
+        scoped_set_task_priority_for_current_thread_(task.traits.priority()),
+        scoped_set_sequence_local_storage_map_for_current_thread_(
+            sequence->sequence_local_storage()) {
+    DCHECK(sequence);
+    DCHECK(sequence->token().IsValid());
+    DCHECK(!task.sequenced_task_runner_ref ||
+           !task.single_thread_task_runner_ref);
+    if (task.sequenced_task_runner_ref) {
+      sequenced_task_runner_handle_ =
+          std::make_unique<SequencedTaskRunnerHandle>(
+              task.sequenced_task_runner_ref);
+    } else if (task.single_thread_task_runner_ref) {
+      if (ThreadTaskRunnerHandle::IsSet()) {
+        DCHECK_EQ(ThreadTaskRunnerHandle::Get(),
+                  task.single_thread_task_runner_ref);
+        return;
+      }
+
+      single_thread_task_runner_handle_ =
+          std::make_unique<ThreadTaskRunnerHandle>(
+              task.single_thread_task_runner_ref);
+    }
+  }
+  ~ScopedTaskExecutionEnvironment() = default;
+
+ private:
+  ScopedThreadRestrictionsForTask scoped_thread_restrictions_;
+  ScopedSetSequenceTokenForCurrentThread
+      scoped_set_sequence_token_for_current_thread_;
+  ScopedSetTaskPriorityForCurrentThread
+      scoped_set_task_priority_for_current_thread_;
+  ScopedSetSequenceLocalStorageMapForCurrentThread
+      scoped_set_sequence_local_storage_map_for_current_thread_;
+  std::unique_ptr<SequencedTaskRunnerHandle> sequenced_task_runner_handle_;
+  std::unique_ptr<ThreadTaskRunnerHandle> single_thread_task_runner_handle_;
+
+  DISALLOW_COPY_AND_ASSIGN(ScopedTaskExecutionEnvironment);
+};
 
 // An immutable copy of a scheduler task's info required by tracing.
 class TaskTracingInfo : public trace_event::ConvertableToTraceFormat {
@@ -293,7 +339,7 @@ scoped_refptr<Sequence> TaskTracker::WillScheduleSequence(
   return nullptr;
 }
 
-scoped_refptr<Sequence> TaskTracker::RunNextTask(
+scoped_refptr<Sequence> TaskTracker::RunAndPopNextTask(
     scoped_refptr<Sequence> sequence,
     CanScheduleSequenceObserver* observer) {
   DCHECK(sequence);
@@ -303,18 +349,9 @@ scoped_refptr<Sequence> TaskTracker::RunNextTask(
   // TODO(fdoray): Support TakeTask() returning null. https://crbug.com/783309
   DCHECK(task);
 
-  const TaskShutdownBehavior shutdown_behavior =
-      task->traits.shutdown_behavior();
   const TaskPriority task_priority = task->traits.priority();
-  const bool can_run_task = BeforeRunTask(shutdown_behavior);
-  const bool is_delayed = !task->delayed_run_time.is_null();
-
-  RunOrSkipTask(std::move(task.value()), sequence.get(), can_run_task);
-  if (can_run_task)
-    AfterRunTask(shutdown_behavior);
-
-  if (!is_delayed)
-    DecrementNumIncompleteUndelayedTasks();
+  RunTask(&task.value(), sequence.get());
+  task.reset();
 
   const bool sequence_is_empty_after_pop = sequence->Pop();
 
@@ -331,6 +368,12 @@ scoped_refptr<Sequence> TaskTracker::RunNextTask(
   }
 
   return sequence;
+}
+
+void TaskTracker::DestroyTask(Task task) {
+  const bool is_delayed = !task.delayed_run_time.is_null();
+  if (!is_delayed)
+    DecrementNumIncompleteUndelayedTasks();
 }
 
 bool TaskTracker::HasShutdownStarted() const {
@@ -354,70 +397,47 @@ void TaskTracker::SetHasShutdownStartedForTesting() {
   state_->StartShutdown();
 }
 
-void TaskTracker::RunOrSkipTask(Task task,
-                                Sequence* sequence,
-                                bool can_run_task) {
-  RecordTaskLatencyHistogram(task);
-
-  const bool previous_singleton_allowed =
-      ThreadRestrictions::SetSingletonAllowed(
-          task.traits.shutdown_behavior() !=
-          TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN);
-  const bool previous_io_allowed =
-      ThreadRestrictions::SetIOAllowed(task.traits.may_block());
-  const bool previous_wait_allowed = ThreadRestrictions::SetWaitAllowed(
-      task.traits.with_base_sync_primitives());
-
-  {
-    const SequenceToken& sequence_token = sequence->token();
-    DCHECK(sequence_token.IsValid());
-    ScopedSetSequenceTokenForCurrentThread
-        scoped_set_sequence_token_for_current_thread(sequence_token);
-    ScopedSetTaskPriorityForCurrentThread
-        scoped_set_task_priority_for_current_thread(task.traits.priority());
-    ScopedSetSequenceLocalStorageMapForCurrentThread
-        scoped_set_sequence_local_storage_map_for_current_thread(
-            sequence->sequence_local_storage());
-
-    // Set up TaskRunnerHandle as expected for the scope of the task.
-    std::unique_ptr<SequencedTaskRunnerHandle> sequenced_task_runner_handle;
-    std::unique_ptr<ThreadTaskRunnerHandle> single_thread_task_runner_handle;
-    DCHECK(!task.sequenced_task_runner_ref ||
-           !task.single_thread_task_runner_ref);
-    if (task.sequenced_task_runner_ref) {
-      sequenced_task_runner_handle.reset(
-          new SequencedTaskRunnerHandle(task.sequenced_task_runner_ref));
-    } else if (task.single_thread_task_runner_ref) {
-      single_thread_task_runner_handle.reset(
-          new ThreadTaskRunnerHandle(task.single_thread_task_runner_ref));
-    }
-
-    if (can_run_task) {
-      TRACE_TASK_EXECUTION(kRunFunctionName, task);
+void TaskTracker::RunTask(Task* task,
+                          Sequence* sequence,
+                          TaskResetPolicy task_reset_policy) {
+  const TaskShutdownBehavior shutdown_behavior =
+      task->traits.shutdown_behavior();
+  const bool can_run_task = BeforeRunTask(shutdown_behavior);
+  const bool is_delayed = !task->delayed_run_time.is_null();
+  RecordTaskLatencyHistogram(*task);
+  if (can_run_task) {
+    {
+      ScopedTaskExecutionEnvironment scoped_task_execution_environment(
+          *task, sequence);
+      TRACE_TASK_EXECUTION(kRunFunctionName, *task);
 
       const char* const execution_mode =
-          task.single_thread_task_runner_ref
+          task->single_thread_task_runner_ref
               ? kSingleThreadExecutionMode
-              : (task.sequenced_task_runner_ref ? kSequencedExecutionMode
-                                                : kParallelExecutionMode);
+              : (task->sequenced_task_runner_ref
+                     ? kSequencedExecutionMode
+                     : kParallelExecutionMode);
       // TODO(gab): In a better world this would be tacked on as an extra arg
       // to the trace event generated above. This is not possible however until
       // http://crbug.com/652692 is resolved.
       TRACE_EVENT1("task_scheduler", "TaskTracker::RunTask", "task_info",
                    std::make_unique<TaskTracingInfo>(
-                       task.traits, execution_mode, sequence_token));
+                       task->traits, execution_mode, sequence->token()));
 
-      debug::TaskAnnotator().RunTask(kQueueFunctionName, &task);
+      debug::TaskAnnotator().RunTask(kQueueFunctionName, task);
     }
+    AfterRunTask(shutdown_behavior);
+  } else {
+    if (task_reset_policy == TaskResetPolicy::kReset){
+        ScopedTaskExecutionEnvironment scoped_task_execution_environment(
+          *task, sequence);
 
-    // Make sure the arguments bound to the callback are deleted within the
-    // scope in which the callback runs.
-    task.task = OnceClosure();
+        task->task.Reset();
+        }
   }
 
-  ThreadRestrictions::SetWaitAllowed(previous_wait_allowed);
-  ThreadRestrictions::SetIOAllowed(previous_io_allowed);
-  ThreadRestrictions::SetSingletonAllowed(previous_singleton_allowed);
+  if (!is_delayed)
+    DecrementNumIncompleteUndelayedTasks();
 }
 
 void TaskTracker::PerformShutdown() {

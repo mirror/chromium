@@ -9,6 +9,7 @@
 #include "base/metrics/field_trial_params.h"
 #include "base/task_scheduler/delayed_task_manager.h"
 #include "base/task_scheduler/environment_config.h"
+#include "base/task_scheduler/scheduler_incoming_task_queue.h"
 #include "base/task_scheduler/scheduler_worker_pool_params.h"
 #include "base/task_scheduler/sequence.h"
 #include "base/task_scheduler/sequence_sort_key.h"
@@ -164,6 +165,14 @@ std::vector<const HistogramBase*> TaskSchedulerImpl::GetHistograms() const {
   return histograms;
 }
 
+scoped_refptr<internal::SchedulerIncomingTaskQueue>
+TaskSchedulerImpl::CreateSchedulerIncomingTaskQueueForTraits(
+    MessageLoop* message_loop,
+    const TaskTraits& task_traits) {
+  return new SchedulerIncomingTaskQueue(message_loop, task_tracker_.get(),
+                                        task_traits);
+}
+
 int TaskSchedulerImpl::GetMaxConcurrentNonBlockedTasksWithTraitsDeprecated(
     const TaskTraits& traits) const {
   return GetWorkerPoolForTraits(traits)
@@ -172,6 +181,7 @@ int TaskSchedulerImpl::GetMaxConcurrentNonBlockedTasksWithTraitsDeprecated(
 
 void TaskSchedulerImpl::Shutdown() {
   // TODO(fdoray): Increase the priority of BACKGROUND tasks blocking shutdown.
+  service_thread_.Stop();
   task_tracker_->Shutdown();
 }
 

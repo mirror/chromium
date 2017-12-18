@@ -7,6 +7,7 @@
 #include <process.h>
 
 #include "base/message_loop/message_loop.h"
+#include "base/task_scheduler/task_scheduler.h"
 #include "base/run_loop.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -125,6 +126,7 @@ void RunTest_OutlivesMessageLoop(MessageLoop::Type message_loop_type) {
   // people use the Singleton pattern or atexit.
   HANDLE event = CreateEvent(NULL, TRUE, FALSE, NULL);  // not signaled
   {
+    TaskScheduler::CreateAndStartWithDefaultParams("ObjectWatcherTest");
     ObjectWatcher watcher;
     {
       MessageLoop message_loop(message_loop_type);
@@ -132,6 +134,10 @@ void RunTest_OutlivesMessageLoop(MessageLoop::Type message_loop_type) {
       QuitDelegate delegate;
       watcher.StartWatchingOnce(event, &delegate);
     }
+    base::TaskScheduler::GetInstance()->FlushForTesting();
+    base::TaskScheduler::GetInstance()->Shutdown();
+    base::TaskScheduler::GetInstance()->JoinForTesting();
+    base::TaskScheduler::SetInstance(nullptr);
   }
   CloseHandle(event);
 }

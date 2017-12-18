@@ -21,6 +21,7 @@ class BASE_EXPORT ScopedSetTaskPriorityForCurrentThread {
 
  private:
   const TaskPriority priority_;
+  const TaskPriority* const previous_task_priority_;
 
   DISALLOW_COPY_AND_ASSIGN(ScopedSetTaskPriorityForCurrentThread);
 };

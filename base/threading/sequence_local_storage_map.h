@@ -82,6 +82,8 @@ class BASE_EXPORT ScopedSetSequenceLocalStorageMapForCurrentThread {
   ~ScopedSetSequenceLocalStorageMapForCurrentThread();
 
  private:
+  SequenceLocalStorageMap* const last_sequence_local_storage_map_;
+
   DISALLOW_COPY_AND_ASSIGN(ScopedSetSequenceLocalStorageMapForCurrentThread);
 };
 }  // namespace internal

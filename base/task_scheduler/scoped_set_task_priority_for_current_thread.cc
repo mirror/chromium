@@ -20,15 +20,17 @@ LazyInstance<ThreadLocalPointer<const TaskPriority>>::Leaky
 
 ScopedSetTaskPriorityForCurrentThread::ScopedSetTaskPriorityForCurrentThread(
     TaskPriority priority)
-    : priority_(priority) {
-  DCHECK(!tls_task_priority_for_current_thread.Get().Get());
+    : priority_(priority),
+      previous_task_priority_(
+          tls_task_priority_for_current_thread.Get().Get()) {
+  DCHECK(!previous_task_priority_ || priority_ == *previous_task_priority_);
   tls_task_priority_for_current_thread.Get().Set(&priority_);
 }
 
 ScopedSetTaskPriorityForCurrentThread::
     ~ScopedSetTaskPriorityForCurrentThread() {
   DCHECK_EQ(&priority_, tls_task_priority_for_current_thread.Get().Get());
-  tls_task_priority_for_current_thread.Get().Set(nullptr);
+  tls_task_priority_for_current_thread.Get().Set(previous_task_priority_);
 }
 
 TaskPriority GetTaskPriorityForCurrentThread() {

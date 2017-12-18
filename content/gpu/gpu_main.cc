@@ -223,6 +223,13 @@ int GpuMain(const MainFunctionParams& parameters) {
 
   logging::SetLogMessageHandler(GpuProcessLogMessageHandler);
 
+  base::ThreadPriority io_thread_priority = base::ThreadPriority::NORMAL;
+#if defined(OS_ANDROID) || defined(OS_CHROMEOS)
+  io_thread_priority = base::ThreadPriority::DISPLAY;
+#endif
+
+  GpuProcess gpu_process(io_thread_priority);
+
   // We are experiencing what appear to be memory-stomp issues in the GPU
   // process. These issues seem to be impacting the message loop and listeners
   // registered to it. Create the message loop on the heap to guard against
@@ -305,12 +312,6 @@ int GpuMain(const MainFunctionParams& parameters) {
   logging::SetLogMessageHandler(nullptr);
   GetContentClient()->SetGpuInfo(gpu_init->gpu_info());
 
-  base::ThreadPriority io_thread_priority = base::ThreadPriority::NORMAL;
-#if defined(OS_ANDROID) || defined(OS_CHROMEOS)
-  io_thread_priority = base::ThreadPriority::DISPLAY;
-#endif
-
-  GpuProcess gpu_process(io_thread_priority);
   GpuChildThread* child_thread = new GpuChildThread(
       std::move(gpu_init), std::move(deferred_messages.Get()));
   deferred_messages.Get().clear();

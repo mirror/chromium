@@ -49,8 +49,8 @@ int main(int argc, char** argv) {
 #endif
 
   // Set up environment to make Blink and V8 workable.
-  base::MessageLoop message_loop;
   base::TaskScheduler::CreateAndStartWithDefaultParams("TakeSnapshot");
+  base::MessageLoop message_loop;
   mojo::edk::Init();
 
   // Take a snapshot.

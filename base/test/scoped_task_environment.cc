@@ -62,9 +62,10 @@ class ScopedTaskEnvironment::TestTaskTracker
   friend class ScopedTaskEnvironment;
 
   // internal::TaskSchedulerImpl::TaskTrackerImpl:
-  void RunOrSkipTask(internal::Task task,
-                     internal::Sequence* sequence,
-                     bool can_run_task) override;
+  void RunTask(
+      internal::Task* task,
+      internal::Sequence* sequence,
+      internal::TaskTracker::TaskResetPolicy task_reset_policy) override;
 
   // Synchronizes accesses to members below.
   Lock lock_;
@@ -257,10 +258,11 @@ bool ScopedTaskEnvironment::TestTaskTracker::DisallowRunTasks() {
   return true;
 }
 
-void ScopedTaskEnvironment::TestTaskTracker::RunOrSkipTask(
-    internal::Task task,
+void ScopedTaskEnvironment::TestTaskTracker::RunTask(
+    internal::Task* task,
     internal::Sequence* sequence,
-    bool can_run_task) {
+    internal::TaskTracker::TaskResetPolicy task_reset_policy =
+        TaskResetPolicy::kReset) {
   {
     AutoLock auto_lock(lock_);
 
@@ -270,8 +272,8 @@ void ScopedTaskEnvironment::TestTaskTracker::RunOrSkipTask(
     ++num_tasks_running_;
   }
 
-  internal::TaskSchedulerImpl::TaskTrackerImpl::RunOrSkipTask(
-      std::move(task), sequence, can_run_task);
+  internal::TaskSchedulerImpl::TaskTrackerImpl::RunTask(task, sequence,
+                                                        task_reset_policy);
 
   {
     AutoLock auto_lock(lock_);

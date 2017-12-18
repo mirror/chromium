@@ -13,6 +13,8 @@
 #include "base/memory/ptr_util.h"
 #include "base/message_loop/message_pump_default.h"
 #include "base/run_loop.h"
+#include "base/task_scheduler/task_scheduler.h"
+#include "base/task_scheduler/task_traits.h"
 #include "base/third_party/dynamic_annotations/dynamic_annotations.h"
 #include "base/threading/thread_id_name_manager.h"
 #include "base/threading/thread_local.h"
@@ -275,9 +277,13 @@ std::unique_ptr<MessageLoop> MessageLoop::CreateUnbound(
 MessageLoop::MessageLoop(Type type, MessagePumpFactoryCallback pump_factory)
     : type_(type),
       pump_factory_(std::move(pump_factory)),
-      incoming_task_queue_(new internal::IncomingTaskQueue(this)),
-      unbound_task_runner_(
-          new internal::MessageLoopTaskRunner(incoming_task_queue_)),
+      incoming_task_queue_(base::TaskScheduler::GetInstance()
+                               ->CreateSchedulerIncomingTaskQueueForTraits(
+                                   this,
+                                   {TaskPriority::USER_BLOCKING, MayBlock(),
+                                    WithBaseSyncPrimitives(),
+                                    TaskShutdownBehavior::SKIP_ON_SHUTDOWN})),
+      unbound_task_runner_(incoming_task_queue_->incoming_task_runner()),
       task_runner_(unbound_task_runner_) {
   // If type is TYPE_CUSTOM non-null pump_factory must be given.
   DCHECK(type_ != TYPE_CUSTOM || !pump_factory_.is_null());
@@ -293,15 +299,16 @@ void MessageLoop::BindToCurrentThread() {
   DCHECK(!current()) << "should only have one message loop per thread";
   GetTLSMessageLoop()->Set(this);
 
+  incoming_task_queue_->BindToCurrentThread();
   incoming_task_queue_->StartScheduling();
-  unbound_task_runner_->BindToCurrentThread();
+  // unbound_task_runner_->BindToCurrentThread();
   unbound_task_runner_ = nullptr;
   SetThreadTaskRunnerHandle();
   thread_id_ = PlatformThread::CurrentId();
 
   scoped_set_sequence_local_storage_map_for_current_thread_ = std::make_unique<
       internal::ScopedSetSequenceLocalStorageMapForCurrentThread>(
-      &sequence_local_storage_map_);
+      incoming_task_queue_->sequence_local_storage());
 
   RunLoop::RegisterDelegateForCurrentThread(this);
 }
@@ -367,7 +374,7 @@ bool MessageLoop::ProcessNextDelayedNonNestableTask() {
     return false;
 
   while (incoming_task_queue_->deferred_tasks().HasTasks()) {
-    PendingTask pending_task = incoming_task_queue_->deferred_tasks().Pop();
+    auto pending_task = incoming_task_queue_->deferred_tasks().Pop();
     if (!pending_task.task.IsCancelled()) {
       RunTask(&pending_task);
       return true;
@@ -377,7 +384,7 @@ bool MessageLoop::ProcessNextDelayedNonNestableTask() {
   return false;
 }
 
-void MessageLoop::RunTask(PendingTask* pending_task) {
+void MessageLoop::RunTask(internal::Task* pending_task) {
   DCHECK(task_execution_allowed_);
   current_pending_task_ = pending_task;
 
@@ -397,7 +404,7 @@ void MessageLoop::RunTask(PendingTask* pending_task) {
   current_pending_task_ = nullptr;
 }
 
-bool MessageLoop::DeferOrRunPendingTask(PendingTask pending_task) {
+bool MessageLoop::DeferOrRunPendingTask(internal::Task pending_task) {
   if (pending_task.nestable == Nestable::kNestable ||
       !RunLoop::IsNestedOnCurrentThread()) {
     RunTask(&pending_task);
@@ -431,7 +438,7 @@ bool MessageLoop::DoWork() {
 
   // Execute oldest task.
   while (incoming_task_queue_->triage_tasks().HasTasks()) {
-    PendingTask pending_task = incoming_task_queue_->triage_tasks().Pop();
+    auto pending_task = incoming_task_queue_->triage_tasks().Pop();
     if (pending_task.task.IsCancelled())
       continue;
 
@@ -477,7 +484,7 @@ bool MessageLoop::DoDelayedWork(TimeTicks* next_delayed_work_time) {
     }
   }
 
-  PendingTask pending_task = incoming_task_queue_->delayed_tasks().Pop();
+  auto pending_task = incoming_task_queue_->delayed_tasks().Pop();
 
   if (incoming_task_queue_->delayed_tasks().HasTasks()) {
     *next_delayed_work_time =

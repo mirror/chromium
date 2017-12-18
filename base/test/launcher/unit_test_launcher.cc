@@ -26,6 +26,7 @@
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/string_util.h"
 #include "base/sys_info.h"
+#include "base/task_scheduler/task_scheduler.h"
 #include "base/test/gtest_xml_util.h"
 #include "base/test/launcher/test_launcher.h"
 #include "base/test/test_switches.h"
@@ -242,20 +243,30 @@ int LaunchUnitTestsInternal(const RunTestSuiteCallback& run_test_suite,
           "--single-process-tests.\n");
   fflush(stdout);
 
-  MessageLoopForIO message_loop;
+  TaskScheduler::CreateAndStartWithDefaultParams("unit_test_launcher");
+  bool success;
+  {
+    MessageLoopForIO message_loop;
+
 #if defined(OS_POSIX)
-  FileDescriptorWatcher file_descriptor_watcher(&message_loop);
+    FileDescriptorWatcher file_descriptor_watcher(&message_loop);
 #endif
 
-  DefaultUnitTestPlatformDelegate platform_delegate;
-  UnitTestLauncherDelegate delegate(
-      &platform_delegate, batch_limit, use_job_objects);
-  TestLauncher launcher(&delegate, parallel_jobs);
-  bool success = launcher.Run();
+    DefaultUnitTestPlatformDelegate platform_delegate;
+    UnitTestLauncherDelegate delegate(&platform_delegate, batch_limit,
+                                      use_job_objects);
+    TestLauncher launcher(&delegate, parallel_jobs);
+    success = launcher.Run();
 
-  fprintf(stdout, "Tests took %" PRId64 " seconds.\n",
-          (TimeTicks::Now() - start_time).InSeconds());
-  fflush(stdout);
+    fprintf(stdout, "Tests took %" PRId64 " seconds.\n",
+            (TimeTicks::Now() - start_time).InSeconds());
+    fflush(stdout);
+  }
+
+  TaskScheduler::GetInstance()->FlushForTesting();
+  TaskScheduler::GetInstance()->Shutdown();
+  TaskScheduler::GetInstance()->JoinForTesting();
+  TaskScheduler::SetInstance(nullptr);
 
   return (success ? 0 : 1);
 }

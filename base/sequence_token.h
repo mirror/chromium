@@ -106,6 +106,8 @@ class BASE_EXPORT ScopedSetSequenceTokenForCurrentThread {
  private:
   const SequenceToken sequence_token_;
   const TaskToken task_token_;
+  const SequenceToken* const previous_sequence_token_;
+  const TaskToken* const previous_task_token_;
 
   DISALLOW_COPY_AND_ASSIGN(ScopedSetSequenceTokenForCurrentThread);
 };
