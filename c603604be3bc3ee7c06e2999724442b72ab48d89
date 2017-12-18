@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "24a6d532_5139a508",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/common/system/filesystem_mock.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-12-18T18:02:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b851e51e_c852fe31",
+      "revId": "c603604be3bc3ee7c06e2999724442b72ab48d89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "21f98f53_64953c8e",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/port/linux.py",
         "patchSetId": 3
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "9876d036_edd3d98f",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/port/linux.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-12-18T18:02:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "21f98f53_64953c8e",
+      "range": {
+        "startLine": 144,
+        "startChar": 10,
+        "endLine": 144,
+        "endChar": 15
+      },
+      "revId": "c603604be3bc3ee7c06e2999724442b72ab48d89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ac7ade59_6179740d",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/port/linux.py",
         "patchSetId": 3
@@ -53,6 +95,30 @@
       "writtenOn": "2017-12-18T17:42:33Z",
       "side": 1,
       "message": "Is there any reason for the for loop here? The alternative could just be:\n\ndirname \u003d \u0027.cache\u0027\noriginal_path \u003d fs.join(self._original_home, dirname)\nif fs.exists(original_path):\n    fs.symlink(original_path, fs.join(dummy_home, dirname))",
+      "range": {
+        "startLine": 144,
+        "startChar": 0,
+        "endLine": 149,
+        "endChar": 67
+      },
+      "revId": "c603604be3bc3ee7c06e2999724442b72ab48d89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6577b0ce_d8973f64",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/port/linux.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-12-18T18:02:23Z",
+      "side": 1,
+      "message": "It\u0027s consistent with the other part of the function for .Xauthority. It just looks weird to write the two parts in different styles. I think the loops makes it easier to add other files/directories to copy/link.",
+      "parentUuid": "ac7ade59_6179740d",
       "range": {
         "startLine": 144,
         "startChar": 0,
