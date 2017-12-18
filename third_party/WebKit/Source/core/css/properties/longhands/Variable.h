@@ -19,8 +19,17 @@ class Variable : public CSSProperty {
 
   bool IsInherited() const override { return true; }
   bool IsAffectedByAll() const override { return false; }
+
+  const CSSValue* CSSValueFromComputedStyleInternal(
+      const ComputedStyle&,
+      const SVGComputedStyle&,
+      const LayoutObject*,
+      Node*,
+      bool allow_visited_style) const override {
+    NOTREACHED();
+    return nullptr;
+  }
 };
 
 }  // namespace blink
-
 #endif  // Variable_h
