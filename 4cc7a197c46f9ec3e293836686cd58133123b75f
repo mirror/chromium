@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c20f08e6_cc26cb3f",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_popup_presenter.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-12-18T14:13:18Z",
+      "side": 1,
+      "message": "I guess we are only converting popupContainerView to autolayout?  And popup continues to need autoresizing masks?",
+      "revId": "4cc7a197c46f9ec3e293836686cd58133123b75f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
