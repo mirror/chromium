@@ -159,8 +159,10 @@ void FrameViewPaintPropertyTreeBuilder::Update(
     context.current.rendering_context_id = 0;
     context.current.should_flatten_inherited_transform = true;
     context.absolute_position = context.current;
+    context.absolute_position.containing_block_changed_under_filter = false;
     full_context.container_for_absolute_position = nullptr;
     context.fixed_position = context.current;
+    context.fixed_position.containing_block_changed_under_filter = false;
     context.fixed_position.fixed_position_children_fixed_to_root = true;
     return;
   } else {
@@ -233,8 +235,10 @@ void FrameViewPaintPropertyTreeBuilder::Update(
   context.current.rendering_context_id = 0;
   context.current.should_flatten_inherited_transform = true;
   context.absolute_position = context.current;
+  context.fixed_position.containing_block_changed_under_filter = false;
   full_context.container_for_absolute_position = nullptr;
   context.fixed_position = context.current;
+  context.fixed_position.containing_block_changed_under_filter = false;
   context.fixed_position.transform = fixed_transform_node;
   context.fixed_position.scroll = fixed_scroll_node;
   context.fixed_position.fixed_position_children_fixed_to_root = true;
@@ -1207,6 +1211,20 @@ void FragmentPaintPropertyTreeBuilder::UpdateScrollAndScrollTranslation() {
   }
 }
 
+static inline bool ContextsDiffer(
+    const PaintPropertyTreeBuilderFragmentContext::ContainingBlockContext& a,
+    const PaintPropertyTreeBuilderFragmentContext::ContainingBlockContext& b) {
+  if (a.clip != b.clip)
+    return true;
+  if (a.transform != b.transform)
+    return true;
+  if (a.paint_offset != b.paint_offset)
+    return true;
+  if (a.scroll != b.scroll)
+    return true;
+  return false;
+}
+
 void FragmentPaintPropertyTreeBuilder::UpdateOutOfFlowContext() {
   if (!object_.IsBoxModelObject() && !properties_)
     return;
@@ -1214,8 +1232,10 @@ void FragmentPaintPropertyTreeBuilder::UpdateOutOfFlowContext() {
   if (object_.IsLayoutBlock())
     context_.paint_offset_for_float = context_.current.paint_offset;
 
-  if (object_.CanContainAbsolutePositionObjects())
+  if (object_.CanContainAbsolutePositionObjects()) {
     context_.absolute_position = context_.current;
+    context_.absolute_position.containing_block_changed_under_filter = false;
+  }
 
   if (object_.IsLayoutView()) {
     if (RuntimeEnabledFeatures::RootLayerScrollingEnabled()) {
@@ -1223,6 +1243,7 @@ void FragmentPaintPropertyTreeBuilder::UpdateOutOfFlowContext() {
       const auto* initial_fixed_scroll = context_.fixed_position.scroll;
 
       context_.fixed_position = context_.current;
+      context_.fixed_position.containing_block_changed_under_filter = false;
 
       // Fixed position transform and scroll nodes should not be affected.
       context_.fixed_position.transform = initial_fixed_transform;
@@ -1230,6 +1251,7 @@ void FragmentPaintPropertyTreeBuilder::UpdateOutOfFlowContext() {
     }
   } else if (object_.CanContainFixedPositionObjects()) {
     context_.fixed_position = context_.current;
+    context_.fixed_position.containing_block_changed_under_filter = false;
     context_.fixed_position.fixed_position_children_fixed_to_root = false;
   } else if (properties_ && properties_->CssClip()) {
     // CSS clip applies to all descendants, even if this object is not a
@@ -1258,6 +1280,14 @@ void FragmentPaintPropertyTreeBuilder::UpdateOutOfFlowContext() {
         context_.fixed_position.clip = properties_->CssClipFixedPosition();
       return;
     }
+  }
+
+  if (NeedsFilter(object_)) {
+    if (ContextsDiffer(context_.current, context_.absolute_position))
+      context_.absolute_position.containing_block_changed_under_filter = true;
+
+    if (ContextsDiffer(context_.current, context_.fixed_position))
+      context_.fixed_position.containing_block_changed_under_filter = true;
   }
 
   if (object_.NeedsPaintPropertyUpdate() ||
@@ -1358,6 +1388,12 @@ void FragmentPaintPropertyTreeBuilder::UpdatePaintOffset() {
                box_model_object.Container());
         context_.current = context_.absolute_position;
 
+        if (context_.absolute_position.containing_block_changed_under_filter) {
+          UseCounter::Count(
+              object_.GetDocument(),
+              WebFeature::kFilterAsContainingBlockMayChangeOutput);
+        }
+
         // Absolutely positioned content in an inline should be positioned
         // relative to the inline.
         const auto* container = full_context_.container_for_absolute_position;
@@ -1381,6 +1417,12 @@ void FragmentPaintPropertyTreeBuilder::UpdatePaintOffset() {
         // relative to that transform, and hence the fixed-position element.
         if (context_.fixed_position.fixed_position_children_fixed_to_root)
           context_.current.paint_offset_root = &box_model_object;
+
+        if (context_.absolute_position.containing_block_changed_under_filter) {
+          UseCounter::Count(
+              object_.GetDocument(),
+              WebFeature::kFilterAsContainingBlockMayChangeOutput);
+        }
         break;
       default:
         NOTREACHED();

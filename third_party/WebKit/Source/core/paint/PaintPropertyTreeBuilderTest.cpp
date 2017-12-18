@@ -4189,6 +4189,80 @@ TEST_P(PaintPropertyTreeBuilderTest, ScrollBoundsOffset) {
             scroll_properties->PaintOffsetTranslation()->Matrix());
 }
 
+TEST_P(PaintPropertyTreeBuilderTest, FilterContainingBlockUseCounterRelPos) {
+  SetBodyInnerHTML(
+      "<div style='filter:blur(2px)'>"
+      "  <div id=target style='position:relative'></div>"
+      "</div>");
+
+  EXPECT_FALSE(UseCounter::IsCounted(
+      GetDocument(), WebFeature::kFilterAsContainingBlockMayChangeOutput));
+}
+
+TEST_P(PaintPropertyTreeBuilderTest, FilterContainingBlockUseCounterAbsPos) {
+  SetBodyInnerHTML(
+      "<div style='filter:blur(2px)'>"
+      "  <div id=target style='position:absolute'></div>"
+      "</div>");
+
+  EXPECT_TRUE(UseCounter::IsCounted(
+      GetDocument(), WebFeature::kFilterAsContainingBlockMayChangeOutput));
+}
+
+TEST_P(PaintPropertyTreeBuilderTest, FilterContainingBlockUseCounterStickyPos) {
+  SetBodyInnerHTML(
+      "<div style='filter:blur(2px)'>"
+      "  <div id=target style='position:sticky'></div>"
+      "</div>");
+
+  EXPECT_FALSE(UseCounter::IsCounted(
+      GetDocument(), WebFeature::kFilterAsContainingBlockMayChangeOutput));
+}
+
+TEST_P(PaintPropertyTreeBuilderTest, FilterContainingBlockUseCounterFixedPos) {
+  SetBodyInnerHTML(
+      "<div style='filter:blur(2px)'>"
+      "  <div id=target style='position:fixed'></div>"
+      "</div>");
+
+  EXPECT_TRUE(UseCounter::IsCounted(
+      GetDocument(), WebFeature::kFilterAsContainingBlockMayChangeOutput));
+}
+
+TEST_P(PaintPropertyTreeBuilderTest,
+       FilterContainingBlockUseCounterAbsPosAbsPos) {
+  SetBodyInnerHTML(
+      "<div style='filter:blur(2px); position:absolute'>"
+      "  <div id=target style='position:absolute'></div>"
+      "</div>");
+
+  EXPECT_FALSE(UseCounter::IsCounted(
+      GetDocument(), WebFeature::kFilterAsContainingBlockMayChangeOutput));
+}
+
+TEST_P(PaintPropertyTreeBuilderTest,
+       FilterContainingBlockUseCounterAbsPosFixedPos) {
+  SetBodyInnerHTML(
+      "<div style='filter:blur(2px); position:absolute'>"
+      "  <div id=target style='position:fixed'></div>"
+      "</div>"
+      "<div style='width: 10px; height: 1000px'></div>");
+
+  EXPECT_FALSE(UseCounter::IsCounted(
+      GetDocument(), WebFeature::kFilterAsContainingBlockMayChangeOutput));
+}
+
+TEST_P(PaintPropertyTreeBuilderTest,
+       FilterContainingBlockUseCounterFixedPosFixedPos) {
+  SetBodyInnerHTML(
+      "<div style='filter:blur(2px); position:absolute'>"
+      "  <div id=target style='position:fixed'></div>"
+      "</div>");
+
+  EXPECT_FALSE(UseCounter::IsCounted(
+      GetDocument(), WebFeature::kFilterAsContainingBlockMayChangeOutput));
+}
+
 TEST_P(PaintPropertyTreeBuilderTest, CompositedLayerPaintOffsetTranslation) {
   SetBodyInnerHTML(R"HTML(
     <style>#target { position: absolute; top: 50px; left: 60px }</style>
