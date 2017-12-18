@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "07da1318_75419787",
+        "filename": "third_party/WebKit/Source/core/css/resolver/StyleAdjuster.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 576,
+      "author": {
+        "id": 1251514
+      },
+      "writtenOn": "2017-12-18T10:52:54Z",
+      "side": 1,
+      "message": "Reported/fixed 795685 and added a test for that.\n\nThe condition on the block below was slightly different (!IsSVGElement), so I think it makes sense with two separate blocks. Should be clearer from the latest PS.",
+      "parentUuid": "eebd4802_0570053d",
+      "range": {
+        "startLine": 575,
+        "startChar": 8,
+        "endLine": 576,
+        "endChar": 45
+      },
+      "revId": "bfe746b7897017bdc9bfb216bd8b6310ea186ff4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "652cbe0f_de858c6d",
         "filename": "third_party/WebKit/Source/core/css/resolver/StyleAdjuster.cpp",
         "patchSetId": 2
@@ -132,6 +156,30 @@
       "side": 1,
       "message": "I\u0027ll file an issue.",
       "parentUuid": "652cbe0f_de858c6d",
+      "range": {
+        "startLine": 585,
+        "startChar": 20,
+        "endLine": 585,
+        "endChar": 27
+      },
+      "revId": "bfe746b7897017bdc9bfb216bd8b6310ea186ff4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d18b74ec_b67716c1",
+        "filename": "third_party/WebKit/Source/core/css/resolver/StyleAdjuster.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 585,
+      "author": {
+        "id": 1251514
+      },
+      "writtenOn": "2017-12-18T10:52:54Z",
+      "side": 1,
+      "message": "https://github.com/w3c/csswg-drafts/issues/2118\n\n@fs: I didn\u0027t find your github user.",
+      "parentUuid": "92c9f7c5_0af8ddf1",
       "range": {
         "startLine": 585,
         "startChar": 20,
