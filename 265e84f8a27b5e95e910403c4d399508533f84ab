@@ -1,0 +1,175 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "13a6e251_8c45d300",
+        "filename": "chrome/browser/vr/elements/toast.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-12-18T20:48:46Z",
+      "side": 1,
+      "message": "This is a bit scary.  There\u0027s no saying how big a Toast will be in the scene.  Icon texture size should probably still be a scene-creator parameter, right?  Otherwise, when we sleep through and fix the texture sizing mechanism, we could miss this.",
+      "revId": "265e84f8a27b5e95e910403c4d399508533f84ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2585c5b_8cf336ff",
+        "filename": "chrome/browser/vr/elements/toast.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-12-18T20:48:46Z",
+      "side": 1,
+      "message": "Why grab the pointer in the middle of all the setters?",
+      "revId": "265e84f8a27b5e95e910403c4d399508533f84ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46b91c19_6f6230bc",
+        "filename": "chrome/browser/vr/elements/toast.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-12-18T20:48:46Z",
+      "side": 1,
+      "message": "It looks like these Config calls must only be called once.  Should DCHECK here to ensure the pointers aren\u0027t allocated yet.",
+      "revId": "265e84f8a27b5e95e910403c4d399508533f84ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb1fdf75_a7f60c3d",
+        "filename": "chrome/browser/vr/elements/toast.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-12-18T20:48:46Z",
+      "side": 1,
+      "message": "Why not SetIcon() for clarity?  Just because it\u0027s two related properties doesn\u0027t mean it\u0027s not a setter...",
+      "revId": "265e84f8a27b5e95e910403c4d399508533f84ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30471e79_2ed3c7ab",
+        "filename": "chrome/browser/vr/ui_scene_constants.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-12-18T20:48:46Z",
+      "side": 1,
+      "message": "Why not pre-multiply these?  It\u0027s not clear what you\u0027re multiplying here.",
+      "range": {
+        "startLine": 69,
+        "startChar": 52,
+        "endLine": 69,
+        "endChar": 56
+      },
+      "revId": "265e84f8a27b5e95e910403c4d399508533f84ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae4c719d_f4a39b3e",
+        "filename": "chrome/browser/vr/ui_scene_creator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-12-18T20:48:46Z",
+      "side": 1,
+      "message": "All icons are square - kIndicatorIconSize would be better.",
+      "range": {
+        "startLine": 427,
+        "startChar": 40,
+        "endLine": 427,
+        "endChar": 60
+      },
+      "revId": "265e84f8a27b5e95e910403c4d399508533f84ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b815c98e_50a67bbb",
+        "filename": "chrome/browser/vr/ui_scene_creator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-12-18T20:48:46Z",
+      "side": 1,
+      "message": "Minor thing, but it seems conventional in element config to create it, call all the setters, then create bindings, for readability.  Here, the order is mixed.  If there\u0027s no reason against, maybe shuffle this around?",
+      "revId": "265e84f8a27b5e95e910403c4d399508533f84ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a381832_9ecb1e4c",
+        "filename": "chrome/browser/vr/ui_scene_creator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-12-18T20:48:46Z",
+      "side": 1,
+      "message": "s/Config/Configure/",
+      "range": {
+        "startLine": 430,
+        "startChar": 15,
+        "endLine": 430,
+        "endChar": 25
+      },
+      "revId": "265e84f8a27b5e95e910403c4d399508533f84ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "593a37d2_38276537",
+        "filename": "chrome/browser/vr/ui_scene_creator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1517,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-12-18T20:48:46Z",
+      "side": 1,
+      "message": "\"Toasts\" now refers to several elements.  Should this be kExclusiveScreenToastCornerRadiusDMM?",
+      "revId": "265e84f8a27b5e95e910403c4d399508533f84ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
