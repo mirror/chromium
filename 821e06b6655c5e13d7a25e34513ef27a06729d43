@@ -16,6 +16,24 @@
       "revId": "821e06b6655c5e13d7a25e34513ef27a06729d43",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3e7384d_c4df8565",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 9510,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-18T19:30:27Z",
+      "side": 1,
+      "message": "Chime in for AuthMode info.\n\nAuthMode \u003d\u003d DEFAULT means online Gaia login, which is the default of ChromeOS login and where the null contentWindow problem happens.\n\nThe other two modes are\nOFFLINE: offline chromeos login\nDESKTOP: online gaia login for desktop chrome,",
+      "parentUuid": "fe3e5a80_8f0e99d8",
+      "revId": "821e06b6655c5e13d7a25e34513ef27a06729d43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
