@@ -16,6 +16,24 @@
       "revId": "6e54e80c4fde548e058fb9ec2f8160189e4ba034",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53393f52_3e328648",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-12-18T18:07:59Z",
+      "side": 1,
+      "message": "This is done by applying the \"storage-view\" class. It adjusts borders and some colors.",
+      "parentUuid": "142bf753_aa7e7cb9",
+      "revId": "6e54e80c4fde548e058fb9ec2f8160189e4ba034",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
