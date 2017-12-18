@@ -278,11 +278,42 @@ void NGFragmentBuilder::ComputeInlineContainerFragments(
             value.start_fragment_offset = descendant.offset_to_container_box;
             value.start_linebox_fragment = linebox;
             value.start_linebox_offset = offsets_.at(i);
+            value.start_fragment_union_size = value.start_fragment->Size();
           }
-          value.end_fragment = descendant.fragment;
-          value.end_fragment_offset = descendant.offset_to_container_box;
-          value.end_linebox_fragment = linebox;
-          value.end_linebox_offset = offsets_.at(i);
+          if (!value.end_fragment || value.end_linebox_fragment != linebox) {
+            value.end_fragment = descendant.fragment;
+            value.end_fragment_offset = descendant.offset_to_container_box;
+            value.end_linebox_fragment = linebox;
+            value.end_linebox_offset = offsets_.at(i);
+            value.end_fragment_union_size = value.end_fragment->Size();
+          }
+          // Extend the union size
+          if (value.start_linebox_fragment == linebox) {
+            // std::max because initial box might have larger extent than its
+            // descendants.
+            value.start_fragment_union_size.width =
+                std::max(descendant.offset_to_container_box.left +
+                             descendant.fragment->Size().width -
+                             value.start_fragment_offset.left,
+                         value.start_fragment_union_size.width);
+            value.start_fragment_union_size.height =
+                std::max(descendant.offset_to_container_box.top +
+                             descendant.fragment->Size().height -
+                             value.start_fragment_offset.top,
+                         value.start_fragment_union_size.width);
+          }
+          if (value.end_linebox_fragment == linebox) {
+            value.end_fragment_union_size.width =
+                std::max(descendant.offset_to_container_box.left +
+                             descendant.fragment->Size().width -
+                             value.end_fragment_offset.left,
+                         value.end_fragment_union_size.width);
+            value.end_fragment_union_size.height =
+                std::max(descendant.offset_to_container_box.top +
+                             descendant.fragment->Size().height -
+                             value.end_fragment_offset.top,
+                         value.end_fragment_union_size.height);
+          }
           inline_container_fragments->Set(key, value);
         }
       }
