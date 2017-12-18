@@ -88,7 +88,6 @@
 #include "core/dom/NodeTraversal.h"
 #include "core/dom/NodeWithIndex.h"
 #include "core/dom/NthIndexCache.h"
-#include "core/dom/Policy.h"
 #include "core/dom/ProcessingInstruction.h"
 #include "core/dom/ScriptRunner.h"
 #include "core/dom/ScriptedAnimationController.h"
@@ -206,6 +205,7 @@
 #include "core/page/scrolling/SnapCoordinator.h"
 #include "core/page/scrolling/TopDocumentRootScrollerController.h"
 #include "core/paint/compositing/PaintLayerCompositor.h"
+#include "core/policy/DocumentPolicy.h"
 #include "core/probe/CoreProbes.h"
 #include "core/resize_observer/ResizeObserverController.h"
 #include "core/svg/SVGDocumentExtensions.h"
@@ -7219,7 +7219,7 @@ scoped_refptr<WebTaskRunner> Document::GetTaskRunner(TaskType type) {
 }
 
 Policy* Document::policy() {
-  return Policy::Create(this);
+  return new DocumentPolicy(this);
 }
 
 void Document::Trace(blink::Visitor* visitor) {
