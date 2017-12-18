@@ -201,29 +201,43 @@ bool FirefoxProxySettings::ToProxyConfig(net::ProxyConfig* config) {
   // The rest of this funciton is for handling the MANUAL case.
   DCHECK_EQ(MANUAL, config_type());
 
+  net::PartialNetworkTrafficAnnotationTag traffic_annotation =
+      net::DefinePartialNetworkTrafficAnnotation("proxy_settings_from_firefox",
+                                                 "proxy_settings",
+                                                 R"(
+        semantics {
+          description: "This set of proxy settings are received from firefox?"
+        }
+        policy {
+          setting: "HOW TO AVOID GETTING IT?"
+          chrome_policy {
+            ...
+          }
+          policy_exception_justification: "..."
+        })");
+
   *config = net::ProxyConfig();
   config->proxy_rules().type =
       net::ProxyConfig::ProxyRules::TYPE_PROXY_PER_SCHEME;
 
   if (!http_proxy().empty()) {
     config->proxy_rules().proxies_for_http.SetSingleProxyServer(
-        net::ProxyServer(
-            net::ProxyServer::SCHEME_HTTP,
-            net::HostPortPair(http_proxy(), http_proxy_port())));
+        net::ProxyServer(net::ProxyServer::SCHEME_HTTP,
+                         net::HostPortPair(http_proxy(), http_proxy_port()),
+                         traffic_annotation));
   }
 
   if (!ftp_proxy().empty()) {
-    config->proxy_rules().proxies_for_ftp.SetSingleProxyServer(
-        net::ProxyServer(
-            net::ProxyServer::SCHEME_HTTP,
-            net::HostPortPair(ftp_proxy(), ftp_proxy_port())));
+    config->proxy_rules().proxies_for_ftp.SetSingleProxyServer(net::ProxyServer(
+        net::ProxyServer::SCHEME_HTTP,
+        net::HostPortPair(ftp_proxy(), ftp_proxy_port()), traffic_annotation));
   }
 
   if (!ssl_proxy().empty()) {
     config->proxy_rules().proxies_for_https.SetSingleProxyServer(
-        net::ProxyServer(
-            net::ProxyServer::SCHEME_HTTP,
-            net::HostPortPair(ssl_proxy(), ssl_proxy_port())));
+        net::ProxyServer(net::ProxyServer::SCHEME_HTTP,
+                         net::HostPortPair(ssl_proxy(), ssl_proxy_port()),
+                         traffic_annotation));
   }
 
   if (!socks_host().empty()) {
@@ -231,9 +245,9 @@ bool FirefoxProxySettings::ToProxyConfig(net::ProxyConfig* config) {
         net::ProxyServer::SCHEME_SOCKS5 : net::ProxyServer::SCHEME_SOCKS4;
 
     config->proxy_rules().fallback_proxies.SetSingleProxyServer(
-        net::ProxyServer(
-            proxy_scheme,
-            net::HostPortPair(socks_host(), socks_port())));
+        net::ProxyServer(proxy_scheme,
+                         net::HostPortPair(socks_host(), socks_port()),
+                         traffic_annotation));
   }
 
   config->proxy_rules().bypass_rules.ParseFromStringUsingSuffixMatching(

@@ -121,6 +121,26 @@ DataReductionProxyChromeSettings::MigrateDataReductionProxyOffProxyPrefsHelper(
     return PROXY_PREF_CLEARED_MODE_SYSTEM;
   }
 
+  net::PartialNetworkTrafficAnnotationTag traffic_annotation =
+      net::DefinePartialNetworkTrafficAnnotation(
+          "proxy_settings_data_reduction", "proxy_settings", R"(
+        semantics {
+          description: "Where do we read this settings?"
+        }
+        policy {
+          setting:
+            "Users can control Data Saver on Android via 'Data Saver' setting. "
+            "Data Saver is not available on iOS, and on desktop it is enabled "
+            "by insalling the Data Saver extension. While Data Saver is "
+            "enabled, this feature cannot be disabled by settings."
+          chrome_policy {
+            DataCompressionProxyEnabled {
+              DataCompressionProxyEnabled: false
+            }
+          }
+          policy_exception_justification: "..."
+        })");
+
   // From M36 to M40, the DRP was configured using MODE_FIXED_SERVERS in the
   // proxy pref.
   if (ProxyModeToString(ProxyPrefs::MODE_FIXED_SERVERS) == mode) {
@@ -128,7 +148,7 @@ DataReductionProxyChromeSettings::MigrateDataReductionProxyOffProxyPrefsHelper(
     if (!dict->GetString("server", &proxy_server))
       return PROXY_PREF_NOT_CLEARED;
     net::ProxyConfig::ProxyRules proxy_rules;
-    proxy_rules.ParseFromString(proxy_server);
+    proxy_rules.ParseFromString(proxy_server, traffic_annotation);
     // Clear the proxy pref if it matches a currently configured Data Reduction
     // Proxy, or if the proxy host ends with ".googlezip.net", in order to
     // ensure that any DRP in the pref is cleared even if the DRP configuration

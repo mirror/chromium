@@ -250,7 +250,8 @@ void DataReductionProxyDelegate::GetAlternativeProxy(
   }
 
   *alternative_proxy_server = net::ProxyServer(
-      net::ProxyServer::SCHEME_QUIC, resolved_proxy_server.host_port_pair());
+      net::ProxyServer::SCHEME_QUIC, resolved_proxy_server.host_port_pair(),
+      resolved_proxy_server.GetPartialTrafficAnnotation());
   DCHECK(alternative_proxy_server->is_valid());
   RecordQuicProxyStatus(QUIC_PROXY_STATUS_AVAILABLE);
   return;
@@ -273,10 +274,30 @@ bool DataReductionProxyDelegate::SupportsQUIC(
     const net::ProxyServer& proxy_server) const {
   DCHECK(thread_checker_.CalledOnValidThread());
   // Enable QUIC for whitelisted proxies.
+  net::PartialNetworkTrafficAnnotationTag traffic_annotation =
+      net::DefinePartialNetworkTrafficAnnotation(
+          "proxy_settings_data_reduction_quic", "proxy_settings", R"(
+        semantics {
+          description: "Where do we read this settings?"
+        }
+        policy {
+          setting:
+            "Users can control Data Saver on Android via 'Data Saver' setting. "
+            "Data Saver is not available on iOS, and on desktop it is enabled "
+            "by insalling the Data Saver extension. While Data Saver is "
+            "enabled, this feature cannot be disabled by settings."
+          chrome_policy {
+            DataCompressionProxyEnabled {
+              DataCompressionProxyEnabled: false
+            }
+          }
+          policy_exception_justification: "..."
+        })");
   return params::IsQuicEnabledForNonCoreProxies() ||
          proxy_server ==
              net::ProxyServer(net::ProxyServer::SCHEME_HTTPS,
-                              net::HostPortPair(kDataReductionCoreProxy, 443));
+                              net::HostPortPair(kDataReductionCoreProxy, 443),
+                              traffic_annotation);
 }
 
 void DataReductionProxyDelegate::RecordQuicProxyStatus(

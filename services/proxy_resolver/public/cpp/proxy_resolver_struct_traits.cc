@@ -102,8 +102,13 @@ bool StructTraits<
     return false;
   }
 
-  *out = net::ProxyServer(scheme,
-                          net::HostPortPair(host.as_string(), data.port()));
+  // TODO(This CL): Get Annotation from the other side of mojo interface.
+  net::PartialNetworkTrafficAnnotationTag traffic_annotation =
+      net::DefinePartialNetworkTrafficAnnotation("proxy_settings_...",
+                                                 "proxy_settings", R"()");
+  *out =
+      net::ProxyServer(scheme, net::HostPortPair(host.as_string(), data.port()),
+                       traffic_annotation);
   return true;
 }
 

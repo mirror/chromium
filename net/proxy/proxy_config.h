@@ -12,6 +12,7 @@
 #include "net/proxy/proxy_config_source.h"
 #include "net/proxy/proxy_list.h"
 #include "net/proxy/proxy_server.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 #include "url/gurl.h"
 
 namespace base {
@@ -107,7 +108,11 @@ class NET_EXPORT ProxyConfig {
     //   "http=foopy;socks=foopy2   --  use HTTP proxy "foopy" for http URLs,
     //                                  and use socks4://foopy2 for all other
     //                                  URLs.
-    void ParseFromString(const std::string& proxy_rules);
+    // TODO(THIS CL): Remove after adding annotation to tests.
+    void ParseFromString(
+        const std::string& proxy_rules,
+        const net::PartialNetworkTrafficAnnotationTag& traffic_annotation =
+            NO_PARTIALTRAFFIC_ANNOTATION_BUG_656607("proxy_settings"));
 
     // Returns one of {&proxies_for_http, &proxies_for_https, &proxies_for_ftp,
     // &fallback_proxies}, or NULL if there is no proxy to use.

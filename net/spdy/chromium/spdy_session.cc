@@ -1640,9 +1640,10 @@ void SpdySession::TryCreatePushStream(SpdyStreamId stream_id,
   // Cross-origin push validation.
   GURL associated_url(associated_it->second->GetUrlFromHeaders());
   if (associated_url.GetOrigin() != gurl.GetOrigin()) {
-    if (proxy_delegate_ &&
-        proxy_delegate_->IsTrustedSpdyProxy(
-            ProxyServer(ProxyServer::SCHEME_HTTPS, host_port_pair()))) {
+    if (proxy_delegate_ && proxy_delegate_->IsTrustedSpdyProxy(ProxyServer(
+                               ProxyServer::SCHEME_HTTPS, host_port_pair(),
+                               spdy_session_key_.host_port_proxy_pair()
+                                   .second.GetPartialTrafficAnnotation()))) {
       // Disallow pushing of HTTPS content by trusted proxy.
       if (gurl.SchemeIs("https")) {
         EnqueueResetStreamFrame(

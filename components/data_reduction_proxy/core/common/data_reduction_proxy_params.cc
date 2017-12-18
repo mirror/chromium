@@ -349,6 +349,28 @@ int GetFieldTrialParameterAsInteger(const std::string& group,
 bool GetOverrideProxiesForHttpFromCommandLine(
     std::vector<DataReductionProxyServer>* override_proxies_for_http) {
   DCHECK(override_proxies_for_http);
+
+  net::PartialNetworkTrafficAnnotationTag traffic_annotation =
+      net::DefinePartialNetworkTrafficAnnotation(
+          "proxy_settings_data_reduction_from_command_line", "proxy_settings",
+          R"(
+        semantics {
+          description: "Where do we read this settings?"
+        }
+        policy {
+          setting:
+            "Users can control Data Saver on Android via 'Data Saver' setting. "
+            "Data Saver is not available on iOS, and on desktop it is enabled "
+            "by insalling the Data Saver extension. While Data Saver is "
+            "enabled, this feature cannot be disabled by settings."
+          chrome_policy {
+            DataCompressionProxyEnabled {
+              DataCompressionProxyEnabled: false
+            }
+          }
+          policy_exception_justification: "..."
+        })");
+
   if (base::CommandLine::ForCurrentProcess()->HasSwitch(
           switches::kDataReductionProxyHttpProxies)) {
     // It is illegal to use |kDataReductionProxy| or
@@ -370,7 +392,8 @@ bool GetOverrideProxiesForHttpFromCommandLine(
       // Overriding proxies have type UNSPECIFIED_TYPE.
       override_proxies_for_http->push_back(DataReductionProxyServer(
           net::ProxyServer::FromURI(proxy_override,
-                                    net::ProxyServer::SCHEME_HTTP),
+                                    net::ProxyServer::SCHEME_HTTP,
+                                    traffic_annotation),
           ProxyServer::UNSPECIFIED_TYPE));
     }
 
@@ -391,13 +414,14 @@ bool GetOverrideProxiesForHttpFromCommandLine(
   // Overriding proxies have type UNSPECIFIED_TYPE.
   if (!origin.empty()) {
     override_proxies_for_http->push_back(DataReductionProxyServer(
-        net::ProxyServer::FromURI(origin, net::ProxyServer::SCHEME_HTTP),
+        net::ProxyServer::FromURI(origin, net::ProxyServer::SCHEME_HTTP,
+                                  traffic_annotation),
         ProxyServer::UNSPECIFIED_TYPE));
   }
   if (!fallback_origin.empty()) {
     override_proxies_for_http->push_back(DataReductionProxyServer(
-        net::ProxyServer::FromURI(fallback_origin,
-                                  net::ProxyServer::SCHEME_HTTP),
+        net::ProxyServer::FromURI(
+            fallback_origin, net::ProxyServer::SCHEME_HTTP, traffic_annotation),
         ProxyServer::UNSPECIFIED_TYPE));
   }
 
@@ -432,14 +456,37 @@ DataReductionProxyParams::DataReductionProxyParams() {
       params::GetOverrideProxiesForHttpFromCommandLine(&proxies_for_http_);
 
   if (!use_override_proxies_for_http) {
+    net::PartialNetworkTrafficAnnotationTag traffic_annotation =
+        net::DefinePartialNetworkTrafficAnnotation(
+            "proxy_settings_data_reduction_proxy_params", "proxy_settings",
+            R"(
+        semantics {
+          description: "Where do we read this settings?"
+        }
+        policy {
+          setting:
+            "Users can control Data Saver on Android via 'Data Saver' setting. "
+            "Data Saver is not available on iOS, and on desktop it is enabled "
+            "by insalling the Data Saver extension. While Data Saver is "
+            "enabled, this feature cannot be disabled by settings."
+          chrome_policy {
+            DataCompressionProxyEnabled {
+              DataCompressionProxyEnabled: false
+            }
+          }
+          policy_exception_justification: "..."
+        })");
+
     DCHECK(proxies_for_http_.empty());
     proxies_for_http_.push_back(DataReductionProxyServer(
         net::ProxyServer::FromURI("https://proxy.googlezip.net:443",
-                                  net::ProxyServer::SCHEME_HTTP),
+                                  net::ProxyServer::SCHEME_HTTP,
+                                  traffic_annotation),
         ProxyServer::CORE));
     proxies_for_http_.push_back(DataReductionProxyServer(
         net::ProxyServer::FromURI("compress.googlezip.net:80",
-                                  net::ProxyServer::SCHEME_HTTP),
+                                  net::ProxyServer::SCHEME_HTTP,
+                                  traffic_annotation),
         ProxyServer::CORE));
   }
 }

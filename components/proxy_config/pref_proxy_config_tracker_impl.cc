@@ -343,7 +343,22 @@ bool PrefProxyConfigTrackerImpl::PrefConfigToNetConfig(
                    << "specify their URLs. Falling back to direct connection.";
         return true;
       }
-      config->proxy_rules().ParseFromString(proxy_server);
+      net::PartialNetworkTrafficAnnotationTag traffic_annotation =
+          net::DefinePartialNetworkTrafficAnnotation(
+              "proxy_settings_config_tracker", "proxy_settings", R"(
+        semantics {
+          description: "...WHERE DO WE GET THIS SETTINGS FROM?..."
+        }
+        policy {
+          setting: "...HOW IS IT DISABLED?..."
+          chrome_policy {
+            [POLICY_NAME] {
+              [POLICY_NAME]: ... //(value to disable it)
+            }
+          }
+          policy_exception_justification: "..."
+        })");
+      config->proxy_rules().ParseFromString(proxy_server, traffic_annotation);
 
       std::string proxy_bypass;
       if (proxy_dict.GetBypassList(&proxy_bypass)) {

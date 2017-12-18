@@ -490,8 +490,22 @@ class ProxyResolverV8::Context {
       js_bindings()->OnError(-1, error_message);
       return ERR_PAC_SCRIPT_FAILED;
     }
-
-    results->UsePacString(base::UTF16ToASCII(ret_str));
+    net::PartialNetworkTrafficAnnotationTag traffic_annotation =
+        net::DefinePartialNetworkTrafficAnnotation("proxy_settings_v8",
+                                                   "proxy_settings", R"(
+        semantics {
+          description: "...WHERE DO THESE SETTINGS COME FROM"
+        }
+        policy {
+          setting: "...HOW TO STOP THEM?"
+          chrome_policy {
+            [POLICY_NAME] {
+              [POLICY_NAME]: ... //(value to disable it)
+            }
+          }
+          policy_exception_justification: "..."
+        })");
+    results->UsePacString(base::UTF16ToASCII(ret_str), traffic_annotation);
     return OK;
   }
 

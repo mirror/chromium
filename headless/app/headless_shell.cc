@@ -40,6 +40,7 @@
 #include "net/base/net_errors.h"
 #include "net/http/http_util.h"
 #include "net/socket/ssl_client_socket.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 #include "ui/base/ui_base_switches.h"
 #include "ui/gfx/geometry/size.h"
 
@@ -732,7 +733,21 @@ int HeadlessShellMain(int argc, const char** argv) {
     std::string proxy_server =
         command_line.GetSwitchValueASCII(switches::kProxyServer);
     auto proxy_config = std::make_unique<net::ProxyConfig>();
-    proxy_config->proxy_rules().ParseFromString(proxy_server);
+    net::PartialNetworkTrafficAnnotationTag traffic_annotation =
+        net::DefinePartialNetworkTrafficAnnotation(
+            "proxy_settings_headless_from_commandline", "proxy_settings", R"(
+        semantics {
+          description:
+            "This set of proxy settings are given to Chrome Headless through "
+            "command line."
+        }
+        policy {
+          setting: "No settings, only used if passed as command line."
+          policy_exception_justification:
+            "Not implemented, only used in headless mode."
+        })");
+    proxy_config->proxy_rules().ParseFromString(proxy_server,
+                                                traffic_annotation);
     if (command_line.HasSwitch(switches::kProxyBypassList)) {
       std::string bypass_list =
           command_line.GetSwitchValueASCII(switches::kProxyBypassList);

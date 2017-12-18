@@ -90,6 +90,23 @@ const net::BackoffEntry::Policy kDefaultBackoffPolicy = {
 };
 
 // Extracts the list of Data Reduction Proxy servers to use for HTTP requests.
+net::PartialNetworkTrafficAnnotationTag traffic_annotation =
+    net::DefinePartialNetworkTrafficAnnotation(
+        "proxy_settings_data_reductuin_conifg",
+        "proxy_settings",
+        R"(
+      semantics {
+        description:
+          "...Do we know from where we have received these settings or it "
+          "should be passed here."
+      }
+      policy {
+        setting: "HOW TO AVOID GETTING IT?"
+        chrome_policy {
+          ...
+        }
+        policy_exception_justification: "..."
+      })");
 std::vector<DataReductionProxyServer> GetProxiesForHTTP(
     const data_reduction_proxy::ProxyConfig& proxy_config) {
   std::vector<DataReductionProxyServer> proxies;
@@ -98,7 +115,8 @@ std::vector<DataReductionProxyServer> GetProxiesForHTTP(
       proxies.push_back(DataReductionProxyServer(
           net::ProxyServer(
               protobuf_parser::SchemeFromProxyScheme(server.scheme()),
-              net::HostPortPair(server.host(), server.port())),
+              net::HostPortPair(server.host(), server.port()),
+              traffic_annotation),
           server.type()));
     }
   }
