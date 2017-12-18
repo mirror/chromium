@@ -17,7 +17,7 @@ Check area hits overlapping SVG element
 PASS All correct nodes found for rect
 PASS All correct nodes found for rect
 Check area hits across SVG elements
-PASS All correct nodes found for rect
+FAIL Unexpected node #1 for rect [20,30], [20,10,30,10] - svg#svg1
 
 PASS successfullyParsed is true
 
