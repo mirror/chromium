@@ -1763,8 +1763,6 @@ void RenderProcessHostImpl::CreateMessageFilters() {
 #if BUILDFLAG(ENABLE_PLUGINS)
   AddFilter(new PepperRendererConnection(GetID()));
 #endif
-  AddFilter(new SpeechRecognitionDispatcherHost(
-      GetID(), storage_partition_impl_->GetURLRequestContext()));
   AddFilter(new FileAPIMessageFilter(
       GetID(), storage_partition_impl_->GetURLRequestContext(),
       storage_partition_impl_->GetFileSystemContext(),
@@ -1946,6 +1944,11 @@ void RenderProcessHostImpl::RegisterMojoInterfaces() {
       &AppCacheDispatcherHost::Create,
       base::Unretained(storage_partition_impl_->GetAppCacheService()),
       GetID()));
+
+  registry->AddInterface(base::Bind(
+      SpeechRecognitionDispatcherHost::Create, weak_factory_.GetWeakPtr(),
+      GetID(),
+      base::WrapRefCounted(storage_partition_impl_->GetURLRequestContext())));
 
   AddUIThreadInterface(registry.get(), base::Bind(&FieldTrialRecorder::Create));
 

@@ -10,11 +10,10 @@
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "content/common/content_export.h"
-#include "content/public/browser/browser_message_filter.h"
+#include "content/common/speech_recognizer.mojom.h"
 #include "content/public/browser/speech_recognition_event_listener.h"
+#include "ipc/ipc_sender.h"
 #include "net/url_request/url_request_context_getter.h"
-
-struct SpeechRecognitionHostMsg_StartRequest_Params;
 
 namespace content {
 
@@ -25,12 +24,20 @@ class SpeechRecognitionManager;
 // from the SpeechRecognitionManager to IPC messages (and vice versa).
 // It's the complement of SpeechRecognitionDispatcher (owned by RenderView).
 class CONTENT_EXPORT SpeechRecognitionDispatcherHost
-    : public BrowserMessageFilter,
-      public SpeechRecognitionEventListener {
+    : public SpeechRecognitionEventListener,
+      public mojom::SpeechRecognizer {
  public:
   SpeechRecognitionDispatcherHost(
+      base::WeakPtr<IPC::Sender> sender,
       int render_process_id,
-      net::URLRequestContextGetter* context_getter);
+      scoped_refptr<net::URLRequestContextGetter> context_getter);
+
+  ~SpeechRecognitionDispatcherHost() override;
+
+  static void Create(base::WeakPtr<IPC::Sender> sender,
+                     int render_process_id,
+                     scoped_refptr<net::URLRequestContextGetter> context_getter,
+                     mojom::SpeechRecognizerRequest request);
 
   base::WeakPtr<SpeechRecognitionDispatcherHost> AsWeakPtr();
 
@@ -50,34 +57,42 @@ class CONTENT_EXPORT SpeechRecognitionDispatcherHost
                            float volume,
                            float noise_volume) override;
 
-  // BrowserMessageFilter implementation.
-  void OnDestruct() const override;
-  bool OnMessageReceived(const IPC::Message& message) override;
-  void OverrideThreadForMessage(const IPC::Message& message,
-                                BrowserThread::ID* thread) override;
-
-  void OnChannelClosing() override;
+  // mojom::SpeechRecognizer:
+  void StartRequest(
+      mojom::StartSpeechRecognitionRequestParamsPtr params) override;
+  void AbortRequest(int64_t render_view_id, int64_t request_id) override;
+  void AbortAllRequests(int64_t render_view_id) override;
+  void StopCaptureRequest(int64_t render_view_id, int64_t request_id) override;
 
  private:
   friend class base::DeleteHelper<SpeechRecognitionDispatcherHost>;
   friend class BrowserThread;
 
-  ~SpeechRecognitionDispatcherHost() override;
+  static void StartRequestOnUI(
+      base::WeakPtr<SpeechRecognitionDispatcherHost>
+          speech_recognition_dispatcher_host,
+      int render_process_id,
+      mojom::StartSpeechRecognitionRequestParamsPtr params);
 
-  void OnStartRequest(
-      const SpeechRecognitionHostMsg_StartRequest_Params& params);
-  void OnStartRequestOnIO(
-      int embedder_render_process_id,
-      int embedder_render_view_id,
-      const SpeechRecognitionHostMsg_StartRequest_Params& params,
-      int params_render_frame_id,
-      bool filter_profanities);
-  void OnAbortRequest(int render_view_id, int request_id);
-  void OnStopCaptureRequest(int render_view_id, int request_id);
-  void OnAbortAllRequests(int render_view_id);
+  void StartRequestOnIO(int embedder_render_process_id,
+                        int embedder_render_view_id,
+                        mojom::StartSpeechRecognitionRequestParamsPtr params,
+                        int params_render_frame_id,
+                        bool filter_profanities);
+
+  // Sends the given message on the UI thread. Can be called from the IO thread.
+  void SendOnUI(IPC::Message* message);
+
+  // Checks the reported render view ID against the stored one. If they are
+  // different, calls mojo::ReportBadMessage and returns true.
+  bool CheckIfBadRenderViewId(int reported_render_view_id);
 
   int render_process_id_;
+  int render_view_id_;
   scoped_refptr<net::URLRequestContextGetter> context_getter_;
+
+  // TODO(sashab): Convert this message path to Mojo and remove it.
+  base::WeakPtr<IPC::Sender> sender_;
 
   // Used for posting asynchronous tasks (on the IO thread) without worrying
   // about this class being destroyed in the meanwhile (due to browser shutdown)
