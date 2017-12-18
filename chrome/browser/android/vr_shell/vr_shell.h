@@ -26,6 +26,7 @@
 #include "device/vr/android/gvr/gvr_gamepad_data_provider.h"
 #include "device/vr/vr_service.mojom.h"
 #include "third_party/gvr-android-sdk/src/libraries/headers/vr/gvr/capi/include/gvr_types.h"
+#include "ui/compositor/compositor_lock.h"
 
 namespace base {
 class Version;
@@ -73,7 +74,8 @@ enum UiAction {
 class VrShell : device::GvrGamepadDataProvider,
                 device::CardboardGamepadDataProvider,
                 vr::VoiceResultDelegate,
-                public ChromeToolbarModelDelegate {
+                public ChromeToolbarModelDelegate,
+                public ui::CompositorLockClient {
  public:
   VrShell(JNIEnv* env,
           const base::android::JavaParamRef<jobject>& obj,
@@ -213,6 +215,9 @@ class VrShell : device::GvrGamepadDataProvider,
   content::WebContents* GetActiveWebContents() const override;
   bool ShouldDisplayURL() const override;
 
+  // ui::CompositorLockClient implementation.
+  void CompositorLockTimedOut() override;
+
   void OnVoiceResults(const base::string16& result) override;
 
   void OnAssetsLoaded(vr::AssetsLoadStatus status,
@@ -294,6 +299,9 @@ class VrShell : device::GvrGamepadDataProvider,
 
   gfx::SizeF display_size_meters_;
   gfx::Size display_size_pixels_;
+
+  // Lock which, when held, defers/prevents commits on the compositor.
+  std::unique_ptr<ui::CompositorLock> compositor_lock_;
 
   base::WeakPtrFactory<VrShell> weak_ptr_factory_;
 

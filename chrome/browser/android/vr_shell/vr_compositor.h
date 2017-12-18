@@ -10,6 +10,7 @@
 #include "base/android/scoped_java_ref.h"
 #include "base/macros.h"
 #include "content/public/browser/android/compositor_client.h"
+#include "ui/compositor/compositor_lock.h"
 #include "ui/gfx/geometry/size.h"
 
 typedef unsigned int SkColor;
@@ -25,6 +26,7 @@ class WebContents;
 
 namespace ui {
 class WindowAndroid;
+class WindowAndroidCompositor;
 }
 
 namespace vr_shell {
@@ -36,7 +38,9 @@ class VrCompositor : public content::CompositorClient {
 
   void SurfaceDestroyed();
   void SetWindowBounds(gfx::Size size);
-  void SetDeferCommits(bool defer_commits);
+  std::unique_ptr<ui::CompositorLock> GetCompositorLock(
+      ui::CompositorLockClient* client,
+      base::TimeDelta timeout);
   void SurfaceChanged(jobject surface);
   void SetLayer(content::WebContents* web_contents);
 
@@ -44,6 +48,7 @@ class VrCompositor : public content::CompositorClient {
   void RestoreLayer();
 
   std::unique_ptr<content::Compositor> compositor_;
+  ui::WindowAndroidCompositor* window_compositor_;
 
   cc::Layer* layer_ = nullptr;
   cc::Layer* layer_parent_ = nullptr;
