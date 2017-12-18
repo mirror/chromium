@@ -1016,7 +1016,7 @@ bool AppsGridView::OnKeyPressed(const ui::KeyEvent& event) {
   if (suggestions_container_ &&
       suggestions_container_->selected_index() != -1) {
     int selected_suggested_index = suggestions_container_->selected_index();
-    handled = suggestions_container_->GetTileItemView(selected_suggested_index)
+    handled = suggestions_container_->GetTileViewAt(selected_suggested_index)
                   ->OnKeyPressed(event);
   }
 

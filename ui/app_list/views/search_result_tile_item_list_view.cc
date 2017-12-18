@@ -64,9 +64,8 @@ SearchResultTileItemListView::SearchResultTileItemListView(
       AddChildView(separator);
     }
 
-    SearchResultTileItemView* tile_item = new SearchResultTileItemView(
-        this, view_delegate, nullptr, false /* Not a suggested app */,
-        is_play_store_app_search_enabled_);
+    SearchResultTileItemView* tile_item =
+        new SearchResultTileItemView(this, view_delegate, nullptr);
     tile_item->SetParentBackgroundColor(kCardBackgroundColor);
     tile_views_.push_back(tile_item);
     AddChildView(tile_item);
