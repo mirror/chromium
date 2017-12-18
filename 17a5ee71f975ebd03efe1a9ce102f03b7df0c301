@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "38b6d298_49ec7a47",
+        "filename": "services/network/public/interfaces/udp_socket.mojom",
+        "patchSetId": 28
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-12-18T14:50:43Z",
+      "side": 1,
+      "message": "Thanks Jana and Buck for the QUIC insight. \nWe still need the pipelining in the mojo API layer. Randy mentioned that the cost of mojo API call is at least a PostTask if in-process and more if it crosses the process boundary. Without pipelining, this will be significantly less usable compared to //net\u0027s C++ net::UDPSocket.\n\nThere is a different type of pipelining that Randy mentioned in https://chromium-review.googlesource.com/c/chromium/src/+/796933/23/services/network/udp_socket_impl.cc#191.\nThat is between //net and the kernel. We talked about it briefly and decided that is out of scope of the CL.",
+      "parentUuid": "db3f4e8d_6e9e68b7",
+      "revId": "17a5ee71f975ebd03efe1a9ce102f03b7df0c301",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "925a0fe0_0d37e3d0",
         "filename": "services/network/public/interfaces/udp_socket.mojom",
         "patchSetId": 28
