@@ -1,0 +1,215 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bebb950a_b2ac8142",
+        "filename": "chromeos/printing/ppd_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-12-18T23:55:37Z",
+      "side": 1,
+      "message": "from",
+      "range": {
+        "startLine": 175,
+        "startChar": 58,
+        "endLine": 175,
+        "endChar": 62
+      },
+      "revId": "6e876a243b649b6e88b6bfb7f6f843baf345988c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ad34f84_bfe30bb9",
+        "filename": "chromeos/printing/ppd_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-12-18T23:55:37Z",
+      "side": 1,
+      "message": "In Google/Chromium references should be const.  Use a pointer if you\u0027re modifying what you\u0027re passing in.  (Also, usually modified parameters come after constant ones)\n\nhttps://google.github.io/styleguide/cppguide.html#Reference_Arguments",
+      "range": {
+        "startLine": 211,
+        "startChar": 35,
+        "endLine": 211,
+        "endChar": 78
+      },
+      "revId": "6e876a243b649b6e88b6bfb7f6f843baf345988c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0df3525d_a0fb8830",
+        "filename": "chromeos/printing/ppd_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-12-18T23:55:37Z",
+      "side": 1,
+      "message": "If you want to do it this way to have the logging, that\u0027s cool.  Otherwise this whole function could be expressed nicely as a std::remove_if",
+      "revId": "6e876a243b649b6e88b6bfb7f6f843baf345988c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a577bdad_605e5a60",
+        "filename": "chromeos/printing/ppd_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-12-18T23:55:37Z",
+      "side": 1,
+      "message": "I think this entry in the initializer list doesn\u0027t do anything (that wouldn\u0027t be done anyways).",
+      "revId": "6e876a243b649b6e88b6bfb7f6f843baf345988c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b82bff9_22f2098b",
+        "filename": "chromeos/printing/ppd_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-12-18T23:55:37Z",
+      "side": 1,
+      "message": "\"indexes\" (or \"indices\" if you want to sound fancier.  :))",
+      "range": {
+        "startLine": 371,
+        "startChar": 44,
+        "endLine": 371,
+        "endChar": 50
+      },
+      "revId": "6e876a243b649b6e88b6bfb7f6f843baf345988c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b93e5ab_a39c1691",
+        "filename": "chromeos/printing/ppd_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-12-18T23:55:37Z",
+      "side": 1,
+      "message": "This is a little suboptimal.  If you have potential keys \"A\", \"B\", and \"C\" to locate a ppd, and each is on a different index shard, then I would think the right behavior would be\n\nResolve index shard for \"A\"\nTry to resolve using key \"A\"\nResolve index shard for \"B\"\nTry to resolve using key \"B\"\nResolve index shard for \"C\"\nTry to resolve using key \"C\"\n\nRight now, this seems to do\nResolve index shard for \"A\"\nResolve index shard for \"B\"\nResolve index shard for \"C\"\nTry to resolve using key \"A\"\nTry to resolve using key \"B\"\nTry to resolve using key \"C\"\n\nSince the index shard resolution network roundtrips are *much* more expensive than the attempts to resolve a ppd given an index shard, and you may not need to resolve all the index shards if you get lucky with one of the early ones.\n\nHOwever, this does add a bit of complexity for probably not a lot of real-world gain.  So if you don\u0027t want to tackle that, or find it too complicated, I\u0027m ok with this.",
+      "revId": "6e876a243b649b6e88b6bfb7f6f843baf345988c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0a3a441b_cac3f124",
+        "filename": "chromeos/printing/ppd_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 556,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-12-18T23:55:37Z",
+      "side": 1,
+      "message": "s/we will/we/",
+      "revId": "6e876a243b649b6e88b6bfb7f6f843baf345988c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ad152a5_a9589028",
+        "filename": "chromeos/printing/ppd_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1143,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-12-18T23:55:37Z",
+      "side": 1,
+      "message": "This function has some memory problems, I think. \n\nOn success, top_list is a pointer to (a pointer to) this:\n\n https://cs.chromium.org/chromium/src/base/values.h?rcl\u003d04235e62d2eae12e49b31ee74d8e6a448e3d8cc5\u0026l\u003d364\n\nThe enclosing Value object is never destroyed.  \n\nIn fact, unless I\u0027m missing something, it looks like there\u0027s no mechanism by which any of the JSON memory (which is left unowned by the .release() at line 1154) is ever cleaned up.\n\nSuggest reworking this so that top_list is ListValue*.    Then you can do something like\n\nauto* tmp_list \u003d base::ListValue::From(base::JSONReader::Read(buffer));\nif (tmp_list \u003d\u003d nullptr) {\n  return PpdProvider::INTERNAL_ERROR;\n}\n*top_list \u003d std::move(*tmp_list);",
+      "revId": "6e876a243b649b6e88b6bfb7f6f843baf345988c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f6f1e8d_860bda59",
+        "filename": "chromeos/printing/ppd_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1155,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-12-18T23:55:37Z",
+      "side": 1,
+      "message": "This part of the conditional is redundant -- ListValue::From() returns nullptr if the thing it\u0027s passed is not a list.",
+      "range": {
+        "startLine": 1155,
+        "startChar": 28,
+        "endLine": 1155,
+        "endChar": 51
+      },
+      "revId": "6e876a243b649b6e88b6bfb7f6f843baf345988c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f565432_65cca6df",
+        "filename": "chromeos/printing/ppd_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1388,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-12-18T23:55:37Z",
+      "side": 1,
+      "message": "unordered_map is a little bit of an odd choice when the keys only range from 0-20, but I can see how it saves you some other things, so ok.",
+      "revId": "6e876a243b649b6e88b6bfb7f6f843baf345988c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "00a49c0e_ba793bd0",
+        "filename": "chromeos/printing/ppd_provider.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-12-18T23:55:37Z",
+      "side": 1,
+      "message": "Should this be exposed to the API consumer?  (To be clear, it currently *is*, just not sure there\u0027s a reason it *should be*)",
+      "revId": "6e876a243b649b6e88b6bfb7f6f843baf345988c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
