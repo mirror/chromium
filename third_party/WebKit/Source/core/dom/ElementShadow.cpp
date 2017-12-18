@@ -44,37 +44,20 @@ ElementShadow* ElementShadow::Create() {
 
 ElementShadow::ElementShadow() : needs_distribution_recalc_(false) {}
 
-ShadowRoot& ElementShadow::YoungestShadowRoot() const {
-  ShadowRoot* current = shadow_root_;
-  DCHECK(current);
-  while (current->YoungerShadowRoot())
-    current = current->YoungerShadowRoot();
-  return *current;
-}
-
 ShadowRoot& ElementShadow::AddShadowRoot(Element& shadow_host,
                                          ShadowRootType type) {
   EventDispatchForbiddenScope assert_no_event_dispatch;
   ScriptForbiddenScope forbid_script;
 
-  // Multiple ShadowRoots are removed.
-  // TODO(kochi): Further cleanup of unnecessary code for multiple shadow.
   DCHECK(!shadow_root_);
-
-  if (shadow_root_) {
-    // TODO(hayato): Is the order, from the youngest to the oldest, important?
-    for (ShadowRoot* root = &YoungestShadowRoot(); root;
-         root = root->OlderShadowRoot())
-      root->LazyReattachIfAttached();
-  } else if (type == ShadowRootType::V0 || type == ShadowRootType::kUserAgent) {
+  if (type == ShadowRootType::V0 || type == ShadowRootType::kUserAgent) {
     DCHECK(!element_shadow_v0_);
     element_shadow_v0_ = ElementShadowV0::Create(*this);
   }
 
-  ShadowRoot* shadow_root = ShadowRoot::Create(shadow_host.GetDocument(), type);
-  shadow_root->SetParentOrShadowHostNode(&shadow_host);
-  shadow_root->SetParentTreeScope(shadow_host.GetTreeScope());
-  AppendShadowRoot(*shadow_root);
+  shadow_root_ = ShadowRoot::Create(shadow_host.GetDocument(), type);
+  shadow_root_->SetParentOrShadowHostNode(&shadow_host);
+  shadow_root_->SetParentTreeScope(shadow_host.GetTreeScope());
   if (type == ShadowRootType::V0) {
     SetNeedsDistributionRecalc();
   } else {
@@ -82,20 +65,15 @@ ShadowRoot& ElementShadow::AddShadowRoot(Element& shadow_host,
       child.LazyReattachIfAttached();
   }
 
-  shadow_root->InsertedInto(&shadow_host);
+  shadow_root_->InsertedInto(&shadow_host);
   shadow_host.SetChildNeedsStyleRecalc();
   shadow_host.SetNeedsStyleRecalc(
       kSubtreeStyleChange,
       StyleChangeReasonForTracing::Create(StyleChangeReason::kShadow));
 
-  probe::didPushShadowRoot(&shadow_host, shadow_root);
+  probe::didPushShadowRoot(&shadow_host, shadow_root_);
 
-  return *shadow_root;
-}
-
-void ElementShadow::AppendShadowRoot(ShadowRoot& shadow_root) {
-  DCHECK(!shadow_root_);
-  shadow_root_ = &shadow_root;
+  return *shadow_root_;
 }
 
 void ElementShadow::Attach(const Node::AttachContext& context) {
