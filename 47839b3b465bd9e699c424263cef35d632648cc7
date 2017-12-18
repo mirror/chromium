@@ -16,6 +16,24 @@
       "revId": "47839b3b465bd9e699c424263cef35d632648cc7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c96d81a9_ec9314ce",
+        "filename": "chrome/browser/resources/settings/site_settings/site_details_permission.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-12-18T06:21:41Z",
+      "side": 1,
+      "message": "I\u0027m not sure what you mean by converting the i18nAdvanced string ids into numbers - do you mean adding an array of the string ids and returning the indexes of that array in permissionInfoStringIndex_()? This sounds like it no longer uses the automatic translation in the HTML via i18nPolymer(), so if we\u0027re trying to reduce the number of parameters passed in here, it might be simpler to just to do all the translations via i18nAdvanced() in the JS.\n\nI\u0027ve gone ahead and done that in the next patchset, but let me know if I\u0027ve misunderstood something or you still think it\u0027s worth having the translations pre-done in the HTML.",
+      "parentUuid": "c4143a69_957f7289",
+      "revId": "47839b3b465bd9e699c424263cef35d632648cc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
