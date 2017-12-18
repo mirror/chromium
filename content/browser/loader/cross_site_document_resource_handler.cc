@@ -20,10 +20,13 @@
 #include "content/common/site_isolation_policy.h"
 #include "content/public/browser/content_browser_client.h"
 #include "content/public/browser/resource_context.h"
+#include "content/public/browser/web_contents.h"
 #include "content/public/common/content_client.h"
 #include "net/base/io_buffer.h"
 #include "net/base/mime_sniffer.h"
 #include "net/url_request/url_request.h"
+#include "services/metrics/public/cpp/ukm_builders.h"
+#include "services/metrics/public/cpp/ukm_recorder.h"
 
 namespace content {
 
@@ -33,6 +36,81 @@ void LogCrossSiteDocumentAction(
     CrossSiteDocumentResourceHandler::Action action) {
   UMA_HISTOGRAM_ENUMERATION("SiteIsolation.XSD.Browser.Action", action,
                             CrossSiteDocumentResourceHandler::Action::kCount);
+}
+
+void LogBlockedResponseOnUIThread(
+    ResourceRequestInfo::WebContentsGetter web_contents_getter,
+    bool needed_sniffing,
+    CrossSiteDocumentMimeType canonical_mime_type,
+    ResourceType resource_type,
+    int http_response_code) {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+
+  WebContents* web_contents = web_contents_getter.Run();
+  if (!web_contents)
+    return;
+
+  ukm::UkmRecorder* recorder = ukm::UkmRecorder::Get();
+  ukm::SourceId source_id = ukm::UkmRecorder::GetNewSourceID();
+  recorder->UpdateSourceURL(source_id, web_contents->GetLastCommittedURL());
+  ukm::builders::SiteIsolation_XSD_Browser_Blocked(source_id)
+      .SetContentResourceType(resource_type)
+      .SetCanonicalMimeType(canonical_mime_type)
+      .SetHttpResponseCode(http_response_code)
+      .SetNeededSniffing(needed_sniffing)
+      .Record(recorder);
+}
+
+void LogBlockedResponse(ResourceRequestInfoImpl* resource_request_info,
+                        bool needed_sniffing,
+                        CrossSiteDocumentMimeType canonical_mime_type,
+                        int http_response_code) {
+  LogCrossSiteDocumentAction(
+      needed_sniffing
+          ? CrossSiteDocumentResourceHandler::Action::kBlockedAfterSniffing
+          : CrossSiteDocumentResourceHandler::Action::kBlockedWithoutSniffing);
+
+  ResourceType resource_type = resource_request_info->GetResourceType();
+  UMA_HISTOGRAM_ENUMERATION("SiteIsolation.XSD.Browser.Blocked", resource_type,
+                            content::RESOURCE_TYPE_LAST_TYPE);
+
+  switch (canonical_mime_type) {
+    case CROSS_SITE_DOCUMENT_MIME_TYPE_HTML:
+      UMA_HISTOGRAM_ENUMERATION("SiteIsolation.XSD.Browser.Blocked.HTML",
+                                resource_type,
+                                content::RESOURCE_TYPE_LAST_TYPE);
+      break;
+    case CROSS_SITE_DOCUMENT_MIME_TYPE_XML:
+      UMA_HISTOGRAM_ENUMERATION("SiteIsolation.XSD.Browser.Blocked.XML",
+                                resource_type,
+                                content::RESOURCE_TYPE_LAST_TYPE);
+      break;
+    case CROSS_SITE_DOCUMENT_MIME_TYPE_JSON:
+      UMA_HISTOGRAM_ENUMERATION("SiteIsolation.XSD.Browser.Blocked.JSON",
+                                resource_type,
+                                content::RESOURCE_TYPE_LAST_TYPE);
+      break;
+    case CROSS_SITE_DOCUMENT_MIME_TYPE_PLAIN:
+      UMA_HISTOGRAM_ENUMERATION("SiteIsolation.XSD.Browser.Blocked.Plain",
+                                resource_type,
+                                content::RESOURCE_TYPE_LAST_TYPE);
+      break;
+    default:
+      NOTREACHED();
+  }
+
+  // The last committed URL is only available on the UI thread - we need to hop
+  // onto the UI thread to log an UKM event.  Note that this is racey - by the
+  // time the posted task runs, the WebContents could have been closed and/or
+  // navigated to another URL.  This is understood and acceptable - this should
+  // be rare enough to not matter for the collected UKM data.
+  BrowserThread::PostTask(
+      BrowserThread::UI, FROM_HERE,
+      base::BindOnce(
+          &LogBlockedResponseOnUIThread,
+          base::Passed(resource_request_info->GetWebContentsGetterForRequest()),
+          needed_sniffing, canonical_mime_type, resource_type,
+          http_response_code));
 }
 
 }  // namespace
@@ -113,6 +191,7 @@ void CrossSiteDocumentResourceHandler::OnResponseStarted(
       CrossSiteDocumentResourceHandler::Action::kResponseStarted);
 
   should_block_based_on_headers_ = ShouldBlockBasedOnHeaders(response);
+  http_response_code_ = response->head.headers->response_code();
   next_handler_->OnResponseStarted(response, std::move(controller));
 }
 
@@ -246,39 +325,8 @@ void CrossSiteDocumentResourceHandler::OnReadCompleted(
                        : "null",
                    "url", request()->url().spec());
 
-      LogCrossSiteDocumentAction(
-          needs_sniffing_
-              ? CrossSiteDocumentResourceHandler::Action::kBlockedAfterSniffing
-              : CrossSiteDocumentResourceHandler::Action::
-                    kBlockedWithoutSniffing);
-      ResourceType resource_type = GetRequestInfo()->GetResourceType();
-      UMA_HISTOGRAM_ENUMERATION("SiteIsolation.XSD.Browser.Blocked",
-                                resource_type,
-                                content::RESOURCE_TYPE_LAST_TYPE);
-      switch (canonical_mime_type_) {
-        case CROSS_SITE_DOCUMENT_MIME_TYPE_HTML:
-          UMA_HISTOGRAM_ENUMERATION("SiteIsolation.XSD.Browser.Blocked.HTML",
-                                    resource_type,
-                                    content::RESOURCE_TYPE_LAST_TYPE);
-          break;
-        case CROSS_SITE_DOCUMENT_MIME_TYPE_XML:
-          UMA_HISTOGRAM_ENUMERATION("SiteIsolation.XSD.Browser.Blocked.XML",
-                                    resource_type,
-                                    content::RESOURCE_TYPE_LAST_TYPE);
-          break;
-        case CROSS_SITE_DOCUMENT_MIME_TYPE_JSON:
-          UMA_HISTOGRAM_ENUMERATION("SiteIsolation.XSD.Browser.Blocked.JSON",
-                                    resource_type,
-                                    content::RESOURCE_TYPE_LAST_TYPE);
-          break;
-        case CROSS_SITE_DOCUMENT_MIME_TYPE_PLAIN:
-          UMA_HISTOGRAM_ENUMERATION("SiteIsolation.XSD.Browser.Blocked.Plain",
-                                    resource_type,
-                                    content::RESOURCE_TYPE_LAST_TYPE);
-          break;
-        default:
-          NOTREACHED();
-      }
+      LogBlockedResponse(GetRequestInfo(), needs_sniffing_,
+                         canonical_mime_type_, http_response_code_);
     } else {
       // Allow the response through instead and proceed with reading more.
       // Copy sniffed data into the next handler's buffer before proceeding.
