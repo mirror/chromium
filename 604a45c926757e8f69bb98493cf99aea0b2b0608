@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b5883b26_34bfd7de",
+        "filename": "components/data_reduction_proxy/content/browser/data_reduction_proxy_pingback_client_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-12-18T23:29:13Z",
+      "side": 1,
+      "message": "can these be protected or private?\nProtected might be better so they are still accessible to TestDataReductionProxyPingbackClientImpl class.",
+      "range": {
+        "startLine": 42,
+        "startChar": 2,
+        "endLine": 46,
+        "endChar": 0
+      },
+      "revId": "604a45c926757e8f69bb98493cf99aea0b2b0608",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
