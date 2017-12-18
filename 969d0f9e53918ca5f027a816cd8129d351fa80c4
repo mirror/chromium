@@ -119,6 +119,24 @@
     },
     {
       "key": {
+        "uuid": "beddb21f_3a9fe478",
+        "filename": "chrome/browser/chromeos/settings/device_settings_service.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-18T22:42:19Z",
+      "side": 1,
+      "message": "Ah, right. STORE_SUCCESS is an operation success for policy store, not the store operation is done successfully.\n\nNever mind then.",
+      "parentUuid": "0614f0d1_ecb7af46",
+      "revId": "969d0f9e53918ca5f027a816cd8129d351fa80c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "826da6b6_0f2555fc",
         "filename": "chrome/browser/chromeos/settings/device_settings_service.h",
         "patchSetId": 5
@@ -148,6 +166,24 @@
       "side": 1,
       "message": "Well, in order to do that, DeviceSettingsService pretty much needs to depend on the off_hours policy code and we shouldn\u0027t try to make this layering change.\n\nIn the associated issue, mnissler@ suggested that we should separate out policy from DeviceSettingsService, so that is the approach I was taking, but maybe this needs to be part of a larger / more thought out plan about where the policy code should live. I am happy to put this change on the backburner in the meanwhile.",
       "parentUuid": "826da6b6_0f2555fc",
+      "revId": "969d0f9e53918ca5f027a816cd8129d351fa80c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cfbbe9b_d79a821a",
+        "filename": "chrome/browser/chromeos/settings/device_settings_service.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-18T22:42:19Z",
+      "side": 1,
+      "message": "Thanks for the clarification. Now this makes more sense.",
+      "parentUuid": "d72e6b83_5586ec38",
       "revId": "969d0f9e53918ca5f027a816cd8129d351fa80c4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
