@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9e335c30_9a69518f",
+        "filename": "content/browser/service_manager/service_manager_context.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-12-18T19:19:29Z",
+      "side": 1,
+      "message": "I am not sure. It might work.\nWhich exact thread are you referring to that we already have for the underlying video capture?\n\nIn the pre-service legacy code path of video capture, on Android and Linux, we were using a thread from the audio manager to run the equivalent code. I thought about using that one here, too, but I did not see an easy way to plumb access to a corresponding TaskRunner from the code that knows the audio manager to this location here.",
+      "parentUuid": "213ba328_254a867c",
+      "range": {
+        "startLine": 482,
+        "startChar": 40,
+        "endLine": 482,
+        "endChar": 44
+      },
+      "revId": "86f643e5161535b4fb50d37fe9177b03a04f9b38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3abcdcbe_afee9c7a",
         "filename": "services/service_manager/embedder/embedded_instance_manager.cc",
         "patchSetId": 8
