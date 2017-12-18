@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "414dbfe1_943a3fe5",
+        "filename": "cc/tiles/software_image_decode_cache.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-12-18T18:58:30Z",
+      "side": 1,
+      "message": "super-nit: yields",
+      "range": {
+        "startLine": 133,
+        "startChar": 32,
+        "endLine": 133,
+        "endChar": 37
+      },
+      "revId": "4eb0bf3298e04f7a9178457af5659da42dfada03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac596387_0dc8e735",
+        "filename": "cc/tiles/software_image_decode_cache.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-12-18T18:58:30Z",
+      "side": 1,
+      "message": "nit: Should we DCHECK_IMPLIES(nearest_neighbor_, type_ \u003d\u003d kOriginal) this is the case?",
+      "range": {
+        "startLine": 54,
+        "startChar": 7,
+        "endLine": 54,
+        "endChar": 74
+      },
+      "revId": "4eb0bf3298e04f7a9178457af5659da42dfada03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
