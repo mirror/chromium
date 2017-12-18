@@ -34,6 +34,24 @@
       "revId": "4531ee9d5738622e030f47c7c1e2cbc473ed3ddf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1acbe906_98d93fcc",
+        "filename": "mojo/public/cpp/test_support/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1108829
+      },
+      "writtenOn": "2017-12-18T17:41:19Z",
+      "side": 1,
+      "message": "Yup, that works. Thanks :)",
+      "parentUuid": "bb8fe129_a7305194",
+      "revId": "4531ee9d5738622e030f47c7c1e2cbc473ed3ddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
