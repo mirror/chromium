@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "a9e0ff21_f657dc2e",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-12-18T23:45:59Z",
+      "side": 1,
+      "message": "I didn\u0027t understand what you meant in your reply. The 35 s delay is greater than the 20 s DB closing timeout so it will close anyway. I don\u0027t think that\u0027s a problem and I don\u0027t understand how this explains not using 45 s as suggested in the design and from the UMA data we looked at.",
+      "parentUuid": "2ca3c7d2_f530e0c7",
+      "range": {
+        "startLine": 44,
+        "startChar": 33,
+        "endLine": 44,
+        "endChar": 35
+      },
+      "revId": "b5d2386676888f5cdb587c449a13bc10bd1fb610",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9e8d9dc6_f40a016a",
         "filename": "components/offline_pages/core/model/offline_page_model_taskified.cc",
         "patchSetId": 1
@@ -225,6 +249,30 @@
       "side": 1,
       "message": "We definitely will, once that something is implemented.",
       "parentUuid": "cd9c7df6_9714a1a5",
+      "range": {
+        "startLine": 505,
+        "startChar": 60,
+        "endLine": 505,
+        "endChar": 62
+      },
+      "revId": "b5d2386676888f5cdb587c449a13bc10bd1fb610",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b78a2353_2414e1fb",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 505,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-12-18T23:45:59Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "8479b63a_64ad3c95",
       "range": {
         "startLine": 505,
         "startChar": 60,
