@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "213ba328_254a867c",
+        "filename": "content/browser/service_manager/service_manager_context.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 1108829
+      },
+      "writtenOn": "2017-12-18T18:34:21Z",
+      "side": 1,
+      "message": "Just curious, does the service need to be running on its own thread? We already have a dedicated thread for the underlying video capture. Would it avoid the issue in EmbeddedInstanceManager if the service is not using its own thread?",
+      "range": {
+        "startLine": 482,
+        "startChar": 40,
+        "endLine": 482,
+        "endChar": 44
+      },
+      "revId": "86f643e5161535b4fb50d37fe9177b03a04f9b38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3abcdcbe_afee9c7a",
         "filename": "services/service_manager/embedder/embedded_instance_manager.cc",
         "patchSetId": 8
@@ -13,6 +36,29 @@
       "writtenOn": "2017-12-08T00:51:48Z",
       "side": 1,
       "message": "I do not think this is OK. This does not necessarily only happen at (and in fact almost certainly does happen at times other than) process shutdown. We should join the thread from a blocking background task instead. That should be easy enough to implement.",
+      "revId": "86f643e5161535b4fb50d37fe9177b03a04f9b38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0edd1972_90ef2dcc",
+        "filename": "services/video_capture/service_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1108829
+      },
+      "writtenOn": "2017-12-18T18:34:21Z",
+      "side": 1,
+      "message": "std::make_unique",
+      "range": {
+        "startLine": 26,
+        "startChar": 9,
+        "endLine": 26,
+        "endChar": 25
+      },
       "revId": "86f643e5161535b4fb50d37fe9177b03a04f9b38",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
