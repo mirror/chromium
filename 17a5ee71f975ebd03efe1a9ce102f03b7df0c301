@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "59484fc0_aa7293ca",
+        "filename": "services/network/public/interfaces/udp_socket.mojom",
+        "patchSetId": 28
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-18T16:45:53Z",
+      "side": 1,
+      "message": "Can we instead just have a hard-coded limit, which we guarantee that we\u0027ll allow, and get rid of this method?  Returning ERR_INSUFFICIENT_RESOURCES for some indeterminate limit seems not great.  If we want to let consumers set a lower limit (For debugging/error checking), we can just make it passed in on creation.",
+      "range": {
+        "startLine": 70,
+        "startChar": 31,
+        "endLine": 70,
+        "endChar": 32
+      },
+      "revId": "17a5ee71f975ebd03efe1a9ce102f03b7df0c301",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "45c1469d_04c92c85",
         "filename": "services/network/public/interfaces/udp_socket.mojom",
         "patchSetId": 28
