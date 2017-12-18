@@ -36,6 +36,52 @@
     },
     {
       "key": {
+        "uuid": "fa3da931_76b12ac9",
+        "filename": "docs/tour_of_luci_ui.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1141499
+      },
+      "writtenOn": "2017-12-18T22:20:53Z",
+      "side": 1,
+      "message": "underline doesn\u0027t show in gerrit anyway. IMO, just backticks would be fine and you shouldn\u0027t need to escape \u003c\u003e:\n\n`ci.chromium.org/p/\u003cproject_id\u003e/g/\u003cgroup_id\u003e/console`, replace `\u003cproject_id\u003e` with ...",
+      "range": {
+        "startLine": 17,
+        "startChar": 24,
+        "endLine": 18,
+        "endChar": 35
+      },
+      "revId": "6454d1768a5a8069603be9e30630c991e134874e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ab573bf_4c45c1a7",
+        "filename": "docs/tour_of_luci_ui.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1141499
+      },
+      "writtenOn": "2017-12-18T22:20:53Z",
+      "side": 1,
+      "message": "ditto. Just link it [Chromium Main](http://ci.chromium.org/p/chromium/g/main/console)",
+      "range": {
+        "startLine": 22,
+        "startChar": 17,
+        "endLine": 22,
+        "endChar": 58
+      },
+      "revId": "6454d1768a5a8069603be9e30630c991e134874e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "52a9e69c_20cb0149",
         "filename": "docs/tour_of_luci_ui.md",
         "patchSetId": 1
@@ -47,6 +93,46 @@
       "writtenOn": "2017-12-18T17:27:15Z",
       "side": 1,
       "message": "\"ordered\"?",
+      "revId": "6454d1768a5a8069603be9e30630c991e134874e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4595d02e_24ae119a",
+        "filename": "docs/tour_of_luci_ui.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1141499
+      },
+      "writtenOn": "2017-12-18T22:20:53Z",
+      "side": 1,
+      "message": "nit: at most 2 empty lines is what we typically follow.",
+      "revId": "6454d1768a5a8069603be9e30630c991e134874e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98aae4a3_c592ae05",
+        "filename": "docs/tour_of_luci_ui.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1141499
+      },
+      "writtenOn": "2017-12-18T22:20:53Z",
+      "side": 1,
+      "message": "ditto here and below.",
+      "range": {
+        "startLine": 117,
+        "startChar": 9,
+        "endLine": 118,
+        "endChar": 78
+      },
       "revId": "6454d1768a5a8069603be9e30630c991e134874e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
