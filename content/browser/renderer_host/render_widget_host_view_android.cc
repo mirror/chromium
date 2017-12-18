@@ -671,12 +671,11 @@ bool RenderWidgetHostViewAndroid::IsShowing() {
   return is_showing_ && content_view_core_;
 }
 
-void RenderWidgetHostViewAndroid::OnShowUnhandledTapUIIfNeeded(int x_dip,
-                                                               int y_dip) {
+void RenderWidgetHostViewAndroid::OnShowUnhandledTapUIIfNeeded(int x, int y) {
   if (!selection_popup_controller_ || !content_view_core_)
     return;
   selection_popup_controller_->OnShowUnhandledTapUIIfNeeded(
-      x_dip, y_dip, view_.GetDipScale());
+      x, y, view_.GetDipScale());
 }
 
 void RenderWidgetHostViewAndroid::OnSelectWordAroundCaretAck(bool did_select,

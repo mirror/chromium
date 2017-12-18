@@ -11,6 +11,7 @@
 #include "content/browser/renderer_host/render_widget_host_view_android.h"
 #include "content/browser/web_contents/web_contents_impl.h"
 #include "content/public/common/context_menu_params.h"
+#include "content/public/common/use_zoom_for_dsf_policy.h"
 #include "jni/SelectionPopupController_jni.h"
 #include "third_party/WebKit/public/web/WebContextMenuData.h"
 #include "ui/gfx/geometry/point_conversions.h"
@@ -165,16 +166,17 @@ bool SelectionPopupController::ShowSelectionMenu(
   return true;
 }
 
-void SelectionPopupController::OnShowUnhandledTapUIIfNeeded(int x_dip,
-                                                            int y_dip,
+void SelectionPopupController::OnShowUnhandledTapUIIfNeeded(int x,
+                                                            int y,
                                                             float dip_scale) {
   JNIEnv* env = AttachCurrentThread();
   ScopedJavaLocalRef<jobject> obj = java_obj_.get(env);
   if (obj.is_null())
     return;
+  float x_px = UseZoomForDSFEnabled() ? x : x * dip_scale;
+  float y_px = UseZoomForDSFEnabled() ? y : y * dip_scale;
   Java_SelectionPopupController_onShowUnhandledTapUIIfNeeded(
-      env, obj, static_cast<jint>(x_dip * dip_scale),
-      static_cast<jint>(y_dip * dip_scale));
+      env, obj, static_cast<jint>(x_px), static_cast<jint>(y_px));
 }
 
 void SelectionPopupController::OnSelectWordAroundCaretAck(bool did_select,
