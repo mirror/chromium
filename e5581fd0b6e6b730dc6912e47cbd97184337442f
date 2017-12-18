@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4018a793_37326edf",
+        "filename": "gpu/command_buffer/service/texture_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-12-18T17:31:59Z",
+      "side": 1,
+      "message": "Please #include \u003ctuple\u003e here",
+      "revId": "e5581fd0b6e6b730dc6912e47cbd97184337442f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
