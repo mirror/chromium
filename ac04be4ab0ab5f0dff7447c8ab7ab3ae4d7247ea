@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3cee7393_82e6363c",
+        "filename": "chrome/browser/browser_process_platform_part_chromeos.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1178302
+      },
+      "writtenOn": "2017-12-18T20:39:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b64ccc1c_a6eb1953",
+      "revId": "ac04be4ab0ab5f0dff7447c8ab7ab3ae4d7247ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1377012e_c1f9ba5a",
         "filename": "chrome/browser/component_updater/cros_component_installer.cc",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "ac04be4ab0ab5f0dff7447c8ab7ab3ae4d7247ea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a46a3e5a_8689bdf1",
+        "filename": "chrome/browser/component_updater/cros_component_installer.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1178302
+      },
+      "writtenOn": "2017-12-18T20:39:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1377012e_c1f9ba5a",
+      "revId": "ac04be4ab0ab5f0dff7447c8ab7ab3ae4d7247ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "1dab15df_96c94aaa",
+        "filename": "chrome/browser/component_updater/cros_component_installer.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1178302
+      },
+      "writtenOn": "2017-12-18T20:39:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "43888cbf_43facfa2",
+      "range": {
+        "startLine": 64,
+        "startChar": 12,
+        "endLine": 64,
+        "endChar": 19
+      },
+      "revId": "ac04be4ab0ab5f0dff7447c8ab7ab3ae4d7247ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ed54d50_2ec08ae6",
         "filename": "chrome/browser/component_updater/cros_component_installer.cc",
         "patchSetId": 7
@@ -73,6 +133,24 @@
       "revId": "ac04be4ab0ab5f0dff7447c8ab7ab3ae4d7247ea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d201fa09_cf930cd2",
+        "filename": "chrome/browser/component_updater/cros_component_installer.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1178302
+      },
+      "writtenOn": "2017-12-18T20:39:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ed54d50_2ec08ae6",
+      "revId": "ac04be4ab0ab5f0dff7447c8ab7ab3ae4d7247ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "d0f648af_a2579885",
+        "filename": "chrome/browser/component_updater/cros_component_installer.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1178302
+      },
+      "writtenOn": "2017-12-18T20:39:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1b0f91c9_ae4e298e",
+      "revId": "ac04be4ab0ab5f0dff7447c8ab7ab3ae4d7247ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ace00485_43eb748b",
         "filename": "chrome/browser/component_updater/cros_component_installer.h",
         "patchSetId": 7
@@ -107,6 +203,24 @@
       "revId": "ac04be4ab0ab5f0dff7447c8ab7ab3ae4d7247ea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc73c022_f0b867c0",
+        "filename": "chrome/browser/component_updater/cros_component_installer.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1178302
+      },
+      "writtenOn": "2017-12-18T20:39:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ace00485_43eb748b",
+      "revId": "ac04be4ab0ab5f0dff7447c8ab7ab3ae4d7247ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -127,6 +241,24 @@
     },
     {
       "key": {
+        "uuid": "4c3e22bc_efcc4e57",
+        "filename": "chrome/browser/component_updater/cros_component_installer.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1178302
+      },
+      "writtenOn": "2017-12-18T20:39:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d04ac460_378f56c3",
+      "revId": "ac04be4ab0ab5f0dff7447c8ab7ab3ae4d7247ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a172e2ec_2e616ed0",
         "filename": "chrome/browser/component_updater/cros_component_installer.h",
         "patchSetId": 7
@@ -141,6 +273,24 @@
       "revId": "ac04be4ab0ab5f0dff7447c8ab7ab3ae4d7247ea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a980b33_620f42aa",
+        "filename": "chrome/browser/component_updater/cros_component_installer.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1178302
+      },
+      "writtenOn": "2017-12-18T20:39:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a172e2ec_2e616ed0",
+      "revId": "ac04be4ab0ab5f0dff7447c8ab7ab3ae4d7247ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -161,6 +311,24 @@
     },
     {
       "key": {
+        "uuid": "cd30e6be_a8f02f1e",
+        "filename": "chrome/browser/component_updater/cros_component_installer.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1178302
+      },
+      "writtenOn": "2017-12-18T20:39:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "693f2614_5a451394",
+      "revId": "ac04be4ab0ab5f0dff7447c8ab7ab3ae4d7247ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "622c10a3_646a7d50",
         "filename": "chrome/browser/component_updater/cros_component_installer.h",
         "patchSetId": 7
@@ -175,6 +343,24 @@
       "revId": "ac04be4ab0ab5f0dff7447c8ab7ab3ae4d7247ea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f7a5f59_d6d61d21",
+        "filename": "chrome/browser/component_updater/cros_component_installer.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1178302
+      },
+      "writtenOn": "2017-12-18T20:39:13Z",
+      "side": 1,
+      "message": "Done\n\nNo, name is used in this class to name a component. but in chrome component system id is used to name a component. we use name here because it\u0027s more readable and friendly to developers.",
+      "parentUuid": "622c10a3_646a7d50",
+      "revId": "ac04be4ab0ab5f0dff7447c8ab7ab3ae4d7247ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -195,6 +381,24 @@
     },
     {
       "key": {
+        "uuid": "8fca670a_0936f1a0",
+        "filename": "chrome/browser/component_updater/cros_component_installer.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1178302
+      },
+      "writtenOn": "2017-12-18T20:39:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3b89151b_d2479973",
+      "revId": "ac04be4ab0ab5f0dff7447c8ab7ab3ae4d7247ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9d16ba72_36966dff",
         "filename": "chrome/browser/component_updater/cros_component_installer.h",
         "patchSetId": 7
@@ -212,6 +416,24 @@
     },
     {
       "key": {
+        "uuid": "4dd1184e_82670714",
+        "filename": "chrome/browser/component_updater/cros_component_installer.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1178302
+      },
+      "writtenOn": "2017-12-18T20:39:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9d16ba72_36966dff",
+      "revId": "ac04be4ab0ab5f0dff7447c8ab7ab3ae4d7247ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d69bb0a1_c0af4e28",
         "filename": "chrome/browser/component_updater/cros_component_installer.h",
         "patchSetId": 7
@@ -223,6 +445,24 @@
       "writtenOn": "2017-12-16T07:24:16Z",
       "side": 1,
       "message": "if the result is a mount point, should it be base::Optional\u003cbase::FilePath\u003e instead?\n\nand sorry if this came up before, but do you actually need base::Optional here, or can you just use an empty path/string to convey an unset value?",
+      "revId": "ac04be4ab0ab5f0dff7447c8ab7ab3ae4d7247ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3e6f598_a90a4931",
+        "filename": "chrome/browser/component_updater/cros_component_installer.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1178302
+      },
+      "writtenOn": "2017-12-18T20:39:13Z",
+      "side": 1,
+      "message": "This is a path returned from ImageLoaderClient::LoadComponentAtPath. I use base::Optional to make it consistent with other methods in ImageLoaderClient.",
+      "parentUuid": "d69bb0a1_c0af4e28",
       "revId": "ac04be4ab0ab5f0dff7447c8ab7ab3ae4d7247ea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
