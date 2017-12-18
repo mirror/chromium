@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "d32a4e5a_4ce4a35a",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/templates/CSSProperty.cpp.tmpl",
+        "patchSetId": 29
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2017-12-18T01:57:31Z",
+      "side": 1,
+      "message": "I considered your suggestions when I wrote this code initially \u0026 decided against it. If you want to discuss it further we can go over it offline.",
+      "parentUuid": "0a144115_64f486c0",
+      "revId": "fd2953003a621081f6ab44cc75e96b592525f492",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9418b863_ffc53daf",
         "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/templates/CSSUnresolvedProperty.cpp.tmpl",
         "patchSetId": 29
