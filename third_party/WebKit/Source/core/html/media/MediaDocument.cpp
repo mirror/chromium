@@ -128,17 +128,13 @@ void MediaDocumentParser::CreateDocumentStructure() {
 
   GetDocument()->WillInsertBody();
 
-  if (GetDocument()->GetSettings() &&
-      GetDocument()->GetSettings()->GetEmbeddedMediaExperienceEnabled() &&
-      source->type().StartsWithIgnoringASCIICase("video/")) {
-    EventListener* listener = MediaLoadedEventListener::Create();
-    AddEventListenerOptions options;
-    options.setOnce(true);
-    AddEventListenerOptionsOrBoolean options_or_boolean;
-    options_or_boolean.SetAddEventListenerOptions(options);
-    media->addEventListener(EventTypeNames::loadedmetadata, listener,
-                            options_or_boolean);
-  }
+  EventListener* listener = MediaLoadedEventListener::Create();
+  AddEventListenerOptions options;
+  options.setOnce(true);
+  AddEventListenerOptionsOrBoolean options_or_boolean;
+  options_or_boolean.SetAddEventListenerOptions(options);
+  media->addEventListener(EventTypeNames::loadedmetadata, listener,
+                          options_or_boolean);
 
   body->AppendChild(media);
   root_element->AppendChild(head);
