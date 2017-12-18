@@ -10,6 +10,7 @@
 #include "base/macros.h"
 #include "ui/accessibility/ax_enums.h"
 #include "ui/gfx/native_widget_types.h"
+#include "ui/views/view.h"
 #include "ui/views/views_export.h"
 
 namespace views {
@@ -26,6 +27,9 @@ class VIEWS_EXPORT NativeViewAccessibility {
 
   virtual gfx::NativeViewAccessible GetNativeObject() = 0;
   virtual void NotifyAccessibilityEvent(ui::AXEvent event_type) = 0;
+  // The unique accessibility id, used for the target of relationships, or -1
+  // if no accessibility object exists.
+  virtual int32_t GetId() const = 0;
 
  protected:
   NativeViewAccessibility() {}

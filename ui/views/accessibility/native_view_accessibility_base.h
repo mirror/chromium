@@ -52,6 +52,7 @@ class VIEWS_EXPORT NativeViewAccessibilityBase
   bool AccessibilityPerformAction(const ui::AXActionData& data) override;
   bool ShouldIgnoreHoveredStateForTesting() override;
   bool IsOffscreen() const override;
+  int32_t GetId() const override;
 
  protected:
   explicit NativeViewAccessibilityBase(View* view);
