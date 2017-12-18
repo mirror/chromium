@@ -1707,6 +1707,15 @@
     },
   },
 
+  'chromedriver_py_tests_isolated_scripts': {
+    'chromedriver_py_tests': {
+      'swarming': {
+        'hard_timeout': 960,
+        'shards': 12,
+      },
+    }
+  },
+
   'telemetry_perf_unittests_scripts': {
     'telemetry_perf_unittests': {
       'script': 'telemetry_perf_unittests.py',
@@ -2023,6 +2032,7 @@
     'desktop_chromium_isolated_scripts',
     'linux_specific_chromium_isolated_scripts',
     'telemetry_perf_unittests_isolated_scripts',
+    'chromedriver_py_tests_isolated_scripts',
   ],
 
   'chromium_mac_clang_gtests': [
