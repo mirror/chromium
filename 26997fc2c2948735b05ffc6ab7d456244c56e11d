@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a2dbda1d_adacf80a",
+        "filename": "components/omnibox/browser/autocomplete_input.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-12-18T23:12:04Z",
+      "side": 1,
+      "message": "You should add the .invalid TLD to this conditional (basically, make it behave as if it\u0027s non-compliant), as we likely want to handle these like URLs that have broken hostnames: search by default, but if the user types a scheme, allow them to navigate by explicit choice.",
+      "revId": "26997fc2c2948735b05ffc6ab7d456244c56e11d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36183238_3fe9aae4",
+        "filename": "components/omnibox/browser/autocomplete_input.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 440,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-12-18T23:12:04Z",
+      "side": 1,
+      "message": "Nit: Maybe clearer:\n\nThe .test and .localhost TLDs are special-cased as known TLDs due to RFC 6761.",
+      "revId": "26997fc2c2948735b05ffc6ab7d456244c56e11d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "156f2852_97a4de8c",
+        "filename": "components/omnibox/browser/autocomplete_input.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-12-18T23:12:04Z",
+      "side": 1,
+      "message": "You should consider adding .example as well if you\u0027re adding .test; see bug comment.",
+      "revId": "26997fc2c2948735b05ffc6ab7d456244c56e11d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
