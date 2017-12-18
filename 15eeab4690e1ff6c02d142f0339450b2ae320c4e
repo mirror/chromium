@@ -46,6 +46,30 @@
       "revId": "15eeab4690e1ff6c02d142f0339450b2ae320c4e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53d1d52c_4dbfc6d2",
+        "filename": "content/test/data/media/peerconnection-source-feed-switch.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002301
+      },
+      "writtenOn": "2017-12-18T08:29:45Z",
+      "side": 1,
+      "message": "Yes, remove it for now.",
+      "parentUuid": "ddb5c87e_a827ff66",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 22
+      },
+      "revId": "15eeab4690e1ff6c02d142f0339450b2ae320c4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
