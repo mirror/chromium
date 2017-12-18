@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9fdd0dbf_71b180c6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-12-18T18:19:14Z",
+      "side": 1,
+      "message": "\"tying\"",
+      "range": {
+        "startLine": 20,
+        "startChar": 37,
+        "endLine": 20,
+        "endChar": 45
+      },
+      "revId": "c0a1e4713b81cfa3e03e2118dc81b6259a2a283e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c81b39ae_87b5a4ed",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1921,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-12-18T18:19:14Z",
+      "side": 1,
+      "message": "Are we guaranteed to call ProcessUrlFragment after the document has fully loaded?  I thought Document::goto_anchor_needed_after_stylesheets_load_ played some role in ensuring this.\n\nIf the document hasn\u0027t finished loading, FindAnchor might return null here because the anchor node isn\u0027t in the DOM yet.",
+      "range": {
+        "startLine": 1921,
+        "startChar": 48,
+        "endLine": 1921,
+        "endChar": 58
+      },
+      "revId": "c0a1e4713b81cfa3e03e2118dc81b6259a2a283e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "144bc03a_57ac3af6",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1931,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-12-18T18:19:14Z",
+      "side": 1,
+      "message": "Why did the return value change here?",
+      "range": {
+        "startLine": 1931,
+        "startChar": 15,
+        "endLine": 1931,
+        "endChar": 20
+      },
+      "revId": "c0a1e4713b81cfa3e03e2118dc81b6259a2a283e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f69519b_0d663bb7",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1964,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-12-18T18:19:14Z",
+      "side": 1,
+      "message": "Should we call LocalFrameView::NeedsLayout here instead?  That encompasses LayoutView::NeedsLayout plus some other conditions.",
+      "range": {
+        "startLine": 1964,
+        "startChar": 38,
+        "endLine": 1964,
+        "endChar": 54
+      },
+      "revId": "c0a1e4713b81cfa3e03e2118dc81b6259a2a283e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
