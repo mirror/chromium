@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4fc61232_ed10cd22",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_popup_presenter.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-12-18T16:51:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9fb1b78f_2f272cd3",
+      "revId": "4cc7a197c46f9ec3e293836686cd58133123b75f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6cdbed74_6e77f79b",
         "filename": "ios/chrome/browser/ui/omnibox/omnibox_popup_presenter.mm",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "4cc7a197c46f9ec3e293836686cd58133123b75f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73cdd31f_737ea5c4",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_popup_presenter.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-12-18T16:51:49Z",
+      "side": 1,
+      "message": "To prevent the animation happening when you add a view (in the same runloop as creating an animation).",
+      "parentUuid": "6cdbed74_6e77f79b",
+      "revId": "4cc7a197c46f9ec3e293836686cd58133123b75f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "4cd446d9_689e6461",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_popup_presenter.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-12-18T16:51:49Z",
+      "side": 1,
+      "message": "We are only converting popupContainerView to autolayout. But popup is just a shortcut to self.popupContainerView, this line was a leftover.\nBut the table view (self.viewController.view) is still using a autoresizing mask.",
+      "parentUuid": "c20f08e6_cc26cb3f",
+      "revId": "4cc7a197c46f9ec3e293836686cd58133123b75f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "56876cc4_9946c73a",
         "filename": "ios/chrome/browser/ui/omnibox/omnibox_popup_presenter.mm",
         "patchSetId": 7
@@ -67,6 +121,24 @@
       "revId": "4cc7a197c46f9ec3e293836686cd58133123b75f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b55a8dd6_31e7983d",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_popup_presenter.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-12-18T16:51:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "56876cc4_9946c73a",
+      "revId": "4cc7a197c46f9ec3e293836686cd58133123b75f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "292316c0_4ab0cbf5",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_popup_presenter.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-12-18T16:51:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c08edbcc_3ae035bd",
+      "revId": "4cc7a197c46f9ec3e293836686cd58133123b75f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "054af0a6_8da563b1",
         "filename": "ios/chrome/browser/ui/omnibox/omnibox_popup_presenter.mm",
         "patchSetId": 7
@@ -101,6 +191,24 @@
       "revId": "4cc7a197c46f9ec3e293836686cd58133123b75f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bf5dfef_e7bd503c",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_popup_presenter.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-12-18T16:51:49Z",
+      "side": 1,
+      "message": "To animate the expansion on iPhone. I have added a comment.",
+      "parentUuid": "054af0a6_8da563b1",
+      "revId": "4cc7a197c46f9ec3e293836686cd58133123b75f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "57c5215c_5989498c",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_popup_presenter.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-12-18T16:51:49Z",
+      "side": 1,
+      "message": "superview layoutIfNeeded is enough to position it, probably not to size the view.",
+      "parentUuid": "1c3f214e_440b99bc",
+      "revId": "4cc7a197c46f9ec3e293836686cd58133123b75f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4586f4dd_1dad03c3",
         "filename": "ios/chrome/browser/ui/omnibox/omnibox_popup_presenter.mm",
         "patchSetId": 7
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "dfea2e9d_550935c1",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_popup_presenter.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-12-18T16:51:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4586f4dd_1dad03c3",
+      "revId": "4cc7a197c46f9ec3e293836686cd58133123b75f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "edf9055f_824d54de",
         "filename": "ios/chrome/browser/ui/omnibox/omnibox_popup_presenter.mm",
         "patchSetId": 7
@@ -152,6 +296,24 @@
       "revId": "4cc7a197c46f9ec3e293836686cd58133123b75f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5434373a_89ef489f",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_popup_presenter.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-12-18T16:51:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "edf9055f_824d54de",
+      "revId": "4cc7a197c46f9ec3e293836686cd58133123b75f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
