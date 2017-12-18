@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e443b8c7_074ea44f",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-12-18T23:10:13Z",
+      "side": 1,
+      "message": "AFAIK UKM is only meant to be used with main frame\u0027s URL:\n\n1. “New UKM collection review” doc explicitly asks to confirm that we are \"only collecting metrics keyed by main frame URLs\".\n\n2. UKM data is collected from users who are both A) opted into metrics collection (UMA/crash)\nand B) syncing their browsing history without a Sync passphrase,  The browsing history already includes top-level / main frame URLs, and therefore (B) is assumed to mean that the URLs can be also associated with UKM data.  There is no such assumption/consent for either 1) non-main-frame URLs or 2) resource URLs.\n\n\nI hope that the main frame\u0027s URL will be sufficient for investigating most-blocked resource types and/or most-blocked content types, but let\u0027s see what UKM folks say (per go/ukm guidance, this CL needs a CR from either rkaplow@ or holte@).",
+      "parentUuid": "f9e91bad_2a06fa2a",
+      "revId": "fa01af2a8ad28d9a190c4bd5e9cbd17489dbe456",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "616c6f09_a20746c2",
         "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "fa01af2a8ad28d9a190c4bd5e9cbd17489dbe456",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bab95c37_015d18f6",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-12-18T23:10:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "616c6f09_a20746c2",
+      "revId": "fa01af2a8ad28d9a190c4bd5e9cbd17489dbe456",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
