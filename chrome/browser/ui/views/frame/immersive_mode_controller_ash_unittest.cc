@@ -30,6 +30,11 @@
 #include "ui/aura/window.h"
 #include "ui/views/controls/webview/webview.h"
 
+#if defined(OS_CHROMEOS)
+#include "ash/public/cpp/window_properties.h"
+#include "ash/public/interfaces/window_pin_type.mojom.h"
+#endif
+
 class ImmersiveModeControllerAshTest : public TestWithBrowserView {
  public:
   ImmersiveModeControllerAshTest()
@@ -282,3 +287,14 @@ TEST_F(ImmersiveModeControllerAshTest, LayeredSpinners) {
   ToggleFullscreen();
   EXPECT_TRUE(tabstrip->CanPaintThrobberToLayer());
 }
+
+#if defined(OS_CHROMEOS)
+// Regression test for a bug where going from regular fullscreen to locked
+// fullscreen caused a crash.
+TEST_F(ImmersiveModeControllerAshTest, RegularFullscreenToLockedFullscreen) {
+  ToggleFullscreen();
+  // Set locked fullscreen state.
+  browser()->window()->GetNativeWindow()->SetProperty(
+      ash::kWindowPinTypeKey, ash::mojom::WindowPinType::TRUSTED_PINNED);
+}
+#endif
