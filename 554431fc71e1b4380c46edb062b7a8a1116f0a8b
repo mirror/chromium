@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "8800d330_c6bcbe17",
+        "filename": "content/browser/payments/payment_app_info_fetcher.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1114659
+      },
+      "writtenOn": "2017-12-18T17:34:22Z",
+      "side": 1,
+      "message": "Thank you for reply. This CL is focusing on just fixing TSAN error. In other words, no changes existing behavior.\n\nYou said that PaymentAppInfoFetcher is per PaymentAppDatabase/PaymentAppContextImpl/StoragePartition.\nThe PaymentAppDatabase/PaymentAppContextImpl/StoragePartition is only one in the browser process. The storage parition can be multiple but PaymentHandler is only allowed default storage partition now(in the future as well).\nIt means that there is only one app info fetcher for the PaymentHandler in the browser process.\nTherefore, the same problem will occur when a request from b.com comes in when a.com\u0027s request is not over.",
+      "parentUuid": "d4bfe879_06122e01",
+      "range": {
+        "startLine": 122,
+        "startChar": 2,
+        "endLine": 122,
+        "endChar": 56
+      },
+      "revId": "554431fc71e1b4380c46edb062b7a8a1116f0a8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1b5a3219_0313f679",
         "filename": "content/browser/payments/payment_app_info_fetcher.h",
         "patchSetId": 4
