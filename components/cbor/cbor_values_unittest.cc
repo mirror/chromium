@@ -2,15 +2,14 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "content/browser/webauth/cbor/cbor_values.h"
+#include "components/cbor/cbor_values.h"
 
 #include <string>
 #include <utility>
 
-#include "base/strings/string_piece.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
-namespace content {
+namespace cbor {
 
 TEST(CBORValuesTest, TestNothrow) {
   static_assert(std::is_nothrow_move_constructible<CBORValue>::value,
@@ -274,4 +273,4 @@ TEST(CBORValuesTest, SelfSwap) {
   EXPECT_TRUE(test.GetUnsigned() == 1);
 }
 
-}  // namespace content
+}  // namespace cbor
