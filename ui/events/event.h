@@ -496,6 +496,8 @@ class EVENTS_EXPORT MouseEvent : public LocatedEvent {
  public:
   static const PointerId kMousePointerId;
 
+  explicit MouseEvent(const MouseEvent& copy);
+
   explicit MouseEvent(const base::NativeEvent& native_event);
 
   // |pointer_event.IsMousePointerEvent()| must be true.

@@ -12,6 +12,10 @@
 #include "ui/events/event_target_iterator.h"
 #include "ui/events/event_utils.h"
 
+#include "base/bind.h"
+#include "base/callback.h"
+#include "ui/events/blink/web_input_event.h"
+
 namespace ui {
 
 namespace {
@@ -589,6 +593,70 @@ TEST(EventDispatcherTest, EventHandlerAndDispatcherDestroyedDuringDispatch) {
     EXPECT_EQ(1, target.handler_list()[0]);
     EXPECT_EQ(2, target.handler_list()[1]);
   }
+}
+
+gfx::PointF DoNothing(const ui::LocatedEvent& event) {
+  return gfx::PointF();
+}
+
+ui::MouseEvent FixConstMouseEvent(const ui::MouseEvent* event) {
+  // Temporary unique_ptr, seems bad, when is it released?
+  // ui::MouseEvent mouse_event =
+  //     static_cast<ui::MouseEvent>(ui::Event::Clone(*event).get());
+
+  // Explicit unique_ptr.
+  // std::unique_ptr<ui::Event> event_copy = ui::Event::Clone(*event);
+  // But what is this "cast" doing? I don't think you can cast like this.
+  // ui::MouseEvent mouse_event = static_cast<ui::MouseEvent>(event_copy.get());
+
+  // Explicit unique_ptr.
+  std::unique_ptr<ui::Event> event_copy = ui::Event::Clone(*event);
+  ui::Event* event_copy_ptr = event_copy.get();
+  // base::NativeEvent == void* on Chrome OS
+  void* not_really_a_native_event = event_copy_ptr;
+  ui::MouseEvent mouse_event(not_really_a_native_event);
+
+  mouse_event.set_location(gfx::Point(111,222));
+  return mouse_event;
+}
+
+void FixMouseEvent(ui::Event* event) {
+  ui::MouseEvent* mouse_event = event->AsMouseEvent();
+  mouse_event->set_location(gfx::Point(111, 222));
+}
+
+TEST(EventTest, EventCasting1) {
+  const ui::MouseEvent event1(ET_MOUSE_PRESSED, gfx::Point(1, 2), gfx::Point(3, 4),
+                       base::TimeTicks::Now(), 0, 0);
+  ui::MouseEvent fixed = FixConstMouseEvent(&event1);
+  LOG(ERROR) << "JAMES fixed " << fixed.location().ToString();
+  ui::MakeWebMouseEvent(fixed, base::Bind(&DoNothing));
+}
+
+TEST(EventTest, EventCasting2) {
+  const ui::MouseEvent event2(ET_MOUSE_PRESSED, gfx::Point(1, 2), gfx::Point(3, 4),
+                       base::TimeTicks::Now(), 0, 0);
+
+  LOG(ERROR) << "JAMES about to clone";
+  std::unique_ptr<ui::Event> mutable_event = ui::Event::Clone(event2);
+  FixMouseEvent(mutable_event.get());
+  LOG(ERROR) << "JAMES fixed2 "
+             << mutable_event->AsMouseEvent()->location().ToString();
+  ui::MakeWebMouseEvent(*mutable_event->AsMouseEvent(), base::Bind(&DoNothing));
+}
+
+TEST(EventTest, EventCasting3) {
+  const ui::MouseEvent event(ET_MOUSE_PRESSED, gfx::Point(1, 2), gfx::Point(3, 4),
+                       base::TimeTicks::Now(), 0, 0);
+  LOG(ERROR) << "JAMES about to copy";
+  ui::MouseEvent mutable_event(event);
+  FixMouseEvent(&mutable_event);
+  LOG(ERROR) << "JAMES fixed3 "
+             << mutable_event.location().ToString();
+  ui::MakeWebMouseEvent(mutable_event, base::Bind(&DoNothing));
+
+  ui::MouseEvent noparams;
+  LOG(ERROR) << &noparams;
 }
 
 }  // namespace ui
