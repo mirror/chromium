@@ -58,6 +58,7 @@ GpuVideoAcceleratorFactoriesImpl::Create(
     const scoped_refptr<base::SingleThreadTaskRunner>& task_runner,
     const scoped_refptr<ui::ContextProviderCommandBuffer>& context_provider,
     bool enable_gpu_memory_buffer_video_frames,
+    bool disable_multiplanar_gpu_memory_buffers_for_video_frames,
     const viz::BufferUsageAndFormatList& texture_target_exception_list,
     bool enable_video_accelerator,
     media::mojom::VideoEncodeAcceleratorProviderPtrInfo unbound_vea_provider) {
@@ -66,6 +67,7 @@ GpuVideoAcceleratorFactoriesImpl::Create(
   return base::WrapUnique(new GpuVideoAcceleratorFactoriesImpl(
       std::move(gpu_channel_host), main_thread_task_runner, task_runner,
       context_provider, enable_gpu_memory_buffer_video_frames,
+      disable_multiplanar_gpu_memory_buffers_for_video_frames,
       texture_target_exception_list, enable_video_accelerator,
       std::move(unbound_vea_provider)));
 }
@@ -76,6 +78,7 @@ GpuVideoAcceleratorFactoriesImpl::GpuVideoAcceleratorFactoriesImpl(
     const scoped_refptr<base::SingleThreadTaskRunner>& task_runner,
     const scoped_refptr<ui::ContextProviderCommandBuffer>& context_provider,
     bool enable_gpu_memory_buffer_video_frames,
+    bool disable_multiplanar_gpu_memory_buffers_for_video_frames,
     const viz::BufferUsageAndFormatList& texture_target_exception_list,
     bool enable_video_accelerator,
     media::mojom::VideoEncodeAcceleratorProviderPtrInfo unbound_vea_provider)
@@ -86,6 +89,8 @@ GpuVideoAcceleratorFactoriesImpl::GpuVideoAcceleratorFactoriesImpl(
       context_provider_(context_provider.get()),
       enable_gpu_memory_buffer_video_frames_(
           enable_gpu_memory_buffer_video_frames),
+      disable_multiplanar_gpu_memory_buffers_for_video_frames_(
+          disable_multiplanar_gpu_memory_buffers_for_video_frames),
       texture_target_exception_list_(texture_target_exception_list),
       video_accelerator_enabled_(enable_video_accelerator),
       gpu_memory_buffer_manager_(
@@ -310,8 +315,10 @@ GpuVideoAcceleratorFactoriesImpl::VideoFrameOutputFormat() {
     return media::GpuVideoAcceleratorFactories::OutputFormat::UNDEFINED;
   viz::ContextProvider::ScopedContextLock lock(context_provider_);
   auto capabilities = context_provider_->ContextCapabilities();
-  if (capabilities.image_ycbcr_420v)
+  if (capabilities.image_ycbcr_420v &&
+      !disable_multiplanar_gpu_memory_buffers_for_video_frames_) {
     return media::GpuVideoAcceleratorFactories::OutputFormat::NV12_SINGLE_GMB;
+  }
   if (capabilities.image_ycbcr_422)
     return media::GpuVideoAcceleratorFactories::OutputFormat::UYVY;
   if (capabilities.texture_rg)
