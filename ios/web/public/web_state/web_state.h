@@ -297,6 +297,10 @@ class WebState : public base::SupportsUserData {
   // Callback used to handle snapshots. The parameter is the snapshot image.
   typedef base::Callback<void(const gfx::Image&)> SnapshotCallback;
 
+  // Returns whether it is possible to take a snapshot of this WebState
+  // without reloading the web page.
+  virtual bool CanTakeSnapshot() const = 0;
+
   // Takes a snapshot of this WebState with |target_size|. |callback| is
   // asynchronously invoked after performing the snapshot.
   virtual void TakeSnapshot(const SnapshotCallback& callback,

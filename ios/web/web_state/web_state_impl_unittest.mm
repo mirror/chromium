@@ -49,6 +49,10 @@ using testing::AtMost;
 using testing::DoAll;
 using testing::Return;
 
+@interface CRWWebController (PrivateAPI)
+- (void)addPlaceholderOverlay;
+@end
+
 namespace web {
 namespace {
 
@@ -824,6 +828,28 @@ TEST_F(WebStateImplTest, FaviconUpdateForSameDocumentNavigations) {
   context.SetIsSameDocument(true);
   web_state_->OnNavigationFinished(&context);
   EXPECT_FALSE(observer->update_favicon_url_candidates_info());
+}
+
+// Tests that taking a snapshot after disabling web usage or adding an overlay
+// will force the creation of the WebState's view.
+TEST_F(WebStateImplTest, CanTakeSnapshot) {
+  // Force view creation to ensure that taking a snapshot is possible.
+  web_state_->GetView();
+  ASSERT_TRUE(web_state_->CanTakeSnapshot());
+
+  // Adding an overlay do not prevent taking a snapshot.
+  [web_state_->GetWebController() setOverlayPreviewMode:YES];
+  [web_state_->GetWebController() addPlaceholderOverlay];
+  EXPECT_TRUE(web_state_->CanTakeSnapshot());
+
+  // Disabling the overlay will force a reload if taking a snapshot.
+  [web_state_->GetWebController() setOverlayPreviewMode:NO];
+  EXPECT_FALSE(web_state_->CanTakeSnapshot());
+
+  // After re-creating the view, it is possible to take a snapshot without
+  // reloading.
+  web_state_->GetView();
+  EXPECT_TRUE(web_state_->CanTakeSnapshot());
 }
 
 }  // namespace web
