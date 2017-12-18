@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b8e73995_151d9e14",
+        "filename": "content/browser/devtools/protocol/security_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2017-12-18T10:17:07Z",
+      "side": 1,
+      "message": ":P Yeah, doesn\u0027t make much sense. Got rid of it.",
+      "parentUuid": "3d7bc368_25fd6932",
+      "revId": "390a9d0d9f47b7f251d84091d5c5dbad51e2c963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "18a06212_b8c0bcd8",
         "filename": "content/browser/devtools/protocol/security_handler.cc",
         "patchSetId": 4
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "b64ed8d8_552c6f1e",
+        "filename": "content/browser/devtools/protocol/security_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2017-12-18T10:17:07Z",
+      "side": 1,
+      "message": "Right. I thought we might need to observe the web contents, but it seems that\u0027s not necessary :)",
+      "parentUuid": "18a06212_b8c0bcd8",
+      "revId": "390a9d0d9f47b7f251d84091d5c5dbad51e2c963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5b451549_e48a28a8",
         "filename": "content/browser/ssl/ssl_manager.cc",
         "patchSetId": 4
@@ -50,6 +86,24 @@
       "revId": "390a9d0d9f47b7f251d84091d5c5dbad51e2c963",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d66cd396_df0c0596",
+        "filename": "content/browser/ssl/ssl_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2017-12-18T10:17:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5b451549_e48a28a8",
+      "revId": "390a9d0d9f47b7f251d84091d5c5dbad51e2c963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
