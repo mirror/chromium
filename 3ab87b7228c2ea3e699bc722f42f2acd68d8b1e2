@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d02b8ec0_7e463be6",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-12-18T18:41:19Z",
+      "side": 1,
+      "message": "Yes, this is intentional. The text is only displayed when the section is expanded, so there\u0027s no reason to fetch it when the section is closing.",
+      "parentUuid": "d23e0f81_1d752c4e",
+      "range": {
+        "startLine": 350,
+        "startChar": 8,
+        "endLine": 350,
+        "endChar": 25
+      },
+      "revId": "3ab87b7228c2ea3e699bc722f42f2acd68d8b1e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "87a07ab4_79fc40c9",
         "filename": "chrome/browser/resources/settings/chrome_cleanup_page/items_to_remove_list.js",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "8d6f38d0_c55c0512",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/items_to_remove_list.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-12-18T18:41:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87a07ab4_79fc40c9",
+      "range": {
+        "startLine": 76,
+        "startChar": 17,
+        "endLine": 76,
+        "endChar": 22
+      },
+      "revId": "3ab87b7228c2ea3e699bc722f42f2acd68d8b1e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6acc382d_f614f1c0",
         "filename": "chrome/test/data/webui/settings/chrome_cleanup_page_test.js",
         "patchSetId": 4
@@ -62,6 +110,24 @@
       "revId": "3ab87b7228c2ea3e699bc722f42f2acd68d8b1e2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f35b19be_a43fedeb",
+        "filename": "chrome/test/data/webui/settings/chrome_cleanup_page_test.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-12-18T18:41:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6acc382d_f614f1c0",
+      "revId": "3ab87b7228c2ea3e699bc722f42f2acd68d8b1e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
