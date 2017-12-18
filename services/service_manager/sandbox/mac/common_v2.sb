@@ -93,7 +93,11 @@
 
 ; Reads from /Library.
 (allow file-read-data
-  (path "/Library/Preferences/.GlobalPreferences.plist")
+  (path "/Library/Preferences/.GlobalPreferences.plist"))
+
+; Reads from /System.
+(allow file-read-data
+  (path "/System/Library/CoreServices/checkfixlist")
   (path "/System/Library/CoreServices/SystemVersion.plist"))
 
 ; Reads from /usr.
