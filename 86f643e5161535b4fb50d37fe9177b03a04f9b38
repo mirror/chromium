@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "01fc92e4_38ea46b3",
+        "filename": "content/browser/service_manager/service_manager_context.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 1108829
+      },
+      "writtenOn": "2017-12-18T21:45:45Z",
+      "side": 1,
+      "message": "I see. Thanks for the detail explanation :). Might want to add a comment here as well on why dedicated thread is needed.",
+      "parentUuid": "70079f3b_a8202e82",
+      "range": {
+        "startLine": 482,
+        "startChar": 40,
+        "endLine": 482,
+        "endChar": 44
+      },
+      "revId": "86f643e5161535b4fb50d37fe9177b03a04f9b38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3abcdcbe_afee9c7a",
         "filename": "services/service_manager/embedder/embedded_instance_manager.cc",
         "patchSetId": 8
