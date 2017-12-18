@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "cc857163_6680c386",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-12-18T19:40:31Z",
+      "side": 1,
+      "message": "You will also need to call route.set_incognito()",
+      "revId": "4ddb1d75b7d30266d6483183be9526e345d44c77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0c706f1_91db81cb",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-12-18T19:40:31Z",
+      "side": 1,
+      "message": "emplace(presentation_id, std::move(presentation))",
+      "revId": "4ddb1d75b7d30266d6483183be9526e345d44c77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fd809596_9f8f0bb2",
         "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.cc",
         "patchSetId": 3
@@ -64,6 +98,23 @@
       "writtenOn": "2017-12-18T19:12:51Z",
       "side": 1,
       "message": "PresentationReceiverWindowController is also a WebContentsObserver; could PRWC have an API to set the callback, instead of adding a second observer to the WebContents?",
+      "revId": "4ddb1d75b7d30266d6483183be9526e345d44c77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb0ee83f_00911325",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-12-18T19:40:31Z",
+      "side": 1,
+      "message": "nit: Could you please add DISALLOW_COPY_AND_ASSIGN to this class and others in this file?",
       "revId": "4ddb1d75b7d30266d6483183be9526e345d44c77",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
