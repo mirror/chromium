@@ -337,6 +337,27 @@ static bool GetDeviceTotalChannelCount(AudioDeviceID device,
   return true;
 }
 
+// Returns the channel count from the |audio_unit|'s stream format for input
+// scope / input element or output scope / output element.
+static bool GetAudioUnitStreamFormatChannelCount(AudioUnit audio_unit,
+                                                 AUElement element,
+                                                 int* channels) {
+  AudioStreamBasicDescription stream_format;
+  UInt32 size = sizeof(stream_format);
+  OSStatus result =
+      AudioUnitGetProperty(audio_unit, kAudioUnitProperty_StreamFormat,
+                           element == AUElement::OUTPUT ? kAudioUnitScope_Output
+                                                        : kAudioUnitScope_Input,
+                           element, &stream_format, &size);
+  if (result != noErr) {
+    OSSTATUS_DLOG(ERROR, result) << "Failed to get AudioUnit stream format.";
+    return false;
+  }
+
+  *channels = stream_format.mChannelsPerFrame;
+  return true;
+}
+
 // Returns the channel layout for |device| as provided by the AudioUnit attached
 // to that device matching |element|. Returns true if the count could be pulled
 // from the AudioUnit successfully, false otherwise.
@@ -366,10 +387,23 @@ static bool GetDeviceChannels(AudioDeviceID device,
   if (!au.is_valid())
     return false;
 
-  // Attempt to retrieve the channel layout from the AudioUnit.
+  // For input, get the channel count directly from the AudioUnit's stream
+  // format.
+  if (element == AUElement::INPUT) {
+    if (!GetAudioUnitStreamFormatChannelCount(au.audio_unit(), element,
+                                              channels)) {
+      return false;
+    }
+    DVLOG(1) << "Input channels: " << *channels;
+    return true;
+  }
+
+  // For output, use the channel layout to determine channel count.
+  // First, attempt to retrieve the channel layout from the AudioUnit.
   //
   // Note: We don't use kAudioDevicePropertyPreferredChannelLayout on the device
   // because it is not available on all devices.
+  DCHECK(element == AUElement::OUTPUT);
   UInt32 size;
   Boolean writable;
   OSStatus result = AudioUnitGetPropertyInfo(
@@ -442,8 +476,7 @@ static bool GetDeviceChannels(AudioDeviceID device,
     }
   }
 
-  DVLOG(1) << (element == AUElement::OUTPUT ? "Output" : "Input")
-           << " channels: " << *channels;
+  DVLOG(1) << "Output channels: " << *channels;
   return true;
 }
 
