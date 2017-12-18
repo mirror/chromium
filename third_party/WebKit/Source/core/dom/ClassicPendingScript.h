@@ -106,6 +106,7 @@ class CORE_EXPORT ClassicPendingScript final : public PendingScript,
 
   // ResourceClient
   void NotifyFinished(Resource*) override;
+  void NotifyFinishedInternal(Resource*);
   String DebugName() const override { return "PendingScript"; }
   void DataReceived(Resource*, const char*, size_t) override;
 

@@ -17,6 +17,7 @@
 #include "bindings/core/v8/V8DOMConfiguration.h"
 #include "core/dom/ExecutionContext.h"
 #include "core/frame/LocalDOMWindow.h"
+#include "core/preemption/PreemptionCheckpointScope.h"
 #include "platform/bindings/RuntimeCallStats.h"
 #include "platform/bindings/V8ObjectConstructor.h"
 #include "platform/wtf/GetPtr.h"
@@ -66,6 +67,8 @@ static_assert(
 namespace TestNodeV8Internal {
 
 static void hrefAttributeGetter(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  PreemptionCheckpointScope scope(info.GetIsolate());
+
   v8::Local<v8::Object> holder = info.Holder();
 
   TestNode* impl = V8TestNode::ToImpl(holder);
@@ -75,7 +78,7 @@ static void hrefAttributeGetter(const v8::FunctionCallbackInfo<v8::Value>& info)
 
 static void hrefAttributeSetter(v8::Local<v8::Value> v8Value, const v8::FunctionCallbackInfo<v8::Value>& info) {
   v8::Isolate* isolate = info.GetIsolate();
-  ALLOW_UNUSED_LOCAL(isolate);
+  PreemptionCheckpointScope scope(isolate);
 
   v8::Local<v8::Object> holder = info.Holder();
   ALLOW_UNUSED_LOCAL(holder);
@@ -91,6 +94,8 @@ static void hrefAttributeSetter(v8::Local<v8::Value> v8Value, const v8::Function
 }
 
 static void hrefThrowsAttributeGetter(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  PreemptionCheckpointScope scope(info.GetIsolate());
+
   v8::Local<v8::Object> holder = info.Holder();
 
   TestNode* impl = V8TestNode::ToImpl(holder);
@@ -100,7 +105,7 @@ static void hrefThrowsAttributeGetter(const v8::FunctionCallbackInfo<v8::Value>&
 
 static void hrefThrowsAttributeSetter(v8::Local<v8::Value> v8Value, const v8::FunctionCallbackInfo<v8::Value>& info) {
   v8::Isolate* isolate = info.GetIsolate();
-  ALLOW_UNUSED_LOCAL(isolate);
+  PreemptionCheckpointScope scope(isolate);
 
   v8::Local<v8::Object> holder = info.Holder();
   ALLOW_UNUSED_LOCAL(holder);
@@ -118,6 +123,8 @@ static void hrefThrowsAttributeSetter(v8::Local<v8::Value> v8Value, const v8::Fu
 }
 
 static void hrefCallWithAttributeGetter(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  PreemptionCheckpointScope scope(info.GetIsolate());
+
   v8::Local<v8::Object> holder = info.Holder();
 
   TestNode* impl = V8TestNode::ToImpl(holder);
@@ -127,7 +134,7 @@ static void hrefCallWithAttributeGetter(const v8::FunctionCallbackInfo<v8::Value
 
 static void hrefCallWithAttributeSetter(v8::Local<v8::Value> v8Value, const v8::FunctionCallbackInfo<v8::Value>& info) {
   v8::Isolate* isolate = info.GetIsolate();
-  ALLOW_UNUSED_LOCAL(isolate);
+  PreemptionCheckpointScope scope(isolate);
 
   v8::Local<v8::Object> holder = info.Holder();
   ALLOW_UNUSED_LOCAL(holder);
@@ -145,6 +152,8 @@ static void hrefCallWithAttributeSetter(v8::Local<v8::Value> v8Value, const v8::
 }
 
 static void hrefByteStringAttributeGetter(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  PreemptionCheckpointScope scope(info.GetIsolate());
+
   v8::Local<v8::Object> holder = info.Holder();
 
   TestNode* impl = V8TestNode::ToImpl(holder);
@@ -154,7 +163,7 @@ static void hrefByteStringAttributeGetter(const v8::FunctionCallbackInfo<v8::Val
 
 static void hrefByteStringAttributeSetter(v8::Local<v8::Value> v8Value, const v8::FunctionCallbackInfo<v8::Value>& info) {
   v8::Isolate* isolate = info.GetIsolate();
-  ALLOW_UNUSED_LOCAL(isolate);
+  PreemptionCheckpointScope scope(isolate);
 
   v8::Local<v8::Object> holder = info.Holder();
   ALLOW_UNUSED_LOCAL(holder);
