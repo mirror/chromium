@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bf99c877_86c3e548",
+        "filename": "content/shell/browser/layout_test/layout_test_message_filter.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1002421
+      },
+      "writtenOn": "2017-12-18T22:36:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0424abfc_6391c363",
+      "revId": "971e77027e6edff54695b1545c318aa5bfc1f47c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a0e4304_48240914",
         "filename": "third_party/WebKit/LayoutTests/NeverFixTests",
         "patchSetId": 9
@@ -33,6 +51,24 @@
       "revId": "971e77027e6edff54695b1545c318aa5bfc1f47c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "292698c3_53bae8fe",
+        "filename": "third_party/WebKit/LayoutTests/NeverFixTests",
+        "patchSetId": 9
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 1002421
+      },
+      "writtenOn": "2017-12-18T22:36:28Z",
+      "side": 1,
+      "message": "Yes, the permissions now interfere with the tests.\n\nWPT @foolip already weighed in on this and said putting them here was the best place to make sure that they get reviewed later once the test driver is updated to support these tests. Note that the geolocation permission tests are also listed in this section.",
+      "parentUuid": "7a0e4304_48240914",
+      "revId": "971e77027e6edff54695b1545c318aa5bfc1f47c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "7dfedd6d_05ea50cd",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/resources/permissions-helper.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002421
+      },
+      "writtenOn": "2017-12-18T22:36:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "354980dd_b3835b1f",
+      "revId": "971e77027e6edff54695b1545c318aa5bfc1f47c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "731b9d0d_f5ecf929",
         "filename": "third_party/WebKit/Source/modules/clipboard/ClipboardPromise.cpp",
         "patchSetId": 9
@@ -67,6 +121,24 @@
       "revId": "971e77027e6edff54695b1545c318aa5bfc1f47c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b553ed1_805a24b8",
+        "filename": "third_party/WebKit/Source/modules/clipboard/ClipboardPromise.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002421
+      },
+      "writtenOn": "2017-12-18T22:36:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "731b9d0d_f5ecf929",
+      "revId": "971e77027e6edff54695b1545c318aa5bfc1f47c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "7a69533b_31b260e6",
+        "filename": "third_party/WebKit/Source/modules/clipboard/ClipboardPromise.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1002421
+      },
+      "writtenOn": "2017-12-18T22:36:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9436b450_51856503",
+      "revId": "971e77027e6edff54695b1545c318aa5bfc1f47c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87c22a7e_2f58bed4",
         "filename": "third_party/WebKit/Source/modules/clipboard/ClipboardPromise.cpp",
         "patchSetId": 9
@@ -101,6 +191,24 @@
       "revId": "971e77027e6edff54695b1545c318aa5bfc1f47c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d55f0724_8f5ec7b8",
+        "filename": "third_party/WebKit/Source/modules/clipboard/ClipboardPromise.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1002421
+      },
+      "writtenOn": "2017-12-18T22:36:28Z",
+      "side": 1,
+      "message": "True, but that would be a design change from what everyone agreed upon since it would mean that write access would trigger a permission prompt.",
+      "parentUuid": "87c22a7e_2f58bed4",
+      "revId": "971e77027e6edff54695b1545c318aa5bfc1f47c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "bbc8dfd1_5548ae66",
+        "filename": "third_party/WebKit/Source/modules/clipboard/ClipboardPromise.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1002421
+      },
+      "writtenOn": "2017-12-18T22:36:28Z",
+      "side": 1,
+      "message": "Actually, it should be used -- HandleRead should use this. Fixed. Thanks for catching that!",
+      "parentUuid": "3aa0c9fc_f92969f7",
+      "revId": "971e77027e6edff54695b1545c318aa5bfc1f47c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "379b8e4b_8d15b353",
         "filename": "third_party/WebKit/Source/modules/clipboard/ClipboardPromise.cpp",
         "patchSetId": 9
@@ -135,6 +261,24 @@
       "revId": "971e77027e6edff54695b1545c318aa5bfc1f47c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44a641dc_374074ec",
+        "filename": "third_party/WebKit/Source/modules/clipboard/ClipboardPromise.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1002421
+      },
+      "writtenOn": "2017-12-18T22:36:28Z",
+      "side": 1,
+      "message": "No. That would reject the write when the clipboard permission is set to PROMPT. And we want writes to succeed in that case.",
+      "parentUuid": "379b8e4b_8d15b353",
+      "revId": "971e77027e6edff54695b1545c318aa5bfc1f47c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "2f5a091d_7bab3591",
+        "filename": "third_party/WebKit/Source/modules/clipboard/ClipboardPromise.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1002421
+      },
+      "writtenOn": "2017-12-18T22:36:28Z",
+      "side": 1,
+      "message": "With them broken out, the calling structure is clearer. If someone else needs to modify this code, they won\u0027t have to figure out what needs to be untangled before making changes. Less change of someone making a change and not realizing that it affects something else as well. \n\nSo there\u0027s no real benefit (other than maybe a temporary saving of ~20bytes of code) to merging them.",
+      "parentUuid": "d76fd99c_900d76e5",
+      "revId": "971e77027e6edff54695b1545c318aa5bfc1f47c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9726f7c2_3c8e72a9",
         "filename": "third_party/WebKit/Source/modules/clipboard/ClipboardPromise.cpp",
         "patchSetId": 9
@@ -169,6 +331,24 @@
       "revId": "971e77027e6edff54695b1545c318aa5bfc1f47c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1dd25463_17f0f25e",
+        "filename": "third_party/WebKit/Source/modules/clipboard/ClipboardPromise.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1002421
+      },
+      "writtenOn": "2017-12-18T22:36:28Z",
+      "side": 1,
+      "message": "See above",
+      "parentUuid": "9726f7c2_3c8e72a9",
+      "revId": "971e77027e6edff54695b1545c318aa5bfc1f47c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
