@@ -105,6 +105,24 @@
       "revId": "0fabfdd20b078f4c3577566e98632cc796165631",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d84bfe35_a383ea54",
+        "filename": "base/android/java/src/org/chromium/base/library_loader/LibraryLoader.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 560,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-12-18T19:42:23Z",
+      "side": 1,
+      "message": "Yeah, as with the prior CL, I don\u0027t see a reason to do this w/ reflection given that the version code check works.",
+      "parentUuid": "eefcad30_5d13072c",
+      "revId": "0fabfdd20b078f4c3577566e98632cc796165631",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
