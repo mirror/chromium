@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "df45cedf_642f40ff",
+        "filename": "content/renderer/media/webrtc/media_stream_track_metrics.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1001148
+      },
+      "writtenOn": "2017-12-18T11:43:14Z",
+      "side": 1,
+      "message": "nit: remove ;",
+      "range": {
+        "startLine": 408,
+        "startChar": 2,
+        "endLine": 408,
+        "endChar": 0
+      },
+      "revId": "c5ce3f9e5464b8a25436a8bebf825e2cf1265efe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
