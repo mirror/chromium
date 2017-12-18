@@ -16,6 +16,24 @@
       "revId": "8bcab9a2ed2e8974912c0d88a1edbdc8b91c7af2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de5c96a9_5767dc89",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetNavigateTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-12-18T16:26:05Z",
+      "side": 0,
+      "message": "This seems fine to me, but alternatively there is a method endAnimations() that should eliminate the need to wait/poll. Since we\u0027re not testing animation in this test, that might be worth doing. Thoughts?",
+      "parentUuid": "851e4046_dbed3012",
+      "revId": "8bcab9a2ed2e8974912c0d88a1edbdc8b91c7af2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
