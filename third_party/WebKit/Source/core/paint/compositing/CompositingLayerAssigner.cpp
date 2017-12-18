@@ -26,6 +26,7 @@
 
 #include "core/paint/compositing/CompositingLayerAssigner.h"
 
+#include "core/html/HTMLFrameOwnerElement.h"
 #include "core/inspector/InspectorTraceEvents.h"
 #include "core/layout/LayoutView.h"
 #include "core/page/Page.h"
@@ -99,6 +100,17 @@ bool CompositingLayerAssigner::NeedsOwnBacking(const PaintLayer* layer) const {
          (compositor_->StaleInCompositingMode() && layer->IsRootLayer());
 }
 
+bool CompositingLayerAssigner::PreventsSquashing(
+    const PaintLayer* layer) const {
+  auto& layout_object = layer->GetLayoutObject();
+  if (!layout_object.IsLayoutEmbeddedContent())
+    return false;
+
+  HTMLFrameOwnerElement* element =
+      ToHTMLFrameOwnerElement(layout_object.GetNode());
+  return element->ContentFrame() && element->ContentFrame()->IsRemoteFrame();
+}
+
 CompositingStateTransitionType
 CompositingLayerAssigner::ComputeCompositedLayerUpdate(PaintLayer* layer) {
   CompositingStateTransitionType update = kNoCompositingStateChange;
@@ -128,6 +140,9 @@ CompositingLayerAssigner::GetReasonsPreventingSquashing(
     const CompositingLayerAssigner::SquashingState& squashing_state) {
   if (!squashing_state.have_assigned_backings_to_entire_squashing_layer_subtree)
     return SquashingDisallowedReason::kWouldBreakPaintOrder;
+
+  if (squashing_state.preceding_layer_prevents_squashing)
+    return SquashingDisallowedReason::kPrecedingLayerPrecludesSquashing;
 
   DCHECK(squashing_state.has_most_recent_mapping);
   const PaintLayer& squashing_layer =
@@ -286,6 +301,9 @@ void CompositingLayerAssigner::AssignLayersToBackingsInternal(
       layer->SetSquashingDisallowedReasons(reasons_preventing_squashing);
     }
   }
+
+  if (PreventsSquashing(layer))
+    squashing_state.preceding_layer_prevents_squashing = true;
 
   CompositingStateTransitionType composited_layer_update =
       ComputeCompositedLayerUpdate(layer);
