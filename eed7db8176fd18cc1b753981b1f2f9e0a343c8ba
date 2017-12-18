@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "17af4a47_c2f76980",
+        "filename": "media/video/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1116061
+      },
+      "writtenOn": "2017-12-18T22:31:48Z",
+      "side": 1,
+      "message": "Why does this need to move to public_deps?",
+      "revId": "eed7db8176fd18cc1b753981b1f2f9e0a343c8ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
