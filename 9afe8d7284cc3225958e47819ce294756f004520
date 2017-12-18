@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "12db7767_1955fe0f",
+        "filename": "chrome/browser/media/media_engagement_contents_observer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-12-18T14:03:18Z",
+      "side": 1,
+      "message": "If we move to ConvertToSourceId should we update this with every navigation? Otherwise the URL recorded will always be the first URL of that session.\n\nAt the moment this isn\u0027t an issue because MediaEngagementSession is origin specific so when we record UKM data we are using the origin rather than the full URL.",
+      "range": {
+        "startLine": 162,
+        "startChar": 2,
+        "endLine": 164,
+        "endChar": 68
+      },
+      "revId": "9afe8d7284cc3225958e47819ce294756f004520",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
