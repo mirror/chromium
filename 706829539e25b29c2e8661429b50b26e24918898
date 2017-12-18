@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "808f2922_5fbfc7d5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-18T18:50:39Z",
+      "side": 1,
+      "message": "nit: Can you make the subject line shorter\n\nSee \"Writing commit descriptions\" in\nhttps://www.chromium.org/developers/contributing-code",
+      "revId": "706829539e25b29c2e8661429b50b26e24918898",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
