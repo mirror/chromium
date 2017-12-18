@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4f6282c5_f241d4a3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 1879,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-12-18T23:51:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "556abce6_45eb57ee",
+      "range": {
+        "startLine": 1879,
+        "startChar": 25,
+        "endLine": 1879,
+        "endChar": 37
+      },
+      "revId": "26c8790b9006e1077ac62fa89c54f908e1e77019",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0c04a224_13867476",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/ModalDialogManager.java",
         "patchSetId": 16
@@ -45,6 +69,30 @@
       "revId": "26c8790b9006e1077ac62fa89c54f908e1e77019",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de6edea6_1c35704d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/ModalDialogManager.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-12-18T23:51:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0c04a224_13867476",
+      "range": {
+        "startLine": 30,
+        "startChar": 27,
+        "endLine": 30,
+        "endChar": 42
+      },
+      "revId": "26c8790b9006e1077ac62fa89c54f908e1e77019",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "51e0a3e1_8753f4dc",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/ModalDialogManager.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-12-18T23:51:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f33b075b_da02ccad",
+      "range": {
+        "startLine": 57,
+        "startChar": 17,
+        "endLine": 57,
+        "endChar": 18
+      },
+      "revId": "26c8790b9006e1077ac62fa89c54f908e1e77019",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "25a3b534_59a0902a",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/ModalDialogManager.java",
         "patchSetId": 16
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "45ba7ead_7fb92364",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/ModalDialogManager.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-12-18T23:51:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "25a3b534_59a0902a",
+      "range": {
+        "startLine": 84,
+        "startChar": 77,
+        "endLine": 84,
+        "endChar": 87
+      },
+      "revId": "26c8790b9006e1077ac62fa89c54f908e1e77019",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "38d28f74_1fc1030a",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/ModalDialogManager.java",
         "patchSetId": 16
@@ -108,6 +204,24 @@
       "revId": "26c8790b9006e1077ac62fa89c54f908e1e77019",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39d22005_56e1e23f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/ModalDialogManager.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-12-18T23:51:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "38d28f74_1fc1030a",
+      "revId": "26c8790b9006e1077ac62fa89c54f908e1e77019",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -134,6 +248,30 @@
     },
     {
       "key": {
+        "uuid": "b51223f0_2416e3b6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/TabModalLifetimeHandler.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-12-18T23:51:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5907cfba_9b43e528",
+      "range": {
+        "startLine": 46,
+        "startChar": 65,
+        "endLine": 46,
+        "endChar": 95
+      },
+      "revId": "26c8790b9006e1077ac62fa89c54f908e1e77019",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "94e8c22b_d05cbe22",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/TabModalLifetimeHandler.java",
         "patchSetId": 16
@@ -145,6 +283,30 @@
       "writtenOn": "2017-12-15T23:56:22Z",
       "side": 1,
       "message": "Should we be dismissing the tab modal dialogs if you switch tabs?  i.e. you click on the tab in the tab strip?\n\nI\u0027m wondering if we should do:\n\nTab currentTab \u003d tabModelSelector.getCurrentTab();\nif (mActiveTab !\u003d currentTab) dismissAll();\nmActiveTab \u003d currentTab;",
+      "range": {
+        "startLine": 49,
+        "startChar": 20,
+        "endLine": 49,
+        "endChar": 30
+      },
+      "revId": "26c8790b9006e1077ac62fa89c54f908e1e77019",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9564c9d_44d45cfc",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/TabModalLifetimeHandler.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-12-18T23:51:52Z",
+      "side": 1,
+      "message": "onInteractabilityChanged() (called from TabModelSelectorImpl#requestToShowTab [1]) will be called before didSelectTab() [2], so we probably don\u0027t need to call cancelAll() in didSelectTab().\n\n[1]https://cs.chromium.org/chromium/src/chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabModelImpl.java?q\u003drequestToShowTab\u0026sq\u003dpackage:chromium\u0026dr\u003dCSs\n\n[2]https://cs.chromium.org/chromium/src/chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabModelImpl.java?q\u003ddidSelectTab\u0026sq\u003dpackage:chromium\u0026dr\u003dCSs\n\nIn future CL, we would very likely support temporarily hiding dialogs, and only dismiss all dialog if tab switch really happens. In that case, cancelAll() should be in didSelectTab() instead.",
+      "parentUuid": "94e8c22b_d05cbe22",
       "range": {
         "startLine": 49,
         "startChar": 20,
@@ -174,6 +336,24 @@
     },
     {
       "key": {
+        "uuid": "a7ecbc7c_415a3967",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/TabModalLifetimeHandler.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-12-18T23:51:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c48e1417_f5690e80",
+      "revId": "26c8790b9006e1077ac62fa89c54f908e1e77019",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d69d6d25_9aa214cc",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/TabModalPresenter.java",
         "patchSetId": 16
@@ -194,6 +374,30 @@
       "revId": "26c8790b9006e1077ac62fa89c54f908e1e77019",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cba67c39_ba30d6c8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/TabModalPresenter.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-12-18T23:51:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d69d6d25_9aa214cc",
+      "range": {
+        "startLine": 91,
+        "startChar": 16,
+        "endLine": 91,
+        "endChar": 37
+      },
+      "revId": "26c8790b9006e1077ac62fa89c54f908e1e77019",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -220,6 +424,30 @@
     },
     {
       "key": {
+        "uuid": "6edc17eb_365a1b3a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/Tab.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 804,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-12-18T23:51:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "02de3ff9_db5a2535",
+      "range": {
+        "startLine": 804,
+        "startChar": 19,
+        "endLine": 804,
+        "endChar": 42
+      },
+      "revId": "26c8790b9006e1077ac62fa89c54f908e1e77019",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b9f37ea5_edc00c8f",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/Tab.java",
         "patchSetId": 16
@@ -240,6 +468,30 @@
       "revId": "26c8790b9006e1077ac62fa89c54f908e1e77019",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46ae4c27_9b3e50fb",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/Tab.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 3347,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-12-18T23:51:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b9f37ea5_edc00c8f",
+      "range": {
+        "startLine": 3347,
+        "startChar": 53,
+        "endLine": 3347,
+        "endChar": 62
+      },
+      "revId": "26c8790b9006e1077ac62fa89c54f908e1e77019",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
