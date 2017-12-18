@@ -177,6 +177,25 @@ TEST_F(PingManagerTest, SendPing) {
   }
 
   {
+    // Test a valid |next_version| = base::Version("0") is not serialized.
+    Component component(*update_context, "abc");
+    component.Uninstall(base::Version("1.2.3.4"), 0);
+    component.AppendEvent(BuildUninstalledEventElement(component));
+
+    ping_manager_->SendPing(component);
+    base::RunLoop().RunUntilIdle();
+
+    EXPECT_EQ(1, interceptor->GetCount()) << interceptor->GetRequestsAsString();
+    EXPECT_NE(string::npos,
+              interceptor->GetRequests()[0].find(
+                  "<app appid=\"abc\" version=\"1.2.3.4\" "
+                  "nextversion=\"1.2.3.4\">"
+                  "<event eventtype=\"4\" eventresult=\"1\"/></app>"))
+        << interceptor->GetRequestsAsString();
+    interceptor->Reset();
+  }
+
+  {
     // Test the download metrics.
     Component component(*update_context, "abc");
     component.state_ = base::MakeUnique<Component::StateUpdated>(&component);
