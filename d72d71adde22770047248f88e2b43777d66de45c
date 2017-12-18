@@ -167,6 +167,24 @@
       "revId": "d72d71adde22770047248f88e2b43777d66de45c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1836ff0_a6889d85",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1461,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2017-12-18T13:17:02Z",
+      "side": 1,
+      "message": "\u003e We should traverse all child of a container for decision whether the container is bad or not. But FindFocusCandidateInContainer never traverses a child element of a container. So your idea requires additional time for each FindFocusCandidateInContainer.\n\nRight, more time in FindFocusCandidate*() but less time in AdvanceNav*() because the former would have already pruned paths to dead ends (\u003d paths to sub trees without anything navigable). To not check those dead ends again, they could be added to the skip_list as well... That\u0027s also slightly complicated so....\n\n... to avoid that, couldn\u0027t we search the complete DOM for the best candidate?\n\n\u003e I think we should improve correctness first and think about optimization later.\n\nI do agree with that. But I also think that correctness will benefit, long-term, if we manage to simplify the algorithm :) A simpler algorithm should be easier to standardize. We have a fairly good test coverage already so now might be a good time to refactor.",
+      "parentUuid": "47ae8aec_a3e83b53",
+      "revId": "d72d71adde22770047248f88e2b43777d66de45c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
