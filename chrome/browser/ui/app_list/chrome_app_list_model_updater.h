@@ -22,8 +22,8 @@ class ChromeAppListModelUpdater : public AppListModelUpdater {
   ~ChromeAppListModelUpdater() override;
 
   // AppListModelUpdater:
-  void AddItem(std::unique_ptr<AppListItem> app_item) override;
-  void AddItemToFolder(std::unique_ptr<AppListItem> app_item,
+  void AddItem(std::unique_ptr<ChromeAppListItem> app_item) override;
+  void AddItemToFolder(std::unique_ptr<ChromeAppListItem> app_item,
                        const std::string& folder_id) override;
   void RemoveItem(const std::string& id) override;
   void RemoveUninstalledItem(const std::string& id) override;
@@ -38,9 +38,9 @@ class ChromeAppListModelUpdater : public AppListModelUpdater {
   void HighlightItemInstalledFromUI(const std::string& id) override;
   void SetSearchEngineIsGoogle(bool is_google) override;
 
-  AppListItem* FindItem(const std::string& id) override;
+  ChromeAppListItem* FindItem(const std::string& id) override;
   size_t ItemCount() override;
-  AppListItem* ItemAt(size_t index) override;
+  ChromeAppListItem* ItemAt(size_t index) override;
   AppListFolderItem* FindFolderItem(const std::string& folder_id) override;
   bool FindItemIndex(const std::string& id, size_t* index) override;
   bool TabletMode() override;
@@ -48,7 +48,7 @@ class ChromeAppListModelUpdater : public AppListModelUpdater {
   bool SearchEngineIsGoogle() override;
 
   // For SynchableService:
-  void AddItemToOemFolder(std::unique_ptr<AppListItem> item,
+  void AddItemToOemFolder(std::unique_ptr<ChromeAppListItem> item,
                           AppListSyncableService::SyncItem* oem_sync_item,
                           const std::string& oem_folder_id,
                           const std::string& oem_folder_name,
