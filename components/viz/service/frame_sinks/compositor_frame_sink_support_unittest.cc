@@ -787,5 +787,7 @@ TEST_F(CompositorFrameSinkSupportTest, FrameIndexCarriedOverToNewSurface) {
   EXPECT_EQ(frame_index + 1, surface2->GetActiveFrameIndex());
 }
 
+TEST_F(CompositorFrameSinkSupportTest, TransferSurfaceReference) {}
+
 }  // namespace
 }  // namespace viz

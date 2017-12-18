@@ -14,6 +14,20 @@
 namespace mojo {
 
 template <>
+struct StructTraits<viz::mojom::SurfaceIdOwnerPairDataView,
+                    std::pair<viz::SurfaceId, viz::FrameSinkId>> {
+  static const viz::SurfaceId& surface_id(
+      const std::pair<viz::SurfaceId, viz::FrameSinkId>& p) {
+    return p.first;
+  }
+
+  static const viz::FrameSinkId& owner(
+      const std::pair<viz::SurfaceId, viz::FrameSinkId>& p) {
+    return p.second;
+  }
+};
+
+template <>
 struct StructTraits<viz::mojom::CompositorFrameMetadataDataView,
                     viz::CompositorFrameMetadata> {
   static float device_scale_factor(
@@ -136,6 +150,11 @@ struct StructTraits<viz::mojom::CompositorFrameMetadataDataView,
   static uint32_t presentation_token(
       const viz::CompositorFrameMetadata& metadata) {
     return metadata.presentation_token;
+  }
+
+  static const std::vector<std::pair<viz::SurfaceId, viz::FrameSinkId>>&
+  references_to_transfer(const viz::CompositorFrameMetadata& metadata) {
+    return metadata.references_to_transfer;
   }
 
   static bool Read(viz::mojom::CompositorFrameMetadataDataView data,

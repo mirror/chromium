@@ -51,6 +51,36 @@ class SatisfySwapPromise : public SwapPromise {
   DISALLOW_COPY_AND_ASSIGN(SatisfySwapPromise);
 };
 
+class TransferReferenceSwapPromise : public SwapPromise {
+ public:
+  TransferReferenceSwapPromise(const viz::SurfaceId& surface_id,
+                               const viz::FrameSinkId& new_owner)
+      : surface_id_(surface_id), new_owner_(new_owner) {}
+
+  ~TransferReferenceSwapPromise() override = default;
+
+ private:
+  void DidActivate() override {}
+
+  void WillSwap(viz::CompositorFrameMetadata* metadata) override {
+    metadata->references_to_transfer.push_back(
+        std::make_pair(surface_id_, new_owner_));
+  }
+
+  void DidSwap() override {}
+
+  DidNotSwapAction DidNotSwap(DidNotSwapReason reason) override {
+    return DidNotSwapAction::KEEP_ACTIVE;
+  }
+
+  int64_t TraceId() const override { return 0; }
+
+  viz::SurfaceId surface_id_;
+  viz::FrameSinkId new_owner_;
+
+  DISALLOW_COPY_AND_ASSIGN(TransferReferenceSwapPromise);
+};
+
 scoped_refptr<SurfaceLayer> SurfaceLayer::Create(
     scoped_refptr<viz::SurfaceReferenceFactory> ref_factory) {
   return base::WrapRefCounted(new SurfaceLayer(std::move(ref_factory)));
@@ -117,6 +147,16 @@ bool SurfaceLayer::HasDrawableContent() const {
 void SurfaceLayer::SetLayerTreeHost(LayerTreeHost* host) {
   if (layer_tree_host() == host) {
     return;
+  }
+
+  if (layer_tree_host())
+    last_layer_tree_host_ = layer_tree_host();
+
+  if (last_layer_tree_host_ && host && fallback_surface_id_.is_valid() &&
+      last_layer_tree_host_ != host) {
+    last_layer_tree_host_->GetSwapPromiseManager()->QueueSwapPromise(
+        std::make_unique<TransferReferenceSwapPromise>(fallback_surface_id_,
+                                                       host->frame_sink_id()));
   }
 
   if (layer_tree_host() && fallback_surface_id_.is_valid())

@@ -212,6 +212,12 @@ class VIZ_SERVICE_EXPORT SurfaceManager {
   // next display frame. We will notify SurfaceObservers accordingly.
   void SurfaceWillBeDrawn(Surface* surface);
 
+  // Adds a temporary reference to |surface_id| from |owner| unless |owner|
+  // already has a surface referencing |surface_id|. If a temporary reference to
+  // |surface_id| already exists, this method assigns it to |owner|.
+  void AddTemporaryReferenceIfNecessary(const SurfaceId& surface_id,
+                                        const FrameSinkId& owner);
+
  private:
   friend class test::SurfaceSynchronizationTest;
   friend class test::SurfaceReferencesTest;

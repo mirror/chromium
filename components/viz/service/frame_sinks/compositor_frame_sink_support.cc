@@ -82,6 +82,11 @@ void CompositorFrameSinkSupport::OnSurfaceActivated(Surface* surface) {
   DCHECK(surface);
   DCHECK(surface->HasActiveFrame());
   DCHECK(surface->active_referenced_surfaces());
+  for (auto& reference :
+       surface->GetActiveFrame().metadata.references_to_transfer) {
+    surface_manager_->AddTemporaryReferenceIfNecessary(reference.first,
+                                                       reference.second);
+  }
   UpdateSurfaceReferences(surface->surface_id().local_surface_id(),
                           *surface->active_referenced_surfaces());
   uint32_t frame_token = surface->GetActiveFrame().metadata.frame_token;
