@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "449d8b72_5708af50",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 4354,
+      "author": {
+        "id": 1116492
+      },
+      "writtenOn": "2017-12-18T20:58:57Z",
+      "side": 1,
+      "message": "What about if PREVIEWS_OFF or PREVIEWS_NO_TRANSFORM are set in |previews_state_|? Should this code check for those bits as well, like it did before?",
+      "range": {
+        "startLine": 4354,
+        "startChar": 8,
+        "endLine": 4354,
+        "endChar": 40
+      },
+      "revId": "fe9b453c0e91c206b0bbfe4e791ff4350476c6e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
