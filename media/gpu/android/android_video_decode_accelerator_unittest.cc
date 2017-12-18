@@ -18,7 +18,6 @@
 #include "base/test/scoped_task_environment.h"
 #include "base/threading/sequenced_task_runner_handle.h"
 #include "gpu/command_buffer/client/client_test_helper.h"
-#include "gpu/command_buffer/service/gles2_cmd_decoder_mock.h"
 #include "gpu/command_buffer/service/gpu_tracer.h"
 #include "media/base/android/media_codec_util.h"
 #include "media/base/android/mock_android_overlay.h"
@@ -56,9 +55,8 @@ bool MakeContextCurrent() {
   return true;
 }
 
-base::WeakPtr<gpu::gles2::GLES2Decoder> GetGLES2Decoder(
-    const base::WeakPtr<gpu::gles2::GLES2Decoder>& decoder) {
-  return decoder;
+gpu::gles2::ContextGroup* GetContextGroup() {
+  return nullptr;
 }
 
 class MockVDAClient : public VideoDecodeAccelerator::Client {
@@ -85,9 +83,7 @@ class MockVDAClient : public VideoDecodeAccelerator::Client {
 class AndroidVideoDecodeAcceleratorTest : public testing::Test {
  public:
   // Default to baseline H264 because it's always supported.
-  AndroidVideoDecodeAcceleratorTest()
-      : gl_decoder_(&command_buffer_service_, &outputter_),
-        config_(H264PROFILE_BASELINE) {}
+  AndroidVideoDecodeAcceleratorTest() : config_(H264PROFILE_BASELINE) {}
 
   void SetUp() override {
     ASSERT_TRUE(gl::init::InitializeGLOneOff());
@@ -123,8 +119,7 @@ class AndroidVideoDecodeAcceleratorTest : public testing::Test {
     // Because VDA has a custom deleter, we must assign it to |vda_| carefully.
     AndroidVideoDecodeAccelerator* avda = new AndroidVideoDecodeAccelerator(
         codec_allocator_.get(), std::move(chooser_that_is_usually_null_),
-        base::Bind(&MakeContextCurrent),
-        base::Bind(&GetGLES2Decoder, gl_decoder_.AsWeakPtr()),
+        base::Bind(&MakeContextCurrent), base::Bind(&GetContextGroup),
         AndroidOverlayMojoFactoryCB(), device_info_.get());
     vda_.reset(avda);
     avda->force_defer_surface_creation_for_testing_ =
@@ -199,9 +194,6 @@ class AndroidVideoDecodeAcceleratorTest : public testing::Test {
 
   scoped_refptr<gl::GLSurface> surface_;
   scoped_refptr<gl::GLContext> context_;
-  gpu::FakeCommandBufferServiceBase command_buffer_service_;
-  gpu::gles2::TraceOutputter outputter_;
-  NiceMock<gpu::gles2::MockGLES2Decoder> gl_decoder_;
   NiceMock<MockVDAClient> client_;
   std::unique_ptr<FakeCodecAllocator> codec_allocator_;
 

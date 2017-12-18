@@ -15,7 +15,7 @@ class GLImage;
 
 namespace gpu {
 namespace gles2 {
-class GLES2Decoder;
+class ContextGroup;
 }
 }
 
@@ -47,9 +47,8 @@ using BindGLImageCallback =
                         const scoped_refptr<gl::GLImage>& image,
                         bool can_bind_to_sampler)>;
 
-// Return a WeakPtr to a GLES2Decoder, if one is available.
-using GetGLES2DecoderCallback =
-    base::Callback<base::WeakPtr<gpu::gles2::GLES2Decoder>(void)>;
+// Return a ContextGroup*, if one is available.
+using GetContextGroupCallback = base::Callback<gpu::gles2::ContextGroup*(void)>;
 
 }  // namespace media
 
