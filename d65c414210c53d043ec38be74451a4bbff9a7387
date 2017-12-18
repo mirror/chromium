@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ee2e11c7_8309d1ba",
+        "filename": "content/common/service_worker/service_worker_loader_helpers.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-18T07:31:46Z",
+      "side": 1,
+      "message": "Could have basic documentation:\n// Reads |blob| using the range in |headers| (if any), writing into |handle_out|. Calls |on_blob_read_complete| when done or if an error occurred. Returns a net error code if the inputs were invalid and reading couldn\u0027t start. In that case |on_blob_read_complete| isn\u0027t called.\n\n(It might be simpler to just call on_blob_read_complete in all cases? But I guess that mixes sync callback with async callback which can be error-prone.)",
+      "revId": "d65c414210c53d043ec38be74451a4bbff9a7387",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82830f03_16da44ce",
+        "filename": "content/common/service_worker/service_worker_loader_helpers.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-18T07:31:46Z",
+      "side": 1,
+      "message": "nit: could be worth saying \"\u003cvoid(int net_error)\u003e\"",
+      "revId": "d65c414210c53d043ec38be74451a4bbff9a7387",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a3d8e73_e9ab91cb",
+        "filename": "content/common/service_worker/service_worker_utils.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-18T07:31:46Z",
+      "side": 1,
+      "message": "nit: this kind of looks like it \"returns true\" if there is one range. I guess we should restrcuture this to mention the common case first. How about something like:\n\nSets |has_range| to true if |headers| specify a single range request, and |offset| and |size| to the range. Returns true on valid input (regardless of |has_range|), and false if there is more than one range or if the bounds overflow.",
+      "revId": "d65c414210c53d043ec38be74451a4bbff9a7387",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
