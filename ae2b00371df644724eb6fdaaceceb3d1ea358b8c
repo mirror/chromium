@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "072cec37_c04a9df5",
+        "filename": "components/viz/common/gpu/context_provider.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1116061
+      },
+      "writtenOn": "2017-12-19T01:56:02Z",
+      "side": 1,
+      "message": "Reverted to keep change smaller.",
+      "parentUuid": "b738fb20_7288f7bf",
+      "revId": "ae2b00371df644724eb6fdaaceceb3d1ea358b8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5da6988f_3e2e40d0",
         "filename": "components/viz/common/gpu/context_provider.h",
         "patchSetId": 11
@@ -139,6 +157,24 @@
       "revId": "ae2b00371df644724eb6fdaaceceb3d1ea358b8c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07c887b2_814e76e6",
+        "filename": "components/viz/common/gpu/context_provider.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1116061
+      },
+      "writtenOn": "2017-12-19T01:56:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8a0acd13_03b15cfe",
+      "revId": "ae2b00371df644724eb6fdaaceceb3d1ea358b8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -189,6 +225,24 @@
       "side": 1,
       "message": "I was hoping multiple inheritance would help avoid indirections, but talking with piman@ it sounds like virtual inheritance adds more indirections automatically.\n\nI\u0027m going to iterate a bit on ways to form these interfaces in other ways.",
       "parentUuid": "441df305_26f99cf5",
+      "revId": "ae2b00371df644724eb6fdaaceceb3d1ea358b8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9bc68ab_20e97a00",
+        "filename": "components/viz/common/gpu/context_provider.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1116061
+      },
+      "writtenOn": "2017-12-19T01:56:02Z",
+      "side": 1,
+      "message": "Removed this, and made the impl classes implement either just viz::ContextProvider, or both viz::Raster/ContextProvider as appropriate.\n\nThis is Split V2 described here: https://docs.google.com/document/d/1cdnET6vYVtqy75dlmrTpJ7ZdoXxBcJG7Pox_CC2E8b4/edit#bookmark\u003did.hvb8yfmt0v4q.  We could then incrementally do Split V4 per context provider impl.",
+      "parentUuid": "cd2ffb2d_32bea518",
       "revId": "ae2b00371df644724eb6fdaaceceb3d1ea358b8c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
