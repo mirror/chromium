@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bd9de886_798846b5",
+        "filename": "media/mojo/interfaces/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-12-19T19:18:34Z",
+      "side": 1,
+      "message": "The other pattern I\u0027ve seen is add cdm_service.mojom at the top, then here sources -\u003d [cdm_service.mojom], sources +\u003d ... That way when EnableIf is implemented this complete block is removed. WDYT?",
+      "range": {
+        "startLine": 59,
+        "startChar": 4,
+        "endLine": 59,
+        "endChar": 42
+      },
+      "revId": "44f297ea890f4083fd75800f8f88202424be7888",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9006425e_a8eb3f59",
+        "filename": "media/mojo/interfaces/cdm_service.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-12-19T19:18:34Z",
+      "side": 1,
+      "message": "Should this be 2017 since it\u0027s a new file?",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "44f297ea890f4083fd75800f8f88202424be7888",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e7a84b9_dc9e5634",
+        "filename": "media/mojo/interfaces/cdm_service.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-12-19T19:18:34Z",
+      "side": 1,
+      "message": "s/MediaService/CdmService/?",
+      "range": {
+        "startLine": 20,
+        "startChar": 14,
+        "endLine": 20,
+        "endChar": 26
+      },
+      "revId": "44f297ea890f4083fd75800f8f88202424be7888",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b49edf1_fff2a675",
+        "filename": "media/mojo/interfaces/cdm_service_mac.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-12-19T19:18:34Z",
+      "side": 1,
+      "message": "Couple of MediaService references in this file too.",
+      "range": {
+        "startLine": 27,
+        "startChar": 31,
+        "endLine": 27,
+        "endChar": 43
+      },
+      "revId": "44f297ea890f4083fd75800f8f88202424be7888",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a05266f_ef188953",
+        "filename": "media/mojo/services/cdm_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-12-19T19:18:34Z",
+      "side": 1,
+      "message": "and here.",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "44f297ea890f4083fd75800f8f88202424be7888",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d78d0b8_b511463c",
+        "filename": "media/mojo/services/cdm_service.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-12-19T19:18:34Z",
+      "side": 1,
+      "message": "2017?",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "44f297ea890f4083fd75800f8f88202424be7888",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9896c6e4_b4f938e8",
+        "filename": "media/mojo/services/cdm_service.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-12-19T19:18:34Z",
+      "side": 1,
+      "message": "ditto from media_service.h",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 21
+      },
+      "revId": "44f297ea890f4083fd75800f8f88202424be7888",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adc910eb_5fb1eb7c",
+        "filename": "media/mojo/services/media_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-12-19T19:18:34Z",
+      "side": 1,
+      "message": "More #include questions:\nptr_util.h not needed if you change the one base::MakeUnique to std::make_unique\nmedia_log.h already in .h file\nmedia-features.h not needed anymore?\nadd logging.h?",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 33
+      },
+      "revId": "44f297ea890f4083fd75800f8f88202424be7888",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfe8ddcf_3d6b9442",
+        "filename": "media/mojo/services/media_service.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-12-19T19:18:34Z",
+      "side": 1,
+      "message": "It doesn\u0027t look like a bunch of these are really needed (although this is by looking at the code, not actually trying it).\ncallback.h -\u003e callback_forward.h (although then you\u0027ll need callback.h in the .cc)\ncompiler_specific.h not needed?\nref-counted.h not needed?\nbuild-config.h not needed?\ngurl.h not needed?",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 21
+      },
+      "revId": "44f297ea890f4083fd75800f8f88202424be7888",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
