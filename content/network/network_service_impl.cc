@@ -12,6 +12,7 @@
 #include "base/values.h"
 #include "build/build_config.h"
 #include "content/network/network_context.h"
+#include "content/public/common/content_features.h"
 #include "content/public/common/content_switches.h"
 #include "content/public/network/url_request_context_builder_mojo.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
@@ -94,10 +95,9 @@ NetworkServiceImpl::NetworkServiceImpl(
     mojom::NetworkServiceRequest request,
     net::NetLog* net_log)
     : registry_(std::move(registry)), binding_(this) {
-  // |registry_| is nullptr when an in-process NetworkService is
-  // created directly. The latter is done in concert with using
-  // CreateNetworkContextWithBuilder to ease the transition to using the
-  // network service.
+  // |registry_| is nullptr when an in-process NetworkService is created
+  // directly. The latter is done to ease the transition to using the network
+  // service.
   if (registry_) {
     DCHECK(!request.is_pending());
     registry_->AddInterface<mojom::NetworkService>(
@@ -136,16 +136,12 @@ NetworkServiceImpl::~NetworkServiceImpl() {
 }
 
 std::unique_ptr<mojom::NetworkContext>
-NetworkServiceImpl::CreateNetworkContextWithBuilder(
-    content::mojom::NetworkContextRequest request,
-    content::mojom::NetworkContextParamsPtr params,
-    std::unique_ptr<URLRequestContextBuilderMojo> builder,
-    net::URLRequestContext** url_request_context) {
-  std::unique_ptr<NetworkContext> network_context =
-      std::make_unique<NetworkContext>(this, std::move(request),
-                                       std::move(params), std::move(builder));
-  *url_request_context = network_context->url_request_context();
-  return network_context;
+NetworkServiceImpl::CreateNetworkContextImpl(
+    mojom::NetworkContextRequest request,
+    net::URLRequestContext* url_request_context) {
+  DCHECK(!base::FeatureList::IsEnabled(features::kNetworkService));
+  return std::make_unique<NetworkContext>(this, std::move(request),
+                                          url_request_context);
 }
 
 std::unique_ptr<NetworkServiceImpl> NetworkServiceImpl::CreateForTesting() {
@@ -157,6 +153,8 @@ void NetworkServiceImpl::RegisterNetworkContext(
     NetworkContext* network_context) {
   DCHECK_EQ(0u, network_contexts_.count(network_context));
   network_contexts_.insert(network_context);
+  if (quic_disabled_)
+    network_context->DisableQuic();
 }
 
 void NetworkServiceImpl::DeregisterNetworkContext(

@@ -30,7 +30,7 @@
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/browser_thread_delegate.h"
 #include "content/public/common/network_service.mojom.h"
-#include "content/public/network/network_service.h"
+#include "content/public/network/url_request_context_owner.h"
 #include "extensions/features/features.h"
 #include "net/base/network_change_notifier.h"
 #include "net/nqe/network_quality_estimator.h"
@@ -115,10 +115,7 @@ class IOThread : public content::BrowserThreadDelegate {
     Globals();
     ~Globals();
 
-    // In-process NetworkService for use in URLRequestContext configuration when
-    // the network service created through the ServiceManager is disabled. See
-    // SystemNetworkContextManager's header comment for more details
-    std::unique_ptr<content::NetworkService> network_service;
+    bool quic_disabled = false;
 
     // Ascribes all data use in Chrome to a source, such as page loads.
     std::unique_ptr<data_use_measurement::ChromeDataUseAscriber>
@@ -133,9 +130,12 @@ class IOThread : public content::BrowserThreadDelegate {
 #endif  // defined(OS_ANDROID)
     std::vector<scoped_refptr<const net::CTLogVerifier>> ct_logs;
     std::unique_ptr<net::HttpAuthPreferences> http_auth_preferences;
-    std::unique_ptr<content::mojom::NetworkContext> system_network_context;
-    net::URLRequestContext* system_request_context;
+    content::URLRequestContextOwner system_request_context_owner;
     SystemRequestContextLeakChecker system_request_context_leak_checker;
+    // When the network service isn't in use, this holds on to a
+    // content::NetworkContext class that is bound to
+    // SystemNetworkContextManager::io_thread_network_context_.
+    std::unique_ptr<content::mojom::NetworkContext> system_network_context_impl;
 #if BUILDFLAG(ENABLE_EXTENSIONS)
     scoped_refptr<extensions::EventRouterForwarder>
         extension_event_router_forwarder;
@@ -312,9 +312,8 @@ class IOThread : public content::BrowserThreadDelegate {
   bool allow_gssapi_library_load_;
 #endif
 
-  // These are set on the UI thread, and then consumed during initialization on
+  // This is set on the UI thread, and then consumed during initialization on
   // the IO thread.
-  content::mojom::NetworkContextRequest network_context_request_;
   content::mojom::NetworkContextParamsPtr network_context_params_;
 
   // This is an instance of the default SSLConfigServiceManager for the current
@@ -327,9 +326,6 @@ class IOThread : public content::BrowserThreadDelegate {
 
   // True if QUIC is initially enabled.
   bool is_quic_allowed_on_init_;
-
-  content::mojom::NetworkServicePtr ui_thread_network_service_;
-  content::mojom::NetworkServiceRequest network_service_request_;
 
   base::WeakPtrFactory<IOThread> weak_factory_;
 

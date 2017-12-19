@@ -17,10 +17,9 @@
 #include "content/network/cookie_manager.h"
 #include "content/public/common/network_service.mojom.h"
 #include "content/public/common/url_loader_factory.mojom.h"
+#include "content/public/network/url_request_context_owner.h"
 #include "mojo/public/cpp/bindings/binding.h"
 #include "mojo/public/cpp/bindings/strong_binding_set.h"
-
-class PrefService;
 
 namespace net {
 class URLRequestContext;
@@ -51,18 +50,11 @@ class CONTENT_EXPORT NetworkContext : public mojom::NetworkContext {
                  mojom::NetworkContextRequest request,
                  mojom::NetworkContextParamsPtr params);
 
-  // Temporary constructor that allows creating an in-process NetworkContext
-  // with a pre-populated URLRequestContextBuilderMojo.
+  // Creates a NetworkContext that wraps a consumer-provided URLRequestContext
+  // that the NetworkContext does not own.
+  // TODO(mmenke):  Remove this constructor when the network service ships.
   NetworkContext(NetworkServiceImpl* network_service,
                  mojom::NetworkContextRequest request,
-                 mojom::NetworkContextParamsPtr params,
-                 std::unique_ptr<URLRequestContextBuilderMojo> builder);
-
-  // Creates a NetworkContext that wraps a consumer-provided URLRequestContext
-  // that the NetworkContext does not own. In this case, there is no
-  // NetworkService object.
-  // TODO(mmenke):  Remove this constructor when the network service ships.
-  NetworkContext(mojom::NetworkContextRequest request,
                  net::URLRequestContext* url_request_context);
 
   ~NetworkContext() override;
@@ -102,6 +94,14 @@ class CONTENT_EXPORT NetworkContext : public mojom::NetworkContext {
   void SetNetworkConditions(const std::string& profile_id,
                             mojom::NetworkConditionsPtr conditions) override;
 
+  // Applies the values in |network_context_params| to |builder|, and builds
+  // the URLRequestContext.
+  static URLRequestContextOwner ApplyContextParamsToBuilder(
+      URLRequestContextBuilderMojo* builder,
+      mojom::NetworkContextParams* network_context_params,
+      bool quic_disabled,
+      net::NetLog* net_log);
+
  private:
   // Constructor only used in tests.
   explicit NetworkContext(mojom::NetworkContextParamsPtr params);
@@ -109,22 +109,15 @@ class CONTENT_EXPORT NetworkContext : public mojom::NetworkContext {
   // On connection errors the NetworkContext destroys itself.
   void OnConnectionError();
 
-  std::unique_ptr<net::URLRequestContext> MakeURLRequestContext(
-      mojom::NetworkContextParams* network_context_params);
-
-  // Applies the values in |network_context_params| to |builder|.
-  void ApplyContextParamsToBuilder(
-      URLRequestContextBuilderMojo* builder,
+  URLRequestContextOwner MakeURLRequestContext(
       mojom::NetworkContextParams* network_context_params);
 
   NetworkServiceImpl* const network_service_;
 
-  // This needs to be destroyed after the URLRequestContext.
-  std::unique_ptr<PrefService> pref_service_;
-
-  // Owning pointer to |url_request_context_|. nullptr when the
-  // NetworkContextImpl doesn't own its own URLRequestContext.
-  std::unique_ptr<net::URLRequestContext> owned_url_request_context_;
+  // Holds owning pointer to |url_request_context_|. Will contain a nullptr for
+  // |url_request_context| when the NetworkContextImpl doesn't own its own
+  // URLRequestContext.
+  URLRequestContextOwner url_request_context_owner_;
 
   net::URLRequestContext* url_request_context_ = nullptr;
 

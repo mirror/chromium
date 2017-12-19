@@ -116,7 +116,8 @@ void CheckEffectiveConnectionType(IOThread* io_thread,
 void CheckSCTsAreSentToTreeTracker(IOThread* io_thread) {
   EXPECT_EQ(io_thread->ct_tree_tracker(),
             io_thread->globals()
-                ->system_request_context->cert_transparency_verifier()
+                ->system_request_context_owner.url_request_context
+                ->cert_transparency_verifier()
                 ->GetObserver());
 }
 
