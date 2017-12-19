@@ -317,10 +317,10 @@ class MODULES_EXPORT IDBRequest : public EventTargetWithInlineData,
 
  protected:
   IDBRequest(ScriptState*, IDBAny* source, IDBTransaction*, AsyncTraceState);
-  void EnqueueEvent(Event*);
+  void DispatchOrEnqueueEvent(Event*);
   void DequeueEvent(Event*);
   virtual bool ShouldEnqueueEvent() const;
-  void EnqueueResultInternal(IDBAny*);
+  void DispatchOrEnqueueResultInternal(IDBAny*);
   void SetResult(IDBAny*);
 
   // Overridden by IDBOpenDBRequest.

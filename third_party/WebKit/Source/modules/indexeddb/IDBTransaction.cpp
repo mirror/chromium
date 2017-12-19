@@ -30,6 +30,7 @@
 #include "core/dom/ExceptionCode.h"
 #include "core/dom/ExecutionContext.h"
 #include "core/dom/events/EventQueue.h"
+#include "core/inspector/MainThreadDebugger.h"
 #include "modules/indexed_db_names.h"
 #include "modules/indexeddb/IDBDatabase.h"
 #include "modules/indexeddb/IDBEventDispatcher.h"
@@ -414,7 +415,7 @@ void IDBTransaction::OnAbort(DOMException* error) {
 
   // Enqueue events before notifying database, as database may close which
   // enqueues more events and order matters.
-  EnqueueEvent(Event::CreateBubble(EventTypeNames::abort));
+  DispatchOrEnqueueEvent(Event::CreateBubble(EventTypeNames::abort));
   Finished();
 }
 
@@ -430,7 +431,7 @@ void IDBTransaction::OnComplete() {
 
   // Enqueue events before notifying database, as database may close which
   // enqueues more events and order matters.
-  EnqueueEvent(Event::Create(EventTypeNames::complete));
+  DispatchOrEnqueueEvent(Event::Create(EventTypeNames::complete));
   Finished();
 }
 
@@ -540,15 +541,19 @@ DispatchEventResult IDBTransaction::DispatchEventInternal(Event* event) {
   return dispatch_result;
 }
 
-void IDBTransaction::EnqueueEvent(Event* event) {
+void IDBTransaction::DispatchOrEnqueueEvent(Event* event) {
   DCHECK_NE(state_, kFinished)
       << "A finished transaction tried to enqueue an event of type "
       << event->type() << ".";
   if (!GetExecutionContext())
     return;
 
-  EventQueue* event_queue = GetExecutionContext()->GetEventQueue();
   event->SetTarget(this);
+  if (!MainThreadDebugger::Instance()->IsPaused()) {
+    DispatchEvent(event);
+    return;
+  }
+  EventQueue* event_queue = GetExecutionContext()->GetEventQueue();
   event_queue->EnqueueEvent(FROM_HERE, event);
 }
 
