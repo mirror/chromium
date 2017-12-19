@@ -500,6 +500,30 @@
     },
     {
       "key": {
+        "uuid": "d2fe4d6d_69ec4158",
+        "filename": "content/browser/download/download_manager_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1043,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-12-19T21:03:57Z",
+      "side": 1,
+      "message": "I put a note in the code--this pathway needs to be removed because the GUID is null at this point for new downloads. However, more changes need to made (ie. move request_origin, download_source from DownloadUrlParameters) before this code can be removed.",
+      "parentUuid": "68fedec4_f7b5a46e",
+      "range": {
+        "startLine": 1039,
+        "startChar": 2,
+        "endLine": 1043,
+        "endChar": 3
+      },
+      "revId": "72372832e4491ad720a0fcba486cb75c063750c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "97307f81_1c41b26e",
         "filename": "content/browser/download/download_resource_handler.cc",
         "patchSetId": 4
