@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a821817_efb8ca2b",
+        "filename": "ash/system/power/peripheral_battery_notifier_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-19T14:24:41Z",
+      "side": 1,
+      "message": "shouldn\u0027t we only disable on mus? (I dunno if there\u0027s a better way to do this than to check GetAshConfig and early return.)",
+      "range": {
+        "startLine": 187,
+        "startChar": 37,
+        "endLine": 187,
+        "endChar": 47
+      },
+      "revId": "9a6d07a3d475738e07d0453f402df905b6143b97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
