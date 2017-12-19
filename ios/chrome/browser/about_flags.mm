@@ -20,7 +20,6 @@
 #include "base/strings/stringprintf.h"
 #include "base/strings/sys_string_conversions.h"
 #include "base/sys_info.h"
-#include "base/task_scheduler/switches.h"
 #include "components/dom_distiller/core/dom_distiller_switches.h"
 #include "components/feature_engagement/public/feature_constants.h"
 #include "components/feature_engagement/public/feature_list.h"
@@ -113,10 +112,6 @@ const flags_ui::FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kContextualSearchDescription, flags_ui::kOsIos,
      ENABLE_DISABLE_VALUE_TYPE(switches::kEnableContextualSearch,
                                switches::kDisableContextualSearch)},
-    {"browser-task-scheduler", flag_descriptions::kBrowserTaskScheduler,
-     flag_descriptions::kBrowserTaskSchedulerDescription, flags_ui::kOsIos,
-     ENABLE_DISABLE_VALUE_TYPE(switches::kEnableBrowserTaskScheduler,
-                               switches::kDisableBrowserTaskScheduler)},
     {"mark-non-secure-as", flag_descriptions::kMarkHttpAsName,
      flag_descriptions::kMarkHttpAsDescription, flags_ui::kOsIos,
      MULTI_VALUE_TYPE(kMarkHttpAsChoices)},
