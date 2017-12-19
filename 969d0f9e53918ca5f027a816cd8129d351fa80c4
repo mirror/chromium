@@ -208,6 +208,24 @@
     },
     {
       "key": {
+        "uuid": "765d809b_793243bc",
+        "filename": "chrome/browser/chromeos/settings/device_settings_service.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-12-19T18:07:39Z",
+      "side": 1,
+      "message": "Well, long term, if DeviceSettingsService and policy are implemented as separate services that can live in separate executables this will need to be exposed as a \"public\" mojo API (restricted of course, but similar exposure to this \"public\" API).\n\nWhat we need to decide is whether this is a separation that we want to allow. If not then I will just put this on the backburner and this code can live in src/chrome until/unless we move the policy code to a separate component.",
+      "parentUuid": "5b9aded9_8a19201c",
+      "revId": "969d0f9e53918ca5f027a816cd8129d351fa80c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bd3b984e_ca757349",
         "filename": "chrome/browser/ui/views/ash/chrome_browser_main_extra_parts_ash.cc",
         "patchSetId": 5
