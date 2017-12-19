@@ -42,6 +42,48 @@
     },
     {
       "key": {
+        "uuid": "bc9549cd_f6023381",
+        "filename": "chrome/browser/ui/views/hover_button.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2017-12-19T13:51:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9e76692c_4bf6cdbb",
+      "revId": "78622498f4c0b7b0df2f6f9e2d91192c08d7ab3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9369e1af_0e1be60d",
+        "filename": "chrome/browser/ui/views/hover_button.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2017-12-19T13:51:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d62e0efa_c3630bad",
+      "range": {
+        "startLine": 278,
+        "startChar": 10,
+        "endLine": 278,
+        "endChar": 18
+      },
+      "revId": "78622498f4c0b7b0df2f6f9e2d91192c08d7ab3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d1771447_9c62815d",
         "filename": "chrome/browser/ui/views/hover_button.cc",
         "patchSetId": 14
@@ -56,6 +98,24 @@
       "revId": "78622498f4c0b7b0df2f6f9e2d91192c08d7ab3a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e5efdf4_b4b2347e",
+        "filename": "chrome/browser/ui/views/hover_button.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2017-12-19T13:51:39Z",
+      "side": 1,
+      "message": "|title_| is a StyledLabel and the function is named like this. See https://cs.chromium.org/chromium/src/ui/views/controls/styled_label.h?rcl\u003d29cd12f363e548cc7d1bc67a1dcfba86b24531ea\u0026l\u003d105.",
+      "parentUuid": "d1771447_9c62815d",
+      "revId": "78622498f4c0b7b0df2f6f9e2d91192c08d7ab3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "cd50ec3c_eecc217b",
+        "filename": "chrome/browser/ui/views/hover_button.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2017-12-19T13:51:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b2fd83a2_2d39c1dc",
+      "revId": "78622498f4c0b7b0df2f6f9e2d91192c08d7ab3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d64d5d40_9f325ce4",
         "filename": "chrome/browser/ui/views/hover_button.cc",
         "patchSetId": 14
@@ -90,6 +168,24 @@
       "revId": "78622498f4c0b7b0df2f6f9e2d91192c08d7ab3a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ba1eeec_6de413ab",
+        "filename": "chrome/browser/ui/views/hover_button.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2017-12-19T13:51:39Z",
+      "side": 1,
+      "message": "Removed NONE.",
+      "parentUuid": "d64d5d40_9f325ce4",
+      "revId": "78622498f4c0b7b0df2f6f9e2d91192c08d7ab3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -110,6 +206,24 @@
     },
     {
       "key": {
+        "uuid": "bca715a1_74273c33",
+        "filename": "chrome/browser/ui/views/hover_button.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2017-12-19T13:51:39Z",
+      "side": 1,
+      "message": "Yes, I actually thought about that. It definitely is more readable, so I changed it.",
+      "parentUuid": "f3eb73fd_ccd8deb6",
+      "revId": "78622498f4c0b7b0df2f6f9e2d91192c08d7ab3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "17a214e3_20414a42",
         "filename": "chrome/browser/ui/views/hover_button.h",
         "patchSetId": 14
@@ -124,6 +238,24 @@
       "revId": "78622498f4c0b7b0df2f6f9e2d91192c08d7ab3a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db0e3596_8316203c",
+        "filename": "chrome/browser/ui/views/hover_button.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2017-12-19T13:51:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "17a214e3_20414a42",
+      "revId": "78622498f4c0b7b0df2f6f9e2d91192c08d7ab3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -144,6 +276,24 @@
     },
     {
       "key": {
+        "uuid": "3ebb1728_82b73362",
+        "filename": "chrome/browser/ui/views/hover_button.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2017-12-19T13:51:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "693d9c1c_0cb7c6ae",
+      "revId": "78622498f4c0b7b0df2f6f9e2d91192c08d7ab3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3006f724_f0be33c7",
         "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
         "patchSetId": 14
@@ -158,6 +308,24 @@
       "revId": "78622498f4c0b7b0df2f6f9e2d91192c08d7ab3a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82f92eb2_919beea6",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 1073,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2017-12-19T13:51:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3006f724_f0be33c7",
+      "revId": "78622498f4c0b7b0df2f6f9e2d91192c08d7ab3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -178,6 +346,24 @@
     },
     {
       "key": {
+        "uuid": "3375731d_e86e468c",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 1119,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2017-12-19T13:51:39Z",
+      "side": 1,
+      "message": "I checked again and it should actually be 16. I mixed something up. Thanks!",
+      "parentUuid": "2939fc76_481831b8",
+      "revId": "78622498f4c0b7b0df2f6f9e2d91192c08d7ab3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3d2430d8_b918ddff",
         "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
         "patchSetId": 14
@@ -192,6 +378,24 @@
       "revId": "78622498f4c0b7b0df2f6f9e2d91192c08d7ab3a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfb99813_41870797",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 1156,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2017-12-19T13:51:39Z",
+      "side": 1,
+      "message": "I named the constant above kSmallMenuIconSize because there will be more items that need this constant once the sign-in view will be extended.",
+      "parentUuid": "3d2430d8_b918ddff",
+      "revId": "78622498f4c0b7b0df2f6f9e2d91192c08d7ab3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

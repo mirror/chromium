@@ -283,6 +283,24 @@
     },
     {
       "key": {
+        "uuid": "656e70af_7c1c101c",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1067,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2017-12-19T13:51:39Z",
+      "side": 1,
+      "message": "Using set_inside_border_insets/set_minimum_cross_axis_size unfortunately doesn\u0027t work. \nI added a comment.",
+      "parentUuid": "82d87cea_c8f0de31",
+      "revId": "5288b583723a027e778dacc54fa09638d8ce9e40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d79d0006_cd80c1c2",
         "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
         "patchSetId": 13
