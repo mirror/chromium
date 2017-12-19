@@ -133,9 +133,9 @@ IDBRequest* IDBCursor::update(ScriptState* script_state,
   }
 
   IDBObjectStore* object_store = EffectiveObjectStore();
-  return object_store->put(script_state, kWebIDBPutModeCursorUpdate,
-                           IDBAny::Create(this), value, primary_key_,
-                           exception_state);
+  return object_store->PutFromCursor(script_state, kWebIDBPutModeCursorUpdate,
+                                     IDBAny::Create(this), value,
+                                     primary_key_.get(), exception_state);
 }
 
 void IDBCursor::advance(unsigned count, ExceptionState& exception_state) {
@@ -191,10 +191,11 @@ void IDBCursor::Continue(ScriptState* script_state,
     return;
   }
 
-  IDBKey* key = key_value.IsUndefined() || key_value.IsNull()
-                    ? nullptr
-                    : ScriptValue::To<IDBKey*>(script_state->GetIsolate(),
-                                               key_value, exception_state);
+  std::unique_ptr<IDBKey> key =
+      key_value.IsUndefined() || key_value.IsNull()
+          ? nullptr
+          : ScriptValue::To<std::unique_ptr<IDBKey>>(
+                script_state->GetIsolate(), key_value, exception_state);
   if (exception_state.HadException())
     return;
   if (key && !key->IsValid()) {
@@ -202,7 +203,7 @@ void IDBCursor::Continue(ScriptState* script_state,
                                       IDBDatabase::kNotValidKeyErrorMessage);
     return;
   }
-  Continue(key, nullptr, std::move(metrics), exception_state);
+  Continue(std::move(key), nullptr, std::move(metrics), exception_state);
 }
 
 void IDBCursor::continuePrimaryKey(ScriptState* script_state,
@@ -243,8 +244,8 @@ void IDBCursor::continuePrimaryKey(ScriptState* script_state,
     return;
   }
 
-  IDBKey* key = ScriptValue::To<IDBKey*>(script_state->GetIsolate(), key_value,
-                                         exception_state);
+  std::unique_ptr<IDBKey> key = ScriptValue::To<std::unique_ptr<IDBKey>>(
+      script_state->GetIsolate(), key_value, exception_state);
   if (exception_state.HadException())
     return;
   if (!key->IsValid()) {
@@ -253,8 +254,9 @@ void IDBCursor::continuePrimaryKey(ScriptState* script_state,
     return;
   }
 
-  IDBKey* primary_key = ScriptValue::To<IDBKey*>(
-      script_state->GetIsolate(), primary_key_value, exception_state);
+  std::unique_ptr<IDBKey> primary_key =
+      ScriptValue::To<std::unique_ptr<IDBKey>>(
+          script_state->GetIsolate(), primary_key_value, exception_state);
   if (exception_state.HadException())
     return;
   if (!primary_key->IsValid()) {
@@ -263,11 +265,12 @@ void IDBCursor::continuePrimaryKey(ScriptState* script_state,
     return;
   }
 
-  Continue(key, primary_key, std::move(metrics), exception_state);
+  Continue(std::move(key), std::move(primary_key), std::move(metrics),
+           exception_state);
 }
 
-void IDBCursor::Continue(IDBKey* key,
-                         IDBKey* primary_key,
+void IDBCursor::Continue(std::unique_ptr<IDBKey> key,
+                         std::unique_ptr<IDBKey> primary_key,
                          IDBRequest::AsyncTraceState metrics,
                          ExceptionState& exception_state) {
   DCHECK(transaction_->IsActive());
@@ -279,9 +282,9 @@ void IDBCursor::Continue(IDBKey* key,
     DCHECK(key_);
     if (direction_ == kWebIDBCursorDirectionNext ||
         direction_ == kWebIDBCursorDirectionNextNoDuplicate) {
-      const bool ok =
-          key_->IsLessThan(key) || (primary_key && key_->IsEqual(key) &&
-                                    primary_key_->IsLessThan(primary_key));
+      const bool ok = key_->IsLessThan(key.get()) ||
+                      (primary_key && key_->IsEqual(key.get()) &&
+                       primary_key_->IsLessThan(primary_key.get()));
       if (!ok) {
         exception_state.ThrowDOMException(
             kDataError,
@@ -290,9 +293,9 @@ void IDBCursor::Continue(IDBKey* key,
       }
 
     } else {
-      const bool ok = key->IsLessThan(key_.Get()) ||
-                      (primary_key && key->IsEqual(key_.Get()) &&
-                       primary_key->IsLessThan(primary_key_.Get()));
+      const bool ok = key->IsLessThan(key_.get()) ||
+                      (primary_key && key->IsEqual(key_.get()) &&
+                       primary_key->IsLessThan(primary_key_.get()));
       if (!ok) {
         exception_state.ThrowDOMException(kDataError,
                                           "The parameter is greater than or "
@@ -308,7 +311,7 @@ void IDBCursor::Continue(IDBKey* key,
   request_->SetPendingCursor(this);
   request_->AssignNewMetrics(std::move(metrics));
   got_value_ = false;
-  backend_->Continue(key, primary_key,
+  backend_->Continue(std::move(key), std::move(primary_key),
                      request_->CreateWebCallbacks().release());
 }
 
@@ -348,7 +351,8 @@ IDBRequest* IDBCursor::Delete(ScriptState* script_state,
     return nullptr;
   }
 
-  IDBKeyRange* key_range = IDBKeyRange::only(primary_key_, exception_state);
+  IDBKeyRange* key_range =
+      IDBKeyRange::only(std::move(primary_key_), exception_state);
   DCHECK(!exception_state.HadException());
 
   IDBRequest* request =
@@ -373,11 +377,23 @@ void IDBCursor::Close() {
 
 ScriptValue IDBCursor::key(ScriptState* script_state) {
   key_dirty_ = false;
-  return ScriptValue::From(script_state, key_);
+  return ScriptValue::From(script_state, key_.get());
 }
 
 ScriptValue IDBCursor::primaryKey(ScriptState* script_state) {
   primary_key_dirty_ = false;
+  const IDBKey* primary_key = primary_key_.get();
+  if (!primary_key) {
+#if DCHECK_IS_ON()
+    DCHECK(value_has_injected_primary_key_);
+
+    IDBObjectStore* object_store = EffectiveObjectStore();
+    DCHECK(object_store->autoIncrement() &&
+           !object_store->IdbKeyPath().IsNull());
+#endif  // DCHECK_IS_ON()
+
+    primary_key = value_->Value()->PrimaryKey();
+  }
   return ScriptValue::From(script_state, primary_key_);
 }
 
@@ -409,13 +425,13 @@ ScriptValue IDBCursor::source(ScriptState* script_state) const {
   return ScriptValue::From(script_state, source_);
 }
 
-void IDBCursor::SetValueReady(IDBKey* key,
-                              IDBKey* primary_key,
+void IDBCursor::SetValueReady(std::unique_ptr<IDBKey> key,
+                              std::unique_ptr<IDBKey> primary_key,
                               std::unique_ptr<IDBValue> value) {
-  key_ = key;
+  key_ = std::move(key);
   key_dirty_ = true;
 
-  primary_key_ = primary_key;
+  primary_key_ = std::move(primary_key);
   primary_key_dirty_ = true;
 
   got_value_ = true;
@@ -443,7 +459,7 @@ void IDBCursor::SetValueReady(IDBKey* key,
   value_has_injected_primary_key_ = true;
 #endif  // DCHECK_IS_ON()
   std::unique_ptr<IDBValue> value_with_injected_primary_key = IDBValue::Create(
-      std::move(value), primary_key_, object_store->IdbKeyPath());
+      std::move(value), std::move(primary_key_), object_store->IdbKeyPath());
   value_ = IDBAny::Create(std::move(value_with_injected_primary_key));
 }
 

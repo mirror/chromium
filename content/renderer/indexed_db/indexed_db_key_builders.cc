@@ -15,6 +15,7 @@
 
 using blink::WebIDBKey;
 using blink::WebIDBKeyRange;
+using blink::WebIDBKeyView;
 using blink::kWebIDBKeyTypeArray;
 using blink::kWebIDBKeyTypeBinary;
 using blink::kWebIDBKeyTypeDate;
@@ -26,30 +27,32 @@ using blink::kWebIDBKeyTypeString;
 using blink::WebVector;
 using blink::WebString;
 
-static content::IndexedDBKey::KeyArray CopyKeyArray(const WebIDBKey& other) {
+namespace {
+
+content::IndexedDBKey::KeyArray CopyKeyArray(blink::WebIDBKeyArrayView other) {
   content::IndexedDBKey::KeyArray result;
-  if (other.KeyType() == kWebIDBKeyTypeArray) {
-    const WebVector<WebIDBKey>& array = other.Array();
-    for (size_t i = 0; i < array.size(); ++i)
-      result.push_back(content::IndexedDBKeyBuilder::Build(array[i]));
-  }
+  size_t array_size = other.size();
+  result.reserve(other.size());
+  for (size_t i = 0; i < array_size; ++i)
+    result.push_back(content::IndexedDBKeyBuilder::Build(other[i]));
   return result;
 }
 
-static std::vector<base::string16> CopyArray(
-    const WebVector<WebString>& array) {
+std::vector<base::string16> CopyArray(const WebVector<WebString>& array) {
   std::vector<base::string16> copy(array.size());
   for (size_t i = 0; i < array.size(); ++i)
     copy[i] = array[i].Utf16();
   return copy;
 }
 
+}  // anonymous namespace
+
 namespace content {
 
-IndexedDBKey IndexedDBKeyBuilder::Build(const blink::WebIDBKey& key) {
+IndexedDBKey IndexedDBKeyBuilder::Build(blink::WebIDBKeyView key) {
   switch (key.KeyType()) {
     case kWebIDBKeyTypeArray:
-      return IndexedDBKey(CopyKeyArray(key));
+      return IndexedDBKey(CopyKeyArray(key.ArrayView()));
     case kWebIDBKeyTypeBinary: {
       const blink::WebData data = key.Binary();
       std::string key_string;

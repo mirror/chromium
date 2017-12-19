@@ -19,6 +19,7 @@ using blink::WebBlobInfo;
 using blink::WebData;
 using blink::WebIDBCallbacks;
 using blink::WebIDBKey;
+using blink::WebIDBKeyView;
 using blink::WebIDBValue;
 using indexed_db::mojom::CallbacksAssociatedPtrInfo;
 using indexed_db::mojom::CursorAssociatedPtrInfo;
@@ -100,8 +101,8 @@ void WebIDBCursorImpl::Advance(unsigned long count,
                      base::Passed(&callbacks_impl)));
 }
 
-void WebIDBCursorImpl::Continue(const WebIDBKey& key,
-                                const WebIDBKey& primary_key,
+void WebIDBCursorImpl::Continue(WebIDBKeyView key,
+                                WebIDBKeyView primary_key,
                                 WebIDBCallbacks* callbacks_ptr) {
   std::unique_ptr<WebIDBCallbacks> callbacks(callbacks_ptr);
 

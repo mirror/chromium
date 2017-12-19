@@ -110,7 +110,7 @@ class WebIDBDatabase {
                    long long object_store_id,
                    const WebData& value,
                    const WebVector<WebBlobInfo>&,
-                   const WebIDBKey&,
+                   WebIDBKeyView primary_key,
                    WebIDBPutMode,
                    WebIDBCallbacks*,
                    const WebVector<long long>& index_ids,

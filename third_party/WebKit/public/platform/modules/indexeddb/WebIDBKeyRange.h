@@ -40,21 +40,21 @@ class WebIDBKeyRange {
 
   WebIDBKeyRange() {}
   WebIDBKeyRange(const WebIDBKeyRange& key_range) { Assign(key_range); }
-  WebIDBKeyRange(const WebIDBKey& lower,
-                 const WebIDBKey& upper,
+  WebIDBKeyRange(WebIDBKey lower,
+                 WebIDBKey upper,
                  bool lower_open,
                  bool upper_open) {
-    Assign(lower, upper, lower_open, upper_open);
+    Assign(std::move(lower), std::move(std upper), lower_open, upper_open);
   }
 
-  BLINK_EXPORT WebIDBKey Lower() const;
-  BLINK_EXPORT WebIDBKey Upper() const;
+  BLINK_EXPORT WebIDBKeyView Lower() const;
+  BLINK_EXPORT WebIDBKeyView Upper() const;
   BLINK_EXPORT bool LowerOpen() const;
   BLINK_EXPORT bool UpperOpen() const;
 
   BLINK_EXPORT void Assign(const WebIDBKeyRange&);
-  BLINK_EXPORT void Assign(const WebIDBKey& lower,
-                           const WebIDBKey& upper,
+  BLINK_EXPORT void Assign(std::unique_ptr<WebIDBKey> lower,
+                           std::unique_ptr<WebIDBKey> upper,
                            bool lower_open,
                            bool upper_open);
 

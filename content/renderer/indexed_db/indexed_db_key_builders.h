@@ -22,7 +22,7 @@ namespace content {
 
 class CONTENT_EXPORT IndexedDBKeyBuilder {
  public:
-  static IndexedDBKey Build(const blink::WebIDBKey& key);
+  static IndexedDBKey Build(blink::WebIDBKeyView key);
 
  private:
   DISALLOW_COPY_AND_ASSIGN(IndexedDBKeyBuilder);

@@ -35,8 +35,8 @@ class CONTENT_EXPORT WebIDBCursorImpl : public blink::WebIDBCursor {
   ~WebIDBCursorImpl() override;
 
   void Advance(unsigned long count, blink::WebIDBCallbacks* callback) override;
-  void Continue(const blink::WebIDBKey& key,
-                const blink::WebIDBKey& primary_key,
+  void Continue(blink::WebIDBKeyView key,
+                blink::WebIDBKeyView primary_key,
                 blink::WebIDBCallbacks* callback) override;
   void PostSuccessHandlerCallback() override;
 

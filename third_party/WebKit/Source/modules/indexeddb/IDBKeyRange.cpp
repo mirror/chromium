@@ -46,8 +46,8 @@ IDBKeyRange* IDBKeyRange::FromScriptValue(ExecutionContext* context,
   if (range)
     return range;
 
-  IDBKey* key =
-      ScriptValue::To<IDBKey*>(ToIsolate(context), value, exception_state);
+  std::unique_ptr<IDBKey> key = ScriptValue::To<std::unique_ptr<IDBKey>>(
+      ToIsolate(context), value, exception_state);
   if (exception_state.HadException())
     return nullptr;
   if (!key || !key->IsValid()) {
@@ -56,30 +56,35 @@ IDBKeyRange* IDBKeyRange::FromScriptValue(ExecutionContext* context,
     return nullptr;
   }
 
-  return new IDBKeyRange(key, key, kLowerBoundClosed, kUpperBoundClosed);
+  IDBKey* upper_compressed = key.get();
+  return new IDBKeyRange(std::move(key), uper_compressed, nullptr,
+                         kLowerBoundClosed, kUpperBoundClosed);
 }
 
-IDBKeyRange::IDBKeyRange(IDBKey* lower,
+IDBKeyRange::IDBKeyRange(std::unique_ptr<IDBKey> lower,
                          IDBKey* upper,
+                         std::unique_ptr<IDBKey> upper_if_distinct,
                          LowerBoundType lower_type,
                          UpperBoundType upper_type)
-    : lower_(lower),
+    : lower_(std::move(lower)),
       upper_(upper),
+      upper_if_distinct_(std::move(upper_if_distinct)),
       lower_type_(lower_type),
-      upper_type_(upper_type) {}
-
-void IDBKeyRange::Trace(blink::Visitor* visitor) {
-  visitor->Trace(lower_);
-  visitor->Trace(upper_);
-  ScriptWrappable::Trace(visitor);
+      upper_type_(upper_type) {
+  DCHECK(!upper_if_distinct_ || upper == upper_if_distinct_.get())
+      << "In the normal representation, upper must point to upper_if_distinct.";
+  DCHECK(upper != lower.get() || !upper_if_distinct_)
+      << "In the compressed representation, upper_if_distinct_ must be null.";
+  DCHECK(lower_ || lower_type_ == kLowerBoundOpen);
+  DCHECK(upper_ || upper_type_ == kUpperBoundOpen);
 }
 
 ScriptValue IDBKeyRange::LowerValue(ScriptState* script_state) const {
-  return ScriptValue::From(script_state, lower_);
+  return ScriptValue::From(script_state, Lower());
 }
 
 ScriptValue IDBKeyRange::UpperValue(ScriptState* script_state) const {
-  return ScriptValue::From(script_state, upper_);
+  return ScriptValue::From(script_state, Upper());
 }
 
 IDBKeyRange* IDBKeyRange::only(IDBKey* key, ExceptionState& exception_state) {
@@ -154,9 +159,9 @@ IDBKeyRange* IDBKeyRange::bound(ScriptState* script_state,
                                 bool lower_open,
                                 bool upper_open,
                                 ExceptionState& exception_state) {
-  IDBKey* lower =
-      ScriptValue::To<IDBKey*>(ToIsolate(ExecutionContext::From(script_state)),
-                               lower_value, exception_state);
+  std::unique_ptr<IDBKey> lower = ScriptValue::To<std::unique_ptr<IDBKey>>(
+      ToIsolate(ExecutionContext::From(script_state)), lower_value,
+      exception_state);
   if (exception_state.HadException())
     return nullptr;
   if (!lower || !lower->IsValid()) {
@@ -165,9 +170,10 @@ IDBKeyRange* IDBKeyRange::bound(ScriptState* script_state,
     return nullptr;
   }
 
-  IDBKey* upper =
-      ScriptValue::To<IDBKey*>(ToIsolate(ExecutionContext::From(script_state)),
-                               upper_value, exception_state);
+  std::unique_ptr<IDBKey> upper = ScriptValue::To<std::unique_ptr<IDBKey>>(
+      ToIsolate(ExecutionContext::From(script_state)), upper_value,
+      exception_state);
+
   if (exception_state.HadException())
     return nullptr;
   if (!upper || !upper->IsValid()) {
@@ -176,19 +182,22 @@ IDBKeyRange* IDBKeyRange::bound(ScriptState* script_state,
     return nullptr;
   }
 
-  if (upper->IsLessThan(lower)) {
+  if (upper->IsLessThan(lower.get())) {
     exception_state.ThrowDOMException(
         kDataError, "The lower key is greater than the upper key.");
     return nullptr;
   }
-  if (upper->IsEqual(lower) && (lower_open || upper_open)) {
+  if (upper->IsEqual(lower.get()) && (lower_open || upper_open)) {
     exception_state.ThrowDOMException(
         kDataError,
         "The lower key and upper key are equal and one of the bounds is open.");
     return nullptr;
   }
 
-  return IDBKeyRange::Create(lower, upper,
+  // This always builds a normal representation. We could save a tiny bit of
+  // memory by building a compressed representation if the two keys are equal,
+  // but this seems rare, so it's not worth the extra code size.
+  return IDBKeyRange::Create(std::move(lower), std::move(upper),
                              lower_open ? kLowerBoundOpen : kLowerBoundClosed,
                              upper_open ? kUpperBoundOpen : kUpperBoundClosed);
 }
@@ -196,9 +205,9 @@ IDBKeyRange* IDBKeyRange::bound(ScriptState* script_state,
 bool IDBKeyRange::includes(ScriptState* script_state,
                            const ScriptValue& key_value,
                            ExceptionState& exception_state) {
-  IDBKey* key =
-      ScriptValue::To<IDBKey*>(ToIsolate(ExecutionContext::From(script_state)),
-                               key_value, exception_state);
+  std::unique_ptr<IDBKey> key = ScriptValue::To<std::unique_ptr<IDBKey>>(
+      ToIsolate(ExecutionContext::From(script_state)), key_value,
+      exception_state);
   if (exception_state.HadException())
     return false;
   if (!key || !key->IsValid()) {
@@ -208,7 +217,7 @@ bool IDBKeyRange::includes(ScriptState* script_state,
   }
 
   if (lower_) {
-    int compared_with_lower = key->Compare(lower_);
+    int compared_with_lower = key->Compare(lower_.get());
     if (compared_with_lower < 0 || (compared_with_lower == 0 && lowerOpen()))
       return false;
   }

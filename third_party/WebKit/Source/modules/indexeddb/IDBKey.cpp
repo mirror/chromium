@@ -31,11 +31,7 @@
 
 namespace blink {
 
-IDBKey::~IDBKey() {}
-
-void IDBKey::Trace(blink::Visitor* visitor) {
-  visitor->Trace(array_);
-}
+IDBKey::~IDBKey() = default;
 
 bool IDBKey::IsValid() const {
   if (type_ == kInvalidType)
@@ -69,7 +65,7 @@ int IDBKey::Compare(const IDBKey* other) const {
   switch (type_) {
     case kArrayType:
       for (size_t i = 0; i < array_.size() && i < other->array_.size(); ++i) {
-        if (int result = array_[i]->Compare(other->array_[i].Get()))
+        if (int result = array_[i]->Compare(other->array_[i].get()))
           return result;
       }
       return CompareNumbers(array_.size(), other->array_.size());
@@ -106,22 +102,28 @@ bool IDBKey::IsEqual(const IDBKey* other) const {
   return !Compare(other);
 }
 
-IDBKey::KeyArray IDBKey::ToMultiEntryArray() const {
-  DCHECK_EQ(type_, kArrayType);
+// static
+IDBKey::KeyArray IDBKey::ToMultiEntryArray(std::unique_ptr<IDBKey> array_key) {
+  DCHECK_EQ(array_key->type_, kArrayType);
   KeyArray result;
-  result.ReserveCapacity(array_.size());
-  std::copy_if(array_.begin(), array_.end(), std::back_inserter(result),
-               [](const Member<IDBKey> key) { return key->IsValid(); });
+  result.ReserveInitialCapacity(array_key->array_.size());
+  std::copy_if(
+      std::make_move_iterator(array_key->array_.begin()),
+      std::make_move_iterator(array_key->array_.end()),
+      std::back_inserter(result),
+      [](const std::unique_ptr<IDBKey>& key) { return key->IsValid(); });
 
   // Remove duplicates using std::sort/std::unique rather than a hashtable to
   // avoid the complexity of implementing DefaultHash<IDBKey>.
-  std::sort(result.begin(), result.end(),
-            [](const Member<IDBKey> a, const Member<IDBKey> b) {
-              return a->IsLessThan(b);
-            });
+  std::sort(
+      result.begin(), result.end(),
+      [](const std::unique_ptr<IDBKey>& a, const std::unique_ptr<IDBKey>& b) {
+        return a->IsLessThan(b.get());
+      });
   const auto end = std::unique(result.begin(), result.end());
   DCHECK_LE(static_cast<size_t>(end - result.begin()), result.size());
   result.resize(end - result.begin());
+
   return result;
 }
 
