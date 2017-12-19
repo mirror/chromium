@@ -22,6 +22,30 @@
       "revId": "9609febfc9273fde74784d44aec5c0ae52507c2a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55ba7b75_1c0691f4",
+        "filename": "chrome/browser/signin/identity_proxy_factory.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-12-19T13:24:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5c6f818c_17186f1e",
+      "range": {
+        "startLine": 35,
+        "startChar": 15,
+        "endLine": 35,
+        "endChar": 29
+      },
+      "revId": "9609febfc9273fde74784d44aec5c0ae52507c2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
