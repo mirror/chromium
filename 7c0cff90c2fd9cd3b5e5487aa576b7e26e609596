@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "03b04bdb_bf2c126f",
+        "filename": "content/browser/devtools/devtools_agent_host_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-12-19T22:58:32Z",
+      "side": 1,
+      "message": "Note that GerOrCreateFor() always returns non-null.",
+      "revId": "7c0cff90c2fd9cd3b5e5487aa576b7e26e609596",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "907d5966_ba382f42",
+        "filename": "content/browser/devtools/devtools_agent_host_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-12-19T22:58:32Z",
+      "side": 1,
+      "message": "nit: Strange DCHECK here :)",
+      "revId": "7c0cff90c2fd9cd3b5e5487aa576b7e26e609596",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f83126a1_f632d526",
+        "filename": "content/browser/devtools/protocol/security_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-12-19T22:58:32Z",
+      "side": 1,
+      "message": "Should not check for handler here, or else you don\u0027t handle ignore all mode sometimes.\n\nif (mode \u003d\u003d\u003d kIgnoreAll) {\n  if (handler)\n    handler.Run(...);\n  return true;\n}",
+      "revId": "7c0cff90c2fd9cd3b5e5487aa576b7e26e609596",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
