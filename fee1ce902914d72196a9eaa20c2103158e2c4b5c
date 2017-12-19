@@ -22,6 +22,30 @@
       "revId": "fee1ce902914d72196a9eaa20c2103158e2c4b5c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a64ba96c_0e8cff6b",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 2766,
+      "author": {
+        "id": 1175809
+      },
+      "writtenOn": "2017-12-19T14:13:44Z",
+      "side": 1,
+      "message": "Thank you for the feedback, Kyle.\n\nCorrect. \"enable_mus \u003d is_chromeos\" in ui_features.gni is what I meant by \"chromeos implies mus\".\nHowever, from your comment, it sounded to me like if it was still possible to build ChromeOS without MUS enabled. I do not think this is the case anymore (although one can still set enable_mus false on its gn.args, yes). Do you mean that chromeos builds without mus are still a supported configuration today? If so, then checking both to be same would be the best way to do.\n\nThat being said, this CL goes from the premise that compile checking for ENABLE_MUS supersedes OS_CHROMEOS.\nSo, the proposed change would be the same as something like:\n\n#if !os_android \u0026\u0026 !os_chromeos \u0026\u0026 !os_any_platform_that_enables_mus\n\nor for simplicity\n\n#if !os_android \u0026\u0026 !enable_mus.\n\ndoes it make sense to you?",
+      "parentUuid": "ca162703_6dd91822",
+      "range": {
+        "startLine": 2766,
+        "startChar": 39,
+        "endLine": 2766,
+        "endChar": 49
+      },
+      "revId": "fee1ce902914d72196a9eaa20c2103158e2c4b5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
