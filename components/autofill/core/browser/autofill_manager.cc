@@ -336,8 +336,14 @@ void AutofillManager::OnFormsSeen(const std::vector<FormData>& forms,
   ParseForms(forms);
 }
 
-bool AutofillManager::OnWillSubmitFormImpl(const FormData& form,
-                                           const TimeTicks timestamp) {
+bool AutofillManager::OnFormSubmittedImpl(const FormData& form,
+                                          bool known_success,
+                                          SubmissionSource source,
+                                          base::TimeTicks timestamp) {
+  // Not ready to handle PROBABLY_FORM_SUBMISSION yet.
+  if (source == SubmissionSource::PROBABLY_FORM_SUBMITTED)
+    return false;
+
   // We will always give Autocomplete a chance to save the data.
   std::unique_ptr<FormStructure> submitted_form = ValidateSubmittedForm(form);
   if (!submitted_form) {
@@ -361,19 +367,6 @@ bool AutofillManager::OnWillSubmitFormImpl(const FormData& form,
     credit_card_form_event_logger_->OnWillSubmitForm();
 
   StartUploadProcess(std::move(submitted_form), timestamp, true);
-
-  return true;
-}
-
-bool AutofillManager::OnFormSubmitted(const FormData& form) {
-  if (!IsValidFormData(form))
-    return false;
-
-  // We will always give Autocomplete a chance to save the data.
-  std::unique_ptr<FormStructure> submitted_form = ValidateSubmittedForm(form);
-  if (!submitted_form) {
-    return false;
-  }
 
   CreditCard credit_card =
       form_data_importer_->ExtractCreditCardFromForm(*submitted_form);

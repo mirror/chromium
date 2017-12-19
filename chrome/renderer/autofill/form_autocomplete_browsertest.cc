@@ -9,6 +9,7 @@
 #include "base/time/time.h"
 #include "build/build_config.h"
 #include "chrome/test/base/chrome_render_view_test.h"
+#include "components/autofill/content/common/submission_source_util.h"
 #include "components/autofill/content/renderer/autofill_agent.h"
 #include "components/autofill/core/common/form_data.h"
 #include "content/public/renderer/render_frame.h"
@@ -43,22 +44,24 @@ class FakeContentAutofillDriver : public mojom::AutofillDriver {
 
   bool did_unfocus_form() const { return did_unfocus_form_; }
 
-  const FormData* form_will_submit() const { return form_will_submit_.get(); }
-
   const FormData* form_submitted() const { return form_submitted_.get(); }
+
+  bool known_success() const { return known_success_; }
+
+  SubmissionSource submission_source() const { return submission_source_; }
 
  private:
   // mojom::AutofillDriver:
   void FormsSeen(const std::vector<FormData>& forms,
                  base::TimeTicks timestamp) override {}
 
-  void WillSubmitForm(const FormData& form,
-                      base::TimeTicks timestamp) override {
-    form_will_submit_.reset(new FormData(form));
-  }
-
-  void FormSubmitted(const FormData& form) override {
+  void FormSubmitted(const FormData& form,
+                     bool known_success,
+                     SubmissionSource source,
+                     base::TimeTicks timestamp) override {
     form_submitted_.reset(new FormData(form));
+    known_success_ = known_success;
+    submission_source_ = source;
   }
 
   void TextFieldDidChange(const FormData& form,
@@ -95,10 +98,13 @@ class FakeContentAutofillDriver : public mojom::AutofillDriver {
 
   // Records whether FocusNoLongerOnForm() get called.
   bool did_unfocus_form_;
-  // Records the form data received via WillSubmitForm() call.
-  std::unique_ptr<FormData> form_will_submit_;
+
   // Records the form data received via FormSubmitted() call.
   std::unique_ptr<FormData> form_submitted_;
+
+  bool known_success_;
+
+  SubmissionSource submission_source_;
 
   mojo::BindingSet<mojom::AutofillDriver> bindings_;
 };
@@ -110,28 +116,19 @@ void VerifyReceivedRendererMessages(
     const FakeContentAutofillDriver& fake_driver,
     const std::string& fname,
     const std::string& lname,
-    bool expect_submitted_message) {
-  ASSERT_TRUE(fake_driver.form_will_submit());
-  ASSERT_EQ(expect_submitted_message, fake_driver.form_submitted() != nullptr);
+    bool expect_known_success,
+    SubmissionSource expect_submission_source) {
+  ASSERT_TRUE(fake_driver.form_submitted());
 
   // The tuple also includes a timestamp, which is ignored.
-  const FormData& will_submit_form = *(fake_driver.form_will_submit());
-  ASSERT_LE(2U, will_submit_form.fields.size());
-
-  EXPECT_EQ(base::ASCIIToUTF16("fname"), will_submit_form.fields[0].name);
-  EXPECT_EQ(base::UTF8ToUTF16(fname), will_submit_form.fields[0].value);
-  EXPECT_EQ(base::ASCIIToUTF16("lname"), will_submit_form.fields[1].name);
-  EXPECT_EQ(base::UTF8ToUTF16(lname), will_submit_form.fields[1].value);
-
-  if (expect_submitted_message) {
-    const FormData& submitted_form = *(fake_driver.form_submitted());
-    ASSERT_LE(2U, submitted_form.fields.size());
-
-    EXPECT_EQ(base::ASCIIToUTF16("fname"), submitted_form.fields[0].name);
-    EXPECT_EQ(base::UTF8ToUTF16(fname), submitted_form.fields[0].value);
-    EXPECT_EQ(base::ASCIIToUTF16("lname"), submitted_form.fields[1].name);
-    EXPECT_EQ(base::UTF8ToUTF16(lname), submitted_form.fields[1].value);
-  }
+  const FormData& submitted_form = *(fake_driver.form_submitted());
+  ASSERT_LE(2U, submitted_form.fields.size());
+  EXPECT_EQ(base::ASCIIToUTF16("fname"), submitted_form.fields[0].name);
+  EXPECT_EQ(base::UTF8ToUTF16(fname), submitted_form.fields[0].value);
+  EXPECT_EQ(base::ASCIIToUTF16("lname"), submitted_form.fields[1].name);
+  EXPECT_EQ(expect_known_success, fake_driver.known_success());
+  EXPECT_EQ(expect_submission_source,
+            FromMojomSubmissionSource(fake_driver.submission_source()));
 }
 
 // Helper function to verify that NO form-related messages are received from the
@@ -139,7 +136,6 @@ void VerifyReceivedRendererMessages(
 void VerifyNoSubmitMessagesReceived(
     const FakeContentAutofillDriver& fake_driver) {
   // No submission messages sent.
-  EXPECT_EQ(nullptr, fake_driver.form_will_submit());
   EXPECT_EQ(nullptr, fake_driver.form_submitted());
 }
 
@@ -229,7 +225,8 @@ TEST_F(FormAutocompleteTest, NormalFormSubmit) {
   base::RunLoop().RunUntilIdle();
 
   VerifyReceivedRendererMessages(fake_driver_, "Rick", "Deckard",
-                                 true /* expect_submitted_message */);
+                                 true /* expect_known_success */,
+                                 SubmissionSource::FORM_SUBMISSION);
 }
 
 // TODO(crbug.com/785504): Rewrite this test.
@@ -250,7 +247,8 @@ TEST_F(FormAutocompleteTest, DISABLED_SubmitEventPrevented) {
   base::RunLoop().RunUntilIdle();
 
   VerifyReceivedRendererMessages(fake_driver_, "Rick", "Deckard",
-                                 false /* expect_submitted_message */);
+                                 true /* expect_known_success */,
+                                 SubmissionSource::FORM_SUBMISSION);
 }
 
 // Tests that completing an Ajax request and having the form disappear will
@@ -279,7 +277,8 @@ TEST_F(FormAutocompleteTest, AjaxSucceeded_NoLongerVisible) {
   base::RunLoop().RunUntilIdle();
 
   VerifyReceivedRendererMessages(fake_driver_, "Rick", "Deckard",
-                                 true /* expect_submitted_message */);
+                                 true /* expect_known_success */,
+                                 SubmissionSource::XHR_SUCCEEDED);
 }
 
 // Tests that completing an Ajax request and having the form with a specific
@@ -313,7 +312,8 @@ TEST_F(FormAutocompleteTest,
   base::RunLoop().RunUntilIdle();
 
   VerifyReceivedRendererMessages(fake_driver_, "Rick", "Deckard",
-                                 true /* expect_submitted_message */);
+                                 true /* expect_known_success */,
+                                 SubmissionSource::XHR_SUCCEEDED);
 }
 
 // Tests that completing an Ajax request and having the form with no action
@@ -354,7 +354,8 @@ TEST_F(FormAutocompleteTest, MAYBE_NoLongerVisibleBothNoActions) {
   base::RunLoop().RunUntilIdle();
 
   VerifyReceivedRendererMessages(fake_driver_, "Rick", "Deckard",
-                                 true /* expect_submitted_message */);
+                                 true /* expect_known_success */,
+                                 SubmissionSource::XHR_SUCCEEDED);
 }
 
 // Tests that completing an Ajax request and having the form with no action
@@ -382,7 +383,8 @@ TEST_F(FormAutocompleteTest, AjaxSucceeded_NoLongerVisible_NoAction) {
   base::RunLoop().RunUntilIdle();
 
   VerifyReceivedRendererMessages(fake_driver_, "Rick", "Deckard",
-                                 true /* expect_submitted_message */);
+                                 true /* expect_known_success */,
+                                 SubmissionSource::XHR_SUCCEEDED);
 }
 
 // Tests that completing an Ajax request but leaving a form visible will not
@@ -458,7 +460,8 @@ TEST_F(FormAutocompleteTest, AjaxSucceeded_FilledFormIsInvisible) {
   base::RunLoop().RunUntilIdle();
 
   VerifyReceivedRendererMessages(fake_driver_, "Rick", "Smith",
-                                 true /* expect_submitted_message */);
+                                 true /* expect_known_success */,
+                                 SubmissionSource::XHR_SUCCEEDED);
 }
 
 // Tests that completing an Ajax request after having autofilled a form,
@@ -512,7 +515,8 @@ TEST_F(FormAutocompleteTest, AjaxSucceeded_FormlessElements) {
   base::RunLoop().RunUntilIdle();
 
   VerifyReceivedRendererMessages(fake_driver_, "Kirby", "Puckett",
-                                 /* expect_submitted_message = */ true);
+                                 true /* expect_known_success */,
+                                 SubmissionSource::XHR_SUCCEEDED);
 }
 
 // Unit test for CollectFormlessElements.
@@ -675,7 +679,8 @@ TEST_F(FormAutocompleteTest, AutoCompleteOffFormSubmit) {
   base::RunLoop().RunUntilIdle();
 
   VerifyReceivedRendererMessages(fake_driver_, "Rick", "Deckard",
-                                 true /* expect_submitted_message */);
+                                 false /* expect_known_success */,
+                                 SubmissionSource::FORM_SUBMISSION);
 }
 
 // Tests that fields with autocomplete off are submitted.
@@ -692,7 +697,8 @@ TEST_F(FormAutocompleteTest, AutoCompleteOffInputSubmit) {
   base::RunLoop().RunUntilIdle();
 
   VerifyReceivedRendererMessages(fake_driver_, "Rick", "Deckard",
-                                 true /* expect_submitted_message */);
+                                 false /* expect_known_success */,
+                                 SubmissionSource::FORM_SUBMISSION);
 }
 
 // Tests that submitting a form that has been dynamically set as autocomplete
@@ -722,7 +728,8 @@ TEST_F(FormAutocompleteTest, DynamicAutoCompleteOffFormSubmit) {
   base::RunLoop().RunUntilIdle();
 
   VerifyReceivedRendererMessages(fake_driver_, "Rick", "Deckard",
-                                 true /* expect_submitted_message */);
+                                 false /* expect_known_success */,
+                                 SubmissionSource::FORM_SUBMISSION);
 }
 
 }  // namespace autofill

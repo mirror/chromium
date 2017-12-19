@@ -629,11 +629,12 @@ class AutofillManagerTest : public testing::Test {
 
   void FormSubmitted(const FormData& form) {
     autofill_manager_->ResetRunLoop();
-    if (autofill_manager_->OnWillSubmitForm(form, base::TimeTicks::Now()) &&
+    if (autofill_manager_->OnFormSubmitted(form, false,
+                                           SubmissionSource::FORM_SUBMISSION,
+                                           base::TimeTicks::Now()) &&
         (!personal_data_.GetProfiles().empty() ||
          !personal_data_.GetCreditCards().empty()))
       autofill_manager_->WaitForAsyncUploadProcess();
-    autofill_manager_->OnFormSubmitted(form);
   }
 
   void FillAutofillFormData(int query_id,
@@ -4039,7 +4040,9 @@ TEST_F(AutofillManagerTest, FormWillSubmitDoesNotSaveData) {
   // this point (since the form was not submitted). Does not call
   // OnFormSubmitted.
   autofill_manager_->ResetRunLoop();
-  autofill_manager_->OnWillSubmitForm(response_data, base::TimeTicks::Now());
+  autofill_manager_->OnFormSubmitted(response_data, false,
+                                     SubmissionSource::FORM_SUBMISSION,
+                                     base::TimeTicks::Now());
   autofill_manager_->WaitForAsyncUploadProcess();
   EXPECT_EQ(0, personal_data_.num_times_save_imported_profile_called());
 }
@@ -5244,7 +5247,8 @@ TEST_F(AutofillManagerTest, DontOfferToSavePaymentsCard) {
   full_card_unmask_delegate()->OnUnmaskResponse(response);
   autofill_manager_->OnDidGetRealPan(AutofillClient::SUCCESS,
                                      "4012888888881881");
-  autofill_manager_->OnFormSubmitted(form);
+  autofill_manager_->OnFormSubmitted(
+      form, false, SubmissionSource::FORM_SUBMISSION, base::TimeTicks::Now());
 }
 
 TEST_F(AutofillManagerTest, FillInUpdatedExpirationDate) {
