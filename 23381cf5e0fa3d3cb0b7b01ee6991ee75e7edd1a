@@ -375,6 +375,30 @@
       "revId": "23381cf5e0fa3d3cb0b7b01ee6991ee75e7edd1a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b850961_1bb8a55f",
+        "filename": "services/network/public/cpp/proxy_resolving_client_socket_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-19T18:06:45Z",
+      "side": 1,
+      "message": "That doesn\u0027t quite cover my concern about testing the address we connect to.  None of the tests looks at the IP address we actually connect to.  For example, we could always try connecting to the first proxy in the list, or we could always connect to 127.0.0.1, for that matter, and I believe all these tests would still pass?",
+      "parentUuid": "230a07e0_d350b74c",
+      "range": {
+        "startLine": 257,
+        "startChar": 1,
+        "endLine": 257,
+        "endChar": 0
+      },
+      "revId": "23381cf5e0fa3d3cb0b7b01ee6991ee75e7edd1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

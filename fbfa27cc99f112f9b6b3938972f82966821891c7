@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "82f63b7a_fc4a6128",
+        "filename": "services/network/public/cpp/proxy_resolving_client_socket.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-19T18:06:45Z",
+      "side": 1,
+      "message": "Suggest |url|\u0027s host and port specify where a connection will be established to.  The full URL will only be used for proxy resolution.",
+      "range": {
+        "startLine": 49,
+        "startChar": 33,
+        "endLine": 49,
+        "endChar": 40
+      },
+      "revId": "fbfa27cc99f112f9b6b3938972f82966821891c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f04f9450_6615eb65",
+        "filename": "services/network/public/cpp/proxy_resolving_client_socket_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-19T18:06:45Z",
+      "side": 1,
+      "message": "Maybe rename this to something like url_request_context_getter_with_proxy_, or just context_getter_with_proxy_?",
+      "range": {
+        "startLine": 59,
+        "startChar": 21,
+        "endLine": 59,
+        "endChar": 48
+      },
+      "revId": "fbfa27cc99f112f9b6b3938972f82966821891c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56c30fe9_3df245a4",
+        "filename": "services/network/public/cpp/proxy_resolving_client_socket_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-19T18:06:45Z",
+      "side": 1,
+      "message": "nit:  For all instances of this pattern, should make these const and use the const naming scheme.",
+      "range": {
+        "startLine": 69,
+        "startChar": 13,
+        "endLine": 69,
+        "endChar": 14
+      },
+      "revId": "fbfa27cc99f112f9b6b3938972f82966821891c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80b734b7_5e9d03fe",
+        "filename": "services/network/public/cpp/proxy_resolving_client_socket_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-19T18:06:45Z",
+      "side": 1,
+      "message": "May as well add a port (Which should also be passed through)",
+      "range": {
+        "startLine": 338,
+        "startChar": 37,
+        "endLine": 338,
+        "endChar": 40
+      },
+      "revId": "fbfa27cc99f112f9b6b3938972f82966821891c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d8c5c7e_53e95bce",
+        "filename": "services/network/public/cpp/proxy_resolving_client_socket_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-19T18:06:45Z",
+      "side": 1,
+      "message": "nit:  kProxyTestMockErrors",
+      "range": {
+        "startLine": 443,
+        "startChar": 10,
+        "endLine": 443,
+        "endChar": 32
+      },
+      "revId": "fbfa27cc99f112f9b6b3938972f82966821891c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
