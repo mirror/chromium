@@ -1,13 +1,23 @@
-<h1>Hosting and Updating</h1>
-
+<h1>Webstore Hosting and Updating</h1>
+<p>
+  All of an extension's files are organized within a single directory.
+  The directory is distributed to users as a ZIP file with a special
+  <code><a href="/crx">.crx</a></code> suffix.
+  Extensions that are hosted on the
+  <a href="https://chrome.google.com/webstore/category/extensions">
+    Chrome Webstore</a>
+  are uploaded as <code>.zip</code> files through the
+  <a href="https://chrome.google.com/webstore/developer/dashboard">
+  Developer Dashboard</a>.
+  Through this process, the <code>.crx</code> file is auto-created.
+</p>
 <h2 id="hosting">Hosting</h2>
 
 <p>
-  Extensions must be uploaded through the
+  Most extensions must be uploaded through the
   <a href="https://chrome.google.com/webstore/developer/dashboard">
   Developer Dashboard</a>
-  and are
-  <a href="/webstore">distributed</a> in the
+  and <a href="/webstore">distributed</a> in the
   <a href="https://chrome.google.com/webstore/category/extensions">
   Chrome Web Store</a> to
   <a href="http://blog.chromium.org/2015/05/continuing-to-protect-chrome-users-from.html">
@@ -61,7 +71,8 @@
 </pre>
 
 <p>
-  Re-<a href="/packaging">package</a> the updated extension and locate it in the
+  Convert the updated extension directory into a ZIP file
+  and locate the old version in the
   <a href="https://chrome.google.com/webstore/developer/dashboard">
   Developer Dashboard</a>.
   Select <strong>Edit</strong>, upload the new package,
