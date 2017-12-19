@@ -94,6 +94,18 @@ void HostFrameSinkManager::SetFrameSinkDebugLabel(
   frame_sink_manager_->SetFrameSinkDebugLabel(frame_sink_id, debug_label);
 }
 
+void HostFrameSinkManager::SetInputTargetClient(
+    const FrameSinkId& frame_sink_id,
+    mojom::InputTargetClientPtr input_target_client) {
+  frame_sink_data_map_[frame_sink_id].input_target_client =
+      std::move(input_target_client);
+}
+
+mojom::InputTargetClientPtr HostFrameSinkManager::GetInputTargetClient(
+    const FrameSinkId& frame_sink_id) {
+  return std::move(frame_sink_data_map_[frame_sink_id].input_target_client);
+}
+
 void HostFrameSinkManager::CreateRootCompositorFrameSink(
     const FrameSinkId& frame_sink_id,
     gpu::SurfaceHandle surface_handle,
@@ -114,7 +126,7 @@ void HostFrameSinkManager::CreateRootCompositorFrameSink(
       frame_sink_id, surface_handle, force_software_compositing,
       renderer_settings, std::move(request), std::move(client),
       std::move(display_private_request), std::move(display_client));
-  display_hit_test_query_[frame_sink_id] = base::MakeUnique<HitTestQuery>();
+  display_hit_test_query_[frame_sink_id] = base::MakeUnique<HitTestQuery>(this);
 }
 
 void HostFrameSinkManager::CreateCompositorFrameSink(

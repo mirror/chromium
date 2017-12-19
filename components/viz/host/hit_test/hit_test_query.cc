@@ -4,7 +4,9 @@
 
 #include "components/viz/host/hit_test/hit_test_query.h"
 
+#include "components/viz/host/host_frame_sink_manager.h"
 #include "services/viz/public/interfaces/hit_test/hit_test_region_list.mojom.h"
+#include "services/viz/public/interfaces/hit_test/input_target_client.mojom.h"
 
 namespace viz {
 namespace {
@@ -17,7 +19,8 @@ bool ShouldUseTouchBounds(EventSource event_source) {
 
 }  // namespace
 
-HitTestQuery::HitTestQuery() = default;
+HitTestQuery::HitTestQuery(HostFrameSinkManager* host_frame_sink_manager)
+    : host_frame_sink_manager_(host_frame_sink_manager), weak_factory_(this) {}
 
 HitTestQuery::~HitTestQuery() = default;
 
@@ -49,6 +52,8 @@ void HitTestQuery::SwitchActiveAggregatedHitTestRegionList(
   active_hit_test_list_size_ = handle_buffer_sizes_[active_handle_index];
 }
 
+void HitTestQuery::TargetResolved(const FrameSinkId& frame_sinkId) {}
+
 Target HitTestQuery::FindTargetForLocation(
     EventSource event_source,
     const gfx::Point& location_in_root) const {
@@ -58,6 +63,45 @@ Target HitTestQuery::FindTargetForLocation(
 
   FindTargetInRegionForLocation(event_source, location_in_root,
                                 active_hit_test_list_, &target);
+
+  if (target.flags == mojom::kHitTestAsk) {
+    mojom::InputTargetClientPtr input_target_client =
+        host_frame_sink_manager_->GetInputTargetClient(target.frame_sink_id);
+    // TODO(gklassen) is this the correct point to use?
+    // TODO(gklassen) callback and ensure the queue is async ready.
+    // TODO(gklassen) do we need InputTargetClient to return the point in the
+    // new target coordinates?
+
+    input_target_client->FrameSinkIdAt(
+        target.location_in_target, base::BindOnce(&HitTestQuery::TargetResolved,
+                                                  weak_factory_.GetWeakPtr()));
+  }
+
+  // HostFrameSinkManager can resolve the frame_sink_id to HostFrameSinkClient
+  // as shown in OnFirstSurfaceActivation HostFrameSinkManager owns this
+  // HitTestQuery There are many clients that implement HostFrameSinkClient (
+  // DelegatedFrameHost(TopLevelRenderers),
+  // RenderWidgetHostViewChildFrame(OOPIF), others for offscreen canvas and
+  // others ) each of these will need to Need to add a method to
+  // HostFrameSinkClient like
+  //   virtual void OnDelegatedHitTestQuery(Point transformed into target
+  //   coordinate space); // needs bikeshed this is an async request that will
+  //   generate an async response
+
+  // DelegatedFrameHost can implement this by:
+  //  DelegatedFrameHost has a DelegatedFrameHostClient
+  //  DelegatedFrameHostClient is a DelegatedFrameHostClientAura which has a
+  //  RenderWidgetHostViewAura RenderWidgetHostViewAura has a
+  //  RenderWidgetHostImpl* const host_;
+
+  // RenderWidgetHostImpl has a RenderWidget
+
+  // RenderWidgetHostInputEventRouter maps FrameSinkId to
+  // RenderWidgetHostViewBase
+
+  // Move GetInputTargetClient from RenderFrameHostImpl to
+  // RenderWidgetHostViewBase
+
   return target;
 }
 
