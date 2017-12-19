@@ -14,6 +14,7 @@
 #include "base/macros.h"
 #include "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_win.h"
 #include "components/component_updater/component_installer.h"
+#include "components/component_updater/component_updater_service.h"
 
 class PrefRegistrySimple;
 
@@ -83,9 +84,33 @@ class SwReporterInstallerPolicy : public ComponentInstallerPolicy {
   DISALLOW_COPY_AND_ASSIGN(SwReporterInstallerPolicy);
 };
 
+class SwReporterOnDemandFetcher : public ServiceObserver {
+ public:
+  SwReporterOnDemandFetcher(ComponentUpdateService* cus,
+                            base::OnceClosure on_error_callback);
+  ~SwReporterOnDemandFetcher() override;
+
+  // Start the on-demand update.
+  void Start();
+
+  // ServiceObserver implementation.
+  void OnEvent(Events event, const std::string& id) override;
+
+ private:
+  ComponentUpdateService* cus_;
+  base::OnceClosure on_error_callback_;
+
+  DISALLOW_COPY_AND_ASSIGN(SwReporterOnDemandFetcher);
+};
+
 // Call once during startup to make the component update service aware of the
 // SwReporter. Once ready, this may trigger a periodic run of the reporter.
 void RegisterSwReporterComponent(ComponentUpdateService* cus);
+
+// Forces an update of the reporter component.
+// Note: this can have adverse effects on the component updater subsystem and
+// should only be called from direct user action.
+void ForceSwReporterComponentUpdate(ComponentUpdateService* cus);
 
 // Register local state preferences related to the SwReporter.
 void RegisterPrefsForSwReporter(PrefRegistrySimple* registry);

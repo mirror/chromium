@@ -136,6 +136,9 @@ enum class SwReporterInvocationResult {
   kNotScheduled,
   // The reporter process timed-out while running.
   kTimedOut,
+  // The on-demand reporter run failed to download a new version of the reporter
+  // component.
+  kComponentNotAvailable,
   // The reporter failed to start.
   kProcessFailedToLaunch,
   // The reporter ended with a failure.
@@ -163,6 +166,8 @@ class SwReporterInvocationSequence {
   explicit SwReporterInvocationSequence(
       const base::Version& version = base::Version());
   SwReporterInvocationSequence(SwReporterInvocationSequence&& queue);
+  SwReporterInvocationSequence(
+      const SwReporterInvocationSequence& invocations_sequence);
   virtual ~SwReporterInvocationSequence();
 
   void PushInvocation(const SwReporterInvocation& invocation);
