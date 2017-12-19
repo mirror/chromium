@@ -16,6 +16,24 @@
       "revId": "72ebcc532a08f570738cd3704508e11a387304da",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25b7bb7d_66e0f98d",
+        "filename": "media/test/pipeline_integration_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2360,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-12-19T23:07:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "61374c9f_7fb41a43",
+      "revId": "72ebcc532a08f570738cd3704508e11a387304da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
