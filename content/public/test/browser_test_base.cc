@@ -343,7 +343,6 @@ void BrowserTestBase::ProxyRunTestOnMainThreadLoop() {
     if (!disable_io_checks_)
       base::ThreadRestrictions::SetIOAllowed(old_io_allowed_value);
     TearDownOnMainThread();
-    PostRunTestOnMainThread();
   }
 
   if (base::CommandLine::ForCurrentProcess()->HasSwitch(
@@ -364,6 +363,8 @@ void BrowserTestBase::ProxyRunTestOnMainThreadLoop() {
                                    run_loop.QuitClosure(), trace_file)));
     run_loop.Run();
   }
+
+  PostRunTestOnMainThread();
 }
 
 void BrowserTestBase::CreateTestServer(const base::FilePath& test_server_base) {
