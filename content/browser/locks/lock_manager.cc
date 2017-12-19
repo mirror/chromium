@@ -104,18 +104,19 @@ void LockManager::OriginState::MergeLockState(
       .insert(scope.begin(), scope.end());
 }
 
-void LockManager::CreateService(blink::mojom::LockManagerRequest request) {
+void LockManager::CreateService(blink::mojom::LockManagerRequest request,
+                                const url::Origin& origin) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
-  bindings_.AddBinding(this, std::move(request));
+  bindings_.AddBinding(this, std::move(request), origin);
 }
 
-void LockManager::RequestLock(const url::Origin& origin,
-                              const std::vector<std::string>& scope,
+void LockManager::RequestLock(const std::vector<std::string>& scope,
                               LockMode mode,
                               WaitMode wait,
                               blink::mojom::LockRequestPtr request) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
 
+  const url::Origin& origin = bindings_.dispatch_context();
   if (wait == WaitMode::NO_WAIT && !IsGrantable(origin, scope, mode)) {
     request->Failed();
     return;

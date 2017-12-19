@@ -210,9 +210,7 @@ ScriptPromise LockManager::acquire(ScriptState* script_state,
   AddPendingRequest(new LockRequestImpl(callback, resolver, scope, mode,
                                         mojo::MakeRequest(&request_ptr), this));
 
-  service_->RequestLock(
-      ExecutionContext::From(script_state)->GetSecurityOrigin(), scope, mode,
-      wait, std::move(request_ptr));
+  service_->RequestLock(scope, mode, wait, std::move(request_ptr));
 
   return promise;
 }
