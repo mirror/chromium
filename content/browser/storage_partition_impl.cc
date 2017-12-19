@@ -581,7 +581,8 @@ std::unique_ptr<StoragePartitionImpl> StoragePartitionImpl::Create(
         BlobURLLoaderFactory::Create(std::move(blob_getter));
 
     partition->url_loader_factory_getter_ = new URLLoaderFactoryGetter();
-    partition->url_loader_factory_getter_->Initialize(partition.get());
+    partition->url_loader_factory_getter_->Initialize(
+        partition->weak_factory_.GetWeakPtr());
   }
 
   partition->service_worker_context_->Init(
@@ -1096,6 +1097,8 @@ void StoragePartitionImpl::FlushNetworkInterfaceForTesting() {
   network_context_.FlushForTesting();
   if (url_loader_factory_for_browser_process_)
     url_loader_factory_for_browser_process_.FlushForTesting();
+  if (url_loader_factory_getter_)
+    url_loader_factory_getter_->FlushNetworkInterfaceOnIOThreadForTesting();
 }
 
 BrowserContext* StoragePartitionImpl::browser_context() const {
