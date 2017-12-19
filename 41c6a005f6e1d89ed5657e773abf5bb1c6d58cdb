@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ef4445d2_86e76bc4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-12-19T07:54:00Z",
+      "side": 1,
+      "message": "V4L2VDA: fix initial resolution change handling.\n\nThe V4L2 driver should send a resolution change event once enough data is found in the stream to infer the coded size. Some legacy drivers do not support the resolution change event however, and, to support them, V4L2VDA, in addition to handling resolution change events, also explicitly queries for current format after each decode run, to see if it changed. This may however cause the resolution change to be processed twice for drivers that do send an event: once as a result of receiving the event, and once after explicitly querying for the format. Fix this by explicitly dequeuing any pending events after detecting format change in the latter case.",
+      "revId": "41c6a005f6e1d89ed5657e773abf5bb1c6d58cdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd8cc968_a4dbfe3f",
+        "filename": "media/gpu/v4l2/v4l2_video_decode_accelerator.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1029,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-12-19T07:54:00Z",
+      "side": 1,
+      "message": "Please also document the output_buffer_map_.empty() case:\n\n\"If the initial resolution change is done and coded size is known, we may still have to wait for AssignPictureBuffers and output buffers to be allocated.\"",
+      "revId": "41c6a005f6e1d89ed5657e773abf5bb1c6d58cdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f027bf44_768f2d8c",
+        "filename": "media/gpu/v4l2/v4l2_video_decode_accelerator.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1589,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-12-19T07:54:00Z",
+      "side": 1,
+      "message": "Nit: I\u0027d remove this comment as well, this is not where we are performing the actual flush.",
+      "revId": "41c6a005f6e1d89ed5657e773abf5bb1c6d58cdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
