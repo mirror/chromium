@@ -22,6 +22,30 @@
       "revId": "b6e24d44070386b6208d36b4f47e27a726db5f49",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7492f604_433c20ef",
+        "filename": "ios/web/public/download/download_task.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-19T15:25:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "18b7e729_56052cb7",
+      "range": {
+        "startLine": 51,
+        "startChar": 17,
+        "endLine": 51,
+        "endChar": 26
+      },
+      "revId": "b6e24d44070386b6208d36b4f47e27a726db5f49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
