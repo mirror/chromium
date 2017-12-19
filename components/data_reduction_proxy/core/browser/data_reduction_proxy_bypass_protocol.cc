@@ -219,14 +219,23 @@ bool DataReductionProxyBypassProtocol::HandleValidResponseHeadersCase(
     // header, then apply the bypass logic regardless.
     // TODO(sclittle): Remove this workaround once http://crbug.com/476610 is
     // fixed.
-    const net::HostPortPair host_port_pair =
-        !request.proxy_server().is_valid() || request.proxy_server().is_direct()
-            ? net::HostPortPair()
-            : request.proxy_server().host_port_pair();
-    data_reduction_proxy_type_info->proxy_servers.push_back(
-        net::ProxyServer(net::ProxyServer::SCHEME_HTTPS, host_port_pair));
-    data_reduction_proxy_type_info->proxy_servers.push_back(
-        net::ProxyServer(net::ProxyServer::SCHEME_HTTP, host_port_pair));
+    if (!request.proxy_server().is_valid() ||
+        request.proxy_server().is_direct()) {
+      data_reduction_proxy_type_info->proxy_servers.push_back(net::ProxyServer(
+          net::ProxyServer::SCHEME_HTTPS, net::HostPortPair()));
+      data_reduction_proxy_type_info->proxy_servers.push_back(
+          net::ProxyServer(net::ProxyServer::SCHEME_HTTP, net::HostPortPair()));
+    } else {
+      data_reduction_proxy_type_info->proxy_servers.push_back(net::ProxyServer(
+          net::ProxyServer::SCHEME_HTTPS,
+          request.proxy_server().host_port_pair(),
+          request.proxy_server().GetPartialTrafficAnnotation()));
+      data_reduction_proxy_type_info->proxy_servers.push_back(net::ProxyServer(
+          net::ProxyServer::SCHEME_HTTP,
+          request.proxy_server().host_port_pair(),
+          request.proxy_server().GetPartialTrafficAnnotation()));
+    }
+
     data_reduction_proxy_type_info->proxy_index = 0;
   } else {
     ReportResponseProxyServerStatusHistogram(RESPONSE_PROXY_SERVER_STATUS_DRP);
