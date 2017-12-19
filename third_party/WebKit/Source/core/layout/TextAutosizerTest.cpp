@@ -2,6 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include "core/frame/LocalFrame.h"
 #include "core/layout/LayoutObject.h"
 #include "core/layout/LayoutTestHelper.h"
 #include "core/loader/EmptyClients.h"
@@ -31,6 +32,10 @@ class TextAutosizerClient : public EmptyChromeClient {
   float device_scale_factor_;
 };
 
+static const int kInitialWidth = 320;
+static const int kInitialHeight = 480;
+static const int kTemporalWidth = 800;
+
 class TextAutosizerTest : public RenderingTest {
  public:
   ChromeClient& GetChromeClient() const override {
@@ -41,6 +46,21 @@ class TextAutosizerTest : public RenderingTest {
                         (TextAutosizerClient::Create()));
     return client;
   }
+  void set_device_scale_factor(float device_scale_factor) {
+    GetTextAutosizerClient().set_device_scale_factor(device_scale_factor);
+
+    // Changing window size triggers updating multiplier.
+    GetDocument().GetSettings()->SetTextAutosizingWindowSizeOverride(
+        IntSize(kTemporalWidth, kInitialHeight));
+
+    GetDocument().GetFrame()->SetPageZoomFactor(device_scale_factor);
+
+    // This returns back to the initial size.
+    GetDocument().GetSettings()->SetTextAutosizingWindowSizeOverride(
+        IntSize(kInitialWidth, kInitialHeight));
+
+    GetDocument().View()->UpdateAllLifecyclePhases();
+  }
 
  private:
   void SetUp() override {
@@ -48,7 +68,7 @@ class TextAutosizerTest : public RenderingTest {
     RenderingTest::SetUp();
     GetDocument().GetSettings()->SetTextAutosizingEnabled(true);
     GetDocument().GetSettings()->SetTextAutosizingWindowSizeOverride(
-        IntSize(320, 480));
+        IntSize(kInitialWidth, kInitialHeight));
   }
 };
 
@@ -938,10 +958,6 @@ TEST_F(TextAutosizerTest, MultiColumns) {
 }
 
 TEST_F(TextAutosizerTest, ScaledbyDSF) {
-  GetTextAutosizerClient().set_device_scale_factor(1.f);
-  // Change setting triggers updating device scale factor
-  GetDocument().GetSettings()->SetTextAutosizingWindowSizeOverride(
-      IntSize(400, 300));
   SetBodyInnerHTML(R"HTML(
     <style>
       html { font-size: 16px; }
@@ -963,29 +979,20 @@ TEST_F(TextAutosizerTest, ScaledbyDSF) {
 
   Element* target = GetDocument().getElementById("target");
   // (specified font-size = 16px) * (thread flow layout width = 800px) /
-  // (window width = 400px) = 32px.
-  EXPECT_FLOAT_EQ(32.0f,
+  // (window width = 320px) = 40px.
+  EXPECT_FLOAT_EQ(40.0f,
                   target->GetLayoutObject()->Style()->ComputedFontSize());
 
-  const float device_scale = 3.5f;
-  GetTextAutosizerClient().set_device_scale_factor(device_scale);
-  // Change setting triggers updating device scale factor
-  GetDocument().GetSettings()->SetTextAutosizingWindowSizeOverride(
-      IntSize(200, 150));
-  GetDocument().View()->UpdateAllLifecyclePhases();
+  const float device_scale = 3;
+  set_device_scale_factor(device_scale);
 
   // (specified font-size = 16px) * (thread flow layout width = 800px) /
-  // (window width = 200px) * (device scale factor) = 64px * device_scale.
-  EXPECT_FLOAT_EQ(64.0f * device_scale,
+  // (window width = 320px) * (device scale factor) = 40px * device_scale.
+  EXPECT_FLOAT_EQ(40.0f * device_scale,
                   target->GetLayoutObject()->Style()->ComputedFontSize());
 }
 
 TEST_F(TextAutosizerTest, ClusterHasEnoughTextToAutosizeForZoomDSF) {
-  GetTextAutosizerClient().set_device_scale_factor(1.f);
-  // Change setting triggers updating device scale factor
-  GetDocument().GetSettings()->SetTextAutosizingWindowSizeOverride(
-      IntSize(800, 600));
-  GetDocument().GetSettings()->SetAccessibilityFontScaleFactor(4);
   SetBodyInnerHTML(R"HTML(
     <style>
       html { font-size: 8px; }
@@ -1007,16 +1014,14 @@ TEST_F(TextAutosizerTest, ClusterHasEnoughTextToAutosizeForZoomDSF) {
   // computed font-size = specified font-size = 8px.
   EXPECT_FLOAT_EQ(8.0f, target->GetLayoutObject()->Style()->ComputedFontSize());
 
-  GetTextAutosizerClient().set_device_scale_factor(3);
-  // Change setting triggers updating device scale factor
-  GetDocument().GetSettings()->SetAccessibilityFontScaleFactor(2);
-  GetDocument().View()->UpdateAllLifecyclePhases();
+  const float device_scale = 3;
+  set_device_scale_factor(device_scale);
 
-  // (accessibility font scale factor = 2) * (specified font-size = 8px) *
-  // (device scale factor = 3) = 48.
+  // (specified font-size = 8px) * (thread flow layout width = 800px) /
+  // (window width = 320px) * (device scale factor) = 20px * device_scale.
   // ClusterHasEnoughTextToAutosize() returns true and both accessibility font
   // scale factor and device scale factor are multiplied.
-  EXPECT_FLOAT_EQ(48.0f,
+  EXPECT_FLOAT_EQ(20.0f * device_scale,
                   target->GetLayoutObject()->Style()->ComputedFontSize());
 }
 }  // namespace blink
