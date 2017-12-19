@@ -506,6 +506,8 @@ void DownloadManagerImpl::StartDownloadWithId(
     const DownloadUrlParameters::OnStartedCallback& on_started,
     bool new_download,
     uint32_t id) {
+  LOG(ERROR) << "dtrainor: network service "
+             << base::FeatureList::IsEnabled(features::kNetworkService);
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   DCHECK_NE(content::DownloadItem::kInvalidId, id);
   DownloadItemImpl* download = nullptr;
