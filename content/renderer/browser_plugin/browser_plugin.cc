@@ -464,12 +464,18 @@ bool BrowserPlugin::Initialize(WebPluginContainer* container) {
       RenderFrameImpl::FromWebFrame(container_->GetDocument().GetFrame())
           ->GetRenderWidget();
   pending_resize_params_.screen_info = render_widget->screen_info();
+  render_widget->RegisterBrowserPlugin(this);
 
   return true;
 }
 
 void BrowserPlugin::Destroy() {
   if (container_) {
+    RenderFrameImpl* render_frame_impl =
+        RenderFrameImpl::FromWebFrame(container_->GetDocument().GetFrame());
+    if (render_frame_impl)
+      render_frame_impl->GetRenderWidget()->UnregisterBrowserPlugin(this);
+
     // The BrowserPlugin's WebPluginContainer is deleted immediately after this
     // call returns, so let's not keep a reference to it around.
     g_plugin_container_map.Get().erase(container_);
