@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "024710d7_b5d220b7",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXObject.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1081,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-19T21:23:03Z",
+      "side": 1,
+      "message": "Are the options only focusable when the text box itself is focused?\n\nHow about walking to the ancestor listbox element (or the container\nelement in general), then use AXRelationCache to follow the reverse\nrelationship for Controls?",
+      "revId": "affd7ad045df79cd7bc5442bb445110261ab0d26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
