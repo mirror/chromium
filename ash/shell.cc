@@ -826,6 +826,9 @@ Shell::~Shell() {
 void Shell::Init(ui::ContextFactory* context_factory,
                  ui::ContextFactoryPrivate* context_factory_private) {
   const Config config = shell_port_->GetAshConfig();
+  LOG(ERROR) << "JAMES context_factory " << context_factory;
+  LOG(ERROR) << "JAMES context_factory_private " << context_factory_private;
+  LOG(ERROR) << "JAMES connector " << shell_delegate_->GetShellConnector();
 
   // These controllers call Shell::Get() in their constructors, so they cannot
   // be in the member initialization list.
@@ -904,10 +907,12 @@ void Shell::Init(ui::ContextFactory* context_factory,
 
   if (!display_initialized) {
     if (config != Config::CLASSIC && !chromeos::IsRunningAsSystemCompositor()) {
+      LOG(ERROR) << "JAMES pre BindInterface";
       display::mojom::DevDisplayControllerPtr controller;
       shell_delegate_->GetShellConnector()->BindInterface(
           ui::mojom::kServiceName, &controller);
       display_manager_->SetDevDisplayController(std::move(controller));
+      LOG(ERROR) << "JAMES post BindInterface";
     }
 
     if (config != Config::CLASSIC || chromeos::IsRunningAsSystemCompositor()) {

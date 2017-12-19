@@ -42,6 +42,10 @@ class ShellInit : public shell::ShellDelegateImpl, public ShellObserver {
     window_manager_service_ = service;
   }
 
+  ::service_manager::Connector* GetShellConnector() const override {
+    return window_manager_service_->GetConnector();
+  }
+
   // shell::ShellDelegateImpl:
   void PreInit() override {
     DCHECK(window_manager_service_->GetConnector());

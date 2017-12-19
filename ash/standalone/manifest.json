@@ -4,7 +4,7 @@
   "interface_provider_specs": {
     "service_manager:connector": {
       "provides": {
-        "ash": [
+        "system_ui": [
           "app_list::mojom::AppList",
           "ash::mojom::AcceleratorController",
           "ash::mojom::CastConfig",
@@ -19,7 +19,7 @@
           "ash::mojom::ShutdownController",
           "ash::mojom::SystemTray",
           "ash::mojom::TabletModeController",
-	  "ash::mojom::VoiceInteractionController",
+          "ash::mojom::VoiceInteractionController",
           "ash::mojom::VpnList",
           "ash::mojom::WallpaperController"
         ],
@@ -27,8 +27,10 @@
       },
       "requires": {
         "*": [ "accessibility", "app" ],
-        "preferences_forwarder": [ "pref_client" ],
-        "ui": [ "display_dev", "window_manager" ],
+        "ash_pref_connector": [ "pref_connector" ],
+        "catalog": [ "directory" ],
+        "local_state": [ "pref_client" ],
+        "ui": [ "display_dev", "window_manager", "video_detector" ],
         "touch_hud": [ "mash:launchable" ]
       }
     }
