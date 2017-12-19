@@ -4,7 +4,10 @@
 
 var AutomationEvent = chrome.automation.AutomationEvent;
 var EventType = chrome.automation.EventType;
-var RoleType = chrome.automation.RoleType;
+
+// Whether reading selected text is enabled.
+// DO NOT SUBMIT with this true.
+const READ_SELECTION_ENABLED = true;
 
 /**
  * Return the rect that encloses two points.
@@ -200,6 +203,17 @@ function nextWordHelper(text, indexAfter, re, defaultValue) {
 }
 
 /**
+ * Returns true if a node should be ignored by Select-to-Speak.
+ * @param {AutomationNode} node The node to test
+ * @return {boolean} whether this node should be ignored.
+ */
+function shouldIgnoreNode(node) {
+  return (
+      !node.name || !node.location || node.state.offscreen ||
+      node.state.invisible);
+}
+
+/**
  * Finds all nodes within the subtree rooted at |node| that overlap
  * a given rectangle.
  * @param {AutomationNode} node The starting node.
@@ -219,10 +233,11 @@ function findAllMatching(node, rect, nodes) {
   if (found)
     return true;
 
-  if (!node.name || !node.location || node.state.offscreen ||
-      node.state.invisible)
+  if (shouldIgnoreNode(node))
     return false;
 
+  if (node.location === undefined)
+    return false;
   if (overlaps(node.location, rect)) {
     if (!node.children || node.children.length == 0 ||
         node.children[0].role != RoleType.INLINE_TEXT_BOX) {
@@ -237,6 +252,35 @@ function findAllMatching(node, rect, nodes) {
   return false;
 }
 
+/**
+ * Finds the node where a selection starts given a node object and
+ * selection offset. This is meant to be used in conjunction with
+ * the anchorObject/anchorOffset and focusObject/focusOffset of the
+ * automation API.
+ * @param {AutomationNode} parent The parent node of the selection,
+ * similar to chrome.automation.focusObject.
+ * @param {number} offset The integer offset of the selection. This is
+ * similar to chrome.automation.focusOffset.
+ * @return {!AutomationNode} The node matching the selected offset.
+ */
+// DO NOT SUBMIT write tests.
+function getNodeForSelection(parent, offset) {
+  if (parent.children.length == 0)
+    return parent;
+  let nodesToCheck = parent.children;
+  let index = 0;
+  // Delve down into the children recursively to find the
+  // one at this offset
+  while (nodesToCheck.length > 0) {
+    let node = nodesToCheck.pop();
+    index += node.name ? node.name.length : 0;
+    if (index >= offset) {
+      return node;
+    }
+    nodesToCheck = nodesToCheck.concat(node.children);
+  }
+  return parent;
+}
 
 
 /**
@@ -254,6 +298,9 @@ var SelectToSpeak = function() {
 
   /** @private {boolean} */
   this.isSearchKeyDown_ = false;
+
+  /** @private {boolean} */
+  this.isSelectionKeyDown_ = false;
 
   /** @private {!Set<number>} */
   this.keysCurrentlyDown_ = new Set();
@@ -336,6 +383,9 @@ SelectToSpeak.SEARCH_KEY_CODE = 91;
 SelectToSpeak.CONTROL_KEY_CODE = 17;
 
 /** @const {number} */
+SelectToSpeak.READ_SELECTION_KEY_CODE = 83;
+
+/** @const {number} */
 SelectToSpeak.NODE_STATE_TEST_INTERVAL_MS = 1000;
 
 SelectToSpeak.prototype = {
@@ -350,7 +400,9 @@ SelectToSpeak.prototype = {
    *    handlers to run.
    */
   onMouseDown_: function(evt) {
-    if (!this.isSearchKeyDown_)
+    // If the user hasn't clicked 'search', or if they are currently
+    // trying to highlight a selection, don't track the mouse.
+    if (!this.isSearchKeyDown_ || this.isSelectionKeyDown_)
       return false;
 
     this.trackingMouse_ = true;
@@ -425,6 +477,7 @@ SelectToSpeak.prototype = {
     // container. In the future we might include other container-like
     // roles here.
     var root = evt.target;
+    // TODO: Use AutomationPredicate.root instead?
     while (root.parent && root.role != RoleType.WINDOW &&
            root.role != RoleType.ROOT_WEB_AREA &&
            root.role != RoleType.DESKTOP && root.role != RoleType.DIALOG &&
@@ -445,6 +498,7 @@ SelectToSpeak.prototype = {
       if (!findAllMatching(root, rect, nodes) && focusedNode)
         findAllMatching(focusedNode.root, rect, nodes);
       this.startSpeechQueue_(nodes);
+      // TODO: Include a metric to say this was started using search+mouse.
       this.recordStartEvent_();
     }.bind(this));
   },
@@ -456,6 +510,13 @@ SelectToSpeak.prototype = {
     if (this.keysPressedTogether_.size == 0 &&
         evt.keyCode == SelectToSpeak.SEARCH_KEY_CODE) {
       this.isSearchKeyDown_ = true;
+    } else if (
+        READ_SELECTION_ENABLED && this.keysPressedTogether_.size == 1 &&
+        evt.keyCode == SelectToSpeak.READ_SELECTION_KEY_CODE &&
+        !this.trackingMouse_) {
+      // Only go into selection mode if we aren't already tracking the mouse.
+      this.isSelectionKeyDown_ = true;
+      console.log('selection key down without tracking mouse');
     } else if (!this.trackingMouse_) {
       this.isSearchKeyDown_ = false;
     }
@@ -468,7 +529,14 @@ SelectToSpeak.prototype = {
    * @param {!Event} evt
    */
   onKeyUp_: function(evt) {
-    if (evt.keyCode == SelectToSpeak.SEARCH_KEY_CODE) {
+    if (evt.keyCode == SelectToSpeak.READ_SELECTION_KEY_CODE &&
+        this.isSelectionKeyDown_ && this.keysPressedTogether_.size == 2 &&
+        this.keysPressedTogether_.has(evt.keyCode) &&
+        this.keysPressedTogether_.has(SelectToSpeak.SEARCH_KEY_CODE)) {
+      this.isSelectionKeyDown_ = false;
+      chrome.tts.isSpeaking(this.cancelIfSpeaking_.bind(this));
+      chrome.automation.getFocus(this.requestSpeakSelectedText_.bind(this));
+    } else if (evt.keyCode == SelectToSpeak.SEARCH_KEY_CODE) {
       this.isSearchKeyDown_ = false;
 
       // If we were in the middle of tracking the mouse, cancel it.
@@ -494,6 +562,69 @@ SelectToSpeak.prototype = {
       this.keysPressedTogether_.clear();
       this.didTrackMouse_ = false;
     }
+  },
+
+  /**
+   * Queues up selected text for reading.
+   */
+  requestSpeakSelectedText_: function(focusedNode) {
+    // If nothing is selected, return early.
+    // TODO: Consider playing a tone to let the user know they did the correct
+    // keystroke but nothing was selected.
+    if (!focusedNode || !focusedNode.root || !focusedNode.root.anchorObject ||
+        !focusedNode.root.focusObject)
+      return;
+    let params = {
+      anchorObject: focusedNode.root.anchorObject,
+      anchorOffset: focusedNode.root.anchorOffset || 0,
+      focusObject: focusedNode.root.focusObject,
+      focusOffset: focusedNode.root.focusOffset || 0
+    };
+    if (params.anchorObject === params.focusObject &&
+        params.anchorOffset == params.focusOffset)
+      return;
+    let selectedNode;
+    let finalNode;
+    let dir =
+        AutomationUtil.getDirection(params.anchorObject, params.focusObject);
+    // Highlighting may be forwards or backwards. Make sure we start at the
+    // first node.
+    if (dir == constants.Dir.FORWARD) {
+      selectedNode =
+          getNodeForSelection(params.anchorObject, params.anchorOffset);
+      finalNode = getNodeForSelection(params.focusObject, params.focusOffset);
+    } else {
+      finalNode = getNodeForSelection(params.anchorObject, params.anchorOffset);
+      selectedNode =
+          getNodeForSelection(params.focusObject, params.focusOffset);
+    }
+
+    let nodes = [selectedNode];  // Initialize to the first node in the list.
+    while (selectedNode && selectedNode != finalNode &&
+           AutomationUtil.getDirection(selectedNode, finalNode) ===
+               constants.Dir.FORWARD) {
+      // TODO: Is there a way to optimize the directionality checking of
+      // AutomationUtil.getDirection(selectedNode, finalNode)?
+      // For example, by making a helper and storing partial computation?
+      selectedNode = AutomationUtil.findNextNode(
+          selectedNode, constants.Dir.FORWARD,
+          AutomationPredicate.leafWithText);
+      if (selectedNode) {
+        console.log(selectedNode.name);
+        if (!shouldIgnoreNode(selectedNode))
+          nodes.push(selectedNode);
+      } else {
+        break;
+      }
+    }
+
+    // TODO: Needs indexes to not read the full things, just the highlighted
+    // thing.
+    this.startSpeechQueue_(nodes);
+
+    // TODO: Include a metric to say this was started using search+mouse.
+    this.recordStartEvent_();
+    // TODO: Affinity? Does it mean anything?
   },
 
   /**

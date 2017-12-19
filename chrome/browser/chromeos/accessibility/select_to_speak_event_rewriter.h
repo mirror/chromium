@@ -54,10 +54,12 @@ class SelectToSpeakEventRewriter : public ui::EventRewriter {
       std::unique_ptr<ui::Event>* new_event) override;
 
   enum State {
-    // Neither the Search key nor the mouse button are down.
+    // The search key is not down. Not tracking any events.
     INACTIVE,
 
-    // The Search key is down but the mouse button is not.
+    // The Search key is down but the mouse button is not. Mouse events and
+    // other key events will be forwarded to the extension until the Search
+    // button is released or the mouse is released.
     SEARCH_DOWN,
 
     // The user held down Search and clicked the mouse button. We're capturing
