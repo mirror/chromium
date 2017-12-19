@@ -33,6 +33,63 @@
       "revId": "2d633bb9619b9bbc21cac47d759188fb944c4ff6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcb2b4c8_c2bee152",
+        "filename": "tools/mb/mb_config.pyl",
+        "patchSetId": 5
+      },
+      "lineNbr": 654,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-12-19T00:11:08Z",
+      "side": 0,
+      "message": "This trybot\u0027s configuration was lost; needs to be reinstated. It\u0027s referred to by many PRESUBMIT scripts.",
+      "revId": "2d633bb9619b9bbc21cac47d759188fb944c4ff6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d715b814_d5e0f8ba",
+        "filename": "tools/mb/mb_config.pyl",
+        "patchSetId": 5
+      },
+      "lineNbr": 680,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-12-19T00:11:08Z",
+      "side": 0,
+      "message": "Needs to be reinstated.",
+      "range": {
+        "startLine": 680,
+        "startChar": 37,
+        "endLine": 680,
+        "endChar": 65
+      },
+      "revId": "2d633bb9619b9bbc21cac47d759188fb944c4ff6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63c8f6af_5cf4ba63",
+        "filename": "tools/mb/mb_config.pyl",
+        "patchSetId": 5
+      },
+      "lineNbr": 751,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-12-19T00:11:08Z",
+      "side": 0,
+      "message": "Needs to be reinstated.",
+      "revId": "2d633bb9619b9bbc21cac47d759188fb944c4ff6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

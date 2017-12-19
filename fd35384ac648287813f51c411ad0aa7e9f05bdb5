@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2fc25207_6e28c325",
+        "filename": "tools/mb/mb_config.pyl",
+        "patchSetId": 5
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-12-19T00:11:08Z",
+      "side": 1,
+      "message": "Was the intent really to change this bot to build without codecs?",
+      "revId": "fd35384ac648287813f51c411ad0aa7e9f05bdb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
