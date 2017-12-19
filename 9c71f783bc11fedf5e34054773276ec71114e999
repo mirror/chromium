@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b71797e4_3a6f8f20",
+        "filename": "chrome/browser/ui/cocoa/download/md_download_item_view_unittest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1171114
+      },
+      "writtenOn": "2017-12-19T18:39:09Z",
+      "side": 1,
+      "message": "This shouldn\u0027t be necessary since it\u0027s called in setPretendFullKeyboardAccessIsEnabled",
+      "range": {
+        "startLine": 72,
+        "startChar": 41,
+        "endLine": 72,
+        "endChar": 0
+      },
+      "revId": "9c71f783bc11fedf5e34054773276ec71114e999",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16420369_7a3a111c",
+        "filename": "ui/gfx/test/ui_cocoa_test_helper.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1171114
+      },
+      "writtenOn": "2017-12-19T18:39:09Z",
+      "side": 1,
+      "message": "Should this fall back to the super implementation if this is false? This makes it an unconditional override, not sure if that\u0027s the intention.",
+      "range": {
+        "startLine": 93,
+        "startChar": 9,
+        "endLine": 93,
+        "endChar": 44
+      },
+      "revId": "9c71f783bc11fedf5e34054773276ec71114e999",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f83dafb9_17a4d462",
+        "filename": "ui/gfx/test/ui_cocoa_test_helper.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1171114
+      },
+      "writtenOn": "2017-12-19T18:39:09Z",
+      "side": 1,
+      "message": "Nit: camelCase names in Objc",
+      "range": {
+        "startLine": 101,
+        "startChar": 27,
+        "endLine": 101,
+        "endChar": 42
+      },
+      "revId": "9c71f783bc11fedf5e34054773276ec71114e999",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
