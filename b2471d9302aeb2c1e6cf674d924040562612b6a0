@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ca7b170_2d7785e0",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-12-19T00:49:27Z",
+      "side": 1,
+      "message": "* @return {string}",
+      "revId": "b2471d9302aeb2c1e6cf674d924040562612b6a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
