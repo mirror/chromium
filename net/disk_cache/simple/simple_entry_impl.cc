@@ -1013,7 +1013,8 @@ void SimpleEntryImpl::WriteDataInternal(int stream_index,
   if (!doomed_ && backend_.get())
     backend_->index()->UseIfExists(entry_hash_);
 
-  // Any stream 1 write invalidates the prefetched data.
+  // Any stream 1 write invalidates the prefetched data. Also do it for stream 2
+  // writes since usage pattern suggests those never go with stream 1 read.
   if (stream_index == 1)
     stream_1_prefetch_data_ = nullptr;
 
