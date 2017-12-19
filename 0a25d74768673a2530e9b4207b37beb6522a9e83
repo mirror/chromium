@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d51d3892_2aca26a2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-12-19T07:41:12Z",
+      "side": 1,
+      "message": "you\u0027ve reverted the change. please reflected that here too.",
+      "revId": "0a25d74768673a2530e9b4207b37beb6522a9e83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8efb5fb1_c09b4d29",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-12-19T07:41:12Z",
+      "side": 1,
+      "message": "cau -\u003e can",
+      "revId": "0a25d74768673a2530e9b4207b37beb6522a9e83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8eaf237_4a74ab1b",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webstorage/event_session_url_usvstring.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-12-19T07:41:12Z",
+      "side": 1,
+      "message": "h1 element is unnecessary. let\u0027s just describe what we\u0027re testing in the title and test description (which you\u0027re already doing)",
+      "revId": "0a25d74768673a2530e9b4207b37beb6522a9e83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4ee12b9_f72dae93",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webstorage/event_session_url_usvstring.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-12-19T07:41:12Z",
+      "side": 1,
+      "message": "this is not needed I think",
+      "revId": "0a25d74768673a2530e9b4207b37beb6522a9e83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fa42dc2_a7be13da",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webstorage/event_session_url_usvstring.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-12-19T07:41:12Z",
+      "side": 1,
+      "message": "var -\u003e const",
+      "revId": "0a25d74768673a2530e9b4207b37beb6522a9e83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8a3008a_327cf04f",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webstorage/event_session_url_usvstring.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-12-19T07:41:12Z",
+      "side": 1,
+      "message": "dispatching the event is not increasing test coverage I think. how about just checking event.url after constructing a StorageEvent?",
+      "revId": "0a25d74768673a2530e9b4207b37beb6522a9e83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
