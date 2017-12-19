@@ -16,6 +16,24 @@
       "revId": "e5581fd0b6e6b730dc6912e47cbd97184337442f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81d6742c_dc0f5465",
+        "filename": "gpu/command_buffer/service/texture_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1110804
+      },
+      "writtenOn": "2017-12-19T09:20:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4018a793_37326edf",
+      "revId": "e5581fd0b6e6b730dc6912e47cbd97184337442f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
