@@ -43,7 +43,6 @@ public class Website implements Serializable {
     private ProtectedMediaIdentifierInfo mProtectedMediaIdentifierInfo;
     private ContentSettingException mSoundException;
     private final List<StorageInfo> mStorageInfo = new ArrayList<StorageInfo>();
-    private int mStorageInfoCallbacksLeft;
     private final List<UsbInfo> mUsbInfo = new ArrayList<UsbInfo>();
 
     public Website(WebsiteAddress origin, WebsiteAddress embedder) {
@@ -490,14 +489,11 @@ public class Website implements Serializable {
             mLocalStorageInfo.clear();
             mLocalStorageInfo = null;
         }
-        mStorageInfoCallbacksLeft = mStorageInfo.size();
-        if (mStorageInfoCallbacksLeft > 0) {
+        int[] callbacksLeft = {mStorageInfo.size()};
+        if (callbacksLeft[0] > 0) {
             for (StorageInfo info : mStorageInfo) {
-                info.clear(new WebsitePreferenceBridge.StorageInfoClearedCallback() {
-                    @Override
-                    public void onStorageInfoCleared() {
-                        if (--mStorageInfoCallbacksLeft == 0) callback.onStoredDataCleared();
-                    }
+                info.clear(() -> {
+                    if (--callbacksLeft[0] == 0) callback.onStoredDataCleared();
                 });
             }
             mStorageInfo.clear();
