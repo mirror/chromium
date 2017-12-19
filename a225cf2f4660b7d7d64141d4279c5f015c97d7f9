@@ -16,6 +16,24 @@
       "revId": "a225cf2f4660b7d7d64141d4279c5f015c97d7f9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "390d482b_c54d6224",
+        "filename": "extensions/browser/updater/update_data_provider.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1238209
+      },
+      "writtenOn": "2017-12-19T22:02:43Z",
+      "side": 1,
+      "message": "The |ids| are there to satisfy CrxDataCallback declared here: \nhttps://cs.chromium.org/chromium/src/components/update_client/update_client.h?sq\u003dpackage:chromium\u0026l\u003d272\nMore specifically, update_info is bound to the callback in update_service.cc.\n\nFor your second question, the map and the ids should be the same, unless update_client tries to do something differently.",
+      "parentUuid": "f1427f70_e87f3057",
+      "revId": "a225cf2f4660b7d7d64141d4279c5f015c97d7f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
