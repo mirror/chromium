@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "86d59c76_a082dcc6",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals_page_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-12-19T22:36:43Z",
+      "side": 1,
+      "message": "umm, why not use the variations API?\nhttps://cs.chromium.org/chromium/src/chrome/browser/io_thread.cc?rcl\u003dd58ed22843126d3cbcc43f192e1ff5b9016777be\u0026l\u003d478\n\nManually parsing the switch for field trial can be flaky if the variations team decides to change the format.",
+      "range": {
+        "startLine": 73,
+        "startChar": 16,
+        "endLine": 73,
+        "endChar": 35
+      },
+      "revId": "348865c9e36684a9967953714270fcf998b2cf50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
