@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e2d04239_8bc49d32",
+        "filename": "services/service_manager/sandbox/mac/ppapi_v2.sb",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1137859
+      },
+      "writtenOn": "2017-12-19T21:44:54Z",
+      "side": 1,
+      "message": "Ahh right, I just copied over the old ppapi.sb and forgot to bring the formatting up to speed. I really like the suggestion of using a function anyhow because there are subtle differences between renderer and ppapi font access that don\u0027t make sense.",
+      "parentUuid": "dd477c35_60dba20b",
+      "revId": "a1803e045e8ce97333d59ccc2771fc32ed1db820",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d77fa03e_65089c50",
         "filename": "services/service_manager/sandbox/mac/ppapi_v2.sb",
         "patchSetId": 4
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "191bf6b4_15815805",
+        "filename": "services/service_manager/sandbox/mac/ppapi_v2.sb",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1137859
+      },
+      "writtenOn": "2017-12-19T21:44:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d77fa03e_65089c50",
+      "revId": "a1803e045e8ce97333d59ccc2771fc32ed1db820",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6f2c2382_34ea9508",
         "filename": "services/service_manager/sandbox/mac/ppapi_v2.sb",
         "patchSetId": 4
@@ -50,6 +86,24 @@
       "revId": "a1803e045e8ce97333d59ccc2771fc32ed1db820",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d195a58_81d067d1",
+        "filename": "services/service_manager/sandbox/mac/ppapi_v2.sb",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1137859
+      },
+      "writtenOn": "2017-12-19T21:44:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6f2c2382_34ea9508",
+      "revId": "a1803e045e8ce97333d59ccc2771fc32ed1db820",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
