@@ -5,6 +5,7 @@
 #import "ios/chrome/browser/tabs/tab_model_web_state_list_delegate.h"
 
 #include "base/logging.h"
+#import "ios/chrome/browser/snapshots/snapshot_tab_helper.h"
 #import "ios/chrome/browser/tabs/legacy_tab_helper.h"
 #import "ios/chrome/browser/tabs/tab.h"
 #import "ios/chrome/browser/tabs/tab_helper_util.h"
@@ -23,8 +24,15 @@ TabModelWebStateListDelegate::~TabModelWebStateListDelegate() = default;
 void TabModelWebStateListDelegate::WillAddWebState(web::WebState* web_state) {
   // Some Tab objects are created outside of TabModel, avoid recreating the
   // tab helpers for those Tab objects.
-  if (!LegacyTabHelper::FromWebState(web_state))
+  if (!LegacyTabHelper::FromWebState(web_state)) {
     AttachTabHelpers(web_state);
+
+    // TODO(crbug.com/794115): PreloadController uses AttachTabHelpers but do
+    // not want a SnapshotTabHelper, thus it is created here. Move this back
+    // to AttachTabHelpers once PreloadController is fixed to only create the
+    // tab helpers that are required for pre-rendered tabs.
+    SnapshotTabHelper::CreateForWebState(web_state);
+  }
 
   DCHECK(LegacyTabHelper::FromWebState(web_state));
   Tab* tab = LegacyTabHelper::GetTabForWebState(web_state);
