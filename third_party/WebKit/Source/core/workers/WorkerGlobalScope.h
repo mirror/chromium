@@ -126,6 +126,9 @@ class CORE_EXPORT WorkerGlobalScope
   // EventTarget
   ExecutionContext* GetExecutionContext() const final;
 
+  void ImportModuleScript(const KURL& module_url_record,
+                          network::mojom::FetchCredentialsMode);
+
   double TimeOrigin() const { return time_origin_; }
   WorkerSettings* GetWorkerSettings() const { return worker_settings_.get(); }
 
