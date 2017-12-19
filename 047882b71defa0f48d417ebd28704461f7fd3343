@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c75c6649_86c823d3",
+        "filename": "chrome/browser/printing/print_view_manager_base.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-19T22:43:57Z",
+      "side": 1,
+      "message": "Also wanted to ask - what happens to |callback| if this returns early?",
+      "revId": "047882b71defa0f48d417ebd28704461f7fd3343",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acbad4b2_4d9149ba",
+        "filename": "chrome/browser/ui/webui/print_preview/print_preview_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1265,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-19T22:43:57Z",
+      "side": 1,
+      "message": "If we are using BackgroundPrintingManager, does this end up indirectly triggerring PrintViewManager::PrintPreviewDone() via PrintViewManager::RenderFrameDeleted() ?",
+      "revId": "047882b71defa0f48d417ebd28704461f7fd3343",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
