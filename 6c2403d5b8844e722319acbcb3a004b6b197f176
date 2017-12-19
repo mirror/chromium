@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f06e8111_76747b30",
+        "filename": "chrome/browser/lifetime/application_lifetime.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-12-19T00:03:24Z",
+      "side": 1,
+      "message": "A two-part answer:\n\n1) No, it is called for all OSes except Chrome OS.\n\n2) I just renamed AttemptExitInternal(bool) to AttemptExitImpl(bool) and made it public, and this went to platform-specific part.",
+      "parentUuid": "47283296_8da879c6",
+      "revId": "6c2403d5b8844e722319acbcb3a004b6b197f176",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "47b7a2da_c2af9864",
         "filename": "chrome/browser/lifetime/application_lifetime.cc",
         "patchSetId": 18
@@ -33,6 +51,24 @@
       "revId": "6c2403d5b8844e722319acbcb3a004b6b197f176",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a40e9a6_9d35c6e8",
+        "filename": "chrome/browser/lifetime/application_lifetime.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-12-19T00:03:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "47b7a2da_c2af9864",
+      "revId": "6c2403d5b8844e722319acbcb3a004b6b197f176",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
