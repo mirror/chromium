@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "8fc6688d_5156a8b2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1250986
+      },
+      "writtenOn": "2017-12-19T17:09:37Z",
+      "side": 1,
+      "message": "Yes, I know. I will provide GCC fixes as needed. Right now I am updating Yocto build for Raspberry pi 2/3 using GCC, so every time I update I can detect and fix these GCC issues. It is not officially supported, but still I can contribute fixes at least for my build scenario.",
+      "parentUuid": "2b509f75_3719271f",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 28
+      },
+      "revId": "2ceb3ca9d272852e5016e1d024c7e943eef6922d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "751be8c9_5efad346",
         "filename": "device/u2f/u2f_hid_discovery.cc",
         "patchSetId": 1
@@ -93,6 +117,30 @@
       "revId": "2ceb3ca9d272852e5016e1d024c7e943eef6922d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a236737_a50707a4",
+        "filename": "device/u2f/u2f_hid_discovery.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1250986
+      },
+      "writtenOn": "2017-12-19T17:09:37Z",
+      "side": 1,
+      "message": "Sure, I will. Thanks!",
+      "parentUuid": "751be8c9_5efad346",
+      "range": {
+        "startLine": 58,
+        "startChar": 0,
+        "endLine": 60,
+        "endChar": 80
+      },
+      "revId": "2ceb3ca9d272852e5016e1d024c7e943eef6922d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
