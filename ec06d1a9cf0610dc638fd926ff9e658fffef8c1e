@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a12f9bb_5042d16f",
+        "filename": "third_party/WebKit/Source/core/html/HTMLIFrameElement.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-12-19T21:42:48Z",
+      "side": 1,
+      "message": "Nit: Can you just forward-declare blink::Policy here and #include this in the .cpp file?",
+      "revId": "ec06d1a9cf0610dc638fd926ff9e658fffef8c1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55aa9617_17e655a6",
+        "filename": "third_party/WebKit/Source/core/policy/IFramePolicy.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-12-19T21:42:48Z",
+      "side": 1,
+      "message": "Nit: Can remove \u0027explicit\u0027 here, since there are three constructor arguments in this case\n\n(Moved this nit from the older FramePolicy.h file)",
+      "revId": "ec06d1a9cf0610dc638fd926ff9e658fffef8c1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e35c2865_e5f2b131",
+        "filename": "third_party/WebKit/Source/core/policy/Policy.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-12-19T21:42:48Z",
+      "side": 1,
+      "message": "Nit: These two lines can probably be removed. In general I wouldn\u0027t expect Policy to depend on either DocumentPolicy or IFramePolicy.",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 37
+      },
+      "revId": "ec06d1a9cf0610dc638fd926ff9e658fffef8c1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
