@@ -27,6 +27,7 @@ class AppListItemView;
 class AppListMainView;
 class AppListModel;
 class FolderHeaderView;
+class PageSwitcherFullscreen;
 
 class AppListFolderView : public views::View,
                           public FolderHeaderViewDelegate,
@@ -112,6 +113,8 @@ class AppListFolderView : public views::View,
   AppListMainView* app_list_main_view_;   // Not Owned.
   FolderHeaderView* folder_header_view_;  // Owned by views hierarchy.
   AppsGridView* items_grid_view_;         // Owned by the views hierarchy.
+  PageSwitcherFullscreen* page_switcher_fullscreen_ =
+      nullptr;  // Owned by the views hierarchy.
 
   std::unique_ptr<views::ViewModel> view_model_;
 
@@ -121,6 +124,8 @@ class AppListFolderView : public views::View,
   bool hide_for_reparent_;
 
   base::string16 accessible_name_;
+
+  const bool is_fullscreen_app_list_enabled_;
 
   // Whether the app list focus is enabled.
   const bool is_app_list_focus_enabled_;

@@ -2,32 +2,27 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef UI_APP_LIST_VIEWS_PAGE_SWITCHER_VERTICAL_H_
-#define UI_APP_LIST_VIEWS_PAGE_SWITCHER_VERTICAL_H_
+#ifndef UI_APP_LIST_VIEWS_PAGE_SWITCHER_FULLSCREEN_H_
+#define UI_APP_LIST_VIEWS_PAGE_SWITCHER_FULLSCREEN_H_
 
 #include "base/macros.h"
 #include "ui/app_list/pagination_model_observer.h"
-#include "ui/app_list/views/page_switcher.h"
 #include "ui/views/controls/button/button.h"
 
 namespace app_list {
 
 class PaginationModel;
 
-// PageSwitcher represents its underlying PaginationModel with a button strip.
-// Each page in the PageinationModel has a button in the strip and when the
-// button is clicked, the corresponding page becomes selected.
-class PageSwitcherVertical : public PageSwitcher,
-                             public views::ButtonListener,
-                             public PaginationModelObserver {
+// PageSwitcherFullscreen represents its underlying PaginationModel with a
+// button strip. Each page in the PageinationModel has a button in the strip and
+// when the button is clicked, the corresponding page becomes selected. NOTE:
+// This is only used in fullscreen app list.
+class PageSwitcherFullscreen : public views::View,
+                               public views::ButtonListener,
+                               public PaginationModelObserver {
  public:
-  explicit PageSwitcherVertical(PaginationModel* model);
-  ~PageSwitcherVertical() override;
-
-  // Overridden from PageSwitcher:
-  int GetPageForPoint(const gfx::Point& point) const override;
-  void UpdateUIForDragPoint(const gfx::Point& point) override;
-  gfx::Rect GetButtonsBoundsInScreen() override;
+  PageSwitcherFullscreen(PaginationModel* model, bool vertical);
+  ~PageSwitcherFullscreen() override;
 
   // Overridden from views::View:
   gfx::Size CalculatePreferredSize() const override;
@@ -47,9 +42,12 @@ class PageSwitcherVertical : public PageSwitcher,
   PaginationModel* model_;  // Owned by AppsGridView.
   views::View* buttons_;    // Owned by views hierarchy.
 
-  DISALLOW_COPY_AND_ASSIGN(PageSwitcherVertical);
+  // True if the page switcher button strip should grow vertically.
+  bool vertical_;
+
+  DISALLOW_COPY_AND_ASSIGN(PageSwitcherFullscreen);
 };
 
 }  // namespace app_list
 
-#endif  // UI_APP_LIST_VIEWS_PAGE_SWITCHER_VERTICAL_H_
+#endif  // UI_APP_LIST_VIEWS_PAGE_SWITCHER_FULLSCREEN_H_
