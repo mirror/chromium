@@ -752,19 +752,14 @@ bool GetPasswordForm(
       form_util::GetCanonicalOriginForDocument(form.document);
   password_form->signon_realm = GetSignOnRealm(password_form->origin);
 
-  // Remove |username_element| from the vector |all_possible_usernames| if the
-  // value presents in the vector.
-  if (!username_element.IsNull()) {
-    all_possible_usernames.erase(
-        std::remove(all_possible_usernames.begin(),
-                    all_possible_usernames.end(), username_element),
-        all_possible_usernames.end());
-  }
   // Convert |all_possible_usernames| to PossibleUsernamesVector.
   autofill::PossibleUsernamesVector other_possible_usernames;
-  for (WebInputElement possible_username : all_possible_usernames) {
-    other_possible_usernames.push_back(
-        MakePossibleUsernamePair(possible_username));
+  for (const WebInputElement& possible_username : all_possible_usernames) {
+    if (possible_username == username_element)
+      continue;
+    auto pair = MakePossibleUsernamePair(possible_username);
+    if (!pair.first.empty())
+      other_possible_usernames.push_back(std::move(pair));
   }
   password_form->other_possible_usernames.swap(other_possible_usernames);
 
@@ -818,6 +813,8 @@ bool GetPasswordForm(
       (number_of_non_empty_text_non_password_fields == 1 &&
        password_form->password_element.empty() &&
        !password_form->new_password_element.empty());
+  LOG(ERROR) << "create a form: does_look_like_signup_form="
+             << password_form->does_look_like_signup_form;
   return true;
 }
 
