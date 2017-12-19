@@ -111,7 +111,8 @@ class MEDIA_EXPORT VideoFrame : public base::RefCountedThreadSafe<VideoFrame> {
                                                const gfx::Size& coded_size,
                                                const gfx::Rect& visible_rect,
                                                const gfx::Size& natural_size,
-                                               base::TimeDelta timestamp);
+                                               base::TimeDelta timestamp,
+                                               size_t bit_depth = 8);
 
   // Offers the same functionality as CreateFrame, and additionally zeroes out
   // the initial allocated buffers.
@@ -120,7 +121,8 @@ class MEDIA_EXPORT VideoFrame : public base::RefCountedThreadSafe<VideoFrame> {
       const gfx::Size& coded_size,
       const gfx::Rect& visible_rect,
       const gfx::Size& natural_size,
-      base::TimeDelta timestamp);
+      base::TimeDelta timestamp,
+      size_t bit_depth = 8);
 
   // Wraps a set of native textures with a VideoFrame.
   // |mailbox_holders_release_cb| will be called with a sync token as the
@@ -145,7 +147,8 @@ class MEDIA_EXPORT VideoFrame : public base::RefCountedThreadSafe<VideoFrame> {
       const gfx::Size& natural_size,
       uint8_t* data,
       size_t data_size,
-      base::TimeDelta timestamp);
+      base::TimeDelta timestamp,
+      size_t bit_depth = 8);
 
   // Same as WrapExternalData() with SharedMemoryHandle and its offset.
   static scoped_refptr<VideoFrame> WrapExternalSharedMemory(
@@ -157,7 +160,8 @@ class MEDIA_EXPORT VideoFrame : public base::RefCountedThreadSafe<VideoFrame> {
       size_t data_size,
       base::SharedMemoryHandle handle,
       size_t shared_memory_offset,
-      base::TimeDelta timestamp);
+      base::TimeDelta timestamp,
+      size_t bit_depth = 8);
 
   // Wraps external YUV data of the given parameters with a VideoFrame.
   // The returned VideoFrame does not own the data passed in.
@@ -172,7 +176,8 @@ class MEDIA_EXPORT VideoFrame : public base::RefCountedThreadSafe<VideoFrame> {
       uint8_t* y_data,
       uint8_t* u_data,
       uint8_t* v_data,
-      base::TimeDelta timestamp);
+      base::TimeDelta timestamp,
+      size_t bit_depth = 8);
 
   // Wraps external YUVA data of the given parameters with a VideoFrame.
   // The returned VideoFrame does not own the data passed in.
@@ -189,7 +194,8 @@ class MEDIA_EXPORT VideoFrame : public base::RefCountedThreadSafe<VideoFrame> {
       uint8_t* u_data,
       uint8_t* v_data,
       uint8_t* a_data,
-      base::TimeDelta timestamp);
+      base::TimeDelta timestamp,
+      size_t bit_depth = 8);
 
 #if defined(OS_LINUX)
   // Wraps provided dmabufs
@@ -255,15 +261,17 @@ class MEDIA_EXPORT VideoFrame : public base::RefCountedThreadSafe<VideoFrame> {
   static size_t NumPlanes(VideoPixelFormat format);
 
   // Returns the required allocation size for a (tightly packed) frame of the
-  // given coded size and format.
+  // given |coded_size|, |format| and, if specified, |bit_depth|.
   static size_t AllocationSize(VideoPixelFormat format,
-                               const gfx::Size& coded_size);
+                               const gfx::Size& coded_size,
+                               size_t bit_depth = 8);
 
-  // Returns the plane gfx::Size (in bytes) for a plane of the given coded size
-  // and format.
+  // Returns the plane gfx::Size (in bytes) for a plane of the |coded_size|,
+  // |format| and, if specified, |bit_depth|.
   static gfx::Size PlaneSize(VideoPixelFormat format,
                              size_t plane,
-                             const gfx::Size& coded_size);
+                             const gfx::Size& coded_size,
+                             size_t bit_depth = 8);
 
   // Returns horizontal bits per pixel for given |plane| and |format|.
   static int PlaneHorizontalBitsPerPixel(VideoPixelFormat format, size_t plane);
@@ -273,7 +281,10 @@ class MEDIA_EXPORT VideoFrame : public base::RefCountedThreadSafe<VideoFrame> {
 
   // Returns the number of bytes per row for the given plane, format, and width.
   // The width may be aligned to format requirements.
-  static size_t RowBytes(size_t plane, VideoPixelFormat format, int width);
+  static size_t RowBytes(size_t plane,
+                         VideoPixelFormat format,
+                         int width,
+                         size_t bit_depth = 8);
 
   // Returns the number of rows for the given plane, format, and height.
   // The height may be aligned to format requirements.
@@ -411,8 +422,7 @@ class MEDIA_EXPORT VideoFrame : public base::RefCountedThreadSafe<VideoFrame> {
   // guaranteed to be unique within a single process.
   int unique_id() const { return unique_id_; }
 
-  // Returns the number of bits per channel.
-  size_t BitDepth() const;
+  size_t bit_depth() const { return bit_depth_; }
 
  protected:
   friend class base::RefCountedThreadSafe<VideoFrame>;
@@ -425,7 +435,8 @@ class MEDIA_EXPORT VideoFrame : public base::RefCountedThreadSafe<VideoFrame> {
              const gfx::Size& coded_size,
              const gfx::Rect& visible_rect,
              const gfx::Size& natural_size,
-             base::TimeDelta timestamp);
+             base::TimeDelta timestamp,
+             size_t bit_depth = 8);
 
   virtual ~VideoFrame();
 
@@ -455,13 +466,14 @@ class MEDIA_EXPORT VideoFrame : public base::RefCountedThreadSafe<VideoFrame> {
              const gfx::Size& natural_size,
              base::TimeDelta timestamp,
              base::SharedMemoryHandle handle,
-             size_t shared_memory_offset);
+             size_t shared_memory_offset,
+             size_t bit_depth);
   VideoFrame(VideoPixelFormat format,
              StorageType storage_type,
              const gfx::Size& coded_size,
              const gfx::Rect& visible_rect,
              const gfx::Size& natural_size,
-             const gpu::MailboxHolder(&mailbox_holders)[kMaxPlanes],
+             const gpu::MailboxHolder (&mailbox_holders)[kMaxPlanes],
              const ReleaseMailboxCB& mailbox_holder_release_cb,
              base::TimeDelta timestamp);
 
@@ -475,7 +487,8 @@ class MEDIA_EXPORT VideoFrame : public base::RefCountedThreadSafe<VideoFrame> {
       size_t data_size,
       base::TimeDelta timestamp,
       base::SharedMemoryHandle handle,
-      size_t data_offset);
+      size_t data_offset,
+      size_t bit_depth = 8);
 
   static scoped_refptr<VideoFrame> CreateFrameInternal(
       VideoPixelFormat format,
@@ -483,14 +496,17 @@ class MEDIA_EXPORT VideoFrame : public base::RefCountedThreadSafe<VideoFrame> {
       const gfx::Rect& visible_rect,
       const gfx::Size& natural_size,
       base::TimeDelta timestamp,
-      bool zero_initialize_memory);
+      bool zero_initialize_memory,
+      size_t bit_depth = 8);
 
   // Returns the pixel size of each subsample for a given |plane| and |format|.
   // E.g. 2x2 for the U-plane in PIXEL_FORMAT_I420.
   static gfx::Size SampleSize(VideoPixelFormat format, size_t plane);
 
   // Returns the number of bytes per element for given |plane| and |format|.
-  static int BytesPerElement(VideoPixelFormat format, size_t plane);
+  static int BytesPerElement(VideoPixelFormat format,
+                             size_t plane,
+                             size_t bit_depth = 8);
 
   // Return the alignment for the whole frame, calculated as the max of the
   // alignment for each individual plane.
@@ -500,6 +516,8 @@ class MEDIA_EXPORT VideoFrame : public base::RefCountedThreadSafe<VideoFrame> {
 
   // Frame format.
   const VideoPixelFormat format_;
+
+  size_t bit_depth_;
 
   // Storage type for the different planes.
   StorageType storage_type_;  // TODO(mcasas): make const

@@ -92,6 +92,8 @@ MEDIA_EXPORT bool IsYuvPlanar(VideoPixelFormat format);
 // Returns true if |format| has no Alpha channel (hence is always opaque).
 MEDIA_EXPORT bool IsOpaque(VideoPixelFormat format);
 
+MEDIA_EXPORT size_t GetBitDepth(VideoPixelFormat format);
+
 }  // namespace media
 
 #endif  // MEDIA_BASE_VIDEO_TYPES_H_
