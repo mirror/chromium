@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0e1daf62_8bf59c29",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 4464,
+      "author": {
+        "id": 1116492
+      },
+      "writtenOn": "2017-12-19T22:26:51Z",
+      "side": 1,
+      "message": "nit: make this constexpr PreviewsState kDisabledBits \u003d ...",
+      "range": {
+        "startLine": 4464,
+        "startChar": 2,
+        "endLine": 4464,
+        "endChar": 15
+      },
+      "revId": "6930d58e5673c7cc1dfcbc6e3d7331e2c9a44983",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e186239a_eb07aa7f",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 4468,
+      "author": {
+        "id": 1116492
+      },
+      "writtenOn": "2017-12-19T22:26:51Z",
+      "side": 1,
+      "message": "This causes a |previews_state_| of PREVIEWS_NO_TRANSFORM to be returned as kPreviewsOff. Could you instead change this to return (previews_state_ \u0026 disabled_bits)? Just in case Blink wants to have different behavior for kPreviewsNoTransform vs. kPreviewsOff.\n\nEither that or just return |previews_state_|, since the above DCHECK *should* enforce that it doesn\u0027t have any other bits set. Normally, I\u0027d recommend relying on the DCHECK and just returning |previews_state_|, but since this code is kinda related to communication between the renderer and browser processes, there\u0027s an argument to be made for making this code more robust.",
+      "range": {
+        "startLine": 4468,
+        "startChar": 26,
+        "endLine": 4468,
+        "endChar": 38
+      },
+      "revId": "6930d58e5673c7cc1dfcbc6e3d7331e2c9a44983",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3f19b0a_d7dd6446",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrame.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1139,
+      "author": {
+        "id": 1116492
+      },
+      "writtenOn": "2017-12-19T22:26:51Z",
+      "side": 1,
+      "message": "Now that the LocalFrame is doing less trivial work here, could you perhaps add a test for it somehow? I know it\u0027s a pain to create new tests for these files, especially since a LocalFrameTest.cpp doesn\u0027t already exist, but it\u0027ll definitely help make this code more robust.\n\nYou could probably create a subclass of blink::RenderingTest (kinda like how LocalFrameViewTest.cpp does), and pass in your own mocked version of LocalFrameClient in it\u0027s constructor. You could adapt a lot of the old test cases from render_frame_impl_browsertests.cc for ShouldUseClientLoFiForRequest, and just check FetchParameters::GetPlaceholderImageRequestType() to see if a placeholder is being used or not.",
+      "range": {
+        "startLine": 1139,
+        "startChar": 17,
+        "endLine": 1139,
+        "endChar": 43
+      },
+      "revId": "6930d58e5673c7cc1dfcbc6e3d7331e2c9a44983",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
