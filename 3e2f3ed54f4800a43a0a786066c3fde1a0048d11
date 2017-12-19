@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "829f44de_0039b19a",
+        "filename": "chrome/browser/payments/payment_request_display_manager_factory.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-12-19T19:07:50Z",
+      "side": 1,
+      "message": "Need to override GetBrowserContextToUse(), otherwise this will return null in incognito.\n\ncontent::BrowserContext* PaymentRequestDisplayManagerFactory::GetBrowserContextToUse(\n    content::BrowserContext* context) const {\n  // Returns non-NULL even for Incognito contexts so that a separate\n  // instance of a service is created for the Incognito context.\n  return chrome::GetBrowserContextOwnInstanceInIncognito(context);\n}",
+      "revId": "3e2f3ed54f4800a43a0a786066c3fde1a0048d11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e354dcda_ca80cf09",
+        "filename": "components/payments/content/payment_request_display_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-12-19T19:07:50Z",
+      "side": 1,
+      "message": "explicit",
+      "range": {
+        "startLine": 24,
+        "startChar": 4,
+        "endLine": 24,
+        "endChar": 17
+      },
+      "revId": "3e2f3ed54f4800a43a0a786066c3fde1a0048d11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff357489_248c6380",
+        "filename": "components/payments/content/payment_request_display_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-12-19T19:07:50Z",
+      "side": 1,
+      "message": "If",
+      "range": {
+        "startLine": 36,
+        "startChar": 5,
+        "endLine": 36,
+        "endChar": 7
+      },
+      "revId": "3e2f3ed54f4800a43a0a786066c3fde1a0048d11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
