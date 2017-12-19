@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7d1800c3_06f266b4",
+        "filename": "third_party/WebKit/LayoutTests/inspector-protocol/input/dispatchTouchEvent.js",
+        "patchSetId": 16
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-12-19T19:37:01Z",
+      "side": 1,
+      "message": "It seems that the touch emulator doesn\u0027t respect the `preventDefault` on the page so it will cause zooming. Previously this didn\u0027t cause a zoom because it was the first move (if there was a second move, it would zoom). I\u0027ve changed the moves here to be smaller than the touch slop so we don\u0027t initiate a zoom.\n\nDo you know who owns the touch emulator? This feels like a bug but who to file it with?",
+      "range": {
+        "startLine": 117,
+        "startChar": 9,
+        "endLine": 117,
+        "endChar": 12
+      },
+      "revId": "72c36839c6e7554ac2edf73c9545fb26f05b4f94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
