@@ -171,17 +171,9 @@ NSEvent* MockMouseEventWithParams(CGEventType mouse_type,
   return event;
 }
 
-NSEventPhase PhaseForEventType(NSEventType type) {
-  if (type == NSEventTypeBeginGesture)
-    return NSEventPhaseBegan;
-  if (type == NSEventTypeEndGesture)
-    return NSEventPhaseEnded;
-  return NSEventPhaseChanged;
-}
-
-id MockGestureEvent(NSEventType type, double magnification) {
+id MockPinchEvent(NSEventPhase phase, double magnification) {
   id event = [OCMockObject mockForClass:[NSEvent class]];
-  NSEventPhase phase = PhaseForEventType(type);
+  NSEventType type = NSEventTypeMagnify;
   NSPoint locationInWindow = NSMakePoint(0, 0);
   CGFloat deltaX = 0;
   CGFloat deltaY = 0;
@@ -1745,15 +1737,15 @@ class RenderWidgetHostViewMacPinchTest : public RenderWidgetHostViewMacTest {
     return true;
   }
 
-  void SendBeginEvent() {
-    NSEvent* pinchBeginEvent = MockGestureEvent(NSEventTypeBeginGesture, 0);
+  void SendBeginPinchEvent() {
+    NSEvent* pinchBeginEvent = MockPinchEvent(NSEventPhaseBegan, 0);
     if (ShouldSendGestureEvents())
       [cocoa_view_ beginGestureWithEvent:pinchBeginEvent];
     [cocoa_view_ magnifyWithEvent:pinchBeginEvent];
   }
 
-  void SendEndEvent() {
-    NSEvent* pinchEndEvent = MockGestureEvent(NSEventTypeEndGesture, 0);
+  void SendEndPinchEvent() {
+    NSEvent* pinchEndEvent = MockPinchEvent(NSEventPhaseEnded, 0);
     [cocoa_view_ magnifyWithEvent:pinchEndEvent];
     if (ShouldSendGestureEvents())
       [cocoa_view_ endGestureWithEvent:pinchEndEvent];
@@ -1776,12 +1768,12 @@ TEST_F(RenderWidgetHostViewMacPinchTest, PinchThresholding) {
   // Do a gesture that crosses the threshold.
   {
     NSEvent* pinchUpdateEvents[3] = {
-        MockGestureEvent(NSEventTypeMagnify, 0.25),
-        MockGestureEvent(NSEventTypeMagnify, 0.25),
-        MockGestureEvent(NSEventTypeMagnify, 0.25),
+        MockPinchEvent(NSEventPhaseChanged, 0.25),
+        MockPinchEvent(NSEventPhaseChanged, 0.25),
+        MockPinchEvent(NSEventPhaseChanged, 0.25),
     };
 
-    SendBeginEvent();
+    SendBeginPinchEvent();
     base::RunLoop().RunUntilIdle();
     MockWidgetInputHandler::MessageVector events =
         host_->GetAndResetDispatchedMessages();
@@ -1810,7 +1802,7 @@ TEST_F(RenderWidgetHostViewMacPinchTest, PinchThresholding) {
     EXPECT_EQ("GesturePinchUpdate", GetMessageNames(events));
     EXPECT_FALSE(ZoomDisabledForPinchUpdateMessage(events));
 
-    SendEndEvent();
+    SendEndPinchEvent();
     base::RunLoop().RunUntilIdle();
     events = host_->GetAndResetDispatchedMessages();
     EXPECT_EQ("GesturePinchEnd", GetMessageNames(events));
@@ -1819,11 +1811,11 @@ TEST_F(RenderWidgetHostViewMacPinchTest, PinchThresholding) {
   // Do a gesture that doesn't cross the threshold, but happens when we're not
   // at page scale factor one, so it should be sent to the renderer.
   {
-    NSEvent* pinchUpdateEvent = MockGestureEvent(NSEventTypeMagnify, 0.25);
+    NSEvent* pinchUpdateEvent = MockPinchEvent(NSEventPhaseChanged, 0.25);
 
     view_->page_at_minimum_scale_ = false;
 
-    SendBeginEvent();
+    SendBeginPinchEvent();
     base::RunLoop().RunUntilIdle();
     MockWidgetInputHandler::MessageVector events =
         host_->GetAndResetDispatchedMessages();
@@ -1836,7 +1828,7 @@ TEST_F(RenderWidgetHostViewMacPinchTest, PinchThresholding) {
     EXPECT_EQ("GesturePinchBegin GesturePinchUpdate", GetMessageNames(events));
     EXPECT_FALSE(ZoomDisabledForPinchUpdateMessage(events));
 
-    SendEndEvent();
+    SendEndPinchEvent();
     base::RunLoop().RunUntilIdle();
     events = host_->GetAndResetDispatchedMessages();
     EXPECT_EQ("GesturePinchEnd", GetMessageNames(events));
@@ -1845,11 +1837,11 @@ TEST_F(RenderWidgetHostViewMacPinchTest, PinchThresholding) {
   // Do a gesture again, after the page scale is no longer at one, and ensure
   // that it is thresholded again.
   {
-    NSEvent* pinchUpdateEvent = MockGestureEvent(NSEventTypeMagnify, 0.25);
+    NSEvent* pinchUpdateEvent = MockPinchEvent(NSEventTypeMagnify, 0.25);
 
     view_->page_at_minimum_scale_ = true;
 
-    SendBeginEvent();
+    SendBeginPinchEvent();
     base::RunLoop().RunUntilIdle();
     MockWidgetInputHandler::MessageVector events =
         host_->GetAndResetDispatchedMessages();
@@ -1866,7 +1858,7 @@ TEST_F(RenderWidgetHostViewMacPinchTest, PinchThresholding) {
     EXPECT_EQ("GesturePinchBegin GesturePinchUpdate", GetMessageNames(events));
     EXPECT_TRUE(ZoomDisabledForPinchUpdateMessage(events));
 
-    SendEndEvent();
+    SendEndPinchEvent();
     base::RunLoop().RunUntilIdle();
     events = host_->GetAndResetDispatchedMessages();
     EXPECT_EQ("GesturePinchEnd", GetMessageNames(events));
