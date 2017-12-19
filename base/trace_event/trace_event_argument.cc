@@ -367,7 +367,7 @@ std::unique_ptr<base::Value> TracedValue::ToBaseValue() const {
         base::Value new_dict(base::Value::Type::DICTIONARY);
         if (cur_dict) {
           stack.push_back(cur_dict);
-          cur_dict = cur_dict->SetKey(ReadKeyName(it), std::move(new_dict));
+          cur_dict = &cur_dict->SetKey(ReadKeyName(it), std::move(new_dict));
         } else {
           cur_list->GetList().push_back(std::move(new_dict));
           // |new_dict| is invalidated at this point, so |cur_dict| needs to be
@@ -394,7 +394,7 @@ std::unique_ptr<base::Value> TracedValue::ToBaseValue() const {
         base::Value new_list(base::Value::Type::LIST);
         if (cur_dict) {
           stack.push_back(cur_dict);
-          cur_list = cur_dict->SetKey(ReadKeyName(it), std::move(new_list));
+          cur_list = &cur_dict->SetKey(ReadKeyName(it), std::move(new_list));
           cur_dict = nullptr;
         } else {
           cur_list->GetList().push_back(std::move(new_list));

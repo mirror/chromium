@@ -60,15 +60,8 @@ void FakeShillIPConfigClient::SetProperty(const dbus::ObjectPath& ipconfig_path,
                                           const std::string& name,
                                           const base::Value& value,
                                           VoidDBusMethodCallback callback) {
-  base::Value* dict = ipconfigs_.FindKeyOfType(ipconfig_path.value(),
-                                               base::Value::Type::DICTIONARY);
-  if (!dict) {
-    dict = ipconfigs_.SetKey(ipconfig_path.value(),
-                             base::Value(base::Value::Type::DICTIONARY));
-  }
-
   // Update existing ip config stub object's properties.
-  dict->SetKey(name, value.Clone());
+  ipconfigs_.SetPath({ipconfig_path.value(), name}, value.Clone());
   base::ThreadTaskRunnerHandle::Get()->PostTask(
       FROM_HERE, base::BindOnce(std::move(callback), true));
 }

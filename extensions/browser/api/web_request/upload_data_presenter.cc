@@ -28,10 +28,7 @@ namespace {
 // for |key|, creating it if necessary.
 base::Value* GetOrCreateList(base::DictionaryValue* dictionary,
                              const std::string& key) {
-  base::Value* list = dictionary->FindKeyOfType(key, base::Value::Type::LIST);
-  if (list)
-    return list;
-  return dictionary->SetKey(key, base::Value(base::Value::Type::LIST));
+  return &dictionary->FindOrCreateKeyOfType(key, base::Value::Type::LIST);
 }
 
 }  // namespace

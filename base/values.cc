@@ -15,6 +15,7 @@
 #include "base/json/json_writer.h"
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
+#include "base/strings/string_split.h"
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/trace_event/memory_usage_estimator.h"
@@ -283,13 +284,29 @@ const Value* Value::FindKeyOfType(StringPiece key, Type type) const {
   return result;
 }
 
+Value& Value::FindOrCreateKeyOfType(StringPiece key, Type type) {
+  CHECK(is_dict());
+  // Use lower_bound to avoid doing the search twice for missing keys.
+  auto found = dict_.lower_bound(key);
+  if (found == dict_.end() || found->first != key) {
+    // No key found, insert one.
+    return *dict_.try_emplace(found, key, std::make_unique<Value>(type))
+                ->second;
+  }
+
+  // Check if the found value is of |type| type. Create a new value if not.
+  if (found->second->type() != type)
+    found->second = std::make_unique<Value>(type);
+  return *found->second;
+}
+
 bool Value::RemoveKey(StringPiece key) {
   CHECK(is_dict());
   // NOTE: Can't directly return dict_->erase(key) due to MSVC warning C4800.
   return dict_.erase(key) != 0;
 }
 
-Value* Value::SetKey(StringPiece key, Value value) {
+Value& Value::SetKey(StringPiece key, Value value) {
   CHECK(is_dict());
   // NOTE: We can't use |insert_or_assign| here, as only |try_emplace| does
   // an explicit conversion from StringPiece to std::string if necessary.
@@ -299,18 +316,18 @@ Value* Value::SetKey(StringPiece key, Value value) {
     // val_ptr is guaranteed to be still intact at this point.
     result.first->second = std::move(val_ptr);
   }
-  return result.first->second.get();
+  return *result.first->second;
 }
 
-Value* Value::SetKey(std::string&& key, Value value) {
+Value& Value::SetKey(std::string&& key, Value value) {
   CHECK(is_dict());
-  return dict_
-      .insert_or_assign(std::move(key),
-                        std::make_unique<Value>(std::move(value)))
-      .first->second.get();
+  return *dict_
+              .insert_or_assign(std::move(key),
+                                std::make_unique<Value>(std::move(value)))
+              .first->second;
 }
 
-Value* Value::SetKey(const char* key, Value value) {
+Value& Value::SetKey(const char* key, Value value) {
   return SetKey(StringPiece(key), std::move(value));
 }
 
@@ -361,39 +378,44 @@ const Value* Value::FindPathOfType(span<const StringPiece> path,
   return result;
 }
 
-Value* Value::SetPath(std::initializer_list<StringPiece> path, Value value) {
-  DCHECK_GE(path.size(), 2u) << "Use SetKey() for a path of length 1.";
-  return SetPath(make_span(path.begin(), path.size()), std::move(value));
+Value& Value::FindOrCreatePathOfType(std::initializer_list<StringPiece> path,
+                                     Type type) {
+  DCHECK_GE(path.size(), 2u)
+      << "Use FindOrCreateKeyOfType() for a path of length 1.";
+  return FindOrCreatePathOfType(make_span(path.begin(), path.size()), type);
 }
 
-Value* Value::SetPath(span<const StringPiece> path, Value value) {
+Value& Value::FindOrCreatePathOfType(span<const StringPiece> path, Type type) {
   DCHECK_NE(path.begin(), path.end());  // Can't be empty path.
 
   // Walk/construct intermediate dictionaries. The last element requires
   // special handling so skip it in this loop.
   Value* cur = this;
-  const StringPiece* cur_path = path.begin();
-  for (; (cur_path + 1) < path.end(); ++cur_path) {
-    if (!cur->is_dict())
-      return nullptr;
-
-    // Use lower_bound to avoid doing the search twice for missing keys.
-    const StringPiece path_component = *cur_path;
-    auto found = cur->dict_.lower_bound(path_component);
-    if (found == cur->dict_.end() || found->first != path_component) {
-      // No key found, insert one.
-      auto inserted = cur->dict_.try_emplace(
-          found, path_component, std::make_unique<Value>(Type::DICTIONARY));
-      cur = inserted->second.get();
-    } else {
-      cur = found->second.get();
-    }
+  for (const StringPiece component : path.first(path.size() - 1)) {
+    cur = &cur->FindOrCreateKeyOfType(component, Type::DICTIONARY);
   }
 
+  return cur->FindOrCreateKeyOfType(path[path.size() - 1], type);
+}
+
+Value& Value::SetPath(std::initializer_list<StringPiece> path, Value value) {
+  DCHECK_GE(path.size(), 2u) << "Use SetKey() for a path of length 1.";
+  return SetPath(make_span(path.begin(), path.size()), std::move(value));
+}
+
+Value& Value::SetPath(span<const StringPiece> path, Value value) {
+  DCHECK_NE(path.begin(), path.end());  // Can't be empty path.
+
+  // Short circuit if path only consists of one component.
+  if (path.size() == 1)
+    return SetKey(path[0], std::move(value));
+
+  // Walk/construct intermediate dictionaries. The last element requires
+  // special handling so skip it here.
+  Value& last_dict =
+      FindOrCreatePathOfType(path.first(path.size() - 1), Type::DICTIONARY);
   // "cur" will now contain the last dictionary to insert or replace into.
-  if (!cur->is_dict())
-    return nullptr;
-  return cur->SetKey(*cur_path, std::move(value));
+  return last_dict.SetKey(path[path.size() - 1], std::move(value));
 }
 
 bool Value::RemovePath(std::initializer_list<StringPiece> path) {
@@ -724,26 +746,17 @@ Value* DictionaryValue::Set(StringPiece path, std::unique_ptr<Value> in_value) {
   DCHECK(IsStringUTF8(path));
   DCHECK(in_value);
 
-  StringPiece current_path(path);
-  Value* current_dictionary = this;
-  for (size_t delimiter_position = current_path.find('.');
-       delimiter_position != StringPiece::npos;
-       delimiter_position = current_path.find('.')) {
-    // Assume that we're indexing into a dictionary.
-    StringPiece key = current_path.substr(0, delimiter_position);
-    Value* child_dictionary =
-        current_dictionary->FindKeyOfType(key, Type::DICTIONARY);
-    if (!child_dictionary) {
-      child_dictionary =
-          current_dictionary->SetKey(key, Value(Type::DICTIONARY));
-    }
+  std::vector<base::StringPiece> components =
+      base::SplitStringPiece(path, ".", KEEP_WHITESPACE, SPLIT_WANT_ALL);
+  DictionaryValue* last = this;
 
-    current_dictionary = child_dictionary;
-    current_path = current_path.substr(delimiter_position + 1);
+  if (components.size() > 1) {
+    auto components_span = base::make_span(components);
+    last = static_cast<DictionaryValue*>(&FindOrCreatePathOfType(
+        components_span.first(components_span.size() - 1), Type::DICTIONARY));
   }
 
-  return static_cast<DictionaryValue*>(current_dictionary)
-      ->SetWithoutPathExpansion(current_path, std::move(in_value));
+  return last->SetWithoutPathExpansion(components.back(), std::move(in_value));
 }
 
 Value* DictionaryValue::SetBoolean(StringPiece path, bool in_value) {

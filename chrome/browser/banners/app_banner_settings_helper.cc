@@ -94,7 +94,7 @@ base::Value* GetAppDict(base::DictionaryValue* origin_dict,
   if (!app_dict) {
     // Don't allow more than kMaxAppsPerSite dictionaries.
     if (origin_dict->size() < kMaxAppsPerSite) {
-      app_dict = origin_dict->SetKey(
+      app_dict = &origin_dict->SetKey(
           key_name, base::Value(base::Value::Type::DICTIONARY));
     }
   }

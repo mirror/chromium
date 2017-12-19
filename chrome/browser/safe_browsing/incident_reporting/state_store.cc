@@ -39,14 +39,8 @@ void StateStore::Transaction::MarkAsReported(IncidentType type,
                                              const std::string& key,
                                              IncidentDigest digest) {
   std::string type_string(base::IntToString(static_cast<int32_t>(type)));
-  base::DictionaryValue* incidents_sent = GetPrefDict();
-  base::Value* type_dict =
-      incidents_sent->FindKeyOfType(type_string, base::Value::Type::DICTIONARY);
-  if (!type_dict) {
-    type_dict = incidents_sent->SetKey(
-        type_string, base::Value(base::Value::Type::DICTIONARY));
-  }
-  type_dict->SetKey(key, base::Value(base::UintToString(digest)));
+  GetPrefDict()->SetPath({type_string, key},
+                         base::Value(base::UintToString(digest)));
 }
 
 void StateStore::Transaction::Clear(IncidentType type, const std::string& key) {
