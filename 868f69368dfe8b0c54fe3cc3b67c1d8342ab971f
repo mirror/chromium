@@ -16,6 +16,24 @@
       "revId": "868f69368dfe8b0c54fe3cc3b67c1d8342ab971f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b630cfd_8c546abd",
+        "filename": "third_party/WebKit/public/platform/TaskType.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-12-19T17:06:24Z",
+      "side": 1,
+      "message": "Yes, we\u0027ve discussed this with Hajime-san offline. I have something like this in mind (e.g. for InternalLoading):\n\n\"This task type should be used for implementation details of loading process, for example notifying some component that loading has been finished.\nThis task type should not run any javascript, use kNetworking or another appropriate task source in this case.\nThis task type is typically used in //content/renderer/loader or //WebKit/Source/core/loader.\"",
+      "parentUuid": "4eb84cab_58a85410",
+      "revId": "868f69368dfe8b0c54fe3cc3b67c1d8342ab971f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
