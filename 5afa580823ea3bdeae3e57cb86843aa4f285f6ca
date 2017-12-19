@@ -22,6 +22,30 @@
       "revId": "5afa580823ea3bdeae3e57cb86843aa4f285f6ca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "126843be_10ed6672",
+        "filename": "content/test/data/media/peerconnection-resolution-switch.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1212208
+      },
+      "writtenOn": "2017-12-19T09:12:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b01c0a47_316942eb",
+      "range": {
+        "startLine": 30,
+        "startChar": 25,
+        "endLine": 30,
+        "endChar": 54
+      },
+      "revId": "5afa580823ea3bdeae3e57cb86843aa4f285f6ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
