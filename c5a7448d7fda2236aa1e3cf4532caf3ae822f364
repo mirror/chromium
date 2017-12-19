@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "61d23563_07561306",
+        "filename": "ios/chrome/browser/web/external_app_launcher_tab_helper_unittest.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-19T23:44:36Z",
+      "side": 1,
+      "message": "This test does not test external_app_launcher_tab_helper.h. Can we rename the file to external_app_launcher_tab_helper_util and test to ExternalAppLauncherTabHelperUtil?",
+      "revId": "c5a7448d7fda2236aa1e3cf4532caf3ae822f364",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
