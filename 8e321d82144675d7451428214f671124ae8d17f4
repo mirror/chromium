@@ -105,6 +105,24 @@
       "revId": "8e321d82144675d7451428214f671124ae8d17f4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cae0c622_19e4d4b4",
+        "filename": "tools/perf/page_sets/top_25_smooth.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-12-19T16:13:20Z",
+      "side": 1,
+      "message": "Your 2nd proposal sounds great. However there is on going work to unify the smoothness benchmarks, so I would avoid doing any large refactoring until that work is done.\n\nFor now, given that the refactoring approach in this CL relies on multi-inheritance and not make it easier to understand, I would vote for not pursuing this further.",
+      "parentUuid": "2f245d01_846e9387",
+      "revId": "8e321d82144675d7451428214f671124ae8d17f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
