@@ -501,6 +501,10 @@ const base::Feature kMacV2Sandbox{"MacV2Sandbox",
 const base::Feature kV8BackgroundCompile{"V8BackgroundCompile",
                                          base::FEATURE_DISABLED_BY_DEFAULT};
 
+// Enables extra masking and integrity checking in V8.
+const base::Feature kV8ExtraMasking{"V8ExtraMasking",
+                                    base::FEATURE_DISABLED_BY_DEFAULT};
+
 // Enables to use a snapshot file in creating V8 contexts.
 const base::Feature kV8ContextSnapshot{"V8ContextSnapshot",
                                        base::FEATURE_DISABLED_BY_DEFAULT};
