@@ -93,6 +93,30 @@
       "revId": "32ba3f6d116eb25b3b4449b6c4b332991a499462",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63f13ca1_10b72340",
+        "filename": "ios/chrome/browser/ui/fullscreen/chrome_coordinator+fullscreen_disabling.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-12-19T18:04:22Z",
+      "side": 1,
+      "message": "No block passing!\n\nLet\u0027s use this now but keep thinking about ways to factor common code. For example, it doesn\u0027t seem right to subclass for one case (overlays) but not another. The best idea I have right now is for a coordinator helper pattern, which might involve implicit observation of the coordinator.",
+      "parentUuid": "156b3c8f_ca4af59b",
+      "range": {
+        "startLine": 69,
+        "startChar": 4,
+        "endLine": 69,
+        "endChar": 28
+      },
+      "revId": "32ba3f6d116eb25b3b4449b6c4b332991a499462",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
