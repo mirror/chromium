@@ -8888,12 +8888,10 @@ interface XPathResult
     method snapshotItem
 interface XR : EventTarget
     attribute @@toStringTag
-    getter ondeviceconnect
-    getter ondevicedisconnect
+    getter ondevicechange
     method constructor
     method requestDevice
-    setter ondeviceconnect
-    setter ondevicedisconnect
+    setter ondevicechange
 interface XRCoordinateSystem
     attribute @@toStringTag
     method constructor
@@ -8905,10 +8903,6 @@ interface XRDevice : EventTarget
     method constructor
     method requestSession
     method supportsSession
-interface XRDeviceEvent : Event
-    attribute @@toStringTag
-    getter device
-    method constructor
 interface XRDevicePose
     attribute @@toStringTag
     getter poseModelMatrix
