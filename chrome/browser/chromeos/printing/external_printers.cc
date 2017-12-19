@@ -330,22 +330,15 @@ class ExternalPrintersImpl : public ExternalPrinters {
     }
 
     // Maybe notify that the computed list has changed.
-    Notify(valid);
-  }
-
-  // Notify all attached observers.
-  void Notify(bool received) {
-    DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
-
     // Do not notify for invalid->invalid transitions
-    if (!received && !received_data_) {
+    if (!valid && !received_data_) {
       return;
     }
 
-    received_data_ = received;
+    received_data_ = valid;
     for (auto& observer : observers_) {
       // We rely on the assumption that this is sequenced with the rest of our
-      // code.
+      // code to guarantee that printers_ remains valid.
       observer.OnPrintersChanged(received_data_, printers_);
     }
   }
