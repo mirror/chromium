@@ -82,13 +82,20 @@ class APP_LIST_EXPORT AppsGridView : public views::View,
   int rows_per_page() const { return rows_per_page_; }
 
   // Returns the size of a tile view including its padding.
-  static gfx::Size GetTotalTileSize();
+  gfx::Size GetTotalTileSize() const;
 
   // Returns the padding around a tile view.
-  static gfx::Insets GetTilePadding();
+  gfx::Insets GetTilePadding() const;
+
+  // Returns the size of the entire tile grid without padding.
+  gfx::Size GetTileGridSizeWithoutPadding() const;
 
   // This resets the grid view to a fresh state for showing the app list.
   void ResetForShowApps();
+
+  // All items in this view become unfocusable if |disabled| is true. This is
+  // used to trap focus within the folder when it is opened.
+  void DisableFocusForShowingActiveFolder(bool disabled);
 
   // Sets |model| to use. Note this does not take ownership of |model|.
   void SetModel(AppListModel* model);
@@ -236,6 +243,8 @@ class APP_LIST_EXPORT AppsGridView : public views::View,
     folder_delegate_ = folder_delegate;
   }
 
+  bool is_in_folder() const { return !!folder_delegate_; }
+
   AppListItemView* activated_folder_item_view() const {
     return activated_folder_item_view_;
   }
@@ -253,6 +262,12 @@ class APP_LIST_EXPORT AppsGridView : public views::View,
   ExpandArrowView* expand_arrow_view_for_test() const {
     return expand_arrow_view_;
   }
+
+  bool is_fullscreen_app_list_enabled() const {
+    return is_fullscreen_app_list_enabled_;
+  }
+
+  bool is_app_list_focus_enabled() const { return is_app_list_focus_enabled_; }
 
  private:
   class FadeoutLayerDelegate;
@@ -528,6 +543,9 @@ class APP_LIST_EXPORT AppsGridView : public views::View,
   // Handle focus movement triggered by arrow up and down in FULLSCREEN_ALL_APPS
   // state.
   bool HandleFocusMovementInFullscreenAllAppsState(bool arrow_up);
+
+  // Update number of columns and rows for apps within a folder.
+  void UpdateColsAndRowsForFolder();
 
   AppListModel* model_ = nullptr;         // Owned by AppListView.
   AppListItemList* item_list_ = nullptr;  // Not owned.

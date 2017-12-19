@@ -5,26 +5,58 @@
 #ifndef UI_APP_LIST_VIEWS_PAGE_SWITCHER_H_
 #define UI_APP_LIST_VIEWS_PAGE_SWITCHER_H_
 
-#include "ui/views/view.h"
+#include "base/macros.h"
+#include "ui/app_list/pagination_model_observer.h"
+#include "ui/views/controls/button/button.h"
 
 namespace app_list {
 
+class PaginationModel;
+
 // PageSwitcher represents its underlying PaginationModel with a button strip.
 // Each page in the PageinationModel has a button in the strip and when the
-// button is clicked, the corresponding page becomes selected.
-class PageSwitcher : public views::View {
+// button is clicked, the corresponding page becomes selected. NOTE: This is
+// deprecated and is not used in fullscreen app list.
+class PageSwitcher : public views::View,
+                     public views::ButtonListener,
+                     public PaginationModelObserver {
  public:
+  explicit PageSwitcher(PaginationModel* model);
+  ~PageSwitcher() override;
+
   // Returns the page index of the page switcher button under the point. If no
   // page switcher button is under the point, -1 is return. |point| is in
   // PageSwitcher's coordinates.
-  virtual int GetPageForPoint(const gfx::Point& point) const = 0;
+  int GetPageForPoint(const gfx::Point& point) const;
 
   // Shows hover for button under the point. |point| is in PageSwitcher's
   // coordinates.
-  virtual void UpdateUIForDragPoint(const gfx::Point& point) = 0;
+  void UpdateUIForDragPoint(const gfx::Point& point);
 
   // Gets the screen bounds of the buttons in the page switcher.
-  virtual gfx::Rect GetButtonsBoundsInScreen() = 0;
+  gfx::Rect GetButtonsBoundsInScreen();
+
+  // Overridden from views::View:
+  gfx::Size CalculatePreferredSize() const override;
+  void Layout() override;
+
+ private:
+  void CalculateButtonWidthAndSpacing(int contents_width);
+
+  // Overridden from views::ButtonListener:
+  void ButtonPressed(views::Button* sender, const ui::Event& event) override;
+
+  // Overridden from PaginationModelObserver:
+  void TotalPagesChanged() override;
+  void SelectedPageChanged(int old_selected, int new_selected) override;
+  void TransitionStarted() override;
+  void TransitionChanged() override;
+  void TransitionEnded() override;
+
+  PaginationModel* model_;  // Owned by AppsGridView.
+  views::View* buttons_;    // Owned by views hierarchy.
+
+  DISALLOW_COPY_AND_ASSIGN(PageSwitcher);
 };
 
 }  // namespace app_list
