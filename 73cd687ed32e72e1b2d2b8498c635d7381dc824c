@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4d9d81d1_2df5e544",
+        "filename": "media/base/audio_latency.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1212154
+      },
+      "writtenOn": "2017-12-19T09:53:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed1ceb2c_70cb99b6",
+      "revId": "73cd687ed32e72e1b2d2b8498c635d7381dc824c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "27701e69_3c252daf",
         "filename": "media/base/audio_latency.cc",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "73cd687ed32e72e1b2d2b8498c635d7381dc824c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9612898e_b1bb433a",
+        "filename": "media/base/audio_latency.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1212154
+      },
+      "writtenOn": "2017-12-19T09:53:21Z",
+      "side": 1,
+      "message": "Yes, that was my messy attempt at checking exactly that. :) I\u0027ve moved this to GetMinAudioBufferSizeMacOS() now that the max webaudio size has been moved to limits.h.",
+      "parentUuid": "27701e69_3c252daf",
+      "revId": "73cd687ed32e72e1b2d2b8498c635d7381dc824c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "aa1f5354_768f849d",
+        "filename": "media/base/audio_latency.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1212154
+      },
+      "writtenOn": "2017-12-19T09:53:21Z",
+      "side": 1,
+      "message": "Yes, good idea, added this now. Wasn\u0027t sure what to add for the static_assert message, let me know if this should be different.",
+      "parentUuid": "f5cb9cef_904e23c2",
+      "revId": "73cd687ed32e72e1b2d2b8498c635d7381dc824c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "409d6d03_6a0600f4",
         "filename": "media/base/audio_latency.cc",
         "patchSetId": 7
@@ -67,6 +121,24 @@
       "revId": "73cd687ed32e72e1b2d2b8498c635d7381dc824c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1feb2d6_6e51728c",
+        "filename": "media/base/audio_latency.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1212154
+      },
+      "writtenOn": "2017-12-19T09:53:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "409d6d03_6a0600f4",
+      "revId": "73cd687ed32e72e1b2d2b8498c635d7381dc824c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
