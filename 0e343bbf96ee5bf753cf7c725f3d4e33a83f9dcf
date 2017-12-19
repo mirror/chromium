@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "08c3aeb7_8204707d",
+        "filename": "ui/accessibility/platform/ax_platform_node.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-12-19T01:41:25Z",
+      "side": 1,
+      "message": "const sounds good. \n\nprivate is going to be a little bit of a pain in that I\u0027ll have to change a lot of references in ax_platform_node_win, but it\u0027s not really a problem.",
+      "parentUuid": "ce592af8_4ec922e1",
+      "revId": "0e343bbf96ee5bf753cf7c725f3d4e33a83f9dcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9d862a22_be26abe4",
         "filename": "ui/accessibility/platform/ax_platform_node.h",
         "patchSetId": 23
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "e3d0eb76_ca3c537f",
+        "filename": "ui/accessibility/platform/ax_platform_node.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-12-19T01:41:25Z",
+      "side": 1,
+      "message": "Sounds good.",
+      "parentUuid": "9d862a22_be26abe4",
+      "revId": "0e343bbf96ee5bf753cf7c725f3d4e33a83f9dcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f580fb29_af90229c",
         "filename": "ui/views/accessibility/native_view_accessibility_base.cc",
         "patchSetId": 23
@@ -47,6 +83,24 @@
       "writtenOn": "2017-12-19T00:39:58Z",
       "side": 1,
       "message": "Should data_.id still be set? (just, from GetId() now, rather than |id_|)",
+      "revId": "0e343bbf96ee5bf753cf7c725f3d4e33a83f9dcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b005f6f3_75e92d09",
+        "filename": "ui/views/accessibility/native_view_accessibility_base.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-12-19T01:41:25Z",
+      "side": 1,
+      "message": "This caused it to be reentrant -- infinite loop and crash in tests on Linux. It doesn\u0027t really need to be set. I suspect that once Dominic refactors we\u0027ll have a cleaner solution where this won\u0027t be an issue.",
+      "parentUuid": "f580fb29_af90229c",
       "revId": "0e343bbf96ee5bf753cf7c725f3d4e33a83f9dcf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
