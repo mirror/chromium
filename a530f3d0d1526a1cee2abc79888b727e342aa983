@@ -283,6 +283,24 @@
     },
     {
       "key": {
+        "uuid": "6fdac10c_f6c10722",
+        "filename": "chrome/browser/chromeos/printing/external_printers.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-12-19T01:03:58Z",
+      "side": 1,
+      "message": "I think what you have now is ok, but an alternate suggestion would be to have Restrictions::ClearData return a null printer list, and then just use OnComputationComplete in the normal fashion; to me that\u0027s a little more consistent.",
+      "parentUuid": "775690bb_853845ec",
+      "revId": "a530f3d0d1526a1cee2abc79888b727e342aa983",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "36b39313_2c34f9ff",
         "filename": "chrome/browser/chromeos/printing/external_printers.cc",
         "patchSetId": 3
