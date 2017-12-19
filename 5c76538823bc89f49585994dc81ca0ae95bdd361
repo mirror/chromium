@@ -16,6 +16,24 @@
       "revId": "5c76538823bc89f49585994dc81ca0ae95bdd361",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3ad3b76_4ad5d7a3",
+        "filename": "content/browser/gpu/browser_gpu_channel_host_factory.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-12-19T20:41:34Z",
+      "side": 1,
+      "message": "\u003e This feels like a very odd place to do this, and I\u0027m not really sure we guarantee that this runs before renderers start.\n\nIt\u0027s as early as can be done, since |gpu_memory_buffer_manager_| is created\nin l.226...\n\n\u003e \n\u003e Is there a way to instead not expose chromium_image_ycbcr_420v in FeatureInfo when it is not supported natively?\n\nIndeed, there was some discussion re. whether to expose the flag or not: \nreveman@ argued convincingly that chromium_image_ycbcr_420v should be\nexposed in these platforms because in all actuality the platforms do \nsupport it and IIUC it\u0027s used by ARC++; what we want to limit is the \nuse of it for VideoFrames because of performance reasons. Makes sense?",
+      "parentUuid": "f602c5dc_8f2da8f6",
+      "revId": "5c76538823bc89f49585994dc81ca0ae95bdd361",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
