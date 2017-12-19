@@ -198,7 +198,15 @@ void ServiceWorkerRegistration::ActivateWaitingVersionWhenReady() {
     ActivateWaitingVersion(false /* delay */);
     return;
   }
-
+  if (ServiceWorkerUtils::IsServicificationEnabled()) {
+    DCHECK_NE(EmbeddedWorkerStatus::STOPPED,
+              active_version()->running_status());
+    DCHECK(active_version()->event_dispatcher());
+    // If the active worker is needed to be swapped out soon, ask the service
+    // worker to request termination immediately.
+    if (!active_version()->HasControllee() || waiting_version()->skip_waiting())
+      active_version()->event_dispatcher()->TriggerIdleTimerImmediately();
+  }
   StartLameDuckTimerIfNeeded();
 }
 
@@ -264,12 +272,18 @@ void ServiceWorkerRegistration::OnNoControllees(ServiceWorkerVersion* version) {
   if (!context_)
     return;
   DCHECK_EQ(active_version(), version);
-  if (is_uninstalling_)
+  if (is_uninstalling_) {
     Clear();
-  else if (IsReadyToActivate())
+  } else if (IsReadyToActivate()) {
     ActivateWaitingVersion(true /* delay */);
-  else
+  } else {
+    if (ServiceWorkerUtils::IsServicificationEnabled() &&
+        should_activate_when_ready_ &&
+        active_version()->running_status() == EmbeddedWorkerStatus::RUNNING) {
+      active_version()->event_dispatcher()->TriggerIdleTimerImmediately();
+    }
     StartLameDuckTimerIfNeeded();
+  }
 }
 
 void ServiceWorkerRegistration::OnNoWork(ServiceWorkerVersion* version) {
