@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "40dbfc53_b4e939e6",
+        "filename": "services/resource_coordinator/memory_instrumentation/queued_request.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1115925
+      },
+      "writtenOn": "2017-12-19T11:58:14Z",
+      "side": 1,
+      "message": "Having both Args\u0026 and MemoryDumpRequestArgs\u0026 seems painful especially as they contain 2/3 the same information, perhaps we could just store dump_guid on the QueuedRequest and have a method:\nMemoryDumpRequestArgs QueuedRequest::GetRequestArgs()\nWhich constructs the MemoryDumpRequestArgs and adjust the code to use args wherever possible?",
+      "range": {
+        "startLine": 64,
+        "startChar": 0,
+        "endLine": 65,
+        "endChar": 77
+      },
+      "revId": "e326053241d722b3067823b2350e4e3913f24897",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
