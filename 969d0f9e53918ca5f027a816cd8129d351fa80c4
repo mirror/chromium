@@ -190,6 +190,24 @@
     },
     {
       "key": {
+        "uuid": "5b9aded9_8a19201c",
+        "filename": "chrome/browser/chromeos/settings/device_settings_service.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-19T13:47:08Z",
+      "side": 1,
+      "message": "I\u0027m also concerned about this exposure.\nPreviously, the fact that the policy blob received from server was modified here was hidden as an implementation detail; DeviceSettingsService was itself calling into DeviceOffHoursController and replacing the blob with its output.\nNow, this functionality of editing policy blobs is exposed as a public method, which means that any code becomes technically allowed to do that operation.\n\nMaybe the \"Delegate\" approach would work better? It would allow both to keep the implementation details private and to rid of policy dependency in the DeviceSettingsService class itself. WDYT?",
+      "parentUuid": "9cfbbe9b_d79a821a",
+      "revId": "969d0f9e53918ca5f027a816cd8129d351fa80c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bd3b984e_ca757349",
         "filename": "chrome/browser/ui/views/ash/chrome_browser_main_extra_parts_ash.cc",
         "patchSetId": 5
