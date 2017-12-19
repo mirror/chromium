@@ -132,6 +132,34 @@ void ClientLayerTreeFrameSink::SetLocalSurfaceId(
   local_surface_id_ = local_surface_id;
 }
 
+namespace {
+
+bool ContainsSurface(const CompositorFrame& compositor_frame) {
+  for (const auto& render_pass : compositor_frame.render_pass_list) {
+    for (const DrawQuad* quad : render_pass->quad_list) {
+      if (quad->material == DrawQuad::SURFACE_CONTENT)
+        return true;
+    }
+  }
+  return false;
+}
+
+mojom::HitTestRegionListPtr CreateHitTestRegionListFromCompositorFrame(
+    const CompositorFrame& compositor_frame) {
+  auto hit_test_region_list = mojom::HitTestRegionList::New();
+
+  // Use kHitTestAsk only when there is an embedded Surface(OOPIF).
+  hit_test_region_list->flags = ContainsSurface(compositor_frame)
+                                    ? mojom::kHitTestAsk
+                                    : mojom::kHitTestMine;
+
+  gfx::Size size = compositor_frame.size_in_pixels();
+  hit_test_region_list->bounds.SetRect(0, 0, size.width(), size.height());
+  return hit_test_region_list;
+}
+
+}  // namespace
+
 void ClientLayerTreeFrameSink::SubmitCompositorFrame(CompositorFrame frame) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   DCHECK(compositor_frame_sink_ptr_);
@@ -151,8 +179,11 @@ void ClientLayerTreeFrameSink::SubmitCompositorFrame(CompositorFrame frame) {
                                      &tracing_enabled);
 
   mojom::HitTestRegionListPtr hit_test_region_list;
-  if (hit_test_data_provider_)
+  if (hit_test_data_provider_) {
     hit_test_region_list = hit_test_data_provider_->GetHitTestData();
+  } else {
+    hit_test_region_list = CreateHitTestRegionListFromCompositorFrame(frame);
+  }
 
   compositor_frame_sink_ptr_->SubmitCompositorFrame(
       local_surface_id_, std::move(frame), std::move(hit_test_region_list),
