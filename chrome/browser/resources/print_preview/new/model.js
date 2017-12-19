@@ -66,7 +66,7 @@ Polymer({
           updatesPreview: false,
         },
         layout: {
-          value: false, /* portrait */
+          value: false /* portrait */,
           valid: true,
           available: true,
           updatesPreview: true,
@@ -87,7 +87,7 @@ Polymer({
           updatesPreview: true,
         },
         margins: {
-          value: 0,
+          value: print_preview.ticket_items.MarginsTypeValue.DEFAULT,
           valid: true,
           available: true,
           updatesPreview: true,

@@ -210,8 +210,10 @@ cr.define('print_preview', function() {
         pageRange: printTicketStore.pageRange.getDocumentPageRanges(),
         mediaSize: printTicketStore.mediaSize.getValue(),
         landscape: printTicketStore.landscape.getValue(),
-        color: PreviewGenerator.getNativeColorModel(
-            destination, printTicketStore.color),
+        color: getNativeColorModel(
+            destination.isLocal ? printTicketStore.color.getSelectedOption() :
+                                  null,
+            printTicketStore.color.getValue()),
         headerFooterEnabled: printTicketStore.headerFooter.getValue(),
         marginsType: printTicketStore.marginsType.getValue(),
         isFirstRequest: this.inFlightRequestId_ == 0,
@@ -233,8 +235,8 @@ cr.define('print_preview', function() {
             printTicketStore.dpi.getValue().vertical_dpi :
             0,
         duplex: printTicketStore.duplex.getValue() ?
-            PreviewGenerator.DuplexMode.LONG_EDGE :
-            PreviewGenerator.DuplexMode.SIMPLEX,
+            print_preview.DuplexMode.LONG_EDGE :
+            print_preview.DuplexMode.SIMPLEX,
         printToPDF: destination.id ==
             print_preview.Destination.GooglePromotedId.SAVE_AS_PDF,
         printWithCloudPrint: !destination.isLocal,
@@ -482,35 +484,6 @@ cr.define('print_preview', function() {
     // Dispatched when the current print preview request fails.
     FAIL: 'print_preview.PreviewGenerator.FAIL'
   };
-
-  /**
-   * Enumeration of color modes used by Chromium.
-   * @enum {number}
-   */
-  PreviewGenerator.ColorMode = {GRAY: 1, COLOR: 2};
-
-  /**
-   * @param {!print_preview.Destination} destination Destination to print to.
-   * @param {!print_preview.ticket_items.Color} color Color ticket item.
-   * @return {number} Native color model.
-   */
-  PreviewGenerator.getNativeColorModel = function(destination, color) {
-    // For non-local printers native color model is ignored anyway.
-    const option = destination.isLocal ? color.getSelectedOption() : null;
-    const nativeColorModel = parseInt(option ? option.vendor_id : null, 10);
-    if (isNaN(nativeColorModel)) {
-      return color.getValue() ? PreviewGenerator.ColorMode.COLOR :
-                                PreviewGenerator.ColorMode.GRAY;
-    }
-    return nativeColorModel;
-  };
-
-  /**
-   * Constant values matching printing::DuplexMode enum.
-   * @enum {number}
-   */
-  PreviewGenerator
-      .DuplexMode = {SIMPLEX: 0, LONG_EDGE: 1, UNKNOWN_DUPLEX_MODE: -1};
 
   // Export
   return {PreviewGenerator: PreviewGenerator};
