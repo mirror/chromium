@@ -417,7 +417,12 @@ def Update(force=False):
       ] + _GetDesiredVsToolchainHashes()
     if force:
       get_toolchain_args.append('--force')
-    subprocess.check_call(get_toolchain_args)
+    try:
+        out = subprocess.check_output(get_toolchain_args)
+    except subprocess.CalledProcessError as e:
+      print "out: " + out
+      print "CalledProcessError: " + e
+      raise e
 
   return 0
 
