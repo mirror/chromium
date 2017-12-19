@@ -85,12 +85,15 @@ class CORE_EXPORT TreeScope : public GarbageCollectedMixin {
 
   Element* ElementFromPoint(double x, double y) const;
   Element* HitTestPoint(double x, double y, const HitTestRequest&) const;
+  Element* HitTestPointInternal(Node*) const;
   HeapVector<Member<Element>> ElementsFromPoint(double x, double y) const;
   HeapVector<Member<Element>> ElementsFromHitTestResult(HitTestResult&) const;
 
   DOMSelection* GetSelection() const;
 
-  Element* Retarget(const Element& target) const;
+  Element* Retarget(Element& target) const;
+
+  Element* AdjustedFocusedElementInternal(const Element& target) const;
 
   // Find first anchor with the given name.
   // First searches for an element with the given ID, but if that fails, then

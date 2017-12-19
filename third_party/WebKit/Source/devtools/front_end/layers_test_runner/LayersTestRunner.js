@@ -112,7 +112,6 @@ LayersTestRunner.dispatchMouseEvent = function(eventType, button, element, offse
   if (eventType === 'mouseout') {
     eventArguments.screenX = 0;
     eventArguments.screenY = 0;
-    eventArguments.clientX = 0;
     eventArguments.clientY = 0;
   }
 
