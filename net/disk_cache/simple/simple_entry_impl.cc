@@ -759,9 +759,12 @@ void SimpleEntryImpl::OpenEntryInternal(bool have_index,
   DCHECK(!synchronous_entry_);
   state_ = STATE_IO_PENDING;
   const base::TimeTicks start_time = base::TimeTicks::Now();
+
   std::unique_ptr<SimpleEntryCreationResults> results(
       new SimpleEntryCreationResults(SimpleEntryStat(
           last_used_, last_modified_, data_size_, sparse_data_size_)));
+  results->stream_prefetch_data[1].data = new net::GrowableIOBuffer();
+  results->stream_prefetch_data[1].data->SetCapacity(32 * 1024);
   Closure task = base::Bind(&SimpleSynchronousEntry::OpenEntry, cache_type_,
                             path_, key_, entry_hash_, have_index, start_time,
                             file_tracker_, results.get());
@@ -1236,6 +1239,7 @@ void SimpleEntryImpl::CreationOperationComplete(
                    "EntryCreationResult", cache_type_,
                    in_results->result == net::OK);
   if (in_results->result != net::OK) {
+    in_results->stream_prefetch_data[1].data = nullptr;
     if (in_results->result != net::ERR_FILE_EXISTS)
       MarkAsDoomed();
 
@@ -1256,7 +1260,7 @@ void SimpleEntryImpl::CreationOperationComplete(
   for (int stream = 0; stream < 2; ++stream) {
     const SimpleStreamPrefetchData& prefetched =
         in_results->stream_prefetch_data[stream];
-    if (prefetched.data.get()) {
+    if (prefetched.data.get() && prefetched.data->RemainingCapacity()) {
       if (stream == 0)
         stream_0_data_ = prefetched.data;
       else
