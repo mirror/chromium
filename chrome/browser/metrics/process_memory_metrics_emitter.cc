@@ -226,7 +226,7 @@ void ProcessMemoryMetricsEmitter::FetchAndEmitProcessMemoryMetrics() {
   auto callback =
       base::Bind(&ProcessMemoryMetricsEmitter::ReceivedMemoryDump, this);
   memory_instrumentation::MemoryInstrumentation::GetInstance()
-      ->RequestGlobalDump(callback);
+      ->RequestGlobalDump(std::vector<std::string>(), callback);
 
   // The callback keeps this object alive until the callback is invoked.
   if (IsResourceCoordinatorEnabled()) {
