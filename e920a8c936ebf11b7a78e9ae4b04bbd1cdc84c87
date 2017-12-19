@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7d86773e_cbf1adf1",
+        "filename": "base/test/launcher/test_results_tracker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-12-19T23:17:08Z",
+      "side": 1,
+      "message": "IMO it would be cleaner to extract all code above to a separate method (base::Value GetSummary()), but I don\u0027t think it\u0027s worth doing in this CL. I\u0027ve reformatted the code below a bit to make it a bit simpler.",
+      "parentUuid": "43a9a5ee_f4667479",
+      "range": {
+        "startLine": 441,
+        "startChar": 2,
+        "endLine": 442,
+        "endChar": 48
+      },
+      "revId": "e920a8c936ebf11b7a78e9ae4b04bbd1cdc84c87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "91a1ac33_1226c826",
         "filename": "base/test/launcher/test_results_tracker.cc",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-12-19T22:25:02Z",
       "side": 1,
       "message": "nit: This will use pwrite() under the hood, rather than write(); given that we just opened the file for writing, with CREATE_ALWAYS, so we know we\u0027re seek\u0027d to position zero.",
+      "range": {
+        "startLine": 449,
+        "startChar": 13,
+        "endLine": 449,
+        "endChar": 23
+      },
+      "revId": "e920a8c936ebf11b7a78e9ae4b04bbd1cdc84c87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "170d7e02_18cd33e5",
+        "filename": "base/test/launcher/test_results_tracker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 449,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-12-19T23:17:08Z",
+      "side": 1,
+      "message": "Replaced Write() with WriteAtCurrentPos()",
+      "parentUuid": "91a1ac33_1226c826",
       "range": {
         "startLine": 449,
         "startChar": 13,
