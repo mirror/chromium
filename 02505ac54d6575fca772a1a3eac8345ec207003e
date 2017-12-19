@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "522399c8_d3f75d9a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/partnerbookmarks/PartnerBookmarksShim.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-12-19T18:06:58Z",
+      "side": 1,
+      "message": "Turned out one year in ms is too large for int32. clampToInt() happens in recordCustomTimesHistogramMilliseconds(). How about adding assertions before the clamping?",
+      "range": {
+        "startLine": 67,
+        "startChar": 32,
+        "endLine": 67,
+        "endChar": 59
+      },
+      "revId": "02505ac54d6575fca772a1a3eac8345ec207003e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
