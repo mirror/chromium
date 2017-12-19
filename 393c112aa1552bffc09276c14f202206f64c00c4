@@ -1235,6 +1235,30 @@
     },
     {
       "key": {
+        "uuid": "05c37c6c_d3c68205",
+        "filename": "components/arc/timer/arc_timer_bridge_unittest.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-12-19T12:25:14Z",
+      "side": 1,
+      "message": "The test SIGSEGVs if I don\u0027t have this",
+      "parentUuid": "b41ff80b_7cdd9e9f",
+      "range": {
+        "startLine": 62,
+        "startChar": 2,
+        "endLine": 63,
+        "endChar": 41
+      },
+      "revId": "393c112aa1552bffc09276c14f202206f64c00c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cbd48ee3_73148b9e",
         "filename": "components/arc/timer/arc_timer_bridge_unittest.cc",
         "patchSetId": 23
