@@ -245,10 +245,6 @@ class NET_EXPORT CookieMonster : public CookieStore {
   // For kSafeFromGlobalPurgeDays in CookieStore.
   FRIEND_TEST_ALL_PREFIXES(CookieMonsterTest, EvictSecureCookies);
 
-  // For CookieDeleteEquivalent histogram enum.
-  FRIEND_TEST_ALL_PREFIXES(CookieMonsterTest,
-                           CookieDeleteEquivalentHistogramTest);
-
   // Internal reasons for deletion, used to populate informative histograms
   // and to provide a public cause for onCookieChange notifications.
   //
@@ -335,43 +331,6 @@ class NET_EXPORT CookieMonster : public CookieStore {
     COOKIE_SOURCE_NONSECURE_COOKIE_CRYPTOGRAPHIC_SCHEME,
     COOKIE_SOURCE_NONSECURE_COOKIE_NONCRYPTOGRAPHIC_SCHEME,
     COOKIE_SOURCE_LAST_ENTRY
-  };
-
-  // Used to populate a histogram for cookie setting in the "delete equivalent"
-  // step. Measures total attempts to delete an equivalent cookie, and
-  // categorizes the outcome.
-  //
-  // * COOKIE_DELETE_EQUIVALENT_ATTEMPT is incremented each time a cookie is
-  //   set, causing the equivalent deletion algorithm to execute.
-  //
-  // * COOKIE_DELETE_EQUIVALENT_SKIPPING_SECURE is incremented when a non-secure
-  //   cookie is ignored because an equivalent, but secure, cookie already
-  //   exists.
-  //
-  // * COOKIE_DELETE_EQUIVALENT_WOULD_HAVE_DELETED is incremented when a cookie
-  //   is skipped due to `secure` rules (e.g. whenever
-  //   COOKIE_DELETE_EQUIVALENT_SKIPPING_SECURE is incremented), but would have
-  //   caused a deletion without those rules.
-  //
-  //   TODO(mkwst): Now that we've shipped strict secure cookie checks, we don't
-  //   need this value anymore.
-  //
-  // * COOKIE_DELETE_EQUIVALENT_FOUND is incremented each time an equivalent
-  //   cookie is found (and deleted).
-  //
-  // * COOKIE_DELETE_EQUIVALENT_FOUND_WITH_SAME_VALUE is incremented each time
-  //   an equivalent cookie that also shared the same value with the new cookie
-  //   is found (and deleted).
-  //
-  // Please do not reorder or remove entries. New entries must be added to the
-  // end of the list, just before COOKIE_DELETE_EQUIVALENT_LAST_ENTRY.
-  enum CookieDeleteEquivalent {
-    COOKIE_DELETE_EQUIVALENT_ATTEMPT = 0,
-    COOKIE_DELETE_EQUIVALENT_FOUND,
-    COOKIE_DELETE_EQUIVALENT_SKIPPING_SECURE,
-    COOKIE_DELETE_EQUIVALENT_WOULD_HAVE_DELETED,
-    COOKIE_DELETE_EQUIVALENT_FOUND_WITH_SAME_VALUE,
-    COOKIE_DELETE_EQUIVALENT_LAST_ENTRY
   };
 
   // The strategy for fetching cookies. Controlled by Finch experiment.
@@ -639,7 +598,6 @@ class NET_EXPORT CookieMonster : public CookieStore {
   base::HistogramBase* histogram_count_;
   base::HistogramBase* histogram_cookie_type_;
   base::HistogramBase* histogram_cookie_source_scheme_;
-  base::HistogramBase* histogram_cookie_delete_equivalent_;
   base::HistogramBase* histogram_time_blocked_on_load_;
 
   CookieMap cookies_;

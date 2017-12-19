@@ -11445,6 +11445,10 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="Cookie.CookieDeleteEquivalent" enum="CookieDeleteEquivalent">
+  <obsolete>
+    Deprecated 2017-12-19 as part of cookie histogram cleanup
+    (https://crbug.com/796003).
+  </obsolete>
   <owner>mkwst@chromium.org</owner>
   <summary>
     Record when at attempt is made to delete an equivalent cookie on a set

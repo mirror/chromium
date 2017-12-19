@@ -1250,8 +1250,6 @@ bool CookieMonster::DeleteAnyEquivalentCookie(
   bool skipped_httponly = false;
   bool skipped_secure_cookie = false;
 
-  histogram_cookie_delete_equivalent_->Add(COOKIE_DELETE_EQUIVALENT_ATTEMPT);
-
   for (CookieMapItPair its = cookies_.equal_range(key);
        its.first != its.second;) {
     CookieMap::iterator curit = its.first;
@@ -1267,18 +1265,11 @@ bool CookieMonster::DeleteAnyEquivalentCookie(
     if (cc->IsSecure() && !source_secure &&
         ecc.IsEquivalentForSecureCookieMatching(*cc)) {
       skipped_secure_cookie = true;
-      histogram_cookie_delete_equivalent_->Add(
-          COOKIE_DELETE_EQUIVALENT_SKIPPING_SECURE);
       // If the cookie is equivalent to the new cookie and wouldn't have been
       // skipped for being HTTP-only, record that it is a skipped secure cookie
       // that would have been deleted otherwise.
       if (ecc.IsEquivalent(*cc)) {
         found_equivalent_cookie = true;
-
-        if (!skip_httponly || !cc->IsHttpOnly()) {
-          histogram_cookie_delete_equivalent_->Add(
-              COOKIE_DELETE_EQUIVALENT_WOULD_HAVE_DELETED);
-        }
       }
     } else if (ecc.IsEquivalent(*cc)) {
       // We should never have more than one equivalent cookie, since they should
@@ -1290,12 +1281,8 @@ bool CookieMonster::DeleteAnyEquivalentCookie(
       if (skip_httponly && cc->IsHttpOnly()) {
         skipped_httponly = true;
       } else {
-        histogram_cookie_delete_equivalent_->Add(
-            COOKIE_DELETE_EQUIVALENT_FOUND);
         if (cc->Value() == ecc.Value()) {
           *creation_date_to_inherit = cc->CreationDate();
-          histogram_cookie_delete_equivalent_->Add(
-              COOKIE_DELETE_EQUIVALENT_FOUND_WITH_SAME_VALUE);
         }
         InternalDeleteCookie(curit, true, already_expired
                                               ? DELETE_COOKIE_EXPIRED_OVERWRITE
@@ -1919,11 +1906,6 @@ void CookieMonster::InitializeHistograms() {
   histogram_cookie_source_scheme_ = base::LinearHistogram::FactoryGet(
       "Cookie.CookieSourceScheme", 1, COOKIE_SOURCE_LAST_ENTRY - 1,
       COOKIE_SOURCE_LAST_ENTRY, base::Histogram::kUmaTargetedHistogramFlag);
-  histogram_cookie_delete_equivalent_ = base::LinearHistogram::FactoryGet(
-      "Cookie.CookieDeleteEquivalent", 1,
-      COOKIE_DELETE_EQUIVALENT_LAST_ENTRY - 1,
-      COOKIE_DELETE_EQUIVALENT_LAST_ENTRY,
-      base::Histogram::kUmaTargetedHistogramFlag);
 
   // From UMA_HISTOGRAM_{CUSTOM_,}TIMES
   histogram_time_blocked_on_load_ = base::Histogram::FactoryTimeGet(
