@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9cfe93c1_1cae3dff",
+        "filename": "ui/views/controls/label_perftest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-19T20:06:22Z",
+      "side": 1,
+      "message": "5 seconds is quite long for a unit-test, is that normal for a perf-test? LapTimer\u0027s default ctor caps at 3 seconds. Maybe this test shouldn\u0027t increase the perf bot cycle time quite so much; try 5000 laps?",
+      "revId": "326916334ff4645c14be14bd51e023a18d0204bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31b894c8_9a0f09f5",
+        "filename": "ui/views/controls/label_perftest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-19T20:06:22Z",
+      "side": 1,
+      "message": "nit: |kWarmupLaps|",
+      "revId": "326916334ff4645c14be14bd51e023a18d0204bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

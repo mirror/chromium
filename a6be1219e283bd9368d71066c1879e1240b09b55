@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "d754c7e6_08d5f3ff",
+        "filename": "ui/gfx/harfbuzz_font_skia.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-19T20:06:22Z",
+      "side": 1,
+      "message": "I\u0027m generally in favor of this proposal, I\u0027ve long wanted the browser UI to leverage Blink\u0027s more mature text code. Still, it needs buy-in from the Blink font/text folks; I imagine they\u0027d bear the brunt of the burden maintaining any shared layer (and font caching may be a good starting layer). This would indeed be Epic.\n\nApparently src/third_party/WebKit code already uses src/ui (so, I\u0027d prefer src/ui/text or src/ui/gfx/text over src/text): \nhttps://cs.chromium.org/search/?q\u003df:third_party/WebKit.*BUILD.gn+//ui\u0026sq\u003dpackage:chromium\u0026type\u003dcs\n\nI think it\u0027s worth pinging that bug, or the TODO author, to elucidate the performance benefits you\u0027ve found with caching hb_font_t objects. Perhaps the intent is to cache hb_face_t *and* hb_font_t objects?",
+      "parentUuid": "40f335b2_5a98db14",
+      "revId": "a6be1219e283bd9368d71066c1879e1240b09b55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7944150c_bec46636",
         "filename": "ui/views/controls/label_perftest.cc",
         "patchSetId": 5
@@ -124,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "707b37bb_2f25f24d",
+        "filename": "ui/views/controls/label_perftest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-19T20:06:22Z",
+      "side": 1,
+      "message": "O(10) or O(100) could very well reduce overhead and noise. I really don\u0027t have a strong preference or opinion here, mostly because I\u0027m not too familiar with perf tests. Maybe loop in a reviewer that knows perf tests a bit better, and maybe document the thoughts behind your overall approach; like \"Test the number of text size measurements that can be made made per second. This should surface any performance regressions in underlying text layout system, eg. failure to cache font structures.\"",
+      "parentUuid": "22f6bac0_014c5b64",
+      "revId": "a6be1219e283bd9368d71066c1879e1240b09b55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a02c0c5f_d822ce41",
         "filename": "ui/views/controls/label_perftest.cc",
         "patchSetId": 5
@@ -156,6 +192,24 @@
       "revId": "a6be1219e283bd9368d71066c1879e1240b09b55",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60858d00_8b89c928",
+        "filename": "ui/views/controls/label_perftest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-19T20:06:22Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "3c299af1_72190521",
+      "revId": "a6be1219e283bd9368d71066c1879e1240b09b55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -194,6 +248,24 @@
     },
     {
       "key": {
+        "uuid": "662338b4_bc393a6c",
+        "filename": "ui/views/controls/label_perftest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-19T20:06:22Z",
+      "side": 1,
+      "message": "Neat!",
+      "parentUuid": "d195cb1f_0f9e243c",
+      "revId": "a6be1219e283bd9368d71066c1879e1240b09b55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b7df75ec_6c9ca1b4",
         "filename": "ui/views/views_perftests.cc",
         "patchSetId": 5
@@ -223,6 +295,24 @@
       "side": 1,
       "message": "\u003e Is this needed for views tests? Maybe comment as to why\n\nHmm. views_unittests does it. It was added for views_unittests in r482704 \"ensures ui::InitializeContextFactoryForTests() initializes HostFrameSinkManager. This uses Mojo so it requires that test targets initialize mojo::edk\"\n\nHostFrameSinkManager looks as though it\u0027s needed to interact with the compositor.\n\nviews::ViewsTestBase will call ui::InitializeContextFactoryForTests() when its views::ScopedViewsTestHelper initializes a views::PlatformTestHelper, so I think we do want this to be consistent and so we can test drawing performance.\n\nI\u0027m not sure what to comment though. HostFrameSinkManager wants this call to Init() now, but there could be lots of things wanting it in future.\n\nThe current perf test does pass without this line. So, I\u0027m happy to remove it, but I feel like it would be an obscure thing to discover/troubleshoot when someone adds a test that happens to tickle enough of the compositor. wdyt?",
       "parentUuid": "b7df75ec_6c9ca1b4",
+      "revId": "a6be1219e283bd9368d71066c1879e1240b09b55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78f7f10d_91e9ad9a",
+        "filename": "ui/views/views_perftests.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-19T20:06:22Z",
+      "side": 1,
+      "message": "I have a slight preference towards a minimalistic approach; I\u0027d avoid adding  dependencies and init boilerplate until they\u0027re explicitly necessary. Someone may indeed stumble on this later, but I think that\u0027s okay.",
+      "parentUuid": "2f2a803d_aa0dfd02",
       "revId": "a6be1219e283bd9368d71066c1879e1240b09b55",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
