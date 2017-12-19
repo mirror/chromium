@@ -226,6 +226,24 @@
     },
     {
       "key": {
+        "uuid": "2795905a_96bbd40e",
+        "filename": "chrome/browser/chromeos/settings/device_settings_service.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-19T19:13:16Z",
+      "side": 1,
+      "message": "I\u0027m not quite getting the point about Servicification.\nEven in the service-based world, I\u0027d still think of the OffHoursController as an internal implementation detail of the Policy Service, because all policy consumers should just receive the result of its application (and 99% of them shouldn\u0027t even know about its existence, while the rest 1% that care just need a boolean flag |is_off_hours_mode|). Anyway, it sounds rather dangerous and undesirable to expose a public API that would allow any code in Chromium to touch the policy blob - this data should be under control of the policy service.\nAlthough I\u0027m hypothesizing here, as there\u0027s no concrete design for the Policy Service at the moment AFAIK.\n\nIf your argument is that DeviceSettingsService should rather be a thin wrapper around lower-level policy managing code (which can potentially be moved into a separate service) - then it\u0027s also good. Knowledge about policy-specific things like DeviceOffHours could be kept inside that lower layer. But for moving in this direction, this additional layer has to be introduced now?",
+      "parentUuid": "765d809b_793243bc",
+      "revId": "969d0f9e53918ca5f027a816cd8129d351fa80c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bd3b984e_ca757349",
         "filename": "chrome/browser/ui/views/ash/chrome_browser_main_extra_parts_ash.cc",
         "patchSetId": 5
