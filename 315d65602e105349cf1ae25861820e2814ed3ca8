@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "37cf871f_2a43a96f",
+        "filename": "ash/root_window_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-12-19T21:15:29Z",
+      "side": 1,
+      "message": "Can this if() be removed now?",
+      "revId": "315d65602e105349cf1ae25861820e2814ed3ca8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "baaa6f06_e7ac208d",
+        "filename": "ash/root_window_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 708,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-12-19T21:15:29Z",
+      "side": 1,
+      "message": "Since you are now doing this every time a RootWindowController is initialized, and RWC::InitializeShelf() does nothing if called more than once, please remove the call from ash::Shell::InitializeShelf() on shell.cc line 1288. Also, you should rename or remove ash::Shell::InitializeShelf() since it won\u0027t actually initialize the shelf any more. Also, make RootWindowController::InitializeShelf() private.",
+      "revId": "315d65602e105349cf1ae25861820e2814ed3ca8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51f79717_7edf5d0c",
+        "filename": "ash/shelf/shelf_widget_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-12-19T21:15:29Z",
+      "side": 1,
+      "message": "nit: \"Visible\"",
+      "revId": "315d65602e105349cf1ae25861820e2814ed3ca8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
