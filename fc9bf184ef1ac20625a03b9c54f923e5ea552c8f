@@ -399,6 +399,30 @@
     },
     {
       "key": {
+        "uuid": "e37c0256_9fffa2f2",
+        "filename": "components/arc/test/fake_timer_instance.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-12-19T11:57:57Z",
+      "side": 1,
+      "message": "Right the intention is to print approx. human readable time.Adding time ticks would just be the time ticks at |absolute_expiration_time| which is not human interpretable.",
+      "parentUuid": "f4f02f62_8c043ae4",
+      "range": {
+        "startLine": 105,
+        "startChar": 6,
+        "endLine": 105,
+        "endChar": 23
+      },
+      "revId": "fc9bf184ef1ac20625a03b9c54f923e5ea552c8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "798c134e_3663eb8d",
         "filename": "components/arc/test/fake_timer_instance.cc",
         "patchSetId": 20
@@ -2018,6 +2042,30 @@
       "side": 1,
       "message": "Is this necessary ? I like to be consistent, for me one line loops are also loops :). Style guide says they are optional.",
       "parentUuid": "6e05033f_ecc09a95",
+      "range": {
+        "startLine": 64,
+        "startChar": 38,
+        "endLine": 64,
+        "endChar": 40
+      },
+      "revId": "fc9bf184ef1ac20625a03b9c54f923e5ea552c8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c265b1e_7e983d3a",
+        "filename": "components/arc/timer/arc_timer_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-12-19T11:57:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "81b0a519_92cab05a",
       "range": {
         "startLine": 64,
         "startChar": 38,

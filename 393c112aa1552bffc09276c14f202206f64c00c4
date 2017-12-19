@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "27659f5f_15d14228",
+        "filename": "components/arc/common/timer.mojom",
+        "patchSetId": 23
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-12-19T11:57:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "26595d3f_434b1e65",
+      "range": {
+        "startLine": 55,
+        "startChar": 77,
+        "endLine": 55,
+        "endChar": 78
+      },
+      "revId": "393c112aa1552bffc09276c14f202206f64c00c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "113bfd25_0afa060e",
         "filename": "components/arc/test/fake_timer_instance.cc",
         "patchSetId": 23
@@ -45,6 +69,30 @@
       "revId": "393c112aa1552bffc09276c14f202206f64c00c4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38c69f28_e06ecf1a",
+        "filename": "components/arc/test/fake_timer_instance.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-12-19T11:57:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "113bfd25_0afa060e",
+      "range": {
+        "startLine": 59,
+        "startChar": 3,
+        "endLine": 60,
+        "endChar": 66
+      },
+      "revId": "393c112aa1552bffc09276c14f202206f64c00c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "2362deff_aa13dc38",
+        "filename": "components/arc/test/fake_timer_instance.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-12-19T11:57:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5956c5a8_38233294",
+      "range": {
+        "startLine": 69,
+        "startChar": 4,
+        "endLine": 70,
+        "endChar": 51
+      },
+      "revId": "393c112aa1552bffc09276c14f202206f64c00c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9bb5fdfc_59229092",
         "filename": "components/arc/test/fake_timer_instance.cc",
         "patchSetId": 23
@@ -91,6 +163,30 @@
       "revId": "393c112aa1552bffc09276c14f202206f64c00c4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75e2c148_ec00823a",
+        "filename": "components/arc/test/fake_timer_instance.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-12-19T11:57:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9bb5fdfc_59229092",
+      "range": {
+        "startLine": 95,
+        "startChar": 2,
+        "endLine": 96,
+        "endChar": 66
+      },
+      "revId": "393c112aa1552bffc09276c14f202206f64c00c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "398716a3_3dd593bb",
+        "filename": "components/arc/test/fake_timer_instance.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-12-19T11:57:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f57a1a0b_6709678a",
+      "range": {
+        "startLine": 113,
+        "startChar": 2,
+        "endLine": 114,
+        "endChar": 39
+      },
+      "revId": "393c112aa1552bffc09276c14f202206f64c00c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1f68534b_bd8b898d",
         "filename": "components/arc/test/fake_timer_instance.cc",
         "patchSetId": 23
@@ -137,6 +257,30 @@
       "revId": "393c112aa1552bffc09276c14f202206f64c00c4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fe688c1_ba43ab4b",
+        "filename": "components/arc/test/fake_timer_instance.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-12-19T11:57:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1f68534b_bd8b898d",
+      "range": {
+        "startLine": 142,
+        "startChar": 2,
+        "endLine": 143,
+        "endChar": 71
+      },
+      "revId": "393c112aa1552bffc09276c14f202206f64c00c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "83c03104_cb8ba0dd",
+        "filename": "components/arc/test/fake_timer_instance.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-12-19T11:57:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e2b2661c_1921a6e4",
+      "range": {
+        "startLine": 157,
+        "startChar": 4,
+        "endLine": 157,
+        "endChar": 54
+      },
+      "revId": "393c112aa1552bffc09276c14f202206f64c00c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7c33a995_e2f9101d",
         "filename": "components/arc/test/fake_timer_instance.cc",
         "patchSetId": 23
@@ -183,6 +351,30 @@
       "revId": "393c112aa1552bffc09276c14f202206f64c00c4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d007ef7b_b40a158d",
+        "filename": "components/arc/test/fake_timer_instance.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-12-19T11:57:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7c33a995_e2f9101d",
+      "range": {
+        "startLine": 164,
+        "startChar": 4,
+        "endLine": 165,
+        "endChar": 35
+      },
+      "revId": "393c112aa1552bffc09276c14f202206f64c00c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "8bf93a66_aa23a2e6",
+        "filename": "components/arc/test/fake_timer_instance.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-12-19T11:57:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b91ef851_8bf359e0",
+      "range": {
+        "startLine": 175,
+        "startChar": 6,
+        "endLine": 175,
+        "endChar": 78
+      },
+      "revId": "393c112aa1552bffc09276c14f202206f64c00c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "577ee413_bc1ce424",
         "filename": "components/arc/test/fake_timer_instance.h",
         "patchSetId": 23
@@ -229,6 +445,30 @@
       "revId": "393c112aa1552bffc09276c14f202206f64c00c4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79994fa2_9e4f8b0c",
+        "filename": "components/arc/test/fake_timer_instance.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-12-19T11:57:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "577ee413_bc1ce424",
+      "range": {
+        "startLine": 27,
+        "startChar": 41,
+        "endLine": 27,
+        "endChar": 42
+      },
+      "revId": "393c112aa1552bffc09276c14f202206f64c00c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -278,6 +518,54 @@
     },
     {
       "key": {
+        "uuid": "69c3f700_219209d6",
+        "filename": "components/arc/test/fake_timer_instance.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-12-19T11:57:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "479b8d7b_974eb647",
+      "range": {
+        "startLine": 30,
+        "startChar": 41,
+        "endLine": 31,
+        "endChar": 30
+      },
+      "revId": "393c112aa1552bffc09276c14f202206f64c00c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "baa00eb5_b41b9099",
+        "filename": "components/arc/test/fake_timer_instance.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-12-19T11:57:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "381c9669_51b42ea0",
+      "range": {
+        "startLine": 31,
+        "startChar": 9,
+        "endLine": 31,
+        "endChar": 29
+      },
+      "revId": "393c112aa1552bffc09276c14f202206f64c00c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7ddcb2a0_3b2dca1d",
         "filename": "components/arc/test/fake_timer_instance.h",
         "patchSetId": 23
@@ -292,6 +580,24 @@
       "revId": "393c112aa1552bffc09276c14f202206f64c00c4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07c06f85_6307a398",
+        "filename": "components/arc/test/fake_timer_instance.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-12-19T11:57:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7ddcb2a0_3b2dca1d",
+      "revId": "393c112aa1552bffc09276c14f202206f64c00c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -318,6 +624,30 @@
     },
     {
       "key": {
+        "uuid": "efe0e3fa_dc94bb6d",
+        "filename": "components/arc/timer/arc_timer.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-12-19T11:57:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d381a6f3_5ac83836",
+      "range": {
+        "startLine": 11,
+        "startChar": 9,
+        "endLine": 11,
+        "endChar": 17
+      },
+      "revId": "393c112aa1552bffc09276c14f202206f64c00c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ffd34994_2df796ca",
         "filename": "components/arc/timer/arc_timer.cc",
         "patchSetId": 23
@@ -338,6 +668,30 @@
       "revId": "393c112aa1552bffc09276c14f202206f64c00c4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "144df1ba_279a233a",
+        "filename": "components/arc/timer/arc_timer.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-12-19T11:57:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ffd34994_2df796ca",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 42
+      },
+      "revId": "393c112aa1552bffc09276c14f202206f64c00c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -364,6 +718,30 @@
     },
     {
       "key": {
+        "uuid": "7bac5071_e53bb4b1",
+        "filename": "components/arc/timer/arc_timer.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-12-19T11:57:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "612a8097_dffdb301",
+      "range": {
+        "startLine": 41,
+        "startChar": 12,
+        "endLine": 41,
+        "endChar": 75
+      },
+      "revId": "393c112aa1552bffc09276c14f202206f64c00c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e2833fea_0313e16c",
         "filename": "components/arc/timer/arc_timer.cc",
         "patchSetId": 23
@@ -387,6 +765,30 @@
     },
     {
       "key": {
+        "uuid": "b73ba045_bdef6445",
+        "filename": "components/arc/timer/arc_timer.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-12-19T11:57:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e2833fea_0313e16c",
+      "range": {
+        "startLine": 46,
+        "startChar": 51,
+        "endLine": 46,
+        "endChar": 77
+      },
+      "revId": "393c112aa1552bffc09276c14f202206f64c00c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0eed12ce_cf8c3065",
         "filename": "components/arc/timer/arc_timer.cc",
         "patchSetId": 23
@@ -398,6 +800,30 @@
       "writtenOn": "2017-12-18T22:09:48Z",
       "side": 1,
       "message": "Is it useful to land this log statement, or is it mostly useful when developing this patch?",
+      "range": {
+        "startLine": 56,
+        "startChar": 2,
+        "endLine": 56,
+        "endChar": 36
+      },
+      "revId": "393c112aa1552bffc09276c14f202206f64c00c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cf85b53_eeec41e5",
+        "filename": "components/arc/timer/arc_timer.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-12-19T11:57:57Z",
+      "side": 1,
+      "message": "Helpful for debugging if we miss alarms.",
+      "parentUuid": "0eed12ce_cf8c3065",
       "range": {
         "startLine": 56,
         "startChar": 2,
@@ -433,6 +859,30 @@
     },
     {
       "key": {
+        "uuid": "70b8ca5e_05f1ea78",
+        "filename": "components/arc/timer/arc_timer.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-12-19T11:57:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77e7e648_da20aec8",
+      "range": {
+        "startLine": 60,
+        "startChar": 2,
+        "endLine": 60,
+        "endChar": 37
+      },
+      "revId": "393c112aa1552bffc09276c14f202206f64c00c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a5044375_a2fc80cc",
         "filename": "components/arc/timer/arc_timer.h",
         "patchSetId": 23
@@ -444,6 +894,30 @@
       "writtenOn": "2017-12-18T22:09:48Z",
       "side": 1,
       "message": "This is false. Like other members, it is only accessed from the sequence on which this ArcTimer is initialized.",
+      "range": {
+        "startLine": 50,
+        "startChar": 39,
+        "endLine": 50,
+        "endChar": 74
+      },
+      "revId": "393c112aa1552bffc09276c14f202206f64c00c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b88e76c_29b94057",
+        "filename": "components/arc/timer/arc_timer.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-12-19T11:57:57Z",
+      "side": 1,
+      "message": "Sorry this was a stale comment. Fixed.",
+      "parentUuid": "a5044375_a2fc80cc",
       "range": {
         "startLine": 50,
         "startChar": 39,
@@ -479,6 +953,30 @@
     },
     {
       "key": {
+        "uuid": "51568571_016daafc",
+        "filename": "components/arc/timer/arc_timer.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-12-19T11:57:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e1a581b3_e43f94d5",
+      "range": {
+        "startLine": 53,
+        "startChar": 72,
+        "endLine": 53,
+        "endChar": 79
+      },
+      "revId": "393c112aa1552bffc09276c14f202206f64c00c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f30eeca2_90b2ebd2",
         "filename": "components/arc/timer/arc_timer_bridge.cc",
         "patchSetId": 23
@@ -502,6 +1000,30 @@
     },
     {
       "key": {
+        "uuid": "271943ba_2f0d4bb4",
+        "filename": "components/arc/timer/arc_timer_bridge.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-12-19T11:57:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f30eeca2_90b2ebd2",
+      "range": {
+        "startLine": 102,
+        "startChar": 0,
+        "endLine": 102,
+        "endChar": 6
+      },
+      "revId": "393c112aa1552bffc09276c14f202206f64c00c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ac42414c_b52081a9",
         "filename": "components/arc/timer/arc_timer_bridge.cc",
         "patchSetId": 23
@@ -513,6 +1035,30 @@
       "writtenOn": "2017-12-18T22:09:48Z",
       "side": 1,
       "message": "Instead of passing this by argument, you can just use base::SequencedTaskRunnerHandle::Get() below to get the \"current\" sequence.",
+      "range": {
+        "startLine": 135,
+        "startChar": 4,
+        "endLine": 135,
+        "endChar": 64
+      },
+      "revId": "393c112aa1552bffc09276c14f202206f64c00c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc14e0e8_f421f27a",
+        "filename": "components/arc/timer/arc_timer_bridge.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-12-19T11:57:57Z",
+      "side": 1,
+      "message": "I\u0027d argue this communicates the intent of the function a bit better compared to implicitly getting the runner.",
+      "parentUuid": "ac42414c_b52081a9",
       "range": {
         "startLine": 135,
         "startChar": 4,
@@ -548,6 +1094,30 @@
     },
     {
       "key": {
+        "uuid": "53e7c919_99b7c729",
+        "filename": "components/arc/timer/arc_timer_bridge.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-12-19T11:57:57Z",
+      "side": 1,
+      "message": ":)",
+      "parentUuid": "23101954_bf344ee0",
+      "range": {
+        "startLine": 179,
+        "startChar": 8,
+        "endLine": 179,
+        "endChar": 44
+      },
+      "revId": "393c112aa1552bffc09276c14f202206f64c00c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "572e5c2d_06efe289",
         "filename": "components/arc/timer/arc_timer_bridge.cc",
         "patchSetId": 23
@@ -571,6 +1141,30 @@
     },
     {
       "key": {
+        "uuid": "b01ed479_066ef7b0",
+        "filename": "components/arc/timer/arc_timer_bridge.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-12-19T11:57:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "572e5c2d_06efe289",
+      "range": {
+        "startLine": 192,
+        "startChar": 2,
+        "endLine": 195,
+        "endChar": 79
+      },
+      "revId": "393c112aa1552bffc09276c14f202206f64c00c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3bd88f72_4315c8ce",
         "filename": "components/arc/timer/arc_timer_bridge_unittest.cc",
         "patchSetId": 23
@@ -582,6 +1176,30 @@
       "writtenOn": "2017-12-18T22:09:48Z",
       "side": 1,
       "message": "Do you really need a TestBrowserThreadBundle? Using a base::test::ScopedTaskEnvironment would remove the dependency on content/.",
+      "range": {
+        "startLine": 51,
+        "startChar": 2,
+        "endLine": 51,
+        "endChar": 50
+      },
+      "revId": "393c112aa1552bffc09276c14f202206f64c00c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c234a38f_df8fd765",
+        "filename": "components/arc/timer/arc_timer_bridge_unittest.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-12-19T11:57:57Z",
+      "side": 1,
+      "message": "This was suggested by @yusukes and seems to be the ARC++ test way",
+      "parentUuid": "3bd88f72_4315c8ce",
       "range": {
         "startLine": 51,
         "startChar": 2,
@@ -628,6 +1246,30 @@
       "writtenOn": "2017-12-18T22:09:48Z",
       "side": 1,
       "message": "FromSeconds(5)\n\nBut do you really want to wait 5 seconds in a test?",
+      "range": {
+        "startLine": 72,
+        "startChar": 23,
+        "endLine": 72,
+        "endChar": 80
+      },
+      "revId": "393c112aa1552bffc09276c14f202206f64c00c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63f07d8c_65d7b7b9",
+        "filename": "components/arc/timer/arc_timer_bridge_unittest.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-12-19T11:57:57Z",
+      "side": 1,
+      "message": "Reduced to 2.",
+      "parentUuid": "cbd48ee3_73148b9e",
       "range": {
         "startLine": 72,
         "startChar": 23,
