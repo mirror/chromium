@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8c0daf02_ae48900a",
+        "filename": "ash/login/ui/lock_window_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-12-19T18:32:24Z",
+      "side": 1,
+      "message": "nit: If removing LoadUser please just fetch the login_controller_ instance here instead of caching it.",
+      "revId": "ccc0f7ab97ab2f7034242f1d442d10f769752c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6845ce94_4e95cff7",
+        "filename": "ash/login/ui/lock_window_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-12-19T18:32:24Z",
+      "side": 1,
+      "message": "EXPECT_EQ?",
+      "revId": "ccc0f7ab97ab2f7034242f1d442d10f769752c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dedf3237_88b56711",
+        "filename": "ash/login/ui/lock_window_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-12-19T18:32:24Z",
+      "side": 1,
+      "message": "Introduce TestApi class, ie,\n\n  return ash::LockScreen::TestApi(ash::LockScreen::Get()).contents_view();",
+      "revId": "ccc0f7ab97ab2f7034242f1d442d10f769752c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcb1426e_fbbec146",
+        "filename": "ash/login/ui/lock_window_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-12-19T18:32:24Z",
+      "side": 1,
+      "message": "What about just using LoginTestBase::SetUserCount?",
+      "revId": "ccc0f7ab97ab2f7034242f1d442d10f769752c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38a253cf_14aa76a0",
+        "filename": "ash/login/ui/lock_window_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-12-19T18:32:24Z",
+      "side": 1,
+      "message": "Move this assert into GetLockContentsView()",
+      "revId": "ccc0f7ab97ab2f7034242f1d442d10f769752c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d7eb04d_b4b694ac",
+        "filename": "ash/login/ui/login_test_base.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-12-19T18:32:24Z",
+      "side": 1,
+      "message": ":)",
+      "revId": "ccc0f7ab97ab2f7034242f1d442d10f769752c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
