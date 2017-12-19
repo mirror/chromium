@@ -141,6 +141,24 @@
     },
     {
       "key": {
+        "uuid": "7bcd5e0b_1eb7840f",
+        "filename": "services/audio/public/cpp/audio_system_to_mojo_adapter.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-12-19T18:53:56Z",
+      "side": 1,
+      "message": "Sorry I was unclear.\n\nSo what I do in audio_system_to_mojo_adapter_test.cc to simulate \"service shutdown\" even is I call (probably incorrectly?)\nsystem_info_binding_-\u003eClose();\n\nIf I use OverrideBinderForTesting instead of using a binding callback:\nAfter binding closed the pipe and the client code attempts to bind again, Connector::BindConnectorIfNecessary() does not perform binding any more: it does an early return at [1] instead because (!unbound_state_.is_valid()) resolves to true.\n\nThe comment there says:\n      // It\u0027s possible to get here when the link to the service manager has been\n      // severed (and so the connector pipe has been closed) but the app has\n      // chosen not to quit.\n\nSo after binding is closed the connector becomes unusable.\nAm I doing something wrong?\n\n[1] https://cs.chromium.org/chromium/src/services/service_manager/public/cpp/connector.cc?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d175",
+      "parentUuid": "73d9e485_3a598a33",
+      "revId": "e4539833286b4f75212c3691f0bc690fe820954a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7718df27_4571d357",
         "filename": "services/audio/public/interfaces/system_info.mojom",
         "patchSetId": 17
