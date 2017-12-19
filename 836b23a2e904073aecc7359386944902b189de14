@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1e76789f_d41f604f",
+        "filename": "media/audio/audio_system.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-12-19T13:44:27Z",
+      "side": 1,
+      "message": "In case an optional matched device id is not empty, is it guaranteed to be a non-empty std::string? \nIf so, could you please add a comment on that and DCHECK that everywhere?",
+      "revId": "836b23a2e904073aecc7359386944902b189de14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "667e69fd_a854d747",
+        "filename": "media/audio/audio_system_test_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-12-19T13:44:27Z",
+      "side": 1,
+      "message": "If AudioSystem contract implies that we never receive an empty std::string (see above), please add\nDCHECK(!expected_associated_device_id.is_empty()) \u003c\u003c \"AudioSystem never returns an empty device id.\";",
+      "revId": "836b23a2e904073aecc7359386944902b189de14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03cf9bb7_4e85fc86",
+        "filename": "media/audio/audio_system_test_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-12-19T13:44:27Z",
+      "side": 1,
+      "message": "Ditto:\nDCHECK(!expected_id.is_empty()) \u003c\u003c \"AudioSystem never returns an empty device id.\";",
+      "revId": "836b23a2e904073aecc7359386944902b189de14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
