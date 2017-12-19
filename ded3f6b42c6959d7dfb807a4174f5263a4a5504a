@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0db6c7bf_ca6ec06f",
+        "filename": "ui/shell_dialogs/select_file_dialog_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 516,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-12-19T22:06:33Z",
+      "side": 1,
+      "message": "Are we guaranteed that BFFM_INITIALIZED happens before any BFFM_SELCHANGED events? If not, maybe we should initialize |initialized_tickcount| to 0 and not enable on line 539 if |initialized_tickcount| is still 0.",
+      "range": {
+        "startLine": 516,
+        "startChar": 17,
+        "endLine": 516,
+        "endChar": 33
+      },
+      "revId": "ded3f6b42c6959d7dfb807a4174f5263a4a5504a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afc83165_52f68869",
+        "filename": "ui/shell_dialogs/select_file_dialog_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 535,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-12-19T22:06:33Z",
+      "side": 1,
+      "message": "nit: \"at least one second\"? (to be clear that it gets enabled after the selection is changed, not automatically after 1 second passes)",
+      "range": {
+        "startLine": 535,
+        "startChar": 32,
+        "endLine": 535,
+        "endChar": 33
+      },
+      "revId": "ded3f6b42c6959d7dfb807a4174f5263a4a5504a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7b767ae_8d01c1e3",
+        "filename": "ui/shell_dialogs/select_file_dialog_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 542,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-12-19T22:06:33Z",
+      "side": 1,
+      "message": "optional nit: I think I got TRUE to compile here? IMO this would be more readable:\nSendMessage(window, BFFM_ENABLEOK, 0, enable ? TRUE : FALSE);",
+      "range": {
+        "startLine": 542,
+        "startChar": 42,
+        "endLine": 542,
+        "endChar": 77
+      },
+      "revId": "ded3f6b42c6959d7dfb807a4174f5263a4a5504a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
