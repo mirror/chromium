@@ -1226,7 +1226,7 @@ TEST_F(OfflinePageModelTaskifiedTest, MAYBE_StartUp_ConsistencyCheckExecuted) {
 
   // Rebuild the model in order to trigger consistency check.
   BuildModel();
-  task_runner()->FastForwardBy(base::TimeDelta::FromSeconds(20));
+  task_runner()->FastForwardBy(base::TimeDelta::FromSeconds(30));
 
   EXPECT_EQ(1LL, store_test_util()->GetPageCount());
   EXPECT_EQ(0UL, test_utils::GetFileCountInDirectory(temporary_dir_path()));

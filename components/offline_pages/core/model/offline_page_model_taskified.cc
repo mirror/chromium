@@ -26,6 +26,7 @@
 #include "components/offline_pages/core/model/offline_page_model_utils.h"
 #include "components/offline_pages/core/model/persistent_pages_consistency_check_task.h"
 #include "components/offline_pages/core/model/temporary_pages_consistency_check_task.h"
+#include "components/offline_pages/core/offline_page_feature.h"
 #include "components/offline_pages/core/offline_page_metadata_store.h"
 #include "components/offline_pages/core/offline_page_metadata_store_sql.h"
 #include "components/offline_pages/core/offline_page_model.h"
@@ -38,7 +39,15 @@ using ClearStorageResult = ClearStorageTask::ClearStorageResult;
 
 namespace {
 
-const base::TimeDelta kInitializingTaskDelay = base::TimeDelta::FromSeconds(20);
+// Initial delay after which a list of items for upgrade will be generated.
+const base::TimeDelta kInitialUpgradeSelectionDelay =
+    base::TimeDelta::FromSeconds(45);
+
+// Initial delay of other tasks triggered at the startup.
+// TODO(fgorski): We need to measure the cost of opening and closing the DB,
+// before we split |kInitializingTaskDelay| and |kInitialUpgradeSelectionDelay|
+// further apart, than 20 seconds.
+const base::TimeDelta kInitializingTaskDelay = base::TimeDelta::FromSeconds(30);
 // The time that the storage cleanup will be triggered again since the last
 // one.
 const base::TimeDelta kClearStorageInterval = base::TimeDelta::FromMinutes(30);
@@ -126,6 +135,8 @@ OfflinePageModelTaskified::OfflinePageModelTaskified(
   PostClearLegacyTemporaryPagesTask();
   PostClearCachedPagesTask(true /* is_initializing */);
   PostCheckMetadataConsistencyTask(true /* is_initializing */);
+  // TODO(fgorski): Call from here, when upgrade task is available:
+  // PostSelectItemsMarkedForUpgrade();
 }
 
 OfflinePageModelTaskified::~OfflinePageModelTaskified() {}
@@ -478,6 +489,36 @@ void OfflinePageModelTaskified::CheckPersistentPagesConsistency() {
       store_.get(), policy_controller_.get(),
       archive_manager_->GetPersistentArchivesDir());
   task_queue_.AddTask(std::move(task));
+}
+
+void OfflinePageModelTaskified::PostSelectItemsMarkedForUpgrade() {
+  // TODO(fgorski): Make storage permission check. Here or later?
+  // TODO(fgorski): Check disk space here.
+  if (!IsOfflinePagesSharingEnabled())
+    return;
+
+  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+      FROM_HERE,
+      base::BindRepeating(
+          &OfflinePageModelTaskified::SelectItemsMarkedForUpgrade,
+          weak_ptr_factory_.GetWeakPtr()),
+      kInitialUpgradeSelectionDelay);
+}
+
+void OfflinePageModelTaskified::SelectItemsMarkedForUpgrade() {
+  // TODO(fgorski): Add legacy Persistent path in archive manager to know which
+  // files still need upgrade.
+  auto task = GetPagesTask::CreateTaskSelectingItemsMarkedForUpgrade(
+      store_.get(),
+      base::BindRepeating(
+          &OfflinePageModelTaskified::OnSelectItemsMarkedForUpgradeDone,
+          weak_ptr_factory_.GetWeakPtr()));
+  task_queue_.AddTask(std::move(task));
+}
+
+void OfflinePageModelTaskified::OnSelectItemsMarkedForUpgradeDone(
+    const MultipleOfflinePageItemResult& pages_for_upgrade) {
+  // TODO(fgorski): Save the list of ID to feed them into the upgrade task.
 }
 
 void OfflinePageModelTaskified::RemovePagesMatchingUrlAndNamespace(
