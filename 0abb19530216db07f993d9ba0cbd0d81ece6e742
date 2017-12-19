@@ -46,6 +46,30 @@
       "revId": "0abb19530216db07f993d9ba0cbd0d81ece6e742",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48e13e49_a4327989",
+        "filename": "media/base/video_frame_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-12-19T23:51:46Z",
+      "side": 0,
+      "message": "OIC, it\u0027s because this loop assumes a contiguous range of values. Hmm...The only other solution I can see would be to add something like this at the top of the loop:\n\n  if (i \u003d\u003d 25u) ++i;  // Skip deprecated value.\n\nUp to you, I don\u0027t feel strongly about either approach.",
+      "parentUuid": "3cadeecd_b2e80510",
+      "range": {
+        "startLine": 446,
+        "startChar": 4,
+        "endLine": 446,
+        "endChar": 76
+      },
+      "revId": "0abb19530216db07f993d9ba0cbd0d81ece6e742",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
