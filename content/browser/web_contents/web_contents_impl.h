@@ -353,7 +353,6 @@ class CONTENT_EXPORT WebContentsImpl : public WebContents,
   void OnAudioStateChanged(bool is_audible) override;
   base::TimeTicks GetLastActiveTime() const override;
   void SetLastActiveTime(base::TimeTicks last_active_time) override;
-  base::TimeTicks GetLastHiddenTime() const override;
   void WasShown() override;
   void WasHidden() override;
   bool IsVisible() const override;
