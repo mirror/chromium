@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1491e49c_795ffc5d",
+        "filename": "content/browser/storage_partition_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-19T01:56:18Z",
+      "side": 1,
+      "message": "Ah ok, we\u0027re not yet using mojom enum in this CL.",
+      "revId": "8e46f7fa579a8b4ca206f72374794b09d865c766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
