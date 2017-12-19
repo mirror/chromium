@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8bca9574_039d7db3",
+        "filename": "base/synchronization/waitable_event_watcher_mac.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-19T16:15:13Z",
+      "side": 1,
+      "message": "My understanding is that this DCHECK is misplaced, and it should be in StartWatching() (and StopWatching?) instead. This object can be created on one thread/sequence, then given to another one to use, which would call StartWatching. And the task runner needs to be running on that sequence?",
+      "revId": "6b89f25e2a421180f2cfdfea70c27b65b87c963a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
