@@ -392,7 +392,8 @@ bool PaintLayer::ScrollsWithRespectTo(const PaintLayer* other) const {
 }
 
 void PaintLayer::UpdateLayerPositionsAfterOverflowScroll() {
-  ClearClipRects();
+  if (!IsRootLayer() || !GetLayoutObject().GetFrame()->IsLocalRoot())
+    ClearClipRects();
   UpdateLayerPositionRecursive();
 }
 
@@ -2176,9 +2177,11 @@ PaintLayer* PaintLayer::HitTestLayer(
         PaintLayer::kDoNotUseGeometryMapper,
         kExcludeOverlayScrollbarSizeForHitTesting);
   } else {
-    CollectFragments(layer_fragments, root_layer, hit_test_rect,
-                     clip_rects_cache_slot, PaintLayer::kDoNotUseGeometryMapper,
-                     kExcludeOverlayScrollbarSizeForHitTesting);
+    CollectFragments(
+        layer_fragments, root_layer, hit_test_rect, clip_rects_cache_slot,
+        PaintLayer::kDoNotUseGeometryMapper,
+        kExcludeOverlayScrollbarSizeForHitTesting,
+        IsRootLayer() ? kIgnoreOverflowClip : kRespectOverflowClip);
   }
 
   if (scrollable_area_ && scrollable_area_->HitTestResizerInFragments(

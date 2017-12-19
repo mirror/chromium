@@ -87,7 +87,8 @@ class ClipRectsContext {
                 : kRespectOverflowClip) {}
 
   void SetIgnoreOverflowClip() {
-    DCHECK(!UsesCache() || cache_slot_ == kPaintingClipRects);
+    DCHECK(!UsesCache() || cache_slot_ == kPaintingClipRects ||
+           cache_slot_ == kRootRelativeClipRects);
     DCHECK(respect_overflow_clip == kRespectOverflowClip);
     if (UsesCache())
       cache_slot_ = kPaintingClipRectsIgnoringOverflowClip;
