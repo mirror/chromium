@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "7144f567_4b6c8910",
+        "filename": "chrome/browser/resources/md_extensions/code_section.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-19T18:49:28Z",
+      "side": 1,
+      "message": "@param, @return (here and elsewhere in this file).",
+      "revId": "d8057c5b32afd8d45c11a62ac9db99483318c345",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b528a7d8_44abc0de",
         "filename": "chrome/browser/resources/md_extensions/code_section.js",
         "patchSetId": 9
@@ -30,6 +47,46 @@
       "writtenOn": "2017-12-19T01:00:15Z",
       "side": 1,
       "message": "Suggest removing the \" - 1\".\n\nNot all coding standards require a trailing blank line. So \"foo\\nbar\" will show up as one line. Removing the -1 also means that \"foo\\nbar\\n\" will appear as three lines, but it is three lines (so that\u0027s a good thing).",
+      "revId": "d8057c5b32afd8d45c11a62ac9db99483318c345",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "185545fe_79040c30",
+        "filename": "chrome/browser/resources/md_extensions/code_section.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-19T18:49:28Z",
+      "side": 1,
+      "message": "Can me move all helper methods within this scope, such that they are not unnecessarily global?",
+      "revId": "d8057c5b32afd8d45c11a62ac9db99483318c345",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a009d362_7ba0d418",
+        "filename": "chrome/browser/resources/md_extensions/code_section.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-19T18:49:28Z",
+      "side": 1,
+      "message": "The equivalent I18nBehavior code to create parametrized localized strings does a bit more than just this, see https://cs.chromium.org/chromium/src/ui/webui/resources/js/i18n_behavior.js?l\u003d48.\n\nShould we use this.i18n() here, and move the string ID from C++ to the JS for this reason?",
+      "range": {
+        "startLine": 110,
+        "startChar": 37,
+        "endLine": 110,
+        "endChar": 39
+      },
       "revId": "d8057c5b32afd8d45c11a62ac9db99483318c345",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
