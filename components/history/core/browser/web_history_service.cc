@@ -114,7 +114,7 @@ class RequestImpl : public WebHistoryService::Request,
     oauth_scopes.insert(kHistoryOAuthScope);
 
     token_request_ = token_service_->StartRequest(
-        signin_manager_->GetAuthenticatedAccountId(), oauth_scopes, this);
+        "", oauth_scopes, this);
     is_pending_ = true;
   }
 
@@ -133,7 +133,7 @@ class RequestImpl : public WebHistoryService::Request,
       OAuth2TokenService::ScopeSet oauth_scopes;
       oauth_scopes.insert(kHistoryOAuthScope);
       token_service_->InvalidateAccessToken(
-          signin_manager_->GetAuthenticatedAccountId(), oauth_scopes,
+          "", oauth_scopes,
           access_token_);
 
       access_token_.clear();
