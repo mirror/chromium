@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0ba99bc8_959c339d",
+        "filename": "chrome/browser/ui/ash/launcher/launcher_context_menu_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-12-19T00:32:50Z",
+      "side": 1,
+      "message": "nit: style guide order is expected, actual",
+      "revId": "f99c79b66da4dd08ec6ab1825f1bd02e513a1d02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d9f84b6_ee7c2dd7",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 14
+      },
+      "lineNbr": 2162,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-12-19T00:32:50Z",
+      "side": 1,
+      "message": "nit: Perhaps \"Not recorded whenever the context menu is not for an app icon on the shelf.\"\nor something similar.  Right now it sounds like the phrase \"not including the body of the shelf\" somehow clarifies the meaning of the \"split by component\", not when the metric is recorded.",
+      "revId": "f99c79b66da4dd08ec6ab1825f1bd02e513a1d02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
