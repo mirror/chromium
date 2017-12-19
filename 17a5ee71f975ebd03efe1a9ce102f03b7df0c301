@@ -65,6 +65,30 @@
     },
     {
       "key": {
+        "uuid": "817a0268_819d8c55",
+        "filename": "services/network/public/interfaces/udp_socket.mojom",
+        "patchSetId": 28
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-12-19T16:26:35Z",
+      "side": 1,
+      "message": "Matt: The basic problem here from my perspective (which I only really became aware of in the conversation with Helen and Jana) is that the extensions UDP API pretty closely mimics the Posix socket API.  So if we try to improve the API in the type of ways you\u0027re talking about (which I have all sorts of urges to do as well) we\u0027re taking on the burden of converting from the Posix API at the extensions level to our new API and back, which seems to me to be adding more chances for semantic drift than is wise.  WDYT?",
+      "parentUuid": "5a24d4d2_cc8958ad",
+      "range": {
+        "startLine": 32,
+        "startChar": 21,
+        "endLine": 32,
+        "endChar": 31
+      },
+      "revId": "17a5ee71f975ebd03efe1a9ce102f03b7df0c301",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "59484fc0_aa7293ca",
         "filename": "services/network/public/interfaces/udp_socket.mojom",
         "patchSetId": 28
