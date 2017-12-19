@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9ffc5d63_7db450c3",
+        "filename": "third_party/WebKit/Source/core/dom/TreeScope.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1247388
+      },
+      "writtenOn": "2017-12-19T08:24:51Z",
+      "side": 1,
+      "message": "Since Retarget is changed to receive Element\u0026, I\u0027m saving this to a variable instead.",
+      "parentUuid": "8a1bdf70_eff0d18f",
+      "revId": "f8252dbb12700639f23cdcdc272b4495c7c5ffe1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "673cdfe3_2fd3fc42",
         "filename": "third_party/WebKit/Source/core/dom/TreeScope.cpp",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-19T06:27:13Z",
       "side": 1,
       "message": "How about using ToElementOrDie() here?\n\n(And ToElement() or ToElementOrDie() can take reference instead of pointer as well)",
+      "revId": "f8252dbb12700639f23cdcdc272b4495c7c5ffe1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4af92dfa_df0a5e0d",
+        "filename": "third_party/WebKit/Source/core/dom/TreeScope.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1247388
+      },
+      "writtenOn": "2017-12-19T08:24:51Z",
+      "side": 1,
+      "message": "In the previous version of the code, there is a null check that I removed so I\u0027m adding it back here. (so I\u0027m keeping toElement, although I haven\u0027t found a case to make the result null yet)",
+      "parentUuid": "673cdfe3_2fd3fc42",
       "revId": "f8252dbb12700639f23cdcdc272b4495c7c5ffe1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "39c07f4d_83602068",
+        "filename": "third_party/WebKit/Source/core/dom/TreeScope.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1247388
+      },
+      "writtenOn": "2017-12-19T08:24:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3152ec89_7099cd53",
+      "revId": "f8252dbb12700639f23cdcdc272b4495c7c5ffe1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ed0a2cf2_a0ba8f09",
         "filename": "third_party/WebKit/Source/core/dom/TreeScope.h",
         "patchSetId": 6
@@ -64,6 +118,24 @@
       "writtenOn": "2017-12-19T06:27:13Z",
       "side": 1,
       "message": "Why the argument cannot be |const Element\u0026|?",
+      "revId": "f8252dbb12700639f23cdcdc272b4495c7c5ffe1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca0c78cc_bdedacc0",
+        "filename": "third_party/WebKit/Source/core/dom/TreeScope.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1247388
+      },
+      "writtenOn": "2017-12-19T08:24:51Z",
+      "side": 1,
+      "message": "I changed it to Element\u0026, but can\u0027t add const because there are cases that might return \u0026target",
+      "parentUuid": "ed0a2cf2_a0ba8f09",
       "revId": "f8252dbb12700639f23cdcdc272b4495c7c5ffe1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
