@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "c564707a_0cfa1699",
+        "filename": "ash/shelf/shelf_widget.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1248360
+      },
+      "writtenOn": "2017-12-19T01:54:12Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "62eb0cee_83ce90d8",
+      "revId": "4bcff6eb09267e7ebb1229186a18bca62239f91d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2a83ed08_f14b7910",
         "filename": "ash/shelf/shelf_widget.cc",
         "patchSetId": 1
@@ -53,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "54e31e20_b74537be",
+        "filename": "ash/shelf/shelf_widget.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1248360
+      },
+      "writtenOn": "2017-12-19T01:54:12Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "2a83ed08_f14b7910",
+      "revId": "4bcff6eb09267e7ebb1229186a18bca62239f91d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "96e97485_a1be78f6",
         "filename": "ash/shelf/shelf_widget.cc",
         "patchSetId": 1
@@ -67,6 +103,24 @@
       "revId": "4bcff6eb09267e7ebb1229186a18bca62239f91d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62c6acc0_3f95d07e",
+        "filename": "ash/shelf/shelf_widget.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1248360
+      },
+      "writtenOn": "2017-12-19T01:54:12Z",
+      "side": 1,
+      "message": "Picked this option. It\u0027s a good idea to demonstrate that all ground is covered.",
+      "parentUuid": "96e97485_a1be78f6",
+      "revId": "4bcff6eb09267e7ebb1229186a18bca62239f91d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -174,6 +228,24 @@
     },
     {
       "key": {
+        "uuid": "d9b9f403_df17b8c2",
+        "filename": "ash/shelf/shelf_widget_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 473,
+      "author": {
+        "id": 1248360
+      },
+      "writtenOn": "2017-12-19T01:54:12Z",
+      "side": 1,
+      "message": "I refactored the tests to use flags instead of bools as advised by Jacob. It improves readability, so I removed the comments as well. \n\nTestVisibilitily(SessionState::LOGGED_IN_NOT_ACTIVE, kNone);\nTestVisibilitily(SessionState::ACTIVE, kShelf);\nTestVisibilitily(SessionState::LOCKED, kLoginShelf);\n  \nI think it should address the problem.",
+      "parentUuid": "c67b0206_ea828b3c",
+      "revId": "4bcff6eb09267e7ebb1229186a18bca62239f91d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "daecfd52_0f166b24",
         "filename": "ash/shelf/shelf_widget_unittest.cc",
         "patchSetId": 1
@@ -188,6 +260,24 @@
       "revId": "4bcff6eb09267e7ebb1229186a18bca62239f91d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c436f2d0_b2a2e820",
+        "filename": "ash/shelf/shelf_widget_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 1248360
+      },
+      "writtenOn": "2017-12-19T01:54:12Z",
+      "side": 1,
+      "message": "Intentionally to see that the visibility changes when login is shown.",
+      "parentUuid": "daecfd52_0f166b24",
+      "revId": "4bcff6eb09267e7ebb1229186a18bca62239f91d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -208,6 +298,24 @@
     },
     {
       "key": {
+        "uuid": "58598518_3dea59d6",
+        "filename": "ash/shelf/shelf_widget_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 494,
+      "author": {
+        "id": 1248360
+      },
+      "writtenOn": "2017-12-19T01:54:12Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "60a4ff78_bda7b634",
+      "revId": "4bcff6eb09267e7ebb1229186a18bca62239f91d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b4209050_5a9c18e1",
         "filename": "ash/shelf/shelf_widget_unittest.cc",
         "patchSetId": 1
@@ -225,6 +333,24 @@
     },
     {
       "key": {
+        "uuid": "097468e2_1a93b5e2",
+        "filename": "ash/shelf/shelf_widget_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 503,
+      "author": {
+        "id": 1248360
+      },
+      "writtenOn": "2017-12-19T01:54:12Z",
+      "side": 1,
+      "message": "Thanks for pointing that out.",
+      "parentUuid": "b4209050_5a9c18e1",
+      "revId": "4bcff6eb09267e7ebb1229186a18bca62239f91d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "42fed749_972d0770",
         "filename": "ash/shelf/shelf_widget_unittest.cc",
         "patchSetId": 1
@@ -239,6 +365,24 @@
       "revId": "4bcff6eb09267e7ebb1229186a18bca62239f91d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3824d95_dfce013a",
+        "filename": "ash/shelf/shelf_widget_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 512,
+      "author": {
+        "id": 1248360
+      },
+      "writtenOn": "2017-12-19T01:54:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "42fed749_972d0770",
+      "revId": "4bcff6eb09267e7ebb1229186a18bca62239f91d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
