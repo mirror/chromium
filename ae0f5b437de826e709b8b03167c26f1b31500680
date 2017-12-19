@@ -49,6 +49,236 @@
     },
     {
       "key": {
+        "uuid": "9a815cb0_f3dc3116",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/StartupPageLoadMetricsObserver.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-12-19T13:31:33Z",
+      "side": 1,
+      "message": "nit: boolean class members are initialized to false by default, so it is considered a better style to avoid stating the unnecessary. It is also more consistent this way:\n\nshell\u003e git grep \u0027private boolean.*\u003d.*true\u0027 -- \u0027*.java\u0027 | wc -l\n91\n\nshell\u003e git grep \u0027private boolean.*\u003d.*false\u0027 -- \u0027*.java\u0027 | wc -l\n89\n\nshell\u003e git grep \u0027private boolean\u0027 -- \u0027*.java\u0027 | wc -l\n2260",
+      "range": {
+        "startLine": 17,
+        "startChar": 4,
+        "endLine": 17,
+        "endChar": 51
+      },
+      "revId": "ae0f5b437de826e709b8b03167c26f1b31500680",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe2b9afc_130f0356",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/StartupPageLoadMetricsObserver.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-12-19T13:31:33Z",
+      "side": 1,
+      "message": "can you plz remind me in shich cases the webcontents changes with onnewnavigation on the observer? is it for OOPIF?",
+      "range": {
+        "startLine": 25,
+        "startChar": 43,
+        "endLine": 25,
+        "endChar": 76
+      },
+      "revId": "ae0f5b437de826e709b8b03167c26f1b31500680",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac0cf9a2_83171c81",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/UmaUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-12-19T13:31:33Z",
+      "side": 1,
+      "message": "nit: // All these values originate from SystemClock.uptimeMillis().\n\nBut hey, not the boolean one, right?",
+      "range": {
+        "startLine": 22,
+        "startChar": 24,
+        "endLine": 22,
+        "endChar": 41
+      },
+      "revId": "ae0f5b437de826e709b8b03167c26f1b31500680",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e646efe_02495604",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/UmaUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-12-19T13:31:33Z",
+      "side": 1,
+      "message": "By \"the application start\" did you mean |sApplicationStartTimeMs|? If so, I think it would be more helpful to list this variable explicitly.",
+      "range": {
+        "startLine": 28,
+        "startChar": 37,
+        "endLine": 28,
+        "endChar": 58
+      },
+      "revId": "ae0f5b437de826e709b8b03167c26f1b31500680",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83eaa181_a427fdf1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/UmaUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-12-19T13:31:33Z",
+      "side": 1,
+      "message": "Since this also tweaks the ApplicationStart, let\u0027s rephrase:\n\n\"Registers the fact that a navigation has finished. Based on this fact, may discard recording histograms later.\"\n\nMaybe also rename s/recordFinish/registerFinish/ ?",
+      "range": {
+        "startLine": 65,
+        "startChar": 7,
+        "endLine": 65,
+        "endChar": 54
+      },
+      "revId": "ae0f5b437de826e709b8b03167c26f1b31500680",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d70baa00_a3e2b275",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/UmaUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-12-19T13:31:33Z",
+      "side": 1,
+      "message": "this early return makes the reader have to follow the relation of sFirstCommitTimeMs and sRunningApplicationStart, which I think may make it harder to evolve this code. I am wondering whether it would be simpler to have sFirstCommitTimeMs having a less global effect, like:\n\nif (isTrackedPage \u0026\u0026 isRunningApplicationStart()) {\n    if (sFirstCommitTimeMs \u003d\u003d 0)\n        sFirstCommitTimeMs \u003d SystemClock.uptimeMillis() - sApplicationStartTimeMs;\n    recordHistogram.recordLongTimesHistogram100(...)\n}\n\nthis does not save us from side effects in recordFirstContentfulPaint(), but still looks easier to follow for me.\n\nUp to you.",
+      "range": {
+        "startLine": 68,
+        "startChar": 8,
+        "endLine": 68,
+        "endChar": 44
+      },
+      "revId": "ae0f5b437de826e709b8b03167c26f1b31500680",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb734505_5eb8f1c9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/UmaUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-12-19T13:31:33Z",
+      "side": 1,
+      "message": "now when the condition fits into one line, let\u0027s have it inlined into the if()? No extra local variable, no tracking of its lifetime - simple :)",
+      "range": {
+        "startLine": 70,
+        "startChar": 16,
+        "endLine": 70,
+        "endChar": 37
+      },
+      "revId": "ae0f5b437de826e709b8b03167c26f1b31500680",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef3e525d_fed9835f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/UmaUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-12-19T13:31:33Z",
+      "side": 1,
+      "message": "nit: I think it would be clearer to setRunningApplicationStart(false) as the first thing this function does. It is more work than what it is currently, but the amount of work is tiny, so I lean towards having more clarity.\n\nthis is a nit, up to you",
+      "range": {
+        "startLine": 77,
+        "startChar": 8,
+        "endLine": 77,
+        "endChar": 42
+      },
+      "revId": "ae0f5b437de826e709b8b03167c26f1b31500680",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9c067a7_290074eb",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/UmaUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-12-19T13:31:33Z",
+      "side": 1,
+      "message": "no need to create an extra local",
+      "range": {
+        "startLine": 90,
+        "startChar": 8,
+        "endLine": 90,
+        "endChar": 35
+      },
+      "revId": "ae0f5b437de826e709b8b03167c26f1b31500680",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83b17828_6b099985",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/Tab.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1827,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-12-19T13:31:33Z",
+      "side": 1,
+      "message": "Just a note for the future, not asking to do anything in this change.\n\nIt seems cleaner to always observe and have one central place that has all the observations and decides whether record metrics based on those. This way, for example, we would keep the notion of application start local to that central place.\n\nSince my review is too late (sorry!), let\u0027s have it as is now and think about how to consolidate the knowledge about the startup events later.",
+      "range": {
+        "startLine": 1827,
+        "startChar": 12,
+        "endLine": 1827,
+        "endChar": 55
+      },
+      "revId": "ae0f5b437de826e709b8b03167c26f1b31500680",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2b9674b1_36279664",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/metrics/PageLoadMetricsTest.java",
         "patchSetId": 3

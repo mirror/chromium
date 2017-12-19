@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a68ebbf7_df11bbc5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/keyboard/GvrKeyboardLoaderClient.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-12-19T13:31:33Z",
+      "side": 0,
+      "message": "what is the context of this change? was there a change in global lint settings? /me curious\n\nI usually just send such small things as separate commits, this way they take less time to land and worry less reviewers :)\n\nThat being said, I\u0027m totally OK having this change here and now, no need to remove it.",
+      "range": {
+        "startLine": 37,
+        "startChar": 4,
+        "endLine": 37,
+        "endChar": 36
+      },
+      "revId": "1c811db2dcd39a8e353ce4aae7336ff82548a9a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
