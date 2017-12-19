@@ -1,0 +1,191 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "02f09aa0_a379b02b",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapAllocator.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-12-19T15:14:21Z",
+      "side": 1,
+      "message": "Save ThreadState::Current() to a local variable.",
+      "revId": "5c95eb27ef490c6cacc0cd6b194a69fd58543fc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59f13ffe_8595e070",
+        "filename": "third_party/WebKit/Source/platform/heap/Member.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 594,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-12-19T15:14:21Z",
+      "side": 1,
+      "message": "tmp -\u003e object",
+      "revId": "5c95eb27ef490c6cacc0cd6b194a69fd58543fc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95d06ba7_fc02ae87",
+        "filename": "third_party/WebKit/Source/platform/wtf/ConstructTraits.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-12-19T15:14:21Z",
+      "side": 1,
+      "message": "I think you can remove the Allocator parameter by adding ConstructElement and NewInitializedElements to HeapAllocator and ParitionAllocator.",
+      "revId": "5c95eb27ef490c6cacc0cd6b194a69fd58543fc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4acc3eb_95985d18",
+        "filename": "third_party/WebKit/Source/platform/wtf/ConstructTraits.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-12-19T15:14:21Z",
+      "side": 1,
+      "message": "Add a very good comment about what ConstructTraits is.",
+      "revId": "5c95eb27ef490c6cacc0cd6b194a69fd58543fc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff76b00c_e0215394",
+        "filename": "third_party/WebKit/Source/platform/wtf/ConstructTraits.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-12-19T15:14:21Z",
+      "side": 1,
+      "message": "Once we remove the Allocator parameter, I think that this specialization will be gone.",
+      "revId": "5c95eb27ef490c6cacc0cd6b194a69fd58543fc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4a0f092_6665fa6d",
+        "filename": "third_party/WebKit/Source/platform/wtf/ConstructTraits.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-12-19T15:14:21Z",
+      "side": 1,
+      "message": "tmp \u003d\u003e object",
+      "revId": "5c95eb27ef490c6cacc0cd6b194a69fd58543fc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4fc17bb_d05df8ae",
+        "filename": "third_party/WebKit/Source/platform/wtf/ConstructTraits.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-12-19T15:14:21Z",
+      "side": 1,
+      "message": "NotifyNewObject \u003d\u003e ConstructElement ?",
+      "revId": "5c95eb27ef490c6cacc0cd6b194a69fd58543fc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a9f2e88_93b9abfe",
+        "filename": "third_party/WebKit/Source/platform/wtf/ConstructTraits.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-12-19T15:14:21Z",
+      "side": 1,
+      "message": "NewInitializedElements \u003d\u003e ConstructElements ?",
+      "revId": "5c95eb27ef490c6cacc0cd6b194a69fd58543fc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86f4b17a_30ba1405",
+        "filename": "third_party/WebKit/Source/platform/wtf/ConstructTraits.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-12-19T15:14:21Z",
+      "side": 1,
+      "message": "NotifyNewObjects \u003d\u003e ConstructElements ?",
+      "revId": "5c95eb27ef490c6cacc0cd6b194a69fd58543fc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a151e5fb_4fa2a170",
+        "filename": "third_party/WebKit/Source/platform/wtf/Deque.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 501,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-12-19T15:14:21Z",
+      "side": 1,
+      "message": "Don\u0027t you need to insert a write-barrier here?\n\nI\u0027m fine with addressing Deque in a follow-up.",
+      "revId": "5c95eb27ef490c6cacc0cd6b194a69fd58543fc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db6a4069_100712d8",
+        "filename": "third_party/WebKit/Source/platform/wtf/Vector.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-12-19T15:14:21Z",
+      "side": 1,
+      "message": "You could use NewInitializedElements outside the while loop.\n\nThe same comment for other loops in this file.",
+      "revId": "5c95eb27ef490c6cacc0cd6b194a69fd58543fc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
