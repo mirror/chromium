@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c529d00a_939c4fba",
+        "filename": "chrome/browser/chromeos/smb_client/smb_file_system.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1170114
+      },
+      "writtenOn": "2017-12-19T15:12:16Z",
+      "side": 1,
+      "message": "Create a specific bug for this item and reference it here.",
+      "revId": "3965d3ea17bf22577ed37ae5089d42e918d7b674",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fd0ffa6_136e6532",
+        "filename": "chrome/browser/chromeos/smb_client/smb_file_system.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1170114
+      },
+      "writtenOn": "2017-12-19T15:12:16Z",
+      "side": 1,
+      "message": "Remove this, and put the function in the anonymous namespace in the .cc",
+      "revId": "3965d3ea17bf22577ed37ae5089d42e918d7b674",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
