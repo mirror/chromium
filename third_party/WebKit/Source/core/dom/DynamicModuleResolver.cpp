@@ -17,7 +17,11 @@ namespace blink {
 
 namespace {
 
-class DynamicImportTreeClient final : public ModuleTreeClient {
+class DynamicImportTreeClient final
+    : public GarbageCollectedFinalized<DynamicImportTreeClient>,
+      public ModuleTreeClient {
+  USING_GARBAGE_COLLECTED_MIXIN(DynamicImportTreeClient);
+
  public:
   static DynamicImportTreeClient* Create(
       const KURL& url,

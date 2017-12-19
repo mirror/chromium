@@ -135,6 +135,16 @@ void WorkerThread::EvaluateClassicScript(
                           WTF::Passed(std::move(cached_meta_data)), stack_id));
 }
 
+void WorkerThread::ImportModuleScript(
+    const KURL& script_url,
+    network::mojom::FetchCredentialsMode credentials_mode) {
+  GetTaskRunner(TaskType::kUnthrottled)
+      ->PostTask(FROM_HERE, CrossThreadBind(
+                                &WorkerThread::ImportModuleScriptOnWorkerThread,
+                                CrossThreadUnretained(this), script_url,
+                                credentials_mode));
+}
+
 void WorkerThread::Terminate() {
   DCHECK(IsMainThread());
 
@@ -452,6 +462,16 @@ void WorkerThread::EvaluateClassicScriptOnWorkerThread(
   GlobalScope()->EvaluateClassicScript(script_url, std::move(source_code),
                                        std::move(cached_meta_data));
   debugger->ExternalAsyncTaskFinished(stack_id);
+}
+
+void WorkerThread::ImportModuleScriptOnWorkerThread(
+    const KURL& script_url,
+    network::mojom::FetchCredentialsMode credentials_mode) {
+  // Worklets have a different path to import module scripts.
+  // TODO(nhiroki): Consider excluding module import code path from WorkerThread
+  // like Worklets.
+  ToWorkerGlobalScope(GlobalScope())
+      ->ImportModuleScript(script_url, credentials_mode);
 }
 
 void WorkerThread::PrepareForShutdownOnWorkerThread() {

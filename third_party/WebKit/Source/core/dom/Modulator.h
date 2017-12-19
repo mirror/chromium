@@ -48,9 +48,7 @@ class CORE_EXPORT SingleModuleClient
 
 // A ModuleTreeClient is notified when a module script and its whole descendent
 // tree load is complete.
-class CORE_EXPORT ModuleTreeClient
-    : public GarbageCollectedFinalized<ModuleTreeClient>,
-      public TraceWrapperBase {
+class CORE_EXPORT ModuleTreeClient : public GarbageCollectedMixin {
  public:
   virtual ~ModuleTreeClient() = default;
   virtual void Trace(blink::Visitor* visitor) {}
