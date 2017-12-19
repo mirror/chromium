@@ -4,11 +4,13 @@
 
 #include "modules/xr/XRWebGLLayer.h"
 
+#include "core/imagebitmap/ImageBitmap.h"
 #include "modules/webgl/WebGL2RenderingContext.h"
 #include "modules/webgl/WebGLFramebuffer.h"
 #include "modules/webgl/WebGLRenderingContext.h"
 #include "modules/xr/XRDevice.h"
 #include "modules/xr/XRFrameProvider.h"
+#include "modules/xr/XRPresentationContext.h"
 #include "modules/xr/XRSession.h"
 #include "modules/xr/XRView.h"
 #include "modules/xr/XRViewport.h"
@@ -73,13 +75,17 @@ XRWebGLLayer* XRWebGLLayer::Create(
     return nullptr;
   }
 
-  return new XRWebGLLayer(session, drawing_buffer);
+  return new XRWebGLLayer(session, drawing_buffer, framebuffer_scale);
 }
 
 XRWebGLLayer::XRWebGLLayer(XRSession* session,
-                           XRWebGLDrawingBuffer* drawing_buffer)
-    : XRLayer(session, kXRWebGLLayerType), drawing_buffer_(drawing_buffer) {
+                           XRWebGLDrawingBuffer* drawing_buffer,
+                           double framebuffer_scale)
+    : XRLayer(session, kXRWebGLLayerType),
+      drawing_buffer_(drawing_buffer),
+      framebuffer_scale_(framebuffer_scale) {
   DCHECK(drawing_buffer);
+  UpdateViewports();
 }
 
 void XRWebGLLayer::getXRWebGLRenderingContext(
@@ -95,10 +101,17 @@ void XRWebGLLayer::getXRWebGLRenderingContext(
 }
 
 void XRWebGLLayer::requestViewportScaling(double scale_factor) {
-  // Clamp the developer-requested viewport size to ensure it's not too
-  // small to see or larger than the framebuffer.
-  scale_factor =
-      ClampToRange(scale_factor, kViewportMinScale, kViewportMaxScale);
+  if (!session()->exclusive()) {
+    // TODO(bajones): For the moment we're just going to ignore viewport changes
+    // in non-exclusive mode. This is legal, but probably not what developers
+    // would like to see. Look into making viewport scale apply properly.
+    scale_factor = 1.0;
+  } else {
+    // Clamp the developer-requested viewport size to ensure it's not too
+    // small to see or larger than the framebuffer.
+    scale_factor =
+        ClampToRange(scale_factor, kViewportMinScale, kViewportMaxScale);
+  }
 
   if (viewport_scale_ != scale_factor) {
     viewport_scale_ = scale_factor;
@@ -120,6 +133,8 @@ void XRWebGLLayer::UpdateViewports() {
   long framebuffer_width = framebufferWidth();
   long framebuffer_height = framebufferHeight();
 
+  viewports_dirty_ = false;
+
   if (session()->exclusive()) {
     left_viewport_ =
         new XRViewport(0, 0, framebuffer_width * 0.5 * viewport_scale_,
@@ -128,20 +143,40 @@ void XRWebGLLayer::UpdateViewports() {
         new XRViewport(framebuffer_width * 0.5 * viewport_scale_, 0,
                        framebuffer_width * 0.5 * viewport_scale_,
                        framebuffer_height * viewport_scale_);
+
+    session()->device()->frameProvider()->UpdateWebGLLayerViewports(this);
   } else {
     left_viewport_ = new XRViewport(0, 0, framebuffer_width * viewport_scale_,
                                     framebuffer_height * viewport_scale_);
   }
-
-  viewports_dirty_ = false;
 }
 
 void XRWebGLLayer::OnFrameStart() {
-  drawing_buffer_->MarkFramebufferComplete(true);
+  drawing_buffer_->Activate();
 }
 
 void XRWebGLLayer::OnFrameEnd() {
-  drawing_buffer_->MarkFramebufferComplete(false);
+  // Exit early if Finish indicates the framebuffer has not changed.
+  if (!drawing_buffer_->Finish())
+    return;
+
+  // Submit the frame to the XR compositor.
+  if (session()->exclusive()) {
+    session()->device()->frameProvider()->SubmitFrame(drawing_buffer_);
+  } else if (session()->outputContext()) {
+    ImageBitmap* image_bitmap =
+        ImageBitmap::Create(drawing_buffer_->TransferToStaticBitmapImage());
+    session()->outputContext()->transferFromImageBitmap(image_bitmap);
+  }
+}
+
+void XRWebGLLayer::OnResize() {
+  DoubleSize framebuffers_size = session()->IdealFramebufferSize();
+
+  IntSize desired_size(framebuffers_size.Width() * framebuffer_scale_,
+                       framebuffers_size.Height() * framebuffer_scale_);
+  drawing_buffer_->Resize(desired_size);
+  viewports_dirty_ = true;
 }
 
 void XRWebGLLayer::Trace(blink::Visitor* visitor) {

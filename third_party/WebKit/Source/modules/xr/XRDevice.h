@@ -6,6 +6,7 @@
 #define XRDevice_h
 
 #include "bindings/core/v8/ScriptPromise.h"
+#include "bindings/modules/v8/webgl_rendering_context_or_webgl2_rendering_context.h"
 #include "core/dom/events/EventTarget.h"
 #include "device/vr/vr_service.mojom-blink.h"
 #include "modules/xr/XRSessionCreationOptions.h"
@@ -31,12 +32,15 @@ class XRDevice final : public EventTargetWithInlineData,
            device::mojom::blink::VRDisplayInfoPtr);
   XR* xr() const { return xr_; }
 
-  const String& deviceName() const { return device_name_; }
-  bool isExternal() const { return is_external_; }
+  bool external() const { return external_; }
 
   ScriptPromise supportsSession(ScriptState*,
                                 const XRSessionCreationOptions&) const;
   ScriptPromise requestSession(ScriptState*, const XRSessionCreationOptions&);
+
+  ScriptPromise ensureContextCompatibility(
+      ScriptState*,
+      const WebGLRenderingContextOrWebGL2RenderingContext&) const;
 
   // EventTarget overrides.
   ExecutionContext* GetExecutionContext() const override;
@@ -75,8 +79,7 @@ class XRDevice final : public EventTargetWithInlineData,
 
   Member<XR> xr_;
   Member<XRFrameProvider> frame_provider_;
-  String device_name_;
-  bool is_external_;
+  bool external_;
   bool supports_exclusive_;
 
   device::mojom::blink::VRMagicWindowProviderPtr magic_window_provider_;
