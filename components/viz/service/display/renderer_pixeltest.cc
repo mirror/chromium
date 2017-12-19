@@ -313,12 +313,8 @@ void CreateTestYUVVideoDrawQuad_FromVideoFrame(
                                tex_coord_rect.height() * uv_tex_size.height());
 
   auto* yuv_quad = render_pass->CreateAndAppendDrawQuad<YUVVideoDrawQuad>();
-  uint32_t bits_per_channel = 8;
-  if (video_frame->format() == media::PIXEL_FORMAT_YUV420P10 ||
-      video_frame->format() == media::PIXEL_FORMAT_YUV422P10 ||
-      video_frame->format() == media::PIXEL_FORMAT_YUV444P10) {
-    bits_per_channel = 10;
-  }
+  uint32_t bits_per_channel = video_frame->bit_depth();
+  DVLOG(1) << bits_per_channel;
 
   ResourceFormat yuv_highbit_resource_format =
       resource_provider->YuvResourceFormat(bits_per_channel);
@@ -387,26 +383,10 @@ void CreateTestY16TextureDrawQuad_FromVideoFrame(
 // Upshift video frame to 10 bit.
 scoped_refptr<media::VideoFrame> CreateHighbitVideoFrame(
     media::VideoFrame* video_frame) {
-  media::VideoPixelFormat format;
-  switch (video_frame->format()) {
-    case media::PIXEL_FORMAT_I420:
-    case media::PIXEL_FORMAT_YV12:
-      format = media::PIXEL_FORMAT_YUV420P10;
-      break;
-    case media::PIXEL_FORMAT_I422:
-      format = media::PIXEL_FORMAT_YUV422P10;
-      break;
-    case media::PIXEL_FORMAT_YV24:
-      format = media::PIXEL_FORMAT_YUV444P10;
-      break;
-
-    default:
-      NOTREACHED();
-      return nullptr;
-  }
   scoped_refptr<media::VideoFrame> ret = media::VideoFrame::CreateFrame(
-      format, video_frame->coded_size(), video_frame->visible_rect(),
-      video_frame->natural_size(), video_frame->timestamp());
+      video_frame->format(), video_frame->coded_size(),
+      video_frame->visible_rect(), video_frame->natural_size(),
+      video_frame->timestamp(), 10 /* bit_depth */);
 
   // Copy all metadata.
   ret->metadata()->MergeMetadataFrom(video_frame->metadata());
@@ -434,7 +414,7 @@ void CreateTestYUVVideoDrawQuad_Striped(
     media::VideoPixelFormat format,
     media::ColorSpace color_space,
     bool is_transparent,
-    bool highbit,
+    bool high_bit_depth,
     const gfx::RectF& tex_coord_rect,
     RenderPass* render_pass,
     cc::VideoResourceUpdater* video_resource_updater,
@@ -471,8 +451,9 @@ void CreateTestYUVVideoDrawQuad_Striped(
   }
   uint8_t alpha_value = is_transparent ? 0 : 128;
 
-  if (highbit)
+  if (high_bit_depth)
     video_frame = CreateHighbitVideoFrame(video_frame.get());
+
   video_frame->metadata()->SetInteger(media::VideoFrameMetadata::COLOR_SPACE,
                                       color_space);
 
@@ -664,7 +645,7 @@ void CreateTestY16TextureDrawQuad_TwoColor(
       media::VideoFrame::WrapExternalData(
           media::PIXEL_FORMAT_Y16, rect.size(), visible_rect,
           visible_rect.size(), memory.get(), rect.size().GetArea() * 2,
-          base::TimeDelta());
+          base::TimeDelta(), 16 /* bit_depth */);
   DCHECK_EQ(video_frame->rows(0) % 2, 0);
   DCHECK_EQ(video_frame->stride(0) % 2, 0);
 

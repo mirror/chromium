@@ -690,6 +690,9 @@ VideoPixelFormat AVPixelFormatToVideoPixelFormat(AVPixelFormat pixel_format) {
   switch (pixel_format) {
     case AV_PIX_FMT_YUV444P:
     case AV_PIX_FMT_YUVJ444P:
+    case AV_PIX_FMT_YUV444P9LE:
+    case AV_PIX_FMT_YUV444P10LE:
+    case AV_PIX_FMT_YUV444P12LE:
       return PIXEL_FORMAT_YV24;
 
     // TODO(dalecurtis): This is incorrect; see http://crbug.com/784627. This
@@ -706,30 +709,49 @@ VideoPixelFormat AVPixelFormatToVideoPixelFormat(AVPixelFormat pixel_format) {
       return PIXEL_FORMAT_YV12A;
 
     case AV_PIX_FMT_YUV420P9LE:
-      return PIXEL_FORMAT_YUV420P9;
     case AV_PIX_FMT_YUV420P10LE:
-      return PIXEL_FORMAT_YUV420P10;
     case AV_PIX_FMT_YUV420P12LE:
-      return PIXEL_FORMAT_YUV420P12;
+      return PIXEL_FORMAT_I420;
 
     case AV_PIX_FMT_YUV422P9LE:
-      return PIXEL_FORMAT_YUV422P9;
     case AV_PIX_FMT_YUV422P10LE:
-      return PIXEL_FORMAT_YUV422P10;
     case AV_PIX_FMT_YUV422P12LE:
-      return PIXEL_FORMAT_YUV422P12;
-
-    case AV_PIX_FMT_YUV444P9LE:
-      return PIXEL_FORMAT_YUV444P9;
-    case AV_PIX_FMT_YUV444P10LE:
-      return PIXEL_FORMAT_YUV444P10;
-    case AV_PIX_FMT_YUV444P12LE:
-      return PIXEL_FORMAT_YUV444P12;
+      return PIXEL_FORMAT_I422;
 
     default:
       DVLOG(1) << "Unsupported AVPixelFormat: " << pixel_format;
   }
   return PIXEL_FORMAT_UNKNOWN;
+}
+
+size_t AVPixelFormatChannelBitDepth(AVPixelFormat pixel_format) {
+  // The YUVJ alternatives are FFmpeg's (deprecated, but still in use) way to
+  // specify a pixel format and full range color combination.
+  switch (pixel_format) {
+    case AV_PIX_FMT_YUVJ420P:
+    case AV_PIX_FMT_YUVJ422P:
+    case AV_PIX_FMT_YUVJ444P:
+    case AV_PIX_FMT_YUV420P:
+    case AV_PIX_FMT_YUV422P:
+    case AV_PIX_FMT_YUV444P:
+    case AV_PIX_FMT_YUVA420P:
+      return 8;
+    case AV_PIX_FMT_YUV420P9LE:
+    case AV_PIX_FMT_YUV422P9LE:
+    case AV_PIX_FMT_YUV444P9LE:
+      return 9;
+    case AV_PIX_FMT_YUV420P10LE:
+    case AV_PIX_FMT_YUV422P10LE:
+    case AV_PIX_FMT_YUV444P10LE:
+      return 10;
+    case AV_PIX_FMT_YUV420P12LE:
+    case AV_PIX_FMT_YUV422P12LE:
+    case AV_PIX_FMT_YUV444P12LE:
+      return 12;
+    default:
+      DVLOG(1) << "Unsupported AVPixelFormat: " << pixel_format;
+  }
+  return 0;
 }
 
 AVPixelFormat VideoPixelFormatToAVPixelFormat(VideoPixelFormat video_format) {

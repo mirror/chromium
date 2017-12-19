@@ -134,11 +134,9 @@ int FFmpegVideoDecoder::GetVideoBuffer(struct AVCodecContext* codec_context,
   if (format == PIXEL_FORMAT_UNKNOWN)
     return AVERROR(EINVAL);
   DCHECK(format == PIXEL_FORMAT_YV12 || format == PIXEL_FORMAT_I422 ||
-         format == PIXEL_FORMAT_YV24 || format == PIXEL_FORMAT_YUV420P9 ||
-         format == PIXEL_FORMAT_YUV420P10 || format == PIXEL_FORMAT_YUV422P9 ||
-         format == PIXEL_FORMAT_YUV422P10 || format == PIXEL_FORMAT_YUV444P9 ||
-         format == PIXEL_FORMAT_YUV444P10 || format == PIXEL_FORMAT_YUV420P12 ||
-         format == PIXEL_FORMAT_YUV422P12 || format == PIXEL_FORMAT_YUV444P12);
+         format == PIXEL_FORMAT_YV24 || format == PIXEL_FORMAT_I420 ||
+         format == PIXEL_FORMAT_YV12A)
+      << VideoPixelFormatToString(format);
 
   gfx::Size size(codec_context->width, codec_context->height);
   const int ret = av_image_check_size(size.width(), size.height(), 0, NULL);
@@ -169,10 +167,15 @@ int FFmpegVideoDecoder::GetVideoBuffer(struct AVCodecContext* codec_context,
     return AVERROR(EINVAL);
   }
 
+  const size_t bit_depth = AVPixelFormatChannelBitDepth(codec_context->pix_fmt);
+
+  DVLOG(1) << __func__ << " " << VideoPixelFormatToString(format) << " "
+           << bit_depth;
   // FFmpeg expects the initialize allocation to be zero-initialized.  Failure
   // to do so can lead to unitialized value usage.  See http://crbug.com/390941
-  scoped_refptr<VideoFrame> video_frame = frame_pool_.CreateFrame(
-      format, coded_size, gfx::Rect(size), natural_size, kNoTimestamp);
+  scoped_refptr<VideoFrame> video_frame =
+      frame_pool_.CreateFrame(format, coded_size, gfx::Rect(size), natural_size,
+                              kNoTimestamp, bit_depth);
 
   if (!video_frame)
     return AVERROR(EINVAL);
@@ -212,12 +215,9 @@ int FFmpegVideoDecoder::GetVideoBuffer(struct AVCodecContext* codec_context,
   // reference to the VideoFrame object.
   VideoFrame* opaque = video_frame.get();
   opaque->AddRef();
-  frame->buf[0] =
-      av_buffer_create(frame->data[0],
-                       VideoFrame::AllocationSize(format, coded_size),
-                       ReleaseVideoBufferImpl,
-                       opaque,
-                       0);
+  frame->buf[0] = av_buffer_create(
+      frame->data[0], VideoFrame::AllocationSize(format, coded_size, bit_depth),
+      ReleaseVideoBufferImpl, opaque, 0);
   return 0;
 }
 

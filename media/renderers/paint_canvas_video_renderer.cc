@@ -478,70 +478,24 @@ void PaintCanvasVideoRenderer::Copy(
 
 namespace {
 
-// libyuv doesn't support 9- and 10-bit video frames yet. This function
-// creates a regular 8-bit video frame which we can give to libyuv.
+// libyuv doesn't support all high bit depth VideoFrames. This function creates
+// a regular 8-bit per channel VideoFrame by downshifting.
 scoped_refptr<VideoFrame> DownShiftHighbitVideoFrame(
     const VideoFrame* video_frame) {
-  VideoPixelFormat format;
-  int shift = 1;
-  switch (video_frame->format()) {
-    case PIXEL_FORMAT_YUV420P12:
-      shift = 4;
-      format = PIXEL_FORMAT_I420;
-      break;
+  DCHECK_NE(video_frame->bit_depth(), 8u);
+  const int shift = video_frame->bit_depth() - 8;
 
-    case PIXEL_FORMAT_YUV420P10:
-      shift = 2;
-      format = PIXEL_FORMAT_I420;
-      break;
-
-    case PIXEL_FORMAT_YUV420P9:
-      shift = 1;
-      format = PIXEL_FORMAT_I420;
-      break;
-
-    case PIXEL_FORMAT_YUV422P12:
-      shift = 4;
-      format = PIXEL_FORMAT_I422;
-      break;
-
-    case PIXEL_FORMAT_YUV422P10:
-      shift = 2;
-      format = PIXEL_FORMAT_I422;
-      break;
-
-    case PIXEL_FORMAT_YUV422P9:
-      shift = 1;
-      format = PIXEL_FORMAT_I422;
-      break;
-
-    case PIXEL_FORMAT_YUV444P12:
-      shift = 4;
-      format = PIXEL_FORMAT_YV24;
-      break;
-
-    case PIXEL_FORMAT_YUV444P10:
-      shift = 2;
-      format = PIXEL_FORMAT_YV24;
-      break;
-
-    case PIXEL_FORMAT_YUV444P9:
-      shift = 1;
-      format = PIXEL_FORMAT_YV24;
-      break;
-
-    default:
-      NOTREACHED();
-      return nullptr;
-  }
   scoped_refptr<VideoFrame> ret = VideoFrame::CreateFrame(
-      format, video_frame->coded_size(), video_frame->visible_rect(),
-      video_frame->natural_size(), video_frame->timestamp());
+      video_frame->format(), video_frame->coded_size(),
+      video_frame->visible_rect(), video_frame->natural_size(),
+      video_frame->timestamp());
 
   // Copy all metadata.
   // (May be enough to copy color space)
   ret->metadata()->MergeMetadataFrom(video_frame->metadata());
 
+  // TODO(mcasas): Use libyuv P010ToI420 when available
+  // formats, https://bugs.chromium.org/p/libyuv/issues/detail?id=751
   for (int plane = VideoFrame::kYPlane; plane <= VideoFrame::kVPlane; ++plane) {
     int width = ret->row_bytes(plane);
     const uint16_t* src =
@@ -696,11 +650,45 @@ void PaintCanvasVideoRenderer::ConvertVideoFrameToRGBPixels(
     return;
   }
 
-  switch (video_frame->format()) {
-    case PIXEL_FORMAT_YV12:
-    case PIXEL_FORMAT_I420:
-      if (CheckColorSpace(video_frame, COLOR_SPACE_JPEG)) {
-        LIBYUV_J420_TO_ARGB(video_frame->visible_data(VideoFrame::kYPlane),
+  // The vast majority of times |video_frame| wil be 8 bits per channel.
+  if (video_frame->bit_depth() == 8) {
+    switch (video_frame->format()) {
+      case PIXEL_FORMAT_YV12:
+      case PIXEL_FORMAT_I420:
+        if (CheckColorSpace(video_frame, COLOR_SPACE_JPEG)) {
+          LIBYUV_J420_TO_ARGB(video_frame->visible_data(VideoFrame::kYPlane),
+                              video_frame->stride(VideoFrame::kYPlane),
+                              video_frame->visible_data(VideoFrame::kUPlane),
+                              video_frame->stride(VideoFrame::kUPlane),
+                              video_frame->visible_data(VideoFrame::kVPlane),
+                              video_frame->stride(VideoFrame::kVPlane),
+                              static_cast<uint8_t*>(rgb_pixels), row_bytes,
+                              video_frame->visible_rect().width(),
+                              video_frame->visible_rect().height());
+        } else if (CheckColorSpace(video_frame, COLOR_SPACE_HD_REC709)) {
+          LIBYUV_H420_TO_ARGB(video_frame->visible_data(VideoFrame::kYPlane),
+                              video_frame->stride(VideoFrame::kYPlane),
+                              video_frame->visible_data(VideoFrame::kUPlane),
+                              video_frame->stride(VideoFrame::kUPlane),
+                              video_frame->visible_data(VideoFrame::kVPlane),
+                              video_frame->stride(VideoFrame::kVPlane),
+                              static_cast<uint8_t*>(rgb_pixels), row_bytes,
+                              video_frame->visible_rect().width(),
+                              video_frame->visible_rect().height());
+        } else {
+          LIBYUV_I420_TO_ARGB(video_frame->visible_data(VideoFrame::kYPlane),
+                              video_frame->stride(VideoFrame::kYPlane),
+                              video_frame->visible_data(VideoFrame::kUPlane),
+                              video_frame->stride(VideoFrame::kUPlane),
+                              video_frame->visible_data(VideoFrame::kVPlane),
+                              video_frame->stride(VideoFrame::kVPlane),
+                              static_cast<uint8_t*>(rgb_pixels), row_bytes,
+                              video_frame->visible_rect().width(),
+                              video_frame->visible_rect().height());
+        }
+        break;
+      case PIXEL_FORMAT_I422:
+        LIBYUV_I422_TO_ARGB(video_frame->visible_data(VideoFrame::kYPlane),
                             video_frame->stride(VideoFrame::kYPlane),
                             video_frame->visible_data(VideoFrame::kUPlane),
                             video_frame->stride(VideoFrame::kUPlane),
@@ -709,8 +697,26 @@ void PaintCanvasVideoRenderer::ConvertVideoFrameToRGBPixels(
                             static_cast<uint8_t*>(rgb_pixels), row_bytes,
                             video_frame->visible_rect().width(),
                             video_frame->visible_rect().height());
-      } else if (CheckColorSpace(video_frame, COLOR_SPACE_HD_REC709)) {
-        LIBYUV_H420_TO_ARGB(video_frame->visible_data(VideoFrame::kYPlane),
+        break;
+
+      case PIXEL_FORMAT_YV12A:
+        LIBYUV_I420ALPHA_TO_ARGB(
+            video_frame->visible_data(VideoFrame::kYPlane),
+            video_frame->stride(VideoFrame::kYPlane),
+            video_frame->visible_data(VideoFrame::kUPlane),
+            video_frame->stride(VideoFrame::kUPlane),
+            video_frame->visible_data(VideoFrame::kVPlane),
+            video_frame->stride(VideoFrame::kVPlane),
+            video_frame->visible_data(VideoFrame::kAPlane),
+            video_frame->stride(VideoFrame::kAPlane),
+            static_cast<uint8_t*>(rgb_pixels), row_bytes,
+            video_frame->visible_rect().width(),
+            video_frame->visible_rect().height(),
+            1);  // 1 = enable RGB premultiplication by Alpha.
+        break;
+
+      case PIXEL_FORMAT_YV24:
+        LIBYUV_I444_TO_ARGB(video_frame->visible_data(VideoFrame::kYPlane),
                             video_frame->stride(VideoFrame::kYPlane),
                             video_frame->visible_data(VideoFrame::kUPlane),
                             video_frame->stride(VideoFrame::kUPlane),
@@ -719,94 +725,57 @@ void PaintCanvasVideoRenderer::ConvertVideoFrameToRGBPixels(
                             static_cast<uint8_t*>(rgb_pixels), row_bytes,
                             video_frame->visible_rect().width(),
                             video_frame->visible_rect().height());
-      } else {
-        LIBYUV_I420_TO_ARGB(video_frame->visible_data(VideoFrame::kYPlane),
-                            video_frame->stride(VideoFrame::kYPlane),
-                            video_frame->visible_data(VideoFrame::kUPlane),
-                            video_frame->stride(VideoFrame::kUPlane),
-                            video_frame->visible_data(VideoFrame::kVPlane),
-                            video_frame->stride(VideoFrame::kVPlane),
-                            static_cast<uint8_t*>(rgb_pixels), row_bytes,
-                            video_frame->visible_rect().width(),
-                            video_frame->visible_rect().height());
-      }
-      break;
-    case PIXEL_FORMAT_I422:
-      LIBYUV_I422_TO_ARGB(video_frame->visible_data(VideoFrame::kYPlane),
-                          video_frame->stride(VideoFrame::kYPlane),
-                          video_frame->visible_data(VideoFrame::kUPlane),
-                          video_frame->stride(VideoFrame::kUPlane),
-                          video_frame->visible_data(VideoFrame::kVPlane),
-                          video_frame->stride(VideoFrame::kVPlane),
-                          static_cast<uint8_t*>(rgb_pixels), row_bytes,
-                          video_frame->visible_rect().width(),
-                          video_frame->visible_rect().height());
-      break;
+        break;
 
-    case PIXEL_FORMAT_YV12A:
-      LIBYUV_I420ALPHA_TO_ARGB(
-          video_frame->visible_data(VideoFrame::kYPlane),
-          video_frame->stride(VideoFrame::kYPlane),
-          video_frame->visible_data(VideoFrame::kUPlane),
-          video_frame->stride(VideoFrame::kUPlane),
-          video_frame->visible_data(VideoFrame::kVPlane),
-          video_frame->stride(VideoFrame::kVPlane),
-          video_frame->visible_data(VideoFrame::kAPlane),
-          video_frame->stride(VideoFrame::kAPlane),
-          static_cast<uint8_t*>(rgb_pixels), row_bytes,
-          video_frame->visible_rect().width(),
-          video_frame->visible_rect().height(),
-          1);  // 1 = enable RGB premultiplication by Alpha.
-      break;
-
-    case PIXEL_FORMAT_YV24:
-      LIBYUV_I444_TO_ARGB(video_frame->visible_data(VideoFrame::kYPlane),
-                          video_frame->stride(VideoFrame::kYPlane),
-                          video_frame->visible_data(VideoFrame::kUPlane),
-                          video_frame->stride(VideoFrame::kUPlane),
-                          video_frame->visible_data(VideoFrame::kVPlane),
-                          video_frame->stride(VideoFrame::kVPlane),
-                          static_cast<uint8_t*>(rgb_pixels), row_bytes,
-                          video_frame->visible_rect().width(),
-                          video_frame->visible_rect().height());
-      break;
-
-    case PIXEL_FORMAT_YUV420P9:
-    case PIXEL_FORMAT_YUV422P9:
-    case PIXEL_FORMAT_YUV444P9:
-    case PIXEL_FORMAT_YUV420P10:
-    case PIXEL_FORMAT_YUV422P10:
-    case PIXEL_FORMAT_YUV444P10:
-    case PIXEL_FORMAT_YUV420P12:
-    case PIXEL_FORMAT_YUV422P12:
-    case PIXEL_FORMAT_YUV444P12: {
-      scoped_refptr<VideoFrame> temporary_frame =
-          DownShiftHighbitVideoFrame(video_frame);
-      ConvertVideoFrameToRGBPixels(temporary_frame.get(), rgb_pixels,
-                                   row_bytes);
-      break;
+      case PIXEL_FORMAT_YUV420P9:
+      case PIXEL_FORMAT_YUV422P9:
+      case PIXEL_FORMAT_YUV444P9:
+      case PIXEL_FORMAT_YUV420P10:
+      case PIXEL_FORMAT_YUV422P10:
+      case PIXEL_FORMAT_YUV444P10:
+      case PIXEL_FORMAT_YUV420P12:
+      case PIXEL_FORMAT_YUV422P12:
+      case PIXEL_FORMAT_YUV444P12:
+      case PIXEL_FORMAT_Y16:
+        NOTREACHED() << "I shouldn't be here :-(";
+      case PIXEL_FORMAT_NV12:
+      case PIXEL_FORMAT_NV21:
+      case PIXEL_FORMAT_UYVY:
+      case PIXEL_FORMAT_YUY2:
+      case PIXEL_FORMAT_ARGB:
+      case PIXEL_FORMAT_XRGB:
+      case PIXEL_FORMAT_RGB24:
+      case PIXEL_FORMAT_RGB32:
+      case PIXEL_FORMAT_MJPEG:
+      case PIXEL_FORMAT_MT21:
+      case PIXEL_FORMAT_Y8:
+      case PIXEL_FORMAT_UNKNOWN:
+        NOTREACHED() << "Only YUV formats and Y16 are supported.";
     }
-
-    case PIXEL_FORMAT_Y16:
-      // Since it is grayscale conversion, we disregard SK_PMCOLOR_BYTE_ORDER
-      // and always use GL_RGBA.
-      FlipAndConvertY16(video_frame, static_cast<uint8_t*>(rgb_pixels), GL_RGBA,
-                        GL_UNSIGNED_BYTE, false /*flip_y*/, row_bytes);
-      break;
-
-    case PIXEL_FORMAT_NV12:
-    case PIXEL_FORMAT_NV21:
-    case PIXEL_FORMAT_UYVY:
-    case PIXEL_FORMAT_YUY2:
-    case PIXEL_FORMAT_ARGB:
-    case PIXEL_FORMAT_XRGB:
-    case PIXEL_FORMAT_RGB24:
-    case PIXEL_FORMAT_RGB32:
-    case PIXEL_FORMAT_MJPEG:
-    case PIXEL_FORMAT_MT21:
-    case PIXEL_FORMAT_Y8:
-    case PIXEL_FORMAT_UNKNOWN:
-      NOTREACHED() << "Only YUV formats and Y16 are supported.";
+  } else {
+    // TODO(mcasas): The most common high bit depth format is I420 with 10 bits
+    // per channel; use libyuv::P010ToARGB or P010ToBGRA for it.
+    switch (video_frame->format()) {
+      case PIXEL_FORMAT_YV12:
+      case PIXEL_FORMAT_I420:
+      case PIXEL_FORMAT_I422:
+      case PIXEL_FORMAT_YV24: {
+        scoped_refptr<VideoFrame> temporary_frame =
+            DownShiftHighbitVideoFrame(video_frame);
+        ConvertVideoFrameToRGBPixels(temporary_frame.get(), rgb_pixels,
+                                     row_bytes);
+        break;
+      }
+      case PIXEL_FORMAT_Y16:
+        // Since it is grayscale conversion, we disregard SK_PMCOLOR_BYTE_ORDER
+        // and always use GL_RGBA.
+        FlipAndConvertY16(video_frame, static_cast<uint8_t*>(rgb_pixels),
+                          GL_RGBA, GL_UNSIGNED_BYTE, false /*flip_y*/,
+                          row_bytes);
+        break;
+      default:
+        NOTREACHED() << "Unsupported high bit depth format.";
+    }
   }
 }
 
