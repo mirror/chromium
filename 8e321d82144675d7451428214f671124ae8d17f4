@@ -87,6 +87,24 @@
       "revId": "8e321d82144675d7451428214f671124ae8d17f4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f245d01_846e9387",
+        "filename": "tools/perf/page_sets/top_25_smooth.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1239517
+      },
+      "writtenOn": "2017-12-19T15:49:07Z",
+      "side": 1,
+      "message": "I agree, the way the code sharing is done here is a bit awkward.\n\nUnfortunately, it\u0027s more than just 4 pages - there are 4 from top pages which are (slightly) customised below, plus 13 more which just have smooth scrolling behaviour added. So I think copying all 17 here is also not a great solution.\n\nI think there are two options. One is do a minimal refactoring, as I\u0027ve done here (or none). The other option is to go for a deeper refactoring that fully resolves the issue, for this benchmark and others which scroll.\n\nMany pagesets make use of scrolling, so I think if we wanted to do a proper refactoring, it would be good to share a common implementation across all the pages. At the moment, scrolling implementation and behaviour is entirely defined with the Page subclass, but IMO it might be cleaner to define a default scrolling implementation in Page, and trigger scrolling from the benchmark. This would facilitate reusing pagesets for different benchmarks (i.e., separate the definition of the page from the behaviour required by the benchmark). I appreciate this is a bit of a change to how Pages currently are used though.",
+      "parentUuid": "34c361e9_f1c66b41",
+      "revId": "8e321d82144675d7451428214f671124ae8d17f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
