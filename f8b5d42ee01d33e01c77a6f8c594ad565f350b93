@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2c8c733d_8940a668",
+        "filename": "content/browser/security_exploit_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-19T01:47:01Z",
+      "side": 1,
+      "message": "nit:\n\ncraft a CreateLoaderAndStart -\u003e call CreateLoaderAndStart (to initiate requests)",
+      "revId": "f8b5d42ee01d33e01c77a6f8c594ad565f350b93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
