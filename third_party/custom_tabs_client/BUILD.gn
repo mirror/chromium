@@ -60,6 +60,8 @@ android_library("custom_tabs_support_java") {
     "src/customtabs/src/android/support/customtabs/browseractions/BrowserActionsFallbackMenuUi.java",
     "src/customtabs/src/android/support/customtabs/browseractions/BrowserActionsFallbackMenuView.java",
     "src/customtabs/src/android/support/customtabs/browseractions/BrowserActionsIntent.java",
+    "src/customtabs/src/android/support/customtabs/browseractions/BrowserServiceFileProvider.java",
+    "src/customtabs/src/android/support/customtabs/browseractions/BrowserServiceImageReadTask.java",
     "src/customtabs/src/android/support/customtabs/CustomTabsCallback.java",
     "src/customtabs/src/android/support/customtabs/CustomTabsClient.java",
     "src/customtabs/src/android/support/customtabs/CustomTabsIntent.java",

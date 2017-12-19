@@ -5,8 +5,12 @@
 package org.chromium.chrome.browser.contextmenu;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.StrictMode;
+import android.support.customtabs.browseractions.BrowserServiceImageReadTask;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +22,7 @@ import android.widget.TextView;
 
 import org.chromium.base.Callback;
 import org.chromium.chrome.R;
+import org.chromium.chrome.browser.browseractions.BrowserActionsCustomContextMenuItem;
 
 import java.util.List;
 
@@ -90,6 +95,22 @@ class TabularContextMenuListAdapter extends BaseAdapter {
         Drawable icon = menuItem.getDrawable(mActivity);
         viewHolder.mIcon.setImageDrawable(icon);
         viewHolder.mIcon.setVisibility(icon != null ? View.VISIBLE : View.INVISIBLE);
+
+        if (menuItem instanceof BrowserActionsCustomContextMenuItem
+                && ((BrowserActionsCustomContextMenuItem) menuItem).getIconUri() != null) {
+            BrowserServiceImageReadTask<Uri, Void, Bitmap> task =
+                    new BrowserServiceImageReadTask<Uri, Void, Bitmap>(mActivity) {
+                        @Override
+                        protected void onPostExecute(Bitmap bm) {
+                            if (viewHolder.mIcon != null && bm != null) {
+                                viewHolder.mIcon.setVisibility(View.VISIBLE);
+                                viewHolder.mIcon.setImageBitmap(bm);
+                            }
+                        }
+                    };
+            task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,
+                    ((BrowserActionsCustomContextMenuItem) menuItem).getIconUri());
+        }
 
         if (menuItem instanceof ShareContextMenuItem) {
             StrictMode.ThreadPolicy oldPolicy = StrictMode.allowThreadDiskReads();
