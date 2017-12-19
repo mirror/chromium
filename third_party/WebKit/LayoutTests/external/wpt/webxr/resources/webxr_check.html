@@ -1,0 +1,8 @@
+<script>
+'use strict';
+if(navigator.xr) {
+    window.parent.postMessage({ available: true }, '*');
+} else {
+    window.parent.postMessage({ available: false }, '*');
+}
+</script>

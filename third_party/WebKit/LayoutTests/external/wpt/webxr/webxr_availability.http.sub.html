@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<body>
+  <script src=/resources/testharness.js></script>
+  <script src=/resources/testharnessreport.js></script>
+  <script>
+    'use strict';
+
+    var same_origin_src = '/webxr/resources/';
+    var cross_origin_https_src = 'https://{{domains[www]}}:{{ports[https][0]}}' +
+      same_origin_src;
+
+    function test_webxr_availability(test, src, available) {
+      let frame = document.createElement('iframe');
+      frame.src = src;
+
+      window.addEventListener('message', test.step_func(function handler(evt) {
+          if (evt.source === frame.contentWindow) {
+            assert_equals(evt.data.available, available);
+            document.body.removeChild(frame);
+            window.removeEventListener('message', handler);
+            test.done();
+          }
+      }));
+
+      document.body.appendChild(frame);
+    }
+
+    test(t => {
+        assert_equals(navigator.xr, undefined);
+    }, 'Test webxr not available in insecure context');
+
+    async_test(t => {
+        test_webxr_availability(t, cross_origin_https_src + 'webxr_check.html', false) ;
+    }, 'Test webxr not available in secure context in insecure context');
+
+  </script>
+</body>
