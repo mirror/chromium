@@ -78,6 +78,18 @@ struct MHTMLGenerationParams;
 struct PageImportanceSignals;
 struct RendererPreferences;
 
+#if defined(OS_MACOSX)
+
+struct TextSuggestionInfo {
+  base::string16 text;
+  base::string16 text_for_suggestion;
+  int start;
+  int offsetFromCursor;
+  int end;
+};
+
+#endif
+
 // WebContents is the core class in content/. A WebContents renders web content
 // (usually HTML) in a rectangular area.
 //
@@ -823,6 +835,10 @@ class WebContents : public PageNavigator,
 
   // Returns true if the WebContents has completed its first meaningful paint.
   virtual bool CompletedFirstVisuallyNonEmptyPaint() const = 0;
+
+  virtual std::string GetTextForSuggestions() = 0;
+
+  virtual TextSuggestionInfo GetTextSuggestionInfo() = 0;
 #endif  // OS_ANDROID
 
  private:

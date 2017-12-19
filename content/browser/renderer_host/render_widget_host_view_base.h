@@ -181,7 +181,8 @@ class CONTENT_EXPORT RenderWidgetHostViewBase : public RenderWidgetHostView,
   // Notifies the View that the renderer text selection has changed.
   virtual void SelectionChanged(const base::string16& text,
                                 size_t offset,
-                                const gfx::Range& range);
+                                const gfx::Range& range,
+                                int word_offset);
 
   // The requested size of the renderer. May differ from GetViewBounds().size()
   // when the view requires additional throttling.

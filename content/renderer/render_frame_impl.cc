@@ -2963,9 +2963,11 @@ void RenderFrameImpl::DetachGuest(int element_instance_id) {
 
 void RenderFrameImpl::SetSelectedText(const base::string16& selection_text,
                                       size_t offset,
-                                      const gfx::Range& range) {
+                                      const gfx::Range& range,
+                                      int word_offset) {
   Send(new FrameHostMsg_SelectionChanged(routing_id_, selection_text,
-                                         static_cast<uint32_t>(offset), range));
+                                         static_cast<uint32_t>(offset), range,
+                                         word_offset));
 }
 
 void RenderFrameImpl::AddMessageToConsole(ConsoleMessageLevel level,
@@ -4392,6 +4394,31 @@ void RenderFrameImpl::DidChangeSelection(bool is_empty_selection) {
 
   if (is_empty_selection)
     selection_text_.clear();
+
+#if defined(OS_MACOSX)
+  LOG(INFO) << "DidChangeSelection";
+
+  blink::WebInputMethodController* inputMethodController =
+      frame_->GetInputMethodController();
+  blink::WebTextInputInfo textInfo = inputMethodController->TextInputInfo();
+  if (inputMethodController->TextInputType() == blink::kWebTextInputTypeText ||
+      inputMethodController->TextInputType() ==
+          blink::kWebTextInputTypeSearch ||
+      inputMethodController->TextInputType() ==
+          blink::kWebTextInputTypeContentEditable) {
+    if (textInfo.value.IsEmpty()) {
+      LOG(INFO) << "Suggestion for: " << textInfo.value.Utf16();
+    } else {
+      LOG(INFO) << "Suggestion for: "
+                << inputMethodController->WordBeforeCaret().Utf16();
+    }
+
+    // Get the selected value here!
+  } else {
+    LOG(INFO) << "Some other kind of input: " << textInfo.value.Utf8();
+  }
+
+#endif
 
   // UpdateTextInputState should be called before SyncSelectionIfRequired.
   // UpdateTextInputState may send TextInputStateChanged to notify the focus
@@ -6599,6 +6626,7 @@ void RenderFrameImpl::SyncSelectionIfRequired() {
   base::string16 text;
   size_t offset;
   gfx::Range range;
+  int word_offset;
 #if BUILDFLAG(ENABLE_PLUGINS)
   if (focused_pepper_plugin_) {
     focused_pepper_plugin_->GetSurroundingText(&text, &range);
@@ -6635,6 +6663,10 @@ void RenderFrameImpl::SyncSelectionIfRequired() {
       // have to set the range according to text.length().
       range.set_end(range.start() + text.length());
     }
+
+    word_offset = frame_->GetInputMethodController()
+                      ->GetEditingWordOffsets()
+                      .StartOffset();
   }
 
   // TODO(dglazkov): Investigate if and why this would be happening,
@@ -6649,7 +6681,7 @@ void RenderFrameImpl::SyncSelectionIfRequired() {
     selection_text_ = text;
     selection_text_offset_ = offset;
     selection_range_ = range;
-    SetSelectedText(text, offset, range);
+    SetSelectedText(text, offset, range, word_offset);
   }
   GetRenderWidget()->UpdateSelectionBounds();
 }

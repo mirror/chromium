@@ -34,6 +34,7 @@
 #include "content/browser/renderer_host/render_view_host_delegate.h"
 #include "content/browser/renderer_host/render_view_host_impl.h"
 #include "content/browser/renderer_host/render_widget_host_delegate.h"
+#include "content/browser/renderer_host/text_input_manager.h"
 #include "content/browser/wake_lock/wake_lock_context_host.h"
 #include "content/common/color_chooser.mojom.h"
 #include "content/common/content_export.h"
@@ -90,7 +91,6 @@ class SavePackage;
 class ScreenOrientationProvider;
 class SiteInstance;
 class TestWebContents;
-class TextInputManager;
 class WebContentsAudioMuter;
 class WebContentsDelegate;
 class WebContentsImpl;
@@ -130,7 +130,8 @@ class CONTENT_EXPORT WebContentsImpl : public WebContents,
                                        public mojom::ColorChooserFactory,
                                        public NotificationObserver,
                                        public NavigationControllerDelegate,
-                                       public NavigatorDelegate {
+                                       public NavigatorDelegate,
+                                       public TextInputManager::Observer {
  public:
   class FriendWrapper;
 
@@ -462,6 +463,8 @@ class CONTENT_EXPORT WebContentsImpl : public WebContents,
   void SetAllowOtherViews(bool allow) override;
   bool GetAllowOtherViews() override;
   bool CompletedFirstVisuallyNonEmptyPaint() const override;
+  std::string GetTextForSuggestions() override;
+  content::TextSuggestionInfo GetTextSuggestionInfo() override;
 #endif
 
   // Implementation of PageNavigator.
@@ -795,6 +798,10 @@ class CONTENT_EXPORT WebContentsImpl : public WebContents,
   void NotifyNavigationEntryChanged(
       const EntryChangedDetails& change_details) override;
   void NotifyNavigationListPruned(const PrunedDetails& pruned_details) override;
+
+  // TextInputManager::Observer -----------------------------------------------
+  void OnTextSelectionChanged(TextInputManager* text_input_manager,
+                              RenderWidgetHostViewBase* updated_view) override;
 
   // Invoked before a form repost warning is shown.
   void NotifyBeforeFormRepostWarningShow() override;

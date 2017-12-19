@@ -129,9 +129,12 @@ int RenderWidgetHostViewBase::GetMouseWheelMinimumGranularity() const {
 
 void RenderWidgetHostViewBase::SelectionChanged(const base::string16& text,
                                                 size_t offset,
-                                                const gfx::Range& range) {
-  if (GetTextInputManager())
-    GetTextInputManager()->SelectionChanged(this, text, offset, range);
+                                                const gfx::Range& range,
+                                                int word_offset) {
+  if (GetTextInputManager()) {
+    GetTextInputManager()->SelectionChanged(this, text, offset, range,
+                                            word_offset);
+  }
 }
 
 gfx::Size RenderWidgetHostViewBase::GetRequestedRendererSize() const {

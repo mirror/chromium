@@ -482,7 +482,8 @@ class CONTENT_EXPORT RenderFrameImpl
   void DetachGuest(int element_instance_id) override;
   void SetSelectedText(const base::string16& selection_text,
                        size_t offset,
-                       const gfx::Range& range) override;
+                       const gfx::Range& range,
+                       int word_offset) override;
   void AddMessageToConsole(ConsoleMessageLevel level,
                            const std::string& message) override;
   void DetachDevToolsForTest() override;

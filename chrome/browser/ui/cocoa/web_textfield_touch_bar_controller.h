@@ -9,24 +9,41 @@
 
 #include <memory>
 
+#include "base/mac/scoped_nsobject.h"
+#include "content/public/browser/web_contents.h"
 #import "ui/base/cocoa/touch_bar_forward_declarations.h"
 
 @class AutofillPopupViewCocoa;
 @class TabContentsController;
+class WebTextfieldTouchBarBridgeObserver;
 
 // Provides a touch bar for the textfields in the WebContents. This class
 // implements the NSTouchBarDelegate and handles the items in the touch bar.
-@interface WebTextfieldTouchBarController : NSObject<NSTouchBarDelegate> {
+@interface WebTextfieldTouchBarController
+    : NSObject<NSTouchBarDelegate, NSCandidateListTouchBarItemDelegate> {
   TabContentsController* owner_;       // weak.
   AutofillPopupViewCocoa* popupView_;  // weak.
   NSWindow* window_;                   // weak.
+  std::unique_ptr<WebTextfieldTouchBarBridgeObserver> observer_;
+  base::scoped_nsobject<NSString> textForSuggestions_;  // weak.
+  NSMutableArray<NSTextCheckingResult*>* candidates_;
+  API_AVAILABLE(macos(10.12.2))
+  base::scoped_nsobject<NSCandidateListTouchBarItem> candidateListItem_;
+  content::WebContents* contents_;
+
+  content::TextSuggestionInfo textSuggestionInfo_;
 }
 
 // Designated initializer.
-- (instancetype)initWithTabContentsController:(TabContentsController*)owner;
+- (instancetype)initWithTabContentsController:(TabContentsController*)owner
+                                  webContents:(content::WebContents*)contents;
 
 // Display the touch bar that is provided by |popupView|.
 - (void)showCreditCardAutofillForPopupView:(AutofillPopupViewCocoa*)popupView;
+
+- (void)updateTextSuggestionsWithInfo:(content::TextSuggestionInfo)info;
+
+- (void)changeWebContents:(content::WebContents*)contents;
 
 // Creates and returns a touch bar.
 - (NSTouchBar*)makeTouchBar API_AVAILABLE(macos(10.12.2));

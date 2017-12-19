@@ -224,7 +224,8 @@ class CONTENT_EXPORT RenderFrame : public IPC::Listener,
   // Notifies the browser of text selection changes made.
   virtual void SetSelectedText(const base::string16& selection_text,
                                size_t offset,
-                               const gfx::Range& range) = 0;
+                               const gfx::Range& range,
+                               int word_offset) = 0;
 
   // Adds |message| to the DevTools console.
   virtual void AddMessageToConsole(ConsoleMessageLevel level,
