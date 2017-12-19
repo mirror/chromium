@@ -12,6 +12,7 @@
 #include "chrome/browser/local_discovery/service_discovery_client_impl.h"
 #include "net/dns/dns_protocol.h"
 #include "net/dns/record_rdata.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 
 namespace local_discovery {
 
@@ -109,10 +110,12 @@ bool ServiceWatcherImpl::CreateTransaction(
     transaction_flags |= net::MDnsTransaction::QUERY_CACHE;
 
   if (transaction_flags) {
+    // TODO(crbug.com/656607): Add proper annotation.
     *transaction = mdns_client_->CreateTransaction(
         net::dns_protocol::kTypePTR, service_type_, transaction_flags,
-        base::Bind(&ServiceWatcherImpl::OnTransactionResponse,
-                   AsWeakPtr(), transaction));
+        base::Bind(&ServiceWatcherImpl::OnTransactionResponse, AsWeakPtr(),
+                   transaction),
+        NO_TRAFFIC_ANNOTATION_BUG_656607);
     return (*transaction)->Start();
   }
 
@@ -208,12 +211,15 @@ void ServiceWatcherImpl::ServiceListeners::SetActiveRefresh(
 
   if (active_refresh && !has_srv_) {
     DCHECK(has_ptr_);
+    // TODO(crbug.com/656607): Add proper annotation.
     srv_transaction_ = mdns_client_->CreateTransaction(
         net::dns_protocol::kTypeSRV, service_name_,
         net::MDnsTransaction::SINGLE_RESULT |
-        net::MDnsTransaction::QUERY_CACHE | net::MDnsTransaction::QUERY_NETWORK,
+            net::MDnsTransaction::QUERY_CACHE |
+            net::MDnsTransaction::QUERY_NETWORK,
         base::Bind(&ServiceWatcherImpl::ServiceListeners::OnSRVRecord,
-                   base::Unretained(this)));
+                   base::Unretained(this)),
+        NO_TRAFFIC_ANNOTATION_BUG_656607);
     srv_transaction_->Start();
   } else if (!active_refresh) {
     srv_transaction_.reset();
@@ -350,20 +356,20 @@ bool ServiceResolverImpl::CreateTxtTransaction() {
   txt_transaction_ = mdns_client_->CreateTransaction(
       net::dns_protocol::kTypeTXT, service_name_,
       net::MDnsTransaction::SINGLE_RESULT | net::MDnsTransaction::QUERY_CACHE |
-      net::MDnsTransaction::QUERY_NETWORK,
+          net::MDnsTransaction::QUERY_NETWORK,
       base::Bind(&ServiceResolverImpl::TxtRecordTransactionResponse,
-                 AsWeakPtr()));
+                 AsWeakPtr()),
+      NO_TRAFFIC_ANNOTATION_BUG_656607);
   return txt_transaction_->Start();
 }
 
 // TODO(noamsml): quick-resolve for AAAA records.  Since A records tend to be in
 void ServiceResolverImpl::CreateATransaction() {
   a_transaction_ = mdns_client_->CreateTransaction(
-      net::dns_protocol::kTypeA,
-      service_staging_.address.host(),
+      net::dns_protocol::kTypeA, service_staging_.address.host(),
       net::MDnsTransaction::SINGLE_RESULT | net::MDnsTransaction::QUERY_CACHE,
-      base::Bind(&ServiceResolverImpl::ARecordTransactionResponse,
-                 AsWeakPtr()));
+      base::Bind(&ServiceResolverImpl::ARecordTransactionResponse, AsWeakPtr()),
+      NO_TRAFFIC_ANNOTATION_BUG_656607);
   a_transaction_->Start();
 }
 
@@ -371,9 +377,10 @@ bool ServiceResolverImpl::CreateSrvTransaction() {
   srv_transaction_ = mdns_client_->CreateTransaction(
       net::dns_protocol::kTypeSRV, service_name_,
       net::MDnsTransaction::SINGLE_RESULT | net::MDnsTransaction::QUERY_CACHE |
-      net::MDnsTransaction::QUERY_NETWORK,
+          net::MDnsTransaction::QUERY_NETWORK,
       base::Bind(&ServiceResolverImpl::SrvRecordTransactionResponse,
-                 AsWeakPtr()));
+                 AsWeakPtr()),
+      NO_TRAFFIC_ANNOTATION_BUG_656607);
   return srv_transaction_->Start();
 }
 
@@ -510,11 +517,12 @@ void LocalDomainResolverImpl::Start() {
 std::unique_ptr<net::MDnsTransaction>
 LocalDomainResolverImpl::CreateTransaction(uint16_t type) {
   return mdns_client_->CreateTransaction(
-      type, domain_, net::MDnsTransaction::SINGLE_RESULT |
-                     net::MDnsTransaction::QUERY_CACHE |
-                     net::MDnsTransaction::QUERY_NETWORK,
+      type, domain_,
+      net::MDnsTransaction::SINGLE_RESULT | net::MDnsTransaction::QUERY_CACHE |
+          net::MDnsTransaction::QUERY_NETWORK,
       base::Bind(&LocalDomainResolverImpl::OnTransactionComplete,
-                 base::Unretained(this)));
+                 base::Unretained(this)),
+      NO_TRAFFIC_ANNOTATION_BUG_656607);
 }
 
 void LocalDomainResolverImpl::OnTransactionComplete(

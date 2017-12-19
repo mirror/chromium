@@ -17,6 +17,7 @@
 #include "net/dns/dns_query.h"
 #include "net/dns/dns_response.h"
 #include "net/dns/record_parsed.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 
 namespace net {
 
@@ -161,7 +162,8 @@ class NET_EXPORT MDnsClient {
       uint16_t rrtype,
       const std::string& name,
       int flags,
-      const MDnsTransaction::ResultCallback& callback) = 0;
+      const MDnsTransaction::ResultCallback& callback,
+      const NetworkTrafficAnnotationTag& traffic_annotation) = 0;
 
   virtual bool StartListening(MDnsSocketFactory* factory) = 0;
 

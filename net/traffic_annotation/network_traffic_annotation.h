@@ -223,8 +223,12 @@ struct MutableNetworkTrafficAnnotationTag {
   }
 
   explicit operator NetworkTrafficAnnotationTag() const {
-    CHECK_NE(unique_id_hash_code, TRAFFIC_ANNOTATION_UNINITIALIZED);
+    CHECK(has_value());
     return NetworkTrafficAnnotationTag({unique_id_hash_code});
+  }
+
+  bool has_value() const {
+    return unique_id_hash_code != TRAFFIC_ANNOTATION_UNINITIALIZED;
   }
 };
 

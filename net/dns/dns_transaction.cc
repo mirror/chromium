@@ -43,6 +43,7 @@
 #include "net/log/net_log_with_source.h"
 #include "net/socket/datagram_client_socket.h"
 #include "net/socket/stream_socket.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 
 namespace net {
 
@@ -247,10 +248,10 @@ class DnsUDPAttempt : public DnsAttempt {
 
   int DoSendQuery() {
     next_state_ = STATE_SEND_QUERY_COMPLETE;
-    return socket()->Write(query_->io_buffer(),
-                           query_->io_buffer()->size(),
-                           base::Bind(&DnsUDPAttempt::OnIOComplete,
-                                      base::Unretained(this)));
+    return socket()->Write(
+        query_->io_buffer(), query_->io_buffer()->size(),
+        base::Bind(&DnsUDPAttempt::OnIOComplete, base::Unretained(this)),
+        query_->traffic_annotation());
   }
 
   int DoSendQueryComplete(int rv) {
@@ -443,9 +444,9 @@ class DnsTCPAttempt : public DnsAttempt {
     if (buffer_->BytesRemaining() > 0) {
       next_state_ = STATE_SEND_LENGTH;
       return socket_->Write(
-          buffer_.get(),
-          buffer_->BytesRemaining(),
-          base::Bind(&DnsTCPAttempt::OnIOComplete, base::Unretained(this)));
+          buffer_.get(), buffer_->BytesRemaining(),
+          base::Bind(&DnsTCPAttempt::OnIOComplete, base::Unretained(this)),
+          query_->traffic_annotation());
     }
     buffer_ = new DrainableIOBuffer(query_->io_buffer(),
                                     query_->io_buffer()->size());
@@ -462,9 +463,9 @@ class DnsTCPAttempt : public DnsAttempt {
     if (buffer_->BytesRemaining() > 0) {
       next_state_ = STATE_SEND_QUERY;
       return socket_->Write(
-          buffer_.get(),
-          buffer_->BytesRemaining(),
-          base::Bind(&DnsTCPAttempt::OnIOComplete, base::Unretained(this)));
+          buffer_.get(), buffer_->BytesRemaining(),
+          base::Bind(&DnsTCPAttempt::OnIOComplete, base::Unretained(this)),
+          query_->traffic_annotation());
     }
     buffer_ =
         new DrainableIOBuffer(length_buffer_.get(), length_buffer_->size());
@@ -735,8 +736,10 @@ class DnsTransactionImpl : public DnsTransaction,
 
     uint16_t id = session_->NextQueryId();
     std::unique_ptr<DnsQuery> query;
+    // TODO(crbug.com/656607): Add Proper annotation.
     if (attempts_.empty()) {
-      query.reset(new DnsQuery(id, qnames_.front(), qtype_, opt_rdata_));
+      query.reset(new DnsQuery(id, qnames_.front(), qtype_,
+                               NO_TRAFFIC_ANNOTATION_BUG_656607, opt_rdata_));
     } else {
       query = attempts_[0]->GetQuery()->CloneWithNewId(id);
     }

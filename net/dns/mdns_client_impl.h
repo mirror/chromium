@@ -26,6 +26,7 @@
 #include "net/socket/datagram_server_socket.h"
 #include "net/socket/udp_server_socket.h"
 #include "net/socket/udp_socket.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 
 namespace base {
 class Clock;
@@ -128,7 +129,9 @@ class NET_EXPORT_PRIVATE MDnsClientImpl : public MDnsClient {
     bool Init(MDnsSocketFactory* socket_factory);
 
     // Send a query with a specific rrtype and name. Returns true on success.
-    bool SendQuery(uint16_t rrtype, const std::string& name);
+    bool SendQuery(uint16_t rrtype,
+                   const std::string& name,
+                   const NetworkTrafficAnnotationTag traffic_annotation);
 
     // Add/remove a listener to the list of listeners.
     void AddListener(MDnsListenerImpl* listener);
@@ -193,11 +196,14 @@ class NET_EXPORT_PRIVATE MDnsClientImpl : public MDnsClient {
       const std::string& name,
       MDnsListener::Delegate* delegate) override;
 
+  // TODO(IN THIS CL): Remove default value after updating tests.
   std::unique_ptr<MDnsTransaction> CreateTransaction(
       uint16_t rrtype,
       const std::string& name,
       int flags,
-      const MDnsTransaction::ResultCallback& callback) override;
+      const MDnsTransaction::ResultCallback& callback,
+      const NetworkTrafficAnnotationTag& traffic_annotation =
+          NO_TRAFFIC_ANNOTATION_BUG_656607) override;
 
   bool StartListening(MDnsSocketFactory* socket_factory) override;
   void StopListening() override;
@@ -276,7 +282,8 @@ class MDnsTransactionImpl : public base::SupportsWeakPtr<MDnsTransactionImpl>,
                       const std::string& name,
                       int flags,
                       const MDnsTransaction::ResultCallback& callback,
-                      MDnsClientImpl* client);
+                      MDnsClientImpl* client,
+                      const NetworkTrafficAnnotationTag& traffic_annotation);
   ~MDnsTransactionImpl() override;
 
   // MDnsTransaction implementation:
@@ -327,6 +334,8 @@ class MDnsTransactionImpl : public base::SupportsWeakPtr<MDnsTransactionImpl>,
 
   bool started_;
   int flags_;
+
+  NetworkTrafficAnnotationTag traffic_annotation_;
 
   DISALLOW_COPY_AND_ASSIGN(MDnsTransactionImpl);
 };
