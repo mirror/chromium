@@ -86,6 +86,30 @@
       "revId": "f92e15e6837cc1e88367cd6c27a175033d113b09",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0cf2590_d47b2666",
+        "filename": "components/autofill/ios/browser/resources/autofill_controller.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 659,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-12-19T12:50:29Z",
+      "side": 1,
+      "message": "AFAICT, checkboxes and radio are not handled correctly, even on desktop.",
+      "parentUuid": "8ec3e094_93dc7ea8",
+      "range": {
+        "startLine": 659,
+        "startChar": 7,
+        "endLine": 659,
+        "endChar": 19
+      },
+      "revId": "f92e15e6837cc1e88367cd6c27a175033d113b09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
