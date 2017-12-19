@@ -34,6 +34,24 @@
       "revId": "d0481c4c909f22a8bf5a8b582a67d5a7793a4086",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65913a52_98183411",
+        "filename": "third_party/WebKit/Source/platform/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 1525,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-12-19T01:08:46Z",
+      "side": 1,
+      "message": "Thanks for the clarification! Makes sense.\n\nGiven that source_set does not define a linkable unit, how is a linkable unit defined?",
+      "parentUuid": "627af7ef_e42c10c5",
+      "revId": "d0481c4c909f22a8bf5a8b582a67d5a7793a4086",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
