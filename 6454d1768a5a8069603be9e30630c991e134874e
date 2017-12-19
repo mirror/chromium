@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "a119777a_3ddb756b",
+        "filename": "docs/tour_of_luci_ui.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1180206
+      },
+      "writtenOn": "2017-12-19T01:34:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bf44950e_d8ce248a",
+      "revId": "6454d1768a5a8069603be9e30630c991e134874e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "349fd59a_5152870e",
         "filename": "docs/tour_of_luci_ui.md",
         "patchSetId": 1
@@ -50,6 +68,24 @@
       "revId": "6454d1768a5a8069603be9e30630c991e134874e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81dd15ac_94cb2544",
+        "filename": "docs/tour_of_luci_ui.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1180206
+      },
+      "writtenOn": "2017-12-19T01:34:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "349fd59a_5152870e",
+      "revId": "6454d1768a5a8069603be9e30630c991e134874e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +112,30 @@
     },
     {
       "key": {
+        "uuid": "2f79b116_4a8e4dc2",
+        "filename": "docs/tour_of_luci_ui.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1180206
+      },
+      "writtenOn": "2017-12-19T01:34:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa3da931_76b12ac9",
+      "range": {
+        "startLine": 17,
+        "startChar": 24,
+        "endLine": 18,
+        "endChar": 35
+      },
+      "revId": "6454d1768a5a8069603be9e30630c991e134874e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ab573bf_4c45c1a7",
         "filename": "docs/tour_of_luci_ui.md",
         "patchSetId": 1
@@ -99,6 +159,30 @@
     },
     {
       "key": {
+        "uuid": "f9747379_e7da2db6",
+        "filename": "docs/tour_of_luci_ui.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1180206
+      },
+      "writtenOn": "2017-12-19T01:34:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ab573bf_4c45c1a7",
+      "range": {
+        "startLine": 22,
+        "startChar": 17,
+        "endLine": 22,
+        "endChar": 58
+      },
+      "revId": "6454d1768a5a8069603be9e30630c991e134874e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "52a9e69c_20cb0149",
         "filename": "docs/tour_of_luci_ui.md",
         "patchSetId": 1
@@ -116,6 +200,24 @@
     },
     {
       "key": {
+        "uuid": "619e579c_b655ddfd",
+        "filename": "docs/tour_of_luci_ui.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1180206
+      },
+      "writtenOn": "2017-12-19T01:34:02Z",
+      "side": 1,
+      "message": "Yes, they are ordered as per console config.",
+      "parentUuid": "52a9e69c_20cb0149",
+      "revId": "6454d1768a5a8069603be9e30630c991e134874e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4595d02e_24ae119a",
         "filename": "docs/tour_of_luci_ui.md",
         "patchSetId": 1
@@ -130,6 +232,24 @@
       "revId": "6454d1768a5a8069603be9e30630c991e134874e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "035398e6_84221c45",
+        "filename": "docs/tour_of_luci_ui.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1180206
+      },
+      "writtenOn": "2017-12-19T01:34:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4595d02e_24ae119a",
+      "revId": "6454d1768a5a8069603be9e30630c991e134874e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -153,6 +273,30 @@
       "revId": "6454d1768a5a8069603be9e30630c991e134874e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7f86112_8673bc22",
+        "filename": "docs/tour_of_luci_ui.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1180206
+      },
+      "writtenOn": "2017-12-19T01:34:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "98aae4a3_c592ae05",
+      "range": {
+        "startLine": 117,
+        "startChar": 9,
+        "endLine": 118,
+        "endChar": 78
+      },
+      "revId": "6454d1768a5a8069603be9e30630c991e134874e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
