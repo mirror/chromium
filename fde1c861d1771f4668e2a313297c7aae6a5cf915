@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "de47b1e5_2fdd5edc",
+        "filename": "ios/chrome/browser/ui/material_components/utils.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-12-19T13:28:19Z",
+      "side": 1,
+      "message": "style: C-style cast are forbidden, instead use base::mac::ObjCCast\u003cMDCShadowLayer\u003e.",
+      "range": {
+        "startLine": 27,
+        "startChar": 9,
+        "endLine": 27,
+        "endChar": 37
+      },
+      "revId": "fde1c861d1771f4668e2a313297c7aae6a5cf915",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
