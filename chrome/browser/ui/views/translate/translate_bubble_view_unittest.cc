@@ -259,7 +259,7 @@ TEST_F(TranslateBubbleViewTest, CloseButton) {
   EXPECT_TRUE(mock_model_->translation_declined_);
 }
 
-TEST_F(TranslateBubbleViewTest, DenialMenuNeverTranslateLanguage) {
+TEST_F(TranslateBubbleViewTest, OptionsMenuNeverTranslateLanguage) {
   CreateAndShowBubble();
 
   EXPECT_FALSE(bubble_->GetWidget()->IsClosed());
@@ -276,7 +276,7 @@ TEST_F(TranslateBubbleViewTest, DenialMenuNeverTranslateLanguage) {
   EXPECT_TRUE(bubble_->GetWidget()->IsClosed());
 }
 
-TEST_F(TranslateBubbleViewTest, DenialMenuNeverTranslateSite) {
+TEST_F(TranslateBubbleViewTest, OptionsMenuNeverTranslateSite) {
   // NEVER_TRANSLATE_SITE should only show up for sites that can be blacklisted.
   mock_model_->SetCanBlacklistSite(true);
   CreateAndShowBubble();
@@ -303,7 +303,7 @@ TEST_F(TranslateBubbleViewTest, MenuButtonNeverTranslateLanguage) {
   EXPECT_FALSE(denial_button_clicked());
 
   bubble_->ExecuteCommand(
-      TranslateBubbleView::DenialMenuItem::NEVER_TRANSLATE_LANGUAGE, 0);
+      TranslateBubbleView::OptionsMenuItem::NEVER_TRANSLATE_LANGUAGE, 0);
 
   EXPECT_TRUE(denial_button_clicked());
   EXPECT_TRUE(mock_model_->never_translate_language_);
@@ -318,7 +318,7 @@ TEST_F(TranslateBubbleViewTest, MenuButtonNeverTranslateSite) {
   EXPECT_FALSE(bubble_->GetWidget()->IsClosed());
 
   bubble_->ExecuteCommand(
-      TranslateBubbleView::DenialMenuItem::NEVER_TRANSLATE_SITE, 0);
+      TranslateBubbleView::OptionsMenuItem::NEVER_TRANSLATE_SITE, 0);
 
   EXPECT_TRUE(denial_button_clicked());
   EXPECT_TRUE(mock_model_->never_translate_site_);
@@ -499,7 +499,7 @@ TEST_F(TranslateBubbleViewTest, CancelButtonReturningError) {
   EXPECT_EQ(TranslateBubbleModel::VIEW_STATE_ERROR, bubble_->GetViewState());
 }
 
-TEST_F(TranslateBubbleViewTest, DenialMenuRespectsBlacklistSite) {
+TEST_F(TranslateBubbleViewTest, OptionsMenuRespectsBlacklistSite) {
   mock_model_->SetCanBlacklistSite(false);
   CreateAndShowBubble();
 

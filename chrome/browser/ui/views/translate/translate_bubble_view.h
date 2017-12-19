@@ -40,13 +40,12 @@ class TranslateBubbleView : public LocationBarBubbleDelegateView,
                             public views::ButtonListener,
                             public views::ComboboxListener,
                             public views::LinkListener,
-                            public views::MenuButtonListener,
                             public ui::SimpleMenuModel::Delegate,
                             public views::StyledLabelListener,
                             public content::WebContentsObserver {
  public:
-  // Item IDs for the denial button's menu.
-  enum DenialMenuItem {
+  // Item IDs for the option button's menu.
+  enum OptionsMenuItem {
     ALWAYS_TRANSLATE_LANGUAGE,
     NEVER_TRANSLATE_LANGUAGE,
     NEVER_TRANSLATE_SITE,
@@ -97,11 +96,6 @@ class TranslateBubbleView : public LocationBarBubbleDelegateView,
   // views::LinkListener method.
   void LinkClicked(views::Link* source, int event_flags) override;
 
-  // views::MenuButtonListener method.
-  void OnMenuButtonClicked(views::MenuButton* source,
-                           const gfx::Point& point,
-                           const ui::Event* event) override;
-
   // ui::SimpleMenuModel::Delegate methods.
   bool IsCommandIdChecked(int command_id) const override;
   bool IsCommandIdEnabled(int command_id) const override;
@@ -128,7 +122,6 @@ class TranslateBubbleView : public LocationBarBubbleDelegateView,
  private:
   enum LinkID {
     LINK_ID_ADVANCED,
-    LINK_ID_LANGUAGE_SETTINGS,
   };
 
   enum ButtonID {
@@ -139,6 +132,7 @@ class TranslateBubbleView : public LocationBarBubbleDelegateView,
     BUTTON_ID_TRY_AGAIN,
     BUTTON_ID_ALWAYS_TRANSLATE,
     BUTTON_ID_ADVANCED,
+    BUTTON_ID_OPTIONS_MENU,
   };
 
   enum ComboboxID {
@@ -173,11 +167,11 @@ class TranslateBubbleView : public LocationBarBubbleDelegateView,
                            CancelButtonReturningAfterTranslate);
   FRIEND_TEST_ALL_PREFIXES(TranslateBubbleViewTest, CancelButtonReturningError);
   FRIEND_TEST_ALL_PREFIXES(TranslateBubbleViewTest,
-                           DenialMenuNeverTranslateLanguage);
+                           OptionsMenuNeverTranslateLanguage);
   FRIEND_TEST_ALL_PREFIXES(TranslateBubbleViewTest,
-                           DenialMenuRespectsBlacklistSite);
+                           OptionsMenuRespectsBlacklistSite);
   FRIEND_TEST_ALL_PREFIXES(TranslateBubbleViewTest,
-                           DenialMenuNeverTranslateSite);
+                           OptionsMenuNeverTranslateSite);
   FRIEND_TEST_ALL_PREFIXES(TranslateBubbleViewTest,
                            AlwaysTranslateLanguageMenuItem);
   FRIEND_TEST_ALL_PREFIXES(TranslateLanguageBrowserTest, TranslateAndRevert);
@@ -195,6 +189,8 @@ class TranslateBubbleView : public LocationBarBubbleDelegateView,
 
   // Handles the event when the user presses a button.
   void HandleButtonPressed(ButtonID sender_id);
+
+  void ShowOptionsMenu(views::Button* source);
 
   // Handles the event when the user clicks a link.
   void HandleLinkClicked(LinkID sender_id);
@@ -255,7 +251,7 @@ class TranslateBubbleView : public LocationBarBubbleDelegateView,
   views::LabelButton* advanced_cancel_button_;
   views::LabelButton* advanced_done_button_;
 
-  views::MenuButton* options_menu_button_;
+  views::Button* options_menu_button_;
   std::unique_ptr<ui::SimpleMenuModel> options_menu_model_;
   std::unique_ptr<views::MenuRunner> options_menu_runner_;
 
