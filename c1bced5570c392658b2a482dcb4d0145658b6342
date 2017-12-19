@@ -166,6 +166,30 @@
       "revId": "c1bced5570c392658b2a482dcb4d0145658b6342",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec81b5c3_b978e629",
+        "filename": "third_party/WebKit/Source/core/layout/TextAutosizer.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1130,
+      "author": {
+        "id": 1237911
+      },
+      "writtenOn": "2017-12-19T01:15:52Z",
+      "side": 1,
+      "message": "\u003e You mentioned that DSF is already applied correctly in the absence of autosizing.  Where does that happen?\n\nIf you see FontBuilder::UpdateComputedSize(), it applies style.EffectiveZoom() which includes DSF.\n\n\u003e Is it feasible to refactor the autosized path to make use of it?\n\nIt is a bit complicated .. because the default one is created by FontBuilder and there is no way to use it in TextAutoSizer as far as I checked. Instead, we can use style.EffectiveZoom() inside ComputedStyle::SetTextAutosizingMultiplier(). I tested it and it looks fine.",
+      "parentUuid": "cb48f055_a69e7c32",
+      "range": {
+        "startLine": 1130,
+        "startChar": 55,
+        "endLine": 1130,
+        "endChar": 59
+      },
+      "revId": "c1bced5570c392658b2a482dcb4d0145658b6342",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
