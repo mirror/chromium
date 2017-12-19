@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ca38663d_0edc2fa8",
+        "filename": "chrome/browser/ui/views/translate/translate_bubble_test_utils_views.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-12-19T23:26:22Z",
+      "side": 1,
+      "message": "For this and the other test buttons just do \"base::string16()\"",
+      "range": {
+        "startLine": 29,
+        "startChar": 43,
+        "endLine": 29,
+        "endChar": 55
+      },
+      "revId": "7be4006ce30e15974fc55368fecae51df1ec0f0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eaf8be0b_613a336c",
+        "filename": "chrome/browser/ui/views/translate/translate_bubble_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 501,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-12-19T23:26:22Z",
+      "side": 1,
+      "message": "call this just \"Translate\"",
+      "range": {
+        "startLine": 501,
+        "startChar": 26,
+        "endLine": 501,
+        "endChar": 42
+      },
+      "revId": "7be4006ce30e15974fc55368fecae51df1ec0f0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "024396b8_75489aea",
+        "filename": "chrome/browser/ui/views/translate/translate_bubble_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 507,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-12-19T23:26:22Z",
+      "side": 1,
+      "message": "call this \"RevertTranslation\"",
+      "range": {
+        "startLine": 507,
+        "startChar": 26,
+        "endLine": 507,
+        "endChar": 45
+      },
+      "revId": "7be4006ce30e15974fc55368fecae51df1ec0f0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "755e9f0e_d51b1025",
+        "filename": "chrome/browser/ui/views/translate/translate_bubble_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 513,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-12-19T23:26:22Z",
+      "side": 1,
+      "message": "This is a weird one... maybe call it \"FinishAdvancedOptions\"?",
+      "range": {
+        "startLine": 513,
+        "startChar": 26,
+        "endLine": 513,
+        "endChar": 45
+      },
+      "revId": "7be4006ce30e15974fc55368fecae51df1ec0f0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f341f5e_a9b5cc1f",
+        "filename": "chrome/browser/ui/views/translate/translate_bubble_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-12-19T23:26:22Z",
+      "side": 1,
+      "message": "Wait, what\u0027s this button? Is it not the \"Options\" button? How is it different than |options_menu_button|, which isn\u0027t saved as a member?",
+      "range": {
+        "startLine": 257,
+        "startChar": 17,
+        "endLine": 257,
+        "endChar": 44
+      },
+      "revId": "7be4006ce30e15974fc55368fecae51df1ec0f0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f94a3348_bb4706fb",
+        "filename": "chrome/browser/ui/views/translate/translate_bubble_view_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-12-19T23:26:22Z",
+      "side": 1,
+      "message": "call this \"PressButton\"",
+      "range": {
+        "startLine": 186,
+        "startChar": 7,
+        "endLine": 186,
+        "endChar": 26
+      },
+      "revId": "7be4006ce30e15974fc55368fecae51df1ec0f0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
