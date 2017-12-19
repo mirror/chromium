@@ -57,6 +57,6 @@ public class SecondBrowserProcess extends Service {
         AwResource.setConfigKeySystemUuidMapping(R.array.config_key_system_uuid_mapping);
         ContextUtils.initApplicationContext(getApplicationContext());
         AwBrowserProcess.loadLibrary();
-        AwBrowserProcess.start();
+        AwBrowserProcess.start(null);
     }
 }
