@@ -18,6 +18,7 @@ class ASH_EXPORT LoginButton : public views::ImageButton {
   ~LoginButton() override;
 
   // views::InkDropHost:
+  void GetAccessibleNodeData(ui::AXNodeData* node) override;
   std::unique_ptr<views::InkDrop> CreateInkDrop() override;
   std::unique_ptr<views::InkDropMask> CreateInkDropMask() const override;
   std::unique_ptr<views::InkDropRipple> CreateInkDropRipple() const override;

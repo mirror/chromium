@@ -1214,6 +1214,8 @@ void AutomationInternalCustomBindings::OnAccessibilityEvent(
         nullptr, context());
     return;
   }
+
+  LOG(ERROR) << tree_wrapper->tree()->ToString();
 }
 
 void AutomationInternalCustomBindings::OnAccessibilityLocationChange(

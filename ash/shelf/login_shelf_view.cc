@@ -28,8 +28,10 @@
 #include "ash/tray_action/tray_action.h"
 #include "ash/wm/lock_state_controller.h"
 #include "base/metrics/user_metrics.h"
+#include "ui/accessibility/ax_node_data.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/gfx/paint_vector_icon.h"
+#include "ui/views/accessibility/ax_aura_obj_cache.h"
 #include "ui/views/animation/ink_drop_impl.h"
 #include "ui/views/controls/button/label_button.h"
 #include "ui/views/focus/focus_search.h"
@@ -70,8 +72,9 @@ class LoginShelfButton : public views::LabelButton {
  public:
   LoginShelfButton(views::ButtonListener* listener,
                    const base::string16& text,
-                   const gfx::ImageSkia& image)
-      : LabelButton(listener, text) {
+                   const gfx::ImageSkia& image,
+                   bool is_last_focus)
+      : LabelButton(listener, text), is_last_focus_(is_last_focus) {
     SetAccessibleName(text);
     SetImage(views::Button::STATE_NORMAL, image);
     SetFocusBehavior(FocusBehavior::ALWAYS);
@@ -96,6 +99,14 @@ class LoginShelfButton : public views::LabelButton {
   gfx::Insets GetInsets() const override {
     return gfx::Insets(kButtonMarginDp);
   }
+  void GetAccessibleNodeData(ui::AXNodeData* node_data) override {
+    if (is_last_focus_) {
+      ash::ShelfWidget* shelf_widget =
+          Shelf::ForWindow(GetWidget()->GetNativeWindow())->shelf_widget();
+      int id = views::AXAuraObjCache::GetInstance()->GetID(shelf_widget);
+      node_data->AddIntAttribute(ui::AX_ATTR_NEXT_FOCUS_ID, id);
+    }
+  }
 
   // views::InkDropHostView:
   std::unique_ptr<views::InkDrop> CreateInkDrop() override {
@@ -107,6 +118,8 @@ class LoginShelfButton : public views::LabelButton {
   }
 
  private:
+  bool is_last_focus_ = false;
+
   DISALLOW_COPY_AND_ASSIGN(LoginShelfButton);
 };
 
@@ -126,19 +139,23 @@ LoginShelfView::LoginShelfView(
       std::make_unique<views::BoxLayout>(views::BoxLayout::kHorizontal));
 
   auto add_button = [this](ButtonId id, int text_resource_id,
-                           const gfx::VectorIcon& icon) {
+                           const gfx::VectorIcon& icon, bool is_last) {
     const base::string16 text = l10n_util::GetStringUTF16(text_resource_id);
     gfx::ImageSkia image = CreateVectorIcon(icon, kButtonColor);
-    LoginShelfButton* button = new LoginShelfButton(this, text, image);
+    LoginShelfButton* button = new LoginShelfButton(this, text, image, is_last);
     button->set_id(id);
     AddChildView(button);
   };
-  add_button(kShutdown, IDS_ASH_SHELF_SHUTDOWN_BUTTON,
-             kShelfShutdownButtonIcon);
-  add_button(kRestart, IDS_ASH_SHELF_RESTART_BUTTON, kShelfShutdownButtonIcon);
-  add_button(kSignOut, IDS_ASH_SHELF_SIGN_OUT_BUTTON, kShelfSignOutButtonIcon);
-  add_button(kCloseNote, IDS_ASH_SHELF_UNLOCK_BUTTON, kShelfUnlockButtonIcon);
-  add_button(kCancel, IDS_ASH_SHELF_CANCEL_BUTTON, kShelfCancelButtonIcon);
+  add_button(kShutdown, IDS_ASH_SHELF_SHUTDOWN_BUTTON, kShelfShutdownButtonIcon,
+             false);
+  add_button(kRestart, IDS_ASH_SHELF_RESTART_BUTTON, kShelfShutdownButtonIcon,
+             false);
+  add_button(kSignOut, IDS_ASH_SHELF_SIGN_OUT_BUTTON, kShelfSignOutButtonIcon,
+             true);
+  add_button(kCloseNote, IDS_ASH_SHELF_UNLOCK_BUTTON, kShelfUnlockButtonIcon,
+             false);
+  add_button(kCancel, IDS_ASH_SHELF_CANCEL_BUTTON, kShelfCancelButtonIcon,
+             false);
 
   // Adds observers for states that affect the visiblity of different buttons.
   tray_action_observer_.Add(Shell::Get()->tray_action());

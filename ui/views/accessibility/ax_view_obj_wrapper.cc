@@ -66,6 +66,29 @@ void AXViewObjWrapper::Serialize(ui::AXNodeData* out_node_data) {
                                     view_->GetClassName());
 
   out_node_data->location = gfx::RectF(view_->GetBoundsInScreen());
+
+  if (out_node_data->HasIntAttribute(ui::AX_ATTR_NEXT_FOCUS_ID))
+    LOG(ERROR) << "!! Got AX_ATTR_NEXT_FOCUS_ID="
+               << out_node_data->GetIntAttribute(ui::AX_ATTR_NEXT_FOCUS_ID);
+
+  // Focus relation.
+  // FocusManager* focus_manager = view_->GetFocusManager();
+  // if (!focus_manager)
+  //   return;
+
+  // View* focus;
+  // if (!out_node_data->HasIntAttribute(ui::AX_ATTR_PREVIOUS_FOCUS_ID) &&
+  //     (focus = focus_manager->GetNextFocusableView(view_, NULL, true, true)))
+  //     {
+  //   out_node_data->AddIntAttribute(ui::AX_ATTR_PREVIOUS_FOCUS_ID,
+  //                                  AXAuraObjCache::GetInstance()->GetID(focus));
+  // }
+  // if (!out_node_data->HasIntAttribute(ui::AX_ATTR_NEXT_FOCUS_ID) &&
+  //     (focus = focus_manager->GetNextFocusableView(view_, NULL, false,
+  //     true))) {
+  //   out_node_data->AddIntAttribute(ui::AX_ATTR_NEXT_FOCUS_ID,
+  //                                  AXAuraObjCache::GetInstance()->GetID(focus));
+  // }
 }
 
 int32_t AXViewObjWrapper::GetID() {

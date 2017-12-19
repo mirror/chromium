@@ -17,6 +17,7 @@
 #include "ash/login/ui/non_accessible_view.h"
 #include "ash/login/ui/note_action_launch_button.h"
 #include "ash/root_window_controller.h"
+#include "ash/shelf/login_shelf_view.h"
 #include "ash/shelf/shelf.h"
 #include "ash/shelf/shelf_widget.h"
 #include "ash/shell.h"
@@ -26,6 +27,7 @@
 #include "ash/system/tray/system_tray_notifier.h"
 #include "base/strings/string16.h"
 #include "base/strings/utf_string_conversions.h"
+#include "ui/accessibility/ax_node_data.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/display/display.h"
 #include "ui/display/manager/display_manager.h"
@@ -34,6 +36,7 @@
 #include "ui/gfx/geometry/rect.h"
 #include "ui/gfx/geometry/size.h"
 #include "ui/gfx/geometry/vector2d.h"
+#include "ui/views/accessibility/ax_aura_obj_cache.h"
 #include "ui/views/background.h"
 #include "ui/views/controls/label.h"
 #include "ui/views/controls/scroll_view.h"
@@ -329,6 +332,20 @@ void LockContentsView::AboutToRequestFocusFromTabTraversal(bool reverse) {
   }
 
   FocusNextWidget(reverse);
+}
+
+void LockContentsView::GetAccessibleNodeData(ui::AXNodeData* node_data) {
+  ash::ShelfWidget* shelf_widget =
+      Shelf::ForWindow(GetWidget()->GetNativeWindow())->shelf_widget();
+  // shelf_widget->login_shelf_view_for_testing()->Hack();
+
+  views::AXAuraObjCache::GetInstance()->GetOrCreate(
+      shelf_widget->login_shelf_view_for_testing());
+  int id = views::AXAuraObjCache::GetInstance()->GetID(
+      shelf_widget->login_shelf_view_for_testing());
+  LOG(ERROR) << "!! Setting NEXT_FOCUS_ID=" << id;
+  node_data->AddIntAttribute(ui::AX_ATTR_NEXT_FOCUS_ID, id);
+  node_data->AddIntAttribute(ui::AX_ATTR_PREVIOUS_FOCUS_ID, id);
 }
 
 void LockContentsView::OnUsersChanged(

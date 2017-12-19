@@ -5,6 +5,11 @@
 #include "ash/login/ui/login_button.h"
 
 #include "ash/ash_constants.h"
+#include "ash/shelf/login_shelf_view.h"
+#include "ash/shelf/shelf.h"
+#include "ash/shelf/shelf_widget.h"
+#include "ui/accessibility/ax_node_data.h"
+#include "ui/views/accessibility/ax_aura_obj_cache.h"
 #include "ui/views/animation/flood_fill_ink_drop_ripple.h"
 #include "ui/views/animation/ink_drop_highlight.h"
 #include "ui/views/animation/ink_drop_impl.h"
@@ -35,6 +40,18 @@ LoginButton::LoginButton(views::ButtonListener* listener)
 }
 
 LoginButton::~LoginButton() = default;
+
+void LoginButton::GetAccessibleNodeData(ui::AXNodeData* node_data) {
+  ash::ShelfWidget* shelf_widget =
+      Shelf::ForWindow(GetWidget()->GetNativeWindow())->shelf_widget();
+  views::AXAuraObjCache::GetInstance()->GetOrCreate(
+      shelf_widget->login_shelf_view_for_testing());
+  int id = views::AXAuraObjCache::GetInstance()->GetID(
+      shelf_widget->login_shelf_view_for_testing());
+  LOG(ERROR) << "!! Setting NEXT_FOCUS_ID=" << id;
+  node_data->AddIntAttribute(ui::AX_ATTR_NEXT_FOCUS_ID, id);
+  // node_data->AddIntAttribute(ui::AX_ATTR_PREVIOUS_FOCUS_ID, id);
+}
 
 std::unique_ptr<views::InkDrop> LoginButton::CreateInkDrop() {
   std::unique_ptr<views::InkDropImpl> ink_drop =
