@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3c862962_55251f4f",
+        "filename": "net/http/http_server_properties.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-19T22:35:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b1791f14_76011453",
+      "range": {
+        "startLine": 317,
+        "startChar": 50,
+        "endLine": 317,
+        "endChar": 57
+      },
+      "revId": "ae524a6f7c7db2d9176f2740f4cf0e62118a7fc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ba7b262_eb3e04ba",
         "filename": "net/http/http_server_properties_manager.cc",
         "patchSetId": 6
@@ -36,6 +60,30 @@
       "writtenOn": "2017-12-19T22:09:26Z",
       "side": 1,
       "message": "Hah!",
+      "range": {
+        "startLine": 137,
+        "startChar": 59,
+        "endLine": 137,
+        "endChar": 0
+      },
+      "revId": "ae524a6f7c7db2d9176f2740f4cf0e62118a7fc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "df57c13b_6181089b",
+        "filename": "net/http/http_server_properties_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-19T22:35:04Z",
+      "side": 1,
+      "message": "Lovely, I know.  :)",
+      "parentUuid": "5ba7b262_eb3e04ba",
       "range": {
         "startLine": 137,
         "startChar": 59,
