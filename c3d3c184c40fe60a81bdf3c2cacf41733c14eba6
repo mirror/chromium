@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d5e1b31f_a82c0fc8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-12-19T05:50:28Z",
+      "side": 1,
+      "message": "URLS -\u003e URLs",
+      "revId": "c3d3c184c40fe60a81bdf3c2cacf41733c14eba6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
