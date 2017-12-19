@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a4169f2_e81a39e1",
+        "filename": "chrome/browser/policy/policy_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 879,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-12-19T19:13:17Z",
+      "side": 1,
+      "message": "nit: \"TODO(crbug/448486): Remove after committed interstitials are launched\"",
+      "revId": "1c4df5a273adf8172aae83642597ed1f3b3ec709",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d14a20ba_e3b6bd84",
+        "filename": "chrome/browser/policy/policy_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 888,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-12-19T19:13:17Z",
+      "side": 1,
+      "message": "optional nit: I prefer wrapping GetParam() calls with a method so that it\u0027s clear to the reader what GetParam() \u003d\u003d true implies:\n\nbool AreCommittedInterstitialsEnabled() const {\n return GetParam();\n}\n\nvoid SetUpCommandLine(...) {\n  if (AreCommittedInterstitialsEnabled()) {\n    ...\n  }\n}",
+      "range": {
+        "startLine": 888,
+        "startChar": 8,
+        "endLine": 888,
+        "endChar": 16
+      },
+      "revId": "1c4df5a273adf8172aae83642597ed1f3b3ec709",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c745bf6b_73217490",
+        "filename": "chrome/browser/ssl/captive_portal_blocking_page_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-12-19T19:13:17Z",
+      "side": 1,
+      "message": "Can you add a comment explaining why this returns proceed when failing? Is it because there shouldn\u0027t be any nav throttling for non-committed interstitials?",
+      "range": {
+        "startLine": 176,
+        "startChar": 17,
+        "endLine": 176,
+        "endChar": 0
+      },
+      "revId": "1c4df5a273adf8172aae83642597ed1f3b3ec709",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e9a5723_c67cb11c",
+        "filename": "chrome/browser/ssl/captive_portal_blocking_page_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-12-19T19:13:17Z",
+      "side": 1,
+      "message": "with?",
+      "range": {
+        "startLine": 328,
+        "startChar": 16,
+        "endLine": 328,
+        "endChar": 17
+      },
+      "revId": "1c4df5a273adf8172aae83642597ed1f3b3ec709",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b06211c9_4534f26a",
+        "filename": "chrome/browser/ssl/security_state_tab_helper_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-12-19T19:13:17Z",
+      "side": 1,
+      "message": "Optional, but would it make sense to put these in a ssl_test_helper.cc/h to avoid repeated code?",
+      "revId": "1c4df5a273adf8172aae83642597ed1f3b3ec709",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
