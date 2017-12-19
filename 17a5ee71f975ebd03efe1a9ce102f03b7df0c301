@@ -89,6 +89,30 @@
     },
     {
       "key": {
+        "uuid": "d32a8729_92af21e5",
+        "filename": "services/network/public/interfaces/udp_socket.mojom",
+        "patchSetId": 28
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-19T16:29:36Z",
+      "side": 1,
+      "message": "Is the UDP API publicly available? My understanding is that the TCP API, at least, is a privileged API and we have a whitelisted the only extensions that can use.",
+      "parentUuid": "817a0268_819d8c55",
+      "range": {
+        "startLine": 32,
+        "startChar": 21,
+        "endLine": 32,
+        "endChar": 31
+      },
+      "revId": "17a5ee71f975ebd03efe1a9ce102f03b7df0c301",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "59484fc0_aa7293ca",
         "filename": "services/network/public/interfaces/udp_socket.mojom",
         "patchSetId": 28
