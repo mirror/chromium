@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8c936683_65fed01a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-12-19T14:00:16Z",
+      "side": 1,
+      "message": "→ \"and internal\"",
+      "range": {
+        "startLine": 11,
+        "startChar": 17,
+        "endLine": 11,
+        "endChar": 28
+      },
+      "revId": "fb2468be154fc8bf097a66b001df1f11f173c97c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d27753e_ff6f5152",
+        "filename": "ios/third_party/material_internationalization_ios/forwarding_headers/MDFInternationalization/MDFInternationalization.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-12-19T14:00:16Z",
+      "side": 1,
+      "message": "Can you add a comment explaining why forwarding headers are required (can be copy-n-pasted to all such forwarding headers)? Something like this would work:\n\n  // This forwarding header allows to import the file using import directives assuming\n  // the code is build as a framework bundle while building it as a source set. This is\n  // required as some multiple third-party dependencies disagree on that point.",
+      "revId": "fb2468be154fc8bf097a66b001df1f11f173c97c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
