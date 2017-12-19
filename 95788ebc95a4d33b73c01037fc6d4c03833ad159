@@ -46,6 +46,30 @@
       "revId": "95788ebc95a4d33b73c01037fc6d4c03833ad159",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71632530_04982815",
+        "filename": "ui/app_list/views/search_result_tile_item_view.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1116056
+      },
+      "writtenOn": "2017-12-19T02:56:09Z",
+      "side": 1,
+      "message": "Assuming that the cleanup will be done as a part of the same bug?",
+      "parentUuid": "13b064cd_c1530cab",
+      "range": {
+        "startLine": 114,
+        "startChar": 7,
+        "endLine": 114,
+        "endChar": 16
+      },
+      "revId": "95788ebc95a4d33b73c01037fc6d4c03833ad159",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
