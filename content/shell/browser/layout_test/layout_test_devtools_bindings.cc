@@ -106,13 +106,10 @@ GURL LayoutTestDevToolsBindings::GetDevToolsPathAsURL(
 
 // static.
 GURL LayoutTestDevToolsBindings::MapTestURLIfNeeded(const GURL& test_url,
-                                                    bool* is_devtools_js_test) {
+                                                    bool* is_devtools_test) {
   std::string spec = test_url.spec();
-  bool is_js_test =
-      base::EndsWith(spec, ".js", base::CompareCase::INSENSITIVE_ASCII);
-  *is_devtools_js_test =
-      spec.find("/devtools/") != std::string::npos && is_js_test;
-  if (!*is_devtools_js_test)
+  *is_devtools_test = spec.find("/devtools/") != std::string::npos;
+  if (!*is_devtools_test)
     return test_url;
   std::string url_string = GetDevToolsPathAsURL(std::string()).spec();
   url_string += "&test=" + spec;
@@ -159,21 +156,16 @@ LayoutTestDevToolsBindings::LayoutTestDevToolsBindings(
     : ShellDevToolsBindings(devtools_contents, inspected_contents, nullptr),
       frontend_url_(frontend_url) {
   SetPreferences(settings);
-  if (new_harness) {
-    is_startup_test_ =
-        frontend_url.query().find("/startup/") != std::string::npos;
-    secondary_observer_ =
-        std::make_unique<SecondaryObserver>(this, is_startup_test_);
-    if (!is_startup_test_) {
-      NavigationController::LoadURLParams params(
-          GetInspectedPageURL(frontend_url));
-      params.transition_type = ui::PageTransitionFromInt(
-          ui::PAGE_TRANSITION_TYPED | ui::PAGE_TRANSITION_FROM_ADDRESS_BAR);
-      inspected_contents->GetController().LoadURLWithParams(params);
-    }
-  } else {
-    NavigateDevToolsFrontend();
-  }
+  is_startup_test_ =
+      frontend_url.query().find("/startup/") != std::string::npos;
+  secondary_observer_ =
+      std::make_unique<SecondaryObserver>(this, is_startup_test_);
+  if (is_startup_test_)
+    return;
+  NavigationController::LoadURLParams params(GetInspectedPageURL(frontend_url));
+  params.transition_type = ui::PageTransitionFromInt(
+      ui::PAGE_TRANSITION_TYPED | ui::PAGE_TRANSITION_FROM_ADDRESS_BAR);
+  inspected_contents->GetController().LoadURLWithParams(params);
 }
 
 LayoutTestDevToolsBindings::~LayoutTestDevToolsBindings() {}
