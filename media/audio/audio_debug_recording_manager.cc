@@ -30,7 +30,8 @@ base::FilePath GetDebugRecordingFileNameWithExtensions(
     const base::FilePath::StringType& file_name_extension,
     int id) {
   return base_file_name.AddExtension(file_name_extension)
-      .AddExtension(IntToStringType(id));
+      .AddExtension(IntToStringType(id))
+      .AddExtension(FILE_PATH_LITERAL("wav"));
 }
 
 }  // namespace
@@ -46,12 +47,12 @@ void AudioDebugRecordingManager::EnableDebugRecording(
   DCHECK(task_runner_->BelongsToCurrentThread());
   DCHECK(!base_file_name.empty());
 
+  debug_recording_base_file_name_ = base_file_name;
   for (const auto& it : debug_recording_helpers_) {
     it.second.first->EnableDebugRecording(
-        GetDebugRecordingFileNameWithExtensions(base_file_name,
+        GetDebugRecordingFileNameWithExtensions(debug_recording_base_file_name_,
                                                 it.second.second, it.first));
   }
-  debug_recording_base_file_name_ = base_file_name;
 }
 
 void AudioDebugRecordingManager::DisableDebugRecording() {
@@ -59,6 +60,13 @@ void AudioDebugRecordingManager::DisableDebugRecording() {
   for (const auto& it : debug_recording_helpers_)
     it.second.first->DisableDebugRecording();
   debug_recording_base_file_name_.clear();
+}
+
+void AudioDebugRecordingManager::CreateFile(const base::FilePath& file_name,
+                                            CreateFileReplyCallback reply_cb) {
+  base::File debug_file(base::File(
+      file_name, base::File::FLAG_CREATE_ALWAYS | base::File::FLAG_WRITE));
+  std::move(reply_cb).Run(std::move(debug_file));
 }
 
 std::unique_ptr<AudioDebugRecorder>
@@ -74,6 +82,8 @@ AudioDebugRecordingManager::RegisterDebugRecordingSource(
   std::unique_ptr<AudioDebugRecordingHelper> recording_helper =
       CreateAudioDebugRecordingHelper(
           params, task_runner_,
+          base::BindRepeating(&AudioDebugRecordingManager::CreateFile,
+                              base::Unretained(this)),
           base::BindOnce(
               &AudioDebugRecordingManager::UnregisterDebugRecordingSource,
               weak_factory_.GetWeakPtr(), id));
@@ -101,9 +111,11 @@ std::unique_ptr<AudioDebugRecordingHelper>
 AudioDebugRecordingManager::CreateAudioDebugRecordingHelper(
     const AudioParameters& params,
     scoped_refptr<base::SingleThreadTaskRunner> task_runner,
+    CreateFileRequestCallback create_file_cb,
     base::OnceClosure on_destruction_closure) {
   return base::MakeUnique<AudioDebugRecordingHelper>(
-      params, task_runner, std::move(on_destruction_closure));
+      params, task_runner, std::move(create_file_cb),
+      std::move(on_destruction_closure));
 }
 
 bool AudioDebugRecordingManager::IsDebugRecordingEnabled() {

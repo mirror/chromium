@@ -9,7 +9,7 @@
 #include "base/macros.h"
 #include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
-#include "base/test/test_message_loop.h"
+#include "base/test/scoped_task_environment.h"
 #include "base/threading/platform_thread.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "build/build_config.h"
@@ -51,7 +51,8 @@ class TestInputCallback : public AudioInputStream::AudioInputCallback {
 class AudioInputTest : public testing::Test {
  public:
   AudioInputTest()
-      : message_loop_(base::MessageLoop::TYPE_UI),
+      : scoped_task_environment_(
+            base::test::ScopedTaskEnvironment::MainThreadType::UI),
         audio_manager_(AudioManager::CreateForTesting(
             base::MakeUnique<TestAudioThread>())),
         audio_input_stream_(NULL) {
@@ -152,7 +153,7 @@ class AudioInputTest : public testing::Test {
 
   void OnLogMessage(const std::string& message) {}
 
-  base::TestMessageLoop message_loop_;
+  base::test::ScopedTaskEnvironment scoped_task_environment_;
   std::unique_ptr<AudioManager> audio_manager_;
   AudioInputStream* audio_input_stream_;
 

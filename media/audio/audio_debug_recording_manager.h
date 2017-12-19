@@ -67,6 +67,8 @@ class MEDIA_EXPORT AudioDebugRecordingManager {
   // Enables and disables debug recording.
   virtual void EnableDebugRecording(const base::FilePath& base_file_name);
   virtual void DisableDebugRecording();
+  void CreateFile(const base::FilePath& file_name,
+                  CreateFileReplyCallback reply_cb);
 
   // Registers a source and returns a wrapped recorder. |file_name_extension| is
   // added to the base filename, along with a unique running ID.
@@ -80,6 +82,7 @@ class MEDIA_EXPORT AudioDebugRecordingManager {
   CreateAudioDebugRecordingHelper(
       const AudioParameters& params,
       scoped_refptr<base::SingleThreadTaskRunner> task_runner,
+      CreateFileRequestCallback create_file_cb,
       base::OnceClosure on_destruction_closure);
 
   // The task runner this class lives on. Also handed to
@@ -110,6 +113,12 @@ class MEDIA_EXPORT AudioDebugRecordingManager {
   // The base file name for debug recording files. If this is non-empty, debug
   // recording is enabled.
   base::FilePath debug_recording_base_file_name_;
+
+  // The task runner to create debug recording files on.
+  scoped_refptr<base::SequencedTaskRunner> file_task_runner_ =
+      base::CreateSequencedTaskRunnerWithTraits(
+          {base::MayBlock(), base::TaskPriority::BACKGROUND,
+           base::TaskShutdownBehavior::BLOCK_SHUTDOWN});
 
   base::WeakPtrFactory<AudioDebugRecordingManager> weak_factory_;
   DISALLOW_COPY_AND_ASSIGN(AudioDebugRecordingManager);

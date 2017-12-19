@@ -5,7 +5,7 @@
 #include "media/audio/audio_debug_recording_helper.h"
 
 #include "base/bind.h"
-#include "base/files/file_path.h"
+#include "base/files/file.h"
 #include "base/memory/ptr_util.h"
 #include "base/single_thread_task_runner.h"
 #include "media/audio/audio_debug_file_writer.h"
@@ -15,10 +15,12 @@ namespace media {
 AudioDebugRecordingHelper::AudioDebugRecordingHelper(
     const AudioParameters& params,
     scoped_refptr<base::SingleThreadTaskRunner> task_runner,
+    CreateFileRequestCallback create_file_cb,
     base::OnceClosure on_destruction_closure)
     : params_(params),
       recording_enabled_(0),
       task_runner_(std::move(task_runner)),
+      create_file_cb_(std::move(create_file_cb)),
       on_destruction_closure_(std::move(on_destruction_closure)),
       weak_factory_(this) {}
 
@@ -33,9 +35,16 @@ void AudioDebugRecordingHelper::EnableDebugRecording(
   DCHECK(!debug_writer_);
   DCHECK(!file_name.empty());
 
+  create_file_cb_.Run(
+      file_name,
+      base::BindOnce(&AudioDebugRecordingHelper::EnableDebugRecordingForFile,
+                     weak_factory_.GetWeakPtr()));
+}
+
+void AudioDebugRecordingHelper::EnableDebugRecordingForFile(base::File file) {
+  DCHECK(file.IsValid());
   debug_writer_ = CreateAudioDebugFileWriter(params_);
-  debug_writer_->Start(
-      file_name.AddExtension(debug_writer_->GetFileNameExtension()));
+  debug_writer_->Start(std::move(file));
 
   base::subtle::NoBarrier_Store(&recording_enabled_, 1);
 }

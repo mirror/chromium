@@ -17,12 +17,17 @@
 #include "media/base/media_export.h"
 
 namespace base {
+class File;
 class FilePath;
 class SingleThreadTaskRunner;
 }
 
 namespace media {
 
+using CreateFileReplyCallback = base::OnceCallback<void(base::File)>;
+using CreateFileRequestCallback =
+    base::RepeatingCallback<void(const base::FilePath&,
+                                 CreateFileReplyCallback reply_cb)>;
 class AudioBus;
 
 // Interface for feeding data to a recorder.
@@ -52,12 +57,14 @@ class MEDIA_EXPORT AudioDebugRecordingHelper : public AudioDebugRecorder {
   AudioDebugRecordingHelper(
       const AudioParameters& params,
       scoped_refptr<base::SingleThreadTaskRunner> task_runner,
+      CreateFileRequestCallback create_file_cb,
       base::OnceClosure on_destruction_closure);
   ~AudioDebugRecordingHelper() override;
 
   // Enable debug recording. The create callback is first run to create an
   // AudioDebugFileWriter.
   virtual void EnableDebugRecording(const base::FilePath& file_name);
+  void EnableDebugRecordingForFile(base::File file);
 
   // Disable debug recording. The AudioDebugFileWriter is destroyed.
   virtual void DisableDebugRecording();
@@ -85,6 +92,8 @@ class MEDIA_EXPORT AudioDebugRecordingHelper : public AudioDebugRecorder {
 
   // The task runner for accessing |debug_writer_|.
   scoped_refptr<base::SingleThreadTaskRunner> task_runner_;
+
+  CreateFileRequestCallback create_file_cb_;
 
   // Runs in destructor if set.
   base::OnceClosure on_destruction_closure_;
