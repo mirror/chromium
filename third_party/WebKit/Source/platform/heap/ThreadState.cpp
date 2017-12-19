@@ -646,12 +646,6 @@ void ThreadState::ScheduleIncrementalMarkingStep() {
   SetGCState(kIncrementalMarkingStepScheduled);
 }
 
-void ThreadState::ScheduleIncrementalMarkingFinalize() {
-  CHECK(!IsSweepingInProgress());
-
-  SetGCState(kIncrementalMarkingFinalizeScheduled);
-}
-
 void ThreadState::ScheduleIdleGC() {
   if (IsSweepingInProgress()) {
     SetGCState(kSweepingAndIdleGCScheduled);
@@ -707,7 +701,6 @@ void UnexpectedGCState(ThreadState::GCState gc_state) {
     UNEXPECTED_GCSTATE(kSweepingAndPreciseGCScheduled);
     UNEXPECTED_GCSTATE(kIncrementalMarkingStartScheduled);
     UNEXPECTED_GCSTATE(kIncrementalMarkingStepScheduled);
-    UNEXPECTED_GCSTATE(kIncrementalMarkingFinalizeScheduled);
     UNEXPECTED_GCSTATE(kPageNavigationGCScheduled);
   }
 }
@@ -724,9 +717,9 @@ void ThreadState::SetGCState(GCState gc_state) {
   switch (gc_state) {
     case kNoGCScheduled:
       DCHECK(CheckThread());
-      VERIFY_STATE_TRANSITION(
-          gc_state_ == kSweeping || gc_state_ == kSweepingAndIdleGCScheduled ||
-          gc_state_ == kIncrementalMarkingFinalizeScheduled);
+      VERIFY_STATE_TRANSITION(gc_state_ == kSweeping ||
+                              gc_state_ == kSweepingAndIdleGCScheduled ||
+                              gc_state_ == kIncrementalMarkingStepScheduled);
       break;
     case kIncrementalMarkingStartScheduled:
       DCHECK(CheckThread());
@@ -737,10 +730,6 @@ void ThreadState::SetGCState(GCState gc_state) {
       DCHECK(CheckThread());
       VERIFY_STATE_TRANSITION(gc_state_ == kIncrementalMarkingStartScheduled ||
                               gc_state_ == kIncrementalMarkingStepScheduled);
-      break;
-    case kIncrementalMarkingFinalizeScheduled:
-      DCHECK(CheckThread());
-      VERIFY_STATE_TRANSITION(gc_state_ == kIncrementalMarkingStepScheduled);
       break;
     case kIdleGCScheduled:
     case kPreciseGCScheduled:
@@ -812,9 +801,6 @@ void ThreadState::RunScheduledGC(BlinkGC::StackState stack_state) {
       break;
     case kIncrementalMarkingStepScheduled:
       IncrementalMarkingStep();
-      break;
-    case kIncrementalMarkingFinalizeScheduled:
-      IncrementalMarkingFinalize();
       break;
     default:
       break;
@@ -1227,7 +1213,7 @@ void ThreadState::IncrementalMarkingStart() {
 
 void ThreadState::IncrementalMarkingStep() {
   DataLogF("IncrementalMarkingStep\n");
-  ScheduleIncrementalMarkingFinalize();
+  IncrementalMarkingFinalize();
 }
 
 void ThreadState::IncrementalMarkingFinalize() {

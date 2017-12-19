@@ -139,7 +139,6 @@ class PLATFORM_EXPORT ThreadState {
     kIdleGCScheduled,
     kIncrementalMarkingStartScheduled,
     kIncrementalMarkingStepScheduled,
-    kIncrementalMarkingFinalizeScheduled,
     kPreciseGCScheduled,
     kFullGCScheduled,
     kPageNavigationGCScheduled,
@@ -258,7 +257,6 @@ class PLATFORM_EXPORT ThreadState {
 
   void ScheduleIncrementalMarkingStart();
   void ScheduleIncrementalMarkingStep();
-  void ScheduleIncrementalMarkingFinalize();
 
   void IncrementalMarkingStart();
   void IncrementalMarkingStep();
@@ -266,8 +264,7 @@ class PLATFORM_EXPORT ThreadState {
 
   bool IsIncrementalMarkingInProgress() const {
     return GcState() == kIncrementalMarkingStartScheduled ||
-           GcState() == kIncrementalMarkingStepScheduled ||
-           GcState() == kIncrementalMarkingFinalizeScheduled;
+           GcState() == kIncrementalMarkingStepScheduled;
   }
 
   // A GC runs in the following sequence.
