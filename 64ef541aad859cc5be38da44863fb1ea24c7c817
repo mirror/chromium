@@ -50,6 +50,24 @@
       "revId": "64ef541aad859cc5be38da44863fb1ea24c7c817",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "369f1c7e_4985c82e",
+        "filename": "ui/shell_dialogs/select_file_dialog_mac.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-12-19T22:44:13Z",
+      "side": 1,
+      "message": "I added you to the bug, sorry about that. It seems that shouldEnableURL works differently for folder upload dialogs vs file upload dialogs. I thought that shouldEnableURL enables/disables the OK button, which is how it appears to work for folder upload... but for file uploads, it just disables all URLs. I\u0027m reverting and will investigate, and can also address your other nits when re-landing.",
+      "parentUuid": "590a4b57_2d1cdf82",
+      "revId": "64ef541aad859cc5be38da44863fb1ea24c7c817",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
