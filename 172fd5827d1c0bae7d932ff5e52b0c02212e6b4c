@@ -311,6 +311,30 @@
     },
     {
       "key": {
+        "uuid": "521e4582_6e1d01c9",
+        "filename": "content/network/data_pipe_element_reader.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-12-19T20:19:38Z",
+      "side": 1,
+      "message": "Randy: I didn\u0027t find relevant document either. The location that you pointed to seems to be a good place to talk about this. And also the following place:\nhttps://cs.chromium.org/chromium/src/mojo/public/c/system/types.h?rcl\u003d46c8bf4a955116f20f839f88720b28de9571a7ca\u0026l\u003d139\n\nYou might want rockot@ to review the change. (I am happy to, but he was the original author of this part.)\n\nMatt: That sounds an interesting idea to me!",
+      "parentUuid": "05c34fcb_d027e970",
+      "range": {
+        "startLine": 94,
+        "startChar": 18,
+        "endLine": 94,
+        "endChar": 30
+      },
+      "revId": "172fd5827d1c0bae7d932ff5e52b0c02212e6b4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a172f978_3dabec5f",
         "filename": "content/network/data_pipe_element_reader.h",
         "patchSetId": 5
