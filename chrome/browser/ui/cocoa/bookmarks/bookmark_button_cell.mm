@@ -403,19 +403,15 @@ const CGFloat kKernAmount = 0.2;
 
 - (NSRect)titleRectForBounds:(NSRect)theRect {
   NSRect textRect = [super titleRectForBounds:theRect];
-  NSRect imageRect = [self imageRectForBounds:theRect];
-  if (cocoa_l10n_util::ShouldDoExperimentalRTLLayout()) {
-    textRect.origin.x = kTrailingPadding;
-    if (drawFolderArrow_) {
-      textRect.origin.x +=
-          [arrowImage_ size].width + kHierarchyButtonTrailingPadding;
-    }
-    textRect.size.width =
-        NSMinX(imageRect) - textRect.origin.x - kIconTextSpacer;
-  } else {
-    textRect.origin.x = NSMaxX(imageRect) + kIconTextSpacer;
-  }
-  return textRect;
+  NSRect iconRect = cocoa_l10n_util::RectFlippedInRectIfRTL(
+      [self imageRectForBounds:theRect], theRect);
+  textRect.origin.x = NSMaxX(iconRect) + kIconTextSpacer;
+  textRect.size.width =
+      NSWidth(theRect) - NSMinX(textRect) - kTrailingPadding -
+      (drawFolderArrow_
+           ? ([arrowImage_ size].width + kHierarchyButtonTrailingPadding)
+           : 0);
+  return cocoa_l10n_util::RectFlippedInRectIfRTL(textRect, theRect);
 }
 
 - (void)drawFocusRingMaskWithFrame:(NSRect)cellFrame
