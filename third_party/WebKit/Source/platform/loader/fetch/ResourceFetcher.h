@@ -75,6 +75,9 @@ class PLATFORM_EXPORT ResourceFetcher
                             const ResourceFactory&,
                             ResourceClient*,
                             const SubstituteData& = SubstituteData());
+  Resource* RequestResource(FetchParameters&,
+                            const ResourceFactory&,
+                            const SubstituteData& = SubstituteData());
 
   Resource* CachedResource(const KURL&) const;
 
@@ -185,10 +188,6 @@ class PLATFORM_EXPORT ResourceFetcher
       bool is_link_preload = false);
 
   enum PrepareRequestResult { kAbort, kContinue, kBlock };
-
-  Resource* RequestResource(FetchParameters&,
-                            const ResourceFactory&,
-                            const SubstituteData&);
   PrepareRequestResult PrepareRequest(FetchParameters&,
                                       const ResourceFactory&,
                                       const SubstituteData&,

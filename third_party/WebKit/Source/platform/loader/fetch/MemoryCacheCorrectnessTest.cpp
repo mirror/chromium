@@ -82,11 +82,11 @@ class MemoryCacheCorrectnessTest : public ::testing::Test {
   }
   // TODO(toyoshim): Consider to use MockResource for all tests instead of
   // RawResource.
-  RawResource* FetchRawResource() {
+  Resource* FetchRawResource() {
     ResourceRequest resource_request{KURL(kResourceURL)};
     resource_request.SetRequestContext(WebURLRequest::kRequestContextInternal);
     FetchParameters fetch_params(resource_request);
-    return RawResource::Fetch(fetch_params, Fetcher(), nullptr);
+    return Fetcher()->RequestResource(fetch_params, RawResource::Factory());
   }
   MockResource* FetchMockResource() {
     ResourceRequest resource_request{KURL(kResourceURL)};
@@ -432,7 +432,9 @@ TEST_F(MemoryCacheCorrectnessTest, PostToSameURLTwice) {
   ResourceRequest request2{KURL(kResourceURL)};
   request2.SetHTTPMethod(HTTPNames::POST);
   FetchParameters fetch2(request2);
-  RawResource* resource2 = RawResource::FetchSynchronously(fetch2, Fetcher());
+  fetch2.MakeSynchronous();
+  Resource* resource2 =
+      Fetcher()->RequestResource(fetch2, RawResource::Factory());
 
   EXPECT_EQ(resource2, GetMemoryCache()->ResourceForURL(request2.Url()));
   EXPECT_NE(resource1, resource2);
@@ -472,9 +474,7 @@ TEST_F(MemoryCacheCorrectnessTest, 302RedirectNotImplicitlyFresh) {
   GetMemoryCache()->Add(first_resource);
 
   AdvanceClock(500.);
-
-  RawResource* fetched = FetchRawResource();
-  EXPECT_NE(first_resource, fetched);
+  EXPECT_NE(first_resource, FetchRawResource());
 }
 
 TEST_F(MemoryCacheCorrectnessTest, 302RedirectExplicitlyFreshMaxAge) {

@@ -114,7 +114,8 @@ TEST_F(ResourceFetcherTest, StartLoadAfterFrameDetach) {
   ResourceRequest resource_request(secure_url);
   resource_request.SetRequestContext(WebURLRequest::kRequestContextInternal);
   FetchParameters fetch_params(resource_request);
-  Resource* resource = RawResource::Fetch(fetch_params, fetcher, nullptr);
+  Resource* resource =
+      fetcher->RequestResource(fetch_params, RawResource::Factory());
   ASSERT_TRUE(resource);
   EXPECT_TRUE(resource->ErrorOccurred());
   EXPECT_TRUE(resource->GetResourceError().IsAccessCheck());
@@ -162,7 +163,8 @@ TEST_F(ResourceFetcherTest, Vary) {
   resource_request.SetRequestContext(WebURLRequest::kRequestContextInternal);
   FetchParameters fetch_params(resource_request);
   platform_->GetURLLoaderMockFactory()->RegisterURL(url, WebURLResponse(), "");
-  Resource* new_resource = RawResource::Fetch(fetch_params, fetcher, nullptr);
+  Resource* new_resource =
+      fetcher->RequestResource(fetch_params, RawResource::Factory());
   EXPECT_NE(resource, new_resource);
   new_resource->Loader()->Cancel();
 }
@@ -179,8 +181,8 @@ TEST_F(ResourceFetcherTest, NavigationTimingInfo) {
   resource_request.SetRequestContext(WebURLRequest::kRequestContextForm);
   FetchParameters fetch_params(resource_request);
   platform_->GetURLLoaderMockFactory()->RegisterURL(url, WebURLResponse(), "");
-  Resource* resource = RawResource::FetchMainResource(
-      fetch_params, fetcher, nullptr, SubstituteData());
+  Resource* resource = fetcher->RequestResource(
+      fetch_params, RawResource::Factory(Resource::kMainResource));
   resource->ResponseReceived(response, nullptr);
   EXPECT_EQ(resource->GetType(), Resource::kMainResource);
 
@@ -221,7 +223,8 @@ TEST_F(ResourceFetcherTest, VaryOnBack) {
   resource_request.SetCacheMode(mojom::FetchCacheMode::kForceCache);
   resource_request.SetRequestContext(WebURLRequest::kRequestContextInternal);
   FetchParameters fetch_params(resource_request);
-  Resource* new_resource = RawResource::Fetch(fetch_params, fetcher, nullptr);
+  Resource* new_resource =
+      fetcher->RequestResource(fetch_params, RawResource::Factory());
   EXPECT_EQ(resource, new_resource);
 }
 
@@ -310,8 +313,10 @@ TEST_F(ResourceFetcherTest, DontReuseMediaDataUrl) {
   options.data_buffering_policy = kDoNotBufferData;
   options.initiator_info.name = FetchInitiatorTypeNames::internal;
   FetchParameters fetch_params(request, options);
-  Resource* resource1 = RawResource::FetchMedia(fetch_params, fetcher, nullptr);
-  Resource* resource2 = RawResource::FetchMedia(fetch_params, fetcher, nullptr);
+  Resource* resource1 = fetcher->RequestResource(
+      fetch_params, RawResource::Factory(Resource::kMedia));
+  Resource* resource2 = fetcher->RequestResource(
+      fetch_params, RawResource::Factory(Resource::kMedia));
   EXPECT_NE(resource1, resource2);
 }
 
@@ -375,7 +380,8 @@ TEST_F(ResourceFetcherTest, ResponseOnCancel) {
   FetchParameters fetch_params(resource_request);
   Persistent<ServeRequestsOnCompleteClient> client =
       new ServeRequestsOnCompleteClient();
-  Resource* resource = RawResource::Fetch(fetch_params, fetcher, client);
+  Resource* resource =
+      fetcher->RequestResource(fetch_params, RawResource::Factory());
   resource->Loader()->Cancel();
 }
 
@@ -408,7 +414,7 @@ class ScopedMockRedirectRequester {
     ResourceRequest resource_request(url);
     resource_request.SetRequestContext(WebURLRequest::kRequestContextInternal);
     FetchParameters fetch_params(resource_request);
-    RawResource::Fetch(fetch_params, fetcher, nullptr);
+    fetcher->RequestResource(fetch_params, RawResource::Factory());
     Platform::Current()->GetURLLoaderMockFactory()->ServeAsynchronousRequests();
   }
 
@@ -463,7 +469,8 @@ TEST_F(ResourceFetcherTest, SynchronousRequest) {
   resource_request.SetRequestContext(WebURLRequest::kRequestContextInternal);
   FetchParameters fetch_params(resource_request);
   fetch_params.MakeSynchronous();
-  Resource* resource = RawResource::Fetch(fetch_params, fetcher, nullptr);
+  Resource* resource =
+      fetcher->RequestResource(fetch_params, RawResource::Factory());
   EXPECT_TRUE(resource->IsLoaded());
   EXPECT_EQ(ResourceLoadPriority::kHighest,
             resource->GetResourceRequest().Priority());
@@ -696,7 +703,8 @@ TEST_F(ResourceFetcherTest, Revalidate304) {
   resource_request.SetRequestContext(WebURLRequest::kRequestContextInternal);
   FetchParameters fetch_params(resource_request);
   platform_->GetURLLoaderMockFactory()->RegisterURL(url, WebURLResponse(), "");
-  Resource* new_resource = RawResource::Fetch(fetch_params, fetcher, nullptr);
+  Resource* new_resource =
+      fetcher->RequestResource(fetch_params, RawResource::Factory());
   fetcher->StopFetching();
 
   EXPECT_NE(resource, new_resource);
@@ -757,8 +765,8 @@ TEST_F(ResourceFetcherTest, ContentIdURL) {
     resource_request.SetFrameType(
         network::mojom::RequestContextFrameType::kNested);
     FetchParameters fetch_params(resource_request);
-    RawResource* resource = RawResource::FetchMainResource(
-        fetch_params, fetcher, nullptr, SubstituteData());
+    Resource* resource = fetcher->RequestResource(
+        fetch_params, RawResource::Factory(Resource::kMainResource));
     EXPECT_NE(nullptr, resource);
   }
 
@@ -767,8 +775,8 @@ TEST_F(ResourceFetcherTest, ContentIdURL) {
     ResourceRequest resource_request(url);
     resource_request.SetRequestContext(WebURLRequest::kRequestContextVideo);
     FetchParameters fetch_params(resource_request);
-    RawResource* resource =
-        RawResource::FetchMedia(fetch_params, fetcher, nullptr);
+    Resource* resource =
+        fetcher->RequestResource(fetch_params, RawResource::Factory());
     EXPECT_NE(nullptr, resource);
   }
 }
