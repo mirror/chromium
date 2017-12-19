@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "09e259ea_5ba09154",
+        "filename": "media/mojo/interfaces/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-12-19T20:48:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bd9de886_798846b5",
+      "range": {
+        "startLine": 59,
+        "startChar": 4,
+        "endLine": 59,
+        "endChar": 42
+      },
+      "revId": "44f297ea890f4083fd75800f8f88202424be7888",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9006425e_a8eb3f59",
         "filename": "media/mojo/interfaces/cdm_service.mojom",
         "patchSetId": 5
@@ -36,6 +60,30 @@
       "writtenOn": "2017-12-19T19:18:34Z",
       "side": 1,
       "message": "Should this be 2017 since it\u0027s a new file?",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "44f297ea890f4083fd75800f8f88202424be7888",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e304f453_358dc3e9",
+        "filename": "media/mojo/interfaces/cdm_service.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-12-19T20:48:00Z",
+      "side": 1,
+      "message": "I think the convention is not to update the year for copied/moved files.",
+      "parentUuid": "9006425e_a8eb3f59",
       "range": {
         "startLine": 1,
         "startChar": 13,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "297bdb00_3e503415",
+        "filename": "media/mojo/interfaces/cdm_service.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-12-19T20:48:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e7a84b9_dc9e5634",
+      "range": {
+        "startLine": 20,
+        "startChar": 14,
+        "endLine": 20,
+        "endChar": 26
+      },
+      "revId": "44f297ea890f4083fd75800f8f88202424be7888",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8b49edf1_fff2a675",
         "filename": "media/mojo/interfaces/cdm_service_mac.mojom",
         "patchSetId": 5
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "22a33fe7_eb267924",
+        "filename": "media/mojo/interfaces/cdm_service_mac.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-12-19T20:48:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8b49edf1_fff2a675",
+      "range": {
+        "startLine": 27,
+        "startChar": 31,
+        "endLine": 27,
+        "endChar": 43
+      },
+      "revId": "44f297ea890f4083fd75800f8f88202424be7888",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a05266f_ef188953",
         "filename": "media/mojo/services/cdm_service.cc",
         "patchSetId": 5
@@ -105,6 +201,30 @@
       "writtenOn": "2017-12-19T19:18:34Z",
       "side": 1,
       "message": "and here.",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "44f297ea890f4083fd75800f8f88202424be7888",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a7b3928_95eca71b",
+        "filename": "media/mojo/services/cdm_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-12-19T20:48:00Z",
+      "side": 1,
+      "message": "ditto",
+      "parentUuid": "3a05266f_ef188953",
       "range": {
         "startLine": 1,
         "startChar": 13,
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "e56e4c26_062d1998",
+        "filename": "media/mojo/services/cdm_service.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-12-19T20:48:00Z",
+      "side": 1,
+      "message": "ditto",
+      "parentUuid": "0d78d0b8_b511463c",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "44f297ea890f4083fd75800f8f88202424be7888",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9896c6e4_b4f938e8",
         "filename": "media/mojo/services/cdm_service.h",
         "patchSetId": 5
@@ -160,6 +304,30 @@
       "revId": "44f297ea890f4083fd75800f8f88202424be7888",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "080f0108_29813d07",
+        "filename": "media/mojo/services/cdm_service.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-12-19T20:48:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9896c6e4_b4f938e8",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 21
+      },
+      "revId": "44f297ea890f4083fd75800f8f88202424be7888",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "446762c9_6b161c69",
+        "filename": "media/mojo/services/media_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-12-19T20:48:00Z",
+      "side": 1,
+      "message": "\u003e More #include questions:\n\u003e ptr_util.h not needed if you change the one base::MakeUnique to std::make_unique\n\nDone\n\n\u003e media_log.h already in .h file\n\nDone\n\n\u003e media-features.h not needed anymore?\n\nI need this for ENABLE_LIBRARY_CDMS\n\n\u003e add logging.h?\n\nDone",
+      "parentUuid": "adc910eb_5fb1eb7c",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 33
+      },
+      "revId": "44f297ea890f4083fd75800f8f88202424be7888",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bfe8ddcf_3d6b9442",
         "filename": "media/mojo/services/media_service.h",
         "patchSetId": 5
@@ -197,6 +389,30 @@
       "writtenOn": "2017-12-19T19:18:34Z",
       "side": 1,
       "message": "It doesn\u0027t look like a bunch of these are really needed (although this is by looking at the code, not actually trying it).\ncallback.h -\u003e callback_forward.h (although then you\u0027ll need callback.h in the .cc)\ncompiler_specific.h not needed?\nref-counted.h not needed?\nbuild-config.h not needed?\ngurl.h not needed?",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 21
+      },
+      "revId": "44f297ea890f4083fd75800f8f88202424be7888",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7467c90e_9e1c4676",
+        "filename": "media/mojo/services/media_service.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-12-19T20:48:00Z",
+      "side": 1,
+      "message": "Good catch! These are probably from years of changes without properly updating these includes.",
+      "parentUuid": "bfe8ddcf_3d6b9442",
       "range": {
         "startLine": 12,
         "startChar": 0,
