@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ef64d2e_1c6dcd7c",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/fetch/api/request/request-keepalive-quota.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-12-19T02:52:27Z",
+      "side": 1,
+      "message": "could you please explain the reason of the addition of .text() calls in the CL description?",
+      "revId": "47dc878db487e864e07a0d8330ddfca965e7c124",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09b7a3bf_c4adc28f",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/fetch/api/request/request-keepalive-quota.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-12-19T02:52:27Z",
+      "side": 1,
+      "message": "it\u0027s -\u003e its",
+      "revId": "47dc878db487e864e07a0d8330ddfca965e7c124",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96cf4cc3_db40e7d8",
+        "filename": "third_party/WebKit/Source/modules/fetch/Request.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-12-19T02:52:27Z",
+      "side": 1,
+      "message": "is this added by clang?",
+      "revId": "47dc878db487e864e07a0d8330ddfca965e7c124",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
