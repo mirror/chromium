@@ -31,6 +31,7 @@
 #include "platform/scheduler/renderer/webthread_impl_for_renderer_scheduler.h"
 #include "public/platform/Platform.h"
 #include "public/platform/scheduler/renderer_process_type.h"
+#include "third_party/WebKit/common/page/launching_process_state.h"
 
 namespace blink {
 namespace scheduler {
@@ -239,7 +240,7 @@ RendererSchedulerImpl::MainThreadOnly::MainThreadOnly(
                             renderer_scheduler_impl,
                             RAILModeToString),
       renderer_hidden(false),
-      renderer_backgrounded(false,
+      renderer_backgrounded(kLaunchingProcessIsBackgrounded,
                             "RendererScheduler.Backgrounded",
                             renderer_scheduler_impl,
                             BackgroundStateToString),
@@ -251,11 +252,10 @@ RendererSchedulerImpl::MainThreadOnly::MainThreadOnly(
           "RendererScheduler.LoadingTaskEstimatedCostMs",
           renderer_scheduler_impl,
           TimeDeltaToMilliseconds),
-      timer_task_estimated_cost(
-          base::TimeDelta(),
-          "RendererScheduler.TimerTaskEstimatedCostMs",
-          renderer_scheduler_impl,
-          TimeDeltaToMilliseconds),
+      timer_task_estimated_cost(base::TimeDelta(),
+                                "RendererScheduler.TimerTaskEstimatedCostMs",
+                                renderer_scheduler_impl,
+                                TimeDeltaToMilliseconds),
       loading_tasks_seem_expensive(
           false,
           "RendererScheduler.LoadingTasksSeemExpensive",
