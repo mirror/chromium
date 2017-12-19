@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "6d9273b3_daaeaa16",
+        "filename": "ui/shell_dialogs/select_file_dialog_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 516,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-12-19T22:33:38Z",
+      "side": 1,
+      "message": "Oops, sorry, I missed both of those things. I have not seen that initialization syntax before but presumably it works because otherwise we\u0027d have a lot of other bugs in this file...",
+      "parentUuid": "a66a8d0f_c93af4ec",
+      "range": {
+        "startLine": 516,
+        "startChar": 17,
+        "endLine": 516,
+        "endChar": 33
+      },
+      "revId": "ded3f6b42c6959d7dfb807a4174f5263a4a5504a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "afc83165_52f68869",
         "filename": "ui/shell_dialogs/select_file_dialog_win.cc",
         "patchSetId": 1
