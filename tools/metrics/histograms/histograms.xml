@@ -7357,6 +7357,14 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="BlinkGC.TimeForCoalesce" units="ms">
+  <owner>haraken@chromium.org</owner>
+  <owner>hpayer@chromium.org</owner>
+  <summary>
+    Duration of time taken to perform coalescing of memory in the Blink GC.
+  </summary>
+</histogram>
+
 <histogram name="BlinkGC.TimeForGlobalWeakProcessing" units="ms">
   <owner>haraken@chromium.org</owner>
   <summary>
@@ -7399,6 +7407,12 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </obsolete>
   <owner>haraken@chromium.org</owner>
   <summary>Duration of time taken to run thread-local weak processing.</summary>
+</histogram>
+
+<histogram name="BlinkGC.TimeForTotalCollectGarbage" units="ms">
+  <owner>haraken@chromium.org</owner>
+  <owner>hpayer@chromium.org</owner>
+  <summary>Duration of total Blink garbage collection time.</summary>
 </histogram>
 
 <histogram name="BlinkGC.TotalAllocatedSpace" units="KB">
