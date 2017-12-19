@@ -2061,7 +2061,7 @@ void LocalFrameView::UpdateLayersAndCompositingAfterScrollIfNeeded() {
       // TODO(skobes): Resolve circular dependency between scroll offset and
       // compositing state, and remove this disabler. https://crbug.com/420741
       DisableCompositingQueryAsserts disabler;
-      layer->UpdateLayerPositionsAfterOverflowScroll();
+      layer->UpdateLayerPosition();
       layout_object->SetMayNeedPaintInvalidationSubtree();
     }
   }

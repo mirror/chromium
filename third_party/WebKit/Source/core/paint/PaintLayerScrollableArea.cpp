@@ -1753,6 +1753,15 @@ void PaintLayerScrollableArea::InvalidatePaintForStickyDescendants() {
   }
 }
 
+void PaintLayerScrollableArea::UpdateLayerPositionForStickyDescendants() {
+  if (PaintLayerScrollableAreaRareData* d = RareData()) {
+    for (PaintLayer* sticky_layer : d->sticky_constraints_map_.Keys()) {
+      sticky_layer->UpdateLayerPosition();
+      sticky_layer->SetNeedsCompositingInputsUpdate();
+    }
+  }
+}
+
 IntSize PaintLayerScrollableArea::OffsetFromResizeCorner(
     const IntPoint& absolute_point) const {
   // Currently the resize corner is either the bottom right corner or the bottom

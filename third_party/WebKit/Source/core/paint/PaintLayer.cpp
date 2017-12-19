@@ -393,7 +393,21 @@ bool PaintLayer::ScrollsWithRespectTo(const PaintLayer* other) const {
 
 void PaintLayer::UpdateLayerPositionsAfterOverflowScroll() {
   ClearClipRects();
-  UpdateLayerPositionRecursive();
+  for (PaintLayer* child = FirstChild(); child; child = child->NextSibling())
+    child->UpdateLayerPosition();
+  if (LayoutBox* box = GetLayoutBox()) {
+    if (box->IsLayoutBlock()) {
+      if (auto positioned_descendants =
+              ToLayoutBlock(box)->PositionedObjects()) {
+        for (LayoutBox* descendant : *positioned_descendants) {
+          if (descendant->HasLayer() && descendant->Layer()->Parent() != this) {
+            descendant->Layer()->UpdateLayerPosition();
+          }
+        }
+      }
+    }
+  }
+  GetScrollableArea()->UpdateLayerPositionForStickyDescendants();
 }
 
 void PaintLayer::UpdateTransformationMatrix() {
