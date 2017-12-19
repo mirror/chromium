@@ -16,6 +16,24 @@
       "revId": "15732197ff3ad8cb8a7b0df98597ae6bf78dcc0e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "034c5b16_f8b2eb42",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/dom/usvstring-reflection.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1242274
+      },
+      "writtenOn": "2017-12-19T12:40:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "596b4864_b4336360",
+      "revId": "15732197ff3ad8cb8a7b0df98597ae6bf78dcc0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
