@@ -150,6 +150,29 @@
       "revId": "2d633bb9619b9bbc21cac47d759188fb944c4ff6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3cca9739_6190b9da",
+        "filename": "tools/mb/mb_config.pyl",
+        "patchSetId": 7
+      },
+      "lineNbr": 561,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-12-19T00:43:31Z",
+      "side": 0,
+      "message": "This one needs to be reinstated too. Sorry I missed this the first time around.",
+      "range": {
+        "startLine": 561,
+        "startChar": 7,
+        "endLine": 561,
+        "endChar": 37
+      },
+      "revId": "2d633bb9619b9bbc21cac47d759188fb944c4ff6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
