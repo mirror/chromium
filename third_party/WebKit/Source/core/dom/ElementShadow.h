@@ -99,6 +99,13 @@ inline ShadowRoot* Element::GetShadowRoot() const {
   return nullptr;
 }
 
+inline ShadowRoot* Element::ShadowRootIfV1() const {
+  ShadowRoot* root = GetShadowRoot();
+  if (root && root->IsV1())
+    return root;
+  return nullptr;
+}
+
 inline ElementShadow* ElementShadow::ContainingShadow() const {
   if (ShadowRoot* parent_root = Host().ContainingShadowRoot())
     return parent_root->Owner();
