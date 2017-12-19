@@ -128,6 +128,20 @@ NSRectEdge TrailingEdge() {
   return ShouldDoExperimentalRTLLayout() ? NSMinXEdge : NSMaxXEdge;
 }
 
+CGFloat LeadingX(NSRect rect) {
+  return ShouldDoExperimentalRTLLayout() ? NSMaxX(rect) : NSMinX(rect);
+}
+
+CGFloat TrailingX(NSRect rect) {
+  return ShouldDoExperimentalRTLLayout() ? NSMinX(rect) : NSMaxX(rect);
+}
+
+NSRect RectMaybeFlippedInRect(NSRect rect, NSRect inRect) {
+  if (ShouldDoExperimentalRTLLayout())
+    rect.origin.x = NSWidth(inRect) - NSWidth(rect) - NSMinX(rect);
+  return rect;
+}
+
 // Adapted from Apple's RTL docs (goo.gl/cBaFnT)
 NSImage* FlippedImage(NSImage* image) {
   const NSSize size = [image size];
