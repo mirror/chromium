@@ -2330,7 +2330,7 @@ bool AXNodeObject::OnNativeFocusAction() {
   // This won't prevent anyone from having a click handler on the object's
   // container.
   if (!IsClickable() && element->FastHasAttribute(idAttr) &&
-      AncestorExposesActiveDescendant()) {
+      CanBeActiveDescendant()) {
     return OnNativeClickAction();
   }
 

@@ -460,8 +460,8 @@ class MODULES_EXPORT AXObject : public GarbageCollectedFinalized<AXObject> {
   void SetLastKnownIsIgnoredValue(bool);
   bool HasInheritedPresentationalRole() const;
   bool IsPresentationalChild() const;
-  bool AncestorExposesActiveDescendant() const;
-  bool ComputeAncestorExposesActiveDescendant() const;
+  bool CanBeActiveDescendant() const;
+  bool ComputeCanBeActiveDescendant() const;
 
   //
   // Accessible name calculation
@@ -880,7 +880,7 @@ class MODULES_EXPORT AXObject : public GarbageCollectedFinalized<AXObject> {
   mutable bool cached_is_descendant_of_leaf_node_ : 1;
   mutable bool cached_is_descendant_of_disabled_node_ : 1;
   mutable bool cached_has_inherited_presentational_role_ : 1;
-  mutable bool cached_ancestor_exposes_active_descendant_ : 1;
+  mutable bool cached_can_be_active_descendant_ : 1;
   mutable bool cached_is_editable_root_;
   mutable Member<AXObject> cached_live_region_root_;
 
@@ -892,6 +892,8 @@ class MODULES_EXPORT AXObject : public GarbageCollectedFinalized<AXObject> {
   void UpdateCachedAttributeValuesIfNeeded() const;
 
  private:
+  bool IsARIAControlledByTextboxWithActiveDescendant() const;
+  bool AncestorExposesActiveDescendant() const;
   bool IsCheckable() const;
   static bool IsNativeCheckboxInMixedState(const Node*);
   static bool IncludesARIAWidgetRole(const String&);
