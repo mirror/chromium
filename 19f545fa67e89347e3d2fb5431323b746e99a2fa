@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c98975b1_7a29da22",
+        "filename": "components/exo/buffer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1161469
+      },
+      "writtenOn": "2017-12-19T08:49:08Z",
+      "side": 1,
+      "message": "I used a temp here to break it up a bit since it looked a little to unwieldy to inline the function call in the call to CopyTextureCHROMIUM below.",
+      "parentUuid": "6da632c1_b200158e",
+      "revId": "19f545fa67e89347e3d2fb5431323b746e99a2fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3b980253_18c50aaa",
         "filename": "components/viz/service/display_embedder/buffer_queue.h",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-15T16:19:23Z",
       "side": 1,
       "message": "can we remove this now? as user of it can just use buffer_format() + helper function..",
+      "revId": "19f545fa67e89347e3d2fb5431323b746e99a2fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8445e299_116900d6",
+        "filename": "components/viz/service/display_embedder/buffer_queue.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1161469
+      },
+      "writtenOn": "2017-12-19T08:49:08Z",
+      "side": 1,
+      "message": "Yes, done.",
+      "parentUuid": "3b980253_18c50aaa",
       "revId": "19f545fa67e89347e3d2fb5431323b746e99a2fa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "6670b460_b8d54f08",
+        "filename": "gpu/command_buffer/common/gpu_memory_buffer_support.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1161469
+      },
+      "writtenOn": "2017-12-19T08:49:08Z",
+      "side": 1,
+      "message": "Added a comment in ui/gfx/buffer_format_util.h where I moved it.",
+      "parentUuid": "334ea752_a3a431f5",
+      "revId": "19f545fa67e89347e3d2fb5431323b746e99a2fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "51b303f2_1204b049",
         "filename": "gpu/command_buffer/common/gpu_memory_buffer_support.h",
         "patchSetId": 2
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "5123796d_2fb547be",
+        "filename": "gpu/command_buffer/common/gpu_memory_buffer_support.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1161469
+      },
+      "writtenOn": "2017-12-19T08:49:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "51b303f2_1204b049",
+      "revId": "19f545fa67e89347e3d2fb5431323b746e99a2fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c60b5af0_25975f47",
         "filename": "gpu/ipc/in_process_command_buffer.cc",
         "patchSetId": 2
@@ -81,6 +153,24 @@
       "writtenOn": "2017-12-15T16:19:23Z",
       "side": 1,
       "message": "can remove temporary variable if you like",
+      "revId": "19f545fa67e89347e3d2fb5431323b746e99a2fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c813cac_9926a34b",
+        "filename": "gpu/ipc/in_process_command_buffer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 803,
+      "author": {
+        "id": 1161469
+      },
+      "writtenOn": "2017-12-19T08:49:08Z",
+      "side": 1,
+      "message": "Removed GLImageSharedMemory internalformat argument instead.",
+      "parentUuid": "c60b5af0_25975f47",
       "revId": "19f545fa67e89347e3d2fb5431323b746e99a2fa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "110ff2f5_f661d458",
+        "filename": "gpu/ipc/service/gpu_channel.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 708,
+      "author": {
+        "id": 1161469
+      },
+      "writtenOn": "2017-12-19T08:49:08Z",
+      "side": 1,
+      "message": "Same resolution here.",
+      "parentUuid": "26b4ca7f_35842ddd",
+      "revId": "19f545fa67e89347e3d2fb5431323b746e99a2fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8d0ee963_aff4be1f",
         "filename": "ui/gl/gl_image_native_pixmap.cc",
         "patchSetId": 2
@@ -115,6 +223,24 @@
       "writtenOn": "2017-12-15T16:19:23Z",
       "side": 1,
       "message": "not sure you\u0027re allowed to include this here. see DEPS file. we might have to move the helper function ui/gfx",
+      "revId": "19f545fa67e89347e3d2fb5431323b746e99a2fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "feed214a_7450bbd4",
+        "filename": "ui/gl/gl_image_native_pixmap.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1161469
+      },
+      "writtenOn": "2017-12-19T08:49:08Z",
+      "side": 1,
+      "message": "Moved the helper to ui/gfx/buffer_format_util.h instead.",
+      "parentUuid": "8d0ee963_aff4be1f",
       "revId": "19f545fa67e89347e3d2fb5431323b746e99a2fa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "cc70be5f_a72e29ce",
+        "filename": "ui/gl/gl_image_native_pixmap.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1161469
+      },
+      "writtenOn": "2017-12-19T08:49:08Z",
+      "side": 1,
+      "message": "Removed. Hack to avoid using the implementation from gpu_memory_buffer_support.h which didn\u0027t link.",
+      "parentUuid": "f06800ba_254241f1",
+      "revId": "19f545fa67e89347e3d2fb5431323b746e99a2fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "59e688c5_cbdee20f",
         "filename": "ui/gl/gl_image_native_pixmap.h",
         "patchSetId": 2
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "02ab9114_a10e67c1",
+        "filename": "ui/gl/gl_image_native_pixmap.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1161469
+      },
+      "writtenOn": "2017-12-19T08:49:08Z",
+      "side": 1,
+      "message": "Yes, once I fix the unit tests.",
+      "parentUuid": "59e688c5_cbdee20f",
+      "revId": "19f545fa67e89347e3d2fb5431323b746e99a2fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "58c18bb3_55312773",
         "filename": "ui/gl/gl_image_native_pixmap.h",
         "patchSetId": 2
@@ -166,6 +328,24 @@
       "writtenOn": "2017-12-15T16:19:23Z",
       "side": 1,
       "message": "can we get format from pixmap_ instead?",
+      "revId": "19f545fa67e89347e3d2fb5431323b746e99a2fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11b15f19_5e990db9",
+        "filename": "ui/gl/gl_image_native_pixmap.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1161469
+      },
+      "writtenOn": "2017-12-19T08:49:08Z",
+      "side": 1,
+      "message": "Yes. Which makes me wonder why we take a format in the ctor.",
+      "parentUuid": "58c18bb3_55312773",
       "revId": "19f545fa67e89347e3d2fb5431323b746e99a2fa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
