@@ -279,6 +279,29 @@
     },
     {
       "key": {
+        "uuid": "10964f58_845dfc5f",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/metrics/PageLoadMetricsTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-12-19T14:41:44Z",
+      "side": 1,
+      "message": "is it possible to leave it as package private?",
+      "range": {
+        "startLine": 76,
+        "startChar": 4,
+        "endLine": 76,
+        "endChar": 11
+      },
+      "revId": "ae0f5b437de826e709b8b03167c26f1b31500680",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2b9674b1_36279664",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/metrics/PageLoadMetricsTest.java",
         "patchSetId": 3
@@ -323,6 +346,52 @@
       "revId": "ae0f5b437de826e709b8b03167c26f1b31500680",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4ba4dc3e_90ef46ef",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/metrics/StartupLoadingMetricsTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-12-19T14:41:44Z",
+      "side": 1,
+      "message": "naming-being-difficult: it does not have to load a URL, as we have with the blank page, it just calls the |loader|.\n\nrunAndWaitForPageLoadMetricsRecorded(InterruptibleRunnable runnable)? I think |runnable| would better hint at the latter having to have the method run(), but that is minor.\n\nI also see that 50% of uses is to load a URL with mActivityTestRule.loadUrl(...). I think having a method for that with just URL as parameter is valuable, it should be clearer/more-intuitive than the lambda syntax. We cannot replace all the various startMainActivity* with it, but it seems to be an improvement still.",
+      "range": {
+        "startLine": 69,
+        "startChar": 17,
+        "endLine": 69,
+        "endChar": 24
+      },
+      "revId": "ae0f5b437de826e709b8b03167c26f1b31500680",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb595783_5b46e180",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/metrics/StartupLoadingMetricsTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-12-19T14:41:44Z",
+      "side": 1,
+      "message": "nit: s/expected/expectedCount/",
+      "range": {
+        "startLine": 83,
+        "startChar": 46,
+        "endLine": 83,
+        "endChar": 54
+      },
+      "revId": "ae0f5b437de826e709b8b03167c26f1b31500680",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
