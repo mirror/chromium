@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a33e6965_6df6c50e",
+        "filename": "services/resource_coordinator/memory_instrumentation/queued_request_dispatcher.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1115925
+      },
+      "writtenOn": "2017-12-19T11:07:44Z",
+      "side": 1,
+      "message": "I think these replicate the constants in MemoryAllocatorDump, we should probably refer to those ones unless there is a good reason not to.",
+      "range": {
+        "startLine": 31,
+        "startChar": 11,
+        "endLine": 31,
+        "endChar": 22
+      },
+      "revId": "370acd02c2ca4bdb3965a665a4274e43342af494",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8736ec5c_c60189e3",
+        "filename": "services/resource_coordinator/memory_instrumentation/queued_request_dispatcher.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1115925
+      },
+      "writtenOn": "2017-12-19T11:07:44Z",
+      "side": 1,
+      "message": "AddChromeDumpToTraceIfEnabled and AddChromeDumpAndGlobalAndEdgesToTraceIfEnabled feel a bit odd now since we do the request-\u003eadd_to_trace check outside but the ShouldAddToTrace check inside then look at the bool result to decide if you should increment the failed_dumps.\n\nIt might be cleaner if the signature was: \nvoid AddChromeDumpToTrace(\n    const base::trace_event::MemoryDumpRequestArgs\u0026 args,\n    const GlobalDumpGraph::Process\u0026 process);\nAnd we handle !ShouldAddToTrace outside.",
+      "range": {
+        "startLine": 168,
+        "startChar": 5,
+        "endLine": 168,
+        "endChar": 34
+      },
+      "revId": "370acd02c2ca4bdb3965a665a4274e43342af494",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8684168b_c5f58ca4",
+        "filename": "services/resource_coordinator/memory_instrumentation/queued_request_dispatcher.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1115925
+      },
+      "writtenOn": "2017-12-19T11:07:44Z",
+      "side": 1,
+      "message": "I think you can get pid from process which would avoid the need to pass it in separately.",
+      "range": {
+        "startLine": 183,
+        "startChar": 29,
+        "endLine": 183,
+        "endChar": 32
+      },
+      "revId": "370acd02c2ca4bdb3965a665a4274e43342af494",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e8aea06_d6cd2e68",
+        "filename": "services/resource_coordinator/memory_instrumentation/queued_request_dispatcher.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1115925
+      },
+      "writtenOn": "2017-12-19T11:07:44Z",
+      "side": 1,
+      "message": "Same here.",
+      "range": {
+        "startLine": 190,
+        "startChar": 16,
+        "endLine": 190,
+        "endChar": 25
+      },
+      "revId": "370acd02c2ca4bdb3965a665a4274e43342af494",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
