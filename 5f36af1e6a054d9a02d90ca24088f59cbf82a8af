@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "19febaef_5e32fbb9",
+        "filename": "third_party/WebKit/Source/core/input/EventHandler.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 945,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2017-12-19T01:23:24Z",
+      "side": 1,
+      "message": "I vaguely remember we were setting some state here that we needed. But looking at the code I don\u0027t see anything that needs to be set for a fake mouse. Then it probably was something else I my mind.",
+      "revId": "5f36af1e6a054d9a02d90ca24088f59cbf82a8af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
