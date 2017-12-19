@@ -891,10 +891,13 @@ void WallpaperController::ShowUserWallpaper(
 }
 
 void WallpaperController::ShowSigninWallpaper() {
-  // TODO(crbug.com/791654): Call |SetDeviceWallpaperIfApplicable| from here.
-  SetDefaultWallpaperImpl(EmptyAccountId(), user_manager::USER_TYPE_REGULAR,
-                          true /*show_wallpaper=*/,
-                          MovableOnDestroyCallbackHolder());
+  if (ShouldSetDevicePolicyWallpaper()) {
+    SetDevicePolicyWallpaper();
+  } else {
+    SetDefaultWallpaperImpl(EmptyAccountId(), user_manager::USER_TYPE_REGULAR,
+                            true /*show_wallpaper=*/,
+                            MovableOnDestroyCallbackHolder());
+  }
 }
 
 void WallpaperController::RemoveUserWallpaper(
