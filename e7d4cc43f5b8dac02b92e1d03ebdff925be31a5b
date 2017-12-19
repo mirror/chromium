@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "75f804c3_e5c543c8",
+        "filename": "components/password_manager/core/browser/password_form_metrics_recorder.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-12-19T14:51:40Z",
+      "side": 0,
+      "message": "Have you addressed the warning in the comment in some way?",
+      "revId": "e7d4cc43f5b8dac02b92e1d03ebdff925be31a5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
