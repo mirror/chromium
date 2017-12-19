@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c787b869_e70a8588",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapAllocator.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-12-19T16:06:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "02f09aa0_a379b02b",
+      "revId": "5c95eb27ef490c6cacc0cd6b194a69fd58543fc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "59f13ffe_8595e070",
         "filename": "third_party/WebKit/Source/platform/heap/Member.h",
         "patchSetId": 7
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "79d499dd_07bc90fa",
+        "filename": "third_party/WebKit/Source/platform/heap/Member.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 594,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-12-19T16:06:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "59f13ffe_8595e070",
+      "revId": "5c95eb27ef490c6cacc0cd6b194a69fd58543fc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "95d06ba7_fc02ae87",
         "filename": "third_party/WebKit/Source/platform/wtf/ConstructTraits.h",
         "patchSetId": 7
@@ -47,6 +83,24 @@
       "writtenOn": "2017-12-19T15:14:21Z",
       "side": 1,
       "message": "I think you can remove the Allocator parameter by adding ConstructElement and NewInitializedElements to HeapAllocator and ParitionAllocator.",
+      "revId": "5c95eb27ef490c6cacc0cd6b194a69fd58543fc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c8d9339_e2915613",
+        "filename": "third_party/WebKit/Source/platform/wtf/ConstructTraits.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-12-19T16:06:12Z",
+      "side": 1,
+      "message": "How would we specialize for the \"true\" part (is traceable)? I like the indirection of ConstructTraits here as it separates concerns. \n\nAm I missing something?\n\n(As a side note: We restrict placement new to ConstructTrait using the current approach.)",
+      "parentUuid": "95d06ba7_fc02ae87",
       "revId": "5c95eb27ef490c6cacc0cd6b194a69fd58543fc7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "c22f1022_27bb5057",
+        "filename": "third_party/WebKit/Source/platform/wtf/ConstructTraits.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-12-19T16:06:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c4acc3eb_95985d18",
+      "revId": "5c95eb27ef490c6cacc0cd6b194a69fd58543fc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ff76b00c_e0215394",
         "filename": "third_party/WebKit/Source/platform/wtf/ConstructTraits.h",
         "patchSetId": 7
@@ -81,6 +153,24 @@
       "writtenOn": "2017-12-19T15:14:21Z",
       "side": 1,
       "message": "Once we remove the Allocator parameter, I think that this specialization will be gone.",
+      "revId": "5c95eb27ef490c6cacc0cd6b194a69fd58543fc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b73b1a5_44b90cca",
+        "filename": "third_party/WebKit/Source/platform/wtf/ConstructTraits.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-12-19T16:06:12Z",
+      "side": 1,
+      "message": "See above, I think we need it to specialize for the true case.",
+      "parentUuid": "ff76b00c_e0215394",
       "revId": "5c95eb27ef490c6cacc0cd6b194a69fd58543fc7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "6e485436_9de634d0",
+        "filename": "third_party/WebKit/Source/platform/wtf/ConstructTraits.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-12-19T16:06:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e4a0f092_6665fa6d",
+      "revId": "5c95eb27ef490c6cacc0cd6b194a69fd58543fc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e4fc17bb_d05df8ae",
         "filename": "third_party/WebKit/Source/platform/wtf/ConstructTraits.h",
         "patchSetId": 7
@@ -115,6 +223,24 @@
       "writtenOn": "2017-12-19T15:14:21Z",
       "side": 1,
       "message": "NotifyNewObject \u003d\u003e ConstructElement ?",
+      "revId": "5c95eb27ef490c6cacc0cd6b194a69fd58543fc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd789f4e_27f96f20",
+        "filename": "third_party/WebKit/Source/platform/wtf/ConstructTraits.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-12-19T16:06:12Z",
+      "side": 1,
+      "message": "The allocator doesn\u0027t really construct but is just notified about construction from here.",
+      "parentUuid": "e4fc17bb_d05df8ae",
       "revId": "5c95eb27ef490c6cacc0cd6b194a69fd58543fc7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "f3c44f32_6cdb4d0f",
+        "filename": "third_party/WebKit/Source/platform/wtf/ConstructTraits.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-12-19T16:06:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a9f2e88_93b9abfe",
+      "revId": "5c95eb27ef490c6cacc0cd6b194a69fd58543fc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "86f4b17a_30ba1405",
         "filename": "third_party/WebKit/Source/platform/wtf/ConstructTraits.h",
         "patchSetId": 7
@@ -149,6 +293,24 @@
       "writtenOn": "2017-12-19T15:14:21Z",
       "side": 1,
       "message": "NotifyNewObjects \u003d\u003e ConstructElements ?",
+      "revId": "5c95eb27ef490c6cacc0cd6b194a69fd58543fc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f55619f6_87802d12",
+        "filename": "third_party/WebKit/Source/platform/wtf/ConstructTraits.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-12-19T16:06:12Z",
+      "side": 1,
+      "message": "See above.",
+      "parentUuid": "86f4b17a_30ba1405",
       "revId": "5c95eb27ef490c6cacc0cd6b194a69fd58543fc7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -172,6 +334,24 @@
     },
     {
       "key": {
+        "uuid": "0abf829b_db573db6",
+        "filename": "third_party/WebKit/Source/platform/wtf/Deque.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 501,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-12-19T16:06:12Z",
+      "side": 1,
+      "message": "HeapDeque is a follow up as it also needs tests.\n\nSneak peak:\n  https://chromium-review.googlesource.com/c/chromium/src/+/833935",
+      "parentUuid": "a151e5fb_4fa2a170",
+      "revId": "5c95eb27ef490c6cacc0cd6b194a69fd58543fc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "db6a4069_100712d8",
         "filename": "third_party/WebKit/Source/platform/wtf/Vector.h",
         "patchSetId": 7
@@ -186,6 +366,24 @@
       "revId": "5c95eb27ef490c6cacc0cd6b194a69fd58543fc7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3c95082_f99b7df1",
+        "filename": "third_party/WebKit/Source/platform/wtf/Vector.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-12-19T16:06:12Z",
+      "side": 1,
+      "message": "Then we would mix placement new and ConstructTraits calls across the code base.\n\nI\u0027d like to restrict access to placement new to the ConstructTraits in a followup.",
+      "parentUuid": "db6a4069_100712d8",
+      "revId": "5c95eb27ef490c6cacc0cd6b194a69fd58543fc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
