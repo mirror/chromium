@@ -1,4 +1,4 @@
-This test documents all interface attributes and methods on DedicatedWorkerGlobalScope.
+third_party/WebKit/LayoutTests/virtual/stable/webexposed/global-interface-listing-shared-worker-expected.txt This test documents all interface attributes and methods on DedicatedWorkerGlobalScope.
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
@@ -667,8 +667,16 @@ Starting worker: resources/global-interface-listing-worker.js
 [Worker]     getter responseEnd
 [Worker]     getter responseStart
 [Worker]     getter secureConnectionStart
+[Worker]     getter serverTiming
 [Worker]     getter transferSize
 [Worker]     getter workerStart
+[Worker]     method constructor
+[Worker]     method toJSON
+[Worker] interface PerformanceServerTiming
+[Worker]     attribute @@toStringTag
+[Worker]     getter description
+[Worker]     getter duration
+[Worker]     getter name
 [Worker]     method constructor
 [Worker]     method toJSON
 [Worker] interface PermissionStatus : EventTarget
