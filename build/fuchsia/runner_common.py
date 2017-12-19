@@ -133,41 +133,6 @@ def _ExpandDirectories(file_mapping, mapper):
   return expanded
 
 
-def _GetSymbolsMapping(dry_run, file_mapping, output_directory):
-  """For each stripped executable or dynamic library in |file_mapping|, looks
-  for an unstripped version in [exe|lib].unstripped under |output_directory|.
-  Returns a map from target filenames to un-stripped binary, if available, or
-  to the run-time binary otherwise."""
-  symbols_mapping = {}
-  for target, source in file_mapping.iteritems():
-    with open(source, 'rb') as f:
-      file_tag = f.read(4)
-    if file_tag != '\x7fELF':
-      continue
-
-    # TODO(wez): Rather than bake-in assumptions about the naming of unstripped
-    # binaries, once we have ELF Build-Id values in the stack printout we should
-    # just scan the two directories to populate an Id->path mapping.
-    binary_name = os.path.basename(source)
-    exe_unstripped_path = os.path.join(
-        output_directory, 'exe.unstripped', binary_name)
-    lib_unstripped_path = os.path.join(
-        output_directory, 'lib.unstripped', binary_name)
-    if os.path.exists(exe_unstripped_path):
-      symbols_mapping[target] = exe_unstripped_path
-    elif os.path.exists(lib_unstripped_path):
-      # TODO(wez): libraries are named by basename in stacks, not by path.
-      symbols_mapping[binary_name] = lib_unstripped_path
-      symbols_mapping[target] = lib_unstripped_path
-    else:
-      symbols_mapping[target] = source
-
-    if dry_run:
-      print 'Symbols:', binary_name, '->', symbols_mapping[target]
-
-  return symbols_mapping
-
-
 def _WriteManifest(manifest_file, file_mapping):
   """Writes |file_mapping| to the given |manifest_file| (a file object) in a
   form suitable for consumption by mkbootfs."""
@@ -280,13 +245,13 @@ class BootfsData(object):
   """Results from BuildBootfs().
 
   bootfs: Local path to .bootfs image file.
-  symbols_mapping: A dict mapping executables to their unstripped originals.
+  file_mapping: A dict mapping files to their originals.
   target_cpu: GN's target_cpu setting for the image.
   has_autorun: Whether an autorun file was written for /system/cr_autorun.
   """
-  def __init__(self, bootfs_name, symbols_mapping, target_cpu, has_autorun):
+  def __init__(self, bootfs_name, file_mapping, target_cpu, has_autorun):
     self.bootfs = bootfs_name
-    self.symbols_mapping = symbols_mapping
+    self.file_mapping = file_mapping
     self.target_cpu = target_cpu
     self.has_autorun = has_autorun
 
@@ -402,15 +367,11 @@ def _BuildBootfsManifest(image_creation_data):
       file_mapping,
       lambda x: _MakeTargetImageName(DIR_SOURCE_ROOT, icd.output_directory, x))
 
-  # Determine the locations of unstripped versions of each binary, if any.
-  symbols_mapping = _GetSymbolsMapping(
-      icd.dry_run, file_mapping, icd.output_directory)
-
-  return file_mapping, symbols_mapping
+  return file_mapping
 
 
 def BuildBootfs(image_creation_data):
-  file_mapping, symbols_mapping = _BuildBootfsManifest(image_creation_data)
+  file_mapping = _BuildBootfsManifest(image_creation_data)
 
   # Write the target, source mappings to a file suitable for bootfs.
   manifest_file = open(image_creation_data.exe_name + '.bootfs_manifest', 'w')
@@ -431,7 +392,7 @@ def BuildBootfs(image_creation_data):
   if _RunAndCheck(image_creation_data.dry_run, args) != 0:
     return None
 
-  return BootfsData(bootfs_name, symbols_mapping,
+  return BootfsData(bootfs_name, file_mapping,
                     image_creation_data.target_cpu,
                     image_creation_data.use_autorun)
 
@@ -439,7 +400,7 @@ def BuildBootfs(image_creation_data):
 def BuildArchive(image_creation_data, output_name):
   """Creates an archive (.tar.gz) of the given binary and its dependencies,
   storing them into output_name."""
-  file_mapping, symbols_mapping = _BuildBootfsManifest(image_creation_data)
+  file_mapping = _BuildBootfsManifest(image_creation_data)
 
   print 'Archiving to', output_name
   tar = tarfile.open(output_name, 'w:gz')
@@ -558,7 +519,7 @@ def _GetResultsFromImg(dry_run, test_launcher_summary_output):
                          'cp', '::/output.json', test_launcher_summary_output])
 
 
-def _HandleOutputFromProcess(process, symbols_mapping):
+def _HandleOutputFromProcess(process, file_mapping):
   # Set up backtrace-parsing regexps.
   fuch_prefix = re.compile(r'^.*> ')
   backtrace_prefix = re.compile(r'bt#(?P<frame_id>\d+): ')
@@ -609,7 +570,7 @@ def _HandleOutputFromProcess(process, symbols_mapping):
     if backtrace_line == 'end':
       if backtrace_entries:
         for processed in _SymbolizeBacktrace(backtrace_entries,
-                                             symbols_mapping):
+                                             file_mapping):
           print processed
       backtrace_entries = []
       continue
@@ -726,8 +687,7 @@ def RunFuchsia(bootfs_data, use_device, kernel_path, dry_run,
     process = subprocess.Popen(
         qemu_command, stdout=subprocess.PIPE, stdin=open(os.devnull))
 
-  success = _HandleOutputFromProcess(process,
-                                     bootfs_data.symbols_mapping)
+  success = _HandleOutputFromProcess(process, bootfs_data.file_mapping)
 
   if not use_device:
     process.wait()
