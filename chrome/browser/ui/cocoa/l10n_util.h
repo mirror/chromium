@@ -60,6 +60,12 @@ NSCellImagePosition TrailingCellImagePosition();
 NSRectEdge LeadingEdge();
 // Returns NSMaxXEdge for LTR and NSMinXEdge for RTL.
 NSRectEdge TrailingEdge();
+// Returns |NSMaxX(rect)| for LTR and |NSMinX(rect)| for RTL.
+CGFloat LeadingX(NSRect rect);
+// Returns |NSMinX(rect)| for LTR and |NSMaxX(rect)| for RTL.
+CGFloat TrailingX(NSRect rect);
+// Returns |rect| for LTR and |rect| mirrored in |inRect| for RTL.
+NSRect RectMaybeFlippedInRect(NSRect rect, NSRect inRect);
 
 // Returns an autoreleased image containing |image| flipped
 // across the x axis.
