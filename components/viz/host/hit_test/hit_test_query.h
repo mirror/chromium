@@ -29,12 +29,14 @@ enum class EventSource {
   TOUCH,
 };
 
+class HostFrameSinkManager;
+
 // Finds the target for a given location based on the AggregatedHitTestRegion
 // list aggregated by HitTestAggregator.
 // TODO(riajiang): Handle 3d space cases correctly.
 class VIZ_HOST_EXPORT HitTestQuery {
  public:
-  HitTestQuery();
+  HitTestQuery(HostFrameSinkManager* host_frame_sink_manager);
   ~HitTestQuery();
 
   // TODO(riajiang): Need to validate the data received.
@@ -90,6 +92,8 @@ class VIZ_HOST_EXPORT HitTestQuery {
       const gfx::Point& location_in_root) const;
 
  private:
+  HostFrameSinkManager* host_frame_sink_manager_;
+
   // Helper function to find |target| for |location_in_parent| in the |region|,
   // returns true if a target is found and false otherwise. |location_in_parent|
   // is in the coordinate space of |region|'s parent.
