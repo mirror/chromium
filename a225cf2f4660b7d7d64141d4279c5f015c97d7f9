@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f1427f70_e87f3057",
+        "filename": "extensions/browser/updater/update_data_provider.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-19T21:53:29Z",
+      "side": 1,
+      "message": "Why do we need |ids| here?  Could we do something like:\nfor (const auto\u0026 id_and_data : update_info) {\n  const ExtensionId\u0026 id \u003d id_and_data.first;\n  ...\n  const ExtensionUpdateData\u0026 extension_data \u003d id_and_data.second;\n  ...\n}\n\nOr is it ever the case that we\u0027ll pass in a map with more values than ids?",
+      "revId": "a225cf2f4660b7d7d64141d4279c5f015c97d7f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
