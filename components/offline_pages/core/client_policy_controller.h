@@ -1,4 +1,4 @@
-// Copyright 2016 The Chromium Authors. All rights reserved.
++  // Copyright 2016 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
@@ -15,7 +15,7 @@
 #include "base/time/time.h"
 #include "components/offline_pages/core/offline_page_client_policy.h"
 
-namespace offline_pages {
+    namespace offline_pages {
 
 // This is the class which is a singleton for offline page model
 // to get client policies based on namespaces.
@@ -64,6 +64,10 @@ class ClientPolicyController {
   // Returns whether pages for |name_space| originate from suggested URLs and
   // are downloaded on behalf of user.
   bool IsSuggested(const std::string& name_space) const;
+
+  // Returns whether we should allow pages for |name_space| to trigger
+  // downloads.
+  bool ShouldAllowDownloads(const std::string& name_space) const;
 
   void AddPolicyForTest(const std::string& name_space,
                         const OfflinePageClientPolicyBuilder& builder);
