@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a59860ab_1da8de19",
+        "filename": "services/shape_detection/detection_utils_win.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-12-19T23:47:45Z",
+      "side": 1,
+      "message": "Replace this with just WRL (here and below) since you have the namespace alias above.",
+      "range": {
+        "startLine": 46,
+        "startChar": 6,
+        "endLine": 46,
+        "endChar": 20
+      },
+      "revId": "fb54a1c7089bc4c033f48cfe7be2acfd648263c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14c06ec9_dfda59f5",
+        "filename": "services/shape_detection/text_detection_impl_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-12-19T23:47:45Z",
+      "side": 1,
+      "message": "std::move(bitmap_factory)",
+      "range": {
+        "startLine": 117,
+        "startChar": 58,
+        "endLine": 117,
+        "endChar": 72
+      },
+      "revId": "fb54a1c7089bc4c033f48cfe7be2acfd648263c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dce8b334_45e95e57",
+        "filename": "services/shape_detection/text_detection_impl_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-12-19T23:47:45Z",
+      "side": 1,
+      "message": "\"|win_bitmap| is passed here so that it is kept alive until the AsyncOperation completes because RecognizeAsync does not hold a reference.\"",
+      "range": {
+        "startLine": 209,
+        "startChar": 3,
+        "endLine": 210,
+        "endChar": 51
+      },
+      "revId": "fb54a1c7089bc4c033f48cfe7be2acfd648263c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
