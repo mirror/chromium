@@ -1,0 +1,118 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ab52b9a2_6740e1e8",
+        "filename": "ui/gfx/buffer_format_util.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-12-19T15:51:14Z",
+      "side": 1,
+      "message": "nit: just \u0027unsigned\u0027 to match definition",
+      "range": {
+        "startLine": 25,
+        "startChar": 11,
+        "endLine": 25,
+        "endChar": 23
+      },
+      "revId": "138a4d4b3a8b02f61e2367ee328942a415f8960c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a0d0edf_3fd2e677",
+        "filename": "ui/gfx/buffer_format_util.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-12-19T15:51:14Z",
+      "side": 1,
+      "message": "what is the problem with having it in ui/gl? it would seem that we just replace current usage of GL enums with this helper so the code that will use it should already depend on ui/gl. I guess the code only needed the enum value before and now they need to link to a function..\n\nshould we have a TODO here about moving it at least?",
+      "range": {
+        "startLine": 25,
+        "startChar": 24,
+        "endLine": 25,
+        "endChar": 47
+      },
+      "revId": "138a4d4b3a8b02f61e2367ee328942a415f8960c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "654832e7_93afe42a",
+        "filename": "ui/gl/gl_image_memory.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-12-19T15:51:14Z",
+      "side": 1,
+      "message": "please add a comment to explain why this is needed.",
+      "revId": "138a4d4b3a8b02f61e2367ee328942a415f8960c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6dd73bf5_c1a38202",
+        "filename": "ui/gl/gl_image_memory.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-12-19T15:51:14Z",
+      "side": 1,
+      "message": "nit: keep the switch statement in a form similar to DataFormat below for consistency and making it more explicit what formats we support. ie. NOTREACHED if used incorrectly and require an update when new formats are added.",
+      "revId": "138a4d4b3a8b02f61e2367ee328942a415f8960c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64630571_48b0ab72",
+        "filename": "ui/gl/gl_image_memory.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-12-19T15:51:14Z",
+      "side": 1,
+      "message": "nit: explicit GLImageMemory(..)",
+      "revId": "138a4d4b3a8b02f61e2367ee328942a415f8960c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf81dcd0_12c245ce",
+        "filename": "ui/gl/gl_image_ref_counted_memory.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-12-19T15:51:14Z",
+      "side": 1,
+      "message": "nit: explicit",
+      "revId": "138a4d4b3a8b02f61e2367ee328942a415f8960c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
