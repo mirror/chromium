@@ -156,7 +156,7 @@ void QueryAndDisplayArcApps(
     const Browser* browser,
     const std::vector<arc::ArcNavigationThrottle::AppInfo>& app_info,
     IntentPickerResponse callback);
-void SetIntentPickerViewVisibility(Browser* browser, bool visible);
+void SetIntentPickerViewVisibility(const Browser* browser, bool visible);
 #endif  // defined(OS_CHROMEOS)
 
 bool CanViewSource(const Browser* browser);

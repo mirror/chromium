@@ -1245,7 +1245,7 @@ void QueryAndDisplayArcApps(
   browser->window()->ShowIntentPickerBubble(app_info, callback);
 }
 
-void SetIntentPickerViewVisibility(Browser* browser, bool visible) {
+void SetIntentPickerViewVisibility(const Browser* browser, bool visible) {
   browser->window()->SetIntentPickerViewVisibility(visible);
 }
 #endif  // defined(OS_CHROMEOS)
