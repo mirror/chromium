@@ -66,26 +66,6 @@ void GpuDataManagerImpl::InitializeForTesting(
   private_->InitializeForTesting(gpu_blacklist_data, gpu_info);
 }
 
-bool GpuDataManagerImpl::IsFeatureBlacklisted(int feature) const {
-  base::AutoLock auto_lock(lock_);
-  return private_->IsFeatureBlacklisted(feature);
-}
-
-bool GpuDataManagerImpl::IsFeatureEnabled(int feature) const {
-  base::AutoLock auto_lock(lock_);
-  return private_->IsFeatureEnabled(feature);
-}
-
-bool GpuDataManagerImpl::IsWebGLEnabled() const {
-  base::AutoLock auto_lock(lock_);
-  return private_->IsWebGLEnabled();
-}
-
-bool GpuDataManagerImpl::IsWebGL2Enabled() const {
-  base::AutoLock auto_lock(lock_);
-  return private_->IsWebGL2Enabled();
-}
-
 gpu::GPUInfo GpuDataManagerImpl::GetGPUInfo() const {
   base::AutoLock auto_lock(lock_);
   return private_->GetGPUInfo();
