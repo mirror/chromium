@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f0794291_0688fce4",
+        "filename": "content/browser/service_worker/service_worker_registration.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-19T15:25:57Z",
+      "side": 1,
+      "message": "Is this basically same as checking IsLameDuckActiveVersion() ?\n\nI probably don\u0027t fully understand the logic yet- how would lame duck timer work with this?",
+      "revId": "6dbbdc0c05b868fca3b9a6955fad1b2f3fe17233",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3633e9a0_45d42b88",
+        "filename": "content/browser/service_worker/service_worker_registration.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-19T15:25:57Z",
+      "side": 1,
+      "message": "nit: could we change this if/else if/else into multiple if-and-return blocks?",
+      "revId": "6dbbdc0c05b868fca3b9a6955fad1b2f3fe17233",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8c3cdc9_49e206e9",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 641,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-19T15:25:57Z",
+      "side": 1,
+      "message": "nit: no inflight event exists -\u003e no inflight events exist\n\nIt feels a bit sudden why StopWorkerIfIdle() is being explained here for S13nServiceWorker cases. Maybe...\n\nOnNoWork() will be called in StopWorkerIfIdle() if no inflight events exist for a while.\n\nor maybe to give a little more context like\n\nOnNoWork() will be called (via StopWorkerIfIdle() when RequestTermination() is called from the renderer if no inflight events have existed for a while.\n\n?",
+      "revId": "6dbbdc0c05b868fca3b9a6955fad1b2f3fe17233",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa85a57a_db029d01",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 730,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-19T15:25:57Z",
+      "side": 1,
+      "message": "\"S13nServiceWorker:\" ?",
+      "revId": "6dbbdc0c05b868fca3b9a6955fad1b2f3fe17233",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b54d8d43_44870aa0",
+        "filename": "content/renderer/service_worker/service_worker_timeout_timer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-19T15:25:57Z",
+      "side": 1,
+      "message": "nit:\n\nif (!trigger_idle_timer_immediately_)\n  return false;\n\n...",
+      "revId": "6dbbdc0c05b868fca3b9a6955fad1b2f3fe17233",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6002941d_d630054a",
+        "filename": "content/renderer/service_worker/service_worker_timeout_timer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-19T15:25:57Z",
+      "side": 1,
+      "message": "It feels slightly weird to call this \u0027Immediately\u0027 given that it may not do anything but just set a flag when it\u0027s not idle",
+      "revId": "6dbbdc0c05b868fca3b9a6955fad1b2f3fe17233",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
