@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "da9e5655_4b925899",
+        "filename": "third_party/WebKit/Source/core/dom/ComputedAccessibleNode.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1256034
+      },
+      "writtenOn": "2017-12-19T22:39:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d3fac70c_ea5ef2a2",
+      "revId": "2b2e4da5286e87621bfc0d280b31737c70b3c723",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "254eb9d0_06cc3db5",
         "filename": "third_party/WebKit/Source/core/dom/ElementRareData.h",
         "patchSetId": 11
@@ -69,6 +87,24 @@
       "revId": "2b2e4da5286e87621bfc0d280b31737c70b3c723",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87ac206d_08f98830",
+        "filename": "third_party/WebKit/Source/core/dom/ElementRareData.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1256034
+      },
+      "writtenOn": "2017-12-19T22:39:35Z",
+      "side": 1,
+      "message": "Done. Thanks for that @Kentaro! I think I just forgot to add that line when I was writing this, I\u0027m new to TraceWrapping!",
+      "parentUuid": "43936306_1a0d80f1",
+      "revId": "2b2e4da5286e87621bfc0d280b31737c70b3c723",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
