@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "62ed3dc2_926b8ed2",
+        "filename": "components/cronet/native/buffer.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-12-19T01:03:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d5aa308c_a3d3763a",
+      "revId": "1a95d21a70dbe99f3e230b21b30c95efa845284d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c349b81f_15ca9c5c",
         "filename": "components/cronet/native/buffer.h",
         "patchSetId": 20
@@ -184,6 +202,30 @@
     },
     {
       "key": {
+        "uuid": "906f84a6_1e189042",
+        "filename": "components/cronet/native/buffer_test.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-12-19T01:03:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cc62c2e9_fee46c3a",
+      "range": {
+        "startLine": 19,
+        "startChar": 34,
+        "endLine": 19,
+        "endChar": 0
+      },
+      "revId": "1a95d21a70dbe99f3e230b21b30c95efa845284d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f8f3ce52_995289e0",
         "filename": "components/cronet/native/buffer_test.cc",
         "patchSetId": 20
@@ -204,6 +246,30 @@
       "revId": "1a95d21a70dbe99f3e230b21b30c95efa845284d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "773e13e0_d3263614",
+        "filename": "components/cronet/native/buffer_test.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-12-19T01:03:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f8f3ce52_995289e0",
+      "range": {
+        "startLine": 21,
+        "startChar": 61,
+        "endLine": 21,
+        "endChar": 0
+      },
+      "revId": "1a95d21a70dbe99f3e230b21b30c95efa845284d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -230,6 +296,30 @@
     },
     {
       "key": {
+        "uuid": "18d1e399_0c39e81c",
+        "filename": "components/cronet/native/buffer_test.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-12-19T01:03:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7bb8f096_e6db2b49",
+      "range": {
+        "startLine": 27,
+        "startChar": 11,
+        "endLine": 27,
+        "endChar": 0
+      },
+      "revId": "1a95d21a70dbe99f3e230b21b30c95efa845284d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "add969c9_8b680473",
         "filename": "components/cronet/native/buffer_test.cc",
         "patchSetId": 20
@@ -253,6 +343,30 @@
     },
     {
       "key": {
+        "uuid": "56008558_1bb187b5",
+        "filename": "components/cronet/native/buffer_test.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-12-19T01:03:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "add969c9_8b680473",
+      "range": {
+        "startLine": 33,
+        "startChar": 63,
+        "endLine": 33,
+        "endChar": 0
+      },
+      "revId": "1a95d21a70dbe99f3e230b21b30c95efa845284d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "905cf00d_cd468241",
         "filename": "components/cronet/native/buffer_test.cc",
         "patchSetId": 20
@@ -264,6 +378,30 @@
       "writtenOn": "2017-12-18T20:05:00Z",
       "side": 1,
       "message": "why are we testing runnable/executor in buffer_test.cc?",
+      "range": {
+        "startLine": 71,
+        "startChar": 6,
+        "endLine": 71,
+        "endChar": 61
+      },
+      "revId": "1a95d21a70dbe99f3e230b21b30c95efa845284d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ca5ce67_80de9b57",
+        "filename": "components/cronet/native/buffer_test.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-12-19T01:03:07Z",
+      "side": 1,
+      "message": "(handwavy) To verify that buffer OnDestroy callback is properly invoked when buffer is asynchronously destroyed on different thread.\n\nI\u0027ve added a couple more tests.",
+      "parentUuid": "905cf00d_cd468241",
       "range": {
         "startLine": 71,
         "startChar": 6,
