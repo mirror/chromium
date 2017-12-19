@@ -8,9 +8,7 @@
 #include "base/memory/ptr_util.h"
 #include "base/memory/ref_counted.h"
 #include "base/run_loop.h"
-#include "base/strings/string_number_conversions.h"
 #include "chrome/browser/browser_process.h"
-#include "chrome/browser/net/system_network_context_manager.h"
 #include "chrome/browser/policy/profile_policy_connector_factory.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/profiles/profile_manager.h"
@@ -19,23 +17,15 @@
 #include "chrome/browser/ui/browser.h"
 #include "chrome/common/chrome_switches.h"
 #include "chrome/test/base/in_process_browser_test.h"
-#include "components/grpc_support/test/quic_test_server.h"
 #include "components/network_session_configurator/common/network_switches.h"
 #include "components/policy/core/browser/browser_policy_connector.h"
 #include "components/policy/core/common/mock_configuration_policy_provider.h"
 #include "components/policy/core/common/policy_map.h"
 #include "components/policy/core/common/policy_types.h"
 #include "components/policy/policy_constants.h"
-#include "content/public/browser/browser_context.h"
 #include "content/public/browser/browser_thread.h"
-#include "content/public/browser/storage_partition.h"
-#include "content/public/common/content_features.h"
 #include "content/public/test/browser_test.h"
-#include "content/public/test/browser_test_utils.h"
-#include "net/cert/test_root_certs.h"
-#include "net/dns/mock_host_resolver.h"
 #include "net/http/http_transaction_factory.h"
-#include "net/test/test_data_directory.h"
 #include "net/url_request/url_request_context.h"
 #include "net/url_request/url_request_context_getter.h"
 
@@ -75,21 +65,6 @@ bool IsQuicEnabled(
   return is_quic_enabled;
 }
 
-bool IsQuicEnabled(content::mojom::NetworkContext* network_context) {
-  GURL url =
-      GURL(std::string("https://") + grpc_support::kTestServerHost + ":" +
-           base::NumberToString(grpc_support::GetQuicTestServerPort()) +
-           grpc_support::kHelloPath);
-  int rv = content::LoadBasicRequest(network_context, url);
-  return rv == net::OK;
-}
-
-bool IsQuicEnabled(Profile* profile) {
-  return IsQuicEnabled(
-      content::BrowserContext::GetDefaultStoragePartition(profile)
-          ->GetNetworkContext());
-}
-
 // Short-hand access to global SafeBrowsingService's URLRequestContextGetter for
 // better readability.
 scoped_refptr<net::URLRequestContextGetter>
@@ -101,15 +76,6 @@ safe_browsing_service_request_context() {
 // readability.
 scoped_refptr<net::URLRequestContextGetter> system_request_context() {
   return g_browser_process->system_request_context();
-}
-
-bool IsQuicEnabledForSystem() {
-  if (base::FeatureList::IsEnabled(features::kNetworkService)) {
-    return IsQuicEnabled(
-        g_browser_process->system_network_context_manager()->GetContext());
-  }
-
-  return IsQuicEnabled(system_request_context());
 }
 
 // Called when an additional profile has been created.
@@ -128,27 +94,12 @@ void OnProfileInitialized(Profile** out_created_profile,
 
 namespace policy {
 
-class QuicTestBase : public InProcessBrowserTest {
- public:
-  void SetUpCommandLine(base::CommandLine* command_line) override {
-    command_line->AppendSwitchASCII(switches::kOriginToForceQuicOn, "*");
-  }
-
-  void SetUpOnMainThread() override {
-    net::TestRootCerts* root_certs = net::TestRootCerts::GetInstance();
-    root_certs->AddFromFile(
-        net::GetTestCertsDirectory().AppendASCII("quic-root.pem"));
-    grpc_support::StartQuicTestServer();
-    host_resolver()->AddRule("*", "127.0.0.1");
-  }
-};
-
 // The tests are based on the assumption that command line flag kEnableQuic
 // guarantees that QUIC protocol is enabled which is the case at the moment
 // when these are being written.
-class QuicAllowedPolicyTestBase : public QuicTestBase {
+class QuicAllowedPolicyTestBase: public InProcessBrowserTest {
  public:
-  QuicAllowedPolicyTestBase() : QuicTestBase() {}
+  QuicAllowedPolicyTestBase() : InProcessBrowserTest() {}
 
  protected:
   void SetUpInProcessBrowserTestFixture() override {
@@ -186,9 +137,9 @@ class QuicAllowedPolicyIsFalse: public QuicAllowedPolicyTestBase {
 };
 
 IN_PROC_BROWSER_TEST_F(QuicAllowedPolicyIsFalse, QuicDisallowed) {
-  EXPECT_FALSE(IsQuicEnabledForSystem());
+  EXPECT_FALSE(IsQuicEnabled(system_request_context()));
   EXPECT_FALSE(IsQuicEnabled(safe_browsing_service_request_context()));
-  EXPECT_FALSE(IsQuicEnabled(browser()->profile()));
+  EXPECT_FALSE(IsQuicEnabled(browser()->profile()->GetRequestContext()));
 }
 
 // Policy QuicAllowed set to true.
@@ -208,9 +159,9 @@ class QuicAllowedPolicyIsTrue: public QuicAllowedPolicyTestBase {
 };
 
 IN_PROC_BROWSER_TEST_F(QuicAllowedPolicyIsTrue, QuicAllowed) {
-  EXPECT_TRUE(IsQuicEnabledForSystem());
+  EXPECT_TRUE(IsQuicEnabled(system_request_context()));
   EXPECT_TRUE(IsQuicEnabled(safe_browsing_service_request_context()));
-  EXPECT_TRUE(IsQuicEnabled(browser()->profile()));
+  EXPECT_TRUE(IsQuicEnabled(browser()->profile()->GetRequestContext()));
 }
 
 // Policy QuicAllowed is not set.
@@ -227,16 +178,17 @@ class QuicAllowedPolicyIsNotSet: public QuicAllowedPolicyTestBase {
 };
 
 IN_PROC_BROWSER_TEST_F(QuicAllowedPolicyIsNotSet, NoQuicRegulations) {
-  EXPECT_TRUE(IsQuicEnabledForSystem());
+  EXPECT_TRUE(IsQuicEnabled(system_request_context()));
   EXPECT_TRUE(IsQuicEnabled(safe_browsing_service_request_context()));
-  EXPECT_TRUE(IsQuicEnabled(browser()->profile()));
+  EXPECT_TRUE(IsQuicEnabled(browser()->profile()->GetRequestContext()));
 }
 
 // Policy QuicAllowed is set dynamically after profile creation.
 // Supports creation of an additional profile.
-class QuicAllowedPolicyDynamicTest : public QuicTestBase {
+class QuicAllowedPolicyDynamicTest : public InProcessBrowserTest {
  public:
-  QuicAllowedPolicyDynamicTest() : profile_1_(nullptr), profile_2_(nullptr) {}
+  QuicAllowedPolicyDynamicTest()
+      : InProcessBrowserTest(), profile_1_(nullptr), profile_2_(nullptr) {}
 
  protected:
   void SetUpCommandLine(base::CommandLine* command_line) override {
@@ -246,7 +198,6 @@ class QuicAllowedPolicyDynamicTest : public QuicTestBase {
 #endif
     // Ensure that QUIC is enabled by default on browser startup.
     command_line->AppendSwitch(switches::kEnableQuic);
-    QuicTestBase::SetUpCommandLine(command_line);
   }
 
   void SetUpInProcessBrowserTestFixture() override {
@@ -257,10 +208,7 @@ class QuicAllowedPolicyDynamicTest : public QuicTestBase {
         ->PushProviderForTesting(&policy_for_profile_1_);
   }
 
-  void SetUpOnMainThread() override {
-    profile_1_ = browser()->profile();
-    QuicTestBase::SetUpOnMainThread();
-  }
+  void SetUpOnMainThread() override { profile_1_ = browser()->profile(); }
 
   // Creates a second Profile for testing. The Profile can then be accessed by
   // profile_2() and its policy by policy_for_profile_2().
@@ -354,31 +302,31 @@ class QuicAllowedPolicyDynamicTest : public QuicTestBase {
 IN_PROC_BROWSER_TEST_F(QuicAllowedPolicyDynamicTest, QuicAllowedFalseThenTrue) {
   // After browser start, QuicAllowed=false comes in dynamically
   SetQuicAllowedPolicy(policy_for_profile_1(), false);
-  EXPECT_FALSE(IsQuicEnabledForSystem());
+  EXPECT_FALSE(IsQuicEnabled(system_request_context()));
   EXPECT_FALSE(IsQuicEnabled(safe_browsing_service_request_context()));
-  EXPECT_FALSE(IsQuicEnabled(profile_1()));
+  EXPECT_FALSE(IsQuicEnabled(profile_1()->GetRequestContext()));
 
   // Set the QuicAllowed policy to true again
   SetQuicAllowedPolicy(policy_for_profile_1(), true);
   // Effectively, QUIC is still disabled because QUIC re-enabling is not
   // supported.
-  EXPECT_FALSE(IsQuicEnabledForSystem());
+  EXPECT_FALSE(IsQuicEnabled(system_request_context()));
   EXPECT_FALSE(IsQuicEnabled(safe_browsing_service_request_context()));
-  EXPECT_FALSE(IsQuicEnabled(profile_1()));
+  EXPECT_FALSE(IsQuicEnabled(profile_1()->GetRequestContext()));
 
   // Completely remove the QuicAllowed policy
   RemoveAllPolicies(policy_for_profile_1());
   // Effectively, QUIC is still disabled because QUIC re-enabling is not
   // supported.
-  EXPECT_FALSE(IsQuicEnabledForSystem());
+  EXPECT_FALSE(IsQuicEnabled(system_request_context()));
   EXPECT_FALSE(IsQuicEnabled(safe_browsing_service_request_context()));
-  EXPECT_FALSE(IsQuicEnabled(profile_1()));
+  EXPECT_FALSE(IsQuicEnabled(profile_1()->GetRequestContext()));
 
   // QuicAllowed=false is set again
   SetQuicAllowedPolicy(policy_for_profile_1(), false);
-  EXPECT_FALSE(IsQuicEnabledForSystem());
+  EXPECT_FALSE(IsQuicEnabled(system_request_context()));
   EXPECT_FALSE(IsQuicEnabled(safe_browsing_service_request_context()));
-  EXPECT_FALSE(IsQuicEnabled(profile_1()));
+  EXPECT_FALSE(IsQuicEnabled(profile_1()->GetRequestContext()));
 }
 
 // QUIC is allowed, then disallowed by policy after the profile has been
@@ -386,27 +334,29 @@ IN_PROC_BROWSER_TEST_F(QuicAllowedPolicyDynamicTest, QuicAllowedFalseThenTrue) {
 IN_PROC_BROWSER_TEST_F(QuicAllowedPolicyDynamicTest, QuicAllowedTrueThenFalse) {
   // After browser start, QuicAllowed=true comes in dynamically
   SetQuicAllowedPolicy(policy_for_profile_1(), true);
-  EXPECT_TRUE(IsQuicEnabledForSystem());
+  EXPECT_TRUE(IsQuicEnabled(system_request_context()));
   EXPECT_TRUE(IsQuicEnabled(safe_browsing_service_request_context()));
-  EXPECT_TRUE(IsQuicEnabled(profile_1()));
+  EXPECT_TRUE(IsQuicEnabled(profile_1()->GetRequestContext()));
 
   // Completely remove the QuicAllowed policy
   RemoveAllPolicies(policy_for_profile_1());
-  EXPECT_TRUE(IsQuicEnabledForSystem());
+  EXPECT_TRUE(IsQuicEnabled(system_request_context()));
   EXPECT_TRUE(IsQuicEnabled(safe_browsing_service_request_context()));
-  EXPECT_TRUE(IsQuicEnabled(profile_1()));
+  EXPECT_TRUE(IsQuicEnabled(profile_1()->GetRequestContext()));
 
   // Set the QuicAllowed policy to true again
   SetQuicAllowedPolicy(policy_for_profile_1(), true);
-  EXPECT_TRUE(IsQuicEnabledForSystem());
+  // Effectively, QUIC is still disabled because QUIC re-enabling is not
+  // supported.
+  EXPECT_TRUE(IsQuicEnabled(system_request_context()));
   EXPECT_TRUE(IsQuicEnabled(safe_browsing_service_request_context()));
-  EXPECT_TRUE(IsQuicEnabled(profile_1()));
+  EXPECT_TRUE(IsQuicEnabled(profile_1()->GetRequestContext()));
 
   // Now set QuicAllowed=false
   SetQuicAllowedPolicy(policy_for_profile_1(), false);
-  EXPECT_FALSE(IsQuicEnabledForSystem());
+  EXPECT_FALSE(IsQuicEnabled(system_request_context()));
   EXPECT_FALSE(IsQuicEnabled(safe_browsing_service_request_context()));
-  EXPECT_FALSE(IsQuicEnabled(profile_1()));
+  EXPECT_FALSE(IsQuicEnabled(profile_1()->GetRequestContext()));
 }
 
 // A second Profile is created when QuicAllowed=false policy is in effect for
@@ -418,17 +368,17 @@ IN_PROC_BROWSER_TEST_F(QuicAllowedPolicyDynamicTest,
     return;
 
   SetQuicAllowedPolicy(policy_for_profile_1(), false);
-  EXPECT_FALSE(IsQuicEnabledForSystem());
+  EXPECT_FALSE(IsQuicEnabled(system_request_context()));
   EXPECT_FALSE(IsQuicEnabled(safe_browsing_service_request_context()));
-  EXPECT_FALSE(IsQuicEnabled(profile_1()));
+  EXPECT_FALSE(IsQuicEnabled(profile_1()->GetRequestContext()));
 
   CreateSecondProfile();
 
   // QUIC is disabled in both profiles
-  EXPECT_FALSE(IsQuicEnabledForSystem());
+  EXPECT_FALSE(IsQuicEnabled(system_request_context()));
   EXPECT_FALSE(IsQuicEnabled(safe_browsing_service_request_context()));
-  EXPECT_FALSE(IsQuicEnabled(profile_1()));
-  EXPECT_FALSE(IsQuicEnabled(profile_2()));
+  EXPECT_FALSE(IsQuicEnabled(profile_1()->GetRequestContext()));
+  EXPECT_FALSE(IsQuicEnabled(profile_2()->GetRequestContext()));
 }
 
 // A second Profile is created when no QuicAllowed policy is in effect for the
@@ -443,24 +393,24 @@ IN_PROC_BROWSER_TEST_F(QuicAllowedPolicyDynamicTest,
   CreateSecondProfile();
 
   // QUIC is enabled in both profiles
-  EXPECT_TRUE(IsQuicEnabledForSystem());
+  EXPECT_TRUE(IsQuicEnabled(system_request_context()));
   EXPECT_TRUE(IsQuicEnabled(safe_browsing_service_request_context()));
-  EXPECT_TRUE(IsQuicEnabled(profile_1()));
-  EXPECT_TRUE(IsQuicEnabled(profile_2()));
+  EXPECT_TRUE(IsQuicEnabled(profile_1()->GetRequestContext()));
+  EXPECT_TRUE(IsQuicEnabled(profile_2()->GetRequestContext()));
 
   // Disable QUIC in first profile
   SetQuicAllowedPolicy(policy_for_profile_1(), false);
-  EXPECT_FALSE(IsQuicEnabledForSystem());
+  EXPECT_FALSE(IsQuicEnabled(system_request_context()));
   EXPECT_FALSE(IsQuicEnabled(safe_browsing_service_request_context()));
-  EXPECT_FALSE(IsQuicEnabled(profile_1()));
-  EXPECT_FALSE(IsQuicEnabled(profile_2()));
+  EXPECT_FALSE(IsQuicEnabled(profile_1()->GetRequestContext()));
+  EXPECT_FALSE(IsQuicEnabled(profile_2()->GetRequestContext()));
 
   // Disable QUIC in second profile
   SetQuicAllowedPolicy(policy_for_profile_2(), false);
-  EXPECT_FALSE(IsQuicEnabledForSystem());
+  EXPECT_FALSE(IsQuicEnabled(system_request_context()));
   EXPECT_FALSE(IsQuicEnabled(safe_browsing_service_request_context()));
-  EXPECT_FALSE(IsQuicEnabled(profile_1()));
-  EXPECT_FALSE(IsQuicEnabled(profile_2()));
+  EXPECT_FALSE(IsQuicEnabled(profile_1()->GetRequestContext()));
+  EXPECT_FALSE(IsQuicEnabled(profile_2()->GetRequestContext()));
 }
 
 }  // namespace policy
