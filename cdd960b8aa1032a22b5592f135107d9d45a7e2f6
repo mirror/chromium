@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e0e886ab_e8cf64b3",
+        "filename": "third_party/WebKit/Source/platform/heap/ThreadState.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1291,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-12-19T18:59:31Z",
+      "side": 1,
+      "message": "Maybe rebase after\n  https://chromium-review.googlesource.com/c/chromium/src/+/834509\n? :)",
+      "range": {
+        "startLine": 1291,
+        "startChar": 2,
+        "endLine": 1291,
+        "endChar": 33
+      },
+      "revId": "cdd960b8aa1032a22b5592f135107d9d45a7e2f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
