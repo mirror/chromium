@@ -12,8 +12,10 @@ class PrefetchBackgroundTaskScheduler {
   // API for interacting with BackgroundTaskScheduler from native.
   // Schedules the default 'NWake' prefetching task.
   // |additional_delay_seconds| is relative to the default 15 minute delay.
+  // |limitlessPrefetching| reflects the current state of the limitless
+  // prefetching feature flag.
   // Implemented in platform-specific object files.
-  static void Schedule(int additional_delay_seconds);
+  static void Schedule(int additional_delay_seconds, bool limitlessPrefetching);
 
   // Cancels the default 'NWake' prefetching task.
   // Implemented in platform-specific object files.
