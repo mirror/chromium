@@ -27,7 +27,7 @@ enum VideoPixelFormat {
 
   PIXEL_FORMAT_I422 = 3,   // 16bpp YVU planar 1x1 Y, 2x1 UV samples.
   PIXEL_FORMAT_YV12A = 4,  // 20bpp YUVA planar 1x1 Y, 2x2 UV, 1x1 A samples.
-  PIXEL_FORMAT_YV24 = 5,   // 24bpp YUV planar, no subsampling.
+  PIXEL_FORMAT_I444 = 5,   // 24bpp YUV planar, no subsampling.
   PIXEL_FORMAT_NV12 =
       6,  // 12bpp with Y plane followed by a 2x2 interleaved UV plane.
   PIXEL_FORMAT_NV21 =
