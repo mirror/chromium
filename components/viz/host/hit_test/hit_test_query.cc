@@ -58,6 +58,59 @@ Target HitTestQuery::FindTargetForLocation(
 
   FindTargetInRegionForLocation(event_source, location_in_root,
                                 active_hit_test_list_, &target);
+
+  // if (target.flags_ == kHitTestAsk) {
+  // target.frame_sink_id_
+  // Invoke RenderFrameHostImpl.GetInputTargetClient()
+
+  // HostFrameSinkManager can resolve the frame_sink_id to HostFrameSinkClient
+  // as shown in OnFirstSurfaceActivation HostFrameSinkManager owns this
+  // HitTestQuery There are many clients that implement HostFrameSinkClient (
+  // DelegatedFrameHost(TopLevelRenderers),
+  // RenderWidgetHostViewChildFrame(OOPIF), others for offscreen canvas and
+  // others ) each of these will need to Need to add a method to
+  // HostFrameSinkClient like
+  //   virtual void OnDelegatedHitTestQuery(Point transformed into target
+  //   coordinate space); // needs bikeshed this is an async request that will
+  //   generate an async response
+
+  // DelegatedFrameHost can implement this by:
+  //  DelegatedFrameHost has a DelegatedFrameHostClient
+  //  DelegatedFrameHostClient is a DelegatedFrameHostClientAura which has a
+  //  RenderWidgetHostViewAura RenderWidgetHostViewAura has a
+  //  RenderWidgetHostImpl* const host_;
+
+  // RenderWidgetHostImpl has a RenderWidget
+
+  // RenderWidgetHostInputEventRouter maps FrameSinkId to
+  // RenderWidgetHostViewBase
+
+  // Move GetInputTargetClient from RenderFrameHostImpl to
+  // RenderWidgetHostViewBase
+
+  // Alternative:
+  // OnCreate
+  //  In SetRenderFrameCreated pass the interface into render_widget_host (
+  //  similar to SetWidgetInputHandler ) In RenderWidgetHostImpl::GetView
+  //  returns RenderWidgetHostViewBase RenderWidgetHostViewBase has the
+  //  framesinkid
+
+  // CONTENT_EXPORT HostFrameSinkManager* GetHostFrameSinkManager();
+
+  //  GetHostFrameSinkManager ( singleton ) add a new method
+  //  HostFrameSinkManager::SetInputTargetClient(FrameSinkId, InputTargetClient)
+  //  HostFrameSinkManager manages a map of FrameSinkId to FrameSinkData - add a
+  //  field for InputTargetClient
+
+  // Then
+  //  HostFrameSinkManager owns this HitTestQuery - add a reference in the
+  //  constructor use HostFrameSinkManager to resolve InputTargetClient from
+  //  FrameSinkId
+  //
+
+  // then - handle async - add a timeout so that if the renderer dies it still
+  // works
+  //}
   return target;
 }
 

@@ -1253,6 +1253,10 @@ void RenderFrameHostImpl::SetRenderFrameCreated(bool created) {
                                                  std::move(host_request));
     }
 
+    viz::mojom::InputTargetClientPtr input_target_client;
+    remote_interfaces_->GetInterface(&input_target_client);
+    render_widget_host_->SetInputTargetClient(std::move(input_target_client));
+
     render_widget_host_->InitForFrame();
   }
 
