@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1300e01a_64c8d03a",
+        "filename": "ui/gl/gl_image_ahardwarebuffer_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1230115
+      },
+      "writtenOn": "2017-12-19T16:57:36Z",
+      "side": 1,
+      "message": "In Patch Set 10 I am giving a try to remove the preserved parameter. But I believe this require to move the initialization before setting the content into the android buffer. See comment bellow. Let\u0027s see if the test still passes on the bots.",
+      "revId": "eb6e2f315cb1cbfc3123e94b4e501b766d510ab5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

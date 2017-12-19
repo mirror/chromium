@@ -123,6 +123,24 @@
       "revId": "ceed94ea5c60c0a99e6eb774bcef2ac2ca022bac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7ec773c5_053aaace",
+        "filename": "ui/gl/gl_image_native_pixmap.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1230115
+      },
+      "writtenOn": "2017-12-19T16:57:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "940691bf_eb519da3",
+      "revId": "ceed94ea5c60c0a99e6eb774bcef2ac2ca022bac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
