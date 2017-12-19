@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "991853ca_a095413b",
+        "filename": "ui/message_center/views/notification_view_md.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 658,
+      "author": {
+        "id": 1000175
+      },
+      "writtenOn": "2017-12-19T08:13:21Z",
+      "side": 1,
+      "message": "nit: this is called even on collapsing. Perhaps \"set_manually_epanded_orcollapsed\"? (you may have a better idea).",
+      "range": {
+        "startLine": 658,
+        "startChar": 6,
+        "endLine": 658,
+        "endChar": 27
+      },
+      "revId": "b7a6dc580652378e3eb45ad6f11c665efcb77d29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
