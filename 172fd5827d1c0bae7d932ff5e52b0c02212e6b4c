@@ -287,6 +287,30 @@
     },
     {
       "key": {
+        "uuid": "05c34fcb_d027e970",
+        "filename": "content/network/data_pipe_element_reader.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-19T19:46:49Z",
+      "side": 1,
+      "message": "It might be...interesting.... To make mojo post bogus readable events and see how many tests fail (Wait until data can be read, so the test is started, then trigger the even, but don\u0027t let the consumer read data), and see how many tests fall over.  Not suggesting doing it in production, just making the change and triggering bots.",
+      "parentUuid": "63ba1b84_95a795c4",
+      "range": {
+        "startLine": 94,
+        "startChar": 18,
+        "endLine": 94,
+        "endChar": 30
+      },
+      "revId": "172fd5827d1c0bae7d932ff5e52b0c02212e6b4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a172f978_3dabec5f",
         "filename": "content/network/data_pipe_element_reader.h",
         "patchSetId": 5
