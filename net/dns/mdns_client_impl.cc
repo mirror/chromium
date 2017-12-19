@@ -21,6 +21,7 @@
 #include "net/dns/dns_util.h"
 #include "net/dns/record_rdata.h"
 #include "net/socket/datagram_socket.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 
 // TODO(gene): Remove this temporary method of disabling NSEC support once it
 // becomes clear whether this feature should be
@@ -208,12 +209,15 @@ bool MDnsClientImpl::Core::Init(MDnsSocketFactory* socket_factory) {
   return connection_->Init(socket_factory);
 }
 
-bool MDnsClientImpl::Core::SendQuery(uint16_t rrtype, const std::string& name) {
+bool MDnsClientImpl::Core::SendQuery(
+    uint16_t rrtype,
+    const std::string& name,
+    const NetworkTrafficAnnotationTag& traffic_annotation) {
   std::string name_dns;
   if (!DNSDomainFromDot(name, &name_dns))
     return false;
 
-  DnsQuery query(0, name_dns, rrtype);
+  DnsQuery query(0, name_dns, rrtype, traffic_annotation);
   query.set_flags(0);  // Remove the RD flag from the query. It is unneeded.
 
   connection_->Send(query.io_buffer(), query.io_buffer()->size());
@@ -447,32 +451,37 @@ bool MDnsClientImpl::IsListening() const {
 std::unique_ptr<MDnsListener> MDnsClientImpl::CreateListener(
     uint16_t rrtype,
     const std::string& name,
-    MDnsListener::Delegate* delegate) {
-  return std::unique_ptr<MDnsListener>(
-      new MDnsListenerImpl(rrtype, name, clock_, delegate, this));
+    MDnsListener::Delegate* delegate,
+    const NetworkTrafficAnnotationTag& traffic_annotation) {
+  return std::unique_ptr<MDnsListener>(new MDnsListenerImpl(
+      rrtype, name, clock_, delegate, this, traffic_annotation));
 }
 
 std::unique_ptr<MDnsTransaction> MDnsClientImpl::CreateTransaction(
     uint16_t rrtype,
     const std::string& name,
     int flags,
-    const MDnsTransaction::ResultCallback& callback) {
-  return std::unique_ptr<MDnsTransaction>(
-      new MDnsTransactionImpl(rrtype, name, flags, callback, this));
+    const MDnsTransaction::ResultCallback& callback,
+    const NetworkTrafficAnnotationTag& traffic_annotation) {
+  return std::unique_ptr<MDnsTransaction>(new MDnsTransactionImpl(
+      rrtype, name, flags, callback, this, traffic_annotation));
 }
 
-MDnsListenerImpl::MDnsListenerImpl(uint16_t rrtype,
-                                   const std::string& name,
-                                   base::Clock* clock,
-                                   MDnsListener::Delegate* delegate,
-                                   MDnsClientImpl* client)
+MDnsListenerImpl::MDnsListenerImpl(
+    uint16_t rrtype,
+    const std::string& name,
+    base::Clock* clock,
+    MDnsListener::Delegate* delegate,
+    MDnsClientImpl* client,
+    const NetworkTrafficAnnotationTag& traffic_annotation)
     : rrtype_(rrtype),
       name_(name),
       clock_(clock),
       client_(client),
       delegate_(delegate),
       started_(false),
-      active_refresh_(false) {}
+      active_refresh_(false),
+      traffic_annotation_(traffic_annotation) {}
 
 MDnsListenerImpl::~MDnsListenerImpl() {
   if (started_) {
@@ -587,7 +596,7 @@ void MDnsListenerImpl::ScheduleNextRefresh() {
 }
 
 void MDnsListenerImpl::DoRefresh() {
-  client_->core()->SendQuery(rrtype_, name_);
+  client_->core()->SendQuery(rrtype_, name_, traffic_annotation_);
 }
 
 MDnsTransactionImpl::MDnsTransactionImpl(
@@ -595,13 +604,15 @@ MDnsTransactionImpl::MDnsTransactionImpl(
     const std::string& name,
     int flags,
     const MDnsTransaction::ResultCallback& callback,
-    MDnsClientImpl* client)
+    MDnsClientImpl* client,
+    const NetworkTrafficAnnotationTag& traffic_annotation)
     : rrtype_(rrtype),
       name_(name),
       callback_(callback),
       client_(client),
       started_(false),
-      flags_(flags) {
+      flags_(flags),
+      traffic_annotation_(traffic_annotation) {
   DCHECK((flags_ & MDnsTransaction::FLAG_MASK) == flags_);
   DCHECK(flags_ & MDnsTransaction::QUERY_CACHE ||
          flags_ & MDnsTransaction::QUERY_NETWORK);
@@ -715,12 +726,13 @@ void MDnsTransactionImpl::ServeRecordsFromCache() {
 }
 
 bool MDnsTransactionImpl::QueryAndListen() {
-  listener_ = client_->CreateListener(rrtype_, name_, this);
+  listener_ =
+      client_->CreateListener(rrtype_, name_, this, traffic_annotation_);
   if (!listener_->Start())
     return false;
 
   DCHECK(client_->core());
-  if (!client_->core()->SendQuery(rrtype_, name_))
+  if (!client_->core()->SendQuery(rrtype_, name_, traffic_annotation_))
     return false;
 
   timeout_.Reset(base::Bind(&MDnsTransactionImpl::SignalTransactionOver,

@@ -17,6 +17,7 @@
 #include "net/dns/dns_query.h"
 #include "net/dns/dns_response.h"
 #include "net/dns/record_parsed.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 
 namespace net {
 
@@ -152,7 +153,8 @@ class NET_EXPORT MDnsClient {
   virtual std::unique_ptr<MDnsListener> CreateListener(
       uint16_t rrtype,
       const std::string& name,
-      MDnsListener::Delegate* delegate) = 0;
+      MDnsListener::Delegate* delegate,
+      const NetworkTrafficAnnotationTag& traffic_annotation) = 0;
 
   // Create a transaction that can be used to query either the MDns cache, the
   // network, or both for records of type |rrtype| and name |name|. |flags| is
@@ -161,7 +163,8 @@ class NET_EXPORT MDnsClient {
       uint16_t rrtype,
       const std::string& name,
       int flags,
-      const MDnsTransaction::ResultCallback& callback) = 0;
+      const MDnsTransaction::ResultCallback& callback,
+      const NetworkTrafficAnnotationTag& traffic_annotation) = 0;
 
   virtual bool StartListening(MDnsSocketFactory* factory) = 0;
 
