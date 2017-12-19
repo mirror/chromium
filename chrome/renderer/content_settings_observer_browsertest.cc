@@ -468,7 +468,7 @@ TEST_F(ContentSettingsObserverBrowserTest, ContentSettingsInterstitialPages) {
   ContentSettingsObserver* observer =
       ContentSettingsObserver::Get(view_->GetMainRenderFrame());
   observer->SetContentSettingRules(&content_setting_rules);
-  observer->OnSetAsInterstitial();
+  observer->SetAsInterstitial();
 
   // Load a page which contains a script.
   LoadHTML(kScriptHtml);
