@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ce592af8_4ec922e1",
+        "filename": "ui/accessibility/platform/ax_platform_node.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-19T00:39:58Z",
+      "side": 1,
+      "message": "could this be const? (note that will disable the assignment operator..)\n\nand can it go in private:? (style guide bans protected data members except in test harnesses)",
+      "revId": "0e343bbf96ee5bf753cf7c725f3d4e33a83f9dcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d862a22_be26abe4",
+        "filename": "ui/accessibility/platform/ax_platform_node.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-19T00:39:58Z",
+      "side": 1,
+      "message": "DISALLOW_COPY_AND_ASSIGN?\n\n(i suspect this was a \"pure\" interface when first written, so that was omitted).",
+      "revId": "0e343bbf96ee5bf753cf7c725f3d4e33a83f9dcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f580fb29_af90229c",
+        "filename": "ui/views/accessibility/native_view_accessibility_base.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-19T00:39:58Z",
+      "side": 1,
+      "message": "Should data_.id still be set? (just, from GetId() now, rather than |id_|)",
+      "revId": "0e343bbf96ee5bf753cf7c725f3d4e33a83f9dcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
