@@ -64,6 +64,8 @@
 #include "core/layout/api/LineLayoutItem.h"
 #include "core/layout/line/InlineIterator.h"
 #include "core/layout/line/InlineTextBox.h"
+#include "core/layout/ng/inline/ng_caret_rect.h"
+#include "core/layout/ng/inline/ng_offset_mapping.h"
 #include "platform/heap/Handle.h"
 #include "platform/text/TextBoundaries.h"
 
@@ -699,7 +701,9 @@ LocalCaretRect LocalCaretRectOfPositionTemplate(
       ComputeInlineAdjustedPosition(position);
 
   if (adjusted.IsNotNull()) {
-    // TODO(xiaochengh): Plug in NG implementation here.
+    if (const LayoutBlockFlow* context =
+            NGInlineFormattingContextOf(position.GetPosition()))
+      return ComputeNGLocalCaretRect(*context, position);
 
     // TODO(editing-dev): This DCHECK is for ensuring the correctness of
     // breaking |ComputeInlineBoxPosition| into |ComputeInlineAdjustedPosition|
