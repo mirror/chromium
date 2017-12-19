@@ -12,6 +12,7 @@ UserContext::UserContext() : account_id_(EmptyAccountId()) {}
 UserContext::UserContext(const UserContext& other)
     : account_id_(other.account_id_),
       key_(other.key_),
+      password_key_(other.password_key_),
       auth_code_(other.auth_code_),
       refresh_token_(other.refresh_token_),
       access_token_(other.access_token_),
@@ -73,6 +74,14 @@ const Key* UserContext::GetKey() const {
 
 Key* UserContext::GetKey() {
   return &key_;
+}
+
+const Key* UserContext::GetPasswordKey() const {
+  return &password_key_;
+}
+
+Key* UserContext::GetMutablePasswordKey() {
+  return &password_key_;
 }
 
 const std::string& UserContext::GetAuthCode() const {
@@ -140,6 +149,10 @@ void UserContext::SetKey(const Key& key) {
   key_ = key;
 }
 
+void UserContext::SetPasswordKey(const Key& key) {
+  password_key_ = key;
+}
+
 void UserContext::SetAuthCode(const std::string& auth_code) {
   auth_code_ = auth_code;
 }
@@ -194,6 +207,7 @@ void UserContext::SetGAPSCookie(const std::string& gaps_cookie) {
 
 void UserContext::ClearSecrets() {
   key_.ClearSecret();
+  password_key_.ClearSecret();
   auth_code_.clear();
   refresh_token_.clear();
 }
