@@ -40,9 +40,6 @@ size_t RegisterChromeCrashKeys() {
     {kActiveURL, kLargeSize},
     {kNumVariations, kSmallSize},
     {kVariations, kHugeSize},
-
-    // TODO(sunnyps): Remove after fixing crbug.com/724999.
-    {"gl-context-set-current-stack-trace", kMediumSize},
   };
 
   // This dynamic set of keys is used for sets of key value pairs when gathering
