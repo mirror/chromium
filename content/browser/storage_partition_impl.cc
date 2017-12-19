@@ -27,12 +27,14 @@
 #include "content/browser/notifications/platform_notification_context_impl.h"
 #include "content/common/dom_storage/dom_storage_types.h"
 #include "content/network/network_context.h"
+#include "content/network/network_service_impl.h"
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/content_browser_client.h"
 #include "content/public/browser/dom_storage_context.h"
 #include "content/public/browser/indexed_db_context.h"
 #include "content/public/browser/local_storage_usage_info.h"
+#include "content/public/browser/network_service_instance.h"
 #include "content/public/browser/session_storage_usage_info.h"
 #include "content/public/common/content_client.h"
 #include "content/public/common/content_features.h"
@@ -250,7 +252,7 @@ base::WeakPtr<storage::BlobStorageContext> BlobStorageContextGetter(
 // URLRequestContext, when the ContentBrowserClient doesn't provide a
 // NetworkContext itself.
 //
-// Createdd on the UI thread, but must be initialized and destroyed on the IO
+// Created on the UI thread, but must be initialized and destroyed on the IO
 // thread.
 class StoragePartitionImpl::NetworkContextOwner {
  public:
@@ -263,6 +265,7 @@ class StoragePartitionImpl::NetworkContextOwner {
     DCHECK_CURRENTLY_ON(BrowserThread::IO);
     context_getter_ = std::move(context_getter);
     network_context_ = std::make_unique<NetworkContext>(
+        static_cast<NetworkServiceImpl*>(GetNetworkServiceImpl()),
         std::move(network_context_request),
         context_getter_->GetURLRequestContext());
   }
@@ -1086,6 +1089,15 @@ void StoragePartitionImpl::OverrideSpecialStoragePolicyForTesting(
 void StoragePartitionImpl::SetURLRequestContext(
     net::URLRequestContextGetter* url_request_context) {
   url_request_context_ = url_request_context;
+  if (!url_request_context)
+    return;
+
+  // If network service isn't enabled, create a NetworkContext object now
+  // (instead of on first use) so that the in-process NetworkService class can
+  // be connected to the URLRequestContext. This is needed to route
+  // modifications that are applied to the NetworkService interface.
+  if (!base::FeatureList::IsEnabled(features::kNetworkService))
+    GetNetworkContext();
 }
 
 void StoragePartitionImpl::SetMediaURLRequestContext(
