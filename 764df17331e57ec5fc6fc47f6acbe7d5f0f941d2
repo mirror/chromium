@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "210b6481_5a7c3f9b",
+        "filename": "third_party/WebKit/Source/core/dom/ComputedAccessibleNode.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1256034
+      },
+      "writtenOn": "2017-12-19T02:11:02Z",
+      "side": 1,
+      "message": "At the moment, the Element is how we are getting the computedName/role.",
+      "parentUuid": "7fffd661_bcf476f5",
+      "revId": "764df17331e57ec5fc6fc47f6acbe7d5f0f941d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9f77c5d6_3699ec7c",
         "filename": "third_party/WebKit/Source/core/dom/ComputedAccessibleNode.cpp",
         "patchSetId": 8
@@ -143,6 +161,24 @@
     },
     {
       "key": {
+        "uuid": "891fb911_7ca9b785",
+        "filename": "third_party/WebKit/Source/core/dom/ComputedAccessibleNode.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1256034
+      },
+      "writtenOn": "2017-12-19T02:11:02Z",
+      "side": 1,
+      "message": "Good point. I\u0027ve changed it so that if the role or name is requested from the ComputedAccessibleNode, it will in turn request it from the Element itself rather than storing the name/role as a member, and added a test for this case. This does mean that ComputedAccessibleNode needs to store the Element internally though.",
+      "parentUuid": "d98af7d2_73a68adf",
+      "revId": "764df17331e57ec5fc6fc47f6acbe7d5f0f941d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b2e0e8f4_3a154bf8",
         "filename": "third_party/WebKit/Source/core/dom/Element.h",
         "patchSetId": 8
@@ -160,6 +196,24 @@
     },
     {
       "key": {
+        "uuid": "2e481298_dfbee7b0",
+        "filename": "third_party/WebKit/Source/core/dom/Element.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1256034
+      },
+      "writtenOn": "2017-12-19T02:11:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b2e0e8f4_3a154bf8",
+      "revId": "764df17331e57ec5fc6fc47f6acbe7d5f0f941d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "67b436fc_d4a46479",
         "filename": "third_party/WebKit/Source/core/frame/LocalDOMWindow.cpp",
         "patchSetId": 8
@@ -174,6 +228,24 @@
       "revId": "764df17331e57ec5fc6fc47f6acbe7d5f0f941d2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a305f72_73f60760",
+        "filename": "third_party/WebKit/Source/core/frame/LocalDOMWindow.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 1110,
+      "author": {
+        "id": 1256034
+      },
+      "writtenOn": "2017-12-19T02:11:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67b436fc_d4a46479",
+      "revId": "764df17331e57ec5fc6fc47f6acbe7d5f0f941d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
