@@ -2061,6 +2061,16 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
   _sadTabCoordinator.baseViewController = self;
   _sadTabCoordinator.dispatcher = self.dispatcher;
 
+  // If there are any existing SadTabHelpers in |_model|, update the helpers
+  // delegate with the new |_sadTabCoordinator|.
+  for (NSUInteger i = 0; i < _model.count; i++) {
+    SadTabTabHelper* sadTabHelper =
+        SadTabTabHelper::FromWebState([_model tabAtIndex:i].webState);
+    if (sadTabHelper) {
+      sadTabHelper->SetDelegate(_sadTabCoordinator);
+    }
+  }
+
   _pageInfoCoordinator =
       [[PageInfoLegacyCoordinator alloc] initWithBaseViewController:self];
   _pageInfoCoordinator.browserState = _browserState;
