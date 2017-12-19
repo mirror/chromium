@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "470815a0_2bc4edf3",
+        "filename": "media/base/video_types.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-12-19T22:29:02Z",
+      "side": 1,
+      "message": "Up next? Same for YV12A?",
+      "range": {
+        "startLine": 26,
+        "startChar": 2,
+        "endLine": 26,
+        "endChar": 19
+      },
+      "revId": "61004b79378a4d86cb06b350880016c0ccc211b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f38893cc_8181f3ee",
+        "filename": "media/base/video_types.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-12-19T22:29:02Z",
+      "side": 1,
+      "message": "I think you meant YUV here in the previous CL.",
+      "range": {
+        "startLine": 28,
+        "startChar": 36,
+        "endLine": 28,
+        "endChar": 39
+      },
+      "revId": "61004b79378a4d86cb06b350880016c0ccc211b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
