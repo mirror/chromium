@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aaafbc6e_513fb8f3",
+        "filename": "chrome/browser/printing/print_view_manager_base.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-19T21:51:27Z",
+      "side": 1,
+      "message": "Just wondering if we can reuse SystemDialogCancelled() here.",
+      "revId": "297affc4ae94611bb84559b014b93a31d3faa462",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c69feaf_df2d9dd8",
+        "filename": "chrome/browser/ui/webui/print_preview/print_preview_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1259,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-19T21:51:27Z",
+      "side": 1,
+      "message": "Do we also need to set |dialog_hidden_| back to false at some point?",
+      "revId": "297affc4ae94611bb84559b014b93a31d3faa462",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfe795ad_66926158",
+        "filename": "chrome/browser/ui/webui/print_preview/print_preview_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1260,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-19T21:51:27Z",
+      "side": 1,
+      "message": "This looks very similar to code removed from r524493. Can we also put back the comments that were there?",
+      "revId": "297affc4ae94611bb84559b014b93a31d3faa462",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
