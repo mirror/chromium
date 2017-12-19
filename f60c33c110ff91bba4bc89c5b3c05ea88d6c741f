@@ -34,6 +34,24 @@
       "revId": "f60c33c110ff91bba4bc89c5b3c05ea88d6c741f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a08bb39b_39659dbe",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 2
+      },
+      "lineNbr": 5181,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-12-19T19:53:42Z",
+      "side": 1,
+      "message": "Discussed offline. Moved IDS_SEARCH_OR_TYPE_WEB_ADDRESS to chrome/app/generated_resources.grd so that VR can share.",
+      "parentUuid": "18124eb9_d3ca3264",
+      "revId": "f60c33c110ff91bba4bc89c5b3c05ea88d6c741f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
