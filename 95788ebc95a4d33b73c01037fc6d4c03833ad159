@@ -22,6 +22,30 @@
       "revId": "95788ebc95a4d33b73c01037fc6d4c03833ad159",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13b064cd_c1530cab",
+        "filename": "ui/app_list/views/search_result_tile_item_view.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-12-19T02:51:45Z",
+      "side": 1,
+      "message": "Yes, I see AppListFocus is default enabled, so this and many APIs can be removed.",
+      "parentUuid": "8a196bb0_2d8934df",
+      "range": {
+        "startLine": 114,
+        "startChar": 7,
+        "endLine": 114,
+        "endChar": 16
+      },
+      "revId": "95788ebc95a4d33b73c01037fc6d4c03833ad159",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
