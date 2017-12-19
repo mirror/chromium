@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2a673e01_952b7cd7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/init/AsyncInitializationActivity.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1115960
+      },
+      "writtenOn": "2017-12-19T06:16:32Z",
+      "side": 1,
+      "message": "I think you want to scope this down as much as you can. If it happens in super.onCreate() call, let\u0027s put the allowDiskRead around that rather than around the whole method. This can mask real implementation issues in our code.",
+      "range": {
+        "startLine": 239,
+        "startChar": 13,
+        "endLine": 239,
+        "endChar": 30
+      },
+      "revId": "4df0e6043949eb89c58719ec47f6ac799e0f77e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
