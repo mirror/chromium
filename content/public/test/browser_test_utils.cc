@@ -2385,6 +2385,11 @@ int LoadBasicRequest(mojom::NetworkContext* network_context, const GURL& url) {
   // at this point.
   EXPECT_FALSE(url_loader_factory.encountered_error());
 
+  return LoadBasicRequest(url_loader_factory.get(), url);
+}
+
+int LoadBasicRequest(mojom::URLLoaderFactory* url_loader_factory,
+                     const GURL& url) {
   auto request = std::make_unique<ResourceRequest>();
   request->url = url;
 
@@ -2392,11 +2397,9 @@ int LoadBasicRequest(mojom::NetworkContext* network_context, const GURL& url) {
   std::unique_ptr<content::SimpleURLLoader> simple_loader =
       content::SimpleURLLoader::Create(std::move(request),
                                        TRAFFIC_ANNOTATION_FOR_TESTS);
-
   simple_loader->DownloadToStringOfUnboundedSizeUntilCrashAndDie(
-      url_loader_factory.get(), simple_loader_helper.GetCallback());
+      url_loader_factory, simple_loader_helper.GetCallback());
   simple_loader_helper.WaitForCallback();
-
   return simple_loader->NetError();
 }
 
