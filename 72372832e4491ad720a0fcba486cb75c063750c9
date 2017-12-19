@@ -524,6 +524,30 @@
     },
     {
       "key": {
+        "uuid": "6d403e3a_29aab9f5",
+        "filename": "content/browser/download/download_manager_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1043,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-12-19T21:04:11Z",
+      "side": 1,
+      "message": "For DownloadSource, we can pass DownloadSource::UNKNOWN for now, I will hook up with other things in following CL.\n\nThis path is for sending new request Through DownloadManager::DownloadUrl. \n\nThe other path is navigation interception, that we use the same request but toss it to content download, It has two versions:\n\n1. Without network service enabled(network in browser process): The flow starts from  DownloadResourceHandler::Create. Then DownloadResourceHandler will then call OnResponseStarted \u003d\u003d\u003eDownloadRequestCore \u003d\u003d\u003e DownloadCreateInfo, then pass to DownloadManagerImpl.  There is a weird thing that DownloadResourceHandler can also be created in the first code path(DownloadUrl).\n\n2. Network service enabled(network in a isolated process): See DownloadManagerImpl::InterceptNavigation, then it builds ResourceDownloader \u003d\u003d\u003e DownloadResponseHandler \u003d\u003d\u003e DownloadCreateInfo, then pass it to DownloadManagerImpl.\n\nBoth paths will call into DownloadManagerImpl::StartDownloadWithId, so it\u0027s probably better to add the entry there? Also this place is before sending the new request. History db persists after getting the server response. If server doesn\u0027t response, it would be good to not have in progress cache entry(worth some discussion though, not totally sure).",
+      "parentUuid": "68fedec4_f7b5a46e",
+      "range": {
+        "startLine": 1039,
+        "startChar": 2,
+        "endLine": 1043,
+        "endChar": 3
+      },
+      "revId": "72372832e4491ad720a0fcba486cb75c063750c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "97307f81_1c41b26e",
         "filename": "content/browser/download/download_resource_handler.cc",
         "patchSetId": 4
