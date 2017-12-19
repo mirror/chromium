@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b37430ca_156a2792",
+        "filename": "content/browser/frame_host/navigation_controller_impl_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 995,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-12-19T02:33:06Z",
+      "side": 1,
+      "message": "I think it might be worthwhile to keep coverage for both same-process and cross-process cases here, so I\u0027m ok doing it this way.  We already branch based on AreAllSitesIsolatedForTesting() in several other tests.  And if you wanted to make it more intuitive, perhaps converting to NavigationSimulator could help?",
+      "parentUuid": "2df4a413_4a65b738",
+      "range": {
+        "startLine": 995,
+        "startChar": 23,
+        "endLine": 995,
+        "endChar": 37
+      },
+      "revId": "8d9ce25723362ca9d623f433e24a4c2ef7674287",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "726db7a0_fabbeac4",
         "filename": "content/browser/frame_host/navigation_controller_impl_unittest.cc",
         "patchSetId": 13
@@ -36,6 +60,30 @@
       "writtenOn": "2017-12-14T20:08:10Z",
       "side": 1,
       "message": "Because of the redirect on line 1655 we will commit |url2|, not |url1| - the old test code was incorrect.",
+      "range": {
+        "startLine": 1656,
+        "startChar": 72,
+        "endLine": 1656,
+        "endChar": 76
+      },
+      "revId": "8d9ce25723362ca9d623f433e24a4c2ef7674287",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "12590b78_67fe8fe8",
+        "filename": "content/browser/frame_host/navigation_controller_impl_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1656,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-12-19T02:33:06Z",
+      "side": 1,
+      "message": "Good catch!",
+      "parentUuid": "726db7a0_fabbeac4",
       "range": {
         "startLine": 1656,
         "startChar": 72,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "a610fe53_2a36a773",
+        "filename": "content/browser/frame_host/navigation_controller_impl_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1746,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-12-19T02:33:06Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "dc0c62e2_3f8c3f48",
+      "range": {
+        "startLine": 1746,
+        "startChar": 48,
+        "endLine": 1746,
+        "endChar": 52
+      },
+      "revId": "8d9ce25723362ca9d623f433e24a4c2ef7674287",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4905b4be_9feea490",
         "filename": "content/browser/frame_host/navigation_controller_impl_unittest.cc",
         "patchSetId": 13
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "9af23896_bd1e8107",
+        "filename": "content/browser/frame_host/navigation_controller_impl_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1861,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-12-19T02:33:06Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "4905b4be_9feea490",
+      "range": {
+        "startLine": 1861,
+        "startChar": 2,
+        "endLine": 1861,
+        "endChar": 52
+      },
+      "revId": "8d9ce25723362ca9d623f433e24a4c2ef7674287",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "07e4ec2c_3fa45b77",
         "filename": "content/browser/frame_host/navigation_controller_impl_unittest.cc",
         "patchSetId": 13
@@ -105,6 +201,30 @@
       "writtenOn": "2017-12-14T20:08:10Z",
       "side": 1,
       "message": "Can\u0027t use NavigationSimulator, because we need to inspect the pending entry below (which will disappear once the navigation is done / is fully simulated).",
+      "range": {
+        "startLine": 1874,
+        "startChar": 2,
+        "endLine": 1874,
+        "endChar": 25
+      },
+      "revId": "8d9ce25723362ca9d623f433e24a4c2ef7674287",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1f0a254e_f18869c6",
+        "filename": "content/browser/frame_host/navigation_controller_impl_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1874,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-12-19T02:33:06Z",
+      "side": 1,
+      "message": "Could CreateHistoryNavigation() help here?  (GoForward is basically that plus commit)",
+      "parentUuid": "07e4ec2c_3fa45b77",
       "range": {
         "startLine": 1874,
         "startChar": 2,

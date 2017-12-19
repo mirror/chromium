@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "f510ddcb_146f12f7",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 3247,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-12-19T02:33:06Z",
+      "side": 1,
+      "message": "Perhaps update the comment to reflect that, as it\u0027s not very obvious?",
+      "parentUuid": "1b5ff59e_2cccd5fa",
+      "range": {
+        "startLine": 3247,
+        "startChar": 2,
+        "endLine": 3247,
+        "endChar": 22
+      },
+      "revId": "ea4496b399cb0802685dd4fe6be8825262abee16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a4006f7c_769eeffe",
         "filename": "content/browser/frame_host/render_frame_host_impl.cc",
         "patchSetId": 14
@@ -59,6 +83,30 @@
       "writtenOn": "2017-12-14T20:08:10Z",
       "side": 1,
       "message": "This is the main change in this CL.",
+      "range": {
+        "startLine": 3274,
+        "startChar": 6,
+        "endLine": 3274,
+        "endChar": 19
+      },
+      "revId": "ea4496b399cb0802685dd4fe6be8825262abee16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9cb86fc5_5ee99e17",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 3274,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-12-19T02:33:06Z",
+      "side": 1,
+      "message": "Ack, makes sense.  I guess this is orthogonal to the origin lock checks in SiteInstanceImpl::LockToOriginIfNeeded(), in the sense that LockToOriginIfNeeded() will prevent a new, not-yet-locked SiteInstance from committing a navigation in a process with an incompatible origin lock, whereas these checks will guard a process that has already committed something and locked to an origin from committing incompatible origins.  (Right?)",
+      "parentUuid": "a4006f7c_769eeffe",
       "range": {
         "startLine": 3274,
         "startChar": 6,
@@ -105,6 +153,30 @@
       "writtenOn": "2017-12-14T20:08:10Z",
       "side": 1,
       "message": "This also means that we don\u0027t need to relax the checks for webview tag guests (which are not locked to an origin).",
+      "range": {
+        "startLine": 3276,
+        "startChar": 0,
+        "endLine": 3281,
+        "endChar": 54
+      },
+      "revId": "ea4496b399cb0802685dd4fe6be8825262abee16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "eddefed2_89f8b987",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 3281,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-12-19T02:33:06Z",
+      "side": 1,
+      "message": "Ack.  And \u003cwebview\u003e should work once we check ShouldLockToOrigin() here, because ShouldLockToOrigin returns false for chrome-guest://, right?",
+      "parentUuid": "42e54993_bf0db904",
       "range": {
         "startLine": 3276,
         "startChar": 0,
