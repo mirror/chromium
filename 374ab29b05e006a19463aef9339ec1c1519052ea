@@ -46,6 +46,30 @@
       "revId": "374ab29b05e006a19463aef9339ec1c1519052ea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5ca3a65_de079a50",
+        "filename": "components/cronet/ios/cronet_environment.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-12-19T20:02:22Z",
+      "side": 1,
+      "message": "Correct, it should already work through experimental options.",
+      "parentUuid": "1f962a9a_a3929688",
+      "range": {
+        "startLine": 339,
+        "startChar": 2,
+        "endLine": 339,
+        "endChar": 24
+      },
+      "revId": "374ab29b05e006a19463aef9339ec1c1519052ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
