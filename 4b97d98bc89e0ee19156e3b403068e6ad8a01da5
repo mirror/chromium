@@ -1,0 +1,208 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f0e924ab_db141870",
+        "filename": "ui/views/accessibility/ax_view_obj_wrapper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-19T00:37:08Z",
+      "side": 1,
+      "message": "is this redundant now?",
+      "revId": "4b97d98bc89e0ee19156e3b403068e6ad8a01da5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b7c04cd_d18e086c",
+        "filename": "ui/views/accessibility/ax_view_obj_wrapper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-19T00:37:08Z",
+      "side": 1,
+      "message": "this... probably is too, but it\u0027s IsDrawn() vs visible()",
+      "revId": "4b97d98bc89e0ee19156e3b403068e6ad8a01da5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9fb4a74_542c3aef",
+        "filename": "ui/views/accessibility/ax_view_obj_wrapper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-19T00:37:08Z",
+      "side": 1,
+      "message": "I think this is redundant too",
+      "revId": "4b97d98bc89e0ee19156e3b403068e6ad8a01da5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9dd2f663_85807d9c",
+        "filename": "ui/views/accessibility/ax_view_obj_wrapper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-19T00:37:08Z",
+      "side": 1,
+      "message": "this doesn\u0027t seem to be redundant, but it perhaps should move to ViewAccessible",
+      "revId": "4b97d98bc89e0ee19156e3b403068e6ad8a01da5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7091372_c2e9ddf8",
+        "filename": "ui/views/accessibility/native_view_accessibility_stub.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-19T00:37:08Z",
+      "side": 1,
+      "message": "\"native_view_accessibility_stub.cc\" no longer sounds right for this file.. But I don\u0027t have an obviously better name. Maybe default_view_accessibility.cc ?\n\nAnd perhaps comment below where is is used (e.g.\n\n // This file is used on platforms that do not require an implementation of\n // NativeViewAccessibility to interface with the native accessibility toolkit.",
+      "revId": "4b97d98bc89e0ee19156e3b403068e6ad8a01da5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cacbed57_4aa0a495",
+        "filename": "ui/views/accessibility/view_accessibility.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-19T00:37:08Z",
+      "side": 1,
+      "message": "nit: no (c)",
+      "revId": "4b97d98bc89e0ee19156e3b403068e6ad8a01da5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "369af69a_80a6ed51",
+        "filename": "ui/views/accessibility/view_accessibility.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-19T00:37:08Z",
+      "side": 1,
+      "message": "blank line before? Or I guess remove, since it\u0027s in the .h",
+      "revId": "4b97d98bc89e0ee19156e3b403068e6ad8a01da5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31039328_7a3cc47f",
+        "filename": "ui/views/accessibility/view_accessibility.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-19T00:37:08Z",
+      "side": 1,
+      "message": "nit: explicit, also there shouldn\u0027t be curlies here",
+      "revId": "4b97d98bc89e0ee19156e3b403068e6ad8a01da5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ae4cc8e_4f128726",
+        "filename": "ui/views/accessibility/view_accessibility.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-19T00:37:08Z",
+      "side": 1,
+      "message": "move implementation/curlies to .cc?",
+      "revId": "4b97d98bc89e0ee19156e3b403068e6ad8a01da5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f047202_e2aab46a",
+        "filename": "ui/views/accessibility/view_accessibility.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-19T00:37:08Z",
+      "side": 1,
+      "message": "const std::string\u0026?",
+      "revId": "4b97d98bc89e0ee19156e3b403068e6ad8a01da5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d1408b6_ea14dfc5",
+        "filename": "ui/views/accessibility/view_accessibility.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-19T00:37:08Z",
+      "side": 1,
+      "message": "can this be moved to private: and accessors added? (style guide bans public data members). And I think it can it be declared `View* const view_;`  (if it can\u0027t, we maybe want a view() accessor, and a `void ClearView()` that sets it to null - but I forget whether anything still needs to do that).",
+      "revId": "4b97d98bc89e0ee19156e3b403068e6ad8a01da5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f7f1df7_f333c557",
+        "filename": "ui/views/accessibility/view_accessibility.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-19T00:37:08Z",
+      "side": 1,
+      "message": "comment? (E.g. to say it only holds data set explicitly -- my first thought was that GetAccessibleNodeData() would just return this)",
+      "revId": "4b97d98bc89e0ee19156e3b403068e6ad8a01da5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
