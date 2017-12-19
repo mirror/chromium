@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b32b4dcf_73f114dc",
+        "filename": "third_party/WebKit/Source/core/html/canvas/CanvasRenderingContextHost.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1149164
+      },
+      "writtenOn": "2017-12-19T19:01:38Z",
+      "side": 1,
+      "message": "A function that already exists in both OffscreenCanvas and HTMLCanvasElement.",
+      "revId": "4612ef23a2de9967e8a9581c08858e4e8ba9709a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad01bb25_141e54e3",
+        "filename": "third_party/WebKit/Source/modules/canvas/offscreencanvas2d/OffscreenCanvasRenderingContext2D.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1149164
+      },
+      "writtenOn": "2017-12-19T19:01:38Z",
+      "side": 1,
+      "message": "not doing creation of imagebuffer (or whatever similar) just like html canvas.",
+      "revId": "4612ef23a2de9967e8a9581c08858e4e8ba9709a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
