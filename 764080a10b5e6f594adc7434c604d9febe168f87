@@ -16,6 +16,24 @@
       "revId": "764080a10b5e6f594adc7434c604d9febe168f87",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1fd114d_5ec7f873",
+        "filename": "content/browser/compositor/test/test_image_transport_factory.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-12-19T21:08:50Z",
+      "side": 1,
+      "message": "There are a few more things that needed to be added but yes I think we can delete NoTransportImageTransportFactory.",
+      "parentUuid": "ef61b21d_5e01dbe1",
+      "revId": "764080a10b5e6f594adc7434c604d9febe168f87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
