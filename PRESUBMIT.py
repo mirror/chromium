@@ -2764,7 +2764,8 @@ def _CheckSyslogUseWarning(input_api, output_api, source_file_filter=None,
 def _CheckCrbugLinksHaveHttps(input_api, output_api):
   """Checks that crbug(.com) links are correctly prefixed by https://"""
   white_list = r'.+%s' % _IMPLEMENTATION_EXTENSIONS
-  black_list = (_EXCLUDED_PATHS + _TEST_CODE_EXCLUDED_PATHS)
+  IOS_PATH = ( r"^ios[\\\/].*", );
+  black_list = (_EXCLUDED_PATHS + _TEST_CODE_EXCLUDED_PATHS + IOS_PATH)
   sources = lambda f: input_api.FilterSourceFile(
       f, white_list=white_list, black_list=black_list)
 
