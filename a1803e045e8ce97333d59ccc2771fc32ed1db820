@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dd477c35_60dba20b",
+        "filename": "services/service_manager/sandbox/mac/ppapi_v2.sb",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-12-19T18:50:40Z",
+      "side": 1,
+      "message": "(allow file-read* \n  (subpath \"/System/Library/Fonts\")\n  (subpath \"/Library/Fonts\"))\n\n?\n\nThough this is organized differently than renderer_v2.sb where these would be in \"Reads from /System.\" and \"Reads from /Library.\" respectively.\n\nAlternatively, since this is the same kind of access that the renderer has, perhaps common_v2.sb could have a macro like (allow-font-access) that could dedupe the logic between the two profiles.",
+      "revId": "a1803e045e8ce97333d59ccc2771fc32ed1db820",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d77fa03e_65089c50",
+        "filename": "services/service_manager/sandbox/mac/ppapi_v2.sb",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-12-19T18:50:40Z",
+      "side": 1,
+      "message": "And similar grouping the mach-lookups into a single statement.",
+      "revId": "a1803e045e8ce97333d59ccc2771fc32ed1db820",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f2c2382_34ea9508",
+        "filename": "services/service_manager/sandbox/mac/ppapi_v2.sb",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-12-19T18:50:40Z",
+      "side": 1,
+      "message": "nit: extra blank line",
+      "revId": "a1803e045e8ce97333d59ccc2771fc32ed1db820",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
