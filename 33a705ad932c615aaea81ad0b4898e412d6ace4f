@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "e587a5db_e88e2a78",
+        "filename": "chrome/browser/component_updater/sw_reporter_installer_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 449,
+      "author": {
+        "id": 1159306
+      },
+      "writtenOn": "2017-12-19T18:54:23Z",
+      "side": 1,
+      "message": "I think you also want to call RemoveObserver in the destructor for when there\u0027s no error. (It looks like it\u0027s safe to call that twice with the same pointer, in case you get in this branch and then again in the destructor - the second call will just be a no-op.)",
+      "revId": "33a705ad932c615aaea81ad0b4898e412d6ace4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74e935e4_68ae3344",
+        "filename": "chrome/browser/component_updater/sw_reporter_installer_win.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1159306
+      },
+      "writtenOn": "2017-12-19T18:54:23Z",
+      "side": 1,
+      "message": "That\u0027s a scary comment. Can you be more specific about what the adverse effects are?",
+      "revId": "33a705ad932c615aaea81ad0b4898e412d6ace4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8e6a46d7_df4034a0",
         "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_controller_impl_win.cc",
         "patchSetId": 2
@@ -42,6 +76,64 @@
     },
     {
       "key": {
+        "uuid": "f8a91b2f_c8631203",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_controller_impl_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 415,
+      "author": {
+        "id": 1159306
+      },
+      "writtenOn": "2017-12-19T18:54:23Z",
+      "side": 1,
+      "message": "I prefer it like this - I think it would be harder to read with the lambda inline.\n\nAlthough I\u0027m not sure why you need a lambda: you should be able to just use:\n\nbase::BindOnce(\u0026ChromeCleanerController::OnReporterSequenceDone, this, kComponentNotAvailable)\n\nWhich is simple enough to be inline, I think.",
+      "parentUuid": "98048cd2_f05d2d45",
+      "range": {
+        "startLine": 415,
+        "startChar": 39,
+        "endLine": 415,
+        "endChar": 40
+      },
+      "revId": "33a705ad932c615aaea81ad0b4898e412d6ace4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b94a1e14_df063857",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_controller_impl_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 1159306
+      },
+      "writtenOn": "2017-12-19T18:54:23Z",
+      "side": 1,
+      "message": "Please use base::MakeUnique instead of new. (Same as Sorin\u0027s comment above.)",
+      "revId": "33a705ad932c615aaea81ad0b4898e412d6ace4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6638396_aaf35b52",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_controller_impl_win.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1159306
+      },
+      "writtenOn": "2017-12-19T18:54:23Z",
+      "side": 1,
+      "message": "Nit: can you add a blank line before these so it\u0027s clear they\u0027re not protected by lock_? (Unless they are protected by lock, in which case please add a comment for that too.)",
+      "revId": "33a705ad932c615aaea81ad0b4898e412d6ace4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8e6f81ff_e1f54dc3",
         "filename": "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_win.cc",
         "patchSetId": 2
@@ -53,6 +145,23 @@
       "writtenOn": "2017-12-19T17:38:10Z",
       "side": 1,
       "message": "const?",
+      "revId": "33a705ad932c615aaea81ad0b4898e412d6ace4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c4b4d03_ca819db2",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_win.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1159306
+      },
+      "writtenOn": "2017-12-19T18:54:23Z",
+      "side": 1,
+      "message": "It\u0027s really unclear that this contructor doesn\u0027t copy the callback, but the \u0026\u0026 constructor does. \n\nSince AFAICT you only call this once, what about doing this at the call site:\n\ncached_reporter_invocations_ \u003d base::MakeUnique\u003cSwReporterInvocationSequence\u003e(invocations.version());\ncached_reporter_invocations_.mutable_container() \u003d invocations.container();",
       "revId": "33a705ad932c615aaea81ad0b4898e412d6ace4f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
