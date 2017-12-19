@@ -244,6 +244,24 @@
     },
     {
       "key": {
+        "uuid": "4ad9202a_bd0fa762",
+        "filename": "chrome/browser/chromeos/settings/device_settings_service.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-12-19T19:25:51Z",
+      "side": 1,
+      "message": "DeviceSettingsService is *mostly* a wrapper around SessionManager. It happens to load a policy blob but seems moslty unwaware of that detail, excepet for the off hours code (at least based on the code dependencies).\n\nSo yes, it\u0027s a question of whether it should be part of a separate layer, maybe associated with other session manager services, or part of a TBD policy service.\n\nIt sounds like it needs to be part of the TBD policy service.\n\nThe challenge with that is the policy code is super complicated and not (as far as I can tell) very well componentized, so extracting that out is going to be a bit of work.\n\nThere is no urgency on this. There are some Ash dependencies on CrosSettings, which depends on DeviceSettingsService, that I was hoping to be able to address with a reasonable amount of effort, but it looks like this is going to be a larger effort so I will put it off.",
+      "parentUuid": "2795905a_96bbd40e",
+      "revId": "969d0f9e53918ca5f027a816cd8129d351fa80c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bd3b984e_ca757349",
         "filename": "chrome/browser/ui/views/ash/chrome_browser_main_extra_parts_ash.cc",
         "patchSetId": 5
