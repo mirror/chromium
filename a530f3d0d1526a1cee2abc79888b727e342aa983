@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e95b44d3_420d97c1",
+        "filename": "chrome/browser/chromeos/printing/external_printers.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-12-19T00:31:26Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "61c210a6_76e836b0",
+      "range": {
+        "startLine": 48,
+        "startChar": 36,
+        "endLine": 48,
+        "endChar": 46
+      },
+      "revId": "a530f3d0d1526a1cee2abc79888b727e342aa983",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "375f9cc8_32a97542",
         "filename": "chrome/browser/chromeos/printing/external_printers.cc",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "989e5453_b70122aa",
+        "filename": "chrome/browser/chromeos/printing/external_printers.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-12-19T00:31:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "375f9cc8_32a97542",
+      "range": {
+        "startLine": 59,
+        "startChar": 0,
+        "endLine": 59,
+        "endChar": 32
+      },
+      "revId": "a530f3d0d1526a1cee2abc79888b727e342aa983",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cf8dec5e_217536eb",
         "filename": "chrome/browser/chromeos/printing/external_printers.cc",
         "patchSetId": 3
@@ -65,6 +113,24 @@
     },
     {
       "key": {
+        "uuid": "fd6bcef0_a3d94a76",
+        "filename": "chrome/browser/chromeos/printing/external_printers.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-12-19T00:31:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cf8dec5e_217536eb",
+      "revId": "a530f3d0d1526a1cee2abc79888b727e342aa983",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b1b429bc_3b4ec46d",
         "filename": "chrome/browser/chromeos/printing/external_printers.cc",
         "patchSetId": 3
@@ -79,6 +145,24 @@
       "revId": "a530f3d0d1526a1cee2abc79888b727e342aa983",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b40f0b27_2aa3afb2",
+        "filename": "chrome/browser/chromeos/printing/external_printers.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-12-19T00:31:26Z",
+      "side": 1,
+      "message": "It should be like we never received a policy.  I\u0027ll clear that up.",
+      "parentUuid": "b1b429bc_3b4ec46d",
+      "revId": "a530f3d0d1526a1cee2abc79888b727e342aa983",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -105,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "23519f5c_b2a759c3",
+        "filename": "chrome/browser/chromeos/printing/external_printers.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-12-19T00:31:26Z",
+      "side": 1,
+      "message": "Ack.  For lack of a better idea, it\u0027s called update now.",
+      "parentUuid": "07519358_6d865d30",
+      "range": {
+        "startLine": 107,
+        "startChar": 31,
+        "endLine": 107,
+        "endChar": 44
+      },
+      "revId": "a530f3d0d1526a1cee2abc79888b727e342aa983",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8529abf2_8242241d",
         "filename": "chrome/browser/chromeos/printing/external_printers.cc",
         "patchSetId": 3
@@ -119,6 +227,24 @@
       "revId": "a530f3d0d1526a1cee2abc79888b727e342aa983",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0262ff8_9ad27f82",
+        "filename": "chrome/browser/chromeos/printing/external_printers.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-12-19T00:31:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8529abf2_8242241d",
+      "revId": "a530f3d0d1526a1cee2abc79888b727e342aa983",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -139,6 +265,24 @@
     },
     {
       "key": {
+        "uuid": "775690bb_853845ec",
+        "filename": "chrome/browser/chromeos/printing/external_printers.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-12-19T00:31:26Z",
+      "side": 1,
+      "message": "Nope.  That\u0027s correct.  It\u0027s on reply now. \u003e:(",
+      "parentUuid": "81cc5c49_fa3b2a18",
+      "revId": "a530f3d0d1526a1cee2abc79888b727e342aa983",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "36b39313_2c34f9ff",
         "filename": "chrome/browser/chromeos/printing/external_printers.cc",
         "patchSetId": 3
@@ -150,6 +294,24 @@
       "writtenOn": "2017-12-18T21:13:09Z",
       "side": 1,
       "message": "You *could* have a helper function that just takes the bound function-to-call as an argument here, and reuse it for all of these delegate-to-Restrictions calls.  However, I\u0027m not entirely sure if the readability will improve with that or not.",
+      "revId": "a530f3d0d1526a1cee2abc79888b727e342aa983",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1cc2a512_22b46ec4",
+        "filename": "chrome/browser/chromeos/printing/external_printers.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-12-19T00:31:26Z",
+      "side": 1,
+      "message": "Yeah.  I thought about that.  But I\u0027m not terribly keen on passing around function pointers if I don\u0027t absolutely need to.  And using an enum to indicate the operation seems silly.  Having the code repeated at least makes it clear that we\u0027re expecting a continuation sometime in the future.",
+      "parentUuid": "36b39313_2c34f9ff",
       "revId": "a530f3d0d1526a1cee2abc79888b727e342aa983",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -173,6 +335,24 @@
     },
     {
       "key": {
+        "uuid": "eb2995d1_01f8137a",
+        "filename": "chrome/browser/chromeos/printing/external_printers.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-12-19T00:31:26Z",
+      "side": 1,
+      "message": "I think you\u0027re right.  Especially because I\u0027ve added validity to the callback.",
+      "parentUuid": "c1af72f9_9132179a",
+      "revId": "a530f3d0d1526a1cee2abc79888b727e342aa983",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "03200b48_337e94da",
         "filename": "chrome/browser/chromeos/printing/external_printers.cc",
         "patchSetId": 3
@@ -187,6 +367,24 @@
       "revId": "a530f3d0d1526a1cee2abc79888b727e342aa983",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aed69aa0_acf85215",
+        "filename": "chrome/browser/chromeos/printing/external_printers.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-12-19T00:31:26Z",
+      "side": 1,
+      "message": "It is.  I don\u0027t want stale data hanging around in this situation.",
+      "parentUuid": "03200b48_337e94da",
+      "revId": "a530f3d0d1526a1cee2abc79888b727e342aa983",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -210,6 +408,30 @@
       "revId": "a530f3d0d1526a1cee2abc79888b727e342aa983",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df7625f8_7c6c0bda",
+        "filename": "chrome/browser/chromeos/printing/external_printers.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-12-19T00:31:26Z",
+      "side": 1,
+      "message": "Nope.",
+      "parentUuid": "efed9e83_e2dcc95d",
+      "range": {
+        "startLine": 40,
+        "startChar": 16,
+        "endLine": 40,
+        "endChar": 38
+      },
+      "revId": "a530f3d0d1526a1cee2abc79888b727e342aa983",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
