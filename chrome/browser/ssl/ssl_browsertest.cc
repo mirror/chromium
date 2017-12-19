@@ -1063,11 +1063,19 @@ IN_PROC_BROWSER_TEST_P(SSLUITest, TestHTTP) {
       browser()->tab_strip_model()->GetActiveWebContents(), AuthState::NONE);
 }
 
+// TODO(crbug.com/795820): Fails in Windows official builds.
+#if defined(OFFICIAL_BUILD) && defined(OS_WIN)
+#define MAYBE_TestHTTPWithBrokenHTTPSResource \
+  DISABLED_TestHTTPWithBrokenHTTPSResource
+#else
+#define MAYBE_TestHTTPWithBrokenHTTPSResource TestHTTPWithBrokenHTTPSResource
+#endif
+
 // Visits a page over http which includes broken https resources (status should
 // be OK).
 // TODO(jcampan): test that bad HTTPS content is blocked (otherwise we'll give
 //                the secure cookies away!).
-IN_PROC_BROWSER_TEST_P(SSLUITest, TestHTTPWithBrokenHTTPSResource) {
+IN_PROC_BROWSER_TEST_P(SSLUITest, MAYBE_TestHTTPWithBrokenHTTPSResource) {
   ASSERT_TRUE(embedded_test_server()->Start());
   ASSERT_TRUE(https_server_expired_.Start());
 
