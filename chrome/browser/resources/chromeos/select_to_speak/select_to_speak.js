@@ -4,7 +4,6 @@
 
 var AutomationEvent = chrome.automation.AutomationEvent;
 var EventType = chrome.automation.EventType;
-var RoleType = chrome.automation.RoleType;
 
 /**
  * Return the rect that encloses two points.
