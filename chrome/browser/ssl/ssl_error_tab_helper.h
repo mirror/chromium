@@ -7,6 +7,8 @@
 
 #include <map>
 
+#include "components/security_interstitials/core/common/interfaces/interstitial_commands.mojom.h"
+#include "content/public/browser/web_contents_binding_set.h"
 #include "content/public/browser/web_contents_observer.h"
 #include "content/public/browser/web_contents_user_data.h"
 
@@ -22,7 +24,8 @@ class SecurityInterstitialPage;
 // Long-lived helper associated with a WebContents, for owning blocking pages.
 class SSLErrorTabHelper
     : public content::WebContentsObserver,
-      public content::WebContentsUserData<SSLErrorTabHelper> {
+      public content::WebContentsUserData<SSLErrorTabHelper>,
+      public interstitial_commands::mojom::InterstitialCommands {
  public:
   ~SSLErrorTabHelper() override;
 
@@ -52,6 +55,11 @@ class SSLErrorTabHelper
       std::unique_ptr<security_interstitials::SecurityInterstitialPage>
           blocking_page);
 
+  // interstitial_commands::mojom::InterstitialCommands::
+  void ReceiveMessage(
+      interstitial_commands::mojom::InterstitialCommands::InterstitialCommandId
+          cmd) override;
+
   // Keeps track of blocking pages for navigations that have encountered
   // certificate errors in this WebContents. When a navigation commits, the
   // corresponding blocking page is moved out and stored in
@@ -64,6 +72,10 @@ class SSLErrorTabHelper
   // blocking page) or reset on every committed navigation.
   std::unique_ptr<security_interstitials::SecurityInterstitialPage>
       blocking_page_for_currently_committed_navigation_;
+
+  content::WebContentsFrameBindingSet<
+      interstitial_commands::mojom::InterstitialCommands>
+      binding_;
 
   DISALLOW_COPY_AND_ASSIGN(SSLErrorTabHelper);
 };

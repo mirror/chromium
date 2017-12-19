@@ -1,0 +1,30 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+module interstitial_commands.mojom;
+
+interface InterstitialCommands {
+  [Extensible]
+  enum InterstitialCommandId {
+    CMD_DONT_PROCEED = 0,
+    CMD_PROCEED = 1,
+    // Ways for user to get more information
+    CMD_SHOW_MORE_SECTION = 2,
+    CMD_OPEN_HELP_CENTER = 3,
+    CMD_OPEN_DIAGNOSTIC = 4,
+    // Primary button actions
+    CMD_RELOAD = 5,
+    CMD_OPEN_DATE_SETTINGS = 6,
+    CMD_OPEN_LOGIN = 7,
+    // Safe Browsing Extended Reporting
+    CMD_DO_REPORT = 8,
+    CMD_DONT_REPORT = 9,
+    CMD_OPEN_REPORTING_PRIVACY = 10,
+    CMD_OPEN_WHITEPAPER = 11,
+    // Report a phishing error.
+    CMD_REPORT_PHISHING_ERROR = 12
+  };
+
+  ReceiveMessage(InterstitialCommandId cmd);
+};
