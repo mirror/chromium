@@ -12,8 +12,6 @@
 #include "mojo/public/cpp/bindings/strong_binding.h"
 #include "third_party/zlib/google/zip.h"
 
-namespace chrome {
-
 namespace {
 
 // A zip::FileAccessor that talks to a file system through the Mojo
@@ -182,4 +180,3 @@ void ZipFileCreator::CreateZipFile(
   std::move(callback).Run(success);
 }
 
-}  // namespace chrome

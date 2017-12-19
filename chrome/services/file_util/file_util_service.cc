@@ -17,8 +17,6 @@
 #include "chrome/services/file_util/zip_file_creator.h"
 #endif
 
-namespace chrome {
-
 namespace {
 
 #if defined(FULL_SAFE_BROWSING)
@@ -71,5 +69,3 @@ void FileUtilService::OnBindInterface(
     mojo::ScopedMessagePipeHandle interface_pipe) {
   registry_.BindInterface(interface_name, std::move(interface_pipe));
 }
-
-}  //  namespace chrome

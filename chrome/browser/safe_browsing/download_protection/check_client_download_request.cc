@@ -478,7 +478,7 @@ void CheckClientDownloadRequest::StartExtractZipFeatures() {
   zip_analysis_start_time_ = base::TimeTicks::Now();
   // We give the zip analyzer a weak pointer to this object.  Since the
   // analyzer is refcounted, it might outlive the request.
-  analyzer_ = new chrome::SandboxedZipAnalyzer(
+  analyzer_ = new SandboxedZipAnalyzer(
       item_->GetFullPath(),
       base::Bind(&CheckClientDownloadRequest::OnZipAnalysisFinished,
                  weakptr_factory_.GetWeakPtr()),
