@@ -3908,10 +3908,6 @@ void RenderFrameImpl::DidCommitProvisionalLoad(
     committed_first_load_ = true;
   }
 
-  DocumentState* document_state =
-      DocumentState::FromDocumentLoader(frame_->GetDocumentLoader());
-  NavigationStateImpl* navigation_state =
-      static_cast<NavigationStateImpl*>(document_state->navigation_state());
   const WebURLResponse& web_url_response =
       frame_->GetDocumentLoader()->GetResponse();
   WebURLResponseExtraDataImpl* extra_data =
@@ -3919,7 +3915,7 @@ void RenderFrameImpl::DidCommitProvisionalLoad(
   // Only update the PreviewsState and effective connection type states for new
   // main frame documents. Subframes inherit from the main frame and should not
   // change at commit time.
-  if (is_main_frame_ && !navigation_state->WasWithinSameDocument()) {
+  if (is_main_frame_) {
     previews_state_ = PREVIEWS_OFF;
     if (extra_data) {
       previews_state_ = extra_data->previews_state();
@@ -3940,7 +3936,7 @@ void RenderFrameImpl::DidCommitProvisionalLoad(
   // Navigations that change the document represent a new content source.  Keep
   // track of that on the widget to help the browser process detect when stale
   // compositor frames are being shown after a commit.
-  if (is_main_frame_ && !navigation_state->WasWithinSameDocument()) {
+  if (is_main_frame_) {
     GetRenderWidget()->IncrementContentSourceId();
 
     // Update the URL used to key Ukm metrics in the compositor if the
@@ -3952,18 +3948,8 @@ void RenderFrameImpl::DidCommitProvisionalLoad(
       GetRenderWidget()->compositor()->SetURLForUkm(GetLoadingUrl());
   }
 
-  // When we perform a new navigation, we need to update the last committed
-  // session history entry with state for the page we are leaving. Do this
-  // before updating the current history item.
-  SendUpdateState();
-
-  // Update the current history item for this frame.
-  current_history_item_ = item;
-  // Note: don't reference |item| after this point, as its value may not match
-  // |current_history_item_|.
-  current_history_item_.SetTarget(
-      blink::WebString::FromUTF8(unique_name_helper_.value()));
-
+  DocumentState* document_state =
+      DocumentState::FromDocumentLoader(frame_->GetDocumentLoader());
   InternalDocumentStateData* internal_data =
       InternalDocumentStateData::FromDocumentState(document_state);
 
@@ -3972,35 +3958,10 @@ void RenderFrameImpl::DidCommitProvisionalLoad(
     internal_data->set_must_reset_scroll_and_scale_state(false);
   }
 
-  const RequestNavigationParams& request_params =
-      navigation_state->request_params();
-  bool is_new_navigation = commit_type == blink::kWebStandardCommit;
-  if (is_new_navigation) {
-    DCHECK(!navigation_state->common_params().should_replace_current_entry ||
-           render_view_->history_list_length_ > 0);
-    if (!navigation_state->common_params().should_replace_current_entry) {
-      // Advance our offset in session history, applying the length limit.
-      // There is now no forward history.
-      render_view_->history_list_offset_++;
-      if (render_view_->history_list_offset_ >= kMaxSessionHistoryEntries)
-        render_view_->history_list_offset_ = kMaxSessionHistoryEntries - 1;
-      render_view_->history_list_length_ =
-          render_view_->history_list_offset_ + 1;
-    }
-  } else {
-    if (request_params.nav_entry_id != 0 &&
-        !request_params.intended_as_new_entry) {
-      // This is a successful session history navigation!
-      render_view_->history_list_offset_ =
-          request_params.pending_history_list_offset;
-    }
-  }
-
   service_manager::mojom::InterfaceProviderRequest
       remote_interface_provider_request;
-  if (!navigation_state->WasWithinSameDocument() &&
-      global_object_reuse_policy !=
-          blink::WebGlobalObjectReusePolicy::kUseExisting) {
+  if (global_object_reuse_policy !=
+      blink::WebGlobalObjectReusePolicy::kUseExisting) {
     // If we're navigating to a new document, bind |remote_interfaces_| to a new
     // message pipe. The request end of the new InterfaceProvider interface will
     // be sent over as part of DidCommitProvisionalLoad. After the RFHI receives
@@ -4033,47 +3994,22 @@ void RenderFrameImpl::DidCommitProvisionalLoad(
     }
   }
 
-  if (commit_type == blink::WebHistoryCommitType::kWebBackForwardCommit)
-    render_view_->DidCommitProvisionalHistoryLoad();
-
-  for (auto& observer : render_view_->observers_)
-    observer.DidCommitProvisionalLoad(frame_, is_new_navigation);
-  {
-    SCOPED_UMA_HISTOGRAM_TIMER("RenderFrameObservers.DidCommitProvisionalLoad");
-    for (auto& observer : observers_) {
-      observer.DidCommitProvisionalLoad(
-          is_new_navigation, navigation_state->WasWithinSameDocument());
-    }
-  }
-
   // Notify the MediaPermissionDispatcher that its connection will be closed
   // due to a navigation to a different document.
-  if (media_permission_dispatcher_ &&
-      !navigation_state->WasWithinSameDocument()) {
+  if (media_permission_dispatcher_)
     media_permission_dispatcher_->OnNavigation();
-  }
 
-  if (!frame_->Parent()) {  // Only for top frames.
-    RenderThreadImpl* render_thread_impl = RenderThreadImpl::current();
-    if (render_thread_impl) {  // Can be NULL in tests.
-      render_thread_impl->histogram_customizer()->
-          RenderViewNavigatedToHost(GURL(GetLoadingUrl()).host(),
-                                    RenderView::GetRenderViewCount());
-    }
-  }
+  UpdateStateBeforeCommitMessage(item, commit_type);
 
-  // Remember that we've already processed this request, so we don't update
-  // the session history again.  We do this regardless of whether this is
-  // a session history navigation, because if we attempted a session history
-  // navigation without valid HistoryItem state, WebCore will think it is a
-  // new navigation.
-  navigation_state->set_request_committed(true);
+  // This invocation must precede any calls to allowScripts(), allowImages(), or
+  // allowPlugins() for the new page. This ensures that when these functions
+  // send ViewHostMsg_ContentBlocked messages, those arrive after the browser
+  // process has already been informed of the provisional load committing.
+  auto params = MakeDidCommitProvisionalLoadParams(commit_type);
+  GetFrameHost()->DidCommitProvisionalLoad(
+      std::move(params), std::move(remote_interface_provider_request));
 
-  SendDidCommitProvisionalLoad(frame_, commit_type,
-                               std::move(remote_interface_provider_request));
-
-  // Check whether we have new encoding name.
-  UpdateEncoding(frame_, frame_->View()->PageEncoding().Utf8());
+  UpdateStateAfterCommitMessage();
 }
 
 void RenderFrameImpl::DidCreateNewDocument() {
@@ -4313,11 +4249,20 @@ void RenderFrameImpl::DidNavigateWithinPage(
       DocumentState::FromDocumentLoader(frame_->GetDocumentLoader());
   UpdateNavigationState(document_state, true /* was_within_same_document */,
                         content_initiated);
-  static_cast<NavigationStateImpl*>(document_state->navigation_state())
-      ->set_was_within_same_document(true);
+  NavigationStateImpl* navigation_state =
+      static_cast<NavigationStateImpl*>(document_state->navigation_state());
+  navigation_state->set_was_within_same_document(true);
 
-  DidCommitProvisionalLoad(item, commit_type,
-                           blink::WebGlobalObjectReusePolicy::kUseExisting);
+  UpdateStateBeforeCommitMessage(item, commit_type);
+
+  // This invocation must precede any calls to allowScripts(), allowImages(), or
+  // allowPlugins() for the new page. This ensures that when these functions
+  // send ViewHostMsg_ContentBlocked messages, those arrive after the browser
+  // process has already been informed of the provisional load committing.
+  auto params = MakeDidCommitProvisionalLoadParams(commit_type);
+  GetFrameHost()->DidCommitSameDocumentNavigation(std::move(params));
+
+  UpdateStateAfterCommitMessage();
 }
 
 void RenderFrameImpl::DidUpdateCurrentHistoryItem() {
@@ -5155,40 +5100,19 @@ const RenderFrameImpl* RenderFrameImpl::GetLocalRoot() const {
                        : RenderFrameImpl::FromWebFrame(frame_->LocalRoot());
 }
 
-// Tell the embedding application that the URL of the active page has changed.
-void RenderFrameImpl::SendDidCommitProvisionalLoad(
-    blink::WebLocalFrame* frame,
-    blink::WebHistoryCommitType commit_type,
-    service_manager::mojom::InterfaceProviderRequest
-        remote_interface_provider_request) {
-  DCHECK_EQ(frame_, frame);
-  WebDocumentLoader* document_loader = frame->GetDocumentLoader();
-  DCHECK(document_loader);
-
+std::unique_ptr<FrameHostMsg_DidCommitProvisionalLoad_Params>
+RenderFrameImpl::MakeDidCommitProvisionalLoadParams(
+    blink::WebHistoryCommitType commit_type) {
+  WebDocumentLoader* document_loader = frame_->GetDocumentLoader();
   const WebURLRequest& request = document_loader->GetRequest();
   const WebURLResponse& response = document_loader->GetResponse();
 
   DocumentState* document_state =
-      DocumentState::FromDocumentLoader(document_loader);
+      DocumentState::FromDocumentLoader(frame_->GetDocumentLoader());
   NavigationStateImpl* navigation_state =
       static_cast<NavigationStateImpl*>(document_state->navigation_state());
   InternalDocumentStateData* internal_data =
       InternalDocumentStateData::FromDocumentState(document_state);
-
-  // Set the correct engagement level on the frame, and wipe the cached origin
-  // so this will not be reused accidentally.
-  if (url::Origin(frame_->GetSecurityOrigin()) == engagement_level_.first) {
-    frame_->SetEngagementLevel(engagement_level_.second);
-    engagement_level_.first = url::Origin();
-  }
-
-  // Set the correct high media engagement bit on the frame, and wipe the cached
-  // origin so this will not be reused accidentally.
-  if (url::Origin(frame_->GetSecurityOrigin()) ==
-      high_media_engagement_origin_) {
-    frame_->SetHasHighMediaEngagement(true);
-    high_media_engagement_origin_ = url::Origin();
-  }
 
   std::unique_ptr<FrameHostMsg_DidCommitProvisionalLoad_Params> params =
       std::make_unique<FrameHostMsg_DidCommitProvisionalLoad_Params>();
@@ -5209,7 +5133,6 @@ void RenderFrameImpl::SendDidCommitProvisionalLoad(
   // are unwound or moved to RenderFrameHost (crbug.com/304341) we can move the
   // client to be based on the routing_id of the RenderFrameHost.
   params->render_view_routing_id = render_view_->routing_id();
-  params->was_within_same_document = navigation_state->WasWithinSameDocument();
 
   // "Standard" commits from Blink create new NavigationEntries. We also treat
   // main frame "inert" commits as creating new NavigationEntries if they
@@ -5220,17 +5143,17 @@ void RenderFrameImpl::SendDidCommitProvisionalLoad(
   // stale state around.
   params->did_create_new_entry =
       (commit_type == blink::kWebStandardCommit) ||
-      (commit_type == blink::kWebHistoryInertCommit && !frame->Parent() &&
+      (commit_type == blink::kWebHistoryInertCommit && !frame_->Parent() &&
        params->should_replace_current_entry &&
-       !params->was_within_same_document);
+       !navigation_state->WasWithinSameDocument());
 
-  WebDocument frame_document = frame->GetDocument();
+  WebDocument frame_document = frame_->GetDocument();
   // Set the origin of the frame.  This will be replicated to the corresponding
   // RenderFrameProxies in other processes.
   WebSecurityOrigin frame_origin = frame_document.GetSecurityOrigin();
   params->origin = frame_origin;
 
-  params->insecure_request_policy = frame->GetInsecureRequestPolicy();
+  params->insecure_request_policy = frame_->GetInsecureRequestPolicy();
 
   params->has_potentially_trustworthy_unique_origin =
       frame_origin.IsUnique() && frame_origin.IsPotentiallyTrustworthy();
@@ -5274,45 +5197,11 @@ void RenderFrameImpl::SendDidCommitProvisionalLoad(
                  document_loader->GetRequest().GetReferrerPolicy());
   } else {
     params->referrer = RenderViewImpl::GetReferrerFromRequest(
-        frame, document_loader->GetRequest());
+        frame_, document_loader->GetRequest());
   }
 
-  if (!frame->Parent()) {
-    // Top-level navigation.
-
-    // Reset the zoom limits in case a plugin had changed them previously. This
-    // will also call us back which will cause us to send a message to
-    // update WebContentsImpl.
-    render_view_->webview()->ZoomLimitsChanged(
-        ZoomFactorToZoomLevel(kMinimumZoomFactor),
-        ZoomFactorToZoomLevel(kMaximumZoomFactor));
-
-    // Set zoom level, but don't do it for full-page plugin since they don't use
-    // the same zoom settings.
-    HostZoomLevels::iterator host_zoom =
-        host_zoom_levels_.find(GURL(request.Url()));
-    if (render_view_->webview()->MainFrame()->IsWebLocalFrame() &&
-        render_view_->webview()
-            ->MainFrame()
-            ->ToWebLocalFrame()
-            ->GetDocument()
-            .IsPluginDocument()) {
-      // Reset the zoom levels for plugins.
-      render_view_->SetZoomLevel(0);
-    } else {
-      // If the zoom level is not found, then do nothing. In-page navigation
-      // relies on not changing the zoom level in this case.
-      if (host_zoom != host_zoom_levels_.end())
-        render_view_->SetZoomLevel(host_zoom->second);
-    }
-
-    if (host_zoom != host_zoom_levels_.end()) {
-      // This zoom level was merely recorded transiently for this load.  We can
-      // erase it now.  If at some point we reload this page, the browser will
-      // send us a new, up-to-date zoom level.
-      host_zoom_levels_.erase(host_zoom);
-    }
-
+  // Main frame/subframe specifics
+  if (!frame_->Parent()) {
     // Update contents MIME type for main frame.
     params->contents_mime_type =
         document_loader->GetResponse().MimeType().Utf8();
@@ -5340,13 +5229,15 @@ void RenderFrameImpl::SendDidCommitProvisionalLoad(
         navigation_state->request_params().should_clear_history_list;
 
     params->report_type = static_cast<FrameMsg_UILoadMetricsReportType::Value>(
-        frame->GetDocumentLoader()->GetRequest().InputPerfMetricReportPolicy());
+        frame_->GetDocumentLoader()
+            ->GetRequest()
+            .InputPerfMetricReportPolicy());
     params->ui_timestamp =
         base::TimeTicks() +
         base::TimeDelta::FromSecondsD(
-            frame->GetDocumentLoader()->GetRequest().UiStartTime());
+            frame_->GetDocumentLoader()->GetRequest().UiStartTime());
   } else {
-    // Subframe navigation: the type depends on whether this navigation
+    // The type depends on whether this navigation
     // generated a new session history entry. When they do generate a session
     // history entry, it means the user initiated the navigation and we should
     // mark it as such.
@@ -5358,8 +5249,6 @@ void RenderFrameImpl::SendDidCommitProvisionalLoad(
     DCHECK(!navigation_state->request_params().should_clear_history_list);
     params->history_list_was_cleared = false;
     params->report_type = FrameMsg_UILoadMetricsReportType::NO_REPORT;
-    // Subframes should match the zoom level of the main frame.
-    render_view_->SetZoomLevel(render_view_->page_zoom_level());
   }
 
   // Standard URLs must match the reported origin, when it is not unique.
@@ -5377,16 +5266,164 @@ void RenderFrameImpl::SendDidCommitProvisionalLoad(
     }
   }
 
-  // This invocation must precede any calls to allowScripts(), allowImages(), or
-  // allowPlugins() for the new page. This ensures that when these functions
-  // send ViewHostMsg_ContentBlocked messages, those arrive after the browser
-  // process has already been informed of the provisional load committing.
-  GetFrameHost()->DidCommitProvisionalLoad(
-      std::move(params), std::move(remote_interface_provider_request));
+  return params;
+}
+
+void RenderFrameImpl::UpdateStateBeforeCommitMessage(
+    const blink::WebHistoryItem& item,
+    blink::WebHistoryCommitType commit_type) {
+  DocumentState* document_state =
+      DocumentState::FromDocumentLoader(frame_->GetDocumentLoader());
+  NavigationStateImpl* navigation_state =
+      static_cast<NavigationStateImpl*>(document_state->navigation_state());
+  const RequestNavigationParams& request_params =
+      navigation_state->request_params();
+
+  // When we perform a new navigation, we need to update the last committed
+  // session history entry with state for the page we are leaving. Do this
+  // before updating the current history item.
+  SendUpdateState();
+
+  bool is_new_navigation =
+      UpdateNavigationHistory(item, commit_type, request_params);
+  NotifyObservers(is_new_navigation, navigation_state->WasWithinSameDocument());
+  UpdateZoomLevel();
+
+  if (!frame_->Parent()) {  // Only for top frames.
+    RenderThreadImpl* render_thread_impl = RenderThreadImpl::current();
+    if (render_thread_impl) {  // Can be NULL in tests.
+      render_thread_impl->histogram_customizer()->RenderViewNavigatedToHost(
+          GURL(GetLoadingUrl()).host(), RenderView::GetRenderViewCount());
+    }
+  }
+
+  // Remember that we've already processed this request, so we don't update
+  // the session history again.  We do this regardless of whether this is
+  // a session history navigation, because if we attempted a session history
+  // navigation without valid HistoryItem state, WebCore will think it is a
+  // new navigation.
+  navigation_state->set_request_committed(true);
+
+  // Set the correct engagement level on the frame, and wipe the cached origin
+  // so this will not be reused accidentally.
+  if (url::Origin(frame_->GetSecurityOrigin()) == engagement_level_.first) {
+    frame_->SetEngagementLevel(engagement_level_.second);
+    engagement_level_.first = url::Origin();
+  }
+
+  // Set the correct high media engagement bit on the frame, and wipe the cached
+  // origin so this will not be reused accidentally.
+  if (url::Origin(frame_->GetSecurityOrigin()) ==
+      high_media_engagement_origin_) {
+    frame_->SetHasHighMediaEngagement(true);
+    high_media_engagement_origin_ = url::Origin();
+  }
+}
+
+void RenderFrameImpl::NotifyObservers(bool is_new_navigation,
+                                      bool is_same_document) {
+  for (auto& observer : render_view_->observers_)
+    observer.DidCommitProvisionalLoad(frame_, is_new_navigation);
+  {
+    SCOPED_UMA_HISTOGRAM_TIMER("RenderFrameObservers.DidCommitProvisionalLoad");
+    for (auto& observer : observers_) {
+      observer.DidCommitProvisionalLoad(is_new_navigation, is_same_document);
+    }
+  }
+}
+
+bool RenderFrameImpl::UpdateNavigationHistory(
+    const blink::WebHistoryItem& item,
+    blink::WebHistoryCommitType commit_type,
+    const RequestNavigationParams& request_params) {
+  DocumentState* document_state =
+      DocumentState::FromDocumentLoader(frame_->GetDocumentLoader());
+  NavigationStateImpl* navigation_state =
+      static_cast<NavigationStateImpl*>(document_state->navigation_state());
+
+  // Update the current history item for this frame.
+  current_history_item_ = item;
+  // Note: don't reference |item| after this point, as its value may not match
+  // |current_history_item_|.
+  current_history_item_.SetTarget(
+      blink::WebString::FromUTF8(unique_name_helper_.value()));
+  bool is_new_navigation = commit_type == blink::kWebStandardCommit;
+  if (is_new_navigation) {
+    DCHECK(!navigation_state->common_params().should_replace_current_entry ||
+           render_view_->history_list_length_ > 0);
+    if (!navigation_state->common_params().should_replace_current_entry) {
+      // Advance our offset in session history, applying the length limit.
+      // There is now no forward history.
+      render_view_->history_list_offset_++;
+      if (render_view_->history_list_offset_ >= kMaxSessionHistoryEntries)
+        render_view_->history_list_offset_ = kMaxSessionHistoryEntries - 1;
+      render_view_->history_list_length_ =
+          render_view_->history_list_offset_ + 1;
+    }
+  } else if (request_params.nav_entry_id != 0 &&
+             !request_params.intended_as_new_entry) {
+    render_view_->history_list_offset_ =
+        navigation_state->request_params().pending_history_list_offset;
+  }
+
+  if (commit_type == blink::WebHistoryCommitType::kWebBackForwardCommit)
+    render_view_->DidCommitProvisionalHistoryLoad();
+
+  return is_new_navigation;
+}
+
+void RenderFrameImpl::UpdateZoomLevel() {
+  if (!frame_->Parent()) {
+    // Reset the zoom limits in case a plugin had changed them previously. This
+    // will also call us back which will cause us to send a message to
+    // update WebContentsImpl.
+    render_view_->webview()->ZoomLimitsChanged(
+        ZoomFactorToZoomLevel(kMinimumZoomFactor),
+        ZoomFactorToZoomLevel(kMaximumZoomFactor));
+
+    // Set zoom level, but don't do it for full-page plugin since they don't use
+    // the same zoom settings.
+    HostZoomLevels::iterator host_zoom =
+        host_zoom_levels_.find(GetLoadingUrl());
+    if (render_view_->webview()->MainFrame()->IsWebLocalFrame() &&
+        render_view_->webview()
+            ->MainFrame()
+            ->ToWebLocalFrame()
+            ->GetDocument()
+            .IsPluginDocument()) {
+      // Reset the zoom levels for plugins.
+      render_view_->SetZoomLevel(0);
+    } else {
+      // If the zoom level is not found, then do nothing. In-page navigation
+      // relies on not changing the zoom level in this case.
+      if (host_zoom != host_zoom_levels_.end())
+        render_view_->SetZoomLevel(host_zoom->second);
+    }
+
+    if (host_zoom != host_zoom_levels_.end()) {
+      // This zoom level was merely recorded transiently for this load.  We can
+      // erase it now.  If at some point we reload this page, the browser will
+      // send us a new, up-to-date zoom level.
+      host_zoom_levels_.erase(host_zoom);
+    }
+  } else {
+    // Subframes should match the zoom level of the main frame.
+    render_view_->SetZoomLevel(render_view_->page_zoom_level());
+  }
+}
+
+void RenderFrameImpl::UpdateStateAfterCommitMessage() {
+  DocumentState* document_state =
+      DocumentState::FromDocumentLoader(frame_->GetDocumentLoader());
+  NavigationStateImpl* navigation_state =
+      static_cast<NavigationStateImpl*>(document_state->navigation_state());
 
   // If we end up reusing this WebRequest (for example, due to a #ref click),
   // we don't want the transition type to persist.  Just clear it.
   navigation_state->set_transition_type(ui::PAGE_TRANSITION_LINK);
+
+  // Check whether we have new encoding name.
+  UpdateEncoding(frame_, frame_->View()->PageEncoding().Utf8());
 }
 
 bool RenderFrameImpl::SwapIn() {
