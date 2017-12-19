@@ -229,6 +229,7 @@ class SelectFileDialogImpl : public ui::SelectFileDialog,
   struct SelectFolderDialogOptions {
     const wchar_t* default_path;
     bool is_upload;
+    ULONGLONG initialized_tickcount;
   };
 
   // Shows the file selection dialog modal to |owner| and calls the result
@@ -515,17 +516,30 @@ int CALLBACK SelectFileDialogImpl::BrowseCallbackProc(HWND window,
   if (message == BFFM_INITIALIZED) {
     SelectFolderDialogOptions* options =
         reinterpret_cast<SelectFolderDialogOptions*>(data);
+    if (options->default_path) {
+      SendMessage(window, BFFM_SETSELECTION, TRUE,
+                  reinterpret_cast<LPARAM>(options->default_path));
+    }
     if (options->is_upload) {
       SendMessage(window, BFFM_SETOKTEXT, 0,
                   reinterpret_cast<LPARAM>(
                       l10n_util::GetStringUTF16(
                           IDS_SELECT_UPLOAD_FOLDER_DIALOG_UPLOAD_BUTTON)
                           .c_str()));
+      // Disable the OK button by default to combat Gesture-jacking; see
+      // https://crbug.com/637098.
+      SendMessage(window, BFFM_ENABLEOK, 0, 0);
     }
-    if (options->default_path) {
-      SendMessage(window, BFFM_SETSELECTION, TRUE,
-                  reinterpret_cast<LPARAM>(options->default_path));
-    }
+    options->initialized_tickcount = GetTickCount64();
+  } else if (message == BFFM_SELCHANGED) {
+    // Disable the OK button for one second to combat Gesture-jacking; see
+    // https://crbug.com/637098.
+    SelectFolderDialogOptions* options =
+        reinterpret_cast<SelectFolderDialogOptions*>(data);
+    bool enable = !options->is_upload ||
+                  (options->initialized_tickcount &&
+                   (GetTickCount64() - options->initialized_tickcount > 1000));
+    SendMessage(window, BFFM_ENABLEOK, 0, static_cast<LPARAM>(enable ? 1 : 0));
   }
   return 0;
 }
