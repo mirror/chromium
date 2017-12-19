@@ -34,6 +34,24 @@
       "revId": "a225cf2f4660b7d7d64141d4279c5f015c97d7f9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d0238df_a3f52464",
+        "filename": "extensions/browser/updater/update_data_provider.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-19T23:55:48Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "390d482b_c54d6224",
+      "revId": "a225cf2f4660b7d7d64141d4279c5f015c97d7f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
