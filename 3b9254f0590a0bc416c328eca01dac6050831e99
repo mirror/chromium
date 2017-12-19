@@ -22,6 +22,30 @@
       "revId": "3b9254f0590a0bc416c328eca01dac6050831e99",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4d283ba_7d209b1c",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_coordinator.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-12-19T22:38:51Z",
+      "side": 1,
+      "message": "Ack. I actually would rather get it from the WebStateList directly, its not that long of a call and it would make it more readable.",
+      "parentUuid": "28b4e6dd_97128caf",
+      "range": {
+        "startLine": 255,
+        "startChar": 49,
+        "endLine": 255,
+        "endChar": 60
+      },
+      "revId": "3b9254f0590a0bc416c328eca01dac6050831e99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
