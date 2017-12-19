@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a720549b_e9e9523c",
+        "filename": "ui/gl/test/gl_image_test_support.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-12-19T18:57:58Z",
+      "side": 1,
+      "message": "nit: else LOG(FATAL)? Or is there a good reason to fallback to the first impl in the list (might be confusing to the caller)?",
+      "revId": "ec28ea98fcdbfabbdc758f21c7ef2cc07bceaa0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
