@@ -63,8 +63,10 @@ void AXWindowObjWrapper::Serialize(ui::AXNodeData* out_node_data) {
     out_node_data->role = role;
   else
     out_node_data->role = is_alert_ ? ui::AX_ROLE_ALERT : ui::AX_ROLE_WINDOW;
-  out_node_data->AddStringAttribute(ui::AX_ATTR_NAME,
-                                    base::UTF16ToUTF8(window_->GetTitle()));
+  std::string name = base::UTF16ToUTF8(window_->GetTitle());
+  if (name.empty())
+    name = window_->GetName();
+  out_node_data->AddStringAttribute(ui::AX_ATTR_NAME, name);
   if (!window_->IsVisible())
     out_node_data->AddState(ui::AX_STATE_INVISIBLE);
 

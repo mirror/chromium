@@ -21,6 +21,7 @@
 #include "ash/system/status_area_layout_manager.h"
 #include "ash/system/status_area_widget.h"
 #include "base/command_line.h"
+#include "ui/accessibility/platform/aura_window_properties.h"
 #include "ui/compositor/layer.h"
 #include "ui/compositor/scoped_layer_animation_settings.h"
 #include "ui/gfx/skbitmap_operations.h"
@@ -72,9 +73,13 @@ class ShelfWidget::DelegateView : public views::WidgetDelegate,
     default_last_focusable_child_ = default_last_focusable_child;
   }
 
-  // views::WidgetDelegateView:
+  // views::WidgetDelegate:
   views::Widget* GetWidget() override { return View::GetWidget(); }
   const views::Widget* GetWidget() const override { return View::GetWidget(); }
+  ui::AXRole GetAccessibleWindowRole() const override {
+    return ui::AX_ROLE_GROUP;
+  }
+  bool ShouldAdvanceFocusToTopLevelWidget() const override { return true; }
 
   bool CanActivate() const override;
   void ReorderChildLayers(ui::Layer* parent_layer) override;
@@ -203,6 +208,9 @@ ShelfWidget::ShelfWidget(aura::Window* shelf_container, Shelf* shelf)
 
   // Sets initial session state to make sure the UI is properly shown.
   OnSessionStateChanged(Shell::Get()->session_controller()->GetSessionState());
+
+  GetNativeWindow()->SetProperty(ui::kAXRoleOverride,
+                                 static_cast<ui::AXRole>(ui::AX_ROLE_GROUP));
 }
 
 ShelfWidget::~ShelfWidget() {

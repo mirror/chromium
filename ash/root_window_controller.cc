@@ -60,6 +60,7 @@
 #include "base/macros.h"
 #include "base/time/time.h"
 #include "chromeos/chromeos_switches.h"
+#include "ui/accessibility/platform/aura_window_properties.h"
 #include "ui/aura/client/aura_constants.h"
 #include "ui/aura/client/drag_drop_client.h"
 #include "ui/aura/client/screen_position_client.h"
@@ -849,12 +850,21 @@ void RootWindowController::CreateContainers() {
       "LockScreenWallpaperContainer", screen_rotation_container);
   ::wm::SetChildWindowVisibilityChangesAnimated(lock_wallpaper_containers);
 
+  aura::Window* lock_screen_root_containers = CreateContainer(
+      kShellWindowId_LockScreenRootContainersContainer,
+      "LockScreenRootContainersContainer", screen_rotation_container);
+  // "LockScreenRootContainersContainer", root);
+
   aura::Window* lock_screen_containers = CreateContainer(
       kShellWindowId_LockScreenContainersContainer,
-      "LockScreenContainersContainer", screen_rotation_container);
+      "LockScreenContainersContainer", lock_screen_root_containers);
+  lock_screen_containers->SetProperty(
+      ui::kAXRoleOverride, static_cast<ui::AXRole>(ui::AX_ROLE_GROUP));
   aura::Window* lock_screen_related_containers = CreateContainer(
       kShellWindowId_LockScreenRelatedContainersContainer,
-      "LockScreenRelatedContainersContainer", screen_rotation_container);
+      "LockScreenRelatedContainersContainer", lock_screen_root_containers);
+  lock_screen_related_containers->SetProperty(
+      ui::kAXRoleOverride, static_cast<ui::AXRole>(ui::AX_ROLE_GROUP));
 
   CreateContainer(kShellWindowId_UnparentedControlContainer,
                   "UnparentedControlContainer", non_lock_screen_containers);
@@ -890,6 +900,8 @@ void RootWindowController::CreateContainers() {
   wm::SetSnapsChildrenToPhysicalPixelBoundary(shelf_container);
   shelf_container->SetProperty(kUsesScreenCoordinatesKey, true);
   shelf_container->SetProperty(kLockedToRootKey, true);
+  shelf_container->SetProperty(ui::kAXRoleOverride,
+                               static_cast<ui::AXRole>(ui::AX_ROLE_GROUP));
 
   aura::Window* panel_container =
       CreateContainer(kShellWindowId_PanelContainer, "PanelContainer",
@@ -917,6 +929,8 @@ void RootWindowController::CreateContainers() {
                       lock_screen_containers);
   wm::SetSnapsChildrenToPhysicalPixelBoundary(lock_container);
   lock_container->SetProperty(kUsesScreenCoordinatesKey, true);
+  lock_container->SetProperty(ui::kAXRoleOverride,
+                              static_cast<ui::AXRole>(ui::AX_ROLE_GROUP));
 
   aura::Window* lock_action_handler_container =
       CreateContainer(kShellWindowId_LockActionHandlerContainer,
@@ -939,6 +953,8 @@ void RootWindowController::CreateContainers() {
   wm::SetSnapsChildrenToPhysicalPixelBoundary(status_container);
   status_container->SetProperty(kUsesScreenCoordinatesKey, true);
   status_container->SetProperty(kLockedToRootKey, true);
+  status_container->SetProperty(ui::kAXRoleOverride,
+                                static_cast<ui::AXRole>(ui::AX_ROLE_GROUP));
 
   aura::Window* settings_bubble_container =
       CreateContainer(kShellWindowId_SettingBubbleContainer,

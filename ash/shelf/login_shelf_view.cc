@@ -28,6 +28,7 @@
 #include "ash/tray_action/tray_action.h"
 #include "ash/wm/lock_state_controller.h"
 #include "base/metrics/user_metrics.h"
+#include "ui/accessibility/platform/aura_window_properties.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/gfx/paint_vector_icon.h"
 #include "ui/views/animation/ink_drop_impl.h"
@@ -153,6 +154,10 @@ void LoginShelfView::UpdateAfterSessionStateChange(SessionState state) {
   UpdateUi();
 }
 
+const char* LoginShelfView::GetClassName() const {
+  return "LoginShelfView";
+}
+
 void LoginShelfView::OnFocus() {
   LOG(WARNING) << "LoginShelfView was focused, but this should never happen. "
                   "Forwarded focus to shelf widget with an unknown direction.";
@@ -174,6 +179,11 @@ void LoginShelfView::AboutToRequestFocusFromTabTraversal(bool reverse) {
         Shelf::ForWindow(GetWidget()->GetNativeWindow())
             ->GetStatusAreaWidget());
   }
+}
+
+void LoginShelfView::AddedToWidget() {
+  GetWidget()->GetNativeWindow()->SetProperty(
+      ui::kAXRoleOverride, static_cast<ui::AXRole>(ui::AX_ROLE_GROUP));
 }
 
 void LoginShelfView::ButtonPressed(views::Button* sender,
