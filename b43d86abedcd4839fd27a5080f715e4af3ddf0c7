@@ -1,0 +1,147 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0c055828_1249f67a",
+        "filename": "third_party/WebKit/Source/core/css/CSSGradientValue.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 644,
+      "author": {
+        "id": 1003156
+      },
+      "writtenOn": "2017-12-19T18:52:14Z",
+      "side": 1,
+      "message": "Nit: since we\u0027re converting to float anyway, I think it would make sense to just use float for these upfront.",
+      "revId": "b43d86abedcd4839fd27a5080f715e4af3ddf0c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b6189ec_e5ecc73b",
+        "filename": "third_party/WebKit/Source/core/style/StyleImage.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1003156
+      },
+      "writtenOn": "2017-12-19T18:52:14Z",
+      "side": 1,
+      "message": "Not new to this CL, but it seems strange for GetImage to take a less precise rect than what ImageSize returns.\n\nE.g. NinePieceImagePainter::Paint() does something like this\n\n  IntSize image_size \u003d RoundedIntSize(style_image-\u003eImageSize(...));\n   \n  scoped_refptr\u003cImage\u003e image \u003d style_image-\u003eGetImage(..., LayoutSize(image_size));\n\nDoesn\u0027t this pattern defeat the (size * multiplier) / multiplier \u003d\u003d size paint-time invariant?",
+      "range": {
+        "startLine": 111,
+        "startChar": 12,
+        "endLine": 111,
+        "endChar": 22
+      },
+      "revId": "b43d86abedcd4839fd27a5080f715e4af3ddf0c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9c8e752_f49c9c91",
+        "filename": "third_party/WebKit/Source/platform/geometry/LayoutSize.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1003156
+      },
+      "writtenOn": "2017-12-19T18:52:14Z",
+      "side": 1,
+      "message": "DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();\n\n(or tweak hashtraits and keep DISALLOW_NEW() - see below)",
+      "revId": "b43d86abedcd4839fd27a5080f715e4af3ddf0c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d1a32fd_4753532e",
+        "filename": "third_party/WebKit/Source/platform/geometry/LayoutSizeHash.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1003156
+      },
+      "writtenOn": "2017-12-19T18:52:14Z",
+      "side": 1,
+      "message": "I think we could just assign to slot directly, to avoid the requirement for placement new:\n\n  slot \u003d blink::LayoutSize(-1, -1);",
+      "revId": "b43d86abedcd4839fd27a5080f715e4af3ddf0c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea5aabb1_cd80d1f0",
+        "filename": "third_party/WebKit/Source/platform/graphics/GeneratedImage.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1003156
+      },
+      "writtenOn": "2017-12-19T18:52:14Z",
+      "side": 1,
+      "message": "In most places we\u0027re rounding.  Why floor here?",
+      "range": {
+        "startLine": 42,
+        "startChar": 41,
+        "endLine": 42,
+        "endChar": 55
+      },
+      "revId": "b43d86abedcd4839fd27a5080f715e4af3ddf0c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cc23835_85a92919",
+        "filename": "third_party/WebKit/Source/platform/graphics/GeneratedImage.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1003156
+      },
+      "writtenOn": "2017-12-19T18:52:14Z",
+      "side": 1,
+      "message": "Should this return the natural type now?",
+      "range": {
+        "startLine": 42,
+        "startChar": 2,
+        "endLine": 42,
+        "endChar": 9
+      },
+      "revId": "b43d86abedcd4839fd27a5080f715e4af3ddf0c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcf9076a_4e6d642c",
+        "filename": "third_party/WebKit/Source/platform/graphics/GeneratedImage.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1003156
+      },
+      "writtenOn": "2017-12-19T18:52:14Z",
+      "side": 1,
+      "message": "Let\u0027s not leak layout types into graphics.  FloatSize insted?",
+      "range": {
+        "startLine": 68,
+        "startChar": 2,
+        "endLine": 68,
+        "endChar": 12
+      },
+      "revId": "b43d86abedcd4839fd27a5080f715e4af3ddf0c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
