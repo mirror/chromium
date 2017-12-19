@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a4740dba_d5b12516",
+        "filename": "chrome/browser/page_load_metrics/observers/use_counter/ukm_features.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-12-19T16:55:51Z",
+      "side": 1,
+      "message": "let\u0027s also add a comment here, since potential future consumers of this data might look here, with something like:\n\n// kDataUriHasOctothorpe may not be recorded correctly for iframes. See crbug.com/796173 for details.",
+      "revId": "a1935bd64c7fe746f214ba65578c72e656af4b73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
