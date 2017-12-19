@@ -398,6 +398,7 @@ bool RootWindowController::CanWindowReceiveEvents(aura::Window* window) {
   aura::Window* modal_container = nullptr;
   wm::GetBlockingContainersForRoot(GetRootWindow(), &blocking_container,
                                    &modal_container);
+
   SystemModalContainerLayoutManager* modal_layout_manager = nullptr;
   modal_layout_manager = static_cast<SystemModalContainerLayoutManager*>(
       modal_container->layout_manager());

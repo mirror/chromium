@@ -142,6 +142,7 @@ void SystemModalContainerLayoutManager::
 
 bool SystemModalContainerLayoutManager::IsPartOfActiveModalWindow(
     aura::Window* window) {
+  LOG(ERROR) << "ModalWindow:" << modal_window() << ", window=" << window;
   return modal_window() &&
          (modal_window()->Contains(window) ||
           HasTransientAncestor(::wm::GetToplevelWindow(window),
