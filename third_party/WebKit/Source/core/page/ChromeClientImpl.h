@@ -208,6 +208,7 @@ class CORE_EXPORT ChromeClientImpl final : public ChromeClient {
   void OpenTextDataListChooser(HTMLInputElement&) override;
   void TextFieldDataListChanged(HTMLInputElement&) override;
   void AjaxSucceeded(LocalFrame*) override;
+  void SelectFieldOptionsChanged(HTMLSelectElement&) override;
 
   void ShowVirtualKeyboardOnElementFocus(LocalFrame&) override;
 

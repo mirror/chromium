@@ -889,8 +889,9 @@ void HTMLSelectElement::ScrollToOption(HTMLOptionElement* option) {
   if (!has_pending_task) {
     GetDocument()
         .GetTaskRunner(TaskType::kUserInteraction)
-        ->PostTask(FROM_HERE, WTF::Bind(&HTMLSelectElement::ScrollToOptionTask,
-                                        WrapPersistent(this)));
+        ->PostTask(BLINK_FROM_HERE,
+                   WTF::Bind(&HTMLSelectElement::ScrollToOptionTask,
+                             WrapPersistent(this)));
   }
 }
 
@@ -932,6 +933,13 @@ void HTMLSelectElement::OptionInserted(HTMLOptionElement& option,
   }
   SetNeedsValidityCheck();
   last_on_change_selection_.clear();
+
+  DCHECK(GetDocument().IsActive());
+  if (!GetDocument().IsActive())
+    return;
+
+  LocalFrame* frame = GetDocument().GetFrame();
+  frame->GetPage()->GetChromeClient().SelectFieldOptionsChanged(*this);
 }
 
 void HTMLSelectElement::OptionRemoved(HTMLOptionElement& option) {
@@ -954,6 +962,13 @@ void HTMLSelectElement::OptionRemoved(HTMLOptionElement& option) {
     SetAutofilled(false);
   SetNeedsValidityCheck();
   last_on_change_selection_.clear();
+
+  DCHECK(GetDocument().IsActive());
+  if (!GetDocument().IsActive())
+    return;
+
+  LocalFrame* frame = GetDocument().GetFrame();
+  frame->GetPage()->GetChromeClient().SelectFieldOptionsChanged(*this);
 }
 
 void HTMLSelectElement::OptGroupInsertedOrRemoved(
