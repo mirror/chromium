@@ -141,7 +141,7 @@ void WriteWavHeader(WavHeaderBuffer* buf,
 class AudioDebugFileWriter::AudioFileWriter {
  public:
   static AudioFileWriterUniquePtr Create(
-      const base::FilePath& file_name,
+      base::File file_name,
       const AudioParameters& params,
       scoped_refptr<base::SequencedTaskRunner> task_runner);
 
@@ -160,7 +160,7 @@ class AudioDebugFileWriter::AudioFileWriter {
   // actual size info accumulated throughout the object lifetime.
   void WriteHeader();
 
-  void CreateRecordingFile(const base::FilePath& file_name);
+  void SetRecordingFile(base::File file);
 
   // The file to write to.
   base::File file_;
@@ -182,7 +182,7 @@ class AudioDebugFileWriter::AudioFileWriter {
 // static
 AudioDebugFileWriter::AudioFileWriterUniquePtr
 AudioDebugFileWriter::AudioFileWriter::Create(
-    const base::FilePath& file_name,
+    base::File file,
     const AudioParameters& params,
     scoped_refptr<base::SequencedTaskRunner> task_runner) {
   AudioFileWriterUniquePtr file_writer(new AudioFileWriter(params),
@@ -192,8 +192,8 @@ AudioDebugFileWriter::AudioFileWriter::Create(
   // |task_runner|.
   task_runner->PostTask(
       FROM_HERE,
-      base::Bind(&AudioFileWriter::CreateRecordingFile,
-                 base::Unretained(file_writer.get()), file_name));
+      base::BindOnce(&AudioFileWriter::SetRecordingFile,
+                     base::Unretained(file_writer.get()), std::move(file)));
   return file_writer;
 }
 
@@ -249,14 +249,12 @@ void AudioDebugFileWriter::AudioFileWriter::WriteHeader() {
   file_.Seek(base::File::FROM_BEGIN, kWavHeaderSize);
 }
 
-void AudioDebugFileWriter::AudioFileWriter::CreateRecordingFile(
-    const base::FilePath& file_name) {
+void AudioDebugFileWriter::AudioFileWriter::SetRecordingFile(base::File file) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   base::AssertBlockingAllowed();
   DCHECK(!file_.IsValid());
 
-  file_ = base::File(file_name,
-                     base::File::FLAG_CREATE_ALWAYS | base::File::FLAG_WRITE);
+  file_ = std::move(file);
 
   if (file_.IsValid()) {
     WriteHeader();
@@ -284,10 +282,11 @@ AudioDebugFileWriter::~AudioDebugFileWriter() {
   // |file_writer_| will be deleted on |task_runner_|.
 }
 
-void AudioDebugFileWriter::Start(const base::FilePath& file_name) {
+void AudioDebugFileWriter::Start(base::File file) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(client_sequence_checker_);
   DCHECK(!file_writer_);
-  file_writer_ = AudioFileWriter::Create(file_name, params_, file_task_runner_);
+  file_writer_ =
+      AudioFileWriter::Create(std::move(file), params_, file_task_runner_);
 }
 
 void AudioDebugFileWriter::Stop() {
@@ -317,10 +316,6 @@ bool AudioDebugFileWriter::WillWrite() {
   // here, but it's fine: we can afford missing some data or scheduling some
   // no-op writes.
   return !!file_writer_;
-}
-
-const base::FilePath::CharType* AudioDebugFileWriter::GetFileNameExtension() {
-  return FILE_PATH_LITERAL("wav");
 }
 
 }  // namespace media

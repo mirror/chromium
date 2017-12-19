@@ -37,7 +37,7 @@ class MEDIA_EXPORT AudioDebugFileWriter {
   // Must be called before calling Write() for the first time after creation or
   // Stop() call. Can be called on any sequence; Write() and Stop() must be
   // called on the same sequence as Start().
-  virtual void Start(const base::FilePath& file);
+  virtual void Start(base::File file);
 
   // Must be called to finish recording. Each call to Start() requires a call to
   // Stop(). Will be automatically called on destruction.
@@ -51,11 +51,6 @@ class MEDIA_EXPORT AudioDebugFileWriter {
   // may be ambigulous if Start() or Stop() is executed at the moment. Can be
   // called from any sequence.
   virtual bool WillWrite();
-
-  // Gets the extension for the file type the as a string, for example "wav".
-  // Can be called before calling Start() to add the appropriate extension to
-  // the filename.
-  virtual const base::FilePath::CharType* GetFileNameExtension();
 
  protected:
   const AudioParameters params_;
