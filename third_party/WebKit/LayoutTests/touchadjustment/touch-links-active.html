@@ -38,6 +38,7 @@
     });
     
     var curElement;
+    var uniqueId = 1234;
     
     function isLinkActive()
     {
@@ -57,9 +58,19 @@
     {
         curElement = element;
         if (isLinkActive()) testFailed('Link unexpectedly active on entry');
-        eventSender.gestureShowPress(touchpoint.x, touchpoint.y, touchpoint.width, touchpoint.height);
+
+        eventSender.addTouchPoint(touchpoint.x, touchpoint.y, touchpoint.width, touchpoint.height);
+        eventSender.touchStart(uniqueId + 1);
+        eventSender.releaseTouchPoint(0);
+        eventSender.touchEnd(uniqueId + 2);
+        eventSender.gestureTapDown(touchpoint.x, touchpoint.y, touchpoint.width, touchpoint.height, uniqueId + 1);
+        eventSender.gestureShowPress(touchpoint.x, touchpoint.y, touchpoint.width, touchpoint.height, uniqueId + 2);
+
         shouldBeTrue("isLinkActive()");
-        eventSender.gestureTapCancel(touchpoint.x, touchpoint.y);
+
+        eventSender.gestureTapCancel(touchpoint.x, touchpoint.y, uniqueId + 2);
+
+        uniqueId += 2;
         if (isLinkActive()) testFailed('Link unexpectedly active on exit');
     }
 
