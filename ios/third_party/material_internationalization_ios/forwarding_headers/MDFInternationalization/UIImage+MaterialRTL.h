@@ -1,0 +1,1 @@
+#import "ios/third_party/material_internationalization_ios/src/Sources/UIImage+MaterialRTL.h"
