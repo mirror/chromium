@@ -136,7 +136,60 @@ enum class TaskType : unsigned {
   // Tasks for tests or mock objects.
   kInternalTest = 26,
 
-  kCount = 27,
+  // Posted at //content/renderer/devtools
+  kInternalDevTools = 27,
+
+  // Posted at gpu-related places:
+  // * //components/viz/common/gpu
+  // * //content/renderer/gpu/render_widget_compositor.cc
+  // * //gpu
+  // * //services/ui/public/cpp/gpu
+  kInternalGPU = 28,
+
+  // |RenderThreadImpl::idle_timer_|
+  kInternalIdle = 29,
+
+  // Posted at //content/renderer/indexed_db
+  kInternalIndexedDB = 30,
+
+  // |RenderWidget::task_runner_|
+  kInternalInitialization = 31,
+
+  // Posted at IPC-related places:
+  // * //content/renderer/child_message_filter.cc
+  // * //content/renderer/mojo
+  // * //ipc
+  // * //mojo
+  kInternalIPC = 32,
+
+  // Posted at //content/renderer/loader
+  kInternalLoading = 33,
+
+  // Posted at //content/renderer/media or //media
+  kInternalMedia = 34,
+
+  // Posted at plugin-related places:
+  // * //components/plugins/renderer
+  // * //content/renderer/pepper
+  // * //ppapi
+  kInternalPlugin = 35,
+
+  // Posted at //services/service_manager or //content/common/service_manager/
+  kInternalServiceManager = 36,
+
+  // Posted at //base/trace_event
+  kInternalTracing = 37,
+
+  // Posted at //content/renderer/input/
+  kInternalUserInteraction = 38,
+
+  // Posted at //components/webcrypto
+  kInternalWebCrypto = 39,
+
+  // Posted at //content/renderer/service_worker
+  kInternalWorker = 40,
+
+  kCount = 41,
 };
 
 }  // namespace blink
