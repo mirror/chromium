@@ -16,6 +16,24 @@
       "revId": "1386bee67be7b52cd8429919b735b72b1ec1907c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c9107b8_a6e9e857",
+        "filename": "ui/message_center/notification.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-19T17:06:12Z",
+      "side": 0,
+      "message": "It does seem like this function belongs in ash/, although it would have to go in ash/public/cpp and we would need some shared strings file (that gets compiled into both executables).",
+      "parentUuid": "84a634eb_87a9fd02",
+      "revId": "1386bee67be7b52cd8429919b735b72b1ec1907c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

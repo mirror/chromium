@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3c835349_7f341fc1",
+        "filename": "ui/message_center/message_center.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-19T17:06:12Z",
+      "side": 1,
+      "message": "Figuring out what exactly to do about this is a TODO, but this is not the right place for it. The two options are:\n\n- make new grd files that know whether it\u0027s an official build (this is appealing because Ash should know its own name rather than asking Chrome for it)\n- add this to ash::ShellDelegate as a bandaid. Note that I just removed a similar function, GetProductName, from that interface.",
+      "parentUuid": "ec258126_aa94125e",
+      "revId": "e9a9e665f614611b47fa39e38ac97ea6f4c4092b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d81224cf_f08baa45",
         "filename": "ui/message_center/message_center.h",
         "patchSetId": 2
@@ -53,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "4d64f4db_4bb6c4c3",
+        "filename": "ui/message_center/views/notification_view_md.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 672,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-19T17:06:12Z",
+      "side": 1,
+      "message": "I understand that, but I don\u0027t think the plan espoused in the comment is tenable, so we need to keep it a while longer. Keeping this hack until we find a proper solution is necessary to continue porting tests in chrome/browser that call CreateSystemNotification but no longer have a MessageCenter instance.",
+      "parentUuid": "46148ba0_95fe5680",
+      "revId": "e9a9e665f614611b47fa39e38ac97ea6f4c4092b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9b760337_4e248b83",
         "filename": "ui/message_center/views/notification_view_md.cc",
         "patchSetId": 2
@@ -64,6 +100,24 @@
       "writtenOn": "2017-12-19T16:02:27Z",
       "side": 1,
       "message": "BTW, it defaults to blue accent color, so I think it breaks some notifications e.g. low power notification.",
+      "revId": "e9a9e665f614611b47fa39e38ac97ea6f4c4092b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb901ef7_ee75e33f",
+        "filename": "ui/message_center/views/notification_view_md.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 685,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-19T17:06:12Z",
+      "side": 1,
+      "message": "so we should copy L699-702?",
+      "parentUuid": "9b760337_4e248b83",
       "revId": "e9a9e665f614611b47fa39e38ac97ea6f4c4092b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
