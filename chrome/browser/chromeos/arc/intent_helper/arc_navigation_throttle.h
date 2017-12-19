@@ -5,6 +5,7 @@
 #ifndef CHROME_BROWSER_CHROMEOS_ARC_INTENT_HELPER_ARC_NAVIGATION_THROTTLE_H_
 #define CHROME_BROWSER_CHROMEOS_ARC_INTENT_HELPER_ARC_NAVIGATION_THROTTLE_H_
 
+#include <map>
 #include <memory>
 #include <string>
 #include <utility>
@@ -164,6 +165,10 @@ class ArcNavigationThrottle : public content::NavigationThrottle {
   // preferred app or asked the UI to be shown, this flag ensures we never
   // trigger the UI twice for the same throttle.
   bool ui_displayed_;
+
+  // Keeps a map (uint32_t, int) to keep track of the amount of times the
+  // intent picker bubble results in DIALOG_DEACTIVATED.
+  static std::map<uint32_t, int> dialog_deactivated_counter_;
 
   // This has to be the last member of the class.
   base::WeakPtrFactory<ArcNavigationThrottle> weak_ptr_factory_;
