@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0b928495_5de0149b",
+        "filename": "content/browser/renderer_host/pepper/pepper_tcp_socket_message_filter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 693,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-12-19T17:21:50Z",
+      "side": 1,
+      "message": "Curious: Why this is \"older\"? (I don\u0027t know Chrome Apps very well. Do you mean we have \"newer\" Chrome Apps?)",
+      "range": {
+        "startLine": 693,
+        "startChar": 28,
+        "endLine": 693,
+        "endChar": 33
+      },
+      "revId": "6417c3965cc8a5e8d15a5dc73c74cbc6e691bb0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
