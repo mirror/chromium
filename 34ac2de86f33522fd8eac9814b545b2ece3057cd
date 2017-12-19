@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "36ab0fff_060401f1",
+        "filename": "content/public/common/resource_request_body.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-19T01:44:22Z",
+      "side": 1,
+      "message": "can be auto clone \u003d base::MakeRefCounted\u003cRsourceRequestBody\u003e()",
+      "revId": "34ac2de86f33522fd8eac9814b545b2ece3057cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab415ad8_cd38acb9",
+        "filename": "content/public/common/resource_request_body.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-19T01:44:22Z",
+      "side": 1,
+      "message": "maybe cloned_element or something to contrast with |element|",
+      "revId": "34ac2de86f33522fd8eac9814b545b2ece3057cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3b9dc5f_35226f50",
+        "filename": "content/public/common/resource_request_body.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-19T01:44:22Z",
+      "side": 1,
+      "message": "I think we usually say \"DeepCopy\", \"Copy\", or \"Clone\". I\u0027m not too sure how DeepCopy() would differ from a hypothetical Copy() function in this case. DeepCopy() actually might give the wrong idea since it\u0027s not like we\u0027re copying a file to another file. Not too sure.",
+      "revId": "34ac2de86f33522fd8eac9814b545b2ece3057cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
