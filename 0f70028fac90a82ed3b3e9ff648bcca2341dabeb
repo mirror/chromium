@@ -22,6 +22,30 @@
       "revId": "0f70028fac90a82ed3b3e9ff648bcca2341dabeb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "06231936_18b34ac6",
+        "filename": "chrome/android/java/strings/android_chrome_strings.grd",
+        "patchSetId": 10
+      },
+      "lineNbr": 3056,
+      "author": {
+        "id": 1117405
+      },
+      "writtenOn": "2017-12-19T16:33:43Z",
+      "side": 1,
+      "message": "How about \"A tunnel connection through the proxy could not be established.\"? If we change the strings in a follow up CL, is it ok to keep the CL on trunk (not merge to M64)?",
+      "parentUuid": "a0a55e96_dc78a915",
+      "range": {
+        "startLine": 3056,
+        "startChar": 8,
+        "endLine": 3056,
+        "endChar": 53
+      },
+      "revId": "0f70028fac90a82ed3b3e9ff648bcca2341dabeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
