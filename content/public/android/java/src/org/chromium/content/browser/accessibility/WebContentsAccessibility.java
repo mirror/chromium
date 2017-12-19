@@ -80,6 +80,7 @@ public class WebContentsAccessibility extends AccessibilityNodeProvider {
     private int mSelectionStartIndex;
     private int mSelectionEndIndex;
     protected int mAccessibilityFocusId;
+    protected int mSelectionNodeId;
     private Runnable mSendWindowContentChangedRunnable;
     private View mAutofillPopupView;
     private boolean mShouldFocusOnPageLoad;
@@ -109,6 +110,7 @@ public class WebContentsAccessibility extends AccessibilityNodeProvider {
         mContext = context;
         mWebContents = (WebContentsImpl) webContents;
         mAccessibilityFocusId = View.NO_ID;
+        mSelectionNodeId = View.NO_ID;
         mIsHovering = false;
         mCurrentRootId = View.NO_ID;
         mView = containerView;
@@ -428,16 +430,32 @@ public class WebContentsAccessibility extends AccessibilityNodeProvider {
 
     private boolean nextAtGranularity(int granularity, boolean extendSelection) {
         setGranularityAndUpdateSelection(granularity);
+
+        // Pick the node with input focus over a11y focus only if its is a text field.
+        int nodeId = mAccessibilityFocusId;
+        if (nativeIsEditableText(mNativeObj, mSelectionNodeId)
+                && nativeIsFocused(mNativeObj, mSelectionNodeId)) {
+            nodeId = mSelectionNodeId;
+        }
+
         // This calls finishGranularityMove when it's done.
-        return nativeNextAtGranularity(mNativeObj, mSelectionGranularity, extendSelection,
-                mAccessibilityFocusId, mSelectionStartIndex);
+        return nativeNextAtGranularity(
+                mNativeObj, mSelectionGranularity, extendSelection, nodeId, mSelectionStartIndex);
     }
 
     private boolean previousAtGranularity(int granularity, boolean extendSelection) {
         setGranularityAndUpdateSelection(granularity);
+
+        // Pick the node with input focus over a11y focus only if its is a text field.
+        int nodeId = mAccessibilityFocusId;
+        if (nativeIsEditableText(mNativeObj, mSelectionNodeId)
+                && nativeIsFocused(mNativeObj, mSelectionNodeId)) {
+            nodeId = mSelectionNodeId;
+        }
+
         // This calls finishGranularityMove when it's done.
-        return nativePreviousAtGranularity(mNativeObj, mSelectionGranularity, extendSelection,
-                mAccessibilityFocusId, mSelectionEndIndex);
+        return nativePreviousAtGranularity(
+                mNativeObj, mSelectionGranularity, extendSelection, nodeId, mSelectionEndIndex);
     }
 
     @CalledByNative
@@ -445,9 +463,9 @@ public class WebContentsAccessibility extends AccessibilityNodeProvider {
             int itemEndIndex, boolean forwards) {
         // Prepare to send both a selection and a traversal event in sequence.
         AccessibilityEvent selectionEvent = buildAccessibilityEvent(
-                mAccessibilityFocusId, AccessibilityEvent.TYPE_VIEW_TEXT_SELECTION_CHANGED);
+                mSelectionNodeId, AccessibilityEvent.TYPE_VIEW_TEXT_SELECTION_CHANGED);
         if (selectionEvent == null) return;
-        AccessibilityEvent traverseEvent = buildAccessibilityEvent(mAccessibilityFocusId,
+        AccessibilityEvent traverseEvent = buildAccessibilityEvent(mSelectionNodeId,
                 AccessibilityEvent.TYPE_VIEW_TEXT_TRAVERSED_AT_MOVEMENT_GRANULARITY);
         if (traverseEvent == null) {
             selectionEvent.recycle();
@@ -464,10 +482,10 @@ public class WebContentsAccessibility extends AccessibilityNodeProvider {
         if (!extendSelection) {
             mSelectionStartIndex = mSelectionEndIndex;
         }
-        if (nativeIsEditableText(mNativeObj, mAccessibilityFocusId)
-                && nativeIsFocused(mNativeObj, mAccessibilityFocusId)) {
+        if (nativeIsEditableText(mNativeObj, mSelectionNodeId)
+                && nativeIsFocused(mNativeObj, mSelectionNodeId)) {
             nativeSetSelection(
-                    mNativeObj, mAccessibilityFocusId, mSelectionStartIndex, mSelectionEndIndex);
+                    mNativeObj, mSelectionNodeId, mSelectionStartIndex, mSelectionEndIndex);
         }
 
         // The selection event's "from" and "to" indices are just a cursor at the focus
@@ -516,6 +534,10 @@ public class WebContentsAccessibility extends AccessibilityNodeProvider {
 
         mAccessibilityFocusId = newAccessibilityFocusId;
         mAccessibilityFocusRect = null;
+        // Used to store the node (edit text field) that has input focus but not a11y focus.
+        // Usually while the user is typing in an edit text field, a11y is on the IME and input
+        // focus is on the edit field. Granularity move needs to know where the input focus is.
+        mSelectionNodeId = mAccessibilityFocusId;
         mSelectionGranularity = NO_GRANULARITY_SELECTED;
         mSelectionStartIndex = -1;
         mSelectionEndIndex = nativeGetTextLength(mNativeObj, newAccessibilityFocusId);
@@ -1053,6 +1075,9 @@ public class WebContentsAccessibility extends AccessibilityNodeProvider {
         event.setRemovedCount(removedCount);
         event.setBeforeText(beforeText);
         event.getText().add(text);
+
+        mSelectionEndIndex = fromIndex + addedCount - removedCount;
+        mSelectionStartIndex = fromIndex + addedCount - removedCount;
     }
 
     @CalledByNative
