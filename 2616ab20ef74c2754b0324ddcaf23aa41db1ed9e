@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "8a85fc19_93a8cfd7",
+        "filename": "chrome/browser/chromeos/smb_client/smb_file_system.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1240064
+      },
+      "writtenOn": "2017-12-19T23:36:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7f41d65b_05ab3eda",
+      "revId": "2616ab20ef74c2754b0324ddcaf23aa41db1ed9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0e422cb1_5a0c9bf0",
         "filename": "chrome/browser/chromeos/smb_client/smb_file_system.cc",
         "patchSetId": 8
