@@ -204,6 +204,14 @@ TestContextProvider::~TestContextProvider() {
          context_thread_checker_.CalledOnValidThread());
 }
 
+void TestContextProvider::AddRef() const {
+  base::RefCountedThreadSafe<TestContextProvider>::AddRef();
+}
+
+void TestContextProvider::Release() const {
+  base::RefCountedThreadSafe<TestContextProvider>::Release();
+}
+
 gpu::ContextResult TestContextProvider::BindToCurrentThread() {
   // This is called on the thread the context will be used.
   DCHECK(context_thread_checker_.CalledOnValidThread());
@@ -239,7 +247,7 @@ gpu::gles2::GLES2Interface* TestContextProvider::ContextGL() {
   return context_gl_.get();
 }
 
-gpu::raster::RasterInterface* TestContextProvider::RasterContext() {
+gpu::raster::RasterInterface* TestContextProvider::RasterInterface() {
   return raster_context_.get();
 }
 
