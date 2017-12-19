@@ -109413,6 +109413,7 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <suffix name="XML" label="Classified as XML MIME type."/>
   <suffix name="JSON" label="Classified as JSON MIME type."/>
   <suffix name="Plain" label="Classified as plain text MIME type."/>
+  <suffix name="Others" label="Classified as other MIME types."/>
   <affected-histogram name="SiteIsolation.XSD.Browser.Blocked"/>
 </histogram_suffixes>
 

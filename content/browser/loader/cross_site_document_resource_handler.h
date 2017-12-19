@@ -142,7 +142,8 @@ class CONTENT_EXPORT CrossSiteDocumentResourceHandler
   // blocking mislabeled responses (e.g., JSONP labeled as HTML).  This is
   // usually true when |should_block_based_on_headers_| is set, unless there is
   // a nosniff header or range request.
-  bool needs_sniffing_ = false;
+  bool has_nosniff_header_ = false;
+  bool sniffing_impossible_ = false;
 
   // Whether this response will be allowed through despite being flagged for
   // blocking (via |should_block_based_on_headers_), because sniffing determined
