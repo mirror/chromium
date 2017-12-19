@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f90557af_5fe1da6a",
+        "filename": "base/test/launcher/test_results_tracker.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-12-19T23:39:40Z",
+      "side": 1,
+      "message": "nit: If you don\u0027t need the base:: prefix for File, below, then you don\u0027t need it for this either. :)",
+      "range": {
+        "startLine": 442,
+        "startChar": 2,
+        "endLine": 442,
+        "endChar": 25
+      },
+      "revId": "0a5a8b68028ebaabec38d1b25191c3db26de5bf4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14630f55_49d2d6dc",
+        "filename": "base/test/launcher/test_results_tracker.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-12-19T23:39:40Z",
+      "side": 1,
+      "message": "IMO this was easier to read as a series of if (!...) return false early-exits.",
+      "range": {
+        "startLine": 449,
+        "startChar": 9,
+        "endLine": 452,
+        "endChar": 24
+      },
+      "revId": "0a5a8b68028ebaabec38d1b25191c3db26de5bf4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
