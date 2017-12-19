@@ -223,7 +223,7 @@ void V8LazyEventListener::CompileScript(ScriptState* script_state,
            .ToLocal(&to_string_function))
     return;
   String to_string_string = "function " + function_name_ + "(" +
-                            event_parameter_name_ + ") {\n  " + code_ + "\n}";
+                            event_parameter_name_ + ") {  " + code_ + "}";
   V8PrivateProperty::GetLazyEventListenerToString(GetIsolate())
       .Set(wrapped_function, V8String(GetIsolate(), to_string_string));
   if (!V8CallBoolean(wrapped_function->CreateDataProperty(
