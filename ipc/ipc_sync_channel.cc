@@ -84,14 +84,16 @@ class SyncChannel::ReceivedSyncMsgQueue :
   class NestedSendDoneWatcher {
    public:
     NestedSendDoneWatcher(SyncChannel::SyncContext* context,
-                          base::RunLoop* run_loop)
+                          base::RunLoop* run_loop,
+                          scoped_refptr<base::SequencedTaskRunner> task_runner)
         : sync_msg_queue_(context->received_sync_msgs()),
           outer_state_(sync_msg_queue_->top_send_done_event_watcher_),
           event_(context->GetSendDoneEvent()),
           callback_(
               base::BindOnce(&SyncChannel::SyncContext::OnSendDoneEventSignaled,
                              context,
-                             run_loop)) {
+                             run_loop)),
+          watcher_(task_runner) {
       sync_msg_queue_->top_send_done_event_watcher_ = this;
       if (outer_state_)
         outer_state_->StopWatching();
@@ -355,6 +357,7 @@ SyncChannel::SyncContext::SyncContext(
     : ChannelProxy::Context(listener, ipc_task_runner, listener_task_runner),
       received_sync_msgs_(ReceivedSyncMsgQueue::AddContext()),
       shutdown_event_(shutdown_event),
+      shutdown_watcher_(listener_task_runner),
       restrict_dispatch_group_(kRestrictDispatchGroup_None) {}
 
 void SyncChannel::SyncContext::OnSendDoneEventSignaled(
@@ -571,7 +574,8 @@ SyncChannel::SyncChannel(
                                    ipc_task_runner,
                                    listener_task_runner,
                                    shutdown_event)),
-      sync_handle_registry_(mojo::SyncHandleRegistry::current()) {
+      sync_handle_registry_(mojo::SyncHandleRegistry::current()),
+      dispatch_watcher_(listener_task_runner) {
   // The current (listener) thread must be distinct from the IPC thread, or else
   // sending synchronous messages will deadlock.
   DCHECK_NE(ipc_task_runner.get(), base::ThreadTaskRunnerHandle::Get().get());
@@ -689,7 +693,8 @@ void SyncChannel::WaitForReply(mojo::SyncHandleRegistry* registry,
 
 void SyncChannel::WaitForReplyWithNestedMessageLoop(SyncContext* context) {
   base::RunLoop nested_loop(base::RunLoop::Type::kNestableTasksAllowed);
-  ReceivedSyncMsgQueue::NestedSendDoneWatcher watcher(context, &nested_loop);
+  ReceivedSyncMsgQueue::NestedSendDoneWatcher watcher(
+      context, &nested_loop, context->listener_task_runner());
   nested_loop.Run();
 }
 

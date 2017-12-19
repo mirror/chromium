@@ -10,7 +10,14 @@
 
 namespace base {
 
-WaitableEventWatcher::WaitableEventWatcher() : weak_ptr_factory_(this) {}
+WaitableEventWatcher::WaitableEventWatcher(
+    scoped_refptr<SequencedTaskRunner> task_runner)
+    : task_runner_(std::move(task_runner)), weak_ptr_factory_(this) {
+  DCHECK(task_runner_->RunsTasksInCurrentSequence());
+  // Create a weak reference to |this| here to assure that |weak_this_|'s
+  // sequence is same as |task_runner_|'s.
+  weak_this_ = weak_ptr_factory_.GetWeakPtr();
+}
 
 WaitableEventWatcher::~WaitableEventWatcher() {
   StopWatching();
@@ -29,9 +36,8 @@ bool WaitableEventWatcher::StartWatching(WaitableEvent* event,
   // Locals for capture by the block. Accessing anything through the |this| or
   // |event| pointers is not safe, since either may have been deleted by the
   // time the handler block is invoked.
-  scoped_refptr<SequencedTaskRunner> task_runner =
-      SequencedTaskRunnerHandle::Get();
-  WeakPtr<WaitableEventWatcher> weak_this = weak_ptr_factory_.GetWeakPtr();
+  scoped_refptr<SequencedTaskRunner> task_runner = task_runner_;
+  WeakPtr<WaitableEventWatcher> weak_this = weak_this_;
   const bool auto_reset =
       event->policy_ == WaitableEvent::ResetPolicy::AUTOMATIC;
 
