@@ -18,7 +18,6 @@ import org.chromium.base.test.util.RetryOnFailure;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ChromeSwitches;
 import org.chromium.chrome.browser.compositor.CompositorViewHolder;
-import org.chromium.chrome.browser.tabmodel.TabModelSelector;
 import org.chromium.chrome.browser.vr_shell.rules.ChromeTabbedActivityVrTestRule;
 import org.chromium.chrome.test.ChromeActivityTestRule;
 import org.chromium.chrome.test.ChromeJUnit4ClassRunner;
@@ -53,7 +52,6 @@ public class VrShellCompositorViewHolderTest {
     @RetryOnFailure
     public void testResizeWithCompositorViewHolderDetached()
             throws InterruptedException, TimeoutException {
-        final AtomicReference<TabModelSelector> selector = new AtomicReference<>();
         final AtomicReference<Integer> oldWidth = new AtomicReference<>();
         final int testWidth = 123;
         final ContentViewCore cvc =
@@ -65,7 +63,7 @@ public class VrShellCompositorViewHolderTest {
                 CompositorViewHolder compositorViewHolder =
                         (CompositorViewHolder) mVrTestRule.getActivity().findViewById(
                                 R.id.compositor_view_holder);
-                selector.set(compositorViewHolder.detachForVr());
+                compositorViewHolder.detachForVr();
                 oldWidth.set(cvc.getViewportWidthPix());
 
                 ViewGroup.LayoutParams layoutParams = compositorViewHolder.getLayoutParams();
@@ -93,7 +91,7 @@ public class VrShellCompositorViewHolderTest {
                 CompositorViewHolder compositorViewHolder =
                         (CompositorViewHolder) mVrTestRule.getActivity().findViewById(
                                 R.id.compositor_view_holder);
-                compositorViewHolder.onExitVr(selector.get());
+                compositorViewHolder.onExitVr();
             }
         });
 
