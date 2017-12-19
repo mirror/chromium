@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8a1bdf70_eff0d18f",
+        "filename": "third_party/WebKit/Source/core/dom/TreeScope.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-12-19T06:27:13Z",
+      "side": 1,
+      "message": "Keeping |Element*| return value in |Node*| and converting back to |Element*|\nat line 261 looks redundant.\n\nHow about:\n\nif (node-\u003eIsPseudoElement() || node-\u003eIsTextNode())\n  return Retarget(node-\u003eParentOrShadowHostElement());\nreturn Retarget(ToElementOrDie(node));",
+      "revId": "f8252dbb12700639f23cdcdc272b4495c7c5ffe1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "673cdfe3_2fd3fc42",
+        "filename": "third_party/WebKit/Source/core/dom/TreeScope.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-12-19T06:27:13Z",
+      "side": 1,
+      "message": "How about using ToElementOrDie() here?\n\n(And ToElement() or ToElementOrDie() can take reference instead of pointer as well)",
+      "revId": "f8252dbb12700639f23cdcdc272b4495c7c5ffe1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3152ec89_7099cd53",
+        "filename": "third_party/WebKit/Source/core/dom/TreeScope.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-12-19T06:27:13Z",
+      "side": 1,
+      "message": "Please use WHATWG DOM as a canonical reference to the algorithm.\nhttps://dom.spec.whatwg.org/#retarget",
+      "revId": "f8252dbb12700639f23cdcdc272b4495c7c5ffe1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed0a2cf2_a0ba8f09",
+        "filename": "third_party/WebKit/Source/core/dom/TreeScope.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-12-19T06:27:13Z",
+      "side": 1,
+      "message": "Why the argument cannot be |const Element\u0026|?",
+      "revId": "f8252dbb12700639f23cdcdc272b4495c7c5ffe1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
