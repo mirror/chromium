@@ -16,6 +16,24 @@
       "revId": "fd35384ac648287813f51c411ad0aa7e9f05bdb5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0534104e_a86aed12",
+        "filename": "tools/mb/mb_config.pyl",
+        "patchSetId": 5
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-12-19T00:25:27Z",
+      "side": 1,
+      "message": "Yes; this builder is uploading to the bucket (and really should be on the chromium waterfall as a result).",
+      "parentUuid": "2fc25207_6e28c325",
+      "revId": "fd35384ac648287813f51c411ad0aa7e9f05bdb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
