@@ -68,6 +68,19 @@ std::string GetFeatureFlagStatus(const std::string& feature_name) {
   return kDefaultFlagValue;
 }
 
+std::string GetNonFlagEctValue() {
+  if (base::CommandLine::ForCurrentProcess()
+              ->GetSwitchValueASCII("force-fieldtrials")
+              .find("NetworkQualityEstimator/Enabled") != std::string::npos &&
+      base::CommandLine::ForCurrentProcess()
+              ->GetSwitchValueASCII("force-fieldtrial-params")
+              .find("NetworkQualityEstimator.Enabled:"
+                    "force_effective_connection_type/") != std::string::npos) {
+    return "Forced by field trial";
+  }
+  return kDefaultFlagValue;
+}
+
 }  // namespace
 
 InterventionsInternalsPageHandler::InterventionsInternalsPageHandler(
@@ -199,7 +212,7 @@ void InterventionsInternalsPageHandler::GetPreviewsFlagsDetails(
   std::string ect_value =
       base::CommandLine::ForCurrentProcess()->GetSwitchValueASCII(
           switches::kForceEffectiveConnectionType);
-  ect_status->value = ect_value.empty() ? kDefaultFlagValue : ect_value;
+  ect_status->value = ect_value.empty() ? GetNonFlagEctValue() : ect_value;
   ect_status->htmlId = kEctFlagHtmlId;
   flags.push_back(std::move(ect_status));
 

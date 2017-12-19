@@ -459,6 +459,25 @@ TEST_F(InterventionsInternalsPageHandlerTest, GetFlagsForceEctValue) {
   }
 }
 
+TEST_F(InterventionsInternalsPageHandlerTest, GetFlagsEctForceFieldtrialValue) {
+  base::test::ScopedCommandLine scoped_command_line;
+  base::CommandLine* command_line = scoped_command_line.GetProcessCommandLine();
+  command_line->AppendSwitchASCII("force-fieldtrials",
+                                  "NetworkQualityEstimator/Enabled");
+  command_line->AppendSwitchASCII("force-fieldtrial-params",
+                                  "NetworkQualityEstimator.Enabled:"
+                                  "force_effective_connection_type/Slow-2G");
+  page_handler_->GetPreviewsFlagsDetails(
+      base::BindOnce(&MockGetPreviewsFlagsCallback));
+
+  auto ect_flag = passed_in_flags.find(kEctFlagHtmlId);
+  ASSERT_NE(passed_in_flags.end(), ect_flag);
+  EXPECT_EQ(flag_descriptions::kForceEffectiveConnectionTypeName,
+            ect_flag->second->description);
+  EXPECT_EQ("Forced by field trial", ect_flag->second->value);
+  EXPECT_EQ(kEctFlagLink, ect_flag->second->link);
+}
+
 TEST_F(InterventionsInternalsPageHandlerTest, GetFlagsNoScriptDefaultValue) {
   page_handler_->GetPreviewsFlagsDetails(
       base::BindOnce(&MockGetPreviewsFlagsCallback));
