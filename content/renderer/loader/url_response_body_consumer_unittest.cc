@@ -11,7 +11,6 @@
 #include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
 #include "base/single_thread_task_runner.h"
-#include "content/common/resource_messages.h"
 #include "content/public/common/resource_request.h"
 #include "content/public/common/service_worker_modes.h"
 #include "content/public/renderer/request_peer.h"
@@ -88,21 +87,14 @@ class TestRequestPeer : public RequestPeer {
   DISALLOW_COPY_AND_ASSIGN(TestRequestPeer);
 };
 
-class URLResponseBodyConsumerTest : public ::testing::Test,
-                                    public ::IPC::Sender {
+class URLResponseBodyConsumerTest : public ::testing::Test {
  protected:
   URLResponseBodyConsumerTest()
-      : dispatcher_(new ResourceDispatcher(this, message_loop_.task_runner())) {
-  }
+      : dispatcher_(new ResourceDispatcher(message_loop_.task_runner())) {}
 
   ~URLResponseBodyConsumerTest() override {
     dispatcher_.reset();
     base::RunLoop().RunUntilIdle();
-  }
-
-  bool Send(IPC::Message* message) override {
-    delete message;
-    return true;
   }
 
   std::unique_ptr<ResourceRequest> CreateResourceRequest() {
@@ -137,8 +129,7 @@ class URLResponseBodyConsumerTest : public ::testing::Test,
         std::move(request), 0, nullptr, url::Origin(),
         TRAFFIC_ANNOTATION_FOR_TESTS, false,
         std::make_unique<TestRequestPeer>(context, message_loop_.task_runner()),
-        blink::WebURLRequest::LoadingIPCType::kChromeIPC, nullptr,
-        std::vector<std::unique_ptr<URLLoaderThrottle>>(),
+        nullptr, std::vector<std::unique_ptr<URLLoaderThrottle>>(),
         mojom::URLLoaderClientEndpointsPtr());
   }
 
