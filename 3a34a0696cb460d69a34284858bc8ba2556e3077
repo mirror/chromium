@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6b3f93d2_3968959a",
+        "filename": "ios/web_view/test/web_view_autofill_inttest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-12-19T19:39:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5888e018_d64bc433",
+      "range": {
+        "startLine": 9,
+        "startChar": 9,
+        "endLine": 9,
+        "endChar": 13
+      },
+      "revId": "3a34a0696cb460d69a34284858bc8ba2556e3077",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8cdd0c46_0a9b87e6",
         "filename": "ios/web_view/test/web_view_autofill_inttest.mm",
         "patchSetId": 3
@@ -71,6 +95,54 @@
     },
     {
       "key": {
+        "uuid": "f5f0034c_82dc6af4",
+        "filename": "ios/web_view/test/web_view_autofill_inttest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-12-19T19:39:50Z",
+      "side": 1,
+      "message": "oops. old habits die hard.",
+      "parentUuid": "314a279b_fe2ed40a",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 6
+      },
+      "revId": "3a34a0696cb460d69a34284858bc8ba2556e3077",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "27248038_af5a0e2a",
+        "filename": "ios/web_view/test/web_view_autofill_inttest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-12-19T19:39:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8cdd0c46_0a9b87e6",
+      "range": {
+        "startLine": 24,
+        "startChar": 17,
+        "endLine": 24,
+        "endChar": 30
+      },
+      "revId": "3a34a0696cb460d69a34284858bc8ba2556e3077",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "088b5ab2_7e0cdffd",
         "filename": "ios/web_view/test/web_view_autofill_inttest.mm",
         "patchSetId": 3
@@ -85,6 +157,24 @@
       "revId": "3a34a0696cb460d69a34284858bc8ba2556e3077",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91a4ea84_80402056",
+        "filename": "ios/web_view/test/web_view_autofill_inttest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-12-19T19:39:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "088b5ab2_7e0cdffd",
+      "revId": "3a34a0696cb460d69a34284858bc8ba2556e3077",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -105,6 +195,24 @@
     },
     {
       "key": {
+        "uuid": "b1f80b8a_6b1b6aad",
+        "filename": "ios/web_view/test/web_view_autofill_inttest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-12-19T19:39:50Z",
+      "side": 1,
+      "message": "About 1000ms each. I\u0027ll combine them into one test.",
+      "parentUuid": "325a668b_95cda001",
+      "revId": "3a34a0696cb460d69a34284858bc8ba2556e3077",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "62d477e9_1576de0a",
         "filename": "ios/web_view/test/web_view_autofill_inttest.mm",
         "patchSetId": 3
@@ -116,6 +224,30 @@
       "writtenOn": "2017-12-19T00:59:40Z",
       "side": 1,
       "message": "This will be flaky. Callbacks are not synchronous and the test should wait until they are called.",
+      "range": {
+        "startLine": 63,
+        "startChar": 12,
+        "endLine": 63,
+        "endChar": 18
+      },
+      "revId": "3a34a0696cb460d69a34284858bc8ba2556e3077",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49dfcc6b_6ceac105",
+        "filename": "ios/web_view/test/web_view_autofill_inttest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-12-19T19:39:50Z",
+      "side": 1,
+      "message": "Do you mean these javascript events are handled async? I think they are synchronous, and since test::EvaluateJavaScript waits, it should be fine.\n\nOr do you mean the __gr.invokeOnHost calls are async?",
+      "parentUuid": "62d477e9_1576de0a",
       "range": {
         "startLine": 63,
         "startChar": 12,
