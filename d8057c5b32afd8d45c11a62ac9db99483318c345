@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b528a7d8_44abc0de",
+        "filename": "chrome/browser/resources/md_extensions/code_section.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-12-19T01:00:15Z",
+      "side": 1,
+      "message": "It\u0027s rather likely that something (lower level) will convert \\r\\n (or just \\r) to \\n for us, but could we confirm that? i.e. confirm that we don\u0027t need to handle \\r in this code",
+      "revId": "d8057c5b32afd8d45c11a62ac9db99483318c345",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea8449bd_6227f393",
+        "filename": "chrome/browser/resources/md_extensions/code_section.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-12-19T01:00:15Z",
+      "side": 1,
+      "message": "Suggest removing the \" - 1\".\n\nNot all coding standards require a trailing blank line. So \"foo\\nbar\" will show up as one line. Removing the -1 also means that \"foo\\nbar\\n\" will appear as three lines, but it is three lines (so that\u0027s a good thing).",
+      "revId": "d8057c5b32afd8d45c11a62ac9db99483318c345",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
