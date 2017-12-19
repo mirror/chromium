@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4935fcc9_5bd54671",
+        "filename": "components/vector_icons/security_key.icon",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-19T20:27:17Z",
+      "side": 1,
+      "message": "nit: requires license header",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 22
+      },
+      "revId": "0085ef52b4825260489de80f7bd46690a6dcca04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab15709a_b0fd7b7d",
+        "filename": "components/vector_icons/security_key.icon",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-19T20:27:17Z",
+      "side": 1,
+      "message": "nit: the name of this file makes me think it looks like a door/padlock key",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "0085ef52b4825260489de80f7bd46690a6dcca04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
