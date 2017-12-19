@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "47f99010_d0dad544",
+        "filename": "net/proxy/proxy_config.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-19T18:18:03Z",
+      "side": 1,
+      "message": "This doesn\u0027t seem to cover the PAC script (No idea about other loading code).  Also, don\u0027t forget content/public/common/proxy_config_traits.h.  We may also need some tests, not sure.",
+      "range": {
+        "startLine": 115,
+        "startChar": 59,
+        "endLine": 115,
+        "endChar": 0
+      },
+      "revId": "b4588482075a7cccd96c0c31e848f46a76bd6ffa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
