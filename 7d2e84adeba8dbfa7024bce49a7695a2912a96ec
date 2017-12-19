@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dc08c366_ac1dac71",
+        "filename": "chrome/browser/ssl/ssl_error_tab_helper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-12-19T22:24:10Z",
+      "side": 1,
+      "message": "To clean up the repetition a little, you could have a private helper method HandleCommand:\n\nvoid HandleCommand(security_interstitials::SecurityInterstitialCommand cmd) {\n  if (blocking_page_for_currently_committed_navigation_) {\n    blocking_page_for_currently_committed_navigation_-\u003eCommandReceived(base::NumberToString(cmd));\n  }\n}\n\nAnd then each of these methods could just call HandleCommand() and pass the appropriate command.",
+      "range": {
+        "startLine": 77,
+        "startChar": 39,
+        "endLine": 77,
+        "endChar": 0
+      },
+      "revId": "7d2e84adeba8dbfa7024bce49a7695a2912a96ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f14c8580_b3656c09",
+        "filename": "chrome/browser/ssl/ssl_error_tab_helper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-12-19T22:24:10Z",
+      "side": 1,
+      "message": "This one isn\u0027t implemented by SSL error pages (just Safe Browsing error pages), so this can simply be NOTREACHED() (with a comment that SSL error pages don\u0027t send this one).",
+      "range": {
+        "startLine": 113,
+        "startChar": 1,
+        "endLine": 118,
+        "endChar": 3
+      },
+      "revId": "7d2e84adeba8dbfa7024bce49a7695a2912a96ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d2076d8_946bcf14",
+        "filename": "chrome/browser/ssl/ssl_error_tab_helper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-12-19T22:24:10Z",
+      "side": 1,
+      "message": "ditto, NOTREACHED with a comment",
+      "range": {
+        "startLine": 181,
+        "startChar": 2,
+        "endLine": 186,
+        "endChar": 3
+      },
+      "revId": "7d2e84adeba8dbfa7024bce49a7695a2912a96ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41d413fa_44bc39c6",
+        "filename": "chrome/browser/ssl/ssl_error_tab_helper.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-12-19T22:24:10Z",
+      "side": 1,
+      "message": "nit: remove blank lines between these",
+      "range": {
+        "startLine": 59,
+        "startChar": 0,
+        "endLine": 83,
+        "endChar": 38
+      },
+      "revId": "7d2e84adeba8dbfa7024bce49a7695a2912a96ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae61a5c5_86aec533",
+        "filename": "components/security_interstitials/core/common/interfaces/interstitial_commands.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-12-19T22:24:10Z",
+      "side": 1,
+      "message": "I think this should be |security_interstitials.mojom| -- seems like the convention elsewhere is to use the component name as the module name, e.g. https://cs.chromium.org/chromium/src/components/autofill/content/common/autofill_agent.mojom?l\u003d5",
+      "range": {
+        "startLine": 6,
+        "startChar": 7,
+        "endLine": 6,
+        "endChar": 28
+      },
+      "revId": "7d2e84adeba8dbfa7024bce49a7695a2912a96ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
