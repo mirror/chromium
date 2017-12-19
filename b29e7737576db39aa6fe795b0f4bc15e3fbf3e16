@@ -16,6 +16,24 @@
       "revId": "b29e7737576db39aa6fe795b0f4bc15e3fbf3e16",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c2acc6e_5c63a3eb",
+        "filename": "services/ui/service.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-12-19T18:20:35Z",
+      "side": 1,
+      "message": "We also use this to set up screen manager forwarding. It seems unclear to me to tie that to resource loading. I changed things to use Service::running_standalone_ (which the old code used), which eliminates \"in-process\" from this class. I also eliminated |in_process| from the cursor loader helper class. That OK?",
+      "parentUuid": "f0f21c24_240d439d",
+      "revId": "b29e7737576db39aa6fe795b0f4bc15e3fbf3e16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
