@@ -70,6 +70,24 @@
       "revId": "a1ca25d1d4f634386549ac8723e28d879abb6893",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24da6164_9bb37589",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/dom/usvstring-reflection.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-12-19T08:59:24Z",
+      "side": 1,
+      "message": "\"about:blank\" is very special and always the same origin-domain with the window that is opening a new window.\n\nSo, I think that we can use \"about:blank#whatever_we_want_to_write\".  This is probably the easiest way.\n\nAlso we can create a new file such as usvstring-reflection.sub.html and open it with the same scheme, host, port, etc. so that the new window will be the same origin-domain.  We can give it an arbitrary hash part.",
+      "parentUuid": "2ca8371c_9d5953af",
+      "revId": "a1ca25d1d4f634386549ac8723e28d879abb6893",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
