@@ -278,6 +278,24 @@
     },
     {
       "key": {
+        "uuid": "7c5202d5_32a3cdea",
+        "filename": "chrome/browser/sync/test/integration/sync_app_list_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2017-12-19T00:19:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a48eb127_a5d4c917",
+      "revId": "01ae5bd7f528103c07147f3dcf53c4c5fdfd413c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2357fb00_5784adb0",
         "filename": "chrome/browser/ui/app_list/app_list_service_impl_browsertest.cc",
         "patchSetId": 2

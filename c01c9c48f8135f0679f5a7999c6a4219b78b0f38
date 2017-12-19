@@ -22,6 +22,30 @@
       "revId": "c01c9c48f8135f0679f5a7999c6a4219b78b0f38",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0523d40_8a0f7311",
+        "filename": "chrome/browser/ui/app_list/app_list_syncable_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 520,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2017-12-19T00:19:43Z",
+      "side": 1,
+      "message": "It\u0027s pretty much work to totally get rid of AppListItem in AppListSyncableService, but it\u0027s possible to change this AddItem.",
+      "parentUuid": "9ab1b166_9c0ef7b2",
+      "range": {
+        "startLine": 519,
+        "startChar": 8,
+        "endLine": 520,
+        "endChar": 43
+      },
+      "revId": "c01c9c48f8135f0679f5a7999c6a4219b78b0f38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
