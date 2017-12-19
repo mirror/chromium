@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "38114387_0f58a2a2",
+        "filename": "third_party/WebKit/Source/devtools/front_end/audits2/Audits2Panel.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1111657
+      },
+      "writtenOn": "2017-12-19T20:31:04Z",
+      "side": 1,
+      "message": "await!",
+      "revId": "a1f99c0d46341ed1a76b2bcf85726da35c3c2818",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b34de8be_6dac3178",
+        "filename": "third_party/WebKit/Source/devtools/front_end/audits2/Audits2Panel.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 501,
+      "author": {
+        "id": 1111657
+      },
+      "writtenOn": "2017-12-19T20:31:04Z",
+      "side": 1,
+      "message": "this method would be a lot cleaner if it called a dedicated setPhase() method.\n\nalso then you can change this big block to use a nice switch statement, should be able to DRY it up.",
+      "revId": "a1f99c0d46341ed1a76b2bcf85726da35c3c2818",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8da29467_9a2770cc",
+        "filename": "third_party/WebKit/Source/devtools/front_end/audits2/Audits2Panel.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 559,
+      "author": {
+        "id": 1111657
+      },
+      "writtenOn": "2017-12-19T20:31:04Z",
+      "side": 1,
+      "message": "Keeping around the _fastFactsUsed array feels funny to me. An alternative:\n\n* in statusview\u0027s ctr/reset: this._queuedFacts \u003d Array.from(Audits2.Audits2Panel.StatusView.FastFacts)\n* in here just splice the item off of `this._queuedFacts` to remove it.\n\nwdyt?",
+      "revId": "a1f99c0d46341ed1a76b2bcf85726da35c3c2818",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84b3e2c8_f8a81b4d",
+        "filename": "third_party/WebKit/Source/devtools/front_end/audits2/Audits2Panel.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 560,
+      "author": {
+        "id": 1111657
+      },
+      "writtenOn": "2017-12-19T20:31:04Z",
+      "side": 1,
+      "message": "gotta use floor",
+      "revId": "a1f99c0d46341ed1a76b2bcf85726da35c3c2818",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe82f08e_1eb697d6",
+        "filename": "third_party/WebKit/Source/devtools/front_end/audits2/Audits2Panel.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 588,
+      "author": {
+        "id": 1111657
+      },
+      "writtenOn": "2017-12-19T20:31:04Z",
+      "side": 1,
+      "message": "An alternative to this is that each fact holds state on when it was set \u0026 if its replaceable. It\u0027s an attractive idea but I don\u0027t think it\u0027s necessary.",
+      "revId": "a1f99c0d46341ed1a76b2bcf85726da35c3c2818",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ea1979e_21158c96",
+        "filename": "third_party/WebKit/Source/devtools/front_end/audits2/audits2Dialog.css",
+        "patchSetId": 3
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1111657
+      },
+      "writtenOn": "2017-12-19T20:31:04Z",
+      "side": 1,
+      "message": "let\u0027s move these keyframe anims to be next to their usage on L60-80\n\nalso lets extract the duration and widths into custom props so its more clear they are completely arbitrary and tweakable.",
+      "revId": "a1f99c0d46341ed1a76b2bcf85726da35c3c2818",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
