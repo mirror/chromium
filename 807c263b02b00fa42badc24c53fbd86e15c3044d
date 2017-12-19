@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9aff4432_ce9d3223",
+        "filename": "third_party/WebKit/Source/platform/scheduler/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-12-19T11:23:57Z",
+      "side": 1,
+      "message": "We\u0027ll probably have to split scheduler into public (exposed to the rest of the platform and blink) and private part, but for now this approach will work fine.",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 37
+      },
+      "revId": "807c263b02b00fa42badc24c53fbd86e15c3044d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
