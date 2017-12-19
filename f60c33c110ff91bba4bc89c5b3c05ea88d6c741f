@@ -16,6 +16,24 @@
       "revId": "f60c33c110ff91bba4bc89c5b3c05ea88d6c741f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18124eb9_d3ca3264",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 2
+      },
+      "lineNbr": 5181,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-12-19T19:13:38Z",
+      "side": 1,
+      "message": "I see. I guess I\u0027ll just leave this as is and file a bug for VR to change the omnibox hint string then? I don\u0027t want to break anything since I\u0027m not familiar with how VR is set up.",
+      "parentUuid": "1ac100c7_22ec9898",
+      "revId": "f60c33c110ff91bba4bc89c5b3c05ea88d6c741f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
