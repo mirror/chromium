@@ -16,6 +16,24 @@
       "revId": "d740df47a849ebf3e7ebb1ed88b1d9aced42b325",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfef5fca_3041019a",
+        "filename": "net/quic/core/quic_utils.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-12-19T22:19:53Z",
+      "side": 1,
+      "message": "I noticed this when confirming that I had made both the internal and external files identical. The internal version of the file has the code here, and since the comment applies to the QuicPrefetchT0() call, it seems like the more correct version.",
+      "parentUuid": "07c1c417_b06baca3",
+      "revId": "d740df47a849ebf3e7ebb1ed88b1d9aced42b325",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
