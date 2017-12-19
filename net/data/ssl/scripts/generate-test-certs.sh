@@ -423,6 +423,18 @@ openssl req -x509 -newkey rsa:2048 \
   -extensions req_extensions_with_tls_feature \
   -nodes -config ee.cnf
 
+# Issued after 1 Dec 2017 (Symantec Legacy Distrust Date)
+openssl req -config ../scripts/ee.cnf \
+  -newkey rsa:2048 -text -out out/dec_2017.req
+CA_NAME="req_ca_dn" \
+  openssl ca \
+    -batch \
+    -extensions user_cert \
+    -startdate 171201000000Z \
+    -enddate   200101000000Z \
+    -in out/dec_2017.req \
+    -out ../certificates/dec_2017.pem \
+    -config ca.cnf
 
 # Regenerate CRLSets
 ## Block a leaf cert directly by SPKI
