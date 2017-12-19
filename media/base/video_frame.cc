@@ -98,7 +98,7 @@ static bool AreValidPixelFormatsForWrap(VideoPixelFormat source_format,
 
   // It is possible to add other planar to planar format conversions here if the
   // use case is there.
-  return source_format == PIXEL_FORMAT_YV12A &&
+  return source_format == PIXEL_FORMAT_I420A &&
          target_format == PIXEL_FORMAT_I420;
 }
 
@@ -131,7 +131,7 @@ bool RequiresEvenSizeAllocation(VideoPixelFormat format) {
     case PIXEL_FORMAT_YUV420P12:
     case PIXEL_FORMAT_YUV422P12:
     case PIXEL_FORMAT_YUV444P12:
-    case PIXEL_FORMAT_YV12A:
+    case PIXEL_FORMAT_I420A:
     case PIXEL_FORMAT_UYVY:
       return true;
     case PIXEL_FORMAT_UNKNOWN:
@@ -502,7 +502,7 @@ scoped_refptr<VideoFrame> VideoFrame::CreateTransparentFrame(
   const uint8_t kTransparentA = 0x00;
   const base::TimeDelta kZero;
   scoped_refptr<VideoFrame> frame =
-      CreateFrame(PIXEL_FORMAT_YV12A, size, gfx::Rect(size), size, kZero);
+      CreateFrame(PIXEL_FORMAT_I420A, size, gfx::Rect(size), size, kZero);
   FillYUVA(frame.get(), kBlackY, kBlackUV, kBlackUV, kTransparentA);
   return frame;
 }
@@ -538,7 +538,7 @@ size_t VideoFrame::NumPlanes(VideoPixelFormat format) {
     case PIXEL_FORMAT_YUV422P12:
     case PIXEL_FORMAT_YUV444P12:
       return 3;
-    case PIXEL_FORMAT_YV12A:
+    case PIXEL_FORMAT_I420A:
       return 4;
     case PIXEL_FORMAT_UNKNOWN:
       break;
@@ -836,7 +836,7 @@ size_t VideoFrame::BitDepth() const {
     case media::PIXEL_FORMAT_I420:
     case media::PIXEL_FORMAT_YV12:
     case media::PIXEL_FORMAT_I422:
-    case media::PIXEL_FORMAT_YV12A:
+    case media::PIXEL_FORMAT_I420A:
     case media::PIXEL_FORMAT_YV24:
     case media::PIXEL_FORMAT_NV12:
     case media::PIXEL_FORMAT_NV21:
@@ -1108,7 +1108,7 @@ gfx::Size VideoFrame::SampleSize(VideoPixelFormat format, size_t plane) {
 
         case PIXEL_FORMAT_YV12:
         case PIXEL_FORMAT_I420:
-        case PIXEL_FORMAT_YV12A:
+        case PIXEL_FORMAT_I420A:
         case PIXEL_FORMAT_NV12:
         case PIXEL_FORMAT_NV21:
         case PIXEL_FORMAT_MT21:
@@ -1166,7 +1166,7 @@ int VideoFrame::BytesPerElement(VideoPixelFormat format, size_t plane) {
     case PIXEL_FORMAT_YV12:
     case PIXEL_FORMAT_I420:
     case PIXEL_FORMAT_I422:
-    case PIXEL_FORMAT_YV12A:
+    case PIXEL_FORMAT_I420A:
     case PIXEL_FORMAT_YV24:
     case PIXEL_FORMAT_Y8:
       return 1;
