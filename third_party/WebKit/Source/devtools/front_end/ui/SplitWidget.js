@@ -328,6 +328,7 @@ UI.SplitWidget = class extends UI.Widget {
       shadowToHide.classList.remove('maximized');
       this._removeAllLayoutProperties();
       this.doResize();
+      this._showFinishedForTest();
     }
 
     if (animate)
@@ -337,6 +338,10 @@ UI.SplitWidget = class extends UI.Widget {
 
     this._sidebarSizeDIP = -1;
     this.setResizable(false);
+  }
+
+  _showFinishedForTest() {
+    // This method is sniffed in tests.
   }
 
   _removeAllLayoutProperties() {
@@ -371,6 +376,11 @@ UI.SplitWidget = class extends UI.Widget {
     this._resizerElement.classList.remove('hidden');
     this.setResizable(true);
 
+    // Order widgets in DOM properly.
+    this.setSecondIsSidebar(this._secondIsSidebar);
+    this._sidebarSizeDIP = -1;
+    this._updateShowMode(UI.SplitWidget.ShowMode.Both);
+
     // Make sure main is the first in the children list.
     this.suspendInvalidations();
     if (this._sidebarWidget)
@@ -378,11 +388,6 @@ UI.SplitWidget = class extends UI.Widget {
     if (this._mainWidget)
       this._mainWidget.show(this.element, this._sidebarWidget ? this._sidebarWidget.element : null);
     this.resumeInvalidations();
-    // Order widgets in DOM properly.
-    this.setSecondIsSidebar(this._secondIsSidebar);
-
-    this._sidebarSizeDIP = -1;
-    this._updateShowMode(UI.SplitWidget.ShowMode.Both);
     this._updateLayout(animate);
   }
 
