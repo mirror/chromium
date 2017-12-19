@@ -16,6 +16,7 @@
 #include "content/public/test/browser_test_utils.h"
 #include "content/public/test/content_browser_test_utils.h"
 #include "content/shell/browser/shell.h"
+#include "media/base/media_switches.h"
 #include "net/test/embedded_test_server/embedded_test_server.h"
 
 #if defined(OS_WIN)
@@ -87,7 +88,14 @@ class WebRtcAudioDebugRecordingsBrowserTest
     // Automatically grant device permission.
     AppendUseFakeUIForMediaStreamFlag();
   }
+
   ~WebRtcAudioDebugRecordingsBrowserTest() override {}
+
+  void SetUpCommandLine(base::CommandLine* command_line) override {
+    command_line->AppendSwitchASCII(
+        switches::kAutoplayPolicy,
+        switches::autoplay::kNoUserGestureRequiredPolicy);
+  }
 };
 
 #if defined(OS_ANDROID) && defined(ADDRESS_SANITIZER)
