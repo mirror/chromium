@@ -70,6 +70,30 @@
       "revId": "374ab29b05e006a19463aef9339ec1c1519052ea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3729f986_3754e8b6",
+        "filename": "components/cronet/ios/cronet_environment.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-12-19T20:13:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d5ca3a65_de079a50",
+      "range": {
+        "startLine": 339,
+        "startChar": 2,
+        "endLine": 339,
+        "endChar": 24
+      },
+      "revId": "374ab29b05e006a19463aef9339ec1c1519052ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
