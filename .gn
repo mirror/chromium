@@ -66,6 +66,12 @@ default_args = {
   # Changes some setup for the Crashpad build to set them to build against
   # Chromium's zlib, base, etc.
   crashpad_in_chromium = true
+
+  # TODO(crbug.com/795935): Rework the upstream ffmpeg build to depend on
+  # build_with_chromium and proprietary_codecs, and look at target_os to
+  # use "Chrome" vs. "ChromeOS" vs. "Chromium" so that this isn't so
+  # complicated.
+  ffmpeg_branding = "Chrome"
 }
 
 # These are the targets to check headers for by default. The files in targets
