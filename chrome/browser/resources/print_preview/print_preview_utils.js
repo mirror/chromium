@@ -2,6 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+cr.exportPath('print_preview');
+
 /**
  * @param {string} toTest The string to be tested.
  * @return {boolean} True if |toTest| contains only digits. Leading and trailing
@@ -241,3 +243,37 @@ function getStringForCurrentLocale(localizedStrings) {
   return getStringForLocale(localizedStrings, navigator.language) ||
       getStringForLocale(localizedStrings, navigator.language.split('-')[0]);
 }
+
+/**
+ * Enumeration of color modes used by Chromium.
+ * @enum {number}
+ */
+print_preview.ColorMode = {
+  GRAY: 1,
+  COLOR: 2
+};
+
+/**
+ * @param {?{vendor_id: number}} colorOption The selected color option.
+ * @param {boolean} color Whether color printing is selected.
+ * @return {number} Native color model.
+ */
+function getNativeColorModel(colorOption, color) {
+  // For non-local printers native color model is ignored anyway.
+  const nativeColorModel =
+      parseInt(colorOption ? colorOption.vendor_id : null, 10);
+  if (isNaN(nativeColorModel)) {
+    return color ? print_preview.ColorMode.COLOR : print_preview.ColorMode.GRAY;
+  }
+  return nativeColorModel;
+}
+
+/**
+ * Constant values matching printing::DuplexMode enum.
+ * @enum {number}
+ */
+print_preview.DuplexMode = {
+  SIMPLEX: 0,
+  LONG_EDGE: 1,
+  UNKNOWN_DUPLEX_MODE: -1
+};
