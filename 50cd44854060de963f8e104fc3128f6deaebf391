@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "bdb00385_6e142533",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_controller_impl_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-12-19T22:36:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "318b9dde_f0566501",
+      "revId": "50cd44854060de963f8e104fc3128f6deaebf391",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "018e2095_fe1f6a8f",
         "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_controller_impl_win.h",
         "patchSetId": 4
@@ -54,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "65f28463_7716cc4a",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_controller_impl_win.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-12-19T22:36:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "018e2095_fe1f6a8f",
+      "revId": "50cd44854060de963f8e104fc3128f6deaebf391",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f0b7a35c_f91330c9",
         "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_controller_win.h",
         "patchSetId": 4
@@ -68,6 +104,24 @@
       "revId": "50cd44854060de963f8e104fc3128f6deaebf391",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aba9791b_faea60d1",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_controller_win.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-12-19T22:36:52Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f0b7a35c_f91330c9",
+      "revId": "50cd44854060de963f8e104fc3128f6deaebf391",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
