@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bb1c6256_762a4d3d",
+        "filename": "third_party/WebKit/Source/platform/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 1525,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-12-19T00:27:04Z",
+      "side": 1,
+      "message": "Very stupid question: Does this mean that these directories are linked into different link units? In other words, it\u0027s not allowed to create a cyclic dependency between platform/blob/ and platform/heap/, right?",
+      "revId": "d0481c4c909f22a8bf5a8b582a67d5a7793a4086",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
