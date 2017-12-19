@@ -370,14 +370,6 @@ Host.InspectorFrontendHostStub = class {
 
   /**
    * @override
-   * @return {boolean}
-   */
-  isUnderTest() {
-    return false;
-  }
-
-  /**
-   * @override
    * @param {function()} callback
    */
   reattach(callback) {
@@ -550,16 +542,10 @@ window.InspectorFrontendHost = InspectorFrontendHost;
 InspectorFrontendHost.events;
 
 /**
- * @param {!Object<string, string>=} prefs
  * @return {boolean}
  */
-Host.isUnderTest = function(prefs) {
-  if (InspectorFrontendHost.isUnderTest())
-    return true;
-
-  if (prefs)
-    return prefs['isUnderTest'] === 'true';
-  return Common.settings.createSetting('isUnderTest', false).get();
+Host.isUnderTest = function() {
+  return !!Runtime.queryParam('test');
 };
 
 /**

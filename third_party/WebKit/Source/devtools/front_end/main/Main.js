@@ -76,7 +76,7 @@ Main.Main = class {
    */
   _gotPreferences(prefs) {
     console.timeStamp('Main._gotPreferences');
-    if (Host.isUnderTest(prefs))
+    if (Host.isUnderTest())
       self.runtime.useTestBase();
     this._createSettings(prefs);
     this._createAppUI();
@@ -91,11 +91,11 @@ Main.Main = class {
     var storagePrefix = '';
     if (Host.isCustomDevtoolsFrontend())
       storagePrefix = '__custom__';
-    else if (!Runtime.queryParam('can_dock') && !!Runtime.queryParam('debugFrontend') && !Host.isUnderTest(prefs))
+    else if (!Runtime.queryParam('can_dock') && !!Runtime.queryParam('debugFrontend') && !Host.isUnderTest())
       storagePrefix = '__bundled__';
 
     var localStorage;
-    if (!Host.isUnderTest(prefs) && window.localStorage) {
+    if (!Host.isUnderTest() && window.localStorage) {
       localStorage = new Common.SettingsStorage(
           window.localStorage, undefined, undefined, () => window.localStorage.clear(), storagePrefix);
     } else {
@@ -105,7 +105,7 @@ Main.Main = class {
         prefs, InspectorFrontendHost.setPreference, InspectorFrontendHost.removePreference,
         InspectorFrontendHost.clearPreferences, storagePrefix);
     Common.settings = new Common.Settings(globalStorage, localStorage);
-    if (!Host.isUnderTest(prefs))
+    if (!Host.isUnderTest())
       new Common.VersionController().updateVersion();
   }
 
@@ -143,7 +143,7 @@ Main.Main = class {
 
     Runtime.experiments.cleanUpStaleExperiments();
 
-    if (Host.isUnderTest(prefs)) {
+    if (Host.isUnderTest()) {
       var testPath = Runtime.queryParam('test') || JSON.parse(prefs['testPath'] || '""');
       // Enable experiments for testing.
       if (testPath.indexOf('accessibility/') !== -1)
