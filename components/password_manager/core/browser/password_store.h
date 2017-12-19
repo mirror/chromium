@@ -258,9 +258,11 @@ class PasswordStore : protected PasswordStoreSync,
                           const std::string& domain,
                           PasswordReuseDetectorConsumer* consumer);
 
-#if !defined(OS_CHROMEOS)
   // Saves a hash of |password| for password reuse checking.
   virtual void SaveSyncPasswordHash(const base::string16& password);
+
+  // Saves |sync_password_data| for password reuse checking.
+  virtual void SaveSyncPasswordHash(const SyncPasswordData& sync_password_data);
 
   // Clears the saved sync password hash.
   virtual void ClearSyncPasswordHash();
@@ -268,7 +270,6 @@ class PasswordStore : protected PasswordStoreSync,
   // Shouldn't be called more than once, |notifier| must be not nullptr.
   void SetPasswordStoreSigninNotifier(
       std::unique_ptr<PasswordStoreSigninNotifier> notifier);
-#endif
 #endif
 
  protected:

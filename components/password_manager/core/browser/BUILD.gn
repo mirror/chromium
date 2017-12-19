@@ -10,7 +10,7 @@ if (is_android) {
 }
 
 # TODO(crbug.com/706392): Fix password reuse detection for Android.
-password_reuse_detection_support = !is_android && !is_ios
+password_reuse_detection_support = is_win || is_mac || is_linux || is_chromeos
 
 static_library("browser") {
   sources = [
@@ -159,16 +159,9 @@ static_library("browser") {
       "password_reuse_detector.h",
       "password_reuse_detector_consumer.cc",
       "password_reuse_detector_consumer.h",
+      "password_store_signin_notifier.cc",
+      "password_store_signin_notifier.h",
     ]
-
-    if (is_win || is_mac || (is_linux && !is_chromeos)) {
-      sources += [
-        "hash_password_manager.cc",
-        "hash_password_manager.h",
-        "password_store_signin_notifier.cc",
-        "password_store_signin_notifier.h",
-      ]
-    }
   }
 
   public_deps = [
@@ -193,7 +186,6 @@ static_library("browser") {
     "//components/url_formatter",
     "//components/variations",
     "//components/webdata/common",
-    "//crypto",
     "//google_apis",
     "//net",
     "//services/metrics/public/cpp:metrics_cpp",
@@ -205,6 +197,10 @@ static_library("browser") {
     "//ui/gfx",
     "//url",
   ]
+
+  if (password_reuse_detection_support) {
+    deps += [ ":hash_password_manager" ]
+  }
 
   if (!is_ios) {
     sources += [
@@ -226,6 +222,20 @@ static_library("browser") {
 proto_library("proto") {
   sources = [
     "android_affiliation/affiliation_api.proto",
+  ]
+}
+
+static_library("hash_password_manager") {
+  sources = [
+    "hash_password_manager.cc",
+    "hash_password_manager.h",
+  ]
+  deps = [
+    "//base:base",
+    "//components/os_crypt",
+    "//components/password_manager/core/common",
+    "//components/prefs",
+    "//crypto",
   ]
 }
 
@@ -372,13 +382,12 @@ source_set("unit_tests") {
   }
   if (password_reuse_detection_support) {
     sources += [
+      "hash_password_manager_unittest.cc",
       "password_reuse_detection_manager_unittest.cc",
       "password_reuse_detector_unittest.cc",
     ]
   }
-  if (is_win || is_mac || (is_linux && !is_chromeos)) {
-    sources += [ "hash_password_manager_unittest.cc" ]
-  }
+
   deps = [
     ":test_support",
     ":unit_tests_bundle_data",
@@ -404,6 +413,9 @@ source_set("unit_tests") {
     "//ui/base",
     "//url",
   ]
+  if (password_reuse_detection_support) {
+    deps += [ ":hash_password_manager" ]
+  }
 }
 
 fuzzer_test("csv_reader_fuzzer") {
