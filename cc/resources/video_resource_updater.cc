@@ -81,7 +81,7 @@ VideoFrameExternalResources::ResourceType ExternalResourceTypeForHardwarePlanes(
     case media::PIXEL_FORMAT_YV12:
     case media::PIXEL_FORMAT_I422:
     case media::PIXEL_FORMAT_YV24:
-    case media::PIXEL_FORMAT_YV12A:
+    case media::PIXEL_FORMAT_I420A:
     case media::PIXEL_FORMAT_NV21:
     case media::PIXEL_FORMAT_YUY2:
     case media::PIXEL_FORMAT_RGB24:
