@@ -24767,6 +24767,7 @@ from previous Chrome versions.
   <int value="-1833149810" label="enable-accessibility-tab-switcher"/>
   <int value="-1832575380" label="show-saved-copy"/>
   <int value="-1832221649" label="disable-out-of-process-pac"/>
+  <int value="-1828233359" label="OfflinePagesPendingDownload:enabled"/>
   <int value="-1821058653" label="enable-delay-agnostic-aec"/>
   <int value="-1817209284" label="PayWithGoogleV1:enabled"/>
   <int value="-1812579951" label="ContentSuggestionsCategoryRanker:enabled"/>
@@ -25177,6 +25178,7 @@ from previous Chrome versions.
   <int value="-743103250" label="enable-linkable-ephemeral-apps"/>
   <int value="-741806604" label="DownloadsUi:disabled"/>
   <int value="-738957187" label="OmniboxUIExperimentSwapTitleAndUrl:disabled"/>
+  <int value="-724740768" label="OfflinePagesPendingDownload:disabled"/>
   <int value="-723224470" label="enable-password-force-saving:enabled"/>
   <int value="-722474177" label="browser-side-navigation:disabled"/>
   <int value="-718626298" label="SysInternals:enabled"/>
