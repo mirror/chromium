@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a66a8d0f_c93af4ec",
+        "filename": "ui/shell_dialogs/select_file_dialog_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 516,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-12-19T22:27:04Z",
+      "side": 1,
+      "message": "BFFM_SELCHANGED can indeed fire before BFFM_INITIALIZED (which is silly).\n\nLine 540 checks whether initialized_tickcount is non-zero, and I *think* that line 570 zero-initializes the tickcount field of the structure?",
+      "parentUuid": "0db6c7bf_ca6ec06f",
+      "range": {
+        "startLine": 516,
+        "startChar": 17,
+        "endLine": 516,
+        "endChar": 33
+      },
+      "revId": "ded3f6b42c6959d7dfb807a4174f5263a4a5504a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "afc83165_52f68869",
         "filename": "ui/shell_dialogs/select_file_dialog_win.cc",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "486cb393_b2da6a6f",
+        "filename": "ui/shell_dialogs/select_file_dialog_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 535,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-12-19T22:27:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "afc83165_52f68869",
+      "range": {
+        "startLine": 535,
+        "startChar": 32,
+        "endLine": 535,
+        "endChar": 33
+      },
+      "revId": "ded3f6b42c6959d7dfb807a4174f5263a4a5504a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f7b767ae_8d01c1e3",
         "filename": "ui/shell_dialogs/select_file_dialog_win.cc",
         "patchSetId": 1
@@ -68,6 +116,30 @@
       "revId": "ded3f6b42c6959d7dfb807a4174f5263a4a5504a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34a50399_e3d54f64",
+        "filename": "ui/shell_dialogs/select_file_dialog_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 542,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-12-19T22:27:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f7b767ae_8d01c1e3",
+      "range": {
+        "startLine": 542,
+        "startChar": 42,
+        "endLine": 542,
+        "endChar": 77
+      },
+      "revId": "ded3f6b42c6959d7dfb807a4174f5263a4a5504a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
