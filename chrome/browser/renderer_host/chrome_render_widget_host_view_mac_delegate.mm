@@ -125,8 +125,7 @@ using content::RenderViewHost;
       Profile* profile = Profile::FromBrowserContext(host->GetBrowserContext());
       DCHECK(profile);
       NSCellStateValue checkedState =
-          profile->GetPrefs()->GetBoolean(
-              spellcheck::prefs::kEnableSpellcheck)
+          profile->GetPrefs()->GetBoolean(spellcheck::prefs::kSpellCheckEnable)
               ? NSOnState
               : NSOffState;
       [(id)item setState:checkedState];
