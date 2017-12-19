@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "71ec3c42_c7c63b35",
+        "filename": "content/browser/gpu/gpu_ipc_browsertests.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-12-19T17:37:54Z",
+      "side": 1,
+      "message": "Can you add a comment for why this is disabled?",
+      "revId": "1a6f6765ab1588640d7531f4408d7883e073039f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
