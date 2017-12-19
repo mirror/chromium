@@ -68,6 +68,24 @@
       "revId": "64ef541aad859cc5be38da44863fb1ea24c7c817",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a0a0111_a519c2dc",
+        "filename": "ui/shell_dialogs/select_file_dialog_mac.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-12-19T22:49:30Z",
+      "side": 1,
+      "message": "Drive-by interest.\n\nTrent is right. -panel:shouldEnableURL: is about enabling files to be selected, not about enabling the \"Open\" button. How have you tested this CL? From what I see, this disables selecting any file until a file is selected.\n\nAlso, I believe that the open panel caches the results of this method, which means that switching it to return a different value for the same files will be troublesome.",
+      "parentUuid": "590a4b57_2d1cdf82",
+      "revId": "64ef541aad859cc5be38da44863fb1ea24c7c817",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
