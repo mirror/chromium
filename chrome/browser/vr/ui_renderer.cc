@@ -28,23 +28,13 @@ void UiRenderer::Draw(const RenderInfo& render_info) {
 
 void UiRenderer::Draw2dBrowsing(const RenderInfo& render_info) {
   const auto& elements = scene_->GetVisible2dBrowsingElements();
-  const auto& elements_overlay = scene_->GetVisible2dBrowsingOverlayElements();
-  if (elements.empty() && elements_overlay.empty())
+  if (elements.empty())
     return;
 
-  if (!elements.empty()) {
-    // Note that we do not clear the color buffer. The scene's background
-    // elements are responsible for drawing a complete background.
-    glEnable(GL_CULL_FACE);
-    DrawUiView(render_info, elements);
-  }
-
-  if (elements_overlay.empty())
-    return;
-
-  // The overlays do not make use of depth testing or backface culling.
-  glDisable(GL_CULL_FACE);
-  DrawUiView(render_info, elements_overlay);
+  // Note that we do not clear the color buffer. The scene's background
+  // elements are responsible for drawing a complete background.
+  glEnable(GL_CULL_FACE);
+  DrawUiView(render_info, elements);
 }
 
 void UiRenderer::DrawSplashScreen(const RenderInfo& render_info) {

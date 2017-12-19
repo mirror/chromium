@@ -175,24 +175,15 @@ UiScene::Elements UiScene::GetVisible2dBrowsingElements() const {
   return GetVisibleElements(
       GetUiElementByName(k2dBrowsingRoot), [](UiElement* element) {
         return element->draw_phase() == kPhaseForeground ||
-               element->draw_phase() == kPhaseFloorCeiling ||
                element->draw_phase() == kPhaseBackground;
-      });
-}
-
-UiScene::Elements UiScene::GetVisible2dBrowsingOverlayElements() const {
-  return GetVisibleElements(
-      GetUiElementByName(k2dBrowsingRoot), [](UiElement* element) {
-        return element->draw_phase() == kPhaseOverlayBackground ||
-               element->draw_phase() == kPhaseOverlayForeground;
       });
 }
 
 UiScene::Elements UiScene::GetVisibleSplashScreenElements() const {
   return GetVisibleElements(
       GetUiElementByName(kSplashScreenRoot), [](UiElement* element) {
-        return element->draw_phase() == kPhaseOverlayBackground ||
-               element->draw_phase() == kPhaseOverlayForeground;
+        return element->draw_phase() == kPhaseForeground ||
+               element->draw_phase() == kPhaseBackground;
       });
 }
 
