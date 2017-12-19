@@ -6,6 +6,7 @@
 
 #include "base/message_loop/message_loop.h"
 #include "base/strings/stringprintf.h"
+#include "base/threading/thread_restrictions.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "build/build_config.h"
 
@@ -65,6 +66,7 @@ bool TaskService::UnbindInstance() {
   // But invoked tasks might be still running here. To ensure no task runs on
   // quitting this method, wait for all tasks to complete.
   base::AutoLock tasks_in_flight_auto_lock(tasks_in_flight_lock_);
+  base::ScopedAllowBaseSyncPrimitives allow_wait;
   while (tasks_in_flight_ > 0)
     no_tasks_in_flight_cv_.Wait();
 
