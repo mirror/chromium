@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "020a02bd_7fdea67a",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1643,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-12-19T21:16:53Z",
+      "side": 1,
+      "message": "It seems to me that even when |ShowUserWallpaper()| fails, |current_user_| should still stay the same?",
+      "revId": "3b76d41ca42030300f90a578a1db40ee9bb6e956",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
