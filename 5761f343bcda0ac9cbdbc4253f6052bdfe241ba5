@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "533f67af_f8e19860",
+        "filename": "components/cronet/native/buffer_test.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-12-19T19:58:42Z",
+      "side": 1,
+      "message": "can we make TestCronet_BufferCallback_OnDestroy() a static member function and then make set_on_destroy_called() a private?",
+      "range": {
+        "startLine": 20,
+        "startChar": 72,
+        "endLine": 20,
+        "endChar": 0
+      },
+      "revId": "5761f343bcda0ac9cbdbc4253f6052bdfe241ba5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "262876d2_a1b13c6b",
+        "filename": "components/cronet/native/executors_test.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-12-19T19:58:42Z",
+      "side": 1,
+      "message": "can we remove this?",
+      "range": {
+        "startLine": 45,
+        "startChar": 44,
+        "endLine": 45,
+        "endChar": 0
+      },
+      "revId": "5761f343bcda0ac9cbdbc4253f6052bdfe241ba5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd867604_d874e485",
+        "filename": "components/cronet/native/include/cronet_c.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-12-19T19:58:42Z",
+      "side": 1,
+      "message": ":-\u003e):",
+      "range": {
+        "startLine": 17,
+        "startChar": 11,
+        "endLine": 17,
+        "endChar": 12
+      },
+      "revId": "5761f343bcda0ac9cbdbc4253f6052bdfe241ba5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
