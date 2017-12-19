@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "242d058f_e3aedd78",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8LazyEventListener.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1118373
+      },
+      "writtenOn": "2017-12-19T10:05:55Z",
+      "side": 0,
+      "message": "The fact that this adds two white spaces as indentation is totally arbitrary and also only affects the first line. The new V8 implementation does not do that. Also fixed that in the test expectation.",
+      "range": {
+        "startLine": 226,
+        "startChar": 58,
+        "endLine": 226,
+        "endChar": 60
+      },
+      "revId": "41f6c8762dca5575d4dfee57457fd6b47a93cad9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
