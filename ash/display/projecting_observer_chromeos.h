@@ -20,6 +20,9 @@ class ASH_EXPORT ProjectingObserver
     : public display::DisplayConfigurator::Observer,
       public ShellObserver {
  public:
+  // Default builder using DBus PowerManagerClient impl.
+  static ProjectingObserver* Create();
+
   // |power_manager_client| must outlive this object.
   explicit ProjectingObserver(
       chromeos::PowerManagerClient* power_manager_client);
