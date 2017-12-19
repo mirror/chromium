@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ed8728d_1210388b",
+        "filename": "ui/ozone/platform/drm/host/drm_gpu_platform_support_host.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-12-19T18:23:53Z",
+      "side": 1,
+      "message": "what thread runner is going to be used? You have to use the ui thread for servicing compositor thread actions related to things like overlays yes?",
+      "revId": "c372a3595d6bad08e4b7a97b664889e5ace41139",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
