@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bb9d53bd_20ca24ae",
+        "filename": "components/update_client/component.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1116033
+      },
+      "writtenOn": "2017-12-19T17:41:06Z",
+      "side": 1,
+      "message": "is this correct? I thought the next version must be 0 on uninstall.",
+      "revId": "256134fdb2a3296f78aa1892657e7b2926e1963b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
