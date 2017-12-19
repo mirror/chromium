@@ -46,6 +46,30 @@
       "revId": "a0ecbdb090ba50a33e3906faf5f27a17e4c81b96",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "babb33d0_1b94de3b",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1138489
+      },
+      "writtenOn": "2017-12-19T00:21:16Z",
+      "side": 1,
+      "message": "Done.\n\nI\u0027ve never dealt with polymer before. Out of curiosity: is there a reason why this is the preferred way to display strings or is it because we want to be consistent with the existing code?",
+      "parentUuid": "aa981341_6167ea8f",
+      "range": {
+        "startLine": 121,
+        "startChar": 21,
+        "endLine": 121,
+        "endChar": 47
+      },
+      "revId": "a0ecbdb090ba50a33e3906faf5f27a17e4c81b96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
