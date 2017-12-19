@@ -14,6 +14,7 @@
 #include "net/proxy/proxy_list.h"
 #include "net/proxy/proxy_retry_info.h"
 #include "net/proxy/proxy_server.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 
 namespace net {
 
@@ -50,7 +51,11 @@ class NET_EXPORT ProxyInfo {
   // It is OK to have LWS between entries.
   //
   // See also the note for UseDirect().
-  void UseNamedProxy(const std::string& proxy_uri_list);
+  // TODO(THIS CL): Remove after adding annotation to tests.
+  void UseNamedProxy(
+      const std::string& proxy_uri_list,
+      const PartialNetworkTrafficAnnotationTag& traffic_annotation =
+          NO_PARTIALTRAFFIC_ANNOTATION_BUG_656607("proxy_settings"));
 
   // Sets the proxy list to a single entry, |proxy_server|.
   //
@@ -60,7 +65,11 @@ class NET_EXPORT ProxyInfo {
   // Parses from the given PAC result.
   //
   // See also the note for UseDirect().
-  void UsePacString(const std::string& pac_string);
+  // TODO(THIS CL): Remove after adding annotation to tests.
+  void UsePacString(
+      const std::string& pac_string,
+      const PartialNetworkTrafficAnnotationTag& traffic_annotation =
+          NO_PARTIALTRAFFIC_ANNOTATION_BUG_656607("proxy_settings"));
 
   // Uses the proxies from the given list.
   //

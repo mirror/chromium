@@ -34,6 +34,7 @@
 #include "net/proxy/proxy_resolver_factory.h"
 #include "net/proxy/proxy_script_decider.h"
 #include "net/proxy/proxy_script_fetcher.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 #include "net/url_request/url_request_context.h"
 #include "url/gurl.h"
 
@@ -197,20 +198,23 @@ class ProxyResolverNull : public ProxyResolver {
 // |pac_string| for every single URL.
 class ProxyResolverFromPacString : public ProxyResolver {
  public:
-  explicit ProxyResolverFromPacString(const std::string& pac_string)
-      : pac_string_(pac_string) {}
+  explicit ProxyResolverFromPacString(
+      const std::string& pac_string,
+      const PartialNetworkTrafficAnnotationTag& traffic_annotation)
+      : pac_string_(pac_string), traffic_annotation_(traffic_annotation) {}
 
   int GetProxyForURL(const GURL& url,
                      ProxyInfo* results,
                      const CompletionCallback& callback,
                      std::unique_ptr<Request>* request,
                      const NetLogWithSource& net_log) override {
-    results->UsePacString(pac_string_);
+    results->UsePacString(pac_string_, traffic_annotation_);
     return OK;
   }
 
  private:
   const std::string pac_string_;
+  const PartialNetworkTrafficAnnotationTag traffic_annotation_;
 };
 
 // Creates ProxyResolvers using a platform-specific implementation.
@@ -263,8 +267,12 @@ class ProxyResolverFactoryForNullResolver : public ProxyResolverFactory {
 
 class ProxyResolverFactoryForPacResult : public ProxyResolverFactory {
  public:
-  explicit ProxyResolverFactoryForPacResult(const std::string& pac_string)
-      : ProxyResolverFactory(false), pac_string_(pac_string) {}
+  explicit ProxyResolverFactoryForPacResult(
+      const std::string& pac_string,
+      const PartialNetworkTrafficAnnotationTag& traffic_annotation)
+      : ProxyResolverFactory(false),
+        pac_string_(pac_string),
+        traffic_annotation_(traffic_annotation) {}
 
   // ProxyResolverFactory override.
   int CreateProxyResolver(
@@ -272,12 +280,14 @@ class ProxyResolverFactoryForPacResult : public ProxyResolverFactory {
       std::unique_ptr<ProxyResolver>* resolver,
       const net::CompletionCallback& callback,
       std::unique_ptr<Request>* request) override {
-    resolver->reset(new ProxyResolverFromPacString(pac_string_));
+    resolver->reset(
+        new ProxyResolverFromPacString(pac_string_, traffic_annotation_));
     return OK;
   }
 
  private:
   const std::string pac_string_;
+  const PartialNetworkTrafficAnnotationTag traffic_annotation_;
 
   DISALLOW_COPY_AND_ASSIGN(ProxyResolverFactoryForPacResult);
 };
@@ -984,9 +994,10 @@ std::unique_ptr<ProxyService> ProxyService::CreateFixed(const ProxyConfig& pc) {
 
 // static
 std::unique_ptr<ProxyService> ProxyService::CreateFixed(
-    const std::string& proxy) {
+    const std::string& proxy,
+    const PartialNetworkTrafficAnnotationTag& traffic_annotation) {
   ProxyConfig proxy_config;
-  proxy_config.proxy_rules().ParseFromString(proxy);
+  proxy_config.proxy_rules().ParseFromString(proxy, traffic_annotation);
   return ProxyService::CreateFixed(proxy_config);
 }
 
@@ -1005,7 +1016,8 @@ std::unique_ptr<ProxyService> ProxyService::CreateDirectWithNetLog(
 
 // static
 std::unique_ptr<ProxyService> ProxyService::CreateFixedFromPacResult(
-    const std::string& pac_string) {
+    const std::string& pac_string,
+    const PartialNetworkTrafficAnnotationTag& traffic_annotation) {
   // We need the settings to contain an "automatic" setting, otherwise the
   // ProxyResolver dependency we give it will never be used.
   std::unique_ptr<ProxyConfigService> proxy_config_service(
@@ -1013,7 +1025,9 @@ std::unique_ptr<ProxyService> ProxyService::CreateFixedFromPacResult(
 
   return std::make_unique<ProxyService>(
       std::move(proxy_config_service),
-      std::make_unique<ProxyResolverFactoryForPacResult>(pac_string), nullptr);
+      std::make_unique<ProxyResolverFactoryForPacResult>(pac_string,
+                                                         traffic_annotation),
+      nullptr);
 }
 
 int ProxyService::ResolveProxy(const GURL& raw_url,
@@ -1313,8 +1327,13 @@ void ProxyService::ReportSuccess(const ProxyInfo& result,
     if (existing == proxy_retry_info_.end()) {
       proxy_retry_info_[iter->first] = iter->second;
       if (proxy_delegate) {
-        const ProxyServer& bad_proxy =
-            ProxyServer::FromURI(iter->first, ProxyServer::SCHEME_HTTP);
+        // TODO(This CL): UPDATE ProxyRetryInfoMap so that the annotation used
+        // to create the bad_proxy would also be kept.
+        net::PartialNetworkTrafficAnnotationTag traffic_annotation =
+            net::DefinePartialNetworkTrafficAnnotation("proxy_settings_...",
+                                                       "proxy_settings", R"()");
+        const ProxyServer& bad_proxy = ProxyServer::FromURI(
+            iter->first, ProxyServer::SCHEME_HTTP, traffic_annotation);
         const ProxyRetryInfo& proxy_retry_info = iter->second;
         proxy_delegate->OnFallback(bad_proxy, proxy_retry_info.net_error);
       }

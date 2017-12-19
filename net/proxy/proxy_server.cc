@@ -65,7 +65,19 @@ ProxyServer::Scheme GetSchemeFromURIInternal(base::StringPiece type) {
 }  // namespace
 
 ProxyServer::ProxyServer(Scheme scheme, const HostPortPair& host_port_pair)
-      : scheme_(scheme), host_port_pair_(host_port_pair) {
+    : scheme_(scheme), host_port_pair_(host_port_pair) {
+  // Annotation free constructor can only be used when there is no host port and
+  // pair.
+  CHECK(host_port_pair.Equals(HostPortPair()));
+}
+
+ProxyServer::ProxyServer(
+    Scheme scheme,
+    const HostPortPair& host_port_pair,
+    const PartialNetworkTrafficAnnotationTag& traffic_annotation)
+    : scheme_(scheme),
+      host_port_pair_(host_port_pair),
+      traffic_annotation_(traffic_annotation) {
   if (scheme_ == SCHEME_DIRECT || scheme_ == SCHEME_INVALID) {
     // |host_port_pair| isn't relevant for these special schemes, so none should
     // have been specified. It is important for this to be consistent since we
@@ -84,15 +96,19 @@ const HostPortPair& ProxyServer::host_port_pair() const {
 }
 
 // static
-ProxyServer ProxyServer::FromURI(const std::string& uri,
-                                 Scheme default_scheme) {
-  return FromURI(uri.begin(), uri.end(), default_scheme);
+ProxyServer ProxyServer::FromURI(
+    const std::string& uri,
+    Scheme default_scheme,
+    const PartialNetworkTrafficAnnotationTag& traffic_annotation) {
+  return FromURI(uri.begin(), uri.end(), default_scheme, traffic_annotation);
 }
 
 // static
-ProxyServer ProxyServer::FromURI(std::string::const_iterator begin,
-                                 std::string::const_iterator end,
-                                 Scheme default_scheme) {
+ProxyServer ProxyServer::FromURI(
+    std::string::const_iterator begin,
+    std::string::const_iterator end,
+    Scheme default_scheme,
+    const PartialNetworkTrafficAnnotationTag& traffic_annotation) {
   // We will default to |default_scheme| if no scheme specifier was given.
   Scheme scheme = default_scheme;
 
@@ -110,7 +126,7 @@ ProxyServer ProxyServer::FromURI(std::string::const_iterator begin,
   }
 
   // Now parse the <host>[":"<port>].
-  return FromSchemeHostAndPort(scheme, begin, end);
+  return FromSchemeHostAndPort(scheme, begin, end, traffic_annotation);
 }
 
 std::string ProxyServer::ToURI() const {
@@ -136,13 +152,18 @@ std::string ProxyServer::ToURI() const {
 }
 
 // static
-ProxyServer ProxyServer::FromPacString(const std::string& pac_string) {
-  return FromPacString(pac_string.begin(), pac_string.end());
+ProxyServer ProxyServer::FromPacString(
+    const std::string& pac_string,
+    const PartialNetworkTrafficAnnotationTag& traffic_annotation) {
+  return FromPacString(pac_string.begin(), pac_string.end(),
+                       traffic_annotation);
 }
 
 // static
-ProxyServer ProxyServer::FromPacString(std::string::const_iterator begin,
-                                       std::string::const_iterator end) {
+ProxyServer ProxyServer::FromPacString(
+    std::string::const_iterator begin,
+    std::string::const_iterator end,
+    const PartialNetworkTrafficAnnotationTag& traffic_annotation) {
   // Trim the leading/trailing whitespace.
   HttpUtil::TrimLWS(&begin, &end);
 
@@ -162,7 +183,7 @@ ProxyServer ProxyServer::FromPacString(std::string::const_iterator begin,
 
   // And everything to the right of the space is the
   // <host>[":" <port>].
-  return FromSchemeHostAndPort(scheme, space, end);
+  return FromSchemeHostAndPort(scheme, space, end, traffic_annotation);
 }
 
 std::string ProxyServer::ToPacString() const {
@@ -218,8 +239,8 @@ size_t ProxyServer::EstimateMemoryUsage() const {
 ProxyServer ProxyServer::FromSchemeHostAndPort(
     Scheme scheme,
     std::string::const_iterator begin,
-    std::string::const_iterator end) {
-
+    std::string::const_iterator end,
+    const PartialNetworkTrafficAnnotationTag& traffic_annotation) {
   // Trim leading/trailing space.
   HttpUtil::TrimLWS(&begin, &end);
 
@@ -243,7 +264,27 @@ ProxyServer ProxyServer::FromSchemeHostAndPort(
     host_port_pair = HostPortPair(host, static_cast<uint16_t>(port));
   }
 
-  return ProxyServer(scheme, host_port_pair);
+  return ProxyServer(scheme, host_port_pair, traffic_annotation);
+}
+
+const NetworkTrafficAnnotationTag ProxyServer::GetTrafficAnnotation() const {
+  return CompleteNetworkTrafficAnnotation(
+      "proxy_settings", PartialNetworkTrafficAnnotationTag(traffic_annotation_),
+      R"(
+        semantics {
+          sender: "Proxy Socket"
+          descrption:
+            "This annotation is used for all required socket control commands "
+            "to establish and use the proxy."
+          trigger: "A network request that needs the proxy."
+          data: "Request data."
+          destination: OTHER
+          destination_other:
+            "The data will be sent to the destination address of the proxy."
+        }
+        policy {
+          cookies_allowed: NO
+        })");
 }
 
 }  // namespace net

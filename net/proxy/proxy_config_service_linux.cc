@@ -31,6 +31,7 @@
 #include "base/timer/timer.h"
 #include "net/proxy/proxy_config.h"
 #include "net/proxy/proxy_server.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 
 #if defined(USE_GIO)
 #include <gio/gio.h>
@@ -98,8 +99,25 @@ bool ProxyConfigServiceLinux::Delegate::GetProxyFromEnvVarForScheme(
     return false;
 
   env_value = FixupProxyHostScheme(scheme, env_value);
-  ProxyServer proxy_server =
-      ProxyServer::FromURI(env_value, ProxyServer::SCHEME_HTTP);
+  net::PartialNetworkTrafficAnnotationTag traffic_annotation =
+      net::DefinePartialNetworkTrafficAnnotation(
+          "proxy_settings_environmental_variables", "proxy_settings", R"(
+        semantics {
+          description:
+            "This set of proxy settings are read from Linux environmental "
+            "variables."
+        }
+        policy {
+          setting: "...ANY SETTINGS TO IGNORE IT?"
+          chrome_policy {
+            [POLICY_NAME] {
+              [POLICY_NAME]: ... //(value to disable it)
+            }
+          }
+          policy_exception_justification: "..."
+        })");
+  ProxyServer proxy_server = ProxyServer::FromURI(
+      env_value, ProxyServer::SCHEME_HTTP, traffic_annotation);
   if (proxy_server.is_valid() && !proxy_server.is_direct()) {
     *result_server = proxy_server;
     return true;
@@ -1003,8 +1021,23 @@ bool ProxyConfigServiceLinux::Delegate::GetProxyFromSettings(
   ProxyServer::Scheme scheme = (host_key == SettingGetter::PROXY_SOCKS_HOST) ?
       ProxyServer::SCHEME_SOCKS5 : ProxyServer::SCHEME_HTTP;
   host = FixupProxyHostScheme(scheme, host);
-  ProxyServer proxy_server = ProxyServer::FromURI(host,
-                                                  ProxyServer::SCHEME_HTTP);
+  net::PartialNetworkTrafficAnnotationTag traffic_annotation =
+      net::DefinePartialNetworkTrafficAnnotation(
+          "proxy_settings_linux_settings", "proxy_settings", R"(
+        semantics {
+          description: "...WHERE DO THEY COME FROM?"
+        }
+        policy {
+          setting: "...HOW TO STOP THEM?"
+          chrome_policy {
+            [POLICY_NAME] {
+              [POLICY_NAME]: ... //(value to disable it)
+            }
+          }
+          policy_exception_justification: "..."
+        })");
+  ProxyServer proxy_server =
+      ProxyServer::FromURI(host, ProxyServer::SCHEME_HTTP, traffic_annotation);
   if (proxy_server.is_valid()) {
     *result_server = proxy_server;
     return true;
