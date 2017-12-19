@@ -133,6 +133,23 @@
       "revId": "042961a0e954266c77a637641c2a341b3defa67d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d61ba56_25ea1463",
+        "filename": "content/browser/accessibility/browser_accessibility_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1139279
+      },
+      "writtenOn": "2017-12-19T22:52:19Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be initialized in the constructor?",
+      "revId": "042961a0e954266c77a637641c2a341b3defa67d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
