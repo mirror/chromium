@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f0b23939_01238e16",
+        "filename": "content/browser/loader/resource_dispatcher_host_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1495,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-19T09:46:57Z",
+      "side": 1,
+      "message": "I suspect we can also remove this?",
+      "revId": "aacbf367f862c8b2aeaec1686236318571224b6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5eb5ff74_f3bd3e52",
+        "filename": "content/browser/loader/resource_message_filter.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-19T09:46:57Z",
+      "side": 1,
+      "message": "Do we still need this method?",
+      "revId": "aacbf367f862c8b2aeaec1686236318571224b6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
