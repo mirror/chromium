@@ -12,6 +12,7 @@
 
 #include "components/proxy_config/proxy_prefs.h"
 #include "net/proxy/proxy_config.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 
 class ProxyConfigDictionary;
 
@@ -113,8 +114,11 @@ bool JoinUrlList(const base::ListValue* list,
 // Creates and returns a ProxyRules dictionary as defined in the extension API
 // with the values of a ProxyConfigDictionary configured for fixed proxy
 // servers. Returns NULL in case of failures.
+// TODO(https://crbug.com/656607): Remove default value.
 std::unique_ptr<base::DictionaryValue> CreateProxyRulesDict(
-    const ProxyConfigDictionary& proxy_config);
+    const ProxyConfigDictionary& proxy_config,
+    const net::PartialNetworkTrafficAnnotationTag& traffic_annotation =
+        net::ProxyServer::GetProxyEmptyPartialAnnotation());
 
 // Creates and returns a ProxyServer dictionary as defined in the extension API
 // with values from a net::ProxyServer object. Never returns NULL.
