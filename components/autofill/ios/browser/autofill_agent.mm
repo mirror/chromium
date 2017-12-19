@@ -156,8 +156,8 @@ void GetFormAndField(autofill::FormData* form,
 @end
 
 @implementation AutofillAgent {
-  // Timestamp of the first time forms are seen.
-  base::TimeTicks formsSeenTimestamp_;
+  // Whether page is scanned for forms.
+  BOOL pageProcessed_;
 
   // The WebState this instance is observing. Will be null after
   // -webStateDestroyed: has been called.
@@ -327,7 +327,7 @@ void GetFormAndField(autofill::FormData* form,
   DCHECK(autofillManager);
   DCHECK(!forms.empty());
   autofillManager->Reset();
-  autofillManager->OnFormsSeen(forms, formsSeenTimestamp_);
+  autofillManager->OnFormsSeen(forms, base::TimeTicks::Now());
 }
 
 - (void)notifyAutofillManager:(autofill::AutofillManager*)autofillManager
@@ -351,17 +351,6 @@ void GetFormAndField(autofill::FormData* form,
                        pageURL:(const GURL&)pageURL
              completionHandler:(FetchFormsCompletionHandler)completionHandler {
   DCHECK(completionHandler);
-
-  // TODO(crbug.com/418827): Early-inject the script and replace the following
-  // if statement with a DCHECK if a race condition between the script injection
-  // and the call to the this function continues to happen.
-  // Return if the script has not been injected.
-  if (![jsAutofillManager_ hasBeenInjected]) {
-    dispatch_async(dispatch_get_main_queue(), ^{
-      completionHandler(NO, FormDataVector());
-    });
-    return;
-  }
 
   // Necessary so the values can be used inside a block.
   base::string16 formNameCopy = formName;
@@ -573,8 +562,11 @@ void GetFormAndField(autofill::FormData* form,
     completion(NO);
     return;
   }
-  web::URLVerificationTrustLevel trustLevel;
-  const GURL pageURL(webState->GetCurrentURL(&trustLevel));
+
+  if (![self autofillEnabledForWebState:webState]) {
+    completion(NO);
+    return;
+  }
 
   // Once the active form and field are extracted, send a query to the
   // AutofillManager for suggestions.
@@ -589,6 +581,9 @@ void GetFormAndField(autofill::FormData* form,
                      completionHandler:completion];
     }
   };
+
+  web::URLVerificationTrustLevel trustLevel;
+  const GURL pageURL(webState->GetCurrentURL(&trustLevel));
 
   // Re-extract the active form and field only. All forms with at least one
   // input element are considered because key/value suggestions are offered
@@ -669,16 +664,9 @@ void GetFormAndField(autofill::FormData* form,
     // Saving from iframes is not implemented.
     return;
   }
-  DCHECK_EQ(webState_, webState);
-  if (!prefService_->GetBoolean(autofill::prefs::kAutofillEnabled))
-    return;
 
-  web::URLVerificationTrustLevel trustLevel;
-  const GURL pageURL(webState->GetCurrentURL(&trustLevel));
-  if (trustLevel != web::URLVerificationTrustLevel::kAbsolute) {
-    DLOG(WARNING) << "Form submit not handled on untrusted page";
+  if (![self autofillEnabledForWebState:webState])
     return;
-  }
 
   __weak AutofillAgent* weakSelf = self;
   id completionHandler = ^(BOOL success, const FormDataVector& forms) {
@@ -698,6 +686,10 @@ void GetFormAndField(autofill::FormData* form,
                         userInitiated:userInitiated];
 
   };
+
+  web::URLVerificationTrustLevel trustLevel;
+  const GURL pageURL(webState->GetCurrentURL(&trustLevel));
+
   // This code is racing against the new page loading and will not get the
   // password form data if the page has changed. In most cases this code wins
   // the race.
@@ -710,29 +702,18 @@ void GetFormAndField(autofill::FormData* form,
 }
 
 - (void)webState:(web::WebState*)webState didLoadPageWithSuccess:(BOOL)success {
-  DCHECK_EQ(webState_, webState);
-  if (!prefService_->GetBoolean(autofill::prefs::kAutofillEnabled) ||
-      !webState->ContentIsHTML()) {
+  if (![self autofillEnabledForWebState:webState])
     return;
-  }
+
+  pageProcessed_ = NO;
   [self processPage:webState];
 }
 
 - (void)processPage:(web::WebState*)webState {
-  DCHECK_EQ(webState_, webState);
-  web::URLVerificationTrustLevel trustLevel;
-  const GURL pageURL(webState->GetCurrentURL(&trustLevel));
-  if (trustLevel != web::URLVerificationTrustLevel::kAbsolute) {
-    DLOG(WARNING) << "Page load not handled on untrusted page";
-    return;
-  }
-
-  if (!web::UrlHasWebScheme(pageURL))
-    return;
-
   // This process is only done once.
-  if ([jsAutofillManager_ hasBeenInjected])
+  if (pageProcessed_)
     return;
+  pageProcessed_ = YES;
 
   popupDelegate_.reset();
   suggestionsAvailableCompletion_ = nil;
@@ -740,7 +721,8 @@ void GetFormAndField(autofill::FormData* form,
   mostRecentSuggestions_ = nil;
   typedValue_ = nil;
 
-  [jsAutofillManager_ inject];
+  web::URLVerificationTrustLevel trustLevel;
+  const GURL pageURL(webState->GetCurrentURL(&trustLevel));
 
   __weak AutofillAgent* weakSelf = self;
   id completionHandler = ^(BOOL success, const FormDataVector& forms) {
@@ -767,18 +749,7 @@ void GetFormAndField(autofill::FormData* form,
 
 - (void)webState:(web::WebState*)webState
     didRegisterFormActivity:(const web::FormActivityParams&)params {
-  DCHECK_EQ(webState_, webState);
-  if (!prefService_->GetBoolean(autofill::prefs::kAutofillEnabled))
-    return;
-  web::URLVerificationTrustLevel trustLevel;
-  const GURL pageURL(webState->GetCurrentURL(&trustLevel));
-  if (trustLevel != web::URLVerificationTrustLevel::kAbsolute) {
-    DLOG(WARNING) << "Form activity not handled on untrusted page";
-    return;
-  }
-
-  // Autofill and suggestion scripts are only injected for web URLs.
-  if (!web::UrlHasWebScheme(pageURL) || !webState->ContentIsHTML())
+  if (![self autofillEnabledForWebState:webState])
     return;
 
   // Returns early and reset the suggestion state if an error occurs.
@@ -811,6 +782,9 @@ void GetFormAndField(autofill::FormData* form,
     }
   };
 
+  web::URLVerificationTrustLevel trustLevel;
+  const GURL pageURL(webState->GetCurrentURL(&trustLevel));
+
   // Re-extract the active form and field only. There is no minimum field
   // requirement because key/value suggestions are offered even on short forms.
   [self fetchFormsFiltered:YES
@@ -842,6 +816,25 @@ void GetFormAndField(autofill::FormData* form,
     autofillManager->OnTextFieldDidChange(form, field, gfx::RectF(),
                                           base::TimeTicks::Now());
   }
+}
+
+- (BOOL)autofillEnabledForWebState:(web::WebState*)webState {
+  DCHECK_EQ(webState_, webState);
+  if (!prefService_->GetBoolean(autofill::prefs::kAutofillEnabled))
+    return NO;
+
+  web::URLVerificationTrustLevel trustLevel;
+  const GURL pageURL(webState->GetCurrentURL(&trustLevel));
+  if (trustLevel != web::URLVerificationTrustLevel::kAbsolute) {
+    DLOG(WARNING) << "Autofill not enabled on untrusted page";
+    return NO;
+  }
+
+  // Only web URLs are supported by Autofill.
+  if (!web::UrlHasWebScheme(pageURL) || !webState->ContentIsHTML())
+    return NO;
+
+  return YES;
 }
 
 #pragma mark -
