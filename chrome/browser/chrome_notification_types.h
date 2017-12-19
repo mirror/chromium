@@ -249,10 +249,6 @@ enum NotificationType {
   // PrintJob::EventDetails. Source is a PrintJob.
   NOTIFICATION_PRINT_JOB_EVENT,
 
-  // Sent when a PrintJob has been released.
-  // Source is the WebContents that holds the print job.
-  NOTIFICATION_PRINT_JOB_RELEASED,
-
   // Content Settings --------------------------------------------------------
 
   // Sent when the collect cookies dialog is shown. The source is a
