@@ -15,9 +15,7 @@ import org.chromium.base.Callback;
 import org.chromium.base.ContextUtils;
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.VisibleForTesting;
-import org.chromium.base.metrics.RecordUserAction;
 import org.chromium.chrome.R;
-import org.chromium.chrome.browser.metrics.OneShotImpressionListener;
 import org.chromium.chrome.browser.ntp.ContextMenuManager;
 import org.chromium.chrome.browser.ntp.snippets.CategoryInt;
 import org.chromium.chrome.browser.ntp.snippets.CategoryStatus;
@@ -83,44 +81,24 @@ public class SignInPromo extends OptionalLeaf {
      */
     private boolean mSuppressed;
 
-    private final OneShotImpressionListener mOneShotImpressionTracker =
-            new OneShotImpressionListener(this::onImpression);
-
     private @Nullable Runnable mSuppressionStatusDeferredUpdater;
     private final @Nullable SigninObserver mSigninObserver;
-
-    /**
-     * Marks which are the parts of the code that switch between the generic and the personalized
-     * signin promos. When the personalized promos launch completely, the dead code related to the
-     * generic promos should be removed. It is also an indicator whether the Finch flag for the
-     * personalized signin promo is enabled.
-     */
-    private final boolean mArePersonalizedPromosEnabled;
     private final @Nullable SigninPromoController mSigninPromoController;
     private final @Nullable ProfileDataCache mProfileDataCache;
-    private final @Nullable StatusCardViewHolder.DataSource mGenericPromoData;
     private final Handler mHandler = new Handler(ThreadUtils.getUiThreadLooper());
 
     public SignInPromo(SuggestionsUiDelegate uiDelegate) {
-        Context context = ContextUtils.getApplicationContext();
-        mArePersonalizedPromosEnabled = SigninPromoController.arePersonalizedPromosEnabled();
-
-        ChromePreferenceManager preferenceManager = ChromePreferenceManager.getInstance();
-        if (mArePersonalizedPromosEnabled) {
-            mWasDismissed = preferenceManager.getNewTabPagePersonalizedSigninPromoDismissed();
-        } else {
-            mWasDismissed = preferenceManager.getNewTabPageGenericSigninPromoDismissed();
-        }
+        mWasDismissed = ChromePreferenceManager.getInstance().getNewTabPageSigninPromoDismissed();
 
         if (mWasDismissed) {
             setVisibilityInternal(false);
             mSigninObserver = null;
             mProfileDataCache = null;
             mSigninPromoController = null;
-            mGenericPromoData = null;
             return;
         }
 
+        Context context = ContextUtils.getApplicationContext();
         SuggestionsSource suggestionsSource = uiDelegate.getSuggestionsSource();
         SigninManager signinManager = SigninManager.get(context);
 
@@ -130,17 +108,10 @@ public class SignInPromo extends OptionalLeaf {
 
         updateVisibility();
 
-        if (mArePersonalizedPromosEnabled) {
-            int imageSize = context.getResources().getDimensionPixelSize(R.dimen.user_picture_size);
-            mProfileDataCache = new ProfileDataCache(context, imageSize);
-            mSigninPromoController =
-                    new SigninPromoController(SigninAccessPoint.NTP_CONTENT_SUGGESTIONS);
-            mGenericPromoData = null;
-        } else {
-            mProfileDataCache = null;
-            mSigninPromoController = null;
-            mGenericPromoData = new GenericSigninPromoData();
-        }
+        int imageSize = context.getResources().getDimensionPixelSize(R.dimen.user_picture_size);
+        mProfileDataCache = new ProfileDataCache(context, imageSize);
+        mSigninPromoController =
+                new SigninPromoController(SigninAccessPoint.NTP_CONTENT_SUGGESTIONS);
 
         mSigninObserver = new SigninObserver(signinManager, suggestionsSource);
         uiDelegate.addDestructionObserver(mSigninObserver);
@@ -207,33 +178,19 @@ public class SignInPromo extends OptionalLeaf {
     public NewTabPageViewHolder createViewHolder(SuggestionsRecyclerView parent,
             ContextMenuManager contextMenuManager, UiConfig config) {
         assert !mWasDismissed;
-        if (mArePersonalizedPromosEnabled) {
-            return new PersonalizedPromoViewHolder(
-                    parent, config, contextMenuManager, mProfileDataCache, mSigninPromoController);
-        }
-        return new GenericPromoViewHolder(parent, contextMenuManager, config);
+        return new PersonalizedPromoViewHolder(
+                parent, config, contextMenuManager, mProfileDataCache, mSigninPromoController);
     }
 
     @Override
     protected void onBindViewHolder(NewTabPageViewHolder holder) {
         assert !mWasDismissed;
-        if (mArePersonalizedPromosEnabled) {
-            ((PersonalizedPromoViewHolder) holder).onBindViewHolder();
-            return;
-        }
-
-        ((GenericPromoViewHolder) holder)
-                .onBindViewHolder(mGenericPromoData, mOneShotImpressionTracker);
+        ((PersonalizedPromoViewHolder) holder).onBindViewHolder();
     }
 
     @Override
     protected void visitOptionalItem(NodeVisitor visitor) {
         visitor.visitSignInPromo();
-    }
-
-    private void onImpression() {
-        assert !mWasDismissed;
-        RecordUserAction.record("Signin_Impression_FromNTPContentSuggestions");
     }
 
     private void updateVisibility() {
@@ -254,14 +211,8 @@ public class SignInPromo extends OptionalLeaf {
         updateVisibility();
 
         final @StringRes int promoHeader;
-        ChromePreferenceManager preferenceManager = ChromePreferenceManager.getInstance();
-        if (mArePersonalizedPromosEnabled) {
-            preferenceManager.setNewTabPagePersonalizedSigninPromoDismissed(true);
-            promoHeader = mSigninPromoController.getDescriptionStringId();
-        } else {
-            preferenceManager.setNewTabPageGenericSigninPromoDismissed(true);
-            promoHeader = mGenericPromoData.getHeader();
-        }
+        ChromePreferenceManager.getInstance().setNewTabPageSigninPromoDismissed(true);
+        promoHeader = mSigninPromoController.getDescriptionStringId();
 
         cancelSuppressionStatusDeferredUpdate();
         mSigninObserver.unregister();
@@ -288,10 +239,8 @@ public class SignInPromo extends OptionalLeaf {
             mSuggestionsSource = suggestionsSource;
             mSuggestionsSource.addObserver(this);
 
-            if (mArePersonalizedPromosEnabled) {
-                mProfileDataCache.addObserver(this);
-                AccountManagerFacade.get().addObserver(this);
-            }
+            mProfileDataCache.addObserver(this);
+            AccountManagerFacade.get().addObserver(this);
         }
 
         private void unregister() {
@@ -305,10 +254,8 @@ public class SignInPromo extends OptionalLeaf {
 
             mSuggestionsSource.removeObserver(this);
 
-            if (mArePersonalizedPromosEnabled) {
-                mProfileDataCache.removeObserver(this);
-                AccountManagerFacade.get().removeObserver(this);
-            }
+            mProfileDataCache.removeObserver(this);
+            AccountManagerFacade.get().removeObserver(this);
         }
 
         // DestructionObserver implementation.
