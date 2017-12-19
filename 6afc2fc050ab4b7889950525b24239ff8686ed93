@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "af565b16_c631d5f5",
+        "filename": "chrome/browser/sync/test/integration/sync_app_list_helper.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2017-12-19T19:17:19Z",
+      "side": 1,
+      "message": "Was considering to do so, but L149 is using the |j|.",
+      "parentUuid": "889e812e_823fa819",
+      "revId": "6afc2fc050ab4b7889950525b24239ff8686ed93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "497a73da_e4f83ec0",
         "filename": "chrome/browser/ui/app_list/chrome_app_list_item.h",
         "patchSetId": 9
