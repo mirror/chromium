@@ -81,6 +81,24 @@
       "revId": "6428aeb40146bfebcafe6fafad29ab19cc845c86",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "506b1731_07f78244",
+        "filename": "net/network_error_logging/network_error_logging_end_to_end_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1113149
+      },
+      "writtenOn": "2017-12-19T17:26:41Z",
+      "side": 1,
+      "message": "I tried doing some code archaeology on this and I\u0027m still confused about it, but I think my conclusion is that it\u0027s necessary on Linux, maybe necessary on Android, and unnecessary but not harmful on other platforms.\n\nSo, up to you.",
+      "parentUuid": "84433f8f_844b479e",
+      "revId": "6428aeb40146bfebcafe6fafad29ab19cc845c86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
