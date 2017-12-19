@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "dd19cc57_04e66f43",
+        "filename": "third_party/WebKit/LayoutTests/editing/pasteboard/no-clipboard-event-to-hidden-selection.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2017-12-19T13:48:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c949c9bf_dacf7094",
+      "range": {
+        "startLine": 35,
+        "startChar": 39,
+        "endLine": 35,
+        "endChar": 53
+      },
+      "revId": "f902b1b3f3de39ee5f74890b0e62065ae74ba7f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "27a01f92_84d7a111",
         "filename": "third_party/WebKit/LayoutTests/editing/pasteboard/no-clipboard-event-to-hidden-selection.html",
         "patchSetId": 7
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "076a3b9c_43f06401",
+        "filename": "third_party/WebKit/LayoutTests/editing/pasteboard/no-clipboard-event-to-hidden-selection.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2017-12-19T13:48:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27a01f92_84d7a111",
+      "range": {
+        "startLine": 41,
+        "startChar": 39,
+        "endLine": 41,
+        "endChar": 53
+      },
+      "revId": "f902b1b3f3de39ee5f74890b0e62065ae74ba7f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0455be4a_af60887d",
         "filename": "third_party/WebKit/LayoutTests/editing/pasteboard/no-clipboard-event-to-hidden-selection.html",
         "patchSetId": 7
@@ -68,6 +116,30 @@
       "revId": "f902b1b3f3de39ee5f74890b0e62065ae74ba7f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a781ecb_30d4b48f",
+        "filename": "third_party/WebKit/LayoutTests/editing/pasteboard/no-clipboard-event-to-hidden-selection.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2017-12-19T13:48:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0455be4a_af60887d",
+      "range": {
+        "startLine": 47,
+        "startChar": 39,
+        "endLine": 47,
+        "endChar": 53
+      },
+      "revId": "f902b1b3f3de39ee5f74890b0e62065ae74ba7f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
