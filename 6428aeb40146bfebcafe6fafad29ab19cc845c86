@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ca203a51_034d3f82",
+        "filename": "net/network_error_logging/network_error_logging_end_to_end_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1147120
+      },
+      "writtenOn": "2017-12-19T16:24:34Z",
+      "side": 1,
+      "message": "Argh, right. Eventually this will become habit. (We should have an upload hook for it, like we do for BindRepeating.)",
+      "parentUuid": "d7d5cab1_6da980f9",
+      "range": {
+        "startLine": 64,
+        "startChar": 18,
+        "endLine": 64,
+        "endChar": 34
+      },
+      "revId": "6428aeb40146bfebcafe6fafad29ab19cc845c86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7bd9c0d5_bf179b7c",
         "filename": "net/network_error_logging/network_error_logging_end_to_end_test.cc",
         "patchSetId": 2
@@ -36,6 +60,24 @@
       "writtenOn": "2017-12-18T23:38:08Z",
       "side": 1,
       "message": "Why is this platform-specific?",
+      "revId": "6428aeb40146bfebcafe6fafad29ab19cc845c86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84433f8f_844b479e",
+        "filename": "net/network_error_logging/network_error_logging_end_to_end_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1147120
+      },
+      "writtenOn": "2017-12-19T16:24:34Z",
+      "side": 1,
+      "message": "I\u0027m not sure! I cribbed it from URLRequestContextBuilder\u0027s unittest. I can make it unconditional if you think that makes more sense.",
+      "parentUuid": "7bd9c0d5_bf179b7c",
       "revId": "6428aeb40146bfebcafe6fafad29ab19cc845c86",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
