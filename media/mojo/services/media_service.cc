@@ -14,13 +14,6 @@
 #include "mojo/public/cpp/bindings/strong_binding.h"
 #include "services/service_manager/public/cpp/connector.h"
 
-#if BUILDFLAG(ENABLE_LIBRARY_CDMS)
-#include "media/cdm/cdm_module.h"
-#if defined(OS_MACOSX)
-#include "sandbox/mac/seatbelt_extension.h"
-#endif  // defined(OS_MACOSX)
-#endif  // BUILDFLAG(ENABLE_LIBRARY_CDMS)
-
 namespace media {
 
 MediaService::MediaService(std::unique_ptr<MojoMediaClient> mojo_media_client)
@@ -58,66 +51,6 @@ bool MediaService::OnServiceManagerConnectionLost() {
 
 void MediaService::Create(mojom::MediaServiceRequest request) {
   bindings_.AddBinding(this, std::move(request));
-}
-
-#if defined(OS_MACOSX)
-void MediaService::LoadCdm(
-    const base::FilePath& cdm_path,
-    mojom::SeatbeltExtensionTokenProviderPtr token_provider) {
-#else
-void MediaService::LoadCdm(const base::FilePath& cdm_path) {
-#endif  // defined(OS_MACOSX)
-  DVLOG(1) << __func__ << ": cdm_path = " << cdm_path.value();
-
-  // Ignore request if service has already stopped.
-  if (!mojo_media_client_)
-    return;
-
-#if BUILDFLAG(ENABLE_LIBRARY_CDMS)
-  CdmModule* instance = CdmModule::GetInstance();
-  if (instance->was_initialize_called()) {
-    DCHECK_EQ(cdm_path, instance->GetCdmPath());
-    return;
-  }
-
-#if defined(OS_MACOSX)
-  std::vector<sandbox::SeatbeltExtensionToken> tokens;
-  CHECK(token_provider->GetTokens(&tokens));
-
-  std::vector<std::unique_ptr<sandbox::SeatbeltExtension>> extensions;
-
-  for (auto&& token : tokens) {
-    DVLOG(3) << "token: " << token.token();
-    auto extension = sandbox::SeatbeltExtension::FromToken(std::move(token));
-    if (!extension->Consume()) {
-      DVLOG(1) << "Failed to comsume sandbox seatbelt extension. This could "
-                  "happen if --no-sandbox is specified.";
-    }
-    extensions.push_back(std::move(extension));
-  }
-#endif  // defined(OS_MACOSX)
-
-#if BUILDFLAG(ENABLE_CDM_HOST_VERIFICATION)
-  std::vector<CdmHostFilePath> cdm_host_file_paths;
-  mojo_media_client_->AddCdmHostFilePaths(&cdm_host_file_paths);
-  if (!instance->Initialize(cdm_path, cdm_host_file_paths))
-    return;
-#else
-  if (!instance->Initialize(cdm_path))
-    return;
-#endif  // BUILDFLAG(ENABLE_CDM_HOST_VERIFICATION)
-
-  // This may trigger the sandbox to be sealed.
-  mojo_media_client_->EnsureSandboxed();
-
-#if defined(OS_MACOSX)
-  for (auto&& extension : extensions)
-    extension->Revoke();
-#endif  // defined(OS_MACOSX)
-
-  // Always called within the sandbox.
-  instance->InitializeCdmModule();
-#endif  // BUILDFLAG(ENABLE_LIBRARY_CDMS)
 }
 
 void MediaService::CreateInterfaceFactory(
