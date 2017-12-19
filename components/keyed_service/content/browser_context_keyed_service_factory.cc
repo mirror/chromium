@@ -81,6 +81,7 @@ bool BrowserContextKeyedServiceFactory::ServiceIsNULLWhileTesting() const {
 
 void BrowserContextKeyedServiceFactory::BrowserContextShutdown(
     content::BrowserContext* context) {
+  DCHECK(context);
   KeyedServiceFactory::ContextShutdown(context);
 }
 
