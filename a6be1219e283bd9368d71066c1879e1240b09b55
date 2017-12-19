@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "edc2df39_7bdbfc16",
+        "filename": "ui/gfx/harfbuzz_font_skia.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-19T05:29:22Z",
+      "side": 1,
+      "message": "note the TODO here... I think we need to tackle this, but it will be tough -- see below.",
+      "revId": "a6be1219e283bd9368d71066c1879e1240b09b55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ddd7c833_9b81f21e",
         "filename": "ui/gfx/harfbuzz_font_skia.cc",
         "patchSetId": 5
@@ -13,6 +30,24 @@
       "writtenOn": "2017-12-15T15:46:18Z",
       "side": 1,
       "message": "nit: add a comment; can other platforms do something smarter here?",
+      "revId": "a6be1219e283bd9368d71066c1879e1240b09b55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40f335b2_5a98db14",
+        "filename": "ui/gfx/harfbuzz_font_skia.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-19T05:29:22Z",
+      "side": 1,
+      "message": "\u003e nit: add a comment; can other platforms do something smarter here?\n\nComment Done.\n\nI think other platforms _can_ do something smarter, but it involves `FaceCache` not just caching hb_face_t, but the full hb_font_t. But this is actually what WebKit/Source/platform/fonts/shaping/HarfBuzzFace.cpp does already\n\nThat\u0027s this thing: https://cs.chromium.org/chromium/src/third_party/WebKit/Source/platform/fonts/shaping/HarfBuzzFontCache.h?q\u003dHbFontCacheEntry\u0026sq\u003dpackage:chromium\u0026l\u003d119\n\n(but it has a TODO to cache the size-independent hb_*face*_t (not hb_font_t) arrrgghhh. It\u0027s a mess. I think that TODO is actually not TODOable any more, since it would inflict Blink on Mac with this same performance regression we got in UI).\n\nAnyway.... Really we need to delete harfbuzz_font_skia.cc completely and move HarfBuzzFontCache.h and HarfBuzzFace.cpp out of third_party/WebKit and into somewhere that can be shared. I\u0027m thinking src/text (:o). Since I\u0027m pretty sure blink doesn\u0027t want to depend on src/ui.\n\nAlso that means settling on a common font description, adapting gfx::Font to use it, pulling in the FontCache (which has a text run cache too! woohoo). It\u0027s Epic. But it needs to be done -- we can\u0027t have two different harfbuzz \"glue\" frameworks since they are drifting apart: the one in blink is getting updated, but this one in ui/gfx is rotting and the Unicode standard is not stationary.",
+      "parentUuid": "ddd7c833_9b81f21e",
       "revId": "a6be1219e283bd9368d71066c1879e1240b09b55",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -36,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "e8a4a698_eb8dd6ec",
+        "filename": "ui/views/controls/label_perftest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-19T05:29:22Z",
+      "side": 1,
+      "message": "\u003e Where do these numbers come from? Maybe comment?\n\nyeah there are some quirks to constructing a cc::LapTimer -- I switched to the explicit constructor so it\u0027s clearer where the numbers come from.\n\nNote I followed the \"fixed number of iterations\" approach that the ash_perftest we have in ash_background_filter_blur_perftest is doing.\n\nWe could also switch to an actual time limit.",
+      "parentUuid": "7944150c_bec46636",
+      "revId": "a6be1219e283bd9368d71066c1879e1240b09b55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "786072da_4d014b53",
         "filename": "ui/views/controls/label_perftest.cc",
         "patchSetId": 5
@@ -47,6 +100,24 @@
       "writtenOn": "2017-12-15T15:46:18Z",
       "side": 1,
       "message": "What\u0027s the point of repeating 10 times within a lap? Smoother averages? Please add a comment.",
+      "revId": "a6be1219e283bd9368d71066c1879e1240b09b55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22f6bac0_014c5b64",
+        "filename": "ui/views/controls/label_perftest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-19T05:29:22Z",
+      "side": 1,
+      "message": "\u003e What\u0027s the point of repeating 10 times within a lap? Smoother averages? Please add a comment.\n\nThere are some overheads for measuring times. Also it depends what scale we want \"runs/sec\" to be reported. O(100) has some appeal, since when truncated to an integer, it should\u0027t vary much (i.e. adding a digit would just add noise).\n\nBut maybe there\u0027s also some appeal it knowing how long \"one\" lap takes, and representing that in the perf measure.",
+      "parentUuid": "786072da_4d014b53",
       "revId": "a6be1219e283bd9368d71066c1879e1240b09b55",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +141,24 @@
     },
     {
       "key": {
+        "uuid": "3c299af1_72190521",
+        "filename": "ui/views/controls/label_perftest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-19T05:29:22Z",
+      "side": 1,
+      "message": "\u003e Is |j \u0026 1| quicker than |j % 2 \u003d\u003d 0|?\n\ntechnically yes, but in reality any compiler worth its salt would just output \"%2\" as \"\u00261\" anyway. I\u0027m indifferent :)",
+      "parentUuid": "a02c0c5f_d822ce41",
+      "revId": "a6be1219e283bd9368d71066c1879e1240b09b55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "393e13f0_bac4e456",
         "filename": "ui/views/controls/label_perftest.cc",
         "patchSetId": 5
@@ -87,6 +176,24 @@
     },
     {
       "key": {
+        "uuid": "d195cb1f_0f9e243c",
+        "filename": "ui/views/controls/label_perftest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-19T05:29:22Z",
+      "side": 1,
+      "message": "\u003e How is this number tracked, and when does a perf test \u0027fail\u0027? Is it just manual monitoring?\n\nInitially it\u0027s just something to track manually, to ensure the CL is doing something :)\n\nThe follow-up in http://crrev.com/c/828226 should get output from this line into the perf bot infrastructure.\n\nthis line outputs like\n\n*RESULT LabelPerfTest: GetPreferredSize\u003d 2000.7423095703125 runs/s\n\nand with that CL I think it should appear on perf bots, get pretty graphs, and allow bisecting. E.g.\n\nhttps://chromeperf.appspot.com/report?sid\u003d5b6f9ce587e2be438a111f7b909c22f9ac4f5435dcb59713afa9b7c650f35d57\n\nis run from cc_perftests that outputs like\n\n*RESULT tiling_set_raster_queue_construct_and_iterate: 32_100x100\u003d 7906.26025390625 runs/s\n\n\nThere might be some other steps -- I\u0027ll reach out to the perf folks for that CL. But there doesn\u0027t seem to be anything else done inside the chromium repository for cc_perftests to get this hooked in.\n\n\nas for a \"failure\" we can (in another follow-up, once we know how noisy the data is), opt the particular metric into the alerting system that the perf sheriffs use. That automatically files bugs and things if it regresses.",
+      "parentUuid": "393e13f0_bac4e456",
+      "revId": "a6be1219e283bd9368d71066c1879e1240b09b55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b7df75ec_6c9ca1b4",
         "filename": "ui/views/views_perftests.cc",
         "patchSetId": 5
@@ -98,6 +205,24 @@
       "writtenOn": "2017-12-15T15:46:18Z",
       "side": 1,
       "message": "Is this needed for views tests? Maybe comment as to why",
+      "revId": "a6be1219e283bd9368d71066c1879e1240b09b55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f2a803d_aa0dfd02",
+        "filename": "ui/views/views_perftests.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-19T05:29:22Z",
+      "side": 1,
+      "message": "\u003e Is this needed for views tests? Maybe comment as to why\n\nHmm. views_unittests does it. It was added for views_unittests in r482704 \"ensures ui::InitializeContextFactoryForTests() initializes HostFrameSinkManager. This uses Mojo so it requires that test targets initialize mojo::edk\"\n\nHostFrameSinkManager looks as though it\u0027s needed to interact with the compositor.\n\nviews::ViewsTestBase will call ui::InitializeContextFactoryForTests() when its views::ScopedViewsTestHelper initializes a views::PlatformTestHelper, so I think we do want this to be consistent and so we can test drawing performance.\n\nI\u0027m not sure what to comment though. HostFrameSinkManager wants this call to Init() now, but there could be lots of things wanting it in future.\n\nThe current perf test does pass without this line. So, I\u0027m happy to remove it, but I feel like it would be an obscure thing to discover/troubleshoot when someone adds a test that happens to tickle enough of the compositor. wdyt?",
+      "parentUuid": "b7df75ec_6c9ca1b4",
       "revId": "a6be1219e283bd9368d71066c1879e1240b09b55",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
