@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3b71edd9_d23ccdf2",
+        "filename": "services/identity/identity_manager_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-12-19T12:05:48Z",
+      "side": 1,
+      "message": "SigninManagerObserver::Shutdown should be called only once per SigninManager. So this could be a BindOnce (you may change this in a future CL if you want).",
+      "range": {
+        "startLine": 78,
+        "startChar": 16,
+        "endLine": 78,
+        "endChar": 29
+      },
+      "revId": "de99148b44f60008c91ca6346cc01ac2b7e89f23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "192ab19c_4755d51c",
+        "filename": "services/identity/identity_manager_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-12-19T12:05:48Z",
+      "side": 1,
+      "message": "Same here - it looks like the OnConnectionError deletes this, so this can be a BindOnce.",
+      "range": {
+        "startLine": 80,
+        "startChar": 46,
+        "endLine": 80,
+        "endChar": 59
+      },
+      "revId": "de99148b44f60008c91ca6346cc01ac2b7e89f23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
