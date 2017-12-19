@@ -520,7 +520,10 @@ class BlinkPerfParser(_BlinkPerfBenchmark):
   def GetExpectations(self):
     class StoryExpectations(story.expectations.StoryExpectations):
       def SetExpectations(self):
-        pass # Nothing disabled.
+        self.DisableStory(
+            'html5-full-render.html',
+            [story.expectations.ANDROID_ONE],
+            'crbug.com/796115')
     return StoryExpectations()
 
 
