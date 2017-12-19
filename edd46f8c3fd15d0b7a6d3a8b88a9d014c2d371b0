@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "81f7b447_1e26cb76",
+        "filename": "cc/resources/resource_provider_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 578,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-19T16:23:21Z",
+      "side": 1,
+      "message": "TransferSoftwareResources does this transfer delete dance for software resources. TransferGLResources does most of this also. You could just add the child receiving and deleting the resources to that test?\n\nThis test is just creating a resource and checking the id works, and it would be nice to keep the basic create test as just that?",
+      "revId": "edd46f8c3fd15d0b7a6d3a8b88a9d014c2d371b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a6746e8_cecfb734",
+        "filename": "cc/resources/resource_provider_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 699,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-19T16:23:21Z",
+      "side": 1,
+      "message": "This is already the DeleteTransferredResources test no?",
+      "revId": "edd46f8c3fd15d0b7a6d3a8b88a9d014c2d371b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
