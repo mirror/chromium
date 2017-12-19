@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "2f89afdb_b814fe06",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/StartupPageLoadMetricsObserver.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-12-19T16:10:07Z",
+      "side": 1,
+      "message": "discussed this offline, decided to remove tracking webcontents and make the conditions only based on navigationId.\n\nHaving only one StartupPageLoadMetricsObserver from somewhere in UmaUtils sounded as a good simplification, but decided to postpone to a future refactor.",
+      "parentUuid": "ca350cf3_2b66dbb6",
+      "range": {
+        "startLine": 25,
+        "startChar": 43,
+        "endLine": 25,
+        "endChar": 76
+      },
+      "revId": "ae0f5b437de826e709b8b03167c26f1b31500680",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ac0cf9a2_83171c81",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/UmaUtils.java",
         "patchSetId": 3
@@ -331,6 +355,30 @@
     },
     {
       "key": {
+        "uuid": "1ec922e5_39c73adb",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/UmaUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-12-19T16:10:07Z",
+      "side": 1,
+      "message": "yes, the check is excessive. Maybe:\n\nif (!isRunningApplicationStart()) return;\n\nif (isTrackedPage) {\n  sFirstCommitTimeMs \u003d ...;\n  RecordHistogram.recordLongTimesHistogram100(...);\n}\nsetRunningApplicationStart(false);\n\nsimpler?",
+      "parentUuid": "e09401c3_b1d50a32",
+      "range": {
+        "startLine": 68,
+        "startChar": 8,
+        "endLine": 68,
+        "endChar": 44
+      },
+      "revId": "ae0f5b437de826e709b8b03167c26f1b31500680",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fb734505_5eb8f1c9",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/UmaUtils.java",
         "patchSetId": 3
@@ -425,6 +473,30 @@
     },
     {
       "key": {
+        "uuid": "7e378e0e_b9216675",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/UmaUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-12-19T16:10:07Z",
+      "side": 1,
+      "message": "oh, I found this too, just forgot to remove this comment, sry :)",
+      "parentUuid": "64e47bdf_a6ffc6ac",
+      "range": {
+        "startLine": 77,
+        "startChar": 8,
+        "endLine": 77,
+        "endChar": 42
+      },
+      "revId": "ae0f5b437de826e709b8b03167c26f1b31500680",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b9c067a7_290074eb",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/UmaUtils.java",
         "patchSetId": 3
@@ -460,6 +532,30 @@
       "side": 1,
       "message": "nit: sFirstContentfulPaintTimeMs is a static class variable.\nI\u0027m saving this time because it may be useful later + to make it consistent with sFirstCommitTimeMs.\nIt can be safely deleted though, as you wish.",
       "parentUuid": "b9c067a7_290074eb",
+      "range": {
+        "startLine": 90,
+        "startChar": 8,
+        "endLine": 90,
+        "endChar": 35
+      },
+      "revId": "ae0f5b437de826e709b8b03167c26f1b31500680",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ba4c2d7_39aa3edf",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/UmaUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-12-19T16:10:07Z",
+      "side": 1,
+      "message": "oh, sry, I missed that it is static, this makes it even harder to follow than I thought.\n\nI am on the side to extend the lifetime of \u0027state\u0027 when it becomes necessary as a way to optimize code for reading instead of optimizing for extending.",
+      "parentUuid": "dfebf43d_f9a50a1a",
       "range": {
         "startLine": 90,
         "startChar": 8,
