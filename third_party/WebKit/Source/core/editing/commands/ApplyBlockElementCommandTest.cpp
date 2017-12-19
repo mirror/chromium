@@ -109,4 +109,49 @@ TEST_F(ApplyBlockElementCommandTest, IndentHeadingIntoBlockquote) {
       GetDocument().body()->InnerHTMLAsString());
 }
 
+// This is a regression test for https://crbug.com/795280
+TEST_F(ApplyBlockElementCommandTest, CrashFormatBlockWithNthChildStyle) {
+  GetDocument().head()->insertAdjacentHTML(
+      "afterbegin",
+      "<style>li:nth-child(2) { display:table-column-group;}</style>",
+      ASSERT_NO_EXCEPTION);
+  GetDocument().body()->insertAdjacentHTML(
+      "afterbegin", "<li></li><canvas></canvas>", ASSERT_NO_EXCEPTION);
+  GetDocument().setDesignMode("on");
+  GetDocument().execCommand("selectall", false, "", ASSERT_NO_EXCEPTION);
+
+  //  QualifiedName qualified_tag_name("", "pre", HTMLNames::xhtmlNamespaceURI);
+  //  FormatBlockCommand* command =
+  //     FormatBlockCommand::Create(GetDocument(), qualified_tag_name);
+  //  command->Apply();
+  GetDocument().execCommand("FormatBlock", false, "<pre>", ASSERT_NO_EXCEPTION);
+
+  EXPECT_EQ(
+      "<head><style>li:nth-child(2) { "
+      "display:table-column-group;}</style></head><body><li></li><canvas></"
+      "canvas></body>",
+      GetDocument().documentElement()->InnerHTMLAsString());
+}
+
+// This is a regression test for https://crbug.com/795280
+TEST_F(ApplyBlockElementCommandTest, CrashFormatBlockWithNthChildStyleManual) {
+  GetDocument().setDesignMode("on");
+  Element* head = GetDocument().QuerySelector("head");
+  Element* style = GetDocument().createElement("style");
+  style->setTextContent("li:nth-child(2) { display:table-column-group;}");
+  head->AppendChild(style);
+  Element* body = GetDocument().QuerySelector("body");
+  Element* li = GetDocument().createElement("li");
+  Element* canvas = GetDocument().createElement("canvas");
+  body->AppendChild(li);
+  body->AppendChild(canvas);
+  GetDocument().execCommand("selectall", false, "", ASSERT_NO_EXCEPTION);
+  GetDocument().execCommand("FormatBlock", false, "<pre>", ASSERT_NO_EXCEPTION);
+  EXPECT_EQ(
+      "<head><style>li:nth-child(2) { "
+      "display:table-column-group;}</style></head><body><li></li><canvas></"
+      "canvas></body>",
+      GetDocument().documentElement()->InnerHTMLAsString());
+}
+
 }  // namespace blink
