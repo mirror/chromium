@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "28b4e6dd_97128caf",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_coordinator.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-12-19T22:32:30Z",
+      "side": 1,
+      "message": "This is breaking apple coding guidelines + our style guide.  Getters shouldn\u0027t include the \"get\" prefix; this should just be |-webState|.  Furthermore, you could just make it a readonly property to save a couple more characters.  You don\u0027t need to fix it in this CL though, since it\u0027s used all over the place.\n\nhttp://go/objc-style#Objective-C_Method_Names",
+      "range": {
+        "startLine": 255,
+        "startChar": 49,
+        "endLine": 255,
+        "endChar": 60
+      },
+      "revId": "3b9254f0590a0bc416c328eca01dac6050831e99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
