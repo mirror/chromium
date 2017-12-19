@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "84a26744_601e24d8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/StartupPageLoadMetricsObserver.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-12-19T15:07:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a815cb0_f3dc3116",
+      "range": {
+        "startLine": 17,
+        "startChar": 4,
+        "endLine": 17,
+        "endChar": 51
+      },
+      "revId": "ae0f5b437de826e709b8b03167c26f1b31500680",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fe2b9afc_130f0356",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/StartupPageLoadMetricsObserver.java",
         "patchSetId": 3
@@ -92,6 +116,30 @@
       "revId": "ae0f5b437de826e709b8b03167c26f1b31500680",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca350cf3_2b66dbb6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/StartupPageLoadMetricsObserver.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-12-19T15:07:38Z",
+      "side": 1,
+      "message": "Webcontents doesn\u0027t change during the navigation, however the observer can get a new navigation event from a different webcontents. \nPage load metrics observers in Java have very different lifetime model than in C++. They receive events from all tabs for all navigations simultaneously and we have to filter out all uninteresting events. \n\nWe can implement it differently:\nDo not keep a webcontents object, make this class a singleton and just accept the first seen navigation only.",
+      "parentUuid": "fe2b9afc_130f0356",
+      "range": {
+        "startLine": 25,
+        "startChar": 43,
+        "endLine": 25,
+        "endChar": 76
+      },
+      "revId": "ae0f5b437de826e709b8b03167c26f1b31500680",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -118,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "b7c6d95e_2dece38b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/UmaUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-12-19T15:07:38Z",
+      "side": 1,
+      "message": "You\u0027re goddamn right.\nDone",
+      "parentUuid": "ac0cf9a2_83171c81",
+      "range": {
+        "startLine": 22,
+        "startChar": 24,
+        "endLine": 22,
+        "endChar": 41
+      },
+      "revId": "ae0f5b437de826e709b8b03167c26f1b31500680",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8e646efe_02495604",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/UmaUtils.java",
         "patchSetId": 3
@@ -138,6 +210,30 @@
       "revId": "ae0f5b437de826e709b8b03167c26f1b31500680",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f231dc88_ec780bd5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/UmaUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-12-19T15:07:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e646efe_02495604",
+      "range": {
+        "startLine": 28,
+        "startChar": 37,
+        "endLine": 28,
+        "endChar": 58
+      },
+      "revId": "ae0f5b437de826e709b8b03167c26f1b31500680",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -164,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "b421aa1a_c4ae3c06",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/UmaUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-12-19T15:07:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "83eaa181_a427fdf1",
+      "range": {
+        "startLine": 65,
+        "startChar": 7,
+        "endLine": 65,
+        "endChar": 54
+      },
+      "revId": "ae0f5b437de826e709b8b03167c26f1b31500680",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d70baa00_a3e2b275",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/UmaUtils.java",
         "patchSetId": 3
@@ -175,6 +295,30 @@
       "writtenOn": "2017-12-19T13:31:33Z",
       "side": 1,
       "message": "this early return makes the reader have to follow the relation of sFirstCommitTimeMs and sRunningApplicationStart, which I think may make it harder to evolve this code. I am wondering whether it would be simpler to have sFirstCommitTimeMs having a less global effect, like:\n\nif (isTrackedPage \u0026\u0026 isRunningApplicationStart()) {\n    if (sFirstCommitTimeMs \u003d\u003d 0)\n        sFirstCommitTimeMs \u003d SystemClock.uptimeMillis() - sApplicationStartTimeMs;\n    recordHistogram.recordLongTimesHistogram100(...)\n}\n\nthis does not save us from side effects in recordFirstContentfulPaint(), but still looks easier to follow for me.\n\nUp to you.",
+      "range": {
+        "startLine": 68,
+        "startChar": 8,
+        "endLine": 68,
+        "endChar": 44
+      },
+      "revId": "ae0f5b437de826e709b8b03167c26f1b31500680",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e09401c3_b1d50a32",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/UmaUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-12-19T15:07:38Z",
+      "side": 1,
+      "message": "I was reading this more like \"Run this function iff sFirstCommitTimeMs wasn\u0027t recorded before\". \nThe way you suggest doesn\u0027t say that. Moreover I\u0027d think that we can record this histogram more than once just using the previously recorded value.\n\nHowever, this check is excessive here, because the sRunningApplicationStart flag is set to false at the end of the function so we can pass isRunningApplicationStart() check only the first time this function is called (the sRunningApplicationStart should never be set back to true).",
+      "parentUuid": "d70baa00_a3e2b275",
       "range": {
         "startLine": 68,
         "startChar": 8,
@@ -210,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "9b223531_af4639c0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/UmaUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-12-19T15:07:38Z",
+      "side": 1,
+      "message": "I find that giving a name to a condition that we check sometimes makes the code clearer. I agree, here it is trivial.\nDone",
+      "parentUuid": "fb734505_5eb8f1c9",
+      "range": {
+        "startLine": 70,
+        "startChar": 16,
+        "endLine": 70,
+        "endChar": 37
+      },
+      "revId": "ae0f5b437de826e709b8b03167c26f1b31500680",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ef3e525d_fed9835f",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/UmaUtils.java",
         "patchSetId": 3
@@ -221,6 +389,30 @@
       "writtenOn": "2017-12-19T13:31:33Z",
       "side": 1,
       "message": "nit: I think it would be clearer to setRunningApplicationStart(false) as the first thing this function does. It is more work than what it is currently, but the amount of work is tiny, so I lean towards having more clarity.\n\nthis is a nit, up to you",
+      "range": {
+        "startLine": 77,
+        "startChar": 8,
+        "endLine": 77,
+        "endChar": 42
+      },
+      "revId": "ae0f5b437de826e709b8b03167c26f1b31500680",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64e47bdf_a6ffc6ac",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/UmaUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-12-19T15:07:38Z",
+      "side": 1,
+      "message": "But then isRunningApplicationStart() will always return false. The flag has to be set after this check.",
+      "parentUuid": "ef3e525d_fed9835f",
       "range": {
         "startLine": 77,
         "startChar": 8,
@@ -256,6 +448,30 @@
     },
     {
       "key": {
+        "uuid": "dfebf43d_f9a50a1a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/UmaUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-12-19T15:07:38Z",
+      "side": 1,
+      "message": "nit: sFirstContentfulPaintTimeMs is a static class variable.\nI\u0027m saving this time because it may be useful later + to make it consistent with sFirstCommitTimeMs.\nIt can be safely deleted though, as you wish.",
+      "parentUuid": "b9c067a7_290074eb",
+      "range": {
+        "startLine": 90,
+        "startChar": 8,
+        "endLine": 90,
+        "endChar": 35
+      },
+      "revId": "ae0f5b437de826e709b8b03167c26f1b31500680",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "83b17828_6b099985",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/Tab.java",
         "patchSetId": 3
@@ -279,6 +495,30 @@
     },
     {
       "key": {
+        "uuid": "06462e9f_055094f6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/Tab.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1827,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-12-19T15:07:38Z",
+      "side": 1,
+      "message": "SGTM",
+      "parentUuid": "83b17828_6b099985",
+      "range": {
+        "startLine": 1827,
+        "startChar": 12,
+        "endLine": 1827,
+        "endChar": 55
+      },
+      "revId": "ae0f5b437de826e709b8b03167c26f1b31500680",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "10964f58_845dfc5f",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/metrics/PageLoadMetricsTest.java",
         "patchSetId": 3
@@ -299,6 +539,30 @@
       "revId": "ae0f5b437de826e709b8b03167c26f1b31500680",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11fd2840_3944b65c",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/metrics/PageLoadMetricsTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-12-19T15:07:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "10964f58_845dfc5f",
+      "range": {
+        "startLine": 76,
+        "startChar": 4,
+        "endLine": 76,
+        "endChar": 11
+      },
+      "revId": "ae0f5b437de826e709b8b03167c26f1b31500680",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -372,6 +636,30 @@
     },
     {
       "key": {
+        "uuid": "eba77e1a_57d25479",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/metrics/StartupLoadingMetricsTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-12-19T15:07:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4ba4dc3e_90ef46ef",
+      "range": {
+        "startLine": 69,
+        "startChar": 17,
+        "endLine": 69,
+        "endChar": 24
+      },
+      "revId": "ae0f5b437de826e709b8b03167c26f1b31500680",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fb595783_5b46e180",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/metrics/StartupLoadingMetricsTest.java",
         "patchSetId": 3
@@ -392,6 +680,30 @@
       "revId": "ae0f5b437de826e709b8b03167c26f1b31500680",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4acbccd_280d53c8",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/metrics/StartupLoadingMetricsTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-12-19T15:07:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fb595783_5b46e180",
+      "range": {
+        "startLine": 83,
+        "startChar": 46,
+        "endLine": 83,
+        "endChar": 54
+      },
+      "revId": "ae0f5b437de826e709b8b03167c26f1b31500680",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
