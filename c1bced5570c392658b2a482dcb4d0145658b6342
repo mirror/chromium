@@ -94,6 +94,30 @@
       "revId": "c1bced5570c392658b2a482dcb4d0145658b6342",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f87b7a6_dbbc90e2",
+        "filename": "third_party/WebKit/Source/core/layout/TextAutosizer.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1130,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-12-19T00:15:43Z",
+      "side": 1,
+      "message": "The text autosizing multiplier represents the effect of the text autosizer.\n\nA multiplier \u003d\u003d 1 means no text autosizing is applied.\n\nA multiplier \u003d\u003d 2 means the text is twice as big as it would have been if no text autosizing had been applied.\n\nDSF and browser zoom are independent of text autosizing.  Even if no text autosizing is applied, the size of the text should reflect the appropriate DSF and browser zoom level.\n\nThe multiplier that we store in the ComputedStyle should not be scaled (from the multiplier passed to TextAutosizer::ApplyMultiplier) by either the zoom factor or the DSF.  The multiplier represents a ratio of \"size of text with autosizing\" / \"size of text without autosizing\".\n\nIt seems more likely that you have found a bug in the way ComputedStyle uses the multiplier to determine the font size.  In that case we should fix the bug in the code that consumes the multiplier.  Ideally the application of zoom factor and DSF should occur in the same codepath for both autosized text and non-autosized text.",
+      "parentUuid": "08253899_c43323c9",
+      "range": {
+        "startLine": 1130,
+        "startChar": 55,
+        "endLine": 1130,
+        "endChar": 59
+      },
+      "revId": "c1bced5570c392658b2a482dcb4d0145658b6342",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
