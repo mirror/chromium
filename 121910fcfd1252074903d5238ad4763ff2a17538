@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3177ecb3_9c74d53b",
+        "filename": "third_party/WebKit/Source/core/layout/TextAutosizerTest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-12-19T17:41:24Z",
+      "side": 1,
+      "message": "Why are we changing the window size only to change it back at the end of the method?",
+      "revId": "121910fcfd1252074903d5238ad4763ff2a17538",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
