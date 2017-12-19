@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f33bb99c_357184dd",
+        "filename": "chrome/browser/printing/print_view_manager_base.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-19T21:19:54Z",
+      "side": 1,
+      "message": "I think you can omit the .get() portion and \"operator bool\" for |printer_query| will still evaluate to the right result.",
+      "range": {
+        "startLine": 198,
+        "startChar": 19,
+        "endLine": 198,
+        "endChar": 25
+      },
+      "revId": "ca955dd564eec1a6e603bd4ff64323bc9856c7f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24d72931_2b2aa77d",
+        "filename": "chrome/browser/ui/webui/print_preview/print_preview_handler.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-19T21:19:54Z",
+      "side": 1,
+      "message": "Needs to be initialized to false.",
+      "revId": "ca955dd564eec1a6e603bd4ff64323bc9856c7f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
