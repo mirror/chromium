@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1d9c51ef_6651ef08",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-19T19:51:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "09fdf8ed_0e901a68",
+      "revId": "85cfb00851eec62759c8248e64d5aeb58d98b717",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a527f0ef_4ddf2fc7",
         "filename": "device/ctap/ctap_data.cc",
         "patchSetId": 5
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "ad9edec2_1b3d243e",
+        "filename": "device/ctap/ctap_data.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-19T19:51:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a527f0ef_4ddf2fc7",
+      "range": {
+        "startLine": 9,
+        "startChar": 20,
+        "endLine": 9,
+        "endChar": 23
+      },
+      "revId": "85cfb00851eec62759c8248e64d5aeb58d98b717",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "75c8234e_6a852f65",
         "filename": "device/ctap/ctap_data.h",
         "patchSetId": 5
@@ -53,6 +95,24 @@
       "writtenOn": "2017-12-19T08:17:57Z",
       "side": 1,
       "message": "why is this a union?",
+      "revId": "85cfb00851eec62759c8248e64d5aeb58d98b717",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9b24e2c_ad757fd5",
+        "filename": "device/ctap/ctap_data.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-19T19:51:43Z",
+      "side": 1,
+      "message": "CTAPData is a base class for both CTAPRequest object and CTAPResponse object (which should be added in upcoming CL) :)",
+      "parentUuid": "75c8234e_6a852f65",
       "revId": "85cfb00851eec62759c8248e64d5aeb58d98b717",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "dfe9b526_eff7819e",
+        "filename": "device/ctap/ctap_data_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-19T19:51:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b3f9ad6f_ebeeba35",
+      "range": {
+        "startLine": 16,
+        "startChar": 2,
+        "endLine": 16,
+        "endChar": 35
+      },
+      "revId": "85cfb00851eec62759c8248e64d5aeb58d98b717",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2a4eec71_409c5334",
         "filename": "device/ctap/ctap_data_unittest.cc",
         "patchSetId": 5
@@ -102,6 +186,30 @@
       "revId": "85cfb00851eec62759c8248e64d5aeb58d98b717",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c489cd4f_f143dcf5",
+        "filename": "device/ctap/ctap_data_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-19T19:51:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2a4eec71_409c5334",
+      "range": {
+        "startLine": 21,
+        "startChar": 2,
+        "endLine": 21,
+        "endChar": 35
+      },
+      "revId": "85cfb00851eec62759c8248e64d5aeb58d98b717",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -128,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "eeeb20d7_0dca7e93",
+        "filename": "device/ctap/ctap_data_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-19T19:51:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7e455ba5_0c9500bf",
+      "range": {
+        "startLine": 26,
+        "startChar": 2,
+        "endLine": 26,
+        "endChar": 35
+      },
+      "revId": "85cfb00851eec62759c8248e64d5aeb58d98b717",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "794c1de3_c3988d4c",
         "filename": "device/ctap/ctap_data_unittest.cc",
         "patchSetId": 5
@@ -148,6 +280,30 @@
       "revId": "85cfb00851eec62759c8248e64d5aeb58d98b717",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ca9cc73_ab7bc745",
+        "filename": "device/ctap/ctap_data_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-19T19:51:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "794c1de3_c3988d4c",
+      "range": {
+        "startLine": 118,
+        "startChar": 14,
+        "endLine": 118,
+        "endChar": 29
+      },
+      "revId": "85cfb00851eec62759c8248e64d5aeb58d98b717",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -174,6 +330,30 @@
     },
     {
       "key": {
+        "uuid": "d1c6c58c_df914b99",
+        "filename": "device/ctap/ctap_data_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-19T19:51:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0e9e6662_664d24ee",
+      "range": {
+        "startLine": 119,
+        "startChar": 25,
+        "endLine": 119,
+        "endChar": 54
+      },
+      "revId": "85cfb00851eec62759c8248e64d5aeb58d98b717",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7c34f929_e935c6df",
         "filename": "device/ctap/ctap_data_unittest.cc",
         "patchSetId": 5
@@ -194,6 +374,30 @@
       "revId": "85cfb00851eec62759c8248e64d5aeb58d98b717",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5310f82f_6215d202",
+        "filename": "device/ctap/ctap_data_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-19T19:51:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7c34f929_e935c6df",
+      "range": {
+        "startLine": 120,
+        "startChar": 2,
+        "endLine": 120,
+        "endChar": 43
+      },
+      "revId": "85cfb00851eec62759c8248e64d5aeb58d98b717",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -220,6 +424,30 @@
     },
     {
       "key": {
+        "uuid": "92a13b6e_3225bbfb",
+        "filename": "device/ctap/ctap_data_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-19T19:51:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f0edb39d_0fe6631d",
+      "range": {
+        "startLine": 121,
+        "startChar": 14,
+        "endLine": 121,
+        "endChar": 38
+      },
+      "revId": "85cfb00851eec62759c8248e64d5aeb58d98b717",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f19e8b1e_240a6988",
         "filename": "device/ctap/ctap_data_unittest.cc",
         "patchSetId": 5
@@ -240,6 +468,30 @@
       "revId": "85cfb00851eec62759c8248e64d5aeb58d98b717",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8d7804c_1203ac55",
+        "filename": "device/ctap/ctap_data_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-19T19:51:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f19e8b1e_240a6988",
+      "range": {
+        "startLine": 126,
+        "startChar": 2,
+        "endLine": 126,
+        "endChar": 35
+      },
+      "revId": "85cfb00851eec62759c8248e64d5aeb58d98b717",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -266,6 +518,30 @@
     },
     {
       "key": {
+        "uuid": "640337f2_b64896c6",
+        "filename": "device/ctap/ctap_data_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-19T19:51:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "431548cf_603ff859",
+      "range": {
+        "startLine": 158,
+        "startChar": 0,
+        "endLine": 168,
+        "endChar": 58
+      },
+      "revId": "85cfb00851eec62759c8248e64d5aeb58d98b717",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a5cfa516_aba80845",
         "filename": "device/ctap/ctap_data_unittest.cc",
         "patchSetId": 5
@@ -289,6 +565,30 @@
     },
     {
       "key": {
+        "uuid": "79d4c897_3f97d6fc",
+        "filename": "device/ctap/ctap_data_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-19T19:51:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a5cfa516_aba80845",
+      "range": {
+        "startLine": 226,
+        "startChar": 15,
+        "endLine": 226,
+        "endChar": 27
+      },
+      "revId": "85cfb00851eec62759c8248e64d5aeb58d98b717",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "40a127e4_87e3ab33",
         "filename": "device/ctap/ctap_data_unittest.cc",
         "patchSetId": 5
@@ -309,6 +609,30 @@
       "revId": "85cfb00851eec62759c8248e64d5aeb58d98b717",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b2a4d1d_8ed13948",
+        "filename": "device/ctap/ctap_data_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-19T19:51:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "40a127e4_87e3ab33",
+      "range": {
+        "startLine": 234,
+        "startChar": 15,
+        "endLine": 234,
+        "endChar": 27
+      },
+      "revId": "85cfb00851eec62759c8248e64d5aeb58d98b717",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -358,6 +682,30 @@
     },
     {
       "key": {
+        "uuid": "774919fb_c4a69fd1",
+        "filename": "device/ctap/ctap_data_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-19T19:51:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5adb2ee2_258e9cb8",
+      "range": {
+        "startLine": 245,
+        "startChar": 2,
+        "endLine": 248,
+        "endChar": 38
+      },
+      "revId": "85cfb00851eec62759c8248e64d5aeb58d98b717",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "694982d0_3d691be8",
         "filename": "device/ctap/ctap_data_unittest.cc",
         "patchSetId": 5
@@ -378,6 +726,30 @@
       "revId": "85cfb00851eec62759c8248e64d5aeb58d98b717",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8511cc18_48ed87dc",
+        "filename": "device/ctap/ctap_data_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-19T19:51:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "694982d0_3d691be8",
+      "range": {
+        "startLine": 253,
+        "startChar": 2,
+        "endLine": 253,
+        "endChar": 35
+      },
+      "revId": "85cfb00851eec62759c8248e64d5aeb58d98b717",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -404,6 +776,30 @@
     },
     {
       "key": {
+        "uuid": "87db12f0_e323ba8e",
+        "filename": "device/ctap/ctap_device_command.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-19T19:51:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "309520bc_74108a80",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 21,
+        "endChar": 22
+      },
+      "revId": "85cfb00851eec62759c8248e64d5aeb58d98b717",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "37d19eab_528d32f8",
         "filename": "device/ctap/ctap_request_command.h",
         "patchSetId": 5
@@ -424,6 +820,30 @@
       "revId": "85cfb00851eec62759c8248e64d5aeb58d98b717",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37fb4221_55d893a6",
+        "filename": "device/ctap/ctap_request_command.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-19T19:51:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "37d19eab_528d32f8",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 29
+      },
+      "revId": "85cfb00851eec62759c8248e64d5aeb58d98b717",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -450,6 +870,30 @@
     },
     {
       "key": {
+        "uuid": "944e4769_7b045105",
+        "filename": "device/ctap/ctap_request_data.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-19T19:51:43Z",
+      "side": 1,
+      "message": "The encoding format to send to CTAP devices are specified in section 6.1 of \nhttps://fidoalliance.org/specs/fido-v2.0-rd-20170927/fido-client-to-authenticator-protocol-v2.0-rd-20170927.html#authenticator-api",
+      "parentUuid": "1067757a_ea309e19",
+      "range": {
+        "startLine": 33,
+        "startChar": 27,
+        "endLine": 33,
+        "endChar": 42
+      },
+      "revId": "85cfb00851eec62759c8248e64d5aeb58d98b717",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "506adf99_94fd9710",
         "filename": "device/ctap/ctap_request_data.h",
         "patchSetId": 5
@@ -461,6 +905,30 @@
       "writtenOn": "2017-12-19T12:16:44Z",
       "side": 1,
       "message": "What is the reason for this intermediate class? Wouldn\u0027t it be easier to simply make the CTAPMakeCredentialRequest constructor public?",
+      "range": {
+        "startLine": 30,
+        "startChar": 8,
+        "endLine": 30,
+        "endChar": 36
+      },
+      "revId": "85cfb00851eec62759c8248e64d5aeb58d98b717",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1568449_87676839",
+        "filename": "device/ctap/ctap_request_data.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-19T19:51:43Z",
+      "side": 1,
+      "message": "Builder class for each of the two request objects were made to enforce callers of the request to create objects that have minimum required parameters. Since MakeCredentialRequest and GetAssertionRequest has multiple parameters, many of which are optional, I thought creating builder would make it easier for the caller of this API to create request parameter objects. (and also to avoid multiple default parameters in constructor). \n\nhttps://google.github.io/styleguide/cppguide.html#Default_Arguments",
+      "parentUuid": "506adf99_94fd9710",
       "range": {
         "startLine": 30,
         "startChar": 8,
@@ -542,6 +1010,30 @@
     },
     {
       "key": {
+        "uuid": "76198ef1_4d67d0c9",
+        "filename": "device/ctap/ctap_response_code.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-19T19:51:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1ed243c6_3c615d31",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 64,
+        "endChar": 30
+      },
+      "revId": "85cfb00851eec62759c8248e64d5aeb58d98b717",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8df51111_d5fc18d5",
         "filename": "device/ctap/ctap_response_code.h",
         "patchSetId": 5
@@ -562,6 +1054,30 @@
       "revId": "85cfb00851eec62759c8248e64d5aeb58d98b717",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b3bd680_c583538e",
+        "filename": "device/ctap/ctap_response_code.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-19T19:51:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8df51111_d5fc18d5",
+      "range": {
+        "startLine": 67,
+        "startChar": 0,
+        "endLine": 67,
+        "endChar": 42
+      },
+      "revId": "85cfb00851eec62759c8248e64d5aeb58d98b717",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -611,6 +1127,54 @@
     },
     {
       "key": {
+        "uuid": "3e77bc54_512a3815",
+        "filename": "device/ctap/public_key_credential_descriptor.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-19T19:51:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fbafc007_d1d89ac2",
+      "range": {
+        "startLine": 12,
+        "startChar": 23,
+        "endLine": 12,
+        "endChar": 38
+      },
+      "revId": "85cfb00851eec62759c8248e64d5aeb58d98b717",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b839f8f0_9666c1f0",
+        "filename": "device/ctap/public_key_credential_descriptor.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-19T19:51:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "429b9d68_967c3da2",
+      "range": {
+        "startLine": 12,
+        "startChar": 45,
+        "endLine": 12,
+        "endChar": 47
+      },
+      "revId": "85cfb00851eec62759c8248e64d5aeb58d98b717",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3ad3cba3_c4e35982",
         "filename": "device/ctap/public_key_credential_descriptor.cc",
         "patchSetId": 5
@@ -631,6 +1195,30 @@
       "revId": "85cfb00851eec62759c8248e64d5aeb58d98b717",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc60d488_c46fa55b",
+        "filename": "device/ctap/public_key_credential_descriptor.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-19T19:51:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3ad3cba3_c4e35982",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 20
+      },
+      "revId": "85cfb00851eec62759c8248e64d5aeb58d98b717",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -657,6 +1245,30 @@
     },
     {
       "key": {
+        "uuid": "3071b475_75431ec8",
+        "filename": "device/ctap/public_key_credential_descriptor.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-19T19:51:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2c400696_52910d5b",
+      "range": {
+        "startLine": 32,
+        "startChar": 25,
+        "endLine": 32,
+        "endChar": 44
+      },
+      "revId": "85cfb00851eec62759c8248e64d5aeb58d98b717",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2e370a6b_9d0ffcb4",
         "filename": "device/ctap/public_key_credential_descriptor.cc",
         "patchSetId": 5
@@ -677,6 +1289,30 @@
       "revId": "85cfb00851eec62759c8248e64d5aeb58d98b717",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcda0ac7_a2d51128",
+        "filename": "device/ctap/public_key_credential_descriptor.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-19T19:51:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2e370a6b_9d0ffcb4",
+      "range": {
+        "startLine": 38,
+        "startChar": 0,
+        "endLine": 44,
+        "endChar": 23
+      },
+      "revId": "85cfb00851eec62759c8248e64d5aeb58d98b717",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -703,6 +1339,30 @@
     },
     {
       "key": {
+        "uuid": "715fc8b9_338bba47",
+        "filename": "device/ctap/public_key_credential_params.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-19T19:51:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "52475b26_93eee1c0",
+      "range": {
+        "startLine": 11,
+        "startChar": 40,
+        "endLine": 11,
+        "endChar": 57
+      },
+      "revId": "85cfb00851eec62759c8248e64d5aeb58d98b717",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a12d7527_e7eb2193",
         "filename": "device/ctap/public_key_credential_params.cc",
         "patchSetId": 5
@@ -726,6 +1386,30 @@
     },
     {
       "key": {
+        "uuid": "ddfb1fda_1bda62ac",
+        "filename": "device/ctap/public_key_credential_params.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-19T19:51:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a12d7527_e7eb2193",
+      "range": {
+        "startLine": 25,
+        "startChar": 4,
+        "endLine": 25,
+        "endChar": 78
+      },
+      "revId": "85cfb00851eec62759c8248e64d5aeb58d98b717",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da848032_71bf0aac",
         "filename": "device/ctap/public_key_credential_params.cc",
         "patchSetId": 5
@@ -737,6 +1421,30 @@
       "writtenOn": "2017-12-19T12:16:44Z",
       "side": 1,
       "message": "this will create a map with only two entries, each iteration of the loop will overwrite the existing values of the map. I don\u0027t think this is what you want. Did you mean\n\n  cbor_credential_map[cbor::CBORValue(it-\u003efirst)] \u003d cbor::CBORValue(it-\u003esecond);\n\ninstead?",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 80
+      },
+      "revId": "85cfb00851eec62759c8248e64d5aeb58d98b717",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35dd01d6_4ae03a67",
+        "filename": "device/ctap/public_key_credential_params.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-19T19:51:43Z",
+      "side": 1,
+      "message": "The |cbor_credential_map| should always have only 2 entries which are \"type\" and \"alg\". \n\nChanged |credential_param_list| to list of tuples to enforce this restriction.",
+      "parentUuid": "da848032_71bf0aac",
       "range": {
         "startLine": 26,
         "startChar": 0,
@@ -772,6 +1480,30 @@
     },
     {
       "key": {
+        "uuid": "b8bf65ad_9ccc31da",
+        "filename": "device/ctap/public_key_credential_params.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-19T19:51:43Z",
+      "side": 1,
+      "message": "List was used over vector since the sequential order of \u003cstring, int\u003e represents the preferred order of cryptographic algorithm and credential type. Please let me know if using vector is more optimal in this case! \n\nAlso, using a single map wouldn\u0027t work since in most cases, the key (credential type) are simply \"public-key\".  \n\nChanged list of maps to list of tuples\u003cstring, int\u003e .",
+      "parentUuid": "e5b04a7f_c081d6e7",
+      "range": {
+        "startLine": 30,
+        "startChar": 2,
+        "endLine": 30,
+        "endChar": 11
+      },
+      "revId": "85cfb00851eec62759c8248e64d5aeb58d98b717",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9ef7104a_96e791cd",
         "filename": "device/ctap/public_key_credential_rp_entity.cc",
         "patchSetId": 5
@@ -795,6 +1527,30 @@
     },
     {
       "key": {
+        "uuid": "bcdff7f5_132c6760",
+        "filename": "device/ctap/public_key_credential_rp_entity.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-19T19:51:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9ef7104a_96e791cd",
+      "range": {
+        "startLine": 10,
+        "startChar": 13,
+        "endLine": 10,
+        "endChar": 18
+      },
+      "revId": "85cfb00851eec62759c8248e64d5aeb58d98b717",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "773de958_49016f6c",
         "filename": "device/ctap/public_key_credential_rp_entity.h",
         "patchSetId": 5
@@ -812,6 +1568,24 @@
     },
     {
       "key": {
+        "uuid": "1110f9fb_6c4d1cb8",
+        "filename": "device/ctap/public_key_credential_rp_entity.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-19T19:51:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "773de958_49016f6c",
+      "revId": "85cfb00851eec62759c8248e64d5aeb58d98b717",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d1efe298_cb896552",
         "filename": "device/ctap/public_key_credential_rp_entity.h",
         "patchSetId": 5
@@ -826,6 +1600,24 @@
       "revId": "85cfb00851eec62759c8248e64d5aeb58d98b717",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2dab63f0_fd82a8ab",
+        "filename": "device/ctap/public_key_credential_rp_entity.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-19T19:51:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d1efe298_cb896552",
+      "revId": "85cfb00851eec62759c8248e64d5aeb58d98b717",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -869,6 +1661,24 @@
     },
     {
       "key": {
+        "uuid": "68b8ae62_cbf37960",
+        "filename": "device/ctap/public_key_credential_rp_entity.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-19T19:51:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "acf14e51_6a031ecd",
+      "revId": "85cfb00851eec62759c8248e64d5aeb58d98b717",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4ba6f1c3_edc36a4d",
         "filename": "device/ctap/public_key_credential_user_entity.h",
         "patchSetId": 5
@@ -880,6 +1690,30 @@
       "writtenOn": "2017-12-19T12:16:44Z",
       "side": 1,
       "message": "same question as before, why setters instead of constructor params?",
+      "range": {
+        "startLine": 30,
+        "startChar": 0,
+        "endLine": 32,
+        "endChar": 44
+      },
+      "revId": "85cfb00851eec62759c8248e64d5aeb58d98b717",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bacbebf_517edfbc",
+        "filename": "device/ctap/public_key_credential_user_entity.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-19T19:51:43Z",
+      "side": 1,
+      "message": "While |user_id| is a required parameter,|user_name|, |display_name|, and |icon_url| are optional parameters. I thought creating constructor overload for all possible (8) cases of when optional parameters are included or not will make this class bloated. \n\nPlease let me know if you think changing constructor to have parameters that are defaulted to base::nullopt would be better!",
+      "parentUuid": "4ba6f1c3_edc36a4d",
       "range": {
         "startLine": 30,
         "startChar": 0,
