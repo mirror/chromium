@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "70aba25d_4d9fedf8",
+        "filename": "chrome/browser/chromeos/login/session/user_session_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1016,
+      "author": {
+        "id": 1149149
+      },
+      "writtenOn": "2017-12-19T18:40:17Z",
+      "side": 1,
+      "message": "I don\u0027t think so, I want this warning to show up even if send_password is false because I want to be explicit about not even trying to save the password for enterprise users. \n\nLooking at this though, I need to clear the secret still for this conditional just in case.",
+      "parentUuid": "f1335ef0_c51d96f2",
+      "revId": "32c42b84d526cb1f0d316c75d30a7d39b490cf47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fc6b9f4e_00326c93",
         "filename": "chrome/browser/chromeos/policy/user_network_configuration_updater.cc",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "5e28e77e_d83156c4",
+        "filename": "chrome/browser/chromeos/policy/user_network_configuration_updater.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1149149
+      },
+      "writtenOn": "2017-12-19T18:40:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc6b9f4e_00326c93",
+      "revId": "32c42b84d526cb1f0d316c75d30a7d39b490cf47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "eab41b1e_c7d1db3d",
         "filename": "chromeos/network/onc/onc_utils.cc",
         "patchSetId": 3
@@ -47,6 +83,24 @@
       "writtenOn": "2017-12-19T16:54:02Z",
       "side": 1,
       "message": "Just curious if you know what happens if someone enters the substitution variable and it isn\u0027t the only thing in the field? Does the substitution still happen? We probably shouldn\u0027t support that but not sure if we explicitly prevent it or not.",
+      "revId": "32c42b84d526cb1f0d316c75d30a7d39b490cf47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c52cab16_e57b055e",
+        "filename": "chromeos/network/onc/onc_utils.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1342,
+      "author": {
+        "id": 1149149
+      },
+      "writtenOn": "2017-12-19T18:40:17Z",
+      "side": 1,
+      "message": "Nope, it has to be an exact match to ${PASSWORD} for the substitution to happen. Otherwise the literal string \"${PASSWORD}xyz\" will be used as the password. But we should  discuss offline to make sure everyone agrees that\u0027s the behavior we want since we do allow ${LOGIN ID} to be used for partial substitution. It makes more sense for login id though, since it\u0027s common to glob @companyfoobar.com at the end of the username.",
+      "parentUuid": "eab41b1e_c7d1db3d",
       "revId": "32c42b84d526cb1f0d316c75d30a7d39b490cf47",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
