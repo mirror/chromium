@@ -7,6 +7,7 @@
 
 #include "base/base_export.h"
 #include "base/macros.h"
+#include "base/sequenced_task_runner.h"
 #include "build/build_config.h"
 
 #if defined(OS_WIN)
@@ -76,7 +77,10 @@ class BASE_EXPORT WaitableEventWatcher
 {
  public:
   using EventCallback = OnceCallback<void(WaitableEvent*)>;
-  WaitableEventWatcher();
+
+  // |task_runner| is used for asynchronous executions e.g. calling a callback
+  // at StartWatching().
+  explicit WaitableEventWatcher(scoped_refptr<SequencedTaskRunner> task_runner);
 
 #if defined(OS_WIN)
   ~WaitableEventWatcher() override;
@@ -98,6 +102,9 @@ class BASE_EXPORT WaitableEventWatcher
   void StopWatching();
 
  private:
+  // Used for asynchronous executions.
+  scoped_refptr<SequencedTaskRunner> task_runner_;
+
 #if defined(OS_WIN)
   void OnObjectSignaled(HANDLE h) override;
 
@@ -127,6 +134,10 @@ class BASE_EXPORT WaitableEventWatcher
   // is delivered, the message queue will be peeked and the bound |callback_|
   // may be run. This will be null if nothing is currently being watched.
   ScopedDispatchObject<dispatch_source_t> source_;
+
+  // Used to pass to PostTask at StartWatching. This must be on the same
+  // sequenced as |task_runner_|'s.
+  WeakPtr<WaitableEventWatcher> weak_this_;
 
   // Used to vend a weak pointer for calling InvokeCallback() from the
   // |source_| event handler.
