@@ -81,6 +81,41 @@ static const CSSValue* ParseCSSValue(const ExecutionContext* context,
                                                          *parser_context);
 }
 
+static FontDisplay CSSValueToFontDisplay(const CSSValue* value) {
+  if (value && value->IsIdentifierValue()) {
+    switch (ToCSSIdentifierValue(value)->GetValueID()) {
+      case CSSValueAuto:
+        return kFontDisplayAuto;
+      case CSSValueBlock:
+        return kFontDisplayBlock;
+      case CSSValueSwap:
+        return kFontDisplaySwap;
+      case CSSValueFallback:
+        return kFontDisplayFallback;
+      case CSSValueOptional:
+        return kFontDisplayOptional;
+      default:
+        break;
+    }
+  }
+  return kFontDisplayAuto;
+}
+
+static CSSFontFace* CreateCSSFontFace(FontFace* font_face,
+                                      const CSSValue* unicode_range) {
+  Vector<UnicodeRange> ranges;
+  if (const CSSValueList* range_list = ToCSSValueList(unicode_range)) {
+    unsigned num_ranges = range_list->length();
+    for (unsigned i = 0; i < num_ranges; i++) {
+      const CSSUnicodeRangeValue& range =
+          ToCSSUnicodeRangeValue(range_list->Item(i));
+      ranges.push_back(UnicodeRange(range.From(), range.To()));
+    }
+  }
+
+  return new CSSFontFace(font_face, ranges);
+}
+
 FontFace* FontFace::Create(ExecutionContext* context,
                            const AtomicString& family,
                            StringOrArrayBufferOrArrayBufferView& source,
@@ -320,6 +355,8 @@ bool FontFace::SetPropertyValue(const CSSValue* value,
       break;
     case AtRuleDescriptorID::FontDisplay:
       display_ = value;
+      if (css_font_face_)
+        css_font_face_->SetDisplay(CSSValueToFontDisplay(display_.Get()));
       break;
     default:
       NOTREACHED();
@@ -646,41 +683,6 @@ size_t FontFace::ApproximateBlankCharacterCount() const {
   if (status_ == kLoading)
     return css_font_face_->ApproximateBlankCharacterCount();
   return 0;
-}
-
-static FontDisplay CSSValueToFontDisplay(const CSSValue* value) {
-  if (value && value->IsIdentifierValue()) {
-    switch (ToCSSIdentifierValue(value)->GetValueID()) {
-      case CSSValueAuto:
-        return kFontDisplayAuto;
-      case CSSValueBlock:
-        return kFontDisplayBlock;
-      case CSSValueSwap:
-        return kFontDisplaySwap;
-      case CSSValueFallback:
-        return kFontDisplayFallback;
-      case CSSValueOptional:
-        return kFontDisplayOptional;
-      default:
-        break;
-    }
-  }
-  return kFontDisplayAuto;
-}
-
-static CSSFontFace* CreateCSSFontFace(FontFace* font_face,
-                                      const CSSValue* unicode_range) {
-  Vector<UnicodeRange> ranges;
-  if (const CSSValueList* range_list = ToCSSValueList(unicode_range)) {
-    unsigned num_ranges = range_list->length();
-    for (unsigned i = 0; i < num_ranges; i++) {
-      const CSSUnicodeRangeValue& range =
-          ToCSSUnicodeRangeValue(range_list->Item(i));
-      ranges.push_back(UnicodeRange(range.From(), range.To()));
-    }
-  }
-
-  return new CSSFontFace(font_face, ranges);
 }
 
 bool ContextAllowsDownload(ExecutionContext* context) {
