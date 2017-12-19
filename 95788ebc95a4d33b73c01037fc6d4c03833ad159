@@ -70,6 +70,30 @@
       "revId": "95788ebc95a4d33b73c01037fc6d4c03833ad159",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9df8990a_431089f2",
+        "filename": "ui/app_list/views/search_result_tile_item_view.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-12-19T03:01:14Z",
+      "side": 1,
+      "message": "I think crbug.com/780526 is done at this point.\n\nWhat we need to do is to cleanup dead APIs (Selected, SelectedIndex, etc) in SearchResultContainerView. This can be a separate bug if there isn\u0027t one. I can look up the bug table and file one if there isn\u0027t.",
+      "parentUuid": "71632530_04982815",
+      "range": {
+        "startLine": 114,
+        "startChar": 7,
+        "endLine": 114,
+        "endChar": 16
+      },
+      "revId": "95788ebc95a4d33b73c01037fc6d4c03833ad159",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
