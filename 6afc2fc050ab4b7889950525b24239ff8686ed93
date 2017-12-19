@@ -69,6 +69,24 @@
       "revId": "6afc2fc050ab4b7889950525b24239ff8686ed93",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "527f494b_9cb010b9",
+        "filename": "chrome/browser/ui/app_list/chrome_app_list_item.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-19T20:17:47Z",
+      "side": 1,
+      "message": "I won\u0027t block the CL because of this. But IMHO, we should make those methods public or having a TestAPI for those methods.",
+      "parentUuid": "329be234_ebd87b19",
+      "revId": "6afc2fc050ab4b7889950525b24239ff8686ed93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
