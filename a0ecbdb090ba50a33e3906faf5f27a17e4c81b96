@@ -70,6 +70,30 @@
       "revId": "a0ecbdb090ba50a33e3906faf5f27a17e4c81b96",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "36ceb65c_91518bd4",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-12-19T00:42:43Z",
+      "side": 1,
+      "message": "Thanks for asking. The reason is performance. Doing the i18n with $i18n{} or $i18nPolymer{} (using C++) is much faster than doing with JS. I plan to eventually remove the i18n.i18n() function. It also reduces flicker on page load. Here\u0027s some more background:\nhttps://docs.google.com/document/d/1yIZ4vN8VgFr5UaulgA1A55Za0RHJe1vQQJKc6ze-iNs/edit",
+      "parentUuid": "babb33d0_1b94de3b",
+      "range": {
+        "startLine": 121,
+        "startChar": 21,
+        "endLine": 121,
+        "endChar": 47
+      },
+      "revId": "a0ecbdb090ba50a33e3906faf5f27a17e4c81b96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
