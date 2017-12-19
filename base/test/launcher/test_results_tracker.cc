@@ -23,6 +23,11 @@
 #include "base/test/launcher/test_launcher.h"
 #include "base/time/time.h"
 #include "base/values.h"
+#include "build/build_config.h"
+
+#if defined(OS_POSIX)
+#include <fcntl.h>
+#endif
 
 namespace base {
 
@@ -438,7 +443,19 @@ bool TestResultsTracker::SaveSummaryAsJSON(
   summary_root->Set("test_locations", std::move(test_locations));
 
   JSONFileValueSerializer serializer(path);
-  return serializer.Serialize(*summary_root);
+  bool result = serializer.Serialize(*summary_root);
+#if defined(OS_POSIX)
+  if (result) {
+    // Try to ensure the results file has been flushed. This is useful if a VM
+    // is terminated immediately on test completion. https://crbug.com/796318.
+    int fd = open(path.value().c_str(), O_RDWR);
+    if (fd >= 0) {
+      fsync(fd);
+      close(fd);
+    }
+  }
+#endif
+  return result;
 }
 
 TestResultsTracker::TestStatusMap
