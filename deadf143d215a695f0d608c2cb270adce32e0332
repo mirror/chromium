@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "b75abe27_910b8a88",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/CompositorSurfaceManager.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-12-19T21:06:09Z",
+      "side": 1,
+      "message": "Why are these lines needed?",
+      "range": {
+        "startLine": 136,
+        "startChar": 8,
+        "endLine": 136,
+        "endChar": 26
+      },
+      "revId": "deadf143d215a695f0d608c2cb270adce32e0332",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "012bc35d_fc62e37a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/CompositorView.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-12-19T21:06:09Z",
+      "side": 1,
+      "message": "why did you have to create separate functions? Can\u0027t you just do mCompositorView.surfaceCreated(null)?",
+      "range": {
+        "startLine": 243,
+        "startChar": 8,
+        "endLine": 243,
+        "endChar": 22
+      },
+      "revId": "deadf143d215a695f0d608c2cb270adce32e0332",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4781b71c_9f29a66e",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/CompositorView.java",
         "patchSetId": 14
@@ -13,6 +59,75 @@
       "writtenOn": "2017-12-19T20:04:38Z",
       "side": 1,
       "message": "I think it\u0027d help to have a comment here to explain why we nuke the surface manager (as well as explaining how VR provides similar functionality, but isn\u0027t quite the same thing as a surface manager).",
+      "revId": "deadf143d215a695f0d608c2cb270adce32e0332",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "453f6061_e08ccba1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/CompositorView.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-12-19T21:06:09Z",
+      "side": 1,
+      "message": "should this be an assert since we\u0027re setting it to null when detaching?",
+      "range": {
+        "startLine": 439,
+        "startChar": 12,
+        "endLine": 439,
+        "endChar": 37
+      },
+      "revId": "deadf143d215a695f0d608c2cb270adce32e0332",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78f64650_132c93aa",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/CompositorView.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-12-19T21:06:09Z",
+      "side": 1,
+      "message": "Does it make sense to reuse the same initialization code in CompositorView\u0027s constructor?",
+      "range": {
+        "startLine": 441,
+        "startChar": 8,
+        "endLine": 441,
+        "endChar": 33
+      },
+      "revId": "deadf143d215a695f0d608c2cb270adce32e0332",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45b2b9f2_c6fd9629",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 1653,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-12-19T21:06:09Z",
+      "side": 1,
+      "message": "can this just move into createVrShell? It seems odd that we get the tab model, but don\u0027t detachForVr until in VrShellImpl\u0027s constructor.",
+      "range": {
+        "startLine": 1653,
+        "startChar": 25,
+        "endLine": 1653,
+        "endChar": 41
+      },
       "revId": "deadf143d215a695f0d608c2cb270adce32e0332",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -47,6 +162,75 @@
       "writtenOn": "2017-12-19T20:04:38Z",
       "side": 1,
       "message": "Given that this progress bar is up for review in a separate CL, would be nice to remove it from this one.",
+      "revId": "deadf143d215a695f0d608c2cb270adce32e0332",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e55d3836_779ba583",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrViewContainer.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-12-19T21:06:09Z",
+      "side": 1,
+      "message": "Should this be mBackgroundToRestore?",
+      "range": {
+        "startLine": 29,
+        "startChar": 21,
+        "endLine": 29,
+        "endChar": 32
+      },
+      "revId": "deadf143d215a695f0d608c2cb270adce32e0332",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27267c27_b07be840",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrViewContainer.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-12-19T21:06:09Z",
+      "side": 1,
+      "message": "can we somehow be sure that the child exists, or that the child is android.R.id.content?",
+      "range": {
+        "startLine": 84,
+        "startChar": 15,
+        "endLine": 84,
+        "endChar": 25
+      },
+      "revId": "deadf143d215a695f0d608c2cb270adce32e0332",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c9da10b_f46bda4f",
+        "filename": "chrome/browser/android/vr_shell/vr_gl_thread.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-12-19T21:06:09Z",
+      "side": 1,
+      "message": "BindOnce?",
+      "range": {
+        "startLine": 92,
+        "startChar": 23,
+        "endLine": 92,
+        "endChar": 27
+      },
       "revId": "deadf143d215a695f0d608c2cb270adce32e0332",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
