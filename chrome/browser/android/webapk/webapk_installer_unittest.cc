@@ -90,10 +90,12 @@ class WebApkInstallerRunner {
  public:
   WebApkInstallerRunner(content::BrowserContext* browser_context,
                         const GURL& best_primary_icon_url,
-                        const GURL& best_badge_icon_url)
+                        const GURL& best_badge_icon_url,
+                        SpaceStatus test_space_status)
       : browser_context_(browser_context),
         best_primary_icon_url_(best_primary_icon_url),
-        best_badge_icon_url_(best_badge_icon_url) {}
+        best_badge_icon_url_(best_badge_icon_url),
+        test_space_status_(test_space_status) {}
 
   ~WebApkInstallerRunner() {}
 
@@ -106,6 +108,7 @@ class WebApkInstallerRunner {
     info.best_badge_icon_url = best_badge_icon_url_;
     WebApkInstaller::InstallAsyncForTesting(
         CreateWebApkInstaller(), info, SkBitmap(), SkBitmap(),
+        test_space_status_,
         base::Bind(&WebApkInstallerRunner::OnCompleted,
                    base::Unretained(this)));
 
@@ -146,6 +149,9 @@ class WebApkInstallerRunner {
   // The Web Manifest's icon URLs.
   const GURL best_primary_icon_url_;
   const GURL best_badge_icon_url_;
+
+  // The space status used in tests.
+  SpaceStatus test_space_status_;
 
   // Called after the installation process has succeeded or failed.
   base::Closure on_completed_callback_;
@@ -312,9 +318,14 @@ class WebApkInstallerTest : public ::testing::Test {
     webapk_response_builder_ = builder;
   }
 
+  // Sets the function that should be used to build the response to the
+  // WebAPK creation request.
+  void SetSpaceStatus(const SpaceStatus status) { test_space_status_ = status; }
+
   std::unique_ptr<WebApkInstallerRunner> CreateWebApkInstallerRunner() {
-    return std::unique_ptr<WebApkInstallerRunner>(new WebApkInstallerRunner(
-        profile_.get(), best_primary_icon_url_, best_badge_icon_url_));
+    return std::unique_ptr<WebApkInstallerRunner>(
+        new WebApkInstallerRunner(profile_.get(), best_primary_icon_url_,
+                                  best_badge_icon_url_, test_space_status_));
   }
 
   std::unique_ptr<BuildProtoRunner> CreateBuildProtoRunner() {
@@ -330,6 +341,7 @@ class WebApkInstallerTest : public ::testing::Test {
     SetBestBadgeIconUrl(test_server_.GetURL(kBestBadgeIconUrl));
     SetWebApkServerUrl(test_server_.GetURL(kServerUrl));
     SetWebApkResponseBuilder(base::Bind(&BuildValidWebApkResponse, kToken));
+    SetSpaceStatus(SpaceStatus::ENOUGH_SPACE);
   }
 
   std::unique_ptr<net::test_server::HttpResponse> HandleWebApkRequest(
@@ -350,6 +362,9 @@ class WebApkInstallerTest : public ::testing::Test {
   // Builds response to the WebAPK creation request.
   WebApkResponseBuilder webapk_response_builder_;
 
+  // The space status used in tests.
+  SpaceStatus test_space_status_;
+
   DISALLOW_COPY_AND_ASSIGN(WebApkInstallerTest);
 };
 
@@ -358,6 +373,14 @@ TEST_F(WebApkInstallerTest, Success) {
   std::unique_ptr<WebApkInstallerRunner> runner = CreateWebApkInstallerRunner();
   runner->RunInstallWebApk();
   EXPECT_EQ(WebApkInstallResult::SUCCESS, runner->result());
+}
+
+// Test that installation fails if there is not enough space on device.
+TEST_F(WebApkInstallerTest, FailOnLowSpace) {
+  SetSpaceStatus(SpaceStatus::NOT_ENOUGH_SPACE);
+  std::unique_ptr<WebApkInstallerRunner> runner = CreateWebApkInstallerRunner();
+  runner->RunInstallWebApk();
+  EXPECT_EQ(WebApkInstallResult::FAILURE, runner->result());
 }
 
 // Test that installation fails if fetching the bitmap at the best primary icon
