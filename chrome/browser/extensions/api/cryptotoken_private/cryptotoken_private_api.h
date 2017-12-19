@@ -9,6 +9,7 @@
 #include <string>
 #include <vector>
 
+#include "base/feature_list.h"
 #include "base/values.h"
 #include "chrome/browser/extensions/chrome_extension_function_details.h"
 #include "chrome/common/extensions/api/cryptotoken_private.h"
@@ -21,6 +22,11 @@ class PrefRegistrySyncable;
 // Implementations for chrome.cryptotokenPrivate API functions.
 
 namespace extensions {
+
+// kSecurityKeyPermitAttestation controls whether the user is prompted when
+// sites request attestation.
+extern const base::Feature kSecurityKeyAttestationPrompt;
+
 namespace api {
 
 void CryptotokenRegisterProfilePrefs(
@@ -54,6 +60,23 @@ class CryptotokenPrivateIsAppIdHashInEnterpriseContextFunction
 
  private:
   ChromeExtensionFunctionDetails chrome_details_;
+};
+
+class CryptotokenPrivateCanAppIdGetAttestationFunction
+    : public UIThreadExtensionFunction {
+ public:
+  CryptotokenPrivateCanAppIdGetAttestationFunction();
+  DECLARE_EXTENSION_FUNCTION("cryptotokenPrivate.canAppIdGetAttestation",
+                             CRYPTOTOKENPRIVATE_CANAPPIDGETATTESTATION)
+
+ protected:
+  ~CryptotokenPrivateCanAppIdGetAttestationFunction() override {}
+  ResponseAction Run() override;
+
+ private:
+  ChromeExtensionFunctionDetails chrome_details_;
+
+  void Complete(bool result);
 };
 
 }  // namespace api
