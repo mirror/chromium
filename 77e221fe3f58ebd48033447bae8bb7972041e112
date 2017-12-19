@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "badab8e7_d139fe50",
+        "filename": "components/metrics/file_metrics_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1117419
+      },
+      "writtenOn": "2017-12-19T00:47:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a939281c_3c1de3d0",
+      "range": {
+        "startLine": 301,
+        "startChar": 27,
+        "endLine": 301,
+        "endChar": 49
+      },
+      "revId": "77e221fe3f58ebd48033447bae8bb7972041e112",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "03d45e9c_22112b6c",
         "filename": "components/metrics/file_metrics_provider.cc",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "98550c5b_d737759b",
+        "filename": "components/metrics/file_metrics_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1117419
+      },
+      "writtenOn": "2017-12-19T00:47:19Z",
+      "side": 1,
+      "message": "I think it\u0027s easier to follow with all the conditions in one place.",
+      "parentUuid": "03d45e9c_22112b6c",
+      "range": {
+        "startLine": 301,
+        "startChar": 6,
+        "endLine": 317,
+        "endChar": 7
+      },
+      "revId": "77e221fe3f58ebd48033447bae8bb7972041e112",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "759d85bf_2d35eccb",
         "filename": "components/metrics/file_metrics_provider.cc",
         "patchSetId": 1
@@ -59,6 +107,30 @@
       "writtenOn": "2017-12-18T22:08:16Z",
       "side": 1,
       "message": "Suggest breaking this into a helper function, maybe ScanDirectory?",
+      "range": {
+        "startLine": 293,
+        "startChar": 4,
+        "endLine": 339,
+        "endChar": 41
+      },
+      "revId": "77e221fe3f58ebd48033447bae8bb7972041e112",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e860ced3_1761782a",
+        "filename": "components/metrics/file_metrics_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1117419
+      },
+      "writtenOn": "2017-12-19T00:47:19Z",
+      "side": 1,
+      "message": "It doesn\u0027t split because there are counters updated in the first half that are referenced in the second half.",
+      "parentUuid": "759d85bf_2d35eccb",
       "range": {
         "startLine": 293,
         "startChar": 4,
