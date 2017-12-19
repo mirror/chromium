@@ -27,6 +27,7 @@
 #include "ui/views/controls/button/md_text_button.h"
 #include "ui/views/controls/menu/menu_item_view.h"
 #include "ui/views/controls/menu/menu_runner.h"
+#include "ui/views/controls/textfield/textfield.h"
 #include "ui/views/layout/grid_layout.h"
 #include "ui/views/widget/widget.h"
 #include "ui/wm/core/shadow_types.h"
@@ -49,8 +50,10 @@ class ModalWindow : public views::WidgetDelegateView,
   explicit ModalWindow(ui::ModalType modal_type)
       : modal_type_(modal_type),
         color_(g_colors[g_color_index]),
+        textfield_(new views::Textfield()),
         open_button_(MdTextButton::Create(this, base::ASCIIToUTF16("Moar!"))) {
     ++g_color_index %= arraysize(g_colors);
+    AddChildView(textfield_);
     AddChildView(open_button_);
   }
   ~ModalWindow() override = default;
@@ -74,6 +77,8 @@ class ModalWindow : public views::WidgetDelegateView,
     gfx::Rect local_bounds = GetLocalBounds();
     open_button_->SetBounds(5, local_bounds.bottom() - open_ps.height() - 5,
                             open_ps.width(), open_ps.height());
+    gfx::Size text_ps = textfield_->GetPreferredSize();
+    textfield_->SetBounds(5, 5, local_bounds.width() - 10, text_ps.height());
   }
 
   // Overridden from views::WidgetDelegate:
@@ -92,6 +97,7 @@ class ModalWindow : public views::WidgetDelegateView,
  private:
   ui::ModalType modal_type_;
   SkColor color_;
+  views::Textfield* textfield_;
   views::Button* open_button_;
 
   DISALLOW_COPY_AND_ASSIGN(ModalWindow);

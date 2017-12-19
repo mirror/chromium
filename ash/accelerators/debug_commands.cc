@@ -21,6 +21,7 @@
 #include "base/metrics/user_metrics.h"
 #include "base/metrics/user_metrics_action.h"
 #include "base/strings/utf_string_conversions.h"
+#include "ui/aura/client/aura_constants.h"
 #include "ui/compositor/debug_utils.h"
 #include "ui/compositor/layer.h"
 #include "ui/display/manager/display_manager.h"
@@ -55,6 +56,7 @@ void HandlePrintViewHierarchy() {
 }
 
 void PrintWindowHierarchy(const aura::Window* active_window,
+                          const aura::Window* focused_window,
                           aura::Window* window,
                           int indent,
                           std::ostringstream* out) {
@@ -62,9 +64,25 @@ void PrintWindowHierarchy(const aura::Window* active_window,
   std::string name(window->GetName());
   if (name.empty())
     name = "\"\"";
+  std::string modal;
+  switch (window->GetProperty(aura::client::kModalKey)) {
+    case ui::MODAL_TYPE_NONE:
+      break;
+    case ui::MODAL_TYPE_WINDOW:
+      modal = "[window modal] ";
+      break;
+    case ui::MODAL_TYPE_CHILD:
+      modal = "[child modal] ";
+      break;
+    case ui::MODAL_TYPE_SYSTEM:
+      modal = "[system modal] ";
+      break;
+  }
+
   *out << indent_str << name << " (" << window << ")"
        << " type=" << window->type()
        << ((window == active_window) ? " [active] " : " ")
+       << ((window == focused_window) ? " [focused] " : " ") << modal
        << (window->IsVisible() ? " visible " : " ")
        << window->bounds().ToString()
        << (window->GetProperty(kSnapChildrenToPixelBoundary) ? " [snapped] "
@@ -73,16 +91,18 @@ void PrintWindowHierarchy(const aura::Window* active_window,
        << window->layer()->subpixel_position_offset().ToString() << '\n';
 
   for (aura::Window* child : window->children())
-    PrintWindowHierarchy(active_window, child, indent + 3, out);
+    PrintWindowHierarchy(active_window, focused_window, child, indent + 3, out);
 }
 
 void HandlePrintWindowHierarchy() {
   aura::Window* active_window = wm::GetActiveWindow();
+  aura::Window* focused_window = wm::GetFocusedWindow();
+
   aura::Window::Windows roots = Shell::Get()->GetAllRootWindows();
   for (size_t i = 0; i < roots.size(); ++i) {
     std::ostringstream out;
     out << "RootWindow " << i << ":\n";
-    PrintWindowHierarchy(active_window, roots[i], 0, &out);
+    PrintWindowHierarchy(active_window, focused_window, roots[i], 0, &out);
     // Error so logs can be collected from end-users.
     LOG(ERROR) << out.str();
   }
