@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "66f8063f_8de537ca",
+        "filename": "chrome/browser/ui/ash/launcher/chrome_launcher_controller_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2038,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-19T23:46:50Z",
+      "side": 1,
+      "message": "(1) It\u0027s good that you\u0027re fixing this case, and presumably we\u0027ll fix other chrome [extension] window minimize/maximize/restore/etc actions in this file later. I wonder if there\u0027s a better wholesale approach, or something we can do to avoid these types of failures better (helper methods?). I suspect inlining this call is the most simple and direct solution, so what you have is fine and you shouldn\u0027t go out of your way to devise something better, I\u0027m just wondering aloud.\n\n(2) Is this window minimization (triggered by the chrome-side test) routed through ash, or is it sent directly to the window server? If the latter, then could this test trigger the item selection before ash is notified of the window minimization? (ie. is the window minimization guaranteed to occur in ash before the item selection?) Sorry if I\u0027m asking a stupid question.",
+      "revId": "52de0369c828d836d722bd60ccf05fa798e8e3d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4093a768_ef6fe448",
+        "filename": "chrome/browser/ui/ash/launcher/chrome_launcher_controller_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2044,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-19T23:46:50Z",
+      "side": 1,
+      "message": "SelectItem already calls this, is another call really necessary? Maybe comment explaining why?",
+      "revId": "52de0369c828d836d722bd60ccf05fa798e8e3d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3532f0e1_2e061a69",
+        "filename": "testing/buildbot/filters/mojo.fyi.mash.browser_tests.filter",
+        "patchSetId": 1
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-19T23:46:50Z",
+      "side": 1,
+      "message": "optional nit:\n-ShelfAppBrowserTest.LaunchAppFromDisplayWithoutFocus*",
+      "revId": "52de0369c828d836d722bd60ccf05fa798e8e3d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
