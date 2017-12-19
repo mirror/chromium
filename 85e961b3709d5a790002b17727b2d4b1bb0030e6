@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f6d75a2b_3f3418aa",
+        "filename": "ui/compositor/compositor_lock.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-12-19T23:53:10Z",
+      "side": 1,
+      "message": "FYI, I did this rather than take a LayerTreeHost* because:\n- Some clients (compositor) need to notify observers that lock state has changed, so we need some way to communicate out to them.\n- LTH is not easily mockable / fakeable for testing, while a custom interface is.\n\nWDYT?",
+      "range": {
+        "startLine": 45,
+        "startChar": 24,
+        "endLine": 45,
+        "endChar": 51
+      },
+      "revId": "85e961b3709d5a790002b17727b2d4b1bb0030e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
