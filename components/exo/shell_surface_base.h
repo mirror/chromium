@@ -265,7 +265,7 @@ class ShellSurfaceBase : public SurfaceTreeHost,
 
   // Attempt to start a drag operation. The type of drag operation to start is
   // determined by |component|.
-  void AttemptToStartDrag(int component);
+  virtual void AttemptToStartDrag(int component);
 
   // Set the parent window of this surface.
   void SetParentWindow(aura::Window* parent);
