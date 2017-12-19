@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "765ef98b_a4dc7000",
+        "filename": "chrome/browser/resources/md_extensions/item.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-12-19T19:09:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4a022a97_55721abd",
+      "revId": "8765f7b4eab701516c61acbc707333956442d45f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f1a0dbad_cdf40fba",
         "filename": "chrome/browser/resources/md_extensions/item.js",
         "patchSetId": 4
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "737a6fb9_32d9d19f",
+        "filename": "chrome/browser/resources/md_extensions/item.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-12-19T19:09:33Z",
+      "side": 1,
+      "message": "Done. Also fixed another use of loadTimeData below.",
+      "parentUuid": "f1a0dbad_cdf40fba",
+      "range": {
+        "startLine": 106,
+        "startChar": 12,
+        "endLine": 106,
+        "endChar": 37
+      },
+      "revId": "8765f7b4eab701516c61acbc707333956442d45f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b7494d50_57706725",
         "filename": "chrome/browser/ui/webui/extensions/extensions_ui.cc",
         "patchSetId": 4
@@ -62,6 +104,30 @@
       "revId": "8765f7b4eab701516c61acbc707333956442d45f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac90a23b_7223f948",
+        "filename": "chrome/browser/ui/webui/extensions/extensions_ui.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-12-19T19:09:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b7494d50_57706725",
+      "range": {
+        "startLine": 197,
+        "startChar": 30,
+        "endLine": 197,
+        "endChar": 50
+      },
+      "revId": "8765f7b4eab701516c61acbc707333956442d45f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
