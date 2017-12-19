@@ -1246,6 +1246,9 @@ void ThreadState::CollectGarbage(BlinkGC::StackState stack_state,
   if (SweepForbidden())
     return;
 
+  double start_total_collect_garbage_time =
+      WTF::CurrentTimeTicksInMilliseconds();
+
   CompleteSweep();
 
   RUNTIME_CALL_TIMER_SCOPE_IF_ISOLATE_EXISTS(
@@ -1282,6 +1285,13 @@ void ThreadState::CollectGarbage(BlinkGC::StackState stack_state,
 #endif
 
   PreSweep(gc_type);
+
+  double total_collect_garbage_time =
+      WTF::CurrentTimeTicksInMilliseconds() - start_total_collect_garbage_time;
+  DEFINE_THREAD_SAFE_STATIC_LOCAL(
+      CustomCountHistogram, time_for_total_collect_garbage_histogram,
+      ("BlinkGC.TimeForTotalCollectGarbage", 1, 10 * 1000, 50));
+  time_for_total_collect_garbage_histogram.Count(total_collect_garbage_time);
 }
 
 void ThreadState::MarkPhasePrologue(BlinkGC::StackState stack_state,
