@@ -25,7 +25,6 @@
 #include "ui/accessibility/ax_text_utils.h"
 #include "ui/accessibility/ax_tree_data.h"
 #include "ui/accessibility/platform/ax_platform_node_delegate.h"
-#include "ui/accessibility/platform/ax_platform_unique_id.h"
 #include "ui/base/win/atl_module.h"
 #include "ui/gfx/geometry/rect_conversions.h"
 
@@ -355,16 +354,14 @@ AXPlatformNode* AXPlatformNodeWin::GetFromUniqueId(int32_t unique_id) {
 // AXPlatformNodeWin
 //
 
-AXPlatformNodeWin::AXPlatformNodeWin()
-    : unique_id_(GetNextAXPlatformNodeUniqueId()) {
-  g_unique_id_map.Get()[unique_id_] = this;
+AXPlatformNodeWin::AXPlatformNodeWin() {
+  g_unique_id_map.Get()[unique_id()] = this;
 }
 
 AXPlatformNodeWin::~AXPlatformNodeWin() {
   for (AXPlatformNodeRelationWin* relation : relations_)
     relation->Release();
-  if (unique_id_)
-    g_unique_id_map.Get().erase(unique_id_);
+  g_unique_id_map.Get().erase(unique_id());
 }
 
 const base::char16 AXPlatformNodeWin::kEmbeddedCharacter = L'\xfffc';
@@ -580,8 +577,7 @@ void AXPlatformNodeWin::Dispose() {
 }
 
 void AXPlatformNodeWin::Destroy() {
-  g_unique_id_map.Get().erase(unique_id_);
-  unique_id_ = 0;
+  g_unique_id_map.Get().erase(unique_id());
 
   RemoveAlertTarget();
 
@@ -612,7 +608,7 @@ void AXPlatformNodeWin::NotifyAccessibilityEvent(AXEvent event_type) {
   if (native_event < EVENT_MIN)
     return;
 
-  ::NotifyWinEvent(native_event, hwnd, OBJID_CLIENT, -unique_id_);
+  ::NotifyWinEvent(native_event, hwnd, OBJID_CLIENT, -unique_id());
 
   // Keep track of objects that are a target of an alert event.
   if (event_type == AX_EVENT_ALERT)
@@ -1187,10 +1183,10 @@ STDMETHODIMP AXPlatformNodeWin::get_states(AccessibleStates* states) {
   return S_OK;
 }
 
-STDMETHODIMP AXPlatformNodeWin::get_uniqueID(LONG* unique_id) {
+STDMETHODIMP AXPlatformNodeWin::get_uniqueID(LONG* id) {
   WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_GET_UNIQUE_ID);
-  COM_OBJECT_VALIDATE_1_ARG(unique_id);
-  *unique_id = -unique_id_;
+  COM_OBJECT_VALIDATE_1_ARG(id);
+  *id = -unique_id();
   return S_OK;
 }
 

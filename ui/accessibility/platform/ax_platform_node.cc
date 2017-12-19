@@ -9,6 +9,7 @@
 #include "build/build_config.h"
 #include "ui/accessibility/ax_node_data.h"
 #include "ui/accessibility/platform/ax_platform_node_delegate.h"
+#include "ui/accessibility/platform/ax_platform_unique_id.h"
 #include "ui/base/ui_features.h"
 
 namespace ui {
@@ -43,7 +44,8 @@ void AXPlatformNode::RegisterNativeWindowHandler(
   native_window_handler_.Get() = handler;
 }
 
-AXPlatformNode::AXPlatformNode() {}
+AXPlatformNode::AXPlatformNode()
+    : unique_id_(GetNextAXPlatformNodeUniqueId()) {}
 
 AXPlatformNode::~AXPlatformNode() {
 }

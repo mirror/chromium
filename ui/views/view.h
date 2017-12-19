@@ -1106,6 +1106,8 @@ class VIEWS_EXPORT View : public ui::LayerDelegate,
   virtual bool HandleAccessibleAction(const ui::AXActionData& action_data);
 
   // Returns an instance of the native accessibility interface for this view.
+  // TODO(aleventhal) Refactor to clear up name confusion.
+  NativeViewAccessibility* GetNativeViewAccessibility();
   virtual gfx::NativeViewAccessible GetNativeViewAccessible();
 
   // Notifies assistive technology that an accessibility event has

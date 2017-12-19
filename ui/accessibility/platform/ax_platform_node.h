@@ -69,6 +69,9 @@ class AX_EXPORT AXPlatformNode {
   // Return this object's delegate.
   virtual AXPlatformNodeDelegate* GetDelegate() const = 0;
 
+  // A unique id is used to define the relationships between nodes.
+  int32_t unique_id() const { return unique_id_; }
+
  protected:
   AXPlatformNode();
   virtual ~AXPlatformNode();
@@ -80,6 +83,10 @@ class AX_EXPORT AXPlatformNode {
 
   static base::LazyInstance<NativeWindowHandlerCallback>::Leaky
       native_window_handler_;
+
+  const int32_t unique_id_;
+
+  DISALLOW_COPY_AND_ASSIGN(AXPlatformNode);
 };
 
 }  // namespace ui

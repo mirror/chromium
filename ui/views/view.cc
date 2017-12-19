@@ -1447,12 +1447,15 @@ bool View::HandleAccessibleAction(const ui::AXActionData& action_data) {
   return false;
 }
 
-gfx::NativeViewAccessible View::GetNativeViewAccessible() {
+NativeViewAccessibility* View::GetNativeViewAccessibility() {
   if (!native_view_accessibility_)
     native_view_accessibility_ = NativeViewAccessibility::Create(this);
-  if (native_view_accessibility_)
-    return native_view_accessibility_->GetNativeObject();
-  return nullptr;
+  return native_view_accessibility_.get();
+}
+
+gfx::NativeViewAccessible View::GetNativeViewAccessible() {
+  NativeViewAccessibility* accessible = GetNativeViewAccessibility();
+  return accessible ? accessible->GetNativeObject() : nullptr;
 }
 
 void View::NotifyAccessibilityEvent(
