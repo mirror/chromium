@@ -19,6 +19,29 @@
     },
     {
       "key": {
+        "uuid": "a527f0ef_4ddf2fc7",
+        "filename": "device/ctap/ctap_data.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-19T12:16:44Z",
+      "side": 1,
+      "message": "\u003d default;\n\nhttps://sites.google.com/a/chromium.org/dev/developers/coding-style/cpp-dos-and-donts#TOC-Prefer-to-use-default",
+      "range": {
+        "startLine": 9,
+        "startChar": 20,
+        "endLine": 9,
+        "endChar": 23
+      },
+      "revId": "85cfb00851eec62759c8248e64d5aeb58d98b717",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "75c8234e_6a852f65",
         "filename": "device/ctap/ctap_data.h",
         "patchSetId": 5
@@ -30,6 +53,742 @@
       "writtenOn": "2017-12-19T08:17:57Z",
       "side": 1,
       "message": "why is this a union?",
+      "revId": "85cfb00851eec62759c8248e64d5aeb58d98b717",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3f9ad6f_ebeeba35",
+        "filename": "device/ctap/ctap_data_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-19T12:16:44Z",
+      "side": 1,
+      "message": "violates Google C++ Style Guide: https://google.github.io/styleguide/cppguide.html#Static_and_Global_Variables\n\nEither remove static or make this an array (either C-style or std::array).",
+      "range": {
+        "startLine": 16,
+        "startChar": 2,
+        "endLine": 16,
+        "endChar": 35
+      },
+      "revId": "85cfb00851eec62759c8248e64d5aeb58d98b717",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a4eec71_409c5334",
+        "filename": "device/ctap/ctap_data_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-19T12:16:44Z",
+      "side": 1,
+      "message": "same here",
+      "range": {
+        "startLine": 21,
+        "startChar": 2,
+        "endLine": 21,
+        "endChar": 35
+      },
+      "revId": "85cfb00851eec62759c8248e64d5aeb58d98b717",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e455ba5_0c9500bf",
+        "filename": "device/ctap/ctap_data_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-19T12:16:44Z",
+      "side": 1,
+      "message": "and here",
+      "range": {
+        "startLine": 26,
+        "startChar": 2,
+        "endLine": 26,
+        "endChar": 35
+      },
+      "revId": "85cfb00851eec62759c8248e64d5aeb58d98b717",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "794c1de3_c3988d4c",
+        "filename": "device/ctap/ctap_data_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-19T12:16:44Z",
+      "side": 1,
+      "message": "base::Optional has an explicit conversion to bool., i.e. ASSERT_TRUE(req) is enough here",
+      "range": {
+        "startLine": 118,
+        "startChar": 14,
+        "endLine": 118,
+        "endChar": 29
+      },
+      "revId": "85cfb00851eec62759c8248e64d5aeb58d98b717",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e9e6662_664d24ee",
+        "filename": "device/ctap/ctap_data_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-19T12:16:44Z",
+      "side": 1,
+      "message": "req-\u003eSerializeToCBOR()",
+      "range": {
+        "startLine": 119,
+        "startChar": 25,
+        "endLine": 119,
+        "endChar": 54
+      },
+      "revId": "85cfb00851eec62759c8248e64d5aeb58d98b717",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c34f929_e935c6df",
+        "filename": "device/ctap/ctap_data_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-19T12:16:44Z",
+      "side": 1,
+      "message": "ASSERT_TRUE(serialized_data);",
+      "range": {
+        "startLine": 120,
+        "startChar": 2,
+        "endLine": 120,
+        "endChar": 43
+      },
+      "revId": "85cfb00851eec62759c8248e64d5aeb58d98b717",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0edb39d_0fe6631d",
+        "filename": "device/ctap/ctap_data_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-19T12:16:44Z",
+      "side": 1,
+      "message": "*serialized_data,",
+      "range": {
+        "startLine": 121,
+        "startChar": 14,
+        "endLine": 121,
+        "endChar": 38
+      },
+      "revId": "85cfb00851eec62759c8248e64d5aeb58d98b717",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f19e8b1e_240a6988",
+        "filename": "device/ctap/ctap_data_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-19T12:16:44Z",
+      "side": 1,
+      "message": "here aswell",
+      "range": {
+        "startLine": 126,
+        "startChar": 2,
+        "endLine": 126,
+        "endChar": 35
+      },
+      "revId": "85cfb00851eec62759c8248e64d5aeb58d98b717",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "431548cf_603ff859",
+        "filename": "device/ctap/ctap_data_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-19T12:16:44Z",
+      "side": 1,
+      "message": "here too",
+      "range": {
+        "startLine": 158,
+        "startChar": 0,
+        "endLine": 168,
+        "endChar": 58
+      },
+      "revId": "85cfb00851eec62759c8248e64d5aeb58d98b717",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5cfa516_aba80845",
+        "filename": "device/ctap/ctap_data_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-19T12:16:44Z",
+      "side": 1,
+      "message": "use push_back if you are using the constructor anyway",
+      "range": {
+        "startLine": 226,
+        "startChar": 15,
+        "endLine": 226,
+        "endChar": 27
+      },
+      "revId": "85cfb00851eec62759c8248e64d5aeb58d98b717",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40a127e4_87e3ab33",
+        "filename": "device/ctap/ctap_data_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-19T12:16:44Z",
+      "side": 1,
+      "message": "same here",
+      "range": {
+        "startLine": 234,
+        "startChar": 15,
+        "endLine": 234,
+        "endChar": 27
+      },
+      "revId": "85cfb00851eec62759c8248e64d5aeb58d98b717",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04526e84_d0e39e91",
+        "filename": "device/ctap/ctap_data_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-19T12:16:44Z",
+      "side": 1,
+      "message": "|allowed_list| could be inlined",
+      "range": {
+        "startLine": 242,
+        "startChar": 41,
+        "endLine": 242,
+        "endChar": 53
+      },
+      "revId": "85cfb00851eec62759c8248e64d5aeb58d98b717",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5adb2ee2_258e9cb8",
+        "filename": "device/ctap/ctap_data_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-19T12:16:44Z",
+      "side": 1,
+      "message": "same base::Optional comments as above apply here",
+      "range": {
+        "startLine": 245,
+        "startChar": 2,
+        "endLine": 248,
+        "endChar": 38
+      },
+      "revId": "85cfb00851eec62759c8248e64d5aeb58d98b717",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "694982d0_3d691be8",
+        "filename": "device/ctap/ctap_data_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-19T12:16:44Z",
+      "side": 1,
+      "message": "and here",
+      "range": {
+        "startLine": 253,
+        "startChar": 2,
+        "endLine": 253,
+        "endChar": 35
+      },
+      "revId": "85cfb00851eec62759c8248e64d5aeb58d98b717",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "309520bc_74108a80",
+        "filename": "device/ctap/ctap_device_command.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-19T12:16:44Z",
+      "side": 1,
+      "message": "prefer kEnumName style for new code:\nhttps://google.github.io/styleguide/cppguide.html#Enumerator_Names\n\nalso add a source for the values you specify",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 21,
+        "endChar": 22
+      },
+      "revId": "85cfb00851eec62759c8248e64d5aeb58d98b717",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37d19eab_528d32f8",
+        "filename": "device/ctap/ctap_request_command.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-19T12:16:44Z",
+      "side": 1,
+      "message": "Same comments here (kEnumStyle, add source)",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 29
+      },
+      "revId": "85cfb00851eec62759c8248e64d5aeb58d98b717",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1067757a_ea309e19",
+        "filename": "device/ctap/ctap_request_data.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-19T12:16:44Z",
+      "side": 1,
+      "message": "could you provide an explicit link where this structure is defined? Using a Map with integer keys seems a bit strange to me, usually I\u0027d use an array for this.",
+      "range": {
+        "startLine": 33,
+        "startChar": 27,
+        "endLine": 33,
+        "endChar": 42
+      },
+      "revId": "85cfb00851eec62759c8248e64d5aeb58d98b717",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "506adf99_94fd9710",
+        "filename": "device/ctap/ctap_request_data.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-19T12:16:44Z",
+      "side": 1,
+      "message": "What is the reason for this intermediate class? Wouldn\u0027t it be easier to simply make the CTAPMakeCredentialRequest constructor public?",
+      "range": {
+        "startLine": 30,
+        "startChar": 8,
+        "endLine": 30,
+        "endChar": 36
+      },
+      "revId": "85cfb00851eec62759c8248e64d5aeb58d98b717",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54623c30_bd8fc9dd",
+        "filename": "device/ctap/ctap_request_data.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-19T12:16:44Z",
+      "side": 1,
+      "message": "const does not make much sense here, you are returning the Optional by value.",
+      "range": {
+        "startLine": 63,
+        "startChar": 2,
+        "endLine": 63,
+        "endChar": 7
+      },
+      "revId": "85cfb00851eec62759c8248e64d5aeb58d98b717",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b95eccee_75bb78df",
+        "filename": "device/ctap/ctap_request_data.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-19T12:16:44Z",
+      "side": 1,
+      "message": "Same here, this class does not seem necessary.",
+      "range": {
+        "startLine": 90,
+        "startChar": 8,
+        "endLine": 90,
+        "endChar": 38
+      },
+      "revId": "85cfb00851eec62759c8248e64d5aeb58d98b717",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ed243c6_3c615d31",
+        "filename": "device/ctap/ctap_response_code.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-19T12:16:44Z",
+      "side": 1,
+      "message": "provide reference and use kEnumName style",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 64,
+        "endChar": 30
+      },
+      "revId": "85cfb00851eec62759c8248e64d5aeb58d98b717",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8df51111_d5fc18d5",
+        "filename": "device/ctap/ctap_response_code.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-19T12:16:44Z",
+      "side": 1,
+      "message": "make this a constexpr array, static keyword is not needed here",
+      "range": {
+        "startLine": 67,
+        "startChar": 0,
+        "endLine": 67,
+        "endChar": 42
+      },
+      "revId": "85cfb00851eec62759c8248e64d5aeb58d98b717",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "429b9d68_967c3da2",
+        "filename": "device/ctap/public_key_credential_descriptor.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-19T12:16:44Z",
+      "side": 1,
+      "message": "std::move(id)",
+      "range": {
+        "startLine": 12,
+        "startChar": 45,
+        "endLine": 12,
+        "endChar": 47
+      },
+      "revId": "85cfb00851eec62759c8248e64d5aeb58d98b717",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbafc007_d1d89ac2",
+        "filename": "device/ctap/public_key_credential_descriptor.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-19T12:16:44Z",
+      "side": 1,
+      "message": "std::move(credential_type)",
+      "range": {
+        "startLine": 12,
+        "startChar": 23,
+        "endLine": 12,
+        "endChar": 38
+      },
+      "revId": "85cfb00851eec62759c8248e64d5aeb58d98b717",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ad3cba3_c4e35982",
+        "filename": "device/ctap/public_key_credential_descriptor.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-19T12:16:44Z",
+      "side": 1,
+      "message": "return PublicKeyCredentialDescriptor(credential_type_, id_);",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 20
+      },
+      "revId": "85cfb00851eec62759c8248e64d5aeb58d98b717",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c400696_52910d5b",
+        "filename": "device/ctap/public_key_credential_descriptor.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-19T12:16:44Z",
+      "side": 1,
+      "message": "std::move(cbor_descriptor_map)",
+      "range": {
+        "startLine": 32,
+        "startChar": 25,
+        "endLine": 32,
+        "endChar": 44
+      },
+      "revId": "85cfb00851eec62759c8248e64d5aeb58d98b717",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e370a6b_9d0ffcb4",
+        "filename": "device/ctap/public_key_credential_descriptor.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-19T12:16:44Z",
+      "side": 1,
+      "message": "You need to check if type and id are of the correct type as well. Also try to do as little map look ups as possible, e.g. like this:\n\nif (!cbor.is_map())\n  return base::nullopt;\n\nconst cbor::CBORValue::MapValue\u0026 map \u003d cbor.GetMap();\nauto type \u003d map.find(cbor::CBORValue(\"type\"));\nif (type \u003d\u003d map.end() || !type-\u003esecond.is_string())\n  return base::nullopt;\n\nauto id \u003d map.find(cbor::CBORValue(\"id\"));\nif (id \u003d\u003d map.end() || !id-\u003esecond.is_bytestring())\n  return base::nullopt;\n\nreturn PublicKeyCredentialDescriptor(type-\u003esecond.GetString(), id-\u003esecond.GetBytestring());",
+      "range": {
+        "startLine": 38,
+        "startChar": 0,
+        "endLine": 44,
+        "endChar": 23
+      },
+      "revId": "85cfb00851eec62759c8248e64d5aeb58d98b717",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52475b26_93eee1c0",
+        "filename": "device/ctap/public_key_credential_params.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-19T12:16:44Z",
+      "side": 1,
+      "message": "std::move(credential_params)",
+      "range": {
+        "startLine": 11,
+        "startChar": 40,
+        "endLine": 11,
+        "endChar": 57
+      },
+      "revId": "85cfb00851eec62759c8248e64d5aeb58d98b717",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a12d7527_e7eb2193",
+        "filename": "device/ctap/public_key_credential_params.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-19T12:16:44Z",
+      "side": 1,
+      "message": "use for-each loop here",
+      "range": {
+        "startLine": 25,
+        "startChar": 4,
+        "endLine": 25,
+        "endChar": 78
+      },
+      "revId": "85cfb00851eec62759c8248e64d5aeb58d98b717",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da848032_71bf0aac",
+        "filename": "device/ctap/public_key_credential_params.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-19T12:16:44Z",
+      "side": 1,
+      "message": "this will create a map with only two entries, each iteration of the loop will overwrite the existing values of the map. I don\u0027t think this is what you want. Did you mean\n\n  cbor_credential_map[cbor::CBORValue(it-\u003efirst)] \u003d cbor::CBORValue(it-\u003esecond);\n\ninstead?",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 80
+      },
+      "revId": "85cfb00851eec62759c8248e64d5aeb58d98b717",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5b04a7f_c081d6e7",
+        "filename": "device/ctap/public_key_credential_params.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-19T12:16:44Z",
+      "side": 1,
+      "message": "what is your reason to choose a list over a vector here? Also is a container of maps necessary, wouldn\u0027t a single map suffice?",
+      "range": {
+        "startLine": 30,
+        "startChar": 2,
+        "endLine": 30,
+        "endChar": 11
+      },
+      "revId": "85cfb00851eec62759c8248e64d5aeb58d98b717",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ef7104a_96e791cd",
+        "filename": "device/ctap/public_key_credential_rp_entity.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-19T12:16:44Z",
+      "side": 1,
+      "message": "std::move(rp_id)",
+      "range": {
+        "startLine": 10,
+        "startChar": 13,
+        "endLine": 10,
+        "endChar": 18
+      },
       "revId": "85cfb00851eec62759c8248e64d5aeb58d98b717",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -81,6 +840,52 @@
       "writtenOn": "2017-12-19T08:17:57Z",
       "side": 1,
       "message": "should be const GURL\u0026 icon_url",
+      "revId": "85cfb00851eec62759c8248e64d5aeb58d98b717",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5f743be_91d49c0e",
+        "filename": "device/ctap/public_key_credential_rp_entity.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-19T12:16:44Z",
+      "side": 1,
+      "message": "what is your reason to have setters instead of constructor parameters? do you intend to overwrite the existing values often?",
+      "range": {
+        "startLine": 26,
+        "startChar": 1,
+        "endLine": 27,
+        "endChar": 42
+      },
+      "revId": "85cfb00851eec62759c8248e64d5aeb58d98b717",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ba6f1c3_edc36a4d",
+        "filename": "device/ctap/public_key_credential_user_entity.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-19T12:16:44Z",
+      "side": 1,
+      "message": "same question as before, why setters instead of constructor params?",
+      "range": {
+        "startLine": 30,
+        "startChar": 0,
+        "endLine": 32,
+        "endChar": 44
+      },
       "revId": "85cfb00851eec62759c8248e64d5aeb58d98b717",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
