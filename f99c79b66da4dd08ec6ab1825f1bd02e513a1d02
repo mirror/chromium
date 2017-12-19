@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c9cf2f7d_8210b6ad",
+        "filename": "chrome/browser/ui/ash/launcher/launcher_context_menu_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-12-19T18:25:34Z",
+      "side": 1,
+      "message": "Thanks, fixed.",
+      "parentUuid": "0ba99bc8_959c339d",
+      "revId": "f99c79b66da4dd08ec6ab1825f1bd02e513a1d02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2d9f84b6_ee7c2dd7",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 14
@@ -33,6 +51,24 @@
       "revId": "f99c79b66da4dd08ec6ab1825f1bd02e513a1d02",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80168f53_667835cd",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 14
+      },
+      "lineNbr": 2162,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-12-19T18:25:34Z",
+      "side": 1,
+      "message": "Thanks, that is definitely better. I\u0027ll modify this description to include the launcher once that part has been implemented.",
+      "parentUuid": "2d9f84b6_ee7c2dd7",
+      "revId": "f99c79b66da4dd08ec6ab1825f1bd02e513a1d02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

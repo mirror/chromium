@@ -22,6 +22,30 @@
       "revId": "cd64a224ecb0add2b5e52ed14c439d9b1b61e063",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db68a849_59b7b079",
+        "filename": "ui/views/controls/menu/menu_model_adapter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-12-19T18:25:34Z",
+      "side": 1,
+      "message": "Ended up implementing option 1!",
+      "parentUuid": "ae2cdb7f_26b92c5a",
+      "range": {
+        "startLine": 154,
+        "startChar": 4,
+        "endLine": 154,
+        "endChar": 34
+      },
+      "revId": "cd64a224ecb0add2b5e52ed14c439d9b1b61e063",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

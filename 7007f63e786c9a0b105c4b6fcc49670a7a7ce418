@@ -125,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "dd55008a_a429f686",
+        "filename": "ash/shelf/shelf_context_menu_model_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-12-19T18:25:34Z",
+      "side": 1,
+      "message": "Ok understood! I\u0027ll remove these checks in other tests too.",
+      "parentUuid": "d9cbe5aa_599a77fc",
+      "revId": "7007f63e786c9a0b105c4b6fcc49670a7a7ce418",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4350ebfd_72c3cf24",
         "filename": "chrome/browser/ui/app_list/app_context_menu.h",
         "patchSetId": 12
@@ -242,6 +260,24 @@
     },
     {
       "key": {
+        "uuid": "00b82bb9_11a5ceab",
+        "filename": "chrome/browser/ui/app_list/app_context_menu_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 491,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-12-19T18:25:34Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "c7793b22_5a5060bf",
+      "revId": "7007f63e786c9a0b105c4b6fcc49670a7a7ce418",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3d025e5b_4bbe1355",
         "filename": "chrome/browser/ui/ash/launcher/launcher_context_menu_unittest.cc",
         "patchSetId": 12
@@ -274,6 +310,24 @@
       "revId": "7007f63e786c9a0b105c4b6fcc49670a7a7ce418",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32187f47_5d481d4f",
+        "filename": "chrome/browser/ui/ash/launcher/launcher_context_menu_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-12-19T18:25:34Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "519c0a9a_2fba45a7",
+      "revId": "7007f63e786c9a0b105c4b6fcc49670a7a7ce418",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
