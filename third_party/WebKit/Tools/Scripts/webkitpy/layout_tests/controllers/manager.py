@@ -277,9 +277,6 @@ class Manager(object):
             self._port.TEST_PATH_SEPARATOR + self.HTTP_SUBDIR + self._port.TEST_PATH_SEPARATOR in test
         )
 
-    def _is_inspector_test(self, test):
-        return self.INSPECTOR_SUBDIR + self._port.TEST_PATH_SEPARATOR in test
-
     def _is_websocket_test(self, test):
         if self._port.should_use_wptserve(test):
             return False
@@ -399,8 +396,7 @@ class Manager(object):
             self._port.start_wptserve()
             self._wptserve_started = True
 
-        if self._port.requires_http_server() or any((self._is_http_test(test) or self._is_inspector_test(test))
-                                                    for test in tests_to_run):
+        if self._port.requires_http_server() or any(self._is_http_test(test) for test in tests_to_run):
             self._printer.write_update('Starting HTTP server ...')
             self._port.start_http_server(additional_dirs={}, number_of_drivers=self._options.max_locked_shards)
             self._http_server_started = True
