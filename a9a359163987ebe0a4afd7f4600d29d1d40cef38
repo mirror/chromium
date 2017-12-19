@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6e8cc464_cbe78a71",
+        "filename": "third_party/WebKit/common/service_worker/service_worker_client.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-12-19T02:46:40Z",
+      "side": 1,
+      "message": "I think so, but I am not very sure why the original comments is \"window client\", so just keep it.\nDo you think we need to change the comments?",
+      "parentUuid": "d8bf024a_335da6ec",
+      "revId": "a9a359163987ebe0a4afd7f4600d29d1d40cef38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4498b92f_101a4a30",
         "filename": "third_party/WebKit/common/service_worker/service_worker_client.mojom",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-15T08:47:35Z",
       "side": 1,
       "message": "There is only WindowClient#visibilityState. What is this value when the Client is not a window?",
+      "revId": "a9a359163987ebe0a4afd7f4600d29d1d40cef38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4ac315c_aa94b83b",
+        "filename": "third_party/WebKit/common/service_worker/service_worker_client.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-12-19T02:46:40Z",
+      "side": 1,
+      "message": "I think it\u0027s PageVisibilityState::kHidden.\nhttps://cs.chromium.org/chromium/src/content/browser/service_worker/service_worker_client_utils.cc?dr\u0026l\u003d325",
+      "parentUuid": "4498b92f_101a4a30",
       "revId": "a9a359163987ebe0a4afd7f4600d29d1d40cef38",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "c98ba300_24082071",
+        "filename": "third_party/WebKit/common/service_worker/service_worker_client.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-12-19T02:46:40Z",
+      "side": 1,
+      "message": "It is false.\nhttps://cs.chromium.org/chromium/src/content/browser/service_worker/service_worker_client_utils.cc?dr\u0026l\u003d326",
+      "parentUuid": "346c837a_db6774a0",
+      "revId": "a9a359163987ebe0a4afd7f4600d29d1d40cef38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1323c09b_a0d0c1b9",
         "filename": "third_party/WebKit/common/service_worker/service_worker_client.mojom",
         "patchSetId": 4
@@ -67,6 +121,24 @@
       "revId": "a9a359163987ebe0a4afd7f4600d29d1d40cef38",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc2b21fe_152d4d84",
+        "filename": "third_party/WebKit/common/service_worker/service_worker_client.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-12-19T02:46:40Z",
+      "side": 1,
+      "message": "Ack, thanks.",
+      "parentUuid": "1323c09b_a0d0c1b9",
+      "revId": "a9a359163987ebe0a4afd7f4600d29d1d40cef38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "583c985e_e33d6c8b",
+        "filename": "third_party/WebKit/common/service_worker/service_worker_client.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-12-19T02:46:40Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "9e8fb405_86d7d181",
+      "revId": "a9a359163987ebe0a4afd7f4600d29d1d40cef38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "20f8d5da_f1cb7432",
         "filename": "third_party/WebKit/common/service_worker/service_worker_client.mojom",
         "patchSetId": 4
@@ -98,6 +188,24 @@
       "writtenOn": "2017-12-15T08:47:35Z",
       "side": 1,
       "message": "Using kLast for the default values seems a bit weird to me. It\u0027s pretty arbitrary which the last enum type is and it can easily change. Can we choose a specific value instead? What happens if we don\u0027t set a default?",
+      "revId": "a9a359163987ebe0a4afd7f4600d29d1d40cef38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44e4d5d6_f79ef36d",
+        "filename": "third_party/WebKit/common/service_worker/service_worker_client.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-12-19T02:46:40Z",
+      "side": 1,
+      "message": "If we only use client_info.url.is_empty() to check IsEmptyClientInfo, and don\u0027t set the default values for page_visibility_state, frame_type and client_type. ServiceWorkerDispatcherHostTest.DispatchExtendableMessageEvent_Fail will not pass, I am investigating it.",
+      "parentUuid": "20f8d5da_f1cb7432",
       "revId": "a9a359163987ebe0a4afd7f4600d29d1d40cef38",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
