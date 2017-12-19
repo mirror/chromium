@@ -16,6 +16,24 @@
       "revId": "c82135757963b5eae19b194dba5a50d30b01f423",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88ec0631_8188b49a",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilderTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 4254,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-12-19T20:14:37Z",
+      "side": 1,
+      "message": "Updated PaintPropertyTreeBuilderTest.FrameBorderRadius to include a padding.",
+      "parentUuid": "8e0889e3_76195051",
+      "revId": "c82135757963b5eae19b194dba5a50d30b01f423",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
