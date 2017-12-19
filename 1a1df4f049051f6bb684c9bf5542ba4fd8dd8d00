@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "61757720_0ced7e8f",
+        "filename": "third_party/WebKit/Source/platform/heap/Member.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 587,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-12-19T08:05:04Z",
+      "side": 1,
+      "message": "The have a Trace() method and thus we call NotifyNewObject upon creating them in the Vector.\n\nSee tests that deal with \"NonGarbageCollectedContainer\".",
+      "parentUuid": "bc75ef9e_36ebf762",
+      "revId": "1a1df4f049051f6bb684c9bf5542ba4fd8dd8d00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9acb8f31_d4982b43",
         "filename": "third_party/WebKit/Source/platform/heap/ThreadState.h",
         "patchSetId": 6
@@ -47,6 +65,24 @@
       "writtenOn": "2017-12-19T07:54:50Z",
       "side": 1,
       "message": "Can we simplify the ConstructTraits by adding the same-name methods to HeapAllocator and PartitionAllocator? See how AllocateVectorBacking works between HeapAllocator and PartitionAllocator.",
+      "revId": "1a1df4f049051f6bb684c9bf5542ba4fd8dd8d00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8683ff8_8a04a46b",
+        "filename": "third_party/WebKit/Source/platform/wtf/ConstructTraits.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-12-19T08:05:04Z",
+      "side": 1,
+      "message": "Yes (keeping unresolved since I am just going through the questions.)",
+      "parentUuid": "fe268bc8_38743923",
       "revId": "1a1df4f049051f6bb684c9bf5542ba4fd8dd8d00",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +123,24 @@
     },
     {
       "key": {
+        "uuid": "84ebf683_062d1ea0",
+        "filename": "third_party/WebKit/Source/platform/wtf/ConstructTraits.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-12-19T08:05:04Z",
+      "side": 1,
+      "message": "Consider \n  Vector\u003c  // 1\n    Vector\u003cT\u003e  // 2\n  \u003e\n\nCase (2) is traceable because Vector\u003cT\u003e has a tracing method (in Vector.h). So case (1) will go here as it\u0027s inner type is traceable. I think this could in theory be solved by moving Vector::Trace on to HeapVector. One would need to try to see whether that is possible or not.",
+      "parentUuid": "10fe4a1e_8cc5c6d2",
+      "revId": "1a1df4f049051f6bb684c9bf5542ba4fd8dd8d00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8e4970d5_0d8e16a3",
         "filename": "third_party/WebKit/Source/platform/wtf/ConstructTraits.h",
         "patchSetId": 6
@@ -104,6 +158,24 @@
     },
     {
       "key": {
+        "uuid": "9d5672c5_5e91bb6d",
+        "filename": "third_party/WebKit/Source/platform/wtf/ConstructTraits.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-12-19T08:05:04Z",
+      "side": 1,
+      "message": "Yes.",
+      "parentUuid": "8e4970d5_0d8e16a3",
+      "revId": "1a1df4f049051f6bb684c9bf5542ba4fd8dd8d00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "43218f92_b48cdd70",
         "filename": "third_party/WebKit/Source/platform/wtf/ConstructTraits.h",
         "patchSetId": 6
@@ -118,6 +190,24 @@
       "revId": "1a1df4f049051f6bb684c9bf5542ba4fd8dd8d00",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ceaee77b_49001d7c",
+        "filename": "third_party/WebKit/Source/platform/wtf/ConstructTraits.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-12-19T08:05:04Z",
+      "side": 1,
+      "message": "It\u0027s when we in-place construct objects in a vector, or move a vector of such objects.\n\nSee IncrementalMarkingTest.cc dealing with \"NonGarbageCollectedContainer\". For example, HeapVectorEmplaceBackNonGCedContainer or HeapVectorCopyNonGCedContainer.",
+      "parentUuid": "43218f92_b48cdd70",
+      "revId": "1a1df4f049051f6bb684c9bf5542ba4fd8dd8d00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
