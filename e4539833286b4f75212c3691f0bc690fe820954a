@@ -159,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "93c5f982_eb64555c",
+        "filename": "services/audio/public/cpp/audio_system_to_mojo_adapter.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-12-19T18:56:28Z",
+      "side": 1,
+      "message": "Ohhh. That is a bug in Connector. I think the overrides should clearly be consulted before (and if there\u0027s a hit, in exclusion to) the BindConnectorIfNecessary test. I would happily LGTM that if you made that change here. :)",
+      "parentUuid": "7bcd5e0b_1eb7840f",
+      "revId": "e4539833286b4f75212c3691f0bc690fe820954a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7718df27_4571d357",
         "filename": "services/audio/public/interfaces/system_info.mojom",
         "patchSetId": 17
