@@ -168,6 +168,13 @@ void PostMessageAndWaitForReply(FrameTreeNode* sender_ftn,
   }
 }
 
+void RunOneCycle() {
+  base::RunLoop runloop;
+  base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE,
+                                                runloop.QuitClosure());
+  runloop.Run();
+}
+
 // Helper function to extract and return "window.receivedMessages" from the
 // |sender_ftn| frame.  This variable is used in post_message.html to count the
 // number of messages received via postMessage by the current window.
@@ -372,6 +379,7 @@ void SurfaceHitTestTestHelper(
   main_frame_monitor.ResetEventReceived();
   child_frame_monitor.ResetEventReceived();
   router->RouteMouseEvent(root_view, &child_event, ui::LatencyInfo());
+  RunOneCycle();
 
   EXPECT_TRUE(child_frame_monitor.EventWasReceived());
   // The expected result coordinates are (5, 5), but can get slightly
@@ -392,6 +400,7 @@ void SurfaceHitTestTestHelper(
   main_event.click_count = 1;
   // Ladies and gentlemen, THIS is the main_event!
   router->RouteMouseEvent(root_view, &main_event, ui::LatencyInfo());
+  RunOneCycle();
 
   EXPECT_FALSE(child_frame_monitor.EventWasReceived());
   EXPECT_TRUE(main_frame_monitor.EventWasReceived());
@@ -2269,6 +2278,7 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest, NestedSurfaceHitTestTest) {
   nested_frame_monitor.ResetEventReceived();
   main_frame_monitor.ResetEventReceived();
   router->RouteMouseEvent(root_view, &nested_event, ui::LatencyInfo());
+  RunOneCycle();
 
   EXPECT_TRUE(nested_frame_monitor.EventWasReceived());
   EXPECT_NEAR(10, nested_frame_monitor.event().PositionInWidget().x, 2);
@@ -2318,6 +2328,7 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest,
   main_frame_monitor.ResetEventReceived();
   child_frame_monitor.ResetEventReceived();
   router->RouteMouseEvent(root_view, &child_event, ui::LatencyInfo());
+  RunOneCycle();
 
   EXPECT_TRUE(main_frame_monitor.EventWasReceived());
   EXPECT_NEAR(75, main_frame_monitor.event().PositionInWidget().x, 2);
@@ -2404,6 +2415,7 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest,
   // other renderers.
   web_contents()->GetInputEventRouter()->RouteMouseEvent(rwhv_a, &mouse_event,
                                                          ui::LatencyInfo());
+  RunOneCycle();
   EXPECT_TRUE(a_frame_monitor.EventWasReceived());
   a_frame_monitor.ResetEventReceived();
   EXPECT_FALSE(b_frame_monitor.EventWasReceived());
@@ -2415,6 +2427,7 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest,
   mouse_event.SetPositionInWidget(point_in_b_frame.x(), point_in_b_frame.y());
   web_contents()->GetInputEventRouter()->RouteMouseEvent(rwhv_a, &mouse_event,
                                                          ui::LatencyInfo());
+  RunOneCycle();
   EXPECT_TRUE(a_frame_monitor.EventWasReceived());
   EXPECT_EQ(a_frame_monitor.event().GetType(),
             blink::WebInputEvent::kMouseMove);
@@ -2429,6 +2442,7 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest,
   mouse_event.SetPositionInWidget(point_in_d_frame.x(), point_in_d_frame.y());
   web_contents()->GetInputEventRouter()->RouteMouseEvent(rwhv_a, &mouse_event,
                                                          ui::LatencyInfo());
+  RunOneCycle();
   EXPECT_TRUE(a_frame_monitor.EventWasReceived());
   EXPECT_EQ(a_frame_monitor.event().GetType(),
             blink::WebInputEvent::kMouseMove);
@@ -2496,6 +2510,7 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest, CrossProcessMouseCapture) {
   main_frame_monitor.ResetEventReceived();
   child_frame_monitor.ResetEventReceived();
   router->RouteMouseEvent(root_view, &mouse_event, ui::LatencyInfo());
+  RunOneCycle();
 
   EXPECT_FALSE(main_frame_monitor.EventWasReceived());
   EXPECT_TRUE(child_frame_monitor.EventWasReceived());
@@ -2510,10 +2525,12 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest, CrossProcessMouseCapture) {
   // causes a MouseMove to be sent to the main frame also, which we
   // need to ignore.
   router->RouteMouseEvent(root_view, &mouse_event, ui::LatencyInfo());
+  RunOneCycle();
   main_frame_monitor.ResetEventReceived();
   child_frame_monitor.ResetEventReceived();
   mouse_event.SetPositionInWidget(1, 5);
   router->RouteMouseEvent(root_view, &mouse_event, ui::LatencyInfo());
+  RunOneCycle();
 
   EXPECT_FALSE(main_frame_monitor.EventWasReceived());
   EXPECT_TRUE(child_frame_monitor.EventWasReceived());
@@ -2525,6 +2542,7 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest, CrossProcessMouseCapture) {
   main_frame_monitor.ResetEventReceived();
   child_frame_monitor.ResetEventReceived();
   router->RouteMouseEvent(root_view, &mouse_event, ui::LatencyInfo());
+  RunOneCycle();
 
   EXPECT_FALSE(main_frame_monitor.EventWasReceived());
   EXPECT_TRUE(child_frame_monitor.EventWasReceived());
@@ -2535,10 +2553,12 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest, CrossProcessMouseCapture) {
   mouse_event.SetPositionInWidget(1, 10);
   // Sending the MouseMove twice for the same reason as above.
   router->RouteMouseEvent(root_view, &mouse_event, ui::LatencyInfo());
+  RunOneCycle();
   main_frame_monitor.ResetEventReceived();
   child_frame_monitor.ResetEventReceived();
   mouse_event.SetPositionInWidget(1, 15);
   router->RouteMouseEvent(root_view, &mouse_event, ui::LatencyInfo());
+  RunOneCycle();
 
   EXPECT_TRUE(main_frame_monitor.EventWasReceived());
   EXPECT_FALSE(child_frame_monitor.EventWasReceived());
@@ -2549,6 +2569,7 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest, CrossProcessMouseCapture) {
   main_frame_monitor.ResetEventReceived();
   child_frame_monitor.ResetEventReceived();
   router->RouteMouseEvent(root_view, &mouse_event, ui::LatencyInfo());
+  RunOneCycle();
 
   EXPECT_TRUE(main_frame_monitor.EventWasReceived());
   EXPECT_FALSE(child_frame_monitor.EventWasReceived());
@@ -2561,6 +2582,7 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest, CrossProcessMouseCapture) {
   main_frame_monitor.ResetEventReceived();
   child_frame_monitor.ResetEventReceived();
   router->RouteMouseEvent(root_view, &mouse_event, ui::LatencyInfo());
+  RunOneCycle();
 
   EXPECT_TRUE(main_frame_monitor.EventWasReceived());
   EXPECT_FALSE(child_frame_monitor.EventWasReceived());
@@ -6351,6 +6373,7 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest,
   mouse_event.SetPositionInWidget(60, 60);
   web_contents()->GetInputEventRouter()->RouteMouseEvent(
       root_view, &mouse_event, ui::LatencyInfo());
+  RunOneCycle();
 
   // CursorMessageFilter::Wait() implicitly tests whether we receive a
   // ViewHostMsg_SetCursor message from the renderer process, because it does
@@ -7295,11 +7318,13 @@ void CreateContextMenuTestHelper(
   click_event.SetPositionInWidget(point.x(), point.y());
   click_event.click_count = 1;
   router->RouteMouseEvent(root_view, &click_event, ui::LatencyInfo());
+  RunOneCycle();
 
   // We also need a MouseUp event, needed by Windows.
   click_event.SetType(blink::WebInputEvent::kMouseUp);
   click_event.SetPositionInWidget(point.x(), point.y());
   router->RouteMouseEvent(root_view, &click_event, ui::LatencyInfo());
+  RunOneCycle();
 
   context_menu_delegate.Wait();
 
@@ -7473,6 +7498,7 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest, PopupMenuTest) {
   click_event.SetPositionInWidget(360, 90);
   click_event.click_count = 1;
   router->RouteMouseEvent(rwhv_root, &click_event, ui::LatencyInfo());
+  RunOneCycle();
 
   filter->Wait();
 
@@ -10792,6 +10818,7 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessNonIntegerScaleFactorBrowserTest,
   mouse_event.click_count = 1;
   event_monitor.ResetEventReceived();
   router->RouteMouseEvent(rwhv, &mouse_event, ui::LatencyInfo());
+  RunOneCycle();
 
   EXPECT_TRUE(event_monitor.EventWasReceived());
   gfx::Point mouse_down_coords =
@@ -10802,6 +10829,7 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessNonIntegerScaleFactorBrowserTest,
   mouse_event.SetType(blink::WebInputEvent::kMouseUp);
   mouse_event.SetPositionInWidget(75, 75);
   router->RouteMouseEvent(rwhv, &mouse_event, ui::LatencyInfo());
+  RunOneCycle();
 
   EXPECT_TRUE(event_monitor.EventWasReceived());
   EXPECT_EQ(mouse_down_coords,

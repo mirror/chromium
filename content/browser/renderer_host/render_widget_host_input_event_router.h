@@ -14,6 +14,7 @@
 #include "base/containers/hash_tables.h"
 #include "base/gtest_prod_util.h"
 #include "base/macros.h"
+#include "base/memory/weak_ptr.h"
 #include "components/viz/common/surfaces/surface_id.h"
 #include "components/viz/service/surfaces/surface_hittest_delegate.h"
 #include "content/browser/renderer_host/render_widget_host_view_base_observer.h"
@@ -40,6 +41,7 @@ class LatencyInfo;
 
 namespace content {
 
+class AsyncTargeter;
 class RenderWidgetHostImpl;
 class RenderWidgetHostView;
 class RenderWidgetHostViewBase;
@@ -62,6 +64,9 @@ class CONTENT_EXPORT RenderWidgetHostInputEventRouter
   void RouteMouseEvent(RenderWidgetHostViewBase* root_view,
                        blink::WebMouseEvent* event,
                        const ui::LatencyInfo& latency);
+  void OnFoundTarget(RenderWidgetHostViewBase* root_view,
+                     const blink::WebMouseEvent& event,
+                     const ui::LatencyInfo& latency);
   void RouteMouseWheelEvent(RenderWidgetHostViewBase* root_view,
                             blink::WebMouseWheelEvent* event,
                             const ui::LatencyInfo& latency);
@@ -188,6 +193,9 @@ class CONTENT_EXPORT RenderWidgetHostInputEventRouter
   bool gesture_pinch_did_send_scroll_begin_;
   std::unordered_map<viz::SurfaceId, HittestData, viz::SurfaceIdHash>
       hittest_data_;
+
+  std::unique_ptr<AsyncTargeter> async_targeter_;
+  base::WeakPtrFactory<RenderWidgetHostInputEventRouter> weak_ptr_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(RenderWidgetHostInputEventRouter);
   friend class RenderWidgetHostInputEventRouterTest;
