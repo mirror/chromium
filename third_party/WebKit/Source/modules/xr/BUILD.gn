@@ -40,6 +40,8 @@ blink_modules_sources("xr") {
     "XRWebGLDrawingBuffer.h",
     "XRWebGLLayer.cpp",
     "XRWebGLLayer.h",
+    "common/XRFrameHelper.cpp",
+    "common/XRFrameHelper.h",
   ]
 
   deps = [

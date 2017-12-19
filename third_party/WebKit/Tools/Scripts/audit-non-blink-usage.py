@@ -134,11 +134,7 @@ _CONFIG = [
         # These modules need access to GL drawing, cross-process image
         # transport, and related interfaces.
         'allowed': [
-            'gfx::GpuFence',
-            'gfx::GpuFenceHandle',
-            'gfx::GpuMemoryBufferHandle',
             'gpu::gles2::GLES2Interface',
-            'gpu::MailboxHolder',
         ],
     },
     {
