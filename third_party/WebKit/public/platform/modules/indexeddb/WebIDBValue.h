@@ -14,17 +14,20 @@
 namespace blink {
 
 struct WebIDBValue {
-  WebIDBValue() {}
-  explicit WebIDBValue(const WebData& data) : data(data) {}
+  WebIDBValue() : primary_key(WebIDBKey::CreateNull()) {}
+  explicit WebIDBValue(const WebData& data)
+      : data(data), primary_key(WebIDBKey::CreateNull()) {}
   WebIDBValue(const WebData& data, const WebVector<WebBlobInfo>& blob_info)
-      : data(data), web_blob_info(blob_info) {}
+      : data(data),
+        web_blob_info(blob_info),
+        primary_key(WebIDBKey::CreateNull()) {}
   WebIDBValue(const WebData& data,
               const WebVector<WebBlobInfo>& blob_info,
-              const WebIDBKey& primary_key,
+              WebIDBKey primary_key,
               const WebIDBKeyPath& key_path)
       : data(data),
         web_blob_info(blob_info),
-        primary_key(primary_key),
+        primary_key(std::move(primary_key)),
         key_path(key_path) {}
 
   // The serialized JavaScript bits (ignoring blob data) for this IDB Value.

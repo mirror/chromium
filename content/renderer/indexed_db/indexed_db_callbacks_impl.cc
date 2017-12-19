@@ -351,7 +351,7 @@ void IndexedDBCallbacksImpl::InternalState::SuccessCursorPrefetch(
     ConvertValue(values[i], &web_values[i]);
 
   if (cursor_) {
-    cursor_->SetPrefetchData(keys, primary_keys, web_values);
+    cursor_->SetPrefetchData(keys, primary_keys, std::move(web_values));
     cursor_->CachedContinue(callbacks_.get());
   }
   callbacks_.reset();

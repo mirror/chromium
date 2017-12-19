@@ -110,14 +110,14 @@ class WebIDBDatabase {
                    long long object_store_id,
                    const WebData& value,
                    const WebVector<WebBlobInfo>&,
-                   const WebIDBKey&,
+                   WebIDBKeyView primary_key,
                    WebIDBPutMode,
                    WebIDBCallbacks*,
                    const WebVector<long long>& index_ids,
                    const WebVector<WebIndexKeys>&) = 0;
   virtual void SetIndexKeys(long long transaction_id,
                             long long object_store_id,
-                            const WebIDBKey&,
+                            WebIDBKeyView primary_key,
                             const WebVector<long long>& index_ids,
                             const WebVector<WebIndexKeys>&) = 0;
   virtual void SetIndexesReady(long long transaction_id,

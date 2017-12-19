@@ -63,8 +63,10 @@ void BuildObservationsAndNotify(WebIDBDatabaseCallbacks* callbacks,
     }
   }
 
-  callbacks->OnChanges(changes->observation_index_map, web_observations,
-                       observer_transactions);
+  callbacks->OnChanges(
+      changes->observation_index_map,
+      blink::WebVector<blink::WebIDBObservation>(std::move(web_observations)),
+      observer_transactions);
 }
 
 }  // namespace
