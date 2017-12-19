@@ -45,6 +45,54 @@
       "revId": "0085ef52b4825260489de80f7bd46690a6dcca04",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88485e09_f2f79ef2",
+        "filename": "components/vector_icons/security_key.icon",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002270
+      },
+      "writtenOn": "2017-12-19T21:19:59Z",
+      "side": 1,
+      "message": "Fair point. Renamed to \"usb_security_key.icon\" to try and be clearer.",
+      "parentUuid": "ab15709a_b0fd7b7d",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "0085ef52b4825260489de80f7bd46690a6dcca04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bdf686f9_71469fc2",
+        "filename": "components/vector_icons/security_key.icon",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002270
+      },
+      "writtenOn": "2017-12-19T21:19:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4935fcc9_5bd54671",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 22
+      },
+      "revId": "0085ef52b4825260489de80f7bd46690a6dcca04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
