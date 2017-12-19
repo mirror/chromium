@@ -228,8 +228,8 @@ SK_API void SkDebugf_FileLine(const char* file, int line, bool fatal,
 #define SK_SUPPORT_LEGACY_TILED_BITMAPS
 #endif
 
-#ifndef SK_COLOR_SPACE_XFORM_LEGACY_PIPELINE
-#define SK_COLOR_SPACE_XFORM_LEGACY_PIPELINE
+#ifndef SK_LEGACY_HIGH_QUALITY_SCALING_CLAMP
+#define SK_LEGACY_HIGH_QUALITY_SCALING_CLAMP
 #endif
 
 // remove after rebaselining svg layout tests
