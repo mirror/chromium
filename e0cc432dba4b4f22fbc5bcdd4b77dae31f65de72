@@ -1,0 +1,129 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cf6aa1a8_dba176f2",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 792,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-12-19T14:12:09Z",
+      "side": 1,
+      "message": "Maybe move this to the end of the method? (same below)",
+      "revId": "e0cc432dba4b4f22fbc5bcdd4b77dae31f65de72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "813be3ae_1a74a6d4",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 812,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-12-19T14:12:09Z",
+      "side": 1,
+      "message": "Maybe call `Initialize()` or init the element in the test directly if this is only meant to workaround this being null during tests.",
+      "revId": "e0cc432dba4b4f22fbc5bcdd4b77dae31f65de72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e73144e_cf8d9cac",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlTimelineElement.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-12-19T14:12:09Z",
+      "side": 1,
+      "message": "Maybe move this comment above when `IsValidPointerEvent()` defined?",
+      "revId": "e0cc432dba4b4f22fbc5bcdd4b77dae31f65de72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86d5499c_280fbcb2",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlTimelineElement.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-12-19T14:12:09Z",
+      "side": 1,
+      "message": "Could you do in CSS:\n`margin-left: calc(-50%);`",
+      "revId": "e0cc432dba4b4f22fbc5bcdd4b77dae31f65de72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acf5a3bb_501f1d8c",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlTimelineElement.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-12-19T14:12:09Z",
+      "side": 1,
+      "message": "I think you don\u0027t need to nullcheck and `Trace()` will.",
+      "revId": "e0cc432dba4b4f22fbc5bcdd4b77dae31f65de72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e775eeb3_4b644b1c",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlTimelineElement.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-12-19T14:12:09Z",
+      "side": 1,
+      "message": "style: no { }",
+      "range": {
+        "startLine": 300,
+        "startChar": 2,
+        "endLine": 300,
+        "endChar": 3
+      },
+      "revId": "e0cc432dba4b4f22fbc5bcdd4b77dae31f65de72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e407d1ac_a4ac99f9",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlTimelineElement.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-12-19T14:12:09Z",
+      "side": 1,
+      "message": "For readability, what about:\n```\nswitch (event.type()) {\n  case EventTypeNames::touchend;\n  case EventTypeNames::touchcancel:\n  case EventTypeNames::change:\n    return is_touching_;\n  case EventTypeNames::pointerup:\n  case EventTypeNames::pointercancel:\n    return IsValidPointerEvent(event);\n  default:\n    return false;\n}\n```\n\n(though, you could return false outside as some compilers are not smart enough to handle this)",
+      "revId": "e0cc432dba4b4f22fbc5bcdd4b77dae31f65de72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
