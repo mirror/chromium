@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b1a746bb_0e3c5615",
+        "filename": "net/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 2483,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-12-19T18:48:31Z",
+      "side": 1,
+      "message": "I\u0027m a bit surprised that quic_root.crt and quic_chain.crt do not need to be changed as well. Can you explain why?",
+      "revId": "24301112392ed04deb2c3f7e34ea4e92401b761b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
