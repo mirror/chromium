@@ -36,8 +36,22 @@
 
 namespace blink {
 
-PLATFORM_EXPORT void QuotedPrintableEncode(const Vector<char>&, Vector<char>&);
-PLATFORM_EXPORT void QuotedPrintableEncode(const char*, size_t, Vector<char>&);
+// The different soft line break should be used to break long line depending on
+// where it lives, header or body.
+enum class SoftLineBreakType {
+  // "=CRLF", used to break long line in body as defined in RFC 2045.
+  kForBody,
+  // "CRLF+TAB", used to break long line in header as defined in RFC 2047.
+  kForHeader,
+};
+
+PLATFORM_EXPORT void QuotedPrintableEncode(const Vector<char>&,
+                                           SoftLineBreakType,
+                                           Vector<char>&);
+PLATFORM_EXPORT void QuotedPrintableEncode(const char*,
+                                           size_t,
+                                           SoftLineBreakType,
+                                           Vector<char>&);
 
 PLATFORM_EXPORT void QuotedPrintableDecode(const Vector<char>&, Vector<char>&);
 PLATFORM_EXPORT void QuotedPrintableDecode(const char*, size_t, Vector<char>&);
