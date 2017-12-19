@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "36d2d93c_53e35e6e",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-12-19T18:08:56Z",
+      "side": 1,
+      "message": "nit: drop \" renderer\" part. \"normal\" / \"extension\" are fine.",
+      "range": {
+        "startLine": 106,
+        "startChar": 18,
+        "endLine": 106,
+        "endChar": 27
+      },
+      "revId": "e5f81d2f7ef29b44acd25d0382f3943b32380802",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba50d645_cd02660f",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-12-19T18:08:56Z",
+      "side": 1,
+      "message": "nit: we don\u0027t have \"unknown\" in the enum. I suggest using switch construction here to ensure that all enums values are covered (compiler will enforce this).",
+      "range": {
+        "startLine": 109,
+        "startChar": 4,
+        "endLine": 109,
+        "endChar": 6
+      },
+      "revId": "e5f81d2f7ef29b44acd25d0382f3943b32380802",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
