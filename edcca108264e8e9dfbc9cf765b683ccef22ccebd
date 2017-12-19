@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f3a12927_6caca0aa",
+        "filename": "third_party/android_platform/development/scripts/stack_core.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 411,
+      "author": {
+        "id": 1143954
+      },
+      "writtenOn": "2017-12-19T20:47:00Z",
+      "side": 1,
+      "message": "The local test of \u0027DCHECK(false)\u0027 I did did not enter this else statement.",
+      "revId": "edcca108264e8e9dfbc9cf765b683ccef22ccebd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
