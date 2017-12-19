@@ -2460,17 +2460,21 @@ void RenderWidgetHostViewMac::OnDisplayMetricsChanged(
 
 - (void)handleEndGestureWithEvent:(NSEvent*)event {
   [responderDelegate_ endGestureWithEvent:event];
-  gestureBeginEvent_.reset();
 
-  if (!renderWidgetHostView_->render_widget_host_)
-    return;
+  if ([event type] == NSEventTypeMagnify) {
+    gestureBeginEvent_.reset();
 
-  if (gestureBeginPinchSent_) {
-    WebGestureEvent endEvent(WebGestureEventBuilder::Build(event, self));
-    endEvent.SetType(WebInputEvent::kGesturePinchEnd);
-    endEvent.source_device = blink::WebGestureDevice::kWebGestureDeviceTouchpad;
-    renderWidgetHostView_->SendGesturePinchEvent(&endEvent);
-    gestureBeginPinchSent_ = NO;
+    if (!renderWidgetHostView_->render_widget_host_)
+      return;
+
+    if (gestureBeginPinchSent_) {
+      WebGestureEvent endEvent(WebGestureEventBuilder::Build(event, self));
+      endEvent.SetType(WebInputEvent::kGesturePinchEnd);
+      endEvent.source_device =
+          blink::WebGestureDevice::kWebGestureDeviceTouchpad;
+      renderWidgetHostView_->SendGesturePinchEvent(&endEvent);
+      gestureBeginPinchSent_ = NO;
+    }
   }
 }
 
