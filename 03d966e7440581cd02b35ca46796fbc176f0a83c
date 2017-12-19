@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "1003381d_75bacb07",
+        "filename": "ui/views/test/views_pixel_test.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-19T04:52:26Z",
+      "side": 1,
+      "message": "\u003e Oh I see, for compositing tests we don\u0027t depend on any OS features such as text, that can break from version to version, or bot to bot. Per-platform results may make sense, but will be very difficult to generate without a lot of infrastructure like layout tests have.\n\u003e \n\u003e I\u0027d probably suggest just pick one platform and test there.. for tests that would have text in them. The bugs you\u0027re checking for are not text rendering bugs, but views layout/painting, which isn\u0027t mac version specific?\n\nYup - I think this approach gives some flexibility in this respect. It\u0027s basically up to the test author to pick what\u0027s appropriate for what they\u0027re testing. If they just add a linux reference image - that\u0027s the only one that will matter.\n\nAlternatively, a test can disallow fallbacks when it shouldn\u0027t differ, or to get bots to generate more reference images for them and put a data: URL in the test failure output.\n\nSo yeah - a lot of non-text stuff would fall into this category (i.e. \"strict\" -- same reference image on all platforms).\n\nBut there is lots of OS-specific stuff at higher levels. Like, buttons get swapped around, or use Title Case labels (I guess that\u0027s text too), or NativeTheme colors change, or focus ring may disappear.",
+      "parentUuid": "c6d12be3_38de8d77",
+      "revId": "03d966e7440581cd02b35ca46796fbc176f0a83c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7cab0dec_a7d0c3d2",
         "filename": "ui/views/test/views_pixel_test.cc",
         "patchSetId": 16
@@ -184,6 +202,30 @@
       "side": 1,
       "message": "\u003e So the goal with this is *just* to test the appearance on configurations known to run on the default set of CQ trybots: win10, win7, mac 10.9, mac 10.12, linux. Other bot configurations are allowed to not care about the test -- the assumption is that we get sufficient coverage already and the rest is just extra maintenance burden.\n\nI\u0027m not sure what difference you\u0027re expecting on bots that is not the differences seen by platform. For cc tests, try bots do in fact the any deltas, they show up in win vs mac vs linux skia raster code, or osmesa (our software GL emulation) differences. But within a platform there\u0027s no deltas.\n\nFor cc we generate all pixel results on linux, and add OS_WINDOWS|MAC fuzzy comparators to make them pass with minimal parameters. We\u0027ve never AFAIK seen a bug where a test failed on a single platform but was passing cuz of the fuzzy checks. Rather when things are bugs that we\u0027re testing for, they\u0027d fail on the reference platform (linux). And other platforms are mostly smoke tests to verify our sanity.\n\nMy suggestion is to do the simplest thing that will give you confidence.",
       "parentUuid": "f462a0a0_82e94734",
+      "range": {
+        "startLine": 24,
+        "startChar": 10,
+        "endLine": 24,
+        "endChar": 28
+      },
+      "revId": "03d966e7440581cd02b35ca46796fbc176f0a83c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a95f2aca_ebf3ff4a",
+        "filename": "ui/views/test/views_pixel_test.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-19T04:52:26Z",
+      "side": 1,
+      "message": "\u003e \u003e So the goal with this is *just* to test the appearance on configurations known to run on the default set of CQ trybots: win10, win7, mac 10.9, mac 10.12, linux. Other bot configurations are allowed to not care about the test -- the assumption is that we get sufficient coverage already and the rest is just extra maintenance burden.\n\u003e \n\u003e I\u0027m not sure what difference you\u0027re expecting on bots that is not the differences seen by platform. For cc tests, try bots do in fact the any deltas, they show up in win vs mac vs linux skia raster code, or osmesa (our software GL emulation) differences. But within a platform there\u0027s no deltas.\n\u003e \n\u003e For cc we generate all pixel results on linux, and add OS_WINDOWS|MAC fuzzy comparators to make them pass with minimal parameters. We\u0027ve never AFAIK seen a bug where a test failed on a single platform but was passing cuz of the fuzzy checks. Rather when things are bugs that we\u0027re testing for, they\u0027d fail on the reference platform (linux). And other platforms are mostly smoke tests to verify our sanity.\n\u003e \n\u003e My suggestion is to do the simplest thing that will give you confidence.\n\nThat\u0027s what I\u0027m aiming for too :). \n\nFor this use-case win7 and win10 differ quite a bit (win7 lacked AA completely for Helvetica), I\u0027m not sure if fuzziness would catch that (also it would be a bug if we suddenly lost AA on win10). mac 10.9 and 10.12 differed slightly -- fuzziness could have catered for this. But if we\u0027d used default OS fonts (like we probably should for native UI testing), then 10.9 and 10.12 would have picked up quite different typefaces (Lucida Grande vs San Francisco - then in 10.10 Apple also threw in Helvetica Neue). Similarly - if we accidentally started using the wrong typeface for native UI on macOS, that would be a bug.\n\nPicking fuzzy params to find the right balance would be quite hard, and might feel too arbitrary. So the initial plan is to attempt exact matching.",
+      "parentUuid": "1818a6b5_792be209",
       "range": {
         "startLine": 24,
         "startChar": 10,
