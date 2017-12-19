@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "58da9ce7_1a37a9df",
+        "filename": "components/viz/service/frame_sinks/frame_sink_manager_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-12-19T23:57:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "72cd80ab_dcbc828a",
+      "range": {
+        "startLine": 236,
+        "startChar": 32,
+        "endLine": 236,
+        "endChar": 62
+      },
+      "revId": "5f9011f03b3ec9a8e609e4d9ee44e70dc275432d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d313e72e_9b66d957",
         "filename": "components/viz/service/frame_sinks/frame_sink_manager_impl.cc",
         "patchSetId": 3
@@ -36,6 +60,24 @@
       "writtenOn": "2017-12-19T19:18:31Z",
       "side": 1,
       "message": "optional: This might be a good application for base::EraseIf().",
+      "revId": "5f9011f03b3ec9a8e609e4d9ee44e70dc275432d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d457a71a_3e874b3b",
+        "filename": "components/viz/service/frame_sinks/frame_sink_manager_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-12-19T23:57:22Z",
+      "side": 1,
+      "message": "I tried that. Because it is raw pointer comparison with std::unique_ptr, a custom body is still needed. Also, base::EraseIf() scans the whole vector whereas here we know we can break once the known-unique entry is found and erased.",
+      "parentUuid": "d313e72e_9b66d957",
       "revId": "5f9011f03b3ec9a8e609e4d9ee44e70dc275432d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "7bc6d9e3_0d8cdcba",
+        "filename": "components/viz/service/frame_sinks/video_capture/frame_sink_video_capturer_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-12-19T23:57:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9262bdbc_226cfb4b",
+      "range": {
+        "startLine": 194,
+        "startChar": 41,
+        "endLine": 194,
+        "endChar": 75
+      },
+      "revId": "5f9011f03b3ec9a8e609e4d9ee44e70dc275432d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "458eba8a_6771d203",
         "filename": "components/viz/service/frame_sinks/video_capture/frame_sink_video_capturer_impl.cc",
         "patchSetId": 3
@@ -76,6 +142,24 @@
       "writtenOn": "2017-12-19T19:18:31Z",
       "side": 1,
       "message": "Ideally you don\u0027t want to crash the browser/gpu process if the client does something wrong.",
+      "revId": "5f9011f03b3ec9a8e609e4d9ee44e70dc275432d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9564b752_0b29294a",
+        "filename": "components/viz/service/frame_sinks/video_capture/frame_sink_video_capturer_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-12-19T23:57:22Z",
+      "side": 1,
+      "message": "The frame doesn\u0027t come from the client. It comes from viz::InterprocessFramePool (same code dir). I meant for this to be a statement of the safety of the pointer downcast. I\u0027ll just change it to DCHECK_EQ(). SGTY?",
+      "parentUuid": "458eba8a_6771d203",
       "revId": "5f9011f03b3ec9a8e609e4d9ee44e70dc275432d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -99,6 +183,24 @@
     },
     {
       "key": {
+        "uuid": "47352aa2_ac46d6d2",
+        "filename": "components/viz/service/frame_sinks/video_capture/frame_sink_video_capturer_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 501,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-12-19T23:57:22Z",
+      "side": 1,
+      "message": "Done. I also broke up this chunk of code into multiple comment+code sections to help make the process clearer.",
+      "parentUuid": "b1055d9c_a0ca8773",
+      "revId": "5f9011f03b3ec9a8e609e4d9ee44e70dc275432d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "09c8497b_f5794975",
         "filename": "components/viz/service/frame_sinks/video_capture/in_flight_frame_delivery.h",
         "patchSetId": 3
@@ -110,6 +212,24 @@
       "writtenOn": "2017-12-19T19:18:31Z",
       "side": 1,
       "message": "If closing the pipe and calling Done() do the same thing, then you could probably get rid of Done().",
+      "revId": "5f9011f03b3ec9a8e609e4d9ee44e70dc275432d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dff30d04_c903fdd9",
+        "filename": "components/viz/service/frame_sinks/video_capture/in_flight_frame_delivery.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-12-19T23:57:22Z",
+      "side": 1,
+      "message": "The concern is that ProvideFeedback() is called later (after downstream processing), and there is also benefit to calling Done() as soon as possible: It allows the shared memory buffer to be re-used sooner (and this may prevent the pool from having allocate more memory for other frames).",
+      "parentUuid": "09c8497b_f5794975",
       "revId": "5f9011f03b3ec9a8e609e4d9ee44e70dc275432d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
