@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "71828f91_7dccd0d4",
+        "filename": "third_party/WebKit/LayoutTests/virtual/spv175/fast/borders/border-antialiasing-expected.png",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-12-19T16:49:26Z",
+      "side": 1,
+      "message": "The differences between these new pixel baselines and the original baselines are only at border edges. They are not visible to my eyes.",
+      "revId": "62f0869b142b40ea73aa4253e1494f0c243e1edf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c49a864_a8da9e3a",
+        "filename": "third_party/WebKit/LayoutTests/virtual/spv175/fast/borders/overflow-hidden-border-radius-force-backing-store-expected.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-12-19T16:49:26Z",
+      "side": 1,
+      "message": "The difference is about the scrolling layers of LayoutView.",
+      "revId": "62f0869b142b40ea73aa4253e1494f0c243e1edf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
