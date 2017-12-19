@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a0a55e96_dc78a915",
+        "filename": "chrome/android/java/strings/android_chrome_strings.grd",
+        "patchSetId": 10
+      },
+      "lineNbr": 3056,
+      "author": {
+        "id": 1235104
+      },
+      "writtenOn": "2017-12-19T16:22:41Z",
+      "side": 1,
+      "message": "Is this a user-facing message? Please come up with a non-technical message if so.",
+      "range": {
+        "startLine": 3056,
+        "startChar": 8,
+        "endLine": 3056,
+        "endChar": 53
+      },
+      "revId": "0f70028fac90a82ed3b3e9ff648bcca2341dabeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
