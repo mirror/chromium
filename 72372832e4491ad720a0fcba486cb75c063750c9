@@ -548,6 +548,30 @@
     },
     {
       "key": {
+        "uuid": "4156d6a0_f2eff225",
+        "filename": "content/browser/download/download_manager_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1043,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-12-19T21:16:38Z",
+      "side": 1,
+      "message": "Okay, instead I\u0027m just removing this codepath assuming that download_source (xingliu@) and request_origin (shaktisahu@) will be moved from DownloadUrlParameters to DownloadCreateInfo.\n\nHowever, looking into moving this path into DownloadRequestCore::OnResponseStart and DownloadResponseHandler::OnReceiveResponse to make sure that we get a server response before we start saving download information.",
+      "parentUuid": "6d403e3a_29aab9f5",
+      "range": {
+        "startLine": 1039,
+        "startChar": 2,
+        "endLine": 1043,
+        "endChar": 3
+      },
+      "revId": "72372832e4491ad720a0fcba486cb75c063750c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "97307f81_1c41b26e",
         "filename": "content/browser/download/download_resource_handler.cc",
         "patchSetId": 4
