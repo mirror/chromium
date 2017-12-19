@@ -22,6 +22,30 @@
       "revId": "85a7403fde3d709d405048cceb6081fd70c8d3e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "544abd43_26dd6fd5",
+        "filename": "chrome/common/webui_url_constants.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-19T19:42:57Z",
+      "side": 1,
+      "message": "Other Settings subpages are defined differently.  See [1] on how they are defined, and [2] on how those constants are used. Should the same pattern be followed here?\n\n\n[1] https://cs.chromium.org/chromium/src/chrome/common/webui_url_constants.cc?type\u003dcs\u0026q\u003dchrome/common/webui_url_constants.cc\u0026sq\u003dpackage:chromium\u0026l\u003d260-287\n[2] https://cs.chromium.org/chromium/src/chrome/browser/ui/chrome_pages.cc?l\u003d353",
+      "parentUuid": "850540ce_61bbef15",
+      "range": {
+        "startLine": 220,
+        "startChar": 67,
+        "endLine": 220,
+        "endChar": 0
+      },
+      "revId": "85a7403fde3d709d405048cceb6081fd70c8d3e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
