@@ -48,6 +48,54 @@
     },
     {
       "key": {
+        "uuid": "992f581e_15318ae9",
+        "filename": "ui/gfx/buffer_format_util.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1161469
+      },
+      "writtenOn": "2017-12-19T19:03:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ab52b9a2_6740e1e8",
+      "range": {
+        "startLine": 25,
+        "startChar": 11,
+        "endLine": 25,
+        "endChar": 23
+      },
+      "revId": "138a4d4b3a8b02f61e2367ee328942a415f8960c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "774b5981_f18b4490",
+        "filename": "ui/gfx/buffer_format_util.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1161469
+      },
+      "writtenOn": "2017-12-19T19:03:23Z",
+      "side": 1,
+      "message": "I got a link error when I tried to add //ui/gl to deps in one of the places it was used. That was earlier on in the refactoring where it was used in more places. Now it works, and I\u0027ve moved it to ui/gl/gl_utils.cc.",
+      "parentUuid": "6a0d0edf_3fd2e677",
+      "range": {
+        "startLine": 25,
+        "startChar": 24,
+        "endLine": 25,
+        "endChar": 47
+      },
+      "revId": "138a4d4b3a8b02f61e2367ee328942a415f8960c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "654832e7_93afe42a",
         "filename": "ui/gl/gl_image_memory.cc",
         "patchSetId": 4
@@ -59,6 +107,24 @@
       "writtenOn": "2017-12-19T15:51:14Z",
       "side": 1,
       "message": "please add a comment to explain why this is needed.",
+      "revId": "138a4d4b3a8b02f61e2367ee328942a415f8960c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbea3231_ed36df92",
+        "filename": "ui/gl/gl_image_memory.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1161469
+      },
+      "writtenOn": "2017-12-19T19:03:23Z",
+      "side": 1,
+      "message": "The existing already has the subtlety around BGRA_8888 and BGRX_8888 handling, but I\u0027ll add a comment to spell it out.",
+      "parentUuid": "654832e7_93afe42a",
       "revId": "138a4d4b3a8b02f61e2367ee328942a415f8960c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -82,6 +148,24 @@
     },
     {
       "key": {
+        "uuid": "abf7f02e_2acdc970",
+        "filename": "ui/gl/gl_image_memory.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1161469
+      },
+      "writtenOn": "2017-12-19T19:03:23Z",
+      "side": 1,
+      "message": "Yeah, I expanded it back out and it looks better that way.",
+      "parentUuid": "6dd73bf5_c1a38202",
+      "revId": "138a4d4b3a8b02f61e2367ee328942a415f8960c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "64630571_48b0ab72",
         "filename": "ui/gl/gl_image_memory.h",
         "patchSetId": 4
@@ -99,6 +183,24 @@
     },
     {
       "key": {
+        "uuid": "f3b1dde4_c5b7824c",
+        "filename": "ui/gl/gl_image_memory.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1161469
+      },
+      "writtenOn": "2017-12-19T19:03:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "64630571_48b0ab72",
+      "revId": "138a4d4b3a8b02f61e2367ee328942a415f8960c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bf81dcd0_12c245ce",
         "filename": "ui/gl/gl_image_ref_counted_memory.h",
         "patchSetId": 4
@@ -113,6 +215,24 @@
       "revId": "138a4d4b3a8b02f61e2367ee328942a415f8960c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2df671f_30166d1e",
+        "filename": "ui/gl/gl_image_ref_counted_memory.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1161469
+      },
+      "writtenOn": "2017-12-19T19:03:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bf81dcd0_12c245ce",
+      "revId": "138a4d4b3a8b02f61e2367ee328942a415f8960c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
