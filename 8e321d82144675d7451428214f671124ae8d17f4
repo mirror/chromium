@@ -123,6 +123,24 @@
       "revId": "8e321d82144675d7451428214f671124ae8d17f4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0196d878_7fba0d0e",
+        "filename": "tools/perf/page_sets/top_25_smooth.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1239517
+      },
+      "writtenOn": "2017-12-19T16:27:09Z",
+      "side": 1,
+      "message": "Yes, agree that there\u0027s no point doing this now if these benchmarks are currently undergoing significant changes.\n\nIn the meantime, I\u0027m not sure what the best approach is for https://chromium-review.googlesource.com/c/chromium/src/+/810745 - I can simplify this as much as possible and avoid the refactoring / multi-inheritance. Or return to the idea of putting it in the contrib directory? Do you have any suggestions/preference?",
+      "parentUuid": "cae0c622_19e4d4b4",
+      "revId": "8e321d82144675d7451428214f671124ae8d17f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
