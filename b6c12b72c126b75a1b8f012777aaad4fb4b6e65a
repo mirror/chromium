@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "88a03df6_c0899c51",
+        "filename": "android_webview/browser/aw_render_thread_context_provider.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-19T16:52:44Z",
+      "side": 1,
+      "message": "These need to be public, I would make the whole ContextProvider impl public, hiding it doesn\u0027t actually hide it, just requires casting.",
+      "revId": "b6c12b72c126b75a1b8f012777aaad4fb4b6e65a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33342f01_db9a4dcb",
+        "filename": "components/viz/common/gpu/raster_context_provider.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-19T16:52:44Z",
+      "side": 1,
+      "message": "no (c) and 2017",
+      "revId": "b6c12b72c126b75a1b8f012777aaad4fb4b6e65a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5584258_6179ee03",
+        "filename": "components/viz/common/gpu/raster_context_provider.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-19T16:52:44Z",
+      "side": 1,
+      "message": "no (c) and 2017",
+      "revId": "b6c12b72c126b75a1b8f012777aaad4fb4b6e65a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
