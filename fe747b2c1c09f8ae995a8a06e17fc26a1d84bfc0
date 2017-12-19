@@ -19,6 +19,74 @@
     },
     {
       "key": {
+        "uuid": "d60131e2_c7e96634",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8ScriptRunner.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-12-19T00:52:04Z",
+      "side": 1,
+      "message": "nit: this comment is the same as that for CompileWithoutOptions(). Needs update?",
+      "revId": "fe747b2c1c09f8ae995a8a06e17fc26a1d84bfc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6de31e2_72e56db5",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8ScriptRunner.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-12-19T00:52:04Z",
+      "side": 1,
+      "message": "This looks unreachable, because V8ScriptRunner::GetCompileOptions() never returns kConsumeCodeCache.",
+      "revId": "fe747b2c1c09f8ae995a8a06e17fc26a1d84bfc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ae0159c_e2ebfc2a",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8ScriptRunner.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 411,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-12-19T00:52:04Z",
+      "side": 1,
+      "message": "nit: removing \"else\", i.e.\n  if (parser_cache) {\n    return ...;\n  }\n  return ...;\nmight be easier to read, because it might be clearer that return is always executed and thus there are no fallthrough cases from case kV8CacheOptionsParse to the following cases.",
+      "revId": "fe747b2c1c09f8ae995a8a06e17fc26a1d84bfc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a27306c_a61072fb",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8ScriptRunner.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-12-19T00:52:04Z",
+      "side": 1,
+      "message": "nit: could you add a comment that mentions this is an intended fallthrough?",
+      "revId": "fe747b2c1c09f8ae995a8a06e17fc26a1d84bfc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "916a4d34_f513948b",
         "filename": "third_party/WebKit/Source/bindings/core/v8/WorkerOrWorkletScriptController.cpp",
         "patchSetId": 2
