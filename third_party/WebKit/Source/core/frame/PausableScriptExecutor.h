@@ -71,7 +71,7 @@ class CORE_EXPORT PausableScriptExecutor final
   void ExecuteAndDestroySelf();
   void Dispose();
 
-  scoped_refptr<ScriptState> script_state_;
+  Member<ScriptState> script_state_;
   WebScriptExecutionCallback* callback_;
   BlockingOption blocking_option_;
 

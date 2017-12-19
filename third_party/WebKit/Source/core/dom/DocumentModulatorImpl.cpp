@@ -9,9 +9,9 @@
 namespace blink {
 
 ModulatorImplBase* DocumentModulatorImpl::Create(
-    scoped_refptr<ScriptState> script_state,
+    ScriptState* script_state,
     ResourceFetcher* resource_fetcher) {
-  return new DocumentModulatorImpl(std::move(script_state), resource_fetcher);
+  return new DocumentModulatorImpl(script_state, resource_fetcher);
 }
 
 ModuleScriptFetcher* DocumentModulatorImpl::CreateModuleScriptFetcher() {
@@ -23,10 +23,9 @@ void DocumentModulatorImpl::Trace(blink::Visitor* visitor) {
   ModulatorImplBase::Trace(visitor);
 }
 
-DocumentModulatorImpl::DocumentModulatorImpl(
-    scoped_refptr<ScriptState> script_state,
-    ResourceFetcher* resource_fetcher)
-    : ModulatorImplBase(std::move(script_state)), fetcher_(resource_fetcher) {
+DocumentModulatorImpl::DocumentModulatorImpl(ScriptState* script_state,
+                                             ResourceFetcher* resource_fetcher)
+    : ModulatorImplBase(script_state), fetcher_(resource_fetcher) {
   DCHECK(fetcher_);
 }
 

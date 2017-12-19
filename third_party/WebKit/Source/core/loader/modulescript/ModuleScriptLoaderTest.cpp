@@ -64,7 +64,7 @@ class TestModuleScriptLoaderClient final
 class ModuleScriptLoaderTestModulator final : public DummyModulator {
  public:
   ModuleScriptLoaderTestModulator(
-      scoped_refptr<ScriptState> script_state,
+      ScriptState* script_state,
       scoped_refptr<const SecurityOrigin> security_origin)
       : script_state_(std::move(script_state)),
         security_origin_(std::move(security_origin)) {
@@ -79,7 +79,7 @@ class ModuleScriptLoaderTestModulator final : public DummyModulator {
     return security_origin_.get();
   }
 
-  ScriptState* GetScriptState() override { return script_state_.get(); }
+  ScriptState* GetScriptState() override { return script_state_.Get(); }
 
   ScriptModule CompileModule(const String& script,
                              const String& url_str,
@@ -87,7 +87,7 @@ class ModuleScriptLoaderTestModulator final : public DummyModulator {
                              AccessControlStatus access_control_status,
                              const TextPosition& position,
                              ExceptionState& exception_state) override {
-    ScriptState::Scope scope(script_state_.get());
+    ScriptState::Scope scope(script_state_.Get());
     return ScriptModule::Compile(script_state_->GetIsolate(), script, url_str,
                                  options, access_control_status, position,
                                  exception_state);
@@ -107,7 +107,7 @@ class ModuleScriptLoaderTestModulator final : public DummyModulator {
   }
 
   ModuleScriptFetcher* CreateModuleScriptFetcher() override {
-    auto* execution_context = ExecutionContext::From(script_state_.get());
+    auto* execution_context = ExecutionContext::From(script_state_.Get());
     if (execution_context->IsDocument())
       return new DocumentModuleScriptFetcher(Fetcher());
     auto* global_scope = ToWorkletGlobalScope(execution_context);
@@ -120,13 +120,14 @@ class ModuleScriptLoaderTestModulator final : public DummyModulator {
   void Trace(blink::Visitor*) override;
 
  private:
-  scoped_refptr<ScriptState> script_state_;
+  Member<ScriptState> script_state_;
   scoped_refptr<const SecurityOrigin> security_origin_;
   Member<ResourceFetcher> fetcher_;
   Vector<ModuleRequest> requests_;
 };
 
 void ModuleScriptLoaderTestModulator::Trace(blink::Visitor* visitor) {
+  visitor->Trace(script_state_);
   visitor->Trace(fetcher_);
   DummyModulator::Trace(visitor);
 }

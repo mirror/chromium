@@ -18,19 +18,19 @@
 namespace blink {
 
 ExecutionContext* ModulatorImplBase::GetExecutionContext() const {
-  return ExecutionContext::From(script_state_.get());
+  return ExecutionContext::From(script_state_.Get());
 }
 
-ModulatorImplBase::ModulatorImplBase(scoped_refptr<ScriptState> script_state)
-    : script_state_(std::move(script_state)),
-      task_runner_(ExecutionContext::From(script_state_.get())
+ModulatorImplBase::ModulatorImplBase(ScriptState* script_state)
+    : script_state_(script_state),
+      task_runner_(ExecutionContext::From(script_state_.Get())
                        ->GetTaskRunner(TaskType::kNetworking)),
       map_(ModuleMap::Create(this)),
       loader_registry_(ModuleScriptLoaderRegistry::Create()),
       tree_linker_registry_(ModuleTreeLinkerRegistry::Create()),
       script_module_resolver_(ScriptModuleResolverImpl::Create(
           this,
-          ExecutionContext::From(script_state_.get()))),
+          ExecutionContext::From(script_state_.Get()))),
       dynamic_module_resolver_(DynamicModuleResolver::Create(this)) {
   DCHECK(script_state_);
   DCHECK(task_runner_);
@@ -138,26 +138,26 @@ ScriptModule ModulatorImplBase::CompileModule(
     script_source = provided_source;
 
   // Step 5. Let result be ParseModule(script source, realm, script).
-  ScriptState::Scope scope(script_state_.get());
+  ScriptState::Scope scope(script_state_.Get());
   return ScriptModule::Compile(script_state_->GetIsolate(), script_source,
                                url_str, options, access_control_status,
                                position, exception_state);
 }
 
 ScriptValue ModulatorImplBase::InstantiateModule(ScriptModule script_module) {
-  ScriptState::Scope scope(script_state_.get());
-  return script_module.Instantiate(script_state_.get());
+  ScriptState::Scope scope(script_state_.Get());
+  return script_module.Instantiate(script_state_.Get());
 }
 
 ScriptModuleState ModulatorImplBase::GetRecordStatus(
     ScriptModule script_module) {
-  ScriptState::Scope scope(script_state_.get());
-  return script_module.Status(script_state_.get());
+  ScriptState::Scope scope(script_state_.Get());
+  return script_module.Status(script_state_.Get());
 }
 
 ScriptValue ModulatorImplBase::GetError(const ModuleScript* module_script) {
   DCHECK(module_script);
-  ScriptState::Scope scope(script_state_.get());
+  ScriptState::Scope scope(script_state_.Get());
   // https://html.spec.whatwg.org/multipage/webappapis.html#concept-module-script-error
   // "When a module script is errored, ..." [spec text]
 
@@ -165,22 +165,22 @@ ScriptValue ModulatorImplBase::GetError(const ModuleScript* module_script) {
   // module record is null, ..." [spec text]
   ScriptModule record = module_script->Record();
   if (record.IsNull()) {
-    return ScriptValue(script_state_.get(), module_script->CreateErrorInternal(
+    return ScriptValue(script_state_.Get(), module_script->CreateErrorInternal(
                                                 script_state_->GetIsolate()));
   }
 
   // "or its module record's [[ErrorCompletion]] field's [[Value]] field,
   // otherwise." [spec text]
-  return ScriptValue(script_state_.get(),
-                     record.ErrorCompletion(script_state_.get()));
+  return ScriptValue(script_state_.Get(),
+                     record.ErrorCompletion(script_state_.Get()));
 }
 
 Vector<Modulator::ModuleRequest>
 ModulatorImplBase::ModuleRequestsFromScriptModule(ScriptModule script_module) {
-  ScriptState::Scope scope(script_state_.get());
-  Vector<String> specifiers = script_module.ModuleRequests(script_state_.get());
+  ScriptState::Scope scope(script_state_.Get());
+  Vector<String> specifiers = script_module.ModuleRequests(script_state_.Get());
   Vector<TextPosition> positions =
-      script_module.ModuleRequestPositions(script_state_.get());
+      script_module.ModuleRequestPositions(script_state_.Get());
   DCHECK_EQ(specifiers.size(), positions.size());
   Vector<ModuleRequest> requests;
   requests.ReserveInitialCapacity(specifiers.size());
@@ -207,7 +207,7 @@ ScriptValue ModulatorImplBase::ExecuteModule(
 
   // Step 4. "Prepare to run script given settings." [spec text]
   // This is placed here to also cover ScriptModule::ReportException().
-  ScriptState::Scope scope(script_state_.get());
+  ScriptState::Scope scope(script_state_.Get());
 
   // Step 5. "Let evaluationStatus be null." [spec text]
   // |error| corresponds to "evaluationStatus of [[Type]]: throw".
@@ -225,7 +225,7 @@ ScriptValue ModulatorImplBase::ExecuteModule(
     CHECK(!record.IsNull());
 
     // Step 7.2 "Let evaluationStatus be record.ModuleEvaluate()." [spec text]
-    error = record.Evaluate(script_state_.get());
+    error = record.Evaluate(script_state_.Get());
   }
 
   // Step 8. "If evaluationStatus is an abrupt completion, then:" [spec text]
@@ -237,7 +237,7 @@ ScriptValue ModulatorImplBase::ExecuteModule(
 
     // Step 8.2. "Otherwise, report the exception given by
     // evaluationStatus.[[Value]] for script." [spec text]
-    ScriptModule::ReportException(script_state_.get(), error.V8Value());
+    ScriptModule::ReportException(script_state_.Get(), error.V8Value());
 
     return ScriptValue();
   }
@@ -249,6 +249,7 @@ ScriptValue ModulatorImplBase::ExecuteModule(
 
 void ModulatorImplBase::Trace(blink::Visitor* visitor) {
   Modulator::Trace(visitor);
+  visitor->Trace(script_state_);
   visitor->Trace(map_);
   visitor->Trace(loader_registry_);
   visitor->Trace(tree_linker_registry_);

@@ -9,14 +9,12 @@
 
 namespace blink {
 
-ModulatorImplBase* WorkerModulatorImpl::Create(
-    scoped_refptr<ScriptState> script_state) {
-  return new WorkerModulatorImpl(std::move(script_state));
+ModulatorImplBase* WorkerModulatorImpl::Create(ScriptState* script_state) {
+  return new WorkerModulatorImpl(script_state);
 }
 
-WorkerModulatorImpl::WorkerModulatorImpl(
-    scoped_refptr<ScriptState> script_state)
-    : ModulatorImplBase(std::move(script_state)) {}
+WorkerModulatorImpl::WorkerModulatorImpl(ScriptState* script_state)
+    : ModulatorImplBase(script_state) {}
 
 ModuleScriptFetcher* WorkerModulatorImpl::CreateModuleScriptFetcher() {
   // TODO(nhiroki): Support module loading for workers.

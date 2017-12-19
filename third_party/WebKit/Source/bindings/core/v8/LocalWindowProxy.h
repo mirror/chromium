@@ -69,6 +69,8 @@ class LocalWindowProxy final : public WindowProxy {
   // (e.g., after setting docoument.domain).
   void UpdateSecurityOrigin(const SecurityOrigin*);
 
+  void Trace(Visitor* visitor) override;
+
  private:
   LocalWindowProxy(v8::Isolate*, LocalFrame&, scoped_refptr<DOMWrapperWorld>);
 
@@ -107,7 +109,7 @@ class LocalWindowProxy final : public WindowProxy {
 
   LocalFrame* GetFrame() const { return ToLocalFrame(WindowProxy::GetFrame()); }
 
-  scoped_refptr<ScriptState> script_state_;
+  Member<ScriptState> script_state_;
 };
 
 DEFINE_TYPE_CASTS(LocalWindowProxy,

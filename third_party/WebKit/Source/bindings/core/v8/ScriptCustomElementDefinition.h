@@ -42,6 +42,7 @@ class CORE_EXPORT ScriptCustomElementDefinition final
 
   virtual ~ScriptCustomElementDefinition() = default;
 
+  void Trace(blink::Visitor* visitor) override;
   virtual void TraceWrappers(const ScriptWrappableVisitor*) const;
 
   v8::Local<v8::Object> Constructor() const;
@@ -90,7 +91,7 @@ class CORE_EXPORT ScriptCustomElementDefinition final
                                                 v8::Isolate*,
                                                 ExceptionState&);
 
-  scoped_refptr<ScriptState> script_state_;
+  Member<ScriptState> script_state_;
   TraceWrapperV8Reference<v8::Object> constructor_;
   TraceWrapperV8Reference<v8::Function> connected_callback_;
   TraceWrapperV8Reference<v8::Function> disconnected_callback_;

@@ -216,7 +216,7 @@ void PausableScriptExecutor::ExecuteAndDestroySelf() {
   if (callback_)
     callback_->WillExecute();
 
-  ScriptState::Scope script_scope(script_state_.get());
+  ScriptState::Scope script_scope(script_state_.Get());
   Vector<v8::Local<v8::Value>> results =
       executor_->Execute(ToDocument(GetExecutionContext())->GetFrame());
 
@@ -242,6 +242,7 @@ void PausableScriptExecutor::Dispose() {
 }
 
 void PausableScriptExecutor::Trace(blink::Visitor* visitor) {
+  visitor->Trace(script_state_);
   visitor->Trace(executor_);
   PausableTimer::Trace(visitor);
 }

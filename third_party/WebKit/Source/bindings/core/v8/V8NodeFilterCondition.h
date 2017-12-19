@@ -58,7 +58,7 @@ class V8NodeFilterCondition final
   }
 
   ~V8NodeFilterCondition();
-  virtual void Trace(blink::Visitor* visitor) {}
+  virtual void Trace(blink::Visitor* visitor);
   void TraceWrappers(const ScriptWrappableVisitor*) const;
 
   unsigned acceptNode(Node*, ExceptionState&);
@@ -69,7 +69,7 @@ class V8NodeFilterCondition final
  private:
   V8NodeFilterCondition(v8::Local<v8::Value> filter, ScriptState*);
 
-  scoped_refptr<ScriptState> script_state_;
+  Member<ScriptState> script_state_;
   TraceWrapperV8Reference<v8::Object> filter_;
   bool active_flag_;
 };

@@ -64,13 +64,14 @@ class CSSPaintDefinition final
     return context_settings_;
   }
 
-  ScriptState* GetScriptState() const { return script_state_.get(); }
+  ScriptState* GetScriptState() const { return script_state_.Get(); }
 
   v8::Local<v8::Function> PaintFunctionForTesting(v8::Isolate* isolate) {
     return paint_.NewLocal(isolate);
   }
 
-  void Trace(blink::Visitor* visitor){};
+  void Trace(blink::Visitor* visitor);
+
   void TraceWrappers(const ScriptWrappableVisitor*) const override;
 
  private:
@@ -85,7 +86,7 @@ class CSSPaintDefinition final
 
   void MaybeCreatePaintInstance();
 
-  scoped_refptr<ScriptState> script_state_;
+  Member<ScriptState> script_state_;
 
   // This object keeps the class instance object, constructor function and
   // paint function alive. It participates in wrapper tracing as it holds onto

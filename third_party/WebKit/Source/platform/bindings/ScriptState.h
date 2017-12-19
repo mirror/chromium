@@ -64,7 +64,8 @@ class ScriptValue;
 // ScriptState is created when v8::Context is created.
 // ScriptState is destroyed when v8::Context is garbage-collected and
 // all V8 proxy objects that have references to the ScriptState are destructed.
-class PLATFORM_EXPORT ScriptState : public RefCounted<ScriptState> {
+class PLATFORM_EXPORT ScriptState
+    : public GarbageCollectedFinalized<ScriptState> {
   WTF_MAKE_NONCOPYABLE(ScriptState);
 
  public:
@@ -88,8 +89,11 @@ class PLATFORM_EXPORT ScriptState : public RefCounted<ScriptState> {
     v8::Local<v8::Context> context_;
   };
 
-  static scoped_refptr<ScriptState> Create(v8::Local<v8::Context>,
-                                           scoped_refptr<DOMWrapperWorld>);
+  static ScriptState* Create(v8::Local<v8::Context>,
+                             scoped_refptr<DOMWrapperWorld>);
+
+  void Trace(Visitor* visitor) {}
+
   virtual ~ScriptState();
 
   static ScriptState* Current(v8::Isolate* isolate)  // DEPRECATED
@@ -143,6 +147,7 @@ class PLATFORM_EXPORT ScriptState : public RefCounted<ScriptState> {
   void ClearContext() { return context_.Clear(); }
 
   V8PerContextData* PerContextData() const { return per_context_data_.get(); }
+  // TODO(watk): Remove this?
   void DisposePerContextData();
 
  protected:
@@ -180,15 +185,15 @@ class ScriptStateProtectingContext {
       context_.Set(script_state_->GetIsolate(), script_state_->GetContext());
   }
 
-  ScriptState* operator->() const { return script_state_.get(); }
-  ScriptState* Get() const { return script_state_.get(); }
+  ScriptState* operator->() const { return script_state_.Get(); }
+  ScriptState* Get() const { return script_state_.Get(); }
   void Clear() {
     script_state_ = nullptr;
     context_.Clear();
   }
 
  private:
-  scoped_refptr<ScriptState> script_state_;
+  Persistent<ScriptState> script_state_;
   ScopedPersistent<v8::Context> context_;
 };
 

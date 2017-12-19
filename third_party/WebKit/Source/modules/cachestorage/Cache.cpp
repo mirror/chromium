@@ -442,7 +442,7 @@ class Cache::CodeCacheHandleCallbackForPut final
 
     scoped_refptr<CachedMetadata> cached_metadata =
         V8ScriptRunner::GenerateFullCodeCache(
-            script_state_.get(),
+            script_state_.Get(),
             text_decoder->Decode(static_cast<const char*>(array_buffer->Data()),
                                  array_buffer->ByteLength()),
             web_request_.Url().GetString(), text_decoder->Encoding(),
@@ -469,12 +469,13 @@ class Cache::CodeCacheHandleCallbackForPut final
   }
 
   void Trace(blink::Visitor* visitor) override {
+    visitor->Trace(script_state_);
     visitor->Trace(barrier_callback_);
     FetchDataLoader::Client::Trace(visitor);
   }
 
  private:
-  const scoped_refptr<ScriptState> script_state_;
+  const Member<ScriptState> script_state_;
   const size_t index_;
   Member<BarrierCallbackForPut> barrier_callback_;
   const String mime_type_;

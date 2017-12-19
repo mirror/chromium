@@ -42,7 +42,7 @@ class ScriptModuleResolverImplTestModulator final : public DummyModulator {
 
  private:
   // Implements Modulator:
-  ScriptState* GetScriptState() override { return script_state_.get(); }
+  ScriptState* GetScriptState() override { return script_state_.Get(); }
 
   ModuleScript* GetFetchedModuleScript(const KURL&) override;
 
@@ -50,18 +50,19 @@ class ScriptModuleResolverImplTestModulator final : public DummyModulator {
     return ScriptModuleState::kInstantiated;
   }
   ScriptValue GetError(const ModuleScript* module_script) override {
-    ScriptState::Scope scope(script_state_.get());
-    return ScriptValue(script_state_.get(),
+    ScriptState::Scope scope(script_state_.Get());
+    return ScriptValue(script_state_.Get(),
                        module_script->CreateError(script_state_->GetIsolate()));
   }
 
-  scoped_refptr<ScriptState> script_state_;
+  Member<ScriptState> script_state_;
   int get_fetched_module_script_called_ = 0;
   KURL fetched_url_;
   Member<ModuleScript> module_script_;
 };
 
 void ScriptModuleResolverImplTestModulator::Trace(blink::Visitor* visitor) {
+  visitor->Trace(script_state_);
   visitor->Trace(module_script_);
   DummyModulator::Trace(visitor);
 }

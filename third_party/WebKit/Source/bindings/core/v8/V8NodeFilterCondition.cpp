@@ -53,6 +53,10 @@ V8NodeFilterCondition::V8NodeFilterCondition(v8::Local<v8::Value> filter,
 
 V8NodeFilterCondition::~V8NodeFilterCondition() {}
 
+void V8NodeFilterCondition::Trace(blink::Visitor* visitor) {
+  visitor->Trace(script_state_);
+}
+
 void V8NodeFilterCondition::TraceWrappers(
     const ScriptWrappableVisitor* visitor) const {
   visitor->TraceWrappers(filter_.Cast<v8::Value>());
@@ -100,7 +104,7 @@ unsigned V8NodeFilterCondition::acceptNode(Node* node,
     receiver = filter;
   }
 
-  v8::Local<v8::Value> node_wrapper = ToV8(node, script_state_.get());
+  v8::Local<v8::Value> node_wrapper = ToV8(node, script_state_.Get());
   if (node_wrapper.IsEmpty()) {
     if (exception_catcher.HasCaught())
       exception_state.RethrowV8Exception(exception_catcher.Exception());
@@ -110,7 +114,7 @@ unsigned V8NodeFilterCondition::acceptNode(Node* node,
   v8::Local<v8::Value> result;
   v8::Local<v8::Value> args[] = {node_wrapper};
   if (!V8ScriptRunner::CallFunction(callback,
-                                    ExecutionContext::From(script_state_.get()),
+                                    ExecutionContext::From(script_state_.Get()),
                                     receiver, 1, args, isolate)
            .ToLocal(&result)) {
     exception_state.RethrowV8Exception(exception_catcher.Exception());

@@ -59,9 +59,10 @@ class MODULES_EXPORT BodyStreamBuffer final : public UnderlyingSourceBase,
   bool IsStreamLocked();
   bool IsStreamDisturbed();
   void CloseAndLockAndDisturb();
-  ScriptState* GetScriptState() { return script_state_.get(); }
+  ScriptState* GetScriptState() { return script_state_.Get(); }
 
   void Trace(blink::Visitor* visitor) override {
+    visitor->Trace(script_state_);
     visitor->Trace(consumer_);
     visitor->Trace(loader_);
     UnderlyingSourceBase::Trace(visitor);
@@ -78,7 +79,7 @@ class MODULES_EXPORT BodyStreamBuffer final : public UnderlyingSourceBase,
   void EndLoading();
   void StopLoading();
 
-  scoped_refptr<ScriptState> script_state_;
+  Member<ScriptState> script_state_;
   Member<BytesConsumer> consumer_;
   // We need this member to keep it alive while loading.
   Member<FetchDataLoader> loader_;

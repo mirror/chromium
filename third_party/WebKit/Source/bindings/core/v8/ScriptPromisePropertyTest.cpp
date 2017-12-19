@@ -89,8 +89,8 @@ class GarbageCollectedHolder : public GarbageCollectedScriptWrappable {
   }
 
   virtual void Trace(blink::Visitor* visitor) {
-    GarbageCollectedScriptWrappable::Trace(visitor);
     visitor->Trace(property_);
+    GarbageCollectedScriptWrappable::Trace(visitor);
   }
 
  private:
@@ -115,7 +115,7 @@ class ScriptPromisePropertyTestBase {
     return ToScriptStateForMainWorld(GetDocument().GetFrame());
   }
   DOMWrapperWorld& MainWorld() { return MainScriptState()->World(); }
-  ScriptState* OtherScriptState() { return other_script_state_.get(); }
+  ScriptState* OtherScriptState() { return other_script_state_.Get(); }
   DOMWrapperWorld& OtherWorld() { return other_script_state_->World(); }
   ScriptState* CurrentScriptState() {
     return ScriptState::Current(GetIsolate());
@@ -155,7 +155,7 @@ class ScriptPromisePropertyTestBase {
 
  private:
   std::unique_ptr<DummyPageHolder> page_;
-  scoped_refptr<ScriptState> other_script_state_;
+  Persistent<ScriptState> other_script_state_;
 };
 
 // This is the main test class.

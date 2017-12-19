@@ -37,7 +37,6 @@
 #include "core/CoreExport.h"
 #include "platform/heap/Handle.h"
 #include "platform/wtf/Allocator.h"
-#include "platform/wtf/Vector.h"
 #include "v8/include/v8.h"
 
 namespace blink {
@@ -137,7 +136,7 @@ class CORE_EXPORT ScriptPromise final {
   static void IncreaseInstanceCount();
   static void DecreaseInstanceCount();
 
-  scoped_refptr<ScriptState> script_state_;
+  Persistent<ScriptState> script_state_;
   ScriptValue promise_;
 };
 

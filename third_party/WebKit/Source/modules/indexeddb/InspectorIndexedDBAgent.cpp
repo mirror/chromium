@@ -63,6 +63,8 @@
 #include "public/platform/modules/indexeddb/WebIDBTypes.h"
 
 using blink::protocol::Array;
+using blink::protocol::Maybe;
+using blink::protocol::Response;
 using blink::protocol::IndexedDB::DatabaseWithObjectStores;
 using blink::protocol::IndexedDB::DataEntry;
 using blink::protocol::IndexedDB::Key;
@@ -70,8 +72,6 @@ using blink::protocol::IndexedDB::KeyPath;
 using blink::protocol::IndexedDB::KeyRange;
 using blink::protocol::IndexedDB::ObjectStore;
 using blink::protocol::IndexedDB::ObjectStoreIndex;
-using blink::protocol::Maybe;
-using blink::protocol::Response;
 
 typedef blink::protocol::IndexedDB::Backend::RequestDatabaseNamesCallback
     RequestDatabaseNamesCallback;
@@ -266,11 +266,16 @@ class OpenDatabaseCallback final : public EventListener {
  public:
   static OpenDatabaseCallback* Create(
       ExecutableWithDatabase<RequestCallback>* executable_with_database,
-      scoped_refptr<ScriptState> script_state) {
+      ScriptState* script_state) {
     return new OpenDatabaseCallback(executable_with_database, script_state);
   }
 
   ~OpenDatabaseCallback() override {}
+
+  void Trace(blink::Visitor* visitor) {
+    visitor->Trace(script_state_);
+    EventListener::Trace(visitor);
+  }
 
   bool operator==(const EventListener& other) const override {
     return this == &other;
@@ -293,7 +298,7 @@ class OpenDatabaseCallback final : public EventListener {
     }
 
     IDBDatabase* idb_database = request_result->IdbDatabase();
-    executable_with_database_->Execute(idb_database, script_state_.get());
+    executable_with_database_->Execute(idb_database, script_state_.Get());
     V8PerIsolateData::From(script_state_->GetIsolate())->RunEndOfScopeTasks();
     idb_database->close();
   }
@@ -301,13 +306,13 @@ class OpenDatabaseCallback final : public EventListener {
  private:
   OpenDatabaseCallback(
       ExecutableWithDatabase<RequestCallback>* executable_with_database,
-      scoped_refptr<ScriptState> script_state)
+      ScriptState* script_state)
       : EventListener(EventListener::kCPPEventListenerType),
         executable_with_database_(executable_with_database),
         script_state_(script_state) {}
   scoped_refptr<ExecutableWithDatabase<RequestCallback>>
       executable_with_database_;
-  scoped_refptr<ScriptState> script_state_;
+  Member<ScriptState> script_state_;
 };
 
 template <typename RequestCallback>
@@ -609,10 +614,10 @@ class OpenCursorCallback final : public EventListener {
     }
 
     Document* document =
-        ToDocument(ExecutionContext::From(script_state_.get()));
+        ToDocument(ExecutionContext::From(script_state_.Get()));
     if (!document)
       return;
-    ScriptState* script_state = script_state_.get();
+    ScriptState* script_state = script_state_.Get();
     ScriptState::Scope scope(script_state);
     v8::Local<v8::Context> context = script_state->GetContext();
     v8_inspector::StringView object_group =
@@ -636,7 +641,10 @@ class OpenCursorCallback final : public EventListener {
     request_callback_->sendSuccess(std::move(result_), has_more);
   }
 
-  virtual void Trace(blink::Visitor* visitor) { EventListener::Trace(visitor); }
+  virtual void Trace(blink::Visitor* visitor) {
+    visitor->Trace(script_state_);
+    EventListener::Trace(visitor);
+  }
 
  private:
   OpenCursorCallback(v8_inspector::V8InspectorSession* v8_session,
@@ -654,7 +662,7 @@ class OpenCursorCallback final : public EventListener {
   }
 
   v8_inspector::V8InspectorSession* v8_session_;
-  scoped_refptr<ScriptState> script_state_;
+  Member<ScriptState> script_state_;
   std::unique_ptr<RequestDataCallback> request_callback_;
   int skip_count_;
   unsigned page_size_;
