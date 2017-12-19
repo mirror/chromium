@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "dca29dae_5bacaf1a",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_popup_presenter.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-12-19T08:31:48Z",
+      "side": 1,
+      "message": "It is used on iPhone during animation.",
+      "parentUuid": "eac1308d_c02191f5",
+      "range": {
+        "startLine": 65,
+        "startChar": 4,
+        "endLine": 65,
+        "endChar": 21
+      },
+      "revId": "4b10c97dd55624765110d05ffee7ec35fcddab97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ff1a7891_7d8b19d3",
         "filename": "ios/chrome/browser/ui/omnibox/omnibox_popup_presenter.mm",
         "patchSetId": 9
@@ -39,6 +63,24 @@
       "revId": "4b10c97dd55624765110d05ffee7ec35fcddab97",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fffd54fd_43e64e7c",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_popup_presenter.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-12-19T08:31:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ff1a7891_7d8b19d3",
+      "revId": "4b10c97dd55624765110d05ffee7ec35fcddab97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "8e6044b7_fb633d08",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_popup_presenter.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-12-19T08:31:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "36c8bcf9_8225982b",
+      "revId": "4b10c97dd55624765110d05ffee7ec35fcddab97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "332dfd0c_03aa8161",
         "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.mm",
         "patchSetId": 9
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "5b4e898f_5c26b40b",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 827,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-12-19T08:31:48Z",
+      "side": 1,
+      "message": "I created the helper as it did not exist for UILayoutGuide.",
+      "parentUuid": "332dfd0c_03aa8161",
+      "revId": "4b10c97dd55624765110d05ffee7ec35fcddab97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "438351dd_3e664c32",
         "filename": "ios/chrome/browser/ui/toolbar/web_toolbar_controller.mm",
         "patchSetId": 9
@@ -90,6 +168,24 @@
       "revId": "4b10c97dd55624765110d05ffee7ec35fcddab97",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f6db8b6_3ad62757",
+        "filename": "ios/chrome/browser/ui/toolbar/web_toolbar_controller.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 572,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-12-19T08:31:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "438351dd_3e664c32",
+      "revId": "4b10c97dd55624765110d05ffee7ec35fcddab97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
