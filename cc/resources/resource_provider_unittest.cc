@@ -18,6 +18,7 @@
 #include "base/bind.h"
 #include "base/logging.h"
 #include "base/memory/ref_counted.h"
+#include "cc/test/render_pass_test_utils.h"
 #include "cc/test/test_context_provider.h"
 #include "cc/test/test_shared_bitmap_manager.h"
 #include "cc/test/test_texture.h"
@@ -547,10 +548,13 @@ class ResourceProviderTest : public testing::TestWithParam<viz::ResourceType> {
   std::unique_ptr<TestSharedBitmapManager> shared_bitmap_manager_;
 };
 
+// This will delete resource in DisplarResourceProvider first, then
+// LayerTreeResourceProvider.
 void CheckCreateResource(viz::ResourceType expected_default_type,
                          DisplayResourceProvider* resource_provider,
+                         LayerTreeResourceProvider* child_resource_provider,
                          ResourceProviderContext* context) {
-  DCHECK_EQ(resource_provider->IsSoftware(),
+  DCHECK_EQ(child_resource_provider->IsSoftware(),
             expected_default_type == viz::ResourceType::kBitmap);
 
   gfx::Size size(1, 1);
@@ -558,29 +562,143 @@ void CheckCreateResource(viz::ResourceType expected_default_type,
   size_t pixel_size = TextureSizeBytes(size, format);
   ASSERT_EQ(4U, pixel_size);
 
-  viz::ResourceId id = resource_provider->CreateResource(
+  viz::ResourceId id = child_resource_provider->CreateResource(
       size, viz::ResourceTextureHint::kDefault, format, gfx::ColorSpace());
-  EXPECT_EQ(1, static_cast<int>(resource_provider->num_resources()));
+  EXPECT_EQ(1, static_cast<int>(child_resource_provider->num_resources()));
   if (expected_default_type == viz::ResourceType::kTexture)
     EXPECT_EQ(0u, context->NumTextures());
 
   uint8_t data[4] = {1, 2, 3, 4};
-  resource_provider->CopyToResource(id, data, size);
+  child_resource_provider->CopyToResource(id, data, size);
+
   if (expected_default_type == viz::ResourceType::kTexture)
     EXPECT_EQ(1u, context->NumTextures());
 
+  int child_id = 0;
+  // Transfer resources to the parent.
+  ResourceProvider::ResourceIdArray resource_ids_to_transfer;
+  resource_ids_to_transfer.push_back(id);
+  std::vector<viz::TransferableResource> send_to_parent;
+  std::vector<viz::ReturnedResource> returned_to_child;
+  child_id = resource_provider->CreateChild(base::BindRepeating(
+      &ResourceProviderTest::CollectResources, &returned_to_child));
+  child_resource_provider->PrepareSendToParent(resource_ids_to_transfer,
+                                               &send_to_parent);
+  resource_provider->ReceiveFromChild(child_id, send_to_parent);
+  // Get the maped id.
+  ResourceProvider::ResourceIdMap resourceIdMap =
+      resource_provider->GetChildToParentMap(child_id);
+  viz::ResourceId mapped_id = resourceIdMap[id];
+
   uint8_t result[4] = {0};
-  GetResourcePixels(resource_provider, context, id, size, format, result);
+  GetResourcePixels(resource_provider, context, mapped_id, size, format,
+                    result);
   EXPECT_EQ(0, memcmp(data, result, pixel_size));
 
-  resource_provider->DeleteResource(id);
+  viz::ResourceIdSet resource_ids_to_receive;
+  resource_ids_to_receive.insert(id);
+  resource_provider->DeclareUsedResourcesFromChild(child_id,
+                                                   resource_ids_to_receive);
+  EXPECT_EQ(1, static_cast<int>(resource_provider->num_resources()));
+  // We can not delete imported resource directly, using DestroyChild instead.
+  resource_provider->DestroyChild(child_id);
   EXPECT_EQ(0, static_cast<int>(resource_provider->num_resources()));
+
+  std::vector<viz::ReturnedResource> returned =
+      viz::TransferableResource::ReturnResources(send_to_parent);
+  // Resource has been exported to parent. So DeleteResource will only mark it
+  // for delete.
+  child_resource_provider->DeleteResource(id);
+  EXPECT_EQ(1, static_cast<int>(child_resource_provider->num_resources()));
+  // When resource was returned to child, it will be deleted if it is marked for
+  // delete.
+  child_resource_provider->ReceiveReturnsFromParent(returned);
+  EXPECT_EQ(0, static_cast<int>(child_resource_provider->num_resources()));
+
   if (expected_default_type == viz::ResourceType::kTexture)
     EXPECT_EQ(0u, context->NumTextures());
 }
 
 TEST_P(ResourceProviderTest, Basic) {
-  CheckCreateResource(GetParam(), resource_provider_.get(), context());
+  CheckCreateResource(GetParam(), resource_provider_.get(),
+                      child_resource_provider_.get(), context());
+}
+
+// This will delete resource in LayerTreeResourceProvider first, then
+// DisplayResourceProvider.
+void CheckCreateResourceReverseDelete(
+    viz::ResourceType expected_default_type,
+    DisplayResourceProvider* resource_provider,
+    LayerTreeResourceProvider* child_resource_provider,
+    ResourceProviderContext* context) {
+  DCHECK_EQ(child_resource_provider->IsSoftware(),
+            expected_default_type == viz::ResourceType::kBitmap);
+
+  gfx::Size size(1, 1);
+  viz::ResourceFormat format = viz::RGBA_8888;
+  size_t pixel_size = TextureSizeBytes(size, format);
+  ASSERT_EQ(4U, pixel_size);
+
+  viz::ResourceId id = child_resource_provider->CreateResource(
+      size, viz::ResourceTextureHint::kDefault, format, gfx::ColorSpace());
+  EXPECT_EQ(1, static_cast<int>(child_resource_provider->num_resources()));
+  if (expected_default_type == viz::ResourceType::kTexture)
+    EXPECT_EQ(0u, context->NumTextures());
+
+  uint8_t data[4] = {1, 2, 3, 4};
+  child_resource_provider->CopyToResource(id, data, size);
+
+  if (expected_default_type == viz::ResourceType::kTexture)
+    EXPECT_EQ(1u, context->NumTextures());
+
+  int child_id = 0;
+  // Transfer resources to the parent.
+  ResourceProvider::ResourceIdArray resource_ids_to_transfer;
+  resource_ids_to_transfer.push_back(id);
+  std::vector<viz::TransferableResource> send_to_parent;
+  std::vector<viz::ReturnedResource> returned_to_child;
+  child_id = resource_provider->CreateChild(base::BindRepeating(
+      &ResourceProviderTest::CollectResources, &returned_to_child));
+  child_resource_provider->PrepareSendToParent(resource_ids_to_transfer,
+                                               &send_to_parent);
+  resource_provider->ReceiveFromChild(child_id, send_to_parent);
+  // Get the maped id.
+  ResourceProvider::ResourceIdMap resourceIdMap =
+      resource_provider->GetChildToParentMap(child_id);
+  viz::ResourceId mapped_id = resourceIdMap[id];
+
+  uint8_t result[4] = {0};
+  GetResourcePixels(resource_provider, context, mapped_id, size, format,
+                    result);
+  EXPECT_EQ(0, memcmp(data, result, pixel_size));
+
+  std::vector<viz::ReturnedResource> returned =
+      viz::TransferableResource::ReturnResources(send_to_parent);
+  // Resource has been exported to parent. So DeleteResource will only mark it
+  // for delete.
+  child_resource_provider->DeleteResource(id);
+  EXPECT_EQ(1, static_cast<int>(child_resource_provider->num_resources()));
+  // When resource was returned to child, it will be deleted if it is marked for
+  // delete.
+  child_resource_provider->ReceiveReturnsFromParent(returned);
+  EXPECT_EQ(0, static_cast<int>(child_resource_provider->num_resources()));
+
+  viz::ResourceIdSet resource_ids_to_receive;
+  resource_ids_to_receive.insert(id);
+  resource_provider->DeclareUsedResourcesFromChild(child_id,
+                                                   resource_ids_to_receive);
+  EXPECT_EQ(1, static_cast<int>(resource_provider->num_resources()));
+  // We can not delete imported resource directly, using DestroyChild instead.
+  resource_provider->DestroyChild(child_id);
+  EXPECT_EQ(0, static_cast<int>(resource_provider->num_resources()));
+
+  if (expected_default_type == viz::ResourceType::kTexture)
+    EXPECT_EQ(0u, context->NumTextures());
+}
+
+TEST_P(ResourceProviderTest, BasicReverseDelete) {
+  CheckCreateResourceReverseDelete(GetParam(), resource_provider_.get(),
+                                   child_resource_provider_.get(), context());
 }
 
 TEST_P(ResourceProviderTest, SimpleUpload) {
