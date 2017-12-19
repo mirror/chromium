@@ -42,6 +42,30 @@
     },
     {
       "key": {
+        "uuid": "c301c07a_0cd1b367",
+        "filename": "services/network/public/interfaces/udp_socket.mojom",
+        "patchSetId": 28
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-12-19T16:32:13Z",
+      "side": 1,
+      "message": "We must go deeper :-}.  Devlin, could you comment?  (I\u0027m just making you a reviewer to get this one question on your radar screen--I\u0027m not actually looking for you to review the CL.)",
+      "parentUuid": "eb863492_cb34b544",
+      "range": {
+        "startLine": 11,
+        "startChar": 43,
+        "endLine": 11,
+        "endChar": 68
+      },
+      "revId": "17a5ee71f975ebd03efe1a9ce102f03b7df0c301",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5a24d4d2_cc8958ad",
         "filename": "services/network/public/interfaces/udp_socket.mojom",
         "patchSetId": 28
