@@ -86,7 +86,7 @@ class GESTURE_DETECTION_EXPORT ScaleGestureDetector {
     ANCHORED_SCALE_MODE_STYLUS
   };
 
-  void ResetScaleWithSpan(float span);
+  void ResetScaleWithSpan(float span, float span_x, float span_y);
 
   ScaleGestureListener* const listener_;
   bool stylus_scale_enabled_;
@@ -96,6 +96,8 @@ class GESTURE_DETECTION_EXPORT ScaleGestureDetector {
   float curr_span_;
   float prev_span_;
   float initial_span_;
+  float initial_span_x_;
+  float initial_span_y_;
   float curr_span_x_;
   float curr_span_y_;
   float prev_span_x_;

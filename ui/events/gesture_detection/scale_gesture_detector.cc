@@ -21,6 +21,12 @@ namespace {
 
 const float kScaleFactor = .5f;
 
+// Using a small epsilon when comparing slop distances allows pixel
+// perfect slop determination when using fractional DPI coordinates
+// (assuming the slop region and DPI scale are reasonably
+// proportioned).
+const float kSlopEpsilon = .05f;
+
 }  // namespace
 
 // Note: These constants were taken directly from the default (unscaled)
@@ -43,6 +49,8 @@ ScaleGestureDetector::ScaleGestureDetector(const Config& config,
       curr_span_(0),
       prev_span_(0),
       initial_span_(0),
+      initial_span_x_(0),
+      initial_span_y_(0),
       curr_span_x_(0),
       curr_span_y_(0),
       prev_span_x_(0),
@@ -56,14 +64,8 @@ ScaleGestureDetector::ScaleGestureDetector(const Config& config,
       event_before_or_above_starting_gesture_event_(false) {
   DCHECK(listener_);
 
-  // Using a small epsilon when comparing slop distances allows pixel
-  // perfect slop determination when using fractional DPI coordinates
-  // (assuming the slop region and DPI scale are reasonably
-  // proportioned).
-  const float kSlopEpsilon = .05f;
-
-  span_slop_ = config.span_slop + kSlopEpsilon;
-  min_span_ = config.min_scaling_span + kSlopEpsilon;
+  span_slop_ = config.span_slop;
+  min_span_ = config.min_scaling_span;
 }
 
 ScaleGestureDetector::~ScaleGestureDetector() {}
@@ -92,9 +94,9 @@ bool ScaleGestureDetector::OnTouchEvent(const MotionEvent& event) {
     // This means the app probably didn't give us all the events. Shame on it.
     if (in_progress_) {
       listener_->OnScaleEnd(*this, event);
-      ResetScaleWithSpan(0);
+      ResetScaleWithSpan(0, 0, 0);
     } else if (InAnchoredScaleMode() && stream_complete) {
-      ResetScaleWithSpan(0);
+      ResetScaleWithSpan(0, 0, 0);
     }
 
     if (stream_complete)
@@ -108,6 +110,8 @@ bool ScaleGestureDetector::OnTouchEvent(const MotionEvent& event) {
     anchored_scale_start_y_ = event.GetY();
     anchored_scale_mode_ = ANCHORED_SCALE_MODE_STYLUS;
     initial_span_ = 0;
+    initial_span_x_ = 0;
+    initial_span_y_ = 0;
   }
 
   const bool config_changed = action == MotionEvent::ACTION_DOWN ||
@@ -178,23 +182,37 @@ bool ScaleGestureDetector::OnTouchEvent(const MotionEvent& event) {
   const bool was_in_progress = in_progress_;
   focus_x_ = focus_x;
   focus_y_ = focus_y;
-  if (!InAnchoredScaleMode() && in_progress_ &&
-      (span < min_span_ || config_changed)) {
+  if (!InAnchoredScaleMode() && in_progress_ && config_changed) {
     listener_->OnScaleEnd(*this, event);
-    ResetScaleWithSpan(span);
+    ResetScaleWithSpan(span, span_x, span_y);
   }
   if (config_changed) {
-    prev_span_x_ = curr_span_x_ = span_x;
-    prev_span_y_ = curr_span_y_ = span_y;
+    initial_span_x_ = prev_span_x_ = curr_span_x_ = span_x;
+    initial_span_y_ = prev_span_y_ = curr_span_y_ = span_y;
     initial_span_ = prev_span_ = curr_span_ = span;
   }
 
   const float min_span = InAnchoredScaleMode() ? span_slop_ : min_span_;
-  if (!in_progress_ && span >= min_span &&
-      (was_in_progress || std::abs(span - initial_span_) > span_slop_)) {
+  bool span_exceeds_min_span = span >= min_span + kSlopEpsilon ||
+                               initial_span_ >= min_span + kSlopEpsilon;
+  if (!in_progress_ && span_exceeds_min_span &&
+      (was_in_progress ||
+       std::abs(span - initial_span_) > span_slop_ + kSlopEpsilon)) {
+    float zoom_sign = span > initial_span_ ? 1 : -1;
+
     prev_span_x_ = curr_span_x_ = span_x;
     prev_span_y_ = curr_span_y_ = span_y;
-    prev_span_ = curr_span_ = span;
+
+    curr_span_ = span;
+    prev_span_ = span;
+
+    // To ensure we don't lose delta when the event that starts the scale
+    // crosses the min and slop thresholds, the prev_span on the first update
+    // will the the point at which zooming would have started.
+    prev_span_ = std::max(initial_span_ + zoom_sign * span_slop_, min_span);
+    prev_span_x_ = std::max(initial_span_x_ + zoom_sign * span_slop_, min_span);
+    prev_span_y_ = std::max(initial_span_y_ + zoom_sign * span_slop_, min_span);
+
     prev_time_ = curr_time_;
     in_progress_ = listener_->OnScaleBegin(*this, event);
   }
@@ -208,6 +226,12 @@ bool ScaleGestureDetector::OnTouchEvent(const MotionEvent& event) {
     bool update_prev = true;
 
     if (in_progress_) {
+      // If this will be the last update because this event crossed the min
+      // threshold, calculate the update as if the event stopped right at the
+      // boundary.
+      if (!InAnchoredScaleMode() && span < min_span_ + kSlopEpsilon)
+        curr_span_ = min_span_;
+
       update_prev = listener_->OnScale(*this, event);
     }
 
@@ -217,6 +241,12 @@ bool ScaleGestureDetector::OnTouchEvent(const MotionEvent& event) {
       prev_span_ = curr_span_;
       prev_time_ = curr_time_;
     }
+  }
+
+  if (!InAnchoredScaleMode() && in_progress_ &&
+      span < min_span_ + kSlopEpsilon) {
+    listener_->OnScaleEnd(*this, event);
+    ResetScaleWithSpan(span, span_x, span_y);
   }
 
   return true;
@@ -277,9 +307,13 @@ bool ScaleGestureDetector::OnDoubleTap(const MotionEvent& ev) {
   return true;
 }
 
-void ScaleGestureDetector::ResetScaleWithSpan(float span) {
+void ScaleGestureDetector::ResetScaleWithSpan(float span,
+                                              float span_x,
+                                              float span_y) {
   in_progress_ = false;
   initial_span_ = span;
+  initial_span_x_ = span_x;
+  initial_span_y_ = span_y;
   anchored_scale_mode_ = ANCHORED_SCALE_MODE_NONE;
 }
 
