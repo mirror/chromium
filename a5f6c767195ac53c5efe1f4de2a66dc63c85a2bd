@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "670fe7e8_81dd9165",
+        "filename": "third_party/WebKit/Source/core/css/StyleEngine.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1021,
+      "author": {
+        "id": 1251514
+      },
+      "writtenOn": "2017-12-19T11:59:23Z",
+      "side": 1,
+      "message": "Nit: move assignment into if:\n\nif (ElementShadow* shadow \u003d element-\u003eShadow())",
+      "revId": "a5f6c767195ac53c5efe1f4de2a66dc63c85a2bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0000d79_95b06798",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorDOMAgent.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1762,
+      "author": {
+        "id": 1251514
+      },
+      "writtenOn": "2017-12-19T11:59:23Z",
+      "side": 1,
+      "message": "Nit: pass the GetShadowRoot() call as param to CollectNodes?",
+      "revId": "a5f6c767195ac53c5efe1f4de2a66dc63c85a2bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
