@@ -17,6 +17,7 @@
 #include "net/base/net_errors.h"
 #include "net/base/rand_callback.h"
 #include "net/log/net_log_source.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 
 namespace media {
 namespace cast {
@@ -258,15 +259,47 @@ bool UdpTransport::SendPacket(PacketRef packet, const base::Closure& cb) {
     // If we called Connect() before we must call Write() instead of
     // SendTo(). Otherwise on some platforms we might get
     // ERR_SOCKET_IS_CONNECTED.
-    // TODO(crbug.com/656607): Add proper annotation.
+    net::NetworkTrafficAnnotationTag traffic_annotation =
+        net::DefineNetworkTrafficAnnotation("cast_udp_transport", R"(
+        semantics {
+          sender: "Cast Streaming"
+          description:
+            "Media streaming protocol for LAN transport of screen mirroring "
+            "audio/video. The media router matches clients that wish to render "
+            "content outside the browser (media sources) with devices and "
+            "endpoints capable of rendering that content (media sinks).  When "
+            "a media source is linked with a media sink (in general, requiring "
+            "user permission), a media route is created that allows two-way "
+            "messaging between the client and the sink. The media route allows "
+            "the client to negotiate a peer-to-peer media streaming session "
+            "with the media sink via messaging (e.g., via WebRTC or Cast "
+            "Streaming), aka 'mirroring.'"
+          trigger:
+            "User invokes feature from the Media Router dialog (right click on "
+            "page, 'Cast...')."
+          data:
+            "Media and related control messages."
+          destination: OTHER
+          destination_other:
+            "A playback receiver, such as a Chromecast device."
+        }
+        policy {
+          cookies_allowed: NO
+          setting: "This feature cannot be disabled in settings."
+          chrome_policy {
+            EnableMediaRouter {
+              EnableMediaRouter: false
+            }
+          }
+        })");
+
     result =
         udp_socket_->Write(buf.get(), static_cast<int>(packet->data.size()),
-                           callback, NO_TRAFFIC_ANNOTATION_BUG_656607);
+                           callback, traffic_annotation);
   } else if (!IsEmpty(remote_addr_)) {
-    result = udp_socket_->SendTo(buf.get(),
-                                 static_cast<int>(packet->data.size()),
-                                 remote_addr_,
-                                 callback);
+    result =
+        udp_socket_->SendTo(buf.get(), static_cast<int>(packet->data.size()),
+                            remote_addr_, callback);
   } else {
     VLOG(1) << "Failed to send packet; socket is neither bound nor "
             << "connected.";
