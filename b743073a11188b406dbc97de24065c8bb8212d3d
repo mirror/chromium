@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "d07499d5_730e5265",
+        "filename": "chrome/browser/loader/chrome_resource_dispatcher_host_delegate.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-12-19T00:36:52Z",
+      "side": 1,
+      "message": "nit: Does this need an include?",
+      "range": {
+        "startLine": 87,
+        "startChar": 8,
+        "endLine": 87,
+        "endChar": 13
+      },
+      "revId": "b743073a11188b406dbc97de24065c8bb8212d3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f421b574_6ab511a2",
         "filename": "chrome/browser/offline_pages/background_loader_offliner.cc",
         "patchSetId": 9
@@ -64,6 +87,29 @@
         "startChar": 0,
         "endLine": 83,
         "endChar": 16
+      },
+      "revId": "b743073a11188b406dbc97de24065c8bb8212d3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a435cd1_b69010c4",
+        "filename": "chrome/browser/page_load_metrics/observers/previews_ukm_observer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-12-19T00:36:52Z",
+      "side": 1,
+      "message": "I think this is a mistake that was here before this CL. It should be STOP_OBSERVING here. It shouldn\u0027t affect anything functionally, it\u0027s just keeping this observer alive longer than it needs to be. Would you mind changing it to STOP_OBSERVING? Feel free to open a bug on me instead.",
+      "range": {
+        "startLine": 42,
+        "startChar": 11,
+        "endLine": 42,
+        "endChar": 29
       },
       "revId": "b743073a11188b406dbc97de24065c8bb8212d3d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",

@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "607709fb_e50c1009",
+        "filename": "chrome/browser/loader/chrome_navigation_data_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-12-19T00:36:52Z",
+      "side": 0,
+      "message": "Would it be possible to replace this test with a simple one that makes sure ChromeNavigationData(c_n_d.ToValue()) for some c_n_d with non-null members actually generates non-null members? And maybe null members stay null?",
+      "range": {
+        "startLine": 36,
+        "startChar": 7,
+        "endLine": 36,
+        "endChar": 31
+      },
+      "revId": "79ff0353a50008033973b9130b9cf15d8879bba0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8884a6bc_681b906e",
+        "filename": "chrome/browser/loader/chrome_resource_dispatcher_host_delegate_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-12-19T00:36:52Z",
+      "side": 0,
+      "message": "Thanks for removing the static_casts throughout, they always bothered me somewhat.",
+      "range": {
+        "startLine": 189,
+        "startChar": 33,
+        "endLine": 189,
+        "endChar": 44
+      },
+      "revId": "79ff0353a50008033973b9130b9cf15d8879bba0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
