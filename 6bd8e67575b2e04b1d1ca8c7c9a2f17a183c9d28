@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "59526b03_764e58e2",
+        "filename": "media/base/audio_latency.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-12-19T12:45:00Z",
+      "side": 1,
+      "message": "nit: Could you start it with a capital letter and end with \".\"?",
+      "revId": "6bd8e67575b2e04b1d1ca8c7c9a2f17a183c9d28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ade39bd6_a2cf238f",
+        "filename": "media/base/audio_latency.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-12-19T12:45:00Z",
+      "side": 1,
+      "message": "Sorry, I lost this comment in the previous review round:\nThis code basically means \"if (requested_buffer_size \u003e 4096) return 8192;\" which looks quite confusing - so could you add a comment on why this decision is made here and why we can\u0027t just proceed to l.175 and then clamp the result at l.185?",
+      "revId": "6bd8e67575b2e04b1d1ca8c7c9a2f17a183c9d28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1169c753_1e74480c",
+        "filename": "media/base/audio_latency.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-12-19T12:45:00Z",
+      "side": 1,
+      "message": "Ditto.\nAlso, \"CRAS max buffer size\" - it\u0027s not clear which buffers size is referred to? We have two max buffer sizes at one line here :)",
+      "revId": "6bd8e67575b2e04b1d1ca8c7c9a2f17a183c9d28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57f5e2e6_259c043e",
+        "filename": "media/base/limits.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-12-19T12:45:00Z",
+      "side": 1,
+      "message": "Could we move this text from the source code to the CL description?\nAnd add here a comment what is this value about?",
+      "revId": "6bd8e67575b2e04b1d1ca8c7c9a2f17a183c9d28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
