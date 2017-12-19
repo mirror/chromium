@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ff2fbd15_79f93e28",
+        "filename": "build/android/rebaseline_render_tests.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-12-19T18:00:46Z",
+      "side": 1,
+      "message": "I\u0027m going to have to get this from the shard somehow since different Render Tests can output to different directories.",
+      "range": {
+        "startLine": 178,
+        "startChar": 0,
+        "endLine": 178,
+        "endChar": 10
+      },
+      "revId": "51069372221041ec82c279688c744ac20ff11d45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
