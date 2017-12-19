@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dbbbd1f1_a8de5e02",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-19T23:13:43Z",
+      "side": 1,
+      "message": "You can just say \"r525157 already made ...\" and drop the footnote.",
+      "revId": "6379a70ebd46d9d713313f48b75230ec9b71d221",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
