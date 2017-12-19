@@ -127,6 +127,24 @@
     },
     {
       "key": {
+        "uuid": "cc1d9018_d8de4046",
+        "filename": "extensions/renderer/resources/platform_app.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-19T14:38:45Z",
+      "side": 0,
+      "message": "This all sounds good to me!  Thanks, folks!",
+      "parentUuid": "96169a03_194c6006",
+      "revId": "40ae69e207a3e0960cd8690fb190c8fede585979",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "304192ef_b4b15774",
         "filename": "third_party/WebKit/LayoutTests/virtual/stable/webexposed/global-interface-listing-expected.txt",
         "patchSetId": 7
