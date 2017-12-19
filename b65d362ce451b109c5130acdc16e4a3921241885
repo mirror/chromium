@@ -104,6 +104,24 @@
       "revId": "b65d362ce451b109c5130acdc16e4a3921241885",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e253727_c7007ffe",
+        "filename": "chrome/browser/page_load_metrics/page_load_metrics_initialize.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-12-19T15:46:47Z",
+      "side": 1,
+      "message": "you\u0027re right, sg",
+      "parentUuid": "84d9400e_782b48ba",
+      "revId": "b65d362ce451b109c5130acdc16e4a3921241885",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
