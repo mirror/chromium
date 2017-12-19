@@ -4902,7 +4902,7 @@ void RenderFrameImpl::RequestStorageQuota(
   WebSecurityOrigin origin = frame_->GetDocument().GetSecurityOrigin();
   if (origin.IsUnique()) {
     // Unique origins cannot store persistent state.
-    callbacks.DidFail(blink::kWebStorageQuotaErrorAbort);
+    callbacks.DidFail(blink::QuotaStatusCode::kErrorAbort);
     return;
   }
   RenderThreadImpl::current()->quota_dispatcher()->RequestStorageQuota(
