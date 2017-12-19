@@ -19,6 +19,7 @@
 #include "net/dns/dns_util.h"
 #include "net/dns/record_rdata.h"
 #include "net/socket/socket_test_util.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace certificate_transparency {
@@ -66,8 +67,10 @@ std::unique_ptr<net::DnsQuery> CreateDnsTxtQuery(base::StringPiece qname) {
       kClientSubnetExtensionCode, base::StringPiece("\x00\x01\x00\x00", 4)));
 
   const uint16_t kQueryId = 0;
+  // TODO(https://crbug.com/656607): Add proper annotation.
   return std::make_unique<net::DnsQuery>(
-      kQueryId, encoded_qname, net::dns_protocol::kTypeTXT, &opt_rdata);
+      kQueryId, encoded_qname, net::dns_protocol::kTypeTXT,
+      NO_TRAFFIC_ANNOTATION_BUG_656607, &opt_rdata);
 }
 
 bool CreateDnsTxtResponse(const net::DnsQuery& query,

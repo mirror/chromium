@@ -39,11 +39,13 @@ size_t OptRecordSize(const OptRecordRdata* rdata) {
 DnsQuery::DnsQuery(uint16_t id,
                    const base::StringPiece& qname,
                    uint16_t qtype,
+                   const NetworkTrafficAnnotationTag& traffic_annotation,
                    const OptRecordRdata* opt_rdata)
     : qname_size_(qname.size()),
       io_buffer_(new IOBufferWithSize(kHeaderSize + question_size() +
                                       OptRecordSize(opt_rdata))),
-      header_(reinterpret_cast<dns_protocol::Header*>(io_buffer_->data())) {
+      header_(reinterpret_cast<dns_protocol::Header*>(io_buffer_->data())),
+      traffic_annotation_(traffic_annotation) {
   DCHECK(!DNSDomainToString(qname).empty());
   *header_ = {};
   header_->id = base::HostToNet16(id);
@@ -78,7 +80,8 @@ DnsQuery::DnsQuery(uint16_t id,
 DnsQuery::~DnsQuery() = default;
 
 std::unique_ptr<DnsQuery> DnsQuery::CloneWithNewId(uint16_t id) const {
-  return base::WrapUnique(new DnsQuery(*this, id));
+  return base::WrapUnique(new DnsQuery(
+      *this, id, NetworkTrafficAnnotationTag(traffic_annotation_)));
 }
 
 uint16_t DnsQuery::id() const {
@@ -104,13 +107,16 @@ void DnsQuery::set_flags(uint16_t flags) {
   header_->flags = flags;
 }
 
-DnsQuery::DnsQuery(const DnsQuery& orig, uint16_t id) {
+DnsQuery::DnsQuery(const DnsQuery& orig,
+                   uint16_t id,
+                   const NetworkTrafficAnnotationTag& traffic_annotation) {
   qname_size_ = orig.qname_size_;
   io_buffer_ = new IOBufferWithSize(orig.io_buffer()->size());
   memcpy(io_buffer_.get()->data(), orig.io_buffer()->data(),
          io_buffer_.get()->size());
   header_ = reinterpret_cast<dns_protocol::Header*>(io_buffer_->data());
   header_->id = base::HostToNet16(id);
+  traffic_annotation_ = MutableNetworkTrafficAnnotationTag(traffic_annotation);
 }
 
 }  // namespace net

@@ -7,6 +7,7 @@
 #include "net/base/io_buffer.h"
 #include "net/dns/dns_protocol.h"
 #include "net/dns/record_rdata.h"
+#include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -99,7 +100,8 @@ TEST(DnsQueryTest, EDNS0) {
   base::StringPiece qname(qname_data, sizeof(qname_data));
   OptRecordRdata opt_rdata;
   opt_rdata.AddOpt(OptRecordRdata::Opt(255, "\xde\xad\xbe\xef"));
-  DnsQuery q1(0xbeef, qname, dns_protocol::kTypeA, &opt_rdata);
+  DnsQuery q1(0xbeef, qname, dns_protocol::kTypeA, TRAFFIC_ANNOTATION_FOR_TESTS,
+              &opt_rdata);
   EXPECT_EQ(dns_protocol::kTypeA, q1.qtype());
 
   EXPECT_THAT(AsTuple(q1.io_buffer()), ElementsAreArray(query_data));

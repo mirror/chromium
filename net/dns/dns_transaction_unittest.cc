@@ -27,6 +27,7 @@
 #include "net/log/net_log_with_source.h"
 #include "net/socket/socket_test_util.h"
 #include "net/test/gtest_util.h"
+#include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -54,7 +55,11 @@ class DnsSocketData {
                 IoMode mode,
                 bool use_tcp,
                 const OptRecordRdata* opt_rdata = nullptr)
-      : query_(new DnsQuery(id, DomainFromDot(dotted_name), qtype, opt_rdata)),
+      : query_(new DnsQuery(id,
+                            DomainFromDot(dotted_name),
+                            qtype,
+                            TRAFFIC_ANNOTATION_FOR_TESTS,
+                            opt_rdata)),
         use_tcp_(use_tcp) {
     if (use_tcp_) {
       std::unique_ptr<uint16_t> length(new uint16_t);
