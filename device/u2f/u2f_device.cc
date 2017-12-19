@@ -12,7 +12,7 @@
 
 namespace device {
 
-U2fDevice::U2fDevice() : channel_id_(kBroadcastChannel), capabilities_(0) {}
+U2fDevice::U2fDevice() = default;
 
 U2fDevice::~U2fDevice() = default;
 
