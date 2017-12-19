@@ -53,6 +53,23 @@
     },
     {
       "key": {
+        "uuid": "ea9f582d_5c7e0e91",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_controller_impl_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1116033
+      },
+      "writtenOn": "2017-12-19T20:38:04Z",
+      "side": 1,
+      "message": "can use std::make_unique",
+      "revId": "63b3e3028dbdd8610a9cf0f46527720374300ae1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5f245fc0_ac915e0b",
         "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_controller_impl_win.cc",
         "patchSetId": 3
