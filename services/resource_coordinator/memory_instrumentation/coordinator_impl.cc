@@ -84,6 +84,7 @@ void CoordinatorImpl::BindCoordinatorRequest(
 void CoordinatorImpl::RequestGlobalMemoryDump(
     base::trace_event::MemoryDumpType dump_type,
     base::trace_event::MemoryDumpLevelOfDetail level_of_detail,
+    const std::vector<std::string>& allocator_dump_names,
     const RequestGlobalMemoryDumpCallback& callback) {
   // This merely strips out the |dump_guid| argument.
   auto adapter = [](const RequestGlobalMemoryDumpCallback& callback,
@@ -92,7 +93,8 @@ void CoordinatorImpl::RequestGlobalMemoryDump(
     callback.Run(success, std::move(global_memory_dump));
   };
 
-  QueuedRequest::Args args(dump_type, level_of_detail, false);
+  QueuedRequest::Args args(dump_type, level_of_detail, allocator_dump_names,
+                           false);
   RequestGlobalMemoryDumpInternal(args, base::BindRepeating(adapter, callback));
 }
 
@@ -106,7 +108,8 @@ void CoordinatorImpl::RequestGlobalMemoryDumpAndAppendToTrace(
          bool success, uint64_t dump_guid,
          mojom::GlobalMemoryDumpPtr) { callback.Run(success, dump_guid); };
 
-  QueuedRequest::Args args(dump_type, level_of_detail, true);
+  QueuedRequest::Args args(dump_type, level_of_detail,
+                           std::vector<std::string>(), true);
   RequestGlobalMemoryDumpInternal(args, base::BindRepeating(adapter, callback));
 }
 
@@ -114,7 +117,8 @@ void CoordinatorImpl::GetVmRegionsForHeapProfiler(
     const GetVmRegionsForHeapProfilerCallback& callback) {
   RequestGlobalMemoryDump(
       MemoryDumpType::EXPLICITLY_TRIGGERED,
-      MemoryDumpLevelOfDetail::VM_REGIONS_ONLY_FOR_HEAP_PROFILER, callback);
+      MemoryDumpLevelOfDetail::VM_REGIONS_ONLY_FOR_HEAP_PROFILER,
+      std::vector<std::string>(), callback);
 }
 
 void CoordinatorImpl::RegisterClientProcess(
