@@ -56,6 +56,30 @@
       "revId": "0fe79cab11315a2d9b2fa1a696be9785abc290b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6a8ee76_36e1a28c",
+        "filename": "services/network/public/interfaces/data_pipe_getter.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-19T01:17:16Z",
+      "side": 1,
+      "message": "This was needed because the request body gets passed around in some places but the passer still needs access to the body. Specifically, when the body goes from Blink to //content/renderer, Blink still needs to keep the body around in case of redirect responses: sometimes Blink handles the redirect itself and needs to reissue the request. We\u0027ll need a similar thing when service worker URL interception code (ServiceWorkerURLLoaderJob and ServiceWorkerSubresourceLoader) passes the request to the service worker.\n\nIt also just made code health better. This way GetRequestBodyForWebHTTPBody and GetWebHTTPBodyForRequestBody can convert between content::ResourceRequestBody and blink::WebHTTPBody without mutating the input.\n\nAdmittedly, I didn\u0027t think we\u0027d have more DataPipeGetter implementations and was just thinking about the Blob-backed one. I imagined you could have multiple Read() calls inflight even without Clone() but I see that how that could be a pain.\n\nWhat is the DataPipeGetter implementation you are adding? Is a possibility just electing to not support Clone() in certain implementations, and fail with NOTREACHED()/BadMessageReceieved()?",
+      "parentUuid": "b8c95e68_f78a7b2f",
+      "range": {
+        "startLine": 19,
+        "startChar": 41,
+        "endLine": 19,
+        "endChar": 52
+      },
+      "revId": "0fe79cab11315a2d9b2fa1a696be9785abc290b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
