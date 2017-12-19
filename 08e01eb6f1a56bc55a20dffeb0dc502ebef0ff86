@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bd65fcc6_8356161e",
+        "filename": "third_party/WebKit/Source/core/policy/DocumentPolicy.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-12-19T01:21:00Z",
+      "side": 1,
+      "message": "Add explicit.",
+      "revId": "08e01eb6f1a56bc55a20dffeb0dc502ebef0ff86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a5e37cb_c7095d84",
+        "filename": "third_party/WebKit/Source/core/policy/DocumentPolicy.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-12-19T01:21:00Z",
+      "side": 1,
+      "message": "Why do you want to cache policy_ in the constructor? Maybe we can just call document_-\u003eGetFeaturePolicy() in GetPolicy()?",
+      "revId": "08e01eb6f1a56bc55a20dffeb0dc502ebef0ff86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2480dcca_f69ac415",
+        "filename": "third_party/WebKit/Source/core/policy/IFramePolicy.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-12-19T01:21:00Z",
+      "side": 1,
+      "message": "Why do we need to create another policy here? i.e., why can\u0027t we simply reuse Document::GetFeaturePolicy()?\n\nIt looks confusing that both IFrame and Document owns FeaturePolicy.\n\nIn the first place, why do we need both DocumentPolicy and IFramePolicy? Can the policies be different?",
+      "revId": "08e01eb6f1a56bc55a20dffeb0dc502ebef0ff86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
