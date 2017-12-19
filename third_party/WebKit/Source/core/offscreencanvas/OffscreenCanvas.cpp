@@ -218,12 +218,6 @@ bool OffscreenCanvas::OriginClean() const {
   return origin_clean_ && !disable_reading_from_canvas_;
 }
 
-bool OffscreenCanvas::IsPaintable() const {
-  if (!context_)
-    return IsValidImageSize(size_);
-  return context_->IsPaintable() && size_.Width() && size_.Height();
-}
-
 bool OffscreenCanvas::IsAccelerated() const {
   return context_ && context_->IsAccelerated();
 }
@@ -379,15 +373,10 @@ ScriptPromise OffscreenCanvas::convertToBlob(ScriptState* script_state,
     return exception_state.Reject(script_state);
   }
 
-  if (!this->IsPaintable()) {
+  if (!IsPaintable()) {
     exception_state.ThrowDOMException(
-        kIndexSizeError, "The size of the OffscreenCanvas is zero.");
-    return exception_state.Reject(script_state);
-  }
-
-  if (!this->context_) {
-    exception_state.ThrowDOMException(
-        kInvalidStateError, "OffscreenCanvas object has no rendering contexts");
+        kIndexSizeError,
+        "The OffscreenCanvas does not have a paintable bitmap.");
     return exception_state.Reject(script_state);
   }
 
@@ -398,7 +387,9 @@ ScriptPromise OffscreenCanvas::convertToBlob(ScriptState* script_state,
   ScriptPromiseResolver* resolver = ScriptPromiseResolver::Create(script_state);
   CanvasAsyncBlobCreator* async_creator = nullptr;
   scoped_refptr<StaticBitmapImage> snapshot =
-      context_->GetImage(kPreferNoAcceleration, kSnapshotReasonUnknown);
+      context_
+          ? context_->GetImage(kPreferNoAcceleration, kSnapshotReasonUnknown)
+          : CreateTransparentImage(size_);
   async_creator = CanvasAsyncBlobCreator::Create(
       snapshot, encoding_mime_type, start_time,
       ExecutionContext::From(script_state), resolver);
