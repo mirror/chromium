@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8e85a9f7_83cd77ac",
+        "filename": "tools/android/roll/android_deps/buildSrc/src/main/groovy/ChromiumDepGraph.groovy",
+        "patchSetId": 11
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-12-19T10:00:32Z",
+      "side": 1,
+      "message": "Nit: empty line before this one?",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 3
+      },
+      "revId": "f3f8d796abba3a76661f8bfc819106607ec351ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41c5a9e8_9c4e076f",
+        "filename": "tools/android/roll/android_deps/buildSrc/src/main/groovy/ChromiumDepGraph.groovy",
+        "patchSetId": 11
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-12-19T10:00:32Z",
+      "side": 1,
+      "message": "Re-wrap these lines?",
+      "range": {
+        "startLine": 80,
+        "startChar": 100,
+        "endLine": 80,
+        "endChar": 103
+      },
+      "revId": "f3f8d796abba3a76661f8bfc819106607ec351ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
