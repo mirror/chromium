@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "f05c659f_4ae4ca64",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-12-19T16:19:28Z",
+      "side": 1,
+      "message": "Please also note in the CL description that this changes the behavior of shelf on external monitors at login and lock screen.",
+      "revId": "4bcff6eb09267e7ebb1229186a18bca62239f91d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0cba64b3_2d811be0",
         "filename": "ash/root_window_controller.cc",
         "patchSetId": 1
@@ -31,6 +48,24 @@
       "side": 1,
       "message": "The default right now is views lock screen and web login. And possibly there is already small bug/regression (tried without patch). Shelf on views lock screen is visible on both primary and secondary display. Shelf on web login/lock screen is only visible on primary display.\n\nAccordingly when I enable views login it is visible on both displays.\n Since it is not related to this patch itself, I will clarify what is right behavior and file a separate bug if that is fine with you.",
       "parentUuid": "0cba64b3_2d811be0",
+      "revId": "4bcff6eb09267e7ebb1229186a18bca62239f91d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b4aeec74_ec40aac1",
+        "filename": "ash/root_window_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 705,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-12-19T16:19:28Z",
+      "side": 1,
+      "message": "The shelf has never been visible on a secondary display when attached at the login screen. It\u0027s weird, but it\u0027s always been that way, so I would call that expected behavior. It sounds like you are changing this behavior for views-based login. Please be sure you follow up on this with PM/UX. While unlikely, it\u0027s possible we have customers who expect/rely on the existing behavior.\n\nI would add a comment here about secondary displays, just in case we decide we want the webui behavior, to make it easier to find the code to change.",
+      "parentUuid": "abee9dde_d98b433f",
       "revId": "4bcff6eb09267e7ebb1229186a18bca62239f91d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -293,6 +328,24 @@
       "side": 1,
       "message": "Intentionally to see that the visibility changes when login is shown.",
       "parentUuid": "daecfd52_0f166b24",
+      "revId": "4bcff6eb09267e7ebb1229186a18bca62239f91d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1b49e866_0738f18a",
+        "filename": "ash/shelf/shelf_widget_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-12-19T16:19:28Z",
+      "side": 1,
+      "message": "Yes, but why do you check the transition UNKNOWN -\u003e OOBE -\u003e UNKNOWN? I don\u0027t think that happens in production. If it\u0027s a copy/paste mistake, remove it. If it\u0027s intention, comment why you have to test going back into the UNKNOWN state.",
+      "parentUuid": "c436f2d0_b2a2e820",
       "revId": "4bcff6eb09267e7ebb1229186a18bca62239f91d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
