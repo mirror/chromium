@@ -430,7 +430,6 @@ class BlinkPerfParser(_BlinkPerfBenchmark):
   tag = 'parser'
   subdir = 'Parser'
 
-
 @benchmark.Owner(emails=['kouhei@chromium.org', 'fs@opera.com'])
 class BlinkPerfSVG(_BlinkPerfBenchmark):
   tag = 'svg'
