@@ -47,6 +47,7 @@ DEFINE_NODE_FACTORY(HTMLIFrameElement)
 
 void HTMLIFrameElement::Trace(blink::Visitor* visitor) {
   visitor->Trace(sandbox_);
+  visitor->Trace(policy_);
   HTMLFrameElementBase::Trace(visitor);
   Supplementable<HTMLIFrameElement>::Trace(visitor);
 }
@@ -67,6 +68,14 @@ void HTMLIFrameElement::SetCollapsed(bool collapse) {
 
 DOMTokenList* HTMLIFrameElement::sandbox() const {
   return sandbox_.Get();
+}
+
+Policy* HTMLIFrameElement::policy() {
+  if (!policy_) {
+    policy_ = new IFramePolicy(&GetDocument(), ContainerPolicy(),
+                               GetOriginForFeaturePolicy());
+  }
+  return policy_.Get();
 }
 
 bool HTMLIFrameElement::IsPresentationAttribute(
@@ -255,6 +264,10 @@ ParsedFeaturePolicy HTMLIFrameElement::ConstructContainerPolicy(
       container_policy.push_back(whitelist);
     }
   }
+
+  // Update Policy associated with this iframe, if exists.
+  if (policy_)
+    policy_->UpdateContainerPolicy(container_policy, src_origin);
 
   return container_policy;
 }
