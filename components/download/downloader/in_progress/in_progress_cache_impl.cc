@@ -131,6 +131,7 @@ InProgressCacheImpl::InProgressCacheImpl(
 InProgressCacheImpl::~InProgressCacheImpl() = default;
 
 void InProgressCacheImpl::Initialize(const base::RepeatingClosure& callback) {
+  LOG(ERROR) << "joy: Initialize";
   // If it's already initialized, just run the callback.
   if (initialization_status_ == CACHE_INITIALIZED) {
     base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, callback);
@@ -150,6 +151,7 @@ void InProgressCacheImpl::Initialize(const base::RepeatingClosure& callback) {
 }
 
 void InProgressCacheImpl::OnInitialized(std::vector<char> entries) {
+  LOG(ERROR) << "joy: OnInitialized";
   if (entries.empty()) {
     if (!entries_.ParseFromArray(entries.data(), entries.size())) {
       // TODO(crbug.com/778425): Get UMA for errors.
@@ -169,6 +171,7 @@ void InProgressCacheImpl::OnInitialized(std::vector<char> entries) {
 }
 
 void InProgressCacheImpl::AddOrReplaceEntry(const DownloadEntry& entry) {
+  LOG(ERROR) << "joy: AddOrReplaceEntry " << entry.guid;
   if (initialization_status_ != CACHE_INITIALIZED) {
     LOG(ERROR) << "Cache is not initialized, cannot AddOrReplaceEntry.";
     return;
@@ -185,6 +188,7 @@ void InProgressCacheImpl::AddOrReplaceEntry(const DownloadEntry& entry) {
 
 base::Optional<DownloadEntry> InProgressCacheImpl::RetrieveEntry(
     const std::string& guid) {
+  LOG(ERROR) << "joy: RetreiveEntry " << guid;
   if (initialization_status_ != CACHE_INITIALIZED) {
     LOG(ERROR) << "Cache is not initialized, cannot RetrieveEntry.";
     return base::nullopt;
@@ -194,6 +198,7 @@ base::Optional<DownloadEntry> InProgressCacheImpl::RetrieveEntry(
 }
 
 void InProgressCacheImpl::RemoveEntry(const std::string& guid) {
+  LOG(ERROR) << "joy: RemoveEntry " << guid;
   if (initialization_status_ != CACHE_INITIALIZED) {
     LOG(ERROR) << "Cache is not initialized, cannot RemoveEntry.";
     return;

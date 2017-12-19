@@ -32,12 +32,12 @@ TEST_F(InProgressConversionsTest, DownloadEntries) {
 
   // Entries vector with one entry.
   entries.push_back(
-      DownloadEntry("guid", "request origin", DownloadSource::UNKNOWN));
+      DownloadEntry("guid", "request origin", DownloadSource::UNKNOWN, 123));
   EXPECT_EQ(entries, DownloadEntriesFromProto(DownloadEntriesToProto(entries)));
 
   // Entries vector with multiple entries.
   entries.push_back(
-      DownloadEntry("guid2", "request origin", DownloadSource::UNKNOWN));
+      DownloadEntry("guid2", "request origin", DownloadSource::UNKNOWN, 456));
   EXPECT_EQ(entries, DownloadEntriesFromProto(DownloadEntriesToProto(entries)));
 }
 
