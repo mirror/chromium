@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fc4bcfe5_27e41b38",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 1
+      },
+      "lineNbr": 8516,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-12-19T20:23:59Z",
+      "side": 1,
+      "message": "We can keep \"Never.\"",
+      "range": {
+        "startLine": 8516,
+        "startChar": 12,
+        "endLine": 8516,
+        "endChar": 17
+      },
+      "revId": "df8769f5184b56205493d7a0a0ddbf86ac2f1b2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce4e67f9_28db779b",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 1
+      },
+      "lineNbr": 8596,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-12-19T20:23:59Z",
+      "side": 1,
+      "message": "\"Translating...\"",
+      "range": {
+        "startLine": 8596,
+        "startChar": 12,
+        "endLine": 8596,
+        "endChar": 22
+      },
+      "revId": "df8769f5184b56205493d7a0a0ddbf86ac2f1b2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8703082_789916d8",
+        "filename": "chrome/browser/ui/views/translate/translate_bubble_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-12-19T20:23:59Z",
+      "side": 1,
+      "message": "I\u0027m guessing this is because you\u0027d have to plumb |sender| in, and that\u0027s not possible for the accelerator callsites. I think the problem is HandleButtonPressed is a big do-everything method. Instead, move this switch to ButtonPressed and split the actions that need to be shared with the accelerator callsites into their own methods.",
+      "revId": "df8769f5184b56205493d7a0a0ddbf86ac2f1b2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
