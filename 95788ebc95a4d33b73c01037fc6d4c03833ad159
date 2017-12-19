@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8a196bb0_2d8934df",
+        "filename": "ui/app_list/views/search_result_tile_item_view.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1116056
+      },
+      "writtenOn": "2017-12-19T00:06:21Z",
+      "side": 1,
+      "message": "Can we assume that selected_ is same as focused?\nThen we don\u0027t need this field.",
+      "range": {
+        "startLine": 114,
+        "startChar": 7,
+        "endLine": 114,
+        "endChar": 16
+      },
+      "revId": "95788ebc95a4d33b73c01037fc6d4c03833ad159",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
