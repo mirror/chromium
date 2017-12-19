@@ -27,7 +27,7 @@ class OverlaySurfaceEmbedder {
   std::unique_ptr<OverlayWindow> window_;
 
   // Contains the client's content.
-  std::unique_ptr<ui::Layer> surface_layer_;
+  std::unique_ptr<ui::Layer> layer_;
 
   scoped_refptr<viz::SurfaceReferenceFactory> ref_factory_;
 

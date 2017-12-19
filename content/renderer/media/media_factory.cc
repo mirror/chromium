@@ -319,7 +319,8 @@ blink::WebMediaPlayer* MediaFactory::CreateMediaPlayer(
           enable_instant_source_buffer_gc, embedded_media_experience_enabled,
           std::move(metrics_provider),
           base::Bind(&blink::WebSurfaceLayerBridge::Create, layer_tree_view),
-          RenderThreadImpl::current()->SharedMainThreadContextProvider()));
+          RenderThreadImpl::current()->SharedMainThreadContextProvider(),
+          layer_tree_view));
 
   std::unique_ptr<media::VideoFrameCompositor> vfc =
       std::make_unique<media::VideoFrameCompositor>(
