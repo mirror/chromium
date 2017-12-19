@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f9fa6846_445426b0",
+        "filename": "ui/shell_dialogs/select_file_dialog_mac.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-19T22:33:41Z",
+      "side": 1,
+      "message": "nit: BOOL. and YES/NO rather than true/false would be more consistent with other objc code in chrome.",
+      "revId": "64ef541aad859cc5be38da44863fb1ea24c7c817",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2a5a7a7_cdc13e44",
+        "filename": "ui/shell_dialogs/select_file_dialog_mac.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-19T22:33:41Z",
+      "side": 1,
+      "message": "nit: per http://go/objc-style#Initialization we tend not to do this in objc (the runtime bzeros everything)",
+      "revId": "64ef541aad859cc5be38da44863fb1ea24c7c817",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "590a4b57_2d1cdf82",
+        "filename": "ui/shell_dialogs/select_file_dialog_mac.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-19T22:33:41Z",
+      "side": 1,
+      "message": "I don\u0027t know much about how shouldEnableURL works. It seems weird that doing this still allows a user to change selection. I.e. how does does the panel permit a selection *change* to a URL that isn\u0027t enabled?",
+      "revId": "64ef541aad859cc5be38da44863fb1ea24c7c817",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
