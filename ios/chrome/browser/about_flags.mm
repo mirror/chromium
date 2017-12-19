@@ -21,6 +21,7 @@
 #include "base/strings/sys_string_conversions.h"
 #include "base/sys_info.h"
 #include "base/task_scheduler/switches.h"
+#include "components/autofill/ios/browser/autofill_switches.h"
 #include "components/dom_distiller/core/dom_distiller_switches.h"
 #include "components/feature_engagement/public/feature_constants.h"
 #include "components/feature_engagement/public/feature_list.h"
@@ -83,6 +84,18 @@ const FeatureEntry::Choice kUseDdljsonApiChoices[] = {
      "https://www.gstatic.com/chrome/ntp/doodle_test/ddljson_ios3.json"},
     {"(force test doodle 4)", search_provider_logos::switches::kGoogleDoodleUrl,
      "https://www.gstatic.com/chrome/ntp/doodle_test/ddljson_ios4.json"},
+};
+
+const FeatureEntry::Choice kAutofillDelayBetweenFieldsChoices[] = {
+    {flags_ui::kGenericExperimentChoiceDefault, "", ""},
+    {"0", autofill::switches::kAutofillDelayBetweenFields, "0"},
+    {"10", autofill::switches::kAutofillDelayBetweenFields, "10"},
+    {"20", autofill::switches::kAutofillDelayBetweenFields, "20"},
+    {"50", autofill::switches::kAutofillDelayBetweenFields, "50"},
+    {"100", autofill::switches::kAutofillDelayBetweenFields, "100"},
+    {"200", autofill::switches::kAutofillDelayBetweenFields, "200"},
+    {"500", autofill::switches::kAutofillDelayBetweenFields, "500"},
+    {"1000", autofill::switches::kAutofillDelayBetweenFields, "1000"},
 };
 
 // To add a new entry, add to the end of kFeatureEntries. There are four
@@ -201,8 +214,13 @@ const flags_ui::FeatureEntry kFeatureEntries[] = {
      FEATURE_VALUE_TYPE(password_manager::features::kPasswordExport)},
     {"wk-http-system-cookie-store",
      flag_descriptions::kWKHTTPSystemCookieStoreName,
-     flag_descriptions::kWKHTTPSystemCookieStoreName, flags_ui::kOsIos,
-     FEATURE_VALUE_TYPE(web::features::kWKHTTPSystemCookieStore)}};
+     flag_descriptions::kWKHTTPSystemCookieStoreDescription, flags_ui::kOsIos,
+     FEATURE_VALUE_TYPE(web::features::kWKHTTPSystemCookieStore)},
+    {"autofill-ios-delay-between-fields",
+     flag_descriptions::kAutofillIOSDelayBetweenFieldsName,
+     flag_descriptions::kAutofillIOSDelayBetweenFieldsDescription,
+     flags_ui::kOsIos, MULTI_VALUE_TYPE(kAutofillDelayBetweenFieldsChoices)},
+};
 
 // Add all switches from experimental flags to |command_line|.
 void AppendSwitchesFromExperimentalSettings(base::CommandLine* command_line) {

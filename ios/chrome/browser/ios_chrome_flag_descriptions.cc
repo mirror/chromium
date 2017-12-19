@@ -11,6 +11,11 @@
 
 namespace flag_descriptions {
 
+const char kAutofillIOSDelayBetweenFieldsName[] = "Autofill delay";
+const char kAutofillIOSDelayBetweenFieldsDescription[] =
+    "Delay between the different fields of a form being autofilled. In "
+    "milliseconds.";
+
 const char kBookmarkNewEditPageName[] = "Bookmark New Edit Page";
 const char kBookmarkNewEditPageDescription[] =
     "When enabled, the new bookmark edit page and folder picker will be used "
