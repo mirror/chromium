@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "52745fea_c40c00da",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SignInPromo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-12-19T20:24:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4daefab0_5364af53",
+      "revId": "eeb81907937f3651005ad5ec59700e92686f9e86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5fa45c0c_dac356b7",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SignInPromo.java",
         "patchSetId": 1
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "9452efaa_a6309489",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SignInPromo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-12-19T20:24:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5fa45c0c_dac356b7",
+      "range": {
+        "startLine": 100,
+        "startChar": 41,
+        "endLine": 100,
+        "endChar": 50
+      },
+      "revId": "eeb81907937f3651005ad5ec59700e92686f9e86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a9346ac_40e41541",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SignInPromo.java",
         "patchSetId": 1
@@ -59,6 +101,47 @@
         "endLine": 149,
         "endChar": 55
       },
+      "revId": "eeb81907937f3651005ad5ec59700e92686f9e86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "215ac356_14416fdf",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SignInPromo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-12-19T20:24:09Z",
+      "side": 1,
+      "message": "This can make a difference if SignInPromo is created shortly before suppression period ends. I agree that checking it in constructor only would make things much easier.\nWhile reading the code in this file, I\u0027ve noticed something else related to suppression status checks - please see my next comment. We can decide about this one later.",
+      "parentUuid": "9a9346ac_40e41541",
+      "range": {
+        "startLine": 148,
+        "startChar": 81,
+        "endLine": 149,
+        "endChar": 55
+      },
+      "revId": "eeb81907937f3651005ad5ec59700e92686f9e86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bbefe64_12a43e8c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SignInPromo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-12-19T20:24:09Z",
+      "side": 1,
+      "message": "According to this comment, checking suppression value in constructor is not enough. This is strange, because I\u0027ve checked my CL manually and it indeed suppresses signin promos in NTP after refusing signin in NTP. Is the comment outdated or was I just lucky?\nIf NTP can be created before FRE is completed, then I have to listen to shared preference that stores suppression status.",
       "revId": "eeb81907937f3651005ad5ec59700e92686f9e86",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
