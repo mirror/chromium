@@ -878,7 +878,6 @@ class ComputedStyle : public ComputedStyleBase,
     SetTextEmphasisMarkInternal(mark);
   }
   const AtomicString& TextEmphasisMarkString() const;
-  LineLogicalSide GetTextEmphasisLineLogicalSide() const;
 
   // -webkit-text-emphasis-color (aka -epub-text-emphasis-color)
   void SetTextEmphasisColor(const StyleColor& color) {
