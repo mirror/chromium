@@ -16,6 +16,24 @@
       "revId": "982fbd13451aa95e0fc7e9703e6cfbecc3c1f5ca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d727066f_05d4b5db",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_fragment_builder.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-12-19T07:24:45Z",
+      "side": 1,
+      "message": "Done. Much cleaner.",
+      "parentUuid": "ed3d83c0_6158329f",
+      "revId": "982fbd13451aa95e0fc7e9703e6cfbecc3c1f5ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
