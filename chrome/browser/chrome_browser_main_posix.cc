@@ -22,6 +22,10 @@
 #include "chrome/browser/sessions/session_restore.h"
 #include "content/public/browser/browser_thread.h"
 
+#if defined(OS_CHROMEOS)
+#include "chrome/browser/lifetime/application_lifetime_chromeos.h"
+#endif
+
 using content::BrowserThread;
 
 namespace {
@@ -96,7 +100,7 @@ void ExitHandler::OnSessionRestoreDone(int /* num_tabs */) {
 void ExitHandler::Exit() {
 #if defined(OS_CHROMEOS)
   // On ChromeOS, exiting on signal should be always clean.
-  chrome::ExitCleanly();
+  chromeos::ExitCleanly();
 #else
   chrome::AttemptExit();
 #endif
