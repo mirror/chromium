@@ -6,6 +6,7 @@
 #define NGExclusionSpace_h
 
 #include "core/CoreExport.h"
+#include "core/layout/ng/floats/ng_layout_opportunity.h"
 #include "core/layout/ng/geometry/ng_bfc_offset.h"
 #include "core/layout/ng/geometry/ng_bfc_rect.h"
 #include "core/layout/ng/ng_exclusion.h"
@@ -14,8 +15,6 @@
 #include "platform/wtf/Vector.h"
 
 namespace blink {
-
-typedef NGBfcRect NGLayoutOpportunity;
 
 // The exclusion space represents all of the exclusions within a block
 // formatting context.
@@ -27,7 +26,7 @@ class CORE_EXPORT NGExclusionSpace {
   NGExclusionSpace();
   ~NGExclusionSpace(){};
 
-  void Add(const NGExclusion& exclusion);
+  void Add(scoped_refptr<const NGExclusion> exclusion);
 
   // Returns a layout opportunity, within the BFC, starting at the given offset,
   // with a size greater than {@code minimum_size}.
@@ -39,6 +38,13 @@ class CORE_EXPORT NGExclusionSpace {
   Vector<NGLayoutOpportunity> AllLayoutOpportunities(
       const NGBfcOffset& offset,
       const NGLogicalSize& available_size) const;
+
+  Vector<NGLayoutOpportunity> AllLayoutOpportunities(
+      const NGBfcOffset& offset,
+      const LayoutUnit& available_size) const {
+    return AllLayoutOpportunities(
+        offset, NGLogicalSize(available_size, LayoutUnit::Max()));
+  }
 
   // Returns the clearance offset based on the provided {@code clear_type}.
   LayoutUnit ClearanceOffset(EClear clear_type) const;
@@ -54,9 +60,21 @@ class CORE_EXPORT NGExclusionSpace {
     return !(*this == other);
   }
 
+  // The shelf is an internal data-structure rep TODO
+  struct NGShelf {
+    LayoutUnit block_offset;
+    LayoutUnit line_left;
+    LayoutUnit line_right;
+
+    // The "edges" are all of the floats that... TODO
+    Vector<scoped_refptr<const NGExclusion>, 1> line_left_edges;
+    Vector<scoped_refptr<const NGExclusion>, 1> line_right_edges;
+  };
+
  private:
-  friend class NGLayoutOpportunityIterator;
-  Vector<NGExclusion> storage_;
+  Vector<scoped_refptr<const NGExclusion>> exclusions_;
+  Vector<NGShelf> shelves_;
+  Vector<NGLayoutOpportunity> opportunities_;
 
   // This member is used for implementing the "top edge alignment rule" for
   // floats. Floats can be positioned at negative offsets, hence is initialized
