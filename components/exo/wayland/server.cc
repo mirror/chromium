@@ -2012,7 +2012,7 @@ void remote_surface_ack_configure(wl_client* client,
 }
 
 void remote_surface_move(wl_client* client, wl_resource* resource) {
-  GetUserDataAs<ClientControlledShellSurface>(resource)->Move();
+  GetUserDataAs<ClientControlledShellSurface>(resource)->StartMove();
 }
 
 void remote_surface_set_window_type(wl_client* client,
@@ -2331,6 +2331,67 @@ void HandleRemoteSurfaceStateChangedCallback(
   wl_client_flush(wl_resource_get_client(resource));
 }
 
+void HandleRemoteSurfaceBoundsChangedCallback(
+    wl_resource* resource,
+    ash::mojom::WindowStateType current_state_type,
+    const gfx::Rect& bounds,
+    bool drag,
+    bool resize) {
+  zcr_remote_surface_v1_bounds_change_mode mode =
+      resize ? ZCR_REMOTE_SURFACE_V1_BOUNDS_CHANGE_MODE_RESIZE
+             : (drag ? ZCR_REMOTE_SURFACE_V1_BOUNDS_CHANGE_MODE_DRAG
+                     : ZCR_REMOTE_SURFACE_V1_BOUNDS_CHANGE_MODE_WINDOW_MANAGER);
+  zcr_remote_surface_v1_send_bounds_changed(
+      resource, bounds.x(), bounds.y(), bounds.width(), bounds.height(), mode);
+  wl_client_flush(wl_resource_get_client(resource));
+}
+
+uint32_t ComponentToDirection(int component) {
+  switch (component) {
+    case HTTOP:
+      return ZCR_REMOTE_SURFACE_V1_RESIZE_DIRECTION_TOP;
+
+    case HTTOPRIGHT:
+      return ZCR_REMOTE_SURFACE_V1_RESIZE_DIRECTION_TOPRIGHT;
+
+    case HTRIGHT:
+      return ZCR_REMOTE_SURFACE_V1_RESIZE_DIRECTION_RIGHT;
+
+    case HTBOTTOMRIGHT:
+      return ZCR_REMOTE_SURFACE_V1_RESIZE_DIRECTION_BOTTOMRIGHT;
+
+    case HTBOTTOM:
+      return ZCR_REMOTE_SURFACE_V1_RESIZE_DIRECTION_BOTTOM;
+
+    case HTBOTTOMLEFT:
+      return ZCR_REMOTE_SURFACE_V1_RESIZE_DIRECTION_BOTTOMLEFT;
+
+    case HTLEFT:
+      return ZCR_REMOTE_SURFACE_V1_RESIZE_DIRECTION_LEFT;
+
+    case HTTOPLEFT:
+      return ZCR_REMOTE_SURFACE_V1_RESIZE_DIRECTION_TOPLEFT;
+
+    default:
+      LOG(ERROR) << "Unknown component:" << component;
+      break;
+  }
+  NOTREACHED();
+  return ZCR_REMOTE_SURFACE_V1_RESIZE_DIRECTION_TOP;
+}
+
+void HandleRemoteSurfaceStartResizeCallback(wl_resource* resource,
+                                            int component) {
+  zcr_remote_surface_v1_send_start_resize(resource,
+                                          ComponentToDirection(component));
+  wl_client_flush(wl_resource_get_client(resource));
+}
+
+void HandleRemoteSurfaceEndResizeCallback(wl_resource* resource) {
+  zcr_remote_surface_v1_send_end_resize(resource);
+  wl_client_flush(wl_resource_get_client(resource));
+}
+
 uint32_t HandleRemoteSurfaceConfigureCallback(
     wl_resource* resource,
     const gfx::Size& size,
@@ -2392,10 +2453,25 @@ void remote_shell_get_remote_surface(wl_client* client,
   shell_surface->set_configure_callback(
       base::Bind(&HandleRemoteSurfaceConfigureCallback,
                  base::Unretained(remote_surface_resource)));
+
   if (shell->HasRelativeSurfaceHierarchy()) {
     shell_surface->set_geometry_changed_callback(
         base::BindRepeating(&HandleRemoteSurfaceGeometryChangedCallback,
                             base::Unretained(remote_surface_resource)));
+  }
+
+  LOG(ERROR) << "Remote Surface Version:"
+             << wl_resource_get_version(remote_surface_resource);
+  if (wl_resource_get_version(remote_surface_resource) >= 10) {
+    shell_surface->set_bounds_changed_callback(
+        base::BindRepeating(&HandleRemoteSurfaceBoundsChangedCallback,
+                   base::Unretained(remote_surface_resource)));
+    shell_surface->set_start_resize_callback(
+        base::BindRepeating(&HandleRemoteSurfaceStartResizeCallback,
+                   base::Unretained(remote_surface_resource)));
+    shell_surface->set_end_resize_callback(
+        base::BindRepeating(&HandleRemoteSurfaceEndResizeCallback,
+                   base::Unretained(remote_surface_resource)));
   }
 
   SetImplementation(remote_surface_resource, &remote_surface_implementation,
