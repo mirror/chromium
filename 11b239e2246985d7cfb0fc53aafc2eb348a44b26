@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "853621d1_8412f811",
+        "filename": "device/u2f/u2f_ble_device_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-19T21:40:36Z",
+      "side": 1,
+      "message": "Here I\u0027m not sure if I\u0027m doing enough testing. I do test every method of U2fBleDevice\u0027s public interface, but the class does quite a bit of non-trivial logic and also inherits public methods from U2fDevice, which I am not testing here.\n\nAlso I suppose doing some integration testing with the Mock Bluetooth classes would be a good idea as well, but that would require quite some refactoring of the U2fBleTransaction tests.\n\nWhat is your take on this?",
+      "revId": "11b239e2246985d7cfb0fc53aafc2eb348a44b26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4f8b13b_f5432ca0",
+        "filename": "device/u2f/u2f_ble_transaction.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-19T21:40:36Z",
+      "side": 1,
+      "message": "I\u0027m a bit torn about this. In theory this class could live in an anonymous namespace in u2f_ble_device.cc, as U2fBleDevice should be the only class using this. However, I feel like the class is a bit too large for being in the anon namespace, which is why I decided to move it into its own file. But I must admit I\u0027m not very happy about this either. WDYT?",
+      "revId": "11b239e2246985d7cfb0fc53aafc2eb348a44b26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
