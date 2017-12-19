@@ -6,6 +6,7 @@ module blink.mojom;
 
 import "mojo/common/string16.mojom";
 import "third_party/WebKit/public/platform/modules/permissions/permission_status.mojom";
+import "third_party/WebKit/public/platform/modules/notifications/notification.mojom";
 
 // Service through which Blink can request notifications to be shown, closed or
 // retrieved from the embedder.
@@ -16,6 +17,5 @@ interface NotificationService {
   [Sync] GetPermissionStatus() => (PermissionStatus status);
 
   // Shows a notification that is not associated with a service worker.
-  // TODO(crbug.com/595685): Pass the rest of the notification data through.
-  DisplayNonPersistentNotification(mojo.common.mojom.String16 title);
+  DisplayNonPersistentNotification(NotificationData notification_data);
 };
