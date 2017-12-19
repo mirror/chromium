@@ -34,7 +34,6 @@
 #import "ios/chrome/browser/sync/ios_chrome_synced_tab_delegate.h"
 #import "ios/chrome/browser/tabs/legacy_tab_helper.h"
 #import "ios/chrome/browser/tabs/tab.h"
-#import "ios/chrome/browser/tabs/tab_private.h"
 #import "ios/chrome/browser/translate/chrome_ios_translate_client.h"
 #import "ios/chrome/browser/voice/voice_search_navigations_tab_helper.h"
 #import "ios/chrome/browser/web/blocked_popup_tab_helper.h"
@@ -68,7 +67,8 @@ void AttachTabHelpers(web::WebState* web_state) {
   // so it needs to be created before them.
   IOSChromeSessionTabHelper::CreateForWebState(web_state);
 
-  NetworkActivityIndicatorTabHelper::CreateForWebState(web_state, tab.tabId);
+  NSString* tab_id = TabIdTabHelper::FromWebState(web_state)->tab_id();
+  NetworkActivityIndicatorTabHelper::CreateForWebState(web_state, tab_id);
   IOSChromeSyncedTabDelegate::CreateForWebState(web_state);
   InfoBarManagerImpl::CreateForWebState(web_state);
   IOSSecurityStateTabHelper::CreateForWebState(web_state);
@@ -115,8 +115,4 @@ void AttachTabHelpers(web::WebState* web_state) {
 
   // Allow the embedder to attach tab helpers.
   ios::GetChromeBrowserProvider()->AttachTabHelpers(web_state, tab);
-
-  // Allow the Tab to attach tab helper like objects (all those objects should
-  // really be tab helpers and created above).
-  [tab attachTabHelpers];
 }

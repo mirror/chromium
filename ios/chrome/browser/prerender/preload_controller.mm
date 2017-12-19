@@ -256,11 +256,6 @@ bool IsPrerenderTabEvictionExperimentalGroup() {
   }
 
   if ([tab loadFinished]) {
-    // If the page has finished loading, take a snapshot.  If the page is
-    // still loading, do nothing, as CRWWebController will automatically take
-    // a snapshot once the load completes.
-    [tab updateSnapshotWithOverlay:YES visibleFrameOnly:YES];
-
     [[OmniboxGeolocationController sharedInstance] finishPageLoadForTab:tab
                                                             loadSuccess:YES];
 
