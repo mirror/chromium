@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c270a554_3cb85835",
+        "filename": "chrome/browser/chromeos/printing/external_printers.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-12-19T19:55:17Z",
+      "side": 1,
+      "message": "This parameter needs a comment, I think,\n\nAlternatively, the bigger picture is that now you\u0027re down to only calling Notify from OnComputationComplete (which I think is a sign that we\u0027re getting to a reasonably elegant state).  Suggest you just inline this there because I think having it as a separate function with a sort-of-weird boolean parameter is at least as complicated to read.",
+      "revId": "1c95e8e8818f110c599e6c9520f7ad00a163b331",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
