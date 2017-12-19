@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bce4bcd6_b70f869d",
+        "filename": "ios/chrome/browser/ui/tab_switcher/tab_switcher_controller.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-12-19T20:08:00Z",
+      "side": 1,
+      "message": "nit: comment.",
+      "revId": "2b31385340544c0f163826d8385bf37948b21019",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e7ca83a_3916d686",
+        "filename": "ios/chrome/browser/ui/tab_switcher/tab_switcher_controller.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 1048,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-12-19T20:08:00Z",
+      "side": 1,
+      "message": "nit: DCHECK_EQ(nil, _signInPanelOverlayView);",
+      "revId": "2b31385340544c0f163826d8385bf37948b21019",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
