@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "df11ad77_062e9883",
+        "filename": "base/android/java/src/org/chromium/base/library_loader/LibraryLoader.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-12-19T19:08:39Z",
+      "side": 1,
+      "message": "good point. Made it throw RuntimeException in this case.",
+      "parentUuid": "8af4b507_cac28d4b",
+      "revId": "28d3a6f9cf92051d870b19f60e3dab709776c120",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c61d769d_157f4c19",
         "filename": "base/android/java/src/org/chromium/base/library_loader/LibraryLoader.java",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-18T20:15:02Z",
       "side": 1,
       "message": "You don\u0027t really have to use StringBuilder for examples like this. The compiler converts \"foo\" + bar + \"baz\" style expressions into StringBuilder calls automatically; you only need to use it explicitly for loops/conditionals/other cases where it\u0027s not a single expression, and I generally think it\u0027s more readable with just regular concatenation :)",
+      "revId": "28d3a6f9cf92051d870b19f60e3dab709776c120",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "434a5cbb_4d97b194",
+        "filename": "base/android/java/src/org/chromium/base/library_loader/LibraryLoader.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-12-19T19:08:39Z",
+      "side": 1,
+      "message": "Oh, good to know, I remember old javac did not replace string concat with SB. Also got used to the .append() style so it looks more readable to me. From consistency POV though it makes sense to make it a plain concatenation. Done. Thank you.",
+      "parentUuid": "c61d769d_157f4c19",
       "revId": "28d3a6f9cf92051d870b19f60e3dab709776c120",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
