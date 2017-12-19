@@ -1308,8 +1308,8 @@ if (enable_java_templates) {
   #     "apk".
   #   use_interface_jars: Use all dependent interface .jars rather than
   #     implementation .jars.
+  #   use_unprocessed_jars: Use unprocessed / undesugared .jars.
   #   direct_deps_only: Do not recurse on deps.
-  #   data, deps, testonly, visibility: Usual meaning.
   #   proguard_enabled: Whether to run ProGuard on resulting jar.
   #   proguard_configs: List of proguard configs.
   #   proguard_jar_path: The path to proguard.jar you wish to use. If undefined,
@@ -1321,6 +1321,11 @@ if (enable_java_templates) {
   #     deps = [ ":my_java_lib" ]
   #     output = "$root_build_dir/MyLibrary.jar"
   #   }
+  #   dist_jar("sideloaded_dex") {
+  #     deps = [ ":my_java_lib" ]
+  #     output = "$root_build_dir/MyLibrary.jar"
+  #     dex_path = "$root_build_dir/MyLibrary.dex"
+  #   }
   template("dist_jar") {
     forward_variables_from(invoker, [ "testonly" ])
     _supports_android =
@@ -1331,14 +1336,16 @@ if (enable_java_templates) {
         defined(invoker.proguard_enabled) && invoker.proguard_enabled
     _use_interface_jars =
         defined(invoker.use_interface_jars) && invoker.use_interface_jars
+    _use_unprocessed_jars =
+        defined(invoker.use_unprocessed_jars) && invoker.use_unprocessed_jars
     _direct_deps_only =
         defined(invoker.direct_deps_only) && invoker.direct_deps_only
-    assert(
-        !(_proguard_enabled && _use_interface_jars),
-        "Cannot set both proguard_enabled and use_interface_jars (target=$target_name)")
-    assert(
-        !(_proguard_enabled && _direct_deps_only),
-        "Cannot set both proguard_enabled and direct_deps_only (target=$target_name)")
+    assert(!(_proguard_enabled && _use_interface_jars),
+           "Cannot set both proguard_enabled and use_interface_jars")
+    assert(!(_proguard_enabled && _direct_deps_only),
+           "Cannot set both proguard_enabled and direct_deps_only")
+    assert(!(_use_unprocessed_jars && _use_interface_jars),
+           "Cannot set both use_interface_jars and use_unprocessed_jars")
 
     _jar_target_name = target_name
     if (defined(invoker.dex_path)) {
@@ -1368,7 +1375,11 @@ if (enable_java_templates) {
 
       write_build_config(_build_config_target_name) {
         type = "dist_jar"
-        forward_variables_from(invoker, [ "proguard_enabled" ])
+        forward_variables_from(invoker,
+                               [
+                                 "proguard_enabled",
+                                 "proguard_configs",
+                               ])
         supports_android = _supports_android
         requires_android = _requires_android
         possible_config_deps = _deps
@@ -1382,7 +1393,6 @@ if (enable_java_templates) {
     }
 
     _rebased_build_config = rebase_path(_build_config, root_build_dir)
-
     if (_proguard_enabled) {
       proguard(_jar_target_name) {
         forward_variables_from(invoker,
@@ -1402,11 +1412,6 @@ if (enable_java_templates) {
           "--input-paths=@FileArg($_rebased_build_config:deps_info:java_runtime_classpath)",
           "--classpath=@FileArg($_rebased_build_config:proguard:lib_paths)",
         ]
-        if (defined(invoker.proguard_configs)) {
-          _rebased_proguard_configs =
-              rebase_path(invoker.proguard_configs, root_build_dir)
-          args += [ "--proguard-configs=$_rebased_proguard_configs" ]
-        }
         if (defined(invoker.proguard_config_exclusions)) {
           _rebased_proguard_config_exclusions =
               rebase_path(invoker.proguard_config_exclusions, root_build_dir)
@@ -1439,16 +1444,22 @@ if (enable_java_templates) {
 
         if (_direct_deps_only) {
           if (_use_interface_jars) {
-            args += [ "--inputs=@FileArg($_rebased_build_config:javac:interface_classpath)" ]
-          } else {
+            args += [ "--jars=@FileArg($_rebased_build_config:javac:interface_classpath)" ]
+          } else if (_use_unprocessed_jars) {
             args +=
-                [ "--inputs=@FileArg($_rebased_build_config:javac:classpath)" ]
+                [ "--jars=@FileArg($_rebased_build_config:javac:classpath)" ]
+          } else {
+            assert(
+                false,
+                "direct_deps_only does not work without use_interface_jars or use_unprocessed_jars")
           }
         } else {
           if (_use_interface_jars) {
-            args += [ "--inputs=@FileArg($_rebased_build_config:dist_jar:all_interface_jars)" ]
+            args += [ "--jars=@FileArg($_rebased_build_config:dist_jar:all_interface_jars)" ]
+          } else if (_use_unprocessed_jars) {
+            args += [ "--jars=@FileArg($_rebased_build_config:deps_info:javac_full_classpath)" ]
           } else {
-            args += [ "--inputs=@FileArg($_rebased_build_config:deps_info:java_runtime_classpath)" ]
+            args += [ "--jars=@FileArg($_rebased_build_config:deps_info:java_runtime_classpath)" ]
           }
         }
       }
