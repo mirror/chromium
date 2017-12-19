@@ -363,7 +363,8 @@ std::unique_ptr<base::DictionaryValue> CreateProxyConfigDict(
 }
 
 std::unique_ptr<base::DictionaryValue> CreateProxyRulesDict(
-    const ProxyConfigDictionary& proxy_config) {
+    const ProxyConfigDictionary& proxy_config,
+    const net::PartialNetworkTrafficAnnotationTag& traffic_annotation) {
   ProxyPrefs::ProxyMode mode;
   CHECK(proxy_config.GetMode(&mode) && mode == ProxyPrefs::MODE_FIXED_SERVERS);
 
@@ -376,7 +377,7 @@ std::unique_ptr<base::DictionaryValue> CreateProxyRulesDict(
   }
 
   net::ProxyConfig::ProxyRules rules;
-  rules.ParseFromString(proxy_servers);
+  rules.ParseFromString(proxy_servers, traffic_annotation);
 
   switch (rules.type) {
     case net::ProxyConfig::ProxyRules::TYPE_NO_RULES:

@@ -250,7 +250,8 @@ void DataReductionProxyDelegate::GetAlternativeProxy(
   }
 
   *alternative_proxy_server = net::ProxyServer(
-      net::ProxyServer::SCHEME_QUIC, resolved_proxy_server.host_port_pair());
+      net::ProxyServer::SCHEME_QUIC, resolved_proxy_server.host_port_pair(),
+      resolved_proxy_server.GetPartialTrafficAnnotation());
   DCHECK(alternative_proxy_server->is_valid());
   RecordQuicProxyStatus(QUIC_PROXY_STATUS_AVAILABLE);
   return;
