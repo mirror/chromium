@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3f2c0158_ab1dc392",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 18
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-12-19T14:38:09Z",
+      "side": 1,
+      "message": "Correct, I forgot to ammend this comment. What we want to avoid\nis indeed a multiplanar GMB used to back a multiplanar VF,\nconfusingly enough :-)",
+      "parentUuid": "7b1f24c4_e82e3944",
+      "revId": "cb8fe2b7a68682bbfe26030fcfdf60600c36fdf9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aaa36cf6_ad7d7579",
         "filename": "content/public/common/content_switches.cc",
         "patchSetId": 18
@@ -39,6 +57,30 @@
       "revId": "cb8fe2b7a68682bbfe26030fcfdf60600c36fdf9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bfb6fc1_aad5a669",
+        "filename": "content/public/common/content_switches.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-12-19T14:38:09Z",
+      "side": 1,
+      "message": "Oops, done, thanks.",
+      "parentUuid": "aaa36cf6_ad7d7579",
+      "range": {
+        "startLine": 213,
+        "startChar": 13,
+        "endLine": 213,
+        "endChar": 21
+      },
+      "revId": "cb8fe2b7a68682bbfe26030fcfdf60600c36fdf9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "a5573500_ebf09648",
+        "filename": "content/renderer/media/gpu/gpu_video_accelerator_factories_impl.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-12-19T14:38:09Z",
+      "side": 1,
+      "message": "My reasoning was that, in general, we should always support \nmultiplanar GMBs for multiplanar VFs and it\u0027s only on legacy\nplatforms where we want to avoid that, hence making it a \ndisable_... flag. IOW, we should not see this flag - if we were\nto track it in a UMA, it should be zero in platforms like eve\nand soraka.  Makes sense?",
+      "parentUuid": "82e724f6_88bad4bb",
+      "range": {
+        "startLine": 319,
+        "startChar": 6,
+        "endLine": 319,
+        "endChar": 63
+      },
+      "revId": "cb8fe2b7a68682bbfe26030fcfdf60600c36fdf9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "998f5134_33e4ad29",
         "filename": "gpu/command_buffer/service/feature_info.cc",
         "patchSetId": 18
@@ -76,6 +142,24 @@
       "writtenOn": "2017-12-19T01:24:26Z",
       "side": 1,
       "message": "I think the defined(ARCH_CPU_X86_FAMILY) can be removed now, since we\u0027re already preventing the use of NV12 on rockchip where native gmbs are not enabled.\n\nWe should test it at least on a kevin though.",
+      "revId": "cb8fe2b7a68682bbfe26030fcfdf60600c36fdf9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec335772_adda40b0",
+        "filename": "gpu/command_buffer/service/feature_info.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 1053,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-12-19T14:38:09Z",
+      "side": 1,
+      "message": "Done pending testing, let me get my hands on a Kevin...",
+      "parentUuid": "998f5134_33e4ad29",
       "revId": "cb8fe2b7a68682bbfe26030fcfdf60600c36fdf9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
