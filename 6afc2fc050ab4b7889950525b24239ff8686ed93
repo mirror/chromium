@@ -16,6 +16,24 @@
       "revId": "6afc2fc050ab4b7889950525b24239ff8686ed93",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "329be234_ebd87b19",
+        "filename": "chrome/browser/ui/app_list/chrome_app_list_item.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2017-12-19T19:03:56Z",
+      "side": 1,
+      "message": "ChromeAppListItem is inheriting several protected methods from AppListItem, which are used by FakeAppListModelUpdater. (e.g. set_folder_id, set_position)\nI think after we break the inheritance, these methods will still be protected.",
+      "parentUuid": "497a73da_e4f83ec0",
+      "revId": "6afc2fc050ab4b7889950525b24239ff8686ed93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
