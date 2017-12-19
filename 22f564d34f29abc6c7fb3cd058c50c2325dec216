@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "19dc12ef_fc14fe93",
+        "filename": "docs/speed/perf_bot_sheriffing.md",
+        "patchSetId": 7
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1128909
+      },
+      "writtenOn": "2017-12-19T18:51:10Z",
+      "side": 1,
+      "message": "I think this would be clearer if you replace \"it\" (which could refer to either a condition or an expectation) with \"a platform\"",
+      "range": {
+        "startLine": 349,
+        "startChar": 9,
+        "endLine": 349,
+        "endChar": 11
+      },
+      "revId": "22f564d34f29abc6c7fb3cd058c50c2325dec216",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0b2bf6c_946e8aeb",
+        "filename": "docs/speed/perf_bot_sheriffing.md",
+        "patchSetId": 7
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1128909
+      },
+      "writtenOn": "2017-12-19T18:51:10Z",
+      "side": 1,
+      "message": "spelling",
+      "range": {
+        "startLine": 381,
+        "startChar": 61,
+        "endLine": 381,
+        "endChar": 69
+      },
+      "revId": "22f564d34f29abc6c7fb3cd058c50c2325dec216",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6f31ed8_746de251",
+        "filename": "docs/speed/perf_bot_sheriffing.md",
+        "patchSetId": 7
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1128909
+      },
+      "writtenOn": "2017-12-19T18:51:10Z",
+      "side": 1,
+      "message": "I\u0027d reword this now that most CLs can be NOTRYed to make it sound less scary:\n\n\"As long as a disabling CL touches only tools/perf/expectations.config, you can use TBR and NOTRY\u003dtrue to submit the CL immediately.\"",
+      "range": {
+        "startLine": 388,
+        "startChar": 0,
+        "endLine": 390,
+        "endChar": 22
+      },
+      "revId": "22f564d34f29abc6c7fb3cd058c50c2325dec216",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
