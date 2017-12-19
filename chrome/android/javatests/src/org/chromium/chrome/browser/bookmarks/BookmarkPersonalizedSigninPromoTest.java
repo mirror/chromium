@@ -162,7 +162,7 @@ public class BookmarkPersonalizedSigninPromoTest {
 
     private void openBookmarkManager() throws InterruptedException {
         ThreadUtils.runOnUiThreadBlocking(
-                () -> BookmarkUtils.showBookmarkManager(mActivityTestRule.getActivity()));
+                () -> BookmarkUtils.showBookmarkManager(mActivityTestRule.getActivity(), false));
     }
 
     private void addTestAccount() {
