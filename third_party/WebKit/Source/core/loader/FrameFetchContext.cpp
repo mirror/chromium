@@ -33,6 +33,7 @@
 #include <algorithm>
 #include <memory>
 #include "bindings/core/v8/ScriptController.h"
+#include "bindings/core/v8/SourceLocation.h"
 #include "bindings/core/v8/V8BindingForCore.h"
 #include "core/dom/Document.h"
 #include "core/frame/ContentSettingsClient.h"
@@ -464,6 +465,26 @@ void FrameFetchContext::DispatchWillSendRequest(
     const FetchInitiatorInfo& initiator_info) {
   if (IsDetached())
     return;
+
+  String initiator =
+      GetFrame()->GetDocument()->DetermineInitiator(initiator_info);
+
+  // if (!GetSubresourceFilter()->AllowLoad(
+  //         KURL(initiator), request.GetRequestContext(),
+  //         SecurityViolationReportingPolicy::kSuppressReporting)) {
+  //   request.ad_resource = true;
+  // }
+
+  if (!initiator.IsEmpty()) {
+    Vector<String> init_split;
+    initiator.Split("?", init_split);
+
+    Vector<String> url_split;
+    request.Url().GetString().Split("?", url_split);
+    if (initiator_info.name == FetchInitiatorTypeNames::document) {
+      LOG(ERROR) << this << " " << url_split[0] << " -- " << init_split[0];
+    }
+  }
 
   if (redirect_response.IsNull()) {
     // Progress doesn't care about redirects, only notify it when an

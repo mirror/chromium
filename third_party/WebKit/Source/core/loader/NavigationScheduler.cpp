@@ -518,6 +518,7 @@ void NavigationScheduler::Schedule(ScheduledNavigation* redirect) {
   redirect_ = redirect;
   if (redirect_->IsLocationChange())
     frame_->GetDocument()->SuppressLoadEvent();
+
   StartTimer();
 }
 
@@ -543,6 +544,12 @@ void NavigationScheduler::StartTimer() {
                                   WTF::Bind(&NavigationScheduler::NavigateTask,
                                             WrapWeakPersistent(this)),
                                   TimeDelta::FromSecondsD(redirect_->Delay()));
+
+  LOG(ERROR) << "Frame Navigation Initiator: "
+             << frame_->GetDocument()->DetermineInitiator(FetchInitiatorInfo());
+
+  frame_->GetDocument()->set_initiator(
+      frame_->GetDocument()->DetermineInitiator(FetchInitiatorInfo()));
 
   probe::frameScheduledNavigation(frame_, redirect_.Get());
 }

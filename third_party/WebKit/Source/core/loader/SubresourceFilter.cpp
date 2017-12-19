@@ -63,6 +63,13 @@ bool SubresourceFilter::AllowLoad(
   return load_policy != WebDocumentSubresourceFilter::kDisallow;
 }
 
+bool SubresourceFilter::WouldAllowLoad(
+    const KURL& resource_url,
+    WebURLRequest::RequestContext request_context) {
+  return subresource_filter_->GetLoadPolicy(resource_url, request_context) ==
+         WebDocumentSubresourceFilter::kAllow;
+}
+
 bool SubresourceFilter::AllowWebSocketConnection(const KURL& url) {
   // Currently WebSocket is handled via document on the main thread.
   DCHECK(execution_context_->IsDocument());

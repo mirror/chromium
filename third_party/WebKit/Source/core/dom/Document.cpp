@@ -233,6 +233,7 @@
 #include "platform/bindings/V8PerIsolateData.h"
 #include "platform/instrumentation/tracing/TraceEvent.h"
 #include "platform/loader/fetch/ResourceFetcher.h"
+#include "platform/loader/fetch/fetch_initiator_type_names.h"
 #include "platform/network/ContentSecurityPolicyParsers.h"
 #include "platform/network/HTTPParsers.h"
 #include "platform/network/NetworkStateNotifier.h"
@@ -566,6 +567,51 @@ Document* Document::Create(const Document& document) {
   new_document->SetSecurityOrigin(document.GetSecurityOrigin());
   new_document->SetContextFeatures(document.GetContextFeatures());
   return new_document;
+}
+
+String Document::DetermineInitiator(const FetchInitiatorInfo& initiator_info) {
+  if (!initiator_info.imported_module_referrer.IsEmpty())
+    return initiator_info.imported_module_referrer;
+
+  if (initiator_info.name == FetchInitiatorTypeNames::document) {
+    return initiator();
+  }
+
+  std::unique_ptr<blink::SourceLocation> current_stack_trace =
+      SourceLocation::Capture(this);
+  if (current_stack_trace &&
+      current_stack_trace->Url().Find("about:blank") == kNotFound) {
+    return current_stack_trace->Url();
+  }
+
+  // std::unique_ptr<v8_inspector::protocol::Runtime::API::StackTrace>
+  //     current_stack_trace =
+  //         SourceLocation::Capture(this)->BuildInspectorObject();
+  // if (current_stack_trace) {
+  //   String
+  //   string(current_stack_trace->toJSONString()->string().characters16(),
+  //                 current_stack_trace->toJSONString()->string().length());
+  //   return string + " -- " + SourceLocation::Capture(this)->Url();
+  //   //    LOG(ERROR) << "Script stack: " <<
+  //   // current_stack_trace->toJSONString()->string().length()
+  //   //     << " : "
+  //   //     << current_stack_trace->toJSONString()
+  //   //            ->string()
+  //   //            .characters8();  // toValue().serialize();
+  // }
+
+  Document* document = this;
+  while (document && !document->GetScriptableDocumentParser()) {
+    document = document->LocalOwner() ? document->LocalOwner()->ownerDocument()
+                                      : nullptr;
+  }
+  if (document && document->GetScriptableDocumentParser()) {
+    KURL result = document->Url();
+    result.RemoveFragmentIdentifier();
+    return result;
+  }
+
+  return "";
 }
 
 Document::Document(const DocumentInit& initializer,
@@ -5646,6 +5692,7 @@ void Document::setDesignMode(const String& value) {
 Document* Document::ParentDocument() const {
   if (!frame_)
     return nullptr;
+
   Frame* parent = frame_->Tree().Parent();
   if (!parent || !parent->IsLocalFrame())
     return nullptr;

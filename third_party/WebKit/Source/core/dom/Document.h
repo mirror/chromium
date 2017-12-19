@@ -66,6 +66,7 @@
 #include "platform/WebTaskRunner.h"
 #include "platform/bindings/TraceWrapperMember.h"
 #include "platform/loader/fetch/ClientHintsPreferences.h"
+#include "platform/loader/fetch/FetchInitiatorInfo.h"
 #include "platform/scroll/ScrollTypes.h"
 #include "platform/weborigin/KURL.h"
 #include "platform/weborigin/ReferrerPolicy.h"
@@ -1399,6 +1400,10 @@ class CORE_EXPORT Document : public ContainerNode,
 
   scoped_refptr<WebTaskRunner> GetTaskRunner(TaskType) override;
 
+  String DetermineInitiator(const FetchInitiatorInfo& initiator_info);
+  void set_initiator(const String& initiator) { initiator_ = initiator; }
+  String initiator() const { return initiator_; }
+
  protected:
   Document(const DocumentInit&, DocumentClassFlags = kDefaultDocumentClass);
 
@@ -1778,6 +1783,8 @@ class CORE_EXPORT Document : public ContainerNode,
   // the document to recorde UKM.
   std::unique_ptr<ukm::UkmRecorder> ukm_recorder_;
   int64_t ukm_source_id_;
+
+  String initiator_;
 };
 
 extern template class CORE_EXTERN_TEMPLATE_EXPORT Supplement<Document>;

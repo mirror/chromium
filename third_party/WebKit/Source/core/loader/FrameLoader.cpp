@@ -1581,6 +1581,8 @@ void FrameLoader::StartLoad(FrameLoadRequest& frame_load_request,
     // is available while sending the request.
     probe::frameClearedScheduledClientNavigation(frame_);
   } else {
+    frame_->GetDocument()->set_initiator(
+        frame_->GetDocument()->DetermineInitiator(FetchInitiatorInfo()));
     probe::frameScheduledClientNavigation(frame_);
   }
 

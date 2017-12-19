@@ -1439,6 +1439,9 @@ bool ResourceFetcher::StartLoad(Resource* resource) {
 
     ResourceResponse response;
 
+    //    LOG(ERROR) << "Resource initiator: " <<
+    //    resource->Options().initiator_info.imported_module_referrer;
+
     blink::probe::PlatformSendRequest probe(&Context(), resource->Identifier(),
                                             request, response,
                                             resource->Options().initiator_info);

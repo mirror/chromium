@@ -193,6 +193,9 @@ struct CONTENT_EXPORT ResourceRequest {
   // The response should be downloaded and stored in the network cache, but not
   // sent back to the renderer.
   bool download_to_network_cache_only = false;
+
+  // True if the resource is fetched on behalf of an advertisement.
+  bool ad_resource = false;
 };
 
 }  // namespace content

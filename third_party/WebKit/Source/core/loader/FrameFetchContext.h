@@ -31,6 +31,8 @@
 #ifndef FrameFetchContext_h
 #define FrameFetchContext_h
 
+#include <set>
+
 #include "core/CoreExport.h"
 #include "core/frame/csp/ContentSecurityPolicy.h"
 #include "core/loader/BaseFetchContext.h"
@@ -235,6 +237,8 @@ class CORE_EXPORT FrameFetchContext final : public BaseFetchContext {
   // NetworkStateNotifier, which is guarded by a mutex lock, and cached locally
   // here for performance.
   const bool save_data_enabled_;
+
+  std::set<String> ad_initiators_;
 
   // Non-null only when detached.
   Member<const FrozenState> frozen_state_;
