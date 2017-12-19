@@ -57,6 +57,7 @@
 #include "net/base/io_buffer.h"
 #include "net/base/mime_util.h"
 #include "net/url_request/url_request_context.h"
+#include "services/metrics/public/cpp/ukm_recorder.h"
 #include "url/url_constants.h"
 
 namespace content {
@@ -275,12 +276,16 @@ bool SavePackage::Init(
 
   std::unique_ptr<DownloadRequestHandleInterface> request_handle(
       new SavePackageRequestHandle(AsWeakPtr()));
+
   // The download manager keeps ownership but adds us as an observer.
+  ukm::SourceId ukm_source_id = ukm::UkmRecorder::GetNewSourceID();
+  DownloadResourceHandler::UpdateSourceURL(ukm::UkmRecorder::Get(),
+                                           ukm_source_id, web_contents());
   download_manager_->CreateSavePackageDownloadItem(
       saved_main_file_path_, page_url_,
       ((save_type_ == SAVE_PAGE_TYPE_AS_MHTML) ? "multipart/related"
                                                : "text/html"),
-      std::move(request_handle),
+      std::move(request_handle), std::move(ukm_source_id),
       base::Bind(&SavePackage::InitWithDownloadItem, AsWeakPtr(),
                  download_created_callback));
   return true;
