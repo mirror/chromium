@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d96bf207_5b3adde0",
+        "filename": "ui/views/accessibility/ax_view_obj_wrapper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-19T22:28:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f0e924ab_db141870",
+      "revId": "4b97d98bc89e0ee19156e3b403068e6ad8a01da5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0b7c04cd_d18e086c",
         "filename": "ui/views/accessibility/ax_view_obj_wrapper.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "4b97d98bc89e0ee19156e3b403068e6ad8a01da5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25c2914d_5b0e379e",
+        "filename": "ui/views/accessibility/ax_view_obj_wrapper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-19T22:28:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b7c04cd_d18e086c",
+      "revId": "4b97d98bc89e0ee19156e3b403068e6ad8a01da5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "8dbe821f_99803d8d",
+        "filename": "ui/views/accessibility/ax_view_obj_wrapper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-19T22:28:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e9fb4a74_542c3aef",
+      "revId": "4b97d98bc89e0ee19156e3b403068e6ad8a01da5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9dd2f663_85807d9c",
         "filename": "ui/views/accessibility/ax_view_obj_wrapper.cc",
         "patchSetId": 1
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "a044a821_c8a83b08",
+        "filename": "ui/views/accessibility/ax_view_obj_wrapper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-19T22:28:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9dd2f663_85807d9c",
+      "revId": "4b97d98bc89e0ee19156e3b403068e6ad8a01da5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "de687885_b3ac886d",
         "filename": "ui/views/accessibility/native_view_accessibility_base.cc",
         "patchSetId": 1
@@ -81,6 +153,24 @@
       "writtenOn": "2017-12-19T13:03:56Z",
       "side": 1,
       "message": "Should all the NativeViewAccessibilityFoo classes be renamed to remove the \"Native\" prefix?",
+      "revId": "4b97d98bc89e0ee19156e3b403068e6ad8a01da5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4f0176d_737d25ec",
+        "filename": "ui/views/accessibility/native_view_accessibility_base.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-19T22:28:17Z",
+      "side": 1,
+      "message": "I don\u0027t have a strong feeling either way, I\u0027d be open to\nconsidering it in a follow-up change.\n\nI do think it makes some sense this way:\n\nViewAccessibility is the accessibility information for a view.\nNativeViewAccessibility* is a subclass used for certain platforms.\n\nThis is really similar to other classes in views, like Widget,\nNativeWidget, NativeWidgetAura, NativeWidgetMac.",
+      "parentUuid": "de687885_b3ac886d",
       "revId": "4b97d98bc89e0ee19156e3b403068e6ad8a01da5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "7bdfbddf_f478ab77",
+        "filename": "ui/views/accessibility/native_view_accessibility_stub.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-19T22:28:17Z",
+      "side": 1,
+      "message": "OK, how about this - I just removed this file entirely and\ninlined it in view_accessibility.cc using\nBUILDFLAG_INTERNAL_HAS_NATIVE_ACCESSIBILITY.",
+      "parentUuid": "d7091372_c2e9ddf8",
+      "revId": "4b97d98bc89e0ee19156e3b403068e6ad8a01da5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cacbed57_4aa0a495",
         "filename": "ui/views/accessibility/view_accessibility.cc",
         "patchSetId": 1
@@ -118,6 +226,24 @@
       "revId": "4b97d98bc89e0ee19156e3b403068e6ad8a01da5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b18c9fe_7cae5793",
+        "filename": "ui/views/accessibility/view_accessibility.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-19T22:28:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cacbed57_4aa0a495",
+      "revId": "4b97d98bc89e0ee19156e3b403068e6ad8a01da5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "a289b28c_b54ab332",
+        "filename": "ui/views/accessibility/view_accessibility.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-19T22:28:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "369af69a_80a6ed51",
+      "revId": "4b97d98bc89e0ee19156e3b403068e6ad8a01da5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "31039328_7a3cc47f",
         "filename": "ui/views/accessibility/view_accessibility.h",
         "patchSetId": 1
@@ -152,6 +296,24 @@
       "revId": "4b97d98bc89e0ee19156e3b403068e6ad8a01da5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e24367d7_b139ae9a",
+        "filename": "ui/views/accessibility/view_accessibility.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-19T22:28:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "31039328_7a3cc47f",
+      "revId": "4b97d98bc89e0ee19156e3b403068e6ad8a01da5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -172,6 +334,24 @@
     },
     {
       "key": {
+        "uuid": "a94ba9b4_8707c960",
+        "filename": "ui/views/accessibility/view_accessibility.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-19T22:28:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0ae4cc8e_4f128726",
+      "revId": "4b97d98bc89e0ee19156e3b403068e6ad8a01da5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1f047202_e2aab46a",
         "filename": "ui/views/accessibility/view_accessibility.h",
         "patchSetId": 1
@@ -186,6 +366,24 @@
       "revId": "4b97d98bc89e0ee19156e3b403068e6ad8a01da5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2b47075_ba26b04d",
+        "filename": "ui/views/accessibility/view_accessibility.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-19T22:28:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1f047202_e2aab46a",
+      "revId": "4b97d98bc89e0ee19156e3b403068e6ad8a01da5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -206,6 +404,24 @@
     },
     {
       "key": {
+        "uuid": "f168e4a3_f8929bb5",
+        "filename": "ui/views/accessibility/view_accessibility.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-19T22:28:17Z",
+      "side": 1,
+      "message": "Oops, this was supposed to be protected - but done, made it private and\nadded an accessor.",
+      "parentUuid": "0d1408b6_ea14dfc5",
+      "revId": "4b97d98bc89e0ee19156e3b403068e6ad8a01da5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2f7f1df7_f333c557",
         "filename": "ui/views/accessibility/view_accessibility.h",
         "patchSetId": 1
@@ -220,6 +436,24 @@
       "revId": "4b97d98bc89e0ee19156e3b403068e6ad8a01da5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3ab0113_71aa168b",
+        "filename": "ui/views/accessibility/view_accessibility.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-19T22:28:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2f7f1df7_f333c557",
+      "revId": "4b97d98bc89e0ee19156e3b403068e6ad8a01da5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
