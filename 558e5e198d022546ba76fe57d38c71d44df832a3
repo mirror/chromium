@@ -22,6 +22,30 @@
       "revId": "558e5e198d022546ba76fe57d38c71d44df832a3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "772e2fb8_7a1fc777",
+        "filename": "ui/keyboard/keyboard_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 710,
+      "author": {
+        "id": 1214366
+      },
+      "writtenOn": "2017-12-19T01:59:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e54c985d_dc017726",
+      "range": {
+        "startLine": 710,
+        "startChar": 78,
+        "endLine": 710,
+        "endChar": 79
+      },
+      "revId": "558e5e198d022546ba76fe57d38c71d44df832a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
