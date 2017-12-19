@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "abee9dde_d98b433f",
+        "filename": "ash/root_window_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 705,
+      "author": {
+        "id": 1248360
+      },
+      "writtenOn": "2017-12-19T03:41:48Z",
+      "side": 1,
+      "message": "The default right now is views lock screen and web login. And possibly there is already small bug/regression (tried without patch). Shelf on views lock screen is visible on both primary and secondary display. Shelf on web login/lock screen is only visible on primary display.\n\nAccordingly when I enable views login it is visible on both displays.\n Since it is not related to this patch itself, I will clarify what is right behavior and file a separate bug if that is fine with you.",
+      "parentUuid": "0cba64b3_2d811be0",
+      "revId": "4bcff6eb09267e7ebb1229186a18bca62239f91d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "62eb0cee_83ce90d8",
         "filename": "ash/shelf/shelf_widget.cc",
         "patchSetId": 1
