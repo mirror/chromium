@@ -340,12 +340,15 @@ class CORE_EXPORT CSSSelector {
   // http://dev.w3.org/csswg/selectors4/#compound
   bool IsCompound() const;
 
+  // Note: the link match type is only valid for the start of each selector
+  // in a CSSSelectorList.
   enum LinkMatchMask {
     kMatchLink = 1,
     kMatchVisited = 2,
     kMatchAll = kMatchLink | kMatchVisited
   };
-  unsigned ComputeLinkMatchType() const;
+  void UpdateLinkMatchType();
+  unsigned LinkMatchType() const { return link_match_type_; }
 
   bool IsForPage() const { return is_for_page_; }
   void SetForPage() { is_for_page_ = true; }
@@ -374,6 +377,7 @@ class CORE_EXPORT CSSSelector {
   unsigned is_for_page_ : 1;
   unsigned tag_is_implicit_ : 1;
   unsigned relation_is_affected_by_pseudo_content_ : 1;
+  unsigned link_match_type_ : 2;  // LinkMatchMask
 
   void SetPseudoType(PseudoType pseudo_type) {
     pseudo_type_ = pseudo_type;
@@ -474,7 +478,8 @@ inline CSSSelector::CSSSelector()
       has_rare_data_(false),
       is_for_page_(false),
       tag_is_implicit_(false),
-      relation_is_affected_by_pseudo_content_(false) {}
+      relation_is_affected_by_pseudo_content_(false),
+      link_match_type_(kMatchAll) {}
 
 inline CSSSelector::CSSSelector(const QualifiedName& tag_q_name,
                                 bool tag_is_implicit)
@@ -486,7 +491,8 @@ inline CSSSelector::CSSSelector(const QualifiedName& tag_q_name,
       has_rare_data_(false),
       is_for_page_(false),
       tag_is_implicit_(tag_is_implicit),
-      relation_is_affected_by_pseudo_content_(false) {
+      relation_is_affected_by_pseudo_content_(false),
+      link_match_type_(kMatchAll) {
   data_.tag_q_name_ = tag_q_name.Impl();
   data_.tag_q_name_->AddRef();
 }
@@ -501,7 +507,8 @@ inline CSSSelector::CSSSelector(const CSSSelector& o)
       is_for_page_(o.is_for_page_),
       tag_is_implicit_(o.tag_is_implicit_),
       relation_is_affected_by_pseudo_content_(
-          o.relation_is_affected_by_pseudo_content_) {
+          o.relation_is_affected_by_pseudo_content_),
+      link_match_type_(kMatchAll) {
   if (o.match_ == kTag) {
     data_.tag_q_name_ = o.data_.tag_q_name_;
     data_.tag_q_name_->AddRef();

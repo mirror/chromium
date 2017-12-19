@@ -85,6 +85,7 @@ class CORE_EXPORT CSSParserSelector {
   void UpdatePseudoPage(const AtomicString& value) {
     selector_->UpdatePseudoPage(value);
   }
+  void UpdateLinkMatchType() { selector_->UpdateLinkMatchType(); }
 
   void AdoptSelectorVector(
       Vector<std::unique_ptr<CSSParserSelector>>& selector_vector);

@@ -72,7 +72,6 @@ RuleData::RuleData(StyleRule* rule,
       is_last_in_array_(false),
       position_(position),
       specificity_(Selector().Specificity()),
-      link_match_type_(Selector().ComputeLinkMatchType()),
       has_document_security_origin_(add_rule_flags &
                                     kRuleHasDocumentSecurityOrigin),
       property_whitelist_(
