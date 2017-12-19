@@ -52,19 +52,18 @@ void AdvancePastWhitespace(StringPiece* data) {
 CrossSiteDocumentClassifier::Result MatchesSignature(
     StringPiece* data,
     const StringPiece signatures[],
-    size_t arr_size) {
+    size_t arr_size,
+    base::CompareCase compare_case) {
   for (size_t i = 0; i < arr_size; ++i) {
     if (signatures[i].length() <= data->length()) {
-      if (base::StartsWith(*data, signatures[i],
-                           base::CompareCase::INSENSITIVE_ASCII)) {
+      if (base::StartsWith(*data, signatures[i], compare_case)) {
         // When |signatures[i]| is a prefix of |data|, it constitutes a match.
         // Strip the matching characters, and return.
         data->remove_prefix(signatures[i].length());
         return CrossSiteDocumentClassifier::kYes;
       }
     } else {
-      if (base::StartsWith(signatures[i], *data,
-                           base::CompareCase::INSENSITIVE_ASCII)) {
+      if (base::StartsWith(signatures[i], *data, compare_case)) {
         // When |data| is a prefix of |signatures[i]|, that means that
         // subsequent bytes in the stream could cause a match to occur.
         return CrossSiteDocumentClassifier::kMaybe;
@@ -188,7 +187,8 @@ CrossSiteDocumentClassifier::Result CrossSiteDocumentClassifier::SniffForHTML(
     AdvancePastWhitespace(&data);
 
     Result signature_match =
-        MatchesSignature(&data, kHtmlSignatures, arraysize(kHtmlSignatures));
+        MatchesSignature(&data, kHtmlSignatures, arraysize(kHtmlSignatures),
+                         base::CompareCase::INSENSITIVE_ASCII);
     if (signature_match != kNo)
       return signature_match;
 
@@ -196,7 +196,8 @@ CrossSiteDocumentClassifier::Result CrossSiteDocumentClassifier::SniffForHTML(
     // as well. Skip over them.
     static const StringPiece kBeginCommentSignature[] = {"<!--"};
     Result comment_match = MatchesSignature(&data, kBeginCommentSignature,
-                                            arraysize(kBeginCommentSignature));
+                                            arraysize(kBeginCommentSignature),
+                                            base::CompareCase::SENSITIVE);
     if (comment_match != kYes)
       return comment_match;
 
@@ -214,16 +215,13 @@ CrossSiteDocumentClassifier::Result CrossSiteDocumentClassifier::SniffForHTML(
 
 CrossSiteDocumentClassifier::Result CrossSiteDocumentClassifier::SniffForXML(
     base::StringPiece data) {
-  // TODO(dsjang): Chrome's mime_sniffer is using strncasecmp() for
-  // this signature. However, XML is case-sensitive. Don't we have to
-  // be more lenient only to block documents starting with the exact
-  // string <?xml rather than <?XML ?
   // TODO(dsjang): Once CrossSiteDocumentClassifier is moved into the browser
   // process, we should do single-thread checking here for the static
   // initializer.
   AdvancePastWhitespace(&data);
   static const StringPiece kXmlSignatures[] = {StringPiece("<?xml")};
-  return MatchesSignature(&data, kXmlSignatures, arraysize(kXmlSignatures));
+  return MatchesSignature(&data, kXmlSignatures, arraysize(kXmlSignatures),
+                          base::CompareCase::SENSITIVE);
 }
 
 CrossSiteDocumentClassifier::Result CrossSiteDocumentClassifier::SniffForJSON(
@@ -290,6 +288,32 @@ CrossSiteDocumentClassifier::Result CrossSiteDocumentClassifier::SniffForJSON(
     }
   }
   return kMaybe;
+}
+
+CrossSiteDocumentClassifier::Result
+CrossSiteDocumentClassifier::SniffForFetchOnlyResource(base::StringPiece data) {
+  static const StringPiece kScriptBreakingPrefixes[] = {
+      // Angular: https://docs.angularjs.org/api/ng/service/$http
+      StringPiece(")]}',\n"),
+
+      // Parser breaker; observed on google.com
+      StringPiece(")]}'\n"),
+
+      // Infinite loop; observed on facebook.com
+      StringPiece("for(;;);"),
+
+      // Infinite loops (alternatives).
+      StringPiece("while(1);"), StringPiece("for (;;);"),
+      StringPiece("while (1);"),
+  };
+  Result has_parser_breaker = MatchesSignature(
+      &data, kScriptBreakingPrefixes, arraysize(kScriptBreakingPrefixes),
+      base::CompareCase::SENSITIVE);
+  if (has_parser_breaker != kNo)
+    return has_parser_breaker;
+
+  // A non-empty JSON object also effectively introduces a JS syntax error.
+  return SniffForJSON(data);
 }
 
 }  // namespace content
