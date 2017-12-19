@@ -1,0 +1,118 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "72cd80ab_dcbc828a",
+        "filename": "components/viz/service/frame_sinks/frame_sink_manager_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-12-19T19:18:31Z",
+      "side": 1,
+      "message": "std::make_unique\u003cFrameSinkVideoCapturerImpl\u003e",
+      "range": {
+        "startLine": 236,
+        "startChar": 32,
+        "endLine": 236,
+        "endChar": 62
+      },
+      "revId": "5f9011f03b3ec9a8e609e4d9ee44e70dc275432d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d313e72e_9b66d957",
+        "filename": "components/viz/service/frame_sinks/frame_sink_manager_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-12-19T19:18:31Z",
+      "side": 1,
+      "message": "optional: This might be a good application for base::EraseIf().",
+      "revId": "5f9011f03b3ec9a8e609e4d9ee44e70dc275432d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9262bdbc_226cfb4b",
+        "filename": "components/viz/service/frame_sinks/video_capture/frame_sink_video_capturer_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-12-19T19:18:31Z",
+      "side": 1,
+      "message": "You can use base::Unretained(this) since |this| owns |consumer_| and will outlive it.",
+      "range": {
+        "startLine": 194,
+        "startChar": 41,
+        "endLine": 194,
+        "endChar": 75
+      },
+      "revId": "5f9011f03b3ec9a8e609e4d9ee44e70dc275432d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "458eba8a_6771d203",
+        "filename": "components/viz/service/frame_sinks/video_capture/frame_sink_video_capturer_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-12-19T19:18:31Z",
+      "side": 1,
+      "message": "Ideally you don\u0027t want to crash the browser/gpu process if the client does something wrong.",
+      "revId": "5f9011f03b3ec9a8e609e4d9ee44e70dc275432d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1055d9c_a0ca8773",
+        "filename": "components/viz/service/frame_sinks/video_capture/frame_sink_video_capturer_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 501,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-12-19T19:18:31Z",
+      "side": 1,
+      "message": "A comment explaining what is happening could be helpful since it\u0027s a bit complicated.",
+      "revId": "5f9011f03b3ec9a8e609e4d9ee44e70dc275432d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09c8497b_f5794975",
+        "filename": "components/viz/service/frame_sinks/video_capture/in_flight_frame_delivery.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-12-19T19:18:31Z",
+      "side": 1,
+      "message": "If closing the pipe and calling Done() do the same thing, then you could probably get rid of Done().",
+      "revId": "5f9011f03b3ec9a8e609e4d9ee44e70dc275432d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
