@@ -206,7 +206,8 @@ bool VaapiVideoEncodeAccelerator::Initialize(
                           RoundUpToPowerOf2(visible_size_.height(), 16));
   mb_width_ = coded_size_.width() / 16;
   mb_height_ = coded_size_.height() / 16;
-  output_buffer_byte_size_ = coded_size_.GetArea() + kExtraOutputBufferSize;
+  output_buffer_byte_size_ =
+      coded_size_.GetArea() * 3 / 2 + kExtraOutputBufferSize;
 
   UpdateRates(initial_bitrate, kDefaultFramerate);
 
