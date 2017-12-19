@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "18b7e729_56052cb7",
+        "filename": "ios/web/public/download/download_task.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-12-19T09:04:11Z",
+      "side": 1,
+      "message": "→ download",
+      "range": {
+        "startLine": 51,
+        "startChar": 17,
+        "endLine": 51,
+        "endChar": 26
+      },
+      "revId": "b6e24d44070386b6208d36b4f47e27a726db5f49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
