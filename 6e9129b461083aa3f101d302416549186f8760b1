@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "36f97865_91f252d9",
+        "filename": "media/audio/mac/audio_manager_mac.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1210379
+      },
+      "writtenOn": "2017-12-19T10:39:11Z",
+      "side": 1,
+      "message": "Seems to me the GetDeviceTotalChannelCount call is to work around a limitation with layouts.\nSo, you should probably check if it\u0027s an INPUT first, and only do GetAudioUnitStreamFormatChannelCount for that, otherwise do GetDeviceTotalChannelCount and then check the layout.",
+      "revId": "6e9129b461083aa3f101d302416549186f8760b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
