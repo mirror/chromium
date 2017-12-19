@@ -118,6 +118,30 @@
       "revId": "c1bced5570c392658b2a482dcb4d0145658b6342",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bde4d90_4f20795a",
+        "filename": "third_party/WebKit/Source/core/layout/TextAutosizer.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1130,
+      "author": {
+        "id": 1237911
+      },
+      "writtenOn": "2017-12-19T00:42:44Z",
+      "side": 1,
+      "message": "\u003e It seems more likely that you have found a bug in the way ComputedStyle uses the multiplier to determine the font size.  In that case we should fix the bug in the code that consumes the multiplier.\n\nAfter herd of your opinion, the right place to handle DSF is inside ComputedStyle::SetTextAutosizingMultiplier(). Please confirm this.\n\n\u003e Ideally the application of zoom factor and DSF should occur in the same codepath for both autosized text and non-autosized text.\n\nYes, this CL supports it. Moving the application of DSF to ComputedStyle::SetTextAutosizingMultiplier() will also support it.",
+      "parentUuid": "8f87b7a6_dbbc90e2",
+      "range": {
+        "startLine": 1130,
+        "startChar": 55,
+        "endLine": 1130,
+        "endChar": 59
+      },
+      "revId": "c1bced5570c392658b2a482dcb4d0145658b6342",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
