@@ -745,7 +745,7 @@ DownloadInterruptReason DownloadManagerImpl::BeginDownloadRequest(
   // TODO(ananta)
   // Find a better way to create the DownloadResourceHandler instance.
   std::unique_ptr<ResourceHandler> handler(
-      DownloadResourceHandler::Create(url_request.get()));
+      DownloadResourceHandler::CreateForNewRequest(url_request.get()));
 
   ResourceDispatcherHostImpl::Get()->BeginURLRequest(
       std::move(url_request), std::move(handler), true,  // download
@@ -813,6 +813,7 @@ void DownloadManagerImpl::DownloadUrl(
     DCHECK_EQ("POST", params->method());
   }
 
+  RecordDownloadCount(DownloadCountTypes::DOWNLOAD_TRIGGERED_COUNT);
   BeginDownloadInternal(std::move(params), content::DownloadItem::kInvalidId);
 }
 
