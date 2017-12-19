@@ -12,6 +12,7 @@
 #include "base/mac/bundle_locations.h"
 #include "base/memory/ptr_util.h"
 #include "base/strings/sys_string_conversions.h"
+#include "components/autofill/core/common/autofill_pref_names.h"
 #include "components/dom_distiller/core/url_constants.h"
 #include "components/payments/core/features.h"
 #include "components/prefs/pref_service.h"
@@ -185,6 +186,13 @@ NSString* ChromeWebClient::GetEarlyPageScriptForMainFrame(
     web::BrowserState* browser_state) const {
   NSMutableArray* scripts = [NSMutableArray array];
   [scripts addObject:GetPageScript(@"chrome_bundle")];
+
+  ios::ChromeBrowserState* chrome_browser_state =
+      ios::ChromeBrowserState::FromBrowserState(browser_state);
+  if (chrome_browser_state->GetPrefs()->GetBoolean(
+          autofill::prefs::kAutofillEnabled)) {
+    [scripts addObject:GetPageScript(@"autofill_controller")];
+  }
 
   if (base::FeatureList::IsEnabled(features::kCredentialManager)) {
     [scripts addObject:GetPageScript(@"credential_manager")];
