@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8e6a46d7_df4034a0",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_controller_impl_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1116033
+      },
+      "writtenOn": "2017-12-19T17:38:10Z",
+      "side": 1,
+      "message": "can we use a creator function instead of calling new?",
+      "revId": "33a705ad932c615aaea81ad0b4898e412d6ace4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98048cd2_f05d2d45",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_controller_impl_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 415,
+      "author": {
+        "id": 1116033
+      },
+      "writtenOn": "2017-12-19T17:38:10Z",
+      "side": 1,
+      "message": "maybe define the lambda where used?",
+      "range": {
+        "startLine": 415,
+        "startChar": 39,
+        "endLine": 415,
+        "endChar": 40
+      },
+      "revId": "33a705ad932c615aaea81ad0b4898e412d6ace4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e6f81ff_e1f54dc3",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1121,
+      "author": {
+        "id": 1116033
+      },
+      "writtenOn": "2017-12-19T17:38:10Z",
+      "side": 1,
+      "message": "const?",
+      "revId": "33a705ad932c615aaea81ad0b4898e412d6ace4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
