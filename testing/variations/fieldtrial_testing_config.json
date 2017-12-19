@@ -763,9 +763,6 @@
             ],
             "experiments": [
                 {
-                    "name": "Default"
-                },
-                {
                     "name": "Enabled",
                     "enable_features": [
                         "ChromeHome"
@@ -795,9 +792,6 @@
                     "enable_features": [
                         "ChromeHomeBottomNavLabels"
                     ]
-                },
-                {
-                    "name": "Default"
                 }
             ]
         }
@@ -809,13 +803,7 @@
             ],
             "experiments": [
                 {
-                    "name": "Enabled",
-                    "enable_features": [
-                        "ChromeHomeInactivitySheetExpansion"
-                    ]
-                },
-                {
-                    "name": "3Hours",
+                    "name": "Enabled_3_Hours",
                     "params": {
                         "time_since_backgrounded_in_mins": "180"
                     },
@@ -832,9 +820,6 @@
                 "android"
             ],
             "experiments": [
-                {
-                    "name": "Default"
-                },
                 {
                     "name": "Enabled",
                     "enable_features": [
@@ -871,9 +856,6 @@
                 "android"
             ],
             "experiments": [
-                {
-                    "name": "Default"
-                },
                 {
                     "name": "ForceTopSites",
                     "disable_features": [
