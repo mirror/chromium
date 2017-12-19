@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "0184c0ad_cc1c556a",
+        "filename": "third_party/WebKit/common/service_worker/service_worker_client.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-19T14:38:19Z",
+      "side": 1,
+      "message": "Yes we should have accurate comments. At least delete the word \"window\" but ideally explain more that this is used for both window and non-window clients.",
+      "parentUuid": "6e8cc464_cbe78a71",
+      "revId": "a9a359163987ebe0a4afd7f4600d29d1d40cef38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4498b92f_101a4a30",
         "filename": "third_party/WebKit/common/service_worker/service_worker_client.mojom",
         "patchSetId": 4
@@ -260,6 +278,24 @@
       "side": 1,
       "message": "We should clarify what\u0027s empty and what\u0027s invalid on top of the definition.\nWhat happens if we add kInvalid? I think we can say clearly it\u0027s empty or invalid.",
       "parentUuid": "44e4d5d6_f79ef36d",
+      "revId": "a9a359163987ebe0a4afd7f4600d29d1d40cef38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab5238b1_54d32f50",
+        "filename": "third_party/WebKit/common/service_worker/service_worker_client.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-19T14:38:19Z",
+      "side": 1,
+      "message": "Yes it\u0027s hard to tell why we need both invalid and empty (of course this is true before this patch but if we can clarify it somehow now is the time to do so as we clean these up in Mojo types).",
+      "parentUuid": "00338665_7afba3ac",
       "revId": "a9a359163987ebe0a4afd7f4600d29d1d40cef38",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
