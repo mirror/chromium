@@ -16,6 +16,7 @@
 
 #include "net/base/host_port_pair.h"
 #include "net/base/net_export.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 
 namespace net {
 
@@ -43,7 +44,15 @@ class NET_EXPORT ProxyServer {
   // Constructs an invalid ProxyServer.
   ProxyServer() : scheme_(SCHEME_INVALID) {}
 
-  ProxyServer(Scheme scheme, const HostPortPair& host_port_pair);
+  // TODO(https://crbug.com/656607): Remove default value.
+  ProxyServer(Scheme scheme,
+              const HostPortPair& host_port_pair,
+              const PartialNetworkTrafficAnnotationTag& traffic_annotation =
+                  GetProxyEmptyPartialAnnotation());
+
+  ProxyServer(Scheme scheme) : scheme_(SCHEME_DIRECT) {
+    CHECK_EQ(SCHEME_DIRECT, scheme);
+  }
 
   bool is_valid() const { return scheme_ != SCHEME_INVALID; }
 
@@ -67,6 +76,12 @@ class NET_EXPORT ProxyServer {
   // Returns true if this ProxyServer is a QUIC proxy.
   bool is_quic() const { return scheme_ == SCHEME_QUIC; }
 
+  const NetworkTrafficAnnotationTag GetTrafficAnnotation() const;
+
+  const PartialNetworkTrafficAnnotationTag GetPartialTrafficAnnotation() const {
+    return PartialNetworkTrafficAnnotationTag(traffic_annotation_);
+  }
+
   const HostPortPair& host_port_pair() const;
 
   // Parses from an input with format:
@@ -88,10 +103,19 @@ class NET_EXPORT ProxyServer {
   //   "quic://foopy:17"  {scheme=QUIC, host="foopy", port=17}
   //   "direct://"        {scheme=DIRECT}
   //   "foopy:X"          INVALID -- bad port.
-  static ProxyServer FromURI(const std::string& uri, Scheme default_scheme);
-  static ProxyServer FromURI(std::string::const_iterator uri_begin,
-                             std::string::const_iterator uri_end,
-                             Scheme default_scheme);
+  // TODO(https://crbug.com/656607): Remove default value.
+  static ProxyServer FromURI(
+      const std::string& uri,
+      Scheme default_scheme,
+      const PartialNetworkTrafficAnnotationTag& traffic_annotation =
+          GetProxyEmptyPartialAnnotation());
+  // TODO(https://crbug.com/656607): Remove default value.
+  static ProxyServer FromURI(
+      std::string::const_iterator uri_begin,
+      std::string::const_iterator uri_end,
+      Scheme default_scheme,
+      const PartialNetworkTrafficAnnotationTag& traffic_annotation =
+          GetProxyEmptyPartialAnnotation());
 
   // Formats as a URI string. This does the reverse of FromURI.
   std::string ToURI() const;
@@ -110,14 +134,20 @@ class NET_EXPORT ProxyServer {
   //   "HTTPS foopy:123"  {scheme=HTTPS, host="foopy", port=123}
   //   "QUIC foopy:123"   {scheme=QUIC, host="foopy", port=123}
   //   "BLAH xxx:xx"      INVALID
-  static ProxyServer FromPacString(const std::string& pac_string);
-  static ProxyServer FromPacString(std::string::const_iterator pac_string_begin,
-                                   std::string::const_iterator pac_string_end);
+  // TODO(https://crbug.com/656607): Remove default value.
+  static ProxyServer FromPacString(
+      const std::string& pac_string,
+      const PartialNetworkTrafficAnnotationTag& traffic_annotation =
+          GetProxyEmptyPartialAnnotation());
+  // TODO(https://crbug.com/656607): Remove default value.
+  static ProxyServer FromPacString(
+      std::string::const_iterator pac_string_begin,
+      std::string::const_iterator pac_string_end,
+      const PartialNetworkTrafficAnnotationTag& traffic_annotation =
+          GetProxyEmptyPartialAnnotation());
 
   // Returns a ProxyServer representing DIRECT connections.
-  static ProxyServer Direct() {
-    return ProxyServer(SCHEME_DIRECT, HostPortPair());
-  }
+  static ProxyServer Direct() { return ProxyServer(SCHEME_DIRECT); }
 
 #if defined(OS_MACOSX)
   // Utility function to pull out a host/port pair from a dictionary and return
@@ -125,10 +155,14 @@ class NET_EXPORT ProxyServer {
   // host key and optionally a value for the port key. In the error condition
   // where the host value is especially malformed, returns an invalid
   // ProxyServer.
-  static ProxyServer FromDictionary(Scheme scheme,
-                                    CFDictionaryRef dict,
-                                    CFStringRef host_key,
-                                    CFStringRef port_key);
+  // TODO(https://crbug.com/656607): Remove default value.
+  static ProxyServer FromDictionary(
+      Scheme scheme,
+      CFDictionaryRef dict,
+      CFStringRef host_key,
+      CFStringRef port_key,
+      const PartialNetworkTrafficAnnotationTag& traffic_annotation =
+          GetProxyEmptyPartialAnnotation());
 #endif
 
   // Formats as a PAC result entry. This does the reverse of FromPacString().
@@ -160,16 +194,25 @@ class NET_EXPORT ProxyServer {
   // Returns the estimate of dynamically allocated memory in bytes.
   size_t EstimateMemoryUsage() const;
 
+  // TODO(https://crbug.com/656607): Remove this function and replace all its
+  // usages with proper annotaitons.
+  static PartialNetworkTrafficAnnotationTag GetProxyEmptyPartialAnnotation();
+
  private:
   // Creates a ProxyServer given a scheme, and host/port string. If parsing the
   // host/port string fails, the returned instance will be invalid.
   static ProxyServer FromSchemeHostAndPort(
       Scheme scheme,
       std::string::const_iterator host_and_port_begin,
-      std::string::const_iterator host_and_port_end);
+      std::string::const_iterator host_and_port_end,
+      const PartialNetworkTrafficAnnotationTag& traffic_annotation);
 
   Scheme scheme_;
   HostPortPair host_port_pair_;
+
+  // Traffic annotation for proxy control. This annotation should include
+  // |description|, |settings|, and |policy| fields.
+  MutablePartialNetworkTrafficAnnotationTag traffic_annotation_;
 };
 
 typedef std::pair<HostPortPair, ProxyServer> HostPortProxyPair;
