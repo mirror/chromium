@@ -16,6 +16,24 @@
       "revId": "256134fdb2a3296f78aa1892657e7b2926e1963b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08771ea2_82421275",
+        "filename": "components/update_client/component.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1238209
+      },
+      "writtenOn": "2017-12-19T18:08:29Z",
+      "side": 1,
+      "message": "Setting nextversion to \"0\" would make the extension version data unavailable in the metrics pipeline (see the attached bug). This is related to an internal bug that @waffles opened.",
+      "parentUuid": "bb9d53bd_20ca24ae",
+      "revId": "256134fdb2a3296f78aa1892657e7b2926e1963b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
