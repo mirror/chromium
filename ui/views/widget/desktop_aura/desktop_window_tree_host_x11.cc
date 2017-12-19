@@ -2053,6 +2053,15 @@ uint32_t DesktopWindowTreeHostX11::DispatchEvent(
       switch (static_cast<XIEvent*>(xev->xcookie.data)->evtype) {
         case XI_Enter:
         case XI_Leave:
+          // 4 is guaranteed to be the XTEST pointer slave. See:
+          // http://who-t.blogspot.ca/2010/07/input-event-processing-in-x.html
+          // This is used when generating events from XTest. Unfortunately,
+          // they seem to be buggy with XI_Enter/Leave (see
+          // https://crbug.com/683434) so we ignore these since Chrome Remote
+          // Desktop uses XTest to inject events.
+          if (enter_event->deviceid == 4)
+            return ui::POST_DISPATCH_STOP_PROPAGATION;
+
           OnCrossingEvent(enter_event->evtype == XI_Enter, enter_event->focus,
                           XI2ModeToXMode(enter_event->mode),
                           enter_event->detail);
