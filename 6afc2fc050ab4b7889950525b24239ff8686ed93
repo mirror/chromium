@@ -87,6 +87,24 @@
       "revId": "6afc2fc050ab4b7889950525b24239ff8686ed93",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1a0da7a_a073469c",
+        "filename": "chrome/browser/ui/app_list/chrome_app_list_item.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2017-12-19T23:52:39Z",
+      "side": 1,
+      "message": "It\u0027s also used in non-test codes. I\u0027ll add a TODO to remove this in the next PS.\n\nThose methods are meant to be called in ChromeAppListItem and its derived classes only and unsafe for others to call. So I\u0027m considering to keep them in protected but add some public for-test methods to call them. WDYT?",
+      "parentUuid": "527f494b_9cb010b9",
+      "revId": "6afc2fc050ab4b7889950525b24239ff8686ed93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
