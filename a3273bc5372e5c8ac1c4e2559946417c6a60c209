@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "90091ad0_48445c2f",
+        "filename": "third_party/WebKit/Source/core/exported/WebDevToolsAgentImpl.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 511,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-12-19T18:43:01Z",
+      "side": 1,
+      "message": "That\u0027s somewhat meh",
+      "revId": "a3273bc5372e5c8ac1c4e2559946417c6a60c209",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
