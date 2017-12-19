@@ -393,37 +393,6 @@ void TypingCommand::InsertText(
     return;
   const size_t selection_start = selection_offsets.Start();
 
-  // Set the starting and ending selection appropriately if we are using a
-  // selection that is different from the current selection.  In the future, we
-  // should change EditCommand to deal with custom selections in a general way
-  // that can be used by all of the commands.
-  if (TypingCommand* last_typing_command =
-          LastTypingCommandIfStillOpenForTyping(frame)) {
-    if (last_typing_command->EndingVisibleSelection() !=
-        selection_for_insertion) {
-      const SelectionForUndoStep& selection_for_insertion_as_undo_step =
-          SelectionForUndoStep::From(selection_for_insertion.AsSelection());
-      last_typing_command->SetStartingSelection(
-          selection_for_insertion_as_undo_step);
-      last_typing_command->SetEndingSelection(
-          selection_for_insertion_as_undo_step);
-    }
-
-    last_typing_command->SetCompositionType(composition_type);
-    last_typing_command->SetShouldRetainAutocorrectionIndicator(
-        options & kRetainAutocorrectionIndicator);
-    last_typing_command->SetShouldPreventSpellChecking(options &
-                                                       kPreventSpellChecking);
-    last_typing_command->is_incremental_insertion_ = is_incremental_insertion;
-    last_typing_command->selection_start_ = selection_start;
-    last_typing_command->input_type_ = input_type;
-
-    EventQueueScope event_queue_scope;
-    last_typing_command->InsertText(new_text, options & kSelectInsertedText,
-                                    editing_state);
-    return;
-  }
-
   TypingCommand* command = TypingCommand::Create(
       document, kInsertText, new_text, options, composition_type);
   bool change_selection = selection_for_insertion != current_selection;
