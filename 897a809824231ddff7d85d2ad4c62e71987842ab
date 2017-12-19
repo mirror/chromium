@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ab4ab59f_d1c20f09",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_box_state.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-12-19T01:48:32Z",
+      "side": 1,
+      "message": "Agreed looks weired. Added comments. For open/close tags, NGLineBreaker stores m+b+p as their inline size.",
+      "parentUuid": "d663d648_85984e16",
+      "revId": "897a809824231ddff7d85d2ad4c62e71987842ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "072ee2b6_ff242655",
         "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_box_state.h",
         "patchSetId": 28
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "6557e07e_f46cc629",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_box_state.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-12-19T01:48:32Z",
+      "side": 1,
+      "message": "Yeah, we need margin for box offset, border+padding for content offset, and sum of them for advance. Added comment.",
+      "parentUuid": "072ee2b6_ff242655",
+      "range": {
+        "startLine": 184,
+        "startChar": 15,
+        "endLine": 184,
+        "endChar": 46
+      },
+      "revId": "897a809824231ddff7d85d2ad4c62e71987842ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4cd0a47d_54ab2dad",
         "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_layout_algorithm.cc",
         "patchSetId": 28
@@ -53,6 +95,24 @@
       "writtenOn": "2017-12-18T18:51:27Z",
       "side": 1,
       "message": "I wonder if the overhead of calling BidiReorder even when it isn\u0027t needed is less than the overhead of this branching.\n\nWould doing something like:\n\nbox_states_-\u003ePrepareForReorder(\u0026line_box_);\nBidiReorder();\nbox_states_-\u003eUpdateAfterReorder(\u0026line_box_);\n\nregardless of box fragments or bidi enabled make sense?\n\nor possibly \n\nbox_states_-\u003ePrepareForReorder(\u0026line_box_);\nif (box_states_-\u003eHasBoxFragments() \u0026\u0026 Node().IsBidiEnabled())\n  BidiReorder();\nbox_states_-\u003eUpdateAfterReorder(\u0026line_box_);\n\nif we want to be a bit more conservative.",
+      "revId": "897a809824231ddff7d85d2ad4c62e71987842ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd07f9d7_f5c3328f",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_layout_algorithm.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-12-19T01:48:32Z",
+      "side": 1,
+      "message": "Removed some DCHECKs and it looks like we can run all of them all the time, thank you!",
+      "parentUuid": "4cd0a47d_54ab2dad",
       "revId": "897a809824231ddff7d85d2ad4c62e71987842ab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
