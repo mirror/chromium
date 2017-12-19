@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "84164416_f702414e",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-12-19T21:29:51Z",
+      "side": 0,
+      "message": "nit: I would suggest keeping this logic, and a separation between |file_mapping| and |symbols_mapping| - we are currently relying on filename matching to locate the host-side binary for symbolization, and for long names there can be ambiguity, due to truncation. Since non-binaries are not relevant to symbolization, removing them from the |symbols_mapping| is still useful.",
+      "range": {
+        "startLine": 145,
+        "startChar": 4,
+        "endLine": 145,
+        "endChar": 29
+      },
+      "revId": "847c3aafdbef649bf8abf02fecf4e62d14150b3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
