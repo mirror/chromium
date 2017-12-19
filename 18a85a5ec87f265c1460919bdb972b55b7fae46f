@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "629bc0bf_eed94769",
+        "filename": "base/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 1389,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-12-19T01:08:40Z",
+      "side": 1,
+      "message": "This define only applies to source files in the //base target; it will (silently) be undefined in gin/array_buffer.cc. You probably want to use build/buildflag_header.gni, which is the new trick for doing this nicely; there are some existing instances of this in base/BUILD.gn.",
+      "revId": "18a85a5ec87f265c1460919bdb972b55b7fae46f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
