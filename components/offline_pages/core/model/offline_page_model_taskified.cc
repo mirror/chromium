@@ -121,6 +121,7 @@ OfflinePageModelTaskified::OfflinePageModelTaskified(
       policy_controller_(new ClientPolicyController()),
       task_queue_(this),
       clock_(std::move(clock)),
+      skip_clearing_original_url_for_testing_(false),
       weak_ptr_factory_(this) {
   CreateArchivesDirectoryIfNeeded();
   PostClearLegacyTemporaryPagesTask();
@@ -149,6 +150,8 @@ void OfflinePageModelTaskified::SavePage(
       save_page_params, archiver.get(),
       base::Bind(&OfflinePageModelTaskified::OnCreateArchiveDone,
                  weak_ptr_factory_.GetWeakPtr(), callback));
+  if (skip_clearing_original_url_for_testing_)
+    task->set_skip_clearing_original_url_for_testing();
   pending_archivers_.push_back(std::move(archiver));
   task_queue_.AddTask(std::move(task));
 }
