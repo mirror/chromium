@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ab1e95e5_52f1ed38",
+        "filename": "third_party/WebKit/Source/core/events/WebInputEventConversion.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2017-12-19T23:26:14Z",
+      "side": 1,
+      "message": "I am. However they are only being deep copied in the WebCoalescedInputEvent constructor. So after this function it is all good that they are gone.",
+      "parentUuid": "82c696d7_b40bae5d",
+      "revId": "a811e699a9987b9bf0f898e8d2dcbda9be6a1d05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cede1a97_d5c832fe",
         "filename": "third_party/WebKit/Source/core/exported/WebPagePopupImpl.cpp",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-19T19:08:56Z",
       "side": 1,
       "message": "I find this incredibly confusing in that I need to look at the header file to understand that it is creating a PointerCausedUaAction event. Are we able to clean this up somehow; probably by getting rid of that ctor.",
+      "revId": "a811e699a9987b9bf0f898e8d2dcbda9be6a1d05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73f5e50e_fcefc92e",
+        "filename": "third_party/WebKit/Source/core/exported/WebPagePopupImpl.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 520,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2017-12-19T23:26:14Z",
+      "side": 1,
+      "message": "I totally agree it is not clear as Mustaq also pointed out. Would a static function that creates this with a better name (like CreatePointerCausedUaActionEvent) solve the issue?",
+      "parentUuid": "cede1a97_d5c832fe",
       "revId": "a811e699a9987b9bf0f898e8d2dcbda9be6a1d05",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "09c0bcbe_ef063814",
+        "filename": "third_party/WebKit/Source/core/exported/WebPagePopupImpl.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 534,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2017-12-19T23:26:14Z",
+      "side": 1,
+      "message": "That is not the pattern in the current code (i.e. before this patch). We ignore the result of the single pointer events and only care about the touch event return value. I believe this is also the behavior we want as preventDefault on TouchStart would prevent some stuff that pointerdown does not do. Fair enough?",
+      "parentUuid": "8b3db839_5a93658a",
+      "revId": "a811e699a9987b9bf0f898e8d2dcbda9be6a1d05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1af777d8_a92272ed",
         "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.cpp",
         "patchSetId": 4
@@ -64,6 +118,24 @@
       "writtenOn": "2017-12-19T19:08:56Z",
       "side": 1,
       "message": "This is all duplicated code. Can we avoid it somehow?",
+      "revId": "a811e699a9987b9bf0f898e8d2dcbda9be6a1d05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c62a108c_79d931d0",
+        "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1988,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2017-12-19T23:26:14Z",
+      "side": 1,
+      "message": "This is definitely duplicated code being copied exactly the same 3 times in this CL. This whole portion will be removed in the next CL and it is only introduced 3 times because I tried to breakdown the code. I couldn\u0027t come up with any better way of refactoring the code without seriously restsructing the code which definitely wasn\u0027t worth it for this code that is indeed temporarily. Do you have any suggestion for a quick clean up without touching the parent class of these?",
+      "parentUuid": "1af777d8_a92272ed",
       "revId": "a811e699a9987b9bf0f898e8d2dcbda9be6a1d05",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -155,6 +227,24 @@
       "writtenOn": "2017-12-19T19:08:56Z",
       "side": 1,
       "message": "Does this now have different behavior? In that they were taking the first touch point of a sequence now you are doing each touch point. Should it be checking that it is primary or something like that?",
+      "revId": "a811e699a9987b9bf0f898e8d2dcbda9be6a1d05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1339ba75_a601ec15",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorOverlayAgent.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2017-12-19T23:26:14Z",
+      "side": 1,
+      "message": "You are right. It does change the behavior presumably. Unfortunately the WebPointerEvents don\u0027t have a notion of primary at this point (or maybe ever?). Is it alright if I handle this for only the first call after a DispatchPendingTouchEvents?",
+      "parentUuid": "9666d89b_f21f554c",
       "revId": "a811e699a9987b9bf0f898e8d2dcbda9be6a1d05",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
