@@ -14,9 +14,11 @@
 #include "ash/shutdown_reason.h"
 #include "ash/system/power/power_button_display_controller.h"
 #include "ash/system/power/power_button_screenshot_controller.h"
+#include "ash/system/power/power_off_menu_controller.h"
 #include "ash/system/power/tablet_power_button_controller.h"
 #include "ash/wm/lock_state_controller.h"
 #include "ash/wm/session_state_animator.h"
+#include "ash/wm/tablet_mode/tablet_mode_controller.h"
 #include "base/command_line.h"
 #include "base/time/default_tick_clock.h"
 #include "chromeos/dbus/dbus_thread_manager.h"
@@ -46,6 +48,8 @@ PowerButtonController::PowerButtonController(
   chromeos::AccelerometerReader::GetInstance()->AddObserver(this);
   Shell::Get()->display_configurator()->AddObserver(this);
   Shell::Get()->PrependPreTargetHandler(this);
+
+  Shell::Get()->tablet_mode_controller()->AddObserver(this);
 }
 
 PowerButtonController::~PowerButtonController() {
@@ -54,6 +58,9 @@ PowerButtonController::~PowerButtonController() {
   chromeos::AccelerometerReader::GetInstance()->RemoveObserver(this);
   chromeos::DBusThreadManager::Get()->GetPowerManagerClient()->RemoveObserver(
       this);
+
+  if (Shell::Get()->tablet_mode_controller())
+    Shell::Get()->tablet_mode_controller()->RemoveObserver(this);
 }
 
 void PowerButtonController::OnPowerButtonEvent(
@@ -160,6 +167,16 @@ void PowerButtonController::OnTouchEvent(ui::TouchEvent* event) {
   display_off_timer_.Stop();
 }
 
+void PowerButtonController::OnTabletModeStarted() {
+  power_off_menu_controller_ =
+      std::make_unique<PowerOffMenuController>(display_controller_.get());
+}
+
+void PowerButtonController::OnTabletModeEnded() {
+  power_off_menu_controller_->DismissMenu();
+  power_off_menu_controller_.reset();
+}
+
 void PowerButtonController::OnDisplayModeChanged(
     const display::DisplayConfigurator::DisplayStateList& display_states) {
   bool internal_display_off = false;
@@ -195,6 +212,11 @@ void PowerButtonController::PowerButtonEventReceived(
   // Handle tablet mode power button screenshot accelerator.
   if (screenshot_controller_ &&
       screenshot_controller_->OnPowerButtonEvent(down, timestamp)) {
+    return;
+  }
+
+  if (button_type_ == ButtonType::NORMAL && power_off_menu_controller_) {
+    power_off_menu_controller_->OnPowerButtonEvent(down, timestamp);
     return;
   }
 

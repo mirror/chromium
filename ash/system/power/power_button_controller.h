@@ -8,6 +8,7 @@
 #include <memory>
 
 #include "ash/ash_export.h"
+#include "ash/wm/tablet_mode/tablet_mode_observer.h"
 #include "base/macros.h"
 #include "base/timer/timer.h"
 #include "chromeos/accelerometer/accelerometer_reader.h"
@@ -27,6 +28,7 @@ class LockStateController;
 class PowerButtonDisplayController;
 class PowerButtonScreenshotController;
 class TabletPowerButtonController;
+class PowerOffMenuController;
 
 // Handles power button and lock button events. For convertible/tablet devices,
 // power button events are handled by TabletPowerButtonController to perform
@@ -37,7 +39,8 @@ class ASH_EXPORT PowerButtonController
     : public ui::EventHandler,
       public display::DisplayConfigurator::Observer,
       public chromeos::PowerManagerClient::Observer,
-      public chromeos::AccelerometerReader::Observer {
+      public chromeos::AccelerometerReader::Observer,
+      public TabletModeObserver {
  public:
   enum class ButtonType {
     // Indicates normal power button type.
@@ -59,16 +62,20 @@ class ASH_EXPORT PowerButtonController
   // Handles lock button behavior.
   void OnLockButtonEvent(bool down, const base::TimeTicks& timestamp);
 
-  // Overridden from ui::EventHandler:
+  // ui::EventHandler:
   void OnKeyEvent(ui::KeyEvent* event) override;
   void OnMouseEvent(ui::MouseEvent* event) override;
   void OnTouchEvent(ui::TouchEvent* event) override;
 
-  // Overridden from display::DisplayConfigurator::Observer:
+  // TabletModeObserver:
+  void OnTabletModeStarted() override;
+  void OnTabletModeEnded() override;
+
+  // display::DisplayConfigurator::Observer:
   void OnDisplayModeChanged(
       const display::DisplayConfigurator::DisplayStateList& outputs) override;
 
-  // Overridden from chromeos::PowerManagerClient::Observer:
+  // chromeos::PowerManagerClient::Observer:
   void BrightnessChanged(int level, bool user_initiated) override;
   void PowerButtonEventReceived(bool down,
                                 const base::TimeTicks& timestamp) override;
@@ -90,6 +97,10 @@ class ASH_EXPORT PowerButtonController
 
   TabletPowerButtonController* tablet_power_button_controller_for_test() {
     return tablet_controller_.get();
+  }
+
+  PowerOffMenuController* power_off_menu_controller_for_test() {
+    return power_off_menu_controller_.get();
   }
 
   void set_power_button_type_for_test(ButtonType button_type) {
@@ -146,8 +157,13 @@ class ASH_EXPORT PowerButtonController
   // Handles events for power button screenshot.
   std::unique_ptr<PowerButtonScreenshotController> screenshot_controller_;
 
-  // Handles events for convertible/tablet devices.
+  // Handles events for devices that switches::kAshEnableTabletMode is set.
+  // Usually this switch is set for convertible/tablet devices except that
+  // |force_clamshell_power_button_| is set like Eve.
   std::unique_ptr<TabletPowerButtonController> tablet_controller_;
+
+  // Hanelds events for power off menu.
+  std::unique_ptr<PowerOffMenuController> power_off_menu_controller_;
 
   // Used to run ForceDisplayOffAfterLock() shortly after the screen is locked.
   // Only started when |force_clamshell_power_button_| is true.
