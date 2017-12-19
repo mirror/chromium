@@ -301,6 +301,24 @@
     },
     {
       "key": {
+        "uuid": "dbbef8fe_b99dd657",
+        "filename": "chrome/browser/chromeos/printing/external_printers.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-12-19T19:45:20Z",
+      "side": 1,
+      "message": "Calling OnComputationComplete is a good idea.  But instead of returning nullptr, I\u0027ll just bind the variables in the closure.",
+      "parentUuid": "6fdac10c_f6c10722",
+      "revId": "a530f3d0d1526a1cee2abc79888b727e342aa983",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "36b39313_2c34f9ff",
         "filename": "chrome/browser/chromeos/printing/external_printers.cc",
         "patchSetId": 3
