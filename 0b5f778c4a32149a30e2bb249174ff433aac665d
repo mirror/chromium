@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "11e998ba_4f3f9f1a",
+        "filename": "ios/chrome/browser/web/external_app_launcher_tab_helper.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-19T21:49:09Z",
+      "side": 1,
+      "message": "Should this be in external_app_launcher_util? I assume this is here for testing.",
+      "range": {
+        "startLine": 16,
+        "startChar": 10,
+        "endLine": 16,
+        "endChar": 50
+      },
+      "revId": "0b5f778c4a32149a30e2bb249174ff433aac665d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30a475cc_a46c211a",
+        "filename": "ios/chrome/browser/web/external_app_launcher_tab_helper_unittest.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-19T21:49:09Z",
+      "side": 1,
+      "message": "nit: No need to put tests into anonymous namespace.",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 9
+      },
+      "revId": "0b5f778c4a32149a30e2bb249174ff433aac665d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3f89f93_0e1721ec",
+        "filename": "ios/chrome/browser/web/external_app_launcher_tab_helper_unittest.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-19T21:49:09Z",
+      "side": 1,
+      "message": "Do we need to keep |@\"garbage:\"| test case?",
+      "range": {
+        "startLine": 21,
+        "startChar": 33,
+        "endLine": 21,
+        "endChar": 73
+      },
+      "revId": "0b5f778c4a32149a30e2bb249174ff433aac665d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
