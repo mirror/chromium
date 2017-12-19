@@ -9,6 +9,7 @@
 #include "base/logging.h"
 #include "build/build_config.h"
 #include "gin/array_buffer.h"
+#include "gin/gin_features.h"
 #include "gin/per_isolate_data.h"
 
 #if defined(OS_POSIX)
@@ -41,19 +42,9 @@ void* ArrayBufferAllocator::AllocateUninitialized(size_t length) {
 }
 
 void* ArrayBufferAllocator::Reserve(size_t length) {
-  void* const hint = nullptr;
-#if defined(OS_POSIX)
-  int const access_flag = PROT_NONE;
-  void* const ret =
-      mmap(hint, length, access_flag, MAP_ANONYMOUS | MAP_PRIVATE, -1, 0);
-  if (ret == MAP_FAILED) {
-    return nullptr;
-  }
-  return ret;
-#else
-  DWORD const access_flag = PAGE_NOACCESS;
-  return VirtualAlloc(hint, length, MEM_RESERVE, access_flag);
-#endif
+  const bool commit = false;
+  return base::AllocPages(nullptr, length, base::kPageAllocationGranularity,
+                          base::PageInaccessible, commit);
 }
 
 void ArrayBufferAllocator::Free(void* data, size_t length) {
@@ -67,16 +58,9 @@ void ArrayBufferAllocator::Free(void* data,
     case AllocationMode::kNormal:
       Free(data, length);
       return;
-    case AllocationMode::kReservation: {
-#if defined(OS_POSIX)
-      int const ret = munmap(data, length);
-      CHECK(!ret);
-#else
-      BOOL const ret = VirtualFree(data, 0, MEM_RELEASE);
-      CHECK(ret);
-#endif
+    case AllocationMode::kReservation:
+      base::FreePages(data, length);
       return;
-    }
     default:
       NOTREACHED();
   }
@@ -91,22 +75,34 @@ void ArrayBufferAllocator::SetProtection(void* data,
 bool ArrayBufferAllocator::SetProtection(Protection protection,
                                          void* data,
                                          size_t length) {
+#if BUILDFLAG(USE_PARTITION_ALLOC)
   switch (protection) {
     case Protection::kNoAccess:
-#if defined(OS_POSIX)
-      return mprotect(data, length, PROT_NONE) == 0;
-#else
-      return VirtualFree(data, length, MEM_DECOMMIT);
-#endif
+      return base::SetSystemPagesAccess(data, length, base::PageInaccessible);
     case Protection::kReadWrite:
-#if defined(OS_POSIX)
-      return mprotect(data, length, PROT_READ | PROT_WRITE) == 0;
-#else
-      return VirtualAlloc(data, length, MEM_COMMIT, PAGE_READWRITE);
-#endif
+      return base::SetSystemPagesAccess(data, length, base::PageReadWrite);
     default:
       NOTREACHED();
   }
+#elif defined(OS_POSIX)
+  switch (protection) {
+    case Protection::kNoAccess:
+      return mprotect(data, length, PROT_NONE) == 0;
+    case Protection::kReadWrite:
+      return mprotect(data, length, PROT_READ | PROT_WRITE) == 0;
+    default:
+      NOTREACHED();
+  }
+#else   // !defined(OS_POSIX)
+  switch (protection) {
+    case Protection::kNoAccess:
+      return VirtualFree(data, length, MEM_DECOMMIT);
+    case Protection::kReadWrite:
+      return VirtualAlloc(data, length, MEM_COMMIT, PAGE_READWRITE);
+    default:
+      NOTREACHED();
+  }
+#endif  // !defined(OS_POSIX)
   return false;
 }
 
