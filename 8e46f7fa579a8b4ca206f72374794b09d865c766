@@ -16,6 +16,24 @@
       "revId": "8e46f7fa579a8b4ca206f72374794b09d865c766",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df9fc044_63ff78fe",
+        "filename": "content/browser/storage_partition_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-12-19T06:17:48Z",
+      "side": 1,
+      "message": "Mojom enum will be an enum class also, so this is still needed.",
+      "parentUuid": "1491e49c_795ffc5d",
+      "revId": "8e46f7fa579a8b4ca206f72374794b09d865c766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
