@@ -16,6 +16,24 @@
       "revId": "c372a3595d6bad08e4b7a97b664889e5ace41139",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbd9e2af_90af3fe2",
+        "filename": "ui/ozone/platform/drm/host/drm_gpu_platform_support_host.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-12-19T19:23:45Z",
+      "side": 1,
+      "message": "The task-runner associated with the thread this host was created on. This is the only place the |ui_runner_| is used. So that should be OK. But maybe you can clarify what overlay things you are referring to?",
+      "parentUuid": "9ed8728d_1210388b",
+      "revId": "c372a3595d6bad08e4b7a97b664889e5ace41139",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
