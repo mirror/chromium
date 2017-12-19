@@ -90,6 +90,30 @@
       "revId": "d8057c5b32afd8d45c11a62ac9db99483318c345",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a1e76bc_8aa4eb03",
+        "filename": "chrome/browser/resources/md_extensions/code_section.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-12-19T19:20:53Z",
+      "side": 1,
+      "message": "In this case the string and the replacement are controlled so the bit more is unnecessary. The replacement is also a number; that is unable to generate an XSS. If we did desire an extra layer of armor, we could either assert that lineCount is a number, or call parseInt on lineCount (optional and unnecessary imo, but wouldn\u0027t hurt that much).",
+      "parentUuid": "a009d362_7ba0d418",
+      "range": {
+        "startLine": 110,
+        "startChar": 37,
+        "endLine": 110,
+        "endChar": 39
+      },
+      "revId": "d8057c5b32afd8d45c11a62ac9db99483318c345",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
