@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e84c19a3_24b3ce44",
+        "filename": "components/drive/service/drive_api_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-12-19T09:17:27Z",
+      "side": 1,
+      "message": "- Please test a debug build especially when adding DCHECK. (the condition looks inverse)\n- Is it guaranteed that the query is not empty when search_query is not empty? If it\u0027s not guaranteed, I think drop the DCHECK and append the \"and trashed...\" string only when the query is not empty.",
+      "revId": "69218cc61ba2fc93271a68a3059351fd255e8300",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fd8966c_03591244",
+        "filename": "components/drive/service/drive_api_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-12-19T09:17:27Z",
+      "side": 1,
+      "message": "Shouldn\u0027t we append a white space before \"and\"?",
+      "revId": "69218cc61ba2fc93271a68a3059351fd255e8300",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
