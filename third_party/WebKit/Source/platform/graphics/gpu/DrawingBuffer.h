@@ -190,6 +190,8 @@ class PLATFORM_EXPORT DrawingBuffer : public cc::TextureLayerClient,
 
   gpu::gles2::GLES2Interface* ContextGL();
   WebGraphicsContext3DProvider* ContextProvider();
+  // TODO(bajones): NOOOOOOOOOPPPPPE. Nope nope nope nope.
+  base::WeakPtr<WebGraphicsContext3DProviderWrapper> ContextProviderWeakPtr();
 
   // cc::TextureLayerClient implementation.
   bool PrepareTransferableResource(viz::TransferableResource* out_resource,
