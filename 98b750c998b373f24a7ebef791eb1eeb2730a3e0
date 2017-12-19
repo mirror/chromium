@@ -199,6 +199,30 @@
       "revId": "98b750c998b373f24a7ebef791eb1eeb2730a3e0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "29169334_12850cc6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/languages/LanguageListPreference.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1234349
+      },
+      "writtenOn": "2017-12-19T00:46:30Z",
+      "side": 1,
+      "message": "Yes, exactly. For the drag\u0026drop case, we should NOT validate user\u0027s each move then revert the move if it\u0027s not, because all the changes happens on UI layer and we only notify native in the end.\n\nI think the right thing to do is to fix it in native side. \n\nBtw, Ted is OOO now and I pinged some other owners for help to approve the native change, but I havent got their response yet. So I still does;t get the approval, how about adding a TBR\u003dted to submit the CL, So Yana and other tester can check this feature soon.",
+      "parentUuid": "71c7ad4e_a5037ac2",
+      "range": {
+        "startLine": 114,
+        "startChar": 8,
+        "endLine": 115,
+        "endChar": 83
+      },
+      "revId": "98b750c998b373f24a7ebef791eb1eeb2730a3e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
