@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a022a97_55721abd",
+        "filename": "chrome/browser/resources/md_extensions/item.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-19T02:31:09Z",
+      "side": 1,
+      "message": "Nit: Let\u0027s mention that unfortunately this text is found by Ctrl+F search, just so that compromise is documented.",
+      "revId": "8765f7b4eab701516c61acbc707333956442d45f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1a0dbad_cdf40fba",
+        "filename": "chrome/browser/resources/md_extensions/item.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-19T02:31:09Z",
+      "side": 1,
+      "message": "Nit: This element already inherits the I18NBehavior. Let\u0027s use this.i18n() instead of referring directly to loadTimeData here (see for example line 115).",
+      "range": {
+        "startLine": 106,
+        "startChar": 12,
+        "endLine": 106,
+        "endChar": 37
+      },
+      "revId": "8765f7b4eab701516c61acbc707333956442d45f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7494d50_57706725",
+        "filename": "chrome/browser/ui/webui/extensions/extensions_ui.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-19T02:31:09Z",
+      "side": 1,
+      "message": "Nit: s/extensionAssociation/extensionA11yAssociation, for consistency.",
+      "range": {
+        "startLine": 197,
+        "startChar": 30,
+        "endLine": 197,
+        "endChar": 50
+      },
+      "revId": "8765f7b4eab701516c61acbc707333956442d45f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
