@@ -542,7 +542,7 @@ void OobeUI::GetLocalizedStrings(base::DictionaryValue* localized_strings) {
                                ? "off"
                                : "on");
   localized_strings->SetString(
-      "showMdLogin", ash::switches::IsUsingWebUiLock() ? "off" : "on");
+      "showViewsLogin", ash::switches::IsUsingViewsLock() ? "on" : "off");
 }
 
 void OobeUI::AddWebUIHandler(std::unique_ptr<BaseWebUIHandler> handler) {
