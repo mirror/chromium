@@ -34,6 +34,24 @@
       "revId": "19883156e8d401f330447cb015f5544ab13f6a82",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7787aaf7_dc1d2cd8",
+        "filename": "third_party/WebKit/Source/core/dom/ScriptedIdleTaskController.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-12-19T15:19:16Z",
+      "side": 1,
+      "message": "Then can we use:\n\n  // TODO: Remove\n  V8IdleRequestCallback::Persistent\u003cV8IdleRequestCallback\u003e keep_alive(idle_task-\u003eGetCallback());\n\n?\n\nThe programming pattern in this CL looks a bit too implicit and error-prone to me...",
+      "parentUuid": "c4608f7f_ec2615cc",
+      "revId": "19883156e8d401f330447cb015f5544ab13f6a82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
