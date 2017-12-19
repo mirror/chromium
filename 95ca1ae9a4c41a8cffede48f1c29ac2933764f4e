@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2dc3c4f9_39e5f2ae",
+        "filename": "third_party/WebKit/Source/devtools/front_end/object_ui/ObjectPropertiesSection.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-12-19T21:57:48Z",
+      "side": 1,
+      "message": "\"all\" might be misleading. Perhaps, it should be \"expand recursively\"?",
+      "revId": "95ca1ae9a4c41a8cffede48f1c29ac2933764f4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfb52315_fd8754d8",
+        "filename": "third_party/WebKit/Source/devtools/front_end/object_ui/ObjectPropertiesSection.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-12-19T21:57:48Z",
+      "side": 1,
+      "message": "I\u0027d say \"collapse children\" is more useful.",
+      "revId": "95ca1ae9a4c41a8cffede48f1c29ac2933764f4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
