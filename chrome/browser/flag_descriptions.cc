@@ -1848,10 +1848,10 @@ const char kEnableExpandedAutofillCreditCardPopupLayoutName[] =
 const char kEnableExpandedAutofillCreditCardPopupLayoutDescription[] =
     "If enabled, displays autofill credit card popup using expanded layout.";
 
-const char kEnableMidiManagerDynamicInstantiationName[] =
-    "MIDIManager dynamic instantiation for Web MIDI.";
-const char kEnableMidiManagerDynamicInstantiationDescription[] =
-    "Enable MIDIManager dynamic instantiation for Web MIDI.";
+const char kEnableFaviconsFromWebManifestName[] =
+    "Load favicons from Web Manifests";
+const char kEnableFaviconsFromWebManifestDescription[] =
+    "Fetch Web Manifests on page load to read favicons from them.";
 
 const char kEnableNtpAssetDownloadSuggestionsName[] =
     "Show asset downloads on the New Tab page";
