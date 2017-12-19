@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a94262dc_52e86ad8",
+        "filename": "ash/root_window_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 705,
+      "author": {
+        "id": 1248360
+      },
+      "writtenOn": "2017-12-19T21:01:54Z",
+      "side": 1,
+      "message": "This seems to be fine as per msw@ comment. Session controller should be initialized at that point (I don\u0027t see a need for DCHECK here, but could do that). Also CQ tests pass and no problems discovered during manual tests.",
+      "parentUuid": "91fa7bc1_9fb3cbe3",
+      "revId": "96dcb660ee7ba50dc7abc85f492b27c0ed9f7222",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2c206dc7_65e81365",
         "filename": "ash/shelf/shelf_widget_unittest.cc",
         "patchSetId": 3
