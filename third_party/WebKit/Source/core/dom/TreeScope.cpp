@@ -255,11 +255,9 @@ Element* TreeScope::HitTestPoint(double x,
   if (!node || node->IsDocumentNode())
     return nullptr;
   if (node->IsPseudoElement() || node->IsTextNode())
-    node = node->ParentOrShadowHostNode();
-  DCHECK(!node || node->IsElementNode() || node->IsShadowRoot());
-  node = AncestorInThisScope(node);
-  if (!node || !node->IsElementNode())
-    return nullptr;
+    node = Retarget(node->ParentOrShadowHostElement());
+  else
+    node = Retarget(ToElement(node));
   return ToElement(node);
 }
 
@@ -366,7 +364,42 @@ void TreeScope::AdoptIfNeeded(Node& node) {
     adopter.Execute();
 }
 
-Element* TreeScope::Retarget(const Element& target) const {
+// This method corresponds to the Retarget algorithm specified in
+// http://w3c.github.io/webcomponents/spec/shadow/#retarget
+// This retargets |target| against the root of |this|.
+// The steps are different with the spec for performance reasons,
+// but the results should be the same.
+Element* TreeScope::Retarget(Element* target) const {
+  const TreeScope& target_scope = target->GetTreeScope();
+  if (!target_scope.RootNode().IsShadowRoot())
+    return target;
+
+  HeapVector<Member<const TreeScope>> target_ancestor_scopes;
+  HeapVector<Member<const TreeScope>> context_ancestor_scopes;
+  for (const TreeScope* tree_scope = &target_scope; tree_scope;
+       tree_scope = tree_scope->ParentTreeScope())
+    target_ancestor_scopes.push_back(tree_scope);
+  for (const TreeScope* tree_scope = this; tree_scope;
+       tree_scope = tree_scope->ParentTreeScope())
+    context_ancestor_scopes.push_back(tree_scope);
+
+  auto target_ancestor_riterator = target_ancestor_scopes.rbegin();
+  auto context_ancestor_riterator = context_ancestor_scopes.rbegin();
+  while (context_ancestor_riterator != context_ancestor_scopes.rend() &&
+         *context_ancestor_riterator == *target_ancestor_riterator) {
+    ++context_ancestor_riterator;
+    ++target_ancestor_riterator;
+  }
+
+  if (target_ancestor_riterator == target_ancestor_scopes.rend())
+    return target;
+  Node& first_different_scope_root =
+      (*target_ancestor_riterator).Get()->RootNode();
+  return &ToShadowRoot(first_different_scope_root).host();
+}
+
+Element* TreeScope::AdjustedFocusedElementInternal(
+    const Element& target) const {
   for (const Element* ancestor = &target; ancestor;
        ancestor = ancestor->OwnerShadowHost()) {
     if (this == ancestor->GetTreeScope())
@@ -385,7 +418,7 @@ Element* TreeScope::AdjustedFocusedElement() const {
     return nullptr;
 
   if (RootNode().IsInV1ShadowTree()) {
-    if (Element* retargeted = Retarget(*element)) {
+    if (Element* retargeted = AdjustedFocusedElementInternal(*element)) {
       return (this == &retargeted->GetTreeScope()) ? retargeted : nullptr;
     }
     return nullptr;
