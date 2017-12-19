@@ -22,6 +22,30 @@
       "revId": "485e93b40297d2a8b8f1d2a1f15151fa4d607219",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9baa376b_57b518dd",
+        "filename": "chrome/browser/browser_process_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1368,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-12-19T15:08:27Z",
+      "side": 1,
+      "message": "Ack. It did come in handy in a more recent crash bug too (crbug.com/779829), so I updated the comment to say consider removing it.",
+      "parentUuid": "2ea7ec0d_e96ed7a3",
+      "range": {
+        "startLine": 1368,
+        "startChar": 30,
+        "endLine": 1368,
+        "endChar": 46
+      },
+      "revId": "485e93b40297d2a8b8f1d2a1f15151fa4d607219",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
