@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "ab6ddaeb_2ccc34e3",
+        "filename": "ash/root_window_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 705,
+      "author": {
+        "id": 1248360
+      },
+      "writtenOn": "2017-12-19T18:46:04Z",
+      "side": 1,
+      "message": "Opened issue (crbug.com/796239), added comment modified cl description.",
+      "parentUuid": "b4aeec74_ec40aac1",
+      "revId": "4bcff6eb09267e7ebb1229186a18bca62239f91d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "62eb0cee_83ce90d8",
         "filename": "ash/shelf/shelf_widget.cc",
         "patchSetId": 1
@@ -346,6 +364,24 @@
       "side": 1,
       "message": "Yes, but why do you check the transition UNKNOWN -\u003e OOBE -\u003e UNKNOWN? I don\u0027t think that happens in production. If it\u0027s a copy/paste mistake, remove it. If it\u0027s intention, comment why you have to test going back into the UNKNOWN state.",
       "parentUuid": "c436f2d0_b2a2e820",
+      "revId": "4bcff6eb09267e7ebb1229186a18bca62239f91d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "36c55e84_eb0f7a5b",
+        "filename": "ash/shelf/shelf_widget_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 1248360
+      },
+      "writtenOn": "2017-12-19T18:46:04Z",
+      "side": 1,
+      "message": "Ok. Removed here and in other tests.",
+      "parentUuid": "1b49e866_0738f18a",
       "revId": "4bcff6eb09267e7ebb1229186a18bca62239f91d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
