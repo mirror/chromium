@@ -46,6 +46,53 @@
       "revId": "2ceb3ca9d272852e5016e1d024c7e943eef6922d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b509f75_3719271f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-19T16:57:37Z",
+      "side": 1,
+      "message": "Thanks for providing more info. I provided a different work around below.\n\nHowever, note that in general we don\u0027t support old GCC versions anymore, see e.g. https://groups.google.com/a/chromium.org/d/msg/chromium-dev/rghrYrM1ka8/efc_L8G3BQAJ.\n\nIf this GCC bug occurs in another place I cannot guarantee it gets fixed upstream.",
+      "parentUuid": "2963446b_6a98f74e",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 28
+      },
+      "revId": "2ceb3ca9d272852e5016e1d024c7e943eef6922d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "751be8c9_5efad346",
+        "filename": "device/u2f/u2f_hid_discovery.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-19T16:57:37Z",
+      "side": 1,
+      "message": "Could you get rid of the lambda + std::for_each all together and simply make this\n\nfor (auto\u0026 device_info : device_infos)\n  DeviceAdded(std::move(device_info));\n\n? I was asked to clean up the for_eachs in the initial patch, this must have slipped.",
+      "range": {
+        "startLine": 58,
+        "startChar": 0,
+        "endLine": 60,
+        "endChar": 80
+      },
+      "revId": "2ceb3ca9d272852e5016e1d024c7e943eef6922d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
