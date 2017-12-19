@@ -126,6 +126,24 @@
       "revId": "44bef33410ed7a838d3e6ff155885a6f7e9a19bf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e148fb37_97782b3b",
+        "filename": "third_party/WebKit/Source/modules/media_controls/resources/legacyMediaControls.css",
+        "patchSetId": 3
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-12-19T11:25:22Z",
+      "side": 1,
+      "message": "Indeed, thanks for the reminder. I guess the gist of the comment still applies as we have different stylesheet and icons for the modern controls :)",
+      "parentUuid": "4e170b39_a4557da5",
+      "revId": "44bef33410ed7a838d3e6ff155885a6f7e9a19bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
