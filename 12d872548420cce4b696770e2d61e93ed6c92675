@@ -1,0 +1,220 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "788b3ad9_5ece0c15",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-19T21:43:02Z",
+      "side": 1,
+      "message": "I think we should add a tracking bug for these, if there are more changes coming.  Even just an umbrella bug like \"Content Verification Refactor\".",
+      "revId": "12d872548420cce4b696770e2d61e93ed6c92675",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41658ec6_3b76b919",
+        "filename": "extensions/browser/content_hash_fetcher.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-19T21:43:02Z",
+      "side": 1,
+      "message": "nit: I don\u0027t think this variable adds much.  Maybe just inline in the if-statement.",
+      "revId": "12d872548420cce4b696770e2d61e93ed6c92675",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14ddd5ca_74da38dc",
+        "filename": "extensions/browser/content_verifier/cancellation_status.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-19T21:43:02Z",
+      "side": 1,
+      "message": "Hmm... I\u0027m not sure about this interface.  At a minimum, I think we should rename it - CancelationStatus sounds much more like an enum to me than an interface.  Something like \"CancelableJob\" or similar, I think, would be clearer.\n\nThat said, I wonder if we really need this.  What if instead we just introduce an IsCanceled() callback, and pass that to ContentHash?  Something like:\n\nusing IsCanceledCallback \u003d base::RepeatingCallback\u003cbool()\u003e;\n\nand then we just check\nbool is_canceled \u003d is_canceled_.Run();\n\nThat seems like it might be easier from an interface perspective, since then we don\u0027t have to introduce this and have the job inherit from it, and we hide the refcounting details from the ContentHash (instead, the callback owns the refcount).\n\nWDYT?",
+      "revId": "12d872548420cce4b696770e2d61e93ed6c92675",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67fdd316_fab69dc4",
+        "filename": "extensions/browser/content_verifier/content_hash.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-19T21:43:02Z",
+      "side": 1,
+      "message": "Is this different than:\nif (!verified_contents_)\n  status_ \u003d Status::kInvalid;\nelse if (!computed_hashes_)\n  status_ \u003d Status::kHasVerifiedContents;\nelse\n  status_ \u003d Status::kSucceeded;\n?",
+      "range": {
+        "startLine": 77,
+        "startChar": 0,
+        "endLine": 84,
+        "endChar": 3
+      },
+      "revId": "12d872548420cce4b696770e2d61e93ed6c92675",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "340c8c64_4a4654fd",
+        "filename": "extensions/browser/content_verifier/content_hash.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-19T21:43:02Z",
+      "side": 1,
+      "message": "isn\u0027t this just \u003d default?",
+      "revId": "12d872548420cce4b696770e2d61e93ed6c92675",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09ebaa53_d686c429",
+        "filename": "extensions/browser/content_verifier/content_hash.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-19T21:43:02Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "12d872548420cce4b696770e2d61e93ed6c92675",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85329716_f1924b0e",
+        "filename": "extensions/browser/content_verifier/content_hash.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-19T21:43:02Z",
+      "side": 1,
+      "message": "nit: s/need_create/need_to_create or similar",
+      "revId": "12d872548420cce4b696770e2d61e93ed6c92675",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc9c22c6_a04596cf",
+        "filename": "extensions/browser/content_verifier/content_hash.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-19T21:43:02Z",
+      "side": 1,
+      "message": "can this be cancelled while enumerating the paths?",
+      "revId": "12d872548420cce4b696770e2d61e93ed6c92675",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16a673ba_e2ae8fd3",
+        "filename": "extensions/browser/content_verifier/content_hash.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-19T21:43:02Z",
+      "side": 1,
+      "message": "Do we need this to be copyable?  Or is movable sufficient?",
+      "revId": "12d872548420cce4b696770e2d61e93ed6c92675",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ed288fa_bf98e3ca",
+        "filename": "extensions/browser/content_verifier/content_hash.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-19T21:43:02Z",
+      "side": 1,
+      "message": "I think maybe enums for these would be more readable.\n\nI also think the \"delete invalid\" terminology is a bit more intuitive than \"only read\".",
+      "revId": "12d872548420cce4b696770e2d61e93ed6c92675",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36f1b733_c355c41b",
+        "filename": "extensions/browser/content_verifier/content_hash.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-19T21:43:02Z",
+      "side": 1,
+      "message": "Hmm... not sure why this would be needed... what error are you seeing if you remove this?",
+      "revId": "12d872548420cce4b696770e2d61e93ed6c92675",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd1bd0dd_701a3828",
+        "filename": "extensions/browser/content_verifier/content_hash.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-19T21:43:02Z",
+      "side": 1,
+      "message": "nit: s/it/this",
+      "range": {
+        "startLine": 78,
+        "startChar": 25,
+        "endLine": 78,
+        "endChar": 27
+      },
+      "revId": "12d872548420cce4b696770e2d61e93ed6c92675",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
