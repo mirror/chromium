@@ -24,6 +24,7 @@
 #include "base/threading/thread_restrictions.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "chrome/browser/browser_process.h"
+#include "chrome/browser/component_updater/sw_reporter_installer_win.h"
 #include "chrome/browser/metrics/chrome_metrics_service_accessor.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/profiles/profile_manager.h"
@@ -37,6 +38,7 @@
 #include "chrome/browser/ui/browser.h"
 #include "chrome/installer/util/scoped_token_privilege.h"
 #include "components/chrome_cleaner/public/constants/constants.h"
+#include "components/component_updater/component_updater_service.h"
 #include "components/safe_browsing/common/safe_browsing_prefs.h"
 #include "content/public/browser/browser_thread.h"
 #include "net/http/http_status_code.h"
@@ -352,6 +354,7 @@ void ChromeCleanerControllerImpl::OnReporterSequenceDone(
       return;
 
     case SwReporterInvocationResult::kTimedOut:
+    case SwReporterInvocationResult::kComponentNotAvailable:
     case SwReporterInvocationResult::kProcessFailedToLaunch:
     case SwReporterInvocationResult::kGeneralFailure:
       idle_reason_ = IdleReason::kReporterFailed;
@@ -375,6 +378,51 @@ void ChromeCleanerControllerImpl::OnReporterSequenceDone(
   }
 
   SetStateAndNotifyObservers(State::kIdle);
+}
+
+SwReporterInvocationType
+ChromeCleanerControllerImpl::GetNextSwReporterInvocationType(
+    SwReporterInvocationSequence* invocations) {
+  base::AutoLock autolock(lock_);
+  cached_reporter_invocations_.reset(
+      new SwReporterInvocationSequence(*invocations));
+
+  if (user_initiated_reporter_run_) {
+    user_initiated_reporter_run_ = false;
+    return logs_enabled_
+               ? SwReporterInvocationType::kUserInitiatedWithLogsAllowed
+               : SwReporterInvocationType::kUserInitiatedWithLogsDisallowed;
+  } else {
+    return SwReporterInvocationType::kPeriodicRun;
+  }
+}
+
+void ChromeCleanerControllerImpl::RequestUserInitiatedScan() {
+  base::AutoLock autolock(lock_);
+  DCHECK(!user_initiated_reporter_run_);
+
+  if (!user_initiated_reporter_run_) {
+    user_initiated_reporter_run_ = true;
+
+    if (cached_reporter_invocations_) {
+      content::BrowserThread::PostTask(
+          content::BrowserThread::UI, FROM_HERE,
+          base::BindOnce(&safe_browsing::OnSwReporterReady,
+                         base::Passed(cached_reporter_invocations_.get())));
+    } else {
+      OnReporterSequenceStarted();
+
+      auto on_component_update_error = [](ChromeCleanerController* controller) {
+        controller->OnReporterSequenceDone(
+            SwReporterInvocationResult::kComponentNotAvailable);
+      };
+      on_demand_sw_reporter_fetcher_.reset(
+          new component_updater::SwReporterOnDemandFetcher(
+              g_browser_process->component_updater(),
+              base::BindOnce(on_component_update_error, this)));
+      on_demand_sw_reporter_fetcher_->Start();
+    }
+  }
 }
 
 void ChromeCleanerControllerImpl::Scan(

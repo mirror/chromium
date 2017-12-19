@@ -149,6 +149,25 @@ class ChromeCleanerController {
   // kIdle otherwise.
   virtual void OnReporterSequenceDone(SwReporterInvocationResult result) = 0;
 
+  // Attempts to start the reporter runner to scan the system for unwanted
+  // software. Once the reporter runner has started (which may involve
+  // downloading the SwReporter component), |OnReporterSequenceStarted| and
+  // |OnReporterSequenceDone| will be called with the result.
+  //
+  // This can have adverse effects on the component updater subsystem and
+  // should only be called from direct user action.
+  virtual void RequestUserInitiatedScan() = 0;
+
+  // Returns the type of the next SwReporter run. If |RequestUserInitiatedScan|
+  // was called previously, this will return |kUserInitiatedWithLogsAllowed| or
+  // |kUserInitiatedWithLogsDisallowed| depending on the current logs upload
+  // state. Otherwise, it will return |SwReporterInvocationType::kPeriodicRun|.
+  //
+  // The given |SwReporterInvocationSequence| is copied and cached for use by
+  // future user-initiated runs.
+  virtual SwReporterInvocationType GetNextSwReporterInvocationType(
+      SwReporterInvocationSequence* invocations) = 0;
+
   // Downloads the Chrome Cleaner binary, executes it and waits for the Cleaner
   // to communicate with Chrome about harmful software found on the
   // system. During this time, the controller will be in the kScanning state. If
