@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ef61b21d_5e01dbe1",
+        "filename": "content/browser/compositor/test/test_image_transport_factory.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-12-19T19:12:41Z",
+      "side": 1,
+      "message": "Do we still need NoTransportImageTransportFactory, or could we just use TestProcessTransportFactory always? I guess all you need is GetGLHelper, but that seems easy enough.",
+      "revId": "764080a10b5e6f594adc7434c604d9febe168f87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
