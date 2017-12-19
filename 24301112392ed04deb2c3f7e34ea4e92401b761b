@@ -16,6 +16,24 @@
       "revId": "24301112392ed04deb2c3f7e34ea4e92401b761b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8a3ded1_c22c4676",
+        "filename": "net/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 2483,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-12-19T19:06:58Z",
+      "side": 1,
+      "message": "I didn\u0027t change net/quic/chromium/crypto_test_utils_chromium.cc which still uses them. I was mostly focused on getting quic requests working in a real chrome environment (i.e. browser tests which uses regular chrome code, cert verifier etc) than the unit tests.\n\nProbably the unit tests can be converted to use the new certs, but after spending a day on this I didn\u0027t want to devote more time to it :)",
+      "parentUuid": "b1a746bb_0e3c5615",
+      "revId": "24301112392ed04deb2c3f7e34ea4e92401b761b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
