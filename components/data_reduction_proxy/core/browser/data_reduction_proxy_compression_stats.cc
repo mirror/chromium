@@ -436,27 +436,6 @@ void DataReductionProxyCompressionStats::Init() {
   InitListPref(prefs::kDailyOriginalContentLengthWithDataReductionProxyEnabled);
 }
 
-void DataReductionProxyCompressionStats::RecordDataUseWithMimeType(
-    int64_t data_used,
-    int64_t original_size,
-    bool data_saver_enabled,
-    DataReductionProxyRequestType request_type,
-    const std::string& mime_type) {
-  DCHECK(thread_checker_.CalledOnValidThread());
-  TRACE_EVENT0("loader",
-               "DataReductionProxyCompressionStats::RecordDataUseWithMimeType")
-  session_total_received_ += data_used;
-  session_total_original_ += original_size;
-
-  IncreaseInt64Pref(data_reduction_proxy::prefs::kHttpReceivedContentLength,
-                    data_used);
-  IncreaseInt64Pref(data_reduction_proxy::prefs::kHttpOriginalContentLength,
-                    original_size);
-
-  RecordRequestSizePrefs(data_used, original_size, data_saver_enabled,
-                         request_type, mime_type, base::Time::Now());
-}
-
 void DataReductionProxyCompressionStats::InitInt64Pref(const char* pref) {
   int64_t pref_value = pref_service_->GetInt64(pref);
   pref_map_[pref] = pref_value;
@@ -1168,12 +1147,27 @@ void DataReductionProxyCompressionStats::IncrementDailyUmaPrefs(
   }
 }
 
-void DataReductionProxyCompressionStats::RecordDataUseByHost(
+void DataReductionProxyCompressionStats::RecordDataUse(
     const std::string& data_usage_host,
     int64_t data_used,
     int64_t original_size,
+    bool data_reduction_proxy_enabled,
+    DataReductionProxyRequestType request_type,
+    const std::string& mime_type,
     const base::Time time) {
   DCHECK(thread_checker_.CalledOnValidThread());
+  TRACE_EVENT0("loader", "DataReductionProxyCompressionStats::RecordDataUse")
+  session_total_received_ += data_used;
+  session_total_original_ += original_size;
+
+  IncreaseInt64Pref(data_reduction_proxy::prefs::kHttpReceivedContentLength,
+                    data_used);
+  IncreaseInt64Pref(data_reduction_proxy::prefs::kHttpOriginalContentLength,
+                    original_size);
+
+  RecordRequestSizePrefs(data_used, original_size, data_reduction_proxy_enabled,
+                         request_type, mime_type, base::Time::Now());
+
   if (current_data_usage_load_status_ != LOADED)
     return;
 

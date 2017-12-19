@@ -60,23 +60,17 @@ class DataReductionProxyCompressionStats {
                                      const base::TimeDelta& delay);
   ~DataReductionProxyCompressionStats();
 
-  // Records detailed data usage broken down by |mime_type|. Also records daily
-  // data savings statistics to prefs and reports data savings UMA. |data_used|
-  // and |original_size| are measured in bytes.
-  void RecordDataUseWithMimeType(int64_t compressed_size,
-                                 int64_t original_size,
-                                 bool data_reduction_proxy_enabled,
-                                 DataReductionProxyRequestType request_type,
-                                 const std::string& mime_type);
-
   // Record data usage and original size of request broken down by host.
   // |original_request_size| and |data_used| are in bytes. |time| is the time at
   // which the data usage occurred. This method should be called in real time,
   // so |time| is expected to be |Time::Now()|.
-  void RecordDataUseByHost(const std::string& data_usage_host,
-                           int64_t original_request_size,
-                           int64_t data_used,
-                           const base::Time time);
+  void RecordDataUse(const std::string& data_usage_host,
+                     int64_t data_used,
+                     int64_t original_size,
+                     bool data_reduction_proxy_enabled,
+                     DataReductionProxyRequestType request_type,
+                     const std::string& mime_type,
+                     const base::Time time);
 
   // Creates a |Value| summary of the persistent state of the network
   // statistics.

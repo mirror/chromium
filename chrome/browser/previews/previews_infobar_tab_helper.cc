@@ -121,11 +121,8 @@ void PreviewsInfoBarTabHelper::DidFinishNavigation(
 
     data_reduction_proxy_settings->data_reduction_proxy_service()
         ->UpdateDataUseForHost(0, uncached_size,
-                               navigation_handle->GetRedirectChain()[0].host());
-
-    data_reduction_proxy_settings->data_reduction_proxy_service()
-        ->UpdateContentLengths(0, uncached_size, data_saver_enabled,
-                               data_reduction_proxy::HTTPS,
+                               navigation_handle->GetRedirectChain()[0].host(),
+                               data_saver_enabled, data_reduction_proxy::HTTPS,
                                "multipart/related");
 
     PreviewsInfoBarDelegate::Create(

@@ -107,9 +107,6 @@ ChromeDataUseAscriber::GetOrCreateDataUseRecorderEntry(
     return entry;
   }
 
-  if (!request->url().SchemeIsHTTPOrHTTPS())
-    return data_use_recorders_.end();
-
   const content::ResourceRequestInfo* request_info =
       content::ResourceRequestInfo::ForRequest(request);
   if (!request_info ||
@@ -350,6 +347,11 @@ void ChromeDataUseAscriber::DidFinishMainFrameNavigation(
           main_frame_it->second.data_use_recorder;
       DataUse::TrafficType old_traffic_type =
           old_frame_entry->data_use().traffic_type();
+
+      DataUse& data_use = old_frame_entry->data_use();
+      if (!data_use.url().is_valid()) {
+        data_use.set_url(gurl);
+      }
       old_frame_entry->set_page_transition(page_transition);
       main_frame_it->second.data_use_recorder = data_use_recorders_.end();
       NotifyPageLoadCommit(old_frame_entry);
@@ -374,6 +376,11 @@ void ChromeDataUseAscriber::DidFinishMainFrameNavigation(
   // concluded its data use.
   if (main_frame_it == main_render_frame_entry_map_.end()) {
     entry->set_page_transition(page_transition);
+
+    DataUse& data_use = entry->data_use();
+    if (!data_use.url().is_valid()) {
+      data_use.set_url(gurl);
+    }
     NotifyPageLoadCommit(entry);
     if (entry->IsDataUseComplete()) {
       NotifyPageLoadConcluded(entry);
@@ -401,6 +408,10 @@ void ChromeDataUseAscriber::DidFinishMainFrameNavigation(
     DCHECK(entry->IsDataUseComplete());
     data_use_recorders_.erase(entry);
 
+    DataUse& data_use = old_frame_entry->data_use();
+    if (!data_use.url().is_valid()) {
+      data_use.set_url(gurl);
+    }
     NotifyPageLoadCommit(old_frame_entry);
   } else {
     DataUse& data_use = entry->data_use();
@@ -445,10 +456,6 @@ void ChromeDataUseAscriber::DidFinishMainFrameNavigation(
 void ChromeDataUseAscriber::DidFinishLoad(int render_process_id,
                                           int render_frame_id,
                                           const GURL& validated_url) {
-  // Only continue for validated HTTP* URLs (e.g., not internal error pages).
-  if (!validated_url.SchemeIsHTTPOrHTTPS())
-    return;
-
   RenderFrameHostID main_frame(render_process_id, render_frame_id);
 
   auto main_frame_it = main_render_frame_entry_map_.find(main_frame);

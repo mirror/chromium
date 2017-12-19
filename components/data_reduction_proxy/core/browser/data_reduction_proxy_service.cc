@@ -121,27 +121,18 @@ void DataReductionProxyService::Shutdown() {
   weak_factory_.InvalidateWeakPtrs();
 }
 
-void DataReductionProxyService::UpdateDataUseForHost(int64_t network_bytes,
-                                                     int64_t original_bytes,
-                                                     const std::string& host) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
-  if (compression_stats_) {
-    compression_stats_->RecordDataUseByHost(host, network_bytes, original_bytes,
-                                            base::Time::Now());
-  }
-}
-
-void DataReductionProxyService::UpdateContentLengths(
-    int64_t data_used,
-    int64_t original_size,
+void DataReductionProxyService::UpdateDataUse(
+    int64_t network_bytes,
+    int64_t original_bytes,
+    const std::string& host,
     bool data_reduction_proxy_enabled,
     DataReductionProxyRequestType request_type,
     const std::string& mime_type) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   if (compression_stats_) {
-    compression_stats_->RecordDataUseWithMimeType(data_used, original_size,
-                                                  data_reduction_proxy_enabled,
-                                                  request_type, mime_type);
+    compression_stats_->RecordDataUse(
+        host, network_bytes, original_bytes, data_reduction_proxy_enabled,
+        request_type, mime_type, base::Time::Now());
   }
 }
 

@@ -536,7 +536,6 @@ void DataReductionProxyNetworkDelegate::OnCompletedInternal(
   DataReductionProxyRequestType request_type = GetDataReductionProxyRequestType(
       *request, configurator_->GetProxyConfig(), *data_reduction_proxy_config_);
 
-  CalculateAndRecordDataUsage(*request, request_type);
   RecordContentLength(*request, request_type,
                       util::CalculateOCLFromOFCL(*request));
   RecordAcceptTransformReceivedUMA(*request);
@@ -578,42 +577,6 @@ void DataReductionProxyNetworkDelegate::OnHeadersReceivedInternal(
     DataReductionProxyData* data =
         DataReductionProxyData::GetDataAndCreateIfNecessary(request);
     data->set_client_lofi_requested(true);
-  }
-}
-
-void DataReductionProxyNetworkDelegate::CalculateAndRecordDataUsage(
-    const net::URLRequest& request,
-    DataReductionProxyRequestType request_type) {
-  DCHECK(thread_checker_.CalledOnValidThread());
-  int64_t data_used = request.GetTotalReceivedBytes();
-
-  // Estimate how many bytes would have been used if the DataReductionProxy was
-  // not used, and record the data usage.
-  int64_t original_size = util::EstimateOriginalReceivedBytes(
-      request, request_type == VIA_DATA_REDUCTION_PROXY,
-      data_reduction_proxy_io_data_
-          ? data_reduction_proxy_io_data_->lofi_decider()
-          : nullptr);
-
-  std::string mime_type;
-  if (request.response_headers())
-    request.response_headers()->GetMimeType(&mime_type);
-
-  AccumulateDataUsage(data_used, original_size, request_type, mime_type);
-}
-
-void DataReductionProxyNetworkDelegate::AccumulateDataUsage(
-    int64_t data_used,
-    int64_t original_size,
-    DataReductionProxyRequestType request_type,
-    const std::string& mime_type) {
-  DCHECK(thread_checker_.CalledOnValidThread());
-  DCHECK_GE(data_used, 0);
-  DCHECK_GE(original_size, 0);
-  if (data_reduction_proxy_io_data_) {
-    data_reduction_proxy_io_data_->UpdateContentLengths(
-        data_used, original_size, data_reduction_proxy_io_data_->IsEnabled(),
-        request_type, mime_type);
   }
 }
 

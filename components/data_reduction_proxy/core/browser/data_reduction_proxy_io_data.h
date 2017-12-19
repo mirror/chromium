@@ -111,15 +111,12 @@ class DataReductionProxyIOData : public DataReductionProxyEventStorageDelegate {
                                  previews::PreviewsDecider* previews_decider);
 
   // Bridge methods to safely call to the UI thread objects.
-  void UpdateDataUseForHost(int64_t network_bytes,
-                            int64_t original_bytes,
-                            const std::string& host);
-  void UpdateContentLengths(
-      int64_t data_used,
-      int64_t original_size,
-      bool data_reduction_proxy_enabled,
-      DataReductionProxyRequestType request_type,
-      const std::string& mime_type);
+  void UpdateDataUse(int64_t network_bytes,
+                     int64_t original_bytes,
+                     const std::string& host,
+                     bool data_reduction_proxy_enabled,
+                     DataReductionProxyRequestType request_type,
+                     const std::string& mime_type);
 
   // Overrides of DataReductionProxyEventStorageDelegate. Bridges to the UI
   // thread objects.

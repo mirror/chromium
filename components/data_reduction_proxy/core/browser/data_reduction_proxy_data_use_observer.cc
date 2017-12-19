@@ -17,27 +17,35 @@
 #include "net/url_request/url_request.h"
 #include "url/gurl.h"
 
+namespace data_reduction_proxy {
 namespace {
 
-class DataUseUserDataBytes : public base::SupportsUserData::Data {
+class MainFrameDataUseUntilCommitUserData
+    : public base::SupportsUserData::Data {
  public:
   // Key used to store data usage in userdata until the page URL is available.
   static const void* const kUserDataKey;
 
-  DataUseUserDataBytes(int64_t network_bytes, int64_t original_bytes)
-      : network_bytes_(network_bytes), original_bytes_(original_bytes) {}
+  MainFrameDataUseUntilCommitUserData(
+      int64_t network_bytes,
+      int64_t original_bytes,
+      DataReductionProxyRequestType request_type,
+      const std::string& mime_type)
+      : network_bytes_(network_bytes),
+        original_bytes_(original_bytes),
+        request_type_(request_type),
+        mime_type_(mime_type) {}
 
   int64_t network_bytes() const { return network_bytes_; }
   int64_t original_bytes() const { return original_bytes_; }
-
-  void IncrementBytes(int64_t network_bytes, int64_t original_bytes) {
-    network_bytes_ += network_bytes;
-    original_bytes_ += original_bytes;
-  }
+  DataReductionProxyRequestType request_type() const { return request_type_; }
+  const std::string& mime_type() const { return mime_type_; }
 
  private:
   int64_t network_bytes_;
   int64_t original_bytes_;
+  DataReductionProxyRequestType request_type_;
+  std::string mime_type_;
 };
 
 // Hostname used for the other bucket which consists of chrome-services traffic.
@@ -45,12 +53,10 @@ class DataUseUserDataBytes : public base::SupportsUserData::Data {
 const char kOtherHostName[] = "Other";
 
 // static
-const void* const DataUseUserDataBytes::kUserDataKey =
-    &DataUseUserDataBytes::kUserDataKey;
+const void* const MainFrameDataUseUntilCommitUserData::kUserDataKey =
+    &MainFrameDataUseUntilCommitUserData::kUserDataKey;
 
 }  // namespace
-
-namespace data_reduction_proxy {
 
 DataReductionProxyDataUseObserver::DataReductionProxyDataUseObserver(
     DataReductionProxyIOData* data_reduction_proxy_io_data,
@@ -69,17 +75,19 @@ DataReductionProxyDataUseObserver::~DataReductionProxyDataUseObserver() {
 void DataReductionProxyDataUseObserver::OnPageLoadCommit(
     data_use_measurement::DataUse* data_use) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
-
-  if (!data_use->url().is_valid())
-    return;
-  DataUseUserDataBytes* bytes = reinterpret_cast<DataUseUserDataBytes*>(
-      data_use->GetUserData(DataUseUserDataBytes::kUserDataKey));
-  if (bytes) {
+  DCHECK(data_use->url().is_valid());
+  MainFrameDataUseUntilCommitUserData* data =
+      reinterpret_cast<MainFrameDataUseUntilCommitUserData*>(
+          data_use->GetUserData(
+              MainFrameDataUseUntilCommitUserData::kUserDataKey));
+  if (data) {
     // Record the data use bytes saved in user data to database.
-    data_reduction_proxy_io_data_->UpdateDataUseForHost(
-        bytes->network_bytes(), bytes->original_bytes(),
-        data_use->url().HostNoBrackets());
-    data_use->RemoveUserData(DataUseUserDataBytes::kUserDataKey);
+    data_reduction_proxy_io_data_->UpdateDataUse(
+        data->network_bytes(), data->original_bytes(),
+        data_use->url().HostNoBrackets(),
+        data_reduction_proxy_io_data_->IsEnabled(), data->request_type(),
+        data->mime_type());
+    data_use->RemoveUserData(MainFrameDataUseUntilCommitUserData::kUserDataKey);
   }
 }
 
@@ -107,28 +115,30 @@ void DataReductionProxyDataUseObserver::OnPageResourceLoad(
       request, request_type == VIA_DATA_REDUCTION_PROXY,
       data_reduction_proxy_io_data_->lofi_decider());
 
+  std::string mime_type;
+  if (request.response_headers())
+    request.response_headers()->GetMimeType(&mime_type);
+
   if (data_use->traffic_type() ==
           data_use_measurement::DataUse::TrafficType::USER_TRAFFIC &&
       !data_use->url().is_valid()) {
     // URL will be empty until pageload navigation commits. Save the data use of
-    // these mainframe, subresource, redirected requests in user data until
-    // then.
-    DataUseUserDataBytes* bytes = reinterpret_cast<DataUseUserDataBytes*>(
-        data_use->GetUserData(DataUseUserDataBytes::kUserDataKey));
-    if (bytes) {
-      bytes->IncrementBytes(network_bytes, original_bytes);
-    } else {
-      data_use->SetUserData(DataUseUserDataBytes::kUserDataKey,
-                            base::MakeUnique<DataUseUserDataBytes>(
-                                network_bytes, original_bytes));
-    }
+    // the mainframe until then. No sub-resource requests can be finished until
+    // commit.
+    DCHECK(!data_use->GetUserData(
+        MainFrameDataUseUntilCommitUserData::kUserDataKey));
+    data_use->SetUserData(
+        MainFrameDataUseUntilCommitUserData::kUserDataKey,
+        base::MakeUnique<MainFrameDataUseUntilCommitUserData>(
+            network_bytes, original_bytes, request_type, mime_type));
   } else {
-    data_reduction_proxy_io_data_->UpdateDataUseForHost(
+    data_reduction_proxy_io_data_->UpdateDataUse(
         network_bytes, original_bytes,
         data_use->traffic_type() ==
                 data_use_measurement::DataUse::TrafficType::USER_TRAFFIC
             ? data_use->url().HostNoBrackets()
-            : kOtherHostName);
+            : kOtherHostName,
+        data_reduction_proxy_io_data_->IsEnabled(), request_type, mime_type);
   }
 }
 
