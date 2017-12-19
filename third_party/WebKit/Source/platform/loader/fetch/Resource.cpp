@@ -113,9 +113,17 @@ static inline bool ShouldUpdateHeaderAfterRevalidation(
   return true;
 }
 
+// CachedMetadataHandlerImpl should be created when a response is received,
+// and can be used independently from Resource.
+// - It doesn't have any references to Resource. Necessary data are captured
+//   from Resource when the handler is created.
+// - It is not affected by Resource's revalidation on MemoryCache.
+//   The validity of the handler is ensured by |response_url_| and
+//   |response_time_| (not by Resource), and the cached metadata is rejected
+//   by the browser process when the handler refers to a stale response.
 class Resource::CachedMetadataHandlerImpl : public CachedMetadataHandler {
  public:
-  static Resource::CachedMetadataHandlerImpl* Create(Resource* resource) {
+  static Resource::CachedMetadataHandlerImpl* Create(const Resource* resource) {
     return new CachedMetadataHandlerImpl(resource);
   }
   ~CachedMetadataHandlerImpl() override {}
@@ -123,33 +131,46 @@ class Resource::CachedMetadataHandlerImpl : public CachedMetadataHandler {
   void SetCachedMetadata(uint32_t, const char*, size_t, CacheType) override;
   void ClearCachedMetadata(CacheType) override;
   scoped_refptr<CachedMetadata> GetCachedMetadata(uint32_t) const override;
-  String Encoding() const override;
+
+  // This returns the encoding at the time of ResponseReceived().
+  // Therefore this does NOT reflect encoding detection from body contents,
+  // but the final encoding after the encoding detection can be determined
+  // uniquely from Encoding(), provided the body content is the same,
+  // as we can assume the encoding detection will results in the same final
+  // encoding.
+  // TODO(hiroshige): Make this semantics cleaner.
+  String Encoding() const override { return String(encoding_.GetName()); }
+
   bool IsServedFromCacheStorage() const override {
-    return !GetResponse().CacheStorageCacheName().IsNull();
+    return !cache_storage_cache_name_.IsNull();
   }
 
   // Sets the serialized metadata retrieved from the platform's cache.
   void SetSerializedCachedMetadata(const char*, size_t);
 
  protected:
-  explicit CachedMetadataHandlerImpl(Resource*);
+  explicit CachedMetadataHandlerImpl(const Resource*);
   virtual void SendToPlatform();
-  const ResourceResponse& GetResponse() const {
-    return resource_->GetResponse();
-  }
 
   scoped_refptr<CachedMetadata> cached_metadata_;
 
+  const KURL response_url_;
+  const Time response_time_;
+  const String cache_storage_cache_name_;
+
  private:
-  Member<Resource> resource_;
+  const WTF::TextEncoding encoding_;
 };
 
 Resource::CachedMetadataHandlerImpl::CachedMetadataHandlerImpl(
-    Resource* resource)
-    : resource_(resource) {}
+    const Resource* resource)
+    : response_url_(resource->GetResponse().Url()),
+      response_time_(resource->GetResponse().ResponseTime()),
+      cache_storage_cache_name_(
+          resource->GetResponse().CacheStorageCacheName()),
+      encoding_(resource->Encoding()) {}
 
 void Resource::CachedMetadataHandlerImpl::Trace(blink::Visitor* visitor) {
-  visitor->Trace(resource_);
   CachedMetadataHandler::Trace(visitor);
 }
 
@@ -182,10 +203,6 @@ Resource::CachedMetadataHandlerImpl::GetCachedMetadata(
   return cached_metadata_;
 }
 
-String Resource::CachedMetadataHandlerImpl::Encoding() const {
-  return String(resource_->Encoding().GetName());
-}
-
 void Resource::CachedMetadataHandlerImpl::SetSerializedCachedMetadata(
     const char* data,
     size_t size) {
@@ -199,20 +216,20 @@ void Resource::CachedMetadataHandlerImpl::SetSerializedCachedMetadata(
 void Resource::CachedMetadataHandlerImpl::SendToPlatform() {
   if (cached_metadata_) {
     const Vector<char>& serialized_data = cached_metadata_->SerializedData();
-    Platform::Current()->CacheMetadata(
-        GetResponse().Url(), GetResponse().ResponseTime(),
-        serialized_data.data(), serialized_data.size());
+    Platform::Current()->CacheMetadata(response_url_, response_time_,
+                                       serialized_data.data(),
+                                       serialized_data.size());
   } else {
-    Platform::Current()->CacheMetadata(
-        GetResponse().Url(), GetResponse().ResponseTime(), nullptr, 0);
+    Platform::Current()->CacheMetadata(response_url_, response_time_, nullptr,
+                                       0);
   }
 }
 
-class Resource::ServiceWorkerResponseCachedMetadataHandler
+class Resource::ServiceWorkerResponseCachedMetadataHandler final
     : public Resource::CachedMetadataHandlerImpl {
  public:
   static Resource::CachedMetadataHandlerImpl* Create(
-      Resource* resource,
+      const Resource* resource,
       const SecurityOrigin* security_origin) {
     return new ServiceWorkerResponseCachedMetadataHandler(resource,
                                                           security_origin);
@@ -224,14 +241,14 @@ class Resource::ServiceWorkerResponseCachedMetadataHandler
   void SendToPlatform() override;
 
  private:
-  explicit ServiceWorkerResponseCachedMetadataHandler(Resource*,
+  explicit ServiceWorkerResponseCachedMetadataHandler(const Resource*,
                                                       const SecurityOrigin*);
   scoped_refptr<const SecurityOrigin> security_origin_;
 };
 
 Resource::ServiceWorkerResponseCachedMetadataHandler::
     ServiceWorkerResponseCachedMetadataHandler(
-        Resource* resource,
+        const Resource* resource,
         const SecurityOrigin* security_origin)
     : CachedMetadataHandlerImpl(resource), security_origin_(security_origin) {}
 
@@ -245,21 +262,19 @@ void Resource::ServiceWorkerResponseCachedMetadataHandler::SendToPlatform() {
   // directly fetched via a ServiceWorker (eg:
   // FetchEvent.respondWith(fetch(FetchEvent.request))) to prevent an attacker's
   // Service Worker from poisoning the metadata cache of HTTPCache.
-  if (GetResponse().CacheStorageCacheName().IsNull())
+  if (cache_storage_cache_name_.IsNull())
     return;
 
   if (cached_metadata_) {
     const Vector<char>& serialized_data = cached_metadata_->SerializedData();
     Platform::Current()->CacheMetadataInCacheStorage(
-        GetResponse().Url(), GetResponse().ResponseTime(),
-        serialized_data.data(), serialized_data.size(),
-        WebSecurityOrigin(security_origin_),
-        GetResponse().CacheStorageCacheName());
+        response_url_, response_time_, serialized_data.data(),
+        serialized_data.size(), WebSecurityOrigin(security_origin_),
+        cache_storage_cache_name_);
   } else {
     Platform::Current()->CacheMetadataInCacheStorage(
-        GetResponse().Url(), GetResponse().ResponseTime(), nullptr, 0,
-        WebSecurityOrigin(security_origin_),
-        GetResponse().CacheStorageCacheName());
+        response_url_, response_time_, nullptr, 0,
+        WebSecurityOrigin(security_origin_), cache_storage_cache_name_);
   }
 }
 
