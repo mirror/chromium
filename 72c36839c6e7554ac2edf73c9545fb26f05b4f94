@@ -22,6 +22,52 @@
       "revId": "72c36839c6e7554ac2edf73c9545fb26f05b4f94",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d157cbca_61bd4984",
+        "filename": "ui/events/gesture_detection/scale_gesture_detector.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-12-19T20:27:20Z",
+      "side": 1,
+      "message": "Given that span is computable from span_x \u0026 span_y, do we need to store all three?",
+      "range": {
+        "startLine": 176,
+        "startChar": 4,
+        "endLine": 176,
+        "endChar": 8
+      },
+      "revId": "72c36839c6e7554ac2edf73c9545fb26f05b4f94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7ba3cb3_f441d08f",
+        "filename": "ui/events/gesture_detection/scale_gesture_detector.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-12-19T20:27:20Z",
+      "side": 1,
+      "message": "Grammar got a little funky here.",
+      "range": {
+        "startLine": 211,
+        "startChar": 7,
+        "endLine": 211,
+        "endChar": 25
+      },
+      "revId": "72c36839c6e7554ac2edf73c9545fb26f05b4f94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
