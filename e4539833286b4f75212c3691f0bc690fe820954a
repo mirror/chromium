@@ -123,6 +123,24 @@
     },
     {
       "key": {
+        "uuid": "73d9e485_3a598a33",
+        "filename": "services/audio/public/cpp/audio_system_to_mojo_adapter.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-12-19T17:55:15Z",
+      "side": 1,
+      "message": "Sorry, I don\u0027t follow. What do you mean when you say the connector becomes unusable at that point? There is no link whatsoever between the Connector and the SystemInfo binding.\n\nSurely you can still call BindInterface on it, and surely the registered binder override must still be invoked? What does the callback do?\n\nIf you Clone the connector at any point, you do have to re-register your override on the clone, but I didn\u0027t see that happening.",
+      "parentUuid": "a56aabf0_adcd145e",
+      "revId": "e4539833286b4f75212c3691f0bc690fe820954a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7718df27_4571d357",
         "filename": "services/audio/public/interfaces/system_info.mojom",
         "patchSetId": 17
@@ -158,6 +176,24 @@
     },
     {
       "key": {
+        "uuid": "d328ee84_49bb790a",
+        "filename": "services/audio/public/interfaces/system_info.mojom",
+        "patchSetId": 17
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-12-19T17:55:15Z",
+      "side": 1,
+      "message": "That\u0027s fair. I don\u0027t think we need to chase perfection right out of the gate, but I want to make sure we can actually rationalize our interface decisions when possible. SGTM",
+      "parentUuid": "e0f8e0a8_6769be5a",
+      "revId": "e4539833286b4f75212c3691f0bc690fe820954a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c3457698_6dc2f63d",
         "filename": "services/audio/public/interfaces/system_info.mojom",
         "patchSetId": 17
@@ -190,6 +226,24 @@
       "revId": "e4539833286b4f75212c3691f0bc690fe820954a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "194137ef_ea28411b",
+        "filename": "services/audio/public/interfaces/system_info.mojom",
+        "patchSetId": 17
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-12-19T17:55:15Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "8cdd5c15_2e49806e",
+      "revId": "e4539833286b4f75212c3691f0bc690fe820954a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -246,6 +300,24 @@
     },
     {
       "key": {
+        "uuid": "2f00208b_1720028b",
+        "filename": "services/audio/public/interfaces/system_info.mojom",
+        "patchSetId": 17
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-12-19T17:55:15Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "76707c4c_e7823a87",
+      "revId": "e4539833286b4f75212c3691f0bc690fe820954a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7532de81_d744391c",
         "filename": "services/audio/service.cc",
         "patchSetId": 17
@@ -281,6 +353,24 @@
     },
     {
       "key": {
+        "uuid": "cfb465e2_a2a8cbcb",
+        "filename": "services/audio/service.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-12-19T17:55:15Z",
+      "side": 1,
+      "message": "Makes sense!",
+      "parentUuid": "e6f482e3_f6283316",
+      "revId": "e4539833286b4f75212c3691f0bc690fe820954a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b498e2aa_50c3ab6a",
         "filename": "services/audio/service.cc",
         "patchSetId": 17
@@ -313,6 +403,24 @@
       "revId": "e4539833286b4f75212c3691f0bc690fe820954a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36d1c91d_c4666d64",
+        "filename": "services/audio/service.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-12-19T17:55:15Z",
+      "side": 1,
+      "message": "It\u0027s not explicitly documented in Service, but there are many classes for which it\u0027s not documented. As a general rule unless there is a reason to assume otherwise (e.g. shared ownership or explicit documentation to the contrary), all objects are implicitly sequence-bound. I guess this isn\u0027t a written rule anywhere but it seems to be a clear convention across most of the code base, and it makes a lot of sense as a means of encouraging safe code.\n\nThe use of thread or sequence checkers is not really harmful either way, so sure, leave it if you like; but I generally reserve it for cases where the class in question actually does any kind of thread or sequence hopping.\n\nI do worry slightly about other service implementors needlessly copying this pattern.",
+      "parentUuid": "dcd13429_b981a350",
+      "revId": "e4539833286b4f75212c3691f0bc690fe820954a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
