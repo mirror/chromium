@@ -74,6 +74,10 @@ TEST(GeneratePolicySource, ChromeSchemaData) {
   ASSERT_TRUE(subschema.valid());
   EXPECT_EQ(base::Value::Type::INTEGER, subschema.type());
 
+  subschema = schema.GetProperty(key::kDefaultAdsSetting);
+  ASSERT_TRUE(subschema.valid());
+  EXPECT_EQ(base::Value::Type::INTEGER, subschema.type());
+
   subschema = schema.GetProperty(key::kProxyMode);
   ASSERT_TRUE(subschema.valid());
   EXPECT_EQ(base::Value::Type::STRING, subschema.type());
