@@ -45,9 +45,25 @@
 #include "public/platform/Platform.h"
 #include "public/platform/TaskType.h"
 #include "public/platform/WebStorageQuotaCallbacks.h"
-#include "public/platform/WebStorageQuotaType.h"
+#include "public/platform/WebTraceLocation.h"
+#include "third_party/WebKit/common/quota/storage_type.h"
 
 namespace blink {
+
+namespace {
+
+StorageType GetStorageType(DeprecatedStorageQuota::Type type) {
+  switch (type) {
+    case DeprecatedStorageQuota::kTemporary:
+      return StorageType::kTemporary;
+    case DeprecatedStorageQuota::kPersistent:
+      return StorageType::kPersistent;
+    default:
+      return StorageType::kUnknown;
+  }
+}
+
+}  // namespace
 
 DeprecatedStorageQuota::DeprecatedStorageQuota(Type type) : type_(type) {}
 
@@ -58,9 +74,9 @@ void DeprecatedStorageQuota::queryUsageAndQuota(
   ExecutionContext* execution_context = ExecutionContext::From(script_state);
   DCHECK(execution_context);
 
-  WebStorageQuotaType storage_type = static_cast<WebStorageQuotaType>(type_);
-  if (storage_type != kWebStorageQuotaTypeTemporary &&
-      storage_type != kWebStorageQuotaTypePersistent) {
+  StorageType storage_type = GetStorageType(type_);
+  if (storage_type != StorageType::kTemporary &&
+      storage_type != StorageType::kPersistent) {
     // Unknown storage type is requested.
     ExecutionContext::From(script_state)
         ->GetTaskRunner(TaskType::kMiscPlatformAPI)
@@ -94,9 +110,9 @@ void DeprecatedStorageQuota::requestQuota(
   ExecutionContext* execution_context = ExecutionContext::From(script_state);
   DCHECK(execution_context);
 
-  WebStorageQuotaType storage_type = static_cast<WebStorageQuotaType>(type_);
-  if (storage_type != kWebStorageQuotaTypeTemporary &&
-      storage_type != kWebStorageQuotaTypePersistent) {
+  StorageType storage_type = GetStorageType(type_);
+  if (storage_type != StorageType::kTemporary &&
+      storage_type != StorageType::kPersistent) {
     // Unknown storage type is requested.
     ExecutionContext::From(script_state)
         ->GetTaskRunner(TaskType::kMiscPlatformAPI)
@@ -117,10 +133,5 @@ void DeprecatedStorageQuota::requestQuota(
   client->RequestQuota(script_state, storage_type, new_quota_in_bytes,
                        success_callback, error_callback);
 }
-
-STATIC_ASSERT_ENUM(kWebStorageQuotaTypeTemporary,
-                   DeprecatedStorageQuota::kTemporary);
-STATIC_ASSERT_ENUM(kWebStorageQuotaTypePersistent,
-                   DeprecatedStorageQuota::kPersistent);
 
 }  // namespace blink
