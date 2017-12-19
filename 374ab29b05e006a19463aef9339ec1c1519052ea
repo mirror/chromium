@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b0c9bb39_c4d213d5",
+        "filename": "components/cronet/ios/cronet_environment.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-12-19T19:35:54Z",
+      "side": 1,
+      "message": "It appears that URLRequestContextConfig supports QUIC user_agent_id experimental options https://cs.chromium.org/chromium/src/components/cronet/url_request_context_config.cc?rcl\u003ddb7bef5a1f702dd9758ecf954083b529233c61f4\u0026l\u003d302 so it probably is more consistent to just use getDefaultQuicUserAgentId() here without special option on Cronet class. \n\nWDYT?",
+      "range": {
+        "startLine": 339,
+        "startChar": 2,
+        "endLine": 339,
+        "endChar": 24
+      },
+      "revId": "374ab29b05e006a19463aef9339ec1c1519052ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
