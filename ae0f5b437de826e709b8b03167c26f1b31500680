@@ -709,6 +709,30 @@
     },
     {
       "key": {
+        "uuid": "b920f407_2d76e1e8",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/metrics/PageLoadMetricsTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-12-19T16:48:33Z",
+      "side": 1,
+      "message": "Ugh, method overloads... Thanks for the explanation!\n\nActually, there is another option: Could you use runOnUiThreadBlockingNoException? That is I think the behavior we\u0027d want, and it lets us clean up the method names all in one go. Thanks!",
+      "parentUuid": "aa35094b_d660656a",
+      "range": {
+        "startLine": 148,
+        "startChar": 16,
+        "endLine": 148,
+        "endChar": 27
+      },
+      "revId": "ae0f5b437de826e709b8b03167c26f1b31500680",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4ba4dc3e_90ef46ef",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/metrics/StartupLoadingMetricsTest.java",
         "patchSetId": 3
