@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "305a7dff_de910d24",
+        "filename": "third_party/WebKit/Source/core/editing/testing/SelectionSample.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1251514
+      },
+      "writtenOn": "2017-12-19T12:02:46Z",
+      "side": 1,
+      "message": "I don\u0027t see any includes removed anywhere, so why did you need to add this here?",
+      "revId": "1c814a1c72200feabd62e5365b9fb423acc08971",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff4f6014_a370026d",
+        "filename": "third_party/WebKit/Source/core/editing/testing/SelectionSampleTest.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1251514
+      },
+      "writtenOn": "2017-12-19T12:02:46Z",
+      "side": 1,
+      "message": "I don\u0027t see any includes removed anywhere, so why did you need to add this here?",
+      "revId": "1c814a1c72200feabd62e5365b9fb423acc08971",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
