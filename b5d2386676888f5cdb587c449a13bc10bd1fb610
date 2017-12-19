@@ -167,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "806ab2a3_62e78651",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-19T00:30:35Z",
+      "side": 1,
+      "message": "Per our discussion. I want to keep this and initializing task delay closer than 20 seconds apart, to prevent DB reopening.\n\nI moved this to 45 seconds and the other delay to 30 seconds to ensure that is the case and added a TODO related to measuring DB initialization.",
+      "parentUuid": "a9e0ff21_f657dc2e",
+      "range": {
+        "startLine": 44,
+        "startChar": 33,
+        "endLine": 44,
+        "endChar": 35
+      },
+      "revId": "b5d2386676888f5cdb587c449a13bc10bd1fb610",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9e8d9dc6_f40a016a",
         "filename": "components/offline_pages/core/model/offline_page_model_taskified.cc",
         "patchSetId": 1
