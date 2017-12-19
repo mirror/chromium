@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3e642247_49864e74",
+        "filename": "chrome/browser/signin/chrome_signin_helper.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-12-19T17:03:01Z",
+      "side": 1,
+      "message": "No, this is not required.\n\nBefore, when there is a redirect, we would attach a new user data even when there is already one. This would cause the old user data to be deleted, which unlocks the reconcilor and the new user data locks it again.\nI don\u0027t think this was really a problem but, it causes unnecessary work.",
+      "parentUuid": "f0a72588_60d89169",
+      "range": {
+        "startLine": 123,
+        "startChar": 30,
+        "endLine": 123,
+        "endChar": 56
+      },
+      "revId": "d84ccfcd57abf693cd41560ca312ff14837b4421",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b401a4b6_76811d43",
         "filename": "chrome/browser/signin/dice_browsertest.cc",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "d84ccfcd57abf693cd41560ca312ff14837b4421",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9dd60887_49dd5000",
+        "filename": "chrome/browser/signin/dice_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 490,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-12-19T17:03:01Z",
+      "side": 1,
+      "message": "Renamed to:\nunblock_enable_sync_response_closure_\n(this is a closure that unblocks the \"ENABLE_SYNC\" response)",
+      "parentUuid": "b401a4b6_76811d43",
+      "range": {
+        "startLine": 490,
+        "startChar": 4,
+        "endLine": 490,
+        "endChar": 33
+      },
+      "revId": "d84ccfcd57abf693cd41560ca312ff14837b4421",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "90bf0213_efaefe94",
+        "filename": "chrome/browser/signin/dice_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 499,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-12-19T17:03:01Z",
+      "side": 1,
+      "message": "Renamed to: unblock_token_exchange_response_closure_",
+      "parentUuid": "bcc3dc2c_93e17ef9",
+      "range": {
+        "startLine": 499,
+        "startChar": 4,
+        "endLine": 499,
+        "endChar": 36
+      },
+      "revId": "d84ccfcd57abf693cd41560ca312ff14837b4421",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2e68a9be_a5a81426",
         "filename": "chrome/browser/signin/dice_browsertest.cc",
         "patchSetId": 5
@@ -91,6 +163,30 @@
       "revId": "d84ccfcd57abf693cd41560ca312ff14837b4421",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9feb3ea4_254dd5a2",
+        "filename": "chrome/browser/signin/dice_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 941,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-12-19T17:03:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2e68a9be_a5a81426",
+      "range": {
+        "startLine": 941,
+        "startChar": 3,
+        "endLine": 941,
+        "endChar": 6
+      },
+      "revId": "d84ccfcd57abf693cd41560ca312ff14837b4421",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "476a2bd4_3255bafc",
+        "filename": "chrome/browser/signin/dice_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 953,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-12-19T17:03:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c111e6cb_a168848b",
+      "range": {
+        "startLine": 953,
+        "startChar": 2,
+        "endLine": 953,
+        "endChar": 21
+      },
+      "revId": "d84ccfcd57abf693cd41560ca312ff14837b4421",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2ec11def_a2685856",
         "filename": "chrome/browser/signin/dice_browsertest.cc",
         "patchSetId": 5
@@ -137,6 +257,30 @@
       "revId": "d84ccfcd57abf693cd41560ca312ff14837b4421",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f7beef4_d97d08e2",
+        "filename": "chrome/browser/signin/dice_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 957,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-12-19T17:03:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2ec11def_a2685856",
+      "range": {
+        "startLine": 957,
+        "startChar": 2,
+        "endLine": 957,
+        "endChar": 33
+      },
+      "revId": "d84ccfcd57abf693cd41560ca312ff14837b4421",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "1e967a33_97f2c332",
+        "filename": "chrome/browser/signin/dice_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 986,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-12-19T17:03:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f62d2c16_9bc55957",
+      "range": {
+        "startLine": 986,
+        "startChar": 7,
+        "endLine": 986,
+        "endChar": 0
+      },
+      "revId": "d84ccfcd57abf693cd41560ca312ff14837b4421",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1bbecba2_0d35ab83",
         "filename": "chrome/browser/signin/dice_browsertest.cc",
         "patchSetId": 5
@@ -174,6 +342,24 @@
       "writtenOn": "2017-12-19T14:48:04Z",
       "side": 1,
       "message": "This part of the test is a bit unexpected: enable sync should be discarded if we receive it before the SIGNIN response. Based on this test, it looks like that tests should work. I am probably misunderstanding something here.",
+      "revId": "d84ccfcd57abf693cd41560ca312ff14837b4421",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7fae787_511a826f",
+        "filename": "chrome/browser/signin/dice_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 995,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-12-19T17:03:01Z",
+      "side": 1,
+      "message": "No. Enable Sync is not discarded in that case.\n\nWhat we do in this case is find the token fetcher that is in flight and attach to it.\nWhen the token fetcher completes, Sync is started.\n\nSee the code line 320:\nhttps://chromium-review.googlesource.com/c/chromium/src/+/796990/11/chrome/browser/signin/dice_response_handler.cc",
+      "parentUuid": "1bbecba2_0d35ab83",
       "revId": "d84ccfcd57abf693cd41560ca312ff14837b4421",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
