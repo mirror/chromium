@@ -51,6 +51,24 @@
       "revId": "2b2e4da5286e87621bfc0d280b31737c70b3c723",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43936306_1a0d80f1",
+        "filename": "third_party/WebKit/Source/core/dom/ElementRareData.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-12-19T08:01:03Z",
+      "side": 1,
+      "message": "Ah, I think a right fix would be to add:\n\n  visitor-\u003eTraceWrappers(computed_accessible_node_);\n\nto TraceWrappers(). This CL expects that ComputedAccessibleNode is kept alive while the Element is alive.\n\nkeishi@: Would it be hard to add a verification to check that TraceWrapperMember is traced in TraceWrappers()?",
+      "parentUuid": "9db631b6_4703c944",
+      "revId": "2b2e4da5286e87621bfc0d280b31737c70b3c723",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
