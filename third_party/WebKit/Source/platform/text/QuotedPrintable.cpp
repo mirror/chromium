@@ -54,12 +54,15 @@ static size_t LengthOfLineEndingAtIndex(const char* input,
   return 0;
 }
 
-void QuotedPrintableEncode(const Vector<char>& in, Vector<char>& out) {
-  QuotedPrintableEncode(in.data(), in.size(), out);
+void QuotedPrintableEncode(const Vector<char>& in,
+                           SoftLineBreakType line_break_type,
+                           Vector<char>& out) {
+  QuotedPrintableEncode(in.data(), in.size(), line_break_type, out);
 }
 
 void QuotedPrintableEncode(const char* input,
                            size_t input_length,
+                           SoftLineBreakType line_break_type,
                            Vector<char>& out) {
   out.clear();
   out.ReserveCapacity(input_length);
@@ -104,8 +107,11 @@ void QuotedPrintableEncode(const char* input,
     // Insert a soft line break if necessary.
     if (current_line_length + length_of_encoded_character >
         kMaximumLineLength) {
-      out.push_back('=');
+      if (line_break_type == SoftLineBreakType::kForBody)
+        out.push_back('=');
       out.Append(kCrlfLineEnding, strlen(kCrlfLineEnding));
+      if (line_break_type == SoftLineBreakType::kForHeader)
+        out.push_back('\t');
       current_line_length = 0;
     }
 
