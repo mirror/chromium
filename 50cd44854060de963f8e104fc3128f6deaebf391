@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "318b9dde_f0566501",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_controller_impl_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1159306
+      },
+      "writtenOn": "2017-12-19T22:19:49Z",
+      "side": 1,
+      "message": "Even better:\n\nSwReporterInvocationType invocation_type \u003d kPeriodicRun;\n...\nstd::swap(pending_invocation_type_, invocation_type);",
+      "parentUuid": "418a3bee_c244acac",
+      "revId": "50cd44854060de963f8e104fc3128f6deaebf391",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "018e2095_fe1f6a8f",
         "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_controller_impl_win.h",
         "patchSetId": 4
