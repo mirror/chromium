@@ -469,8 +469,7 @@ void BlinkTestController::LoadDevToolsJSTest() {
   devtools_window_ = main_window_;
   Shell* secondary = SecondaryWindow();
   devtools_bindings_ = std::make_unique<LayoutTestDevToolsBindings>(
-      devtools_window_->web_contents(), secondary->web_contents(), "",
-      test_url_, true);
+      devtools_window_->web_contents(), secondary->web_contents(), test_url_);
 }
 
 bool BlinkTestController::ResetAfterLayoutTest() {
@@ -968,8 +967,8 @@ void BlinkTestController::OnShowDevTools(const std::string& settings,
                                          const std::string& frontend_url) {
   devtools_window_ = SecondaryWindow();
   devtools_bindings_ = std::make_unique<LayoutTestDevToolsBindings>(
-      devtools_window_->web_contents(), main_window_->web_contents(), settings,
-      GURL(frontend_url), false);
+      devtools_window_->web_contents(), main_window_->web_contents(),
+      GURL(frontend_url));
   devtools_window_->web_contents()->GetRenderViewHost()->GetWidget()->Focus();
   devtools_window_->web_contents()->Focus();
 }
