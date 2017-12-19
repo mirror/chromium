@@ -74,6 +74,14 @@ Polymer({
       },
     },
 
+    /** @private */
+    enableSensorsContentSetting_: {
+      type: Boolean,
+      value: function() {
+        return loadTimeData.getBoolean('enableSensorsContentSetting');
+      },
+    },
+
     /**
      * The type of storage for the origin.
      * @private

@@ -457,6 +457,7 @@ void SiteSettingsHandler::HandleGetDefaultValueForContentType(
 
   ContentSettingsType content_type =
       site_settings::ContentSettingsTypeFromGroupName(type);
+
   HostContentSettingsMap* map =
       HostContentSettingsMapFactory::GetForProfile(profile_);
 
