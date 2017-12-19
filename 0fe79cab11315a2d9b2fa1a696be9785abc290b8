@@ -80,6 +80,30 @@
       "revId": "0fe79cab11315a2d9b2fa1a696be9785abc290b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "595fbb5e_bda83c8e",
+        "filename": "services/network/public/interfaces/data_pipe_getter.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-19T06:39:11Z",
+      "side": 1,
+      "message": "I\u0027m adding string upload support - both to reduce copies and decrease memory loads (Particularly with consumers that want to retry on error), I\u0027m streaming longer strings instead of copying them.\n\nSince I\u0027m implementing a wrapper, that may be used in the renderer process as well as the browser process, it\u0027s probably best to make sure my code fully supports the needed API.\n\nIs there any case in which we\u0027ll need to support reads from different consumers at once?  i.e., if we get another read call, can we just abandon any previously in use data pipes?",
+      "parentUuid": "a6a8ee76_36e1a28c",
+      "range": {
+        "startLine": 19,
+        "startChar": 41,
+        "endLine": 19,
+        "endChar": 52
+      },
+      "revId": "0fe79cab11315a2d9b2fa1a696be9785abc290b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
