@@ -16,6 +16,24 @@
       "revId": "a54a8bc8b32b42d7167fb7d2c84f365f593cc1d9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75ba1225_70550948",
+        "filename": "third_party/WebKit/Source/core/dom/ScriptModuleResolverImplTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-12-19T23:26:58Z",
+      "side": 1,
+      "message": "Nice point.\nkouhei@, do you know any context? Are there any plan to add tests to use parse-error module scripts?\n\n(Perhaps I\u0027ll land this anyway and cleanup the code around this in a separate CL)",
+      "parentUuid": "e0eb8275_51b2329e",
+      "revId": "a54a8bc8b32b42d7167fb7d2c84f365f593cc1d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
