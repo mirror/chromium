@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9deb62a8_d7024441",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-12-19T10:45:48Z",
+      "side": 1,
+      "message": "Maybe mention that the button is dummy and doesn\u0027t actually do anything yet :)",
+      "revId": "44bef33410ed7a838d3e6ff155885a6f7e9a19bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1cbfb4eb_240910f8",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 498,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-12-19T10:45:48Z",
+      "side": 1,
+      "message": "I think you might want to add `\u0026\u0026 !IsModern()` as we don\u0027t want to show the PIP button in the bar for \"modern\u0027 controls.",
+      "revId": "44bef33410ed7a838d3e6ff155885a6f7e9a19bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4db8f04_afca9806",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlPictureInPictureButtonElement.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-12-19T10:45:48Z",
+      "side": 1,
+      "message": "I wonder if we could make `UpdateOverflowString()` part of MediaControlInputElement implementation. Maybe check if `HasOverflowButton()` and only do it in this case? Could be a good follow-up :)",
+      "revId": "44bef33410ed7a838d3e6ff155885a6f7e9a19bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e182d7d_5b8a7ea9",
+        "filename": "third_party/WebKit/Source/modules/media_controls/resources/legacyMediaControls.css",
+        "patchSetId": 3
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-12-19T10:45:48Z",
+      "side": 1,
+      "message": "We would need to add an svg file and update the other stylesheet for the \"modern\" controls.",
+      "revId": "44bef33410ed7a838d3e6ff155885a6f7e9a19bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
