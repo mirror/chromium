@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "0f026d8e_a70c2382",
+        "filename": "third_party/WebKit/Source/core/input/EventHandler.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 934,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2017-12-19T16:32:23Z",
+      "side": 1,
+      "message": "As Dave pointed out to me, the new code is bypassing some boundary event dispatch code.  This is true even for Patcheset 1 here, so I am not sure why the tests passed.  Looking into it.",
+      "parentUuid": "5d30f931_ae852dfe",
+      "revId": "5f36af1e6a054d9a02d90ca24088f59cbf82a8af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "19febaef_5e32fbb9",
         "filename": "third_party/WebKit/Source/core/input/EventHandler.cpp",
         "patchSetId": 2
