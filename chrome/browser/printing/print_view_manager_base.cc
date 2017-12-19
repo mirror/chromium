@@ -194,6 +194,19 @@ void PrintViewManagerBase::OnPrintSettingsDone(
     int page_count,
     PrinterHandler::PrintCallback callback,
     scoped_refptr<printing::PrinterQuery> printer_query) {
+  // Check if the job was cancelled.
+  if (printer_query.get() &&
+      printer_query->last_status() == PrintingContext::CANCEL) {
+    // Query is not yet queued and print job has not been started, but still
+    // need to stop the worker and notify that the job has been released.
+    printer_query->StopWorker();
+    content::NotificationService::current()->Notify(
+        chrome::NOTIFICATION_PRINT_JOB_RELEASED,
+        content::Source<content::WebContents>(web_contents()),
+        content::NotificationService::NoDetails());
+    return;
+  }
+
   queue_->QueuePrinterQuery(printer_query.get());
 
   // Post task so that the query has time to reset the callback before calling
