@@ -46,6 +46,30 @@
       "revId": "02505ac54d6575fca772a1a3eac8345ec207003e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "848390e5_c7a25ad5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/partnerbookmarks/PartnerBookmarksShim.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-12-19T18:55:08Z",
+      "side": 1,
+      "message": "We don\u0027t need the fine granularity, but base/metrics only takes TimeDelta and then convert to Sample, which is int32. We could probably use recordCustomCountHistogram() instead.",
+      "parentUuid": "676372c9_4c5f4025",
+      "range": {
+        "startLine": 67,
+        "startChar": 32,
+        "endLine": 67,
+        "endChar": 59
+      },
+      "revId": "02505ac54d6575fca772a1a3eac8345ec207003e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
