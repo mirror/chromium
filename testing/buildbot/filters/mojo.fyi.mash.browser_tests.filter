@@ -188,9 +188,12 @@
 # Crash in autofill::SaveCardBubbleViews::ShouldShowCloseButton().
 -SaveCardBubbleControllerImplTest.*
 
-# ash::Shell access in test.
--ShelfAppBrowserTest.*
--ShelfAppBrowserTestNoDefaultBrowser.*
+# WindowSizerAsh does not compute correct show state.
+-ShelfAppBrowserTest.AppWindowRestoreBehaviorTest
+
+# ash::Shell access in test for display configuration.
+-ShelfAppBrowserTest.LaunchAppFromDisplayWithoutFocus0
+-ShelfAppBrowserTest.LaunchAppFromDisplayWithoutFocus1
 
 # ash::Shell access in test.
 -ShutdownPolicyInSessionTest.*
@@ -203,6 +206,7 @@
 
 # ash::Shell access in test for StatusAreaWidget.
 -SupervisedUserCreationTest.*
+
 # Crash. Database is locked.
 -SyncAwareCounterTest.*
 

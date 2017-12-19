@@ -2036,10 +2036,12 @@ IN_PROC_BROWSER_TEST_F(ShelfAppBrowserTestNoDefaultBrowser,
   Browser* browser = chrome::FindLastActive();
   ASSERT_TRUE(browser);
   browser->window()->Minimize();
+  aura::test::WaitForAllChangesToComplete();
   EXPECT_TRUE(browser->window()->IsMinimized());
 
   // Activate again. This doesn't create new browser, it activates the window.
   SelectItem(browser_id, ui::ET_UNKNOWN);
+  aura::test::WaitForAllChangesToComplete();
   running_browser = chrome::GetTotalBrowserCount();
   EXPECT_EQ(1u, running_browser);
   EXPECT_TRUE(controller_->IsOpen(browser_id));
