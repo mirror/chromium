@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "chrome/browser/signin/identity_manager_factory.h"
+#include "chrome/browser/signin/identity_proxy_factory.h"
 
 #include "build/build_config.h"
 #include "chrome/browser/profiles/profile.h"
@@ -11,50 +11,48 @@
 #include "components/keyed_service/content/browser_context_dependency_manager.h"
 #include "components/keyed_service/core/keyed_service.h"
 #include "components/signin/core/browser/signin_manager.h"
-#include "services/identity/public/cpp/identity_manager.h"
+#include "services/identity/public/cpp/identity_proxy.h"
 
-// Class that wraps IdentityManager in a KeyedService (as IdentityManager is a
+// Class that wraps IdentityProxy in a KeyedService (as IdentityProxy is a
 // client-side library intended for use by any process, it would be a layering
-// violation for IdentityManager itself to have direct knowledge of
-// KeyedService).
-class IdentityManagerHolder : public KeyedService {
+// violation for IdentityProxy itself to have direct knowledge of KeyedService).
+class IdentityProxyHolder : public KeyedService {
  public:
-  explicit IdentityManagerHolder(Profile* profile)
-      : identity_manager_(
+  explicit IdentityProxyHolder(Profile* profile)
+      : identity_proxy_(
             SigninManagerFactory::GetForProfile(profile),
             ProfileOAuth2TokenServiceFactory::GetForProfile(profile)) {}
 
-  identity::IdentityManager* identity_manager() { return &identity_manager_; }
+  identity::IdentityProxy* identity_proxy() { return &identity_proxy_; }
 
  private:
-  identity::IdentityManager identity_manager_;
+  identity::IdentityProxy identity_proxy_;
 };
 
-IdentityManagerFactory::IdentityManagerFactory()
+IdentityProxyFactory::IdentityProxyFactory()
     : BrowserContextKeyedServiceFactory(
-          "IdentityManager",
+          "IdentityProxy",
           BrowserContextDependencyManager::GetInstance()) {
   DependsOn(ProfileOAuth2TokenServiceFactory::GetInstance());
   DependsOn(SigninManagerFactory::GetInstance());
 }
 
-IdentityManagerFactory::~IdentityManagerFactory() {}
+IdentityProxyFactory::~IdentityProxyFactory() {}
 
 // static
-identity::IdentityManager* IdentityManagerFactory::GetForProfile(
-    Profile* profile) {
-  IdentityManagerHolder* holder = static_cast<IdentityManagerHolder*>(
+identity::IdentityProxy* IdentityProxyFactory::GetForProfile(Profile* profile) {
+  IdentityProxyHolder* holder = static_cast<IdentityProxyHolder*>(
       GetInstance()->GetServiceForBrowserContext(profile, true));
 
-  return holder->identity_manager();
+  return holder->identity_proxy();
 }
 
 // static
-IdentityManagerFactory* IdentityManagerFactory::GetInstance() {
-  return base::Singleton<IdentityManagerFactory>::get();
+IdentityProxyFactory* IdentityProxyFactory::GetInstance() {
+  return base::Singleton<IdentityProxyFactory>::get();
 }
 
-KeyedService* IdentityManagerFactory::BuildServiceInstanceFor(
+KeyedService* IdentityProxyFactory::BuildServiceInstanceFor(
     content::BrowserContext* context) const {
-  return new IdentityManagerHolder(Profile::FromBrowserContext(context));
+  return new IdentityProxyHolder(Profile::FromBrowserContext(context));
 }
