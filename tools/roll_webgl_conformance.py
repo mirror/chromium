@@ -111,7 +111,7 @@ def _GenerateCLDescriptionCommand(webgl_current, webgl_new, bugs):
     return '%s/+log/%s' % (git_repo_url, change_string)
 
   def GetBugString(bugs):
-    bug_str = 'BUG='
+    bug_str = 'Bug: '
     for bug in bugs:
       bug_str += str(bug) + ','
     return bug_str.rstrip(',')
@@ -134,7 +134,7 @@ def _GenerateCLDescriptionCommand(webgl_current, webgl_new, bugs):
   extra_trybot_args = []
   if extra_trybots:
     extra_trybot_string = GetExtraTrybotString()
-    extra_trybot_args = ['-m', 'CQ_INCLUDE_TRYBOTS=' + extra_trybot_string]
+    extra_trybot_args = ['-m', 'Cq-Include-Trybots: ' + extra_trybot_string]
 
   return [
     '-m', 'Roll WebGL ' + change_str,
