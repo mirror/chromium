@@ -33,6 +33,23 @@
       "revId": "32c42b84d526cb1f0d316c75d30a7d39b490cf47",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eab41b1e_c7d1db3d",
+        "filename": "chromeos/network/onc/onc_utils.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1342,
+      "author": {
+        "id": 1170114
+      },
+      "writtenOn": "2017-12-19T16:54:02Z",
+      "side": 1,
+      "message": "Just curious if you know what happens if someone enters the substitution variable and it isn\u0027t the only thing in the field? Does the substitution still happen? We probably shouldn\u0027t support that but not sure if we explicitly prevent it or not.",
+      "revId": "32c42b84d526cb1f0d316c75d30a7d39b490cf47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

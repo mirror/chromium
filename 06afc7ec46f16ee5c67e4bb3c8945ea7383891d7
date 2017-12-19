@@ -137,6 +137,24 @@
     },
     {
       "key": {
+        "uuid": "f63e1eda_103dd4e6",
+        "filename": "chrome/browser/ui/webui/chromeos/login/gaia_screen_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 658,
+      "author": {
+        "id": 1170114
+      },
+      "writtenOn": "2017-12-19T16:54:02Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "27376ee1_c62fe42e",
+      "revId": "06afc7ec46f16ee5c67e4bb3c8945ea7383891d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c72f292c_5c80ee3b",
         "filename": "chromeos/dbus/session_manager_client.cc",
         "patchSetId": 1
