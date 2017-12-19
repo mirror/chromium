@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "41083b7d_cf9bf2f8",
+        "filename": "components/drive/service/drive_api_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-12-19T13:37:54Z",
+      "side": 1,
+      "message": "The precondition of this function doesn\u0027t guarantee if query is non-empty after TranslateQuery.\nTherefore changed it to handle both cases.",
+      "parentUuid": "e84c19a3_24b3ce44",
+      "revId": "69218cc61ba2fc93271a68a3059351fd255e8300",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8fd8966c_03591244",
         "filename": "components/drive/service/drive_api_service.cc",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "69218cc61ba2fc93271a68a3059351fd255e8300",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2e98ceb_cf38407b",
+        "filename": "components/drive/service/drive_api_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-12-19T13:37:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8fd8966c_03591244",
+      "revId": "69218cc61ba2fc93271a68a3059351fd255e8300",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
