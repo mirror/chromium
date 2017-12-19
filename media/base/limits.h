@@ -71,6 +71,11 @@ enum {
   kMinAudioBufferSize = 256,
   kMaxAudioBufferSize = 8192,
 #endif
+
+  // UMA stats for Android show that hardware buffer sizes range from a low of
+  // 96 up to 87,360(!). Set a max of 8192. (The stats say 8192 includes 99.1%
+  // of all devices, as of 2017/11/29.)
+  kMaxWebAudioBufferSize = 8192,
 };
 
 }  // namespace limits
