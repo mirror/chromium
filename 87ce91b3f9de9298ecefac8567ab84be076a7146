@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "97f2a018_5eda2780",
+        "filename": "components/arc/test/fake_timer_instance.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-12-19T14:23:20Z",
+      "side": 1,
+      "message": "The \"nullptr\" constructor of an InterfacePtr is equivalent to the default constructor. If you want, you could replace this with \"\u003d default;\"\n\nhttps://cs.chromium.org/chromium/src/mojo/public/cpp/bindings/interface_ptr.h?l\u003d47\u0026rcl\u003dc46cb0905e0abb1d36130d42606c8c7f6e823447",
+      "range": {
+        "startLine": 27,
+        "startChar": 17,
+        "endLine": 27,
+        "endChar": 36
+      },
+      "revId": "87ce91b3f9de9298ecefac8567ab84be076a7146",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8ca02b1_78f796a4",
+        "filename": "components/arc/test/fake_timer_instance.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-12-19T14:23:20Z",
+      "side": 1,
+      "message": "Why \"const\" here and not in WaitForExpiration? I think you can drop the const here. The style guide recommends to use it only for reference and pointer arguments https://google.github.io/styleguide/cppguide.html#Use_of_const",
+      "range": {
+        "startLine": 42,
+        "startChar": 22,
+        "endLine": 42,
+        "endChar": 37
+      },
+      "revId": "87ce91b3f9de9298ecefac8567ab84be076a7146",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a820cd1_973c0ba0",
+        "filename": "components/arc/test/fake_timer_instance.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-12-19T14:23:20Z",
+      "side": 1,
+      "message": "#include \"base/optional.h\"",
+      "range": {
+        "startLine": 49,
+        "startChar": 6,
+        "endLine": 49,
+        "endChar": 20
+      },
+      "revId": "87ce91b3f9de9298ecefac8567ab84be076a7146",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b22ab97_61160a70",
+        "filename": "components/arc/timer/arc_timer.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-12-19T14:23:20Z",
+      "side": 1,
+      "message": "This could be base::Unretained(this), because it is guaranteed that the error handler won\u0027t be called once |this| is destroyed.\n\n\"The error handler will be reset when this Binding is unbound or closed.\"\nhttps://cs.chromium.org/chromium/src/mojo/public/cpp/bindings/binding.h?l\u003d174\u0026rcl\u003dc1c21b821b0bac5e8b6155da8f2c3fd3407bf8e9",
+      "range": {
+        "startLine": 25,
+        "startChar": 40,
+        "endLine": 25,
+        "endChar": 66
+      },
+      "revId": "87ce91b3f9de9298ecefac8567ab84be076a7146",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2191509_c87736b5",
+        "filename": "components/arc/timer/arc_timer.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-12-19T14:23:20Z",
+      "side": 1,
+      "message": "Add TODO to track the number of expirations, if this is important?",
+      "range": {
+        "startLine": 60,
+        "startChar": 27,
+        "endLine": 60,
+        "endChar": 76
+      },
+      "revId": "87ce91b3f9de9298ecefac8567ab84be076a7146",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "856ca920_2f2fc647",
+        "filename": "components/arc/timer/arc_timer_bridge.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-12-19T14:23:20Z",
+      "side": 1,
+      "message": "Since you expect less than a dozen clocks, use base::flat_set. It provides O(log n) lookups and O(n^2) insertions that \"are better or comparable to other containers even for several dozen items\".\n\nhttps://chromium.googlesource.com/chromium/src/+/627f0f0e3ca12a1e37e8724fc3ca3df33443267c/base/containers/README.md#base_containers-library-map-and-set-selection-usage-advice",
+      "range": {
+        "startLine": 146,
+        "startChar": 2,
+        "endLine": 146,
+        "endChar": 32
+      },
+      "revId": "87ce91b3f9de9298ecefac8567ab84be076a7146",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12e3368b_c55c218c",
+        "filename": "components/arc/timer/arc_timer_bridge.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-12-19T14:23:20Z",
+      "side": 1,
+      "message": "if clocks.size() \u003d\u003d timers.size() and clocks.size() \u003d\u003d proxies.size(), it is guaranteed that timers.size() \u003d\u003d proxies.size() :)",
+      "range": {
+        "startLine": 197,
+        "startChar": 2,
+        "endLine": 198,
+        "endChar": 48
+      },
+      "revId": "87ce91b3f9de9298ecefac8567ab84be076a7146",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7297321_297cbc3d",
+        "filename": "components/arc/timer/arc_timer_bridge_unittest.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-12-19T14:23:20Z",
+      "side": 1,
+      "message": "I initially thought that this was required for the FileDescriptorWatcher::WatchReadable() call in AlarmTimer, but it\u0027s for the FileDescriptorWatcher::WatchReadable() call in FakeTimerInstance::WaitForExpiration(). Add this comment above:\n\n// Required to watch a file descriptor in FakeTimerInstance::WaitForExpiration().",
+      "range": {
+        "startLine": 62,
+        "startChar": 2,
+        "endLine": 63,
+        "endChar": 41
+      },
+      "revId": "87ce91b3f9de9298ecefac8567ab84be076a7146",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
