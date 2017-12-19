@@ -16,9 +16,6 @@ size_t RegisterCastCrashKeys() {
       // chrome/common/crash_keys.cc. When http://crbug.com/598854 is fixed,
       // remove these and refactor as necessary.
 
-      {::crash_keys::kNumVariations, ::crash_keys::kSmallSize},
-      {::crash_keys::kVariations, ::crash_keys::kHugeSize},
-
       // TODO(sunnyps): Remove after fixing crbug.com/724999.
       {"gl-context-set-current-stack-trace", ::crash_keys::kMediumSize},
   };
