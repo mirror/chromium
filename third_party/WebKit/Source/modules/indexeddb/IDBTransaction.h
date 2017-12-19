@@ -185,7 +185,7 @@ class MODULES_EXPORT IDBTransaction final
                  IDBOpenDBRequest*,
                  const IDBDatabaseMetadata&);
 
-  void EnqueueEvent(Event*);
+  void DispatchOrEnqueueEvent(Event*);
 
   // Called when a transaction is aborted.
   void AbortOutstandingRequests();

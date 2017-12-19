@@ -40,6 +40,7 @@
 #include "core/dom/ExceptionCode.h"
 #include "core/dom/ExecutionContext.h"
 #include "core/dom/events/EventQueue.h"
+#include "core/inspector/MainThreadDebugger.h"
 #include "modules/indexed_db_names.h"
 #include "modules/indexeddb/IDBCursorWithValue.h"
 #include "modules/indexeddb/IDBDatabase.h"
@@ -260,7 +261,7 @@ void IDBRequest::SetResultCursor(IDBCursor* cursor,
   cursor_primary_key_ = primary_key;
   cursor_value_ = std::move(value);
 
-  EnqueueResultInternal(IDBAny::Create(cursor));
+  DispatchOrEnqueueResultInternal(IDBAny::Create(cursor));
 }
 
 void IDBRequest::AckReceivedBlobs(const IDBValue& value) {
@@ -411,7 +412,7 @@ void IDBRequest::EnqueueResponse(DOMException* error) {
   error_ = error;
   SetResult(IDBAny::CreateUndefined());
   pending_cursor_.Clear();
-  EnqueueEvent(Event::CreateCancelableBubble(EventTypeNames::error));
+  DispatchOrEnqueueEvent(Event::CreateCancelableBubble(EventTypeNames::error));
   metrics_.RecordAndReset();
 }
 
@@ -425,7 +426,7 @@ void IDBRequest::EnqueueResponse(const Vector<String>& string_list) {
   DOMStringList* dom_string_list = DOMStringList::Create();
   for (size_t i = 0; i < string_list.size(); ++i)
     dom_string_list->Append(string_list[i]);
-  EnqueueResultInternal(IDBAny::Create(dom_string_list));
+  DispatchOrEnqueueResultInternal(IDBAny::Create(dom_string_list));
   metrics_.RecordAndReset();
 }
 
@@ -467,9 +468,9 @@ void IDBRequest::EnqueueResponse(IDBKey* idb_key) {
   }
 
   if (idb_key && idb_key->IsValid())
-    EnqueueResultInternal(IDBAny::Create(idb_key));
+    DispatchOrEnqueueResultInternal(IDBAny::Create(idb_key));
   else
-    EnqueueResultInternal(IDBAny::CreateUndefined());
+    DispatchOrEnqueueResultInternal(IDBAny::CreateUndefined());
   metrics_.RecordAndReset();
 }
 
@@ -490,7 +491,7 @@ void IDBRequest::EnqueueResponse(Vector<std::unique_ptr<IDBValue>> values) {
     return;
   }
 
-  EnqueueResultInternal(IDBAny::Create(std::move(values)));
+  DispatchOrEnqueueResultInternal(IDBAny::Create(std::move(values)));
   metrics_.RecordAndReset();
 }
 
@@ -527,7 +528,7 @@ void IDBRequest::EnqueueResponse(std::unique_ptr<IDBValue> value) {
          value->KeyPath() == EffectiveObjectStore(source_)->IdbKeyPath());
 #endif
 
-  EnqueueResultInternal(IDBAny::Create(std::move(value)));
+  DispatchOrEnqueueResultInternal(IDBAny::Create(std::move(value)));
   metrics_.RecordAndReset();
 }
 
@@ -537,7 +538,7 @@ void IDBRequest::EnqueueResponse(int64_t value) {
     metrics_.RecordAndReset();
     return;
   }
-  EnqueueResultInternal(IDBAny::Create(value));
+  DispatchOrEnqueueResultInternal(IDBAny::Create(value));
   metrics_.RecordAndReset();
 }
 
@@ -547,16 +548,16 @@ void IDBRequest::EnqueueResponse() {
     metrics_.RecordAndReset();
     return;
   }
-  EnqueueResultInternal(IDBAny::CreateUndefined());
+  DispatchOrEnqueueResultInternal(IDBAny::CreateUndefined());
   metrics_.RecordAndReset();
 }
 
-void IDBRequest::EnqueueResultInternal(IDBAny* result) {
+void IDBRequest::DispatchOrEnqueueResultInternal(IDBAny* result) {
   DCHECK(GetExecutionContext());
   DCHECK(!pending_cursor_);
   DCHECK(transit_blob_handles_.IsEmpty());
   SetResult(result);
-  EnqueueEvent(Event::Create(EventTypeNames::success));
+  DispatchOrEnqueueEvent(Event::Create(EventTypeNames::success));
 }
 
 void IDBRequest::SetResult(IDBAny* result) {
@@ -622,7 +623,6 @@ DispatchEventResult IDBRequest::DispatchEventInternal(Event* event) {
     return DispatchEventResult::kCanceledBeforeDispatch;
   DCHECK_EQ(ready_state_, PENDING);
   DCHECK(has_pending_activity_);
-  DCHECK(enqueued_events_.size());
   DCHECK_EQ(event->target(), this);
 
   if (event->type() != EventTypeNames::blocked)
@@ -735,7 +735,7 @@ void IDBRequest::TransactionDidFinishAndDispatch() {
   ready_state_ = PENDING;
 }
 
-void IDBRequest::EnqueueEvent(Event* event) {
+void IDBRequest::DispatchOrEnqueueEvent(Event* event) {
   DCHECK(ready_state_ == PENDING || ready_state_ == DONE);
 
   if (!GetExecutionContext())
@@ -745,14 +745,8 @@ void IDBRequest::EnqueueEvent(Event* event) {
       << "When queueing event " << event->type() << ", ready_state_ was "
       << ready_state_;
 
-  EventQueue* event_queue = GetExecutionContext()->GetEventQueue();
   event->SetTarget(this);
-
-  // Keep track of enqueued events in case we need to abort prior to dispatch,
-  // in which case these must be cancelled. If the events not dispatched for
-  // other reasons they must be removed from this list via DequeueEvent().
-  if (event_queue->EnqueueEvent(FROM_HERE, event))
-    enqueued_events_.push_back(event);
+  DispatchEvent(event);
 }
 
 void IDBRequest::DequeueEvent(Event* event) {

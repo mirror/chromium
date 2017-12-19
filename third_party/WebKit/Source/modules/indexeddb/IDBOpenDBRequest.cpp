@@ -91,7 +91,7 @@ void IDBOpenDBRequest::EnqueueBlocked(int64_t old_version) {
       (version_ == IDBDatabaseMetadata::kDefaultVersion)
           ? Nullable<unsigned long long>()
           : Nullable<unsigned long long>(version_);
-  EnqueueEvent(IDBVersionChangeEvent::Create(
+  DispatchOrEnqueueEvent(IDBVersionChangeEvent::Create(
       EventTypeNames::blocked, old_version, new_version_nullable));
 }
 
@@ -128,9 +128,9 @@ void IDBOpenDBRequest::EnqueueUpgradeNeeded(
 
   if (version_ == IDBDatabaseMetadata::kNoVersion)
     version_ = 1;
-  EnqueueEvent(IDBVersionChangeEvent::Create(EventTypeNames::upgradeneeded,
-                                             old_version, version_, data_loss,
-                                             data_loss_message));
+  DispatchOrEnqueueEvent(
+      IDBVersionChangeEvent::Create(EventTypeNames::upgradeneeded, old_version,
+                                    version_, data_loss, data_loss_message));
 }
 
 void IDBOpenDBRequest::EnqueueResponse(std::unique_ptr<WebIDBDatabase> backend,
@@ -157,7 +157,7 @@ void IDBOpenDBRequest::EnqueueResponse(std::unique_ptr<WebIDBDatabase> backend,
     SetResult(IDBAny::Create(idb_database));
   }
   idb_database->SetMetadata(metadata);
-  EnqueueEvent(Event::Create(EventTypeNames::success));
+  DispatchOrEnqueueEvent(Event::Create(EventTypeNames::success));
   metrics_.RecordAndReset();
 }
 
@@ -172,7 +172,7 @@ void IDBOpenDBRequest::EnqueueResponse(int64_t old_version) {
     old_version = IDBDatabaseMetadata::kDefaultVersion;
   }
   SetResult(IDBAny::CreateUndefined());
-  EnqueueEvent(IDBVersionChangeEvent::Create(
+  DispatchOrEnqueueEvent(IDBVersionChangeEvent::Create(
       EventTypeNames::success, old_version, Nullable<unsigned long long>()));
   metrics_.RecordAndReset();
 }
