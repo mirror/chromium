@@ -46,6 +46,30 @@
       "revId": "e80234f3b7abe3259f83cd41ceb9c93386628db9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb2ff3ae_c1cda8ab",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1014,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-12-19T11:11:05Z",
+      "side": 1,
+      "message": "Oh :( We could deal with this by asynchronously showing the controls on hover/move but I\u0027m not sure if that\u0027s worth it...",
+      "parentUuid": "5b925da1_f5cfefb8",
+      "range": {
+        "startLine": 1014,
+        "startChar": 22,
+        "endLine": 1014,
+        "endChar": 54
+      },
+      "revId": "e80234f3b7abe3259f83cd41ceb9c93386628db9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
