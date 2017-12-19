@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "597a73c2_54ba1152",
+        "filename": "net/extras/sqlite/sqlite_persistent_cookie_store.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1152,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-12-19T23:56:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d39fc57f_4a3de6a9",
+      "range": {
+        "startLine": 1152,
+        "startChar": 27,
+        "endLine": 1152,
+        "endChar": 28
+      },
+      "revId": "d09c2000ed26223d1704ee226d608e1e2f9271a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "654de9e4_ce29905a",
         "filename": "net/extras/sqlite/sqlite_persistent_cookie_store.cc",
         "patchSetId": 2
@@ -69,6 +93,30 @@
       "revId": "d09c2000ed26223d1704ee226d608e1e2f9271a2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98d9d138_d594a470",
+        "filename": "net/extras/sqlite/sqlite_persistent_cookie_store.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1248,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-12-19T23:56:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "654de9e4_ce29905a",
+      "range": {
+        "startLine": 1248,
+        "startChar": 21,
+        "endLine": 1248,
+        "endChar": 27
+      },
+      "revId": "d09c2000ed26223d1704ee226d608e1e2f9271a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
