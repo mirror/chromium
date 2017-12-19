@@ -1,0 +1,197 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "82c696d7_b40bae5d",
+        "filename": "third_party/WebKit/Source/core/events/WebInputEventConversion.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-12-19T19:08:56Z",
+      "side": 1,
+      "message": "This looks completely wrong. You are pushing a pointer of a stack variable into a vector of pointers.",
+      "revId": "a811e699a9987b9bf0f898e8d2dcbda9be6a1d05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cede1a97_d5c832fe",
+        "filename": "third_party/WebKit/Source/core/exported/WebPagePopupImpl.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 520,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-12-19T19:08:56Z",
+      "side": 1,
+      "message": "I find this incredibly confusing in that I need to look at the header file to understand that it is creating a PointerCausedUaAction event. Are we able to clean this up somehow; probably by getting rid of that ctor.",
+      "revId": "a811e699a9987b9bf0f898e8d2dcbda9be6a1d05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b3db839_5a93658a",
+        "filename": "third_party/WebKit/Source/core/exported/WebPagePopupImpl.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 534,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-12-19T19:08:56Z",
+      "side": 1,
+      "message": "What happens when a single event is prevent defaulted what is the resulting code? Should it be merged?",
+      "revId": "a811e699a9987b9bf0f898e8d2dcbda9be6a1d05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1af777d8_a92272ed",
+        "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1988,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-12-19T19:08:56Z",
+      "side": 1,
+      "message": "This is all duplicated code. Can we avoid it somehow?",
+      "revId": "a811e699a9987b9bf0f898e8d2dcbda9be6a1d05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65cdc02d_42e50da5",
+        "filename": "third_party/WebKit/Source/core/frame/WebFrameWidgetImpl.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-12-19T19:08:56Z",
+      "side": 1,
+      "message": "Same duplicated code.",
+      "range": {
+        "startLine": 390,
+        "startChar": 21,
+        "endLine": 390,
+        "endChar": 37
+      },
+      "revId": "a811e699a9987b9bf0f898e8d2dcbda9be6a1d05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e04369e_72d59841",
+        "filename": "third_party/WebKit/Source/core/input/EventHandler.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 2064,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-12-19T19:08:56Z",
+      "side": 1,
+      "message": "Remove the code. Don\u0027t comment it out.",
+      "revId": "a811e699a9987b9bf0f898e8d2dcbda9be6a1d05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9895c0b_44972c7a",
+        "filename": "third_party/WebKit/Source/core/input/PointerEventManagerTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-12-19T19:08:56Z",
+      "side": 1,
+      "message": "Why is this required?",
+      "revId": "a811e699a9987b9bf0f898e8d2dcbda9be6a1d05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1183ed6_16723e8a",
+        "filename": "third_party/WebKit/Source/core/input/PointerEventManagerTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-12-19T19:08:56Z",
+      "side": 1,
+      "message": "I\u0027d prefer calling the ctor here as opposed to adjusting types.",
+      "revId": "a811e699a9987b9bf0f898e8d2dcbda9be6a1d05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9666d89b_f21f554c",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorOverlayAgent.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-12-19T19:08:56Z",
+      "side": 1,
+      "message": "Does this now have different behavior? In that they were taking the first touch point of a sequence now you are doing each touch point. Should it be checking that it is primary or something like that?",
+      "revId": "a811e699a9987b9bf0f898e8d2dcbda9be6a1d05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21ca60dc_0d7c5c3a",
+        "filename": "third_party/WebKit/public/platform/WebPointerEvent.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-12-19T19:08:56Z",
+      "side": 1,
+      "message": "All of our subclasses follow that the Type is the first parameter. This constructor should probably do that as well.",
+      "revId": "a811e699a9987b9bf0f898e8d2dcbda9be6a1d05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1859be18_c853db24",
+        "filename": "third_party/WebKit/public/platform/WebPointerEvent.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-12-19T19:08:56Z",
+      "side": 1,
+      "message": "I don\u0027t care for variables to be named the same as class members; are we able to add a _param suffix?",
+      "revId": "a811e699a9987b9bf0f898e8d2dcbda9be6a1d05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
