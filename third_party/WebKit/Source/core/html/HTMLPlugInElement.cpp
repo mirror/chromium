@@ -24,6 +24,7 @@
 
 #include "bindings/core/v8/ScriptController.h"
 #include "core/CSSPropertyNames.h"
+#include "core/dom/ChildFrameDisconnector.h"
 #include "core/dom/Document.h"
 #include "core/dom/Node.h"
 #include "core/dom/ShadowRoot.h"
@@ -32,6 +33,7 @@
 #include "core/frame/LocalFrame.h"
 #include "core/frame/LocalFrameClient.h"
 #include "core/frame/LocalFrameView.h"
+#include "core/frame/Location.h"
 #include "core/frame/Settings.h"
 #include "core/frame/csp/ContentSecurityPolicy.h"
 #include "core/html/HTMLContentElement.h"
@@ -133,13 +135,20 @@ bool HTMLPlugInElement::RequestObjectInternal(
     return false;
 
   ObjectContentType object_type = GetObjectContentType();
+  should_restart_loading_process_ =
+      ShouldRedirectContentFrameToEmptyUrl(object_type);
+  if (should_restart_loading_process_)
+    SetNeedsPluginUpdate(true);
   if (object_type == ObjectContentType::kFrame ||
-      object_type == ObjectContentType::kImage) {
+      object_type == ObjectContentType::kImage ||
+      should_restart_loading_process_) {
     // If the plugin element already contains a subframe,
     // loadOrRedirectSubframe will re-use it. Otherwise, it will create a
     // new frame and set it as the LayoutEmbeddedContent's EmbeddedContentView,
     // causing what was previously in the EmbeddedContentView to be torn down.
-    return LoadOrRedirectSubframe(completed_url, GetNameAttribute(), true);
+    return LoadOrRedirectSubframe(
+        should_restart_loading_process_ ? BlankURL() : completed_url,
+        GetNameAttribute(), true);
   }
 
   // If an object's content can't be handled and it has no fallback, let
@@ -148,6 +157,20 @@ bool HTMLPlugInElement::RequestObjectInternal(
       object_type == ObjectContentType::kNone && HasFallbackContent();
   return LoadPlugin(completed_url, service_type_, param_names, param_values,
                     use_fallback, true);
+}
+
+bool HTMLPlugInElement::ShouldRedirectContentFrameToEmptyUrl(
+    ObjectContentType content_type) {
+  if (content_type != ObjectContentType::kPlugin)
+    return false;
+
+  if (!ContentFrame() || !ContentFrame()->DomWindow())
+    return false;
+
+  // If the frame is not blank, then it should first be made blank so that the
+  // unload handler logic is run.
+  return ContentFrame()->DomWindow()->location()->hostname() !=
+         BlankURL().Host();
 }
 
 bool HTMLPlugInElement::CanProcessDrag() const {
@@ -264,6 +287,22 @@ void HTMLPlugInElement::CreatePluginWithoutLayoutObject() {
              false);
 }
 
+void HTMLPlugInElement::ContentFrameDidStopLoading() {
+  if (!should_restart_loading_process_)
+    return;
+
+  if (ContentFrame()->DomWindow()->location()->hostname() ==
+      BlankURL().Host()) {
+    // This frame is blank and can be safely detached.
+    ChildFrameDisconnector(*this).Disconnect();
+    GetDocument().LoadPluginsSoon();
+    url_ = "";
+    service_type_ = "";
+  }
+
+  should_restart_loading_process_ = false;
+}
+
 bool HTMLPlugInElement::ShouldAccelerate() const {
   WebPluginContainerImpl* plugin = OwnedPlugin();
   return plugin && plugin->PlatformLayer();
@@ -300,8 +339,7 @@ void HTMLPlugInElement::DetachLayoutTree(const AttachContext& context) {
   WebPluginContainerImpl* plugin = OwnedPlugin();
   if (plugin && context.performing_reattach) {
     SetPersistedPlugin(ToWebPluginContainerImpl(ReleaseEmbeddedContentView()));
-  } else {
-    // Clear the plugin; will trigger disposal of it with Oilpan.
+  } else if (plugin) {
     SetEmbeddedContentView(nullptr);
   }
 

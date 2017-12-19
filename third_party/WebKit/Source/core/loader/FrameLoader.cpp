@@ -55,6 +55,7 @@
 #include "core/frame/VisualViewport.h"
 #include "core/frame/csp/ContentSecurityPolicy.h"
 #include "core/html/HTMLFrameOwnerElement.h"
+#include "core/html/HTMLPlugInElement.h"
 #include "core/html/forms/HTMLFormElement.h"
 #include "core/html_names.h"
 #include "core/input/EventHandler.h"
@@ -511,8 +512,13 @@ void FrameLoader::DidFinishNavigation() {
   }
 
   Frame* parent = frame_->Tree().Parent();
-  if (parent && parent->IsLocalFrame())
+  if (parent && parent->IsLocalFrame()) {
     ToLocalFrame(parent)->GetDocument()->CheckCompleted();
+    if (auto* owner = frame_->DeprecatedLocalOwner()) {
+      if (IsHTMLPlugInElement(owner))
+        ToHTMLPlugInElement(owner)->ContentFrameDidStopLoading();
+    }
+  }
 }
 
 Frame* FrameLoader::Opener() {
