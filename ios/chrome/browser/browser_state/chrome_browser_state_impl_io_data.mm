@@ -351,6 +351,6 @@ void ChromeBrowserStateImplIOData::ClearNetworkingHistorySinceOnIOThread(
   DCHECK(transport_security_state());
   // Completes synchronously.
   transport_security_state()->DeleteAllDynamicDataSince(time);
-  http_server_properties()->Clear();
-  web::WebThread::PostTask(web::WebThread::UI, FROM_HERE, completion);
+  http_server_properties()->Clear(base::BindOnce(
+      &web::WebThread::PostTask, web::WebThread::UI, FROM_HERE, completion));
 }
