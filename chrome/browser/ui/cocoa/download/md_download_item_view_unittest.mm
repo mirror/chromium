@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#import "chrome/browser/ui/cocoa/download/md_download_item_view.h"
+#import "chrome/browser/ui/cocoa/download/md_download_item_view_testing.h"
 
 #include "base/files/file_path.h"
 #import "base/mac/scoped_nsobject.h"
@@ -59,6 +59,22 @@ TEST_F(MDDownloadItemViewTest, TestStates) {
   ON_CALL(item_, GetState())
       .WillByDefault(testing::Return(content::DownloadItem::COMPLETE));
   set_state_and_display();
+}
+
+// Verify that the key view loop is empty when full keyboard access is off and
+// comprises the controls when it is on.
+TEST_F(MDDownloadItemViewTest, TestKeyboardAccess) {
+  EXPECT_TRUE(([test_window().validKeyViews isEqualTo:@[
+    // Nothing.
+  ]]));
+
+  test_window().pretendFullKeyboardAccessIsEnabled = YES;
+  [test_window() recalculateKeyViewLoop];
+
+  EXPECT_TRUE(([test_window().validKeyViews isEqualTo:@[
+    view_.primaryButton,
+    view_.menuButton,
+  ]]));
 }
 
 }  // namespace
