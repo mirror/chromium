@@ -1,0 +1,12 @@
+Test that computing the initiator graph works.
+
+Fetch in worker result: ""
+
+http://127.0.0.1:8000/devtools/network/resources/fetch-worker.js
+Initiators http://127.0.0.1:8000/devtools/network/resources/fetch-worker.js
+Initiated http://127.0.0.1:8000/devtools/network/resources/fetch-worker.js
+
+http://127.0.0.1:8000/devtools/network/resources/empty.html
+Initiators http://127.0.0.1:8000/devtools/network/resources/empty.html
+Initiated http://127.0.0.1:8000/devtools/network/resources/empty.html
+
