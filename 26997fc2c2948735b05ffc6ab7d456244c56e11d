@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0ea67c03_d6a31a51",
+        "filename": "components/omnibox/browser/autocomplete_input.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-12-19T02:08:23Z",
+      "side": 1,
+      "message": "Done\n\nTrivia: \nPresented on the chance that someone else finds it useful to know how to navigate to an .invalid domain.  To navigate to http://foo.invalid (for example) type out the URL and select the non-search version of the URL from the dropdown.  So it is more difficult to use the \".invalid\" domain [1], but not impossible.\n\n[1] https://bugs.chromium.org/p/chromium/issues/detail?id\u003d782146#c25",
+      "parentUuid": "a2dbda1d_adacf80a",
+      "revId": "26997fc2c2948735b05ffc6ab7d456244c56e11d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "36183238_3fe9aae4",
         "filename": "components/omnibox/browser/autocomplete_input.cc",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "db1d6912_e71fd1b8",
+        "filename": "components/omnibox/browser/autocomplete_input.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 440,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-12-19T02:08:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "36183238_3fe9aae4",
+      "revId": "26997fc2c2948735b05ffc6ab7d456244c56e11d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "156f2852_97a4de8c",
         "filename": "components/omnibox/browser/autocomplete_input.cc",
         "patchSetId": 1
@@ -50,6 +86,24 @@
       "revId": "26997fc2c2948735b05ffc6ab7d456244c56e11d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eef48c3b_e3f0a029",
+        "filename": "components/omnibox/browser/autocomplete_input.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-12-19T02:08:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "156f2852_97a4de8c",
+      "revId": "26997fc2c2948735b05ffc6ab7d456244c56e11d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
