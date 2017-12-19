@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "7fa36c9a_c54b76b6",
+        "filename": "third_party/WebKit/Source/platform/heap/Member.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 587,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-12-19T13:50:13Z",
+      "side": 1,
+      "message": "As discussed in the meeting. Lets do eager tracing for now as it is already supported. If that is too slow we can chunk it up adding proper support.",
+      "parentUuid": "5cfb6a41_270d2458",
+      "revId": "1a1df4f049051f6bb684c9bf5542ba4fd8dd8d00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9acb8f31_d4982b43",
         "filename": "third_party/WebKit/Source/platform/heap/ThreadState.h",
         "patchSetId": 6
@@ -69,6 +87,24 @@
       "revId": "1a1df4f049051f6bb684c9bf5542ba4fd8dd8d00",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b02583d4_efc7a70e",
+        "filename": "third_party/WebKit/Source/platform/heap/ThreadState.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 528,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-12-19T13:50:13Z",
+      "side": 1,
+      "message": "HeapAllocator needs it.",
+      "parentUuid": "9acb8f31_d4982b43",
+      "revId": "1a1df4f049051f6bb684c9bf5542ba4fd8dd8d00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -107,6 +143,24 @@
     },
     {
       "key": {
+        "uuid": "ea03c2e3_cc04819b",
+        "filename": "third_party/WebKit/Source/platform/wtf/ConstructTraits.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-12-19T13:50:13Z",
+      "side": 1,
+      "message": "Added the notification methods to ParitionAllocator. This removes one boolean from the traits.",
+      "parentUuid": "e8683ff8_8a04a46b",
+      "revId": "1a1df4f049051f6bb684c9bf5542ba4fd8dd8d00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "74486665_7ddc56f3",
         "filename": "third_party/WebKit/Source/platform/wtf/ConstructTraits.h",
         "patchSetId": 6
@@ -121,6 +175,24 @@
       "revId": "1a1df4f049051f6bb684c9bf5542ba4fd8dd8d00",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a168854_679b5c30",
+        "filename": "third_party/WebKit/Source/platform/wtf/ConstructTraits.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-12-19T13:50:13Z",
+      "side": 1,
+      "message": "WeakMember case has been discussed offline.",
+      "parentUuid": "74486665_7ddc56f3",
+      "revId": "1a1df4f049051f6bb684c9bf5542ba4fd8dd8d00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -171,6 +243,24 @@
       "side": 1,
       "message": "When can Vector\u003cT\u003e happens? It doesn\u0027t look like a valid use case. If T has a trace method, it must be HeapVector\u003cT\u003e. Otherwise, no one traces into the vector.\n\nIn other words, I\u0027d prefer adding static_assert(0) to line 76.",
       "parentUuid": "84ebf683_062d1ea0",
+      "revId": "1a1df4f049051f6bb684c9bf5542ba4fd8dd8d00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d672eab2_7739c4fa",
+        "filename": "third_party/WebKit/Source/platform/wtf/ConstructTraits.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-12-19T13:50:13Z",
+      "side": 1,
+      "message": "Vector\u003cVector\u003cSomeClass\u003e\u003e is a valid use case I think.\n\nHowever, in that case, we actually have Vector\u003cSomethingThatIsTraceable\u003e because Vector\u003cSomeClass\u003e is traceable. We have a DCHECK there that Trace is never called but it is still required for compile time.\n\nAdding the method to PartitionAllocator removes this specialization.",
+      "parentUuid": "57f3eb91_c2f07149",
       "revId": "1a1df4f049051f6bb684c9bf5542ba4fd8dd8d00",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -279,6 +369,24 @@
       "revId": "1a1df4f049051f6bb684c9bf5542ba4fd8dd8d00",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9066acb_c504034b",
+        "filename": "third_party/WebKit/Source/platform/wtf/Vector.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-12-19T13:50:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "06b759b5_bacc1937",
+      "revId": "1a1df4f049051f6bb684c9bf5542ba4fd8dd8d00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
