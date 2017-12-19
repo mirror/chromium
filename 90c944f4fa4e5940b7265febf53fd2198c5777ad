@@ -22,6 +22,30 @@
       "revId": "90c944f4fa4e5940b7265febf53fd2198c5777ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b95e0988_b89bf240",
+        "filename": "ui/message_center/views/message_popup_collection.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-12-19T07:48:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4918d2c5_5542a837",
+      "range": {
+        "startLine": 143,
+        "startChar": 29,
+        "endLine": 143,
+        "endChar": 47
+      },
+      "revId": "90c944f4fa4e5940b7265febf53fd2198c5777ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
