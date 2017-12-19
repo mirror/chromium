@@ -52,6 +52,24 @@
       "revId": "d0481c4c909f22a8bf5a8b582a67d5a7793a4086",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f022a2c5_6f9d3baa",
+        "filename": "third_party/WebKit/Source/platform/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 1525,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-12-19T01:21:24Z",
+      "side": 1,
+      "message": "In a component build, blink_platform is a shared library (e.g. blink_platform.dll), which is a linkable unit, so will force objects to link. In a non-component build, blink_platform will be a static_library (except on Android, where it\u0027s also a source_set). Either way, though, making a static library is just gathering objects, so linking doesn\u0027t happen until we reach the one big Chrome executable/DLL target.\n\nSince the component build is the more restrictive of the two, we must have all symbols not imported from outside platform resolved to link blink_platform (and everything not being linked into blink_platform must depend on blink_platform instead of directly on something inside it, so that it gets the copy exported from the shared library).\n\nAll objects inside platform ought to have a consistent view of the code they share to avoid ODR violations (i.e. all defines and includes need to be resolved), and everything needed to use the headers (e.g. generated headers) needs to exist before any objects which use them are built.\n\nSince specifying \"objects which use those headers\" is hard when we allow includes from any platform header to any other (with the exception of wtf, which is currently still special), the simplest solution is to require that generated headers and other public dependencies be available before any object in platform is built.",
+      "parentUuid": "65913a52_98183411",
+      "revId": "d0481c4c909f22a8bf5a8b582a67d5a7793a4086",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
