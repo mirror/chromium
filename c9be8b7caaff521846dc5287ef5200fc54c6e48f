@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "cb9277af_99dddf5b",
+        "filename": "components/signin/core/browser/signin_manager_base.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-12-19T11:54:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "76b07847_09caaa61",
+      "range": {
+        "startLine": 63,
+        "startChar": 17,
+        "endLine": 63,
+        "endChar": 38
+      },
+      "revId": "c9be8b7caaff521846dc5287ef5200fc54c6e48f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "690ae8aa_318626f2",
         "filename": "services/identity/public/cpp/identity_proxy.cc",
         "patchSetId": 6
@@ -39,6 +63,24 @@
       "revId": "c9be8b7caaff521846dc5287ef5200fc54c6e48f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "692f3514_020d0d7d",
+        "filename": "services/identity/public/cpp/identity_proxy.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-12-19T11:54:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "690ae8aa_318626f2",
+      "revId": "c9be8b7caaff521846dc5287ef5200fc54c6e48f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "db5249be_0cf159ff",
+        "filename": "services/identity/public/cpp/identity_proxy.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-12-19T11:54:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dffda7c8_a7adfc19",
+      "range": {
+        "startLine": 59,
+        "startChar": 20,
+        "endLine": 59,
+        "endChar": 42
+      },
+      "revId": "c9be8b7caaff521846dc5287ef5200fc54c6e48f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c1c7cf52_b8dca06e",
         "filename": "services/identity/public/cpp/identity_proxy.cc",
         "patchSetId": 6
@@ -76,6 +142,30 @@
       "writtenOn": "2017-12-18T14:38:38Z",
       "side": 1,
       "message": "Should this be primary_account_info_ \u003d account_info ?",
+      "range": {
+        "startLine": 63,
+        "startChar": 26,
+        "endLine": 63,
+        "endChar": 37
+      },
+      "revId": "c9be8b7caaff521846dc5287ef5200fc54c6e48f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbd83083_a6483486",
+        "filename": "services/identity/public/cpp/identity_proxy.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-12-19T11:54:31Z",
+      "side": 1,
+      "message": "No. |account_info| is the account that has just been removed; the user is now signed out so there is no valid information for the primary account.",
+      "parentUuid": "c1c7cf52_b8dca06e",
       "range": {
         "startLine": 63,
         "startChar": 26,
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "0c98b647_5a89cde9",
+        "filename": "services/identity/public/cpp/identity_proxy.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-12-19T11:54:31Z",
+      "side": 1,
+      "message": "I believe it\u0027s stylistic preference; I prefer always having braces for for loops unless you feel strongly about it.",
+      "parentUuid": "af36ae93_a20db2e8",
+      "range": {
+        "startLine": 64,
+        "startChar": 41,
+        "endLine": 64,
+        "endChar": 0
+      },
+      "revId": "c9be8b7caaff521846dc5287ef5200fc54c6e48f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9868e0a3_2162a601",
         "filename": "services/identity/public/cpp/identity_proxy.h",
         "patchSetId": 6
@@ -131,6 +245,30 @@
       "revId": "c9be8b7caaff521846dc5287ef5200fc54c6e48f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3f21e47_bb636073",
+        "filename": "services/identity/public/cpp/identity_proxy.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-12-19T11:54:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9868e0a3_2162a601",
+      "range": {
+        "startLine": 22,
+        "startChar": 17,
+        "endLine": 22,
+        "endChar": 38
+      },
+      "revId": "c9be8b7caaff521846dc5287ef5200fc54c6e48f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -157,6 +295,30 @@
     },
     {
       "key": {
+        "uuid": "cc024ae3_b242f743",
+        "filename": "services/identity/public/cpp/identity_proxy.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-12-19T11:54:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "875d9ff8_bdfd0b72",
+      "range": {
+        "startLine": 37,
+        "startChar": 16,
+        "endLine": 37,
+        "endChar": 33
+      },
+      "revId": "c9be8b7caaff521846dc5287ef5200fc54c6e48f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "18ee173f_9477a5cc",
         "filename": "services/identity/public/cpp/identity_proxy.h",
         "patchSetId": 6
@@ -171,6 +333,24 @@
       "revId": "c9be8b7caaff521846dc5287ef5200fc54c6e48f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a3db2ab_e3163939",
+        "filename": "services/identity/public/cpp/identity_proxy.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-12-19T11:54:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "18ee173f_9477a5cc",
+      "revId": "c9be8b7caaff521846dc5287ef5200fc54c6e48f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -197,6 +377,30 @@
     },
     {
       "key": {
+        "uuid": "67eb1514_987a9584",
+        "filename": "services/identity/public/cpp/identity_proxy_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-12-19T11:54:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b329bd60_e8170d7d",
+      "range": {
+        "startLine": 37,
+        "startChar": 2,
+        "endLine": 37,
+        "endChar": 27
+      },
+      "revId": "c9be8b7caaff521846dc5287ef5200fc54c6e48f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "14b7e418_7968db74",
         "filename": "services/identity/public/cpp/identity_proxy_unittest.cc",
         "patchSetId": 6
@@ -220,6 +424,30 @@
     },
     {
       "key": {
+        "uuid": "76e453ec_8191eb14",
+        "filename": "services/identity/public/cpp/identity_proxy_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-12-19T11:54:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "14b7e418_7968db74",
+      "range": {
+        "startLine": 46,
+        "startChar": 4,
+        "endLine": 46,
+        "endChar": 22
+      },
+      "revId": "c9be8b7caaff521846dc5287ef5200fc54c6e48f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a9be33c8_ec8cfa88",
         "filename": "services/identity/public/cpp/identity_proxy_unittest.cc",
         "patchSetId": 6
@@ -231,6 +459,30 @@
       "writtenOn": "2017-12-18T14:38:38Z",
       "side": 1,
       "message": "I see that signin_manager_-\u003eInitialize is never called in this test. I am wondering if that is necessary or not.",
+      "range": {
+        "startLine": 100,
+        "startChar": 21,
+        "endLine": 100,
+        "endChar": 31
+      },
+      "revId": "c9be8b7caaff521846dc5287ef5200fc54c6e48f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d335e9d1_5971fd14",
+        "filename": "services/identity/public/cpp/identity_proxy_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-12-19T11:54:31Z",
+      "side": 1,
+      "message": "As the test is passing without it, I\u0027m loathe to add it, as I feel like that will be misleading.",
+      "parentUuid": "a9be33c8_ec8cfa88",
       "range": {
         "startLine": 100,
         "startChar": 21,
