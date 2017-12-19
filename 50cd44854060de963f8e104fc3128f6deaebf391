@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "418a3bee_c244acac",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_controller_impl_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1159306
+      },
+      "writtenOn": "2017-12-19T22:16:33Z",
+      "side": 1,
+      "message": "I\u0027m uncomfortable holding the lock while calling MaybeStartSwReporter. (It looks like it\u0027s safe right now since MaybeStartReporterRunner just does a lot of book-keeping and then posts a task, but that might change.) How about:\n\nSwReporterInvocationType invocation_type;\n{\n  base::AutoLock ...\n  cached_etc_ \u003d\n  invocation_type \u003d pending_invocation_type_;\n  pending_invocation_type_ \u003d kPeriodicRun;\n}\nMaybeStartSwReporter(invocation_type, ...)",
+      "revId": "50cd44854060de963f8e104fc3128f6deaebf391",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "018e2095_fe1f6a8f",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_controller_impl_win.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1159306
+      },
+      "writtenOn": "2017-12-19T22:16:33Z",
+      "side": 1,
+      "message": "Var name in comment needs updating",
+      "revId": "50cd44854060de963f8e104fc3128f6deaebf391",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0b7a35c_f91330c9",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_controller_win.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1159306
+      },
+      "writtenOn": "2017-12-19T22:16:33Z",
+      "side": 1,
+      "message": "Nice simplification!",
+      "revId": "50cd44854060de963f8e104fc3128f6deaebf391",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

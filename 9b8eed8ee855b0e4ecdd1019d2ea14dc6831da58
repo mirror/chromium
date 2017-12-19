@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f9cedc10_17e0af69",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/mock_chrome_cleaner_controller_win.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1159306
+      },
+      "writtenOn": "2017-12-19T22:16:33Z",
+      "side": 1,
+      "message": "Nit: I\u0027d suggest a more verbose name, like \"MockedOnSwReporterReady\", since a trailing _ already has a meaning.",
+      "revId": "9b8eed8ee855b0e4ecdd1019d2ea14dc6831da58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
