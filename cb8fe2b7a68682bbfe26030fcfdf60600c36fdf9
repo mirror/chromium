@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "7b1f24c4_e82e3944",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 18
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-12-19T01:24:26Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be \"indicating if VideoFrames should be backed by multi-planar GMBs.\"\n\nWe can still have multi-planar VideoFrames (backed by multiple, planar, GBMs).",
+      "revId": "cb8fe2b7a68682bbfe26030fcfdf60600c36fdf9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "aaa36cf6_ad7d7579",
         "filename": "content/public/common/content_switches.cc",
         "patchSetId": 18
@@ -42,6 +59,23 @@
         "endLine": 319,
         "endChar": 63
       },
+      "revId": "cb8fe2b7a68682bbfe26030fcfdf60600c36fdf9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "998f5134_33e4ad29",
+        "filename": "gpu/command_buffer/service/feature_info.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 1053,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-12-19T01:24:26Z",
+      "side": 1,
+      "message": "I think the defined(ARCH_CPU_X86_FAMILY) can be removed now, since we\u0027re already preventing the use of NV12 on rockchip where native gmbs are not enabled.\n\nWe should test it at least on a kevin though.",
       "revId": "cb8fe2b7a68682bbfe26030fcfdf60600c36fdf9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
