@@ -263,6 +263,30 @@
     },
     {
       "key": {
+        "uuid": "63ba1b84_95a795c4",
+        "filename": "content/network/data_pipe_element_reader.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-12-19T19:36:08Z",
+      "side": 1,
+      "message": "Yuzhu: So I took a look at where I would think the documentation would be on guarantees/lack of guarantees of state after a watcher was signaled with a readable signal (https://chromium.googlesource.com/chromium/src/+/master/mojo/public/cpp/system#Watching-Handles ) and didn\u0027t find anything that clarified this.  Is there somewhere else I should be looking?\n\nGiven that we have some code that appears to assume that a watcher triggering with a readable signal can always be read, and some that doesn\u0027t, it would seem making sure the documentation is clear about what assumptions can be made.  Willing to give me a pointer to the documentation I should be considering updating?",
+      "parentUuid": "a64aa63f_a9bf179d",
+      "range": {
+        "startLine": 94,
+        "startChar": 18,
+        "endLine": 94,
+        "endChar": 30
+      },
+      "revId": "172fd5827d1c0bae7d932ff5e52b0c02212e6b4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a172f978_3dabec5f",
         "filename": "content/network/data_pipe_element_reader.h",
         "patchSetId": 5
