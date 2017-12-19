@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ae8dcbe6_df7ad591",
+        "filename": "services/network/public/cpp/proxy_resolving_client_socket.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-19T18:07:50Z",
+      "side": 1,
+      "message": "Erm, that should be, I suggest saying \"|url|\u0027s host and port specify where a connection will be established to.  The full URL will only be used for proxy resolution.\"",
+      "parentUuid": "82f63b7a_fc4a6128",
+      "range": {
+        "startLine": 49,
+        "startChar": 33,
+        "endLine": 49,
+        "endChar": 40
+      },
+      "revId": "fbfa27cc99f112f9b6b3938972f82966821891c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f04f9450_6615eb65",
         "filename": "services/network/public/cpp/proxy_resolving_client_socket_unittest.cc",
         "patchSetId": 19
