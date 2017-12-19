@@ -7,6 +7,7 @@
 
 #include <memory>
 
+#include "base/callback_forward.h"
 #include "base/memory/scoped_refptr.h"
 #include "public/platform/WebApplicationCacheHost.h"
 #include "public/platform/WebDocumentSubresourceFilter.h"
@@ -30,6 +31,10 @@ class WebDocumentSubresourceFilter;
 class WebWorkerFetchContext {
  public:
   virtual ~WebWorkerFetchContext() {}
+
+  // Creates a OnceClosure which terminates synchronous loading requests on
+  // the worker thread from the main thread.
+  virtual base::OnceClosure CreateSyncLoadTerminator() = 0;
 
   virtual void InitializeOnWorkerThread(
       scoped_refptr<base::SingleThreadTaskRunner>) = 0;

@@ -5,6 +5,7 @@
 #ifndef ThreadedMessagingProxyBase_h
 #define ThreadedMessagingProxyBase_h
 
+#include "base/callback_forward.h"
 #include "core/CoreExport.h"
 #include "core/frame/WebFeatureForward.h"
 #include "core/inspector/ConsoleTypes.h"
@@ -102,6 +103,8 @@ class CORE_EXPORT ThreadedMessagingProxyBase
   std::unique_ptr<WorkerThread> worker_thread_;
 
   bool asked_to_terminate_;
+
+  base::OnceClosure sync_load_terminator_;
 
   // Used to keep this alive until the worker thread gets terminated. This is
   // necessary because the co-owner (i.e., Worker or Worklet object) can be

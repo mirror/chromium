@@ -50,7 +50,8 @@ class WebURLLoaderMock : public WebURLLoader {
                          Optional<WebURLError>& error,
                          WebData& data,
                          int64_t& encoded_data_length,
-                         int64_t& encoded_body_length) override;
+                         int64_t& encoded_body_length,
+                         int64_t& downloaded_file_length) override;
   void LoadAsynchronously(const WebURLRequest& request,
                           WebURLLoaderClient* client) override;
   void Cancel() override;
