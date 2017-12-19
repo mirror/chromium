@@ -278,6 +278,8 @@ class CONTENT_EXPORT BrowserPlugin : public blink::WebPlugin,
 
   scoped_refptr<base::SingleThreadTaskRunner> task_runner_;
 
+  RenderWidget* render_widget_ = nullptr;
+
   // Weak factory used in v8 |MakeWeak| callback, since the v8 callback might
   // get called after BrowserPlugin has been destroyed.
   base::WeakPtrFactory<BrowserPlugin> weak_ptr_factory_;
