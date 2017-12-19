@@ -8,6 +8,7 @@
 #include "base/macros.h"
 #include "components/viz/test/test_frame_sink_manager.h"
 #include "services/ui/ws/gpu_host.h"
+#include "services/viz/privileged/interfaces/compositing/frame_sink_manager.mojom.h"
 
 namespace ui {
 namespace ws {

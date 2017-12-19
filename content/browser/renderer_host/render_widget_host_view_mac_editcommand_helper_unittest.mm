@@ -12,7 +12,7 @@
 #include "base/message_loop/message_loop.h"
 #include "base/test/scoped_task_environment.h"
 #include "base/threading/thread_task_runner_handle.h"
-#include "content/browser/compositor/test/no_transport_image_transport_factory.h"
+#include "content/browser/compositor/test/test_image_transport_factory.h"
 #include "content/browser/gpu/compositor_util.h"
 #include "content/browser/renderer_host/render_widget_host_delegate.h"
 #include "content/browser/renderer_host/render_widget_host_impl.h"
@@ -98,8 +98,7 @@ class RenderWidgetHostDelegateEditCommandCounter
 class RenderWidgetHostViewMacEditCommandHelperTest : public PlatformTest {
  protected:
   void SetUp() override {
-    ImageTransportFactory::SetFactory(
-        std::make_unique<NoTransportImageTransportFactory>());
+    ImageTransportFactory::SetFactory(CreateImageTransportFactoryForTesting());
   }
   void TearDown() override { ImageTransportFactory::Terminate(); }
 
@@ -111,8 +110,7 @@ class RenderWidgetHostViewMacEditCommandHelperWithTaskEnvTest
     : public PlatformTest {
  protected:
   void SetUp() override {
-    ImageTransportFactory::SetFactory(
-        std::make_unique<NoTransportImageTransportFactory>());
+    ImageTransportFactory::SetFactory(CreateImageTransportFactoryForTesting());
   }
   void TearDown() override { ImageTransportFactory::Terminate(); }
 
