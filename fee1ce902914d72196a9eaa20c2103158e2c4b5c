@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ca162703_6dd91822",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 2766,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-12-19T13:56:00Z",
+      "side": 1,
+      "message": "OS_CHROMEOS doesn\u0027t actually imply ENABLE_MUS because of this line:\n\nhttps://cs.chromium.org/chromium/src/ui/base/ui_features.gni?type\u003dcs\u0026q\u003dui_features.gni\u0026sq\u003dpackage:chromium\u0026l\u003d22\n\nenable_mus can be toggled on/off at compile time in GN args though. You\u0027ll need to check both here to be safe?",
+      "range": {
+        "startLine": 2766,
+        "startChar": 39,
+        "endLine": 2766,
+        "endChar": 49
+      },
+      "revId": "fee1ce902914d72196a9eaa20c2103158e2c4b5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
