@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "32beb83e_fa7db4b0",
+        "filename": "services/network/public/cpp/proxy_resolving_client_socket.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-12-19T14:56:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5cce48a0_f9e2b8d1",
+      "range": {
+        "startLine": 49,
+        "startChar": 25,
+        "endLine": 49,
+        "endChar": 32
+      },
+      "revId": "23381cf5e0fa3d3cb0b7b01ee6991ee75e7edd1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "61a3f526_fb200c77",
         "filename": "services/network/public/cpp/proxy_resolving_client_socket.cc",
         "patchSetId": 15
@@ -45,6 +69,30 @@
       "revId": "23381cf5e0fa3d3cb0b7b01ee6991ee75e7edd1a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d89f44a7_f4ce1e9b",
+        "filename": "services/network/public/cpp/proxy_resolving_client_socket.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-12-19T14:56:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "61a3f526_fb200c77",
+      "range": {
+        "startLine": 225,
+        "startChar": 13,
+        "endLine": 225,
+        "endChar": 0
+      },
+      "revId": "23381cf5e0fa3d3cb0b7b01ee6991ee75e7edd1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "c5254a5e_143c45f8",
+        "filename": "services/network/public/cpp/proxy_resolving_client_socket.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-12-19T14:56:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "88c5b2fc_273d73e3",
+      "range": {
+        "startLine": 354,
+        "startChar": 38,
+        "endLine": 354,
+        "endChar": 52
+      },
+      "revId": "23381cf5e0fa3d3cb0b7b01ee6991ee75e7edd1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d0052b61_490557c5",
         "filename": "services/network/public/cpp/proxy_resolving_client_socket.cc",
         "patchSetId": 15
@@ -91,6 +163,30 @@
       "revId": "23381cf5e0fa3d3cb0b7b01ee6991ee75e7edd1a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2069182a_1d142cf3",
+        "filename": "services/network/public/cpp/proxy_resolving_client_socket.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-12-19T14:56:19Z",
+      "side": 1,
+      "message": "Ack. I made a note of this in my TODOs. \nWe need to change this method to call into the socket when we add TLS support.",
+      "parentUuid": "d0052b61_490557c5",
+      "range": {
+        "startLine": 392,
+        "startChar": 33,
+        "endLine": 392,
+        "endChar": 50
+      },
+      "revId": "23381cf5e0fa3d3cb0b7b01ee6991ee75e7edd1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "240ff29d_f4ef7a52",
+        "filename": "services/network/public/cpp/proxy_resolving_client_socket.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-12-19T14:56:19Z",
+      "side": 1,
+      "message": "Ack. I have made a note of this in my list of TODOs. Thank you.",
+      "parentUuid": "2c32dd38_1f31bbf1",
+      "range": {
+        "startLine": 416,
+        "startChar": 5,
+        "endLine": 416,
+        "endChar": 31
+      },
+      "revId": "23381cf5e0fa3d3cb0b7b01ee6991ee75e7edd1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "740046e3_66e09fec",
         "filename": "services/network/public/cpp/proxy_resolving_client_socket.h",
         "patchSetId": 15
@@ -137,6 +257,30 @@
       "revId": "23381cf5e0fa3d3cb0b7b01ee6991ee75e7edd1a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d51944b1_676c33fa",
+        "filename": "services/network/public/cpp/proxy_resolving_client_socket.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-12-19T14:56:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "740046e3_66e09fec",
+      "range": {
+        "startLine": 40,
+        "startChar": 6,
+        "endLine": 40,
+        "endChar": 33
+      },
+      "revId": "23381cf5e0fa3d3cb0b7b01ee6991ee75e7edd1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "32427b5b_9b65d09d",
+        "filename": "services/network/public/cpp/proxy_resolving_client_socket_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-12-19T14:56:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f0a3f8cc_2d3fae9a",
+      "range": {
+        "startLine": 60,
+        "startChar": 7,
+        "endLine": 60,
+        "endChar": 37
+      },
+      "revId": "23381cf5e0fa3d3cb0b7b01ee6991ee75e7edd1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9e536cc9_836ddd5d",
         "filename": "services/network/public/cpp/proxy_resolving_client_socket_unittest.cc",
         "patchSetId": 15
@@ -174,6 +342,30 @@
       "writtenOn": "2017-12-14T16:49:50Z",
       "side": 1,
       "message": "Suggested tests (I\u0027m fine with these in a followup, as long as we get them in before we add more consumers):\n\n* Test fallback success via the implicit-fallback-to-direct logic.\n* Test when fallback also fails.\n* Test fallback to another proxy.\n* Make sure that we test sync/async cases (I\u0027m mostly concerned about proxy resolution)\n* Check that the PAC service is send the correct URL (Admittedly, not to interesting).\n* None of the above tests look to check that we connect to the right proxy address.  They should.\n* Test where proxy configuration changes while in the middle of a proxy connect (Not sure if the proxy connect needs to fail or not to make this interesting).\n\n* There are no tests for actually reading/writing data (Both in the proxy and direct cases), or read/write errors, though those are simple enough that we may just want to do integration tests for them.  Up to you.",
+      "range": {
+        "startLine": 257,
+        "startChar": 1,
+        "endLine": 257,
+        "endChar": 0
+      },
+      "revId": "23381cf5e0fa3d3cb0b7b01ee6991ee75e7edd1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "230a07e0_d350b74c",
+        "filename": "services/network/public/cpp/proxy_resolving_client_socket_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-12-19T14:56:19Z",
+      "side": 1,
+      "message": "\u003e Suggested tests (I\u0027m fine with these in a followup, as long as we get them in before we add more consumers):\n\u003e \n\u003e * Test fallback success via the implicit-fallback-to-direct logic.\n\u003e * Test when fallback also fails.\n\u003e * Test fallback to another proxy.\n\u003e * Make sure that we test sync/async cases (I\u0027m mostly concerned about proxy resolution)\n\nDone. Included in ReconsiderProxyAfterErrorTest.ReconsiderProxyAfterError.\n\n\n\u003e * Check that the PAC service is send the correct URL (Admittedly, not to interesting).\n\nDone. Included in ProxyResolvingClientSocketTest.URLSanitized.\n\n\u003e * None of the above tests look to check that we connect to the right proxy address.  They should.\n\nDoes the pac url check in ProxyResolvingClientSocketTest.URLSanitized satisfy this test scenario?\n\n\u003e * Test where proxy configuration changes while in the middle of a proxy connect (Not sure if the proxy connect needs to fail or not to make this interesting).\n\nDone. Included in ProxyResolvingClientSocketTest.ProxyConfigChanged\n\u003e \n\u003e * There are no tests for actually reading/writing data (Both in the proxy and direct cases), or read/write errors, though those are simple enough that we may just want to do integration tests for them.  Up to you.\n\nDone. Included in ProxyResolvingClientSocketTest.ReadWriteErrors.",
+      "parentUuid": "9e536cc9_836ddd5d",
       "range": {
         "startLine": 257,
         "startChar": 1,
