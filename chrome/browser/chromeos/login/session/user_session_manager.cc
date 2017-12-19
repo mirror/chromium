@@ -99,6 +99,7 @@
 #include "chromeos/settings/cros_settings_names.h"
 #include "components/component_updater/component_updater_service.h"
 #include "components/flags_ui/pref_service_flags_storage.h"
+#include "components/password_manager/core/browser/hash_password_manager.h"
 #include "components/policy/core/common/cloud/cloud_policy_constants.h"
 #include "components/prefs/pref_member.h"
 #include "components/prefs/pref_registry_simple.h"
@@ -1303,6 +1304,14 @@ void UserSessionManager::FinalizePrepareProfile(Profile* profile) {
   }
 
   UpdateEasyUnlockKeys(user_context_);
+
+  if (user_context_.GetSyncPasswordData().has_value()) {
+    password_manager::HashPasswordManager hash_password_manager(
+        profile->GetPrefs());
+    hash_password_manager.SavePasswordHash(
+        user_context_.GetSyncPasswordData().value());
+  }
+
   user_context_.ClearSecrets();
   if (TokenHandlesEnabled()) {
     CreateTokenUtilIfMissing();
