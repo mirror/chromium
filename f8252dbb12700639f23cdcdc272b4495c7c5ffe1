@@ -139,6 +139,24 @@
       "revId": "f8252dbb12700639f23cdcdc272b4495c7c5ffe1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b362b7a4_0f06ddba",
+        "filename": "third_party/WebKit/Source/core/dom/TreeScope.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-12-19T09:39:13Z",
+      "side": 1,
+      "message": "In that case const_cast\u003cElement*\u003e() to returning value is allowed.\nAdding |const| means the contract that the function never modifies the state\nof the argument inside the function.",
+      "parentUuid": "ca0c78cc_bdedacc0",
+      "revId": "f8252dbb12700639f23cdcdc272b4495c7c5ffe1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
