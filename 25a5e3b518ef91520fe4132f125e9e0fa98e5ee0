@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a711ef8e_f5257ded",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 2073,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-12-19T21:58:44Z",
+      "side": 1,
+      "message": "it seems this switch is doing exactly what the kDataReductionProxyDecidesTransform feature does. Can we update the variable names to reflect that?\ne.g., --force-enable-data-reduction-proxy-decides-transform-feature?",
+      "range": {
+        "startLine": 2073,
+        "startChar": 6,
+        "endLine": 2073,
+        "endChar": 32
+      },
+      "revId": "25a5e3b518ef91520fe4132f125e9e0fa98e5ee0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a565950c_d4f00129",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-12-19T21:58:44Z",
+      "side": 1,
+      "message": "s/ on slow connections//\nServer may serve previews under variety of conditions (e.g., fast connection but heavy page). May be better for client not to second guess this?",
+      "range": {
+        "startLine": 170,
+        "startChar": 53,
+        "endLine": 170,
+        "endChar": 73
+      },
+      "revId": "25a5e3b518ef91520fe4132f125e9e0fa98e5ee0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a68ea8d5_a3eb02b4",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_network_delegate_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 954,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-12-19T21:58:44Z",
+      "side": 1,
+      "message": "Is this really needed since we are enabling kDataReductionProxyDecidesTransform feature on line 922 above?",
+      "range": {
+        "startLine": 952,
+        "startChar": 6,
+        "endLine": 954,
+        "endChar": 62
+      },
+      "revId": "25a5e3b518ef91520fe4132f125e9e0fa98e5ee0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "375ffa6c_b7184ce2",
+        "filename": "components/data_reduction_proxy/core/common/data_reduction_proxy_params.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-12-19T21:58:44Z",
+      "side": 1,
+      "message": "why is this needed?",
+      "range": {
+        "startLine": 75,
+        "startChar": 5,
+        "endLine": 75,
+        "endChar": 38
+      },
+      "revId": "25a5e3b518ef91520fe4132f125e9e0fa98e5ee0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c44735b_0fe2ea51",
+        "filename": "components/data_reduction_proxy/core/common/data_reduction_proxy_switches.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-12-19T21:58:44Z",
+      "side": 1,
+      "message": "May be rm this? It\u0027s not clear why we ever need a flag to disable server previews on Android? (On desktop server previews are disabled by default)",
+      "range": {
+        "startLine": 36,
+        "startChar": 11,
+        "endLine": 36,
+        "endChar": 52
+      },
+      "revId": "25a5e3b518ef91520fe4132f125e9e0fa98e5ee0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
