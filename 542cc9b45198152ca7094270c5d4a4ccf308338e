@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dcd9ba66_28afdf67",
+        "filename": "media/gpu/v4l2/v4l2_video_decode_accelerator.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1591,
+      "author": {
+        "id": 1196199
+      },
+      "writtenOn": "2017-12-19T02:27:44Z",
+      "side": 0,
+      "message": "Remove this for android.media.cts.DecoderTest#testEOSBehaviorH264/VP8/VP9.\nPlease see crbug.com/735783#c11, #c12 for the detailed description.",
+      "range": {
+        "startLine": 1586,
+        "startChar": 1,
+        "endLine": 1591,
+        "endChar": 11
+      },
+      "revId": "542cc9b45198152ca7094270c5d4a4ccf308338e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
