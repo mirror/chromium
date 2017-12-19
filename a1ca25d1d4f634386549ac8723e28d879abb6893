@@ -52,6 +52,24 @@
       "revId": "a1ca25d1d4f634386549ac8723e28d879abb6893",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ca8371c_9d5953af",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/dom/usvstring-reflection.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1242274
+      },
+      "writtenOn": "2017-12-19T06:35:40Z",
+      "side": 1,
+      "message": "Thanks for the suggestion. I could not find a URL containing an unpaired surrogate. Even to verify with opened_window.location.href, we need to open URL containing an unpaired surrogate from same origin domain which is quite difficult to find.\nSo, now I modified the test case to verify unpaired surrogate present in url should not throw invalid URL which was in case of DOMString type.",
+      "parentUuid": "2960347f_526a26d0",
+      "revId": "a1ca25d1d4f634386549ac8723e28d879abb6893",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
