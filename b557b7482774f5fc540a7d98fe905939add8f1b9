@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "86f641c0_d855ebf1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-12-19T08:55:03Z",
+      "side": 1,
+      "message": "Add a bug line with 661283?",
+      "revId": "b557b7482774f5fc540a7d98fe905939add8f1b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47ed66d7_0da37cd8",
+        "filename": "third_party/WebKit/Source/core/xmlhttprequest/XMLHttpRequest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 775,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-12-19T08:55:03Z",
+      "side": 1,
+      "message": "I was about to publish a comment as follows,\n\"how about putting the same description (the one at L772) in the thrown exception too?\"\nbut just noticed that you might have chosen to make this empty to keep the WPT working for all the browsers. Right?",
+      "revId": "b557b7482774f5fc540a7d98fe905939add8f1b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
