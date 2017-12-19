@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "dc760d4c_b72522db",
+        "filename": "chrome/browser/loader/chrome_navigation_data_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-12-19T12:57:38Z",
+      "side": 0,
+      "message": "Done.\nI also added unit tests for the childs of ChromeNavigationData",
+      "parentUuid": "607709fb_e50c1009",
+      "range": {
+        "startLine": 36,
+        "startChar": 7,
+        "endLine": 36,
+        "endChar": 31
+      },
+      "revId": "79ff0353a50008033973b9130b9cf15d8879bba0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8884a6bc_681b906e",
         "filename": "chrome/browser/loader/chrome_resource_dispatcher_host_delegate_browsertest.cc",
         "patchSetId": 9
@@ -45,6 +69,30 @@
       "revId": "79ff0353a50008033973b9130b9cf15d8879bba0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b4f5130_17681c27",
+        "filename": "chrome/browser/loader/chrome_resource_dispatcher_host_delegate_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-12-19T12:57:38Z",
+      "side": 0,
+      "message": ":-)",
+      "parentUuid": "8884a6bc_681b906e",
+      "range": {
+        "startLine": 189,
+        "startChar": 33,
+        "endLine": 189,
+        "endChar": 44
+      },
+      "revId": "79ff0353a50008033973b9130b9cf15d8879bba0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "400a1c09_9deeaf27",
+        "filename": "chrome/browser/loader/chrome_resource_dispatcher_host_delegate.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-12-19T12:57:38Z",
+      "side": 1,
+      "message": "Here is the rule I apply to myself:\n* Always use a forward declaration for arguments/return-values in function/method declaration in header files.\n* Use #include for object attribute declaration in headers. Also use #include in implementation files if there was no forward declaration in the header file.\n* Do not include anything for arguments/return-value in method that override another one.\n\nSo I am not including the header for this return value because |GetNavigationData| is an override. Let me know what do you think of this and I will update my rule.",
+      "parentUuid": "d07499d5_730e5265",
+      "range": {
+        "startLine": 87,
+        "startChar": 8,
+        "endLine": 87,
+        "endChar": 13
+      },
+      "revId": "b743073a11188b406dbc97de24065c8bb8212d3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f421b574_6ab511a2",
         "filename": "chrome/browser/offline_pages/background_loader_offliner.cc",
         "patchSetId": 9
@@ -45,6 +69,30 @@
       "revId": "b743073a11188b406dbc97de24065c8bb8212d3d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33c7d2d4_8bc620ad",
+        "filename": "chrome/browser/offline_pages/background_loader_offliner.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-12-19T12:57:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f421b574_6ab511a2",
+      "range": {
+        "startLine": 67,
+        "startChar": 42,
+        "endLine": 67,
+        "endChar": 57
+      },
+      "revId": "b743073a11188b406dbc97de24065c8bb8212d3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "fa2e4719_71b32683",
+        "filename": "chrome/browser/offline_pages/background_loader_offliner.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-12-19T12:57:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c2dc3e08_20b70e0e",
+      "range": {
+        "startLine": 75,
+        "startChar": 0,
+        "endLine": 77,
+        "endChar": 16
+      },
+      "revId": "b743073a11188b406dbc97de24065c8bb8212d3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "40799671_23ff2608",
         "filename": "chrome/browser/offline_pages/background_loader_offliner.cc",
         "patchSetId": 9
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "5af88230_32b3e4b4",
+        "filename": "chrome/browser/offline_pages/background_loader_offliner.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-12-19T12:57:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "40799671_23ff2608",
+      "range": {
+        "startLine": 81,
+        "startChar": 0,
+        "endLine": 83,
+        "endChar": 16
+      },
+      "revId": "b743073a11188b406dbc97de24065c8bb8212d3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a435cd1_b69010c4",
         "filename": "chrome/browser/page_load_metrics/observers/previews_ukm_observer.cc",
         "patchSetId": 9
@@ -114,6 +210,30 @@
       "revId": "b743073a11188b406dbc97de24065c8bb8212d3d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c4631ef_e052f033",
+        "filename": "chrome/browser/page_load_metrics/observers/previews_ukm_observer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-12-19T12:57:38Z",
+      "side": 1,
+      "message": "Yes you are right. It makes more sense with STOP_OBSERVING. I will fix the bug in this CL.",
+      "parentUuid": "7a435cd1_b69010c4",
+      "range": {
+        "startLine": 42,
+        "startChar": 11,
+        "endLine": 42,
+        "endChar": 29
+      },
+      "revId": "b743073a11188b406dbc97de24065c8bb8212d3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
