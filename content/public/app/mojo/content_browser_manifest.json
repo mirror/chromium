@@ -47,6 +47,7 @@
           "device::mojom::GamepadHapticsManager",
           "device::mojom::GamepadMonitor",
           "discardable_memory::mojom::DiscardableSharedMemoryManager",
+          "media::mojom::KeySystemInfo",
           "media::mojom::VideoDecodePerfHistory",
           "memory_coordinator::mojom::MemoryCoordinatorHandle",
           "metrics::mojom::SingleSampleMetricsProvider",

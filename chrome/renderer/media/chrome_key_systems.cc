@@ -14,7 +14,6 @@
 #include "base/strings/string_split.h"
 #include "base/strings/utf_string_conversions.h"
 #include "build/build_config.h"
-#include "chrome/renderer/chrome_content_renderer_client.h"
 #include "chrome/renderer/chrome_render_thread_observer.h"
 #include "components/cdm/renderer/external_clear_key_key_system_properties.h"
 #include "components/cdm/renderer/widevine_key_system_properties.h"
@@ -29,7 +28,11 @@
 
 #if BUILDFLAG(ENABLE_LIBRARY_CDMS)
 #include "base/feature_list.h"
+#include "base/macros.h"
+#include "content/public/common/service_names.mojom.h"
 #include "media/base/media_switches.h"
+#include "media/mojo/interfaces/key_system_info.mojom.h"
+#include "services/service_manager/public/cpp/connector.h"
 #endif
 
 #include "widevine_cdm_version.h" // In SHARED_INTERMEDIATE_DIR.
@@ -41,30 +44,42 @@
 #include "base/version.h"
 #endif
 
-using content::WebPluginMimeType;
 using media::EmeFeatureSupport;
 using media::EmeSessionTypeSupport;
 using media::KeySystemProperties;
 using media::SupportedCodecs;
 
 #if BUILDFLAG(ENABLE_LIBRARY_CDMS)
-static bool IsPepperCdmAvailable(
-    const std::string& pepper_type,
-    std::vector<WebPluginMimeType::Param>* additional_params) {
-  base::Optional<std::vector<chrome::mojom::PluginParamPtr>>
-      opt_additional_params;
-  ChromeContentRendererClient::GetPluginInfoHost()
-      ->IsInternalPluginAvailableForMimeType(pepper_type,
-                                             &opt_additional_params);
 
-  if (opt_additional_params) {
-    for (auto& p : *opt_additional_params) {
-      additional_params->emplace_back(p->name, p->value);
+// Obtain a reference to the KeySystemInfo host.
+static media::mojom::KeySystemInfoPtr& GetKeySystemInfoHost() {
+  struct KeySystemInfoHostHolder {
+    KeySystemInfoHostHolder() {
+      content::RenderThread::Get()->GetConnector()->BindInterface(
+          content::mojom::kBrowserServiceName,
+          mojo::MakeRequest(&key_system_info_host));
     }
+    ~KeySystemInfoHostHolder() {}
+    media::mojom::KeySystemInfoPtr key_system_info_host;
+  };
 
-    return true;
-  }
-  return false;
+  CR_DEFINE_STATIC_LOCAL(KeySystemInfoHostHolder, holder, ());
+  return holder.key_system_info_host;
+}
+
+// Determine if |key_system| is available by calling into the browser.
+// If it is available, return true and |supported_codecs| and
+// |supports_persistent_license| are updated to match what |key_system|
+// supports. If not available, false is returned.
+static bool IsCdmAvailable(const std::string& key_system,
+                           std::vector<std::string>* supported_codecs,
+                           bool* supports_persistent_license) {
+  DVLOG(3) << __func__ << " key_system: " << key_system;
+  bool is_available = false;
+
+  GetKeySystemInfoHost()->IsKeySystemAvailable(
+      key_system, &is_available, supported_codecs, supports_persistent_license);
+  return is_available;
 }
 
 // External Clear Key (used for testing).
@@ -95,9 +110,10 @@ static void AddExternalClearKey(
   static const char kExternalClearKeyDifferentGuidTestKeySystem[] =
       "org.chromium.externalclearkey.differentguid";
 
-  std::vector<WebPluginMimeType::Param> additional_params;
-  if (!IsPepperCdmAvailable(cdm::kExternalClearKeyPepperType,
-                            &additional_params)) {
+  std::vector<std::string> supported_codecs;
+  bool supports_persistent_license;
+  if (!IsCdmAvailable(kExternalClearKeyKeySystem, &supported_codecs,
+                      &supports_persistent_license)) {
     return;
   }
 
@@ -148,44 +164,6 @@ static void AddExternalClearKey(
 }
 
 #if defined(WIDEVINE_CDM_AVAILABLE)
-// This function finds "codecs" and parses the value into the vector |codecs|.
-// Converts the codec strings to UTF-8 since we only expect ASCII strings and
-// this simplifies the rest of the code in this file.
-void GetSupportedCodecsForPepperCdm(
-    const std::vector<WebPluginMimeType::Param>& additional_params,
-    std::vector<std::string>* codecs) {
-  DCHECK(codecs->empty());
-  for (const auto& p : additional_params) {
-    if (p.name == base::ASCIIToUTF16(kCdmSupportedCodecsParamName)) {
-      const base::string16& codecs_string16 = p.value;
-      std::string codecs_string;
-      if (!base::UTF16ToUTF8(codecs_string16.c_str(),
-                             codecs_string16.length(),
-                             &codecs_string)) {
-        DLOG(WARNING) << "Non-UTF-8 codecs string.";
-        // Continue using the best effort conversion.
-      }
-      *codecs = base::SplitString(
-          codecs_string, std::string(1, kCdmSupportedCodecsValueDelimiter),
-          base::TRIM_WHITESPACE, base::SPLIT_WANT_ALL);
-      break;
-    }
-  }
-}
-
-// Whether persistent-license session is supported by the CDM.
-bool IsPersistentLicenseSupportedbyCdm(
-    const std::vector<WebPluginMimeType::Param>& additional_params) {
-  const base::string16 expected_param_name =
-      base::ASCIIToUTF16(kCdmPersistentLicenseSupportedParamName);
-  for (const auto& p : additional_params) {
-    if (p.name == expected_param_name) {
-      return p.value == base::ASCIIToUTF16(kCdmFeatureSupported);
-    }
-  }
-  return false;
-}
-
 // Returns persistent-license session support.
 EmeSessionTypeSupport GetPersistentLicenseSupport(bool supported_by_the_cdm) {
   // Do not support persistent-license if the process cannot persist data.
@@ -240,14 +218,13 @@ static void AddPepperBasedWidevine(
     return;
 #endif  // defined(WIDEVINE_CDM_MIN_GLIBC_VERSION)
 
-  std::vector<WebPluginMimeType::Param> additional_params;
-  if (!IsPepperCdmAvailable(kWidevineCdmPluginMimeType, &additional_params)) {
+  std::vector<std::string> codecs;
+  bool supports_persistent_license = false;
+  if (!IsCdmAvailable(kWidevineKeySystem, &codecs,
+                      &supports_persistent_license)) {
     DVLOG(1) << "Widevine CDM is not currently available.";
     return;
   }
-
-  std::vector<std::string> codecs;
-  GetSupportedCodecsForPepperCdm(additional_params, &codecs);
 
   SupportedCodecs supported_codecs = media::EME_CODEC_NONE;
 
@@ -260,22 +237,24 @@ static void AddPepperBasedWidevine(
   supported_codecs |= media::EME_CODEC_MP4_AAC;
 #endif  // BUILDFLAG(USE_PROPRIETARY_CODECS)
 
-  for (size_t i = 0; i < codecs.size(); ++i) {
-    if (codecs[i] == kCdmSupportedCodecVp8)
+  // Video codecs are determined by what was registered for the CDM.
+  for (const auto& codec : codecs) {
+    if (codec == kCdmSupportedCodecVp8) {
       supported_codecs |= media::EME_CODEC_WEBM_VP8;
-    if (codecs[i] == kCdmSupportedCodecVp9) {
+    }
+    if (codec == kCdmSupportedCodecVp9) {
       supported_codecs |= media::EME_CODEC_WEBM_VP9;
       supported_codecs |= media::EME_CODEC_COMMON_VP9;
     }
 #if BUILDFLAG(USE_PROPRIETARY_CODECS)
-    if (codecs[i] == kCdmSupportedCodecAvc1)
+    if (codec == kCdmSupportedCodecAvc1) {
       supported_codecs |= media::EME_CODEC_MP4_AVC1;
+    }
 #endif  // BUILDFLAG(USE_PROPRIETARY_CODECS)
   }
 
   EmeSessionTypeSupport persistent_license_support =
-      GetPersistentLicenseSupport(
-          IsPersistentLicenseSupportedbyCdm(additional_params));
+      GetPersistentLicenseSupport(supports_persistent_license);
 
   using Robustness = cdm::WidevineKeySystemProperties::Robustness;
 
