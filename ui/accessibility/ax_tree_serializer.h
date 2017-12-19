@@ -11,6 +11,7 @@
 #include <vector>
 
 #include "base/containers/hash_tables.h"
+#include "base/debug/stack_trace.h"
 #include "base/logging.h"
 #include "ui/accessibility/ax_export.h"
 #include "ui/accessibility/ax_tree_source.h"
@@ -142,8 +143,7 @@ class AXTreeSerializer {
   // would be updated are being reparented. If so, update |out_lca| to point
   // to the least common ancestor of the previous LCA and the previous
   // parent of the node being reparented.
-  bool AnyDescendantWasReparented(AXSourceNode node,
-                                  AXSourceNode* out_lca);
+  bool AnyDescendantWasReparented(AXSourceNode node, AXSourceNode* out_lca);
 
   ClientTreeNode* ClientTreeNodeById(int32_t id);
 
@@ -244,7 +244,7 @@ AXTreeSerializer<AXSourceNode, AXNodeData, AXTreeData>::LeastCommonAncestor(
   int client_index = static_cast<int>(client_ancestors.size() - 1);
   while (source_index >= 0 && client_index >= 0) {
     if (tree_->GetId(ancestors[source_index]) !=
-            client_ancestors[client_index]->id) {
+        client_ancestors[client_index]->id) {
       return lca;
     }
     lca = ancestors[source_index];
@@ -382,9 +382,8 @@ bool AXTreeSerializer<AXSourceNode, AXNodeData, AXTreeData>::SerializeChanges(
 }
 
 template <typename AXSourceNode, typename AXNodeData, typename AXTreeData>
-void AXTreeSerializer<AXSourceNode,
-                      AXNodeData,
-                      AXTreeData>::DeleteClientSubtree(AXSourceNode node) {
+void AXTreeSerializer<AXSourceNode, AXNodeData, AXTreeData>::
+    DeleteClientSubtree(AXSourceNode node) {
   ClientTreeNode* client_node = ClientTreeNodeById(tree_->GetId(node));
   if (client_node)
     DeleteClientSubtree(client_node);
@@ -419,6 +418,8 @@ bool AXTreeSerializer<AXSourceNode, AXNodeData, AXTreeData>::
   // about. If we don't find it, then this must be the new root of the
   // accessibility tree.
   int id = tree_->GetId(node);
+  LOG(ERROR) << "!! SerializeChangedNodes node id=" << id;
+
   ClientTreeNode* client_node = ClientTreeNodeById(id);
   if (!client_node) {
     Reset();
@@ -456,7 +457,12 @@ bool AXTreeSerializer<AXSourceNode, AXNodeData, AXTreeData>::
     // above. If this happens, reset and return an error.
     ClientTreeNode* client_child = client_id_map_[new_child_id];
     if (client_child && client_child->parent != client_node) {
+      LOG(ERROR) << "!! failing; new_child_id=" << new_child_id
+                 << ", client_child->parent=" << client_child->parent
+                 << ", client_node=" << client_node
+                 << ", client_child=" << client_child;
       Reset();
+      base::debug::StackTrace().Print();
       return false;
     }
   }
@@ -522,6 +528,12 @@ bool AXTreeSerializer<AXSourceNode, AXNodeData, AXTreeData>::
       ClientTreeNode* new_child = new ClientTreeNode();
       new_child->id = child_id;
       new_child->parent = client_node;
+
+      if (child_id == 95) {
+        LOG(ERROR) << "!! Creating child_id=" << new_child->id
+                   << ", parent=" << new_child->parent;
+      }
+
       client_node->children.push_back(new_child);
       client_id_map_[child_id] = new_child;
       if (!SerializeChangedNodes(child, out_update))

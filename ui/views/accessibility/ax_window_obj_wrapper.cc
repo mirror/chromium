@@ -36,9 +36,9 @@ AXWindowObjWrapper::~AXWindowObjWrapper() {
 }
 
 AXAuraObjWrapper* AXWindowObjWrapper::GetParent() {
-  if (!window_->parent())
-    return NULL;
-
+  aura::Window* parent = window_->GetProperty(ui::kAXAriaParent);
+  if (!parent)
+    parent = window_->parent();
   return AXAuraObjCache::GetInstance()->GetOrCreate(window_->parent());
 }
 
@@ -54,6 +54,11 @@ void AXWindowObjWrapper::GetChildren(
   Widget* widget = Widget::GetWidgetForNativeView(window_);
   if (widget && widget->IsVisible())
     out_children->push_back(AXAuraObjCache::GetInstance()->GetOrCreate(widget));
+
+  // Add widget for aria-owns.
+  aura::Window* owned = window_->GetProperty(ui::kAXAriaOwns);
+  if (owned)
+    out_children->push_back(AXAuraObjCache::GetInstance()->GetOrCreate(owned));
 }
 
 void AXWindowObjWrapper::Serialize(ui::AXNodeData* out_node_data) {
@@ -63,8 +68,10 @@ void AXWindowObjWrapper::Serialize(ui::AXNodeData* out_node_data) {
     out_node_data->role = role;
   else
     out_node_data->role = is_alert_ ? ui::AX_ROLE_ALERT : ui::AX_ROLE_WINDOW;
-  out_node_data->AddStringAttribute(ui::AX_ATTR_NAME,
-                                    base::UTF16ToUTF8(window_->GetTitle()));
+  std::string name = base::UTF16ToUTF8(window_->GetTitle());
+  if (name.empty())
+    name = window_->GetName();
+  out_node_data->AddStringAttribute(ui::AX_ATTR_NAME, name);
   if (!window_->IsVisible())
     out_node_data->AddState(ui::AX_STATE_INVISIBLE);
 

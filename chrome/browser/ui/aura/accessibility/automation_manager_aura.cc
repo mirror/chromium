@@ -191,6 +191,7 @@ void AutomationManagerAura::SendEvent(BrowserContext* context,
 
   ExtensionMsg_AccessibilityEventParams params;
   if (!current_tree_serializer_->SerializeChanges(aura_obj, &params.update)) {
+    // failing
     LOG(ERROR) << "Unable to serialize one accessibility event.";
     return;
   }
