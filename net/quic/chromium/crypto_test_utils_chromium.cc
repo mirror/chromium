@@ -82,9 +82,9 @@ std::unique_ptr<ProofSource> ProofSourceForTesting() {
   std::unique_ptr<ProofSourceChromium> source(new ProofSourceChromium());
   base::FilePath certs_dir = GetTestCertsDirectory();
   CHECK(source->Initialize(
-      certs_dir.AppendASCII("quic_chain.crt"),
-      certs_dir.AppendASCII("quic_test.example.com.key.pkcs8"),
-      certs_dir.AppendASCII("quic_test.example.com.key.sct")));
+      certs_dir.AppendASCII("quic-chain.pem"),
+      certs_dir.AppendASCII("quic-cert.key"),
+      base::FilePath()));
   return std::move(source);
 }
 
@@ -103,7 +103,7 @@ std::unique_ptr<ProofVerifier> ProofVerifierForTesting() {
   return std::make_unique<TestProofVerifierChromium>(
       std::move(cert_verifier), std::make_unique<TransportSecurityState>(),
       std::make_unique<MultiLogCTVerifier>(),
-      std::make_unique<CTPolicyEnforcer>(), "quic_root.crt");
+      std::make_unique<CTPolicyEnforcer>(), "quic-root.pem");
 }
 
 ProofVerifyContext* ProofVerifyContextForTesting() {

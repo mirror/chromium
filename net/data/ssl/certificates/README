@@ -116,7 +116,6 @@ unit tests.
 
 - quic_test_ecc.example.com.crt
 - quic_test.example.com.crt
-- quic_root.crt
      These certificates are used by the ProofVerifier's unit tests of QUIC.
 
 ===== From net/data/ssl/scripts/generate-quic-chain.sh
