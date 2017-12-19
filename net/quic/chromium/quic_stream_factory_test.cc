@@ -5806,5 +5806,215 @@ TEST_P(QuicStreamFactoryTest, ConfigMaxTimeBeforeCryptoHandshake) {
             config->max_idle_time_before_crypto_handshake());
 }
 
+TEST_P(QuicStreamFactoryTest, HostResolutionSuccessCallbackAsyncSync) {
+  Initialize();
+  ProofVerifyDetailsChromium verify_details = DefaultProofVerifyDetails();
+  crypto_client_stream_factory_.AddProofVerifyDetails(&verify_details);
+
+  host_resolver_.set_ondemand_mode(true);
+
+  MockQuicData socket_data;
+  socket_data.AddRead(SYNCHRONOUS, ERR_FAILED);
+  socket_data.AddWrite(SYNCHRONOUS, ERR_FAILED);
+  socket_data.AddSocketDataToFactory(socket_factory_.get());
+
+  QuicStreamRequest request(factory_.get());
+  EXPECT_EQ(ERR_IO_PENDING,
+            request.Request(host_port_pair_, version_, privacy_mode_,
+                            DEFAULT_PRIORITY,
+                            /*cert_verify_flags=*/0, url_, net_log_,
+                            &net_error_details_, callback_.callback()));
+
+  TestClosure host_resolution_callback;
+  EXPECT_TRUE(request.SetHostResolutionSuccessCallback(
+      host_resolution_callback.closure()));
+
+  // |host_resolver_| has not finished host resolution at this point, so
+  // |host_resolution_callback| should not have a result.
+  base::RunLoop().RunUntilIdle();
+  EXPECT_FALSE(host_resolution_callback.have_result());
+
+  // Allow |host_resolver_| to finish host resolution.
+  // Since the request fails immediately after host resolution (getting
+  // ERR_FAILED from socket reads/writes), |host_resolution_callback| should not
+  // be called.
+  host_resolver_.ResolveAllPending();
+  base::RunLoop().RunUntilIdle();
+  EXPECT_FALSE(host_resolution_callback.have_result());
+
+  // Calling SetHostResolutionSuccessCallback() a second time should still
+  // return false.
+  EXPECT_FALSE(request.SetHostResolutionSuccessCallback(
+      host_resolution_callback.closure()));
+
+  EXPECT_TRUE(callback_.have_result());
+  EXPECT_EQ(ERR_QUIC_PROTOCOL_ERROR, callback_.WaitForResult());
+}
+
+TEST_P(QuicStreamFactoryTest, HostResolutionSuccessCallbackAsyncAsync) {
+  Initialize();
+  ProofVerifyDetailsChromium verify_details = DefaultProofVerifyDetails();
+  crypto_client_stream_factory_.AddProofVerifyDetails(&verify_details);
+
+  // Host resolution will succeed asynchronously (after ResolveAllPending()).
+  // Crypto handshake will fail asynchronously (after mock data is unpaused).
+  host_resolver_.set_ondemand_mode(true);
+  crypto_client_stream_factory_.set_handshake_mode(
+      MockCryptoClientStream::ZERO_RTT);
+  factory_->set_require_confirmation(true);
+
+  MockQuicData socket_data;
+  socket_data.AddRead(ASYNC, ERR_IO_PENDING);  // Pause
+  socket_data.AddRead(ASYNC, ERR_FAILED);
+  socket_data.AddWrite(ASYNC, ERR_FAILED);
+  socket_data.AddSocketDataToFactory(socket_factory_.get());
+
+  QuicStreamRequest request(factory_.get());
+  EXPECT_EQ(ERR_IO_PENDING,
+            request.Request(host_port_pair_, version_, privacy_mode_,
+                            DEFAULT_PRIORITY,
+                            /*cert_verify_flags=*/0, url_, net_log_,
+                            &net_error_details_, callback_.callback()));
+
+  TestClosure host_resolution_callback;
+  EXPECT_TRUE(request.SetHostResolutionSuccessCallback(
+      host_resolution_callback.closure()));
+
+  // |host_resolver_| has not finished host resolution at this point, so
+  // |host_resolution_callback| should not have a result.
+  base::RunLoop().RunUntilIdle();
+  EXPECT_FALSE(host_resolution_callback.have_result());
+
+  // Allow |host_resolver_| to finish host resolution.
+  // |host_resolution_callback| should then have a result.
+  host_resolver_.ResolveAllPending();
+  base::RunLoop().RunUntilIdle();
+  EXPECT_TRUE(host_resolution_callback.have_result());
+  EXPECT_FALSE(callback_.have_result());
+
+  // Calling SetHostResolutionSuccessCallback() a second time should return
+  // false since host resolution has finished already.
+  EXPECT_FALSE(request.SetHostResolutionSuccessCallback(
+      host_resolution_callback.closure()));
+
+  socket_data.GetSequencedSocketData()->Resume();
+  EXPECT_TRUE(callback_.have_result());
+  EXPECT_EQ(ERR_QUIC_PROTOCOL_ERROR, callback_.WaitForResult());
+}
+
+TEST_P(QuicStreamFactoryTest, HostResolutionSuccessCallbackSync) {
+  Initialize();
+  ProofVerifyDetailsChromium verify_details = DefaultProofVerifyDetails();
+  crypto_client_stream_factory_.AddProofVerifyDetails(&verify_details);
+
+  host_resolver_.set_synchronous_mode(true);
+
+  MockQuicData socket_data;
+  socket_data.AddRead(SYNCHRONOUS, ERR_FAILED);
+  socket_data.AddWrite(SYNCHRONOUS, ERR_FAILED);
+  socket_data.AddSocketDataToFactory(socket_factory_.get());
+
+  QuicStreamRequest request(factory_.get());
+  EXPECT_EQ(
+      ERR_QUIC_PROTOCOL_ERROR,
+      request.Request(host_port_pair_, version_, privacy_mode_,
+                      DEFAULT_PRIORITY, /*cert_verify_flags=*/0, url_, net_log_,
+                      &net_error_details_, callback_.callback()));
+
+  TestClosure host_resolution_callback;
+  EXPECT_FALSE(request.SetHostResolutionSuccessCallback(
+      host_resolution_callback.closure()));
+  base::RunLoop().RunUntilIdle();
+  EXPECT_FALSE(host_resolution_callback.have_result());
+}
+
+TEST_P(QuicStreamFactoryTest, HostResolutionSuccessCallbackSyncAsync) {
+  Initialize();
+  ProofVerifyDetailsChromium verify_details = DefaultProofVerifyDetails();
+  crypto_client_stream_factory_.AddProofVerifyDetails(&verify_details);
+
+  // Host resolution will succeed synchronously, but Request() as a whole
+  // will fail asynchronously.
+  host_resolver_.set_synchronous_mode(true);
+  crypto_client_stream_factory_.set_handshake_mode(
+      MockCryptoClientStream::ZERO_RTT);
+  factory_->set_require_confirmation(true);
+
+  MockQuicData socket_data;
+  socket_data.AddRead(ASYNC, ERR_IO_PENDING);  // Pause
+  socket_data.AddRead(ASYNC, ERR_FAILED);
+  socket_data.AddWrite(ASYNC, ERR_FAILED);
+  socket_data.AddSocketDataToFactory(socket_factory_.get());
+
+  QuicStreamRequest request(factory_.get());
+  EXPECT_EQ(
+      ERR_IO_PENDING,
+      request.Request(host_port_pair_, version_, privacy_mode_,
+                      DEFAULT_PRIORITY, /*cert_verify_flags=*/0, url_, net_log_,
+                      &net_error_details_, callback_.callback()));
+
+  // Even though Request() is pending, the host resolution step succeeded
+  // synchronously. Therefore, SetHostResolutionSuccessCallback() should return
+  // false.
+  TestClosure host_resolution_callback;
+  EXPECT_FALSE(request.SetHostResolutionSuccessCallback(
+      host_resolution_callback.closure()));
+  base::RunLoop().RunUntilIdle();
+  EXPECT_FALSE(host_resolution_callback.have_result());
+
+  socket_data.GetSequencedSocketData()->Resume();
+  EXPECT_EQ(ERR_QUIC_PROTOCOL_ERROR, callback_.WaitForResult());
+}
+
+TEST_P(QuicStreamFactoryTest, HostResolutionSuccessCallbackSyncFail) {
+  Initialize();
+  ProofVerifyDetailsChromium verify_details = DefaultProofVerifyDetails();
+  crypto_client_stream_factory_.AddProofVerifyDetails(&verify_details);
+
+  // Host resolution will fail synchronously.
+  host_resolver_.rules()->AddSimulatedFailure(host_port_pair_.host());
+  host_resolver_.set_synchronous_mode(true);
+
+  QuicStreamRequest request(factory_.get());
+  EXPECT_EQ(
+      ERR_NAME_NOT_RESOLVED,
+      request.Request(host_port_pair_, version_, privacy_mode_,
+                      DEFAULT_PRIORITY, /*cert_verify_flags=*/0, url_, net_log_,
+                      &net_error_details_, callback_.callback()));
+
+  TestClosure host_resolution_callback;
+  EXPECT_FALSE(request.SetHostResolutionSuccessCallback(
+      host_resolution_callback.closure()));
+  base::RunLoop().RunUntilIdle();
+  EXPECT_FALSE(host_resolution_callback.have_result());
+}
+
+TEST_P(QuicStreamFactoryTest, HostResolutionSuccessCallbackAsyncFail) {
+  Initialize();
+  ProofVerifyDetailsChromium verify_details = DefaultProofVerifyDetails();
+  crypto_client_stream_factory_.AddProofVerifyDetails(&verify_details);
+
+  // Host resolution will fail asynchronously.
+  host_resolver_.rules()->AddSimulatedFailure(host_port_pair_.host());
+
+  QuicStreamRequest request(factory_.get());
+  EXPECT_EQ(
+      ERR_IO_PENDING,
+      request.Request(host_port_pair_, version_, privacy_mode_,
+                      DEFAULT_PRIORITY, /*cert_verify_flags=*/0, url_, net_log_,
+                      &net_error_details_, callback_.callback()));
+
+  TestClosure host_resolution_callback;
+  EXPECT_TRUE(request.SetHostResolutionSuccessCallback(
+      host_resolution_callback.closure()));
+
+  base::RunLoop().RunUntilIdle();
+
+  EXPECT_FALSE(host_resolution_callback.have_result());
+
+  EXPECT_TRUE(callback_.have_result());
+  EXPECT_EQ(ERR_NAME_NOT_RESOLVED, callback_.WaitForResult());
+}
+
 }  // namespace test
 }  // namespace net
