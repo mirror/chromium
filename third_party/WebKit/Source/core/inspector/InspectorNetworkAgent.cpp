@@ -152,13 +152,8 @@ class InspectorFileReaderLoaderClient final : public FileReaderLoaderClient {
  public:
   InspectorFileReaderLoaderClient(
       scoped_refptr<BlobDataHandle> blob,
-      const String& mime_type,
-      const String& text_encoding_name,
-      std::unique_ptr<GetResponseBodyCallback> callback)
-      : blob_(std::move(blob)),
-        mime_type_(mime_type),
-        text_encoding_name_(text_encoding_name),
-        callback_(std::move(callback)) {
+      base::OnceCallback<void(scoped_refptr<SharedBuffer>)> callback)
+      : blob_(std::move(blob)), callback_(std::move(callback)) {
     loader_ = FileReaderLoader::Create(FileReaderLoader::kReadByClient, this);
   }
 
@@ -178,25 +173,13 @@ class InspectorFileReaderLoaderClient final : public FileReaderLoaderClient {
     raw_data_->Append(data, data_length);
   }
 
-  void DidFinishLoading() override {
-    String result;
-    bool base64_encoded;
-    if (InspectorPageAgent::SharedBufferContent(raw_data_, mime_type_,
-                                                text_encoding_name_, &result,
-                                                &base64_encoded))
-      callback_->sendSuccess(result, base64_encoded);
-    else
-      callback_->sendFailure(Response::Error("Couldn't encode data"));
-    Dispose();
-  }
+  void DidFinishLoading() override { Done(raw_data_); }
 
-  void DidFail(FileError::ErrorCode) override {
-    callback_->sendFailure(Response::Error("Couldn't read BLOB"));
-    Dispose();
-  }
+  void DidFail(FileError::ErrorCode) override { Done(nullptr); }
 
  private:
-  void Dispose() {
+  void Done(scoped_refptr<SharedBuffer> output) {
+    std::move(callback_).Run(output);
     raw_data_ = nullptr;
     delete this;
   }
@@ -204,10 +187,94 @@ class InspectorFileReaderLoaderClient final : public FileReaderLoaderClient {
   scoped_refptr<BlobDataHandle> blob_;
   String mime_type_;
   String text_encoding_name_;
-  std::unique_ptr<GetResponseBodyCallback> callback_;
+  base::OnceCallback<void(scoped_refptr<SharedBuffer>)> callback_;
   std::unique_ptr<FileReaderLoader> loader_;
   scoped_refptr<SharedBuffer> raw_data_;
   DISALLOW_COPY_AND_ASSIGN(InspectorFileReaderLoaderClient);
+};
+
+static void ResponseBodyFileReaderLoaderDone(
+    const String& mime_type,
+    const String& text_encoding_name,
+    std::unique_ptr<GetResponseBodyCallback> callback,
+    scoped_refptr<SharedBuffer> raw_data) {
+  if (!raw_data) {
+    callback->sendFailure(Response::Error("Couldn't read BLOB"));
+    return;
+  }
+  String result;
+  bool base64_encoded;
+  if (InspectorPageAgent::SharedBufferContent(
+          raw_data, mime_type, text_encoding_name, &result, &base64_encoded))
+    callback->sendSuccess(result, base64_encoded);
+  else
+    callback->sendFailure(Response::Error("Couldn't encode data"));
+}
+
+class InspectorPostBodyParser : public RefCounted<InspectorPostBodyParser> {
+ public:
+  explicit InspectorPostBodyParser(base::OnceCallback<void(String)> callback)
+      : callback_(std::move(callback)), error_(false) {}
+
+  void Parse(ExecutionContext* context, EncodedFormData* request_body) {
+    if (request_body && !request_body->IsEmpty()) {
+      parts_.Grow(request_body->Elements().size());
+      for (size_t i = 0; i < request_body->Elements().size(); i++) {
+        const FormDataElement& data = request_body->Elements()[i];
+        switch (data.type_) {
+          case FormDataElement::kData:
+            parts_[i].Append(data.data_.data(),
+                             static_cast<size_t>(data.data_.size()));
+            break;
+          case FormDataElement::kEncodedBlob:
+            ReadDataBlob(context, data.optional_blob_data_handle_, &parts_[i]);
+            break;
+          case FormDataElement::kEncodedFile:
+          case FormDataElement::kDataPipe:
+            // Do nothing, not supported
+            break;
+        }
+      }
+    }
+  }
+
+ private:
+  friend class RefCounted<InspectorPostBodyParser>;
+  ~InspectorPostBodyParser() {
+    if (error_)
+      return;
+    Vector<char> bytes;
+    for (const auto& part : parts_)
+      bytes.AppendVector(part);
+
+    std::move(callback_).Run(
+        String::FromUTF8WithLatin1Fallback(bytes.data(), bytes.size()));
+  }
+
+  void BlobReadCallback(Vector<char>* destination,
+                        scoped_refptr<SharedBuffer> raw_data) {
+    if (destination)
+      *destination = raw_data->Copy();
+    else
+      error_ = true;
+  }
+
+  void ReadDataBlob(ExecutionContext* context,
+                    scoped_refptr<blink::BlobDataHandle> blob_handle,
+                    Vector<char>* destination) {
+    if (!blob_handle)
+      return;
+    auto* reader = new InspectorFileReaderLoaderClient(
+        blob_handle,
+        WTF::Bind(&InspectorPostBodyParser::BlobReadCallback,
+                  WTF::RetainedRef(this), WTF::Unretained(destination)));
+    reader->Start(context);
+  }
+
+  base::OnceCallback<void(String)> callback_;
+  bool error_;
+  Vector<Vector<char>> parts_;
+  DISALLOW_COPY_AND_ASSIGN(InspectorPostBodyParser);
 };
 
 KURL UrlWithoutFragment(const KURL& url) {
@@ -363,21 +430,13 @@ static std::unique_ptr<protocol::Network::ResourceTiming> BuildObjectForTiming(
 
 static std::unique_ptr<protocol::Network::Request>
 BuildObjectForResourceRequest(const ResourceRequest& request) {
-  std::unique_ptr<protocol::Network::Request> request_object =
-      protocol::Network::Request::create()
-          .setUrl(UrlWithoutFragment(request.Url()).GetString())
-          .setMethod(request.HttpMethod())
-          .setHeaders(BuildObjectForHeaders(request.HttpHeaderFields()))
-          .setInitialPriority(ResourcePriorityJSON(request.Priority()))
-          .setReferrerPolicy(GetReferrerPolicy(request.GetReferrerPolicy()))
-          .build();
-  if (request.HttpBody() && !request.HttpBody()->IsEmpty()) {
-    Vector<char> bytes;
-    request.HttpBody()->Flatten(bytes);
-    request_object->setPostData(
-        String::FromUTF8WithLatin1Fallback(bytes.data(), bytes.size()));
-  }
-  return request_object;
+  return protocol::Network::Request::create()
+      .setUrl(UrlWithoutFragment(request.Url()).GetString())
+      .setMethod(request.HttpMethod())
+      .setHeaders(BuildObjectForHeaders(request.HttpHeaderFields()))
+      .setInitialPriority(ResourcePriorityJSON(request.Priority()))
+      .setReferrerPolicy(GetReferrerPolicy(request.GetReferrerPolicy()))
+      .build();
 }
 
 static std::unique_ptr<protocol::Network::Response>
@@ -614,6 +673,28 @@ void InspectorNetworkAgent::DidChangeResourcePriority(
                                          CurrentTimeTicksInSeconds());
 }
 
+void InspectorNetworkAgent::DidFinishReadingRequestBody(
+    String request_id,
+    String loader_id,
+    String documentURL,
+    std::unique_ptr<protocol::Network::Request> request_info,
+    std::unique_ptr<protocol::Network::Initiator> initiator_object,
+    std::unique_ptr<protocol::Network::Response> response,
+    String resource_type,
+    Maybe<String> maybe_frame_id,
+    String post_data) {
+  auto* frontend = GetFrontend();
+  if (!frontend)
+    return;
+  request_info->setPostData(post_data);
+  frontend->requestWillBeSent(
+      request_id, loader_id, documentURL, std::move(request_info),
+      CurrentTimeTicksInSeconds(), CurrentTime(), std::move(initiator_object),
+      std::move(response), resource_type, std::move(maybe_frame_id));
+  if (pending_xhr_replay_data_ && !pending_xhr_replay_data_->Async())
+    frontend->flush();
+}
+
 void InspectorNetworkAgent::WillSendRequestInternal(
     ExecutionContext* execution_context,
     unsigned long identifier,
@@ -669,13 +750,15 @@ void InspectorNetworkAgent::WillSendRequestInternal(
   Maybe<String> maybe_frame_id;
   if (!frame_id.IsEmpty())
     maybe_frame_id = frame_id;
-  GetFrontend()->requestWillBeSent(
-      request_id, loader_id, documentURL, std::move(request_info),
-      CurrentTimeTicksInSeconds(), CurrentTime(), std::move(initiator_object),
-      BuildObjectForResourceResponse(redirect_response), resource_type,
-      std::move(maybe_frame_id));
-  if (pending_xhr_replay_data_ && !pending_xhr_replay_data_->Async())
-    GetFrontend()->flush();
+
+  scoped_refptr<InspectorPostBodyParser> parser =
+      base::MakeRefCounted<InspectorPostBodyParser>(WTF::Bind(
+          &InspectorNetworkAgent::DidFinishReadingRequestBody,
+          WrapWeakPersistent(this), request_id, loader_id, documentURL,
+          std::move(request_info), std::move(initiator_object),
+          BuildObjectForResourceResponse(redirect_response), resource_type,
+          std::move(maybe_frame_id)));
+  parser->Parse(execution_context, request.HttpBody());
 }
 
 void InspectorNetworkAgent::WillSendRequest(
@@ -1313,8 +1396,10 @@ void InspectorNetworkAgent::GetResponseBodyBlob(
       resources_data_->Data(request_id);
   BlobDataHandle* blob = resource_data->DownloadedFileBlob();
   InspectorFileReaderLoaderClient* client = new InspectorFileReaderLoaderClient(
-      blob, resource_data->MimeType(), resource_data->TextEncodingName(),
-      std::move(callback));
+      blob,
+      WTF::Bind(ResponseBodyFileReaderLoaderDone, resource_data->MimeType(),
+                resource_data->TextEncodingName(),
+                WTF::Passed(std::move(callback))));
   if (worker_global_scope_) {
     client->Start(worker_global_scope_);
     return;
