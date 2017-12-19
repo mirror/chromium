@@ -196,6 +196,16 @@ void PrintViewManagerBase::OnPrintSettingsDone(
     scoped_refptr<printing::PrinterQuery> printer_query) {
   queue_->QueuePrinterQuery(printer_query.get());
 
+  // Check if the job was cancelled.
+  if (printer_query &&
+      printer_query->last_status() == PrintingContext::CANCEL) {
+    content::BrowserThread::PostTask(
+        content::BrowserThread::UI, FROM_HERE,
+        base::BindOnce(&PrintViewManagerBase::SystemDialogCancelled,
+                       base::Unretained(this)));
+    return;
+  }
+
   // Post task so that the query has time to reset the callback before calling
   // OnDidGetPrintedPagesCount.
   content::BrowserThread::PostTask(
@@ -380,6 +390,7 @@ void PrintViewManagerBase::RenderFrameDeleted(
 void PrintViewManagerBase::SystemDialogCancelled() {
   // System dialog was cancelled. Clean up the print job and notify the
   // BackgroundPrintingManager.
+  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   ReleasePrinterQuery();
   TerminatePrintJob(true);
   content::NotificationService::current()->Notify(
