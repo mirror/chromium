@@ -745,8 +745,11 @@ void RenderWidgetHostViewMac::Show() {
 
   ui::LatencyInfo renderer_latency_info;
   renderer_latency_info.AddLatencyNumber(
-      ui::TAB_SHOW_COMPONENT, render_widget_host_->GetLatencyComponentId(), 0);
+      ui::TAB_SHOW_COMPONENT, render_widget_host_->GetLatencyComponentId(),
+      ++tab_show_sequence_);
   render_widget_host_->WasShown(renderer_latency_info);
+  TRACE_EVENT_ASYNC_BEGIN0("latency", "TabSwitching::Latency",
+                           tab_show_sequence_);
 
   // If there is not a frame being currently drawn, kick one, so that the below
   // pause will have a frame to wait on.
