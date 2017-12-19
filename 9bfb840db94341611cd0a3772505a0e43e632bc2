@@ -1,0 +1,216 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8a432c4d_473f4b37",
+        "filename": "ios/chrome/browser/ui/omnibox/clipping_mask_view.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-12-19T13:45:03Z",
+      "side": 1,
+      "message": "edge → edges",
+      "range": {
+        "startLine": 11,
+        "startChar": 64,
+        "endLine": 11,
+        "endChar": 68
+      },
+      "revId": "9bfb840db94341611cd0a3772505a0e43e632bc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "520a53b1_7345291f",
+        "filename": "ios/chrome/browser/ui/omnibox/clipping_mask_view.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-12-19T13:45:03Z",
+      "side": 1,
+      "message": "nit: blank line before @end (by symmetry with blank line after @interface)",
+      "revId": "9bfb840db94341611cd0a3772505a0e43e632bc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bb39f3a_562e2f1d",
+        "filename": "ios/chrome/browser/ui/omnibox/clipping_mask_view.mm",
+        "patchSetId": 18
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-12-19T13:45:03Z",
+      "side": 1,
+      "message": "Can we use an enum instead of BOOL?\n\n  enum GradientViewDirection {\n    GRADIENT_LEFT_TO_RIGHT,\n    GRADIENT_RIGHT_TO_LEFT,\n  };\n\n  @interface GradientView : UIView\n  @property(nonatomic, assign) GradientViewDirection direction;\n  @end\n\n   ...",
+      "range": {
+        "startLine": 18,
+        "startChar": 29,
+        "endLine": 18,
+        "endChar": 45
+      },
+      "revId": "9bfb840db94341611cd0a3772505a0e43e632bc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec9883c6_702c0842",
+        "filename": "ios/chrome/browser/ui/omnibox/clipping_mask_view.mm",
+        "patchSetId": 18
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-12-19T13:45:03Z",
+      "side": 1,
+      "message": "style: C-style cast are forbidden. I think you can use static_cast\u003c\u003e here.",
+      "range": {
+        "startLine": 31,
+        "startChar": 27,
+        "endLine": 31,
+        "endChar": 45
+      },
+      "revId": "9bfb840db94341611cd0a3772505a0e43e632bc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08438c06_c7fcc3ea",
+        "filename": "ios/chrome/browser/ui/omnibox/clipping_mask_view.mm",
+        "patchSetId": 18
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-12-19T13:45:03Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "9bfb840db94341611cd0a3772505a0e43e632bc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aac6c966_2bc91058",
+        "filename": "ios/chrome/browser/ui/omnibox/clipping_mask_view.mm",
+        "patchSetId": 18
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-12-19T13:45:03Z",
+      "side": 1,
+      "message": "style: avoid abbreviation (unless they are well known)\n\nSo I would recommend \"leftGradientView\"/\"rightGradientView\" or \"leftMaskView\"/\"rightMaskView\" or even \"leftView\"/\"rightView\".",
+      "range": {
+        "startLine": 51,
+        "startChar": 43,
+        "endLine": 51,
+        "endChar": 55
+      },
+      "revId": "9bfb840db94341611cd0a3772505a0e43e632bc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff4366db_1d371273",
+        "filename": "ios/chrome/browser/ui/omnibox/clipping_mask_view.mm",
+        "patchSetId": 18
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-12-19T13:45:03Z",
+      "side": 1,
+      "message": "nit: self.fadeLeft",
+      "range": {
+        "startLine": 110,
+        "startChar": 6,
+        "endLine": 110,
+        "endChar": 21
+      },
+      "revId": "9bfb840db94341611cd0a3772505a0e43e632bc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08093854_28e7efc6",
+        "filename": "ios/chrome/browser/ui/omnibox/clipping_mask_view.mm",
+        "patchSetId": 18
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-12-19T13:45:03Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 116,
+        "startChar": 6,
+        "endLine": 116,
+        "endChar": 22
+      },
+      "revId": "9bfb840db94341611cd0a3772505a0e43e632bc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6be292e_7d374b70",
+        "filename": "ios/chrome/browser/ui/omnibox/clipping_mask_view.mm",
+        "patchSetId": 18
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-12-19T13:45:03Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 123,
+        "startChar": 6,
+        "endLine": 123,
+        "endChar": 22
+      },
+      "revId": "9bfb840db94341611cd0a3772505a0e43e632bc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "377c29b9_463aa0c8",
+        "filename": "ios/chrome/browser/ui/omnibox/clipping_textfield_container.mm",
+        "patchSetId": 18
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-12-19T13:45:03Z",
+      "side": 1,
+      "message": "nit: blank line (by symmetry with blank line after @interface)",
+      "revId": "9bfb840db94341611cd0a3772505a0e43e632bc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
