@@ -1313,7 +1313,7 @@ void RTCPeerConnection::removeTrack(RTCRtpSender* sender,
   if (rtp_senders_.find(sender->web_sender()->Id()) == rtp_senders_.end()) {
     exception_state.ThrowDOMException(
         kInvalidAccessError,
-        "The sender was not created by this peer connection.");
+        "The sender does not belong to this peer connection.");
     return;
   }
 
