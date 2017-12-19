@@ -1,0 +1,4 @@
+Tests presence of the request body for original request and its clone.
+request body
+request body
+

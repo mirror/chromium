@@ -266,6 +266,16 @@ class CORE_EXPORT InspectorNetworkAgent final
   void GetResponseBodyBlob(const String& request_id,
                            std::unique_ptr<GetResponseBodyCallback>);
   void ClearPendingRequestData();
+  void DidFinishReadingRequestBody(
+      String request_id,
+      String loader_id,
+      String documentURL,
+      std::unique_ptr<protocol::Network::Request> request_info,
+      std::unique_ptr<protocol::Network::Initiator>,
+      std::unique_ptr<protocol::Network::Response>,
+      String resource_type,
+      Maybe<String> maybe_frame_id,
+      String post_data);
 
   // This is null while inspecting workers.
   Member<InspectedFrames> inspected_frames_;
