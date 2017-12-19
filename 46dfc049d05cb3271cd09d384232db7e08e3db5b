@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ff08bc64_1c32272a",
+        "filename": "ui/shell_dialogs/select_file_dialog_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-12-19T18:42:17Z",
+      "side": 1,
+      "message": "We should probably move this inside the |is_upload| block to avoid interfering with the DevTools scenario where gesture-jacking isn\u0027t a security threat?",
+      "revId": "46dfc049d05cb3271cd09d384232db7e08e3db5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc9fa9a1_4baa1d35",
+        "filename": "ui/shell_dialogs/select_file_dialog_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 531,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-12-19T18:42:17Z",
+      "side": 1,
+      "message": "Unfortunately, on Windows 10, this fires four times during load of the dialog box without any user action. Maybe we can add a initialized_timestamp to SelectFolderDialogOptions and then in the selchanged callback, verify that 500ms or so has passed before we enable the button?",
+      "range": {
+        "startLine": 531,
+        "startChar": 24,
+        "endLine": 531,
+        "endChar": 39
+      },
+      "revId": "46dfc049d05cb3271cd09d384232db7e08e3db5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a81a9f02_eef85f32",
+        "filename": "ui/shell_dialogs/select_file_dialog_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 532,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-12-19T18:42:17Z",
+      "side": 1,
+      "message": "static_cast",
+      "range": {
+        "startLine": 532,
+        "startChar": 42,
+        "endLine": 532,
+        "endChar": 58
+      },
+      "revId": "46dfc049d05cb3271cd09d384232db7e08e3db5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
