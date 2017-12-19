@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d685511d_8d23d622",
+        "filename": "chrome/browser/printing/print_view_manager_base.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-12-19T22:40:46Z",
+      "side": 1,
+      "message": "Done. Had trouble getting this to work before, but turns out the trick was\n1) queue the printer query so it stays alive\n2) call SystemDialogCancelled on the UI thread",
+      "parentUuid": "aaafbc6e_513fb8f3",
+      "revId": "297affc4ae94611bb84559b014b93a31d3faa462",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7c69feaf_df2d9dd8",
         "filename": "chrome/browser/ui/webui/print_preview/print_preview_handler.cc",
         "patchSetId": 2
