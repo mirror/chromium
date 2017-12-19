@@ -214,6 +214,7 @@ extern const char kChromeUIUserImageURL[];
 #endif  // defined(OS_CHROMEOS)
 
 #if defined(OS_WIN)
+extern const char kChromeUICleanupPageURL[];
 extern const char kChromeUIMetroFlowHost[];
 extern const char kChromeUIMetroFlowURL[];
 #endif
