@@ -16,6 +16,24 @@
       "revId": "d0481c4c909f22a8bf5a8b582a67d5a7793a4086",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "627af7ef_e42c10c5",
+        "filename": "third_party/WebKit/Source/platform/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 1525,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-12-19T01:01:59Z",
+      "side": 1,
+      "message": "Not a stupid question; build files are complicated. :)\n\nConfusingly:\n- no, they\u0027re not linked separately (at present, they end up being source_set targets, which just make .o files)\n- yes, gn rejects cyclic dependencies between source_set targets, too\n\nhttps://chromium.googlesource.com/chromium/src/+/master/tools/gn/docs/reference.md#allow_circular_includes_from has a few details (for the particular case of a \"parent\" and \"child\" target in the same linkable unit).\n\nThe bottom line is that gn expects targets and their dependencies to form a DAG. Ordinarily a single unit that has lots of inner dependencies is constructed as a single target, but that can get a little unwieldy when it gets big enough (and I think some of the bits were also split off to make them build quickly with jumbo build).\n\nNonetheless we do need:\n* dependents of platform (like core) to be able to see all of platform as a single unit, and see all of its headers, etc\n* parts of platform to get the necessary dependency edges, build flags, etc to correctly include one another\u0027s headers\n\nIn my ideal world, gn would have a \"multi-part shared_library\" or similar target that built the sources of each part with the deps needed only for its headers and the transitive closure of headers it depended on, with cycles. But AFAIK we cannot directly express that in gn.",
+      "parentUuid": "bb1c6256_762a4d3d",
+      "revId": "d0481c4c909f22a8bf5a8b582a67d5a7793a4086",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
