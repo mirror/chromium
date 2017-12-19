@@ -16,6 +16,24 @@
       "revId": "e67cb7b7450e486db18828bc9fc823446f9509ab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d130b13_bb34ca3e",
+        "filename": "chrome/renderer/content_settings_observer_browsertest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1249510
+      },
+      "writtenOn": "2017-12-19T11:05:17Z",
+      "side": 1,
+      "message": "I shall submit follow up patch.\nCould you please point me to some reference example.",
+      "parentUuid": "0426438c_51cce08f",
+      "revId": "e67cb7b7450e486db18828bc9fc823446f9509ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
