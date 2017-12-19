@@ -1,0 +1,276 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "04adc414_2e61a70b",
+        "filename": "chrome/common/extensions/docs/templates/articles/user_interface.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002693
+      },
+      "writtenOn": "2017-12-19T16:59:34Z",
+      "side": 1,
+      "message": "Rename to Design User Interface to match left-nave title. I\u0027m adding a longer comment overall for proposed new structure, so make sure to check that.",
+      "revId": "081281d5ad559150a7d0ed9d7e86a33055059b29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19705ed1_19663220",
+        "filename": "chrome/common/extensions/docs/templates/articles/user_interface.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1002693
+      },
+      "writtenOn": "2017-12-19T16:59:34Z",
+      "side": 1,
+      "message": "The extension user interface... (add the).",
+      "revId": "081281d5ad559150a7d0ed9d7e86a33055059b29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "899aba39_5b93196e",
+        "filename": "chrome/common/extensions/docs/templates/articles/user_interface.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002693
+      },
+      "writtenOn": "2017-12-19T16:59:34Z",
+      "side": 1,
+      "message": "This paragraph is a bit strange. Suggestion instead to explain the purpose of the doc, which is to explain how to design the extension\u0027s user interface, including both required and optional UI features. Feel free to word whatever what you think makes sense, but it\u0027s important to rephrase around the direction of designing the user interface for your extension.",
+      "revId": "081281d5ad559150a7d0ed9d7e86a33055059b29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bea9b59f_8614e016",
+        "filename": "chrome/common/extensions/docs/templates/articles/user_interface.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1002693
+      },
+      "writtenOn": "2017-12-19T16:59:34Z",
+      "side": 1,
+      "message": "Can you explain a little bit more the specifics of when enabled and disabled? Basically describe the functionality in the code in more detail.",
+      "revId": "081281d5ad559150a7d0ed9d7e86a33055059b29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcec435a_74e2f8d8",
+        "filename": "chrome/common/extensions/docs/templates/articles/user_interface.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1002693
+      },
+      "writtenOn": "2017-12-19T16:59:34Z",
+      "side": 1,
+      "message": "The icon descriptions are better in table format-- with Icon size, and Description as headers.",
+      "revId": "081281d5ad559150a7d0ed9d7e86a33055059b29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29c6651d_07eeef7f",
+        "filename": "chrome/common/extensions/docs/templates/articles/user_interface.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1002693
+      },
+      "writtenOn": "2017-12-19T16:59:34Z",
+      "side": 1,
+      "message": "Throughout the doc, change to active tense as much as possible. So in this instance, it would be \"Register the icons in the manifest under the icons field\".",
+      "revId": "081281d5ad559150a7d0ed9d7e86a33055059b29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d99675e_a38ce0e3",
+        "filename": "chrome/common/extensions/docs/templates/articles/user_interface.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1002693
+      },
+      "writtenOn": "2017-12-19T16:59:34Z",
+      "side": 1,
+      "message": "Suggestion to move this sentence up to the main intro to icons, before the sizes table.",
+      "revId": "081281d5ad559150a7d0ed9d7e86a33055059b29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1664ae81_859eb438",
+        "filename": "chrome/common/extensions/docs/templates/articles/user_interface.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1002693
+      },
+      "writtenOn": "2017-12-19T16:59:34Z",
+      "side": 1,
+      "message": "This feels like a note at the very least. Suggestion to remove it, as it seems out of place.",
+      "revId": "081281d5ad559150a7d0ed9d7e86a33055059b29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23751275_9d88e027",
+        "filename": "chrome/common/extensions/docs/templates/articles/user_interface.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1002693
+      },
+      "writtenOn": "2017-12-19T16:59:34Z",
+      "side": 1,
+      "message": "Question: can you include a stylesheet for a pop-up? If so, I would suggest you cover something about styling.",
+      "revId": "081281d5ad559150a7d0ed9d7e86a33055059b29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e62ed447_78d52caa",
+        "filename": "chrome/common/extensions/docs/templates/articles/user_interface.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1002693
+      },
+      "writtenOn": "2017-12-19T16:59:34Z",
+      "side": 1,
+      "message": "How? Is there a doc that specifically covers how to do this?",
+      "revId": "081281d5ad559150a7d0ed9d7e86a33055059b29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eba6aa9d_995a059a",
+        "filename": "chrome/common/extensions/docs/templates/articles/user_interface.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1002693
+      },
+      "writtenOn": "2017-12-19T16:59:34Z",
+      "side": 1,
+      "message": "This is browser action specific, so I\u0027ve moved it to be part of that narrative in new proposed structure.",
+      "revId": "081281d5ad559150a7d0ed9d7e86a33055059b29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "226e8c0d_d7377b56",
+        "filename": "chrome/common/extensions/docs/templates/articles/user_interface.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1002693
+      },
+      "writtenOn": "2017-12-19T16:59:34Z",
+      "side": 1,
+      "message": "Suggestion to explain more specifically what happens in execution for the below sample... a new tab opens with the URL, or something like that.",
+      "revId": "081281d5ad559150a7d0ed9d7e86a33055059b29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "734a0221_cdd0acdd",
+        "filename": "chrome/common/extensions/docs/templates/articles/user_interface.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1002693
+      },
+      "writtenOn": "2017-12-19T16:59:34Z",
+      "side": 1,
+      "message": "Spelling: opion should be option.",
+      "revId": "081281d5ad559150a7d0ed9d7e86a33055059b29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5662ed3_873fdf1a",
+        "filename": "chrome/common/extensions/docs/templates/articles/user_interface.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1002693
+      },
+      "writtenOn": "2017-12-19T16:59:34Z",
+      "side": 1,
+      "message": "Move this sentence to come before next image.",
+      "revId": "081281d5ad559150a7d0ed9d7e86a33055059b29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e71f18a_eda35efa",
+        "filename": "chrome/common/extensions/docs/templates/articles/user_interface.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1002693
+      },
+      "writtenOn": "2017-12-19T16:59:34Z",
+      "side": 1,
+      "message": "This sentence reads funny. Should be something like: Create a context menu by calling...",
+      "revId": "081281d5ad559150a7d0ed9d7e86a33055059b29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02ecc24f_3380eb00",
+        "filename": "chrome/common/extensions/docs/templates/articles/user_interface.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1002693
+      },
+      "writtenOn": "2017-12-19T16:59:34Z",
+      "side": 1,
+      "message": "Where is locale.js called from? I don\u0027t see it in previous code snippets.",
+      "revId": "081281d5ad559150a7d0ed9d7e86a33055059b29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
