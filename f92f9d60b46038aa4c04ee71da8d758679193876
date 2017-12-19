@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "255914a5_e8420d80",
+        "filename": "third_party/WebKit/Source/devtools/front_end/host/InspectorFrontendHost.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 560,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-12-19T21:48:16Z",
+      "side": 0,
+      "message": "Let\u0027s keep the prefs and setting parts.",
+      "revId": "f92f9d60b46038aa4c04ee71da8d758679193876",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
