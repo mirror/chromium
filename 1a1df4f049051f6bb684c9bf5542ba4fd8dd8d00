@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bc75ef9e_36ebf762",
+        "filename": "third_party/WebKit/Source/platform/heap/Member.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 587,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-12-19T07:54:50Z",
+      "side": 1,
+      "message": "How are DISALLOW_NEW_EXCEPT_PLACEMENT_NEW objects handled?",
+      "revId": "1a1df4f049051f6bb684c9bf5542ba4fd8dd8d00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9acb8f31_d4982b43",
+        "filename": "third_party/WebKit/Source/platform/heap/ThreadState.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 528,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-12-19T07:54:50Z",
+      "side": 1,
+      "message": "Do we need to make this public while we have the friend class?",
+      "revId": "1a1df4f049051f6bb684c9bf5542ba4fd8dd8d00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe268bc8_38743923",
+        "filename": "third_party/WebKit/Source/platform/wtf/ConstructTraits.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-12-19T07:54:50Z",
+      "side": 1,
+      "message": "Can we simplify the ConstructTraits by adding the same-name methods to HeapAllocator and PartitionAllocator? See how AllocateVectorBacking works between HeapAllocator and PartitionAllocator.",
+      "revId": "1a1df4f049051f6bb684c9bf5542ba4fd8dd8d00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74486665_7ddc56f3",
+        "filename": "third_party/WebKit/Source/platform/wtf/ConstructTraits.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-12-19T07:54:50Z",
+      "side": 1,
+      "message": "Just help me understand: Specifically, when can IsTraceableInCollection become false while kIsGarbageCollected is true?\n\nOne case is an on-heap hash table that has weak members. Is there any other case?\n\nHere I have one question: Why is it okay to not insert a write-barrier for weak member assignment? Consider the following case:\n\nWeakMember\u003cT\u003e x \u003d obj1;\n... // Incremental marking traces from x to obj1.\nx \u003d obj2;  // A write-barrier is not dispatched.\n\nThen who clears x when obj2 gets destructed?",
+      "revId": "1a1df4f049051f6bb684c9bf5542ba4fd8dd8d00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10fe4a1e_8cc5c6d2",
+        "filename": "third_party/WebKit/Source/platform/wtf/ConstructTraits.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-12-19T07:54:50Z",
+      "side": 1,
+      "message": "I don\u0027t understand this. Why is the inner vector of WTF::Vector\u003cWTF::Vector\u003cT\u003e\u003e traceable?",
+      "revId": "1a1df4f049051f6bb684c9bf5542ba4fd8dd8d00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e4970d5_0d8e16a3",
+        "filename": "third_party/WebKit/Source/platform/wtf/ConstructTraits.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-12-19T07:54:50Z",
+      "side": 1,
+      "message": "Do DISALLOW_NEW_EXCEPT_NEW objects hit this case?",
+      "revId": "1a1df4f049051f6bb684c9bf5542ba4fd8dd8d00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43218f92_b48cdd70",
+        "filename": "third_party/WebKit/Source/platform/wtf/ConstructTraits.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-12-19T07:54:50Z",
+      "side": 1,
+      "message": "Sorry, I don\u0027t fully understand the point of NotifyNewObject... What is it for?",
+      "revId": "1a1df4f049051f6bb684c9bf5542ba4fd8dd8d00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06b759b5_bacc1937",
+        "filename": "third_party/WebKit/Source/platform/wtf/Vector.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-12-19T07:54:50Z",
+      "side": 1,
+      "message": "Nit: Changing the second parameter from |void* end| to |size_t len| will simplify the call sites.",
+      "revId": "1a1df4f049051f6bb684c9bf5542ba4fd8dd8d00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
