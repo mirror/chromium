@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "73289fbb_23bf9296",
+        "filename": "ios/chrome/browser/web/external_app_launcher_tab_helper.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-12-19T23:41:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "11e998ba_4f3f9f1a",
+      "range": {
+        "startLine": 16,
+        "startChar": 10,
+        "endLine": 16,
+        "endChar": 50
+      },
+      "revId": "0b5f778c4a32149a30e2bb249174ff433aac665d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "30a475cc_a46c211a",
         "filename": "ios/chrome/browser/web/external_app_launcher_tab_helper_unittest.mm",
         "patchSetId": 8
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "e6489303_5e38a4be",
+        "filename": "ios/chrome/browser/web/external_app_launcher_tab_helper_unittest.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-12-19T23:41:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "30a475cc_a46c211a",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 9
+      },
+      "revId": "0b5f778c4a32149a30e2bb249174ff433aac665d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b3f89f93_0e1721ec",
         "filename": "ios/chrome/browser/web/external_app_launcher_tab_helper_unittest.mm",
         "patchSetId": 8
@@ -59,6 +107,30 @@
       "writtenOn": "2017-12-19T21:49:09Z",
       "side": 1,
       "message": "Do we need to keep |@\"garbage:\"| test case?",
+      "range": {
+        "startLine": 21,
+        "startChar": 33,
+        "endLine": 21,
+        "endChar": 73
+      },
+      "revId": "0b5f778c4a32149a30e2bb249174ff433aac665d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "220d0365_49cb6aef",
+        "filename": "ios/chrome/browser/web/external_app_launcher_tab_helper_unittest.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-12-19T23:41:52Z",
+      "side": 1,
+      "message": "That test is not technically malformed, as the hashes are not required for a scheme. As such, I don\u0027t want to put it in concrete as a test case. If we correct the algorithm in the future, we can make better test cases.",
+      "parentUuid": "b3f89f93_0e1721ec",
       "range": {
         "startLine": 21,
         "startChar": 33,
