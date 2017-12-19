@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "434d274d_5f447878",
+        "filename": "chrome/browser/ui/cocoa/download/md_download_item_view_unittest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-12-19T22:01:10Z",
+      "side": 1,
+      "message": "EXPECT_NSEQ from gtest_mac.h will pretty-print the description on failure.",
+      "range": {
+        "startLine": 67,
+        "startChar": 2,
+        "endLine": 67,
+        "endChar": 13
+      },
+      "revId": "9c71f783bc11fedf5e34054773276ec71114e999",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b71797e4_3a6f8f20",
         "filename": "chrome/browser/ui/cocoa/download/md_download_item_view_unittest.mm",
         "patchSetId": 1
@@ -19,6 +42,23 @@
         "endLine": 72,
         "endChar": 0
       },
+      "revId": "9c71f783bc11fedf5e34054773276ec71114e999",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b8a4c8d_d977720a",
+        "filename": "ui/gfx/test/ui_cocoa_test_helper.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-12-19T22:01:10Z",
+      "side": 1,
+      "message": "Does this need to go into here? This is a pretty generic place and it seems only used in one test.",
       "revId": "9c71f783bc11fedf5e34054773276ec71114e999",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
