@@ -30,10 +30,31 @@ base::FilePath GetDebugRecordingFileNameWithExtensions(
     const base::FilePath::StringType& file_name_extension,
     int id) {
   return base_file_name.AddExtension(file_name_extension)
-      .AddExtension(IntToStringType(id));
+      .AddExtension(IntToStringType(id))
+      .AddExtension(FILE_PATH_LITERAL("wav"));
 }
 
 }  // namespace
+
+class FileWrapper : public base::RefCountedThreadSafe<FileWrapper> {
+ public:
+  void SetFile(base::File file) { file_ = std::move(file); }
+  base::File GetFile() { return std::move(file_); }
+  void CreateFile(const base::FilePath& file_name, int id);
+
+ private:
+  friend class base::RefCountedThreadSafe<FileWrapper>;
+  ~FileWrapper();
+  base::File file_;
+};
+
+FileWrapper::~FileWrapper() = default;
+
+void FileWrapper::CreateFile(const base::FilePath& file_name, int id) {
+  base::File debug_file(base::File(
+      file_name, base::File::FLAG_CREATE_ALWAYS | base::File::FLAG_WRITE));
+  file_ = std::move(debug_file);
+}
 
 AudioDebugRecordingManager::AudioDebugRecordingManager(
     scoped_refptr<base::SingleThreadTaskRunner> task_runner)
@@ -46,12 +67,30 @@ void AudioDebugRecordingManager::EnableDebugRecording(
   DCHECK(task_runner_->BelongsToCurrentThread());
   DCHECK(!base_file_name.empty());
 
-  for (const auto& it : debug_recording_helpers_) {
-    it.second.first->EnableDebugRecording(
-        GetDebugRecordingFileNameWithExtensions(base_file_name,
-                                                it.second.second, it.first));
-  }
   debug_recording_base_file_name_ = base_file_name;
+  // TODO should not give weak pointer between threads
+  for (const auto& it : debug_recording_helpers_) {
+    base::FilePath file_name(GetDebugRecordingFileNameWithExtensions(
+        debug_recording_base_file_name_, it.second.second, it.first));
+    scoped_refptr<FileWrapper> file_wrapper = new FileWrapper();
+    file_task_runner_->PostTaskAndReply(
+        FROM_HERE,
+        base::BindOnce(&FileWrapper::CreateFile, file_wrapper, file_name,
+                       it.first),
+        base::BindOnce(
+            &AudioDebugRecordingManager::DoEnableDebugRecordingSource,
+            weak_factory_.GetWeakPtr(), file_wrapper, it.first));
+  }
+}
+
+void AudioDebugRecordingManager::DoEnableDebugRecordingSource(
+    scoped_refptr<FileWrapper> file_wrapper,
+    int id) {
+  DCHECK(task_runner_->BelongsToCurrentThread());
+  auto it = debug_recording_helpers_.find(id);
+  DCHECK(it != debug_recording_helpers_.end());
+
+  it->second.first->EnableDebugRecording(file_wrapper->GetFile());
 }
 
 void AudioDebugRecordingManager::DisableDebugRecording() {
@@ -79,9 +118,15 @@ AudioDebugRecordingManager::RegisterDebugRecordingSource(
               weak_factory_.GetWeakPtr(), id));
 
   if (IsDebugRecordingEnabled()) {
-    recording_helper->EnableDebugRecording(
-        GetDebugRecordingFileNameWithExtensions(debug_recording_base_file_name_,
-                                                file_name_extension, id));
+    base::FilePath file_name(GetDebugRecordingFileNameWithExtensions(
+        debug_recording_base_file_name_, file_name_extension, id));
+    scoped_refptr<FileWrapper> file_wrapper = new FileWrapper();
+    file_task_runner_->PostTaskAndReply(
+        FROM_HERE,
+        base::BindOnce(&FileWrapper::CreateFile, file_wrapper, file_name, id),
+        base::BindOnce(
+            &AudioDebugRecordingManager::DoEnableDebugRecordingSource,
+            weak_factory_.GetWeakPtr(), file_wrapper, id));
   }
 
   debug_recording_helpers_[id] =

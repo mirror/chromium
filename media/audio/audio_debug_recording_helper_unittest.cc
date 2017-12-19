@@ -6,6 +6,7 @@
 
 #include "base/bind.h"
 #include "base/files/file_path.h"
+#include "base/files/file_util.h"
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
 #include "base/run_loop.h"
@@ -46,7 +47,8 @@ class MockAudioDebugFileWriter : public AudioDebugFileWriter {
       : AudioDebugFileWriter(params), reference_data_(nullptr) {}
   ~MockAudioDebugFileWriter() override = default;
 
-  MOCK_METHOD1(Start, void(const base::FilePath&));
+  MOCK_METHOD1(DoStart, void(int64_t length));
+  void Start(base::File file) { DoStart(file.GetLength()); }
   MOCK_METHOD0(Stop, void());
 
   // Functions with move-only types as arguments can't be mocked directly, so
@@ -66,7 +68,6 @@ class MockAudioDebugFileWriter : public AudioDebugFileWriter {
   }
 
   MOCK_METHOD0(WillWrite, bool());
-  MOCK_METHOD0(GetFileNameExtension, const base::FilePath::CharType*());
 
   // Set reference data to compare against. Must be called before Write() is
   // called.
@@ -101,11 +102,13 @@ class AudioDebugRecordingHelperUnderTest : public AudioDebugRecordingHelper {
   std::unique_ptr<AudioDebugFileWriter> CreateAudioDebugFileWriter(
       const AudioParameters& params) override {
     MockAudioDebugFileWriter* writer = new MockAudioDebugFileWriter(params);
-    EXPECT_CALL(*writer, GetFileNameExtension())
-        .WillOnce(Return(kFileNameExtension));
+
     base::FilePath expected_file_path =
         base::FilePath(kBaseFilePath).AddExtension(kFileNameExtension);
-    EXPECT_CALL(*writer, Start(expected_file_path));
+    base::File file(expected_file_path,
+                    base::File::FLAG_OPEN_ALWAYS | base::File::FLAG_WRITE);
+    EXPECT_CALL(*writer, DoStart(file.GetLength()));
+
     return base::WrapUnique<AudioDebugFileWriter>(writer);
   }
 
@@ -172,13 +175,19 @@ TEST_F(AudioDebugRecordingHelperTest, EnableDisable) {
   std::unique_ptr<AudioDebugRecordingHelper> recording_helper =
       CreateRecordingHelper(params, base::OnceClosure());
 
-  recording_helper->EnableDebugRecording(file_path_);
+  base::File file(file_path_,
+                  base::File::FLAG_OPEN_ALWAYS | base::File::FLAG_WRITE);
+  EXPECT_TRUE(file.IsValid());
+  recording_helper->EnableDebugRecording(std::move(file));
   EXPECT_CALL(*static_cast<MockAudioDebugFileWriter*>(
                   recording_helper->debug_writer_.get()),
               Stop());
   DisableDebugRecording(recording_helper.get());
 
-  recording_helper->EnableDebugRecording(file_path_);
+  base::File file2(file_path_,
+                   base::File::FLAG_OPEN_ALWAYS | base::File::FLAG_WRITE);
+  EXPECT_TRUE(file2.IsValid());
+  recording_helper->EnableDebugRecording(std::move(file2));
   EXPECT_CALL(*static_cast<MockAudioDebugFileWriter*>(
                   recording_helper->debug_writer_.get()),
               Stop());
@@ -209,7 +218,10 @@ TEST_F(AudioDebugRecordingHelperTest, OnData) {
   // Should not do anything.
   recording_helper->OnData(audio_bus.get());
 
-  recording_helper->EnableDebugRecording(file_path_);
+  base::File file(file_path_,
+                  base::File::FLAG_OPEN_ALWAYS | base::File::FLAG_WRITE);
+  EXPECT_TRUE(file.IsValid());
+  recording_helper->EnableDebugRecording(std::move(file));
   MockAudioDebugFileWriter* mock_audio_file_writer =
       static_cast<MockAudioDebugFileWriter*>(
           recording_helper->debug_writer_.get());
@@ -228,7 +240,10 @@ TEST_F(AudioDebugRecordingHelperTest, OnData) {
   // Enable again, this time with two OnData() calls, one OnData() call
   // without running the message loop until after disabling, and one call after
   // disabling.
-  recording_helper->EnableDebugRecording(file_path_);
+  base::File file2(file_path_,
+                   base::File::FLAG_OPEN_ALWAYS | base::File::FLAG_WRITE);
+  EXPECT_TRUE(file2.IsValid());
+  recording_helper->EnableDebugRecording(std::move(file2));
   mock_audio_file_writer = static_cast<MockAudioDebugFileWriter*>(
       recording_helper->debug_writer_.get());
   mock_audio_file_writer->SetReferenceData(audio_bus.get());
