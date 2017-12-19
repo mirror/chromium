@@ -102,7 +102,7 @@ TEST_F(AutofillAgentTests, OnFormDataFilledTest) {
                                            "\"number\":\"number_value\","
                                            "\"unknown\":\"\""
                                            "},\"formName\":\"\"}"
-                            forceFillFieldName:@""
+                      forceFillFieldIdentifier:@""
                              completionHandler:[OCMArg any]];
   [autofill_agent_ onFormDataFilled:form];
   mock_web_state_->WasShown();
@@ -139,7 +139,7 @@ TEST_F(AutofillAgentTests, OnFormDataFilledWithNameCollisionTest) {
                                            "\"field1\":\"value 2\","
                                            "\"region\":\"California\""
                                            "},\"formName\":\"\"}"
-                            forceFillFieldName:@""
+                      forceFillFieldIdentifier:@""
                              completionHandler:[OCMArg any]];
   [autofill_agent_ onFormDataFilled:form];
   mock_web_state_->WasShown();

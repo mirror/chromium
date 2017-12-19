@@ -166,15 +166,16 @@ namespace {
 // of the username of each suggestion.
 NSArray* BuildSuggestions(const AccountSelectFillData& fillData,
                           NSString* formName,
-                          NSString* fieldName,
-                          NSString* typedValue) {
+                          NSString* fieldIdentifier,
+                          NSString* typedValue,
+                          int a) {
   base::string16 form_name = base::SysNSStringToUTF16(formName);
-  base::string16 field_name = base::SysNSStringToUTF16(fieldName);
+  base::string16 field_identifier = base::SysNSStringToUTF16(fieldIdentifier);
   base::string16 typed_value = base::SysNSStringToUTF16(typedValue);
 
   NSMutableArray* suggestions = [NSMutableArray array];
   std::vector<password_manager::UsernameAndRealm> username_and_realms_ =
-      fillData.RetrieveSuggestions(form_name, field_name, typed_value);
+      fillData.RetrieveSuggestions(form_name, field_identifier, typed_value, a);
   if (username_and_realms_.empty())
     return suggestions;
 
@@ -669,7 +670,8 @@ bool GetPageURLAndCheckTrustLevel(web::WebState* web_state, GURL* page_url) {
 }
 
 - (void)checkIfSuggestionsAvailableForForm:(NSString*)formName
-                                     field:(NSString*)fieldName
+                                 fieldName:(NSString*)fieldName2
+                           fieldIdentifier:(NSString*)fieldIdentifier
                                  fieldType:(NSString*)fieldType
                                       type:(NSString*)type
                                 typedValue:(NSString*)typedValue
@@ -689,11 +691,13 @@ bool GetPageURLAndCheckTrustLevel(web::WebState* web_state, GURL* page_url) {
 
   // Suggestions are available for the username field of the password form.
   completion(fillData_.IsSuggestionsAvailable(
-      base::SysNSStringToUTF16(formName), base::SysNSStringToUTF16(fieldName)));
+      base::SysNSStringToUTF16(formName),
+      base::SysNSStringToUTF16(fieldIdentifier), 0));
 }
 
 - (void)retrieveSuggestionsForForm:(NSString*)formName
-                             field:(NSString*)fieldName
+                         fieldName:(NSString*)fieldName2
+                   fieldIdentifier:(NSString*)fieldIdentifier
                          fieldType:(NSString*)fieldType
                               type:(NSString*)type
                         typedValue:(NSString*)typedValue
@@ -704,12 +708,14 @@ bool GetPageURLAndCheckTrustLevel(web::WebState* web_state, GURL* page_url) {
     completion(@[], nil);
     return;
   }
-  completion(BuildSuggestions(fillData_, formName, fieldName, typedValue),
-             self);
+  completion(
+      BuildSuggestions(fillData_, formName, fieldIdentifier, typedValue, 0),
+      self);
 }
 
 - (void)didSelectSuggestion:(FormSuggestion*)suggestion
-                   forField:(NSString*)fieldName
+                  fieldName:(NSString*)fieldName2
+            fieldIdentifier:(NSString*)fieldIdentifier
                        form:(NSString*)formName
           completionHandler:(SuggestionHandledCompletion)completion {
   const base::string16 username = base::SysNSStringToUTF16(suggestion.value);

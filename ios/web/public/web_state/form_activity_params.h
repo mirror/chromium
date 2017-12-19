@@ -29,6 +29,7 @@ struct FormActivityParams {
   ~FormActivityParams();
 
   std::string form_name;
+  std::string field_identifier;
   std::string field_name;
   std::string field_type;
   std::string type;
