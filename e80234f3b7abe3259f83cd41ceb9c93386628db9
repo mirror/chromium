@@ -22,6 +22,30 @@
       "revId": "e80234f3b7abe3259f83cd41ceb9c93386628db9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b925da1_f5cfefb8",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1014,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-12-19T09:45:27Z",
+      "side": 1,
+      "message": "The problem here is that when we tap we get a whole stack of events fired e.g:\n\npointerover\npointermove\ntapstart\n...\nclick\n\nThe pointer events will always make the controls opaque so by the time we get to the click we need to know whether we were opaque before all these events were fired. Otherwise we show the controls and immediately hide them.\n\nThe boolean holds that previous state so we know if we should hide the controls or not.",
+      "parentUuid": "4c29f625_3b4048be",
+      "range": {
+        "startLine": 1014,
+        "startChar": 22,
+        "endLine": 1014,
+        "endChar": 54
+      },
+      "revId": "e80234f3b7abe3259f83cd41ceb9c93386628db9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
