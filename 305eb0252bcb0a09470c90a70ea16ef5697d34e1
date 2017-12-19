@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "080c5f0e_78a0b6f0",
+        "filename": "chrome/browser/extensions/extension_messages_apitest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1421,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-12-19T05:34:37Z",
+      "side": 1,
+      "message": "I meant instead of, \n\nwindow.receivedChannelId \u003d sender.tlsChannelId;\nchrome.test.sendMessage(\u0027received message\u0027);\n\ndo\n\nchrome.test.sendMessage(sender.tlsChannelId) \n\n\nThen in C++ instead of,\n\nExtensionTestMessageListener received_message_listener(\"received message\",\n                                                         false);\n\ndo,\n\nExtensionTestMessageListener received_message_listener(tls_channel_id, false);",
+      "parentUuid": "16c57f54_d6decc07",
+      "range": {
+        "startLine": 1420,
+        "startChar": 11,
+        "endLine": 1421,
+        "endChar": 55
+      },
+      "revId": "305eb0252bcb0a09470c90a70ea16ef5697d34e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "02dad88c_4733ee78",
         "filename": "extensions/browser/api/messaging/message_service.cc",
         "patchSetId": 4
@@ -93,6 +117,30 @@
       "revId": "305eb0252bcb0a09470c90a70ea16ef5697d34e1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2c983d44_81d1cf31",
+        "filename": "extensions/browser/api/messaging/message_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 824,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-12-19T05:34:37Z",
+      "side": 1,
+      "message": "Is this codepath also used for normal renderers (web pages) trying to connect to extensions? Does this change also change StoragePartition for them?",
+      "parentUuid": "ef97f1d6_0c0ce983",
+      "range": {
+        "startLine": 824,
+        "startChar": 8,
+        "endLine": 824,
+        "endChar": 22
+      },
+      "revId": "305eb0252bcb0a09470c90a70ea16ef5697d34e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
