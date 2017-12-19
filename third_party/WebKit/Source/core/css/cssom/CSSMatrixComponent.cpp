@@ -40,6 +40,19 @@ const DOMMatrix* CSSMatrixComponent::AsMatrix(ExceptionState&) const {
   return matrix_.Get();
 }
 
+CSSMatrixComponent* CSSMatrixComponent::FromCSSValue(
+    const CSSFunctionValue& value) {
+  WTF::Vector<double> entries;
+  std::transform(value.begin(), value.end(), std::back_inserter(entries),
+                 [](const auto& css_value) {
+                   return ToCSSPrimitiveValue(*css_value).GetDoubleValue();
+                 });
+
+  return CSSMatrixComponent::Create(
+      DOMMatrixReadOnly::CreateForSerialization(entries.data(), entries.size()),
+      CSSMatrixComponentOptions());
+}
+
 const CSSFunctionValue* CSSMatrixComponent::ToCSSValue(
     SecureContextMode) const {
   CSSFunctionValue* result =
