@@ -30,31 +30,31 @@ class EVENTS_EXPORT MotionEventAndroid : public MotionEvent {
   static int GetAndroidActionForTesting(int action);
 
   struct Pointer {
-    Pointer(jint id,
-            jfloat pos_x_pixels,
-            jfloat pos_y_pixels,
-            jfloat touch_major_pixels,
-            jfloat touch_minor_pixels,
-            jfloat orientation_rad,
-            jfloat tilt_rad,
-            jint tool_type);
-    jint id;
-    jfloat pos_x_pixels;
-    jfloat pos_y_pixels;
-    jfloat touch_major_pixels;
-    jfloat touch_minor_pixels;
-    jfloat orientation_rad;
+    Pointer(int id,
+            float pos_x_dips,
+            float pos_y_dips,
+            float touch_major_dips,
+            float touch_minor_dips,
+            float orientation_rad,
+            float tilt_rad,
+            int tool_type);
+    int id;
+    float pos_x_dips;
+    float pos_y_dips;
+    float touch_major_dips;
+    float touch_minor_dips;
+    float orientation_rad;
     // Unlike the tilt angles in motion_event.h, this field matches the
     // MotionEvent spec because we get this values from Java.
-    jfloat tilt_rad;
-    jint tool_type;
+    float tilt_rad;
+    int tool_type;
   };
 
   // Forcing the caller to provide all cached values upon construction
   // eliminates the need to perform a JNI call to retrieve values individually.
   MotionEventAndroid(JNIEnv* env,
                      jobject event,
-                     jfloat pix_to_dip,
+                     jfloat dip_to_pix,
                      jfloat ticks_x,
                      jfloat ticks_y,
                      jfloat tick_multiplier,
@@ -66,8 +66,8 @@ class EVENTS_EXPORT MotionEventAndroid : public MotionEvent {
                      jint android_action_button,
                      jint android_button_state,
                      jint meta_state,
-                     jfloat raw_offset_x_pixels,
-                     jfloat raw_offset_y_pixels,
+                     jfloat raw_offset_x_dips,
+                     jfloat raw_offset_y_dips,
                      jboolean for_touch_handle,
                      const Pointer* const pointer0,
                      const Pointer* const pointer1);
@@ -122,7 +122,7 @@ class EVENTS_EXPORT MotionEventAndroid : public MotionEvent {
  private:
   struct CachedPointer;
 
-  float ToDips(float pixels) const;
+  float ToPixels(float dips) const;
   CachedPointer FromAndroidPointer(const Pointer& pointer) const;
   CachedPointer CreateCachedPointer(const CachedPointer& pointer,
                                     const gfx::PointF& point) const;
@@ -135,9 +135,9 @@ class EVENTS_EXPORT MotionEventAndroid : public MotionEvent {
   // The Java reference to the underlying MotionEvent.
   base::android::ScopedJavaGlobalRef<jobject> event_;
 
-  // Used to convert pixel coordinates from the Java-backed MotionEvent to
-  // DIP coordinates cached/returned by the MotionEventAndroid.
-  const float pix_to_dip_;
+  // Used to convert dips from the Java-backed MotionEvent to pixel coordinates
+  // cached/returned by the MotionEventAndroid.
+  const float dip_to_pix_;
 
   // Variables for mouse wheel event.
   const float ticks_x_;
