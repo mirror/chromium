@@ -258,7 +258,6 @@ void UiSceneCreator::CreateScene() {
   CreateContentQuad();
   CreateExitPrompt();
   CreateAudioPermissionPrompt();
-  CreateWebVRExitWarning();
   CreateSystemIndicators();
   CreateUrlBar();
   CreateOmnibox();
@@ -269,6 +268,7 @@ void UiSceneCreator::CreateScene() {
   CreateWebVrTimeoutScreen();
   CreateUnderDevelopmentNotice();
   CreateVoiceSearchUiGroup();
+  CreateExitWarning();
   CreateController();
   CreateKeyboard();
 }
@@ -342,10 +342,10 @@ void UiSceneCreator::CreateWebVrRoot() {
   scene_->AddUiElement(kRoot, std::move(element));
 }
 
-void UiSceneCreator::CreateWebVRExitWarning() {
+void UiSceneCreator::CreateExitWarning() {
   auto scrim = base::MakeUnique<FullScreenRect>();
   scrim->SetName(kScreenDimmer);
-  scrim->SetDrawPhase(kPhaseOverlayBackground);
+  scrim->SetDrawPhase(kPhaseForeground);
   scrim->SetVisible(false);
   scrim->set_hit_testable(false);
   scrim->SetOpacity(kScreenDimmerOpacity);
@@ -353,13 +353,13 @@ void UiSceneCreator::CreateWebVRExitWarning() {
   scrim->SetEdgeColor(model_->color_scheme().dimmer_outer);
   scrim->AddBinding(VR_BIND_FUNC(bool, Model, model_, exiting_vr, UiElement,
                                  scrim.get(), SetVisible));
-  scene_->AddUiElement(k2dBrowsingRoot, std::move(scrim));
+  scene_->AddUiElement(k2dBrowsingViewportAwareRoot, std::move(scrim));
 
   // Create transient exit warning.
   auto scaler = base::MakeUnique<ScaledDepthAdjuster>(kExitWarningDistance);
   auto exit_warning_text = base::MakeUnique<Text>(kExitWarningFontHeightDMM);
   exit_warning_text->SetName(kExitWarningText);
-  exit_warning_text->SetDrawPhase(kPhaseOverlayForeground);
+  exit_warning_text->SetDrawPhase(kPhaseForeground);
   exit_warning_text->SetText(
       l10n_util::GetStringUTF16(IDS_VR_BROWSER_UNSUPPORTED_PAGE));
   exit_warning_text->SetSize(kExitWarningTextWidthDMM, 0);
@@ -370,7 +370,7 @@ void UiSceneCreator::CreateWebVRExitWarning() {
 
   auto exit_warning_bg = base::MakeUnique<Rect>();
   exit_warning_bg->SetName(kExitWarningBackground);
-  exit_warning_bg->SetDrawPhase(kPhaseOverlayForeground);
+  exit_warning_bg->SetDrawPhase(kPhaseForeground);
   exit_warning_bg->set_bounds_contain_children(true);
   exit_warning_bg->set_padding(kExitWarningXPaddingDMM,
                                kExitWarningYPaddingDMM);
@@ -539,7 +539,7 @@ void UiSceneCreator::CreateSplashScreenForDirectWebVrLaunch() {
             &Text::SetColor);
   text->SetText(l10n_util::GetStringUTF16(IDS_VR_POWERED_BY_CHROME_MESSAGE));
   text->SetName(kSplashScreenText);
-  text->SetDrawPhase(kPhaseOverlayForeground);
+  text->SetDrawPhase(kPhaseForeground);
   text->set_hit_testable(false);
   text->SetSize(kSplashScreenTextWidthDMM, 0);
   text->SetTranslate(0, kSplashScreenTextVerticalOffsetDMM, 0);
@@ -549,14 +549,14 @@ void UiSceneCreator::CreateSplashScreenForDirectWebVrLaunch() {
   // Add splash screen background.
   auto bg = base::MakeUnique<FullScreenRect>();
   bg->SetName(kSplashScreenBackground);
-  bg->SetDrawPhase(kPhaseOverlayBackground);
+  bg->SetDrawPhase(kPhaseBackground);
   bg->set_hit_testable(false);
   bg->SetColor(model_->color_scheme().splash_screen_background);
   scene_->AddUiElement(kSplashScreenText, std::move(bg));
 
   auto spinner = base::MakeUnique<Spinner>(512);
   spinner->SetName(kWebVrTimeoutSpinner);
-  spinner->SetDrawPhase(kPhaseOverlayForeground);
+  spinner->SetDrawPhase(kPhaseForeground);
   spinner->SetVisible(false);
   spinner->SetSize(kSpinnerWidth, kSpinnerHeight);
   spinner->SetTranslate(0, kSpinnerVerticalOffset, -kSpinnerDistance);
@@ -571,7 +571,7 @@ void UiSceneCreator::CreateSplashScreenForDirectWebVrLaunch() {
   // will fade out when the viewport aware elements reposition.
   auto spinner_bg = base::MakeUnique<FullScreenRect>();
   spinner_bg->SetName(kWebVrTimeoutSpinnerBackground);
-  spinner_bg->SetDrawPhase(kPhaseOverlayBackground);
+  spinner_bg->SetDrawPhase(kPhaseBackground);
   spinner_bg->SetVisible(false);
   spinner_bg->set_hit_testable(false);
   spinner_bg->SetColor(model_->color_scheme().spinner_background);
@@ -604,15 +604,14 @@ void UiSceneCreator::CreateWebVrTimeoutScreen() {
   timeout_layout->set_hit_testable(false);
   timeout_layout->set_margin(kTimeoutMessageLayoutGapDMM);
 
-  auto timeout_icon = Create<VectorIcon>(kWebVrTimeoutMessageIcon,
-                                         kPhaseOverlayForeground, 512);
+  auto timeout_icon =
+      Create<VectorIcon>(kWebVrTimeoutMessageIcon, kPhaseForeground, 512);
   timeout_icon->SetIcon(kSadTabIcon);
   timeout_icon->SetSize(kTimeoutMessageIconWidthDMM,
                         kTimeoutMessageIconHeightDMM);
 
-  auto timeout_text =
-      Create<Text>(kWebVrTimeoutMessageText, kPhaseOverlayForeground,
-                   kTimeoutMessageTextFontHeightDMM);
+  auto timeout_text = Create<Text>(kWebVrTimeoutMessageText, kPhaseForeground,
+                                   kTimeoutMessageTextFontHeightDMM);
   timeout_text->SetText(
       l10n_util::GetStringUTF16(IDS_VR_WEB_VR_TIMEOUT_MESSAGE));
   timeout_text->SetColor(model_->color_scheme().timeout_message_foreground);
@@ -624,7 +623,7 @@ void UiSceneCreator::CreateWebVrTimeoutScreen() {
       base::MakeUnique<ScaledDepthAdjuster>(kTimeoutButtonDepthOffset);
 
   auto button = Create<DiscButton>(
-      kWebVrTimeoutMessageButton, kPhaseOverlayForeground,
+      kWebVrTimeoutMessageButton, kPhaseForeground,
       base::Bind(&UiBrowserInterface::ExitPresent, base::Unretained(browser_)),
       vector_icons::kClose16Icon);
   button->SetVisible(false);
@@ -717,9 +716,7 @@ void UiSceneCreator::CreateBackground() {
   }
 
   // Floor.
-  auto floor = base::MakeUnique<Grid>();
-  floor->SetName(kFloor);
-  floor->SetDrawPhase(kPhaseFloorCeiling);
+  auto floor = Create<Grid>(kFloor, kPhaseBackground);
   floor->SetSize(kSceneSize, kSceneSize);
   floor->SetTranslate(0.0, -kSceneHeight / 2, 0.0);
   floor->SetRotate(1, 0, 0, -base::kPiFloat / 2);
@@ -732,10 +729,8 @@ void UiSceneCreator::CreateBackground() {
   scene_->AddUiElement(k2dBrowsingBackground, std::move(floor));
 
   // Ceiling.
-  auto ceiling = base::MakeUnique<Rect>();
+  auto ceiling = Create<Rect>(kCeiling, kPhaseBackground);
   ceiling->set_focusable(false);
-  ceiling->SetName(kCeiling);
-  ceiling->SetDrawPhase(kPhaseFloorCeiling);
   ceiling->SetSize(kSceneSize, kSceneSize);
   ceiling->SetTranslate(0.0, kSceneHeight / 2, 0.0);
   ceiling->SetRotate(1, 0, 0, base::kPiFloat / 2);
@@ -1400,7 +1395,6 @@ void UiSceneCreator::CreateExitPrompt() {
   // reticle roughly planar with the content if near content.
   auto backplane = base::MakeUnique<InvisibleHitTarget>();
   backplane->SetName(kExitPromptBackplane);
-  backplane->SetDrawPhase(kPhaseForeground);
   backplane->SetSize(kPromptBackplaneSize, kPromptBackplaneSize);
   backplane->SetTranslate(0.0,
                           kContentVerticalOffset + kExitPromptVerticalOffset,

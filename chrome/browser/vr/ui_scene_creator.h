@@ -39,7 +39,6 @@ class UiSceneCreator {
  private:
   void Create2dBrowsingSubtreeRoots();
   void CreateWebVrRoot();
-  void CreateWebVRExitWarning();
   void CreateSystemIndicators();
   void CreateContentQuad();
   void CreateSplashScreenForDirectWebVrLaunch();
@@ -55,6 +54,7 @@ class UiSceneCreator {
   void CreateAudioPermissionPrompt();
   void CreateToasts();
   void CreateVoiceSearchUiGroup();
+  void CreateExitWarning();
   void CreateController();
   void CreateKeyboard();
 
