@@ -22,6 +22,30 @@
       "revId": "a42975d0c4941492c0ac49e8653b093731136648",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0cc7976_bf9269b2",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/security/xss-DENIED-xml-external-entity-expected.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1003011
+      },
+      "writtenOn": "2017-12-19T02:32:37Z",
+      "side": 0,
+      "message": "As this test was disabled, we don\u0027t know when the error message stopped appearing.",
+      "parentUuid": "71506338_856b7b9e",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 7
+      },
+      "revId": "a42975d0c4941492c0ac49e8653b093731136648",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
