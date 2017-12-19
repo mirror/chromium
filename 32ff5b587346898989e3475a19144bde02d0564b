@@ -102,6 +102,24 @@
     },
     {
       "key": {
+        "uuid": "265d4f8e_c39e0c1d",
+        "filename": "ios/web/public/download/download_task.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-19T01:45:33Z",
+      "side": 1,
+      "message": "I think of \"progress state\" as a download progress, which is GetPercentComplete. \n\n\"The state of the DownloadTask.\" would be more accurate description, but also not useful at all. I don\u0027t think we need a comment for the sake of having a comment. WDYT?",
+      "parentUuid": "51e60199_d53075e1",
+      "revId": "32ff5b587346898989e3475a19144bde02d0564b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "75434b7d_dcb97c3d",
         "filename": "ios/web/public/download/download_task.h",
         "patchSetId": 3
