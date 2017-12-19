@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2f503d16_70b07478",
+        "filename": "third_party/WebKit/Source/devtools/front_end/product_registry/BadgePool.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-12-19T18:44:04Z",
+      "side": 1,
+      "message": "I don\u0027t think we need this one, the one in the constructor is sufficient!",
+      "revId": "21e4cce3cb39af86117f5dae54b81fbf83c1203d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
