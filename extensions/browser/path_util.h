@@ -17,6 +17,11 @@ namespace path_util {
 // replace the home directory component with "~".
 base::FilePath PrettifyPath(const base::FilePath& source_path);
 
+void CalculateAndFormatExtensionDirectorySize(
+    const base::FilePath& extension_path,
+    int message_id,
+    base::OnceCallback<void(const base::string16&)> callback);
+
 }  // namespace path_util
 }  // namespace extensions
 
