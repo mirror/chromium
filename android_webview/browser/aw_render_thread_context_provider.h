@@ -30,7 +30,9 @@ class GLES2TraceImplementation;
 
 namespace android_webview {
 
-class AwRenderThreadContextProvider : public viz::ContextProvider {
+class AwRenderThreadContextProvider
+    : public base::RefCountedThreadSafe<AwRenderThreadContextProvider>,
+      public viz::ContextProvider {
  public:
   static scoped_refptr<AwRenderThreadContextProvider> Create(
       scoped_refptr<gl::GLSurface> surface,
@@ -41,17 +43,20 @@ class AwRenderThreadContextProvider : public viz::ContextProvider {
   uint32_t GetCopyTextureInternalFormat();
 
  private:
+  friend class base::RefCountedThreadSafe<AwRenderThreadContextProvider>;
+
   AwRenderThreadContextProvider(
       scoped_refptr<gl::GLSurface> surface,
       scoped_refptr<gpu::InProcessCommandBuffer::Service> service);
   ~AwRenderThreadContextProvider() override;
 
-  // viz::ContextProvider:
+  // viz::ContextProvider implementation.
+  void AddRef() const override;
+  void Release() const override;
   gpu::ContextResult BindToCurrentThread() override;
   const gpu::Capabilities& ContextCapabilities() const override;
   const gpu::GpuFeatureInfo& GetGpuFeatureInfo() const override;
   gpu::gles2::GLES2Interface* ContextGL() override;
-  gpu::raster::RasterInterface* RasterContext() override;
   gpu::ContextSupport* ContextSupport() override;
   class GrContext* GrContext() override;
   viz::ContextCacheController* CacheController() override;
