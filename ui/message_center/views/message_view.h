@@ -99,6 +99,8 @@ class MESSAGE_CENTER_EXPORT MessageView
   void set_force_disable_pinned() { force_disable_pinned_ = true; }
 #endif
 
+  bool manually_expanded() const { return manually_expanded_; }
+
  protected:
   // Creates and add close button to view hierarchy when necessary. Derived
   // classes should call this after its view hierarchy is populated to ensure
@@ -112,6 +114,8 @@ class MESSAGE_CENTER_EXPORT MessageView
   views::View* background_view() { return background_view_; }
   views::ScrollView* scroller() { return scroller_; }
 
+  void set_manually_expanded() { manually_expanded_ = true; }
+
  private:
   std::string notification_id_;
   views::View* background_view_ = nullptr;  // Owned by views hierarchy.
@@ -124,6 +128,10 @@ class MESSAGE_CENTER_EXPORT MessageView
   // Flag if pin is forcibly disabled on this view. If true, the view is never
   // pinned regardless of the value of |pinned_|.
   bool force_disable_pinned_ = false;
+
+  // True if the notification is expanded by user interaction.
+  // If true, MessagePopupCollection will not auto-collapse the notification.
+  bool manually_expanded_ = false;
 
   std::unique_ptr<views::Painter> focus_painter_;
 
