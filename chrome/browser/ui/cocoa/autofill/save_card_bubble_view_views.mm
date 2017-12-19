@@ -2,8 +2,6 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "base/feature_list.h"
-#include "chrome/browser/ui/cocoa/autofill/save_card_bubble_view_bridge.h"
 #include "chrome/browser/ui/cocoa/browser_dialogs_views_mac.h"
 #include "chrome/browser/ui/cocoa/browser_window_cocoa.h"
 #include "chrome/browser/ui/cocoa/browser_window_controller.h"
@@ -11,7 +9,6 @@
 #include "chrome/browser/ui/cocoa/location_bar/location_bar_view_mac.h"
 #include "chrome/browser/ui/cocoa/location_bar/save_credit_card_decoration.h"
 #include "chrome/browser/ui/views/autofill/save_card_bubble_views.h"
-#include "components/autofill/core/browser/autofill_experiments.h"
 #include "ui/base/cocoa/cocoa_base_utils.h"
 #include "ui/gfx/mac/coordinate_conversion.h"
 
@@ -22,7 +19,6 @@ SaveCardBubbleView* CreateSaveCardBubbleView(
     autofill::SaveCardBubbleController* controller,
     BrowserWindowController* browser_window_controller,
     bool user_gesture) {
-  if (base::FeatureList::IsEnabled(kAutofillToolkitViewsCreditCardDialogsMac)) {
     LocationBarViewMac* location_bar =
         [browser_window_controller locationBarBridge];
     gfx::Point anchor =
@@ -41,7 +37,6 @@ SaveCardBubbleView* CreateSaveCardBubbleView(
                               : autofill::SaveCardBubbleViews::AUTOMATIC);
     KeepBubbleAnchored(bubble, location_bar->save_credit_card_decoration());
     return bubble;
-  }
-  return new SaveCardBubbleViewBridge(controller, browser_window_controller);
 }
-}
+
+}  // namespace autofill
