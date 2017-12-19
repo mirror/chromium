@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "d44de119_6e3991b8",
+        "filename": "third_party/WebKit/common/service_worker/service_worker_client.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-12-19T08:31:59Z",
+      "side": 1,
+      "message": "I think it\u0027s better to describe it on the comment.\n\n// WindowClient#visibilityState\n// Set to |kHidden| if it\u0027s non window client.",
+      "parentUuid": "f4ac315c_aa94b83b",
+      "revId": "a9a359163987ebe0a4afd7f4600d29d1d40cef38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "346c837a_db6774a0",
         "filename": "third_party/WebKit/common/service_worker/service_worker_client.mojom",
         "patchSetId": 4
@@ -101,6 +119,24 @@
       "side": 1,
       "message": "It is false.\nhttps://cs.chromium.org/chromium/src/content/browser/service_worker/service_worker_client_utils.cc?dr\u0026l\u003d326",
       "parentUuid": "346c837a_db6774a0",
+      "revId": "a9a359163987ebe0a4afd7f4600d29d1d40cef38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c392a955_c19c8226",
+        "filename": "third_party/WebKit/common/service_worker/service_worker_client.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-12-19T08:31:59Z",
+      "side": 1,
+      "message": "I think it\u0027s better to describe it on the comment.",
+      "parentUuid": "c98ba300_24082071",
       "revId": "a9a359163987ebe0a4afd7f4600d29d1d40cef38",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -206,6 +242,24 @@
       "side": 1,
       "message": "If we only use client_info.url.is_empty() to check IsEmptyClientInfo, and don\u0027t set the default values for page_visibility_state, frame_type and client_type. ServiceWorkerDispatcherHostTest.DispatchExtendableMessageEvent_Fail will not pass, I am investigating it.",
       "parentUuid": "20f8d5da_f1cb7432",
+      "revId": "a9a359163987ebe0a4afd7f4600d29d1d40cef38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00338665_7afba3ac",
+        "filename": "third_party/WebKit/common/service_worker/service_worker_client.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-12-19T08:31:59Z",
+      "side": 1,
+      "message": "We should clarify what\u0027s empty and what\u0027s invalid on top of the definition.\nWhat happens if we add kInvalid? I think we can say clearly it\u0027s empty or invalid.",
+      "parentUuid": "44e4d5d6_f79ef36d",
       "revId": "a9a359163987ebe0a4afd7f4600d29d1d40cef38",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
