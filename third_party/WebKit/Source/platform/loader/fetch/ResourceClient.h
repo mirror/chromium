@@ -29,6 +29,7 @@
 #include "platform/PlatformExport.h"
 #include "platform/heap/Handle.h"
 #include "platform/loader/fetch/Resource.h"
+#include "platform/loader/fetch/ResourceFetcher.h"
 #include "platform/wtf/Forward.h"
 #include "platform/wtf/text/WTFString.h"
 
@@ -71,9 +72,19 @@ class PLATFORM_EXPORT ResourceClient : public GarbageCollectedMixin {
 
   void Trace(blink::Visitor* visitor) override { visitor->Trace(resource_); }
 
+  Resource* Fetch(FetchParameters& params,
+                  ResourceFetcher* fetcher,
+                  const ResourceFactory& factory,
+                  const SubstituteData& substitute_data = SubstituteData()) {
+    DCHECK_EQ(kRequestAsynchronously, params.Options().synchronous_policy);
+    Resource* resource =
+        fetcher->RequestResource(params, factory, substitute_data);
+    SetResource(resource, fetcher->Context().GetLoadingTaskRunner().get());
+    return resource;
+  }
+
  protected:
   ResourceClient() {}
-
   void ClearResource() { SetResource(nullptr, nullptr); }
 
  private:

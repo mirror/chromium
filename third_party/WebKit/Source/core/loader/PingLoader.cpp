@@ -221,8 +221,8 @@ bool SendBeaconCommon(LocalFrame* frame,
   // mode should always be "no-cors".
   params.MutableOptions().initiator_info.name = FetchInitiatorTypeNames::beacon;
 
-  Resource* resource =
-      RawResource::Fetch(params, frame->GetDocument()->Fetcher(), nullptr);
+  Resource* resource = frame->GetDocument()->Fetcher()->RequestResource(
+      params, RawResource::Factory());
   if (resource && resource->GetStatus() != ResourceStatus::kLoadError) {
     frame->Client()->DidDispatchPingLoader(request.Url());
     return true;
@@ -243,8 +243,8 @@ void PingLoader::LoadImage(LocalFrame* frame, const KURL& url) {
   // TODO(mkwst): Reevaluate this.
   params.SetContentSecurityCheck(kDoNotCheckContentSecurityPolicy);
 
-  Resource* resource =
-      RawResource::Fetch(params, frame->GetDocument()->Fetcher(), nullptr);
+  Resource* resource = frame->GetDocument()->Fetcher()->RequestResource(
+      params, RawResource::Factory());
   if (resource && resource->GetStatus() != ResourceStatus::kLoadError)
     frame->Client()->DidDispatchPingLoader(request.Url());
 }
@@ -279,8 +279,8 @@ void PingLoader::SendLinkAuditPing(LocalFrame* frame,
   FetchParameters params(request);
   params.MutableOptions().initiator_info.name = FetchInitiatorTypeNames::ping;
 
-  Resource* resource =
-      RawResource::Fetch(params, frame->GetDocument()->Fetcher(), nullptr);
+  Resource* resource = frame->GetDocument()->Fetcher()->RequestResource(
+      params, RawResource::Factory());
   if (resource && resource->GetStatus() != ResourceStatus::kLoadError)
     frame->Client()->DidDispatchPingLoader(request.Url());
 }
@@ -311,8 +311,8 @@ void PingLoader::SendViolationReport(LocalFrame* frame,
   params.MutableOptions().security_origin =
       frame->GetDocument()->GetSecurityOrigin();
 
-  Resource* resource =
-      RawResource::Fetch(params, frame->GetDocument()->Fetcher(), nullptr);
+  Resource* resource = frame->GetDocument()->Fetcher()->RequestResource(
+      params, RawResource::Factory());
   if (resource && resource->GetStatus() != ResourceStatus::kLoadError)
     frame->Client()->DidDispatchPingLoader(request.Url());
 }

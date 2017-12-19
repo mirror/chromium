@@ -214,19 +214,13 @@ Resource* DocumentLoader::StartPreload(Resource::Type type,
       resource = CSSStyleSheetResource::Fetch(params, Fetcher(), client);
       break;
     case Resource::kFont:
-      resource = FontResource::Fetch(params, Fetcher(), nullptr);
+      resource = Fetcher()->RequestResource(params, FontResource::Factory());
       break;
     case Resource::kMedia:
-      resource = RawResource::FetchMedia(params, Fetcher(), nullptr);
-      break;
     case Resource::kTextTrack:
-      resource = RawResource::FetchTextTrack(params, Fetcher(), nullptr);
-      break;
     case Resource::kImportResource:
-      resource = RawResource::FetchImport(params, Fetcher(), nullptr);
-      break;
     case Resource::kRaw:
-      resource = RawResource::Fetch(params, Fetcher(), nullptr);
+      resource = Fetcher()->RequestResource(params, RawResource::Factory(type));
       break;
     default:
       NOTREACHED();
@@ -860,8 +854,8 @@ void DocumentLoader::StartLoading() {
   options.data_buffering_policy = kDoNotBufferData;
   options.initiator_info.name = FetchInitiatorTypeNames::document;
   FetchParameters fetch_params(request_, options);
-  RawResource::FetchMainResource(fetch_params, Fetcher(), this,
-                                 substitute_data_);
+  Fetch(fetch_params, Fetcher(), RawResource::Factory(Resource::kMainResource),
+        substitute_data_);
 
   // PlzNavigate:
   // The final access checks are still performed here, potentially rejecting

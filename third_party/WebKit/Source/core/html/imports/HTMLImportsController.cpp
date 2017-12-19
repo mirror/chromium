@@ -113,7 +113,8 @@ HTMLImportChild* HTMLImportsController::Load(const Document& parent_document,
 
   HTMLImportLoader* loader = HTMLImportLoader::Create(this);
   ResourceFetcher* fetcher = parent->GetDocument()->Fetcher();
-  if (!RawResource::FetchImport(params, fetcher, loader))
+  if (!loader->Fetch(params, fetcher,
+                     RawResource::Factory(Resource::kImportResource)))
     return nullptr;
   loaders_.push_back(loader);
   HTMLImportChild* child = CreateChild(url, loader, parent, client);
