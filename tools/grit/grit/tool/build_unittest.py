@@ -54,9 +54,11 @@ class BuildUnittest(unittest.TestCase):
       deps = deps_string.split(' ')
 
       self.failUnlessEqual("resource.h", dep_output_file)
-      self.failUnlessEqual(1, len(deps))
-      self.failUnlessEqual(deps[0],
-          util.PathFromRoot('grit/testdata/substitute.xmb'))
+      self.failUnlessEqual(deps, [
+          util.PathFromRoot('grit/testdata/grit_part.grdp'),
+          util.PathFromRoot('grit/testdata/klonk.ico'),
+          util.PathFromRoot('grit/testdata/substitute.xmb'),
+      ])
 
   def testGenerateDepFileWithResourceIds(self):
     output_dir = tempfile.mkdtemp()
@@ -374,9 +376,11 @@ class BuildUnittest(unittest.TestCase):
       deps = deps_string.split(' ')
 
       self.failUnlessEqual(expected_stamp_file_name, dep_output_file)
-      self.failUnlessEqual(1, len(deps))
-      self.failUnlessEqual(deps[0],
-          util.PathFromRoot('grit/testdata/substitute.xmb'))
+      self.failUnlessEqual(deps, [
+          util.PathFromRoot('grit/testdata/grit_part.grdp'),
+          util.PathFromRoot('grit/testdata/klonk.ico'),
+          util.PathFromRoot('grit/testdata/substitute.xmb'),
+      ])
 
 
 if __name__ == '__main__':

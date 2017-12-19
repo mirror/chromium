@@ -27,5 +27,10 @@ View news that is personalized based on the articles you read.
 For example, if you read lots of sports news, you'll see more sports articles. If you read technology news less often, you'll see fewer of those articles.
       </message>
     </messages>
+    <includes>
+      <if expr="False">
+        <part file="grit_part.grdp" />
+      </if>
+    </includes>
   </release>
 </grit>

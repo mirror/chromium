@@ -463,7 +463,7 @@ class GritNode(base.Node):
       self.SetOutputContext(ctx)
       self.SetFallbackToDefaultLayout(fallback)
 
-      for node in self.ActiveDescendants():
+      for node in self:
         if isinstance(node, (io.FileNode, include.IncludeNode, misc.PartNode,
                              structure.StructureNode, variant.SkeletonNode)):
           input_path = node.GetInputPath()
