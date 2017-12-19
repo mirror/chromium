@@ -424,6 +424,24 @@
     },
     {
       "key": {
+        "uuid": "99ff47c0_956300d7",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 3604,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-19T18:51:26Z",
+      "side": 1,
+      "message": "\u003e For some case, whose size/hint changed, need to get the size/hint info.\n\nvoid GLRenderer::UpdateRenderPassTextures(\n    const RenderPassList\u0026 render_passes_in_draw_order,\n    const base::flat_map\u003cRenderPassId, RenderPassRequirements\u003e\u0026\n        render_passes_in_frame) {\n\nHere we can delete based on the size/hint in the RenderPassRequirements.\n\nvoid GLRenderer::AllocateRenderPassResourceIfNeeded(\n    const RenderPassId\u0026 render_pass_id,\n    const gfx::Size\u0026 enlarged_size,\n    ResourceTextureHint texturehint) {\n\nAnd here we can create based on the size/hint given.\n\n\u003e BTW, the erase in AllocateRenderPassResourceIfNeeded is to replace texture  for specific render pass.\n\nI\u0027m not sure what you mean here. But doing the erasing in UpdateRenderPassTextures() worked before this change. What is different about it now that it stops working? I can\u0027t see it..",
+      "parentUuid": "32bca978_9ee5678d",
+      "revId": "768cbe3e4119794e7f3ab34942d71f94e088dfe9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f046ac99_3bc3236f",
         "filename": "components/viz/service/display/gl_renderer.cc",
         "patchSetId": 29

@@ -195,6 +195,24 @@
     },
     {
       "key": {
+        "uuid": "aeec0140_1bcf891c",
+        "filename": "components/viz/service/display/scoped_render_pass_texture.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-19T18:51:26Z",
+      "side": 1,
+      "message": "I don\u0027t think it should be.. see below.",
+      "parentUuid": "2080b0cc_fa6ea752",
+      "revId": "658caacc431ee01439523cb1dcb630a2d78f5108",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "930f3e8b_766a3948",
         "filename": "components/viz/service/display/scoped_render_pass_texture.cc",
         "patchSetId": 31
@@ -224,6 +242,24 @@
       "side": 1,
       "message": "Yes, other will be deleted automatically here. \nUnder below circumstance, \nScopedRenderPassTexture contents_texture_updated \u003d std::move(contents_texture); \nrender_pass_textures_.insert(\nFree is useless. Because contents_texture_updated is constructed by contents_texture.\n\nHowever, if contents_texture_updated was constructed before like this:\nScopedRenderPassTexture contents_texture_updated(...); \ncontents_texture_updated \u003d std::move(contents_texture_other); \nThen Free will work.",
       "parentUuid": "930f3e8b_766a3948",
+      "revId": "658caacc431ee01439523cb1dcb630a2d78f5108",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8269f6bf_2a916892",
+        "filename": "components/viz/service/display/scoped_render_pass_texture.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-19T18:51:26Z",
+      "side": 1,
+      "message": "But isn\u0027t that bad?\n\nScopedRenderPassTexture a;\nScopedRenderPassTexture b(...);\nLOG(ERROR) \u003c\u003c a.id();  // 0\nLOG(ERROR) \u003c\u003c b.id();  // non-0\na \u003d std::move(b);\nLOG(ERROR) \u003c\u003c a.id();  // 0\nLOG(ERROR) \u003c\u003c b.id();  // 0\n\nThere\u0027s no texture left now cuz it was freed?",
+      "parentUuid": "fbe66154_7cee8f1a",
       "revId": "658caacc431ee01439523cb1dcb630a2d78f5108",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
