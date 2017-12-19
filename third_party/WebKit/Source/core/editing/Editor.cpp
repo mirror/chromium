@@ -127,9 +127,9 @@ void DispatchInputEventEditableContentChanged(
     const String& data,
     InputEvent::EventIsComposing is_composing) {
   if (start_root)
-    DispatchInputEvent(start_root, input_type, data, is_composing);
+    DispatchInputEvent(start_root, InputEvent::InputType::kInsertText, data, InputEvent::EventIsComposing::kIsComposing);
   if (end_root && end_root != start_root)
-    DispatchInputEvent(end_root, input_type, data, is_composing);
+    DispatchInputEvent(end_root, InputEvent::InputType::kInsertText, data, InputEvent::EventIsComposing::kIsComposing);
 }
 
 InputEvent::EventIsComposing IsComposingFromCommand(
