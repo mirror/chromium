@@ -126,9 +126,8 @@ class MockInputRouterImplClient : public InputRouterImplClient {
     return input_router_client_.FilterInputEvent(input_event, latency_info);
   }
 
-  void IncrementInFlightEventCount(
-      blink::WebInputEvent::Type event_type) override {
-    input_router_client_.IncrementInFlightEventCount(event_type);
+  void IncrementInFlightEventCount() override {
+    input_router_client_.IncrementInFlightEventCount();
   }
 
   void DecrementInFlightEventCount(InputEventAckSource ack_source) override {

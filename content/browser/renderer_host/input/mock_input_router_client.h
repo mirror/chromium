@@ -26,8 +26,7 @@ class MockInputRouterClient : public InputRouterClient {
   InputEventAckState FilterInputEvent(
       const blink::WebInputEvent& input_event,
       const ui::LatencyInfo& latency_info) override;
-  void IncrementInFlightEventCount(
-      blink::WebInputEvent::Type event_type) override;
+  void IncrementInFlightEventCount() override;
   void DecrementInFlightEventCount(InputEventAckSource ack_source) override;
   void OnHasTouchEventHandlers(bool has_handlers) override;
   void DidOverscroll(const ui::DidOverscrollParams& params) override;
