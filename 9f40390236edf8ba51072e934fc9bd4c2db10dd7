@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4e5032b4_168e75f7",
+        "filename": "chrome/browser/android/vr_shell/vr_shell.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 559,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-12-19T20:04:38Z",
+      "side": 0,
+      "message": "Likely a dumb question, but why don\u0027t we need to propagate the physical size change anymore?",
+      "revId": "9f40390236edf8ba51072e934fc9bd4c2db10dd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

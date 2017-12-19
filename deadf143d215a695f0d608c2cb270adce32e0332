@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4781b71c_9f29a66e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/CompositorView.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-12-19T20:04:38Z",
+      "side": 1,
+      "message": "I think it\u0027d help to have a comment here to explain why we nuke the surface manager (as well as explaining how VR provides similar functionality, but isn\u0027t quite the same thing as a surface manager).",
+      "revId": "deadf143d215a695f0d608c2cb270adce32e0332",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4da43abf_059e2958",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellImpl.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-12-19T20:04:38Z",
+      "side": 1,
+      "message": "Would be nice to stick these magic numbers (which are limits, if I understood our offline conversation correctly) into named constants.",
+      "revId": "deadf143d215a695f0d608c2cb270adce32e0332",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d6e96e7_1d21ab33",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellImpl.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 555,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-12-19T20:04:38Z",
+      "side": 1,
+      "message": "Given that this progress bar is up for review in a separate CL, would be nice to remove it from this one.",
+      "revId": "deadf143d215a695f0d608c2cb270adce32e0332",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
