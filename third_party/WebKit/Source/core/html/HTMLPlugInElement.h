@@ -87,6 +87,8 @@ class CORE_EXPORT HTMLPlugInElement
       Vector<String>* /* messages */,
       bool* /* old_syntax */) const;
 
+  void ContentFrameDidStopLoading();
+
  protected:
   HTMLPlugInElement(const QualifiedName& tag_name,
                     Document&,
@@ -183,6 +185,10 @@ class CORE_EXPORT HTMLPlugInElement
   bool RequestObjectInternal(const Vector<String>& param_names,
                              const Vector<String>& param_values);
 
+  // Returns true if the element should redirect its content frame to BlankURL
+  // before loading an object.
+  bool ShouldRedirectContentFrameToEmptyUrl(ObjectContentType);
+
   v8::Global<v8::Object> plugin_wrapper_;
   bool needs_plugin_update_;
   bool should_prefer_plug_ins_for_images_;
@@ -190,6 +196,11 @@ class CORE_EXPORT HTMLPlugInElement
   // !layoutEmbeddedItem().showsUnavailablePluginIndicator()|.  We want to
   // avoid accessing |layoutObject()| in layoutObjectIsFocusable().
   bool plugin_is_available_ = false;
+
+  // When true, the element will request the document to reload plugins right
+  // after the content frame stops loading a blank page. This is used to cleanly
+  // switch from frame content type to object.
+  bool should_restart_loading_process_ = false;
 
   // Normally the plugin is stored in
   // HTMLFrameOwnerElement::embedded_content_view. However, plugins can persist
