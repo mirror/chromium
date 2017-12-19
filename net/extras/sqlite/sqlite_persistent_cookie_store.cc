@@ -22,7 +22,9 @@
 #include "base/strings/string_util.h"
 #include "base/strings/stringprintf.h"
 #include "base/synchronization/lock.h"
+#include "base/synchronization/waitable_event.h"
 #include "base/threading/sequenced_worker_pool.h"
+#include "base/threading/thread_restrictions.h"
 #include "base/time/time.h"
 #include "net/base/registry_controlled_domains/registry_controlled_domain.h"
 #include "net/cookies/canonical_cookie.h"
@@ -89,6 +91,9 @@ class SQLitePersistentCookieStore::Backend
       CookieCryptoDelegate* crypto_delegate)
       : path_(path),
         num_pending_(0),
+        pending_writes_(0),
+        write_tasks_event_(base::WaitableEvent::ResetPolicy::MANUAL,
+                           base::WaitableEvent::InitialState::SIGNALED),
         initialized_(false),
         corruption_detected_(false),
         restore_old_session_cookies_(restore_old_session_cookies),
@@ -129,7 +134,11 @@ class SQLitePersistentCookieStore::Backend
 
   // Commit any pending operations and close the database.  This must be called
   // before the object is destructed.
-  void Close(const base::Closure& callback);
+  // If a non-null |writes_blocked_task_runner| is passed to close, a
+  // task will be posted to that task runner that will block on completion
+  // of all writes currently in process in the database.  This task runner
+  // must have the WithBaseSyncPrimitives trait set.
+  void Close(const scoped_refptr<base::TaskRunner>& writes_blocked_task_runner);
 
   // Post background delete of all cookies that match |cookies|.
   void DeleteAllInList(const std::list<CookieOrigin>& cookies);
@@ -222,7 +231,7 @@ class SQLitePersistentCookieStore::Backend
   // Commit our pending operations to the database.
   void Commit();
   // Close() executed on the background runner.
-  void InternalBackgroundClose(const base::Closure& callback);
+  void InternalBackgroundClose();
 
   void DeleteSessionCookiesOnStartup();
 
@@ -239,6 +248,9 @@ class SQLitePersistentCookieStore::Backend
   void FinishedLoadingCookies(const LoadedCallback& loaded_callback,
                               bool success);
 
+  // Wait for all write operations to complete.
+  void WaitForWriteSignal();
+
   const base::FilePath path_;
   std::unique_ptr<sql::Connection> db_;
   sql::MetaTable meta_table_;
@@ -246,7 +258,19 @@ class SQLitePersistentCookieStore::Backend
   typedef std::list<PendingOperation*> PendingOperationsList;
   PendingOperationsList pending_;
   PendingOperationsList::size_type num_pending_;
-  // Guard |cookies_|, |pending_|, |num_pending_|.
+
+  // |pending_writes_| is the number of write tasks outstanding.  It is
+  // different from |num_pending_| as |num_pending_| is decremented when tasks
+  // are removed from |pending_|, and pending_writes_ is decremented when
+  // tasks have been completed.
+  // |write_tasks_event_| is in a signalled state while there are no write
+  // tasks outstanding, and an unsignalled state when there are write tasks
+  // outstanding
+  PendingOperationsList::size_type pending_writes_;
+  base::WaitableEvent write_tasks_event_;
+
+  // Guard |cookies_|, |pending_|, |num_pending_|, |pending_writes_|, and
+  // |write_tasks_event_|.
   base::Lock lock_;
 
   // Temporary buffer for cookies loaded from DB. Accumulates cookies to reduce
@@ -1087,10 +1111,14 @@ void SQLitePersistentCookieStore::Backend::BatchOperation(
     base::AutoLock locked(lock_);
     pending_.push_back(po.release());
     num_pending = ++num_pending_;
+    if (++pending_writes_ == 1u) {
+      // |pending_.empty()| -> |!pending_.empty()| transition; reset
+      // the write tasks event.
+      write_tasks_event_.Reset();
+    }
   }
 
   if (num_pending == 1) {
-    // We've gotten our first entry for this batch, fire off the timer.
     if (!background_task_runner_->PostDelayedTask(
             FROM_HERE, base::Bind(&Backend::Commit, this),
             base::TimeDelta::FromMilliseconds(kCommitIntervalMs))) {
@@ -1098,6 +1126,8 @@ void SQLitePersistentCookieStore::Backend::BatchOperation(
     }
   } else if (num_pending == kCommitAfterBatchSize) {
     // We've reached a big enough batch, fire off a commit now.
+    // Don't reset the write_tasks_event_ as num_pending > 1
+    // implies that that's already been done.
     PostBackgroundTask(FROM_HERE, base::Bind(&Backend::Commit, this));
   }
 }
@@ -1118,8 +1148,30 @@ void SQLitePersistentCookieStore::Backend::Commit() {
     num_pending_ = 0;
   }
 
-  // Maybe an old timer fired or we are already Close()'ed.
-  if (!db_.get() || ops.empty())
+  // Maybe an old timer fired.
+  if (ops.empty())
+    return;
+
+  // Any other reason for exiting this function requires signalling the
+  // write_tasks_event_, as it represents a transition from
+  // |!pending_.empty()| to |pending_.empty()| matching the reverse
+  // transition above.
+  // TODO: Make decrement pending_writes and signal on that basis.
+  class AutoSignal {
+   public:
+    AutoSignal(Backend* backend) : backend_(backend) {}
+    ~AutoSignal() {
+      base::AutoLock locked(backend_->lock_);
+      if (--backend_->pending_writes_ == 0)
+        backend_->write_tasks_event_.Signal();
+    }
+
+   private:
+    SQLitePersistentCookieStore::Backend* backend_;
+  } auto_signal(this);
+
+  // If the DB is already closed, all following tasks are no-ops.
+  if (!db_.get())
     return;
 
   sql::Statement add_smt(db_->GetCachedStatement(
@@ -1208,6 +1260,7 @@ void SQLitePersistentCookieStore::Backend::Commit() {
   bool succeeded = transaction.Commit();
   UMA_HISTOGRAM_ENUMERATION("Cookie.BackingStoreUpdateResults",
                             succeeded ? 0 : 1, 2);
+  write_tasks_event_.Signal();
 }
 
 void SQLitePersistentCookieStore::Backend::SetBeforeFlushCallback(
@@ -1227,28 +1280,30 @@ void SQLitePersistentCookieStore::Backend::Flush(base::OnceClosure callback) {
 // pending commit timer or Load operations holding references on us, but if/when
 // this fires we will already have been cleaned up and it will be ignored.
 void SQLitePersistentCookieStore::Backend::Close(
-    const base::Closure& callback) {
+    const scoped_refptr<base::TaskRunner>& writes_blocked_task_runner) {
+  if (writes_blocked_task_runner) {
+    writes_blocked_task_runner->PostTask(
+        FROM_HERE,
+        base::BindOnce(
+            &SQLitePersistentCookieStore::Backend::WaitForWriteSignal, this));
+  }
+
   if (background_task_runner_->RunsTasksInCurrentSequence()) {
-    InternalBackgroundClose(callback);
+    InternalBackgroundClose();
   } else {
     // Must close the backend on the background runner.
-    PostBackgroundTask(FROM_HERE, base::Bind(&Backend::InternalBackgroundClose,
-                                             this, callback));
+    PostBackgroundTask(FROM_HERE,
+                       base::BindOnce(&Backend::InternalBackgroundClose, this));
   }
 }
 
-void SQLitePersistentCookieStore::Backend::InternalBackgroundClose(
-    const base::Closure& callback) {
+void SQLitePersistentCookieStore::Backend::InternalBackgroundClose() {
   DCHECK(background_task_runner_->RunsTasksInCurrentSequence());
   // Commit any pending operations
   Commit();
 
   meta_table_.Reset();
   db_.reset();
-
-  // We're clean now.
-  if (!callback.is_null())
-    callback.Run();
 }
 
 void SQLitePersistentCookieStore::Backend::DatabaseErrorCallback(
@@ -1380,6 +1435,12 @@ void SQLitePersistentCookieStore::Backend::FinishedLoadingCookies(
                                        loaded_callback, success));
 }
 
+void SQLitePersistentCookieStore::Backend::WaitForWriteSignal() {
+  // TODO(http://crbug.com/793069): Switch to using task_funneling
+  // when available.
+  write_tasks_event_.Wait();
+}
+
 SQLitePersistentCookieStore::SQLitePersistentCookieStore(
     const base::FilePath& path,
     const scoped_refptr<base::SequencedTaskRunner>& client_task_runner,
@@ -1399,9 +1460,10 @@ void SQLitePersistentCookieStore::DeleteAllInList(
     backend_->DeleteAllInList(cookies);
 }
 
-void SQLitePersistentCookieStore::Close(const base::Closure& callback) {
+void SQLitePersistentCookieStore::Close(
+    const scoped_refptr<base::TaskRunner>& writes_blocked_task_runner) {
   if (backend_) {
-    backend_->Close(callback);
+    backend_->Close(writes_blocked_task_runner);
 
     // We release our reference to the Backend, though it will probably still
     // have a reference if the background runner has not run
@@ -1460,7 +1522,7 @@ void SQLitePersistentCookieStore::Flush(base::OnceClosure callback) {
 }
 
 SQLitePersistentCookieStore::~SQLitePersistentCookieStore() {
-  Close(base::Closure());
+  Close(scoped_refptr<base::TaskRunner>());
 }
 
 }  // namespace net
