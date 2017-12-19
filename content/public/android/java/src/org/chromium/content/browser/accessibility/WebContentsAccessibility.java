@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.text.SpannableString;
 import android.text.style.URLSpan;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -80,6 +81,7 @@ public class WebContentsAccessibility extends AccessibilityNodeProvider {
     private int mSelectionStartIndex;
     private int mSelectionEndIndex;
     protected int mAccessibilityFocusId;
+    protected int mSelectionNodeId;
     private Runnable mSendWindowContentChangedRunnable;
     private View mAutofillPopupView;
     private boolean mShouldFocusOnPageLoad;
@@ -90,6 +92,7 @@ public class WebContentsAccessibility extends AccessibilityNodeProvider {
     public static WebContentsAccessibility create(Context context, ViewGroup containerView,
             WebContents webContents, boolean shouldFocusOnPageLoad) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            Log.e("ibobra", " constructor called");
             return new OWebContentsAccessibility(
                     context, containerView, webContents, shouldFocusOnPageLoad);
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -109,6 +112,7 @@ public class WebContentsAccessibility extends AccessibilityNodeProvider {
         mContext = context;
         mWebContents = (WebContentsImpl) webContents;
         mAccessibilityFocusId = View.NO_ID;
+        mSelectionNodeId = View.NO_ID;
         mIsHovering = false;
         mCurrentRootId = View.NO_ID;
         mView = containerView;
@@ -273,6 +277,7 @@ public class WebContentsAccessibility extends AccessibilityNodeProvider {
                 return nextAtGranularity(granularity, extend);
             }
             case AccessibilityNodeInfo.ACTION_PREVIOUS_AT_MOVEMENT_GRANULARITY: {
+                Log.e("ibobra", "ACTION_PREVIOUS_AT_MOVEMENT_GRANULARITY received");
                 if (arguments == null) return false;
                 int granularity = arguments.getInt(
                         AccessibilityNodeInfo.ACTION_ARGUMENT_MOVEMENT_GRANULARITY_INT);
@@ -281,6 +286,7 @@ public class WebContentsAccessibility extends AccessibilityNodeProvider {
                 if (!isValidMovementGranularity(granularity)) {
                     return false;
                 }
+                Log.e("ibobra", "calling previousAtGranularity");
                 return previousAtGranularity(granularity, extend);
             }
             case AccessibilityNodeInfo.ACTION_SCROLL_FORWARD:
@@ -428,16 +434,33 @@ public class WebContentsAccessibility extends AccessibilityNodeProvider {
 
     private boolean nextAtGranularity(int granularity, boolean extendSelection) {
         setGranularityAndUpdateSelection(granularity);
+
+        int nodeId = mAccessibilityFocusId;
+        if (nativeIsEditableText(mNativeObj, mSelectionNodeId)
+                && nativeIsFocused(mNativeObj, mSelectionNodeId)) {
+            nodeId = mSelectionNodeId;
+            Log.e("ibobra", "is focused");
+        }
+
         // This calls finishGranularityMove when it's done.
-        return nativeNextAtGranularity(mNativeObj, mSelectionGranularity, extendSelection,
-                mAccessibilityFocusId, mSelectionStartIndex);
+        return nativeNextAtGranularity(
+                mNativeObj, mSelectionGranularity, extendSelection, nodeId, mSelectionStartIndex);
     }
 
     private boolean previousAtGranularity(int granularity, boolean extendSelection) {
         setGranularityAndUpdateSelection(granularity);
+
+        // Check that mSelectionNodeId is either accessibility focus or input focus
+        int nodeId = mAccessibilityFocusId;
+        if (nativeIsEditableText(mNativeObj, mSelectionNodeId)
+                && nativeIsFocused(mNativeObj, mSelectionNodeId)) {
+            nodeId = mSelectionNodeId;
+            Log.e("ibobra", "is focused");
+        }
+
         // This calls finishGranularityMove when it's done.
-        return nativePreviousAtGranularity(mNativeObj, mSelectionGranularity, extendSelection,
-                mAccessibilityFocusId, mSelectionEndIndex);
+        return nativePreviousAtGranularity(
+                mNativeObj, mSelectionGranularity, extendSelection, nodeId, mSelectionEndIndex);
     }
 
     @CalledByNative
@@ -445,9 +468,9 @@ public class WebContentsAccessibility extends AccessibilityNodeProvider {
             int itemEndIndex, boolean forwards) {
         // Prepare to send both a selection and a traversal event in sequence.
         AccessibilityEvent selectionEvent = buildAccessibilityEvent(
-                mAccessibilityFocusId, AccessibilityEvent.TYPE_VIEW_TEXT_SELECTION_CHANGED);
+                mSelectionNodeId, AccessibilityEvent.TYPE_VIEW_TEXT_SELECTION_CHANGED);
         if (selectionEvent == null) return;
-        AccessibilityEvent traverseEvent = buildAccessibilityEvent(mAccessibilityFocusId,
+        AccessibilityEvent traverseEvent = buildAccessibilityEvent(mSelectionNodeId,
                 AccessibilityEvent.TYPE_VIEW_TEXT_TRAVERSED_AT_MOVEMENT_GRANULARITY);
         if (traverseEvent == null) {
             selectionEvent.recycle();
@@ -464,10 +487,10 @@ public class WebContentsAccessibility extends AccessibilityNodeProvider {
         if (!extendSelection) {
             mSelectionStartIndex = mSelectionEndIndex;
         }
-        if (nativeIsEditableText(mNativeObj, mAccessibilityFocusId)
-                && nativeIsFocused(mNativeObj, mAccessibilityFocusId)) {
+        if (nativeIsEditableText(mNativeObj, mSelectionNodeId)
+                && nativeIsFocused(mNativeObj, mSelectionNodeId)) {
             nativeSetSelection(
-                    mNativeObj, mAccessibilityFocusId, mSelectionStartIndex, mSelectionEndIndex);
+                    mNativeObj, mSelectionNodeId, mSelectionStartIndex, mSelectionEndIndex);
         }
 
         // The selection event's "from" and "to" indices are just a cursor at the focus
@@ -516,6 +539,8 @@ public class WebContentsAccessibility extends AccessibilityNodeProvider {
 
         mAccessibilityFocusId = newAccessibilityFocusId;
         mAccessibilityFocusRect = null;
+        Log.e("ibobra", "setting selectionNodeId");
+        mSelectionNodeId = mAccessibilityFocusId;
         mSelectionGranularity = NO_GRANULARITY_SELECTED;
         mSelectionStartIndex = -1;
         mSelectionEndIndex = nativeGetTextLength(mNativeObj, newAccessibilityFocusId);
@@ -1053,6 +1078,9 @@ public class WebContentsAccessibility extends AccessibilityNodeProvider {
         event.setRemovedCount(removedCount);
         event.setBeforeText(beforeText);
         event.getText().add(text);
+
+        mSelectionEndIndex = fromIndex + addedCount - removedCount;
+        mSelectionStartIndex = fromIndex + addedCount - removedCount;
     }
 
     @CalledByNative

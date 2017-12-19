@@ -285,19 +285,28 @@ bool BrowserAccessibilityManagerAndroid::PreviousAtGranularity(
     BrowserAccessibilityAndroid* node,
     int32_t* start_index,
     int32_t* end_index) {
+  LOG(ERROR) << "ibobra reached PreviousAtGranularity in manager";
   switch (granularity) {
     case ANDROID_ACCESSIBILITY_NODE_INFO_MOVEMENT_GRANULARITY_CHARACTER: {
-      if (cursor_index <= 0)
+      if (cursor_index <= 0) {
+        LOG(ERROR) << "ibobra cursor_index is <=0 ";
         return false;
+      }
       base::string16 text = node->GetText();
       base::i18n::UTF16CharIterator iter(text.data(), text.size());
       int previous_index = 0;
+      LOG(ERROR) << "ibobra cursor_index: " << cursor_index;
+      LOG(ERROR) << "ibobra start_index: " << *start_index;
+      LOG(ERROR) << "ibobra end_index: " << *end_index;
+      LOG(ERROR) << "ibobra text: " << text;
       while (!iter.end() && iter.array_pos() < cursor_index) {
         previous_index = iter.array_pos();
         iter.Advance();
       }
       *start_index = previous_index;
       *end_index = previous_index;
+      LOG(ERROR) << "ibobra start_index: " << *start_index;
+      LOG(ERROR) << "ibobra end_index: " << *end_index;
       break;
     }
     case ANDROID_ACCESSIBILITY_NODE_INFO_MOVEMENT_GRANULARITY_WORD:
@@ -320,6 +329,7 @@ bool BrowserAccessibilityManagerAndroid::PreviousAtGranularity(
       break;
     }
     default:
+      LOG(ERROR) << "ibobra not reached";
       NOTREACHED();
   }
 

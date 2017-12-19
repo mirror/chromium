@@ -355,6 +355,7 @@ WebContentsAccessibilityAndroid::WebContentsAccessibilityAndroid(
 }
 
 WebContentsAccessibilityAndroid::~WebContentsAccessibilityAndroid() {
+  LOG(ERROR) << "ibobra destructor called";
   JNIEnv* env = AttachCurrentThread();
   ScopedJavaLocalRef<jobject> obj = java_ref_.get(env);
   if (obj.is_null())
@@ -1012,11 +1013,14 @@ jboolean WebContentsAccessibilityAndroid::PreviousAtGranularity(
   if (!root_manager_)
     return false;
   BrowserAccessibilityAndroid* node = GetAXFromUniqueID(unique_id);
-  if (!node)
+  if (!node) {
+    LOG(ERROR) << "ibobra !node";
     return false;
+  }
 
   jint start_index = -1;
   int end_index = -1;
+  LOG(ERROR) << "ibobra calling root manager PreviousAtGranularity";
   if (root_manager_->PreviousAtGranularity(granularity, cursor_index, node,
                                            &start_index, &end_index)) {
     Java_WebContentsAccessibility_finishGranularityMove(
