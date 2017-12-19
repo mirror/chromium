@@ -114,6 +114,30 @@
       "revId": "d8057c5b32afd8d45c11a62ac9db99483318c345",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce491eb4_68c709b6",
+        "filename": "chrome/browser/resources/md_extensions/code_section.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-19T19:25:57Z",
+      "side": 1,
+      "message": "I am more worried about others following this pattern as an example, in cases where the contents are not controlled by us.\n\nAlso I don\u0027t recall any other place in the code where we directly refer to the placeholders $1..$9. My understanding is that this are considered implementation details, and are meant to be hidden behind the loadTimeData.getStringF() API.",
+      "parentUuid": "7a1e76bc_8aa4eb03",
+      "range": {
+        "startLine": 110,
+        "startChar": 37,
+        "endLine": 110,
+        "endChar": 39
+      },
+      "revId": "d8057c5b32afd8d45c11a62ac9db99483318c345",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
