@@ -5,8 +5,7 @@
 #ifndef NET_QUIC_CORE_QUIC_SERVER_ID_H_
 #define NET_QUIC_CORE_QUIC_SERVER_ID_H_
 
-#include <stdint.h>
-
+#include <cstdint>
 #include <string>
 
 #include "net/base/host_port_pair.h"
@@ -34,6 +33,9 @@ class QUIC_EXPORT_PRIVATE QuicServerId {
   // ToString() will convert the QuicServerId to "scheme:hostname:port" or
   // "scheme:hostname:port/private". "scheme" will be "https".
   std::string ToString() const;
+
+  // Create a new ServerId from |str| which based on the output of ToString().
+  static QuicServerId FromString(const std::string& str);
 
   // Used in Chromium, but not internally.
   const HostPortPair& host_port_pair() const { return host_port_pair_; }
