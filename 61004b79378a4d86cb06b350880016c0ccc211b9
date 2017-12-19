@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ddd959b1_c721cc82",
+        "filename": "media/base/video_types.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-12-19T22:40:49Z",
+      "side": 1,
+      "message": "Yes and no: YV12A is in crrev.com/c/834292; but substituting YV12 \nfor I420 is not fully automatic because some use sites actually \nmean YV12, but not all, e.g. ffmpeg_... mean I420. Coming up soon!",
+      "parentUuid": "470815a0_2bc4edf3",
+      "range": {
+        "startLine": 26,
+        "startChar": 2,
+        "endLine": 26,
+        "endChar": 19
+      },
+      "revId": "61004b79378a4d86cb06b350880016c0ccc211b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f38893cc_8181f3ee",
         "filename": "media/base/video_types.h",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "61004b79378a4d86cb06b350880016c0ccc211b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9016c237_9e09f7c9",
+        "filename": "media/base/video_types.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-12-19T22:40:49Z",
+      "side": 1,
+      "message": "Oh yeah, good catch.",
+      "parentUuid": "f38893cc_8181f3ee",
+      "range": {
+        "startLine": 28,
+        "startChar": 36,
+        "endLine": 28,
+        "endChar": 39
+      },
+      "revId": "61004b79378a4d86cb06b350880016c0ccc211b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
