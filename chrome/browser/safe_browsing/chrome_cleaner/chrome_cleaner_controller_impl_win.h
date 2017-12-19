@@ -16,6 +16,7 @@
 #include "base/threading/thread_checker.h"
 #include "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_runner_win.h"
 #include "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_scanner_results.h"
+#include "components/component_updater/component_updater_service.h"
 
 namespace safe_browsing {
 
@@ -65,6 +66,9 @@ class ChromeCleanerControllerImpl : public ChromeCleanerController {
   void RemoveObserver(Observer* observer) override;
   void OnReporterSequenceStarted() override;
   void OnReporterSequenceDone(SwReporterInvocationResult result) override;
+  void RequestUserInitiatedScan() override;
+  SwReporterInvocationType GetNextSwReporterInvocationType(
+      SwReporterInvocationSequence* invocations) override;
   void Scan(const SwReporterInvocation& reporter_invocation) override;
   void ReplyWithUserResponse(Profile* profile,
                              UserResponse user_response) override;
@@ -137,6 +141,18 @@ class ChromeCleanerControllerImpl : public ChromeCleanerController {
   base::Time time_cleanup_started_;
 
   base::ObserverList<Observer> observer_list_;
+
+  // Mutex that guards |user_initiated_reporter_run_|,
+  // |on_demand_sw_reporter_fetcher_| and |cached_reporter_invocations_|.
+  mutable base::Lock lock_;
+  bool user_initiated_reporter_run_ = false;  // Protected by |lock_|.
+  std::unique_ptr<component_updater::SwReporterOnDemandFetcher>
+      on_demand_sw_reporter_fetcher_;  // Protected by |lock_|.
+  // Note: SwReporterInvocationSequence is mutable and should not be used more
+  // than once. Special care must be taken that the invocations are not sent
+  // to a |ReporterRunner| more than once.
+  std::unique_ptr<SwReporterInvocationSequence>
+      cached_reporter_invocations_;  // Protected by |lock_|.
 
   THREAD_CHECKER(thread_checker_);
 

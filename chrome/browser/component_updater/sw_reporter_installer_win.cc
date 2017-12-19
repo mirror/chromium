@@ -428,6 +428,30 @@ std::vector<std::string> SwReporterInstallerPolicy::GetMimeTypes() const {
   return std::vector<std::string>();
 }
 
+SwReporterOnDemandFetcher::SwReporterOnDemandFetcher(
+    ComponentUpdateService* cus,
+    base::OnceClosure on_error_callback)
+    : cus_(cus), on_error_callback_(std::move(on_error_callback)) {}
+
+SwReporterOnDemandFetcher::~SwReporterOnDemandFetcher() {
+  cus_->RemoveObserver(this);
+}
+
+void SwReporterOnDemandFetcher::Start() {
+  cus_->AddObserver(this);
+  cus_->GetOnDemandUpdater().OnDemandUpdate(kSwReporterComponentId, Callback());
+}
+
+void SwReporterOnDemandFetcher::OnEvent(Events event, const std::string& id) {
+  if (id != kSwReporterComponentId)
+    return;
+
+  if (event == Events::COMPONENT_NOT_UPDATED) {
+    std::move(on_error_callback_).Run();
+    cus_->RemoveObserver(this);
+  }
+}
+
 void RegisterSwReporterComponent(ComponentUpdateService* cus) {
   ReportUMAForLastCleanerRun();
 
