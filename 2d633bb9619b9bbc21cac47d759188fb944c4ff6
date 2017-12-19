@@ -173,6 +173,30 @@
       "revId": "2d633bb9619b9bbc21cac47d759188fb944c4ff6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "605749ea_98808c4a",
+        "filename": "tools/mb/mb_config.pyl",
+        "patchSetId": 7
+      },
+      "lineNbr": 561,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-12-19T00:52:58Z",
+      "side": 0,
+      "message": "Done, I missed it too :(.",
+      "parentUuid": "3cca9739_6190b9da",
+      "range": {
+        "startLine": 561,
+        "startChar": 7,
+        "endLine": 561,
+        "endChar": 37
+      },
+      "revId": "2d633bb9619b9bbc21cac47d759188fb944c4ff6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
