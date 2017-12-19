@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "26589174_0e5660f8",
+        "filename": "components/omnibox/browser/clipboard_url_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-12-19T18:43:50Z",
+      "side": 1,
+      "message": "I feel like we should preserve the subdomain, too. On the other hand, I feel like we should preserve the scheme but I double-checked and the implementation that pre-dates your changes trimmed the scheme:\n\nhttps://chromium-review.googlesource.com/c/chromium/src/+/594722/3/components/omnibox/browser/clipboard_url_provider.cc\n\nWhat do you think? Either way, lgtm.",
+      "revId": "95b98e4fb0d37cbd891274bc93bfd58dba4bf9bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
