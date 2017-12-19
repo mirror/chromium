@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "16c57f54_d6decc07",
+        "filename": "chrome/browser/extensions/extension_messages_apitest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1421,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-19T05:22:28Z",
+      "side": 1,
+      "message": "Hmm... not 100% sure I follow, but I don\u0027t think so.  We could reply to the message sender, but that\u0027s the app, so we would still have to get the message value in C++ somehow.  And I don\u0027t see an easy way we\u0027d be able to otherwise send it via test.sendMessage (since each of the other messages is already used).\n\nUnless I\u0027m missing something, I *think* this is the cleanest - but lemme know if you spot something simpler!",
+      "parentUuid": "e7a53b24_923e9ff6",
+      "range": {
+        "startLine": 1420,
+        "startChar": 11,
+        "endLine": 1421,
+        "endChar": 55
+      },
+      "revId": "305eb0252bcb0a09470c90a70ea16ef5697d34e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "02dad88c_4733ee78",
         "filename": "extensions/browser/api/messaging/message_service.cc",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "305eb0252bcb0a09470c90a70ea16ef5697d34e1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef97f1d6_0c0ce983",
+        "filename": "extensions/browser/api/messaging/message_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 824,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-19T05:22:28Z",
+      "side": 1,
+      "message": "Yes.  Normal extensions use the default storage partition for the BrowserContext, which is different than the storage partition for platform apps.  Additionally, platform apps are process-isolated, thus ensuring that (hopefully!) RenderProcessHost::GetStoragePartition() should always be correct.  I\u0027ve added a comment with some of this information (and a link to the bug).",
+      "parentUuid": "02dad88c_4733ee78",
+      "range": {
+        "startLine": 824,
+        "startChar": 8,
+        "endLine": 824,
+        "endChar": 22
+      },
+      "revId": "305eb0252bcb0a09470c90a70ea16ef5697d34e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
