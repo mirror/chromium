@@ -664,6 +664,30 @@
     },
     {
       "key": {
+        "uuid": "c27132ca_debbf6c7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/UmaUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-12-19T17:42:29Z",
+      "side": 1,
+      "message": "Making assert that this is only called once would be a nice addition. This would add a so-desired new static variable, but I think the effect of that would be very local and hence easily understood.\n\nUp to you and thank you for patience :)",
+      "parentUuid": "f187f552_96545362",
+      "range": {
+        "startLine": 90,
+        "startChar": 8,
+        "endLine": 90,
+        "endChar": 35
+      },
+      "revId": "ae0f5b437de826e709b8b03167c26f1b31500680",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "83b17828_6b099985",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/Tab.java",
         "patchSetId": 3
