@@ -50,21 +50,18 @@ static void RunConvolveBenchmark(
                          true);
 }
 
-// Benchmark for the various Convolve() methods.  Make sure to build with
+// Benchmarks for the various Convolve() methods.  Make sure to build with
 // branding=Chrome so that DCHECKs are compiled out when benchmarking.
-TEST(SincResamplerPerfTest, Convolve) {
+TEST(SincResamplerPerfTest, Convolve_unoptimized_aligned) {
   SincResampler resampler(kSampleRateRatio,
                           SincResampler::kDefaultRequestSize,
                           base::Bind(&DoNothing));
 
-  RunConvolveBenchmark(
-      &resampler, SincResampler::Convolve_C, true, "unoptimized_aligned");
-
+  RunConvolveBenchmark(&resampler, SincResampler::Convolve_C, true, "unoptimized_aligned");
 #if defined(CONVOLVE_FUNC)
-  RunConvolveBenchmark(
-      &resampler, SincResampler::CONVOLVE_FUNC, true, "optimized_aligned");
-  RunConvolveBenchmark(
-      &resampler, SincResampler::CONVOLVE_FUNC, false, "optimized_unaligned");
+  RunConvolveBenchmark(&resampler, SincResampler::CONVOLVE_FUNC, true, "optimized_aligned");
+  RunConvolveBenchmark(&resampler,
+      SincResampler::CONVOLVE_FUNC, false, "optimized_unaligned");
 #endif
 }
 
