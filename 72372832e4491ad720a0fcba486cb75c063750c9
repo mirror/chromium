@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "39fe11de_6a02df77",
+        "filename": "components/download/downloader/in_progress/download_entry.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-12-19T20:06:34Z",
+      "side": 1,
+      "message": "I\u0027m going to keep -1 as null because techinically RandUint64() returns a number [0, UINT64_MAX], so there is a possibility 0 is selected.",
+      "parentUuid": "1eb49c88_aea267d0",
+      "range": {
+        "startLine": 43,
+        "startChar": 2,
+        "endLine": 43,
+        "endChar": 22
+      },
+      "revId": "72372832e4491ad720a0fcba486cb75c063750c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bd00a0ab_6bc983f7",
         "filename": "components/download/downloader/in_progress/in_progress_cache_impl.cc",
         "patchSetId": 4
@@ -131,6 +155,30 @@
       "side": 1,
       "message": "That feels non-deterministic from the caller standpoint?  It\u0027s odd having some variables technically be ignored.  We shouldn\u0027t be creating new DownloadEntry values directly except when adding brand new downloads right?  We should be hitting the storage layer whenever we need to access the data.",
       "parentUuid": "2f5ece60_b5b32b1a",
+      "range": {
+        "startLine": 31,
+        "startChar": 32,
+        "endLine": 31,
+        "endChar": 58
+      },
+      "revId": "72372832e4491ad720a0fcba486cb75c063750c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c2a8ab82_7d1fae7b",
+        "filename": "components/download/downloader/in_progress/in_progress_cache_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-12-19T20:06:34Z",
+      "side": 1,
+      "message": "Ok!",
+      "parentUuid": "8a56d2d9_7f94c0fa",
       "range": {
         "startLine": 31,
         "startChar": 32,
@@ -238,6 +286,30 @@
     },
     {
       "key": {
+        "uuid": "8385698a_df9e7961",
+        "filename": "components/download/downloader/in_progress/proto/download_entry.proto",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-12-19T20:06:34Z",
+      "side": 1,
+      "message": "Ah didn\u0027t realize that the DownloadCreateInfo gets passed into DownloadItemImpl so we don\u0027t need to save it. Fixed!",
+      "parentUuid": "773df27b_d70526a6",
+      "range": {
+        "startLine": 19,
+        "startChar": 17,
+        "endLine": 19,
+        "endChar": 30
+      },
+      "revId": "72372832e4491ad720a0fcba486cb75c063750c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c632b1b9_8f63fe65",
         "filename": "content/browser/download/download_manager_impl.cc",
         "patchSetId": 4
@@ -297,6 +369,30 @@
       "side": 1,
       "message": "base/rand_util.h: RandUint64() or RandInt()?",
       "parentUuid": "1555c3d4_8c63a0cc",
+      "range": {
+        "startLine": 554,
+        "startChar": 29,
+        "endLine": 554,
+        "endChar": 35
+      },
+      "revId": "72372832e4491ad720a0fcba486cb75c063750c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6914d697_78aa1c6f",
+        "filename": "content/browser/download/download_manager_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 554,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-12-19T20:06:34Z",
+      "side": 1,
+      "message": "This is fine: Returns a random number in range [0, UINT64_MAX].",
+      "parentUuid": "b12de189_47fabe4e",
       "range": {
         "startLine": 554,
         "startChar": 29,
@@ -377,6 +473,30 @@
       "revId": "72372832e4491ad720a0fcba486cb75c063750c9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "68fedec4_f7b5a46e",
+        "filename": "content/browser/download/download_manager_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1043,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-12-19T20:06:34Z",
+      "side": 1,
+      "message": "Roughly, bugs aside (https://paste.googleplex.com/5444689616437248): \n- In the case that we navigate straight to a link that is a download (ie. PDF), we only call StartDownloadWithId and not BeginDownloadInternal.\n- In the case that we long-press and click \"Download link\" on the context menu and it turns out to be not an offline page, we go through BeginDownloadInternal and then StartDownloadWithId.\n\nI\u0027ve added checks to only AddOrReplaceEntry at that point if there isn\u0027t already an existing entry.\n\nThe bigger problem, as I\u0027ve discussed with shaktisahu@ is that there is actually no download GUID at this point yet, only at StartDownloadWithId.",
+      "parentUuid": "e775b46b_b689238a",
+      "range": {
+        "startLine": 1039,
+        "startChar": 2,
+        "endLine": 1043,
+        "endChar": 3
+      },
+      "revId": "72372832e4491ad720a0fcba486cb75c063750c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
