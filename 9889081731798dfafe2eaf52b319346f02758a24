@@ -16,6 +16,29 @@
       "revId": "9889081731798dfafe2eaf52b319346f02758a24",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94d93a96_7f3c4d62",
+        "filename": "third_party/WebKit/Source/core/editing/commands/FormatBlockCommand.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-12-19T20:28:48Z",
+      "side": 1,
+      "message": "It\u0027s better to use two ABORT_EDITING_COMMAND_IF to make the abort condition clearer when we do abort.",
+      "range": {
+        "startLine": 129,
+        "startChar": 0,
+        "endLine": 130,
+        "endChar": 62
+      },
+      "revId": "9889081731798dfafe2eaf52b319346f02758a24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
