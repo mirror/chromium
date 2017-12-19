@@ -7,7 +7,6 @@
 #include <vector>
 
 #include "ui/gfx/half_float.h"
-#include "ui/gl/gl_implementation.h"
 #include "ui/gl/init/gl_factory.h"
 #include "ui/gl/test/gl_surface_test_support.h"
 
@@ -19,7 +18,8 @@
 namespace gl {
 
 // static
-void GLImageTestSupport::InitializeGL() {
+void GLImageTestSupport::InitializeGL(
+    base::Optional<GLImplementation> prefered_impl) {
 #if defined(USE_OZONE)
   ui::OzonePlatform::InitParams params;
   params.single_process = true;
@@ -31,6 +31,13 @@ void GLImageTestSupport::InitializeGL() {
   DCHECK(!allowed_impls.empty());
 
   GLImplementation impl = allowed_impls[0];
+  if (prefered_impl) {
+    auto it_impls =
+        std::find(allowed_impls.begin(), allowed_impls.end(), *prefered_impl);
+    if (it_impls != allowed_impls.end())
+      impl = *it_impls;
+  }
+
   GLSurfaceTestSupport::InitializeOneOffImplementation(impl, true);
 #if defined(USE_OZONE)
   // Make sure all the tasks posted to the current task runner by the
