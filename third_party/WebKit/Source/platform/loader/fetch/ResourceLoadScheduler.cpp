@@ -5,10 +5,12 @@
 #include "platform/loader/fetch/ResourceLoadScheduler.h"
 
 #include "base/metrics/field_trial_params.h"
+#include "base/metrics/histogram.h"
 #include "base/strings/string_number_conversions.h"
 #include "platform/Histogram.h"
 #include "platform/loader/fetch/FetchContext.h"
 #include "platform/runtime_enabled_features.h"
+#include "platform/scheduler/renderer/frame_status.h"
 #include "public/platform/Platform.h"
 
 namespace blink {
@@ -108,7 +110,7 @@ uint32_t GetOutstandingThrottledLimit(FetchContext* context) {
 // A class to gather throttling and traffic information to report histograms.
 class ResourceLoadScheduler::TrafficMonitor {
  public:
-  explicit TrafficMonitor(bool is_main_frame);
+  explicit TrafficMonitor(FetchContext*);
   ~TrafficMonitor();
 
   // Notified when the ThrottlingState is changed.
@@ -123,6 +125,8 @@ class ResourceLoadScheduler::TrafficMonitor {
  private:
   const bool is_main_frame_;
 
+  const WeakPersistent<FetchContext> context_;  // NOT OWNED
+
   WebFrameScheduler::ThrottlingState current_state_ =
       WebFrameScheduler::ThrottlingState::kStopped;
 
@@ -134,10 +138,26 @@ class ResourceLoadScheduler::TrafficMonitor {
   size_t total_not_throttled_decoded_bytes_ = 0;
   size_t throttling_state_change_count_ = 0;
   bool report_all_is_called_ = false;
+
+  base::HistogramBase* traffic_kilobytes_per_frame_status_;
+  base::HistogramBase* decoded_kilobytes_per_frame_status_;
 };
 
-ResourceLoadScheduler::TrafficMonitor::TrafficMonitor(bool is_main_frame)
-    : is_main_frame_(is_main_frame) {}
+ResourceLoadScheduler::TrafficMonitor::TrafficMonitor(FetchContext* context)
+    : is_main_frame_(context->IsMainFrame()),
+      context_(context),
+      traffic_kilobytes_per_frame_status_(base::Histogram::FactoryGet(
+          "Blink.ResourceLoadScheduler.TrafficBytes.KBPerFrameStatus",
+          1,
+          static_cast<int>(scheduler::FrameStatus::kCount),
+          static_cast<int>(scheduler::FrameStatus::kCount) + 1,
+          base::HistogramBase::kUmaTargetedHistogramFlag)),
+      decoded_kilobytes_per_frame_status_(base::Histogram::FactoryGet(
+          "Blink.ResourceLoadScheduler.DecodedBytes.KBPerFrameStatus",
+          1,
+          static_cast<int>(scheduler::FrameStatus::kCount),
+          static_cast<int>(scheduler::FrameStatus::kCount) + 1,
+          base::HistogramBase::kUmaTargetedHistogramFlag)) {}
 
 ResourceLoadScheduler::TrafficMonitor::~TrafficMonitor() {
   ReportAll();
@@ -234,6 +254,26 @@ void ResourceLoadScheduler::TrafficMonitor::Report(
       break;
     case WebFrameScheduler::ThrottlingState::kStopped:
       break;
+  }
+
+  if (!context_)
+    return;
+
+  // Report kilobytes instead of bytes to avoid overflows.
+  size_t encoded_kilobytes = hints.encoded_data_length() / 1024;
+  size_t decoded_kilobytes = hints.decoded_body_length() / 1024;
+
+  if (encoded_kilobytes) {
+    traffic_kilobytes_per_frame_status_->AddCount(
+        static_cast<int>(
+            scheduler::GetFrameStatus(context_->GetFrameScheduler())),
+        encoded_kilobytes);
+  }
+  if (decoded_kilobytes) {
+    decoded_kilobytes_per_frame_status_->AddCount(
+        static_cast<int>(
+            scheduler::GetFrameStatus(context_->GetFrameScheduler())),
+        decoded_kilobytes);
   }
 }
 
@@ -343,8 +383,8 @@ constexpr ResourceLoadScheduler::ClientId
 ResourceLoadScheduler::ResourceLoadScheduler(FetchContext* context)
     : outstanding_throttled_limit_(GetOutstandingThrottledLimit(context)),
       context_(context) {
-  traffic_monitor_ = std::make_unique<ResourceLoadScheduler::TrafficMonitor>(
-      context_->IsMainFrame());
+  traffic_monitor_ =
+      std::make_unique<ResourceLoadScheduler::TrafficMonitor>(context_);
 
   if (!RuntimeEnabledFeatures::ResourceLoadSchedulerEnabled() &&
       !Platform::Current()->IsRendererSideResourceSchedulerEnabled()) {

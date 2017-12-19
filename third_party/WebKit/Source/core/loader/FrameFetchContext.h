@@ -187,7 +187,7 @@ class CORE_EXPORT FrameFetchContext final : public BaseFetchContext {
   LocalFrame* FrameOfImportsController() const;
 
   // FetchContext overrides:
-  WebFrameScheduler* GetFrameScheduler() override;
+  WebFrameScheduler* GetFrameScheduler() const override;
   scoped_refptr<WebTaskRunner> GetLoadingTaskRunner() override;
 
   // BaseFetchContext overrides:

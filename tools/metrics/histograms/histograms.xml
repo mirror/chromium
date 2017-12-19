@@ -6926,6 +6926,19 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>Count received data size in bytes for each resource.</summary>
 </histogram>
 
+<histogram base="true"
+    name="Blink.ResourceLoadScheduler.DecodedBytes.KBPerFrameStatus"
+    enum="RendererSchedulerFrameType" units="KB">
+<!-- Name completed by histogram_suffixes name="ResourceLoadScheduler.FrameType" -->
+
+  <owner>toyoshim@chromium.org</owner>
+  <owner>altimin@chromium.org</owner>
+  <summary>
+    Total decoded size of resources associated with frames of a particular type.
+    Recorded when a fetch has been completed.
+  </summary>
+</histogram>
+
 <histogram base="true" name="Blink.ResourceLoadScheduler.PeakRequests"
     units="requests">
 <!-- Name completed by histogram_suffixes name="ResourceLoadScheduler.FrameType" -->
@@ -6988,6 +7001,19 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>
     Count traffic data size in bytes transferred over networks to load each
     resource.
+  </summary>
+</histogram>
+
+<histogram base="true"
+    name="Blink.ResourceLoadScheduler.TrafficBytes.KBPerFrameStatus"
+    enum="RendererSchedulerFrameType" units="KB">
+<!-- Name completed by histogram_suffixes name="ResourceLoadScheduler.FrameType" -->
+
+  <owner>toyoshim@chromium.org</owner>
+  <owner>altimin@chromium.org</owner>
+  <summary>
+    Total encodeded size of resources associated with frames of a particular
+    type. Recorded when a fetch has been completed.
   </summary>
 </histogram>
 
