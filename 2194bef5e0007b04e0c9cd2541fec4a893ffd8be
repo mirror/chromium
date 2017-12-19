@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d6e7c9cf_dfc409d7",
+        "filename": "content/browser/compositor/viz_process_transport_factory.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-19T20:32:28Z",
+      "side": 1,
+      "message": "Not sure what this means about compositor thread",
+      "revId": "2194bef5e0007b04e0c9cd2541fec4a893ffd8be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df3406c1_66f0c8a0",
+        "filename": "content/browser/compositor/viz_process_transport_factory.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-19T20:32:28Z",
+      "side": 1,
+      "message": "Not so much of an \"if\" here, as it can :)",
+      "revId": "2194bef5e0007b04e0c9cd2541fec4a893ffd8be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84a013c9_1f147b48",
+        "filename": "content/browser/compositor/viz_process_transport_factory.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 409,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-19T20:32:28Z",
+      "side": 1,
+      "message": "Is there potential for weird ordering if we don\u0027t drop the contexts immediately? Like we reconnect the host, then see the context is lost, and we end up making too many contexts or something? Or OnContextLost drops the host we just reconnected?",
+      "revId": "2194bef5e0007b04e0c9cd2541fec4a893ffd8be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbe2d571_d1d0a0d6",
+        "filename": "content/browser/compositor/viz_process_transport_factory.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 527,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-19T20:32:28Z",
+      "side": 1,
+      "message": "Can you comment somewhere that we don\u0027t AddObserver on the worker cuz it\u0027s in a share group with the main context?",
+      "revId": "2194bef5e0007b04e0c9cd2541fec4a893ffd8be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "223dc5df_89e30bf3",
+        "filename": "content/browser/compositor/viz_process_transport_factory.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 559,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-19T20:32:28Z",
+      "side": 1,
+      "message": "We need to keep the context (and GLHelper) alive while we call OnLostResources, but in such a way that if the OnLostResources method tries to grab a GLHelper it will get a new one.",
+      "revId": "2194bef5e0007b04e0c9cd2541fec4a893ffd8be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c8e841b_47c9246e",
+        "filename": "content/browser/compositor/viz_process_transport_factory.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-19T20:32:28Z",
+      "side": 1,
+      "message": "and not lost?",
+      "revId": "2194bef5e0007b04e0c9cd2541fec4a893ffd8be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
