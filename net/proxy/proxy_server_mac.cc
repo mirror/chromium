@@ -15,13 +15,15 @@
 namespace net {
 
 // static
-ProxyServer ProxyServer::FromDictionary(Scheme scheme,
-                                        CFDictionaryRef dict,
-                                        CFStringRef host_key,
-                                        CFStringRef port_key) {
+ProxyServer ProxyServer::FromDictionary(
+    Scheme scheme,
+    CFDictionaryRef dict,
+    CFStringRef host_key,
+    CFStringRef port_key,
+    const PartialNetworkTrafficAnnotationTag& traffic_annotation) {
   if (scheme == SCHEME_INVALID || scheme == SCHEME_DIRECT) {
     // No hostname port to extract; we are done.
-    return ProxyServer(scheme, HostPortPair());
+    return ProxyServer(scheme, HostPortPair(), traffic_annotation);
   }
 
   CFStringRef host_ref =
