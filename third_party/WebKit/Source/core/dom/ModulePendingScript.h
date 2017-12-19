@@ -21,7 +21,12 @@ class ModulePendingScript;
 // registered as ModuleTreeClient to FetchTree() first, and later
 // ModulePendingScript is supplied to ModulePendingScriptTreeClient via
 // SetPendingScript() and is notified of module tree load finish.
-class ModulePendingScriptTreeClient final : public ModuleTreeClient {
+class ModulePendingScriptTreeClient final
+    : public GarbageCollected<ModulePendingScriptTreeClient>,
+      public TraceWrapperBase,
+      public ModuleTreeClient {
+  USING_GARBAGE_COLLECTED_MIXIN(ModulePendingScriptTreeClient);
+
  public:
   static ModulePendingScriptTreeClient* Create() {
     return new ModulePendingScriptTreeClient();
