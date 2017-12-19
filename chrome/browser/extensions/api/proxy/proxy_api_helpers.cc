@@ -185,8 +185,9 @@ bool GetProxyServer(const base::DictionaryValue* proxy_server,
   int port;  // optional.
   if (!proxy_server->GetInteger(keys::kProxyConfigRulePort, &port))
     port = net::ProxyServer::GetDefaultPortForScheme(scheme);
-
-  *out = net::ProxyServer(scheme, net::HostPortPair(host, port));
+  // TODO(https://crbug.com/656607): Add proper annotation.
+  *out = net::ProxyServer(scheme, net::HostPortPair(host, port),
+                          net::ProxyServer::GetProxyEmptyPartialAnnotation());
 
   return true;
 }
@@ -363,7 +364,8 @@ std::unique_ptr<base::DictionaryValue> CreateProxyConfigDict(
 }
 
 std::unique_ptr<base::DictionaryValue> CreateProxyRulesDict(
-    const ProxyConfigDictionary& proxy_config) {
+    const ProxyConfigDictionary& proxy_config,
+    const net::PartialNetworkTrafficAnnotationTag& traffic_annotation) {
   ProxyPrefs::ProxyMode mode;
   CHECK(proxy_config.GetMode(&mode) && mode == ProxyPrefs::MODE_FIXED_SERVERS);
 
@@ -376,7 +378,7 @@ std::unique_ptr<base::DictionaryValue> CreateProxyRulesDict(
   }
 
   net::ProxyConfig::ProxyRules rules;
-  rules.ParseFromString(proxy_servers);
+  rules.ParseFromString(proxy_servers, traffic_annotation);
 
   switch (rules.type) {
     case net::ProxyConfig::ProxyRules::TYPE_NO_RULES:

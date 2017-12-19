@@ -273,7 +273,12 @@ class NET_EXPORT ProxyService : public NetworkChangeNotifier::IPAddressObserver,
   // Convenience methods that creates a proxy service using the
   // specified fixed settings.
   static std::unique_ptr<ProxyService> CreateFixed(const ProxyConfig& pc);
-  static std::unique_ptr<ProxyService> CreateFixed(const std::string& proxy);
+
+  // TODO(crbug.com/656607): Remove default value.
+  static std::unique_ptr<ProxyService> CreateFixed(
+      const std::string& proxy,
+      const PartialNetworkTrafficAnnotationTag& traffic_annotation =
+          ProxyServer::GetProxyEmptyPartialAnnotation());
 
   // Creates a proxy service that uses a DIRECT connection for all requests.
   static std::unique_ptr<ProxyService> CreateDirect();
@@ -285,8 +290,11 @@ class NET_EXPORT ProxyService : public NetworkChangeNotifier::IPAddressObserver,
   //
   // |pac_string| is a list of proxy servers, in the format that a PAC script
   // would return it. For example, "PROXY foobar:99; SOCKS fml:2; DIRECT"
+  // TODO(crbug.com/656607): Remove default value.
   static std::unique_ptr<ProxyService> CreateFixedFromPacResult(
-      const std::string& pac_string);
+      const std::string& pac_string,
+      const PartialNetworkTrafficAnnotationTag& traffic_annotation =
+          ProxyServer::GetProxyEmptyPartialAnnotation());
 
   // Creates a config service appropriate for this platform that fetches the
   // system proxy settings.
