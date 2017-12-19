@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "982a0d8d_a7bbeea7",
+        "filename": "third_party/WebKit/Source/platform/heap/Heap.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-12-19T08:29:23Z",
+      "side": 1,
+      "message": "Can you provide a bit more description on where this applies during incremental marking?",
+      "range": {
+        "startLine": 231,
+        "startChar": 21,
+        "endLine": 231,
+        "endChar": 38
+      },
+      "revId": "7a3f22c3721bc0428eb1f543c36b4598915987c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bcd1602a_4b0d68c7",
         "filename": "third_party/WebKit/Source/platform/heap/Heap.h",
         "patchSetId": 5
@@ -13,6 +36,29 @@
       "writtenOn": "2017-12-19T08:28:35Z",
       "side": 1,
       "message": "What happens if you add CHECK(!state-\u003eIsIncrementalMarkingInProgress())?\n\nIdeally I want to add CHECK(state-\u003eIsInGC())... It\u0027s fragile to call IsHeapObjectAlive except when we\u0027re in an atomic pause phase.",
+      "revId": "7a3f22c3721bc0428eb1f543c36b4598915987c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63268028_d6f40e8a",
+        "filename": "third_party/WebKit/Source/platform/heap/Heap.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-12-19T08:29:23Z",
+      "side": 1,
+      "message": "Please add a small test that hardens the expectation to IncrementalMarking.cc.",
+      "range": {
+        "startLine": 247,
+        "startChar": 15,
+        "endLine": 247,
+        "endChar": 45
+      },
       "revId": "7a3f22c3721bc0428eb1f543c36b4598915987c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
