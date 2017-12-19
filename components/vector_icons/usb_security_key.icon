@@ -1,0 +1,16 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+CANVAS_DIMENSIONS, 45,
+ROUND_RECT, 0.23, 14.75, 31.56, 15.01, 0,
+ROUND_RECT, 31.05, 16.79, 13.63, 10.94, 0,
+ROUND_RECT, 34.31, 17.75, 9.69, 1.92, 0,
+ROUND_RECT, 34.31, 24.95, 9.79, 1.92, 0,
+ROUND_RECT, 34.31, 20.15, 8.45, 1.92, 0,
+ROUND_RECT, 34.31, 22.55, 8.45, 1.92, 0,
+MOVE_TO, 19.72f, 22.07f,
+R_ARC_TO, 3.94f, 3.94f, 0, 1, 1, -7.87f, 0,
+R_ARC_TO, 3.94f, 3.94f, 0, 0, 1, 7.87f, 0,
+CLOSE,
+END
