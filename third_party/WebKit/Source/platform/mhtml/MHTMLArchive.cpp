@@ -71,7 +71,8 @@ static String ConvertToPrintableCharacters(const String& text) {
   // Quoted-Printable format to convert to 7-bit printable ASCII characters.
   CString utf8_text = text.Utf8();
   Vector<char> encoded_text;
-  QuotedPrintableEncode(utf8_text.data(), utf8_text.length(), encoded_text);
+  QuotedPrintableEncode(utf8_text.data(), utf8_text.length(),
+                        SoftLineBreakType::kForHeader, encoded_text);
   return "=?utf-8?Q?" + String(encoded_text.data(), encoded_text.size()) + "?=";
 }
 
@@ -245,7 +246,8 @@ void MHTMLArchive::GenerateMHTMLPart(const String& boundary,
     size_t data_length = flat_data.size();
     Vector<char> encoded_data;
     if (!strcmp(content_encoding, kQuotedPrintable)) {
-      QuotedPrintableEncode(data, data_length, encoded_data);
+      QuotedPrintableEncode(data, data_length, SoftLineBreakType::kForBody,
+                            encoded_data);
       output_buffer.Append(encoded_data.data(), encoded_data.size());
       output_buffer.Append("\r\n", 2u);
     } else {
