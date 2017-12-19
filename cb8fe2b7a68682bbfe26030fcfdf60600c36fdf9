@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aaa36cf6_ad7d7579",
+        "filename": "content/public/common/content_switches.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-12-19T00:19:40Z",
+      "side": 1,
+      "message": "nit: s/multiple/multiplanar/",
+      "range": {
+        "startLine": 213,
+        "startChar": 13,
+        "endLine": 213,
+        "endChar": 21
+      },
+      "revId": "cb8fe2b7a68682bbfe26030fcfdf60600c36fdf9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82e724f6_88bad4bb",
+        "filename": "content/renderer/media/gpu/gpu_video_accelerator_factories_impl.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-12-19T00:19:40Z",
+      "side": 1,
+      "message": "nit: use enable_multiplanar_gpu_memory_buffers_for_video_frames_ instead of avoid double negative",
+      "range": {
+        "startLine": 319,
+        "startChar": 6,
+        "endLine": 319,
+        "endChar": 63
+      },
+      "revId": "cb8fe2b7a68682bbfe26030fcfdf60600c36fdf9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
