@@ -120,7 +120,7 @@ void QueuedRequestDispatcher::SetUpAndDispatch(
 
   TRACE_EVENT_NESTABLE_ASYNC_BEGIN2(
       base::trace_event::MemoryDumpManager::kTraceCategory, "GlobalMemoryDump",
-      TRACE_ID_LOCAL(request->args.dump_guid), "dump_type",
+      TRACE_ID_LOCAL(request->dump_guid), "dump_type",
       base::trace_event::MemoryDumpTypeToString(request->args.dump_type),
       "level_of_detail",
       base::trace_event::MemoryDumpLevelOfDetailToString(
@@ -141,7 +141,7 @@ void QueuedRequestDispatcher::SetUpAndDispatch(
     // processes' vm regions, which are retrieved via RequestOSMemoryDump().
     if (request->wants_chrome_dumps()) {
       request->pending_responses.insert({client, ResponseType::kChromeDump});
-      client->RequestChromeMemoryDump(request->args,
+      client->RequestChromeMemoryDump(request->GetRequestArgs(),
                                       base::Bind(chrome_callback, client));
     }
 
@@ -274,9 +274,10 @@ void QueuedRequestDispatcher::Finalize(QueuedRequest* request,
 
     mojom::OSMemDumpPtr os_dump = CreatePublicOSDump(*raw_os_dump);
     os_dump->shared_footprint_kb = shared_footprints[pid] / 1024;
-    if (request->add_to_trace) {
-      tracing_observer->AddOsDumpToTraceIfEnabled(
-          request->args, pid, os_dump.get(), &raw_os_dump->memory_maps);
+    if (request->args.add_to_trace) {
+      tracing_observer->AddOsDumpToTraceIfEnabled(request->GetRequestArgs(),
+                                                  pid, os_dump.get(),
+                                                  &raw_os_dump->memory_maps);
     }
 
     if (request->args.level_of_detail ==
@@ -302,7 +303,7 @@ void QueuedRequestDispatcher::Finalize(QueuedRequest* request,
 
   const auto& callback = request->callback;
   const bool global_success = request->failed_memory_dump_count == 0;
-  callback.Run(global_success, request->args.dump_guid, std::move(global_dump));
+  callback.Run(global_success, request->dump_guid, std::move(global_dump));
   UMA_HISTOGRAM_MEDIUM_TIMES("Memory.Experimental.Debug.GlobalDumpDuration",
                              base::Time::Now() - request->start_time);
   UMA_HISTOGRAM_COUNTS_1000(
@@ -310,11 +311,11 @@ void QueuedRequestDispatcher::Finalize(QueuedRequest* request,
       request->failed_memory_dump_count);
 
   char guid_str[20];
-  sprintf(guid_str, "0x%" PRIx64, request->args.dump_guid);
+  sprintf(guid_str, "0x%" PRIx64, request->dump_guid);
   TRACE_EVENT_NESTABLE_ASYNC_END2(
       base::trace_event::MemoryDumpManager::kTraceCategory, "GlobalMemoryDump",
-      TRACE_ID_LOCAL(request->args.dump_guid), "dump_guid",
-      TRACE_STR_COPY(guid_str), "success", global_success);
+      TRACE_ID_LOCAL(request->dump_guid), "dump_guid", TRACE_STR_COPY(guid_str),
+      "success", global_success);
 }
 
 QueuedRequestDispatcher::ClientInfo::ClientInfo(mojom::ClientProcess* client,
