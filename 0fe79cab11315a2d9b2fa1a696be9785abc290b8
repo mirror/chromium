@@ -104,6 +104,30 @@
       "revId": "0fe79cab11315a2d9b2fa1a696be9785abc290b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd7fc043_7241b667",
+        "filename": "services/network/public/interfaces/data_pipe_getter.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-19T06:54:09Z",
+      "side": 1,
+      "message": "It\u0027s probably OK to not support it. However, the current non-NetworkService service worker implementation supports simultaneous reads in one case: if the service worker didn\u0027t call respondWith() then the browser falls back to network which means consuming the request body, but the service worker can still simultaneously read the request body.\n\nI think it\u0027d be OK to break this behavior in NetworkService service worker. Recent spec discussion has leaned toward explicitly not supporting this case.",
+      "parentUuid": "595fbb5e_bda83c8e",
+      "range": {
+        "startLine": 19,
+        "startChar": 41,
+        "endLine": 19,
+        "endChar": 52
+      },
+      "revId": "0fe79cab11315a2d9b2fa1a696be9785abc290b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
