@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "053f990f_f00f4865",
+        "filename": "chrome/browser/chromeos/smb_client/smb_file_system.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1240064
+      },
+      "writtenOn": "2017-12-19T18:12:50Z",
+      "side": 1,
+      "message": "I think this was a remnant of an outdated rebase from the ReadDirectory branch.",
+      "parentUuid": "9e2e9f7f_1cffde8a",
+      "revId": "1a0a527ffafb5b6ecf130c164c08871d8891e65d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "043742b4_36b1dcab",
         "filename": "chrome/browser/chromeos/smb_client/smb_file_system.cc",
         "patchSetId": 7
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "fa7b5c1f_9210985d",
+        "filename": "chrome/browser/chromeos/smb_client/smb_file_system.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1240064
+      },
+      "writtenOn": "2017-12-19T18:12:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "043742b4_36b1dcab",
+      "revId": "1a0a527ffafb5b6ecf130c164c08871d8891e65d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "900d75c6_fc48fee5",
         "filename": "chrome/browser/chromeos/smb_client/smb_file_system.cc",
         "patchSetId": 7
@@ -50,6 +86,24 @@
       "revId": "1a0a527ffafb5b6ecf130c164c08871d8891e65d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0dc3de3e_89b1a5dd",
+        "filename": "chrome/browser/chromeos/smb_client/smb_file_system.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1240064
+      },
+      "writtenOn": "2017-12-19T18:12:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "900d75c6_fc48fee5",
+      "revId": "1a0a527ffafb5b6ecf130c164c08871d8891e65d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
