@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6fcedd89_23fdda46",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-19T23:56:24Z",
+      "side": 1,
+      "message": "I just made http://crbug.com/796369 to track these removals - can you add it?",
+      "revId": "7252ee7248730ebf48248ff0ea239e73c7268d75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

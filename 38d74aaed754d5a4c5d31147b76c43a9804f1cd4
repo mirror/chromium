@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ac125cfc_a5d137d6",
+        "filename": "chrome/browser/ui/cocoa/autofill/card_unmask_prompt_view_views.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-19T23:56:24Z",
+      "side": 1,
+      "message": "this is now identical to c/b/ui/views/autofill/card_unmask_prompt_views_shim.cc\n\nI think we can delete both files, and just plonk CreateCardUnmaskPromptView(..) at the end of c/b/ui/views/autofill/card_unmask_prompt_views.cc",
+      "revId": "38d74aaed754d5a4c5d31147b76c43a9804f1cd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
