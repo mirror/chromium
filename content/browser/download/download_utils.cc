@@ -424,16 +424,14 @@ download::DownloadSource ToDownloadSource(
       return download::DownloadSource::EXTENSION_API;
     case DownloadSource::EXTENSION_INSTALLER:
       return download::DownloadSource::EXTENSION_INSTALLER;
-    case DownloadSource::PLUGIN:
-      return download::DownloadSource::PLUGIN;
-    case DownloadSource::PLUGIN_INSTALLER:
-      return download::DownloadSource::PLUGIN_INSTALLER;
     case DownloadSource::INTERNAL_API:
       return download::DownloadSource::INTERNAL_API;
-    case DownloadSource::SAVE_PACKAGE:
-      return download::DownloadSource::SAVE_PACKAGE;
+    case DownloadSource::WEB_CONTENTS_API:
+      return download::DownloadSource::WEB_CONTENTS_API;
     case DownloadSource::OFFLINE_PAGE:
       return download::DownloadSource::OFFLINE_PAGE;
+    case DownloadSource::CONTEXT_MENU:
+      return download::DownloadSource::CONTEXT_MENU;
     case DownloadSource::COUNT:
       break;
   }

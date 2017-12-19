@@ -36,22 +36,19 @@ enum class DownloadSource {
   // Extension web store installer.
   EXTENSION_INSTALLER = 7,
 
-  // Plugin triggered download.
-  PLUGIN = 8,
-
-  // Plugin installer download.
-  PLUGIN_INSTALLER = 9,
-
   // Download service API background download.
-  INTERNAL_API = 10,
+  INTERNAL_API = 8,
 
-  // Save package download.
-  SAVE_PACKAGE = 11,
+  // Download through web contents API.
+  WEB_CONTENTS_API = 9,
 
   // Offline page download.
-  OFFLINE_PAGE = 12,
+  OFFLINE_PAGE = 10,
 
-  COUNT = 13
+  // Context menu download.
+  CONTEXT_MENU = 11,
+
+  COUNT = 12
 };
 
 }  // namespace content

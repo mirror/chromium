@@ -2303,9 +2303,9 @@ void DownloadItemImpl::ResumeInterruptedDownload(
       Referrer(GetReferrerUrl(), blink::kWebReferrerPolicyAlways));
 
   TransitionTo(RESUMING_INTERNAL);
-  RecordDownloadSource(source == ResumptionRequestSource::USER
-                           ? INITIATED_BY_MANUAL_RESUMPTION
-                           : INITIATED_BY_AUTOMATIC_RESUMPTION);
+  download_params->set_download_source(source == ResumptionRequestSource::USER
+                                           ? DownloadSource::MANUAL_RESUMPTION
+                                           : DownloadSource::AUTO_RESUMPTION);
   delegate_->ResumeInterruptedDownload(std::move(download_params), GetId());
 
   if (job_)

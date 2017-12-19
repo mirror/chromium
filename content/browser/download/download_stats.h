@@ -120,39 +120,11 @@ enum DownloadCountTypes {
   // Count of downloads that has target determination completed.
   DOWNLOAD_TARGET_DETERMINED_COUNT,
 
+  // Count of attempts that triggered the download flow, before any network
+  // requests are sent.
+  DOWNLOAD_TRIGGERED_COUNT,
+
   DOWNLOAD_COUNT_TYPES_LAST_ENTRY
-};
-
-// TODO(xingliu): Deprecate this enum.
-enum DownloadTriggerSource {
-  // The download was initiated when the SavePackage system rejected
-  // a Save Page As ... by returning false from
-  // SavePackage::IsSaveableContents().
-  INITIATED_BY_SAVE_PACKAGE_ON_NON_HTML = 0,
-
-  // The download was initiated by a drag and drop from a drag-and-drop
-  // enabled web application.
-  INITIATED_BY_DRAG_N_DROP,
-
-  // The download was initiated by explicit RPC from the renderer process
-  // (e.g. by Alt-click) through the IPC ViewHostMsg_DownloadUrl.
-  INITIATED_BY_RENDERER,
-
-  // Fomerly INITIATED_BY_PEPPER_SAVE.
-  DOWNLOAD_SOURCE_UNUSED_3,
-
-  // Formerly INITIATED_BY_RESUMPTION.
-  DOWNLOAD_SOURCE_UNUSED_4,
-
-  // A request that was initiated as a result of manually resuming an
-  // interrupted download.
-  INITIATED_BY_MANUAL_RESUMPTION,
-
-  // A request that was initiated as a result of automatically resuming an
-  // interrupted download.
-  INITIATED_BY_AUTOMATIC_RESUMPTION,
-
-  DOWNLOAD_SOURCE_LAST_ENTRY
 };
 
 enum DownloadDiscardReason {
@@ -204,9 +176,6 @@ enum class ParallelDownloadCreationEvent {
 
 // Increment one of the above counts.
 void RecordDownloadCount(DownloadCountTypes type);
-
-// Record initiation of a download from a specific source.
-void RecordDownloadSource(DownloadTriggerSource source);
 
 // Record COMPLETED_COUNT and how long the download took.
 void RecordDownloadCompleted(const base::TimeTicks& start,
@@ -331,6 +300,10 @@ enum SavePackageEvent {
 
   // The save package tried to write to an already failed file.
   SAVE_PACKAGE_WRITE_TO_FAILED,
+
+  // Instead of using save package API, used download API to save non HTML
+  // format files.
+  SAVE_PACKAGE_DOWNLOAD_ON_NON_HTML,
 
   SAVE_PACKAGE_LAST_ENTRY
 };

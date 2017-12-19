@@ -42,13 +42,16 @@ enum ChromeDownloadSource {
   // The download was initiated by the WebStore installer.
   DOWNLOAD_INITIATED_BY_WEBSTORE_INSTALLER,
 
-  // The download was initiated by the ImageBurner (cros).
-  DOWNLOAD_INITIATED_BY_IMAGE_BURNER,
+  // Formerly DOWNLOAD_INITIATED_BY_WEBSTORE_INSTALLER.
+  CHROME_DOWNLOAD_SOURCE_UNUSED_3,
 
-  // The download was initiated by the plugin installer.
-  DOWNLOAD_INITIATED_BY_PLUGIN_INSTALLER,
+  // Formerly DOWNLOAD_INITIATED_BY_IMAGE_BURNER,
+  CHROME_DOWNLOAD_SOURCE_UNUSED_4,
 
-  // The download was initiated by the PDF plugin..
+  // Formerly DOWNLOAD_INITIATED_BY_PLUGIN_INSTALLER,
+  CHROME_DOWNLOAD_SOURCE_UNUSED_5,
+
+  // The download was initiated by the PDF plugin.
   DOWNLOAD_INITIATED_BY_PDF_SAVE,
 
   // The download was initiated by chrome.downloads.download().
