@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ba4b0eb9_7b045e6d",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 792,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-12-19T15:28:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cf6aa1a8_dba176f2",
+      "revId": "e0cc432dba4b4f22fbc5bcdd4b77dae31f65de72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "813be3ae_1a74a6d4",
         "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.cpp",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "e0cc432dba4b4f22fbc5bcdd4b77dae31f65de72",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce2a9f0b_ed519ff8",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 812,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-12-19T15:28:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "813be3ae_1a74a6d4",
+      "revId": "e0cc432dba4b4f22fbc5bcdd4b77dae31f65de72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "c263bcfb_0035fffd",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlTimelineElement.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-12-19T15:28:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9e73144e_cf8d9cac",
+      "revId": "e0cc432dba4b4f22fbc5bcdd4b77dae31f65de72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "86d5499c_280fbcb2",
         "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlTimelineElement.cpp",
         "patchSetId": 2
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "f6485d2d_f8583086",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlTimelineElement.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-12-19T15:28:15Z",
+      "side": 1,
+      "message": "The 50% would be 50% of the width of the container not the width of the object so in this case that would not work.",
+      "parentUuid": "86d5499c_280fbcb2",
+      "revId": "e0cc432dba4b4f22fbc5bcdd4b77dae31f65de72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "acf5a3bb_501f1d8c",
         "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlTimelineElement.cpp",
         "patchSetId": 2
@@ -84,6 +156,24 @@
       "revId": "e0cc432dba4b4f22fbc5bcdd4b77dae31f65de72",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0413004_f09e2cc9",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlTimelineElement.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-12-19T15:28:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "acf5a3bb_501f1d8c",
+      "revId": "e0cc432dba4b4f22fbc5bcdd4b77dae31f65de72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -110,6 +200,30 @@
     },
     {
       "key": {
+        "uuid": "9c59faf8_56a5ab16",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlTimelineElement.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-12-19T15:28:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e775eeb3_4b644b1c",
+      "range": {
+        "startLine": 300,
+        "startChar": 2,
+        "endLine": 300,
+        "endChar": 3
+      },
+      "revId": "e0cc432dba4b4f22fbc5bcdd4b77dae31f65de72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e407d1ac_a4ac99f9",
         "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlTimelineElement.cpp",
         "patchSetId": 2
@@ -124,6 +238,24 @@
       "revId": "e0cc432dba4b4f22fbc5bcdd4b77dae31f65de72",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b544ccd4_db046fad",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlTimelineElement.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-12-19T15:28:15Z",
+      "side": 1,
+      "message": "event.type() is a string type which can\u0027t be used in a switch :(",
+      "parentUuid": "e407d1ac_a4ac99f9",
+      "revId": "e0cc432dba4b4f22fbc5bcdd4b77dae31f65de72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
