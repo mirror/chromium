@@ -16,6 +16,24 @@
       "revId": "f82840690bb3ed2acdb42b766c41bddbf2ac7fd9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "336aaa46_91fd9163",
+        "filename": "chrome/browser/lifetime/application_lifetime_android.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-12-19T21:58:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e611552e_53e72463",
+      "revId": "f82840690bb3ed2acdb42b766c41bddbf2ac7fd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
