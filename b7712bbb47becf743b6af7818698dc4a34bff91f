@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "42d84c2f_f44b2e4c",
+        "filename": "ash/shelf/shelf_button.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 440,
+      "author": {
+        "id": 1000853
+      },
+      "writtenOn": "2017-12-19T10:41:09Z",
+      "side": 0,
+      "message": "Please add 234854 to BUG section of the CL description",
+      "range": {
+        "startLine": 440,
+        "startChar": 17,
+        "endLine": 440,
+        "endChar": 18
+      },
+      "revId": "b7712bbb47becf743b6af7818698dc4a34bff91f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad0e496b_92150a6b",
+        "filename": "chrome/browser/unload_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1000853
+      },
+      "writtenOn": "2017-12-19T10:41:09Z",
+      "side": 0,
+      "message": "Please update BUG accordingly.",
+      "range": {
+        "startLine": 245,
+        "startChar": 60,
+        "endLine": 245,
+        "endChar": 63
+      },
+      "revId": "b7712bbb47becf743b6af7818698dc4a34bff91f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "035ac41c_c3d158a2",
+        "filename": "media/audio/audio_power_monitor_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1000853
+      },
+      "writtenOn": "2017-12-19T10:41:09Z",
+      "side": 0,
+      "message": "Please update the BUG section",
+      "range": {
+        "startLine": 84,
+        "startChar": 50,
+        "endLine": 84,
+        "endChar": 56
+      },
+      "revId": "b7712bbb47becf743b6af7818698dc4a34bff91f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04056672_8d04be2e",
+        "filename": "net/proxy/proxy_config_service_linux.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1000853
+      },
+      "writtenOn": "2017-12-19T10:41:09Z",
+      "side": 0,
+      "message": "Please add to BUG",
+      "range": {
+        "startLine": 228,
+        "startChar": 15,
+        "endLine": 228,
+        "endChar": 20
+      },
+      "revId": "b7712bbb47becf743b6af7818698dc4a34bff91f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8bad8d0_5c17a3ce",
+        "filename": "third_party/WebKit/LayoutTests/fast/forms/form-associated-element-crash3-expected.txt",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000853
+      },
+      "writtenOn": "2017-12-19T10:41:09Z",
+      "side": 0,
+      "message": "Dunno if patching third_party files is the right thing to do. They originate from somewhere, after all, and we probably want to keep the diff as small as possible,",
+      "revId": "b7712bbb47becf743b6af7818698dc4a34bff91f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,176 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba2d5d5d_298e92a6",
+        "filename": "components/policy/core/browser/url_blacklist_manager_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1000853
+      },
+      "writtenOn": "2017-12-19T10:41:09Z",
+      "side": 1,
+      "message": "FWIW the correct spelling is \"ASan\", but almost nobody makes it right, so we don\u0027t insist much ;)\nAnd the tool that detects uninit memory is actually called MSan.",
+      "range": {
+        "startLine": 153,
+        "startChar": 8,
+        "endLine": 153,
+        "endChar": 12
+      },
+      "revId": "0f4638bcde67bddc3c13dce00015ae6de159d933",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22138dd6_0baf9021",
+        "filename": "components/sync/engine_impl/cycle/nudge_tracker_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1000853
+      },
+      "writtenOn": "2017-12-19T10:41:09Z",
+      "side": 1,
+      "message": "s/ASAN/MSan",
+      "revId": "0f4638bcde67bddc3c13dce00015ae6de159d933",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbfbc980_27345ef2",
+        "filename": "device/sensors/public/cpp/motion_data.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000853
+      },
+      "writtenOn": "2017-12-19T10:41:09Z",
+      "side": 1,
+      "message": "Nope, this is MSan. ASan doesn\u0027t care if the memory is uninitialized :)",
+      "range": {
+        "startLine": 14,
+        "startChar": 20,
+        "endLine": 14,
+        "endChar": 24
+      },
+      "revId": "0f4638bcde67bddc3c13dce00015ae6de159d933",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5baad4da_5a40d2af",
+        "filename": "device/sensors/public/cpp/orientation_data.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000853
+      },
+      "writtenOn": "2017-12-19T10:41:09Z",
+      "side": 1,
+      "message": "MSan",
+      "range": {
+        "startLine": 14,
+        "startChar": 20,
+        "endLine": 14,
+        "endChar": 24
+      },
+      "revId": "0f4638bcde67bddc3c13dce00015ae6de159d933",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bedf53b7_20a37b08",
+        "filename": "docs/subtle_threading_bugs.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1000853
+      },
+      "writtenOn": "2017-12-19T10:41:09Z",
+      "side": 1,
+      "message": "I\u0027m not sure this applies to ASan and TSan as much as it does to Valgrind, but let\u0027s keep the comment for now.",
+      "range": {
+        "startLine": 112,
+        "startChar": 0,
+        "endLine": 112,
+        "endChar": 5
+      },
+      "revId": "0f4638bcde67bddc3c13dce00015ae6de159d933",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4a42155_234cfc0d",
+        "filename": "ipc/ipc_message.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1000853
+      },
+      "writtenOn": "2017-12-19T10:41:09Z",
+      "side": 1,
+      "message": "MSan",
+      "range": {
+        "startLine": 252,
+        "startChar": 63,
+        "endLine": 252,
+        "endChar": 67
+      },
+      "revId": "0f4638bcde67bddc3c13dce00015ae6de159d933",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27715e79_f099d28b",
+        "filename": "media/audio/alsa/alsa_output_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 845,
+      "author": {
+        "id": 1000853
+      },
+      "writtenOn": "2017-12-19T10:41:09Z",
+      "side": 1,
+      "message": "We don\u0027t have regular testing with heapcheck anymore (I believe this comment applies to Heapchecker or Heapcheck, a leak detector built into TCMalloc, as opposed to the one in the Windows standard library - IIUC Windows doesn\u0027t have ALSA).\n\nHow about \"The code below is needed to keep leak checking tools happy.\" ?",
+      "range": {
+        "startLine": 845,
+        "startChar": 45,
+        "endLine": 845,
+        "endChar": 54
+      },
+      "revId": "0f4638bcde67bddc3c13dce00015ae6de159d933",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a1970d0_3e390a73",
+        "filename": "third_party/WebKit/Source/platform/wtf/DynamicAnnotations.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000853
+      },
+      "writtenOn": "2017-12-19T10:41:09Z",
+      "side": 1,
+      "message": "A big cleanup I would like to perform someday is to remove every instance of dynamic_annotations.h from Chromium. I don\u0027t think it\u0027s necessary to modify those files.",
+      "revId": "0f4638bcde67bddc3c13dce00015ae6de159d933",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
