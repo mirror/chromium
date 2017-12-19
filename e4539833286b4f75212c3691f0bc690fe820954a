@@ -228,6 +228,24 @@
     },
     {
       "key": {
+        "uuid": "76707c4c_e7823a87",
+        "filename": "services/audio/public/interfaces/system_info.mojom",
+        "patchSetId": 17
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-12-19T13:50:32Z",
+      "side": 1,
+      "message": "Actually, my comment here is no longer valid - magically, the client code has just been refactored to use optional :) So I\u0027m waiting for the last CL there [1] to land and will rebase and update the interface.\n\n[1] https://chromium-review.googlesource.com/c/chromium/src/+/833828",
+      "parentUuid": "58a991a7_7da98021",
+      "revId": "e4539833286b4f75212c3691f0bc690fe820954a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7532de81_d744391c",
         "filename": "services/audio/service.cc",
         "patchSetId": 17
