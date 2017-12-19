@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "850540ce_61bbef15",
+        "filename": "chrome/common/webui_url_constants.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-12-19T19:38:45Z",
+      "side": 1,
+      "message": "I\u0027m surprised we didn\u0027t have this URL before.",
+      "range": {
+        "startLine": 220,
+        "startChar": 67,
+        "endLine": 220,
+        "endChar": 0
+      },
+      "revId": "85a7403fde3d709d405048cceb6081fd70c8d3e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
