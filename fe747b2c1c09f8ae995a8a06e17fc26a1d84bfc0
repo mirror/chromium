@@ -87,6 +87,29 @@
     },
     {
       "key": {
+        "uuid": "178b47d3_1e7bfe32",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8ScriptRunner.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 577,
+      "author": {
+        "id": 1175774
+      },
+      "writtenOn": "2017-12-19T10:18:08Z",
+      "side": 1,
+      "message": "I agree with Hiroshige here that I\u0027m not keen on using kNoCacheReason, predominantly because it\u0027s a v8-side enum but it\u0027s only controlling blink-side behaviour (the fact that it\u0027s a v8-side enum is also ugly, and once our cache behaviour is changed I think I\u0027d want to remove it and track cache behaviour in some other way -- or not at all).\n\nCould we add (yet another...) enum for this, and potentially use that enum to inform the kNoCacheReason?",
+      "range": {
+        "startLine": 577,
+        "startChar": 29,
+        "endLine": 577,
+        "endChar": 68
+      },
+      "revId": "fe747b2c1c09f8ae995a8a06e17fc26a1d84bfc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "916a4d34_f513948b",
         "filename": "third_party/WebKit/Source/bindings/core/v8/WorkerOrWorkletScriptController.cpp",
         "patchSetId": 2
