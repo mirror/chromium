@@ -115,6 +115,11 @@ class PLATFORM_EXPORT SegmentedSubstring {
     --length_;
   }
 
+  UChar Peek() const {
+    DCHECK_GE(length_, 1);
+    return is8_bit_ ? *(data_.string8_ptr + 1) : *(data_.string16_ptr + 1);
+  }
+
   String CurrentSubString(unsigned length) {
     int offset = string_.length() - length_;
     return string_.Substring(offset, length);
@@ -188,6 +193,13 @@ class PLATFORM_EXPORT SegmentedString {
   LookAheadResult LookAheadIgnoringCase(const String& string) {
     return LookAheadInline(string, kTextCaseASCIIInsensitive);
   }
+
+  UChar Peek() const {
+    if (LIKELY(current_string_.length()) > 1)
+      return current_string_.Peek();
+    return PeekSubstrings();
+  }
+  UChar PeekSubstrings() const;
 
   ALWAYS_INLINE void Advance() {
     if (LIKELY(current_string_.length() > 1)) {

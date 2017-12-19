@@ -140,6 +140,14 @@ void SegmentedString::AdvanceSubstring() {
   }
 }
 
+UChar SegmentedString::PeekSubstrings() const {
+  for (auto& substring : substrings_) {
+    if (substring.length() > 0)
+      return substring.GetCurrentChar();
+  }
+  return 0xFFFD;
+}
+
 String SegmentedString::ToString() const {
   StringBuilder result;
   current_string_.AppendTo(result);
