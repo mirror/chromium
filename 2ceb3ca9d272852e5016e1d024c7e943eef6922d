@@ -22,6 +22,30 @@
       "revId": "2ceb3ca9d272852e5016e1d024c7e943eef6922d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2963446b_6a98f74e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1250986
+      },
+      "writtenOn": "2017-12-19T16:19:05Z",
+      "side": 1,
+      "message": "This is a known issue in GCC (from a previous bug dealing with same issue):\n\n    This is caused by the bug in GCC \"Inconsistent `this-\u003e`\n    required when calling member function in a lambda\n    capturing `this` through another function\"\n    https://gcc.gnu.org/bugzilla/show_bug.cgi?id\u003d67274\n\nThe error I actually got:\n\n../../../chromium-65.0.3294.5/device/u2f/u2f_hid_discovery.cc: In instantiation of \u0027device::U2fHidDiscovery::OnGetDevices(std::__1::vector\u003cmojo::StructPtr\u003cdevice::mojom::HidDeviceInfo\u003e \u003e)::\u003clambda(auto:1\u0026)\u003e [with auto:1 \u003d mojo::StructPtr\u003cdevice::mojom::HidDeviceInfo\u003e]\u0027:\n../../../chromium-65.0.3294.5/buildtools/third_party/libc++/trunk/include/algorithm:965:12:   required from \u0027_Function std::__1::for_each(_InputIterator, _InputIterator, _Function) [with _InputIterator \u003d std::__1::__wrap_iter\u003cmojo::StructPtr\u003cdevice::mojom::HidDeviceInfo\u003e*\n\u003e; _Function \u003d device::U2fHidDiscovery::OnGetDevices(std::__1::vector\u003cmojo::StructPtr\u003cdevice::mojom::HidDeviceInfo\u003e \u003e)::\u003clambda(auto:1\u0026)\u003e]\u0027\n../../../chromium-65.0.3294.5/device/u2f/u2f_hid_discovery.cc:60:73:   required from here\n../../../chromium-65.0.3294.5/device/u2f/u2f_hid_discovery.cc:60:35: error: cannot call member function \u0027virtual void device::U2fHidDiscovery::DeviceAdded(device::mojom::HidDeviceInfoPtr)\u0027 without object\n       [this](auto\u0026 device_info) { DeviceAdded(std::move(device_info)); });",
+      "parentUuid": "9b1623da_4982cb26",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 28
+      },
+      "revId": "2ceb3ca9d272852e5016e1d024c7e943eef6922d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
