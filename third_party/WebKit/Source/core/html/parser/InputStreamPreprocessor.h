@@ -42,9 +42,7 @@ class InputStreamPreprocessor {
   DISALLOW_NEW();
 
  public:
-  InputStreamPreprocessor(Tokenizer* tokenizer) : tokenizer_(tokenizer) {
-    Reset();
-  }
+  InputStreamPreprocessor(Tokenizer* tokenizer) : tokenizer_(tokenizer) {}
 
   ALWAYS_INLINE UChar NextInputCharacter() const {
     return next_input_character_;
@@ -60,11 +58,9 @@ class InputStreamPreprocessor {
     // fast-reject branch for characters that don't require special
     // handling. Please run the parser benchmark whenever you touch
     // this function. It's very hot.
-    static const UChar kSpecialCharacterMask = '\n' | '\r' | '\0';
-    if (next_input_character_ & ~kSpecialCharacterMask) {
-      skip_next_new_line_ = false;
+    if (LIKELY(next_input_character_ != '\r' && next_input_character_ != '\0'))
       return true;
-    }
+
     return ProcessNextInputCharacter(source);
   }
 
@@ -76,30 +72,17 @@ class InputStreamPreprocessor {
     return Peek(source);
   }
 
-  bool SkipNextNewLine() const { return skip_next_new_line_; }
-
-  void Reset(bool skip_next_new_line = false) {
-    next_input_character_ = '\0';
-    skip_next_new_line_ = skip_next_new_line;
-  }
-
  private:
   bool ProcessNextInputCharacter(SegmentedString& source) {
   ProcessAgain:
     DCHECK_EQ(next_input_character_, source.CurrentChar());
 
-    if (next_input_character_ == '\n' && skip_next_new_line_) {
-      skip_next_new_line_ = false;
-      source.AdvancePastNewlineAndUpdateLineNumber();
-      if (source.IsEmpty())
-        return false;
-      next_input_character_ = source.CurrentChar();
-    }
     if (next_input_character_ == '\r') {
       next_input_character_ = '\n';
-      skip_next_new_line_ = true;
+
+      if (source.Peek() == '\n')
+        source.AdvancePastNonNewline();
     } else {
-      skip_next_new_line_ = false;
       // FIXME: The spec indicates that the surrogate pair range as well as a
       // number of specific character values are parse errors and should be
       // replaced by the replacement character. We suspect this is a problem
@@ -127,8 +110,7 @@ class InputStreamPreprocessor {
   Tokenizer* tokenizer_;
 
   // http://www.whatwg.org/specs/web-apps/current-work/#next-input-character
-  UChar next_input_character_;
-  bool skip_next_new_line_;
+  UChar next_input_character_ = '\0';
 
   DISALLOW_COPY_AND_ASSIGN(InputStreamPreprocessor);
 };
