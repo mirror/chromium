@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a55224e_40f02c75",
+        "filename": "base/pickle.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-19T16:26:33Z",
+      "side": 1,
+      "message": "style: please add punctuation to the end of comment sentences",
+      "revId": "a07ccbc1ca0c80b33184091a5207518a80090d0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
