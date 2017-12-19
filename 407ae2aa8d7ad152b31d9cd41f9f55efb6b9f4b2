@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "315e9003_09fa22d0",
+        "filename": "content/browser/security_exploit_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-12-19T00:58:44Z",
+      "side": 1,
+      "message": "I wanted to spoof the mojo IPC pipeline but I couldn\u0027t - it is hard to inject messages for MojoChannel (at least for me).",
+      "revId": "407ae2aa8d7ad152b31d9cd41f9f55efb6b9f4b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
