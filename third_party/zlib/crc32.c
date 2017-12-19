@@ -29,6 +29,7 @@
 #endif /* MAKECRCH */
 
 #include "deflate.h"
+#include "crc32_simd.h"
 #include "x86.h"
 #include "zutil.h"      /* for STDC and FAR definitions */
 
@@ -241,6 +242,24 @@ unsigned long ZEXPORT crc32(crc, buf, len)
     const unsigned char FAR *buf;
     uInt len;
 {
+#if defined(CRC32_SIMD_SSE42_PCLMUL)
+    /*
+     * Use x86 sse4.2+pclmul SIMD to compute the crc32.
+     */
+    if (x86_cpu_enable_simd && buf && len >= Z_CRC32_SSE42_MINIMUM_LENGTH) {
+        /* crc32 16-byte chunks */
+        uInt chunk_len = len & ~Z_CRC32_SSE42_CHUNKSIZE_MASK;
+        crc = ~crc32_pclmul_simd_(buf, chunk_len, ~(uint32_t)crc);
+        /* crc32 remaining data */
+        uInt remainder = len & Z_CRC32_SSE42_CHUNKSIZE_MASK;
+        if (remainder)
+            crc = crc32_z(crc, buf + chunk_len, remainder);
+        return crc;
+    }
+#endif /* CRC32_SIMD_SSE42_PCLMUL */
+    /*
+     * Otherwise, fall-back to using the default crc32.
+     */
     return crc32_z(crc, buf, len);
 }
 

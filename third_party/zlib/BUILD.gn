@@ -53,9 +53,6 @@ source_set("zlib_adler32_simd") {
     }
   }
 
-  configs -= [ "//build/config/compiler:chromium_code" ]
-  configs += [ "//build/config/compiler:no_chromium_code" ]
-
   public_configs = [ ":zlib_adler32_simd_config" ]
 }
 
@@ -110,12 +107,41 @@ source_set("zlib_inflate_chunk_simd") {
   public_configs = [ ":zlib_inflate_chunk_simd_config" ]
 }
 
+config("zlib_crc32_simd_config") {
+  if (!is_ios && (current_cpu == "x86" || current_cpu == "x64")) {
+    defines = [ "CRC32_SIMD_SSE42_PCLMUL" ]
+  }
+}
+
+source_set("zlib_crc32_simd") {
+  visibility = [ ":*" ]
+
+  if (!is_ios && (current_cpu == "x86" || current_cpu == "x64")) {
+    sources = [
+      "crc32_simd.c",
+      "crc32_simd.h",
+    ]
+
+    if (!is_win || is_clang) {
+      cflags = [
+        "-msse4.2",
+        "-mpclmul",
+      ]
+    }
+  }
+
+  public_configs = [ ":zlib_crc32_simd_config" ]
+}
+
 static_library("zlib_x86_simd") {
+  visibility = [ ":*" ]
+
   if (!is_ios && (current_cpu == "x86" || current_cpu == "x64")) {
     sources = [
       "crc_folding.c",
       "fill_window_sse.c",
     ]
+
     if (!is_win || is_clang) {
       cflags = [
         "-msse4.2",
@@ -184,6 +210,8 @@ static_library("zlib") {
 
     deps += [ ":zlib_inflate_chunk_simd" ]
     sources -= [ "inflate.c" ]
+
+    deps += [ ":zlib_crc32_simd" ]
   }
 
   if (current_cpu == "arm" || current_cpu == "arm64") {
