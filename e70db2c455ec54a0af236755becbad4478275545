@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "37f9e6b9_755d2498",
+        "filename": "chrome/browser/ssl/typed_navigation_timing_throttle.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1189840
+      },
+      "writtenOn": "2017-12-19T01:34:26Z",
+      "side": 1,
+      "message": "Didn\u0027t know about those -- thanks for the pointer. I\u0027ve changed it to use the constants.",
+      "parentUuid": "c29d7b43_9a5af8e1",
+      "range": {
+        "startLine": 56,
+        "startChar": 29,
+        "endLine": 56,
+        "endChar": 34
+      },
+      "revId": "e70db2c455ec54a0af236755becbad4478275545",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f522db86_7b89787a",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 11
@@ -39,6 +63,24 @@
       "revId": "e70db2c455ec54a0af236755becbad4478275545",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1471a89a_e9caaddf",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 11
+      },
+      "lineNbr": 55939,
+      "author": {
+        "id": 1189840
+      },
+      "writtenOn": "2017-12-19T01:34:26Z",
+      "side": 1,
+      "message": "Done. Added the following paragraph:\n\n\"To calculate the percentage of HTTP URL navigations that have been upgraded\nin this way, divide by the count for HTTP in Omnibox.URLNavigationScheme.\"",
+      "parentUuid": "f522db86_7b89787a",
+      "revId": "e70db2c455ec54a0af236755becbad4478275545",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
