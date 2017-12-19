@@ -22,6 +22,8 @@ DEVIL_PATH = os.path.join(
     DIR_SOURCE_ROOT, 'third_party', 'catapult', 'devil')
 PYMOCK_PATH = os.path.join(
     DIR_SOURCE_ROOT, 'third_party', 'pymock')
+WEBKITPY_PATH = os.path.join(
+    DIR_SOURCE_ROOT, 'third_party', 'WebKit', 'Tools', 'Scripts')
 
 @contextlib.contextmanager
 def SysPath(path, position=None):
