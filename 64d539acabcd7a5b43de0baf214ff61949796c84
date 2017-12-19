@@ -2,6 +2,121 @@
   "comments": [
     {
       "key": {
+        "uuid": "94822049_92ff0a51",
+        "filename": "chrome/browser/net/predictor.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 697,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-12-19T18:53:58Z",
+      "side": 1,
+      "message": "Your change may prevent all pre-resolutions originated from the renderer process (link rel\u003d\"dns-prefetch\"), because we get only hostnames from the renderer and append \"http://\" prefix to make a GURL from it.\nWe probably can fix it by appending \"https://\" instead of \"http://\"",
+      "range": {
+        "startLine": 697,
+        "startChar": 25,
+        "endLine": 697,
+        "endChar": 29
+      },
+      "revId": "64d539acabcd7a5b43de0baf214ff61949796c84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21216e79_5b7ba73f",
+        "filename": "chrome/browser/net/predictor.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1018,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-12-19T18:53:58Z",
+      "side": 1,
+      "message": "nit:\nI\u0027d put this check inside of the WouldLikelyProxyURL() function.\nBy the way, don\u0027t we already detect DataReductionProxy from there?",
+      "range": {
+        "startLine": 1018,
+        "startChar": 14,
+        "endLine": 1018,
+        "endChar": 48
+      },
+      "revId": "64d539acabcd7a5b43de0baf214ff61949796c84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcbbf011_28672673",
+        "filename": "chrome/browser/net/predictor_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 847,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-12-19T18:53:58Z",
+      "side": 1,
+      "message": "nit:\nThere is a big chunk of duplicated code across these tests. What about extract a common part into a test class method?",
+      "range": {
+        "startLine": 847,
+        "startChar": 32,
+        "endLine": 847,
+        "endChar": 33
+      },
+      "revId": "64d539acabcd7a5b43de0baf214ff61949796c84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9d8972c_d97aa12c",
+        "filename": "chrome/browser/net/predictor_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 887,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-12-19T18:53:58Z",
+      "side": 1,
+      "message": "Shouldn\u0027t we wait for all hosts being looked up?\n\n    WaitUntilHostsLookedUp(names);",
+      "range": {
+        "startLine": 887,
+        "startChar": 36,
+        "endLine": 887,
+        "endChar": 45
+      },
+      "revId": "64d539acabcd7a5b43de0baf214ff61949796c84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d18ae02_f7b672e4",
+        "filename": "chrome/browser/net/predictor_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 916,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-12-19T18:53:58Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 916,
+        "startChar": 14,
+        "endLine": 916,
+        "endChar": 35
+      },
+      "revId": "64d539acabcd7a5b43de0baf214ff61949796c84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cd496f91_7b1a5e2a",
         "filename": "chrome/browser/predictors/loading_predictor.cc",
         "patchSetId": 3
@@ -18,6 +133,29 @@
         "startChar": 12,
         "endLine": 371,
         "endChar": 23
+      },
+      "revId": "64d539acabcd7a5b43de0baf214ff61949796c84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b811cd4a_a938a398",
+        "filename": "chrome/browser/predictors/loading_predictor.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-12-19T18:53:58Z",
+      "side": 1,
+      "message": "It\u0027s not the only path how the pre-resolution can be triggered in the LoadingPredictor (it\u0027s an experimental feature that should replace net::Predictor eventually).\n\nA robust way to stop all pre-resolutions from the LoadingPredictor would be to add this check in PreconnectManager::TryToLaunchPreresolveJobs(). https://cs.chromium.org/chromium/src/chrome/browser/predictors/preconnect_manager.cc?rcl\u003d7526172345eee3dc448e4ae057d2720b424ca052\u0026l\u003d163\nAs a bonus we can get rid of UI version of WouldLikelyBeFetchedViaDataSaver.\n\n(There is the same caveat with renderer hints, see PreconnectManager::StartPreresolveHosts())",
+      "range": {
+        "startLine": 373,
+        "startChar": 14,
+        "endLine": 373,
+        "endChar": 48
       },
       "revId": "64d539acabcd7a5b43de0baf214ff61949796c84",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
