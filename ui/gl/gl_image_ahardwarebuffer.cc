@@ -13,6 +13,13 @@ GLImageAHardwareBuffer::GLImageAHardwareBuffer(const gfx::Size& size)
 
 GLImageAHardwareBuffer::~GLImageAHardwareBuffer() {}
 
+bool GLImageAHardwareBuffer::Initialize(AHardwareBuffer* buffer) {
+  EGLint attribs[] = {EGL_IMAGE_PRESERVED_KHR, EGL_FALSE, EGL_NONE};
+  EGLClientBuffer client_buffer = eglGetNativeClientBufferANDROID(buffer);
+  return GLImageEGL::Initialize(EGL_NO_CONTEXT, EGL_NATIVE_BUFFER_ANDROID,
+                                client_buffer, attribs);
+}
+
 unsigned GLImageAHardwareBuffer::GetInternalFormat() {
   return GL_RGBA;
 }

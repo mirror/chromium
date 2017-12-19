@@ -15,6 +15,11 @@ class GL_EXPORT GLImageAHardwareBuffer : public GLImageEGL {
  public:
   explicit GLImageAHardwareBuffer(const gfx::Size& size);
 
+  // Create an EGLImage from a given Android hardware buffer. On success the
+  // content of |buffer| is undefined. I.e. the pixel data values associated
+  // with |buffer| are not preserved, but unaffected on failure.
+  bool Initialize(AHardwareBuffer* buffer);
+
   // Overridden from GLImage:
   unsigned GetInternalFormat() override;
   bool CopyTexImage(unsigned target) override;

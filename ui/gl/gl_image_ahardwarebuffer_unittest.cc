@@ -56,6 +56,12 @@ class GLImageAHardwareBufferTestDelegate {
     base::AndroidHardwareBufferCompat::GetInstance().Allocate(&desc, &buffer);
     EXPECT_TRUE(buffer);
 
+    auto image = base::MakeRefCounted<GLImageAHardwareBuffer>(size);
+    bool rv = image->Initialize(buffer);
+    EXPECT_TRUE(rv);
+
+    // The content of the AHardwareBuffer is not perserved when the image
+    // initialization succeeds. So write into the AHardwareBuffer afterward.
     uint8_t* data = nullptr;
     int lock_result = base::AndroidHardwareBufferCompat::GetInstance().Lock(
         buffer, AHARDWAREBUFFER_USAGE_CPU_WRITE_RARELY, -1, nullptr,
@@ -75,12 +81,6 @@ class GLImageAHardwareBufferTestDelegate {
         buffer, nullptr);
     EXPECT_EQ(unlock_result, 0);
 
-    auto image = base::MakeRefCounted<GLImageAHardwareBuffer>(size);
-    EGLint attribs[] = {EGL_IMAGE_PRESERVED_KHR, EGL_TRUE, EGL_NONE};
-    EGLClientBuffer client_buffer = eglGetNativeClientBufferANDROID(buffer);
-    bool rv = image->Initialize(EGL_NO_CONTEXT, EGL_NATIVE_BUFFER_ANDROID,
-                                client_buffer, attribs);
-    EXPECT_TRUE(rv);
     return image;
   }
 
