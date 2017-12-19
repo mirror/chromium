@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5f126a80_3d330e41",
+        "filename": "third_party/WebKit/Source/core/workers/DedicatedWorkerMessagingProxy.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-12-19T07:00:32Z",
+      "side": 1,
+      "message": "For now I\u0027m not sure where is an appropriate place for this function and would like to defer the decision until we start implementing one more modules support for SharedWorker that has another code path.\n\nAlso, we could move this function to core/fetch/ etc as a part of refactoring (see https://crbug.com/794837). Updated this TODO comment.",
+      "parentUuid": "aaa3483e_47786108",
+      "revId": "f032ea81ab3ec563ebbacb1da9a3395d4b305446",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2ba43b9a_360037ce",
         "filename": "third_party/WebKit/Source/core/workers/DedicatedWorkerMessagingProxy.cpp",
         "patchSetId": 11
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-19T06:04:00Z",
       "side": 1,
       "message": "Should we keep the TODO comment if the cond still holds?",
+      "revId": "f032ea81ab3ec563ebbacb1da9a3395d4b305446",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b82e682c_5944f383",
+        "filename": "third_party/WebKit/Source/core/workers/DedicatedWorkerMessagingProxy.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-12-19T07:00:32Z",
+      "side": 1,
+      "message": "It\u0027s no longer necessary. Removed.",
+      "parentUuid": "2ba43b9a_360037ce",
       "revId": "f032ea81ab3ec563ebbacb1da9a3395d4b305446",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "689cdf15_c3a0c833",
+        "filename": "third_party/WebKit/Source/core/dom/DynamicModuleResolver.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-12-19T07:00:32Z",
+      "side": 1,
+      "message": "Discarded this change.",
+      "parentUuid": "a3aa1120_06e50d22",
+      "revId": "691c2d616946b7c6d6e39309900e2ca2370d10b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "21f00d5d_2c0416c3",
         "filename": "third_party/WebKit/Source/core/dom/DynamicModuleResolver.cpp",
         "patchSetId": 8
@@ -30,6 +48,30 @@
       "writtenOn": "2017-12-19T06:04:00Z",
       "side": 1,
       "message": "Not needed.",
+      "range": {
+        "startLine": 23,
+        "startChar": 2,
+        "endLine": 23,
+        "endChar": 31
+      },
+      "revId": "691c2d616946b7c6d6e39309900e2ca2370d10b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c809712_4a96112e",
+        "filename": "third_party/WebKit/Source/core/dom/DynamicModuleResolver.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-12-19T07:00:32Z",
+      "side": 1,
+      "message": "Discarded this change.",
+      "parentUuid": "21f00d5d_2c0416c3",
       "range": {
         "startLine": 23,
         "startChar": 2,
