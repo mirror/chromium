@@ -16,7 +16,6 @@
 #include "third_party/skia/include/core/SkAnnotation.h"
 #include "third_party/skia/include/core/SkCanvas.h"
 #include "third_party/skia/include/core/SkRegion.h"
-#include "third_party/skia/include/core/SkWriteBuffer.h"
 
 namespace cc {
 #define TYPES(M)      \
