@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a940af51_35a4f9e2",
+        "filename": "third_party/WebKit/LayoutTests/editing/text-iterator/basic-iteration-shadowdom.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1251514
+      },
+      "writtenOn": "2017-12-19T12:14:50Z",
+      "side": 1,
+      "message": "Aren\u0027t all shadow roots author roots in this document? Why can\u0027t we just use node.shadowRoot here?",
+      "revId": "5474f02f5c22ccc109f34ddebe879ab5bf89a921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
