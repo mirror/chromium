@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9b1623da_4982cb26",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-19T15:59:47Z",
+      "side": 1,
+      "message": "Could you provide some background info? What exactly is the issue GCC runs into?",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 28
+      },
+      "revId": "2ceb3ca9d272852e5016e1d024c7e943eef6922d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
