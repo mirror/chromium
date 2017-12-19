@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3180b9f3_13e9b965",
+        "filename": "content/browser/BUILD.gn",
+        "patchSetId": 7
+      },
+      "lineNbr": 2127,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-12-19T00:57:25Z",
+      "side": 1,
+      "message": "If the size increase on Android is significant, we may want to move it into a common directory. Otherwise, I don\u0027t particularly mind.",
+      "parentUuid": "33cd43ab_04c50112",
+      "range": {
+        "startLine": 2127,
+        "startChar": 12,
+        "endLine": 2127,
+        "endChar": 22
+      },
+      "revId": "42487a98d61baba7da09312f930cc0307e08d6d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "375db8d0_c943ffdd",
         "filename": "content/browser/renderer_host/compositor_impl_android.cc",
         "patchSetId": 7
@@ -72,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "8c59a51a_2c3d5cb1",
+        "filename": "content/browser/renderer_host/compositor_impl_android.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 955,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-12-19T00:57:25Z",
+      "side": 1,
+      "message": "It feels like something useful to be in cc/trees maybe - maybe together with where CompositorLock might end up.",
+      "parentUuid": "61e462f0_24bd0f42",
+      "range": {
+        "startLine": 955,
+        "startChar": 52,
+        "endLine": 955,
+        "endChar": 69
+      },
+      "revId": "42487a98d61baba7da09312f930cc0307e08d6d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "48ee8875_4fbb36d7",
         "filename": "content/browser/renderer_host/compositor_impl_android.cc",
         "patchSetId": 7
@@ -89,6 +137,47 @@
         "endLine": 967,
         "endChar": 25
       },
+      "revId": "42487a98d61baba7da09312f930cc0307e08d6d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a287f3c4_1ba4debb",
+        "filename": "content/browser/renderer_host/compositor_impl_android.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 967,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-12-19T00:57:25Z",
+      "side": 1,
+      "message": "CompositorLock is meant to be destroyed by the caller whenever whatever condition it was waiting for is satisfied - its destructor is what calls RemoveCompositorLock.\nSo I don\u0027t think there\u0027s such a thing as \"too early\"?",
+      "parentUuid": "48ee8875_4fbb36d7",
+      "range": {
+        "startLine": 967,
+        "startChar": 16,
+        "endLine": 967,
+        "endChar": 25
+      },
+      "revId": "42487a98d61baba7da09312f930cc0307e08d6d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c826838_e11395c3",
+        "filename": "content/browser/renderer_host/compositor_impl_android.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 973,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-12-19T00:57:25Z",
+      "side": 1,
+      "message": "just FYI, this means clients can extend the lock indefinitely, even for clients that expected to lock only for a certain duration. We explicitly wanted to prevent that on Aura, to avoid various things stomping on each other and extending the lock indefinitely (see ui::Compositor::allow_locks_to_extend_timeout_). But it\u0027s probably ok on Android.",
       "revId": "42487a98d61baba7da09312f930cc0307e08d6d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
