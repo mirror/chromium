@@ -46,6 +46,30 @@
       "revId": "731ee15c5ab4b70802e36bb9882aac9733e1e19b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e25ead2d_a19ae38c",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-12-19T01:38:08Z",
+      "side": 1,
+      "message": "Sounds good for a followup patch.  It should involve changing SplitView.js, which affects many clients.\n\nRemoving these 2 lines for now",
+      "parentUuid": "0b740618_12de3b3b",
+      "range": {
+        "startLine": 354,
+        "startChar": 4,
+        "endLine": 354,
+        "endChar": 50
+      },
+      "revId": "731ee15c5ab4b70802e36bb9882aac9733e1e19b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
