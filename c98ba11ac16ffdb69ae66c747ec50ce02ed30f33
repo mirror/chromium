@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "62220a3d_1307fed7",
+        "filename": "ui/ozone/platform/drm/common/drm_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-12-19T02:32:33Z",
+      "side": 1,
+      "message": "nit: descriptor.",
+      "revId": "c98ba11ac16ffdb69ae66c747ec50ce02ed30f33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
