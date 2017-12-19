@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c29d7b43_9a5af8e1",
+        "filename": "chrome/browser/ssl/typed_navigation_timing_throttle.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-12-19T00:48:05Z",
+      "side": 1,
+      "message": "nit while I\u0027m here.  Any reason you\u0027re not using the URL constants (url/url_constants.h) in this file? (two places)",
+      "range": {
+        "startLine": 56,
+        "startChar": 29,
+        "endLine": 56,
+        "endChar": 34
+      },
+      "revId": "e70db2c455ec54a0af236755becbad4478275545",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f522db86_7b89787a",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 11
+      },
+      "lineNbr": 55939,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-12-19T00:48:05Z",
+      "side": 1,
+      "message": "It might be nice to add another paragraph here, poining out a different histogram that can used to normalize this.  In particular, if we want to know the percent of URLs that match this test, we\u0027d look at the count of this divided by ___.",
+      "revId": "e70db2c455ec54a0af236755becbad4478275545",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
