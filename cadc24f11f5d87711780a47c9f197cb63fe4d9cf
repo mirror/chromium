@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c5c5875e_b49bc7af",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 4348,
+      "author": {
+        "id": 1116492
+      },
+      "writtenOn": "2017-12-19T00:25:57Z",
+      "side": 1,
+      "message": "optional, perhaps in a separate CL: It looks like |ShouldUseClientLoFiForRequest| no longer needs to plumbed down and implemented here in RenderFrameImpl; could you move the implementation into Blink? It looks like it\u0027s only used in LocalFrame, so it could even just be an anonymous function in LocalFrame.cpp.",
+      "range": {
+        "startLine": 4348,
+        "startChar": 22,
+        "endLine": 4348,
+        "endChar": 51
+      },
+      "revId": "cadc24f11f5d87711780a47c9f197cb63fe4d9cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "786365a2_725e3f7e",
+        "filename": "third_party/WebKit/Source/core/loader/FrameFetchContext.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1116492
+      },
+      "writtenOn": "2017-12-19T00:25:57Z",
+      "side": 1,
+      "message": "Should this condition check for PREVIEWS_OFF and PREVIEWS_NO_TRANSFORM as well?",
+      "range": {
+        "startLine": 356,
+        "startChar": 7,
+        "endLine": 357,
+        "endChar": 34
+      },
+      "revId": "cadc24f11f5d87711780a47c9f197cb63fe4d9cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
