@@ -597,6 +597,7 @@ split_static_library("browser") {
     "lifetime/application_lifetime.cc",
     "lifetime/application_lifetime.h",
     "lifetime/application_lifetime_mac.mm",
+    "lifetime/application_lifetime_platform.h",
     "loader/chrome_navigation_data.cc",
     "loader/chrome_navigation_data.h",
     "loader/chrome_resource_dispatcher_host_delegate.cc",
@@ -2776,6 +2777,8 @@ split_static_library("browser") {
       "download/notification/download_notification_manager.h",
       "feedback/feedback_util_chromeos.cc",
       "feedback/feedback_util_chromeos.h",
+      "lifetime/application_lifetime_chromeos.cc",
+      "lifetime/application_lifetime_chromeos.h",
       "mash_service_registry.cc",
       "mash_service_registry.h",
       "media/chromeos_login_media_access_handler.cc",
@@ -3065,6 +3068,8 @@ split_static_library("browser") {
 
   if (!is_android && !is_chromeos) {
     sources += [
+      "lifetime/application_lifetime_platform_default.cc",
+      "lifetime/application_lifetime_platform_default.h",
       "lifetime/switch_utils.cc",
       "lifetime/switch_utils.h",
       "metrics/desktop_session_duration/audible_contents_tracker.cc",

@@ -12,6 +12,11 @@ class Browser;
 
 namespace chrome {
 
+// This is internal function to be called from per-platform AttemptExit
+// implementations.
+// Triggers notifications and g_browser_process->platform_part()->AttemptExit();
+void AttemptExitImpl(bool try_to_quit_application);
+
 // Starts a user initiated exit process. Called from Browser::Exit.
 // On platforms other than ChromeOS, this is equivalent to
 // CloseAllBrowsers() On ChromeOS, this tells session manager
@@ -40,21 +45,12 @@ void AttemptRelaunch();
 // unload handler, and the browser may or may not exit.
 void AttemptExit();
 
-#if defined(OS_CHROMEOS)
-// Shutdown chrome cleanly without blocking. This is called
-// when SIGTERM is received on Chrome OS, and always sets
-// exit-cleanly bit and exits the browser, even if there is
-// ongoing downloads or a page with onbeforeunload handler.
-//
-// If you need to exit or restart in your code on ChromeOS,
-// use AttemptExit or AttemptRestart respectively.
-void ExitCleanly();
-
-// Returns true if any of the above Attempt calls have been called.
-bool IsAttemptingShutdown();
-#endif
-
 #if !defined(OS_ANDROID)
+// Returns true if all browsers can be closed without user interaction.
+// This currently checks if there is pending download, or if it needs to
+// handle unload handler.
+bool AreAllBrowsersCloseable();
+
 // Closes all browsers and if successful, quits.
 void CloseAllBrowsersAndQuit();
 
@@ -63,6 +59,9 @@ void CloseAllBrowsersAndQuit();
 // message. This will quit the application if there is nothing other than
 // browser windows keeping it alive or the application is quitting.
 void CloseAllBrowsers();
+
+// Marks shutdown intented, not a crash.
+void MarkAsCleanShutdown();
 
 // If there are no browsers open and we aren't already shutting down,
 // initiate a shutdown.
