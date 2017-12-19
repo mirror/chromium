@@ -177,6 +177,24 @@
     },
     {
       "key": {
+        "uuid": "32a6e4a5_d2664270",
+        "filename": "chromeos/dbus/fake_cryptohome_client.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-12-19T13:31:30Z",
+      "side": 1,
+      "message": "I guess Ryo\u0027s comment and my opinion are not conflicting.\nIIUC, Ryo\u0027s key point looks like maintaining expanded fields/accessors is not that sweet.\nMine is conceptually storing last protocol message looks conflicting with the Fake concept in general. It looks better to maintain internal state, and to add an accessor to it. I don\u0027t care about whether each field is inlined or not.\n\nWDYT?",
+      "parentUuid": "add86fb5_d9c401f0",
+      "revId": "e1ccba8af82c472fc56c0a4712ba6d0086fe6edf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a852e831_850685b7",
         "filename": "chromeos/dbus/fake_cryptohome_client.h",
         "patchSetId": 4

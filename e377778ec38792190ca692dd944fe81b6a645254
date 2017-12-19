@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "96a081a0_892c7c4c",
+        "filename": "chrome/browser/chromeos/login/supervised/supervised_user_test_base.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-12-19T13:31:30Z",
+      "side": 1,
+      "message": "nit: Could you use std::make_unique?",
+      "revId": "e377778ec38792190ca692dd944fe81b6a645254",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b9ee4a6_8e945dd7",
+        "filename": "chrome/browser/chromeos/policy/pre_signin_policy_fetcher_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-12-19T13:31:30Z",
+      "side": 1,
+      "message": "for consistency, could you call DBugThreadManager::Shutdown()?",
+      "revId": "e377778ec38792190ca692dd944fe81b6a645254",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "209cc17d_cb9a9342",
+        "filename": "chrome/browser/ui/webui/chromeos/login/encryption_migration_screen_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 568,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-12-19T13:31:30Z",
+      "side": 1,
+      "message": "optional: how about;\n\ncryptohome::AuthorizationRequest auth_request;\nif (IsArcKiosk()) {\n  mount.set_public_mount(true);\n} else {\n  auth_request \u003d CreateAuthorizationRequest();\n}\nDBusThreadManager::Get()-\u003eGetCryptohomeClient()-\u003eMountEx(...);\n\nto share more parts?",
+      "revId": "e377778ec38792190ca692dd944fe81b6a645254",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab81ab49_132bdaf8",
+        "filename": "chromeos/dbus/cryptohome_client.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1190,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-12-19T13:31:30Z",
+      "side": 1,
+      "message": "logging?",
+      "revId": "e377778ec38792190ca692dd944fe81b6a645254",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83454c92_6eeb8fb9",
+        "filename": "chromeos/dbus/cryptohome_client.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1202,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-12-19T13:31:30Z",
+      "side": 1,
+      "message": "logging?",
+      "revId": "e377778ec38792190ca692dd944fe81b6a645254",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ff99e69_6f53d57d",
+        "filename": "chromeos/dbus/cryptohome_client.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-12-19T13:31:30Z",
+      "side": 1,
+      "message": "As you\u0027re changing the interface, how about dropping success now?\nIIUC, success \u003d\u003d true is identical to return_code \u003d\u003d MOUNT_ERROR_NONE.\n\nOr, if you prefer working on it separately, could you add TODO?",
+      "revId": "e377778ec38792190ca692dd944fe81b6a645254",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb59b31a_09bc9f20",
+        "filename": "chromeos/dbus/fake_cryptohome_client.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-12-19T13:31:30Z",
+      "side": 1,
+      "message": "Ditto.\n\nRather than just directly remembering the last call args, could you change this to more conceptual fields?\n\nE.g, in this case, assuming migration can run for at most one user,\n\"CryptohomeID whose disk is currently being migrated to dircrypto\". Ditto for all other \"last_\" members.",
+      "revId": "e377778ec38792190ca692dd944fe81b6a645254",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
