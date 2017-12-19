@@ -10,4 +10,9 @@ MockChromeCleanerController::MockChromeCleanerController() = default;
 
 MockChromeCleanerController::~MockChromeCleanerController() = default;
 
+void MockChromeCleanerController::OnSwReporterReady(
+    SwReporterInvocationSequence&& sequence) {
+  OnSwReporterReady_(sequence);
+}
+
 }  // namespace safe_browsing
