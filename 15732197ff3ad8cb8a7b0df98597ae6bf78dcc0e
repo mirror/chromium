@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "596b4864_b4336360",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/dom/usvstring-reflection.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-12-19T12:12:06Z",
+      "side": 1,
+      "message": "nit:\nI think that you can use w.location.hash.\n\nIn case of href.endsWith, then please use |assert_true| instead of |assert_equals|.",
+      "revId": "15732197ff3ad8cb8a7b0df98597ae6bf78dcc0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
