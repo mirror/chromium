@@ -32,10 +32,14 @@ class NET_EXPORT_PRIVATE SOCKSClientSocket : public StreamSocket {
  public:
   // |req_info| contains the hostname and port to which the socket above will
   // communicate to via the socks layer. For testing the referrer is optional.
+  // TODO(BEFORE LANDING THIS CL): Remove default value and add test annotation
+  // to unittests.
   SOCKSClientSocket(std::unique_ptr<ClientSocketHandle> transport_socket,
                     const HostResolver::RequestInfo& req_info,
                     RequestPriority priority,
-                    HostResolver* host_resolver);
+                    HostResolver* host_resolver,
+                    const NetworkTrafficAnnotationTag& traffic_annotation =
+                        NO_TRAFFIC_ANNOTATION_BUG_656607);
 
   // On destruction Disconnect() is called.
   ~SOCKSClientSocket() override;
@@ -140,6 +144,9 @@ class NET_EXPORT_PRIVATE SOCKSClientSocket : public StreamSocket {
   RequestPriority priority_;
 
   NetLogWithSource net_log_;
+
+  // Traffic annotation for socket control.
+  NetworkTrafficAnnotationTag traffic_annotation_;
 
   DISALLOW_COPY_AND_ASSIGN(SOCKSClientSocket);
 };

@@ -12,8 +12,7 @@ ProxyInfo::ProxyInfo()
     : config_id_(ProxyConfig::kInvalidConfigID),
       config_source_(PROXY_CONFIG_SOURCE_UNKNOWN),
       did_bypass_proxy_(false),
-      did_use_pac_script_(false) {
-}
+      did_use_pac_script_(false) {}
 
 ProxyInfo::ProxyInfo(const ProxyInfo& other) = default;
 
@@ -40,9 +39,11 @@ void ProxyInfo::UseDirectWithBypassedProxy() {
   did_bypass_proxy_ = true;
 }
 
-void ProxyInfo::UseNamedProxy(const std::string& proxy_uri_list) {
+void ProxyInfo::UseNamedProxy(
+    const std::string& proxy_uri_list,
+    const PartialNetworkTrafficAnnotationTag& traffic_annotation) {
   Reset();
-  proxy_list_.Set(proxy_uri_list);
+  proxy_list_.Set(proxy_uri_list, traffic_annotation);
 }
 
 void ProxyInfo::UseProxyServer(const ProxyServer& proxy_server) {
@@ -50,9 +51,11 @@ void ProxyInfo::UseProxyServer(const ProxyServer& proxy_server) {
   proxy_list_.SetSingleProxyServer(proxy_server);
 }
 
-void ProxyInfo::UsePacString(const std::string& pac_string) {
+void ProxyInfo::UsePacString(
+    const std::string& pac_string,
+    const PartialNetworkTrafficAnnotationTag& traffic_annotation) {
   Reset();
-  proxy_list_.SetFromPacString(pac_string);
+  proxy_list_.SetFromPacString(pac_string, traffic_annotation);
 }
 
 void ProxyInfo::UseProxyList(const ProxyList& proxy_list) {

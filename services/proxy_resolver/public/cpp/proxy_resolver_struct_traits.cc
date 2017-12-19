@@ -102,8 +102,10 @@ bool StructTraits<
     return false;
   }
 
-  *out = net::ProxyServer(scheme,
-                          net::HostPortPair(host.as_string(), data.port()));
+  // TODO(crbug.com/656607): Get the annotation from the trait.
+  *out =
+      net::ProxyServer(scheme, net::HostPortPair(host.as_string(), data.port()),
+                       net::ProxyServer::GetProxyEmptyPartialAnnotation());
   return true;
 }
 

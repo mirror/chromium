@@ -13,6 +13,8 @@
 
 #include "net/base/net_export.h"
 #include "net/proxy/proxy_retry_info.h"
+#include "net/proxy/proxy_server.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 
 namespace base {
 class ListValue;
@@ -21,7 +23,6 @@ class TimeDelta;
 
 namespace net {
 
-class ProxyServer;
 class NetLogWithSource;
 
 // This class is used to hold a list of proxies returned by GetProxyForUrl or
@@ -35,7 +36,10 @@ class NET_EXPORT_PRIVATE ProxyList {
 
   // Initializes the proxy list to a string containing one or more proxy servers
   // delimited by a semicolon.
-  void Set(const std::string& proxy_uri_list);
+  // TODO(crbug.com/656607): Remove default value.
+  void Set(const std::string& proxy_uri_list,
+           const PartialNetworkTrafficAnnotationTag& traffic_annotation =
+               ProxyServer::GetProxyEmptyPartialAnnotation());
 
   // Set the proxy list to a single entry, |proxy_server|.
   void SetSingleProxyServer(const ProxyServer& proxy_server);
@@ -76,7 +80,11 @@ class NET_EXPORT_PRIVATE ProxyList {
   //   "PROXY foopy1"
   //   "PROXY foopy1; SOCKS4 foopy2:1188"
   // Does a best-effort parse, and silently discards any errors.
-  void SetFromPacString(const std::string& pac_string);
+  // TODO(crbug.com/656607): Remove default value.
+  void SetFromPacString(
+      const std::string& pac_string,
+      const PartialNetworkTrafficAnnotationTag& traffic_annotation =
+          ProxyServer::GetProxyEmptyPartialAnnotation());
 
   // Returns a PAC-style semicolon-separated list of valid proxy servers.
   // For example: "PROXY xxx.xxx.xxx.xxx:xx; SOCKS yyy.yyy.yyy:yy".
