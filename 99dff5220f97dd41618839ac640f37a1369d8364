@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "02a54e60_17d2ddbe",
+        "filename": "third_party/WebKit/LayoutTests/fast/events/inputevents/inputevent-ime.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-12-19T23:23:58Z",
+      "side": 1,
+      "message": "Hey look, we don\u0027t fire a beforeinput event here! :P",
+      "revId": "99dff5220f97dd41618839ac640f37a1369d8364",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5d3ff54_bdbbe065",
+        "filename": "third_party/WebKit/LayoutTests/fast/events/inputevents/inputevent-ime.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-12-19T23:23:58Z",
+      "side": 1,
+      "message": "Here we fire beforeinput and textInput for a no-op change, but we don\u0027t fire input...",
+      "revId": "99dff5220f97dd41618839ac640f37a1369d8364",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28f1966e_460b22cd",
+        "filename": "third_party/WebKit/LayoutTests/fast/events/inputevents/inputevent-ime.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-12-19T23:23:58Z",
+      "side": 1,
+      "message": "Here, we fire compositionend, but we never fire textInput for this composition (we fire textInput for CommitText(), but not SetComposingText() and then FinishComposingText()).",
+      "revId": "99dff5220f97dd41618839ac640f37a1369d8364",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb44422b_60ac02ae",
+        "filename": "third_party/WebKit/LayoutTests/fast/events/inputevents/inputevent-ime.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-12-19T23:23:58Z",
+      "side": 1,
+      "message": "It doesn\u0027t seem right that we send the empty string for the data field in textInput and input...shouldn\u0027t we truncate hello to one character and then send \"h\"?",
+      "revId": "99dff5220f97dd41618839ac640f37a1369d8364",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
