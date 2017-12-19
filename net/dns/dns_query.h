@@ -14,6 +14,7 @@
 #include "base/memory/ref_counted.h"
 #include "base/strings/string_piece.h"
 #include "net/base/net_export.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 
 namespace net {
 
@@ -32,9 +33,12 @@ class NET_EXPORT_PRIVATE DnsQuery {
   // DNS name format, and |qtype|. The qclass is set to IN.
   // If opt_rdata is not null, an OPT record will be added to the "Additional"
   // section of the query.
+  // TODO(IN THIS CL): Remove default value after updating tests.
   DnsQuery(uint16_t id,
            const base::StringPiece& qname,
            uint16_t qtype,
+           const NetworkTrafficAnnotationTag& traffic_annotation =
+               NO_TRAFFIC_ANNOTATION_BUG_656607,
            const OptRecordRdata* opt_rdata = nullptr);
   ~DnsQuery();
 
@@ -55,8 +59,14 @@ class NET_EXPORT_PRIVATE DnsQuery {
 
   void set_flags(uint16_t flags);
 
+  const NetworkTrafficAnnotationTag traffic_annotation() const {
+    return NetworkTrafficAnnotationTag(traffic_annotation_);
+  }
+
  private:
-  DnsQuery(const DnsQuery& orig, uint16_t id);
+  DnsQuery(const DnsQuery& orig,
+           uint16_t id,
+           const NetworkTrafficAnnotationTag& traffic_annotation);
 
   // Returns the size of the question section.
   size_t question_size() const {
@@ -73,6 +83,8 @@ class NET_EXPORT_PRIVATE DnsQuery {
 
   // Pointer to the dns header section.
   dns_protocol::Header* header_;
+
+  MutableNetworkTrafficAnnotationTag traffic_annotation_;
 
   DISALLOW_COPY_AND_ASSIGN(DnsQuery);
 };

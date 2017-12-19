@@ -12,6 +12,7 @@
 #include "chrome/browser/local_discovery/service_discovery_client_impl.h"
 #include "net/dns/dns_protocol.h"
 #include "net/dns/record_rdata.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 
 namespace local_discovery {
 
@@ -68,8 +69,10 @@ ServiceWatcherImpl::ServiceWatcherImpl(
 
 void ServiceWatcherImpl::Start() {
   DCHECK(!started_);
-  listener_ = mdns_client_->CreateListener(
-      net::dns_protocol::kTypePTR, service_type_, this);
+  // TODO(https://crbug.com/656607): Add proper annotation.
+  listener_ =
+      mdns_client_->CreateListener(net::dns_protocol::kTypePTR, service_type_,
+                                   this, NO_TRAFFIC_ANNOTATION_BUG_656607);
   started_ = listener_->Start();
   if (started_)
     ReadCachedServices();
@@ -109,10 +112,12 @@ bool ServiceWatcherImpl::CreateTransaction(
     transaction_flags |= net::MDnsTransaction::QUERY_CACHE;
 
   if (transaction_flags) {
+    // TODO(https://crbug.com/656607): Add proper annotation.
     *transaction = mdns_client_->CreateTransaction(
         net::dns_protocol::kTypePTR, service_type_, transaction_flags,
-        base::Bind(&ServiceWatcherImpl::OnTransactionResponse,
-                   AsWeakPtr(), transaction));
+        base::Bind(&ServiceWatcherImpl::OnTransactionResponse, AsWeakPtr(),
+                   transaction),
+        NO_TRAFFIC_ANNOTATION_BUG_656607);
     return (*transaction)->Start();
   }
 
@@ -189,10 +194,14 @@ ServiceWatcherImpl::ServiceListeners::ServiceListeners(
     net::MDnsClient* mdns_client)
     : service_name_(service_name), mdns_client_(mdns_client),
       update_pending_(false), has_ptr_(true), has_srv_(false) {
-  srv_listener_ = mdns_client->CreateListener(
-      net::dns_protocol::kTypeSRV, service_name, watcher);
-  txt_listener_ = mdns_client->CreateListener(
-      net::dns_protocol::kTypeTXT, service_name, watcher);
+  // TODO(https://crbug.com/656607): Add proper annotation.
+  srv_listener_ =
+      mdns_client->CreateListener(net::dns_protocol::kTypeSRV, service_name,
+                                  watcher, NO_TRAFFIC_ANNOTATION_BUG_656607);
+  // TODO(https://crbug.com/656607): Add proper annotation.
+  txt_listener_ =
+      mdns_client->CreateListener(net::dns_protocol::kTypeTXT, service_name,
+                                  watcher, NO_TRAFFIC_ANNOTATION_BUG_656607);
 }
 
 ServiceWatcherImpl::ServiceListeners::~ServiceListeners() {
@@ -208,12 +217,15 @@ void ServiceWatcherImpl::ServiceListeners::SetActiveRefresh(
 
   if (active_refresh && !has_srv_) {
     DCHECK(has_ptr_);
+    // TODO(https://crbug.com/656607): Add proper annotation.
     srv_transaction_ = mdns_client_->CreateTransaction(
         net::dns_protocol::kTypeSRV, service_name_,
         net::MDnsTransaction::SINGLE_RESULT |
-        net::MDnsTransaction::QUERY_CACHE | net::MDnsTransaction::QUERY_NETWORK,
+            net::MDnsTransaction::QUERY_CACHE |
+            net::MDnsTransaction::QUERY_NETWORK,
         base::Bind(&ServiceWatcherImpl::ServiceListeners::OnSRVRecord,
-                   base::Unretained(this)));
+                   base::Unretained(this)),
+        NO_TRAFFIC_ANNOTATION_BUG_656607);
     srv_transaction_->Start();
   } else if (!active_refresh) {
     srv_transaction_.reset();
@@ -350,20 +362,20 @@ bool ServiceResolverImpl::CreateTxtTransaction() {
   txt_transaction_ = mdns_client_->CreateTransaction(
       net::dns_protocol::kTypeTXT, service_name_,
       net::MDnsTransaction::SINGLE_RESULT | net::MDnsTransaction::QUERY_CACHE |
-      net::MDnsTransaction::QUERY_NETWORK,
+          net::MDnsTransaction::QUERY_NETWORK,
       base::Bind(&ServiceResolverImpl::TxtRecordTransactionResponse,
-                 AsWeakPtr()));
+                 AsWeakPtr()),
+      NO_TRAFFIC_ANNOTATION_BUG_656607);
   return txt_transaction_->Start();
 }
 
 // TODO(noamsml): quick-resolve for AAAA records.  Since A records tend to be in
 void ServiceResolverImpl::CreateATransaction() {
   a_transaction_ = mdns_client_->CreateTransaction(
-      net::dns_protocol::kTypeA,
-      service_staging_.address.host(),
+      net::dns_protocol::kTypeA, service_staging_.address.host(),
       net::MDnsTransaction::SINGLE_RESULT | net::MDnsTransaction::QUERY_CACHE,
-      base::Bind(&ServiceResolverImpl::ARecordTransactionResponse,
-                 AsWeakPtr()));
+      base::Bind(&ServiceResolverImpl::ARecordTransactionResponse, AsWeakPtr()),
+      NO_TRAFFIC_ANNOTATION_BUG_656607);
   a_transaction_->Start();
 }
 
@@ -371,9 +383,10 @@ bool ServiceResolverImpl::CreateSrvTransaction() {
   srv_transaction_ = mdns_client_->CreateTransaction(
       net::dns_protocol::kTypeSRV, service_name_,
       net::MDnsTransaction::SINGLE_RESULT | net::MDnsTransaction::QUERY_CACHE |
-      net::MDnsTransaction::QUERY_NETWORK,
+          net::MDnsTransaction::QUERY_NETWORK,
       base::Bind(&ServiceResolverImpl::SrvRecordTransactionResponse,
-                 AsWeakPtr()));
+                 AsWeakPtr()),
+      NO_TRAFFIC_ANNOTATION_BUG_656607);
   return srv_transaction_->Start();
 }
 
@@ -510,11 +523,12 @@ void LocalDomainResolverImpl::Start() {
 std::unique_ptr<net::MDnsTransaction>
 LocalDomainResolverImpl::CreateTransaction(uint16_t type) {
   return mdns_client_->CreateTransaction(
-      type, domain_, net::MDnsTransaction::SINGLE_RESULT |
-                     net::MDnsTransaction::QUERY_CACHE |
-                     net::MDnsTransaction::QUERY_NETWORK,
+      type, domain_,
+      net::MDnsTransaction::SINGLE_RESULT | net::MDnsTransaction::QUERY_CACHE |
+          net::MDnsTransaction::QUERY_NETWORK,
       base::Bind(&LocalDomainResolverImpl::OnTransactionComplete,
-                 base::Unretained(this)));
+                 base::Unretained(this)),
+      NO_TRAFFIC_ANNOTATION_BUG_656607);
 }
 
 void LocalDomainResolverImpl::OnTransactionComplete(
