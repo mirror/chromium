@@ -36,6 +36,47 @@
     },
     {
       "key": {
+        "uuid": "e2af1f06_4a4b2cff",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 498,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-12-19T11:00:19Z",
+      "side": 1,
+      "message": "We still need picture_in_picture_button_ in the new media controls but UpdateOverflowMenuWanted() will make sure it is only present on the overflow menu. We might want to check IsHTMLVideoElement() here though unless PIP supports audio elements.",
+      "parentUuid": "1cbfb4eb_240910f8",
+      "revId": "44bef33410ed7a838d3e6ff155885a6f7e9a19bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11a1c89e_ba5bff4c",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 919,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-12-19T11:00:19Z",
+      "side": 1,
+      "message": "I think you might want to move this below duration_display_ and make it false as we don\u0027t want to always show it.",
+      "range": {
+        "startLine": 918,
+        "startChar": 6,
+        "endLine": 919,
+        "endChar": 0
+      },
+      "revId": "44bef33410ed7a838d3e6ff155885a6f7e9a19bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e4db8f04_afca9806",
         "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlPictureInPictureButtonElement.cpp",
         "patchSetId": 3
@@ -64,6 +105,24 @@
       "writtenOn": "2017-12-19T10:45:48Z",
       "side": 1,
       "message": "We would need to add an svg file and update the other stylesheet for the \"modern\" controls.",
+      "revId": "44bef33410ed7a838d3e6ff155885a6f7e9a19bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e170b39_a4557da5",
+        "filename": "third_party/WebKit/Source/modules/media_controls/resources/legacyMediaControls.css",
+        "patchSetId": 3
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-12-19T11:00:19Z",
+      "side": 1,
+      "message": "There is currently an issue with the svg icons so the previous CL to add them was reverted.",
+      "parentUuid": "3e182d7d_5b8a7ea9",
       "revId": "44bef33410ed7a838d3e6ff155885a6f7e9a19bf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
