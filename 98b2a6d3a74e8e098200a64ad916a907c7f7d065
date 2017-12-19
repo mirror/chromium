@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "50771c59_eff77bf4",
+        "filename": "ios/chrome/app/resources/Info.plist",
+        "patchSetId": 2
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-12-19T08:49:45Z",
+      "side": 0,
+      "message": "I a bit concerned that removing this can cause issues when calling setMinimumBackgroundFetchInterval, even if the only value we use is Never.\n\nCan you remove\nMinimal:\nhttps://cs.chromium.org/chromium/src/ios/chrome/app/application_delegate/app_state.mm?q\u003dsetMinimumBackgroundFetchInterval\u0026sq\u003dpackage:chromium\u0026dr\u003dC\u0026l\u003d255\nhttps://cs.chromium.org/chromium/src/ios/chrome/app/application_delegate/metrics_mediator.mm?q\u003dsetMinimumBackgroundFetchInterval\u0026sq\u003dpackage:chromium\u0026dr\u003dC\u0026l\u003d224\n\nProbably:\nhttps://cs.chromium.org/chromium/src/ios/chrome/app/application_delegate/background_activity.mm?q\u003dsetMinimumBackgroundFetchInterval\u0026sq\u003dpackage:chromium\u0026dr\u003dC\u0026l\u003d40",
+      "range": {
+        "startLine": 88,
+        "startChar": 10,
+        "endLine": 88,
+        "endChar": 15
+      },
+      "revId": "98b2a6d3a74e8e098200a64ad916a907c7f7d065",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
