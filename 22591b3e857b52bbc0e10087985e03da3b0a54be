@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "922e2430_c8ee160d",
+        "filename": "components/arc/test/fake_timer_instance.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-12-19T17:29:11Z",
+      "side": 1,
+      "message": "emplace_back(). Keep the std::move, though.",
+      "range": {
+        "startLine": 75,
+        "startChar": 23,
+        "endLine": 75,
+        "endChar": 32
+      },
+      "revId": "22591b3e857b52bbc0e10087985e03da3b0a54be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a72d4d1_afac8a1c",
+        "filename": "components/arc/test/fake_timer_instance.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-12-19T17:29:11Z",
+      "side": 1,
+      "message": "nit: |responses| (or drop the alias and use |result.value()| consistently).",
+      "range": {
+        "startLine": 172,
+        "startChar": 24,
+        "endLine": 172,
+        "endChar": 38
+      },
+      "revId": "22591b3e857b52bbc0e10087985e03da3b0a54be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec827cfc_5ecef7c4",
+        "filename": "components/arc/timer/arc_timer.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-12-19T17:29:11Z",
+      "side": 1,
+      "message": "This doesn\u0027t seem to be used anymore.",
+      "range": {
+        "startLine": 23,
+        "startChar": 6,
+        "endLine": 23,
+        "endChar": 19
+      },
+      "revId": "22591b3e857b52bbc0e10087985e03da3b0a54be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b04ce6ac_d5ec573b",
+        "filename": "components/arc/timer/arc_timer_bridge.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-12-19T17:29:11Z",
+      "side": 1,
+      "message": "It\u0027s better to not override it if it\u0027s not going to do anything.",
+      "range": {
+        "startLine": 80,
+        "startChar": 0,
+        "endLine": 80,
+        "endChar": 43
+      },
+      "revId": "22591b3e857b52bbc0e10087985e03da3b0a54be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "655301e6_8fc53792",
+        "filename": "components/arc/timer/arc_timer_bridge.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-12-19T17:29:11Z",
+      "side": 1,
+      "message": "Can this be in the anonymous namespace since it\u0027s static and does not access any static members of this class?",
+      "range": {
+        "startLine": 134,
+        "startChar": 16,
+        "endLine": 134,
+        "endChar": 31
+      },
+      "revId": "22591b3e857b52bbc0e10087985e03da3b0a54be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb3cc92c_9ba07d9f",
+        "filename": "components/arc/timer/arc_timer_bridge.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-12-19T17:29:11Z",
+      "side": 1,
+      "message": "Can you avoid this temporary?",
+      "range": {
+        "startLine": 204,
+        "startChar": 0,
+        "endLine": 205,
+        "endChar": 39
+      },
+      "revId": "22591b3e857b52bbc0e10087985e03da3b0a54be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f658904_5a0b5bc2",
+        "filename": "components/arc/timer/arc_timer_bridge.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-12-19T17:29:11Z",
+      "side": 1,
+      "message": "nit: timer_task_runner_",
+      "range": {
+        "startLine": 65,
+        "startChar": 9,
+        "endLine": 65,
+        "endChar": 27
+      },
+      "revId": "22591b3e857b52bbc0e10087985e03da3b0a54be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbc99c02_a63213fb",
+        "filename": "components/arc/timer/arc_timer_bridge_unittest.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-12-19T17:29:11Z",
+      "side": 1,
+      "message": "You don\u0027t need these to be std::unique_ptrs, since you\u0027re creating them in the ctor. Regular value types suffice here.",
+      "range": {
+        "startLine": 52,
+        "startChar": 2,
+        "endLine": 52,
+        "endChar": 18
+      },
+      "revId": "22591b3e857b52bbc0e10087985e03da3b0a54be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d972ae94_20ff7931",
+        "filename": "components/arc/timer/create_timer_request.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-12-19T17:29:11Z",
+      "side": 1,
+      "message": "nit: DISALLOW_COPY_AND_ASSIGN(CreateTimerRequest);\n\nI know this is being done implicitly due to base::ScopedFD being non-copyable, non-assignable, but let\u0027s make it explicit.",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 21,
+        "endChar": 1
+      },
+      "revId": "22591b3e857b52bbc0e10087985e03da3b0a54be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
