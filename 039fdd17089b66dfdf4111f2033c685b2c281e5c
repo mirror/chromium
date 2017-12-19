@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d1dbd2a1_ca1b9c3e",
+        "filename": "chrome/browser/ui/views/overlay/overlay_window_views.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-12-19T10:57:07Z",
+      "side": 1,
+      "message": "That\u0027s obviously fine for now but we will have to think about how to all the user to resize the window without having access to the system chrome.",
+      "revId": "039fdd17089b66dfdf4111f2033c685b2c281e5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33321b9e_24911b5e",
+        "filename": "chrome/browser/ui/views/overlay/overlay_window_views.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-12-19T10:57:07Z",
+      "side": 1,
+      "message": "Should this ultimately use the display of the initiating WebContents? Would it make sense to add a TODO?",
+      "range": {
+        "startLine": 62,
+        "startChar": 36,
+        "endLine": 62,
+        "endChar": 53
+      },
+      "revId": "039fdd17089b66dfdf4111f2033c685b2c281e5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
