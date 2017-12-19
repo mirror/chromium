@@ -2,6 +2,69 @@
   "comments": [
     {
       "key": {
+        "uuid": "4daefab0_5364af53",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SignInPromo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-12-19T18:39:21Z",
+      "side": 1,
+      "message": "@VisibleForTesting?",
+      "revId": "eeb81907937f3651005ad5ec59700e92686f9e86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fa45c0c_dac356b7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SignInPromo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-12-19T18:39:21Z",
+      "side": 1,
+      "message": "Just to be on the safe side, create the Handler with ThreadUtils.getUiThreadLooper()?",
+      "range": {
+        "startLine": 100,
+        "startChar": 41,
+        "endLine": 100,
+        "endChar": 50
+      },
+      "revId": "eeb81907937f3651005ad5ec59700e92686f9e86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a9346ac_40e41541",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SignInPromo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-12-19T18:39:21Z",
+      "side": 1,
+      "message": "Hm, suppressing promos doesn\u0027t affect existing promos, but the suppression expiring will? I think we could simplify the implementation by a good amount if we didn\u0027t require that. (And it would only make a difference if the SigninPromo stays around for more than 24h)",
+      "range": {
+        "startLine": 148,
+        "startChar": 81,
+        "endLine": 149,
+        "endChar": 55
+      },
+      "revId": "eeb81907937f3651005ad5ec59700e92686f9e86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8d8bf8da_6e7a9f53",
         "filename": "chrome/android/junit/src/org/chromium/chrome/browser/ntp/cards/NewTabPageAdapterTest.java",
         "patchSetId": 1
