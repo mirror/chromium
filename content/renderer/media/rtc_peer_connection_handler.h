@@ -153,6 +153,8 @@ class CONTENT_EXPORT RTCPeerConnectionHandler
       const blink::WebMediaStreamTrack& web_track,
       const blink::WebVector<blink::WebMediaStream>& web_streams) override;
   bool RemoveTrack(blink::WebRTCRtpSender* web_sender) override;
+  bool ReplaceTrack(blink::WebRTCRtpSender* web_sender,
+                    const blink::WebMediaStreamTrack& web_track) override;
 
   blink::WebRTCDataChannelHandler* CreateDataChannel(
       const blink::WebString& label,

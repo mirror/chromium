@@ -1928,6 +1928,22 @@ bool RTCPeerConnectionHandler::RemoveTrack(blink::WebRTCRtpSender* web_sender) {
   return true;
 }
 
+bool RTCPeerConnectionHandler::ReplaceTrack(
+    blink::WebRTCRtpSender* web_sender,
+    const blink::WebMediaStreamTrack& web_track) {
+  DCHECK(thread_checker_.CalledOnValidThread());
+  auto it = rtp_senders_.find(web_sender->Id());
+  if (it == rtp_senders_.end())
+    return false;
+  std::unique_ptr<WebRtcMediaStreamTrackAdapterMap::AdapterRef> track_ref;
+  if (!web_track.IsNull()) {
+    track_ref = track_adapter_map_->GetOrCreateLocalTrackAdapter(web_track);
+    DCHECK(track_ref->is_initialized());
+  }
+  return false;
+  // return it->second->ReplaceTrack(web_track);
+}
+
 void RTCPeerConnectionHandler::CloseClientPeerConnection() {
   DCHECK(thread_checker_.CalledOnValidThread());
   if (!is_closed_)
