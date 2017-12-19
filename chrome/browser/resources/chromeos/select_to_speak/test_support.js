@@ -24,6 +24,7 @@ chrome.automation.RoleType = {
   INLINE_TEXT_BOX: 'inlineTextBox',
   PARAGRAPH: 'paragraph'
 };
+var RoleType = chrome.automation.RoleType;
 
 chrome.automation.StateType = {
   INVISIBLE: 'invisible'

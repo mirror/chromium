@@ -26,7 +26,10 @@ run_jsbundler("select_to_speak_copied_files") {
   mode = "copy"
   dest_dir = select_to_speak_out_dir
   sources = [
+    "automation_predicate.js",
+    "automation_util.js",
     "checked.png",
+    "constants.js",
     "options.css",
     "options.html",
     "paragraph_utils.js",
@@ -34,6 +37,7 @@ run_jsbundler("select_to_speak_copied_files") {
     "select_to_speak_gdocs_script.js",
     "select_to_speak_main.js",
     "select_to_speak_options.js",
+    "tree_walker.js",
     "unchecked.png",
   ]
   rewrite_rules = [
