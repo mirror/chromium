@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f91129f6_c26b0b40",
+        "filename": "third_party/WebKit/Source/core/input/EventHandler.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-12-19T18:31:03Z",
+      "side": 1,
+      "message": "I think the UpdatePointerTargetAndDispatchEvents seems like a better name since it does dispatch multiple events and not a single one. Should we revert it back to the original name given that it does dispatch the boundary events?",
+      "revId": "075373fd9b17c2edbe91e339cd4045486b158ff2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
