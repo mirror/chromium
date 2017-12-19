@@ -16,6 +16,24 @@
       "revId": "95b98e4fb0d37cbd891274bc93bfd58dba4bf9bd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07225fbd_676c9b4f",
+        "filename": "components/omnibox/browser/clipboard_url_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-12-19T19:53:58Z",
+      "side": 1,
+      "message": "I agree with your intuition. I changed it and updated the comment.\n\nWe can always change it back if anyone complains.",
+      "parentUuid": "26589174_0e5660f8",
+      "revId": "95b98e4fb0d37cbd891274bc93bfd58dba4bf9bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
