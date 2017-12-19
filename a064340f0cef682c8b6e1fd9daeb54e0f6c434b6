@@ -16,6 +16,24 @@
       "revId": "a064340f0cef682c8b6e1fd9daeb54e0f6c434b6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "971addf5_a135bb31",
+        "filename": "ash/utility/screenshot_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-19T17:02:23Z",
+      "side": 1,
+      "message": "Per offline conversation, this is not needed.",
+      "parentUuid": "a5280f9b_f0ffe53d",
+      "revId": "a064340f0cef682c8b6e1fd9daeb54e0f6c434b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
