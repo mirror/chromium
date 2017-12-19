@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c361bac5_4aa53e33",
+        "filename": "base/test/launcher/test_results_tracker.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 450,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-12-19T22:13:06Z",
+      "side": 1,
+      "message": "nit: This isn\u0027t really about running in a VM, but about whether the platform ensures synchronization of data to persistent storage before shutdown. Alternatively, you might think of this in terms of ensuring that the results data is persisted at this point, no matter what might happen to the OS afterward.",
+      "range": {
+        "startLine": 449,
+        "startChar": 56,
+        "endLine": 450,
+        "endChar": 52
+      },
+      "revId": "d3377cdb0c0e6089085b7fbb22a94df4a51bae33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4ae5888_f6da6ce2",
+        "filename": "base/test/launcher/test_results_tracker.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-12-19T22:13:06Z",
+      "side": 1,
+      "message": "Use base::File here, so you don\u0027t have to manually close() it, and you can call Flush(), which is implemented on all platforms, including Windows?",
+      "range": {
+        "startLine": 451,
+        "startChar": 3,
+        "endLine": 451,
+        "endChar": 48
+      },
+      "revId": "d3377cdb0c0e6089085b7fbb22a94df4a51bae33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
