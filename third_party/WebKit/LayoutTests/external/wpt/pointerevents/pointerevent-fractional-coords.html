@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Pointer events have fractional coordinates</title>
+    <script src="/resources/testharness.js"></script>
+    <script src="/resources/testharnessreport.js"></script>
+    <script src="/resources/testdriver.js"></script>
+    <script src="/resources/testdriver-vendor.js"></script>
+  </head>
+
+<style>
+div {
+  width: 15px;
+  height: 15px;
+  margin-left: 100px;
+  margin-top: 100px;
+  background: #13b4ff;
+}
+</style>
+
+<body>
+<div id="target"></div>
+<div id="finish"></div>
+</body>
+<script>
+async_test(function(t) {
+    const target = document.getElementById("target");
+    const finish = document.getElementById("finish");
+    const expected_x = target.offsetLeft + target.offsetWidth / 2;
+    const expected_y = target.offsetTop + target.offsetHeight / 2;
+
+    const eventList = ["pointerover", "pointerenter", "pointermove", "pointerdown", "pointerup", "pointerout","pointerleave"];
+    const eventLogRecorder = [];
+
+    eventList.forEach(eventName => {
+      target.addEventListener(eventName, t.step_func(event => {
+        assert_not_equals(event.clientX, Math.floor(event.clientX));
+        assert_not_equals(event.clientY, Math.floor(event.clientY));
+        eventLogRecorder.push(`${event.type}`);
+      }));
+    });
+
+    finish.addEventListener("click", t.step_func(event => {
+      assert_array_equals(eventLogRecorder, eventList, `Expected: ${eventList}. Actual: ${eventLogRecorder}.`);
+      t.done();
+    }));
+
+    test_driver.click(target);
+    test_driver.click(finish);
+
+});
+</script>
+</html>
