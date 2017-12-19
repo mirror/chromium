@@ -11,9 +11,16 @@
 #include <vector>
 
 #include "ash/public/cpp/ash_switches.h"
+#include "ash/public/cpp/mus_property_mirror_ash.h"
 #include "ash/public/cpp/shelf_model.h"
+#include "ash/public/cpp/window_pin_type.h"
+#include "ash/public/cpp/window_properties.h"
+#include "ash/public/cpp/window_state_type.h"
 #include "ash/public/interfaces/constants.mojom.h"
 #include "ash/public/interfaces/process_creation_time_recorder.mojom.h"
+#include "ash/public/interfaces/window_pin_type.mojom.h"
+#include "ash/public/interfaces/window_properties.mojom.h"
+#include "ash/public/interfaces/window_state_type.mojom.h"
 #include "ash/root_window_controller.h"
 #include "ash/shell.h"
 #include "ash/sticky_keys/sticky_keys_controller.h"
@@ -112,9 +119,21 @@
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/profiles/profile_manager.h"
 #include "chrome/browser/task_manager/task_manager_interface.h"
+#include "chrome/browser/ui/ash/accessibility/accessibility_controller_client.h"
+#include "chrome/browser/ui/ash/ash_init.h"
 #include "chrome/browser/ui/ash/ash_util.h"
+#include "chrome/browser/ui/ash/cast_config_client_media_router.h"
+#include "chrome/browser/ui/ash/chrome_new_window_client.h"
+#include "chrome/browser/ui/ash/chrome_shell_content_state.h"
+#include "chrome/browser/ui/ash/ime_controller_client.h"
 #include "chrome/browser/ui/ash/launcher/chrome_launcher_controller.h"
+#include "chrome/browser/ui/ash/login_screen_client.h"
+#include "chrome/browser/ui/ash/media_client.h"
+#include "chrome/browser/ui/ash/session_controller_client.h"
+#include "chrome/browser/ui/ash/system_tray_client.h"
 #include "chrome/browser/ui/ash/tablet_mode_client.h"
+#include "chrome/browser/ui/ash/volume_controller.h"
+#include "chrome/browser/ui/ash/vpn_list_forwarder.h"
 #include "chrome/browser/ui/ash/wallpaper_controller_client.h"
 #include "chrome/common/channel_info.h"
 #include "chrome/common/chrome_constants.h"
@@ -185,19 +204,32 @@
 #include "printing/backend/print_backend.h"
 #include "rlz/features/features.h"
 #include "services/service_manager/public/cpp/connector.h"
+#include "services/ui/public/interfaces/constants.mojom.h"
+#include "services/ui/public/interfaces/user_activity_monitor.mojom.h"
 #include "third_party/cros_system_api/dbus/service_constants.h"
+#include "ui/aura/mus/property_converter.h"
+#include "ui/aura/mus/user_activity_forwarder.h"
+#include "ui/aura/mus/window_tree_client_delegate.h"
 #include "ui/base/ime/chromeos/ime_keyboard.h"
 #include "ui/base/ime/chromeos/input_method_manager.h"
 #include "ui/base/ime/chromeos/input_method_util.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/touch/touch_device.h"
+#include "ui/base/user_activity/user_activity_detector.h"
 #include "ui/chromeos/events/event_rewriter_chromeos.h"
 #include "ui/chromeos/events/pref_names.h"
 #include "ui/events/event_utils.h"
+#include "ui/keyboard/content/keyboard.h"
+#include "ui/keyboard/keyboard_controller.h"
 #include "ui/message_center/message_center.h"
+#include "ui/views/mus/mus_client.h"
 
 #if BUILDFLAG(ENABLE_RLZ)
 #include "components/rlz/rlz_tracker.h"
+#endif
+
+#if BUILDFLAG(ENABLE_WAYLAND_SERVER)
+#include "chrome/browser/exo_parts.h"
 #endif
 
 namespace chromeos {
@@ -281,6 +313,44 @@ void PushProcessCreationTimeToAsh() {
   DCHECK(!startup_metric_utils::MainEntryPointTicks().is_null());
   recorder->SetMainProcessCreationTime(
       startup_metric_utils::MainEntryPointTicks());
+}
+
+void RegisterMusWindowProperties() {
+  // Register ash-specific window properties with Chrome's property converter.
+  // This propagates ash properties set on chrome windows to ash, via mojo.
+  DCHECK(views::MusClient::Exists());
+  views::MusClient* mus_client = views::MusClient::Get();
+  aura::WindowTreeClientDelegate* delegate = mus_client;
+  aura::PropertyConverter* converter = delegate->GetPropertyConverter();
+
+  converter->RegisterPrimitiveProperty(
+      ash::kCanConsumeSystemKeysKey, ash::mojom::kCanConsumeSystemKeys_Property,
+      aura::PropertyConverter::CreateAcceptAnyValueCallback());
+  converter->RegisterPrimitiveProperty(
+      ash::kHideShelfWhenFullscreenKey,
+      ash::mojom::kHideShelfWhenFullscreen_Property,
+      aura::PropertyConverter::CreateAcceptAnyValueCallback());
+  converter->RegisterPrimitiveProperty(
+      ash::kPanelAttachedKey, ui::mojom::WindowManager::kPanelAttached_Property,
+      aura::PropertyConverter::CreateAcceptAnyValueCallback());
+  converter->RegisterPrimitiveProperty(
+      ash::kShelfItemTypeKey, ui::mojom::WindowManager::kShelfItemType_Property,
+      base::BindRepeating(&ash::IsValidShelfItemType));
+  converter->RegisterPrimitiveProperty(
+      ash::kWindowStateTypeKey, ash::mojom::kWindowStateType_Property,
+      base::BindRepeating(&ash::IsValidWindowStateType));
+  converter->RegisterPrimitiveProperty(
+      ash::kWindowPinTypeKey, ash::mojom::kWindowPinType_Property,
+      base::BindRepeating(&ash::IsValidWindowPinType));
+  converter->RegisterPrimitiveProperty(
+      ash::kWindowPositionManagedTypeKey,
+      ash::mojom::kWindowPositionManaged_Property,
+      aura::PropertyConverter::CreateAcceptAnyValueCallback());
+  converter->RegisterStringProperty(
+      ash::kShelfIDKey, ui::mojom::WindowManager::kShelfID_Property);
+
+  mus_client->SetMusPropertyMirror(
+      std::make_unique<ash::MusPropertyMirrorAsh>());
 }
 
 }  // namespace
@@ -616,6 +686,95 @@ class SystemTokenCertDBInitializer {
   base::WeakPtrFactory<SystemTokenCertDBInitializer> weak_ptr_factory_;
 };
 
+class MashServices {
+ public:
+  // Constructed in PreProfileInit.
+  MashServices() {
+    // Enterprise support in the browser can monitor user activity. Connect to
+    // the UI service to monitor activity. The ash process has its own monitor.
+    user_activity_detector_ = std::make_unique<ui::UserActivityDetector>();
+    ui::mojom::UserActivityMonitorPtr user_activity_monitor;
+    content::ServiceManagerConnection::GetForProcess()
+        ->GetConnector()
+        ->BindInterface(ui::mojom::kServiceName, &user_activity_monitor);
+    user_activity_forwarder_ = std::make_unique<aura::UserActivityForwarder>(
+        std::move(user_activity_monitor), user_activity_detector_.get());
+  }
+
+  void PostProfileInit() {
+    chrome_shell_content_state_ = base::MakeUnique<ChromeShellContentState>();
+  }
+
+  // Destroyed in PostMainMessageLoopRun.
+  ~MashServices() {
+    chrome_shell_content_state_.reset();
+    user_activity_forwarder_.reset();
+    user_activity_detector_.reset();
+  }
+
+ private:
+  std::unique_ptr<ui::UserActivityDetector> user_activity_detector_;
+  std::unique_ptr<aura::UserActivityForwarder> user_activity_forwarder_;
+  std::unique_ptr<ChromeShellContentState> chrome_shell_content_state_;
+
+  DISALLOW_COPY_AND_ASSIGN(MashServices);
+};
+
+class AshClients {
+ public:
+  // Constructed in PreProfileInit.
+  AshClients() {
+    session_controller_client_ = std::make_unique<SessionControllerClient>();
+    session_controller_client_->Init();
+    accessibility_controller_client_ =
+        std::make_unique<AccessibilityControllerClient>();
+    accessibility_controller_client_->Init();
+    system_tray_client_ = std::make_unique<SystemTrayClient>();
+    ime_controller_client_ = std::make_unique<ImeControllerClient>(
+        chromeos::input_method::InputMethodManager::Get());
+    ime_controller_client_->Init();
+    new_window_client_ = std::make_unique<ChromeNewWindowClient>();
+    volume_controller_ = std::make_unique<VolumeController>();
+    vpn_list_forwarder_ = std::make_unique<VpnListForwarder>();
+  }
+
+  void PostProfileInit() {
+    cast_config_client_media_router_ =
+        base::MakeUnique<CastConfigClientMediaRouter>();
+    media_client_ = base::MakeUnique<MediaClient>();
+    login_screen_client_ = base::MakeUnique<LoginScreenClient>();
+  }
+
+  // Destroyed in PostMainMessageLoopRun.
+  ~AshClients() {
+    login_screen_client_.reset();
+    media_client_.reset();
+    cast_config_client_media_router_.reset();
+    vpn_list_forwarder_.reset();
+    volume_controller_.reset();
+    new_window_client_.reset();
+    ime_controller_client_.reset();
+    system_tray_client_.reset();
+    accessibility_controller_client_.reset();
+    session_controller_client_.reset();
+  }
+
+ private:
+  std::unique_ptr<SessionControllerClient> session_controller_client_;
+  std::unique_ptr<AccessibilityControllerClient>
+      accessibility_controller_client_;
+  std::unique_ptr<SystemTrayClient> system_tray_client_;
+  std::unique_ptr<ImeControllerClient> ime_controller_client_;
+  std::unique_ptr<ChromeNewWindowClient> new_window_client_;
+  std::unique_ptr<VolumeController> volume_controller_;
+  std::unique_ptr<VpnListForwarder> vpn_list_forwarder_;
+  std::unique_ptr<CastConfigClientMediaRouter> cast_config_client_media_router_;
+  std::unique_ptr<MediaClient> media_client_;
+  std::unique_ptr<LoginScreenClient> login_screen_client_;
+
+  DISALLOW_COPY_AND_ASSIGN(AshClients);
+};
+
 }  //  namespace internal
 
 // ChromeBrowserMainPartsChromeos ----------------------------------------------
@@ -708,6 +867,11 @@ void ChromeBrowserMainPartsChromeos::ServiceManagerConnectionStarted(
     content::ServiceManagerConnection* connection) {
   ChromeBrowserMainPartsLinux::ServiceManagerConnectionStarted(connection);
   dbus_services_->ServiceManagerConnectionStarted(connection);
+  if (ash_util::IsRunningInMash()) {
+    // ash::Shell will not be created because ash is running out-of-process.
+    ash::Shell::SetIsBrowserProcessWithMash();
+    RegisterMusWindowProperties();
+  }
 }
 
 // Threads are initialized between MainMessageLoopStart and MainMessageLoopRun.
@@ -855,8 +1019,27 @@ void ChromeBrowserMainPartsChromeos::PreProfileInit() {
 
   arc_kiosk_app_manager_.reset(new ArcKioskAppManager());
 
-  // NOTE: Initializes ash::Shell.
   ChromeBrowserMainPartsLinux::PreProfileInit();
+
+  if (ash_util::ShouldOpenAshOnStartup()) {
+    // Constructs the Ash shell.
+    ash_init_ = std::make_unique<AshInit>();
+  }
+
+  if (ash_util::IsRunningInMash())
+    mash_services_.reset(new internal::MashServices);
+
+  // Clients required for login screen, initialize before profile.
+  ash_clients_.reset(new internal::AshClients);
+
+  // For OS_CHROMEOS, virtual keyboard needs to be initialized before profile
+  // initialized. Otherwise, virtual keyboard extension will not load at login
+  // screen.
+  keyboard::InitializeKeyboard();
+
+#if BUILDFLAG(ENABLE_WAYLAND_SERVER)
+  exo_parts_ = ExoParts::CreateIfNecessary();
+#endif
 
   PushProcessCreationTimeToAsh();
 
@@ -1059,6 +1242,19 @@ void ChromeBrowserMainPartsChromeos::PostProfileInit() {
     low_disk_notification_ = base::MakeUnique<LowDiskNotification>();
 
   ChromeBrowserMainPartsLinux::PostProfileInit();
+
+  if (ash_util::IsRunningInMash())
+    mash_services_->PostProfileInit();
+
+  ash_clients_->PostProfileInit();
+
+  // TODO(mash): Port keyboard activation. http://crbug.com/796365.
+  if (!ash_util::IsRunningInMash()) {
+    // Activate virtual keyboard after profile is initialized. It depends on the
+    // default profile.
+    ash::Shell::GetPrimaryRootWindowController()->ActivateKeyboard(
+        keyboard::KeyboardController::GetInstance());
+  }
 }
 
 void ChromeBrowserMainPartsChromeos::PreBrowserStart() {
@@ -1227,7 +1423,19 @@ void ChromeBrowserMainPartsChromeos::PostMainMessageLoopRun() {
   // Close the notification client before destroying the profile manager.
   notification_client_.reset();
 
-  // NOTE: Closes ash and destroys ash::Shell.
+#if BUILDFLAG(ENABLE_WAYLAND_SERVER)
+  // ExoParts uses state from ash, delete it before the Ash shell so that exo
+  // can uninstall correctly.
+  exo_parts_.reset();
+#endif
+
+  ash_clients_.reset();
+  mash_services_.reset();
+
+  // Destructs the Ash shell.
+  ash_init_.reset();
+
+  // This will destroy Profiles in browser_process_->StartTearDown().
   ChromeBrowserMainPartsLinux::PostMainMessageLoopRun();
 
   // Some observers (e.g. SigninScreenHandler) may not be removed until Ash is
