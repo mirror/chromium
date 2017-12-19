@@ -16,6 +16,24 @@
       "revId": "ee06df306de8f56480562ab4031dca30c3db5f61",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b68220a4_78545c5b",
+        "filename": "components/arc/common/video_decode_accelerator.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2017-12-19T07:17:23Z",
+      "side": 1,
+      "message": "After we switching the format, the deprecated one could be removed. So, we don\u0027t actually need the backward compatibility.",
+      "parentUuid": "fb09080c_05c054af",
+      "revId": "ee06df306de8f56480562ab4031dca30c3db5f61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
