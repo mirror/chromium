@@ -22,7 +22,12 @@ import org.chromium.net.ConnectionType;
  */
 @JNINamespace("offline_pages::prefetch")
 public class PrefetchBackgroundTask extends NativeBackgroundTask {
+    /** Key used in the extra data {@link Bundle} when the limitless flag is enabled. */
+    public static final String LIMITLESS_BUNDLE_KEY = "limitlessPrefetching";
+
     private static final int MINIMUM_BATTERY_PERCENTAGE_FOR_PREFETCHING = 50;
+    private static final int MINIMUM_BATTERY_PERCENTAGE_FOR_LIMITLESS_PREFETCHING = 15;
+
     private static boolean sSkipConditionCheckingForTesting = false;
 
     private long mNativeTask = 0;
@@ -33,6 +38,8 @@ public class PrefetchBackgroundTask extends NativeBackgroundTask {
     // Defaults to true so that we are rescheduled automatically if somehow we were unable to start
     // up native.
     private boolean mCachedRescheduleResult = true;
+    // True when limitless prefetching is enabled.
+    private boolean mLimitlessPrefetching = false;
 
     public PrefetchBackgroundTask() {}
 
@@ -52,6 +59,7 @@ public class PrefetchBackgroundTask extends NativeBackgroundTask {
         // TODO(dewittj): * Preferences enabled.
 
         mTaskFinishedCallback = callback;
+        mLimitlessPrefetching = taskParameters.getExtras().getBoolean(LIMITLESS_BUNDLE_KEY);
 
         if (sSkipConditionCheckingForTesting) return NativeBackgroundTask.LOAD_NATIVE;
 
@@ -103,7 +111,7 @@ public class PrefetchBackgroundTask extends NativeBackgroundTask {
     @Override
     public void reschedule(Context context) {
         // TODO(dewittj): Set the backoff time appropriately.
-        PrefetchBackgroundTaskScheduler.scheduleTask(0);
+        PrefetchBackgroundTaskScheduler.scheduleTask(0, mLimitlessPrefetching);
     }
 
     /**
@@ -130,15 +138,20 @@ public class PrefetchBackgroundTask extends NativeBackgroundTask {
     }
 
     /** Whether battery conditions (on power or enough battery percentage) are met. */
-    private static boolean areBatteryConditionsMet(DeviceConditions deviceConditions) {
+    private boolean areBatteryConditionsMet(DeviceConditions deviceConditions) {
         return deviceConditions.isPowerConnected()
                 || (deviceConditions.getBatteryPercentage()
-                           >= MINIMUM_BATTERY_PERCENTAGE_FOR_PREFETCHING);
+                           >= MINIMUM_BATTERY_PERCENTAGE_FOR_PREFETCHING)
+                || (mLimitlessPrefetching
+                           && deviceConditions.getBatteryPercentage()
+                                   >= MINIMUM_BATTERY_PERCENTAGE_FOR_LIMITLESS_PREFETCHING);
     }
 
     /** Whether network conditions are met. */
-    private static boolean areNetworkConditionsMet(
-            Context context, DeviceConditions deviceConditions) {
+    private boolean areNetworkConditionsMet(Context context, DeviceConditions deviceConditions) {
+        if (mLimitlessPrefetching) {
+            return deviceConditions.getNetConnectionType() != ConnectionType.CONNECTION_NONE;
+        }
         return !DeviceConditions.isActiveNetworkMetered(context)
                 && deviceConditions.getNetConnectionType() == ConnectionType.CONNECTION_WIFI;
     }
