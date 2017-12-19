@@ -13,6 +13,13 @@ test(() => {
 }, "location : unpaired surrogate codepoint should be replaced with U+FFFD");
 
 test(() => {
+  var w = window.open("data:text/html,<span>\ud801 is an unpaired surrogate codepoint</span>");
+  // w should be a window object in case of url as USVString type, otherwise in case of DOMString type
+  // javascript execution stops after throwing syntax error "Unable to open a window with invalid URL".
+  assert_equals(typeof(w), 'object', 'w should be a window object');
+}, "window.open : unpaired surrogate codepoint should be replaced with U+FFFD");
+
+test(() => {
   var element = document.createElement("a");
   element.ping = '\uD989';
   assert_equals(element.ping, '\uFFFD');
