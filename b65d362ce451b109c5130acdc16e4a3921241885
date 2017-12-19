@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a80b3282_95692eb3",
+        "filename": "chrome/browser/page_load_metrics/observers/no_state_prefetch_page_load_metrics_observer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-12-19T15:19:32Z",
+      "side": 1,
+      "message": "Nope, removed.",
+      "parentUuid": "22ad5100_37786ae5",
+      "revId": "b65d362ce451b109c5130acdc16e4a3921241885",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "df768aac_2fc545a5",
         "filename": "chrome/browser/page_load_metrics/observers/prerender_page_load_metrics_observer.cc",
         "patchSetId": 5
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "6035b4f7_d571af49",
+        "filename": "chrome/browser/page_load_metrics/observers/prerender_page_load_metrics_observer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-12-19T15:19:32Z",
+      "side": 1,
+      "message": "Nope, removed.",
+      "parentUuid": "df768aac_2fc545a5",
+      "revId": "b65d362ce451b109c5130acdc16e4a3921241885",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a774d08_ade19923",
         "filename": "chrome/browser/page_load_metrics/page_load_metrics_initialize.cc",
         "patchSetId": 5
@@ -47,6 +83,24 @@
       "writtenOn": "2017-12-17T02:21:24Z",
       "side": 1,
       "message": "i think this changes behavior slightly - iirc PageLoadTracker only gets constructed for tracked loads (http/https, etc) whereas at this point we\u0027ll be recording this for untracked loads as well. am i remembering correctly? i\u0027d prefer to avoid recording this histogram for untracked loads since it is then not comparable to other histograms that count tracked loads.",
+      "revId": "b65d362ce451b109c5130acdc16e4a3921241885",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84d9400e_782b48ba",
+        "filename": "chrome/browser/page_load_metrics/page_load_metrics_initialize.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-12-19T15:19:32Z",
+      "side": 1,
+      "message": "Hm from what I can tell this should be the same. Today this is called just a few lines after \"RegisterObservers\", which is this method. We shouldn\u0027t be registering observers for untracked loads.",
+      "parentUuid": "3a774d08_ade19923",
       "revId": "b65d362ce451b109c5130acdc16e4a3921241885",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

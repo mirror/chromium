@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "88ea4da1_fcd2d67f",
+        "filename": "chrome/browser/loader/chrome_resource_dispatcher_host_delegate.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-12-19T15:19:32Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "e9709ddf_c1d392c5",
+      "revId": "5df33b20da06c2743999b998eb982d612ccaa350",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "554943b8_b4e7ee5e",
         "filename": "chrome/browser/loader/chrome_resource_dispatcher_host_delegate.cc",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "5df33b20da06c2743999b998eb982d612ccaa350",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f6b3b1c_32a9c1ec",
+        "filename": "chrome/browser/loader/chrome_resource_dispatcher_host_delegate.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-12-19T15:19:32Z",
+      "side": 0,
+      "message": "Prerender contents is null if the prerender manager is null, see PrerenderContents::FromWebContents.",
+      "parentUuid": "554943b8_b4e7ee5e",
+      "revId": "5df33b20da06c2743999b998eb982d612ccaa350",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
