@@ -22,6 +22,30 @@
       "revId": "02505ac54d6575fca772a1a3eac8345ec207003e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "676372c9_4c5f4025",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/partnerbookmarks/PartnerBookmarksShim.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1230164
+      },
+      "writtenOn": "2017-12-19T18:09:28Z",
+      "side": 1,
+      "message": "Is there a reason this needs to be recorded as milliseconds?",
+      "parentUuid": "522399c8_d3f75d9a",
+      "range": {
+        "startLine": 67,
+        "startChar": 32,
+        "endLine": 67,
+        "endChar": 59
+      },
+      "revId": "02505ac54d6575fca772a1a3eac8345ec207003e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
