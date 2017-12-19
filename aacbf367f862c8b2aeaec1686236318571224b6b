@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "cf4bb6fd_3b03a0f2",
+        "filename": "content/browser/loader/resource_dispatcher_host_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1286,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-19T10:20:11Z",
+      "side": 1,
+      "message": "Nit: unindent this block (or just run clang-format)",
+      "revId": "aacbf367f862c8b2aeaec1686236318571224b6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f0b23939_01238e16",
         "filename": "content/browser/loader/resource_dispatcher_host_impl.cc",
         "patchSetId": 12
@@ -19,6 +36,23 @@
     },
     {
       "key": {
+        "uuid": "64da17f9_790c2d6b",
+        "filename": "content/browser/loader/resource_message_filter.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-19T10:20:11Z",
+      "side": 1,
+      "message": "Is this something we\u0027d look at removing in a followup? It mostly seems defunct now (maybe CreateLoaderAndStart and its helpers are still needed though?)",
+      "revId": "aacbf367f862c8b2aeaec1686236318571224b6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5eb5ff74_f3bd3e52",
         "filename": "content/browser/loader/resource_message_filter.cc",
         "patchSetId": 12
@@ -30,6 +64,57 @@
       "writtenOn": "2017-12-19T09:46:57Z",
       "side": 1,
       "message": "Do we still need this method?",
+      "revId": "aacbf367f862c8b2aeaec1686236318571224b6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08d57a26_d9f700aa",
+        "filename": "content/renderer/loader/resource_dispatcher.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-19T10:20:11Z",
+      "side": 1,
+      "message": "Nit: unindent this block",
+      "revId": "aacbf367f862c8b2aeaec1686236318571224b6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90740bd6_1bda0d3d",
+        "filename": "content/renderer/loader/resource_dispatcher_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-19T10:20:11Z",
+      "side": 1,
+      "message": "I completely skipped reviewing this file (but looked at all the others)",
+      "revId": "aacbf367f862c8b2aeaec1686236318571224b6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99264560_d0efc2a7",
+        "filename": "content/renderer/loader/url_response_body_consumer_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-19T10:20:11Z",
+      "side": 1,
+      "message": "Maybe a brief comment describing why the a no-op version of the factory is OK would be nice.\n\n(I can\u0027t easily tell just by glancing at the code)",
       "revId": "aacbf367f862c8b2aeaec1686236318571224b6b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
