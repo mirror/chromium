@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9e2e9f7f_1cffde8a",
+        "filename": "chrome/browser/chromeos/smb_client/smb_file_system.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1170114
+      },
+      "writtenOn": "2017-12-19T15:10:00Z",
+      "side": 1,
+      "message": "This is creating a temporary object.",
+      "revId": "1a0a527ffafb5b6ecf130c164c08871d8891e65d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "043742b4_36b1dcab",
+        "filename": "chrome/browser/chromeos/smb_client/smb_file_system.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1170114
+      },
+      "writtenOn": "2017-12-19T15:10:00Z",
+      "side": 1,
+      "message": "It\u0027s redundant to pass null to a unique_ptr constructor. Just put unique_ptr\u003cEntry\u003e() to create a temporary empty unique_ptr.",
+      "revId": "1a0a527ffafb5b6ecf130c164c08871d8891e65d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "900d75c6_fc48fee5",
+        "filename": "chrome/browser/chromeos/smb_client/smb_file_system.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1170114
+      },
+      "writtenOn": "2017-12-19T15:10:00Z",
+      "side": 1,
+      "message": "You should implement thumbnail in the same way that the JS extension currently does by returning the same broken URI if thumbnail was requested along with a similar comment that the JS extension has about why we use a broken URI (to prevent the entire file being downloaded).\n\nIf you don\u0027t do this, and the file app sees a file it thinks is an image, it will call open, readfile, close which are not implemented yet and will crash.\n\nWe don\u0027t/can\u0027t implement mime type for this provider (we could guess from file extension, but the file app already does that for the cases it cares about). Check what the JS extension does (I think it just gives empty string when requested).",
+      "revId": "1a0a527ffafb5b6ecf130c164c08871d8891e65d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
