@@ -5,10 +5,17 @@
 #include "ash/display/projecting_observer_chromeos.h"
 
 #include "base/logging.h"
+#include "chromeos/dbus/dbus_thread_manager.h"
 #include "chromeos/dbus/power_manager_client.h"
 #include "ui/display/types/display_snapshot.h"
 
 namespace ash {
+
+// static
+ProjectingObserver* ProjectingObserver::Create() {
+  return new ProjectingObserver(
+      chromeos::DBusThreadManager::Get()->GetPowerManagerClient());
+}
 
 ProjectingObserver::ProjectingObserver(
     chromeos::PowerManagerClient* power_manager_client)
@@ -19,7 +26,10 @@ ProjectingObserver::ProjectingObserver(
   DCHECK(power_manager_client);
 }
 
-ProjectingObserver::~ProjectingObserver() = default;
+ProjectingObserver::~ProjectingObserver() {
+  // Ensure this is never destroyed before DBusThreadManager.
+  DCHECK(chromeos::DBusThreadManager::IsInitialized());
+}
 
 void ProjectingObserver::OnDisplayModeChanged(
     const display::DisplayConfigurator::DisplayStateList& display_states) {
