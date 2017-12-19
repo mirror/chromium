@@ -34,6 +34,24 @@
       "revId": "5c76538823bc89f49585994dc81ca0ae95bdd361",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4da6fbdb_a358bdca",
+        "filename": "content/browser/gpu/browser_gpu_channel_host_factory.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-12-19T23:28:51Z",
+      "side": 1,
+      "message": "\u003e \u003e This feels like a very odd place to do this, and I\u0027m not really sure we guarantee that this runs before renderers start.\n\u003e \n\u003e It\u0027s as early as can be done, since |gpu_memory_buffer_manager_| is created\n\u003e in l.226...\n\nPossibly, but that doesn\u0027t help if renderers are indeed created before this.\n\n\n\u003e \u003e \n\u003e \u003e Is there a way to instead not expose chromium_image_ycbcr_420v in FeatureInfo when it is not supported natively?\n\u003e \n\u003e Indeed, there was some discussion re. whether to expose the flag or not: \n\u003e reveman@ argued convincingly that chromium_image_ycbcr_420v should be\n\u003e exposed in these platforms because in all actuality the platforms do \n\u003e support it and IIUC it\u0027s used by ARC++; what we want to limit is the \n\u003e use of it for VideoFrames because of performance reasons. Makes sense?\n\nHow about adding another bit in gpu::Capabilities that explains that this format is usable, but slow?",
+      "parentUuid": "f3ad3b76_4ad5d7a3",
+      "revId": "5c76538823bc89f49585994dc81ca0ae95bdd361",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
