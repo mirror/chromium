@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "433b73e6_30f9fee3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 15
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-12-19T19:54:08Z",
+      "side": 1,
+      "message": "On a second thought, we might not be able to delete PendingWallpaper. Suppose the following scenario: User opens Wallpaper Picker app (or whatever Wallpaper App), and clicks on the image gird items very quickly to send several setWallpaper requests in a short amount of time. We should make sure the last selected image is set as the current wallpaper and PendingWallpaper is a way to do it. But after delete it, it seems there is no guarantee which image will be set as the wallpaper as the image decoding and set image are async calls. Sorry for the extra work.",
+      "revId": "8858f35dca4632479ae31fc70259e9312743ca94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb8c726a_8e1b05b3",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 1155,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-12-19T19:54:08Z",
+      "side": 1,
+      "message": "Not related to this CL: I think the ephemeral user\u0027s behavior might have been broken (not sure when). If I understand it correctly, a ephemeral user should still be able to set/change his own wallpaper (if no user policy is specified) but the wallpaper info just doesn\u0027t persist through logout/shutdown. Can you add a TODO here so that we can revisit the logic of the ephemeral user?",
+      "revId": "8858f35dca4632479ae31fc70259e9312743ca94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f041ecc_bc929a5e",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 1161,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-12-19T19:54:08Z",
+      "side": 1,
+      "message": "this check might not be needed any more.",
+      "revId": "8858f35dca4632479ae31fc70259e9312743ca94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0f924fd_30ce7b8f",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 1455,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-12-19T19:54:08Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "8858f35dca4632479ae31fc70259e9312743ca94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00881f94_934d8fd3",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 1495,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-12-19T19:54:08Z",
+      "side": 1,
+      "message": "it seems this if can be safely removed",
+      "revId": "8858f35dca4632479ae31fc70259e9312743ca94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
