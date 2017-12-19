@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4313edea_6ff78c95",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1172,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-12-19T23:24:37Z",
+      "side": 1,
+      "message": "also early return if (info.layout \u003d\u003d layout)?",
+      "revId": "879c00068942f840da3a2943cff38c9d0bcdd6eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
