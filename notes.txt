@@ -1,0 +1,5 @@
+2017/12/07
+  - <details><summary>
+    https://www.w3.org/Bugs/Public/show_bug.cgi?id=28353
+    https://bugs.chromium.org/p/chromium/issues/detail?id=477493
+    https://codereview.chromium.org/1036983002
