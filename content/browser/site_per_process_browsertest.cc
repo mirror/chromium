@@ -12842,4 +12842,91 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest,
   EXPECT_NE(third_shell_instance->GetProcess(), bar_process);
 }
 
+// Verify InputTargetClient works within an OOPIF process.
+IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest, HitTestNestedFrames) {
+  GURL main_url(embedded_test_server()->GetURL(
+      "/frame_tree/page_with_positioned_nested_frames.html"));
+  EXPECT_TRUE(NavigateToURL(shell(), main_url));
+
+  FrameTreeNode* root = static_cast<WebContentsImpl*>(shell()->web_contents())
+                            ->GetFrameTree()
+                            ->root();
+  ASSERT_EQ(1U, root->child_count());
+
+  EXPECT_EQ(
+      " Site A ------------ proxies for B C\n"
+      "   +--Site B ------- proxies for A C\n"
+      "        +--Site C -- proxies for A B\n"
+      "Where A = http://127.0.0.1/\n"
+      "      B = http://a.com/\n"
+      "      C = http://baz.com/",
+      DepictFrameTree(root));
+
+  FrameTreeNode* child_node = root->child_at(0);
+  FrameTreeNode* child_node_nested = child_node->child_at(0);
+  RenderWidgetHostViewBase* rwhv_child = static_cast<RenderWidgetHostViewBase*>(
+      child_node->current_frame_host()->GetRenderWidgetHost()->GetView());
+  RenderWidgetHostViewBase* rwhv_child_nested =
+      static_cast<RenderWidgetHostViewBase*>(
+          child_node_nested->current_frame_host()
+              ->GetRenderWidgetHost()
+              ->GetView());
+
+  WaitForChildFrameSurfaceReady(child_node_nested->current_frame_host());
+
+  float scale_factor = GetPageScaleFactor(shell());
+  gfx::Rect child_bounds = rwhv_child->GetViewBounds();
+  gfx::Rect nested_child_bounds = rwhv_child_nested->GetViewBounds();
+
+  // Create two points to hit test: One in the child of the main frame, and
+  // one in the frame nested within that. The hit test request is sent to the
+  // child's renderer.
+  gfx::Point point_in_child(1, 1);
+  gfx::Point point_in_nested_child(
+      (nested_child_bounds.x() - child_bounds.x() + 5) * scale_factor,
+      (nested_child_bounds.y() - child_bounds.y() + 5) * scale_factor);
+
+  {
+    base::RunLoop run_loop;
+    viz::FrameSinkId received_frame_sink_id;
+    base::Closure quit_closure =
+        content::GetDeferredQuitTaskForRunLoop(&run_loop);
+    DCHECK_NE(child_node->current_frame_host()->GetInputTargetClient(),
+              nullptr);
+    child_node->current_frame_host()->GetInputTargetClient()->FrameSinkIdAt(
+        point_in_child,
+        base::BindLambdaForTesting([&](const viz::FrameSinkId& id) {
+          received_frame_sink_id = id;
+          quit_closure.Run();
+        }));
+    content::RunThisRunLoop(&run_loop);
+    // |point_in_child| should hit test to |rwhv_child|.
+    ASSERT_EQ(viz::FrameSinkId(
+                  rwhv_child->GetRenderWidgetHost()->GetProcess()->GetID(),
+                  rwhv_child->GetRenderWidgetHost()->GetRoutingID()),
+              received_frame_sink_id);
+  }
+
+  {
+    base::RunLoop run_loop;
+    viz::FrameSinkId received_frame_sink_id;
+    base::Closure quit_closure =
+        content::GetDeferredQuitTaskForRunLoop(&run_loop);
+    DCHECK_NE(child_node->current_frame_host()->GetInputTargetClient(),
+              nullptr);
+    child_node->current_frame_host()->GetInputTargetClient()->FrameSinkIdAt(
+        point_in_nested_child,
+        base::BindLambdaForTesting([&](const viz::FrameSinkId& id) {
+          received_frame_sink_id = id;
+          quit_closure.Run();
+        }));
+    content::RunThisRunLoop(&run_loop);
+    // |point_in_nested_child| should hit test to |rwhv_child_nested|.
+    ASSERT_EQ(viz::FrameSinkId(
+                  rwhv_child->GetRenderWidgetHost()->GetProcess()->GetID(),
+                  rwhv_child_nested->GetRenderWidgetHost()->GetRoutingID()),
+              received_frame_sink_id);
+  }
+}
+
 }  // namespace content
