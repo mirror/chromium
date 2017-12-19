@@ -16,6 +16,24 @@
       "revId": "3ea346559cc7948984408f2cc410f87757cf8fac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f5d0ebc_b86a6d03",
+        "filename": "chrome/browser/ui/webui/chromeos/system_web_dialog_delegate.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-12-19T21:33:10Z",
+      "side": 1,
+      "message": "Updated, but this really depends on the usage, and it\u0027s hard to predict which is expected. (If you pre-populate it and use it later without knowing this, it may use wrong modality)  I checked several usages, and they creates and show it\nimmediately so this shouldn\u0027t really matter though.\n\nMaybe changing the modality is an issue because it\u0027s yet another modality.",
+      "parentUuid": "f5e20105_e04cee00",
+      "revId": "3ea346559cc7948984408f2cc410f87757cf8fac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
