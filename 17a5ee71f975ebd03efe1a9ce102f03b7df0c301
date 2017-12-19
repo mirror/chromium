@@ -137,6 +137,30 @@
     },
     {
       "key": {
+        "uuid": "500f26d4_7f4853de",
+        "filename": "services/network/public/interfaces/udp_socket.mojom",
+        "patchSetId": 28
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-12-19T18:30:44Z",
+      "side": 1,
+      "message": "I looked over extensions/browser/api/socket/udp_socket.h. I think Matt\u0027s approach will work. We will still need to keep the Bind() method on UDPSocket interface instead on the factory interface. \n\nI am addressing the comments now. I will try prototype Extensions\u0027s UDP API on top of this and see if there\u0027s any problem.\n\nPlease hold off on the review for a bit. Thank you!",
+      "parentUuid": "d32a8729_92af21e5",
+      "range": {
+        "startLine": 32,
+        "startChar": 21,
+        "endLine": 32,
+        "endChar": 31
+      },
+      "revId": "17a5ee71f975ebd03efe1a9ce102f03b7df0c301",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "59484fc0_aa7293ca",
         "filename": "services/network/public/interfaces/udp_socket.mojom",
         "patchSetId": 28
