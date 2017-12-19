@@ -16,7 +16,9 @@
 #include "ui/app_list/views/app_list_view.h"
 #include "ui/app_list/views/apps_grid_view.h"
 #include "ui/app_list/views/contents_view.h"
+#include "ui/app_list/views/folder_background_fullscreen_view.h"
 #include "ui/app_list/views/folder_background_view.h"
+#include "ui/app_list/views/page_switcher_fullscreen.h"
 #include "ui/app_list/views/search_box_view.h"
 #include "ui/app_list/views/suggestions_container_view.h"
 #include "ui/base/l10n/l10n_util.h"
@@ -41,12 +43,15 @@ AppsContainerView::AppsContainerView(AppListMainView* app_list_main_view,
       is_app_list_focus_enabled_(features::IsAppListFocusEnabled()) {
   apps_grid_view_ =
       new AppsGridView(app_list_main_view->contents_view(), nullptr);
-  if (is_fullscreen_app_list_enabled_) {
-    apps_grid_view_->SetLayout(kPreferredCols, kPreferredRows);
-  } else {
-    apps_grid_view_->SetLayout(kPreferredCols, kPreferredRows);
-  }
+  apps_grid_view_->SetLayout(kPreferredCols, kPreferredRows);
   AddChildView(apps_grid_view_);
+
+  if (is_fullscreen_app_list_enabled_) {
+    // Page switcher should be initialized after AppsGridView.
+    page_switcher_fullscreen_ = new PageSwitcherFullscreen(
+        apps_grid_view_->pagination_model(), true /* vertical */);
+    AddChildView(page_switcher_fullscreen_);
+  }
 
   folder_background_view_ = new FolderBackgroundView();
   AddChildView(folder_background_view_);
@@ -55,6 +60,14 @@ AppsContainerView::AppsContainerView(AppListMainView* app_list_main_view,
       new AppListFolderView(this, model, app_list_main_view);
   // The folder view is initially hidden.
   app_list_folder_view_->SetVisible(false);
+  if (is_fullscreen_app_list_enabled_) {
+    folder_background_fullscreen_view_ =
+        new FolderBackgroundFullscreenView(app_list_folder_view_);
+    AddChildView(folder_background_fullscreen_view_);
+  } else {
+    folder_background_view_ = new FolderBackgroundView();
+    AddChildView(folder_background_view_);
+  }
   AddChildView(app_list_folder_view_);
 
   apps_grid_view_->SetModel(model);
@@ -75,10 +88,12 @@ void AppsContainerView::ShowActiveFolder(AppListFolderItem* folder_item) {
 
   CreateViewsForFolderTopItemsAnimation(folder_item, true);
 
-  if (is_app_list_focus_enabled_)
+  if (is_app_list_focus_enabled_) {
     contents_view()->GetSearchBoxView()->search_box()->RequestFocus();
-  else
+    apps_grid_view_->DisableFocusForShowingActiveFolder(true);
+  } else {
     apps_grid_view_->ClearAnySelectedView();
+  }
 }
 
 void AppsContainerView::ShowApps(AppListFolderItem* folder_item) {
@@ -87,12 +102,18 @@ void AppsContainerView::ShowApps(AppListFolderItem* folder_item) {
 
   PrepareToShowApps(folder_item);
   SetShowState(SHOW_APPS, true);
+  if (is_app_list_focus_enabled_)
+    apps_grid_view_->DisableFocusForShowingActiveFolder(false);
 }
 
 void AppsContainerView::ResetForShowApps() {
   SetShowState(SHOW_APPS, false);
-  folder_background_view_->UpdateFolderContainerBubble(
-      FolderBackgroundView::NO_BUBBLE);
+  if (!is_fullscreen_app_list_enabled_) {
+    folder_background_view_->UpdateFolderContainerBubble(
+        FolderBackgroundView::NO_BUBBLE);
+  }
+  if (is_app_list_focus_enabled_)
+    apps_grid_view_->DisableFocusForShowingActiveFolder(false);
 }
 
 void AppsContainerView::SetDragAndDropHostOfCurrentAppList(
@@ -109,6 +130,8 @@ void AppsContainerView::ReparentFolderItemTransit(
 
   PrepareToShowApps(folder_item);
   SetShowState(SHOW_ITEM_REPARENT, false);
+  if (is_app_list_focus_enabled_)
+    apps_grid_view_->DisableFocusForShowingActiveFolder(false);
 }
 
 bool AppsContainerView::IsInFolderView() const {
@@ -120,27 +143,55 @@ void AppsContainerView::ReparentDragEnded() {
   show_state_ = AppsContainerView::SHOW_APPS;
 }
 
-gfx::Size AppsContainerView::CalculatePreferredSize() const {
-  const gfx::Size grid_size = apps_grid_view_->GetPreferredSize();
-  const gfx::Size folder_view_size = app_list_folder_view_->GetPreferredSize();
+void AppsContainerView::UpdateControlVisibility(AppListViewState app_list_state,
+                                                bool is_in_drag) {
+  if (!is_fullscreen_app_list_enabled_)
+    return;
+  apps_grid_view_->UpdateControlVisibility(app_list_state, is_in_drag);
+  page_switcher_fullscreen_->SetVisible(
+      app_list_state == AppListViewState::FULLSCREEN_ALL_APPS || is_in_drag);
+}
 
-  int width = std::max(grid_size.width(), folder_view_size.width());
-  int height = std::max(grid_size.height(), folder_view_size.height());
-  return gfx::Size(width, height);
+void AppsContainerView::UpdateOpacity() {
+  apps_grid_view_->UpdateOpacity();
+
+  if (!is_fullscreen_app_list_enabled_)
+    return;
+
+  // Updates the opacity of page switcher buttons. The same rule as all apps in
+  // AppsGridView.
+  AppListView* app_list_view = contents_view()->app_list_view();
+  bool should_restore_opacity =
+      !app_list_view->is_in_drag() &&
+      (app_list_view->app_list_state() != AppListViewState::CLOSED);
+  int screen_bottom = app_list_view->GetScreenBottom();
+  gfx::Rect switcher_bounds = page_switcher_fullscreen_->GetBoundsInScreen();
+  float centerline_above_work_area =
+      std::max<float>(screen_bottom - switcher_bounds.CenterPoint().y(), 0.f);
+  float opacity =
+      std::min(std::max((centerline_above_work_area - kAllAppsOpacityStartPx) /
+                            (kAllAppsOpacityEndPx - kAllAppsOpacityStartPx),
+                        0.f),
+               1.0f);
+  page_switcher_fullscreen_->layer()->SetOpacity(
+      should_restore_opacity ? 1.0f : opacity);
+}
+
+gfx::Size AppsContainerView::CalculatePreferredSize() const {
+  gfx::Size size = apps_grid_view_->GetPreferredSize();
+  // Add padding to both side of the apps grid to keep it horizontally
+  // centered since we place page switcher on the right side.
+  size.Enlarge(kAppsGridLeftRightPadding * 2, 0);
+  return size;
 }
 
 void AppsContainerView::Layout() {
-  gfx::Rect rect(GetContentsBounds());
-  if (rect.IsEmpty())
-    return;
-
   switch (show_state_) {
     case SHOW_APPS:
-      apps_grid_view_->SetBoundsRect(rect);
+      LayoutForShowingApps();
       break;
     case SHOW_ACTIVE_FOLDER:
-      folder_background_view_->SetBoundsRect(rect);
-      app_list_folder_view_->SetBoundsRect(rect);
+      LayoutForShowingActiveFolder();
       break;
     case SHOW_ITEM_REPARENT:
       break;
@@ -281,32 +332,20 @@ void AppsContainerView::SetShowState(ShowState show_state,
 
   switch (show_state_) {
     case SHOW_APPS:
-      folder_background_view_->SetVisible(false);
-      if (show_apps_with_animation) {
-        app_list_folder_view_->ScheduleShowHideAnimation(false, false);
-        apps_grid_view_->ScheduleShowHideAnimation(true);
-      } else {
-        app_list_folder_view_->HideViewImmediately();
-        apps_grid_view_->ResetForShowApps();
-      }
+      SetStateForShowingApps(show_apps_with_animation);
       break;
     case SHOW_ACTIVE_FOLDER:
-      folder_background_view_->SetVisible(true);
-      apps_grid_view_->ScheduleShowHideAnimation(false);
-      app_list_folder_view_->ScheduleShowHideAnimation(true, false);
+      SetStateForShowingActiveFolder();
       break;
     case SHOW_ITEM_REPARENT:
-      folder_background_view_->SetVisible(false);
-      folder_background_view_->UpdateFolderContainerBubble(
-          FolderBackgroundView::NO_BUBBLE);
-      app_list_folder_view_->ScheduleShowHideAnimation(false, true);
-      apps_grid_view_->ScheduleShowHideAnimation(true);
+      SetStateForShowingItemReparent();
       break;
     default:
       NOTREACHED();
   }
 
-  app_list_folder_view_->SetBackButtonLabel(IsInFolderView());
+  if (!is_fullscreen_app_list_enabled_)
+    app_list_folder_view_->SetBackButtonLabel(IsInFolderView());
   Layout();
 }
 
@@ -324,6 +363,9 @@ std::vector<gfx::Rect> AppsContainerView::GetTopItemIconBoundsInActiveFolder() {
 void AppsContainerView::CreateViewsForFolderTopItemsAnimation(
     AppListFolderItem* active_folder,
     bool open_folder) {
+  if (!is_folder_top_items_animation_enabled_)
+    return;
+
   top_icon_views_.clear();
   std::vector<gfx::Rect> top_items_bounds =
       GetTopItemIconBoundsInActiveFolder();
@@ -402,6 +444,97 @@ int AppsContainerView::GetSearchBoxTopPaddingDuringDragging() const {
                  std::min<int>(searchbox_final_y, y));
     return y;
   }
+}
+
+void AppsContainerView::LayoutForShowingApps() const {
+  gfx::Rect rect(GetContentsBounds());
+  if (rect.IsEmpty())
+    return;
+
+  if (!is_fullscreen_app_list_enabled_) {
+    apps_grid_view_->SetBoundsRect(rect);
+    return;
+  }
+
+  gfx::Rect grid_rect = rect;
+  grid_rect.Inset(kAppsGridLeftRightPadding, 0);
+  apps_grid_view_->SetBoundsRect(grid_rect);
+
+  gfx::Rect page_switcher_rect = rect;
+  const int page_switcher_width =
+      page_switcher_fullscreen_->GetPreferredSize().width();
+  page_switcher_rect.set_x(page_switcher_rect.right() - page_switcher_width);
+  page_switcher_rect.set_width(page_switcher_width);
+  page_switcher_fullscreen_->SetBoundsRect(page_switcher_rect);
+}
+
+void AppsContainerView::LayoutForShowingActiveFolder() const {
+  gfx::Rect rect(GetContentsBounds());
+  if (rect.IsEmpty())
+    return;
+
+  if (!is_fullscreen_app_list_enabled_) {
+    folder_background_view_->SetBoundsRect(rect);
+    app_list_folder_view_->SetBoundsRect(rect);
+    return;
+  }
+
+  folder_background_fullscreen_view_->SetBoundsRect(rect);
+
+  // The opened folder view's center should try to overlap with the folder
+  // item's center while it must fit within the bounds of this view.
+  DCHECK(apps_grid_view_->activated_folder_item_view());
+  gfx::Rect item_bounds_in_container = apps_grid_view_->ConvertRectToParent(
+      apps_grid_view_->activated_folder_item_view()->bounds());
+  gfx::Rect folder_bounds_in_container =
+      gfx::Rect(app_list_folder_view_->GetPreferredSize());
+  folder_bounds_in_container += (item_bounds_in_container.CenterPoint() -
+                                 folder_bounds_in_container.CenterPoint());
+  folder_bounds_in_container.AdjustToFit(rect);
+  app_list_folder_view_->SetBoundsRect(folder_bounds_in_container);
+}
+
+void AppsContainerView::SetStateForShowingApps(bool with_animation) const {
+  if (is_fullscreen_app_list_enabled_) {
+    folder_background_fullscreen_view_->SetVisible(false);
+    apps_grid_view_->ResetForShowApps();
+    if (with_animation)
+      app_list_folder_view_->ScheduleShowHideAnimation(false, false);
+    else
+      app_list_folder_view_->HideViewImmediately();
+    return;
+  }
+
+  folder_background_view_->SetVisible(false);
+  if (with_animation) {
+    app_list_folder_view_->ScheduleShowHideAnimation(false, false);
+    apps_grid_view_->ScheduleShowHideAnimation(true);
+  } else {
+    app_list_folder_view_->HideViewImmediately();
+    apps_grid_view_->ResetForShowApps();
+  }
+}
+
+void AppsContainerView::SetStateForShowingActiveFolder() const {
+  if (is_fullscreen_app_list_enabled_) {
+    folder_background_fullscreen_view_->SetVisible(true);
+  } else {
+    folder_background_view_->SetVisible(true);
+    apps_grid_view_->ScheduleShowHideAnimation(false);
+  }
+  app_list_folder_view_->ScheduleShowHideAnimation(true, false);
+}
+
+void AppsContainerView::SetStateForShowingItemReparent() const {
+  if (is_fullscreen_app_list_enabled_) {
+    folder_background_fullscreen_view_->SetVisible(false);
+  } else {
+    folder_background_view_->SetVisible(false);
+    folder_background_view_->UpdateFolderContainerBubble(
+        FolderBackgroundView::NO_BUBBLE);
+    apps_grid_view_->ScheduleShowHideAnimation(true);
+  }
+  app_list_folder_view_->ScheduleShowHideAnimation(false, true);
 }
 
 }  // namespace app_list
