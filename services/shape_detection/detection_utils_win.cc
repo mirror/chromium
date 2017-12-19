@@ -11,9 +11,8 @@
 namespace shape_detection {
 
 Microsoft::WRL::ComPtr<ISoftwareBitmap> CreateWinBitmapFromSkBitmap(
-    ISoftwareBitmapStatics* bitmap_factory,
-    BitmapPixelFormat pixel_format,
-    const SkBitmap& bitmap) {
+    const SkBitmap& bitmap,
+    ISoftwareBitmapStatics* bitmap_factory) {
   DCHECK(bitmap_factory);
   DCHECK_EQ(bitmap.colorType(), kN32_SkColorType);
   if (!base::CheckedNumeric<uint32_t>(bitmap.computeByteSize()).IsValid()) {
@@ -48,9 +47,19 @@ Microsoft::WRL::ComPtr<ISoftwareBitmap> CreateWinBitmapFromSkBitmap(
     return nullptr;
   }
 
+  return win_bitmap;
+}
+
+Microsoft::WRL::ComPtr<ISoftwareBitmap> CreateWinBitmapWithPixelFormat(
+    const SkBitmap& bitmap,
+    ISoftwareBitmapStatics* bitmap_factory,
+    BitmapPixelFormat pixel_format) {
+  Microsoft::WRL::ComPtr<ISoftwareBitmap> win_bitmap =
+      CreateWinBitmapFromSkBitmap(bitmap, bitmap_factory);
+
   // Convert Rgba8/Bgra8 to Gray8/Nv12 SoftwareBitmap.
-  hr = bitmap_factory->Convert(win_bitmap.Get(), pixel_format,
-                               win_bitmap.GetAddressOf());
+  const HRESULT hr = bitmap_factory->Convert(win_bitmap.Get(), pixel_format,
+                                             win_bitmap.GetAddressOf());
   if (FAILED(hr)) {
     DLOG(ERROR) << "Convert Rgba8/Bgra8 to Gray8/Nv12 failed: "
                 << logging::SystemErrorCodeToString(hr);

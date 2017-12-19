@@ -46,7 +46,8 @@ void FaceDetectionImplWin::Detect(const SkBitmap& bitmap,
 std::unique_ptr<AsyncOperation<IVector<DetectedFace*>>>
 FaceDetectionImplWin::BeginDetect(const SkBitmap& bitmap) {
   Microsoft::WRL::ComPtr<ISoftwareBitmap> win_bitmap =
-      CreateWinBitmapFromSkBitmap(bitmap_factory_.Get(), pixel_format_, bitmap);
+      CreateWinBitmapWithPixelFormat(bitmap, bitmap_factory_.Get(),
+                                     pixel_format_);
   if (!win_bitmap)
     return nullptr;
 
