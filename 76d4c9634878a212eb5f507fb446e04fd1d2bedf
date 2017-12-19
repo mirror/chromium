@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aa94f7f6_59834ff7",
+        "filename": "media/audio/audio_debug_file_writer_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2017-12-19T09:40:46Z",
+      "side": 1,
+      "message": "TODO in next PS.",
+      "revId": "76d4c9634878a212eb5f507fb446e04fd1d2bedf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e67ef9a_c546333b",
+        "filename": "media/audio/audio_debug_recording_helper_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2017-12-19T09:40:46Z",
+      "side": 1,
+      "message": "I couldn\u0027t find a way to retrieve the file path from a base::File object, so I only check that the file is valid.",
+      "revId": "76d4c9634878a212eb5f507fb446e04fd1d2bedf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fecc879_e4a6a8cc",
+        "filename": "media/audio/audio_debug_recording_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2017-12-19T09:40:46Z",
+      "side": 1,
+      "message": "This will be an inner class if we keep it.",
+      "revId": "76d4c9634878a212eb5f507fb446e04fd1d2bedf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fd46975_13c132f8",
+        "filename": "media/audio/audio_debug_recording_manager_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2017-12-19T09:40:46Z",
+      "side": 1,
+      "message": "I couldn\u0027t find a way to retrieve the file path from a base::File object, so I only check that the file was created.",
+      "revId": "76d4c9634878a212eb5f507fb446e04fd1d2bedf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
