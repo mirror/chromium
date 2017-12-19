@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eb32e7ca_635a9ade",
+        "filename": "chrome/browser/download/chrome_download_manager_delegate.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 626,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-12-19T00:00:44Z",
+      "side": 1,
+      "message": "Maybe (I think it\u0027s the same, check?):\n\nstd::vector\u003cProfile*\u003e profiles_to_check \u003d { profile-\u003eGetOriginalProfile(); }\nif (profile-\u003eHasOffTheRecordProfile()) {\n  profiles_to_check.push_back(profile-\u003eGetOriginalProfile(); }\n}",
+      "range": {
+        "startLine": 626,
+        "startChar": 30,
+        "endLine": 626,
+        "endChar": 37
+      },
+      "revId": "48409bab561eec715def7ae2b363afef86759843",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
