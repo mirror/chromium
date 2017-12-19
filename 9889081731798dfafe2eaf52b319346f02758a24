@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "25b97469_aab28066",
+        "filename": "third_party/WebKit/Source/core/editing/commands/ApplyBlockElementCommandTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1210620
+      },
+      "writtenOn": "2017-12-19T16:53:08Z",
+      "side": 1,
+      "message": "I tried to reproduce the issue in different ways with unit test, but unable to reproduce.\nThis is the simple html content which always crashes when run on chrome.\n\n\u003cstyle\u003e\nli:nth-child(2) {\n  display:table-column-group;\n}\n\u003c/style\u003e\n\u003cli\u003e\n\u003c/li\u003e\n\u003ccanvas\u003e\u003c/canvas\u003e\n\n\u003cscript\u003e\ndocument.designMode\u003d\u0027on\u0027;\ndocument.execCommand(\u0027selectall\u0027);\ndocument.execCommand(\u0027FormatBlock\u0027, false, \u0027\u003cpre\u003e\u0027);\n\u003c/script\u003e\n\u003c/body\u003e\n\nIs there any way which could help in reproducing in unit cases, or else shall i write a layout test case for this ?\nThanks",
+      "revId": "9889081731798dfafe2eaf52b319346f02758a24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
