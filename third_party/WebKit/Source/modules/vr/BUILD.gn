@@ -26,6 +26,8 @@ blink_modules_sources("vr") {
     "VRPose.h",
     "VRStageParameters.cpp",
     "VRStageParameters.h",
+    "common/VRFrameHelper.cpp",
+    "common/VRFrameHelper.h",
   ]
 
   deps = [
