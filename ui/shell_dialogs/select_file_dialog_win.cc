@@ -513,6 +513,8 @@ int CALLBACK SelectFileDialogImpl::BrowseCallbackProc(HWND window,
                                                       LPARAM parameter,
                                                       LPARAM data) {
   if (message == BFFM_INITIALIZED) {
+    // Disable the OK button until the selection has been changed at least once.
+    SendMessage(window, BFFM_ENABLEOK, 0, 0);
     SelectFolderDialogOptions* options =
         reinterpret_cast<SelectFolderDialogOptions*>(data);
     if (options->is_upload) {
@@ -526,6 +528,8 @@ int CALLBACK SelectFileDialogImpl::BrowseCallbackProc(HWND window,
       SendMessage(window, BFFM_SETSELECTION, TRUE,
                   reinterpret_cast<LPARAM>(options->default_path));
     }
+  } else if (message == BFFM_SELCHANGED) {
+    SendMessage(window, BFFM_ENABLEOK, 0, reinterpret_cast<LPARAM>(true));
   }
   return 0;
 }
