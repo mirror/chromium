@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fc9ec0b3_b25a0647",
+        "filename": "chrome/browser/resources/settings/privacy_page/privacy_page.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1115688
+      },
+      "writtenOn": "2017-12-19T16:46:35Z",
+      "side": 1,
+      "message": "nit: () \u003d\u003e loadTimeData.getBoolean(\u0027enableSensorsContentSetting\u0027)",
+      "revId": "5b5e398cfe50d584ad97f7bdf07b7219600d5e30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
