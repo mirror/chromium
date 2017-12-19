@@ -30,6 +30,10 @@ declare_args() {
   # Use absolute file paths in the compiler diagnostics and __FILE__ macro
   # if needed.
   msvc_use_absolute_paths = false
+
+  if (is_win) {
+    use_rsp = true
+  }
 }
 
 if (generate_linker_map) {
