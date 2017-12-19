@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "746911dd_b1570e39",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-19T14:35:34Z",
+      "side": 1,
+      "message": "I think I\u0027d rephrase this (and ExtensionDisabledGlobalError) to focus on a higher-level problem: if there\u0027s something we need to warn the user about related to the extension, we don\u0027t want to *not* warn them just because the extension was terminated.  The extension is still installed, and the user should still be notified.  We should only not warn the user if the extension is removed from the system.",
+      "revId": "99ae9142272889e9494d9ab8fab005787f4ccc54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
