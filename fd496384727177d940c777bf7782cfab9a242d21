@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6414f688_3d8aed37",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/ModalDialogManager.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-12-19T19:08:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5170cd35_cd807ac0",
+      "range": {
+        "startLine": 53,
+        "startChar": 23,
+        "endLine": 53,
+        "endChar": 42
+      },
+      "revId": "fd496384727177d940c777bf7782cfab9a242d21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bfedff81_5f04fd8c",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/ModalDialogManager.java",
         "patchSetId": 17
@@ -45,6 +69,30 @@
       "revId": "fd496384727177d940c777bf7782cfab9a242d21",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31440391_250c4524",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/ModalDialogManager.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-12-19T19:08:06Z",
+      "side": 1,
+      "message": "It can just be iterating the list forward. Since we are only removing one item and then break, change of the index after removal does not affect anything.",
+      "parentUuid": "bfedff81_5f04fd8c",
+      "range": {
+        "startLine": 155,
+        "startChar": 11,
+        "endLine": 155,
+        "endChar": 67
+      },
+      "revId": "fd496384727177d940c777bf7782cfab9a242d21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
