@@ -17,7 +17,7 @@
 #include "media/base/media_export.h"
 
 namespace base {
-class FilePath;
+class File;
 class SingleThreadTaskRunner;
 }
 
@@ -57,7 +57,7 @@ class MEDIA_EXPORT AudioDebugRecordingHelper : public AudioDebugRecorder {
 
   // Enable debug recording. The create callback is first run to create an
   // AudioDebugFileWriter.
-  virtual void EnableDebugRecording(const base::FilePath& file_name);
+  virtual void EnableDebugRecording(base::File file_handle);
 
   // Disable debug recording. The AudioDebugFileWriter is destroyed.
   virtual void DisableDebugRecording();
