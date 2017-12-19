@@ -399,6 +399,30 @@
       "revId": "23381cf5e0fa3d3cb0b7b01ee6991ee75e7edd1a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "beb4a269_a1f286ef",
+        "filename": "services/network/public/cpp/proxy_resolving_client_socket_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-12-19T22:31:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b850961_1bb8a55f",
+      "range": {
+        "startLine": 257,
+        "startChar": 1,
+        "endLine": 257,
+        "endChar": 0
+      },
+      "revId": "23381cf5e0fa3d3cb0b7b01ee6991ee75e7edd1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

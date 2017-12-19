@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1ac56401_b8cd7c63",
+        "filename": "services/network/public/cpp/proxy_resolving_client_socket_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-12-19T22:31:43Z",
+      "side": 1,
+      "message": "Hi Matt, I added this test to check the ip address of the connection is correct.\nIn the case of proxy connection, ProxyResolvingClientSocket::GetPeerAddress() will actually return ERR_NAME_NOT_RESOLVED to hide the address of the proxy.\nI added the check on the underlying socket.",
+      "revId": "c3681a05431dea62357fd816ff9a42efa0b2c5f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

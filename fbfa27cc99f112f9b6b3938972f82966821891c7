@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "696f79c6_b92ae173",
+        "filename": "services/network/public/cpp/proxy_resolving_client_socket.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-12-19T22:31:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ae8dcbe6_df7ad591",
+      "range": {
+        "startLine": 49,
+        "startChar": 33,
+        "endLine": 49,
+        "endChar": 40
+      },
+      "revId": "fbfa27cc99f112f9b6b3938972f82966821891c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f04f9450_6615eb65",
         "filename": "services/network/public/cpp/proxy_resolving_client_socket_unittest.cc",
         "patchSetId": 19
@@ -69,6 +93,30 @@
       "revId": "fbfa27cc99f112f9b6b3938972f82966821891c7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea6d990d_daa93d61",
+        "filename": "services/network/public/cpp/proxy_resolving_client_socket_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-12-19T22:31:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f04f9450_6615eb65",
+      "range": {
+        "startLine": 59,
+        "startChar": 21,
+        "endLine": 59,
+        "endChar": 48
+      },
+      "revId": "fbfa27cc99f112f9b6b3938972f82966821891c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -95,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "eb50bdde_efc9e69a",
+        "filename": "services/network/public/cpp/proxy_resolving_client_socket_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-12-19T22:31:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "56c30fe9_3df245a4",
+      "range": {
+        "startLine": 69,
+        "startChar": 13,
+        "endLine": 69,
+        "endChar": 14
+      },
+      "revId": "fbfa27cc99f112f9b6b3938972f82966821891c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "80b734b7_5e9d03fe",
         "filename": "services/network/public/cpp/proxy_resolving_client_socket_unittest.cc",
         "patchSetId": 19
@@ -118,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "053e3a83_f65c8910",
+        "filename": "services/network/public/cpp/proxy_resolving_client_socket_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-12-19T22:31:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "80b734b7_5e9d03fe",
+      "range": {
+        "startLine": 338,
+        "startChar": 37,
+        "endLine": 338,
+        "endChar": 40
+      },
+      "revId": "fbfa27cc99f112f9b6b3938972f82966821891c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1d8c5c7e_53e95bce",
         "filename": "services/network/public/cpp/proxy_resolving_client_socket_unittest.cc",
         "patchSetId": 19
@@ -138,6 +234,30 @@
       "revId": "fbfa27cc99f112f9b6b3938972f82966821891c7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5a3224b_00f7b85e",
+        "filename": "services/network/public/cpp/proxy_resolving_client_socket_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-12-19T22:31:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1d8c5c7e_53e95bce",
+      "range": {
+        "startLine": 443,
+        "startChar": 10,
+        "endLine": 443,
+        "endChar": 32
+      },
+      "revId": "fbfa27cc99f112f9b6b3938972f82966821891c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
