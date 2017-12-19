@@ -33,12 +33,13 @@ class MEDIA_EXPORT AudioSystem {
       base::OnceCallback<void(const base::Optional<AudioParameters>&)>;
   using OnInputDeviceInfoCallback =
       base::OnceCallback<void(const base::Optional<AudioParameters>&,
-                              const std::string&)>;
+                              const base::Optional<std::string>&)>;
 
   using OnBoolCallback = base::OnceCallback<void(bool)>;
   using OnDeviceDescriptionsCallback =
       base::OnceCallback<void(AudioDeviceDescriptions)>;
-  using OnDeviceIdCallback = base::OnceCallback<void(const std::string&)>;
+  using OnDeviceIdCallback =
+      base::OnceCallback<void(const base::Optional<std::string>&)>;
 
   // The global AudioManager instance must be created prior to that.
   static std::unique_ptr<AudioSystem> CreateInstance();
