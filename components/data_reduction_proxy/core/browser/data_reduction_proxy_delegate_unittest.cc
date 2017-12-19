@@ -664,6 +664,72 @@ TEST_F(DataReductionProxyDelegateTest, OnResolveProxy) {
   EXPECT_FALSE(other_proxy_info.is_direct());
 }
 
+TEST_F(DataReductionProxyDelegateTest, OnResolveProxyWarmupURL) {
+  const struct {
+    bool is_secure_proxy;
+    bool is_core_proxy;
+  } tests[] = {
+      {false, false}, {false, true}, {true, false}, {true, true},
+  };
+
+  for (const auto& test : tests) {
+    config()->SetInFlightWarmupProxyDetails(
+        std::make_pair(test.is_secure_proxy, test.is_core_proxy));
+    GURL url = params::GetWarmupURL();
+    params()->UseNonSecureProxiesForHttp();
+
+    // Only insecure core data saver proxies are used in this test.
+    bool expect_data_reduction_proxy_used =
+        !test.is_secure_proxy && test.is_core_proxy;
+
+    // Other proxy info
+    net::ProxyInfo other_proxy_info;
+    other_proxy_info.UseNamedProxy("proxy.com");
+    EXPECT_FALSE(other_proxy_info.is_empty());
+
+    // Direct
+    net::ProxyInfo direct_proxy_info;
+    direct_proxy_info.UseDirect();
+    EXPECT_TRUE(direct_proxy_info.is_direct());
+
+    // Empty retry info map
+    net::ProxyRetryInfoMap empty_proxy_retry_info;
+
+    // Retry info map with the data reduction proxy;
+    net::ProxyRetryInfoMap data_reduction_proxy_retry_info;
+    net::ProxyRetryInfo retry_info;
+    retry_info.current_delay = base::TimeDelta::FromSeconds(1000);
+    retry_info.bad_until = base::TimeTicks().Now() + retry_info.current_delay;
+    retry_info.try_while_bad = false;
+    data_reduction_proxy_retry_info
+        [params()->proxies_for_http().front().proxy_server().ToURI()] =
+            retry_info;
+
+    net::ProxyInfo result;
+    // Another proxy is used. It should be used afterwards.
+    result.Use(other_proxy_info);
+    proxy_delegate()->OnResolveProxy(url, "GET", empty_proxy_retry_info,
+                                     &result);
+    EXPECT_EQ(other_proxy_info.proxy_server(), result.proxy_server());
+
+    // A direct connection is used. The data reduction proxy should be used
+    // afterwards.
+    // Another proxy is used. It should be used afterwards.
+    result.Use(direct_proxy_info);
+    net::ProxyConfig::ID prev_id = result.config_id();
+    proxy_delegate()->OnResolveProxy(url, "GET", empty_proxy_retry_info,
+                                     &result);
+    if (expect_data_reduction_proxy_used) {
+      EXPECT_EQ(params()->proxies_for_http().front().proxy_server(),
+                result.proxy_server());
+    } else {
+      EXPECT_TRUE(result.proxy_server().is_direct());
+    }
+    // Only the proxy list should be updated, not the proxy info.
+    EXPECT_EQ(result.config_id(), prev_id);
+  }
+}
+
 // Verifies that requests that were not proxied through data saver proxy due to
 // missing config are recorded properly.
 TEST_F(DataReductionProxyDelegateTest, HTTPRequests) {

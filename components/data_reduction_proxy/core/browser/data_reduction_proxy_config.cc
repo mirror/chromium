@@ -425,17 +425,63 @@ void DataReductionProxyConfig::UpdateConfigForTesting(
   enabled_by_user_ = enabled;
   network_properties_manager_->SetIsSecureProxyDisallowedByCarrier(
       !secure_proxies_allowed);
-  network_properties_manager_->SetHasWarmupURLProbeFailed(
-      false /* secure_proxy */, false /* is_core_proxy */,
-      !insecure_proxies_allowed);
-  network_properties_manager_->SetHasWarmupURLProbeFailed(
-      false /* secure_proxy */, true /* is_core_proxy */,
-      !insecure_proxies_allowed);
+  if (!insecure_proxies_allowed !=
+          network_properties_manager_->HasWarmupURLProbeFailed(
+              false /* secure_proxy */, false /* is_core_proxy */) ||
+      !insecure_proxies_allowed !=
+          network_properties_manager_->HasWarmupURLProbeFailed(
+              false /* secure_proxy */, true /* is_core_proxy */)) {
+    network_properties_manager_->SetHasWarmupURLProbeFailed(
+        false /* secure_proxy */, false /* is_core_proxy */,
+        !insecure_proxies_allowed);
+    network_properties_manager_->SetHasWarmupURLProbeFailed(
+        false /* secure_proxy */, true /* is_core_proxy */,
+        !insecure_proxies_allowed);
+  }
 }
 
 void DataReductionProxyConfig::SetNetworkPropertiesManagerForTesting(
     NetworkPropertiesManager* manager) {
   network_properties_manager_ = manager;
+}
+
+base::Optional<
+    std::pair<bool /* is_secure_drp_proxy */, bool /*is_core_proxy */>>
+DataReductionProxyConfig::GetProxyConnectionToWarmup() const {
+  DCHECK(thread_checker_.CalledOnValidThread());
+
+  const std::vector<DataReductionProxyServer>& proxies =
+      DataReductionProxyConfig::GetProxiesForHttp();
+
+  for (const auto proxy_server : proxies) {
+    // First find a proxy server that has never been probed before. Proxies that
+    // have been probed before successfully do not need to be probed. On the
+    // other hand, proxies that have been probed before unsuccessfully are
+    // already disabled, and so they need not be probed immediately.
+    bool is_secure_drp_proxy = proxy_server.IsSecureProxy();
+    bool is_core_proxy = proxy_server.IsCoreProxy();
+    if (!network_properties_manager_->HasWarmupURLProbeFailed(
+            is_secure_drp_proxy, is_core_proxy) &&
+        network_properties_manager_->ShouldFetchWarmupURL(is_secure_drp_proxy,
+                                                          is_core_proxy)) {
+      return std::make_pair(is_secure_drp_proxy, is_core_proxy);
+    }
+  }
+
+  for (const auto proxy_server : proxies) {
+    // Now find any proxy server that can be probed. This would return proxies
+    // that were probed before, the result was unsuccessful, but they have not
+    // yet hit the maximum probe retry limit.
+    bool is_secure_drp_proxy = proxy_server.IsSecureProxy();
+    bool is_core_proxy = proxy_server.IsCoreProxy();
+    if (network_properties_manager_->ShouldFetchWarmupURL(is_secure_drp_proxy,
+                                                          is_core_proxy)) {
+      return std::make_pair(is_secure_drp_proxy, is_core_proxy);
+    }
+  }
+
+  // No more proxies left to probe.
+  return base::nullopt;
 }
 
 void DataReductionProxyConfig::HandleWarmupFetcherResponse(
@@ -451,6 +497,13 @@ void DataReductionProxyConfig::HandleWarmupFetcherResponse(
 
   bool is_secure_drp_proxy = proxy_server.is_https() || proxy_server.is_quic();
   bool is_core_proxy = IsDataReductionProxyServerCore(proxy_server);
+
+  // The proxy server through which the warmup URL was fetched should match
+  // the proxy server for which the warmup URL is in-flight.
+  DCHECK(GetInFlightWarmupProxyDetails());
+  DCHECK_EQ(is_secure_drp_proxy, GetInFlightWarmupProxyDetails()->first);
+  DCHECK_EQ(is_core_proxy, GetInFlightWarmupProxyDetails()->second);
+
   if (is_secure_drp_proxy && is_core_proxy) {
     UMA_HISTOGRAM_BOOLEAN(
         "DataReductionProxy.WarmupURLFetcherCallback.SuccessfulFetch."
@@ -486,6 +539,11 @@ void DataReductionProxyConfig::HandleWarmupFetcherResponse(
                                                            is_core_proxy)) {
     ReloadConfig();
   }
+
+  // May probe other proxy types that have not been probed yet, or may retry
+  // probe of proxy types that has failed but the maximum probe limit has not
+  // been reached yet.
+  FetchWarmupURL();
 }
 
 void DataReductionProxyConfig::HandleSecureProxyCheckResponse(
@@ -624,6 +682,21 @@ void DataReductionProxyConfig::FetchWarmupURL() {
     return;
   }
 
+  base::Optional<
+      std::pair<bool /* is_secure_drp_proxy */, bool /*is_core_proxy */>>
+      warmup_config = GetProxyConnectionToWarmup();
+
+  if (!warmup_config)
+    return;
+
+  // Refetch the warmup URL when it has failed.
+  warmup_url_fetch_in_flight_secure_proxy_ = warmup_config->first;
+  warmup_url_fetch_in_flight_core_proxy_ = warmup_config->second;
+
+  network_properties_manager_->OnWarmupFetchInitiated(
+      warmup_url_fetch_in_flight_secure_proxy_,
+      warmup_url_fetch_in_flight_core_proxy_);
+
   RecordWarmupURLFetchAttemptEvent(WarmupURLFetchAttemptEvent::kFetchInitiated);
 
   warmup_url_fetcher_->FetchWarmupURL();
@@ -705,7 +778,8 @@ base::TimeTicks DataReductionProxyConfig::GetTicksNow() const {
 net::ProxyConfig DataReductionProxyConfig::ProxyConfigIgnoringHoldback() const {
   if (!enabled_by_user_ || config_values_->proxies_for_http().empty())
     return net::ProxyConfig::CreateDirect();
-  return configurator_->CreateProxyConfig(*network_properties_manager_,
+  return configurator_->CreateProxyConfig(false /* probe_url_config */,
+                                          *network_properties_manager_,
                                           config_values_->proxies_for_http());
 }
 
@@ -771,6 +845,23 @@ const NetworkPropertiesManager&
 DataReductionProxyConfig::GetNetworkPropertiesManager() const {
   DCHECK(thread_checker_.CalledOnValidThread());
   return *network_properties_manager_;
+}
+
+bool DataReductionProxyConfig::IsFetchInFlight() const {
+  DCHECK(thread_checker_.CalledOnValidThread());
+  return warmup_url_fetcher_->IsFetchInFlight();
+}
+
+base::Optional<
+    std::pair<bool /* is_secure_drp_proxy */, bool /*is_core_proxy */>>
+DataReductionProxyConfig::GetInFlightWarmupProxyDetails() const {
+  DCHECK(thread_checker_.CalledOnValidThread());
+
+  if (!IsFetchInFlight())
+    return base::nullopt;
+
+  return std::make_pair(warmup_url_fetch_in_flight_secure_proxy_,
+                        warmup_url_fetch_in_flight_core_proxy_);
 }
 
 }  // namespace data_reduction_proxy
