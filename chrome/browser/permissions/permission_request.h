@@ -16,8 +16,8 @@ struct VectorIcon;
 
 // Used for UMA to record the types of permission prompts shown.
 // This corresponds to the PermissionRequestType enum in
-// src/tools/metrics/histograms.xml. The usual rules of updating UMA values
-// applies to this enum:
+// tools/metrics/histograms/enums.xml. The usual rules of updating UMA
+// values applies to this enum:
 // - don't remove values
 // - only ever add values at the end
 // - keep the PermissionRequestType enum in sync with this definition.
@@ -39,6 +39,7 @@ enum class PermissionRequestType {
   PERMISSION_MEDIASTREAM_CAMERA = 14,
   PERMISSION_ACCESSIBILITY_EVENTS = 15,
   PERMISSION_CLIPBOARD_READ = 16,
+  PERMISSION_SECURITY_KEY_ATTESTATION = 17,
   // NUM must be the last value in the enum.
   NUM
 };
