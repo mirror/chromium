@@ -4912,6 +4912,44 @@ TEST_F(FormAutofillTest, UnownedFormElementsAndFieldSetsToFormDataWithForm) {
       &form, nullptr));
 }
 
+TEST_F(FormAutofillTest, FormlessForms) {
+  std::vector<WebElement> fieldsets;
+  std::vector<WebFormControlElement> control_elements;
+
+  const ExtractMask extract_mask =
+      static_cast<ExtractMask>(EXTRACT_VALUE | EXTRACT_OPTIONS);
+
+  LoadHTML(kUnownedUntitledFormHtml);
+
+  WebLocalFrame* frame = GetMainFrame();
+  ASSERT_NE(nullptr, frame);
+
+  control_elements = GetUnownedAutofillableFormFieldElements(
+      frame->GetDocument().All(), &fieldsets);
+  ASSERT_FALSE(control_elements.empty());
+  ASSERT_TRUE(fieldsets.empty());
+
+  {
+    base::test::ScopedFeatureList feature_list;
+    feature_list.InitAndEnableFeature(
+        features::kAutofillRestrictUnownedFieldsToFormlessCheckout);
+    FormData form;
+    EXPECT_FALSE(UnownedCheckoutFormElementsAndFieldSetsToFormData(
+        fieldsets, control_elements, nullptr, frame->GetDocument(),
+        extract_mask, &form, nullptr));
+  }
+
+  {
+    base::test::ScopedFeatureList feature_list;
+    feature_list.InitAndDisableFeature(
+        features::kAutofillRestrictUnownedFieldsToFormlessCheckout);
+    FormData form;
+    EXPECT_TRUE(UnownedCheckoutFormElementsAndFieldSetsToFormData(
+        fieldsets, control_elements, nullptr, frame->GetDocument(),
+        extract_mask, &form, nullptr));
+  }
+}
+
 TEST_F(FormAutofillTest, FormCache_ExtractNewForms) {
   base::test::ScopedFeatureList feature_list;
   feature_list.InitWithFeatures(
