@@ -181,13 +181,10 @@ gfx::Rect LockWindowState::GetWindowBounds(aura::Window* window) {
 
   keyboard::KeyboardController* keyboard_controller =
       keyboard::KeyboardController::GetInstance();
-  gfx::Rect keyboard_bounds;
-
-  if (keyboard_controller && !keyboard::IsKeyboardOverscrollEnabled() &&
-      keyboard_controller->keyboard_visible()) {
-    keyboard_bounds = keyboard_controller->current_keyboard_bounds();
-  }
-
+  const gfx::Rect keyboard_bounds =
+      keyboard_controller
+          ? keyboard_controller->GetKeyboardLockScreenOffsetBounds()
+          : gfx::Rect();
   gfx::Rect bounds = ScreenUtil::GetDisplayBoundsWithShelf(window);
   bounds.Inset(0, Shelf::ForWindow(window)->GetAccessibilityPanelHeight(), 0,
                keyboard_bounds.height());
