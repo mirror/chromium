@@ -11,10 +11,11 @@
 
 #include "base/base64.h"
 #include "base/command_line.h"
+#include "base/files/file.h"
 #include "base/files/file_path.h"
 #include "base/files/file_util.h"
 #include "base/format_macros.h"
-#include "base/json/json_file_value_serializer.h"
+#include "base/json/json_writer.h"
 #include "base/json/string_escape.h"
 #include "base/logging.h"
 #include "base/strings/string_util.h"
@@ -437,8 +438,20 @@ bool TestResultsTracker::SaveSummaryAsJSON(
   }
   summary_root->Set("test_locations", std::move(test_locations));
 
-  JSONFileValueSerializer serializer(path);
-  return serializer.Serialize(*summary_root);
+  std::string json;
+  base::JSONWriter::Write(*summary_root, &json);
+
+  base::File output(path,
+                    base::File::FLAG_CREATE_ALWAYS | base::File::FLAG_WRITE);
+  if (!output.IsValid())
+    return false;
+
+  if (output.Write(0, json.data(), json.size()) !=
+      static_cast<int>(json.size())) {
+    return false;
+  }
+
+  return output.Flush();
 }
 
 TestResultsTracker::TestStatusMap
