@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ec258126_aa94125e",
+        "filename": "ui/message_center/message_center.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-12-19T16:02:27Z",
+      "side": 1,
+      "message": "I agree that using MessageCenter for this is by no means right, but the problem is ash/ does not have any chrome_strings.grdp/chromium_strings.grdp equivalent. Now we might be able to use ash_message_center_controller.mojom for that purpose?",
+      "revId": "e9a9e665f614611b47fa39e38ac97ea6f4c4092b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d81224cf_f08baa45",
+        "filename": "ui/message_center/message_center.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-12-19T16:02:27Z",
+      "side": 1,
+      "message": "Also sorry for violating this... https://groups.google.com/a/chromium.org/forum/#!topic/chromium-dev/PBs5JfR0Aoc",
+      "revId": "e9a9e665f614611b47fa39e38ac97ea6f4c4092b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46148ba0_95fe5680",
+        "filename": "ui/message_center/views/notification_view_md.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 672,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-12-19T16:02:27Z",
+      "side": 1,
+      "message": "The entire #if~#endif is meant to be a hack (CL: https://crrev.com/c/609820). It should be dead code right now. I\u0027d rather remove 672-689 than add new hack on top of it.\n\nThere might be some remaining call sites, so in such cases it would cause regression. Sorry for leaving this until now, but we have to recheck before making change.",
+      "revId": "e9a9e665f614611b47fa39e38ac97ea6f4c4092b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b760337_4e248b83",
+        "filename": "ui/message_center/views/notification_view_md.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 685,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-12-19T16:02:27Z",
+      "side": 1,
+      "message": "BTW, it defaults to blue accent color, so I think it breaks some notifications e.g. low power notification.",
+      "revId": "e9a9e665f614611b47fa39e38ac97ea6f4c4092b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

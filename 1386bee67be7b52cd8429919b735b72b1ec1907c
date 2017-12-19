@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "84a634eb_87a9fd02",
+        "filename": "ui/message_center/notification.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-12-19T16:02:27Z",
+      "side": 0,
+      "message": "I think it is too verbose and error prone to write l10n_util::GetstringFUTF16(...) on each call site (There are many using this http://shortn/_sfG5ySe4b0 ), so I want to somewhat keep default display source. (such as by moving CreateSystemNotification to ash/)",
+      "revId": "1386bee67be7b52cd8429919b735b72b1ec1907c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
