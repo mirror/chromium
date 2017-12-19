@@ -189,7 +189,7 @@ void AudioInputDeviceManager::OpenedOnIOThread(
     const MediaStreamDevice& device,
     base::TimeTicks start_time,
     const base::Optional<media::AudioParameters>& input_params,
-    const std::string& matched_output_device_id) {
+    const base::Optional<std::string>& matched_output_device_id) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   DCHECK(GetDevice(session_id) == devices_.end());
   DCHECK(!input_params || input_params->IsValid());
