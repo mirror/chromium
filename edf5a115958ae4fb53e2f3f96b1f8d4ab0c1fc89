@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9c4c4577_e3ae1cc8",
+        "filename": "components/security_interstitials/core/common/interfaces/interstitial_commands.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-12-19T20:44:49Z",
+      "side": 1,
+      "message": "Could we make these each a separate method instead of a single method that takes a commend argument? i.e. the methods would be:\n\nDontProceed();\nProceed();\nShowMoreSection();\nOpenHelpCenter();\n...\netc.\n\nThe implementation in SSLErrorTabHelper can then translate each of these methods into a command to pass into CommandReceived(). That way when we get rid of the old code path, we can get rid of the command ids and just have methods, which is way more readable IMO.",
+      "range": {
+        "startLine": 9,
+        "startChar": 2,
+        "endLine": 27,
+        "endChar": 4
+      },
+      "revId": "edf5a115958ae4fb53e2f3f96b1f8d4ab0c1fc89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
