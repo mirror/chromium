@@ -118,6 +118,30 @@
       "revId": "009cc8973247ba06712a651c42ea7e2dcb8bfe96",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b73aaf7_4d036506",
+        "filename": "third_party/WebKit/Source/devtools/front_end/security/SecurityPanel.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 773,
+      "author": {
+        "id": 1135976
+      },
+      "writtenOn": "2017-12-19T03:26:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d7173b4b_b2505534",
+      "range": {
+        "startLine": 773,
+        "startChar": 74,
+        "endLine": 773,
+        "endChar": 82
+      },
+      "revId": "009cc8973247ba06712a651c42ea7e2dcb8bfe96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
