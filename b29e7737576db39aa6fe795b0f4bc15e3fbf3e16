@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f0f21c24_240d439d",
+        "filename": "services/ui/service.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-12-19T16:47:43Z",
+      "side": 1,
+      "message": "\"in process\" is a little bit confusing. We use it in a few places, and it makes discussions difficult (e.g. there\u0027s in-process ozone, etc.). Looking at the code, it looks like this specifically affects cursors/resources. So maybe this could be renamed to be more explicit about that? e.g. |should_initialize_resources|. In fact, we probably don\u0027t even need this to be set? The code can check if |resource_runner| is set, and make decisions based on just that?",
+      "revId": "b29e7737576db39aa6fe795b0f4bc15e3fbf3e16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
