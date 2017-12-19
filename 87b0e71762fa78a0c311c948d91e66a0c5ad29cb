@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "95b107e1_7d128880",
+        "filename": "content/renderer/media/webrtc/rtc_rtp_sender.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-12-19T13:56:24Z",
+      "side": 1,
+      "message": "nit: by -\u003e with",
+      "range": {
+        "startLine": 13,
+        "startChar": 41,
+        "endLine": 13,
+        "endChar": 43
+      },
+      "revId": "87b0e71762fa78a0c311c948d91e66a0c5ad29cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eff66f3f_35b5b487",
+        "filename": "content/renderer/media/webrtc/rtc_rtp_sender.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-12-19T13:56:24Z",
+      "side": 1,
+      "message": "Is it intentional that this one uses |with_track| and variant above uses |std::move(with_track)|?\nBTW, WMST does not seem to have move constructor or assignment (although it should).",
+      "range": {
+        "startLine": 255,
+        "startChar": 26,
+        "endLine": 255,
+        "endChar": 36
+      },
+      "revId": "87b0e71762fa78a0c311c948d91e66a0c5ad29cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "badd78b2_9d64a96e",
+        "filename": "content/renderer/media/webrtc/rtc_rtp_sender.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-12-19T13:56:24Z",
+      "side": 1,
+      "message": "nit: replace \"for you\" with either nothing, or by saying \"automatically creates\".",
+      "range": {
+        "startLine": 37,
+        "startChar": 18,
+        "endLine": 37,
+        "endChar": 21
+      },
+      "revId": "87b0e71762fa78a0c311c948d91e66a0c5ad29cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b5189c8_6d1879e7",
+        "filename": "content/renderer/media/webrtc/rtc_rtp_sender_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-12-19T13:56:24Z",
+      "side": 1,
+      "message": "nit: I think std::make_unique is preferred, even in these cases.",
+      "range": {
+        "startLine": 71,
+        "startChar": 1,
+        "endLine": 71,
+        "endChar": 2
+      },
+      "revId": "87b0e71762fa78a0c311c948d91e66a0c5ad29cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68e954bf_7bd02eec",
+        "filename": "content/renderer/media/webrtc/rtc_rtp_sender_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-12-19T13:56:24Z",
+      "side": 1,
+      "message": "Should you check the return value of this call?",
+      "range": {
+        "startLine": 174,
+        "startChar": 12,
+        "endLine": 174,
+        "endChar": 43
+      },
+      "revId": "87b0e71762fa78a0c311c948d91e66a0c5ad29cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
