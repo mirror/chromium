@@ -52,6 +52,24 @@
       "revId": "3fc357793d72ba064922d7712fa7eadff67a0668",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55d0bcb7_40ea7ac5",
+        "filename": "media/gpu/windows/d3d11_h264_accelerator.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-12-19T19:20:49Z",
+      "side": 1,
+      "message": "every call into D3D11H264Accelerator would have to be proxied over to the gpu main thread, in that case.\n\nright now, the VideoDecoder itself that uses all of this proxies over to the gpu main thread from some other (mojo) thread.  if we can combine those, so that the VideoDecoder and H264Decoder run on the mojo thread, and just hop the accelerator over to gpu main, then that seems like an improvement to me.\n\notherwise, it\u0027s a very large amount of thread hopping.\n\ni\u0027ll see if it\u0027s possible to do that.",
+      "parentUuid": "56da4a44_fc104406",
+      "revId": "3fc357793d72ba064922d7712fa7eadff67a0668",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
