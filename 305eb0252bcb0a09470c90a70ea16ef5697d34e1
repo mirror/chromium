@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "62bdb6d2_7c4b24c1",
+        "filename": "chrome/browser/extensions/extension_messages_apitest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1421,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-19T05:43:14Z",
+      "side": 1,
+      "message": "The disadvantage to doing that is that the test will timeout, rather than fail.  This makes it harder to diagnose, since you won\u0027t have the handy-dandy expect-equals logs that say \"expected foo, got bar\", but instead just see an opaque stack trace.  I\u0027d like to avoid that if possible.  (Admittedly, if a *different* message failed, like the \"on ready\" message, this will still timeout, but that\u0027s really not what this test is testing, and would [hopefully] affect many more tests as well).",
+      "parentUuid": "080c5f0e_78a0b6f0",
+      "range": {
+        "startLine": 1420,
+        "startChar": 11,
+        "endLine": 1421,
+        "endChar": 55
+      },
+      "revId": "305eb0252bcb0a09470c90a70ea16ef5697d34e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "02dad88c_4733ee78",
         "filename": "extensions/browser/api/messaging/message_service.cc",
         "patchSetId": 4
@@ -132,6 +156,30 @@
       "side": 1,
       "message": "Is this codepath also used for normal renderers (web pages) trying to connect to extensions? Does this change also change StoragePartition for them?",
       "parentUuid": "ef97f1d6_0c0ce983",
+      "range": {
+        "startLine": 824,
+        "startChar": 8,
+        "endLine": 824,
+        "endChar": 22
+      },
+      "revId": "305eb0252bcb0a09470c90a70ea16ef5697d34e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e38011c6_1e18f1f5",
+        "filename": "extensions/browser/api/messaging/message_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 824,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-19T05:43:14Z",
+      "side": 1,
+      "message": "This should *not* change the value for web pages, since web pages (and extensions) all use the the \"default\" storage partition for the BrowserContext - at least, that\u0027s my understanding.  This is also (theoretically) tested in the existing TLS channel ID tests (in the same extension_messages_apitest.cc file).  Lemme know if you see a gap in the testing that you think this will affect.",
+      "parentUuid": "2c983d44_81d1cf31",
       "range": {
         "startLine": 824,
         "startChar": 8,
