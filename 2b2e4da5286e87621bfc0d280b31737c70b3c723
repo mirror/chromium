@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d3fac70c_ea5ef2a2",
+        "filename": "third_party/WebKit/Source/core/dom/ComputedAccessibleNode.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-12-19T02:17:46Z",
+      "side": 1,
+      "message": "elt \u003d\u003e element\n\nThe same comment for other parts in this CL.",
+      "revId": "2b2e4da5286e87621bfc0d280b31737c70b3c723",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "254eb9d0_06cc3db5",
+        "filename": "third_party/WebKit/Source/core/dom/ElementRareData.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-12-19T02:17:46Z",
+      "side": 1,
+      "message": "This doesn\u0027t need to be TraceWrapperMember since you\u0027re not tracing computed_accessible_node_ in TraceWrappers().\n\nmlippautz, keishi: Can we add a clang check for TraceWrappers?",
+      "revId": "2b2e4da5286e87621bfc0d280b31737c70b3c723",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
