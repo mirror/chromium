@@ -7,8 +7,10 @@
 #include "bindings/core/v8/V8CacheOptions.h"
 #include "core/dom/Document.h"
 #include "core/dom/SecurityContext.h"
+#include "core/frame/WebLocalFrameImpl.h"
 #include "core/frame/csp/ContentSecurityPolicy.h"
 #include "core/inspector/ThreadDebugger.h"
+#include "core/loader/WorkerFetchContext.h"
 #include "core/origin_trials/OriginTrialContext.h"
 #include "core/workers/GlobalScopeCreationParams.h"
 #include "core/workers/ThreadedWorkletObjectProxy.h"
@@ -19,15 +21,16 @@
 #include "platform/CrossThreadFunctional.h"
 #include "platform/WebTaskRunner.h"
 #include "public/platform/TaskType.h"
+#include "public/platform/WebWorkerFetchContext.h"
+#include "public/web/WebFrameClient.h"
 
 namespace blink {
 
 ThreadedWorkletMessagingProxy::ThreadedWorkletMessagingProxy(
-    ExecutionContext* execution_context,
-    WorkerClients* worker_clients)
-    : ThreadedMessagingProxyBase(execution_context, worker_clients) {}
+    ExecutionContext* execution_context)
+    : ThreadedMessagingProxyBase(execution_context) {}
 
-void ThreadedWorkletMessagingProxy::Initialize() {
+void ThreadedWorkletMessagingProxy::Initialize(WorkerClients* worker_clients) {
   DCHECK(IsMainThread());
   if (AskedToTerminate())
     return;
@@ -38,11 +41,26 @@ void ThreadedWorkletMessagingProxy::Initialize() {
   ContentSecurityPolicy* csp = document->GetContentSecurityPolicy();
   DCHECK(csp);
 
+  WebLocalFrameImpl* web_frame =
+      WebLocalFrameImpl::FromFrame(document->GetFrame());
+  // |web_frame| is null in some unit tests.
+  if (web_frame) {
+    std::unique_ptr<WebWorkerFetchContext> web_worker_fetch_context =
+        web_frame->Client()->CreateWorkerFetchContext();
+    DCHECK(web_worker_fetch_context);
+    web_worker_fetch_context->SetApplicationCacheHostID(
+        document->Fetcher()->Context().ApplicationCacheHostID());
+    web_worker_fetch_context->SetIsOnSubframe(
+        document->GetFrame() != document->GetFrame()->Tree().Top());
+    ProvideWorkerFetchContextToWorker(worker_clients,
+                                      std::move(web_worker_fetch_context));
+  }
+
   auto global_scope_creation_params =
       std::make_unique<GlobalScopeCreationParams>(
           document->Url(), document->UserAgent(), csp->Headers().get(),
           document->GetReferrerPolicy(), document->GetSecurityOrigin(),
-          ReleaseWorkerClients(), document->AddressSpace(),
+          worker_clients, document->AddressSpace(),
           OriginTrialContext::GetTokens(document).get(),
           std::make_unique<WorkerSettings>(document->GetSettings()),
           kV8CacheOptionsDefault);

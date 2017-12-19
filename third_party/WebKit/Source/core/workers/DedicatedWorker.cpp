@@ -14,6 +14,7 @@
 #include "core/frame/UseCounter.h"
 #include "core/frame/WebLocalFrameImpl.h"
 #include "core/inspector/MainThreadDebugger.h"
+#include "core/loader/WorkerFetchContext.h"
 #include "core/origin_trials/OriginTrialContext.h"
 #include "core/probe/CoreProbes.h"
 #include "core/workers/DedicatedWorkerMessagingProxy.h"
@@ -24,6 +25,7 @@
 #include "platform/loader/fetch/ResourceFetcher.h"
 #include "platform/weborigin/SecurityPolicy.h"
 #include "public/platform/WebContentSettingsClient.h"
+#include "public/platform/WebWorkerFetchContext.h"
 #include "public/web/WebFrameClient.h"
 #include "services/network/public/interfaces/fetch_api.mojom-blink.h"
 #include "services/service_manager/public/cpp/interface_provider.h"
@@ -81,7 +83,7 @@ DedicatedWorker::DedicatedWorker(ExecutionContext* context,
     : AbstractWorker(context),
       script_url_(script_url),
       options_(options),
-      context_proxy_(CreateMessagingProxy(context)) {
+      context_proxy_(new DedicatedWorkerMessagingProxy(context, this)) {
   DCHECK(IsMainThread());
   DCHECK(script_url_.IsValid());
   DCHECK(context_proxy_);
@@ -166,10 +168,8 @@ bool DedicatedWorker::HasPendingActivity() const {
   return context_proxy_->HasPendingActivity() || script_loader_;
 }
 
-DedicatedWorkerMessagingProxy* DedicatedWorker::CreateMessagingProxy(
-    ExecutionContext* context) {
-  DCHECK(IsMainThread());
-  Document* document = ToDocument(context);
+WorkerClients* DedicatedWorker::CreateWorkerClients() {
+  Document* document = ToDocument(GetExecutionContext());
   WebLocalFrameImpl* web_frame =
       WebLocalFrameImpl::FromFrame(document->GetFrame());
 
@@ -180,7 +180,17 @@ DedicatedWorkerMessagingProxy* DedicatedWorker::CreateMessagingProxy(
       *worker_clients);
   ProvideContentSettingsClientToWorker(
       worker_clients, web_frame->Client()->CreateWorkerContentSettingsClient());
-  return new DedicatedWorkerMessagingProxy(context, this, worker_clients);
+
+  std::unique_ptr<WebWorkerFetchContext> web_worker_fetch_context =
+      web_frame->Client()->CreateWorkerFetchContext();
+  DCHECK(web_worker_fetch_context);
+  web_worker_fetch_context->SetApplicationCacheHostID(
+      document->Fetcher()->Context().ApplicationCacheHostID());
+  web_worker_fetch_context->SetIsOnSubframe(document->GetFrame() !=
+                                            document->GetFrame()->Tree().Top());
+  ProvideWorkerFetchContextToWorker(worker_clients,
+                                    std::move(web_worker_fetch_context));
+  return worker_clients;
 }
 
 void DedicatedWorker::OnResponse() {
@@ -221,7 +231,7 @@ DedicatedWorker::CreateGlobalScopeCreationParams() {
   return std::make_unique<GlobalScopeCreationParams>(
       script_url_, GetExecutionContext()->UserAgent(),
       document->GetContentSecurityPolicy()->Headers().get(),
-      kReferrerPolicyDefault, starter_origin, nullptr /* worker_clients */,
+      kReferrerPolicyDefault, starter_origin, CreateWorkerClients(),
       document->AddressSpace(), OriginTrialContext::GetTokens(document).get(),
       std::make_unique<WorkerSettings>(document->GetSettings()),
       kV8CacheOptionsDefault,
@@ -234,6 +244,7 @@ const AtomicString& DedicatedWorker::InterfaceName() const {
 }
 
 void DedicatedWorker::Trace(blink::Visitor* visitor) {
+  visitor->Trace(worker_clients_);
   visitor->Trace(context_proxy_);
   AbstractWorker::Trace(visitor);
 }
