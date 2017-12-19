@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8b00e64c_f52c8e1d",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 34433,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-12-19T00:55:52Z",
+      "side": 1,
+      "message": "Please refer to it by name, as bucket #2 doesn\u0027t mean much to people viewing the dashboard.\n\"(Another Add Passes View Controller Is Presented)\"",
+      "range": {
+        "startLine": 34433,
+        "startChar": 11,
+        "endLine": 34433,
+        "endChar": 21
+      },
+      "revId": "6ca7403795d06581f5f93a3ef71f8bc48a188380",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
