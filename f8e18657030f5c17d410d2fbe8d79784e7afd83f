@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "2b84f68d_d8bc348f",
+        "filename": "components/autofill/content/renderer/autofill_agent.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 598,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-12-19T14:34:38Z",
+      "side": 1,
+      "message": "Also to be sure that I fully understand you: Are you saying that I am breaking something or that this is something that we should investigate because it could have broken autofill for some time already?",
+      "parentUuid": "011775a0_f94d1063",
+      "revId": "f8e18657030f5c17d410d2fbe8d79784e7afd83f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "78d46fa6_54b15289",
         "filename": "components/autofill/content/renderer/password_autofill_agent.cc",
         "patchSetId": 2
@@ -124,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "a8fbd062_80c0b28d",
+        "filename": "components/autofill/content/renderer/password_autofill_agent.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-12-19T14:34:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a2120e5_1a3828d0",
+      "revId": "f8e18657030f5c17d410d2fbe8d79784e7afd83f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ee054872_1026248a",
         "filename": "third_party/WebKit/Source/core/exported/WebFormControlElement.cpp",
         "patchSetId": 2
@@ -147,6 +183,30 @@
     },
     {
       "key": {
+        "uuid": "f7422756_20534e40",
+        "filename": "third_party/WebKit/Source/core/exported/WebFormControlElement.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-12-19T14:34:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ee054872_1026248a",
+      "range": {
+        "startLine": 64,
+        "startChar": 63,
+        "endLine": 64,
+        "endChar": 64
+      },
+      "revId": "f8e18657030f5c17d410d2fbe8d79784e7afd83f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a9cc5e8_4d57ae09",
         "filename": "third_party/WebKit/public/web/WebFormControlElement.h",
         "patchSetId": 2
@@ -167,6 +227,30 @@
       "revId": "f8e18657030f5c17d410d2fbe8d79784e7afd83f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2137d835_baedd1a3",
+        "filename": "third_party/WebKit/public/web/WebFormControlElement.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-12-19T14:34:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a9cc5e8_4d57ae09",
+      "range": {
+        "startLine": 60,
+        "startChar": 2,
+        "endLine": 61,
+        "endChar": 26
+      },
+      "revId": "f8e18657030f5c17d410d2fbe8d79784e7afd83f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
