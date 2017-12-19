@@ -16,6 +16,24 @@
       "revId": "c98ba11ac16ffdb69ae66c747ec50ce02ed30f33",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c0035cd_651aeb89",
+        "filename": "ui/ozone/platform/drm/common/drm_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-19T21:17:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "62220a3d_1307fed7",
+      "revId": "c98ba11ac16ffdb69ae66c747ec50ce02ed30f33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
