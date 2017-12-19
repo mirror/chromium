@@ -26,6 +26,7 @@ class Profile;
 namespace chromeos {
 class NetworkStateHandler;
 namespace tether {
+class GmsCoreNotificationsStateTracker;
 class GmsCoreNotificationsStateTrackerImpl;
 class NotificationPresenter;
 }  // namespace tether
@@ -66,6 +67,9 @@ class TetherService : public KeyedService,
   // reach chromeos::NetworkStateHandler::TechnologyState::ENABLED are reached.
   // Should only be called once a user is logged in.
   virtual void StartTetherIfPossible();
+
+  virtual chromeos::tether::GmsCoreNotificationsStateTracker*
+  GetGmsCoreNotificationsStateTracker();
 
  protected:
   // KeyedService:
