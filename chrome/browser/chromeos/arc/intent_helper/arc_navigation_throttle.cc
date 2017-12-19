@@ -7,6 +7,7 @@
 #include <algorithm>
 
 #include "base/bind.h"
+#include "base/hash.h"
 #include "base/logging.h"
 #include "base/memory/ref_counted.h"
 #include "base/metrics/histogram_macros.h"
@@ -30,6 +31,8 @@
 namespace arc {
 
 namespace {
+
+constexpr int kMinimumToAvoidAutodisplay = 2;
 
 constexpr char kGoogleCom[] = "google.com";
 
@@ -97,6 +100,9 @@ size_t FindPreferredApp(
 }
 
 }  // namespace
+
+// static
+std::map<uint32_t, int> ArcNavigationThrottle::dialog_deactivated_counter_ = {};
 
 ArcNavigationThrottle::ArcNavigationThrottle(
     content::NavigationHandle* navigation_handle)
@@ -279,12 +285,26 @@ bool ArcNavigationThrottle::FoundPreferredOrVerifiedArcApp(
     for (const auto& handler : handlers)
       activities.emplace_back(handler->package_name, handler->activity_name);
 
-    intent_helper_bridge->GetActivityIcons(
-        activities,
-        base::BindOnce(
-            &ArcNavigationThrottle::AsyncOnAppIconsReceived,
-            chrome::FindBrowserWithWebContents(handle->GetWebContents()),
-            std::move(handlers), url));
+    // Auto-displaying the UI can be avoided if the user has ignored (via
+    // tapping outside of the UI or pressing the close button) 2 times or more.
+    auto it = ArcNavigationThrottle::dialog_deactivated_counter_.find(
+        base::Hash(url.GetWithoutFilename().spec()));
+
+    if (it == ArcNavigationThrottle::dialog_deactivated_counter_.end() ||
+        (it != ArcNavigationThrottle::dialog_deactivated_counter_.end() &&
+         it->second < kMinimumToAvoidAutodisplay)) {
+      intent_helper_bridge->GetActivityIcons(
+          activities,
+          base::BindOnce(
+              &ArcNavigationThrottle::AsyncOnAppIconsReceived,
+              chrome::FindBrowserWithWebContents(handle->GetWebContents()),
+              std::move(handlers), url));
+    } else {
+      Browser* browser = chrome::FindBrowserWithWebContents(
+          navigation_handle()->GetWebContents());
+      if (browser)
+        chrome::SetIntentPickerViewVisibility(browser, true);
+    }
   }
 
   return cancel_navigation;
@@ -310,7 +330,8 @@ void ArcNavigationThrottle::AsyncOnAppIconsReceived(
 
   chrome::QueryAndDisplayArcApps(
       browser, app_info,
-      base::Bind(&ArcNavigationThrottle::AsyncOnIntentPickerClosed, url));
+      base::BindRepeating(&ArcNavigationThrottle::AsyncOnIntentPickerClosed,
+                          url));
 }
 
 // static
@@ -331,6 +352,18 @@ void ArcNavigationThrottle::AsyncOnIntentPickerClosed(
     case CloseReason::ERROR:
     case CloseReason::CHROME_PRESSED:
     case CloseReason::DIALOG_DEACTIVATED: {
+      uint32_t domain_hash = base::Hash(url.GetWithoutFilename().spec());
+      auto it =
+          ArcNavigationThrottle::dialog_deactivated_counter_.find(domain_hash);
+      if (it == dialog_deactivated_counter_.end()) {
+        ArcNavigationThrottle::dialog_deactivated_counter_.insert(
+            std::pair<uint32_t, int>(domain_hash, 1));
+      } else {
+        if (it->second < kMinimumToAvoidAutodisplay) {
+          // No need for a precise counter here.
+          it->second = kMinimumToAvoidAutodisplay;
+        }
+      }
       break;
     }
     case CloseReason::PREFERRED_ACTIVITY_FOUND: {
