@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2c0fd408_45de4144",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-12-19T22:23:21Z",
+      "side": 1,
+      "message": "nit: Minimum time delay between storage cleanups.\n(or something like that)",
+      "range": {
+        "startLine": 63,
+        "startChar": 0,
+        "endLine": 64,
+        "endChar": 8
+      },
+      "revId": "c80e59368cf71484ab803af4556b6fd1c70356d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9de57c40_6c19b862",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-12-19T22:23:21Z",
+      "side": 1,
+      "message": "Is it really necessary to change to on disk storage?",
+      "range": {
+        "startLine": 205,
+        "startChar": 21,
+        "endLine": 205,
+        "endChar": 31
+      },
+      "revId": "c80e59368cf71484ab803af4556b6fd1c70356d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8f30ffb_639ccb11",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-12-19T22:23:21Z",
+      "side": 1,
+      "message": "Instead of creating this new method, can\u0027t this be the start of BuildModel and/or BuildStore?",
+      "range": {
+        "startLine": 222,
+        "startChar": 0,
+        "endLine": 225,
+        "endChar": 1
+      },
+      "revId": "c80e59368cf71484ab803af4556b6fd1c70356d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
