@@ -167,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "ccca1e88_e223cbfb",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/StartupPageLoadMetricsObserver.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-12-19T17:07:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2f89afdb_b814fe06",
+      "range": {
+        "startLine": 25,
+        "startChar": 43,
+        "endLine": 25,
+        "endChar": 76
+      },
+      "revId": "ae0f5b437de826e709b8b03167c26f1b31500680",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ac0cf9a2_83171c81",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/UmaUtils.java",
         "patchSetId": 3
@@ -379,6 +403,30 @@
     },
     {
       "key": {
+        "uuid": "1712302e_fb7fae4c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/UmaUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-12-19T17:07:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1ec922e5_39c73adb",
+      "range": {
+        "startLine": 68,
+        "startChar": 8,
+        "endLine": 68,
+        "endChar": 44
+      },
+      "revId": "ae0f5b437de826e709b8b03167c26f1b31500680",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fb734505_5eb8f1c9",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/UmaUtils.java",
         "patchSetId": 3
@@ -497,6 +545,30 @@
     },
     {
       "key": {
+        "uuid": "70d13e22_c2b02bbd",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/UmaUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-12-19T17:07:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7e378e0e_b9216675",
+      "range": {
+        "startLine": 77,
+        "startChar": 8,
+        "endLine": 77,
+        "endChar": 42
+      },
+      "revId": "ae0f5b437de826e709b8b03167c26f1b31500680",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b9c067a7_290074eb",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/UmaUtils.java",
         "patchSetId": 3
@@ -565,6 +637,30 @@
       "revId": "ae0f5b437de826e709b8b03167c26f1b31500680",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f187f552_96545362",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/UmaUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-12-19T17:07:04Z",
+      "side": 1,
+      "message": "Didn\u0027t notice, than then we are losing the check that the first contentful paint wasn\u0027t recorded before. This function shouldn\u0027t be called more than once though...",
+      "parentUuid": "2ba4c2d7_39aa3edf",
+      "range": {
+        "startLine": 90,
+        "startChar": 8,
+        "endLine": 90,
+        "endChar": 35
+      },
+      "revId": "ae0f5b437de826e709b8b03167c26f1b31500680",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -730,6 +826,30 @@
       "revId": "ae0f5b437de826e709b8b03167c26f1b31500680",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0f1f896_92148359",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/metrics/PageLoadMetricsTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-12-19T17:07:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b920f407_2d76e1e8",
+      "range": {
+        "startLine": 148,
+        "startChar": 16,
+        "endLine": 148,
+        "endChar": 27
+      },
+      "revId": "ae0f5b437de826e709b8b03167c26f1b31500680",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
