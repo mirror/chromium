@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8793b860_997a51d2",
+        "filename": "chrome/browser/subresource_filter/chrome_subresource_filter_client.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-12-19T17:37:44Z",
+      "side": 1,
+      "message": "Remove blank line",
+      "revId": "296eec9f9b28b040b3db353fcb6ff680749a4b25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed2cccb6_7f9d414b",
+        "filename": "chrome/browser/subresource_filter/subresource_filter_settings_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-12-19T17:37:44Z",
+      "side": 1,
+      "message": "probably need to #include gmock",
+      "revId": "296eec9f9b28b040b3db353fcb6ff680749a4b25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

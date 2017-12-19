@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d755ba2b_e6a599a1",
+        "filename": "chrome/browser/ui/blocked_content/safe_browsing_triggered_popup_blocker_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-12-19T17:37:44Z",
+      "side": 0,
+      "message": "Is this just a cleanup? Maybe split it into another CL so this one is cleaner.",
+      "revId": "9739d021f5f138df32e481b163ce94e86af165df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
