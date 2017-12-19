@@ -15,7 +15,6 @@
 #include "chrome/browser/extensions/install_observer.h"
 #include "content/public/browser/notification_observer.h"
 #include "content/public/browser/notification_registrar.h"
-#include "google_apis/gaia/oauth2_token_service.h"
 
 class Profile;
 
@@ -23,17 +22,12 @@ namespace chromeos {
 
 // Launches the app at startup. The flow roughly looks like this:
 // First call Initialize():
-// - Attempts to load oauth token file. Stores the loaded tokens in
-//   |auth_params_|.
-// - Initialize token service and inject |auth_params_| if needed.
 // - Initialize network if app is not installed or not offline_enabled.
 // - If network is online, install or update the app as needed.
 // - After the app is installed/updated, launch it and finish the flow;
 // Report OnLauncherInitialized() or OnLaunchFailed() to observers:
 // - If all goes good, launches the app and finish the flow;
-class StartupAppLauncher : public base::SupportsWeakPtr<StartupAppLauncher>,
-                           public OAuth2TokenService::Observer,
-                           public extensions::InstallObserver,
+class StartupAppLauncher : public extensions::InstallObserver,
                            public KioskAppManagerObserver,
                            public content::NotificationObserver {
  public:
@@ -50,8 +44,6 @@ class StartupAppLauncher : public base::SupportsWeakPtr<StartupAppLauncher>,
     // skip app installation steps.
     virtual bool ShouldSkipAppInstallation() = 0;
 
-    virtual void OnLoadingOAuthFile() = 0;
-    virtual void OnInitializingTokenService() = 0;
     virtual void OnInstallingApp() = 0;
     virtual void OnReadyToLaunch() = 0;
     virtual void OnLaunchSucceeded() = 0;
@@ -104,10 +96,6 @@ class StartupAppLauncher : public base::SupportsWeakPtr<StartupAppLauncher>,
   void MaybeCheckExtensionUpdate();
   void OnExtensionUpdateCheckFinished();
 
-  void StartLoadingOAuthFile();
-  static void LoadOAuthFileAsync(KioskOAuthParams* auth_params);
-  void OnOAuthFileLoaded(KioskOAuthParams* auth_params);
-
   void OnKioskAppDataLoadStatusChanged(const std::string& app_id);
 
   // Returns true if any secondary app is pending.
@@ -129,10 +117,6 @@ class StartupAppLauncher : public base::SupportsWeakPtr<StartupAppLauncher>,
 
   const extensions::Extension* GetPrimaryAppExtension() const;
 
-  // OAuth2TokenService::Observer overrides.
-  void OnRefreshTokenAvailable(const std::string& account_id) override;
-  void OnRefreshTokensLoaded() override;
-
   // extensions::InstallObserver overrides.
   void OnFinishCrxInstall(const std::string& extension_id,
                           bool success) override;
@@ -146,10 +130,10 @@ class StartupAppLauncher : public base::SupportsWeakPtr<StartupAppLauncher>,
                const content::NotificationSource& source,
                const content::NotificationDetails& details) override;
 
-  Profile* profile_;
+  Profile* const profile_;
   const std::string app_id_;
   const bool diagnostic_mode_;
-  Delegate* delegate_;
+  Delegate* const delegate_;
   bool network_ready_handled_ = false;
   int launch_attempt_ = 0;
   bool ready_to_launch_ = false;
@@ -157,8 +141,9 @@ class StartupAppLauncher : public base::SupportsWeakPtr<StartupAppLauncher>,
   bool secondary_apps_installed_ = false;
   bool extension_update_found_ = false;
 
-  KioskOAuthParams auth_params_;
   content::NotificationRegistrar registrar_;
+
+  base::WeakPtrFactory<StartupAppLauncher> weak_ptr_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(StartupAppLauncher);
 };
