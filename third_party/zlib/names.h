@@ -176,4 +176,9 @@
 #define inflate_fast_chunk_ Cr_z_inflate_fast_chunk_
 #endif
 
+#if defined(CRC32_SIMD_SSE42_PCLMUL)
+/* Symbols added by crc32_simd.c */
+#define crc32_pclmul_simd_ Cr_z_crc32_pclmul_simd_
+#endif
+
 #endif  /* THIRD_PARTY_ZLIB_NAMES_H_ */
