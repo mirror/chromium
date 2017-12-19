@@ -54,6 +54,13 @@ QuotaPolicyCookieStore::~QuotaPolicyCookieStore() {
   }
 
   persistent_store_->DeleteAllInList(session_only_cookies);
+  // Block shutdown on flush of backing store to disk.
+  persistent_store_->Close(base::CreateSequencedTaskRunnerWithTraits(
+      {base::MayBlock(),
+       // TODO(http://crbug.com/793069): Switch to using task_funneling
+       // when available.
+       base::WithBaseSyncPrimitives(), base::TaskPriority::BACKGROUND,
+       base::TaskShutdownBehavior::BLOCK_SHUTDOWN}));
 }
 
 void QuotaPolicyCookieStore::Load(const LoadedCallback& loaded_callback) {
@@ -161,7 +168,7 @@ std::unique_ptr<net::CookieStore> CreateCookieStore(
     if (!background_task_runner.get()) {
       background_task_runner = base::CreateSequencedTaskRunnerWithTraits(
           {base::MayBlock(), base::TaskPriority::BACKGROUND,
-           base::TaskShutdownBehavior::BLOCK_SHUTDOWN});
+           base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN});
     }
 
     scoped_refptr<net::SQLitePersistentCookieStore> sqlite_store(

@@ -19,8 +19,11 @@
 #include "base/sequenced_task_runner.h"
 #include "base/strings/stringprintf.h"
 #include "base/synchronization/waitable_event.h"
+#include "base/task_runner.h"
 #include "base/task_scheduler/post_task.h"
 #include "base/test/scoped_task_environment.h"
+#include "base/threading/platform_thread.h"
+#include "base/threading/thread.h"
 #include "base/threading/thread_restrictions.h"
 #include "base/time/time.h"
 #include "crypto/encryptor.h"
@@ -881,7 +884,7 @@ TEST_F(SQLitePersistentCookieStoreTest, EmptyLoadAfterClose) {
 
   // Create the cookie store, but immediately close it.
   Create(false, false);
-  store_->Close(base::Closure());
+  store_->Close(scoped_refptr<base::TaskRunner>());
 
   // Expect any attempt to call Load() to synchronously respond with an empty
   // vector of cookies after we've Close()d the database.
@@ -894,6 +897,64 @@ TEST_F(SQLitePersistentCookieStoreTest, EmptyLoadAfterClose) {
   store_->LoadCookiesForKey("foo.bar", base::Bind(WasCalledWithNoCookies,
                                                   &was_called_with_no_cookies));
   EXPECT_TRUE(was_called_with_no_cookies);
+}
+
+namespace {
+
+void WriteTrue(bool* output) {
+  *output = true;
+}
+
+void WaitOnEvent(base::WaitableEvent* event) {
+  base::ScopedAllowBaseSyncPrimitivesForTesting allow_base_sync_primitives;
+  event->Wait();
+}
+
+}  // namespace
+
+TEST_F(SQLitePersistentCookieStoreTest, CloseTaskRunnerBlockedOnWrites) {
+  InitializeStore(false, false);
+
+  // Task to control running of background processing thread.
+  base::WaitableEvent block_background_event(
+      base::WaitableEvent::ResetPolicy::MANUAL,
+      base::WaitableEvent::InitialState::NOT_SIGNALED);
+  background_task_runner_->PostTask(
+      FROM_HERE,
+      base::BindOnce(&WaitOnEvent, base::Unretained(&block_background_event)));
+
+  // AddCookie will be blocked on the task posted above.
+  AddCookie("name", "value123XYZ", "foo.bar", "/", base::Time::Now());
+
+  // New Task runner to be delayed on completion of all write tasks.
+  scoped_refptr<base::SequencedTaskRunner> blocking_task_runner(
+      base::CreateSequencedTaskRunnerWithTraits(
+          {base::MayBlock(), base::WithBaseSyncPrimitives()}));
+  store_->Close(blocking_task_runner);
+  bool task_run = false;
+  blocking_task_runner->PostTask(FROM_HERE,
+                                 base::BindOnce(&WriteTrue, &task_run));
+
+  // Status:
+  //    * Write task for the AddCookie posted to background_task_runner
+  //      of the SQLitePersistentCookieStore.  Blocked on event declared
+  //      above.
+  //    * Task posted to separately created TaskRunner which blocks waiting
+  //      for the above task to run.  This is what's being tested.
+  //    * Task posted to the same separately created thread that signals back
+  //      when that task has run.
+  EXPECT_FALSE(task_run);
+
+  // Sleep this thread for a short period of time to give the other thread
+  // a chance to run.  (RunUntilIdle() in its various forms can't be used
+  // because task runners are blocked will never become idle.)
+  base::PlatformThread::Sleep(base::TimeDelta::FromMilliseconds(200));
+  EXPECT_FALSE(task_run);
+
+  // The task should run after the store background tasks have run.
+  block_background_event.Signal();
+  NetTestSuite::GetScopedTaskEnvironment()->RunUntilIdle();
+  EXPECT_TRUE(task_run);
 }
 
 }  // namespace net
