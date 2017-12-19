@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "5cfb6a41_270d2458",
+        "filename": "third_party/WebKit/Source/platform/heap/Member.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 587,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-12-19T08:16:31Z",
+      "side": 1,
+      "message": "Makes sense. So those objects are eagerly traced instead of having write-barriers, right?\n\nIt will work but it has a risk of dispatching theoretically unbounded tracings while a mutator is running (because any assignment to HeapVector\u003cT\u003e will dispatch the eager-tracing). I guess it will be problematic.\n\nHowever, the tricky part is that there will be no way to add a write-barrier to T because T is not on Oilpan.\n\nMaybe can we add a write-barrier to the vector backing?",
+      "parentUuid": "61757720_0ced7e8f",
+      "revId": "1a1df4f049051f6bb684c9bf5542ba4fd8dd8d00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9acb8f31_d4982b43",
         "filename": "third_party/WebKit/Source/platform/heap/ThreadState.h",
         "patchSetId": 6
@@ -141,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "57f3eb91_c2f07149",
+        "filename": "third_party/WebKit/Source/platform/wtf/ConstructTraits.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-12-19T08:16:31Z",
+      "side": 1,
+      "message": "When can Vector\u003cT\u003e happens? It doesn\u0027t look like a valid use case. If T has a trace method, it must be HeapVector\u003cT\u003e. Otherwise, no one traces into the vector.\n\nIn other words, I\u0027d prefer adding static_assert(0) to line 76.",
+      "parentUuid": "84ebf683_062d1ea0",
+      "revId": "1a1df4f049051f6bb684c9bf5542ba4fd8dd8d00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8e4970d5_0d8e16a3",
         "filename": "third_party/WebKit/Source/platform/wtf/ConstructTraits.h",
         "patchSetId": 6
@@ -205,6 +241,24 @@
       "side": 1,
       "message": "It\u0027s when we in-place construct objects in a vector, or move a vector of such objects.\n\nSee IncrementalMarkingTest.cc dealing with \"NonGarbageCollectedContainer\". For example, HeapVectorEmplaceBackNonGCedContainer or HeapVectorCopyNonGCedContainer.",
       "parentUuid": "43218f92_b48cdd70",
+      "revId": "1a1df4f049051f6bb684c9bf5542ba4fd8dd8d00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9df9e7d7_506dabf3",
+        "filename": "third_party/WebKit/Source/platform/wtf/ConstructTraits.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-12-19T08:16:31Z",
+      "side": 1,
+      "message": "Ah, I was confused because this CL has #if 0 to NotifyNewObject :) Makes sense.",
+      "parentUuid": "ceaee77b_49001d7c",
       "revId": "1a1df4f049051f6bb684c9bf5542ba4fd8dd8d00",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
