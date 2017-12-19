@@ -239,6 +239,17 @@ BrowserGpuChannelHostFactory::BrowserGpuChannelHostFactory()
               gpu_client_id_, cache_dir));
     }
   }
+  // For performance reasons, discourage storing videoFrames in a multiplanar
+  // GpuMemoryBuffer if this is not native, see https://crbug.com/791676.
+  if (!gpu_memory_buffer_manager_->IsNativeGpuMemoryBufferConfiguration(
+          gfx::BufferFormat::YUV_420_BIPLANAR,
+          gfx::BufferUsage::GPU_READ_CPU_READ_WRITE) &&
+      !gpu_memory_buffer_manager_->IsNativeGpuMemoryBufferConfiguration(
+          gfx::BufferFormat::YVU_420,
+          gfx::BufferUsage::GPU_READ_CPU_READ_WRITE)) {
+    base::CommandLine::ForCurrentProcess()->AppendSwitch(
+        switches::kDisableMultiplanarGpuMemoryBuffersForVideoFrames);
+  }
 }
 
 BrowserGpuChannelHostFactory::~BrowserGpuChannelHostFactory() {

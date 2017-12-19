@@ -1534,8 +1534,11 @@ media::GpuVideoAcceleratorFactories* RenderThreadImpl::GetGpuFactories() {
   gpu_factories_.push_back(GpuVideoAcceleratorFactoriesImpl::Create(
       std::move(gpu_channel_host), base::ThreadTaskRunnerHandle::Get(),
       media_task_runner, std::move(media_context_provider),
-      enable_gpu_memory_buffer_video_frames, texture_target_exception_list_,
-      enable_video_accelerator, vea_provider.PassInterface()));
+      enable_gpu_memory_buffer_video_frames,
+      cmd_line->HasSwitch(
+          switches::kDisableMultiplanarGpuMemoryBuffersForVideoFrames),
+      texture_target_exception_list_, enable_video_accelerator,
+      vea_provider.PassInterface()));
   return gpu_factories_.back().get();
 }
 
