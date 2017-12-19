@@ -898,6 +898,8 @@ bool RenderWidgetHostViewEventHandler::ShouldMoveToCenter() {
 
 bool RenderWidgetHostViewEventHandler::ShouldRouteEvent(
     const ui::Event* event) const {
+  return true;  // XXX(sad): We may end up actually just shipping with this, so
+                //           that all events go through the router.
   // We should route an event in two cases:
   // 1) Mouse events are routed only if cross-process frames are possible.
   // 2) Touch events are always routed. In the absence of a BrowserPlugin

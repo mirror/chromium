@@ -39,6 +39,59 @@ blink::WebGestureEvent DummyGestureScrollUpdate(double timeStampSeconds) {
 
 namespace content {
 
+class AsyncTargeter {
+ public:
+  AsyncTargeter()
+      : task_runner_(base::ThreadTaskRunnerHandle::Get()),
+        weak_ptr_factory_(this) {
+    DCHECK(task_runner_);
+  }
+  ~AsyncTargeter() = default;
+
+  // XXX(sad): Probably don't need to send a callback for every event? Just a
+  // generic RepeatingCallback for dispatching event will probably work.
+  void FindTargetAndDispatch(
+      const blink::WebMouseEvent& event,
+      const ui::LatencyInfo& latency_info,
+      base::OnceCallback<void(const blink::WebMouseEvent& event,
+                              const ui::LatencyInfo& latency)>
+          dispatch_callback) {
+    events_.push_back({event, latency_info, std::move(dispatch_callback)});
+    task_runner_->PostTask(FROM_HERE,
+                           base::BindOnce(&AsyncTargeter::OnTargetFound,
+                                          weak_ptr_factory_.GetWeakPtr()));
+  }
+
+ private:
+  // XXX(sad): This will get the FrameSinkId etc.
+  void OnTargetFound() {
+    DCHECK(!events_.empty());
+    auto event = std::move(events_.front());
+    events_.erase(events_.begin());
+    std::move(event.dispatch_callback).Run(event.event, event.latency_info);
+  }
+
+  //  bool targeting_request_in_flight_ = false;
+  struct X {
+    X() = default;
+    X(X&& x) = default;
+    ~X() = default;
+    X& operator=(X&& other) = default;
+
+    blink::WebMouseEvent event;
+    ui::LatencyInfo latency_info;
+    base::OnceCallback<void(const blink::WebMouseEvent&,
+                            const ui::LatencyInfo&)>
+        dispatch_callback;
+  };
+
+  scoped_refptr<base::SingleThreadTaskRunner> task_runner_;
+  std::vector<X> events_;
+  base::WeakPtrFactory<AsyncTargeter> weak_ptr_factory_;
+
+  DISALLOW_COPY_AND_ASSIGN(AsyncTargeter);
+};
+
 void RenderWidgetHostInputEventRouter::OnRenderWidgetHostViewBaseDestroyed(
     RenderWidgetHostViewBase* view) {
   // RenderWidgetHostViewBase::RemoveObserver() should only ever be called
@@ -152,7 +205,9 @@ RenderWidgetHostInputEventRouter::RenderWidgetHostInputEventRouter()
       last_mouse_move_root_view_(nullptr),
       active_touches_(0),
       in_touchscreen_gesture_pinch_(false),
-      gesture_pinch_did_send_scroll_begin_(false) {}
+      gesture_pinch_did_send_scroll_begin_(false),
+      async_targeter_(std::make_unique<AsyncTargeter>()),
+      weak_ptr_factory_(this) {}
 
 RenderWidgetHostInputEventRouter::~RenderWidgetHostInputEventRouter() {
   // We may be destroyed before some of the owners in the map, so we must
@@ -207,12 +262,15 @@ void RenderWidgetHostInputEventRouter::RouteMouseEvent(
     RenderWidgetHostViewBase* root_view,
     blink::WebMouseEvent* event,
     const ui::LatencyInfo& latency) {
+  LOG(ERROR) << __PRETTY_FUNCTION__ << " "
+             << blink::WebInputEvent::GetName(event->GetType());
   RenderWidgetHostViewBase* target = nullptr;
   gfx::PointF transformed_point;
 
   // When the mouse is locked, directly route the events to the widget that
   // holds the lock and return.
   if (root_view->IsMouseLocked()) {
+    CHECK(false) << " Decide what to do here.";
     target = root_view->GetRenderWidgetHostImpl()
                  ->delegate()
                  ->GetMouseLockWidget()
@@ -226,6 +284,23 @@ void RenderWidgetHostInputEventRouter::RouteMouseEvent(
     return;
   }
 
+  async_targeter_->FindTargetAndDispatch(
+      *event, latency,
+      base::BindOnce(&RenderWidgetHostInputEventRouter::OnFoundTarget,
+                     weak_ptr_factory_.GetWeakPtr(), root_view));
+}
+
+void RenderWidgetHostInputEventRouter::OnFoundTarget(
+    RenderWidgetHostViewBase* root_view,
+    const blink::WebMouseEvent& src_event,
+    const ui::LatencyInfo& latency) {
+  blink::WebMouseEvent copy_event = src_event;
+  blink::WebMouseEvent* event = &copy_event;
+
+  LOG(ERROR) << __PRETTY_FUNCTION__ << " "
+             << blink::WebInputEvent::GetName(event->GetType());
+  RenderWidgetHostViewBase* target = nullptr;
+  gfx::PointF transformed_point;
   const int mouse_button_modifiers = blink::WebInputEvent::kLeftButtonDown |
                                      blink::WebInputEvent::kMiddleButtonDown |
                                      blink::WebInputEvent::kRightButtonDown |
