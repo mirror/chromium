@@ -128,6 +128,7 @@ void BackgroundProfilingTriggers::PerformMemoryUsageChecks() {
          std::vector<base::ProcessId> result) {
         memory_instrumentation::MemoryInstrumentation::GetInstance()
             ->RequestGlobalDump(
+                std::vector<std::string>(),
                 base::Bind(&BackgroundProfilingTriggers::OnReceivedMemoryDump,
                            std::move(weak_ptr), std::move(result)));
       },
