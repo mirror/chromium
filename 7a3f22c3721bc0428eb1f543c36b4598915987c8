@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bcd1602a_4b0d68c7",
+        "filename": "third_party/WebKit/Source/platform/heap/Heap.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-12-19T08:28:35Z",
+      "side": 1,
+      "message": "What happens if you add CHECK(!state-\u003eIsIncrementalMarkingInProgress())?\n\nIdeally I want to add CHECK(state-\u003eIsInGC())... It\u0027s fragile to call IsHeapObjectAlive except when we\u0027re in an atomic pause phase.",
+      "revId": "7a3f22c3721bc0428eb1f543c36b4598915987c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cda9563_8133cd5a",
+        "filename": "third_party/WebKit/Source/platform/heap/Heap.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-12-19T08:28:35Z",
+      "side": 1,
+      "message": "Ditto. What happens if we add CHECK(page-\u003eArena()-\u003eGetThreadState()-\u003eIsSweepingInProgress())?",
+      "revId": "7a3f22c3721bc0428eb1f543c36b4598915987c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
