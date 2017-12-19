@@ -52,7 +52,7 @@ struct VideoDecodeAcceleratorConfig {
 };
 
 // Next MinVersion: 1
-// Next method ID: 8
+// Next method ID: 9
 interface VideoDecodeAccelerator {
   [Extensible]
   enum Result {
@@ -94,8 +94,19 @@ interface VideoDecodeAccelerator {
   // Call VDA::ImportBufferForPicture with gfx::GpuMemoryBufferHandle
   // created from |handle_fd| and |planes|.
   // This should be preceded by a call to AssignPictureBuffers().
-  ImportBufferForPicture@3(int32 picture_buffer_id, handle handle_fd,
+  ImportBufferForPictureDeprecated@3(int32 picture_buffer_id, handle handle_fd,
                            array<VideoFramePlane> planes);
+
+  // Assigns a buffer to be used by the accelerator with specified
+  // |picture_buffer_id|.
+  // In secure mode, if a new protected output buffer is allocated for the given
+  // |picture_buffer_id|. Any previously-allocated buffer with the same
+  // |picture_buffer_id| will be released.
+  // Call VDA::ImportBufferForPicture with |format| and a
+  // gfx::GpuMemoryBufferHandle  created from |handle_fd| and |planes|.
+  // This should be preceded by a call to AssignPictureBuffers().
+  ImportBufferForPicture@8(int32 picture_buffer_id, HalPixelFormat format,
+                           handle handle_fd, array<VideoFramePlane> planes);
 
   // Returns picture buffer with specified |picture_buffer_id| to be reused by
   // the accelerator.

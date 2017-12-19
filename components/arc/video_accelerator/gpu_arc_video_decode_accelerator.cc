@@ -542,6 +542,16 @@ void GpuArcVideoDecodeAccelerator::AssignPictureBuffers(uint32_t count) {
 
 void GpuArcVideoDecodeAccelerator::ImportBufferForPicture(
     int32_t picture_buffer_id,
+    mojom::HalPixelFormat format,
+    mojo::ScopedHandle handle,
+    std::vector<VideoFramePlane> planes) {
+  // TODO(owenlin): Implement this function.
+  ImportBufferForPictureDeprecated(picture_buffer_id, std::move(handle),
+                                   std::move(planes));
+}
+
+void GpuArcVideoDecodeAccelerator::ImportBufferForPictureDeprecated(
+    int32_t picture_buffer_id,
     mojo::ScopedHandle handle,
     std::vector<VideoFramePlane> planes) {
   DVLOGF(3);
