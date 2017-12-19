@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c2ca1766_e177dd94",
+        "filename": "components/download/internal/blob_task_proxy.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-12-19T21:23:57Z",
+      "side": 1,
+      "message": "Should we DCHECK that we\u0027re on the right thread if we made that promise in the constructor?",
+      "range": {
+        "startLine": 37,
+        "startChar": 33,
+        "endLine": 37,
+        "endChar": 34
+      },
+      "revId": "d4a0bdbb9b98d91444672fcfc29f0fa22be380aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d32e333b_7f6a3536",
+        "filename": "components/download/internal/in_memory_download.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-12-19T21:23:57Z",
+      "side": 1,
+      "message": "Do you need this after a default:?",
+      "range": {
+        "startLine": 127,
+        "startChar": 2,
+        "endLine": 128,
+        "endChar": 15
+      },
+      "revId": "d4a0bdbb9b98d91444672fcfc29f0fa22be380aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bd1bef0_3938aee5",
+        "filename": "components/download/internal/in_memory_download.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-12-19T21:23:57Z",
+      "side": 1,
+      "message": "Do this in the cc file",
+      "range": {
+        "startLine": 149,
+        "startChar": 14,
+        "endLine": 149,
+        "endChar": 31
+      },
+      "revId": "d4a0bdbb9b98d91444672fcfc29f0fa22be380aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0233a29_fde0880d",
+        "filename": "components/download/internal/in_memory_download.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-12-19T21:23:57Z",
+      "side": 1,
+      "message": "Same here IMO",
+      "range": {
+        "startLine": 153,
+        "startChar": 28,
+        "endLine": 153,
+        "endChar": 33
+      },
+      "revId": "d4a0bdbb9b98d91444672fcfc29f0fa22be380aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
