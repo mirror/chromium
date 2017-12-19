@@ -297,6 +297,9 @@ class PrintPreviewHandler
   // Whether we have already logged the number of printers this session.
   bool has_logged_printers_count_;
 
+  // Whether the preview dialog is currently hidden.
+  bool dialog_hidden_;
+
   // Holds token service to get OAuth2 access tokens.
   std::unique_ptr<AccessTokenService> token_service_;
 

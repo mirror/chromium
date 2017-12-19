@@ -398,6 +398,7 @@ PrintPreviewHandler::PrintPreviewHandler()
       manage_printers_dialog_request_count_(0),
       reported_failed_preview_(false),
       has_logged_printers_count_(false),
+      dialog_hidden_(false),
       gaia_cookie_manager_service_(nullptr),
       weak_factory_(this) {
   ReportUserActionHistogram(PREVIEW_STARTED);
@@ -764,6 +765,7 @@ void PrintPreviewHandler::HandlePrint(const base::ListValue* args) {
 }
 
 void PrintPreviewHandler::HandleHidePreview(const base::ListValue* /*args*/) {
+  dialog_hidden_ = true;
   print_preview_ui()->OnHidePreviewDialog();
 }
 
@@ -1250,11 +1252,18 @@ void PrintPreviewHandler::OnGotExtensionPrinterInfo(
 
 void PrintPreviewHandler::OnPrintResult(const std::string& callback_id,
                                         const base::Value& error) {
-  if (error.is_none()) {
+  if (error.is_none())
     ResolveJavascriptCallback(base::Value(callback_id), error);
-    return;
+  else
+    RejectJavascriptCallback(base::Value(callback_id), error);
+  if (dialog_hidden_) {
+    WebContents* initiator = GetInitiator();
+    ClearInitiatorDetails();
+    if (initiator) {
+      auto* print_view_manager = PrintViewManager::FromWebContents(initiator);
+      print_view_manager->PrintPreviewDone();
+    }
   }
-  RejectJavascriptCallback(base::Value(callback_id), error);
 }
 
 void PrintPreviewHandler::RegisterForGaiaCookieChanges() {
