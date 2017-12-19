@@ -8,6 +8,7 @@
 
 #include "net/quic/platform/api/quic_estimate_memory_usage.h"
 #include "net/quic/platform/api/quic_str_cat.h"
+#include "net/quic/platform/api/quic_url.h"
 
 using std::string;
 
@@ -42,6 +43,17 @@ bool QuicServerId::operator==(const QuicServerId& other) const {
 string QuicServerId::ToString() const {
   return QuicStrCat("https://", host_port_pair_.ToString(),
                     (privacy_mode_ == PRIVACY_MODE_ENABLED ? "/private" : ""));
+}
+
+// static
+QuicServerId QuicServerId::FromString(const std::string& str) {
+  QuicUrl url(str);
+  if (!url.IsValid()) {
+    return QuicServerId();
+  }
+  return QuicServerId(
+      HostPortPair(url.host(), url.port()),
+      url.path() == "/private" ? PRIVACY_MODE_ENABLED : PRIVACY_MODE_DISABLED);
 }
 
 size_t QuicServerId::EstimateMemoryUsage() const {
