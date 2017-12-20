@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6024621b_cd412c37",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 4464,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-12-20T23:28:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0e1daf62_8bf59c29",
+      "range": {
+        "startLine": 4464,
+        "startChar": 2,
+        "endLine": 4464,
+        "endChar": 15
+      },
+      "revId": "6930d58e5673c7cc1dfcbc6e3d7331e2c9a44983",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e186239a_eb07aa7f",
         "filename": "content/renderer/render_frame_impl.cc",
         "patchSetId": 5
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "7f874201_12f70839",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 4468,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-12-20T23:28:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e186239a_eb07aa7f",
+      "range": {
+        "startLine": 4468,
+        "startChar": 26,
+        "endLine": 4468,
+        "endChar": 38
+      },
+      "revId": "6930d58e5673c7cc1dfcbc6e3d7331e2c9a44983",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b3f19b0a_d7dd6446",
         "filename": "third_party/WebKit/Source/core/frame/LocalFrame.cpp",
         "patchSetId": 5
@@ -59,6 +107,30 @@
       "writtenOn": "2017-12-19T22:26:51Z",
       "side": 1,
       "message": "Now that the LocalFrame is doing less trivial work here, could you perhaps add a test for it somehow? I know it\u0027s a pain to create new tests for these files, especially since a LocalFrameTest.cpp doesn\u0027t already exist, but it\u0027ll definitely help make this code more robust.\n\nYou could probably create a subclass of blink::RenderingTest (kinda like how LocalFrameViewTest.cpp does), and pass in your own mocked version of LocalFrameClient in it\u0027s constructor. You could adapt a lot of the old test cases from render_frame_impl_browsertests.cc for ShouldUseClientLoFiForRequest, and just check FetchParameters::GetPlaceholderImageRequestType() to see if a placeholder is being used or not.",
+      "range": {
+        "startLine": 1139,
+        "startChar": 17,
+        "endLine": 1139,
+        "endChar": 43
+      },
+      "revId": "6930d58e5673c7cc1dfcbc6e3d7331e2c9a44983",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "905905ac_20574d51",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrame.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1139,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-12-20T23:28:53Z",
+      "side": 1,
+      "message": "Yes, I do need to add tests somehow. Would like to defer until an OWNER checks out the main code (and perhaps can offer some test guidance as well since no Test class at this point).",
+      "parentUuid": "b3f19b0a_d7dd6446",
       "range": {
         "startLine": 1139,
         "startChar": 17,
