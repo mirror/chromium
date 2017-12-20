@@ -1855,6 +1855,24 @@
             ]
         }
     ],
+    "MaterialDesignExtensions": [
+        {
+            "platforms": [
+                "chromeos",
+                "linux",
+                "mac",
+                "win"
+            ],
+            "experiments": [
+                {
+                    "name": "Enabled",
+                    "enable_features": [
+                        "MaterialDesignExtensions"
+                    ]
+                }
+            ]
+        }
+    ],
     "MediaFoundationH264Encoding": [
         {
             "platforms": [
