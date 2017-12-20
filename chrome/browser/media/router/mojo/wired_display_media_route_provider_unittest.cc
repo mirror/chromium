@@ -6,6 +6,7 @@
 
 #include "base/run_loop.h"
 #include "chrome/browser/media/router/mojo/mock_mojo_media_router.h"
+#include "chrome/browser/media/router/wired_display_presentation_receiver.h"
 #include "chrome/common/media_router/mojo/media_router.mojom.h"
 #include "chrome/test/base/testing_profile.h"
 #include "content/public/test/test_browser_thread_bundle.h"
@@ -40,6 +41,45 @@ std::string GetSinkId(const Display& display) {
   return WiredDisplayMediaRouteProvider::kSinkPrefix +
          std::to_string(display.id());
 }
+
+class MockPresentationReceiver : public WiredDisplayPresentationReceiver {
+ public:
+  MOCK_METHOD2(Start,
+               void(const std::string& presentation_id, const GURL& start_url));
+  void Terminate() override {
+    TerminateInternal();
+    std::move(termination_callback_).Run();
+  }
+  MOCK_METHOD0(TerminateInternal, void());
+  MOCK_METHOD1(
+      SetTitleChangeCallback,
+      void(base::RepeatingCallback<void(const std::string&)> callback));
+
+  void set_termination_callback(base::OnceClosure termination_callback) {
+    termination_callback_ = std::move(termination_callback);
+  }
+
+ private:
+  base::OnceClosure termination_callback_;
+};
+
+class MockReceiverCreator {
+ public:
+  MockReceiverCreator() = default;
+  ~MockReceiverCreator() = default;
+
+  std::unique_ptr<WiredDisplayPresentationReceiver> CreateReceiver(
+      Profile* profile,
+      const gfx::Rect& bounds,
+      base::OnceClosure termination_callback) {
+    return CreateReceiverInternal(profile, bounds, termination_callback);
+  }
+  MOCK_METHOD3(CreateReceiverInternal,
+               std::unique_ptr<WiredDisplayPresentationReceiver>(
+                   Profile* profile,
+                   const gfx::Rect& bounds,
+                   base::OnceClosure& termination_callback));
+};
 
 const char kPresentationSource[] = "https://www.example.com/presentation";
 const char kNonPresentationSource[] = "not://a.valid.presentation/source";
@@ -105,6 +145,9 @@ class WiredDisplayMediaRouteProviderTest : public testing::Test {
         mojo::MakeRequest(&provider_pointer_), std::move(router_pointer),
         &profile_);
     provider_->set_primary_display(primary_display_);
+    provider_->set_create_receiver_for_testing_cb(
+        base::BindRepeating(&MockReceiverCreator::CreateReceiver,
+                            base::Unretained(&receiver_creator_)));
   }
 
   void TearDown() override {
@@ -128,6 +171,8 @@ class WiredDisplayMediaRouteProviderTest : public testing::Test {
   // The displays below do not meet the criteria for being used as sinks.
   Display primary_display_;
   Display mirror_display_;  // Has the same bounds as |primary_display_|.
+
+  MockReceiverCreator receiver_creator_;
 
  private:
   content::TestBrowserThreadBundle test_thread_bundle_;
@@ -201,11 +246,22 @@ TEST_F(WiredDisplayMediaRouteProviderTest, NoSinksForNonPresentationSource) {
 TEST_F(WiredDisplayMediaRouteProviderTest, CreateAndTerminateRoute) {
   const std::string presentation_id = "presentationId";
   MockCallback callback;
+  auto unique_receiver = std::make_unique<MockPresentationReceiver>();
+  MockPresentationReceiver* receiver = unique_receiver.get();
 
+  provider_->set_all_displays({sink_display1_, primary_display_});
   provider_pointer_->StartObservingMediaRoutes(kPresentationSource);
   base::RunLoop().RunUntilIdle();
 
   // Create a route for |presentation_id|.
+  ON_CALL(receiver_creator_, CreateReceiverInternal(_, _, _))
+      .WillByDefault(testing::Invoke(
+          [&unique_receiver](Profile* profile, const gfx::Rect& bounds,
+                             base::OnceClosure& termination_callback) {
+            unique_receiver->set_termination_callback(
+                std::move(termination_callback));
+            return std::move(unique_receiver);
+          }));
   EXPECT_CALL(callback, CreateRoute(_, base::Optional<std::string>(),
                                     RouteRequestResult::OK))
       .WillOnce(WithArg<0>(
@@ -220,6 +276,7 @@ TEST_F(WiredDisplayMediaRouteProviderTest, CreateAndTerminateRoute) {
             EXPECT_EQ(routes.size(), 1u);
             EXPECT_EQ(routes[0].media_route_id(), presentation_id);
           })));
+  EXPECT_CALL(*receiver, Start(presentation_id, GURL(kPresentationSource)));
   provider_pointer_->CreateRoute(
       kPresentationSource, GetSinkId(sink_display1_), presentation_id,
       url::Origin::Create(GURL(kPresentationSource)), 0,
@@ -232,6 +289,7 @@ TEST_F(WiredDisplayMediaRouteProviderTest, CreateAndTerminateRoute) {
                                        RouteRequestResult::OK));
   EXPECT_CALL(router_, OnRoutesUpdated(kProviderId, IsEmpty(),
                                        kPresentationSource, IsEmpty()));
+  EXPECT_CALL(*receiver, TerminateInternal());
   provider_pointer_->TerminateRoute(
       presentation_id, base::BindOnce(&MockCallback::TerminateRoute,
                                       base::Unretained(&callback)));

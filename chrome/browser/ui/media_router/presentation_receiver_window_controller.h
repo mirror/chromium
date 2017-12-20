@@ -12,6 +12,7 @@
 #include "base/macros.h"
 #include "chrome/browser/media/router/independent_otr_profile_manager.h"
 #include "chrome/browser/media/router/presentation_navigation_policy.h"
+#include "chrome/browser/media/router/wired_display_presentation_receiver.h"
 #include "chrome/browser/ui/media_router/presentation_receiver_window_delegate.h"
 #include "content/public/browser/web_contents_delegate.h"
 #include "content/public/browser/web_contents_observer.h"
@@ -36,7 +37,8 @@ class Rect;
 class PresentationReceiverWindowController final
     : public PresentationReceiverWindowDelegate,
       public content::WebContentsObserver,
-      public content::WebContentsDelegate {
+      public content::WebContentsDelegate,
+      public media_router::WiredDisplayPresentationReceiver {
  public:
   static std::unique_ptr<PresentationReceiverWindowController>
   CreateFromOriginalProfile(Profile* profile,
@@ -47,10 +49,14 @@ class PresentationReceiverWindowController final
 
   // Starts the presentation with the receiver page |start_url| and the
   // presentation ID |presentation_id| for the purpose of messaging.
-  void Start(const std::string& presentation_id, const GURL& start_url);
+  void Start(const std::string& presentation_id,
+             const GURL& start_url) override;
 
   // Closes the window and stops the presentation.
-  void Terminate();
+  void Terminate() override;
+
+  void SetTitleChangeCallback(
+      base::RepeatingCallback<void(const std::string&)> callback) override;
 
   // PresentationReceiverWindowDelegate overrides.
   content::WebContents* web_contents() const final;
@@ -112,6 +118,9 @@ class PresentationReceiverWindowController final
   PresentationReceiverWindow* window_;
 
   base::OnceClosure termination_callback_;
+
+  // Gets called with the new title whenever TitleWasSet() is called.
+  base::RepeatingCallback<void(const std::string&)> title_change_callback_;
 
   media_router::PresentationNavigationPolicy navigation_policy_;
 
