@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1c20d8aa_f77b8115",
+        "filename": "content/browser/renderer_host/delegated_frame_host.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-12-20T20:57:07Z",
+      "side": 1,
+      "message": "Is it guaranteed that the resize_lock_ dips will match the client_ dips? This is probably fine, but wanted to make sure there was nothing weird with scaling across two monitors or something.\n\nYour change definitely doesn\u0027t make things any worse here :D - but as long as we\u0027re sanitizing things, wanted to check.",
+      "range": {
+        "startLine": 387,
+        "startChar": 33,
+        "endLine": 387,
+        "endChar": 46
+      },
+      "revId": "eb823237d0a10006d3b0f3b42c59c8bbcb79d1ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c9a1c81_708e1146",
+        "filename": "content/browser/renderer_host/render_widget_host_view_aura.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 785,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-12-20T20:57:07Z",
+      "side": 1,
+      "message": "Should we allow nullptr in cases where you only need one of these? Additionally, are there cases where only getting one of these is even correct? Or does that imply a potential race?",
+      "range": {
+        "startLine": 785,
+        "startChar": 2,
+        "endLine": 785,
+        "endChar": 26
+      },
+      "revId": "eb823237d0a10006d3b0f3b42c59c8bbcb79d1ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2ab9252_3ead267e",
+        "filename": "content/browser/renderer_host/render_widget_host_view_aura.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 885,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-12-20T20:57:07Z",
+      "side": 1,
+      "message": "Why do we always call this? should this be in an else block?",
+      "range": {
+        "startLine": 885,
+        "startChar": 28,
+        "endLine": 885,
+        "endChar": 52
+      },
+      "revId": "eb823237d0a10006d3b0f3b42c59c8bbcb79d1ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
