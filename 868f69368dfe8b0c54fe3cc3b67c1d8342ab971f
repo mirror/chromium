@@ -52,6 +52,24 @@
       "revId": "868f69368dfe8b0c54fe3cc3b67c1d8342ab971f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37d623ff_203de7f7",
+        "filename": "third_party/WebKit/public/platform/TaskType.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-12-20T11:59:24Z",
+      "side": 1,
+      "message": "Discussed with haraken@ offline. Determining a TaskType based on directories would work in many cases (this is my intuition :-), but we are not sure. For example, there might be loading tasks in other components. I\u0027d need to check the items in the spread sheet one by one...",
+      "parentUuid": "983dc718_c51fe07a",
+      "revId": "868f69368dfe8b0c54fe3cc3b67c1d8342ab971f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
