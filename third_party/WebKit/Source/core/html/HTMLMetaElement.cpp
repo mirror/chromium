@@ -32,6 +32,8 @@
 #include "core/html_names.h"
 #include "core/inspector/ConsoleMessage.h"
 #include "core/loader/HttpEquiv.h"
+#include "core/page/ChromeClient.h"
+#include "core/page/Page.h"
 #include "platform/wtf/text/StringToNumber.h"
 
 namespace blink {
@@ -435,6 +437,29 @@ void HTMLMetaElement::ProcessViewportContentAttribute(
       content, description_from_legacy_tag, &GetDocument(),
       GetDocument().GetSettings() &&
           GetDocument().GetSettings()->GetViewportMetaZeroValuesQuirk());
+
+  if (origin == ViewportDescription::kViewportMeta && GetDocument().GetPage()) {
+    if (description_from_legacy_tag.min_width.IsFixed()) {
+      description_from_legacy_tag.min_width.SetValue(
+          GetDocument().GetPage()->GetChromeClient().WindowToViewportScalar(
+              description_from_legacy_tag.min_width.Value()));
+    }
+    if (description_from_legacy_tag.max_width.IsFixed()) {
+      description_from_legacy_tag.max_width.SetValue(
+          GetDocument().GetPage()->GetChromeClient().WindowToViewportScalar(
+              description_from_legacy_tag.max_width.Value()));
+    }
+    if (description_from_legacy_tag.min_height.IsFixed()) {
+      description_from_legacy_tag.min_height.SetValue(
+          GetDocument().GetPage()->GetChromeClient().WindowToViewportScalar(
+              description_from_legacy_tag.min_height.Value()));
+    }
+    if (description_from_legacy_tag.max_height.IsFixed()) {
+      description_from_legacy_tag.max_height.SetValue(
+          GetDocument().GetPage()->GetChromeClient().WindowToViewportScalar(
+              description_from_legacy_tag.max_height.Value()));
+    }
+  }
 
   GetDocument().SetViewportDescription(description_from_legacy_tag);
 }
