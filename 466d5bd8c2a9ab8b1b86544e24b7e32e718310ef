@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9be48147_89a39cb8",
+        "filename": "third_party/WebKit/LayoutTests/fast/events/inputevents/inputevent-ime.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-12-20T01:58:55Z",
+      "side": 1,
+      "message": "Ohh, we must\u0027ve not been getting the \"h\" since the input already had text in it from the previous test case. Good call to use a fresh \u003cinput\u003e...",
+      "revId": "466d5bd8c2a9ab8b1b86544e24b7e32e718310ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
