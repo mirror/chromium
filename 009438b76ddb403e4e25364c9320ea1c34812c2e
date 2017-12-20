@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7cf9e72f_b9acd9cf",
+        "filename": "chrome/browser/chromeos/login/users/chrome_user_manager_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-20T09:24:50Z",
+      "side": 1,
+      "message": "nit: it\u0027s not your fault, but would you mind moving this method below SetUserAffiliation so the order here matches the order in the interface? the .cc file is already correct. thanks!",
+      "revId": "009438b76ddb403e4e25364c9320ea1c34812c2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c14c19b_0accc8a2",
+        "filename": "chrome/browser/chromeos/login/users/chrome_user_manager_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-20T09:24:50Z",
+      "side": 1,
+      "message": "nit: please remove this blank line so it\u0027s clearer that IsManagedDevice comes from ChromeUserManager.",
+      "revId": "009438b76ddb403e4e25364c9320ea1c34812c2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f978d1df_4b6c60f0",
+        "filename": "chrome/browser/chromeos/login/users/chrome_user_manager_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-20T09:24:50Z",
+      "side": 1,
+      "message": "where does this come from? is there any way it can be made public instead, or that your new code can you the same technique as IsEnterpriseManaged instead of needing a new IsManagedDevice method? it\u0027s a bit confusing to have two methods with similar names that do the same thing, with one public and the other one apparently not.",
+      "revId": "009438b76ddb403e4e25364c9320ea1c34812c2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e1a0ba9_5aa4b52c",
+        "filename": "chrome/browser/chromeos/login/users/fake_chrome_user_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-20T09:24:50Z",
+      "side": 1,
+      "message": "nit: delete blank line",
+      "revId": "009438b76ddb403e4e25364c9320ea1c34812c2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b17a374e_bac36977",
+        "filename": "chrome/browser/chromeos/login/users/mock_user_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-20T09:24:50Z",
+      "side": 1,
+      "message": "please move this down to the ChromeUserManager section",
+      "revId": "009438b76ddb403e4e25364c9320ea1c34812c2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "202055db_b3d3d48f",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-20T09:24:50Z",
+      "side": 1,
+      "message": "consider adding a way to tell the fake which value to return so that you can also test that other states are reported correctly.",
+      "revId": "009438b76ddb403e4e25364c9320ea1c34812c2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74e670e4_513b9cc2",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logging_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-20T09:24:50Z",
+      "side": 1,
+      "message": "nit: consider just inlining the chromeos::ChromeUserManager::Get() call here",
+      "revId": "009438b76ddb403e4e25364c9320ea1c34812c2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
