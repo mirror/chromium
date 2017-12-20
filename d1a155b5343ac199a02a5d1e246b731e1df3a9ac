@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ac167b74_3511ea99",
+        "filename": "services/ui/public/cpp/gpu/gpu.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-12-20T21:47:23Z",
+      "side": 1,
+      "message": "Why do you need this explicitly?",
+      "revId": "d1a155b5343ac199a02a5d1e246b731e1df3a9ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
