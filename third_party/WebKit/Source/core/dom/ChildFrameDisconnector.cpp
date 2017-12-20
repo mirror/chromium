@@ -43,10 +43,8 @@ void ChildFrameDisconnector::CollectFrameOwners(Node& root) {
   for (Node* child = root.firstChild(); child; child = child->nextSibling())
     CollectFrameOwners(*child);
 
-  ElementShadow* shadow =
-      root.IsElementNode() ? ToElement(root).Shadow() : nullptr;
-  if (shadow)
-    CollectFrameOwners(shadow->GetShadowRoot());
+  if (ShadowRoot* shadow_root = root.GetShadowRoot())
+    CollectFrameOwners(*shadow_root);
 }
 
 void ChildFrameDisconnector::DisconnectCollectedFrameOwners() {
