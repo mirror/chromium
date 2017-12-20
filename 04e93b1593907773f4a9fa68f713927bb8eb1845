@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d42975bf_a4afc6a7",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-12-20T00:52:24Z",
+      "side": 1,
+      "message": "let\u0027s drop the comment",
+      "range": {
+        "startLine": 366,
+        "startChar": 5,
+        "endLine": 366,
+        "endChar": 6
+      },
+      "revId": "04e93b1593907773f4a9fa68f713927bb8eb1845",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
