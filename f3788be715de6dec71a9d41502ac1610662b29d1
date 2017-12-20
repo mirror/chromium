@@ -190,6 +190,30 @@
       "revId": "f3788be715de6dec71a9d41502ac1610662b29d1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90ccc8b0_ef8fdc60",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 2069,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-12-20T00:57:36Z",
+      "side": 1,
+      "message": "I didn\u0027t know that was possible. Is there a way we could try testing this? \n\nI could also add it only to the activeWebstate helper instead of iterating, and then add it to the other webstates helpers once they\u0027ve become active (Or for now adding the helper on a tabModelObserver method instead of WSLObserver). This would require exposing the delegate to check if its nil or not.",
+      "parentUuid": "104f4db8_5192ec87",
+      "range": {
+        "startLine": 2069,
+        "startChar": 4,
+        "endLine": 2069,
+        "endChar": 23
+      },
+      "revId": "f3788be715de6dec71a9d41502ac1610662b29d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
