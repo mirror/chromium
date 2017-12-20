@@ -115,7 +115,7 @@ bool PasswordForm::IsPossibleChangePasswordForm() const {
 }
 
 bool PasswordForm::IsPossibleChangePasswordFormWithoutUsername() const {
-  return IsPossibleChangePasswordForm() && username_element.empty();
+  return IsPossibleChangePasswordForm() && username_value.empty();
 }
 
 bool PasswordForm::operator==(const PasswordForm& form) const {
