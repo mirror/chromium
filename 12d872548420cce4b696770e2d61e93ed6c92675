@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "560d82a3_861f4e11",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-12-20T01:31:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "788b3ad9_5ece0c15",
+      "revId": "12d872548420cce4b696770e2d61e93ed6c92675",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "41658ec6_3b76b919",
         "filename": "extensions/browser/content_hash_fetcher.cc",
         "patchSetId": 6
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "29e4bd94_e1f17770",
+        "filename": "extensions/browser/content_hash_fetcher.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-12-20T01:31:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "41658ec6_3b76b919",
+      "revId": "12d872548420cce4b696770e2d61e93ed6c92675",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "14ddd5ca_74da38dc",
         "filename": "extensions/browser/content_verifier/cancellation_status.h",
         "patchSetId": 6
@@ -50,6 +86,24 @@
       "revId": "12d872548420cce4b696770e2d61e93ed6c92675",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f07e143b_9902214d",
+        "filename": "extensions/browser/content_verifier/cancellation_status.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-12-20T01:31:54Z",
+      "side": 1,
+      "message": "I think IsCancelled is simpler and gets the job done.\n\nDone.",
+      "parentUuid": "14ddd5ca_74da38dc",
+      "revId": "12d872548420cce4b696770e2d61e93ed6c92675",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "f6e983cc_5163672a",
+        "filename": "extensions/browser/content_verifier/content_hash.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-12-20T01:31:54Z",
+      "side": 1,
+      "message": "nope, done thanks.",
+      "parentUuid": "67fdd316_fab69dc4",
+      "range": {
+        "startLine": 77,
+        "startChar": 0,
+        "endLine": 84,
+        "endChar": 3
+      },
+      "revId": "12d872548420cce4b696770e2d61e93ed6c92675",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "340c8c64_4a4654fd",
         "filename": "extensions/browser/content_verifier/content_hash.cc",
         "patchSetId": 6
@@ -87,6 +165,24 @@
       "writtenOn": "2017-12-19T21:43:02Z",
       "side": 1,
       "message": "isn\u0027t this just \u003d default?",
+      "revId": "12d872548420cce4b696770e2d61e93ed6c92675",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a8b84a8_28e3f329",
+        "filename": "extensions/browser/content_verifier/content_hash.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-12-20T01:31:54Z",
+      "side": 1,
+      "message": "Except key_ (ExtensionKey), which is copied. I didn\u0027t want to add move operator to ContentVerifierKey, which is part of ExtensionKey. I can do that if you prefer.",
+      "parentUuid": "340c8c64_4a4654fd",
       "revId": "12d872548420cce4b696770e2d61e93ed6c92675",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -127,6 +223,24 @@
     },
     {
       "key": {
+        "uuid": "f93e41a6_dd062f78",
+        "filename": "extensions/browser/content_verifier/content_hash.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-12-20T01:31:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "85329716_f1924b0e",
+      "revId": "12d872548420cce4b696770e2d61e93ed6c92675",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fc9c22c6_a04596cf",
         "filename": "extensions/browser/content_verifier/content_hash.cc",
         "patchSetId": 6
@@ -138,6 +252,24 @@
       "writtenOn": "2017-12-19T21:43:02Z",
       "side": 1,
       "message": "can this be cancelled while enumerating the paths?",
+      "revId": "12d872548420cce4b696770e2d61e93ed6c92675",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b42a6243_d070e0cc",
+        "filename": "extensions/browser/content_verifier/content_hash.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-12-20T01:31:54Z",
+      "side": 1,
+      "message": "In theory it could be, right? This is running in blocking thread while Cancel can be called from other threads. For what is worth, I\u0027m maintaining the status quo here. Also, I\u0027d like to revisit / clear the Cancellable aspect from this code going forward.",
+      "parentUuid": "fc9c22c6_a04596cf",
       "revId": "12d872548420cce4b696770e2d61e93ed6c92675",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -161,6 +293,24 @@
     },
     {
       "key": {
+        "uuid": "776ee30c_d0c09bb9",
+        "filename": "extensions/browser/content_verifier/content_hash.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-12-20T01:31:54Z",
+      "side": 1,
+      "message": "See comment in ContentHash\u0027s move constructor.",
+      "parentUuid": "16a673ba_e2ae8fd3",
+      "revId": "12d872548420cce4b696770e2d61e93ed6c92675",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5ed288fa_bf98e3ca",
         "filename": "extensions/browser/content_verifier/content_hash.h",
         "patchSetId": 6
@@ -178,6 +328,24 @@
     },
     {
       "key": {
+        "uuid": "8f393849_68b94f33",
+        "filename": "extensions/browser/content_verifier/content_hash.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-12-20T01:31:54Z",
+      "side": 1,
+      "message": "I\u0027ve made these express in terms of enum flags. Downside is the static_cast\u003cint\u003e part, lmk if you meant sth else.\n\nread_only -\u003e delete_invalid.",
+      "parentUuid": "5ed288fa_bf98e3ca",
+      "revId": "12d872548420cce4b696770e2d61e93ed6c92675",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "36f1b733_c355c41b",
         "filename": "extensions/browser/content_verifier/content_hash.h",
         "patchSetId": 6
@@ -189,6 +357,24 @@
       "writtenOn": "2017-12-19T21:43:02Z",
       "side": 1,
       "message": "Hmm... not sure why this would be needed... what error are you seeing if you remove this?",
+      "revId": "12d872548420cce4b696770e2d61e93ed6c92675",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cafeb6b2_4978975f",
+        "filename": "extensions/browser/content_verifier/content_hash.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-12-20T01:31:54Z",
+      "side": 1,
+      "message": "My understanding is that task runner creates a empty ctor instance here because PostTaskAndReply returns ContentHash in this case:\nhttps://cs.chromium.org/chromium/src/base/task_runner_util.h?rcl\u003d141e77a5d35749ac52b9837f082baf5e1413fd66\u0026l\u003d40\n\nThe exact error I get is:\n\n\nIn file included from ../../extensions/browser/content_hash_fetcher.cc:18:\nIn file included from ../../content/public/browser/browser_thread.h:18:\n../../base/task_runner_util.h:40:32: error: no matching constructor for initialization of \u0027extensions::ContentHash\u0027\n  TaskReturnType* result \u003d new TaskReturnType();\n                               ^\n../../extensions/browser/content_hash_fetcher.cc:182:9: note: in instantiation of function template specialization \u0027base::PostTaskAndReplyWithResult\u003cextensions::ContentHash, extensions::ContentHash\u003e\u0027 requested here\n  base::PostTaskAndReplyWithResult(\n        ^\n../../extensions/browser/content_verifier/content_hash.h:77:3: note: candidate constructor not viable: requires single argument \u0027other\u0027, but no arguments were provided\n  ContentHash(ContentHash\u0026\u0026 other);\n  ^\n../../extensions/browser/content_verifier/content_hash.h:148:28: note: candidate constructor not viable: requires 1 argument, but 0 were provided\n  DISALLOW_COPY_AND_ASSIGN(ContentHash);\n                           ^\n../../extensions/browser/content_verifier/content_hash.h:114:3: note: candidate constructor not viable: requires 2 arguments, but 0 were provided\n  ContentHash(const ExtensionKey\u0026 key, Status status);\n  ^\n../../extensions/browser/content_verifier/content_hash.h:115:3: note: candidate constructor not viable: requires 3 arguments, but 0 were provided\n  ContentHash(const ExtensionKey\u0026 key,\n  ^\n1 error generated.",
+      "parentUuid": "36f1b733_c355c41b",
       "revId": "12d872548420cce4b696770e2d61e93ed6c92675",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -215,6 +401,30 @@
       "revId": "12d872548420cce4b696770e2d61e93ed6c92675",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33c82121_283dd98a",
+        "filename": "extensions/browser/content_verifier/content_hash.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-12-20T01:31:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bd1bd0dd_701a3828",
+      "range": {
+        "startLine": 78,
+        "startChar": 25,
+        "endLine": 78,
+        "endChar": 27
+      },
+      "revId": "12d872548420cce4b696770e2d61e93ed6c92675",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
