@@ -37,14 +37,6 @@
     {
       "object": "LayoutBlockFlow DIV",
       "reason": "subtree"
-    },
-    {
-      "object": "LayoutSVGForeignObject foreignObject",
-      "reason": "subtree"
-    },
-    {
-      "object": "LayoutBlockFlow DIV",
-      "reason": "subtree"
     }
   ]
 }
