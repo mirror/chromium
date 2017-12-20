@@ -104,6 +104,24 @@
       "revId": "08e01eb6f1a56bc55a20dffeb0dc502ebef0ff86",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f465802_9de9a5d6",
+        "filename": "third_party/WebKit/Source/core/policy/IFramePolicy.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-12-20T01:02:45Z",
+      "side": 1,
+      "message": "Thanks, makes sense. Would it worth adding that as a comment in the header file.\n\nIt\u0027s encouraged to add per-class comments.",
+      "parentUuid": "7667dfee_9be88e9a",
+      "revId": "08e01eb6f1a56bc55a20dffeb0dc502ebef0ff86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

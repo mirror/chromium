@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "34c6a08b_fc45e75b",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 7212,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-12-20T01:02:45Z",
+      "side": 1,
+      "message": "Do you want to create a new DocumentPolicy every time Document::policy() gets called?",
+      "revId": "cd6c590d75d9b85a572dc23412bd5a1fe703ecd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6ee9d4f_0e1b7a98",
+        "filename": "third_party/WebKit/Source/core/policy/DocumentPolicy.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-12-20T01:02:45Z",
+      "side": 1,
+      "message": "Add a class-level comment.",
+      "revId": "cd6c590d75d9b85a572dc23412bd5a1fe703ecd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50d0bc28_3d05cc25",
+        "filename": "third_party/WebKit/Source/core/policy/IFramePolicy.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-12-20T01:02:45Z",
+      "side": 1,
+      "message": "Add a class-level comment.",
+      "revId": "cd6c590d75d9b85a572dc23412bd5a1fe703ecd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1034c91_19623795",
+        "filename": "third_party/WebKit/Source/core/policy/Policy.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-12-20T01:02:45Z",
+      "side": 1,
+      "message": "Add a class-level comment.",
+      "revId": "cd6c590d75d9b85a572dc23412bd5a1fe703ecd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
