@@ -580,8 +580,8 @@ chrome.developerPrivate.DeleteExtensionErrorsProperties;
 
 /**
  * Runs auto update for extensions and apps immediately.
- * @param {function(boolean):void=} callback Called with the boolean result,
- *     true if autoUpdate is successful.
+ * @param {function():void=} callback Called with the boolean result, true if
+ *     autoUpdate is successful.
  * @see https://developer.chrome.com/extensions/developerPrivate#method-autoUpdate
  */
 chrome.developerPrivate.autoUpdate = function(callback) {};
