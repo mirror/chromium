@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3da78323_250d97a4",
+        "filename": "ash/login/ui/lock_screen.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1248360
+      },
+      "writtenOn": "2017-12-20T19:23:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3daadcb2_98f2177e",
+      "revId": "94d0e762b256354ab4c53aa8d46fa765902a1d2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "877cdb4a_aed9a941",
         "filename": "ash/login/ui/lock_screen.h",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "94d0e762b256354ab4c53aa8d46fa765902a1d2e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30489ab3_814704f3",
+        "filename": "ash/login/ui/lock_screen.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1248360
+      },
+      "writtenOn": "2017-12-20T19:23:04Z",
+      "side": 1,
+      "message": "I did and strangely it is not fixing it (tried it again). Also git cl upload or git cl presubmit don\u0027t give me warning. \nDone.",
+      "parentUuid": "877cdb4a_aed9a941",
+      "revId": "94d0e762b256354ab4c53aa8d46fa765902a1d2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "5ca2a886_80d7df51",
+        "filename": "ash/login/ui/lock_window_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1248360
+      },
+      "writtenOn": "2017-12-20T19:23:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e7b83701_860eefde",
+      "revId": "94d0e762b256354ab4c53aa8d46fa765902a1d2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "76f29535_600bf6dd",
         "filename": "ash/login/ui/lock_window_unittest.cc",
         "patchSetId": 4
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "6e7af00c_733d829b",
+        "filename": "ash/login/ui/lock_window_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1248360
+      },
+      "writtenOn": "2017-12-20T19:23:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "76f29535_600bf6dd",
+      "revId": "94d0e762b256354ab4c53aa8d46fa765902a1d2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "150fd3ef_179d662e",
         "filename": "ash/login/ui/lock_window_unittest.cc",
         "patchSetId": 4
@@ -84,6 +156,24 @@
       "revId": "94d0e762b256354ab4c53aa8d46fa765902a1d2e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c9b84df_9b3e4a89",
+        "filename": "ash/login/ui/lock_window_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1248360
+      },
+      "writtenOn": "2017-12-20T19:23:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "150fd3ef_179d662e",
+      "revId": "94d0e762b256354ab4c53aa8d46fa765902a1d2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
