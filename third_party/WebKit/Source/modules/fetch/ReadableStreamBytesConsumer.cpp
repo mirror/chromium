@@ -94,7 +94,7 @@ ReadableStreamBytesConsumer::ReadableStreamBytesConsumer(
   reader_.SetPhantom();
 }
 
-ReadableStreamBytesConsumer::~ReadableStreamBytesConsumer() {}
+ReadableStreamBytesConsumer::~ReadableStreamBytesConsumer() = default;
 
 BytesConsumer::Result ReadableStreamBytesConsumer::BeginRead(
     const char** buffer,

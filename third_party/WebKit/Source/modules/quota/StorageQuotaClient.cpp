@@ -44,9 +44,9 @@
 
 namespace blink {
 
-StorageQuotaClient::StorageQuotaClient() {}
+StorageQuotaClient::StorageQuotaClient() = default;
 
-StorageQuotaClient::~StorageQuotaClient() {}
+StorageQuotaClient::~StorageQuotaClient() = default;
 
 void StorageQuotaClient::RequestQuota(ScriptState* script_state,
                                       WebStorageQuotaType storage_type,

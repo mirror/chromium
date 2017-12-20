@@ -76,7 +76,7 @@ class GlobalFetchImpl final
 
 }  // namespace
 
-GlobalFetch::ScopedFetcher::~ScopedFetcher() {}
+GlobalFetch::ScopedFetcher::~ScopedFetcher() = default;
 
 GlobalFetch::ScopedFetcher* GlobalFetch::ScopedFetcher::From(
     LocalDOMWindow& window) {

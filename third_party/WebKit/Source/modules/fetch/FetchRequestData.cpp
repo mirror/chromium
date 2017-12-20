@@ -100,7 +100,7 @@ FetchRequestData* FetchRequestData::Pass(ScriptState* script_state) {
   return request;
 }
 
-FetchRequestData::~FetchRequestData() {}
+FetchRequestData::~FetchRequestData() = default;
 
 FetchRequestData::FetchRequestData()
     : method_(HTTPNames::GET),

@@ -195,7 +195,7 @@ class MediaKeySession::PendingAction final
                              String());
   }
 
-  ~PendingAction() {}
+  ~PendingAction() = default;
 
   void Trace(blink::Visitor* visitor) {
     visitor->Trace(result_);
@@ -231,7 +231,7 @@ class NewSessionResultPromise : public ContentDecryptionModuleResultPromise {
   NewSessionResultPromise(ScriptState* script_state, MediaKeySession* session)
       : ContentDecryptionModuleResultPromise(script_state), session_(session) {}
 
-  ~NewSessionResultPromise() override {}
+  ~NewSessionResultPromise() override = default;
 
   // ContentDecryptionModuleResult implementation.
   void CompleteWithSession(
@@ -267,7 +267,7 @@ class LoadSessionResultPromise : public ContentDecryptionModuleResultPromise {
   LoadSessionResultPromise(ScriptState* script_state, MediaKeySession* session)
       : ContentDecryptionModuleResultPromise(script_state), session_(session) {}
 
-  ~LoadSessionResultPromise() override {}
+  ~LoadSessionResultPromise() override = default;
 
   // ContentDecryptionModuleResult implementation.
   void CompleteWithSession(
@@ -312,7 +312,7 @@ class SimpleResultPromise : public ContentDecryptionModuleResultPromise {
   SimpleResultPromise(ScriptState* script_state, MediaKeySession* session)
       : ContentDecryptionModuleResultPromise(script_state), session_(session) {}
 
-  ~SimpleResultPromise() override {}
+  ~SimpleResultPromise() override = default;
 
   // ContentDecryptionModuleResultPromise implementation.
   void Complete() override {

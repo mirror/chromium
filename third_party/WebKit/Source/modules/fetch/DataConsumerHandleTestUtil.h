@@ -79,7 +79,7 @@ class DataConsumerHandleTestUtil {
 
   class ThreadingTestBase : public ThreadSafeRefCounted<ThreadingTestBase> {
    public:
-    virtual ~ThreadingTestBase() {}
+    virtual ~ThreadingTestBase() = default;
 
     class ThreadHolder;
 

@@ -32,7 +32,7 @@ CanMakePaymentEvent* CanMakePaymentEvent::Create(
                                  wait_until_observer);
 }
 
-CanMakePaymentEvent::~CanMakePaymentEvent() {}
+CanMakePaymentEvent::~CanMakePaymentEvent() = default;
 
 const AtomicString& CanMakePaymentEvent::InterfaceName() const {
   return EventNames::CanMakePaymentEvent;

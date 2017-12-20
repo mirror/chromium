@@ -152,7 +152,7 @@ class NotificationCallbacks
                                  SameOriginRequirement same_origin_requirement)
       : resolver_(resolver),
         same_origin_requirement_(same_origin_requirement) {}
-  ~NotificationCallbacks() override {}
+  ~NotificationCallbacks() override = default;
 
   void OnSuccess() override {
     Frame* frame = resolver_->GetFrame();
@@ -179,7 +179,7 @@ class RequestCallbacks : public WebCredentialManagerClient::RequestCallbacks {
  public:
   explicit RequestCallbacks(ScriptPromiseResolver* resolver)
       : resolver_(resolver) {}
-  ~RequestCallbacks() override {}
+  ~RequestCallbacks() override = default;
 
   void OnSuccess(std::unique_ptr<WebCredential> credential) override {
     Frame* frame = resolver_->GetFrame();
@@ -271,7 +271,7 @@ CredentialsContainer* CredentialsContainer::Create() {
   return new CredentialsContainer();
 }
 
-CredentialsContainer::CredentialsContainer() {}
+CredentialsContainer::CredentialsContainer() = default;
 
 ScriptPromise CredentialsContainer::get(
     ScriptState* script_state,

@@ -188,7 +188,7 @@ NavigatorVR::NavigatorVR(Navigator& navigator)
   FocusedFrameChanged();
 }
 
-NavigatorVR::~NavigatorVR() {}
+NavigatorVR::~NavigatorVR() = default;
 
 const char* NavigatorVR::SupplementName() {
   return "NavigatorVR";

@@ -33,7 +33,7 @@ class RTCStatsResponse;
 
 class RTCStatsCallback : public GarbageCollectedFinalized<RTCStatsCallback> {
  public:
-  virtual ~RTCStatsCallback() {}
+  virtual ~RTCStatsCallback() = default;
   virtual void Trace(blink::Visitor* visitor) {}
   virtual void handleEvent(RTCStatsResponse*) = 0;
 };

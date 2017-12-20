@@ -43,7 +43,7 @@ class DOMError;
 class StorageErrorCallback
     : public GarbageCollectedFinalized<StorageErrorCallback> {
  public:
-  virtual ~StorageErrorCallback() {}
+  virtual ~StorageErrorCallback() = default;
   virtual void Trace(blink::Visitor* visitor) {}
   virtual void handleEvent(DOMError*) = 0;
 

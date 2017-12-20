@@ -66,7 +66,7 @@ class VRDisplayFrameRequestCallback
  public:
   explicit VRDisplayFrameRequestCallback(VRDisplay* vr_display)
       : vr_display_(vr_display) {}
-  ~VRDisplayFrameRequestCallback() override {}
+  ~VRDisplayFrameRequestCallback() override = default;
   void Invoke(double high_res_time_ms) override {
     double monotonic_time;
     if (!vr_display_->GetDocument() || !vr_display_->GetDocument()->Loader()) {
@@ -108,7 +108,7 @@ VRDisplay::VRDisplay(
   PauseIfNeeded();  // Initialize SuspendabaleObject.
 }
 
-VRDisplay::~VRDisplay() {}
+VRDisplay::~VRDisplay() = default;
 
 void VRDisplay::Pause() {}
 

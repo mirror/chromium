@@ -47,7 +47,7 @@ class FakeBlobBytesConsumer : public BytesConsumer {
  public:
   explicit FakeBlobBytesConsumer(scoped_refptr<BlobDataHandle> handle)
       : blob_handle_(std::move(handle)) {}
-  ~FakeBlobBytesConsumer() override {}
+  ~FakeBlobBytesConsumer() override = default;
 
   Result BeginRead(const char** buffer, size_t* available) override {
     if (state_ == PublicState::kClosed)

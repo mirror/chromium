@@ -15,7 +15,7 @@ PushPermissionStatusCallbacks::PushPermissionStatusCallbacks(
     ScriptPromiseResolver* resolver)
     : resolver_(resolver) {}
 
-PushPermissionStatusCallbacks::~PushPermissionStatusCallbacks() {}
+PushPermissionStatusCallbacks::~PushPermissionStatusCallbacks() = default;
 
 void PushPermissionStatusCallbacks::OnSuccess(WebPushPermissionStatus status) {
   resolver_->Resolve(PermissionString(status));
