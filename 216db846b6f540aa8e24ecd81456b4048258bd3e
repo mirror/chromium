@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bffd842d_92d95ba6",
+        "filename": "media/cast/net/udp_packets_read_write.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-12-20T01:22:59Z",
+      "side": 1,
+      "message": "Suggest using uint16_t instead (since our packets will never be larger than ~1.5 KB in size).",
+      "range": {
+        "startLine": 26,
+        "startChar": 17,
+        "endLine": 26,
+        "endChar": 33
+      },
+      "revId": "216db846b6f540aa8e24ecd81456b4048258bd3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "760ce586_42a56bfd",
+        "filename": "media/cast/net/udp_packets_read_write.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-12-20T01:22:59Z",
+      "side": 1,
+      "message": "It\u0027s pretty heavy-weight to heap-allocate a vector just to store the packet size. How about having a class member like:\n\n  uint16_t current_packet_size_ \u003d 0;\n\n...and read into that instead?\n\nI\u0027m thinking ReadNextPacket() should be renamed to ReadNextPacketPayload(), and have a separate ReadNextPacketSize() method:\n\n  void UdpPacketReader::ReadNextPacketSize() {\n    data_pipe_reader_.Read(\n      \u0026current_packet_size_, sizeof(uint16_t),\n     base::BindOnce(\u0026UdpPacketReader::ReadNextPacketPayload, ...));\n  }\n\n...and note that since there are two separate ReadXYZ() methods, always being called one after the other, there\u0027s no need for the |is_reading_packet_size_| boolean anymore.",
+      "range": {
+        "startLine": 33,
+        "startChar": 20,
+        "endLine": 33,
+        "endChar": 58
+      },
+      "revId": "216db846b6f540aa8e24ecd81456b4048258bd3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e1d3543_3c2f9dc1",
+        "filename": "media/cast/net/udp_packets_read_write.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-12-20T01:22:59Z",
+      "side": 1,
+      "message": "We might send zero-length packets (e.g., Opus).",
+      "range": {
+        "startLine": 77,
+        "startChar": 2,
+        "endLine": 77,
+        "endChar": 29
+      },
+      "revId": "216db846b6f540aa8e24ecd81456b4048258bd3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d52d9c1a_a327e877",
+        "filename": "media/cast/net/udp_packets_read_write.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-12-20T01:22:59Z",
+      "side": 1,
+      "message": "This doesn\u0027t match the file name.\n\nAlso, as a nit: Can we name the file udp_packet_pipe.h/.cc?",
+      "range": {
+        "startLine": 5,
+        "startChar": 22,
+        "endLine": 5,
+        "endChar": 47
+      },
+      "revId": "216db846b6f540aa8e24ecd81456b4048258bd3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82010a8b_98ed1f9a",
+        "filename": "media/cast/net/udp_packets_read_write.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-12-20T01:22:59Z",
+      "side": 1,
+      "message": "naming nit: Subtle thing, but the plural is omitted in the \"compound nouns\" case. So, this should be UdpPacketReader (or maybe even UdpPacketPipeReader).",
+      "range": {
+        "startLine": 19,
+        "startChar": 6,
+        "endLine": 19,
+        "endChar": 22
+      },
+      "revId": "216db846b6f540aa8e24ecd81456b4048258bd3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f856f717_67e23b82",
+        "filename": "media/cast/net/udp_packets_read_write.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-12-20T01:22:59Z",
+      "side": 1,
+      "message": "This can be removed (see .cc file comments).",
+      "range": {
+        "startLine": 39,
+        "startChar": 2,
+        "endLine": 39,
+        "endChar": 31
+      },
+      "revId": "216db846b6f540aa8e24ecd81456b4048258bd3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "caad08ac_6cfd3d88",
+        "filename": "media/cast/net/udp_packets_read_write.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-12-20T01:22:59Z",
+      "side": 1,
+      "message": "naming nit: ditto here (s/packets/packet/)",
+      "range": {
+        "startLine": 49,
+        "startChar": 6,
+        "endLine": 49,
+        "endChar": 22
+      },
+      "revId": "216db846b6f540aa8e24ecd81456b4048258bd3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ad1ddab_611d2a7d",
+        "filename": "media/cast/net/udp_packets_read_write.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-12-20T01:22:59Z",
+      "side": 1,
+      "message": "Should there be a \"done callback\" argument too? The writer (media::cast::PacedSender, I assume?) will not want to call Write() until the previous Write() has completed.",
+      "range": {
+        "startLine": 58,
+        "startChar": 29,
+        "endLine": 58,
+        "endChar": 30
+      },
+      "revId": "216db846b6f540aa8e24ecd81456b4048258bd3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b67bc257_c751a2bc",
+        "filename": "media/cast/net/udp_packets_read_write.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-12-20T01:22:59Z",
+      "side": 1,
+      "message": "We should remove this. This is another data buffer; basically the same as saying, \"the data pipe wasn\u0027t big enough to fit everything before it could be read.\" In that case, we want packets to be dropped. ;-)",
+      "range": {
+        "startLine": 69,
+        "startChar": 2,
+        "endLine": 69,
+        "endChar": 51
+      },
+      "revId": "216db846b6f540aa8e24ecd81456b4048258bd3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
