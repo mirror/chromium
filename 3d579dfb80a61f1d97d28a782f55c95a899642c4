@@ -1,0 +1,300 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "006f1235_1252e16c",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-20T21:07:58Z",
+      "side": 1,
+      "message": "nit: This seems off.",
+      "range": {
+        "startLine": 45,
+        "startChar": 55,
+        "endLine": 45,
+        "endChar": 65
+      },
+      "revId": "3d579dfb80a61f1d97d28a782f55c95a899642c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df3830f9_59cc9e76",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-20T21:07:58Z",
+      "side": 1,
+      "message": "Note that this will prevent us from ever reading doubles (i.e. 64-bit floating point) as well. I wonder if we should stick to uint64_t here?",
+      "revId": "3d579dfb80a61f1d97d28a782f55c95a899642c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eab4fa9a_de7727db",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-20T21:07:58Z",
+      "side": 1,
+      "message": "nit: Why do we have CHECK here but not above?",
+      "revId": "3d579dfb80a61f1d97d28a782f55c95a899642c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61c9965a_8b4fa5f2",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-20T21:07:58Z",
+      "side": 1,
+      "message": "While I understand that the standard requires two\u0027s complement representation for signed integers, which makes this safe, but could we instead rely on safe_math.h to do this for us?",
+      "revId": "3d579dfb80a61f1d97d28a782f55c95a899642c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "412b6156_0fd63d64",
+        "filename": "content/browser/webauth/cbor/cbor_reader.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-20T21:07:58Z",
+      "side": 1,
+      "message": "nit: This reads a bit funny because of int64_t now. How about naming this:\n\nReadVariadicLengthInteger(..., int64_t* value), or\nReadLength(..., int64_t* length);\n\nWhichever you choose, please make sure to be consistent with formal parameter and actual argument names (i.e. value/length consistently).",
+      "revId": "3d579dfb80a61f1d97d28a782f55c95a899642c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4b361c5_0f098dc6",
+        "filename": "content/browser/webauth/cbor/cbor_reader_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-20T21:07:58Z",
+      "side": 1,
+      "message": "We should have a test for the maximum possible value here as well.",
+      "revId": "3d579dfb80a61f1d97d28a782f55c95a899642c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9944b0b_52f4ee13",
+        "filename": "content/browser/webauth/cbor/cbor_reader_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-20T21:07:58Z",
+      "side": 1,
+      "message": "super nit: space after colon",
+      "range": {
+        "startLine": 33,
+        "startChar": 53,
+        "endLine": 33,
+        "endChar": 54
+      },
+      "revId": "3d579dfb80a61f1d97d28a782f55c95a899642c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9e37ca9_c11e604d",
+        "filename": "content/browser/webauth/cbor/cbor_reader_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-20T21:07:58Z",
+      "side": 1,
+      "message": "nit: Why not 1 less here? That should still be representable on 4 bytes.",
+      "revId": "3d579dfb80a61f1d97d28a782f55c95a899642c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a17c28db_be703489",
+        "filename": "content/browser/webauth/cbor/cbor_reader_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-20T21:07:58Z",
+      "side": 1,
+      "message": "Please add test cases for 64 bit integers too, at least the two extremes of the (supported) range that is represented on 64 bit.\n\nAlso, consider using numeric_limits to avoid typos in these numbers, i.e., so that a reader of the code can be immediately sure that we are using the extreme values here.",
+      "revId": "3d579dfb80a61f1d97d28a782f55c95a899642c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23f86e92_67572f82",
+        "filename": "content/browser/webauth/cbor/cbor_values.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-20T21:07:58Z",
+      "side": 1,
+      "message": "nit: If there is only one getter anyway, does the user of CBORValue really care if it\u0027s signed or unsigned? Alternatively, can we add is_integer()?",
+      "revId": "3d579dfb80a61f1d97d28a782f55c95a899642c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4876823_ba67d060",
+        "filename": "content/browser/webauth/cbor/cbor_values_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-20T21:07:58Z",
+      "side": 1,
+      "message": "nit: Use -1 at least in one test to test boundary condition.",
+      "range": {
+        "startLine": 40,
+        "startChar": 19,
+        "endLine": 40,
+        "endChar": 22
+      },
+      "revId": "3d579dfb80a61f1d97d28a782f55c95a899642c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c965a47c_ac90e67b",
+        "filename": "content/browser/webauth/cbor/cbor_writer.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-20T21:07:58Z",
+      "side": 1,
+      "message": "I\u0027d argue that this CHECK should be in CBORValue::GetInteger() itself, so that all users of CBORValue can benefit.\n\nWe should also add a comment in cbor_values.h indicating this invariant. Same for unsigned value.",
+      "revId": "3d579dfb80a61f1d97d28a782f55c95a899642c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccce4b54_2c058ea7",
+        "filename": "content/browser/webauth/cbor/cbor_writer.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-20T21:07:58Z",
+      "side": 1,
+      "message": "nit: With the CHECK above, the value can never be out of range. I\u0027m not sure if we really want to keep this?",
+      "revId": "3d579dfb80a61f1d97d28a782f55c95a899642c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30001034_2ac83d6d",
+        "filename": "content/browser/webauth/cbor/cbor_writer_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-20T21:07:58Z",
+      "side": 1,
+      "message": "Please add test this number +1, and for numeric_limits\u003cint64_t\u003e::max().",
+      "revId": "3d579dfb80a61f1d97d28a782f55c95a899642c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2e9df69_9bad95a9",
+        "filename": "content/browser/webauth/cbor/cbor_writer_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-20T21:07:58Z",
+      "side": 1,
+      "message": "nit: No need to name struct.",
+      "range": {
+        "startLine": 51,
+        "startChar": 15,
+        "endLine": 51,
+        "endChar": 34
+      },
+      "revId": "3d579dfb80a61f1d97d28a782f55c95a899642c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95e6f0e9_340241fb",
+        "filename": "content/browser/webauth/cbor/cbor_writer_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-20T21:07:58Z",
+      "side": 1,
+      "message": "nit: Please add 63 bit keys too, they are cool! :)",
+      "revId": "3d579dfb80a61f1d97d28a782f55c95a899642c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

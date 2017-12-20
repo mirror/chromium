@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aeacd96a_40502f70",
+        "filename": "content/browser/webauth/cbor/cbor_values.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-20T21:07:58Z",
+      "side": 0,
+      "message": "These two seem to be still needed.",
+      "revId": "01e526376476bf02c445e992ac7a9359f4482b29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
