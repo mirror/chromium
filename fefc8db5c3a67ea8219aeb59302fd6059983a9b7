@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a6c61a40_0f3d2f2a",
+        "filename": "ui/app_list/views/app_list_folder_view.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1116056
+      },
+      "writtenOn": "2017-12-20T02:16:13Z",
+      "side": 1,
+      "message": "You can safely assume that it\u0027s true. See this:\nhttps://cs.chromium.org/chromium/src/ui/app_list/app_list_features.cc?q\u003dIsFullscreenA\u0026sq\u003dpackage:chromium\u0026l\u003d31",
+      "range": {
+        "startLine": 128,
+        "startChar": 13,
+        "endLine": 128,
+        "endChar": 44
+      },
+      "revId": "fefc8db5c3a67ea8219aeb59302fd6059983a9b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
