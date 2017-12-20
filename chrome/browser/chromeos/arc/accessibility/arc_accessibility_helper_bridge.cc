@@ -216,6 +216,15 @@ void ArcAccessibilityHelperBridge::OnConnectionReady() {
       arc_bridge_service_->accessibility_helper(), SetFilter);
   instance->SetFilter(filter_type);
 
+  chromeos::AccessibilityManager* accessibility_manager =
+      chromeos::AccessibilityManager::Get();
+  if (accessibility_manager) {
+    accessibility_status_subscription_ =
+        accessibility_manager->RegisterCallback(base::BindRepeating(
+            &ArcAccessibilityHelperBridge::OnAccessibilityStatusChanged,
+            base::Unretained(this)));
+  }
+
   auto* surface_manager = ArcNotificationSurfaceManager::Get();
   if (surface_manager)
     surface_manager->AddObserver(this);
@@ -432,6 +441,21 @@ void ArcAccessibilityHelperBridge::OnActionResult(const ui::AXActionData& data,
     return;
 
   tree_source->NotifyActionResult(data, result);
+}
+
+void ArcAccessibilityHelperBridge::OnAccessibilityStatusChanged(
+    const chromeos::AccessibilityStatusEventDetails& event_details) {
+  // TODO(yawano): Add case for select to speak and switch access.
+  if (event_details.notification_type ==
+          chromeos::ACCESSIBILITY_TOGGLE_SPOKEN_FEEDBACK ||
+      event_details.notification_type ==
+          chromeos::ACCESSIBILITY_TOGGLE_FOCUS_HIGHLIGHT) {
+    arc::mojom::AccessibilityFilterType filter_type =
+        GetFilterTypeForProfile(profile_);
+    auto* instance = ARC_GET_INSTANCE_FOR_METHOD(
+        arc_bridge_service_->accessibility_helper(), SetFilter);
+    instance->SetFilter(filter_type);
+  }
 }
 
 aura::Window* ArcAccessibilityHelperBridge::GetActiveWindow() {
