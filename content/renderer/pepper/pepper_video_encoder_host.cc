@@ -19,7 +19,7 @@
 #include "content/renderer/pepper/host_globals.h"
 #include "content/renderer/pepper/video_encoder_shim.h"
 #include "content/renderer/render_thread_impl.h"
-#include "gpu/command_buffer/common/gles2_cmd_utils.h"
+#include "gpu/command_buffer/common/context_creation_attribs.h"
 #include "gpu/ipc/client/command_buffer_proxy_impl.h"
 #include "media/base/bind_to_current_loop.h"
 #include "media/base/video_frame.h"
@@ -536,7 +536,7 @@ bool PepperVideoEncoderHost::EnsureGpuChannel() {
       kGpuStreamIdDefault, base::ThreadTaskRunnerHandle::Get());
   auto result = command_buffer_->Initialize(
       gpu::kNullSurfaceHandle, nullptr, kGpuStreamPriorityDefault,
-      gpu::gles2::ContextCreationAttribHelper(), GURL::EmptyGURL());
+      gpu::ContextCreationAttribs(), GURL::EmptyGURL());
   if (result != gpu::ContextResult::kSuccess) {
     Close();
     return false;
