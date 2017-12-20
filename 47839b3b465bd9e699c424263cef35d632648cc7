@@ -88,6 +88,24 @@
       "revId": "47839b3b465bd9e699c424263cef35d632648cc7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f40b88e6_28db968b",
+        "filename": "chrome/browser/resources/settings/site_settings/site_details_permission.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-12-20T23:12:16Z",
+      "side": 1,
+      "message": "Oh, thanks for writing up a short test! That helps. In your last sentence, do you mean we should go back to patchset 6 with the permissionInfoString_() method taking 14 parameters?",
+      "parentUuid": "067cb38b_97fb14b4",
+      "revId": "47839b3b465bd9e699c424263cef35d632648cc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
