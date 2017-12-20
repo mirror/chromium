@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "974f0e19_217f919c",
+        "filename": "ios/chrome/browser/ui/tab_switcher/tab_switcher_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 1074,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-12-20T18:13:57Z",
+      "side": 1,
+      "message": "Instead of storing a block, I would make -signinPromoViewVisible/Hidden into a delegate protocol. The mediator can conform to it, and be set as the delegate for the view.",
+      "range": {
+        "startLine": 1072,
+        "startChar": 6,
+        "endLine": 1074,
+        "endChar": 8
+      },
+      "revId": "992d0ecede30cb3aae70e0f6bb8054d600a67cb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
