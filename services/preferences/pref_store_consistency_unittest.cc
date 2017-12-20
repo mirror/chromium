@@ -24,7 +24,7 @@
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace prefs {
-namespace {
+namespace pref_store_consistency_unittest {
 
 constexpr int kInitialValue = 1;
 constexpr char kKey[] = "key";
@@ -914,5 +914,5 @@ TEST_F(PersistentPrefStoreConsistencyTest,
   EXPECT_EQ(empty_dict, *pref_service2.GetDictionary(kDictionaryKey));
 }
 
-}  // namespace
+}  // namespace pref_store_consistency_unittest
 }  // namespace prefs

@@ -18,11 +18,8 @@
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
-using testing::Invoke;
-using testing::WithoutArgs;
-
 namespace prefs {
-namespace {
+namespace persistent_pref_store_impl_unittest {
 
 class PrefStoreObserverMock : public PrefStore::Observer {
  public:
@@ -50,7 +47,8 @@ void ExpectPrefChange(PrefStore* pref_store, base::StringPiece key) {
   pref_store->AddObserver(&observer);
   base::RunLoop run_loop;
   EXPECT_CALL(observer, OnPrefValueChanged(key.as_string()))
-      .WillOnce(WithoutArgs(Invoke([&run_loop]() { run_loop.Quit(); })));
+      .WillOnce(testing::WithoutArgs(
+          testing::Invoke([&run_loop]() { run_loop.Quit(); })));
   run_loop.Run();
   pref_store->RemoveObserver(&observer);
 }
@@ -258,7 +256,8 @@ TEST_F(PersistentPrefStoreImplTest, SchedulePendingLossyWrites) {
   CreateImpl(backing_store);
   base::RunLoop run_loop;
   EXPECT_CALL(*backing_store, SchedulePendingLossyWrites())
-      .WillOnce(WithoutArgs(Invoke([&run_loop]() { run_loop.Quit(); })));
+      .WillOnce(testing::WithoutArgs(
+          testing::Invoke([&run_loop]() { run_loop.Quit(); })));
   EXPECT_CALL(*backing_store, CommitPendingWriteMock()).Times(1);
   pref_store()->SchedulePendingLossyWrites();
   run_loop.Run();
@@ -269,11 +268,12 @@ TEST_F(PersistentPrefStoreImplTest, ClearMutableValues) {
   CreateImpl(backing_store);
   base::RunLoop run_loop;
   EXPECT_CALL(*backing_store, ClearMutableValues())
-      .WillOnce(WithoutArgs(Invoke([&run_loop]() { run_loop.Quit(); })));
+      .WillOnce(testing::WithoutArgs(
+          testing::Invoke([&run_loop]() { run_loop.Quit(); })));
   EXPECT_CALL(*backing_store, CommitPendingWriteMock()).Times(1);
   pref_store()->ClearMutableValues();
   run_loop.Run();
 }
 
-}  // namespace
+}  // namespace persistent_pref_store_impl_unittest
 }  // namespace prefs

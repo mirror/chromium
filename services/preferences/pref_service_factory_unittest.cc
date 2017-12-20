@@ -31,7 +31,7 @@
 #include "services/service_manager/public/interfaces/service_factory.mojom.h"
 
 namespace prefs {
-namespace {
+namespace pref_service_factory_unittest {
 
 class ServiceTestClient : public service_manager::test::ServiceTestClient,
                           public service_manager::mojom::ServiceFactory {
@@ -661,5 +661,5 @@ INSTANTIATE_TEST_CASE_P(UnderlayOrOverlayPref,
                         IncognitoPrefServiceFactoryTest,
                         testing::Bool());
 
-}  // namespace
+}  // namespace pref_service_factory_unittest
 }  // namespace prefs

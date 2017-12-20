@@ -18,11 +18,8 @@
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
-using testing::Invoke;
-using testing::WithoutArgs;
-
 namespace prefs {
-namespace {
+namespace pref_store_impl_unittest {
 
 class PrefStoreObserverMock : public PrefStore::Observer {
  public:
@@ -81,7 +78,8 @@ void ExpectInitializationComplete(PrefStore* pref_store, bool success) {
   base::RunLoop run_loop;
   EXPECT_CALL(observer, OnPrefValueChanged("")).Times(0);
   EXPECT_CALL(observer, OnInitializationCompleted(success))
-      .WillOnce(WithoutArgs(Invoke([&run_loop]() { run_loop.Quit(); })));
+      .WillOnce(testing::WithoutArgs(
+          testing::Invoke([&run_loop]() { run_loop.Quit(); })));
   run_loop.Run();
   pref_store->RemoveObserver(&observer);
 }
@@ -91,7 +89,8 @@ void ExpectPrefChange(PrefStore* pref_store, base::StringPiece key) {
   pref_store->AddObserver(&observer);
   base::RunLoop run_loop;
   EXPECT_CALL(observer, OnPrefValueChanged(key.as_string()))
-      .WillOnce(WithoutArgs(Invoke([&run_loop]() { run_loop.Quit(); })));
+      .WillOnce(testing::WithoutArgs(
+          testing::Invoke([&run_loop]() { run_loop.Quit(); })));
   run_loop.Run();
   pref_store->RemoveObserver(&observer);
 }
@@ -301,5 +300,5 @@ TEST_F(PrefStoreImplTest, RemoveWithoutPathExpansionObservedByOtherClient) {
   EXPECT_TRUE(dict_value->empty());
 }
 
-}  // namespace
+}  // namespace pref_store_impl_unittest
 }  // namespace prefs
