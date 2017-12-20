@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "855c34d3_756b0030",
+        "filename": "content/renderer/loader/resource_dispatcher.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-12-20T10:40:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "794b58fa_8156ca66",
+      "revId": "005d599949bcaa02324826202729c413e48b7d0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cdff3d96_a4afa19b",
         "filename": "content/renderer/loader/sync_load_context.cc",
         "patchSetId": 15
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-20T09:10:58Z",
       "side": 1,
       "message": "RemovePendingRequest deletes |this| lazily. Would it be possible that one of the other On* fires after we signal completed_event_ but before |this| is deleted (and timer and abort watcher is destructed), where completed_event_ could be already invalid?",
+      "revId": "005d599949bcaa02324826202729c413e48b7d0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9db7ec11_9d6bf898",
+        "filename": "content/renderer/loader/sync_load_context.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-12-20T10:40:02Z",
+      "side": 1,
+      "message": "Ah, yes right.\nWe need to stop |abort_watcher_| and |timeout_timer_|.\nThe callback of RequestPeer must not be called after RemovePendingRequest() is called.",
+      "parentUuid": "cdff3d96_a4afa19b",
       "revId": "005d599949bcaa02324826202729c413e48b7d0c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
