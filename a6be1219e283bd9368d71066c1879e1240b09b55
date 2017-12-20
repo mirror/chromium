@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "e8a670f7_331b0f03",
+        "filename": "ui/gfx/harfbuzz_font_skia.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-20T04:46:19Z",
+      "side": 1,
+      "message": "\u003e I\u0027m generally in favor of this proposal, I\u0027ve long wanted the browser UI to leverage Blink\u0027s more mature text code. Still, it needs buy-in from the Blink font/text folks; I imagine they\u0027d bear the brunt of the burden maintaining any shared layer (and font caching may be a good starting layer). This would indeed be Epic.\n\u003e \n\u003e Apparently src/third_party/WebKit code already uses src/ui (so, I\u0027d prefer src/ui/text or src/ui/gfx/text over src/text): \n\u003e https://cs.chromium.org/search/?q\u003df:third_party/WebKit.*BUILD.gn+//ui\u0026sq\u003dpackage:chromium\u0026type\u003dcs\n\nooh neat - yeah src/ui/text sg if blink is happy poking around in src/ui.\n\n\u003e I think it\u0027s worth pinging that bug, or the TODO author, to elucidate the performance benefits you\u0027ve found with caching hb_font_t objects. Perhaps the intent is to cache hb_face_t *and* hb_font_t objects?\n\nI think you\u0027re the only one that will get the ping via cc :). ckocagil left Google a couple of years ago. (I think you and me own this stuff now..)\n\nMy suspicion is that, at the time this file was forked, that Blink/webkit only cached hb_face_t. But it was later modified to cache the hb_font_t. HarfBuzzFontCache.h has only existed since July (r484122). A-ha! Found it \"Cache hb_font_t and the user data container instead of hb_face_t\" --\u003e r391835 from May 2016.\n\nAnd r391149.... \"moved the glyph lookup completely to the built-in HarfBuzz\" which is largely what this file does in ui still does..... 😭",
+      "parentUuid": "d754c7e6_08d5f3ff",
+      "revId": "a6be1219e283bd9368d71066c1879e1240b09b55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7944150c_bec46636",
         "filename": "ui/views/controls/label_perftest.cc",
         "patchSetId": 5
@@ -154,6 +172,24 @@
       "side": 1,
       "message": "O(10) or O(100) could very well reduce overhead and noise. I really don\u0027t have a strong preference or opinion here, mostly because I\u0027m not too familiar with perf tests. Maybe loop in a reviewer that knows perf tests a bit better, and maybe document the thoughts behind your overall approach; like \"Test the number of text size measurements that can be made made per second. This should surface any performance regressions in underlying text layout system, eg. failure to cache font structures.\"",
       "parentUuid": "22f6bac0_014c5b64",
+      "revId": "a6be1219e283bd9368d71066c1879e1240b09b55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ce599f3_5251923d",
+        "filename": "ui/views/controls/label_perftest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-20T04:46:19Z",
+      "side": 1,
+      "message": "\u003e O(10) or O(100) could very well reduce overhead and noise. I really don\u0027t have a strong preference or opinion here, mostly because I\u0027m not too familiar with perf tests. Maybe loop in a reviewer that knows perf tests a bit better, and maybe document the thoughts behind your overall approach; like \"Test the number of text size measurements that can be made made per second. This should surface any performance regressions in underlying text layout system, eg. failure to cache font structures.\"\n\nI gave the TEST_F a comment. I\u0027ll publish the follow-up CL to a perf person and point them here.",
+      "parentUuid": "707b37bb_2f25f24d",
       "revId": "a6be1219e283bd9368d71066c1879e1240b09b55",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -313,6 +349,24 @@
       "side": 1,
       "message": "I have a slight preference towards a minimalistic approach; I\u0027d avoid adding  dependencies and init boilerplate until they\u0027re explicitly necessary. Someone may indeed stumble on this later, but I think that\u0027s okay.",
       "parentUuid": "2f2a803d_aa0dfd02",
+      "revId": "a6be1219e283bd9368d71066c1879e1240b09b55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eeecfc31_9f0ec642",
+        "filename": "ui/views/views_perftests.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-20T04:46:19Z",
+      "side": 1,
+      "message": "\u003e I have a slight preference towards a minimalistic approach; I\u0027d avoid adding  dependencies and init boilerplate until they\u0027re explicitly necessary. Someone may indeed stumble on this later, but I think that\u0027s okay.\n\nI zapped the mojo dep.",
+      "parentUuid": "78f7f10d_91e9ad9a",
       "revId": "a6be1219e283bd9368d71066c1879e1240b09b55",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
