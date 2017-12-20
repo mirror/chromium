@@ -5,11 +5,15 @@
 #ifndef IOS_CHROME_BROWSER_WEB_EXTERNAL_APP_LAUNCHER_TAB_HELPER_H_
 #define IOS_CHROME_BROWSER_WEB_EXTERNAL_APP_LAUNCHER_TAB_HELPER_H_
 
+#include "base/callback.h"
+#include "base/ios/weak_nsobject.h"
 #include "base/macros.h"
 #import "ios/web/public/web_state/web_state_user_data.h"
 
 @class ExternalAppsLaunchPolicyDecider;
 class GURL;
+@class MailtoHandlerManager;
+@class UIViewController;
 
 // A customized external app launcher that optionally shows a modal
 // confirmation dialog before switching context to an external application.
@@ -17,6 +21,9 @@ class ExternalAppLauncherTabHelper
     : public web::WebStateUserData<ExternalAppLauncherTabHelper> {
  public:
   ~ExternalAppLauncherTabHelper() override;
+
+  // Sets the |base_view_controller|, from which to present UI.
+  void SetBaseViewController(UIViewController* base_view_controller);
 
   // Requests to open URL in an external application.
   // The method checks if the application for |url| has been opened repeatedly
@@ -41,6 +48,35 @@ class ExternalAppLauncherTabHelper
   void HandleRepeatedAttemptsToLaunch(const GURL& url,
                                       const GURL& source_page_url,
                                       bool allowed);
+
+  // Shows a prompt for the user to choose which mail client app to use to
+  // handle a mailto:// URL.
+  void PromptForMailClientWithUrl(const GURL& url,
+                                  MailtoHandlerManager* manager);
+
+  // Presents an alert controller with |prompt| as body text, |accept label|
+  // and |reject label| as button labels, and a |callback| that takes a boolean
+  // to handle user response.
+  void ShowAlertWithCallback(NSString* prompt,
+                             NSString* accept_label,
+                             NSString* reject_label,
+                             base::OnceCallback<void(bool)> callback);
+
+  // Presents an alert controller with |prompt| and |open_label| as button label
+  // and launches an external app identified by |url| if user taps the accept
+  // button.
+  void ShowAlertThenLaunchExternalAppIfUserAllowed(NSURL* url,
+                                                   NSString* prompt,
+                                                   NSString* open_label);
+
+  // Opens URL in an external application if possible (optionally after
+  // confirming via dialog in case that user didn't interact using
+  // |link_clicked| or if the external application is face time) or returns NO
+  // if there is no such application available.
+  bool OpenUrl(const GURL& gurl, bool link_clicked);
+
+  // The view controller from which to present UI.
+  base::WeakNSObject<UIViewController> base_view_controller_;
 
   // Used to check for repeated launches and provide policy for launching apps.
   ExternalAppsLaunchPolicyDecider* policy_decider_ = nil;
