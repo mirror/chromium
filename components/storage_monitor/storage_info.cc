@@ -8,6 +8,7 @@
 
 #include "base/logging.h"
 #include "base/strings/utf_string_conversions.h"
+#include "components/crash/core/common/crash_key.h"
 #include "components/storage_monitor/media_storage_util.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/text/bytes_formatting.h"
@@ -109,6 +110,9 @@ bool StorageInfo::CrackDeviceId(const std::string& device_id,
   } else if (prefix == kMacImageCapturePrefix) {
     found_type = MAC_IMAGE_CAPTURE;
   } else {
+    // TODO(tommycli): Remove crash key after solving crbug.com/796094.
+    static crash_reporter::CrashKeyString<256> crashKey("deviceId");
+    crash_reporter::ScopedCrashKeyString scopedKey(&crashKey, device_id);
     NOTREACHED();
     return false;
   }
