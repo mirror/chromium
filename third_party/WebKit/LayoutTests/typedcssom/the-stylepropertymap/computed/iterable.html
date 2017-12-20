@@ -5,7 +5,6 @@
 <script src="../../../resources/testharness.js"></script>
 <script src="../../../resources/testharnessreport.js"></script>
 <script src="../../resources/testhelper.js"></script>
-<div id="target" style="--A: A; width: 10px; --C: C; transition-duration: 1s, 2s; color: red; --B: B;"></div>
 <script>
 'use strict';
 
@@ -16,11 +15,10 @@ function findInStyleMap(styleMap, property) {
   return [...styleMap.values()][index];
 }
 
-const target = document.getElementById('target');
-const styleMap = target.computedStyleMap();
+const styleMap = createComputedStyleMap('--A: A; width: 10px; --C: C; transition-duration: 1s, 2s; color: red; --B: B;');
 
 test(() => {
-  const expectedKeys = [...getComputedStyle(target)].sort().concat('--A', '--B', '--C');
+  const expectedKeys = [...getComputedStyle(document.body)].sort().concat('--A', '--B', '--C');
   assert_array_equals([...styleMap], expectedKeys);
 }, 'StylePropertyMap iterates properties in correct order');
 

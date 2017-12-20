@@ -9,13 +9,13 @@
 'use strict';
 
 test(() => {
-  let styleMap = newDivWithStyle('').attributeStyleMap;
+  let styleMap = createInlineStyleMap('');
   assert_throws(new TypeError(), () => styleMap.delete('lemon'));
   assert_throws(new TypeError(), () => styleMap.delete(null));
 }, 'Calling StylePropertyMap.delete with an unsupported property name throws a TypeError');
 
 test(() => {
-  const styleMap = newDivWithStyle('').attributeStyleMap;
+  const styleMap = createInlineStyleMap('');
   assert_false(styleMap.has('width'));
   styleMap.delete('width');
   assert_false(styleMap.has('width'));
@@ -30,7 +30,7 @@ const gTestCases = [
 
 for (const {style, property, desc} of gTestCases) {
   test(() => {
-    const styleMap = newDivWithStyle(style).attributeStyleMap;
+    const styleMap = createInlineStyleMap(style);
     assert_true(styleMap.has(property));
     styleMap.delete(property);
     assert_false(styleMap.has(property));

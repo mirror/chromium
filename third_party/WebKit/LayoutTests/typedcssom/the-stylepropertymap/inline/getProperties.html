@@ -5,20 +5,18 @@
 <script src="../../../resources/testharness.js"></script>
 <script src="../../../resources/testharnessreport.js"></script>
 <div id="target-empty"></div>
-<div id="target-multiple" style="--A: A; width: 0px; --C: C; transition-duration: 1s, 2s; color: red; --B: B;"></div>
+<div id="target-multiple" style=""></div>
 <script>
 'use strict';
 
 test(() => {
-  const styleMap = document.getElementById('target-empty').attributeStyleMap;
-  const properties = styleMap.getProperties();
-  assert_equals(properties.length, 0);
+  const styleMap = createInlineStyleMap('');
+  assert_array_equals(styleMap.getProperties(), []);
 }, 'Calling StylePropertyMap.getProperties on an empty property model returns a zero-length array');
 
 test(() => {
-  const styleMap = document.getElementById('target-multiple').attributeStyleMap;
-  const properties = styleMap.getProperties();
-  assert_array_equals(properties,
+  const styleMap = createInlineStyleMap('--A: A; width: 0px; --C: C; transition-duration: 1s, 2s; color: red; --B: B;');
+  assert_array_equals(styleMap.getProperties(),
     ['color', 'transition-duration', 'width', '--A', '--B', '--C']);
 }, 'StylePropertyMap.getProperties returns property names in correct order');
 
