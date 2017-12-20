@@ -260,8 +260,9 @@ FYI_WATERFALL = {
     'GPU Linux Builder (dbg)' : {},
     'GPU Linux Ozone Builder' : {},
     'GPU Linux dEQP Builder' : {},
-    'GPU Android arm Builder' : {},
-    'GPU Android arm64 Builder' : {},
+    # Temporarily disabled until crbug.com/754104 is fixed
+    #'GPU Android arm Builder' : {},
+    #'GPU Android arm64 Builder' : {},
   },
 
   'testers': {
