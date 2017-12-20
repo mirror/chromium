@@ -166,6 +166,24 @@
     },
     {
       "key": {
+        "uuid": "45f73c26_23e2e2ca",
+        "filename": "components/viz/service/frame_sinks/video_capture/frame_sink_video_capturer_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-12-20T14:22:12Z",
+      "side": 1,
+      "message": "sgtm.",
+      "parentUuid": "9564b752_0b29294a",
+      "revId": "5f9011f03b3ec9a8e609e4d9ee44e70dc275432d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b1055d9c_a0ca8773",
         "filename": "components/viz/service/frame_sinks/video_capture/frame_sink_video_capturer_impl.cc",
         "patchSetId": 3
@@ -233,6 +251,24 @@
       "revId": "5f9011f03b3ec9a8e609e4d9ee44e70dc275432d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "642027fa_3e17468d",
+        "filename": "components/viz/service/frame_sinks/video_capture/in_flight_frame_delivery.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-12-20T14:22:12Z",
+      "side": 1,
+      "message": "Ah, you can call Done() then ProvideFeedback() after. Makes sense!",
+      "parentUuid": "dff30d04_c903fdd9",
+      "revId": "5f9011f03b3ec9a8e609e4d9ee44e70dc275432d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
