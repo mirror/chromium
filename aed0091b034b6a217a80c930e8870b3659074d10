@@ -16,6 +16,24 @@
       "revId": "aed0091b034b6a217a80c930e8870b3659074d10",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5726515f_d18427b0",
+        "filename": "extensions/browser/extension_web_contents_observer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-12-20T21:06:03Z",
+      "side": 1,
+      "message": "Don\u0027t think it should be required. A RenderFrameDeleted notification should be invoked in this case. We just want to ensure that we don\u0027t register any frames which might not get this notification.",
+      "parentUuid": "4b1fbb97_eed78ba7",
+      "revId": "aed0091b034b6a217a80c930e8870b3659074d10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
