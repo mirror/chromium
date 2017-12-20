@@ -10,12 +10,14 @@
 
 namespace base {
 
-WaitableEventWatcher::WaitableEventWatcher() = default;
+WaitableEventWatcher::WaitableEventWatcher() {}
 
 WaitableEventWatcher::~WaitableEventWatcher() {}
 
-bool WaitableEventWatcher::StartWatching(WaitableEvent* event,
-                                         EventCallback callback) {
+bool WaitableEventWatcher::StartWatching(
+    WaitableEvent* event,
+    EventCallback callback,
+    scoped_refptr<SequencedTaskRunner> task_runner) {
   DCHECK(event);
   callback_ = std::move(callback);
   event_ = event;
