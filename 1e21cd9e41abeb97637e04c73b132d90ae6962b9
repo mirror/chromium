@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "3f3d1a9b_20d0817b",
+        "filename": "content/browser/webauth/fido_attestation_statement.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-20T20:11:41Z",
+      "side": 1,
+      "message": "Yep, that\u0027s what I meant, thanks for cleaning up the deps!",
+      "parentUuid": "dcc92e4a_1ecab568",
+      "revId": "1e21cd9e41abeb97637e04c73b132d90ae6962b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4a4eab88_892204ff",
         "filename": "content/browser/webauth/fido_attestation_statement.cc",
         "patchSetId": 1
@@ -136,6 +154,24 @@
       "side": 1,
       "message": "U2F only allows a single certificate. If more than one is contained in the response, this code will consider subsequent certificates to be part of the signature, but the U2F token would be invalid and wouldn\u0027t work anywhere.",
       "parentUuid": "426c7079_37f1749d",
+      "revId": "1e21cd9e41abeb97637e04c73b132d90ae6962b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1ba6af47_448020ab",
+        "filename": "content/browser/webauth/fido_attestation_statement.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-20T20:11:41Z",
+      "side": 1,
+      "message": "Fair enough, thanks for the explanation!",
+      "parentUuid": "56b53039_3b14ab9c",
       "revId": "1e21cd9e41abeb97637e04c73b132d90ae6962b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
