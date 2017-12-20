@@ -64,7 +64,8 @@ class CONTENT_EXPORT DelegatedFrameHostClient {
   // Returns the color that the resize gutters should be drawn with. Takes the
   // suggested color from the current page background.
   virtual SkColor DelegatedFrameHostGetGutterColor(SkColor color) const = 0;
-  virtual gfx::Size DelegatedFrameHostDesiredSizeInDIP() const = 0;
+  virtual void DelegatedFrameHostDesiredSize(gfx::Size* size_in_dip,
+                                             float* scale_factor) const = 0;
 
   virtual bool DelegatedFrameCanCreateResizeLock() const = 0;
   virtual std::unique_ptr<CompositorResizeLock>
@@ -144,7 +145,7 @@ class CONTENT_EXPORT DelegatedFrameHost
   void WasShown(const ui::LatencyInfo& latency_info);
   void WasResized();
   bool HasSavedFrame();
-  gfx::Size GetRequestedRendererSize() const;
+  void GetRequestedRendererSize(gfx::Size* size, float* scale_factor) const;
   void SetCompositor(ui::Compositor* compositor);
   void ResetCompositor();
   // Note: |src_subrect| is specified in DIP dimensions while |output_size|
