@@ -160,7 +160,7 @@ HTMLParserScriptRunner::HTMLParserScriptRunner(
   DCHECK(host_);
 }
 
-HTMLParserScriptRunner::~HTMLParserScriptRunner() {}
+HTMLParserScriptRunner::~HTMLParserScriptRunner() = default;
 
 void HTMLParserScriptRunner::Detach() {
   if (!document_)

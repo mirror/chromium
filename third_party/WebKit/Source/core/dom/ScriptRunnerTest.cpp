@@ -26,7 +26,7 @@ namespace blink {
 class MockPendingScript : public PendingScript {
  public:
   static MockPendingScript* Create() { return new MockPendingScript; }
-  ~MockPendingScript() override {}
+  ~MockPendingScript() override = default;
 
   MOCK_CONST_METHOD0(GetScriptType, ScriptType());
   MOCK_CONST_METHOD1(CheckMIMETypeBeforeRunScript, bool(Document*));
@@ -63,7 +63,7 @@ class MockScriptLoader final : public ScriptLoader {
   static MockScriptLoader* Create() {
     return (new MockScriptLoader())->SetupForNonStreaming();
   }
-  ~MockScriptLoader() override {}
+  ~MockScriptLoader() override = default;
 
   MOCK_METHOD0(Execute, void());
   MOCK_CONST_METHOD0(IsReady, bool());

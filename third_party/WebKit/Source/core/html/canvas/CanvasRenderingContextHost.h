@@ -61,7 +61,7 @@ class CORE_EXPORT CanvasRenderingContextHost : public GarbageCollectedMixin {
   virtual bool IsOffscreenCanvas() const { return false; }
 
  protected:
-  virtual ~CanvasRenderingContextHost() {}
+  virtual ~CanvasRenderingContextHost() = default;
 };
 
 }  // namespace blink

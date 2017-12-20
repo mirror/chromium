@@ -23,7 +23,7 @@ class LayoutEmbeddedContentItem : public LayoutBoxItem {
 
   explicit LayoutEmbeddedContentItem(std::nullptr_t) : LayoutBoxItem(nullptr) {}
 
-  LayoutEmbeddedContentItem() {}
+  LayoutEmbeddedContentItem() = default;
 
   void UpdateOnEmbeddedContentViewChange() {
     ToPart()->UpdateOnEmbeddedContentViewChange();

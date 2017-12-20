@@ -225,7 +225,7 @@ CompositingRequirementsUpdater::CompositingRequirementsUpdater(
     : layout_view_(layout_view),
       compositing_reason_finder_(compositing_reason_finder) {}
 
-CompositingRequirementsUpdater::~CompositingRequirementsUpdater() {}
+CompositingRequirementsUpdater::~CompositingRequirementsUpdater() = default;
 
 void CompositingRequirementsUpdater::Update(
     PaintLayer* root,

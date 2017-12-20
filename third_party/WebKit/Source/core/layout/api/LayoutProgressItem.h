@@ -23,7 +23,7 @@ class LayoutProgressItem : public LayoutBlockItem {
 
   explicit LayoutProgressItem(std::nullptr_t) : LayoutBlockItem(nullptr) {}
 
-  LayoutProgressItem() {}
+  LayoutProgressItem() = default;
 
   bool IsDeterminate() const { return ToProgress()->IsDeterminate(); }
 

@@ -5367,7 +5367,7 @@ enum QualifiedNameStatus {
 struct ParseQualifiedNameResult {
   QualifiedNameStatus status;
   UChar32 character;
-  ParseQualifiedNameResult() {}
+  ParseQualifiedNameResult() = default;
   explicit ParseQualifiedNameResult(QualifiedNameStatus status)
       : status(status) {}
   ParseQualifiedNameResult(QualifiedNameStatus status, UChar32 character)

@@ -63,7 +63,7 @@ Modulator* Modulator::From(ScriptState* script_state) {
   return modulator;
 }
 
-Modulator::~Modulator() {}
+Modulator::~Modulator() = default;
 
 void Modulator::SetModulator(ScriptState* script_state, Modulator* modulator) {
   DCHECK(script_state);

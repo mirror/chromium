@@ -17,7 +17,7 @@ class CORE_EXPORT Policy final : public ScriptWrappable {
   DEFINE_WRAPPERTYPEINFO();
 
  public:
-  ~Policy() {}
+  ~Policy() = default;
   static Policy* Create(Document*);
   // Returns whether or not the given feature is allowed on the origin of the
   // document that owns the policy.

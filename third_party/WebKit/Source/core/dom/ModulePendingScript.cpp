@@ -9,7 +9,7 @@
 
 namespace blink {
 
-ModulePendingScriptTreeClient::ModulePendingScriptTreeClient() {}
+ModulePendingScriptTreeClient::ModulePendingScriptTreeClient() = default;
 
 void ModulePendingScriptTreeClient::SetPendingScript(
     ModulePendingScript* pending_script) {
@@ -60,7 +60,7 @@ ModulePendingScript::ModulePendingScript(ScriptElementBase* element,
   client->SetPendingScript(this);
 }
 
-ModulePendingScript::~ModulePendingScript() {}
+ModulePendingScript::~ModulePendingScript() = default;
 
 void ModulePendingScript::DisposeInternal() {
   module_tree_client_ = nullptr;

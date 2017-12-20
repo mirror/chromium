@@ -227,7 +227,7 @@ VTTCue::VTTCue(Document& document,
   cue_background_box_->SetShadowPseudoId(CueShadowPseudoId());
 }
 
-VTTCue::~VTTCue() {}
+VTTCue::~VTTCue() = default;
 
 #ifndef NDEBUG
 String VTTCue::ToString() const {
@@ -506,7 +506,7 @@ float VTTCue::CalculateComputedLinePosition() const {
 
 class VTTTextRunIterator : public TextRunIterator {
  public:
-  VTTTextRunIterator() {}
+  VTTTextRunIterator() = default;
   VTTTextRunIterator(const TextRun* text_run, unsigned offset)
       : TextRunIterator(text_run, offset) {}
 

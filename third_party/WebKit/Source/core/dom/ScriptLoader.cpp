@@ -103,7 +103,7 @@ ScriptLoader::ScriptLoader(ScriptElementBase* element,
   }
 }
 
-ScriptLoader::~ScriptLoader() {}
+ScriptLoader::~ScriptLoader() = default;
 
 void ScriptLoader::Trace(blink::Visitor* visitor) {
   visitor->Trace(element_);

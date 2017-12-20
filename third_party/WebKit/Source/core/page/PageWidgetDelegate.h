@@ -64,7 +64,7 @@ class CORE_EXPORT PageWidgetEventHandler {
       LocalFrame& main_frame,
       const WebTouchEvent&,
       const std::vector<const WebInputEvent*>&);
-  virtual ~PageWidgetEventHandler() {}
+  virtual ~PageWidgetEventHandler() = default;
 };
 
 // Common implementation of WebViewImpl and WebPagePopupImpl.
@@ -91,7 +91,7 @@ class CORE_EXPORT PageWidgetDelegate {
       LocalFrame* root);
 
  private:
-  PageWidgetDelegate() {}
+  PageWidgetDelegate() = default;
 };
 
 }  // namespace blink

@@ -21,7 +21,7 @@ class MockScriptElementBase
   static MockScriptElementBase* Create() {
     return new ::testing::StrictMock<MockScriptElementBase>();
   }
-  virtual ~MockScriptElementBase() {}
+  virtual ~MockScriptElementBase() = default;
 
   MOCK_METHOD0(DispatchLoadEvent, void());
   MOCK_METHOD0(DispatchErrorEvent, void());

@@ -54,7 +54,7 @@ class ModuleTreeLinkerTestModulator final : public DummyModulator {
  public:
   ModuleTreeLinkerTestModulator(scoped_refptr<ScriptState> script_state)
       : script_state_(std::move(script_state)) {}
-  ~ModuleTreeLinkerTestModulator() override {}
+  ~ModuleTreeLinkerTestModulator() override = default;
 
   void Trace(blink::Visitor*) override;
 

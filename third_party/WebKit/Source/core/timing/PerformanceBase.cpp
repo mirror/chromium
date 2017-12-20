@@ -99,7 +99,7 @@ PerformanceBase::PerformanceBase(double time_origin,
           this,
           &PerformanceBase::DeliverObservationsTimerFired) {}
 
-PerformanceBase::~PerformanceBase() {}
+PerformanceBase::~PerformanceBase() = default;
 
 const AtomicString& PerformanceBase::InterfaceName() const {
   return EventTargetNames::Performance;

@@ -83,7 +83,7 @@ ClassicPendingScript::ClassicPendingScript(
   MemoryCoordinator::Instance().RegisterClient(this);
 }
 
-ClassicPendingScript::~ClassicPendingScript() {}
+ClassicPendingScript::~ClassicPendingScript() = default;
 
 NOINLINE void ClassicPendingScript::CheckState() const {
   // TODO(hiroshige): Turn these CHECK()s into DCHECK() before going to beta.
