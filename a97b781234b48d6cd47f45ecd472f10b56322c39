@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "22fec21e_a35069f4",
+        "filename": "components/cast_channel/cast_test_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-12-20T23:20:27Z",
+      "side": 1,
+      "message": "traffic_annotation",
+      "revId": "a97b781234b48d6cd47f45ecd472f10b56322c39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
