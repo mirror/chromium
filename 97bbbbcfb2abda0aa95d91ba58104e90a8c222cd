@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "33d65772_c31790e2",
+        "filename": "content/renderer/browser_plugin/browser_plugin.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 461,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-12-20T18:54:21Z",
+      "side": 1,
+      "message": "To clarify, that widget will always call BrowserPlugin::Destroy before it\u0027s destructed, correct?",
+      "revId": "97bbbbcfb2abda0aa95d91ba58104e90a8c222cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79e2afb3_ddae1ac8",
+        "filename": "content/renderer/browser_plugin/browser_plugin.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 472,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-12-20T18:54:21Z",
+      "side": 1,
+      "message": "nit: should embedding_render_widget_ be reset here?",
+      "revId": "97bbbbcfb2abda0aa95d91ba58104e90a8c222cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
