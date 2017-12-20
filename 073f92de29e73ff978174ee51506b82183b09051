@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "dad2e5fe_2d8fc61e",
+        "filename": "content/renderer/loader/resource_dispatcher.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-12-20T08:43:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e77f8997_4978b0eb",
+      "revId": "073f92de29e73ff978174ee51506b82183b09051",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6b5f4a1b_341fae11",
         "filename": "content/renderer/loader/resource_dispatcher.h",
         "patchSetId": 14
@@ -33,6 +51,24 @@
       "revId": "073f92de29e73ff978174ee51506b82183b09051",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77a6b6d5_063049c0",
+        "filename": "content/renderer/loader/resource_dispatcher.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-12-20T08:43:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6b5f4a1b_341fae11",
+      "revId": "073f92de29e73ff978174ee51506b82183b09051",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "19100973_a810c4c7",
+        "filename": "content/renderer/loader/sync_load_context.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-12-20T08:43:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "64016260_8e9b03ef",
+      "revId": "073f92de29e73ff978174ee51506b82183b09051",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "808bc4cd_f414eb0d",
         "filename": "content/renderer/loader/sync_load_response.cc",
         "patchSetId": 14
@@ -67,6 +121,24 @@
       "revId": "073f92de29e73ff978174ee51506b82183b09051",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f174b134_efa63c51",
+        "filename": "content/renderer/loader/sync_load_response.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-12-20T08:43:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "808bc4cd_f414eb0d",
+      "revId": "073f92de29e73ff978174ee51506b82183b09051",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "52f56d09_607e55ba",
+        "filename": "content/renderer/loader/sync_load_response.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-12-20T08:43:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3763600f_d294fc85",
+      "revId": "073f92de29e73ff978174ee51506b82183b09051",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "168a82ae_3d9fae75",
         "filename": "third_party/WebKit/public/platform/WebWorkerFetchContext.h",
         "patchSetId": 14
@@ -98,6 +188,24 @@
       "writtenOn": "2017-12-20T07:41:18Z",
       "side": 1,
       "message": "I think this needs better documentation about lifetime as it can\u0027t run after the context is destructed.\n\nAlso: it feels it\u0027s fine to just return a base::WaitableEvent* and let the client to call Signal(), which is a somewhat common pattern and understandable.",
+      "revId": "073f92de29e73ff978174ee51506b82183b09051",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99d9c3a4_fa8a8d07",
+        "filename": "third_party/WebKit/public/platform/WebWorkerFetchContext.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-12-20T08:43:21Z",
+      "side": 1,
+      "message": "Added comment.\n\nI think we can\u0027t use base::WaitableEvent here bacuease \"base/synchronization/waitable_event.h\" is not listed in core/DEPS.",
+      "parentUuid": "168a82ae_3d9fae75",
       "revId": "073f92de29e73ff978174ee51506b82183b09051",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
