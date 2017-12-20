@@ -2,6 +2,98 @@
   "comments": [
     {
       "key": {
+        "uuid": "bc14abd3_489591cd",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-20T21:29:00Z",
+      "side": 1,
+      "message": "We never seem to be setting response-\u003einfo. Please tell me that tests aren\u0027t  passing. ;-)",
+      "range": {
+        "startLine": 42,
+        "startChar": 7,
+        "endLine": 42,
+        "endChar": 18
+      },
+      "revId": "a3dffdf17f05e62df77ea2b103557d5e8827bec9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ade9067c_848a1091",
+        "filename": "third_party/WebKit/public/platform/modules/webauth/authenticator.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-20T21:29:00Z",
+      "side": 1,
+      "message": "comment nit: both Authenticator::MakeCredential and GetAssertion.",
+      "range": {
+        "startLine": 26,
+        "startChar": 38,
+        "endLine": 26,
+        "endChar": 52
+      },
+      "revId": "a3dffdf17f05e62df77ea2b103557d5e8827bec9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "346d8d0d_441fad52",
+        "filename": "third_party/WebKit/public/platform/modules/webauth/authenticator.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-20T21:29:00Z",
+      "side": 1,
+      "message": "comment nit: s//Authenticator::MakeCredential()/",
+      "range": {
+        "startLine": 39,
+        "startChar": 54,
+        "endLine": 40,
+        "endChar": 25
+      },
+      "revId": "a3dffdf17f05e62df77ea2b103557d5e8827bec9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b4a69ef_602c0c0f",
+        "filename": "third_party/WebKit/public/platform/modules/webauth/authenticator.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-20T21:29:00Z",
+      "side": 1,
+      "message": "comment nit: Equal to the `user.id` passed into create(), maximum 64 bytes.",
+      "range": {
+        "startLine": 58,
+        "startChar": 6,
+        "endLine": 58,
+        "endChar": 76
+      },
+      "revId": "a3dffdf17f05e62df77ea2b103557d5e8827bec9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9e21be31_9ca06a25",
         "filename": "third_party/WebKit/public/platform/modules/webauth/authenticator.mojom",
         "patchSetId": 1
@@ -13,6 +105,30 @@
       "writtenOn": "2017-12-18T07:53:27Z",
       "side": 1,
       "message": "Nit: user_handle",
+      "range": {
+        "startLine": 59,
+        "startChar": 16,
+        "endLine": 59,
+        "endChar": 26
+      },
+      "revId": "a3dffdf17f05e62df77ea2b103557d5e8827bec9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd4a5fab_4c51643b",
+        "filename": "third_party/WebKit/public/platform/modules/webauth/authenticator.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-20T21:29:00Z",
+      "side": 1,
+      "message": "+1.",
+      "parentUuid": "9e21be31_9ca06a25",
       "range": {
         "startLine": 59,
         "startChar": 16,
