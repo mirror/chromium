@@ -106,7 +106,7 @@ public class AwAutofillClient {
     private static void addToAutofillSuggestionArray(AutofillSuggestion[] array, int index,
             String name, String label, int uniqueId) {
         array[index] = new AutofillSuggestion(name, label, DropdownItem.NO_ICON,
-                false /* isIconAtLeft */, uniqueId, false /* isDeletable */,
+                true /* isIconAtLeft */, uniqueId, false /* isDeletable */,
                 false /* isMultilineLabel */, false /* isBoldLabel */);
     }
 

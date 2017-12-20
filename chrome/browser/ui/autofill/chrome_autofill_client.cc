@@ -275,6 +275,7 @@ void ChromeAutofillClient::ShowAutofillPopup(
   gfx::RectF element_bounds_in_screen_space =
       element_bounds + client_area.OffsetFromOrigin();
 
+DLOG(WARNING) <<"3fengLog: in chrome_autofill_client. ShowAutofillPopup";
   // Will delete or reuse the old |popup_controller_|.
   popup_controller_ =
       AutofillPopupControllerImpl::GetOrCreate(popup_controller_,

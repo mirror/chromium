@@ -106,7 +106,7 @@ void AutofillExternalDelegate::OnSuggestionsReturned(
     Suggestion scan_credit_card(
         l10n_util::GetStringUTF16(IDS_AUTOFILL_SCAN_CREDIT_CARD));
     scan_credit_card.frontend_id = POPUP_ITEM_ID_SCAN_CREDIT_CARD;
-    scan_credit_card.icon = base::ASCIIToUTF16("scanCreditCardIcon");
+    scan_credit_card.icon = base::ASCIIToUTF16("googlePay");
     suggestions.push_back(scan_credit_card);
 
     if (!has_shown_popup_for_current_edit_) {
@@ -171,6 +171,7 @@ void AutofillExternalDelegate::OnSuggestionsReturned(
 
   // Send to display.
   if (query_field_.is_focusable) {
+    DLOG(WARNING) <<"3fengLog: ShowAutofillPopup";
     manager_->client()->ShowAutofillPopup(element_bounds_,
                                           query_field_.text_direction,
                                           suggestions,
@@ -360,6 +361,8 @@ void AutofillExternalDelegate::ApplyAutofillOptions(
   // |POPUP_ITEM_ID_CLEAR_FORM|, include a hint for keyboard accessory.
   suggestions->push_back(Suggestion(GetSettingsSuggestionValue()));
   suggestions->back().frontend_id = POPUP_ITEM_ID_AUTOFILL_OPTIONS;
+  suggestions->back().icon = base::ASCIIToUTF16("scanCreditCardIcon");
+
 #if defined(OS_ANDROID)
   if (IsKeyboardAccessoryEnabled()) {
     suggestions->back().icon = base::ASCIIToUTF16("settings");

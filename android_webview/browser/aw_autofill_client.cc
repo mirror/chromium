@@ -116,7 +116,7 @@ void AwAutofillClient::ShowAutofillPopup(
   gfx::Rect client_area = web_contents_->GetContainerBounds();
   gfx::RectF element_bounds_in_screen_space =
       element_bounds + client_area.OffsetFromOrigin();
-
+DLOG(WARNING) <<"3fengLog: in show autofill popup";
   ShowAutofillPopupImpl(element_bounds_in_screen_space,
                         text_direction == base::i18n::RIGHT_TO_LEFT,
                         suggestions);

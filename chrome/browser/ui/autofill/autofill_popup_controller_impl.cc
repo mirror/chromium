@@ -75,6 +75,7 @@ AutofillPopupControllerImpl::~AutofillPopupControllerImpl() {}
 
 void AutofillPopupControllerImpl::Show(
     const std::vector<autofill::Suggestion>& suggestions) {
+  DLOG(WARNING) <<"3fengLog: in AutofillPopupControllerImpl::Show";
   SetValues(suggestions);
   DCHECK_EQ(suggestions_.size(), elided_values_.size());
   DCHECK_EQ(suggestions_.size(), elided_labels_.size());

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2017 The Chromium Authors. All rights reserved.
+     Use of this source code is governed by a BSD-style license that can be
+     found in the LICENSE file. -->
+
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:targetApi="21"
+    android:width="32dp"
+    android:height="20dp"
+    android:viewportWidth="128"
+    android:viewportHeight="80">
+
+    <path
+        android:pathData="M206.2 84.58l0 50.75 -16.1 0 0 -125.33 42.7 0A38.61 38.61 0 0 1 260.45 20.85 34.88 34.88 0 0 1 272 47.3"
+        android:fillColor="#5f6368" />
+    <path
+        android:pathData="M309.1 46.78q17.85 0 28.18 9.54 10.33 9.54 10.32 26.16l0 52.85 -15.4 0 0 -11.9 -0.7 0q-10 14.7 -26.6 14.7 -14.17 0 -23.71 -8.4"
+        android:fillColor="#5f6368" />
+    <path
+        android:pathData="M436 49.58l-53.76 123.55 -16.62 0 19.95 -43.23 -35.35 -80.32 17.5 0 25.55 61.6 0.35 0 24.85 -61.6z"
+        android:fillColor="#5f6368" />
+    <path
+        android:pathData="M141.14 73.64A85.79 85.79 0 0 0 139.9 59l-67.9 0 0 27.73 38.89 0"
+        android:fillColor="#4285f4" />
+    <path
+        android:pathData="M72 144c19.43 0 35.79 -6.38 47.72 -17.38l-23.21 -18C90.05 113 81.73 115.5 72 115.5 53.22 115.5 37.28 102.84 31.58 85.78l-23.91 0 0 18.55A72 72 0 0 0 72 144Z"
+        android:fillColor="#34a853" />
+    <path
+        android:pathData="M31.58 85.78a43.14 43.14 0 0 1 0 -27.56l0 -18.55 -23.91 0a72 72 0 0 0 0 64.66z"
+        android:fillColor="#fabb05" />
+    <path
+        android:pathData="M72 28.5a39.09 39.09 0 0 1 27.62 10.8l0 0 20.55 -20.55A69.18 69.18 0 0 0 72 0 72 72 0 0 0 7.67 39.67L31.58 58.22C37.28 41.16 53.22 28.5 72 28.5Z"
+        android:fillColor="#e94235" />
+<!-- </vector> -->
