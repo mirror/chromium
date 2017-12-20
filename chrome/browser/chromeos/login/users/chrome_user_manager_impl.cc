@@ -1351,6 +1351,10 @@ bool ChromeUserManagerImpl::ShouldReportUser(const std::string& user_id) const {
   return !(reporting_users.Find(user_id_value) == reporting_users.end());
 }
 
+bool ChromeUserManagerImpl::IsManagedDevice() const {
+  return IsEnterpriseManaged();
+}
+
 void ChromeUserManagerImpl::AddReportingUser(const AccountId& account_id) {
   ListPrefUpdate users_update(GetLocalState(), kReportingUsers);
   users_update->AppendIfNotPresent(

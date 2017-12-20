@@ -680,6 +680,10 @@ bool FakeChromeUserManager::ShouldReportUser(const std::string& user_id) const {
   return false;
 }
 
+bool FakeChromeUserManager::IsManagedDevice() const {
+  return false;
+}
+
 user_manager::User* FakeChromeUserManager::GetActiveUserInternal() const {
   if (active_user_ != nullptr)
     return active_user_;

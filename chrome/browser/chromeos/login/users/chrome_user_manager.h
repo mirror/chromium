@@ -40,6 +40,9 @@ class ChromeUserManager : public user_manager::UserManagerBase,
   // policy::DeviceStatusCollector).
   virtual bool ShouldReportUser(const std::string& user_id) const = 0;
 
+  // Return whether the device is managed.
+  virtual bool IsManagedDevice() const = 0;
+
   DISALLOW_COPY_AND_ASSIGN(ChromeUserManager);
 };
 

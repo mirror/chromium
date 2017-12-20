@@ -9,6 +9,7 @@
 
 #include "base/test/test_mock_time_task_runner.h"
 #include "base/timer/timer.h"
+#include "chrome/browser/chromeos/login/users/fake_chrome_user_manager.h"
 #include "chrome/browser/chromeos/power/ml/idle_event_notifier.h"
 #include "chrome/browser/chromeos/power/ml/user_activity_event.pb.h"
 #include "chrome/browser/chromeos/power/ml/user_activity_logger_delegate.h"
@@ -69,7 +70,7 @@ class UserActivityLoggerTest : public testing::Test {
     activity_logger_ = std::make_unique<UserActivityLogger>(
         &delegate_, idle_event_notifier_.get(), &user_activity_detector_,
         &fake_power_manager_client_, &session_manager_,
-        mojo::MakeRequest(&observer));
+        mojo::MakeRequest(&observer), &fake_user_manager_);
     activity_logger_->SetTaskRunnerForTesting(task_runner_);
   }
 
@@ -131,6 +132,7 @@ class UserActivityLoggerTest : public testing::Test {
   chromeos::FakePowerManagerClient fake_power_manager_client_;
   session_manager::SessionManager session_manager_;
   std::unique_ptr<UserActivityLogger> activity_logger_;
+  chromeos::FakeChromeUserManager fake_user_manager_;
 };
 
 // After an idle event, we have a ui::Event, we should expect one
@@ -338,6 +340,8 @@ TEST_F(UserActivityLoggerTest, FeatureExtraction) {
   EXPECT_EQ(UserActivityEvent::Features::CLAMSHELL, features.device_mode());
   EXPECT_EQ(23.0f, features.battery_percent());
   EXPECT_DOUBLE_EQ(false, features.on_battery());
+  EXPECT_EQ(UserActivityEvent::Features::UNMANAGED,
+            features.device_management());
 }
 
 TEST_F(UserActivityLoggerTest, UpdateOpenTabsURLsCalledTimes) {
