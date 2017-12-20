@@ -119,6 +119,24 @@
     },
     {
       "key": {
+        "uuid": "abb1a804_0d13876f",
+        "filename": "chrome/browser/ui/views/hover_button.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-20T05:34:19Z",
+      "side": 1,
+      "message": "\u003e |title_| is a StyledLabel and the function is named like this. See https://cs.chromium.org/chromium/src/ui/views/controls/styled_label.h?rcl\u003d29cd12f363e548cc7d1bc67a1dcfba86b24531ea\u0026l\u003d105.\n\nah. that\u0027s fine.",
+      "parentUuid": "3e5efdf4_b4b2347e",
+      "revId": "78622498f4c0b7b0df2f6f9e2d91192c08d7ab3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b2fd83a2_2d39c1dc",
         "filename": "chrome/browser/ui/views/hover_button.cc",
         "patchSetId": 14
@@ -393,6 +411,24 @@
       "side": 1,
       "message": "I named the constant above kSmallMenuIconSize because there will be more items that need this constant once the sign-in view will be extended.",
       "parentUuid": "3d2430d8_b918ddff",
+      "revId": "78622498f4c0b7b0df2f6f9e2d91192c08d7ab3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d5ca6109_09ebd862",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 1156,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-20T05:34:19Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "cfb99813_41870797",
       "revId": "78622498f4c0b7b0df2f6f9e2d91192c08d7ab3a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
