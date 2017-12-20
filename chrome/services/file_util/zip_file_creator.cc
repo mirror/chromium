@@ -12,8 +12,6 @@
 #include "mojo/public/cpp/bindings/strong_binding.h"
 #include "third_party/zlib/google/zip.h"
 
-namespace chrome {
-
 namespace {
 
 // A zip::FileAccessor that talks to a file system through the Mojo
@@ -155,7 +153,7 @@ ZipFileCreator::ZipFileCreator(
     std::unique_ptr<service_manager::ServiceContextRef> service_ref)
     : service_ref_(std::move(service_ref)) {}
 
-ZipFileCreator::~ZipFileCreator() = default;
+ZipFileCreator::~ZipFileCreator() {}
 
 void ZipFileCreator::CreateZipFile(
     filesystem::mojom::DirectoryPtr source_dir_mojo,
@@ -182,4 +180,3 @@ void ZipFileCreator::CreateZipFile(
   std::move(callback).Run(success);
 }
 
-}  // namespace chrome

@@ -57,7 +57,7 @@ void ZipFileCreator::Start(service_manager::Connector* connector) {
                  base::Unretained(connector)));
 }
 
-ZipFileCreator::~ZipFileCreator() = default;
+ZipFileCreator::~ZipFileCreator() {}
 
 void ZipFileCreator::CreateZipFile(service_manager::Connector* connector,
                                    base::File file) {
