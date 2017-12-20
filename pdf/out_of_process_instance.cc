@@ -140,6 +140,7 @@ const char KJSGetNamedDestination[] = "namedDestination";
 // Reply with the page number of the named destination (Plugin -> Page)
 const char kJSGetNamedDestinationReplyType[] = "getNamedDestinationReply";
 const char kJSNamedDestinationPageNumber[] = "pageNumber";
+const char kJSNamedDestinationViewType[] = "viewType";
 
 // Selecting text in document (Plugin -> Page)
 const char kJSSetIsSelectingType[] = "setIsSelecting";
@@ -666,12 +667,16 @@ void OutOfProcessInstance::HandleMessage(const pp::Var& message) {
     PostMessage(reply);
   } else if (type == KJSGetNamedDestinationType &&
              dict.Get(pp::Var(KJSGetNamedDestination)).is_string()) {
-    int page_number = engine_->GetNamedDestinationPage(
-        dict.Get(pp::Var(KJSGetNamedDestination)).AsString());
+    PDFEngine::NamedDestination namedDestination =
+        engine_->GetNamedDestinationPage(
+            dict.Get(pp::Var(KJSGetNamedDestination)).AsString());
     pp::VarDictionary reply;
     reply.Set(pp::Var(kType), pp::Var(kJSGetNamedDestinationReplyType));
-    if (page_number >= 0)
-      reply.Set(pp::Var(kJSNamedDestinationPageNumber), page_number);
+    if (namedDestination.page >= 0) {
+      reply.Set(pp::Var(kJSNamedDestinationPageNumber), namedDestination.page);
+      reply.Set(pp::Var(kJSNamedDestinationViewType),
+                (int)namedDestination.view);
+    }
     PostMessage(reply);
   } else {
     NOTREACHED();
