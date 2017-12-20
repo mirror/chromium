@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9b7f08d9_89c83dd8",
+        "filename": "ios/chrome/browser/snapshots/snapshot_tab_helper.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-12-20T18:15:10Z",
+      "side": 0,
+      "message": "This parameter did not make any sense.\n\nThe boolean was set to true when code knew the image was not in the cache and false otherwise. Since the boolean was only consulted if the image was not in the cache, we can just remove it.",
+      "range": {
+        "startLine": 41,
+        "startChar": 56,
+        "endLine": 41,
+        "endChar": 69
+      },
+      "revId": "12c416afb97b655bfeecb6181edf3d484d971bce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}

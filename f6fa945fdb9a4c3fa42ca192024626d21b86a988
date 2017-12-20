@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2a7ca9fb_48379f7d",
+        "filename": "ios/chrome/browser/snapshots/snapshot_generator_delegate.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-12-20T18:15:10Z",
+      "side": 1,
+      "message": "This is required to break dependency cycle between SnapshotTabHelper (that want to know if there is an overlay presented which would prevent capturing a snapshot) and PagePlaceholderTabHelper (that want to capture snapshot to present them).",
+      "revId": "f6fa945fdb9a4c3fa42ca192024626d21b86a988",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "36044b55_b414f149",
+        "filename": "ios/chrome/browser/snapshots/snapshot_generator_delegate.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-12-20T18:15:10Z",
+      "side": 1,
+      "message": "Passing the WebState here is not strictly necessary as the delegate is Tab, which has access to the WebState, but I want to change the delegate (to either BVC or an object managed by BVC) and at that time it will be necessary to pass WebState.",
+      "range": {
+        "startLine": 25,
+        "startChar": 46,
+        "endLine": 25,
+        "endChar": 70
+      },
+      "revId": "f6fa945fdb9a4c3fa42ca192024626d21b86a988",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2d6b6e6d_5a1b0534",
+        "filename": "ios/chrome/browser/tabs/tab_model_web_state_list_delegate.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-12-20T18:15:10Z",
+      "side": 1,
+      "message": "As PagePlaceholderTabHelper uses SnapshotTabHelper, it must be created only if SnapshotTabHelper is created. If this list grows again, I\u0027ll create another method in addition to AttachTabHelper (or add a parameter \"for_prerender\" until crbug/794115 is fixed).",
+      "range": {
+        "startLine": 36,
+        "startChar": 4,
+        "endLine": 36,
+        "endChar": 28
+      },
+      "revId": "f6fa945fdb9a4c3fa42ca192024626d21b86a988",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7cef384b_38a57cac",
+        "filename": "ios/chrome/browser/ui/tab_switcher/tab_switcher_cache.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-12-20T18:15:10Z",
+      "side": 1,
+      "message": "Is it worth adding a method SnapshotTabHelper::CanTakeSnapshot()?",
+      "revId": "f6fa945fdb9a4c3fa42ca192024626d21b86a988",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0ebc9b5f_bcf8c9a7",
+        "filename": "ios/chrome/browser/web/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-12-20T18:15:10Z",
+      "side": 1,
+      "message": "This is required to prevent circular dependency between //ios/chrome/browser/snapshots (only depends on tab_id_tab_helper.h) and //ios/chrome/browser/web.",
+      "revId": "f6fa945fdb9a4c3fa42ca192024626d21b86a988",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
