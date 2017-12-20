@@ -19,6 +19,7 @@ class Layer;
 
 namespace ash {
 
+class LockContentsView;
 class LockWindow;
 class LoginDataDispatcher;
 class TrayAction;
@@ -26,6 +27,18 @@ class TrayAction;
 class ASH_EXPORT LockScreen : public TrayActionObserver,
                               public SessionObserver {
  public:
+  // TestApi is used for tests to get internal implementation details.
+  class ASH_EXPORT TestApi {
+   public:
+    explicit TestApi(LockScreen* lock_screen) : lock_screen_(lock_screen){};
+    ~TestApi() = default;
+
+    LockContentsView* contents_view() const;
+
+   private:
+    LockScreen* const lock_screen_;
+  };
+
   // The UI that this instance is displaying.
   enum class ScreenType { kLogin, kLock };
 

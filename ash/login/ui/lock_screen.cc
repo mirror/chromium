@@ -49,6 +49,14 @@ LockScreen* instance_ = nullptr;
 
 }  // namespace
 
+LockContentsView* LockScreen::TestApi::contents_view() const {
+  return lock_screen_->window_
+             ? reinterpret_cast<LockContentsView*>(
+                   static_cast<views::Widget*>(lock_screen_->window_)
+                       ->GetContentsView())
+             : nullptr;
+}
+
 LockScreen::LockScreen(ScreenType type)
     : type_(type), tray_action_observer_(this), session_observer_(this) {
   tray_action_observer_.Add(ash::Shell::Get()->tray_action());
