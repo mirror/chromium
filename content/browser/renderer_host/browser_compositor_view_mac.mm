@@ -377,6 +377,11 @@ void BrowserCompositorMac::WasResized() {
   GetDelegatedFrameHost()->WasResized();
 }
 
+void BrowserCompositorMac::GetRequestedRendererSize(gfx::Size* dip_size,
+                                                    float* scale_factor) const {
+  delegated_frame_host_->GetRequestedRendererSize(dip_size, scale_factor);
+}
+
 bool BrowserCompositorMac::HasFrameOfSize(const gfx::Size& desired_size) {
   if (recyclable_compositor_) {
     return recyclable_compositor_->accelerated_widget_mac()->HasFrameOfSize(
@@ -512,10 +517,21 @@ SkColor BrowserCompositorMac::DelegatedFrameHostGetGutterColor(
   return client_->BrowserCompositorMacGetGutterColor(color);
 }
 
-gfx::Size BrowserCompositorMac::DelegatedFrameHostDesiredSizeInDIP() const {
-  gfx::Size dip_size;
-  GetViewProperties(&dip_size, nullptr, nullptr);
-  return dip_size;
+void BrowserCompositorMac::DelegatedFrameHostDesiredSize(
+    gfx::Size* size_in_dip,
+    float* scale_factor) const {
+  *size_in_dip = gfx::Size();
+  *scale_factor = 1;
+  if (enable_viz_) {
+    if (recyclable_compositor_) {
+      gfx::Size pixel_size = recyclable_compositor_->compositor()->size();
+      *scale_factor =
+          recyclable_compositor_->compositor()->device_scale_factor();
+      *size_in_dip = gfx::ConvertSizeToDIP(*scale_factor, pixel_size);
+    }
+  } else {
+    GetViewProperties(size_in_dip, scale_factor, nullptr);
+  }
 }
 
 bool BrowserCompositorMac::DelegatedFrameCanCreateResizeLock() const {
