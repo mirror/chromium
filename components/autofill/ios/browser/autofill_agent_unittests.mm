@@ -85,14 +85,17 @@ TEST_F(AutofillAgentTests, OnFormDataFilledTest) {
   field.form_control_type = "text";
   field.label = base::ASCIIToUTF16("Card number");
   field.name = base::ASCIIToUTF16("number");
+  field.id = base::ASCIIToUTF16("number");
   field.value = base::ASCIIToUTF16("number_value");
   form.fields.push_back(field);
   field.label = base::ASCIIToUTF16("Name on Card");
   field.name = base::ASCIIToUTF16("name");
+  field.id = base::ASCIIToUTF16("name");
   field.value = base::ASCIIToUTF16("name_value");
   form.fields.push_back(field);
   field.label = base::ASCIIToUTF16("Unknown field");
   field.name = base::ASCIIToUTF16("unknown");
+  field.id = base::ASCIIToUTF16("unknown");
   field.value = base::ASCIIToUTF16("");
   form.fields.push_back(field);
   // Fields are in alphabetical order.
@@ -102,7 +105,7 @@ TEST_F(AutofillAgentTests, OnFormDataFilledTest) {
                                            "\"number\":\"number_value\","
                                            "\"unknown\":\"\""
                                            "},\"formName\":\"\"}"
-                            forceFillFieldName:@""
+                      forceFillFieldIdentifier:@""
                              completionHandler:[OCMArg any]];
   [autofill_agent_ onFormDataFilled:form];
   mock_web_state_->WasShown();
@@ -119,18 +122,22 @@ TEST_F(AutofillAgentTests, OnFormDataFilledWithNameCollisionTest) {
   field.form_control_type = "text";
   field.label = base::ASCIIToUTF16("State");
   field.name = base::ASCIIToUTF16("region");
+  field.id = base::ASCIIToUTF16("region");
   field.value = base::ASCIIToUTF16("California");
   form.fields.push_back(field);
   field.label = base::ASCIIToUTF16("Province");
   field.name = base::ASCIIToUTF16("region");
+  field.id = base::ASCIIToUTF16("region");
   field.value = base::ASCIIToUTF16("");
   form.fields.push_back(field);
   field.label = base::ASCIIToUTF16("Other field");
   field.name = base::ASCIIToUTF16("field1");
+  field.id = base::ASCIIToUTF16("field1");
   field.value = base::ASCIIToUTF16("value 1");
   form.fields.push_back(field);
   field.label = base::ASCIIToUTF16("Other field");
   field.name = base::ASCIIToUTF16("field1");
+  field.id = base::ASCIIToUTF16("field1");
   field.value = base::ASCIIToUTF16("value 2");
   form.fields.push_back(field);
   // Fields are in alphabetical order.
@@ -139,7 +146,7 @@ TEST_F(AutofillAgentTests, OnFormDataFilledWithNameCollisionTest) {
                                            "\"field1\":\"value 2\","
                                            "\"region\":\"California\""
                                            "},\"formName\":\"\"}"
-                            forceFillFieldName:@""
+                      forceFillFieldIdentifier:@""
                              completionHandler:[OCMArg any]];
   [autofill_agent_ onFormDataFilled:form];
   mock_web_state_->WasShown();
