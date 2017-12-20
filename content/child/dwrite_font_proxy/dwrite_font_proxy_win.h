@@ -16,6 +16,7 @@
 #include "base/macros.h"
 #include "base/strings/string16.h"
 #include "content/common/content_export.h"
+#include "content/common/dwrite_font_proxy.mojom.h"
 
 namespace IPC {
 class Sender;
@@ -40,7 +41,7 @@ class DWriteFontCollectionProxy
   // Factory method to avoid exporting the class and all it derives from.
   static CONTENT_EXPORT HRESULT Create(DWriteFontCollectionProxy** proxy_out,
                                        IDWriteFactory* dwrite_factory,
-                                       IPC::Sender* sender);
+                                       mojom::DWriteFontProxyPtr proxy);
 
   // Use Create() to construct these objects. Direct calls to the constructor
   // are an error - it is only public because a WRL helper function creates the
@@ -72,7 +73,8 @@ class DWriteFontCollectionProxy
                       IDWriteFontFileStream** font_file_stream) override;
 
   CONTENT_EXPORT HRESULT STDMETHODCALLTYPE
-  RuntimeClassInitialize(IDWriteFactory* factory, IPC::Sender* sender_override);
+  RuntimeClassInitialize(IDWriteFactory* factory,
+                         mojom::DWriteFontProxyPtr proxy);
 
   CONTENT_EXPORT void Unregister();
 
@@ -89,16 +91,18 @@ class DWriteFontCollectionProxy
 
   bool CreateFamily(UINT32 family_index);
 
-  void SetSenderOverride(IPC::Sender* sender) { sender_override_ = sender; }
+  mojom::DWriteFontProxy& GetFontProxy();
+
+  // XXX: Fix multithread support...
+  // void SetSenderOverride(IPC::Sender* sender) { sender_override_ = sender; }
 
  private:
-  IPC::Sender* GetSender();
 
   Microsoft::WRL::ComPtr<IDWriteFactory> factory_;
   std::vector<Microsoft::WRL::ComPtr<DWriteFontFamilyProxy>> families_;
   std::map<base::string16, UINT32> family_names_;
   UINT32 family_count_ = UINT_MAX;
-  IPC::Sender* sender_override_;
+  mojom::DWriteFontProxyPtr font_proxy_;
 
   DISALLOW_ASSIGN(DWriteFontCollectionProxy);
 };
