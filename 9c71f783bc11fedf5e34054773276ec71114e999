@@ -167,6 +167,24 @@
     },
     {
       "key": {
+        "uuid": "f4bf6c84_4914cfd4",
+        "filename": "ui/gfx/test/ui_cocoa_test_helper.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-12-20T23:36:43Z",
+      "side": 1,
+      "message": "If you have more tests coming imminently that will use this, then I don\u0027t have a concern.",
+      "parentUuid": "164ea2ee_9963c69d",
+      "revId": "9c71f783bc11fedf5e34054773276ec71114e999",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "16420369_7a3a111c",
         "filename": "ui/gfx/test/ui_cocoa_test_helper.mm",
         "patchSetId": 1
