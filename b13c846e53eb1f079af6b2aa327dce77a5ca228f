@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "88b59541_dbdf4bd2",
+        "filename": "chrome/installer/zucchini/heuristic_ensemble_matcher.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-12-20T13:47:39Z",
+      "side": 1,
+      "message": "nit: make this protected so that the base class can\u0027t be instantiated?",
+      "revId": "b13c846e53eb1f079af6b2aa327dce77a5ca228f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
