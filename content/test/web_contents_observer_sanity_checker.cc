@@ -208,6 +208,9 @@ void WebContentsObserverSanityChecker::DidFinishNavigation(
   CHECK(!navigation_handle->HasCommitted() ||
         navigation_handle->GetRenderFrameHost() != nullptr);
 
+  CHECK(!navigation_handle->HasCommitted() ||
+        navigation_handle->GetRenderFrameHost()->IsRenderFrameLive());
+
   ongoing_navigations_.erase(navigation_handle);
 }
 
