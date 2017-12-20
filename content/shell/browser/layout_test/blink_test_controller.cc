@@ -319,7 +319,6 @@ BlinkTestController* BlinkTestController::instance_ = nullptr;
 
 // static
 BlinkTestController* BlinkTestController::Get() {
-  DCHECK(instance_);
   return instance_;
 }
 
