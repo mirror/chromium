@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "af0a9122_6443edce",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialsContainer.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-20T10:49:42Z",
+      "side": 1,
+      "message": "That\u0027s what I thought too, but \"about:\u0027 is a no-access scheme as well [1], so \"about:blank\" translates to a unique SecurityOrigin [2] unless it is considered in relation to an owner frame/document, but that magic happens in [3].\n\n[1]: https://cs.chromium.org/chromium/src/url/url_util.cc?rcl\u003d5ff4374fca2037acd3921353e2e969c6849ca67f\u0026l\u003d63-67\n[2]:\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/Source/platform/weborigin/SecurityOrigin.cpp?rcl\u003d2658764141e6f1d5bd8b3a24fed4e4dc096dc1bf\u0026l\u003d186-187\n[3]: https://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/loader/DocumentLoader.cpp?rcl\u003de5cc4add5bf651e2a3c6b13260bf132d514c5091\u0026l\u003d675-681\n\nSo I\u0027m afraid all these checks are actually needed.",
+      "parentUuid": "00f34d7c_3266eedc",
+      "revId": "15f9f128295c14ae7bb32012010b8bd9fa9345f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "482728c9_9d211cf5",
         "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialsContainer.cpp",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "15f9f128295c14ae7bb32012010b8bd9fa9345f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89df0a7d_47c61c27",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialsContainer.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-20T10:49:42Z",
+      "side": 1,
+      "message": "Apparently we just maintain the invariant that when a unique SecurityOrigin is constructed, the protocol-host-port triple is left empty:\n\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/Source/platform/weborigin/SecurityOrigin.cpp?rcl\u003d2658764141e6f1d5bd8b3a24fed4e4dc096dc1bf\u0026l\u003d186-187",
+      "parentUuid": "482728c9_9d211cf5",
+      "revId": "15f9f128295c14ae7bb32012010b8bd9fa9345f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
