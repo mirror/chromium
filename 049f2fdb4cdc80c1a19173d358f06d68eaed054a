@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ea905d38_6fbc7329",
+        "filename": "ios/chrome/app/application_delegate/app_state.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-20T17:09:27Z",
+      "side": 1,
+      "message": "Instead of setting a pref, can we close all Incognito tabs here? Keeping them in session means that those tabs can seen after downloading app contained via Xcode.",
+      "range": {
+        "startLine": 417,
+        "startChar": 27,
+        "endLine": 417,
+        "endChar": 45
+      },
+      "revId": "049f2fdb4cdc80c1a19173d358f06d68eaed054a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
