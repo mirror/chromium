@@ -5728,7 +5728,7 @@ bool LayoutBox::MustInvalidateFillLayersPaintOnHeightChange(
     return true;
 
   // TODO(alancutter): Make this work correctly for calc lengths.
-  if (layer.YPosition().IsPercentOrCalc() && !layer.YPosition().IsZero())
+  if (layer.PositionY().IsPercentOrCalc() && !layer.PositionY().IsZero())
     return true;
 
   if (layer.BackgroundYOrigin() != kTopEdge)
@@ -5770,7 +5770,7 @@ bool LayoutBox::MustInvalidateFillLayersPaintOnWidthChange(
     return true;
 
   // TODO(alancutter): Make this work correctly for calc lengths.
-  if (layer.XPosition().IsPercentOrCalc() && !layer.XPosition().IsZero())
+  if (layer.PositionX().IsPercentOrCalc() && !layer.PositionX().IsZero())
     return true;
 
   if (layer.BackgroundXOrigin() != kLeftEdge)
