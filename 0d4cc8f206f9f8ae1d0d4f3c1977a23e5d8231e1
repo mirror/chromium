@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "15c3f01c_048de40c",
+        "filename": "third_party/WebKit/Source/core/css/RemoteFontFaceSource.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-12-20T07:15:54Z",
+      "side": 1,
+      "message": "should not have a default here to detect missing case handling in compilation time?",
+      "range": {
+        "startLine": 70,
+        "startChar": 0,
+        "endLine": 71,
+        "endChar": 12
+      },
+      "revId": "0d4cc8f206f9f8ae1d0d4f3c1977a23e5d8231e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2453dff_118410ad",
+        "filename": "third_party/WebKit/Source/core/css/RemoteFontFaceSource.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-12-20T07:15:54Z",
+      "side": 1,
+      "message": "how about the case that the display was set to optional, and is going to be set to others after loading finished?",
+      "range": {
+        "startLine": 156,
+        "startChar": 4,
+        "endLine": 156,
+        "endChar": 10
+      },
+      "revId": "0d4cc8f206f9f8ae1d0d4f3c1977a23e5d8231e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfff1ace_755db389",
+        "filename": "third_party/WebKit/Source/core/css/RemoteFontFaceSource.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-12-20T07:15:54Z",
+      "side": 1,
+      "message": "similar question here.",
+      "range": {
+        "startLine": 164,
+        "startChar": 6,
+        "endLine": 164,
+        "endChar": 17
+      },
+      "revId": "0d4cc8f206f9f8ae1d0d4f3c1977a23e5d8231e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fbbcedb_fe84a10b",
+        "filename": "third_party/WebKit/Source/core/css/RemoteFontFaceSource.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-12-20T07:15:54Z",
+      "side": 1,
+      "message": "this condition is hard to understand.\nprobably we need a comment to explain?",
+      "range": {
+        "startLine": 165,
+        "startChar": 7,
+        "endLine": 165,
+        "endChar": 60
+      },
+      "revId": "0d4cc8f206f9f8ae1d0d4f3c1977a23e5d8231e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4df11e29_db0ae315",
+        "filename": "third_party/WebKit/Source/core/css/RemoteFontFaceSource.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-12-20T07:15:54Z",
+      "side": 1,
+      "message": "It might be good to have some comments on DisplayPeriod so that I can remember what this means quickly :) This enum is not intuitive and represent more difficult concept compared to other enums.",
+      "range": {
+        "startLine": 25,
+        "startChar": 7,
+        "endLine": 25,
+        "endChar": 20
+      },
+      "revId": "0d4cc8f206f9f8ae1d0d4f3c1977a23e5d8231e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
