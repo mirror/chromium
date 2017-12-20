@@ -65,6 +65,40 @@
     },
     {
       "key": {
+        "uuid": "f98a235b_b8b5f96a",
+        "filename": "chrome/browser/chromeos/arc/accessibility/arc_accessibility_helper_bridge.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 466,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-12-20T19:30:53Z",
+      "side": 1,
+      "message": "nit: no need for braces",
+      "revId": "e6469f2f8b1bb816b25e0b70d797140be8fa10d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9f787442_679a993b",
+        "filename": "chrome/browser/chromeos/arc/accessibility/arc_accessibility_helper_bridge.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 491,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-12-20T19:30:53Z",
+      "side": 1,
+      "message": "nit: these two clauses can be combined (set the property to it \u003d\u003d task_id_to_tree_.end())",
+      "revId": "e6469f2f8b1bb816b25e0b70d797140be8fa10d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "42efb063_0231d68d",
         "filename": "chrome/browser/chromeos/arc/accessibility/arc_accessibility_helper_bridge.cc",
         "patchSetId": 4
@@ -88,6 +122,23 @@
     },
     {
       "key": {
+        "uuid": "ebb47acd_aee7727b",
+        "filename": "chrome/browser/chromeos/arc/accessibility/arc_accessibility_helper_bridge.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-12-20T19:30:53Z",
+      "side": 1,
+      "message": "nit: Can you move this to .cc?",
+      "revId": "e6469f2f8b1bb816b25e0b70d797140be8fa10d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "be5b34f7_478b3ef5",
         "filename": "chrome/browser/chromeos/arc/accessibility/arc_accessibility_helper_bridge.h",
         "patchSetId": 4
@@ -108,6 +159,23 @@
       "revId": "e6469f2f8b1bb816b25e0b70d797140be8fa10d6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "813b6285_67ad77b1",
+        "filename": "chrome/browser/chromeos/arc/accessibility/arc_accessibility_helper_bridge.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-12-20T19:30:53Z",
+      "side": 1,
+      "message": "Can this be forward declared?",
+      "revId": "e6469f2f8b1bb816b25e0b70d797140be8fa10d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -154,6 +222,23 @@
       "revId": "e6469f2f8b1bb816b25e0b70d797140be8fa10d6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "437e9637_7150dbc9",
+        "filename": "components/arc/test/fake_accessibility_helper_instance.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-12-20T19:30:53Z",
+      "side": 1,
+      "message": "nit: we can probably start using class member initializers",
+      "revId": "e6469f2f8b1bb816b25e0b70d797140be8fa10d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
