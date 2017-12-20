@@ -145,6 +145,30 @@
     },
     {
       "key": {
+        "uuid": "6455f9d7_1b762157",
+        "filename": "ui/gl/gl_image_ahardwarebuffer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-12-20T03:41:09Z",
+      "side": 1,
+      "message": "Properly handling the preserved attribute is important for performance AFAIK, since preserving content for a new write buffer may involve a redundant expensive copy between main memory and tile memory. Can we please make the intended usage explicit instead of hoping the GPU can optimize despite giving it misleading hints?",
+      "parentUuid": "cd6ea4a9_628dd47a",
+      "range": {
+        "startLine": 19,
+        "startChar": 43,
+        "endLine": 19,
+        "endChar": 57
+      },
+      "revId": "ceed94ea5c60c0a99e6eb774bcef2ac2ca022bac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "56d0c131_204188d2",
         "filename": "ui/gl/gl_image_native_pixmap.h",
         "patchSetId": 6
