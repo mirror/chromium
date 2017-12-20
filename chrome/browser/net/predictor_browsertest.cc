@@ -37,6 +37,7 @@
 #include "chrome/common/pref_names.h"
 #include "chrome/test/base/in_process_browser_test.h"
 #include "chrome/test/base/ui_test_utils.h"
+#include "components/data_reduction_proxy/core/common/data_reduction_proxy_features.h"
 #include "components/prefs/pref_service.h"
 #include "content/public/browser/browsing_data_remover.h"
 #include "content/public/common/content_switches.h"
@@ -67,6 +68,9 @@ using content::BrowserThread;
 using testing::HasSubstr;
 
 namespace {
+
+const GURL kHttpUrl("http://www.example.test/");
+const GURL kHttpsUrl("https://www.example.test/");
 
 net::URLRequestJob* CreateEmptyBodyRequestJob(net::URLRequest* request,
                                               net::NetworkDelegate* delegate) {
@@ -497,7 +501,8 @@ namespace chrome_browser_net {
 class PredictorBrowserTest : public InProcessBrowserTest {
  public:
   PredictorBrowserTest()
-      : startup_url_("http://host1/"),
+      : scoped_feature_list_(base::MakeUnique<base::test::ScopedFeatureList>()),
+        startup_url_("http://host1/"),
         referring_url_("http://host2/"),
         target_url_("http://host3/"),
         rule_based_resolver_proc_(new net::RuleBasedHostResolverProc(nullptr)),
@@ -515,7 +520,7 @@ class PredictorBrowserTest : public InProcessBrowserTest {
         Predictor::kMaxSpeculativeResolveQueueDelayMs + 300);
     rule_based_resolver_proc_->AddRuleWithLatency("delay.google.com",
                                                   "127.0.0.1", 1000 * 60);
-    scoped_feature_list_.InitAndEnableFeature(features::kPreconnectMore);
+    scoped_feature_list_->InitAndEnableFeature(features::kPreconnectMore);
   }
 
   ~PredictorBrowserTest() override {}
@@ -806,7 +811,28 @@ class PredictorBrowserTest : public InProcessBrowserTest {
     EXPECT_TRUE(result);
   }
 
-  base::test::ScopedFeatureList scoped_feature_list_;
+  void SetupDataSaverDisablePreResolutionExperiment(bool enable_experiment,
+                                                    bool enable_data_saver) {
+    scoped_feature_list_ = base::MakeUnique<base::test::ScopedFeatureList>();
+    if (enable_experiment) {
+      scoped_feature_list_->InitWithFeatures(
+          {features::kPreconnectMore,
+           data_reduction_proxy::features::kDisableDnsPreResolution},
+          {});
+    } else {
+      scoped_feature_list_->InitWithFeatures(
+          {features::kPreconnectMore},
+          {data_reduction_proxy::features::kDisableDnsPreResolution});
+    }
+
+    PrefService* prefs = browser()->profile()->GetPrefs();
+    prefs->SetBoolean(prefs::kDataSaverEnabled, enable_data_saver);
+    // Give the setting notification a chance to propagate.
+    content::RunAllPendingInMessageLoop();
+    DiscardAllResultsOnUIThread();
+  }
+
+  std::unique_ptr<base::test::ScopedFeatureList> scoped_feature_list_;
 
   const GURL startup_url_;
   const GURL referring_url_;
@@ -836,6 +862,57 @@ IN_PROC_BROWSER_TEST_F(PredictorBrowserTest, SingleLookupTest) {
   EXPECT_TRUE(observer()->HostFound(url));
   ExpectValidPeakPendingLookupsOnUI(1u);
   ExpectNoLookupsAreInProgressOnUIThread();
+}
+
+// Data saver and kDisableDnsPreResolution feature are enabled.
+IN_PROC_BROWSER_TEST_F(PredictorBrowserTest, DataSaverEnabled) {
+  SetupDataSaverDisablePreResolutionExperiment(true /* enable_experiment */,
+                                               true /* enable_data_saver */);
+  std::vector<GURL> names{kHttpUrl, kHttpsUrl};
+  FloodResolveRequestsOnUIThread(names);
+  observer()->WaitUntilHostLookedUp(kHttpsUrl);
+  ExpectFoundUrls({kHttpsUrl}, {});
+
+  // kHttpUrl should not be pre-resolved when the data saver is enabled.
+  EXPECT_FALSE(observer()->HasHostBeenLookedUp(kHttpUrl));
+  // HTTPS URLs should be pre-resolved even when the data saver is enabled.
+  EXPECT_TRUE(observer()->HasHostBeenLookedUp(kHttpsUrl));
+  ExpectValidPeakPendingLookupsOnUI(1u);
+}
+
+// Data saver is enabled, but the kDisableDnsPreResolution feature is not.
+IN_PROC_BROWSER_TEST_F(PredictorBrowserTest,
+                       DataSaverEnabledDnsPreResolutionFeatureNotEnabled) {
+  SetupDataSaverDisablePreResolutionExperiment(false /* enable_experiment */,
+                                               true /* enable_data_saver */);
+  std::vector<GURL> names{kHttpUrl, kHttpsUrl};
+  FloodResolveRequestsOnUIThread(names);
+  WaitUntilHostsLookedUp(names);
+  ExpectFoundUrls({kHttpUrl, kHttpsUrl}, {});
+
+  // kHttpUrl should be pre-resolved when the data saver is enabled since the
+  // |data_reduction_proxy::features::kDisableDnsPreResolution| feature is not
+  // enabled.
+  EXPECT_TRUE(observer()->HasHostBeenLookedUp(kHttpUrl));
+  // HTTPS URLs should be pre-resolved even when the data saver is enabled.
+  EXPECT_TRUE(observer()->HasHostBeenLookedUp(kHttpsUrl));
+  ExpectValidPeakPendingLookupsOnUI(2u);
+}
+
+// Data saver is not enabled.
+IN_PROC_BROWSER_TEST_F(PredictorBrowserTest, DataSaverDisabled) {
+  SetupDataSaverDisablePreResolutionExperiment(true /* enable_experiment */,
+                                               false /* enable_data_saver */);
+  std::vector<GURL> names{kHttpUrl, kHttpsUrl};
+  FloodResolveRequestsOnUIThread(names);
+  WaitUntilHostsLookedUp(names);
+  ExpectFoundUrls({kHttpUrl, kHttpsUrl}, {});
+
+  // HTTP and HTTPS URLs should be pre-resolved when the data saver is not
+  // enabled.
+  EXPECT_TRUE(observer()->HasHostBeenLookedUp(kHttpUrl));
+  EXPECT_TRUE(observer()->HasHostBeenLookedUp(kHttpsUrl));
+  ExpectValidPeakPendingLookupsOnUI(2u);
 }
 
 IN_PROC_BROWSER_TEST_F(PredictorBrowserTest, ConcurrentLookupTest) {

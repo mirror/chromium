@@ -60,7 +60,7 @@ class MockPreconnectManager : public PreconnectManager {
 MockPreconnectManager::MockPreconnectManager(
     base::WeakPtr<Delegate> delegate,
     scoped_refptr<net::URLRequestContextGetter> context_getter)
-    : PreconnectManager(delegate, context_getter) {}
+    : PreconnectManager(delegate, context_getter, nullptr) {}
 
 }  // namespace
 
