@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "36076eef_27eaf00d",
+        "filename": "chrome/app/settings_strings.grdp",
+        "patchSetId": 2
+      },
+      "lineNbr": 2556,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-12-20T00:18:58Z",
+      "side": 1,
+      "message": "or -\u003e and",
+      "range": {
+        "startLine": 2556,
+        "startChar": 30,
+        "endLine": 2556,
+        "endChar": 32
+      },
+      "revId": "5b5e398cfe50d584ad97f7bdf07b7219600d5e30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d0b47ec_634ca47a",
+        "filename": "chrome/browser/resources/settings/privacy_page/privacy_page.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-12-20T00:18:58Z",
+      "side": 1,
+      "message": "Any reason why this is read-only?",
+      "range": {
+        "startLine": 373,
+        "startChar": 59,
+        "endLine": 373,
+        "endChar": 73
+      },
+      "revId": "5b5e398cfe50d584ad97f7bdf07b7219600d5e30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fc9ec0b3_b25a0647",
         "filename": "chrome/browser/resources/settings/privacy_page/privacy_page.js",
         "patchSetId": 2
@@ -13,6 +59,23 @@
       "writtenOn": "2017-12-19T16:46:35Z",
       "side": 1,
       "message": "nit: () \u003d\u003e loadTimeData.getBoolean(\u0027enableSensorsContentSetting\u0027)",
+      "revId": "5b5e398cfe50d584ad97f7bdf07b7219600d5e30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8dd4671_fe897711",
+        "filename": "chrome/browser/ui/webui/settings/site_settings_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 460,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-12-20T00:18:58Z",
+      "side": 1,
+      "message": "There are no other changes in this file so can you remove this from your patch?",
       "revId": "5b5e398cfe50d584ad97f7bdf07b7219600d5e30",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
