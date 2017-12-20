@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "85c5136e_f9cc2b17",
+        "filename": "net/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 2483,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-12-20T04:22:08Z",
+      "side": 1,
+      "message": "It\u0027s not a straightforward mapping, as some of the old files weren\u0027t used:\n    \"data/ssl/certificates/quic_root.key\",\n    \"data/ssl/certificates/quic_intermediate.crt\",\n    \"data/ssl/certificates/quic_intermediate.key\",\n    \"data/ssl/certificates/quic_test_ecc.example.com.crt\",\n    \"data/ssl/certificates/quic_test_ecc.example.com.key\",\n    \"data/ssl/certificates/quic_test_ecc.example.com.sct\",\n\nIn the previous cl, I replaced:\n  quic_test.example.com.crt with quic-chain.pem\n  quic_test.example.com.key.pkcs8 with quic-cert.key\n\nIn this cl I replaced:\n  quic_root.crt with quic-root.pem\n  quic_chain.crt with quic-chain.pem\n  quic_test.example.com.key.pkcs8.pem with quic.key.pkcs8.pem\n  quic_test.example.com.key.sct with quic.key.sct\n\nFor the two files with \"key\" in their names:\n  quic.key.sct is just a rename of the old quic_test.example.com.key.sct (note this is a bogus text file with \"fake sct for test.example.com\" as the content)\n  quic.key.pkcs8.pem is just a pkcs8 version of quic-cert.key, as the Android test java server needed it in that format",
+      "parentUuid": "055bf2ed_21523da8",
+      "range": {
+        "startLine": 2483,
+        "startChar": 41,
+        "endLine": 2483,
+        "endChar": 0
+      },
+      "revId": "1d87d251bfe5b3b9f80fa1625f070ac3886f1d19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8ab962bc_90dc4dff",
         "filename": "net/data/ssl/scripts/generate-quic-chain.sh",
         "patchSetId": 5
