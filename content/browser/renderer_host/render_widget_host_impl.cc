@@ -747,7 +747,9 @@ bool RenderWidgetHostImpl::GetResizeParams(ResizeParams* resize_params) {
   }
 
   if (view_) {
-    resize_params->new_size = view_->GetRequestedRendererSize();
+    view_->GetRequestedRendererSize(
+        &resize_params->new_size,
+        &resize_params->screen_info.device_scale_factor);
     // TODO(wjmaclean): Can we just get rid of physical_backing_size and just
     // deal with it on the renderer side? It seems to always be
     // ScaleToCeiledSize(new_size, device_scale_factor) ??
