@@ -22,6 +22,30 @@
       "revId": "98b2a6d3a74e8e098200a64ad916a907c7f7d065",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2de408a0_f783c925",
+        "filename": "ios/chrome/app/resources/Info.plist",
+        "patchSetId": 2
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-12-20T17:22:27Z",
+      "side": 0,
+      "message": "I\u0027ll look into removing the code as well. I was thinking that removing code would be a separate step. But you are right that we don\u0027t know what iOS does when these calls are made w/ the provisioning in Info.plist.",
+      "parentUuid": "50771c59_eff77bf4",
+      "range": {
+        "startLine": 88,
+        "startChar": 10,
+        "endLine": 88,
+        "endChar": 15
+      },
+      "revId": "98b2a6d3a74e8e098200a64ad916a907c7f7d065",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
