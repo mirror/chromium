@@ -16,6 +16,24 @@
       "revId": "b13c846e53eb1f079af6b2aa327dce77a5ca228f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4861558a_dbfaa6bc",
+        "filename": "chrome/installer/zucchini/heuristic_ensemble_matcher.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-12-20T16:16:18Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "88b59541_dbdf4bd2",
+      "revId": "b13c846e53eb1f079af6b2aa327dce77a5ca228f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
