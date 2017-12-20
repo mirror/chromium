@@ -52,6 +52,24 @@
       "revId": "47839b3b465bd9e699c424263cef35d632648cc7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a0dc33f_412fd63d",
+        "filename": "chrome/browser/resources/settings/site_settings/site_details_permission.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-12-20T05:40:04Z",
+      "side": 1,
+      "message": "Thanks very much for the clarification! The next patchset has something very similar to your suggestion and satisfies your two goals I think. Instead of the array \u0026 array indexes, I went with a map with the same string keys as MDSettingsLocalizedStringsProvider, but for some reason wasn\u0027t able to get polymer to call permissionInfoString_() when passing in the map directly. I\u0027m not sure if I\u0027m missing something very simple - let me know.",
+      "parentUuid": "d3e1b2dc_1702bc4e",
+      "revId": "47839b3b465bd9e699c424263cef35d632648cc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
