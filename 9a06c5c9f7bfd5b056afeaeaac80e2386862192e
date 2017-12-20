@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "866cf588_6895488d",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-12-20T17:40:08Z",
+      "side": 1,
+      "message": "no comma here",
+      "range": {
+        "startLine": 48,
+        "startChar": 69,
+        "endLine": 48,
+        "endChar": 70
+      },
+      "revId": "9a06c5c9f7bfd5b056afeaeaac80e2386862192e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
