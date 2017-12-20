@@ -125,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "75ecfe06_ddd935b1",
+        "filename": "third_party/WebKit/Source/platform/wtf/ConstructTraits.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-12-20T11:55:08Z",
+      "side": 1,
+      "message": "Done. As discussed offline, we keep Allocator but remove the IsTraceableInCollection bool.\n\nFor documentation: This was done initially this way to avoid adding the Notify methods to PartitionAllocator. Since it is ok to add an empty stub there we can remove the complexity.",
+      "parentUuid": "bfba09dc_6579bf25",
+      "revId": "5c95eb27ef490c6cacc0cd6b194a69fd58543fc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c4acc3eb_95985d18",
         "filename": "third_party/WebKit/Source/platform/wtf/ConstructTraits.h",
         "patchSetId": 7
@@ -192,6 +210,24 @@
       "revId": "5c95eb27ef490c6cacc0cd6b194a69fd58543fc7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e017941b_f7d18f65",
+        "filename": "third_party/WebKit/Source/platform/wtf/ConstructTraits.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-12-20T11:55:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3b73b1a5_44b90cca",
+      "revId": "5c95eb27ef490c6cacc0cd6b194a69fd58543fc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
