@@ -91,17 +91,6 @@ interface VideoDecodeAccelerator {
   // In secure mode, if a new protected output buffer is allocated for the given
   // |picture_buffer_id|. Any previously-allocated buffer with the same
   // |picture_buffer_id| will be released.
-  // Call VDA::ImportBufferForPicture with gfx::GpuMemoryBufferHandle
-  // created from |handle_fd| and |planes|.
-  // This should be preceded by a call to AssignPictureBuffers().
-  ImportBufferForPictureDeprecated@3(int32 picture_buffer_id, handle handle_fd,
-                           array<VideoFramePlane> planes);
-
-  // Assigns a buffer to be used by the accelerator with specified
-  // |picture_buffer_id|.
-  // In secure mode, if a new protected output buffer is allocated for the given
-  // |picture_buffer_id|. Any previously-allocated buffer with the same
-  // |picture_buffer_id| will be released.
   // Call VDA::ImportBufferForPicture with |format| and a
   // gfx::GpuMemoryBufferHandle  created from |handle_fd| and |planes|.
   // This should be preceded by a call to AssignPictureBuffers().
