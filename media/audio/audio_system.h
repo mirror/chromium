@@ -27,18 +27,25 @@ class MEDIA_EXPORT AudioSystem {
   // If optional AudioParameters are empty, it means the specified device is not
   // found. This is best-effort: non-empty parameters do not guarantee existence
   // of the device.
+  // Non-empty optional matched output device id is guaranteed to be a non-empty
+  // std::string. If optional matched output device id is empty, it means there
+  // is no associated output device.
   // TODO(olka,tommi): fix all AudioManager implementations to always report
   // when a device is not found, instead of returning sub parameter values.
   using OnAudioParamsCallback =
       base::OnceCallback<void(const base::Optional<AudioParameters>&)>;
   using OnInputDeviceInfoCallback =
       base::OnceCallback<void(const base::Optional<AudioParameters>&,
-                              const std::string&)>;
+                              const base::Optional<std::string>&)>;
 
   using OnBoolCallback = base::OnceCallback<void(bool)>;
   using OnDeviceDescriptionsCallback =
       base::OnceCallback<void(AudioDeviceDescriptions)>;
-  using OnDeviceIdCallback = base::OnceCallback<void(const std::string&)>;
+  // Non-empty optional matched output device id is guaranteed to be a non-empty
+  // std::string. If optional matched output device id is empty, it means there
+  // is no associated output device.
+  using OnDeviceIdCallback =
+      base::OnceCallback<void(const base::Optional<std::string>&)>;
 
   // The global AudioManager instance must be created prior to that.
   static std::unique_ptr<AudioSystem> CreateInstance();
@@ -62,14 +69,15 @@ class MEDIA_EXPORT AudioSystem {
       bool for_input,
       OnDeviceDescriptionsCallback on_descriptions_cb) = 0;
 
-  // Replies with an empty string if there is no associated output device found.
+  // Replies with an empty optional if there is no associated output device
+  // found.
   virtual void GetAssociatedOutputDeviceID(
       const std::string& input_device_id,
       OnDeviceIdCallback on_device_id_cb) = 0;
 
   // Replies with audio parameters for the specified input device and audio
   // parameters and device ID of the associated output device, if any (otherwise
-  // the associated output device ID is an empty string).
+  // the associated output device ID is an empty optional).
   virtual void GetInputDeviceInfo(
       const std::string& input_device_id,
       OnInputDeviceInfoCallback on_input_device_info_cb) = 0;
