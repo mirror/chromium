@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e5642057_5a2569a7",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialsContainer.cpp",
+        "patchSetId": 23
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-20T12:09:04Z",
+      "side": 1,
+      "message": "I wasn\u0027t sure if the navigator.credentials object could be transferred to other v8::Contexts that belong to something other than a Document. E.g., I am rather unfamiliar with how Worklets work.\n\nHappy to replace this with a SECURITY_CHECK if that should not be possible.",
+      "parentUuid": "997f638a_be374106",
+      "revId": "ef4d871cdf1b92b83dcf6ca2bf0e9a2a438c6f1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a9847bf1_bb6799c8",
         "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialsContainer.cpp",
         "patchSetId": 23
@@ -33,6 +51,24 @@
       "revId": "ef4d871cdf1b92b83dcf6ca2bf0e9a2a438c6f1d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8906d860_a5b7c251",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialsContainer.cpp",
+        "patchSetId": 23
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-20T12:09:04Z",
+      "side": 1,
+      "message": "Sure. Done.",
+      "parentUuid": "a9847bf1_bb6799c8",
+      "revId": "ef4d871cdf1b92b83dcf6ca2bf0e9a2a438c6f1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "c8171510_9f17663c",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialsContainer.cpp",
+        "patchSetId": 23
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-20T12:09:04Z",
+      "side": 1,
+      "message": "We only need the type conversion here to be able to enforce the invariant that CM API is only available to ExecutionContexts that are documents associated with a browsing context.\n\nWe could easily update this in the future if/when we start supporting more types of ExecutionContexts, such as WorkerGlobalScopes.",
+      "parentUuid": "2f5ddc73_ee1ac6e0",
+      "revId": "ef4d871cdf1b92b83dcf6ca2bf0e9a2a438c6f1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6457c2ca_dcf43b5f",
         "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialsContainer.cpp",
         "patchSetId": 23
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "87ca4c5b_ab571a0d",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialsContainer.cpp",
+        "patchSetId": 23
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-20T12:09:04Z",
+      "side": 1,
+      "message": "This is never used outside of a test. Removed in crrev.com/c/836592.",
+      "parentUuid": "6457c2ca_dcf43b5f",
+      "revId": "ef4d871cdf1b92b83dcf6ca2bf0e9a2a438c6f1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aaa4698b_9df43421",
         "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialsContainer.cpp",
         "patchSetId": 23
@@ -81,6 +153,24 @@
       "writtenOn": "2017-12-18T14:33:56Z",
       "side": 1,
       "message": "What cases don\u0027t we allow?",
+      "revId": "ef4d871cdf1b92b83dcf6ca2bf0e9a2a438c6f1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5bc74b9_e9a2dc17",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialsContainer.cpp",
+        "patchSetId": 23
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-20T12:09:04Z",
+      "side": 1,
+      "message": "We currently return this for:\n 1) WebAuthN timeouts.\n 2) WebAuthN duplicate key registration.\n 3) WebAuthN called from a unique relying party origin -- only temporarily, Kim is reworking this in crrev.com/c/775630.\n\nNote that I haven\u0027t changed either this error string or the scenarios where it is used.\n\nLet me know if you want me to change this.",
+      "parentUuid": "aaa4698b_9df43421",
       "revId": "ef4d871cdf1b92b83dcf6ca2bf0e9a2a438c6f1d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "371a28ee_bd808bfa",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialsContainer.cpp",
+        "patchSetId": 23
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-20T12:09:04Z",
+      "side": 1,
+      "message": "Only one place which after this CL has moved to this file, so removed this enum value and inlined construction of the DOMException.",
+      "parentUuid": "19c9ac1c_1df102ab",
+      "revId": "ef4d871cdf1b92b83dcf6ca2bf0e9a2a438c6f1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3910bdff_58c4e202",
         "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialsContainer.cpp",
         "patchSetId": 23
@@ -118,6 +226,24 @@
       "revId": "ef4d871cdf1b92b83dcf6ca2bf0e9a2a438c6f1d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e63b9cb_e3384caf",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialsContainer.cpp",
+        "patchSetId": 23
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-20T12:09:04Z",
+      "side": 1,
+      "message": "No, this is different. It will be used for Step 6 and 7 here:\n\nhttps://w3c.github.io/webauthn/#CreateCred-DetermineRpId\n\nNot currently used though, it is introduced in Kim\u0027s CL here:\n\nhttps://chromium-review.googlesource.com/c/chromium/src/+/775630/3/content/browser/webauth/authenticator_impl.cc\n\nI removed this for now in crrev.com/c/836592. Will talk to Kim to use something more specific in the future.",
+      "parentUuid": "3910bdff_58c4e202",
+      "revId": "ef4d871cdf1b92b83dcf6ca2bf0e9a2a438c6f1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "1099443b_54e11455",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialsContainer.cpp",
+        "patchSetId": 23
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-20T12:09:04Z",
+      "side": 1,
+      "message": "It\u0027s never used. Removed in crrev.com/c/836592.",
+      "parentUuid": "e7e0b6c6_e63602c0",
+      "revId": "ef4d871cdf1b92b83dcf6ca2bf0e9a2a438c6f1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8bc5f81f_2a50eabd",
         "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialsContainer.cpp",
         "patchSetId": 23
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "3317ff81_8247d020",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialsContainer.cpp",
+        "patchSetId": 23
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-20T12:09:04Z",
+      "side": 1,
+      "message": "Uploaded https://chromium-review.googlesource.com/c/chromium/src/+/833913 to fix this before the refactoring.",
+      "parentUuid": "8bc5f81f_2a50eabd",
+      "revId": "ef4d871cdf1b92b83dcf6ca2bf0e9a2a438c6f1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c76bb244_ec617051",
         "filename": "third_party/WebKit/Source/modules/credentialmanager/PublicKeyCredential.cpp",
         "patchSetId": 23
@@ -169,6 +331,24 @@
       "revId": "ef4d871cdf1b92b83dcf6ca2bf0e9a2a438c6f1d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17e6b2e8_8b046aed",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/PublicKeyCredential.cpp",
+        "patchSetId": 23
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-20T12:09:04Z",
+      "side": 1,
+      "message": "Yes. Weird naming indeed, but this is what the spec describes:\n\nhttps://www.w3.org/TR/webauthn/#dom-publickeycredential-type-slot\n\nAdded a comment to this effect.",
+      "parentUuid": "c76bb244_ec617051",
+      "revId": "ef4d871cdf1b92b83dcf6ca2bf0e9a2a438c6f1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
