@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "9e560a47_a60ee4c6",
+        "filename": "third_party/WebKit/Source/core/events/WebInputEventConversion.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-12-20T17:02:08Z",
+      "side": 1,
+      "message": "I\u0027d prefer that you changed the ctor instead of doing this.. because you have an object on the stack that has pointers that could be invalidated at any time (say someone calls an op on related_pointer_events) it is dangerous. You could pass in a movable type to the ctor.",
+      "parentUuid": "ab1e95e5_52f1ed38",
+      "revId": "a811e699a9987b9bf0f898e8d2dcbda9be6a1d05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cede1a97_d5c832fe",
         "filename": "third_party/WebKit/Source/core/exported/WebPagePopupImpl.cpp",
         "patchSetId": 4
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "I totally agree it is not clear as Mustaq also pointed out. Would a static function that creates this with a better name (like CreatePointerCausedUaActionEvent) solve the issue?",
       "parentUuid": "cede1a97_d5c832fe",
+      "revId": "a811e699a9987b9bf0f898e8d2dcbda9be6a1d05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5b8afc1_9bfe25ad",
+        "filename": "third_party/WebKit/Source/core/exported/WebPagePopupImpl.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 520,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-12-20T17:02:08Z",
+      "side": 1,
+      "message": "Yes and you\u0027d have to remove the ctor or make it private.",
+      "parentUuid": "73f5e50e_fcefc92e",
       "revId": "a811e699a9987b9bf0f898e8d2dcbda9be6a1d05",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -107,6 +143,24 @@
     },
     {
       "key": {
+        "uuid": "b0df7ca9_50da2804",
+        "filename": "third_party/WebKit/Source/core/exported/WebPagePopupImpl.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 534,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-12-20T17:02:08Z",
+      "side": 1,
+      "message": "Yup. Just going on from this point it is really going to get complicated in figuring out how scrolling gets blocked. We likely need a design doc how these events are going to get sent and work. Is there one?",
+      "parentUuid": "09c0bcbe_ef063814",
+      "revId": "a811e699a9987b9bf0f898e8d2dcbda9be6a1d05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1af777d8_a92272ed",
         "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.cpp",
         "patchSetId": 4
@@ -136,6 +190,24 @@
       "side": 1,
       "message": "This is definitely duplicated code being copied exactly the same 3 times in this CL. This whole portion will be removed in the next CL and it is only introduced 3 times because I tried to breakdown the code. I couldn\u0027t come up with any better way of refactoring the code without seriously restsructing the code which definitely wasn\u0027t worth it for this code that is indeed temporarily. Do you have any suggestion for a quick clean up without touching the parent class of these?",
       "parentUuid": "1af777d8_a92272ed",
+      "revId": "a811e699a9987b9bf0f898e8d2dcbda9be6a1d05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac7c81bd_a7770253",
+        "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1988,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-12-20T17:02:08Z",
+      "side": 1,
+      "message": "So you can\u0027t put this in PageWidgetEventHandler? (the class that the 3 classes all extend from) I know it is pure virtual right now but did you explore that option?",
+      "parentUuid": "c62a108c_79d931d0",
       "revId": "a811e699a9987b9bf0f898e8d2dcbda9be6a1d05",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -245,6 +317,24 @@
       "side": 1,
       "message": "You are right. It does change the behavior presumably. Unfortunately the WebPointerEvents don\u0027t have a notion of primary at this point (or maybe ever?). Is it alright if I handle this for only the first call after a DispatchPendingTouchEvents?",
       "parentUuid": "9666d89b_f21f554c",
+      "revId": "a811e699a9987b9bf0f898e8d2dcbda9be6a1d05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cb69385_c15f40ba",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorOverlayAgent.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-12-20T17:02:08Z",
+      "side": 1,
+      "message": "I wouldn\u0027t think so. As touches[0] doesn\u0027t always correspond to the first pointer event dispatched does it? (specifically if it is stationary)",
+      "parentUuid": "1339ba75_a601ec15",
       "revId": "a811e699a9987b9bf0f898e8d2dcbda9be6a1d05",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
