@@ -36,8 +36,7 @@ bool OverlayStrategySingleOnTop::Attempt(
   for (auto it = quad_list->begin(); it != quad_list->end(); ++it) {
     cc::OverlayCandidate candidate;
     if (cc::OverlayCandidate::FromDrawQuad(
-            resource_provider, output_color_matrix, *it, &candidate) &&
-        !cc::OverlayCandidate::IsOccluded(candidate, quad_list->cbegin(), it)) {
+            resource_provider, output_color_matrix, *it, &candidate)) {
       // We currently reject quads with alpha that do not request alpha blending
       // since the alpha channel might not be set to 1 and we're not disabling
       // blending when scanning out.
@@ -73,7 +72,18 @@ bool OverlayStrategySingleOnTop::TryOverlay(
   // Add the overlay.
   cc::OverlayCandidateList new_candidate_list = *candidate_list;
   new_candidate_list.push_back(candidate);
-  new_candidate_list.back().plane_z_order = 1;
+
+  bool is_occluded =
+    cc::OverlayCandidate::IsOccluded(candidate, quad_list->cbegin(), candidate_iterator);
+  if (is_occluded) {
+    new_candidate_list.back().plane_z_order = 0;
+    new_candidate_list.back().is_unoccluded = true;
+    new_candidate_list.front().plane_z_order = 1;
+    new_candidate_list.front().is_unoccluded = false;
+    new_candidate_list.front().overlay_handled = false;
+  } else {
+    new_candidate_list.back().plane_z_order = 1;
+  }
 
   // Check for support.
   capability_checker_->CheckOverlaySupport(&new_candidate_list);
@@ -81,7 +91,11 @@ bool OverlayStrategySingleOnTop::TryOverlay(
   const cc::OverlayCandidate& overlay_candidate = new_candidate_list.back();
   // If the candidate can be handled by an overlay, create a pass for it.
   if (overlay_candidate.overlay_handled) {
-    quad_list->EraseAndInvalidateAllPointers(candidate_iterator);
+    if (is_occluded) {
+      quad_list->ReplaceExistingQuadWithOpaqueTransparentSolidColor(candidate_iterator);
+    } else {
+      quad_list->EraseAndInvalidateAllPointers(candidate_iterator);
+    }
     candidate_list->swap(new_candidate_list);
     return true;
   }
