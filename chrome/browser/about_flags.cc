@@ -29,6 +29,7 @@
 #include "cc/base/switches.h"
 #include "chrome/browser/experiments/memory_ablation_experiment.h"
 #include "chrome/browser/flag_descriptions.h"
+#include "chrome/browser/notifications/notification_permission_restrictions.h"
 #include "chrome/browser/predictors/loading_predictor_config.h"
 #include "chrome/browser/predictors/resource_prefetch_common.h"
 #include "chrome/browser/prerender/prerender_field_trial.h"
@@ -1075,6 +1076,31 @@ const FeatureEntry::Choice kEnableOutOfProcessHeapProfilingChoices[] = {
      switches::kMemlog, switches::kMemlogModeManual},
 };
 
+const FeatureEntry::FeatureParam kNotificationGestureRestrictions[] = {
+    {NotificationPermissionRestrictions::kRequireUserGestureParam, "true"}};
+const FeatureEntry::FeatureParam kNotificationLowEngagementRestriction[] = {
+    {NotificationPermissionRestrictions::kMinimumSiteEngagementParam, "8"}};
+const FeatureEntry::FeatureParam kNotificationMediumEngagementRestriction[] = {
+    {NotificationPermissionRestrictions::kMinimumSiteEngagementParam, "15"}};
+const FeatureEntry::FeatureParam kNotificationHighEngagementRestriction[] = {
+    {NotificationPermissionRestrictions::kMinimumSiteEngagementParam, "50"}};
+const FeatureEntry::FeatureParam kNotificationAllRestrictions[] = {
+    {NotificationPermissionRestrictions::kMinimumSiteEngagementParam, "15"},
+    {NotificationPermissionRestrictions::kRequireUserGestureParam, "true"}};
+
+const FeatureEntry::FeatureVariation
+    kNotificationPermissionRestrictionsVariations[] = {
+        {"user gesture", kNotificationGestureRestrictions,
+         arraysize(kNotificationGestureRestrictions), nullptr},
+        {"site engagement (low)", kNotificationLowEngagementRestriction,
+         arraysize(kNotificationLowEngagementRestriction), nullptr},
+        {"site engagement (medium)", kNotificationMediumEngagementRestriction,
+         arraysize(kNotificationMediumEngagementRestriction), nullptr},
+        {"site engagement (high)", kNotificationHighEngagementRestriction,
+         arraysize(kNotificationHighEngagementRestriction), nullptr},
+        {"user gesture & medium site engagement", kNotificationAllRestrictions,
+         arraysize(kNotificationAllRestrictions), nullptr}};
+
 const FeatureEntry::FeatureParam kOmniboxUIMaxAutocompleteMatches4[] = {
     {OmniboxFieldTrial::kUIMaxAutocompleteMatchesParam, "4"}};
 const FeatureEntry::FeatureParam kOmniboxUIMaxAutocompleteMatches6[] = {
@@ -1488,8 +1514,10 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kAshEnableUnifiedDesktopDescription, kOsCrOS,
      SINGLE_VALUE_TYPE(switches::kEnableUnifiedDesktop)},
     {
-        "disable-boot-animation", flag_descriptions::kBootAnimationName,
-        flag_descriptions::kBootAnimationDescription, kOsCrOSOwnerOnly,
+        "disable-boot-animation",
+        flag_descriptions::kBootAnimationName,
+        flag_descriptions::kBootAnimationDescription,
+        kOsCrOSOwnerOnly,
         SINGLE_DISABLE_VALUE_TYPE(chromeos::switches::kDisableBootAnimation),
     },
     {"disable-easy-unlock-bluetooth-low-energy-detection",
@@ -1501,13 +1529,16 @@ const FeatureEntry kFeatureEntries[] = {
     {
         "disable-office-editing-component-app",
         flag_descriptions::kOfficeEditingComponentAppName,
-        flag_descriptions::kOfficeEditingComponentAppDescription, kOsCrOS,
+        flag_descriptions::kOfficeEditingComponentAppDescription,
+        kOsCrOS,
         SINGLE_DISABLE_VALUE_TYPE(
             chromeos::switches::kDisableOfficeEditingComponentApp),
     },
     {
-        "enable-background-blur", flag_descriptions::kEnableBackgroundBlurName,
-        flag_descriptions::kEnableBackgroundBlurDescription, kOsCrOS,
+        "enable-background-blur",
+        flag_descriptions::kEnableBackgroundBlurName,
+        flag_descriptions::kEnableBackgroundBlurDescription,
+        kOsCrOS,
         FEATURE_VALUE_TYPE(app_list::features::kEnableBackgroundBlur),
     },
     {"enable-easyunlock-promotions",
@@ -1515,8 +1546,10 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kEasyUnlockPromotionsDescription, kOsCrOS,
      FEATURE_VALUE_TYPE(features::kEasyUnlockPromotions)},
     {
-        "enable-pinch", flag_descriptions::kPinchScaleName,
-        flag_descriptions::kPinchScaleDescription, kOsLinux | kOsWin | kOsCrOS,
+        "enable-pinch",
+        flag_descriptions::kPinchScaleName,
+        flag_descriptions::kPinchScaleDescription,
+        kOsLinux | kOsWin | kOsCrOS,
         ENABLE_DISABLE_VALUE_TYPE(switches::kEnablePinch,
                                   switches::kDisablePinch),
     },
@@ -1560,14 +1593,17 @@ const FeatureEntry kFeatureEntries[] = {
 #endif  // OS_WIN
 #if defined(OS_CHROMEOS)
     {
-        "ash-debug-shortcuts", flag_descriptions::kDebugShortcutsName,
-        flag_descriptions::kDebugShortcutsDescription, kOsAll,
+        "ash-debug-shortcuts",
+        flag_descriptions::kDebugShortcutsName,
+        flag_descriptions::kDebugShortcutsDescription,
+        kOsAll,
         SINGLE_VALUE_TYPE(ash::switches::kAshDebugShortcuts),
     },
     {
         "ash-enable-mirrored-screen",
         flag_descriptions::kAshEnableMirroredScreenName,
-        flag_descriptions::kAshEnableMirroredScreenDescription, kOsCrOS,
+        flag_descriptions::kAshEnableMirroredScreenDescription,
+        kOsCrOS,
         SINGLE_VALUE_TYPE(ash::switches::kAshEnableMirroredScreen),
     },
     {"ash-shelf-color", flag_descriptions::kAshShelfColorName,
@@ -1873,6 +1909,13 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kNotificationsNativeFlagDescription, kOsMac | kOsLinux,
      FEATURE_VALUE_TYPE(features::kNativeNotifications)},
 #endif  // ENABLE_NATIVE_NOTIFICATIONS
+    {"notification-permission-restrictions",
+     flag_descriptions::kNotificationPermissionRestrictionsFlagName,
+     flag_descriptions::kNotificationPermissionRestrictionsDescription, kOsAll,
+     FEATURE_WITH_PARAMS_VALUE_TYPE(
+         features::kNotificationPermissionRestrictions,
+         kNotificationPermissionRestrictionsVariations,
+         "NotificationPermissionRestrictionsVariations")},
 #if defined(OS_ANDROID)
     {"reader-mode-heuristics", flag_descriptions::kReaderModeHeuristicsName,
      flag_descriptions::kReaderModeHeuristicsDescription, kOsAndroid,

@@ -383,6 +383,9 @@ const base::Feature kNativeNotifications{"NativeNotifications",
 const base::Feature kNetworkPrediction{"NetworkPrediction",
                                        base::FEATURE_ENABLED_BY_DEFAULT};
 
+const base::Feature kNotificationPermissionRestrictions{
+    "kNotificationPermissionRestrictions", base::FEATURE_ENABLED_BY_DEFAULT};
+
 #if defined(OS_POSIX)
 // Enables NTLMv2, which implicitly disables NTLMv1.
 const base::Feature kNtlmV2Enabled{"NtlmV2Enabled",

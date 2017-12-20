@@ -151,6 +151,11 @@ class PermissionContextBase : public KeyedService {
   // Whether the permission should be restricted to secure origins.
   virtual bool IsRestrictedToSecureOrigins() const = 0;
 
+  // Logs the |message| to the developer console for the given |web_contents|
+  // explaining why the permission request was blocked.
+  void LogPermissionBlockedMessage(content::WebContents* web_contents,
+                                   const char* message);
+
   ContentSettingsType content_settings_type() const {
     return content_settings_type_;
   }

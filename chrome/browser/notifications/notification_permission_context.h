@@ -5,11 +5,14 @@
 #ifndef CHROME_BROWSER_NOTIFICATIONS_NOTIFICATION_PERMISSION_CONTEXT_H_
 #define CHROME_BROWSER_NOTIFICATIONS_NOTIFICATION_PERMISSION_CONTEXT_H_
 
+#include <memory>
+
 #include "base/gtest_prod_util.h"
 #include "chrome/browser/permissions/permission_context_base.h"
 #include "components/content_settings/core/common/content_settings.h"
 
 class GURL;
+class NotificationPermissionRestrictions;
 class Profile;
 
 class NotificationPermissionContext : public PermissionContextBase {
@@ -18,6 +21,11 @@ class NotificationPermissionContext : public PermissionContextBase {
   ~NotificationPermissionContext() override;
 
   // PermissionContextBase implementation.
+  void RequestPermission(content::WebContents* web_contents,
+                         const PermissionRequestID& id,
+                         const GURL& requesting_frame,
+                         bool user_gesture,
+                         const BrowserPermissionCallback& callback) override;
   ContentSetting GetPermissionStatusInternal(
       content::RenderFrameHost* render_frame_host,
       const GURL& requesting_origin,
@@ -44,6 +52,7 @@ class NotificationPermissionContext : public PermissionContextBase {
                             ContentSetting content_setting) override;
   bool IsRestrictedToSecureOrigins() const override;
 
+  std::unique_ptr<NotificationPermissionRestrictions> restrictions_;
   base::WeakPtrFactory<NotificationPermissionContext> weak_factory_ui_thread_;
 };
 

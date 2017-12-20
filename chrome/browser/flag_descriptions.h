@@ -565,6 +565,9 @@ extern const char kNostatePrefetchDescription[];
 extern const char kNotificationsNativeFlagName[];
 extern const char kNotificationsNativeFlagDescription[];
 
+extern const char kNotificationPermissionRestrictionsFlagName[];
+extern const char kNotificationPermissionRestrictionsDescription[];
+
 #if defined(OS_POSIX)
 extern const char kNtlmV2EnabledName[];
 extern const char kNtlmV2EnabledDescription[];

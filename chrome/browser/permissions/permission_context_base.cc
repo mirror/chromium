@@ -64,15 +64,6 @@ const char kPermissionBlockedFeaturePolicyMessage[] =
     "%s permission has been blocked because of a Feature Policy applied to the "
     "current document. See https://goo.gl/EuHzyv for more details.";
 
-void LogPermissionBlockedMessage(content::WebContents* web_contents,
-                                 const char* message,
-                                 ContentSettingsType type) {
-  web_contents->GetMainFrame()->AddMessageToConsole(
-      content::CONSOLE_MESSAGE_LEVEL_WARNING,
-      base::StringPrintf(message,
-                         PermissionUtil::GetPermissionString(type).c_str()));
-}
-
 }  // namespace
 
 // static
@@ -135,29 +126,24 @@ void PermissionContextBase::RequestPermission(
       case PermissionStatusSource::KILL_SWITCH:
         // Block the request and log to the developer console.
         LogPermissionBlockedMessage(web_contents,
-                                    kPermissionBlockedKillSwitchMessage,
-                                    content_settings_type_);
+                                    kPermissionBlockedKillSwitchMessage);
         callback.Run(CONTENT_SETTING_BLOCK);
         return;
       case PermissionStatusSource::MULTIPLE_DISMISSALS:
-        LogPermissionBlockedMessage(web_contents,
-                                    kPermissionBlockedRepeatedDismissalsMessage,
-                                    content_settings_type_);
+        LogPermissionBlockedMessage(
+            web_contents, kPermissionBlockedRepeatedDismissalsMessage);
         break;
       case PermissionStatusSource::MULTIPLE_IGNORES:
         LogPermissionBlockedMessage(web_contents,
-                                    kPermissionBlockedRepeatedIgnoresMessage,
-                                    content_settings_type_);
+                                    kPermissionBlockedRepeatedIgnoresMessage);
         break;
       case PermissionStatusSource::SAFE_BROWSING_BLACKLIST:
         LogPermissionBlockedMessage(web_contents,
-                                    kPermissionBlockedBlacklistMessage,
-                                    content_settings_type_);
+                                    kPermissionBlockedBlacklistMessage);
         break;
       case PermissionStatusSource::FEATURE_POLICY:
         LogPermissionBlockedMessage(web_contents,
-                                    kPermissionBlockedFeaturePolicyMessage,
-                                    content_settings_type_);
+                                    kPermissionBlockedFeaturePolicyMessage);
         break;
       case PermissionStatusSource::INSECURE_ORIGIN:
       case PermissionStatusSource::UNSPECIFIED:
@@ -194,8 +180,7 @@ void PermissionContextBase::ContinueRequestPermission(
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   if (permission_blocked) {
     LogPermissionBlockedMessage(web_contents,
-                                kPermissionBlockedBlacklistMessage,
-                                content_settings_type_);
+                                kPermissionBlockedBlacklistMessage);
     // Permission has been automatically blocked. Record that the prompt was
     // suppressed and that we hit the blacklist.
     PermissionUmaUtil::RecordEmbargoPromptSuppression(
@@ -437,6 +422,16 @@ void PermissionContextBase::UpdateContentSetting(
       ->SetContentSettingDefaultScope(requesting_origin, embedding_origin,
                                       content_settings_type_, std::string(),
                                       content_setting);
+}
+
+void PermissionContextBase::LogPermissionBlockedMessage(
+    content::WebContents* web_contents,
+    const char* message) {
+  web_contents->GetMainFrame()->AddMessageToConsole(
+      content::CONSOLE_MESSAGE_LEVEL_WARNING,
+      base::StringPrintf(
+          message,
+          PermissionUtil::GetPermissionString(content_settings_type_).c_str()));
 }
 
 bool PermissionContextBase::PermissionAllowedByFeaturePolicy(

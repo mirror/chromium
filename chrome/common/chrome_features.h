@@ -197,6 +197,8 @@ extern const base::Feature kNativeNotifications;
 
 extern const base::Feature kNetworkPrediction;
 
+extern const base::Feature kNotificationPermissionRestrictions;
+
 #if defined(OS_POSIX)
 extern const base::Feature kNtlmV2Enabled;
 #endif

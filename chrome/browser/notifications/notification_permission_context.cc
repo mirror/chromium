@@ -12,7 +12,9 @@
 #include "base/stl_util.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/timer/timer.h"
+#include "chrome/browser/engagement/site_engagement_service.h"
 #include "chrome/browser/notifications/desktop_notification_profile_util.h"
+#include "chrome/browser/notifications/notification_permission_restrictions.h"
 #include "chrome/browser/permissions/permission_request_id.h"
 #include "chrome/browser/profiles/profile.h"
 #include "components/content_settings/core/common/content_settings_pattern.h"
@@ -25,6 +27,13 @@
 #include "url/gurl.h"
 
 namespace {
+
+const char kPermissionBlockedUserGestureMessage[] =
+    "%s permission has been blocked because a user gesture is required.";
+
+const char kPermissionBlockedEngagementMessage[] =
+    "%s permission has been blocked because you've not yet engaged "
+    "sufficiently with the website.";
 
 // At most one of these is attached to each WebContents. It allows posting
 // delayed tasks whose timer only counts down whilst the WebContents is visible
@@ -161,9 +170,43 @@ NotificationPermissionContext::NotificationPermissionContext(Profile* profile)
     : PermissionContextBase(profile,
                             CONTENT_SETTINGS_TYPE_NOTIFICATIONS,
                             blink::FeaturePolicyFeature::kNotFound),
+      restrictions_(std::make_unique<NotificationPermissionRestrictions>()),
       weak_factory_ui_thread_(this) {}
 
 NotificationPermissionContext::~NotificationPermissionContext() {}
+
+void NotificationPermissionContext::RequestPermission(
+    content::WebContents* web_contents,
+    const PermissionRequestID& id,
+    const GURL& requesting_frame,
+    bool user_gesture,
+    const BrowserPermissionCallback& callback) {
+  if (restrictions_->require_user_gesture() && !user_gesture) {
+    LogPermissionBlockedMessage(web_contents,
+                                kPermissionBlockedUserGestureMessage);
+
+    // Don't store the decision because a following call to request permission
+    // may be following a user gesture.
+    callback.Run(CONTENT_SETTING_BLOCK);
+    return;
+  }
+
+  SiteEngagementService* engagement_service =
+      SiteEngagementService::Get(profile());
+  if (engagement_service->GetScore(requesting_frame.GetOrigin()) <
+      restrictions_->minimum_site_engagement_score()) {
+    LogPermissionBlockedMessage(web_contents,
+                                kPermissionBlockedEngagementMessage);
+
+    // Don't store the decision because the engagement score might have
+    // increased the score enough for a following call to request permission.
+    callback.Run(CONTENT_SETTING_BLOCK);
+    return;
+  }
+
+  PermissionContextBase::RequestPermission(web_contents, id, requesting_frame,
+                                           user_gesture, callback);
+}
 
 ContentSetting NotificationPermissionContext::GetPermissionStatusInternal(
     content::RenderFrameHost* render_frame_host,

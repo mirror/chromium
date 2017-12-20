@@ -913,6 +913,13 @@ const char kNotificationsNativeFlagDescription[] =
     "Enable support for using the native notification toasts and notification "
     "center on platforms where these are available.";
 
+const char kNotificationPermissionRestrictionsFlagName[] =
+    "Enable notification permission restrictions";
+const char kNotificationPermissionRestrictionsDescription[] =
+    "Enables additional restrictions for websites that request permission to "
+    "show notifications, notably a user gesture and a certain Site Engagement "
+    "score representing minimal interaction with the website.";
+
 #if defined(OS_POSIX)
 const char kNtlmV2EnabledName[] = "Enable NTLMv2 Authentication";
 const char kNtlmV2EnabledDescription[] =
