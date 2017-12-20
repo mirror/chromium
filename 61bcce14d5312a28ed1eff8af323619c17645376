@@ -22,6 +22,30 @@
       "revId": "61bcce14d5312a28ed1eff8af323619c17645376",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5e421db_d0d4fad2",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 1323,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-12-20T22:44:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f19375f0_8752535a",
+      "range": {
+        "startLine": 1323,
+        "startChar": 11,
+        "endLine": 1323,
+        "endChar": 25
+      },
+      "revId": "61bcce14d5312a28ed1eff8af323619c17645376",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
