@@ -16,6 +16,24 @@
       "revId": "6936ba18c57bd92c2a6fee9387e298a25c4db448",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "36738f07_f46c06db",
+        "filename": "chrome/browser/resources/chromeos/select_to_speak/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2017-12-20T19:22:24Z",
+      "side": 1,
+      "message": "Did it this way.",
+      "parentUuid": "0079bd6b_398a9f24",
+      "revId": "6936ba18c57bd92c2a6fee9387e298a25c4db448",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
