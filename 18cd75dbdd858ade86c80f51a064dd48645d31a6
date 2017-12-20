@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4af25b04_5c76c88b",
+        "filename": "content/browser/service_worker/service_worker_registration.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-12-20T07:34:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b5dcb3f2_5f35fa1c",
+      "revId": "18cd75dbdd858ade86c80f51a064dd48645d31a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d203b1c7_e7324d19",
         "filename": "content/browser/service_worker/service_worker_version.h",
         "patchSetId": 7
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-20T05:56:27Z",
       "side": 1,
       "message": "We still check this in StopWorkerIfIdle(), which feels confusing as this comment basically says this method is bogus with S13nServiceWorker.\n\nCould we clarify the usage here, say, is this correct to say:\n\n\u0027the only valid timing we can rely on this is in StopWorkerIfIdle(), which is called when the worker in the renderer has no inflight events and therefore thinks it\u0027s idle at least in the renderer-side.\u0027",
+      "revId": "18cd75dbdd858ade86c80f51a064dd48645d31a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fb32113_a7488484",
+        "filename": "content/browser/service_worker/service_worker_version.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-12-20T07:34:35Z",
+      "side": 1,
+      "message": "Thanks a lot! Updated the comment. How about this?",
+      "parentUuid": "d203b1c7_e7324d19",
       "revId": "18cd75dbdd858ade86c80f51a064dd48645d31a6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "f5f9174c_1dda0cab",
+        "filename": "content/renderer/service_worker/service_worker_timeout_timer.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-12-20T07:34:35Z",
+      "side": 1,
+      "message": "Thanks, it sounds better:) Updated.",
+      "parentUuid": "4abaa5ed_487555f5",
+      "revId": "18cd75dbdd858ade86c80f51a064dd48645d31a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c47b54db_d9a102d4",
         "filename": "content/renderer/service_worker/service_worker_timeout_timer.h",
         "patchSetId": 7
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "21af00cb_da636d73",
+        "filename": "content/renderer/service_worker/service_worker_timeout_timer.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-12-20T07:34:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c47b54db_d9a102d4",
+      "revId": "18cd75dbdd858ade86c80f51a064dd48645d31a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "62c146e8_706b573e",
         "filename": "content/renderer/service_worker/service_worker_timeout_timer.h",
         "patchSetId": 7
@@ -84,6 +156,24 @@
       "revId": "18cd75dbdd858ade86c80f51a064dd48645d31a6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54ee4fa6_aed94f28",
+        "filename": "content/renderer/service_worker/service_worker_timeout_timer.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-12-20T07:34:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "62c146e8_706b573e",
+      "revId": "18cd75dbdd858ade86c80f51a064dd48645d31a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
