@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "f6eb6b5b_bcbc2b09",
+        "filename": "ui/gl/gl_image_ahardwarebuffer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-12-20T01:22:14Z",
+      "side": 1,
+      "message": "Just to be clear, the WebVR path I\u0027m currently working on does use the preserved\u003dtrue path. WebVR renders into an FBO backed by an AHardwareBuffer, and on the consumer side I need to rebind the AHardwareBuffer to a readable image for retrieving the rendered content, and the content needs to be preserved for that to work.",
+      "parentUuid": "1b64a381_1ac57d03",
+      "range": {
+        "startLine": 19,
+        "startChar": 43,
+        "endLine": 19,
+        "endChar": 57
+      },
+      "revId": "ceed94ea5c60c0a99e6eb774bcef2ac2ca022bac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "56d0c131_204188d2",
         "filename": "ui/gl/gl_image_native_pixmap.h",
         "patchSetId": 6
