@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8abcc415_aa9972d6",
+        "filename": "chrome/browser/data_use_measurement/chrome_data_use_ascriber.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-12-20T23:11:03Z",
+      "side": 1,
+      "message": "Is this right? That is, could the old frame be for an aborted navigation? Or is this for this navigation?",
+      "range": {
+        "startLine": 353,
+        "startChar": 8,
+        "endLine": 353,
+        "endChar": 31
+      },
+      "revId": "16304da8def64f99119f285e45832429036997c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5755aef3_7821a4b3",
+        "filename": "chrome/browser/data_use_measurement/chrome_data_use_ascriber.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-12-20T23:11:03Z",
+      "side": 1,
+      "message": "Think brief comment on these new blocks would be helpful. Eg, is this accounting any pre-commit data to the committed url (for this navigation)?",
+      "revId": "16304da8def64f99119f285e45832429036997c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae74cf8d_4d18bdd1",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_data_use_observer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-12-20T23:11:03Z",
+      "side": 1,
+      "message": "Yay! Death to on these obscurely named suckers!\n\n[Another name idea: PreCommitDataUse]",
+      "range": {
+        "startLine": 23,
+        "startChar": 6,
+        "endLine": 23,
+        "endChar": 41
+      },
+      "revId": "16304da8def64f99119f285e45832429036997c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
