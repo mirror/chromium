@@ -771,6 +771,7 @@ class DnsTransactionImpl : public DnsTransaction,
                    base::Unretained(this), attempt_number,
                    base::TimeTicks::Now()));
     if (rv == ERR_IO_PENDING) {
+      LOG(ERROR) << "udp " << server_index << " " << attempt_number;
       base::TimeDelta timeout = session_->NextTimeout(server_index,
                                                       attempt_number);
       timer_.Start(FROM_HERE, timeout, this, &DnsTransactionImpl::OnTimeout);
@@ -822,6 +823,7 @@ class DnsTransactionImpl : public DnsTransaction,
     if (rv == ERR_IO_PENDING) {
       // Custom timeout for TCP attempt.
       base::TimeDelta timeout = timer_.GetCurrentDelay() * 2;
+      LOG(ERROR) << "TCP timeout " << timeout;
       timer_.Start(FROM_HERE, timeout, this, &DnsTransactionImpl::OnTimeout);
     }
     return AttemptResult(rv, attempt);
