@@ -1002,5 +1002,18 @@ TEST_F(ProtocolHandlerRegistryTest, TestMultiplePlaceholders) {
   // When URL contains multiple placeholders, only the first placeholder should
   // be changed to the given URL.
   ASSERT_EQ(translated_url,
-            GURL("http://example.com/test%3Aduplicated_placeholders/url=%s"));
+            GURL("http://example.com/test:duplicated_placeholders/url=%s"));
+}
+
+TEST_F(ProtocolHandlerRegistryTest, TestURIPercentEncoded) {
+  ProtocolHandler ph = CreateProtocolHandler(
+      "web+example", GURL("https://example.org/search?q=%s"));
+  registry()->OnAcceptRegisterProtocolHandler(ph);
+
+  GURL translated_url = ph.TranslateUrl(GURL(
+      "web+example://custom/protocol+handler|something%20else/chicken-kïwi"));
+
+  ASSERT_EQ(translated_url,
+            GURL("https://example.org/search?q=web+example://"
+                 "custom/protocol+handler|something%20else/chicken-k%C3%AFwi"));
 }
