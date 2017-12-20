@@ -720,7 +720,6 @@ source_set("common") {
     "//gin",
     "//gpu/command_buffer/client:gles2_c_lib",
     "//gpu/command_buffer/client:gles2_implementation",
-    "//gpu/command_buffer/common:gles2_utils",
     "//gpu/command_buffer/service",
     "//gpu/ipc:gl_in_process_context",
     "//gpu/skia_bindings",
@@ -944,7 +943,9 @@ android_library("android_webview_platform_services_java") {
 }
 
 android_library("android_webview_commandline_java") {
-  java_files = [ "java/src/org/chromium/android_webview/command_line/CommandLineUtil.java" ]
+  java_files = [
+    "java/src/org/chromium/android_webview/command_line/CommandLineUtil.java",
+  ]
 
   deps = [
     "//base:base_java",
