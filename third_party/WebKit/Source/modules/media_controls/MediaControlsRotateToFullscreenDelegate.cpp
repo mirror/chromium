@@ -4,6 +4,7 @@
 
 #include "modules/media_controls/MediaControlsRotateToFullscreenDelegate.h"
 
+#include "bindings/core/v8/V8BindingForCore.h"
 #include "core/dom/ElementVisibilityObserver.h"
 #include "core/dom/UserGestureIndicator.h"
 #include "core/dom/events/Event.h"
@@ -54,6 +55,16 @@ void MediaControlsRotateToFullscreenDelegate::Attach() {
   // TODO(johnme): Check this is battery efficient (note that this doesn't need
   // to receive events for 180 deg rotations).
   dom_window->addEventListener(EventTypeNames::orientationchange, this, false);
+
+  // TODO(795286): device orientation now requires a v8::Context in the stack so
+  // we are creating a fake world to properly link to a v8::Context that is
+  // associated with the frame when `addEventListener` is called.
+  scoped_refptr<DOMWrapperWorld> world =
+      DOMWrapperWorld::Create(v8::Isolate::GetCurrent(),
+                              DOMWrapperWorld::WorldType::kInspectorIsolated);
+  ScriptState::Scope scope(
+      ToScriptState(video_element_->GetDocument().GetFrame(), *world));
+
   dom_window->addEventListener(EventTypeNames::deviceorientation, this, false);
 }
 
