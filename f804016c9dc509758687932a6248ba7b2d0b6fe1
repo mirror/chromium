@@ -84,6 +84,24 @@
     },
     {
       "key": {
+        "uuid": "0a0af525_fef3c2e1",
+        "filename": "components/viz/service/display/skia_renderer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-12-20T21:42:26Z",
+      "side": 1,
+      "message": "I think that technically the style guide implies this should be constexpr with \"use constexpr to specify true constants\" but maybe there is some room for interpretation in it:\n\nhttps://google.github.io/styleguide/cppguide.html#Use_of_constexpr",
+      "parentUuid": "4c709dca_66647954",
+      "revId": "f804016c9dc509758687932a6248ba7b2d0b6fe1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7f1b80a4_4592af62",
         "filename": "components/viz/service/display/skia_renderer.cc",
         "patchSetId": 4
@@ -119,6 +137,24 @@
     },
     {
       "key": {
+        "uuid": "18d2fe84_83928d0d",
+        "filename": "components/viz/service/display/skia_renderer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 838,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-12-20T21:42:26Z",
+      "side": 1,
+      "message": "Much better!",
+      "parentUuid": "6f83e42d_e4208f1f",
+      "revId": "f804016c9dc509758687932a6248ba7b2d0b6fe1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "176ef71f_5631969a",
         "filename": "components/viz/service/display/skia_renderer.cc",
         "patchSetId": 4
@@ -151,6 +187,24 @@
       "revId": "f804016c9dc509758687932a6248ba7b2d0b6fe1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5af61580_df0bd741",
+        "filename": "components/viz/service/display/skia_renderer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 841,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-12-20T21:42:26Z",
+      "side": 1,
+      "message": "Not really.",
+      "parentUuid": "c3dfa6f9_800fd8e3",
+      "revId": "f804016c9dc509758687932a6248ba7b2d0b6fe1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

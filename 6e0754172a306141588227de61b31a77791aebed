@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0983065e_7d0706eb",
+        "filename": "components/viz/service/display/skia_renderer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 812,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-12-20T21:42:26Z",
+      "side": 1,
+      "message": "Carrying on the comment from the DCHECK above, would it make more sense to DCHECK(texture_id) here instead? Does GenTextures() set |texture_id| to zero if it fails even, since texture_id isn\u0027t initialized to anything?",
+      "revId": "6e0754172a306141588227de61b31a77791aebed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
