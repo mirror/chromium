@@ -27,6 +27,6 @@ PlatformFederatedCredential::PlatformFederatedCredential(
   SetType("federated");
 }
 
-PlatformFederatedCredential::~PlatformFederatedCredential() {}
+PlatformFederatedCredential::~PlatformFederatedCredential() = default;
 
 }  // namespace blink

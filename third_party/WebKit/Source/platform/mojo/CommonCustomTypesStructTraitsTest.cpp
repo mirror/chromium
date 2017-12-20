@@ -31,8 +31,8 @@ class TestString16Impl : public mojo::common::test::blink::TestString16 {
 
 class CommonCustomTypesStructTraitsTest : public ::testing::Test {
  protected:
-  CommonCustomTypesStructTraitsTest() {}
-  ~CommonCustomTypesStructTraitsTest() override {}
+  CommonCustomTypesStructTraitsTest() = default;
+  ~CommonCustomTypesStructTraitsTest() override = default;
 
  private:
   base::MessageLoop message_loop_;

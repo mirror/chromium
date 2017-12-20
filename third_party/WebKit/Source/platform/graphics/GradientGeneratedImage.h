@@ -43,7 +43,7 @@ class PLATFORM_EXPORT GradientGeneratedImage final : public GeneratedImage {
         new GradientGeneratedImage(std::move(generator), size));
   }
 
-  ~GradientGeneratedImage() override {}
+  ~GradientGeneratedImage() override = default;
 
   bool ApplyShader(PaintFlags&, const SkMatrix&) override;
 

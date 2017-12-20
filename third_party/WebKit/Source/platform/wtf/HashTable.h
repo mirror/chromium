@@ -333,7 +333,7 @@ class HashTableConstIterator final {
   }
 
  public:
-  HashTableConstIterator() {}
+  HashTableConstIterator() = default;
 
   GetType Get() const {
     CheckModifications();
@@ -461,7 +461,7 @@ class HashTableIterator final {
       : iterator_(pos, end, container, tag) {}
 
  public:
-  HashTableIterator() {}
+  HashTableIterator() = default;
 
   // default copy, assignment and destructor are OK
 
@@ -2157,7 +2157,7 @@ void HashTable<Key,
 template <typename HashTableType, typename Traits>
 struct HashTableConstIteratorAdapter {
   STACK_ALLOCATED();
-  HashTableConstIteratorAdapter() {}
+  HashTableConstIteratorAdapter() = default;
   HashTableConstIteratorAdapter(
       const typename HashTableType::const_iterator& impl)
       : impl_(impl) {}
@@ -2195,7 +2195,7 @@ struct HashTableIteratorAdapter {
   typedef typename Traits::IteratorGetType GetType;
   typedef typename HashTableType::ValueTraits::IteratorGetType SourceGetType;
 
-  HashTableIteratorAdapter() {}
+  HashTableIteratorAdapter() = default;
   HashTableIteratorAdapter(const typename HashTableType::iterator& impl)
       : impl_(impl) {}
 

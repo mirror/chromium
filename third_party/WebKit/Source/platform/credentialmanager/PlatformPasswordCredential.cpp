@@ -25,6 +25,6 @@ PlatformPasswordCredential::PlatformPasswordCredential(const String& id,
   SetType("password");
 }
 
-PlatformPasswordCredential::~PlatformPasswordCredential() {}
+PlatformPasswordCredential::~PlatformPasswordCredential() = default;
 
 }  // namespace blink
