@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "56807616_d9a6aa94",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsRotateToFullscreenDelegate.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-12-20T18:14:46Z",
+      "side": 1,
+      "message": "Hmmm, if I understand worlds correctly, it may not run in the main world if extensions have content scripts. Instead, I\u0027ve created a fake world that has for only goal to pretend that there is a v8::Context. WDYT?",
+      "parentUuid": "2af19491_6339fcc5",
+      "revId": "6ccd25c38daa35ee95ef037600f7cbef58167f75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1bcc5381_c677aa95",
         "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsRotateToFullscreenDelegate.cpp",
         "patchSetId": 2

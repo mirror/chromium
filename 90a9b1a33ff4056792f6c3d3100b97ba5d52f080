@@ -16,6 +16,24 @@
       "revId": "90a9b1a33ff4056792f6c3d3100b97ba5d52f080",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51ea1f9b_e483f839",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/VideoRotateToFullscreenTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-12-20T18:14:46Z",
+      "side": 0,
+      "message": "I\u0027ve fixed at least one issue that was creating flakes.",
+      "parentUuid": "a0dab8ce_2b5d2baf",
+      "revId": "90a9b1a33ff4056792f6c3d3100b97ba5d52f080",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
