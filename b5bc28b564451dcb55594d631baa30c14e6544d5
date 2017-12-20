@@ -195,6 +195,30 @@
     },
     {
       "key": {
+        "uuid": "b4907fb1_33e213b6",
+        "filename": "third_party/wayland-protocols/README.chromium",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1250511
+      },
+      "writtenOn": "2017-12-20T14:47:43Z",
+      "side": 1,
+      "message": "The xml file is (or, rather, will be) part of the wayland-protocols upstream. I just hacked something (i.e., supplied just the scanner output files) so that this RFC CL would be buildable until the protocol is merged upstream. At that point I will update third_party/wayland-protocols and will propose a proper (i.e. non-RFC) version of this CL.",
+      "parentUuid": "d9f5b500_c08b87ae",
+      "range": {
+        "startLine": 66,
+        "startChar": 27,
+        "endLine": 66,
+        "endChar": 85
+      },
+      "revId": "b5bc28b564451dcb55594d631baa30c14e6544d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "281ee5f5_ce65d775",
         "filename": "third_party/wayland-protocols/include/protocol/input-timestamps-unstable-v1-client-protocol.h",
         "patchSetId": 2
