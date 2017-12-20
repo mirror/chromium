@@ -189,6 +189,24 @@
     },
     {
       "key": {
+        "uuid": "e6f76b0c_6c6a4a94",
+        "filename": "extensions/browser/content_verifier/content_hash.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-20T18:45:11Z",
+      "side": 1,
+      "message": "Ah, I see.  I\u0027d slightly prefer that these all just be movable and we could use the \u003d default, but I\u0027d be fine waiting on that if you wanted.  If you decide not to do it here, we should at least add a brief comment that says why this is different than \u003ddefault.",
+      "parentUuid": "0a8b84a8_28e3f329",
+      "revId": "12d872548420cce4b696770e2d61e93ed6c92675",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "09ebaa53_d686c429",
         "filename": "extensions/browser/content_verifier/content_hash.cc",
         "patchSetId": 6
@@ -346,6 +364,24 @@
     },
     {
       "key": {
+        "uuid": "431e6e3c_12968685",
+        "filename": "extensions/browser/content_verifier/content_hash.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-20T18:45:11Z",
+      "side": 1,
+      "message": "For flags, why not just have this be an enum, instead of enum class?  Then I think doing things like:\nint mode \u003d kSomeMode;\nshould just work.",
+      "parentUuid": "8f393849_68b94f33",
+      "revId": "12d872548420cce4b696770e2d61e93ed6c92675",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "36f1b733_c355c41b",
         "filename": "extensions/browser/content_verifier/content_hash.h",
         "patchSetId": 6
@@ -375,6 +411,24 @@
       "side": 1,
       "message": "My understanding is that task runner creates a empty ctor instance here because PostTaskAndReply returns ContentHash in this case:\nhttps://cs.chromium.org/chromium/src/base/task_runner_util.h?rcl\u003d141e77a5d35749ac52b9837f082baf5e1413fd66\u0026l\u003d40\n\nThe exact error I get is:\n\n\nIn file included from ../../extensions/browser/content_hash_fetcher.cc:18:\nIn file included from ../../content/public/browser/browser_thread.h:18:\n../../base/task_runner_util.h:40:32: error: no matching constructor for initialization of \u0027extensions::ContentHash\u0027\n  TaskReturnType* result \u003d new TaskReturnType();\n                               ^\n../../extensions/browser/content_hash_fetcher.cc:182:9: note: in instantiation of function template specialization \u0027base::PostTaskAndReplyWithResult\u003cextensions::ContentHash, extensions::ContentHash\u003e\u0027 requested here\n  base::PostTaskAndReplyWithResult(\n        ^\n../../extensions/browser/content_verifier/content_hash.h:77:3: note: candidate constructor not viable: requires single argument \u0027other\u0027, but no arguments were provided\n  ContentHash(ContentHash\u0026\u0026 other);\n  ^\n../../extensions/browser/content_verifier/content_hash.h:148:28: note: candidate constructor not viable: requires 1 argument, but 0 were provided\n  DISALLOW_COPY_AND_ASSIGN(ContentHash);\n                           ^\n../../extensions/browser/content_verifier/content_hash.h:114:3: note: candidate constructor not viable: requires 2 arguments, but 0 were provided\n  ContentHash(const ExtensionKey\u0026 key, Status status);\n  ^\n../../extensions/browser/content_verifier/content_hash.h:115:3: note: candidate constructor not viable: requires 3 arguments, but 0 were provided\n  ContentHash(const ExtensionKey\u0026 key,\n  ^\n1 error generated.",
       "parentUuid": "36f1b733_c355c41b",
+      "revId": "12d872548420cce4b696770e2d61e93ed6c92675",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "789f6fa3_3ba947c5",
+        "filename": "extensions/browser/content_verifier/content_hash.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-20T18:45:11Z",
+      "side": 1,
+      "message": "Interesting!  So we could get around this by wrapping the ContentHash in an optional or a unique_ptr (so that the return type constructed is just the empty container).  Then, we could avoid having a ctor that we don\u0027t intend anyone to use.  I might like that a bit more, but either way is a bit messy, so I don\u0027t feel super strongly.  WDYT?",
+      "parentUuid": "cafeb6b2_4978975f",
       "revId": "12d872548420cce4b696770e2d61e93ed6c92675",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
