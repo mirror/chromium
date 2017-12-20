@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f94c12cd_cd34796b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-12-20T19:06:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a4e173a_7fd0020f",
+      "range": {
+        "startLine": 11,
+        "startChar": 47,
+        "endLine": 11,
+        "endChar": 73
+      },
+      "revId": "c7051fde6daadaf1d18ebe5a8d30ca9c22ede4ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "40d165fc_77d758be",
         "filename": "/COMMIT_MSG",
         "patchSetId": 9
@@ -45,6 +69,30 @@
       "revId": "c7051fde6daadaf1d18ebe5a8d30ca9c22ede4ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e772a5b8_475f01cb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-12-20T19:06:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "40d165fc_77d758be",
+      "range": {
+        "startLine": 12,
+        "startChar": 27,
+        "endLine": 12,
+        "endChar": 42
+      },
+      "revId": "c7051fde6daadaf1d18ebe5a8d30ca9c22ede4ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "624d1a85_0d1acc3f",
+        "filename": "chrome/browser/content_settings/host_content_settings_map_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-12-20T19:06:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9006b57a_4c153a26",
+      "range": {
+        "startLine": 114,
+        "startChar": 41,
+        "endLine": 114,
+        "endChar": 66
+      },
+      "revId": "c7051fde6daadaf1d18ebe5a8d30ca9c22ede4ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0076666d_7ef3963f",
         "filename": "chrome/browser/content_settings/host_content_settings_map_unittest.cc",
         "patchSetId": 9
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "81bae094_f17cf835",
+        "filename": "chrome/browser/content_settings/host_content_settings_map_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-12-20T19:06:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0076666d_7ef3963f",
+      "range": {
+        "startLine": 207,
+        "startChar": 43,
+        "endLine": 207,
+        "endChar": 47
+      },
+      "revId": "c7051fde6daadaf1d18ebe5a8d30ca9c22ede4ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8f1be2af_38eed139",
         "filename": "components/policy/resources/policy_templates.json",
         "patchSetId": 9
@@ -105,6 +201,30 @@
       "writtenOn": "2017-12-20T16:07:29Z",
       "side": 1,
       "message": "If this is restricted to \"sites with intrusive ads\", the enum value name is very terse. It seems to suggest that all ads are blocked. What about BlockIntrusiveAds? Would that be correct?",
+      "range": {
+        "startLine": 10888,
+        "startChar": 41,
+        "endLine": 10888,
+        "endChar": 68
+      },
+      "revId": "c7051fde6daadaf1d18ebe5a8d30ca9c22ede4ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6593b9fc_e50c7dab",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 9
+      },
+      "lineNbr": 10888,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-12-20T19:06:51Z",
+      "side": 1,
+      "message": "Named it such to be consistent with other Content settings since in the content settings this shows up as just \"Ads\". BlockIntrusiveAds would imply a boolean value (true for blocking and false for allowing) while this is an enum. Also on sites with intrusive ads we block all ads , not just intrusive ads.\nI can think of DefaultAdsSettingForIntrusiveAdsSites. Let me know if you prefer DefaultAdsSettingForIntrusiveAdsSites over DefaultAdsSetting or something else.",
+      "parentUuid": "8f1be2af_38eed139",
       "range": {
         "startLine": 10888,
         "startChar": 41,
