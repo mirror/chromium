@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2fd2f4f7_d09b35f5",
+        "filename": "media/audio/audio_system.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-12-20T06:50:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e76789f_d41f604f",
+      "revId": "836b23a2e904073aecc7359386944902b189de14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "667e69fd_a854d747",
         "filename": "media/audio/audio_system_test_util.cc",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "584741bd_ad004421",
+        "filename": "media/audio/audio_system_test_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-12-20T06:50:49Z",
+      "side": 1,
+      "message": "|associated_device_id| is the one returned by AudioSystem. I think you are referring to it instead of |expected_associated_device_id|?\nI have added a DCHECK for |associated_device_id|.",
+      "parentUuid": "667e69fd_a854d747",
+      "revId": "836b23a2e904073aecc7359386944902b189de14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "03cf9bb7_4e85fc86",
         "filename": "media/audio/audio_system_test_util.cc",
         "patchSetId": 3
@@ -47,6 +83,24 @@
       "writtenOn": "2017-12-19T13:44:27Z",
       "side": 1,
       "message": "Ditto:\nDCHECK(!expected_id.is_empty()) \u003c\u003c \"AudioSystem never returns an empty device id.\";",
+      "revId": "836b23a2e904073aecc7359386944902b189de14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a9d5d1d_7305d60e",
+        "filename": "media/audio/audio_system_test_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-12-20T06:50:49Z",
+      "side": 1,
+      "message": "ditto",
+      "parentUuid": "03cf9bb7_4e85fc86",
       "revId": "836b23a2e904073aecc7359386944902b189de14",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
