@@ -52,6 +52,24 @@
       "revId": "b29e7737576db39aa6fe795b0f4bc15e3fbf3e16",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbb89e52_73888df0",
+        "filename": "services/ui/service.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-12-20T05:27:14Z",
+      "side": 1,
+      "message": "(in case it\u0027s not clear: what you have now lgtm too)",
+      "parentUuid": "96f6f0d5_27e0f474",
+      "revId": "b29e7737576db39aa6fe795b0f4bc15e3fbf3e16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
