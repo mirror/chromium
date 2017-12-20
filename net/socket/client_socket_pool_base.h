@@ -193,7 +193,8 @@ class NET_EXPORT_PRIVATE ClientSocketPoolBaseHelper
             RequestPriority priority,
             ClientSocketPool::RespectLimits respect_limits,
             Flags flags,
-            const NetLogWithSource& net_log);
+            const NetLogWithSource& net_log,
+            const SocketTag& socket_tag);
 
     virtual ~Request();
 
@@ -206,6 +207,7 @@ class NET_EXPORT_PRIVATE ClientSocketPoolBaseHelper
     }
     Flags flags() const { return flags_; }
     const NetLogWithSource& net_log() const { return net_log_; }
+    const SocketTag& socket_tag() const { return socket_tag_; }
 
     // TODO(eroman): Temporary until crbug.com/467797 is solved.
     void CrashIfInvalid() const;
@@ -223,6 +225,7 @@ class NET_EXPORT_PRIVATE ClientSocketPoolBaseHelper
     const ClientSocketPool::RespectLimits respect_limits_;
     const Flags flags_;
     const NetLogWithSource net_log_;
+    const SocketTag socket_tag_;
 
     // TODO(eroman): Temporary until crbug.com/467797 is solved.
     Liveness liveness_ = ALIVE;
@@ -625,8 +628,10 @@ class NET_EXPORT_PRIVATE ClientSocketPoolBaseHelper
   // Posts a task to call InvokeUserCallback() on the next iteration through the
   // current message loop.  Inserts |callback| into |pending_callback_map_|,
   // keyed by |handle|.
-  void InvokeUserCallbackLater(
-      ClientSocketHandle* handle, const CompletionCallback& callback, int rv);
+  void InvokeUserCallbackLater(ClientSocketHandle* handle,
+                               const CompletionCallback& callback,
+                               int rv,
+                               const SocketTag& socket_tag);
 
   // Invokes the user callback for |handle|.  By the time this task has run,
   // it's possible that the request has been cancelled, so |handle| may not
@@ -705,13 +710,15 @@ class ClientSocketPoolBase {
             ClientSocketPool::RespectLimits respect_limits,
             internal::ClientSocketPoolBaseHelper::Flags flags,
             const scoped_refptr<SocketParams>& params,
-            const NetLogWithSource& net_log)
+            const NetLogWithSource& net_log,
+            const SocketTag& socket_tag)
         : internal::ClientSocketPoolBaseHelper::Request(handle,
                                                         callback,
                                                         priority,
                                                         respect_limits,
                                                         flags,
-                                                        net_log),
+                                                        net_log,
+                                                        socket_tag),
           params_(params) {}
 
     const scoped_refptr<SocketParams>& params() const { return params_; }
@@ -778,10 +785,12 @@ class ClientSocketPoolBase {
                     ClientSocketPool::RespectLimits respect_limits,
                     ClientSocketHandle* handle,
                     const CompletionCallback& callback,
-                    const NetLogWithSource& net_log) {
-    std::unique_ptr<Request> request(new Request(
-        handle, callback, priority, respect_limits,
-        internal::ClientSocketPoolBaseHelper::NORMAL, params, net_log));
+                    const NetLogWithSource& net_log,
+                    const SocketTag& socket_tag) {
+    std::unique_ptr<Request> request(
+        new Request(handle, callback, priority, respect_limits,
+                    internal::ClientSocketPoolBaseHelper::NORMAL, params,
+                    net_log, socket_tag));
     return helper_.RequestSocket(group_name, std::move(request));
   }
 
@@ -796,7 +805,7 @@ class ClientSocketPoolBase {
     const Request request(nullptr /* no handle */, CompletionCallback(), IDLE,
                           ClientSocketPool::RespectLimits::ENABLED,
                           internal::ClientSocketPoolBaseHelper::NO_IDLE_SOCKETS,
-                          params, net_log);
+                          params, net_log, SocketTag());
     helper_.RequestSockets(group_name, request, num_sockets, motivation);
   }
 

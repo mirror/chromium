@@ -60,6 +60,9 @@ class NET_EXPORT_PRIVATE HttpProxySocketParams
       bool tunnel,
       ProxyDelegate* proxy_delegate);
 
+  // Returns SocketTag from appropriate SocketParams.
+  const SocketTag& GetSocketTag() const;
+
   const scoped_refptr<TransportSocketParams>& transport_params() const {
     return transport_params_;
   }

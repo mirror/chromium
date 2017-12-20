@@ -740,6 +740,7 @@ class MockSSLClientSocket : public MockClientSocket, public AsyncSocket {
   bool WasAlpnNegotiated() const override;
   NextProto GetNegotiatedProtocol() const override;
   bool GetSSLInfo(SSLInfo* ssl_info) override;
+  void ApplySocketTag(const SocketTag& tag) override;
 
   // SSLClientSocket implementation.
   void GetSSLCertRequestInfo(SSLCertRequestInfo* cert_request_info) override;
@@ -1106,6 +1107,22 @@ class MockTaggingStreamSocket : public WrappedStreamSocket {
 
  private:
   SocketTag tag_;
+};
+
+// Extend MockClientSocketFactory to return MockTaggingStreamSockets and
+// keep track of last socket produced for test inspection.
+class MockTaggingClientSocketFactory : public MockClientSocketFactory {
+ public:
+  std::unique_ptr<StreamSocket> CreateTransportClientSocket(
+      const AddressList& addresses,
+      std::unique_ptr<SocketPerformanceWatcher> socket_performance_watcher,
+      NetLog* net_log,
+      const NetLogSource& source) override;
+
+  MockTaggingStreamSocket* GetLastProducedSocket() { return socket_; }
+
+ private:
+  MockTaggingStreamSocket* socket_ = nullptr;
 };
 
 // Constants for a successful SOCKS v5 handshake.
