@@ -34,6 +34,24 @@
       "revId": "3ea346559cc7948984408f2cc410f87757cf8fac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "700b323b_e6886156",
+        "filename": "chrome/browser/ui/webui/chromeos/system_web_dialog_delegate.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-12-20T18:49:00Z",
+      "side": 1,
+      "message": "Fiar point but creating a dialog and not opening it would be *very* unusual usage I think. The latest patch seems like the best solution, thanks.",
+      "parentUuid": "2f5d0ebc_b86a6d03",
+      "revId": "3ea346559cc7948984408f2cc410f87757cf8fac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
