@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c190586f_6ccf3e13",
+        "filename": "chrome/browser/content_settings/host_content_settings_map_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-12-20T22:11:29Z",
+      "side": 1,
+      "message": "I\u0027m not completely sure that this test is very useful. I wouldn\u0027t bother with these additions.",
+      "revId": "ed08542c4bfb4d8b419bf3e6a4fc4cc6970d16f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
