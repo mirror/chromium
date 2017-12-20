@@ -106,11 +106,13 @@ ol.tree-outline li.selected:focus * {
     -webkit-user-select: none;
     -webkit-mask-image: url(Images/treeoutlineTriangles.png);
     -webkit-mask-size: 32px 24px;
-    content: "aa";
+    content: "";
+    display: inline-block;
     color: transparent;
     text-shadow: none;
     margin-right: -2px;
     height: 12px;
+    width: 14px;
 }
 
 .tree-outline li:not(.parent)::before {
