@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "063256e0_654db3d0",
+        "filename": "chrome/browser/chromeos/tether/tether_service.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-12-20T19:08:28Z",
+      "side": 1,
+      "message": "This class, like all classes, should have a comment describing what its purpose is. It would also be helpful to describe the lifetime of the class here so that a reviewer can easily check whether it is assured to outlive another class :)",
+      "revId": "7a7f99dbd9ce178e561ebca21eda94fd0ff02698",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95addf0a_9cee69f2",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/internet_handler.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-12-20T19:08:28Z",
+      "side": 1,
+      "message": "Add a comment above this noting that the tracker must be gauranteed to outlive the handler. (There should be a similar comment above arc_vpn_provider_manager_).",
+      "revId": "7a7f99dbd9ce178e561ebca21eda94fd0ff02698",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
