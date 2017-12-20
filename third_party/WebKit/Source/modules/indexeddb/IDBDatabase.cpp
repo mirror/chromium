@@ -47,6 +47,7 @@
 #include "platform/wtf/Atomics.h"
 #include "public/platform/modules/indexeddb/WebIDBDatabaseException.h"
 #include "public/platform/modules/indexeddb/WebIDBKeyPath.h"
+#include "public/platform/modules/indexeddb/WebIDBObservation.h"
 #include "public/platform/modules/indexeddb/WebIDBTypes.h"
 
 #include <limits>
@@ -192,7 +193,7 @@ void IDBDatabase::OnComplete(int64_t transaction_id) {
 void IDBDatabase::OnChanges(
     const std::unordered_map<int32_t, std::vector<int32_t>>&
         observation_index_map,
-    const WebVector<WebIDBObservation>& observations,
+    WebVector<WebIDBObservation> observations,
     const IDBDatabaseCallbacks::TransactionMap& transactions) {
   for (const auto& map_entry : observation_index_map) {
     auto it = observers_.find(map_entry.first);
@@ -213,8 +214,9 @@ void IDBDatabase::OnChanges(
       }
 
       observer->Callback()->InvokeAndReportException(
-          observer, IDBObserverChanges::Create(this, transaction, observations,
-                                               map_entry.second, isolate_));
+          observer,
+          IDBObserverChanges::Create(this, transaction, std::move(observations),
+                                     map_entry.second, isolate_));
       if (transaction)
         transaction->SetActive(false);
     }

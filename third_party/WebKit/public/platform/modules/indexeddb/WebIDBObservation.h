@@ -5,6 +5,7 @@
 #ifndef WebIDBObservation_h
 #define WebIDBObservation_h
 
+#include "base/macros.h"
 #include "public/platform/modules/indexeddb/WebIDBKeyRange.h"
 #include "public/platform/modules/indexeddb/WebIDBTypes.h"
 #include "public/platform/modules/indexeddb/WebIDBValue.h"
@@ -16,6 +17,24 @@ struct WebIDBObservation {
   WebIDBOperationType type;
   WebIDBKeyRange key_range;
   WebIDBValue value;
+
+  WebIDBObservation(int64_t object_store_id,
+                    WebIDBOperationType type,
+                    WebIDBKeyRange key_range,
+                    WebIDBValue value)
+      : object_store_id(object_store_id),
+        type(type),
+        key_range(key_range),
+        value(std::move(value)) {}
+
+  WebIDBObservation(WebIDBObservation&&) = default;
+  WebIDBObservation& operator=(WebIDBObservation&&) = default;
+
+ private:
+  // WebIDBObservation has to be move-only, because WebIDBValue is move-only.
+  // Making the restriction explicit results in slightly better compilation
+  // error messages in code that attempts copying.
+  DISALLOW_COPY_AND_ASSIGN(WebIDBObservation);
 };
 
 }  // namespace blink

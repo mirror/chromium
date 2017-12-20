@@ -232,7 +232,7 @@ std::unique_ptr<IDBValue> IDBValueUnwrapper::Unwrap(
   blob_info.pop_back();
 
   return IDBValue::Create(std::move(wrapper_blob_content), std::move(blob_data),
-                          std::move(blob_info), wrapped_value->PrimaryKey(),
+                          std::move(blob_info), wrapped_value->TakePrimaryKey(),
                           wrapped_value->KeyPath());
 }
 

@@ -120,7 +120,7 @@ class MODULES_EXPORT IDBDatabase final
   void OnComplete(int64_t);
   void OnChanges(const std::unordered_map<int32_t, std::vector<int32_t>>&
                      observation_index_map,
-                 const WebVector<WebIDBObservation>& observations,
+                 WebVector<WebIDBObservation> observations,
                  const IDBDatabaseCallbacks::TransactionMap& transactions);
 
   // ScriptWrappable

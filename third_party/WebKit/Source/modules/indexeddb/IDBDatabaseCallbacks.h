@@ -59,7 +59,7 @@ class MODULES_EXPORT IDBDatabaseCallbacks
   virtual void OnChanges(
       const std::unordered_map<int32_t, std::vector<int32_t>>&
           observation_index_map,
-      const WebVector<WebIDBObservation>& observations,
+      WebVector<WebIDBObservation> observations,
       const TransactionMap& transactions);
 
   void Connect(IDBDatabase*);

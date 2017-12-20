@@ -25,10 +25,12 @@
 
 #include "modules/indexeddb/WebIDBDatabaseCallbacksImpl.h"
 
-#include "core/dom/DOMException.h"
-#include "platform/wtf/PtrUtil.h"
-
 #include <memory>
+
+#include "core/dom/DOMException.h"
+#include "modules/indexeddb/IDBDatabaseCallbacks.h"
+#include "public/platform/modules/indexeddb/WebIDBDatabaseError.h"
+#include "public/platform/modules/indexeddb/WebIDBObservation.h"
 
 namespace blink {
 
@@ -74,10 +76,12 @@ void WebIDBDatabaseCallbacksImpl::OnComplete(long long transaction_id) {
 void WebIDBDatabaseCallbacksImpl::OnChanges(
     const std::unordered_map<int32_t, std::vector<int32_t>>&
         observation_index_map,
-    const WebVector<WebIDBObservation>& observations,
+    WebVector<WebIDBObservation> observations,
     const IDBDatabaseCallbacks::TransactionMap& transactions) {
-  if (callbacks_)
-    callbacks_->OnChanges(observation_index_map, observations, transactions);
+  if (callbacks_) {
+    callbacks_->OnChanges(observation_index_map, std::move(observations),
+                          transactions);
+  }
 }
 
 void WebIDBDatabaseCallbacksImpl::Detach() {

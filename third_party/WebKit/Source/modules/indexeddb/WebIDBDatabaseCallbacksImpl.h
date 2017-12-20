@@ -51,7 +51,7 @@ class WebIDBDatabaseCallbacksImpl final : public WebIDBDatabaseCallbacks {
   void OnChanges(
       const std::unordered_map<int32_t, std::vector<int32_t>>&
           observation_index_map,
-      const WebVector<WebIDBObservation>& observations,
+      WebVector<WebIDBObservation> observations,
       const IDBDatabaseCallbacks::TransactionMap& transactions) override;
   void Detach() override;
 

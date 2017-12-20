@@ -23,13 +23,13 @@ class IDBObserverChanges final : public ScriptWrappable {
  public:
   static IDBObserverChanges* Create(
       IDBDatabase*,
-      const WebVector<WebIDBObservation>&,
+      WebVector<WebIDBObservation>,
       const WebVector<int32_t>& observation_indices,
       v8::Isolate*);
   static IDBObserverChanges* Create(
       IDBDatabase*,
       IDBTransaction*,
-      const WebVector<WebIDBObservation>&,
+      WebVector<WebIDBObservation>,
       const WebVector<int32_t>& observation_indices,
       v8::Isolate*);
 
@@ -43,11 +43,11 @@ class IDBObserverChanges final : public ScriptWrappable {
  private:
   IDBObserverChanges(IDBDatabase*,
                      IDBTransaction*,
-                     const WebVector<WebIDBObservation>&,
+                     WebVector<WebIDBObservation>,
                      const WebVector<int32_t>& observation_indices,
                      v8::Isolate*);
 
-  void ExtractChanges(const WebVector<WebIDBObservation>&,
+  void ExtractChanges(WebVector<WebIDBObservation>,
                       const WebVector<int32_t>& observation_indices,
                       v8::Isolate*);
 

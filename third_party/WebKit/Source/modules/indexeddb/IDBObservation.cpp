@@ -65,15 +65,16 @@ const String& IDBObservation::type() const {
   }
 }
 
-IDBObservation* IDBObservation::Create(const WebIDBObservation& observation,
+IDBObservation* IDBObservation::Create(WebIDBObservation observation,
                                        v8::Isolate* isolate) {
-  return new IDBObservation(observation, isolate);
+  return new IDBObservation(std::move(observation), isolate);
 }
 
-IDBObservation::IDBObservation(const WebIDBObservation& observation,
+IDBObservation::IDBObservation(WebIDBObservation observation,
                                v8::Isolate* isolate)
     : key_range_(observation.key_range),
-      value_(IDBAny::Create(IDBValue::Create(observation.value, isolate))),
+      value_(IDBAny::Create(
+          IDBValue::Create(std::move(observation.value), isolate))),
       operation_type_(observation.type) {}
 
 void IDBObservation::Trace(blink::Visitor* visitor) {
