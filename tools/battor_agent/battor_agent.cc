@@ -154,23 +154,36 @@ void BattOrAgent::OnConnectionOpened(bool success) {
     return;
   }
 
-  switch (command_) {
-    case Command::START_TRACING:
-      PerformAction(Action::SEND_INIT);
-      return;
-    case Command::STOP_TRACING:
-      PerformAction(Action::SEND_EEPROM_REQUEST);
-      return;
-    case Command::RECORD_CLOCK_SYNC_MARKER:
-      PerformAction(Action::SEND_CURRENT_SAMPLE_REQUEST);
-      return;
-    case Command::GET_FIRMWARE_GIT_HASH:
-      PerformAction(Action::SEND_GIT_HASH_REQUEST);
-      return;
-    case Command::INVALID:
-      NOTREACHED();
-      return;
+  connection_->Flush();
+}
+
+void BattOrAgent::OnConnectionFlushed(bool success) {
+  if (!success) {
+    CompleteCommand(BATTOR_ERROR_CONNECTION_FAILED);
+    return;
   }
+
+  // Flush after opening connection.
+  if (last_action_ == Action::REQUEST_CONNECTION) {
+    switch (command_) {
+      case Command::START_TRACING:
+        PerformAction(Action::SEND_INIT);
+        return;
+      case Command::STOP_TRACING:
+        PerformAction(Action::SEND_EEPROM_REQUEST);
+        return;
+      case Command::RECORD_CLOCK_SYNC_MARKER:
+        PerformAction(Action::SEND_CURRENT_SAMPLE_REQUEST);
+        return;
+      case Command::GET_FIRMWARE_GIT_HASH:
+        PerformAction(Action::SEND_GIT_HASH_REQUEST);
+        return;
+      case Command::INVALID:
+        NOTREACHED();
+        return;
+    }
+  } else
+    NOTREACHED();
 }
 
 void BattOrAgent::OnBytesSent(bool success) {

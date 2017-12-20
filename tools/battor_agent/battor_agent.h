@@ -90,6 +90,7 @@ class BattOrAgent : public BattOrConnection::Listener,
 
   // BattOrConnection::Listener implementation.
   void OnConnectionOpened(bool success) override;
+  void OnConnectionFlushed(bool success) override;
   void OnBytesSent(bool success) override;
   void OnMessageRead(bool success,
                      BattOrMessageType type,
