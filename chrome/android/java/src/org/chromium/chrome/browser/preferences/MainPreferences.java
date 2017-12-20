@@ -98,17 +98,20 @@ public class MainPreferences extends PreferenceFragment
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             // If we are on Android O+ the Notifications preference should lead to the Android
             // Settings notifications page, not to Chrome's notifications settings page.
-            Preference notifications = findPreference(PREF_NOTIFICATIONS);
-            notifications.setOnPreferenceClickListener(preference -> {
-                // TODO(crbug.com/707804): Use Android O constants.
-                Intent intent = new Intent();
-                intent.setAction("android.settings.APP_NOTIFICATION_SETTINGS");
-                intent.putExtra("android.provider.extra.APP_PACKAGE", BuildInfo.getPackageName());
-                startActivity(intent);
-                // We handle the click so the default action (opening NotificationsPreference)
-                // isn't triggered.
-                return true;
+            changePreference(PREF_NOTIFICATIONS, () -> {
+                Preference notifications = findPreference(PREF_NOTIFICATIONS);
+                notifications.setOnPreferenceClickListener(preference -> {
+                    // TODO(crbug.com/707804): Use Android O constants.
+                    Intent intent = new Intent();
+                    intent.setAction("android.settings.APP_NOTIFICATION_SETTINGS");
+                    intent.putExtra("android.provider.extra.APP_PACKAGE", BuildInfo.getPackageName());
+                    startActivity(intent);
+                    // We handle the click so the default action (opening NotificationsPreference)
+                    // isn't triggered.
+                    return true;
+                });
             });
+
         } else if (!ChromeFeatureList.isEnabled(
                            ChromeFeatureList.CONTENT_SUGGESTIONS_NOTIFICATIONS)) {
             // The Notifications Preferences page currently only contains the Content Suggestions
@@ -119,7 +122,9 @@ public class MainPreferences extends PreferenceFragment
             // This checks whether the Content Suggestions Notifications *feature* is enabled on the
             // user's device, not whether the user has Content Suggestions Notifications themselves
             // enabled (which is what the user can toggle on the Notifications Preferences page).
-            getPreferenceScreen().removePreference(findPreference(PREF_NOTIFICATIONS));
+            changePreference(PREF_NOTIFICATIONS, () -> {
+                getPreferenceScreen().removePreference(findPreference(PREF_NOTIFICATIONS));
+            });
         }
 
         // This checks whether the Languages Preference *feature* is enabled on the user's device.
@@ -173,9 +178,11 @@ public class MainPreferences extends PreferenceFragment
             removePreferenceIfPresent(PREF_HOMEPAGE);
         }
 
-        ChromeBasePreference dataReduction =
-                (ChromeBasePreference) findPreference(PREF_DATA_REDUCTION);
-        dataReduction.setSummary(DataReductionPreferences.generateSummary(getResources()));
+        changePreference(PREF_DATA_REDUCTION, () -> {
+            ChromeBasePreference dataReduction =
+                    (ChromeBasePreference) findPreference(PREF_DATA_REDUCTION);
+            dataReduction.setSummary(DataReductionPreferences.generateSummary(getResources()));
+        });
     }
 
     private Preference addPreferenceIfAbsent(String key) {
@@ -191,20 +198,30 @@ public class MainPreferences extends PreferenceFragment
 
     private void updateSearchEnginePreference() {
         if (!TemplateUrlService.getInstance().isLoaded()) {
-            ChromeBasePreference searchEnginePref =
-                    (ChromeBasePreference) findPreference(PREF_SEARCH_ENGINE);
-            searchEnginePref.setEnabled(false);
+            changePreference(PREF_SEARCH_ENGINE, () -> {
+                ChromeBasePreference searchEnginePref =
+                        (ChromeBasePreference) findPreference(PREF_SEARCH_ENGINE);
+                searchEnginePref.setEnabled(false);
+            });
             return;
         }
 
-        String defaultSearchEngineName = null;
-        TemplateUrl dseTemplateUrl =
-                TemplateUrlService.getInstance().getDefaultSearchEngineTemplateUrl();
-        if (dseTemplateUrl != null) defaultSearchEngineName = dseTemplateUrl.getShortName();
+        changePreference(PREF_SEARCH_ENGINE, () -> {
+            String defaultSearchEngineName = null;
+            TemplateUrl dseTemplateUrl =
+                    TemplateUrlService.getInstance().getDefaultSearchEngineTemplateUrl();
+            if (dseTemplateUrl != null) defaultSearchEngineName = dseTemplateUrl.getShortName();
 
-        Preference searchEnginePreference = findPreference(PREF_SEARCH_ENGINE);
-        searchEnginePreference.setEnabled(true);
-        searchEnginePreference.setSummary(defaultSearchEngineName);
+            Preference searchEnginePreference = findPreference(PREF_SEARCH_ENGINE);
+            searchEnginePreference.setEnabled(true);
+            searchEnginePreference.setSummary(defaultSearchEngineName);
+        });
+    }
+
+    private void changePreference(String key, Runnable task) {
+        Preference pref = findPreference(key);
+        if (pref == null) return;
+        task.run();
     }
 
     private void setOnOffSummary(Preference pref, boolean isOn) {
