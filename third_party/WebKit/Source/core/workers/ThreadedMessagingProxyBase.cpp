@@ -6,11 +6,14 @@
 
 #include "bindings/core/v8/SourceLocation.h"
 #include "core/dom/Document.h"
+#include "core/exported/WebViewImpl.h"
 #include "core/frame/Deprecation.h"
 #include "core/frame/WebLocalFrameImpl.h"
 #include "core/loader/DocumentLoader.h"
 #include "core/loader/ThreadableLoadingContext.h"
 #include "core/loader/WorkerFetchContext.h"
+#include "core/page/ChromeClient.h"
+#include "core/page/Page.h"
 #include "core/workers/GlobalScopeCreationParams.h"
 #include "core/workers/WorkerInspectorProxy.h"
 #include "platform/loader/fetch/ResourceFetcher.h"
@@ -18,6 +21,7 @@
 #include "public/platform/TaskType.h"
 #include "public/platform/WebWorkerFetchContext.h"
 #include "public/web/WebFrameClient.h"
+#include "public/web/WebViewClient.h"
 
 namespace blink {
 
@@ -87,6 +91,12 @@ void ThreadedMessagingProxyBase::InitializeWorkerThread(
       GetParentFrameTaskRunners());
   GetWorkerInspectorProxy()->WorkerThreadCreated(document, GetWorkerThread(),
                                                  script_url);
+
+  if (document->GetPage()) {
+    WebViewClient* web_view_client =
+        document->GetPage()->GetChromeClient().GetWebView()->Client();
+    web_view_client->AddWorkerEventQueue(worker_thread_.get());
+  }
 }
 
 void ThreadedMessagingProxyBase::CountFeature(WebFeature feature) {
@@ -146,8 +156,17 @@ void ThreadedMessagingProxyBase::TerminateGlobalScope() {
     return;
   asked_to_terminate_ = true;
 
-  if (worker_thread_)
+  if (worker_thread_) {
+    Document* document = ToDocument(GetExecutionContext());
+    if (document->GetPage()) {
+      WebViewClient* web_view_client =
+          document->GetPage()->GetChromeClient().GetWebView()->Client();
+      web_view_client->RemoveWorkerEventQueue(worker_thread_.get());
+    }
+
+    // GetExecutionContext()->Doc->Frame->GetChromeClient->GetWebView->RenderView->WIH
     worker_thread_->Terminate();
+  }
 
   worker_inspector_proxy_->WorkerThreadTerminated();
 }

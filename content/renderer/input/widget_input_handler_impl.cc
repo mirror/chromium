@@ -12,6 +12,7 @@
 #include "content/common/input_messages.h"
 #include "content/renderer/gpu/render_widget_compositor.h"
 #include "content/renderer/ime_event_guard.h"
+#include "content/renderer/input/input_event_queue.h"
 #include "content/renderer/input/widget_input_handler_manager.h"
 #include "content/renderer/render_thread_impl.h"
 #include "content/renderer/render_widget.h"
@@ -56,7 +57,7 @@ void RunClosureIfNotSwappedOut(base::WeakPtr<RenderWidget> render_widget,
 WidgetInputHandlerImpl::WidgetInputHandlerImpl(
     scoped_refptr<WidgetInputHandlerManager> manager,
     scoped_refptr<base::SingleThreadTaskRunner> main_thread_task_runner,
-    scoped_refptr<MainThreadEventQueue> input_event_queue,
+    scoped_refptr<InputEventQueue> input_event_queue,
     base::WeakPtr<RenderWidget> render_widget)
     : main_thread_task_runner_(main_thread_task_runner),
       input_handler_manager_(manager),
@@ -159,6 +160,7 @@ void WidgetInputHandlerImpl::DispatchNonBlockingEvent(
 
 void WidgetInputHandlerImpl::RunOnMainThread(base::OnceClosure closure) {
   if (input_event_queue_) {
+    DCHECK(input_event_queue_->IsMainThreadQueue());
     input_event_queue_->QueueClosure(base::BindOnce(
         &RunClosureIfNotSwappedOut, render_widget_, std::move(closure)));
   } else {

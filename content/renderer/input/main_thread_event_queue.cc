@@ -373,6 +373,10 @@ void MainThreadEventQueue::QueueClosure(base::OnceClosure closure) {
     PostTaskToMainThread();
 }
 
+bool MainThreadEventQueue::IsMainThreadQueue() {
+  return true;
+}
+
 void MainThreadEventQueue::PossiblyScheduleMainFrame() {
   bool needs_main_frame = false;
   {

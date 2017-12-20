@@ -571,4 +571,6 @@ bool WorkerThread::CheckRequestedToTerminateOnWorkerThread() {
   return requested_to_terminate_;
 }
 
+void WorkerThread::HandleInputEvent() {}
+
 }  // namespace blink

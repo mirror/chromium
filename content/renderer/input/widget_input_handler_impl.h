@@ -10,7 +10,7 @@
 #include "mojo/public/cpp/bindings/binding.h"
 
 namespace content {
-class MainThreadEventQueue;
+class InputEventQueue;
 class RenderWidget;
 class WidgetInputHandlerManager;
 
@@ -23,7 +23,7 @@ class WidgetInputHandlerImpl : public mojom::WidgetInputHandler {
   WidgetInputHandlerImpl(
       scoped_refptr<WidgetInputHandlerManager> manager,
       scoped_refptr<base::SingleThreadTaskRunner> main_thread_task_runner,
-      scoped_refptr<MainThreadEventQueue> input_event_queue,
+      scoped_refptr<InputEventQueue> input_event_queue,
       base::WeakPtr<RenderWidget> render_widget);
   ~WidgetInputHandlerImpl() override;
 
@@ -60,7 +60,7 @@ class WidgetInputHandlerImpl : public mojom::WidgetInputHandler {
 
   scoped_refptr<base::SingleThreadTaskRunner> main_thread_task_runner_;
   scoped_refptr<WidgetInputHandlerManager> input_handler_manager_;
-  scoped_refptr<MainThreadEventQueue> input_event_queue_;
+  scoped_refptr<InputEventQueue> input_event_queue_;
   base::WeakPtr<RenderWidget> render_widget_;
 
   mojo::Binding<mojom::WidgetInputHandler> binding_;
