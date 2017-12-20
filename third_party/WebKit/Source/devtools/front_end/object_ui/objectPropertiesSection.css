@@ -55,3 +55,7 @@
 .object-properties-section .editable-div {
     overflow: hidden;
 }
+
+li:not(.parent) > .object-value-string {
+    user-select: all;
+}
