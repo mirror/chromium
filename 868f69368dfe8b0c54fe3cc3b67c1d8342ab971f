@@ -88,6 +88,24 @@
       "revId": "868f69368dfe8b0c54fe3cc3b67c1d8342ab971f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd15eddf_11c9981b",
+        "filename": "third_party/WebKit/public/platform/TaskType.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-12-20T12:05:18Z",
+      "side": 1,
+      "message": "+1.",
+      "parentUuid": "1a32eea3_bfb264ba",
+      "revId": "868f69368dfe8b0c54fe3cc3b67c1d8342ab971f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
