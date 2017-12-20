@@ -30,7 +30,6 @@
 #include "core/dom/ChildFrameDisconnector.h"
 #include "core/dom/ChildListMutationScope.h"
 #include "core/dom/ClassCollection.h"
-#include "core/dom/ElementShadow.h"
 #include "core/dom/ElementTraversal.h"
 #include "core/dom/ExceptionCode.h"
 #include "core/dom/NameNodeList.h"
@@ -1736,7 +1735,7 @@ bool ChildAttachedAllowedWhenAttachingChildren(ContainerNode* node) {
   if (IsHTMLSlotElement(node))
     return true;
 
-  if (node->IsElementNode() && ToElement(node)->Shadow())
+  if (node->IsElementNode() && ToElement(node)->GetShadowRoot())
     return true;
 
   return false;

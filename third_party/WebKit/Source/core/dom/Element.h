@@ -53,7 +53,6 @@ class DOMTokenList;
 class Document;
 class ElementAnimations;
 class ElementRareData;
-class ElementShadow;
 class ExceptionState;
 class FloatQuad;
 class FocusOptions;
@@ -475,8 +474,6 @@ class CORE_EXPORT Element : public ContainerNode {
 
   void SetNeedsCompositingUpdate();
 
-  ElementShadow* Shadow() const;
-  ElementShadow& EnsureShadow();
   // If type of ShadowRoot (either closed or open) is explicitly specified,
   // creation of multiple shadow roots is prohibited in any combination and
   // throws an exception.  Multiple shadow roots are allowed only when
@@ -825,6 +822,8 @@ class CORE_EXPORT Element : public ContainerNode {
   EnsureResizeObserverData();
   void SetNeedsResizeObserverUpdate();
 
+  ShadowRoot& AddShadowRoot(ShadowRootType);
+
  protected:
   Element(const QualifiedName& tag_name, Document*, ConstructionType);
 
@@ -1009,7 +1008,7 @@ class CORE_EXPORT Element : public ContainerNode {
 
   void CreateUniqueElementData();
 
-  bool ShouldInvalidateDistributionWhenAttributeChanged(ElementShadow*,
+  bool ShouldInvalidateDistributionWhenAttributeChanged(ShadowRoot*,
                                                         const QualifiedName&,
                                                         const AtomicString&);
 
@@ -1218,19 +1217,19 @@ inline void Element::SetTagNameForCreateElementNS(
 }
 
 inline bool IsShadowHost(const Node* node) {
-  return node && node->IsElementNode() && ToElement(node)->Shadow();
+  return node && node->IsElementNode() && ToElement(node)->GetShadowRoot();
 }
 
 inline bool IsShadowHost(const Node& node) {
-  return node.IsElementNode() && ToElement(node).Shadow();
+  return node.IsElementNode() && ToElement(node).GetShadowRoot();
 }
 
 inline bool IsShadowHost(const Element* element) {
-  return element && element->Shadow();
+  return element && element->GetShadowRoot();
 }
 
 inline bool IsShadowHost(const Element& element) {
-  return element.Shadow();
+  return element.GetShadowRoot();
 }
 
 inline bool IsAtShadowBoundary(const Element* element) {

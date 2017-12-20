@@ -31,10 +31,10 @@
 #include "core/dom/V0InsertionPoint.h"
 
 #include "core/css/StyleChangeReason.h"
-#include "core/dom/ElementShadow.h"
 #include "core/dom/ElementShadowV0.h"
 #include "core/dom/ElementTraversal.h"
 #include "core/dom/QualifiedName.h"
+#include "core/dom/ShadowRoot.h"
 #include "core/dom/StaticNodeList.h"
 #include "core/dom/WhitespaceAttacher.h"
 #include "core/html_names.h"
@@ -205,11 +205,9 @@ bool V0InsertionPoint::LayoutObjectIsNeeded(const ComputedStyle& style) {
 void V0InsertionPoint::ChildrenChanged(const ChildrenChange& change) {
   HTMLElement::ChildrenChanged(change);
   if (ShadowRoot* root = ContainingShadowRoot()) {
-    if (ElementShadow* root_owner = root->Owner()) {
-      if (!(RuntimeEnabledFeatures::IncrementalShadowDOMEnabled() &&
-            root_owner->IsV1()))
-        root_owner->SetNeedsDistributionRecalc();
-    }
+    if (!(RuntimeEnabledFeatures::IncrementalShadowDOMEnabled() &&
+          root->IsV1()))
+      root->SetNeedsDistributionRecalc();
   }
 }
 
@@ -218,17 +216,15 @@ Node::InsertionNotificationRequest V0InsertionPoint::InsertedInto(
   HTMLElement::InsertedInto(insertion_point);
   if (ShadowRoot* root = ContainingShadowRoot()) {
     if (!root->IsV1()) {
-      if (ElementShadow* root_owner = root->Owner()) {
-        if (!(RuntimeEnabledFeatures::IncrementalShadowDOMEnabled() &&
-              root_owner->IsV1()))
-          root_owner->SetNeedsDistributionRecalc();
-        if (CanBeActive() && !registered_with_shadow_root_ &&
-            insertion_point->GetTreeScope().RootNode() == root) {
-          registered_with_shadow_root_ = true;
-          root->DidAddInsertionPoint(this);
-          if (CanAffectSelector())
-            root_owner->V0().WillAffectSelector();
-        }
+      if (!(RuntimeEnabledFeatures::IncrementalShadowDOMEnabled() &&
+            root->IsV1()))
+        root->SetNeedsDistributionRecalc();
+      if (CanBeActive() && !registered_with_shadow_root_ &&
+          insertion_point->GetTreeScope().RootNode() == root) {
+        registered_with_shadow_root_ = true;
+        root->DidAddInsertionPoint(this);
+        if (CanAffectSelector())
+          root->V0().WillAffectSelector();
       }
     }
   }
@@ -245,12 +241,8 @@ void V0InsertionPoint::RemovedFrom(ContainerNode* insertion_point) {
   if (!root)
     root = insertion_point->ContainingShadowRoot();
 
-  // host can be null when removedFrom() is called from ElementShadow
-  // destructor.
-  ElementShadow* root_owner = root ? root->Owner() : nullptr;
-  if (root_owner && !(RuntimeEnabledFeatures::IncrementalShadowDOMEnabled() &&
-                      root_owner->IsV1()))
-    root_owner->SetNeedsDistributionRecalc();
+  if (!(RuntimeEnabledFeatures::IncrementalShadowDOMEnabled() && root->IsV1()))
+    root->SetNeedsDistributionRecalc();
 
   // Since this insertion point is no longer visible from the shadow subtree, it
   // need to clean itself up.
@@ -261,10 +253,8 @@ void V0InsertionPoint::RemovedFrom(ContainerNode* insertion_point) {
     DCHECK(root);
     registered_with_shadow_root_ = false;
     root->DidRemoveInsertionPoint(this);
-    if (!root->IsV1() && root_owner) {
-      if (CanAffectSelector())
-        root_owner->V0().WillAffectSelector();
-    }
+    if (!root->IsV1() && CanAffectSelector())
+      root->V0().WillAffectSelector();
   }
 
   HTMLElement::RemovedFrom(insertion_point);
@@ -279,12 +269,12 @@ const V0InsertionPoint* ResolveReprojection(const Node* projected_node) {
   DCHECK(projected_node);
   const V0InsertionPoint* insertion_point = nullptr;
   const Node* current = projected_node;
-  ElementShadow* last_element_shadow = nullptr;
+  ShadowRoot* last_shadow_root = nullptr;
   while (true) {
-    ElementShadow* shadow = ShadowWhereNodeCanBeDistributedForV0(*current);
-    if (!shadow || shadow->IsV1() || shadow == last_element_shadow)
+    ShadowRoot* shadow = ShadowWhereNodeCanBeDistributedForV0(*current);
+    if (!shadow || shadow->IsV1() || shadow == last_shadow_root)
       break;
-    last_element_shadow = shadow;
+    last_shadow_root = shadow;
     const V0InsertionPoint* inserted_to =
         shadow->V0().FinalDestinationInsertionPointFor(projected_node);
     if (!inserted_to)
@@ -300,12 +290,12 @@ void CollectDestinationInsertionPoints(
     const Node& node,
     HeapVector<Member<V0InsertionPoint>, 8>& results) {
   const Node* current = &node;
-  ElementShadow* last_element_shadow = nullptr;
+  ShadowRoot* last_shadow_root = nullptr;
   while (true) {
-    ElementShadow* shadow = ShadowWhereNodeCanBeDistributedForV0(*current);
-    if (!shadow || shadow->IsV1() || shadow == last_element_shadow)
+    ShadowRoot* shadow = ShadowWhereNodeCanBeDistributedForV0(*current);
+    if (!shadow || shadow->IsV1() || shadow == last_shadow_root)
       return;
-    last_element_shadow = shadow;
+    last_shadow_root = shadow;
     const DestinationInsertionPoints* insertion_points =
         shadow->V0().DestinationInsertionPointsFor(&node);
     if (!insertion_points)
