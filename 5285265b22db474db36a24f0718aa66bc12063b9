@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5927b61d_d1d385bf",
+        "filename": "ios/chrome/browser/ui/main/browser_view_wrangler.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-20T21:33:50Z",
+      "side": 1,
+      "message": "We should call this method only for clean exit and \"termination\" does not necessarily mean clean exit. Would it be better to have a new -[BrowserViewInformation closeIncognitoTabs] method just to close all incognito tabs? I\u0027m worrying that |cleanupTabsForTermination| can be misused.  \n\nAlso would it be useful to explain in the comments why we want to close all Incognito Tabs?\n\nWDYT?",
+      "revId": "5285265b22db474db36a24f0718aa66bc12063b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
