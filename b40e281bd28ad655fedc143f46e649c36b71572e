@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f92c1f2f_2326263a",
+        "filename": "media/cast/net/udp_transport.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-12-20T00:11:58Z",
+      "side": 1,
+      "message": "IMHO, we shouldn\u0027t add a whole description of what the Media Router does here. It could confuse things since Media Router uses other networking transports to do device discovery and communicate application-level control messages to/from devices.\n\nThe code here is purely a media bitstream transport. You could keep the 1st sentence, and maybe add: \"This is also used by browser features that wish to send browser content for remote display, and such features are generally started/stopped from the Media Router dialog.\"",
+      "range": {
+        "startLine": 268,
+        "startChar": 26,
+        "endLine": 276,
+        "endChar": 41
+      },
+      "revId": "b40e281bd28ad655fedc143f46e649c36b71572e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17558b93_b3b350aa",
+        "filename": "media/cast/net/udp_transport.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-12-20T00:11:58Z",
+      "side": 1,
+      "message": "To clarify: s/related control messages/related protocol-level control and performance messages/",
+      "range": {
+        "startLine": 281,
+        "startChar": 23,
+        "endLine": 281,
+        "endChar": 38
+      },
+      "revId": "b40e281bd28ad655fedc143f46e649c36b71572e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "976b56b4_58d9b59e",
+        "filename": "media/cast/net/udp_transport.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-12-20T00:11:58Z",
+      "side": 1,
+      "message": "To be clear, this is just an annotation and not a part of any policy enforcement, correct?",
+      "range": {
+        "startLine": 289,
+        "startChar": 10,
+        "endLine": 293,
+        "endChar": 11
+      },
+      "revId": "b40e281bd28ad655fedc143f46e649c36b71572e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
