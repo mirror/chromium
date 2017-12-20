@@ -136,7 +136,75 @@ enum class TaskType : unsigned {
   // Tasks for tests or mock objects.
   kInternalTest = 26,
 
-  kCount = 27,
+  // Tasks that are related to blob storage and posted at:
+  // * //content/renderer/blob_storage
+  kInternalBlobStorage = 27,
+
+  // Tasks that are related to dev tool and posted at:
+  // * //content/renderer/devtools
+  kInternalDevTools = 28,
+
+  // Tasks that are related to GPU and posted at:
+  // * //components/viz/common/gpu
+  // * //content/renderer/gpu/render_widget_compositor.cc
+  // * //gpu
+  // * //services/ui/public/cpp/gpu
+  kInternalGPU = 29,
+
+  // Tasks that are executed on idling.
+  // |RenderThreadImpl::idle_timer_|
+  kInternalIdle = 30,
+
+  // Tasks that are related to IndexedDB and posted at:
+  // * //content/renderer/indexed_db
+  kInternalIndexedDB = 31,
+
+  // Tasks that are related to IPC and posted at:
+  // * //content/renderer/child_message_filter.cc
+  // * //content/renderer/mojo
+  // * //ipc
+  // * //mojo
+  kInternalIPC = 32,
+
+  // Tasks that are related to loading and posted at:
+  // * //content/renderer/loader
+  kInternalLoading = 33,
+
+  // Tasks that are related to media and posted at:
+  // * //content/renderer/media
+  // * //media
+  kInternalMedia = 34,
+
+  // Tasks that are related to plugin, pepper or PPAPI and posted at
+  // * //components/plugins/renderer
+  // * //content/renderer/pepper
+  // * //ppapi
+  kInternalPlugin = 35,
+
+  // Tasks that are used at RenderWidget.
+  kInternalRenderWidget = 36,
+
+  // Tasks that are related to service manager and posted at:
+  // * //content/common/service_manager/
+  // * //services/service_manager
+  kInternalServiceManager = 37,
+
+  // Tasks that are related to trace event and posted at:
+  kInternalTracing = 38,
+
+  // Tasks that are related to user interaction and posted at:
+  // * //content/renderer/input/
+  kInternalUserInteraction = 39,
+
+  // Tasks that are related to WebCrypto and posted at:
+  // * //components/webcrypto
+  kInternalWebCrypto = 40,
+
+  // Tasks that are related to service workers and posted at
+  // * //content/renderer/service_worker
+  kInternalWorker = 41,
+
+  kCount = 42,
 };
 
 }  // namespace blink
