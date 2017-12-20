@@ -16,7 +16,6 @@
 #include "platform/heap/Handle.h"
 #include "platform/wtf/Deque.h"
 #include "platform/wtf/Locker.h"
-#include "platform/wtf/PtrUtil.h"
 #include "platform/wtf/ThreadSafeRefCounted.h"
 #include "platform/wtf/ThreadingPrimitives.h"
 #include "platform/wtf/Vector.h"
@@ -164,8 +163,8 @@ class DataConsumerHandleTestUtil {
      public:
       ThreadHolder(ThreadingTestBase* test)
           : context_(test->context_),
-            reading_thread_(WTF::WrapUnique(new Thread("reading thread"))),
-            updating_thread_(WTF::WrapUnique(new Thread("updating thread"))) {
+            reading_thread_(std::make_unique<Thread>("reading thread")),
+            updating_thread_(std::make_unique<Thread>("updating thread")) {
         context_->RegisterThreadHolder(this);
       }
       ~ThreadHolder() { context_->UnregisterThreadHolder(); }
@@ -213,8 +212,7 @@ class DataConsumerHandleTestUtil {
       static std::unique_ptr<WebDataConsumerHandle> Create(
           const String& name,
           scoped_refptr<Context> context) {
-        return WTF::WrapUnique(
-            new DataConsumerHandle(name, std::move(context)));
+        return std::make_unique<DataConsumerHandle>(name, std::move(context));
       }
 
      private:
@@ -354,7 +352,7 @@ class DataConsumerHandleTestUtil {
 
    public:
     static std::unique_ptr<ReplayingHandle> Create() {
-      return WTF::WrapUnique(new ReplayingHandle());
+      return std::make_unique<ReplayingHandle>();
     }
     ~ReplayingHandle() override;
 
