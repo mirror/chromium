@@ -220,4 +220,3 @@ class GPU_EXPORT CommonDecoder {
 }  // namespace gpu
 
 #endif  // GPU_COMMAND_BUFFER_SERVICE_COMMON_DECODER_H_
-

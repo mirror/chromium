@@ -65,6 +65,8 @@ RasterCommandBufferStub::RasterCommandBufferStub(
                         stream_id,
                         route_id) {}
 
+RasterCommandBufferStub::~RasterCommandBufferStub() {}
+
 gpu::ContextResult RasterCommandBufferStub::Initialize(
     CommandBufferStub* share_command_buffer_stub,
     const GPUCreateCommandBufferConfig& init_params,
@@ -133,6 +135,7 @@ gpu::ContextResult RasterCommandBufferStub::Initialize(
       this, context_group_->transfer_buffer_manager());
   decoder_.reset(new raster::RasterDecoder(
       this, command_buffer_.get(), manager->outputter(), context_group_.get()));
+  set_decoder(decoder_.get());
 
   sync_point_client_state_ =
       channel_->sync_point_manager()->CreateSyncPointClientState(
@@ -240,9 +243,10 @@ gpu::ContextResult RasterCommandBufferStub::Initialize(
     return result;
   }
 
-  if (manager->gpu_preferences().enable_gpu_service_logging) {
-    decoder_->set_log_commands(true);
-  }
+  // FIXME(backer):
+  // if (manager->gpu_preferences().enable_gpu_service_logging) {
+  //   decoder_->set_log_commands(true);
+  // }
 
   const size_t kSharedStateSize = sizeof(CommandBufferSharedState);
   if (!shared_state_shm->Map(kSharedStateSize)) {

@@ -241,6 +241,7 @@ CommandBufferStub::CommandBufferStub(
       sequence_id_(sequence_id),
       stream_id_(stream_id),
       route_id_(route_id),
+      decoder_(nullptr),
       last_flush_id_(0),
       waiting_for_sync_point_(false),
       previous_processed_num_(0),
@@ -266,8 +267,7 @@ bool CommandBufferStub::OnMessageReceived(const IPC::Message& message) {
   // messages directed at the command buffer. This ensures that the message
   // handler can assume that the context is current (not necessary for
   // RetireSyncPoint or WaitSyncPoint).
-  if (decoder_.get() &&
-      message.type() != GpuCommandBufferMsg_SetGetBuffer::ID &&
+  if (decoder_ && message.type() != GpuCommandBufferMsg_SetGetBuffer::ID &&
       message.type() != GpuCommandBufferMsg_WaitForTokenInRange::ID &&
       message.type() != GpuCommandBufferMsg_WaitForGetOffsetInRange::ID &&
       message.type() != GpuCommandBufferMsg_RegisterTransferBuffer::ID &&
@@ -354,7 +354,7 @@ void CommandBufferStub::PerformWork() {
   // TODO(sunnyps): Should this use ScopedCrashKey instead?
   crash_keys::gpu_gl_context_is_virtual.Set(use_virtualized_gl_context_ ? "1"
                                                                         : "0");
-  if (decoder_.get() && !MakeCurrent())
+  if (decoder_ && !MakeCurrent())
     return;
 
   if (decoder_) {
@@ -396,9 +396,9 @@ bool CommandBufferStub::HasUnprocessedCommands() {
 }
 
 void CommandBufferStub::ScheduleDelayedWork(base::TimeDelta delay) {
-  bool has_more_work = decoder_.get() && (decoder_->HasPendingQueries() ||
-                                          decoder_->HasMoreIdleWork() ||
-                                          decoder_->HasPollingWork());
+  bool has_more_work =
+      decoder_ && (decoder_->HasPendingQueries() ||
+                   decoder_->HasMoreIdleWork() || decoder_->HasPollingWork());
   if (!has_more_work) {
     last_idle_time_ = base::TimeTicks();
     return;
@@ -493,7 +493,7 @@ void CommandBufferStub::Destroy() {
 
   if (decoder_) {
     decoder_->Destroy(have_context);
-    decoder_.reset();
+    decoder_ = nullptr;
   }
 
   command_buffer_.reset();
@@ -643,7 +643,7 @@ void CommandBufferStub::OnAsyncFlush(int32_t put_offset,
   last_flush_id_ = flush_id;
   CommandBuffer::State pre_state = command_buffer_->GetState();
   FastSetActiveURL(active_url_, active_url_hash_, channel_);
-  command_buffer_->Flush(put_offset, decoder_.get());
+  command_buffer_->Flush(put_offset, decoder_);
   CommandBuffer::State post_state = command_buffer_->GetState();
 
   if (pre_state.get_offset != post_state.get_offset)
