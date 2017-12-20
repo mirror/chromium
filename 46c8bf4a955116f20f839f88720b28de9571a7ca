@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "52b53ba7_9510a922",
+        "filename": "content/browser/devtools/protocol/system_info_handler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-12-20T19:18:48Z",
+      "side": 0,
+      "message": "The failing mash test uses the gpu-no-complete-info-collection flag. Is it possible to keep that flag? mash isn\u0027t hooked up correctly to get the gpu-info right now (see crbug.com/669965)",
+      "revId": "46c8bf4a955116f20f839f88720b28de9571a7ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
