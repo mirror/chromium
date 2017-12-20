@@ -74,6 +74,10 @@ class ApplicationContext {
   // saved before shutdown can continue.
   virtual void OnAppEnterBackground() = 0;
 
+  // Invoked when application will terminate in response to the user explicitly
+  // closing the application.
+  virtual void OnAppWillTerminate() = 0;
+
   // Returns whether the last complete shutdown was clean (i.e. happened while
   // the application was backgrounded).
   virtual bool WasLastShutdownClean() = 0;

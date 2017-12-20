@@ -5,12 +5,14 @@
 #import "ios/chrome/browser/ui/main/browser_view_wrangler.h"
 
 #include "base/strings/sys_string_conversions.h"
+#include "components/prefs/pref_service.h"
 #include "ios/chrome/browser/application_context.h"
 #include "ios/chrome/browser/browser_state/chrome_browser_state.h"
 #import "ios/chrome/browser/browsing_data/browsing_data_removal_controller.h"
 #include "ios/chrome/browser/browsing_data/ios_chrome_browsing_data_remover.h"
 #include "ios/chrome/browser/crash_report/crash_report_helper.h"
 #import "ios/chrome/browser/device_sharing/device_sharing_manager.h"
+#include "ios/chrome/browser/pref_names.h"
 #import "ios/chrome/browser/sessions/session_ios.h"
 #import "ios/chrome/browser/sessions/session_service_ios.h"
 #import "ios/chrome/browser/sessions/session_window_ios.h"
@@ -169,7 +171,12 @@
 
 - (TabModel*)otrTabModel {
   if (!_otrTabModel) {
-    self.otrTabModel = [self buildOtrTabModel:NO];
+    PrefService* prefs = GetApplicationContext()->GetLocalState();
+    // Do not restore incognito tabs if the user deliberately terminated the
+    // application.
+    BOOL load_empty_otr_model =
+        prefs->GetBoolean(prefs::kLastAppSessionWasDeliberatelyTerminated);
+    self.otrTabModel = [self buildOtrTabModel:load_empty_otr_model];
   }
   return _otrTabModel;
 }

@@ -171,6 +171,12 @@ void ApplicationContextImpl::OnAppEnterBackground() {
   // handling is necessary on iOS.
 }
 
+void ApplicationContextImpl::OnAppWillTerminate() {
+  DCHECK(thread_checker_.CalledOnValidThread());
+  GetLocalState()->SetBoolean(prefs::kLastAppSessionWasDeliberatelyTerminated,
+                              true);
+}
+
 bool ApplicationContextImpl::WasLastShutdownClean() {
   DCHECK(thread_checker_.CalledOnValidThread());
   // Make sure the locale state is created as the file is initialized there.

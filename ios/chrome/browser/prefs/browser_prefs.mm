@@ -88,6 +88,8 @@ void RegisterLocalStatePrefs(PrefRegistrySimple* registry) {
   registry->RegisterBooleanPref(metrics::prefs::kMetricsReportingEnabled,
                                 false);
   registry->RegisterBooleanPref(prefs::kLastSessionExitedCleanly, true);
+  registry->RegisterBooleanPref(prefs::kLastAppSessionWasDeliberatelyTerminated,
+                                false);
   registry->RegisterBooleanPref(prefs::kMetricsReportingWifiOnly, true);
 }
 

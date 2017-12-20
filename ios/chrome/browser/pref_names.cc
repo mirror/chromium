@@ -89,6 +89,12 @@ const char kIosSettingsSigninPromoDisplayedCount[] =
 const char kLastSessionExitedCleanly[] =
     "ios.user_experience_metrics.last_session_exited_cleanly";
 
+// True if the user explicitly terminated the application from the app switcher
+// while it was in the foreground. False if the system terminated the
+// application.
+const char kLastAppSessionWasDeliberatelyTerminated[] =
+    "ios.app_deliberately_terminated";
+
 // Preference that hold a boolean indicating whether metrics reporting should
 // be limited to wifi (when enabled).
 const char kMetricsReportingWifiOnly[] =
