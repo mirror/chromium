@@ -1370,6 +1370,8 @@ void ThreadState::MarkPhaseEpilogue() {
   Heap().PostMarkingProcessing(current_gc_data_.visitor.get());
   Heap().WeakProcessing(current_gc_data_.visitor.get());
   Heap().DecommitCallbackStacks();
+  GetPersistentRegion()->RebuildFreeList();
+  ProcessHeap::GetCrossThreadPersistentRegion().RebuildFreeList();
 
   Heap().HeapStats().SetEstimatedMarkingTimePerByte(
       current_gc_data_.marked_object_size
@@ -1413,6 +1415,15 @@ void ThreadState::CollectAllGarbage() {
       break;
     previous_live_objects = live_objects;
   }
+}
+
+void ThreadState::CheckObjectNotInCallbackStacks(const void* object) {
+#if DCHECK_IS_ON()
+  DCHECK(!Heap().MarkingStack()->HasCallbackForObject(object));
+  DCHECK(!Heap().PostMarkingCallbackStack()->HasCallbackForObject(object));
+  DCHECK(!Heap().WeakCallbackStack()->HasCallbackForObject(object));
+  DCHECK(!Heap().EphemeronStack()->HasCallbackForObject(object));
+#endif
 }
 
 }  // namespace blink
