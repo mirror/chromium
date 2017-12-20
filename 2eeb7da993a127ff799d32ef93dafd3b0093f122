@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b7684887_791743ca",
+        "filename": "content/browser/renderer_host/render_widget_host_input_event_router_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-12-20T17:00:42Z",
+      "side": 1,
+      "message": "The MockRenderWidgetHostView now ends up forwarding the events to the RenderWidgetHostImpl (where previously it wouldn\u0027t). This triggers some code that DCHECKs that they are running on the BrowserThread::UI thread. So it\u0027s necessary to set that up (just having a TestBrowserThreadBundle instance is sufficient for that).",
+      "parentUuid": "86f25a86_204666bc",
+      "revId": "2eeb7da993a127ff799d32ef93dafd3b0093f122",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9e57aea4_3c0b6f9c",
         "filename": "content/browser/renderer_host/render_widget_host_view_base.h",
         "patchSetId": 3
