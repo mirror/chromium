@@ -36,6 +36,7 @@ class VIEWS_EXPORT NativeViewAccessibilityBase
   // NativeViewAccessibility:
   gfx::NativeViewAccessible GetNativeObject() override;
   void NotifyAccessibilityEvent(ui::AXEvent event_type) override;
+  int32_t GetId() const final;
 
   // ui::AXPlatformNodeDelegate
   const ui::AXNodeData& GetData() const override;

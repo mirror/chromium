@@ -51,6 +51,8 @@ class VIEWS_EXPORT ViewAccessibility {
 
   View* view() const { return view_; }
 
+  virtual int32_t GetId() const = 0;
+
  private:
   // Weak. Owns this.
   View* const view_;
