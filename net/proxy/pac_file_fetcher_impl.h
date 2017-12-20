@@ -17,7 +17,7 @@
 #include "base/strings/string16.h"
 #include "base/time/time.h"
 #include "net/base/net_export.h"
-#include "net/proxy/proxy_script_fetcher.h"
+#include "net/proxy/pac_file_fetcher.h"
 #include "net/url_request/url_request.h"
 
 class GURL;
