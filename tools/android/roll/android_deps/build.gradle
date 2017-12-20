@@ -14,8 +14,48 @@ repositories {
 dependencies {
     // Note about the configuration names: they are defined in buildSrc/ChromiumPlugin
 
-    // Insert here dependencies that will be added to the APKs.
-    // For example: `compile 'com.google.dagger:dagger:2.13'`
+    def supportLibVersion = '27.0.0'
+
+    // Linked in non android_tools code:
+    // android_arch_lifecycle_common_java
+    // android_arch_lifecycle_runtime_java
+    // android_support_annotations_java
+    // android_support_chromium_java // fully custom
+    // android_support_compat_java
+    // android_support_core_ui_java
+    // android_support_core_utils_java
+    // android_support_design_java
+    // android_support_multidex_java
+    // android_support_v13_java
+    // android_support_v4_java
+    // android_support_v7_appcompat_java
+    // android_support_v7_gridlayout_java
+    // android_support_v7_mediarouter_java
+    // android_support_v7_recyclerview_java
+
+    // Architecture components
+    compile "android.arch.lifecycle:runtime:1.0.0"
+    compile "android.arch.lifecycle:common:1.0.0"
+
+    // Support v4 libraries
+    compile "com.android.support:support-v4:${supportLibVersion}"
+    compile "com.android.support:support-compat:${supportLibVersion}"
+    compile "com.android.support:support-core-ui:${supportLibVersion}"
+    compile "com.android.support:support-core-utils:${supportLibVersion}"
+    // compile "com.android.support:support-fragment:${supportLibVersion}"     // should be unnecessary here
+    // compile "com.android.support:support-media-compat:${supportLibVersion}" // should be unnecessary here
+
+    // Support v7 libraries
+    compile "com.android.support:appcompat-v7:${supportLibVersion}"
+    compile "com.android.support:gridlayout-v7:${supportLibVersion}"
+    compile "com.android.support:mediarouter-v7:${supportLibVersion}"
+    compile "com.android.support:recyclerview-v7:${supportLibVersion}"
+
+    compile "com.android.support:support-v13:${supportLibVersion}"
+
+    compile "com.android.support:support-annotations:${supportLibVersion}"
+    compile "com.android.support:design:${supportLibVersion}"
+    compile "com.android.support:multidex:1.0.0"
 }
 
 task setUpRepository(type: BuildConfigGenerator) {
