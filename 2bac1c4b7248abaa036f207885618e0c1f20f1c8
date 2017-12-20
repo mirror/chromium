@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ece571fd_8ca7c5f2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-12-20T19:02:48Z",
+      "side": 1,
+      "message": "nit: truncate lines to 72 chars",
+      "revId": "2bac1c4b7248abaa036f207885618e0c1f20f1c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8af7de9a_1d7bc359",
+        "filename": "chrome/browser/notifications/stub_notification_display_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-12-20T19:02:48Z",
+      "side": 1,
+      "message": "nit: if (!delegate) return;",
+      "revId": "2bac1c4b7248abaa036f207885618e0c1f20f1c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de24592b_129b4966",
+        "filename": "chrome/browser/notifications/stub_notification_display_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-12-20T19:02:48Z",
+      "side": 1,
+      "message": "nit: return, no else",
+      "revId": "2bac1c4b7248abaa036f207885618e0c1f20f1c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
