@@ -157,7 +157,8 @@ class NavigationURLLoaderTest : public testing::Test {
             blink::WebMixedContentContextType::kBlockable,
             false /* is_form_submission */, GURL() /* searchable_form_url */,
             std::string() /* searchable_form_encoding */,
-            url::Origin::Create(url), GURL() /* client_side_redirect_url */);
+            url::Origin::Create(url), GURL() /* client_side_redirect_url */,
+            base::Optional<std::string>() /* suggested_filename */);
     CommonNavigationParams common_params;
     common_params.url = url;
     common_params.allow_download = allow_download;
