@@ -216,6 +216,35 @@ sk_sp<SkImage> TakeOwnershipOfSkImageBacking(GrContext* context,
                                   kPremul_SkAlphaType, std::move(color_space));
 }
 
+// Color converts an SkImage, preventing the backing texture from being cached
+// or re-used.
+sk_sp<SkImage> ConvertColorspaceAndPreventCaching(
+    viz::ContextProvider* context,
+    sk_sp<SkImage>&& image,
+    sk_sp<SkColorSpace> color_space) {
+  // If the image is not texture backed, use standard Skia functionality.
+  if (!image->isTextureBacked()) {
+    return image->makeColorSpace(color_space,
+                                 SkTransferFunctionBehavior::kIgnore);
+  }
+
+  sk_sp<SkImage> original_image_owned =
+      TakeOwnershipOfSkImageBacking(context->GrContext(), std::move(image));
+  // If context is lost, we may get a null image here.
+  if (!original_image_owned)
+    return nullptr;
+
+  sk_sp<SkImage> converted_image = original_image_owned->makeColorSpace(
+      color_space, SkTransferFunctionBehavior::kIgnore);
+
+  // Delete |original_image_owned| as Skia will not clean it up. We are
+  // holding the context lock here, so we can delete immediately.
+  uint32_t texture_id = GlIdFromSkImage(original_image_owned.get());
+  context->RasterContext()->DeleteTextures(1, &texture_id);
+
+  return converted_image;
+}
+
 }  // namespace
 
 // static
@@ -1306,9 +1335,9 @@ void GpuImageDecodeCache::UploadImageIfNecessary(const DrawImage& draw_image,
 
   if (uploaded_image && draw_image.target_color_space().IsValid()) {
     TRACE_EVENT0("cc", "GpuImageDecodeCache::UploadImage - color conversion");
-    uploaded_image = uploaded_image->makeColorSpace(
-        draw_image.target_color_space().ToSkColorSpace(),
-        SkTransferFunctionBehavior::kIgnore);
+    uploaded_image = ConvertColorspaceAndPreventCaching(
+        context_, std::move(uploaded_image),
+        draw_image.target_color_space().ToSkColorSpace());
   }
 
   // At-raster may have decoded this while we were unlocked. If so, ignore our
