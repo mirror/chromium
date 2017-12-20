@@ -486,6 +486,10 @@ class CONTENT_EXPORT WebContentsObserver : public IPC::Listener {
       const std::string& interface_name,
       mojo::ScopedMessagePipeHandle* interface_pipe) {}
 
+  // Notifies to print a remote frame.
+  virtual void PrintChildFrame(RenderFrameHost* dst_host,
+                               const gfx::Rect& rect,
+                               uint32_t content_id) {}
   // IPC::Listener implementation.
   // DEPRECATED: Use (i.e. override) the other overload instead:
   //     virtual bool OnMessageReceived(const IPC::Message& message,
