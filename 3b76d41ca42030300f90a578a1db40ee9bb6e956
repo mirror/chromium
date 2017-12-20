@@ -16,6 +16,24 @@
       "revId": "3b76d41ca42030300f90a578a1db40ee9bb6e956",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4bc938e_5e893c99",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1643,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-12-20T06:26:18Z",
+      "side": 1,
+      "message": "I moved the std::move within ShowUserWallpaper() to the very beginning, so that no copy is needed here. In addition, I think it can help avoid some bugs, since previously last_selected_user_ (renamed to current_user_ now) is not updated for the ephemeral users. So when calling UpdateWallpaper for ephemeral users, it may show the incorrect wallpaper.",
+      "parentUuid": "020a02bd_7fdea67a",
+      "revId": "3b76d41ca42030300f90a578a1db40ee9bb6e956",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
