@@ -15,7 +15,6 @@
 #include "chrome/common/features.h"
 #include "chromeos/system/version_loader.h"
 
-class AshInit;
 class NightLightClient;
 class NotificationPlatformBridge;
 class TabletModeClient;
@@ -57,6 +56,7 @@ class ExternalLoader;
 
 namespace internal {
 class AshClients;
+class AshShellInit;
 class ChromeLauncherControllerInitializer;
 class DBusServices;
 class MashServices;
@@ -127,7 +127,7 @@ class ChromeBrowserMainPartsChromeos : public ChromeBrowserMainPartsLinux {
   std::unique_ptr<LowDiskNotification> low_disk_notification_;
   std::unique_ptr<ArcKioskAppManager> arc_kiosk_app_manager_;
 
-  std::unique_ptr<AshInit> ash_init_;
+  std::unique_ptr<internal::AshShellInit> ash_shell_init_;
   std::unique_ptr<internal::MashServices> mash_services_;
   std::unique_ptr<internal::AshClients> ash_clients_;
 

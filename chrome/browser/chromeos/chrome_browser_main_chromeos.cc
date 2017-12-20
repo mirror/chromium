@@ -10,6 +10,8 @@
 #include <utility>
 #include <vector>
 
+#include "ash/high_contrast/high_contrast_controller.h"
+#include "ash/magnifier/magnification_controller.h"
 #include "ash/public/cpp/ash_switches.h"
 #include "ash/public/cpp/mus_property_mirror_ash.h"
 #include "ash/public/cpp/shelf_model.h"
@@ -23,7 +25,10 @@
 #include "ash/public/interfaces/window_state_type.mojom.h"
 #include "ash/root_window_controller.h"
 #include "ash/shell.h"
+#include "ash/shell_init_params.h"
+#include "ash/shell_port_classic.h"
 #include "ash/sticky_keys/sticky_keys_controller.h"
+#include "ash/window_manager.h"
 #include "base/bind.h"
 #include "base/callback.h"
 #include "base/command_line.h"
@@ -120,11 +125,11 @@
 #include "chrome/browser/profiles/profile_manager.h"
 #include "chrome/browser/task_manager/task_manager_interface.h"
 #include "chrome/browser/ui/ash/accessibility/accessibility_controller_client.h"
-#include "chrome/browser/ui/ash/ash_init.h"
 #include "chrome/browser/ui/ash/ash_util.h"
 #include "chrome/browser/ui/ash/cast_config_client_media_router.h"
 #include "chrome/browser/ui/ash/chrome_new_window_client.h"
 #include "chrome/browser/ui/ash/chrome_shell_content_state.h"
+#include "chrome/browser/ui/ash/chrome_shell_delegate.h"
 #include "chrome/browser/ui/ash/ime_controller_client.h"
 #include "chrome/browser/ui/ash/launcher/chrome_launcher_controller.h"
 #include "chrome/browser/ui/ash/login_screen_client.h"
@@ -143,6 +148,7 @@
 #include "chrome/common/logging_chrome.h"
 #include "chrome/common/pref_names.h"
 #include "chrome/grit/chromium_strings.h"
+#include "chromeos/accelerometer/accelerometer_reader.h"
 #include "chromeos/audio/audio_devices_pref_handler_impl.h"
 #include "chromeos/audio/cras_audio_handler.h"
 #include "chromeos/cert_loader.h"
@@ -185,6 +191,7 @@
 #include "components/user_manager/user_manager.h"
 #include "components/user_manager/user_names.h"
 #include "content/public/browser/browser_thread.h"
+#include "content/public/browser/context_factory.h"
 #include "content/public/browser/media_capture_devices.h"
 #include "content/public/browser/notification_service.h"
 #include "content/public/common/content_switches.h"
@@ -209,6 +216,7 @@
 #include "third_party/cros_system_api/dbus/service_constants.h"
 #include "ui/aura/mus/property_converter.h"
 #include "ui/aura/mus/user_activity_forwarder.h"
+#include "ui/aura/mus/window_tree_client.h"
 #include "ui/aura/mus/window_tree_client_delegate.h"
 #include "ui/base/ime/chromeos/ime_keyboard.h"
 #include "ui/base/ime/chromeos/input_method_manager.h"
@@ -686,6 +694,82 @@ class SystemTokenCertDBInitializer {
   base::WeakPtrFactory<SystemTokenCertDBInitializer> weak_ptr_factory_;
 };
 
+class AshShellInit {
+ public:
+  // Constructed in PreProfileInit.
+  AshShellInit() {
+    // Hide the mouse cursor completely at boot.
+    if (!chromeos::LoginState::Get()->IsUserLoggedIn())
+      ash::Shell::set_initially_hide_cursor(true);
+
+    // Balanced by a call to DestroyInstance() in the destructor.
+    ash::ShellContentState::SetInstance(new ChromeShellContentState);
+
+    if (chromeos::GetAshConfig() == ash::Config::MUS)
+      CreateMusShell();
+    else
+      CreateClassicShell();
+  }
+
+  void Show() { ash::Shell::GetPrimaryRootWindow()->GetHost()->Show(); }
+
+  // Destroyed in PostMainMessageLoopRun.
+  ~AshShellInit() {
+    if (window_manager_) {
+      window_manager_.reset();  // |window_manager_| deletes the Shell.
+    } else if (ash::Shell::HasInstance()) {
+      ash::Shell::DeleteInstance();
+      ash::ShellContentState::DestroyInstance();
+    }
+  }
+
+ private:
+  void CreateClassicShell() {
+    ash::ShellInitParams shell_init_params;
+    shell_init_params.shell_port = std::make_unique<ash::ShellPortClassic>();
+    shell_init_params.delegate = std::make_unique<ChromeShellDelegate>();
+    shell_init_params.context_factory = content::GetContextFactory();
+    shell_init_params.context_factory_private =
+        content::GetContextFactoryPrivate();
+    ash::Shell::CreateInstance(std::move(shell_init_params));
+  }
+
+  void CreateMusShell() {
+    service_manager::Connector* connector =
+        content::ServiceManagerConnection::GetForProcess()->GetConnector();
+    const bool show_primary_host_on_connect = true;
+    window_manager_ = base::MakeUnique<ash::WindowManager>(
+        connector, ash::Config::MUS, show_primary_host_on_connect);
+    // The WindowManager normally deletes the Shell when it loses its connection
+    // to mus. Disable that by installing an empty callback. Chrome installs
+    // its own callback to detect when the connection to mus is lost and that is
+    // what shuts everything down.
+    window_manager_->SetLostConnectionCallback(
+        base::BindOnce(&base::DoNothing));
+    // When Ash runs in the same services as chrome content creates the
+    // DiscardableSharedMemoryManager.
+    const bool create_discardable_memory = false;
+    std::unique_ptr<aura::WindowTreeClient> window_tree_client =
+        base::MakeUnique<aura::WindowTreeClient>(
+            connector, window_manager_.get(), window_manager_.get(), nullptr,
+            nullptr, create_discardable_memory);
+    const bool automatically_create_display_roots = false;
+    window_tree_client->ConnectAsWindowManager(
+        automatically_create_display_roots);
+    aura::Env::GetInstance()->SetWindowTreeClient(window_tree_client.get());
+    window_manager_->Init(std::move(window_tree_client),
+                          base::MakeUnique<ChromeShellDelegate>());
+    // TODO(sky): Potentially blocking here is not ideal.
+    // http://crbug.com/594852.
+    CHECK(window_manager_->WaitForInitialDisplays());
+  }
+
+  // Only created when running in ash::Config::MUS.
+  std::unique_ptr<ash::WindowManager> window_manager_;
+
+  DISALLOW_COPY_AND_ASSIGN(AshShellInit);
+};
+
 class MashServices {
  public:
   // Constructed in PreProfileInit.
@@ -1022,9 +1106,29 @@ void ChromeBrowserMainPartsChromeos::PreProfileInit() {
   ChromeBrowserMainPartsLinux::PreProfileInit();
 
   if (ash_util::ShouldOpenAshOnStartup()) {
-    // Constructs the Ash shell. TODO(stevenjb): Integrate AshInit with
-    // ChromeBrowserMainPartsChromeos.
-    ash_init_ = std::make_unique<AshInit>();
+    ash_shell_init_ = std::make_unique<internal::AshShellInit>();
+
+    // TODO(mash): Move to src/ash?
+    chromeos::AccelerometerReader::GetInstance()->Initialize(
+        base::CreateSequencedTaskRunnerWithTraits(
+            {base::MayBlock(), base::TaskPriority::BACKGROUND,
+             base::TaskShutdownBehavior::SKIP_ON_SHUTDOWN}));
+
+    ash::Shell* shell = ash::Shell::Get();
+    DCHECK(shell);
+    shell->high_contrast_controller()->SetEnabled(
+        chromeos::AccessibilityManager::Get()->IsHighContrastEnabled());
+    DCHECK(chromeos::MagnificationManager::Get());
+    shell->magnification_controller()->SetEnabled(
+        chromeos::MagnificationManager::Get()->IsMagnifierEnabled());
+
+    // TODO(stevenjb): Is this the correct place for this?
+    if (!base::CommandLine::ForCurrentProcess()->HasSwitch(
+            ::switches::kDisableZeroBrowsersOpenForTests)) {
+      g_browser_process->platform_part()->RegisterKeepAlive();
+    }
+
+    ash_shell_init_->Show();
   }
 
   if (ash_util::IsRunningInMash())
@@ -1432,8 +1536,7 @@ void ChromeBrowserMainPartsChromeos::PostMainMessageLoopRun() {
 
   ash_clients_.reset();
   mash_services_.reset();
-
-  ash_init_.reset(); // Destructs the Ash shell.
+  ash_shell_init_.reset();
 
   // This will destroy Profiles in browser_process_->StartTearDown().
   ChromeBrowserMainPartsLinux::PostMainMessageLoopRun();
