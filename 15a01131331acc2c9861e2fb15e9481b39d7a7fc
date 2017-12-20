@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a287ab14_dad3ae13",
+        "filename": "chrome/browser/data_saver/data_saver_util.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-12-20T19:53:36Z",
+      "side": 1,
+      "message": "I do not feel strongly either way. Would it better if I put this in \"chrome_browser_data_saver\" namespace similar to \"chrome_browser_net\" namespace?",
+      "parentUuid": "c30bbcac_bcd7890b",
+      "range": {
+        "startLine": 11,
+        "startChar": 10,
+        "endLine": 11,
+        "endChar": 16
+      },
+      "revId": "15a01131331acc2c9861e2fb15e9481b39d7a7fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a6cb1262_62736d97",
         "filename": "chrome/browser/net/predictor.cc",
         "patchSetId": 5
@@ -39,6 +63,24 @@
       "revId": "15a01131331acc2c9861e2fb15e9481b39d7a7fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6269dab5_574e2270",
+        "filename": "chrome/browser/net/predictor.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 982,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-12-20T19:53:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a6cb1262_62736d97",
+      "revId": "15a01131331acc2c9861e2fb15e9481b39d7a7fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "d5b3ce14_4721e9d6",
+        "filename": "chrome/browser/net/predictor.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 992,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-12-20T19:53:36Z",
+      "side": 1,
+      "message": "I do not understand. If |p_s_| is not null, we would still fallback to the DRP check (as long as there is no proxy configured).",
+      "parentUuid": "252fa1ca_0a4a6451",
+      "revId": "15a01131331acc2c9861e2fb15e9481b39d7a7fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b9cfafd9_6644bdab",
         "filename": "chrome/browser/predictors/preconnect_manager.cc",
         "patchSetId": 5
@@ -70,6 +130,24 @@
       "writtenOn": "2017-12-20T11:03:16Z",
       "side": 1,
       "message": "All methods of Profile class must only be called on the UI thread. This class lives in IO thread. I\u0027d like to avoid having a Profile* in this class.\nWe could pass content::ResourceContext object in ctor of the PreconnectManager and then store a ProfileIOData* as a member.\nIf we do that, we can remove context_getter_ from this class and use profile_io_data-\u003eGetMainRequestContext() instead (should give the same context?).",
+      "revId": "15a01131331acc2c9861e2fb15e9481b39d7a7fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c8021b8_550c93bf",
+        "filename": "chrome/browser/predictors/preconnect_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-12-20T19:53:36Z",
+      "side": 1,
+      "message": "\u003e All methods of Profile class must only be called on the UI thread. This class lives in IO thread. I\u0027d like to avoid having a Profile* in this class.\n\u003e We could pass content::ResourceContext object in ctor of the PreconnectManager and then store a ProfileIOData* as a member.\n\nDone.\n\n\u003e If we do that, we can remove context_getter_ from this class and use profile_io_data-\u003eGetMainRequestContext() instead (should give the same context?).\npreconnet_manager.cc also refers to the URLRequestContextGetter which I believe can\u0027t be accessed from ProfileIOData.",
+      "parentUuid": "b9cfafd9_6644bdab",
       "revId": "15a01131331acc2c9861e2fb15e9481b39d7a7fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -99,6 +177,30 @@
     },
     {
       "key": {
+        "uuid": "874b4227_daaabb58",
+        "filename": "chrome/browser/predictors/preconnect_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-12-20T19:53:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7266dd86_7e140798",
+      "range": {
+        "startLine": 183,
+        "startChar": 42,
+        "endLine": 183,
+        "endChar": 46
+      },
+      "revId": "15a01131331acc2c9861e2fb15e9481b39d7a7fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d6d99e3a_d0c264dc",
         "filename": "chrome/browser/predictors/preconnect_manager_unittest.cc",
         "patchSetId": 5
@@ -119,6 +221,53 @@
       "revId": "15a01131331acc2c9861e2fb15e9481b39d7a7fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3469a4a0_f23588ba",
+        "filename": "chrome/browser/predictors/preconnect_manager_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-12-20T19:53:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d6d99e3a_d0c264dc",
+      "range": {
+        "startLine": 103,
+        "startChar": 27,
+        "endLine": 103,
+        "endChar": 28
+      },
+      "revId": "15a01131331acc2c9861e2fb15e9481b39d7a7fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8561cc8c_4fe8e747",
+        "filename": "components/data_reduction_proxy/core/common/data_reduction_proxy_features.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-12-20T19:53:36Z",
+      "side": 1,
+      "message": "I do not feel strongly about disabling it by default.  I do not perceive any significant risks involved with this experiment, but I would still prefer to keep it disabled by default (to be safe).",
+      "range": {
+        "startLine": 55,
+        "startChar": 10,
+        "endLine": 55,
+        "endChar": 37
+      },
+      "revId": "15a01131331acc2c9861e2fb15e9481b39d7a7fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
