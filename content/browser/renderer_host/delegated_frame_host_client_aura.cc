@@ -93,7 +93,7 @@ std::unique_ptr<ui::CompositorLock>
 DelegatedFrameHostClientAura::GetCompositorLock(
     ui::CompositorLockClient* client) {
   auto* window_host = render_widget_host_view_->window_->GetHost();
-  return window_host->compositor()->GetCompositorLock(client);
+  return window_host->compositor()->lock_manager()->GetCompositorLock(client);
 }
 
 void DelegatedFrameHostClientAura::CompositorResizeLockEnded() {

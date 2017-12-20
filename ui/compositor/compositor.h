@@ -79,8 +79,6 @@ class Layer;
 class Reflector;
 class ScopedAnimationDurationScaleMode;
 
-constexpr int kCompositorLockTimeoutMs = 67;
-
 class COMPOSITOR_EXPORT ContextFactoryObserver {
  public:
   virtual ~ContextFactoryObserver() {}
@@ -193,7 +191,7 @@ class COMPOSITOR_EXPORT ContextFactory {
 // view hierarchy.
 class COMPOSITOR_EXPORT Compositor : public cc::LayerTreeHostClient,
                                      public cc::LayerTreeHostSingleThreadClient,
-                                     public CompositorLockDelegate,
+                                     public CompositorLockManagerClient,
                                      public viz::HostFrameSinkClient {
  public:
   Compositor(const viz::FrameSinkId& frame_sink_id,
@@ -361,14 +359,6 @@ class COMPOSITOR_EXPORT Compositor : public cc::LayerTreeHostClient,
   void RemoveAnimationObserver(CompositorAnimationObserver* observer);
   bool HasAnimationObserver(const CompositorAnimationObserver* observer) const;
 
-  // Creates a compositor lock. Returns NULL if it is not possible to lock at
-  // this time (i.e. we're waiting to complete a previous unlock). If the
-  // timeout is null, then no timeout is used.
-  std::unique_ptr<CompositorLock> GetCompositorLock(
-      CompositorLockClient* client,
-      base::TimeDelta timeout =
-          base::TimeDelta::FromMilliseconds(kCompositorLockTimeoutMs));
-
   // Registers a callback that is run when the next frame successfully makes it
   // to the screen (it's entirely possible some frames may be dropped between
   // the time this is called and the callback is run).
@@ -411,7 +401,10 @@ class COMPOSITOR_EXPORT Compositor : public cc::LayerTreeHostClient,
   void OnFirstSurfaceActivation(const viz::SurfaceInfo& surface_info) override;
   void OnFrameTokenChanged(uint32_t frame_token) override;
 
-  bool IsLocked() { return !active_locks_.empty(); }
+  // CompositorLockManagerClient implementation.
+  void OnCompositorLockStateChanged(bool locked) override;
+
+  CompositorLockManager* lock_manager() { return &lock_manager_; }
 
   void SetOutputIsSecure(bool output_is_secure);
 
@@ -426,21 +419,11 @@ class COMPOSITOR_EXPORT Compositor : public cc::LayerTreeHostClient,
   int activated_frame_count() const { return activated_frame_count_; }
   float refresh_rate() const { return refresh_rate_; }
 
-  void set_allow_locks_to_extend_timeout(bool allowed) {
-    allow_locks_to_extend_timeout_ = allowed;
-  }
-
   // If true, all paint commands are recorded at pixel size instead of DIP.
   bool is_pixel_canvas() const { return is_pixel_canvas_; }
 
  private:
   friend class base::RefCounted<Compositor>;
-
-  // CompositorLockDelegate implementation.
-  void RemoveCompositorLock(CompositorLock* lock) override;
-
-  // Causes all active CompositorLocks to be timed out.
-  void TimeoutLocks();
 
   gfx::Size size_;
 
@@ -486,8 +469,6 @@ class COMPOSITOR_EXPORT Compositor : public cc::LayerTreeHostClient,
   // layers on.
   float device_scale_factor_ = 0.f;
 
-  std::vector<CompositorLock*> active_locks_;
-
   LayerAnimatorCollection layer_animator_collection_;
   scoped_refptr<cc::AnimationTimeline> animation_timeline_;
   std::unique_ptr<ScopedAnimationDurationScaleMode> slow_animations_;
@@ -497,15 +478,11 @@ class COMPOSITOR_EXPORT Compositor : public cc::LayerTreeHostClient,
   gfx::ColorSpace output_color_space_;
   gfx::ColorSpace blending_color_space_;
 
-  // The estimated time that the locks will timeout.
-  base::TimeTicks scheduled_timeout_;
-  // If true, the |scheduled_timeout_| might be recalculated and extended.
-  bool allow_locks_to_extend_timeout_;
   // If true, all paint commands are recorded at pixel size instead of DIP.
   const bool is_pixel_canvas_;
 
-  base::WeakPtrFactory<Compositor> weak_ptr_factory_;
-  base::WeakPtrFactory<Compositor> lock_timeout_weak_ptr_factory_;
+  CompositorLockManager lock_manager_;
+
   base::WeakPtrFactory<Compositor> context_creation_weak_ptr_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(Compositor);
