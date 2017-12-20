@@ -386,13 +386,13 @@ std::unique_ptr<base::DictionaryValue> LayerImpl::LayerAsJson() {
   result->SetString("LayerType", LayerTypeAsString());
 
   auto list = std::make_unique<base::ListValue>();
-  list->AppendInteger(bounds().width());
-  list->AppendInteger(bounds().height());
+  list->GetList().emplace_back(bounds().width());
+  list->GetList().emplace_back(bounds().height());
   result->Set("Bounds", std::move(list));
 
   list = std::make_unique<base::ListValue>();
-  list->AppendDouble(position_.x());
-  list->AppendDouble(position_.y());
+  list->GetList().emplace_back(position_.x());
+  list->GetList().emplace_back(position_.y());
   result->Set("Position", std::move(list));
 
   const gfx::Transform& gfx_transform = test_properties()->transform;
@@ -400,7 +400,7 @@ std::unique_ptr<base::DictionaryValue> LayerImpl::LayerAsJson() {
   gfx_transform.matrix().asColMajord(transform);
   list = std::make_unique<base::ListValue>();
   for (int i = 0; i < 16; ++i)
-    list->AppendDouble(transform[i]);
+    list->GetList().emplace_back(transform[i]);
   result->Set("Transform", std::move(list));
 
   result->SetBoolean("DrawsContent", draws_content_);

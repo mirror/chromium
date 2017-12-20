@@ -113,7 +113,7 @@ TEST_F(JsSyncEncryptionHandlerObserverTest, OnEncryptedTypesChanged) {
   for (int i = FIRST_REAL_MODEL_TYPE; i < MODEL_TYPE_COUNT; ++i) {
     ModelType type = ModelTypeFromInt(i);
     encrypted_types.Put(type);
-    encrypted_type_values->AppendString(ModelTypeToString(type));
+    encrypted_type_values->GetList().emplace_back(ModelTypeToString(type));
   }
 
   base::DictionaryValue expected_details;

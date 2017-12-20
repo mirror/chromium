@@ -261,7 +261,7 @@ bool CookiesTreeModelUtil::GetCookieTreeNodeDictionary(
                service_worker_info.scopes.begin();
            it != service_worker_info.scopes.end();
            ++it) {
-        scopes->AppendString(it->spec());
+        scopes->GetList().emplace_back(it->spec());
       }
       dict->Set(kKeyScopes, std::move(scopes));
       break;

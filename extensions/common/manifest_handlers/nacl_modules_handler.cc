@@ -52,7 +52,7 @@ bool NaClModulesHandler::Parse(Extension* extension, base::string16* error) {
 
   std::unique_ptr<NaClModuleData> nacl_module_data(new NaClModuleData);
 
-  for (size_t i = 0; i < list_value->GetSize(); ++i) {
+  for (size_t i = 0; i < list_value->GetList().size(); ++i) {
     const base::DictionaryValue* module_value = NULL;
     if (!list_value->GetDictionary(i, &module_value)) {
       *error = base::ASCIIToUTF16(errors::kInvalidNaClModules);

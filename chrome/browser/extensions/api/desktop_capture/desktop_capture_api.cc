@@ -36,7 +36,7 @@ DesktopCaptureChooseDesktopMediaFunction::
 }
 
 bool DesktopCaptureChooseDesktopMediaFunction::RunAsync() {
-  EXTENSION_FUNCTION_VALIDATE(args_->GetSize() > 0);
+  EXTENSION_FUNCTION_VALIDATE(args_->GetList().size() > 0);
 
   EXTENSION_FUNCTION_VALIDATE(args_->GetInteger(0, &request_id_));
   DesktopCaptureRequestsRegistry::GetInstance()->AddRequest(

@@ -109,7 +109,7 @@ void WebDialogUI::OnDialogClosed(const base::ListValue* args) {
   WebDialogDelegate* delegate = GetDelegate(web_ui()->GetWebContents());
   if (delegate) {
     std::string json_retval;
-    if (args && !args->empty() && !args->GetString(0, &json_retval))
+    if (args && !args->GetList().empty() && !args->GetString(0, &json_retval))
       NOTREACHED() << "Could not read JSON argument";
 
     delegate->OnDialogCloseFromWebUI(json_retval);

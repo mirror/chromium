@@ -452,10 +452,10 @@ TEST_F(PrefServiceFactoryTest, MultipleClients_SubPrefUpdates_Basic) {
       },
       [](ScopedDictionaryPrefUpdate* update) {
         base::ListValue list;
-        list.AppendInteger(1);
-        list.AppendDouble(2);
-        list.AppendBoolean(true);
-        list.AppendString("four");
+        list.GetList().emplace_back(1);
+        list.GetList().emplace_back(2);
+        list.GetList().emplace_back(true);
+        list.GetList().emplace_back("four");
         (*update)->Set("path.to.list", list.CreateDeepCopy());
         const base::ListValue* out = nullptr;
         ASSERT_TRUE((*update)->GetList("path.to.list", &out));
@@ -463,10 +463,10 @@ TEST_F(PrefServiceFactoryTest, MultipleClients_SubPrefUpdates_Basic) {
       },
       [](ScopedDictionaryPrefUpdate* update) {
         base::ListValue list;
-        list.AppendInteger(1);
-        list.AppendDouble(2);
-        list.AppendBoolean(true);
-        list.AppendString("four");
+        list.GetList().emplace_back(1);
+        list.GetList().emplace_back(2);
+        list.GetList().emplace_back(true);
+        list.GetList().emplace_back("four");
         (*update)->SetWithoutPathExpansion("key.for.list",
                                            list.CreateDeepCopy());
         const base::ListValue* out = nullptr;

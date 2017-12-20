@@ -306,7 +306,7 @@ class PolicyTestCases {
                                                           indicator_selector);
     const base::ListValue* os_list = NULL;
     if (policy_test_dict->GetList("os", &os_list)) {
-      for (size_t i = 0; i < os_list->GetSize(); ++i) {
+      for (size_t i = 0; i < os_list->GetList().size(); ++i) {
         std::string os;
         if (os_list->GetString(i, &os))
           policy_test_case->AddSupportedOs(os);
@@ -318,7 +318,7 @@ class PolicyTestCases {
       policy_test_case->SetTestPolicy(*policy);
     const base::ListValue* pref_mappings = NULL;
     if (policy_test_dict->GetList("pref_mappings", &pref_mappings)) {
-      for (size_t i = 0; i < pref_mappings->GetSize(); ++i) {
+      for (size_t i = 0; i < pref_mappings->GetList().size(); ++i) {
         const base::DictionaryValue* pref_mapping_dict = NULL;
         std::string pref;
         if (!pref_mappings->GetDictionary(i, &pref_mapping_dict) ||
@@ -347,7 +347,7 @@ class PolicyTestCases {
             indicator_test_url, indicator_test_setup_js, indicator_selector);
         const base::ListValue* indicator_tests = NULL;
         if (pref_mapping_dict->GetList("indicator_tests", &indicator_tests)) {
-          for (size_t i = 0; i < indicator_tests->GetSize(); ++i) {
+          for (size_t i = 0; i < indicator_tests->GetList().size(); ++i) {
             const base::DictionaryValue* indicator_test_dict = NULL;
             const base::DictionaryValue* policy = NULL;
             if (!indicator_tests->GetDictionary(i, &indicator_test_dict) ||

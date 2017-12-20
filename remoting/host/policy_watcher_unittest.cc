@@ -76,17 +76,17 @@ class PolicyWatcherTest : public testing::Test {
         base::WrapUnique(policy_loader_));
 
     base::ListValue host_domain;
-    host_domain.AppendString(kHostDomain);
+    host_domain.GetList().emplace_back(kHostDomain);
     base::ListValue client_domain;
-    client_domain.AppendString(kClientDomain);
+    client_domain.GetList().emplace_back(kClientDomain);
     base::ListValue multiple_host_domains;
-    multiple_host_domains.AppendString("a.com");
-    multiple_host_domains.AppendString("b.com");
-    multiple_host_domains.AppendString("c.com");
+    multiple_host_domains.GetList().emplace_back("a.com");
+    multiple_host_domains.GetList().emplace_back("b.com");
+    multiple_host_domains.GetList().emplace_back("c.com");
     base::ListValue multiple_client_domains;
-    multiple_client_domains.AppendString("d.com");
-    multiple_client_domains.AppendString("e.com");
-    multiple_client_domains.AppendString("f.com");
+    multiple_client_domains.GetList().emplace_back("d.com");
+    multiple_client_domains.GetList().emplace_back("e.com");
+    multiple_client_domains.GetList().emplace_back("f.com");
 
     nat_true_.SetBoolean(key::kRemoteAccessHostFirewallTraversal, true);
     nat_false_.SetBoolean(key::kRemoteAccessHostFirewallTraversal, false);

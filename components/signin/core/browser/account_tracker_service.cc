@@ -37,7 +37,7 @@ const char kAccountServiceFlagsPath[] = "service_flags";
 
 void RemoveDeprecatedServiceFlags(PrefService* pref_service) {
   ListPrefUpdate update(pref_service, AccountTrackerService::kAccountInfoPref);
-  for (size_t i = 0; i < update->GetSize(); ++i) {
+  for (size_t i = 0; i < update->GetList().size(); ++i) {
     base::DictionaryValue* dict = nullptr;
     if (update->GetDictionary(i, &dict))
       dict->RemoveWithoutPathExpansion(kAccountServiceFlagsPath, nullptr);
@@ -311,7 +311,7 @@ void AccountTrackerService::LoadFromPrefs() {
       signin_client_->GetPrefs()->GetList(kAccountInfoPref);
   std::set<std::string> to_remove;
   bool contains_deprecated_service_flags = false;
-  for (size_t i = 0; i < list->GetSize(); ++i) {
+  for (size_t i = 0; i < list->GetList().size(); ++i) {
     const base::DictionaryValue* dict;
     if (list->GetDictionary(i, &dict)) {
       base::string16 value;
@@ -396,7 +396,7 @@ void AccountTrackerService::SaveToPrefs(const AccountState& state) {
   base::DictionaryValue* dict = nullptr;
   base::string16 account_id_16 = base::UTF8ToUTF16(state.info.account_id);
   ListPrefUpdate update(signin_client_->GetPrefs(), kAccountInfoPref);
-  for (size_t i = 0; i < update->GetSize(); ++i, dict = nullptr) {
+  for (size_t i = 0; i < update->GetList().size(); ++i, dict = nullptr) {
     if (update->GetDictionary(i, &dict)) {
       base::string16 value;
       if (dict->GetString(kAccountKeyPath, &value) && value == account_id_16)
@@ -408,7 +408,7 @@ void AccountTrackerService::SaveToPrefs(const AccountState& state) {
     dict = new base::DictionaryValue();
     update->Append(base::WrapUnique(dict));
     // |dict| is invalidated at this point, so it needs to be reset.
-    update->GetDictionary(update->GetSize() - 1, &dict);
+    update->GetDictionary(update->GetList().size() - 1, &dict);
     dict->SetString(kAccountKeyPath, account_id_16);
   }
 
@@ -428,7 +428,7 @@ void AccountTrackerService::RemoveFromPrefs(const AccountState& state) {
 
   base::string16 account_id_16 = base::UTF8ToUTF16(state.info.account_id);
   ListPrefUpdate update(signin_client_->GetPrefs(), kAccountInfoPref);
-  for(size_t i = 0; i < update->GetSize(); ++i) {
+  for (size_t i = 0; i < update->GetList().size(); ++i) {
     base::DictionaryValue* dict = nullptr;
     if (update->GetDictionary(i, &dict)) {
       base::string16 value;

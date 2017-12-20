@@ -252,7 +252,7 @@ TEST_F(RulesRegistryWithCacheTest, DeclarativeRulesStored) {
 
   // 2. Test writing behavior.
   std::unique_ptr<base::ListValue> value(new base::ListValue);
-  value->AppendBoolean(true);
+  value->GetList().emplace_back(true);
   cache_delegate->WriteToStorage(extension1_->id(), std::move(value));
   EXPECT_TRUE(cache_delegate->GetDeclarativeRulesStored(extension1_->id()));
   content::RunAllTasksUntilIdle();

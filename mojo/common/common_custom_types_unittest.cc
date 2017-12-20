@@ -319,8 +319,8 @@ TEST_F(CommonCustomTypesTest, Value) {
   dict->SetKey("non_nested.int", base::Value(10));
   {
     std::unique_ptr<base::ListValue> dict_list(new base::ListValue());
-    dict_list->AppendString("string");
-    dict_list->AppendBoolean(true);
+    dict_list->GetList().emplace_back("string");
+    dict_list->GetList().emplace_back(true);
     dict->Set("list", std::move(dict_list));
   }
 
@@ -333,9 +333,9 @@ TEST_F(CommonCustomTypesTest, Value) {
   EXPECT_EQ(*input, *output);
 
   auto list = std::make_unique<base::ListValue>();
-  list->AppendString("string");
-  list->AppendDouble(42.1);
-  list->AppendBoolean(true);
+  list->GetList().emplace_back("string");
+  list->GetList().emplace_back(42.1);
+  list->GetList().emplace_back(true);
   list->Append(base::Value::CreateWithCopiedBuffer("mojo", 4));
   list->Append(std::make_unique<base::Value>());
   {

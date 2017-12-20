@@ -102,7 +102,7 @@ bool NullableEquals(const std::string* a, const std::string* b) {
 bool ExtraInfoSpec::InitFromValue(const base::ListValue& value,
                                   int* extra_info_spec) {
   *extra_info_spec = 0;
-  for (size_t i = 0; i < value.GetSize(); ++i) {
+  for (size_t i = 0; i < value.GetList().size(); ++i) {
     std::string str;
     if (!value.GetString(i, &str))
       return false;
@@ -218,7 +218,7 @@ std::unique_ptr<base::Value> MakeHeaderModificationLogValue(
       delta->modified_request_headers);
   while (modification.GetNext()) {
     std::string line = modification.name() + ": " + modification.value();
-    modified_headers->AppendString(line);
+    modified_headers->GetList().emplace_back(line);
   }
   dict->Set("modified_headers", std::move(modified_headers));
 
@@ -227,7 +227,7 @@ std::unique_ptr<base::Value> MakeHeaderModificationLogValue(
            delta->deleted_request_headers.begin();
        key != delta->deleted_request_headers.end();
        ++key) {
-    deleted_headers->AppendString(*key);
+    deleted_headers->GetList().emplace_back(*key);
   }
   dict->Set("deleted_headers", std::move(deleted_headers));
   return dict;
@@ -242,7 +242,8 @@ bool InDecreasingExtensionInstallationTimeOrder(
 std::unique_ptr<base::ListValue> StringToCharList(const std::string& s) {
   auto result = std::make_unique<base::ListValue>();
   for (size_t i = 0, n = s.size(); i < n; ++i) {
-    result->AppendInteger(*reinterpret_cast<const unsigned char*>(&s[i]));
+    result->GetList().emplace_back(
+        *reinterpret_cast<const unsigned char*>(&s[i]));
   }
   return result;
 }
@@ -250,7 +251,7 @@ std::unique_ptr<base::ListValue> StringToCharList(const std::string& s) {
 bool CharListToString(const base::ListValue* list, std::string* out) {
   if (!list)
     return false;
-  const size_t list_length = list->GetSize();
+  const size_t list_length = list->GetList().size();
   out->resize(list_length);
   int value = 0;
   for (size_t i = 0; i < list_length; ++i) {

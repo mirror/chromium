@@ -31,13 +31,13 @@ std::unique_ptr<base::ListValue> SPKIHashesToListValue(
     const HashValueVector& hashes) {
   auto pins = std::make_unique<base::ListValue>();
   for (size_t i = 0; i != hashes.size(); i++)
-    pins->AppendString(hashes[i].ToString());
+    pins->GetList().emplace_back(hashes[i].ToString());
   return pins;
 }
 
 void SPKIHashesFromListValue(const base::ListValue& pins,
                              HashValueVector* hashes) {
-  size_t num_pins = pins.GetSize();
+  size_t num_pins = pins.GetList().size();
   for (size_t i = 0; i < num_pins; ++i) {
     std::string type_and_base64;
     HashValue fingerprint;

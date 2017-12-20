@@ -586,13 +586,13 @@ void Predictor::GetHtmlInfo(std::string* output) {
 // backwards here so that adding items in order "Just Works" when deserializing.
 void Predictor::SerializeReferrers(base::ListValue* referral_list) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
-  DCHECK(referral_list->empty());
-  referral_list->AppendInteger(kPredictorReferrerVersion);
+  DCHECK(referral_list->GetList().empty());
+  referral_list->GetList().emplace_back(kPredictorReferrerVersion);
   for (Referrers::const_reverse_iterator it = referrers_.rbegin();
        it != referrers_.rend(); ++it) {
     // Create a list for each referer.
     std::unique_ptr<base::ListValue> motivator(new base::ListValue);
-    motivator->AppendString(it->first.spec());
+    motivator->GetList().emplace_back(it->first.spec());
     motivator->Append(it->second.Serialize());
 
     referral_list->Append(std::move(motivator));
@@ -602,10 +602,10 @@ void Predictor::SerializeReferrers(base::ListValue* referral_list) {
 void Predictor::DeserializeReferrers(const base::ListValue& referral_list) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   int format_version = -1;
-  if (referral_list.GetSize() > 0 &&
+  if (referral_list.GetList().size() > 0 &&
       referral_list.GetInteger(0, &format_version) &&
       format_version == kPredictorReferrerVersion) {
-    for (size_t i = 1; i < referral_list.GetSize(); ++i) {
+    for (size_t i = 1; i < referral_list.GetList().size(); ++i) {
       const base::ListValue* motivator;
       if (!referral_list.GetList(i, &motivator)) {
         NOTREACHED();
@@ -1175,12 +1175,12 @@ void InitialObserver::GetInitialDnsResolutionList(
     base::ListValue* startup_list) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   DCHECK(startup_list);
-  DCHECK(startup_list->empty());
-  DCHECK_EQ(0u, startup_list->GetSize());
-  startup_list->AppendInteger(kPredictorStartupFormatVersion);
+  DCHECK(startup_list->GetList().empty());
+  DCHECK_EQ(0u, startup_list->GetList().size());
+  startup_list->GetList().emplace_back(kPredictorStartupFormatVersion);
   for (const auto& url_time : first_navigations_) {
     DCHECK(url_time.first == Predictor::CanonicalizeUrl(url_time.first));
-    startup_list->AppendString(url_time.first.spec());
+    startup_list->GetList().emplace_back(url_time.first.spec());
   }
 }
 

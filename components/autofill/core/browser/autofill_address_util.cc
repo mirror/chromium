@@ -100,7 +100,8 @@ void GetAddressComponents(const std::string& country_code,
       line = new base::ListValue;
       address_components->Append(base::WrapUnique(line));
       // |line| is invalidated at this point, so it needs to be reset.
-      address_components->GetList(address_components->GetSize() - 1, &line);
+      address_components->GetList(address_components->GetList().size() - 1,
+                                  &line);
     }
 
     std::unique_ptr<base::DictionaryValue> component(new base::DictionaryValue);

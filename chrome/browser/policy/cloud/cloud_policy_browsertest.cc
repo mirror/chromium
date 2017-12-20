@@ -161,8 +161,8 @@ void GetExpectedTestPolicy(PolicyMap* expected, const char* homepage) {
                 POLICY_SCOPE_USER, POLICY_SOURCE_CLOUD,
                 base::MakeUnique<base::Value>(4), nullptr);
   base::ListValue list;
-  list.AppendString("dev.chromium.org");
-  list.AppendString("youtube.com");
+  list.GetList().emplace_back("dev.chromium.org");
+  list.GetList().emplace_back("youtube.com");
   expected->Set(key::kURLBlacklist, POLICY_LEVEL_MANDATORY, POLICY_SCOPE_USER,
                 POLICY_SOURCE_CLOUD, list.CreateDeepCopy(), nullptr);
   expected->Set(key::kMaxInvalidationFetchDelay, POLICY_LEVEL_MANDATORY,

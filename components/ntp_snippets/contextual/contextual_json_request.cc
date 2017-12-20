@@ -188,8 +188,8 @@ std::string ContextualJsonRequest::Builder::BuildBody() const {
 
   request->SetString("url", content_url_.spec());
   auto categories = base::MakeUnique<base::ListValue>();
-  categories->AppendString("RELATED_ARTICLES");
-  categories->AppendString("PUBLIC_DEBATE");
+  categories->GetList().emplace_back("RELATED_ARTICLES");
+  categories->GetList().emplace_back("PUBLIC_DEBATE");
   request->Set("categories", std::move(categories));
 
   std::string request_json;

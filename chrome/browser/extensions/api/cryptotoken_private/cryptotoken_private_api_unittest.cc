@@ -38,7 +38,7 @@ class CryptoTokenPrivateApiTest : public extensions::ExtensionApiUnittest {
       return false;
     }
 
-    if (result_list->GetSize() != 1u) {
+    if (result_list->GetList().size() != 1u) {
       ADD_FAILURE() << "Invalid number of results.";
       return false;
     }
@@ -58,8 +58,8 @@ class CryptoTokenPrivateApiTest : public extensions::ExtensionApiUnittest {
     function->set_has_callback(true);
 
     std::unique_ptr<base::ListValue> args(new base::ListValue);
-    args->AppendString(origin);
-    args->AppendString(app_id);
+    args->GetList().emplace_back(origin);
+    args->GetList().emplace_back(app_id);
 
     if (!extension_function_test_utils::RunFunction(
             function.get(), std::move(args), browser(),

@@ -110,8 +110,8 @@ bool LoadFileHandler(const std::string& handler_id,
     return false;
   }
 
-  if ((!mime_types || mime_types->empty()) &&
-      (!file_extensions || file_extensions->empty()) &&
+  if ((!mime_types || mime_types->GetList().empty()) &&
+      (!file_extensions || file_extensions->GetList().empty()) &&
       !handler.include_directories) {
     *error = ErrorUtils::FormatErrorMessageUTF16(
         errors::kInvalidFileHandlerNoTypeOrExtension,
@@ -121,7 +121,7 @@ bool LoadFileHandler(const std::string& handler_id,
 
   if (mime_types) {
     std::string type;
-    for (size_t i = 0; i < mime_types->GetSize(); ++i) {
+    for (size_t i = 0; i < mime_types->GetList().size(); ++i) {
       if (!mime_types->GetString(i, &type)) {
         *error = ErrorUtils::FormatErrorMessageUTF16(
             errors::kInvalidFileHandlerTypeElement, handler_id,
@@ -134,7 +134,7 @@ bool LoadFileHandler(const std::string& handler_id,
 
   if (file_extensions) {
     std::string file_extension;
-    for (size_t i = 0; i < file_extensions->GetSize(); ++i) {
+    for (size_t i = 0; i < file_extensions->GetList().size(); ++i) {
       if (!file_extensions->GetString(i, &file_extension)) {
         *error = ErrorUtils::FormatErrorMessageUTF16(
             errors::kInvalidFileHandlerExtensionElement, handler_id,

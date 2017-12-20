@@ -686,7 +686,7 @@ void MediaInternals::UpdateVideoCaptureDeviceCapabilities(
                                  media::VideoCaptureFormats>>&
         descriptors_and_formats) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
-  video_capture_capabilities_cached_data_.Clear();
+  video_capture_capabilities_cached_data_.GetList().clear();
 
   for (const auto& device_format_pair : descriptors_and_formats) {
     auto format_list = std::make_unique<base::ListValue>();
@@ -699,7 +699,8 @@ void MediaInternals::UpdateVideoCaptureDeviceCapabilities(
     const media::VideoCaptureFormats& supported_formats =
         std::get<1>(device_format_pair);
     for (const auto& format : supported_formats)
-      format_list->AppendString(media::VideoCaptureFormat::ToString(format));
+      format_list->GetList().emplace_back(
+          media::VideoCaptureFormat::ToString(format));
 
     std::unique_ptr<base::DictionaryValue> device_dict(
         new base::DictionaryValue());

@@ -55,7 +55,7 @@ bool ComputedHashes::Reader::InitFromFile(const base::FilePath& path) {
   if (!top_dictionary->GetList(kFileHashesKey, &all_hashes))
     return false;
 
-  for (size_t i = 0; i < all_hashes->GetSize(); i++) {
+  for (size_t i = 0; i < all_hashes->GetList().size(); i++) {
     base::DictionaryValue* dictionary = NULL;
     if (!all_hashes->GetDictionary(i, &dictionary))
       return false;
@@ -83,7 +83,7 @@ bool ComputedHashes::Reader::InitFromFile(const base::FilePath& path) {
     data_[relative_path] = HashInfo(block_size, std::vector<std::string>());
     std::vector<std::string>* hashes = &(data_[relative_path].second);
 
-    for (size_t j = 0; j < hashes_list->GetSize(); j++) {
+    for (size_t j = 0; j < hashes_list->GetList().size(); j++) {
       std::string encoded;
       if (!hashes_list->GetString(j, &encoded))
         return false;

@@ -255,8 +255,7 @@ std::unique_ptr<URLMatcherPortFilter> URLMatcherFactory::CreateURLMatcherPorts(
       ranges.push_back(URLMatcherPortFilter::CreateRange(port));
     } else if (entry.GetAsList(&range)) {
       int from = 0, to = 0;
-      if (range->GetSize() != 2u ||
-          !range->GetInteger(0, &from) ||
+      if (range->GetList().size() != 2u || !range->GetInteger(0, &from) ||
           !range->GetInteger(1, &to)) {
         *error = kInvalidPortRanges;
         return nullptr;

@@ -131,7 +131,7 @@ bool ParseListAccountsData(const std::string& data,
     return false;
 
   base::ListValue* list;
-  if (!value->GetAsList(&list) || list->GetSize() < 2)
+  if (!value->GetAsList(&list) || list->GetList().size() < 2)
     return false;
 
   // Get list of account info.
@@ -141,7 +141,7 @@ bool ParseListAccountsData(const std::string& data,
 
   // Build a vector of accounts from the cookie.  Order is important: the first
   // account in the list is the primary account.
-  for (size_t i = 0; i < account_list->GetSize(); ++i) {
+  for (size_t i = 0; i < account_list->GetList().size(); ++i) {
     base::ListValue* account;
     if (account_list->GetList(i, &account) && account != NULL) {
       std::string email;

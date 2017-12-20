@@ -189,7 +189,7 @@ static bool WillDispatchTabCreatedEvent(
     const Extension* extension,
     Event* event,
     const base::DictionaryValue* listener_filter) {
-  event->event_args->Clear();
+  event->event_args->GetList().clear();
   std::unique_ptr<base::DictionaryValue> tab_value =
       ExtensionTabUtil::CreateTabObject(contents, extension)->ToValue();
   tab_value->SetBoolean(tabs_constants::kSelectedKey, active);
@@ -230,7 +230,7 @@ void TabsEventRouter::TabInsertedAt(TabStripModel* tab_strip_model,
 
   int tab_id = ExtensionTabUtil::GetTabId(contents);
   std::unique_ptr<base::ListValue> args(new base::ListValue);
-  args->AppendInteger(tab_id);
+  args->GetList().emplace_back(tab_id);
 
   std::unique_ptr<base::DictionaryValue> object_args(
       new base::DictionaryValue());
@@ -253,7 +253,7 @@ void TabsEventRouter::TabDetachedAt(WebContents* contents, int index) {
   }
 
   std::unique_ptr<base::ListValue> args(new base::ListValue);
-  args->AppendInteger(ExtensionTabUtil::GetTabId(contents));
+  args->GetList().emplace_back(ExtensionTabUtil::GetTabId(contents));
 
   std::unique_ptr<base::DictionaryValue> object_args(
       new base::DictionaryValue());
@@ -275,7 +275,7 @@ void TabsEventRouter::TabClosingAt(TabStripModel* tab_strip_model,
   int tab_id = ExtensionTabUtil::GetTabId(contents);
 
   std::unique_ptr<base::ListValue> args(new base::ListValue);
-  args->AppendInteger(tab_id);
+  args->GetList().emplace_back(tab_id);
 
   std::unique_ptr<base::DictionaryValue> object_args(
       new base::DictionaryValue());
@@ -298,7 +298,7 @@ void TabsEventRouter::ActiveTabChanged(WebContents* old_contents,
                                        int reason) {
   auto args = base::MakeUnique<base::ListValue>();
   int tab_id = ExtensionTabUtil::GetTabId(new_contents);
-  args->AppendInteger(tab_id);
+  args->GetList().emplace_back(tab_id);
 
   auto object_args = base::MakeUnique<base::DictionaryValue>();
   object_args->Set(tabs_constants::kWindowIdKey,
@@ -342,7 +342,7 @@ void TabsEventRouter::TabSelectionChanged(
     if (!contents)
       break;
     int tab_id = ExtensionTabUtil::GetTabId(contents);
-    all_tabs->AppendInteger(tab_id);
+    all_tabs->GetList().emplace_back(tab_id);
   }
 
   std::unique_ptr<base::ListValue> args(new base::ListValue);
@@ -371,7 +371,7 @@ void TabsEventRouter::TabMoved(WebContents* contents,
                                int from_index,
                                int to_index) {
   std::unique_ptr<base::ListValue> args(new base::ListValue);
-  args->AppendInteger(ExtensionTabUtil::GetTabId(contents));
+  args->GetList().emplace_back(ExtensionTabUtil::GetTabId(contents));
 
   std::unique_ptr<base::DictionaryValue> object_args(
       new base::DictionaryValue());
@@ -443,7 +443,7 @@ void TabsEventRouter::DispatchTabUpdatedEvent(
   std::unique_ptr<base::ListValue> args_base(new base::ListValue);
 
   // First arg: The id of the tab that changed.
-  args_base->AppendInteger(ExtensionTabUtil::GetTabId(contents));
+  args_base->GetList().emplace_back(ExtensionTabUtil::GetTabId(contents));
 
   // Second arg: An object containing the changes to the tab state.  Filled in
   // by WillDispatchTabUpdatedEvent as a copy of changed_properties, if the
@@ -488,8 +488,8 @@ void TabsEventRouter::TabReplacedAt(TabStripModel* tab_strip_model,
   const int new_tab_id = ExtensionTabUtil::GetTabId(new_contents);
   const int old_tab_id = ExtensionTabUtil::GetTabId(old_contents);
   std::unique_ptr<base::ListValue> args(new base::ListValue);
-  args->AppendInteger(new_tab_id);
-  args->AppendInteger(old_tab_id);
+  args->GetList().emplace_back(new_tab_id);
+  args->GetList().emplace_back(old_tab_id);
 
   DispatchEvent(Profile::FromBrowserContext(new_contents->GetBrowserContext()),
                 events::TABS_ON_REPLACED, tabs::OnReplaced::kEventName,

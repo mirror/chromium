@@ -55,14 +55,14 @@ TEST(URLMatcherFactoryTest, CreateFromURLFilterDictionary) {
 
   // Port range: Allow 80;1000-1010.
   auto port_range = base::MakeUnique<base::ListValue>();
-  port_range->AppendInteger(1000);
-  port_range->AppendInteger(1010);
+  port_range->GetList().emplace_back(1000);
+  port_range->GetList().emplace_back(1010);
   auto port_ranges = base::MakeUnique<base::ListValue>();
-  port_ranges->AppendInteger(80);
+  port_ranges->GetList().emplace_back(80);
   port_ranges->Append(std::move(port_range));
 
   auto scheme_list = base::MakeUnique<base::ListValue>();
-  scheme_list->AppendString("http");
+  scheme_list->GetList().emplace_back("http");
 
   base::DictionaryValue valid_condition;
   valid_condition.SetString(keys::kHostSuffixKey, "example.com");
@@ -144,7 +144,7 @@ TEST(URLMatcherFactoryTest, UpperCase) {
 
   // {"scheme": ["HTTP"]}
   auto scheme_list = base::MakeUnique<base::ListValue>();
-  scheme_list->AppendString("HTTP");
+  scheme_list->GetList().emplace_back("HTTP");
   base::DictionaryValue invalid_condition5;
   invalid_condition5.Set(keys::kSchemesKey, std::move(scheme_list));
 
@@ -237,7 +237,7 @@ void UrlConditionCaseTest::CheckCondition(
   base::DictionaryValue condition;
   if (use_list_of_strings_) {
     auto list = base::MakeUnique<base::ListValue>();
-    list->AppendString(value);
+    list->GetList().emplace_back(value);
     condition.SetWithoutPathExpansion(condition_key_, std::move(list));
   } else {
     condition.SetKey(condition_key_, base::Value(value));

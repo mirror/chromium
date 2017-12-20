@@ -142,7 +142,7 @@ void ImportDataHandler::ImportData(const base::ListValue* args) {
 void ImportDataHandler::InitializeDialog(const base::ListValue* args) {
   AllowJavascript();
 
-  CHECK_EQ(1U, args->GetSize());
+  CHECK_EQ(1U, args->GetList().size());
   std::string callback_id;
   CHECK(args->GetString(0, &callback_id));
 
@@ -229,7 +229,7 @@ void ImportDataHandler::FileSelected(const base::FilePath& path,
 void ImportDataHandler::HandleChooseBookmarksFile(const base::ListValue* args) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
-  DCHECK(args && args->empty());
+  DCHECK(args && args->GetList().empty());
   select_file_dialog_ = ui::SelectFileDialog::Create(
       this,
       std::make_unique<ChromeSelectFilePolicy>(web_ui()->GetWebContents()));

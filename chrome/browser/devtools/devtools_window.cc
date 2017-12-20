@@ -1291,7 +1291,7 @@ void DevToolsWindow::ShowCertificateViewer(const std::string& cert_chain) {
   std::unique_ptr<base::ListValue> list =
       base::ListValue::From(std::move(value));
   std::vector<std::string> decoded;
-  for (size_t i = 0; i < list->GetSize(); ++i) {
+  for (size_t i = 0; i < list->GetList().size(); ++i) {
     base::Value* item;
     if (!list->Get(i, &item) || !item->is_string()) {
       NOTREACHED();

@@ -303,7 +303,7 @@ TEST_F(HostContentSettingsMapTest, GetWebsiteSettingsForOneType) {
       (base::Time::Now() + base::TimeDelta::FromDays(1)).ToDoubleT();
   std::unique_ptr<base::ListValue> expiration_times_list =
       base::MakeUnique<base::ListValue>();
-  expiration_times_list->AppendInteger(42 /* client hint  value */);
+  expiration_times_list->GetList().emplace_back(42 /* client hint  value */);
   auto expiration_times_dictionary = std::make_unique<base::DictionaryValue>();
   expiration_times_dictionary->SetList("client_hints",
                                        std::move(expiration_times_list));

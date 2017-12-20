@@ -165,7 +165,7 @@ static bool ParseStringArgs(const base::ListValue* args,
                             std::string* arg0,
                             std::string* arg1,
                             std::string* arg2 = 0) {
-  int arg_size = args->GetSize();
+  int arg_size = args->GetList().size();
   return (!arg0 || (arg_size > 0 && args->GetString(0, arg0))) &&
          (!arg1 || (arg_size > 1 && args->GetString(1, arg1))) &&
          (!arg2 || (arg_size > 2 && args->GetString(2, arg2)));
@@ -239,7 +239,7 @@ void InspectMessageHandler::HandleBooleanPrefChanged(
     return;
 
   bool enabled;
-  if (args->GetSize() == 1 && args->GetBoolean(0, &enabled))
+  if (args->GetList().size() == 1 && args->GetBoolean(0, &enabled))
     profile->GetPrefs()->SetBoolean(pref_name, enabled);
 }
 
@@ -250,7 +250,7 @@ void InspectMessageHandler::HandlePortForwardingConfigCommand(
     return;
 
   const base::DictionaryValue* dict_src;
-  if (args->GetSize() == 1 && args->GetDictionary(0, &dict_src))
+  if (args->GetList().size() == 1 && args->GetDictionary(0, &dict_src))
     profile->GetPrefs()->Set(prefs::kDevToolsPortForwardingConfig, *dict_src);
 }
 
@@ -261,7 +261,7 @@ void InspectMessageHandler::HandleTCPDiscoveryConfigCommand(
     return;
 
   const base::ListValue* list_src;
-  if (args->GetSize() == 1 && args->GetList(0, &list_src))
+  if (args->GetList().size() == 1 && args->GetList(0, &list_src))
     profile->GetPrefs()->Set(prefs::kDevToolsTCPDiscoveryConfig, *list_src);
 }
 

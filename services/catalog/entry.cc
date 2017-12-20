@@ -200,7 +200,7 @@ std::unique_ptr<Entry> Entry::Deserialize(const base::Value& manifest_root) {
 
   const base::ListValue* services = nullptr;
   if (value.GetList(Store::kServicesKey, &services)) {
-    for (size_t i = 0; i < services->GetSize(); ++i) {
+    for (size_t i = 0; i < services->GetList().size(); ++i) {
       const base::DictionaryValue* service = nullptr;
       services->GetDictionary(i, &service);
       std::unique_ptr<Entry> child = Entry::Deserialize(*service);

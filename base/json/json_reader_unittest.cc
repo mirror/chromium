@@ -61,7 +61,7 @@ TEST(JSONReaderTest, Reading) {
     std::unique_ptr<ListValue> list = ListValue::From(
         JSONReader().ReadToValue("[1, /* comment, 2 ] */ \n 3]"));
     ASSERT_TRUE(list);
-    EXPECT_EQ(2u, list->GetSize());
+    EXPECT_EQ(2u, list->GetList().size());
     int int_val = 0;
     EXPECT_TRUE(list->GetInteger(0, &int_val));
     EXPECT_EQ(1, int_val);
@@ -69,7 +69,7 @@ TEST(JSONReaderTest, Reading) {
     EXPECT_EQ(3, int_val);
     list = ListValue::From(JSONReader().ReadToValue("[1, /*a*/2, 3]"));
     ASSERT_TRUE(list);
-    EXPECT_EQ(3u, list->GetSize());
+    EXPECT_EQ(3u, list->GetList().size());
     root = JSONReader().ReadToValue("/* comment **/42");
     ASSERT_TRUE(root);
     EXPECT_TRUE(root->is_int());
@@ -264,7 +264,7 @@ TEST(JSONReaderTest, Reading) {
     std::unique_ptr<ListValue> list =
         ListValue::From(JSONReader::Read("[true, false, null]"));
     ASSERT_TRUE(list);
-    EXPECT_EQ(3U, list->GetSize());
+    EXPECT_EQ(3U, list->GetList().size());
 
     // Test with trailing comma.  Should be parsed the same as above.
     std::unique_ptr<Value> root2 =
@@ -276,7 +276,7 @@ TEST(JSONReaderTest, Reading) {
     // Empty array
     std::unique_ptr<ListValue> list = ListValue::From(JSONReader::Read("[]"));
     ASSERT_TRUE(list);
-    EXPECT_EQ(0U, list->GetSize());
+    EXPECT_EQ(0U, list->GetList().size());
   }
 
   {
@@ -284,7 +284,7 @@ TEST(JSONReaderTest, Reading) {
     std::unique_ptr<ListValue> list = ListValue::From(
         JSONReader::Read("[[true], [], [false, [], [null]], null]"));
     ASSERT_TRUE(list);
-    EXPECT_EQ(4U, list->GetSize());
+    EXPECT_EQ(4U, list->GetList().size());
 
     // Lots of trailing commas.
     std::unique_ptr<Value> root2 =
@@ -313,7 +313,7 @@ TEST(JSONReaderTest, Reading) {
     std::unique_ptr<ListValue> list = ListValue::From(
         JSONReader::Read("[true,]", JSON_ALLOW_TRAILING_COMMAS));
     ASSERT_TRUE(list);
-    EXPECT_EQ(1U, list->GetSize());
+    EXPECT_EQ(1U, list->GetList().size());
     Value* tmp_value = nullptr;
     ASSERT_TRUE(list->Get(0, &tmp_value));
     EXPECT_TRUE(tmp_value->is_bool());
@@ -388,7 +388,7 @@ TEST(JSONReaderTest, Reading) {
     ASSERT_TRUE(dict_val->GetDictionary("inner", &inner_dict));
     ListValue* inner_array = nullptr;
     ASSERT_TRUE(inner_dict->GetList("array", &inner_array));
-    EXPECT_EQ(1U, inner_array->GetSize());
+    EXPECT_EQ(1U, inner_array->GetList().size());
     bool bool_value = true;
     EXPECT_TRUE(dict_val->GetBoolean("false", &bool_value));
     EXPECT_FALSE(bool_value);
@@ -475,7 +475,7 @@ TEST(JSONReaderTest, Reading) {
     std::unique_ptr<ListValue> list =
         ListValue::From(JSONReader::Read(not_evil));
     ASSERT_TRUE(list);
-    EXPECT_EQ(5001U, list->GetSize());
+    EXPECT_EQ(5001U, list->GetList().size());
   }
 
   {
@@ -623,7 +623,7 @@ TEST(JSONReaderTest, StringOptimizations) {
     ASSERT_TRUE(dict->Remove("baz", &dict_string_0));
     ASSERT_TRUE(dict->Remove("moo", &dict_string_1));
 
-    ASSERT_EQ(2u, list->GetSize());
+    ASSERT_EQ(2u, list->GetList().size());
     ASSERT_TRUE(list->Remove(0, &list_value_0));
     ASSERT_TRUE(list->Remove(0, &list_value_1));
   }

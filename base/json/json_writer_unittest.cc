@@ -62,7 +62,7 @@ TEST(JSONWriterTest, NestedTypes) {
   inner_dict->SetInteger("inner int", 10);
   list->Append(std::move(inner_dict));
   list->Append(std::make_unique<ListValue>());
-  list->AppendBoolean(true);
+  list->GetList().emplace_back(true);
   root_dict.Set("list", std::move(list));
 
   // Test the pretty-printer.

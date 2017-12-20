@@ -123,7 +123,7 @@ void ProgrammaticScriptInjector::OnInjectionComplete(
     std::unique_ptr<base::Value> execution_result,
     UserScript::RunLocation run_location,
     content::RenderFrame* render_frame) {
-  DCHECK(results_.empty());
+  DCHECK(results_.GetList().empty());
   if (execution_result)
     results_.Append(std::move(execution_result));
   Finish(std::string(), render_frame);

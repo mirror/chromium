@@ -84,7 +84,7 @@ class TraceEventTestFixture : public testing::Test {
   bool FindNonMatchingValue(const char* key,
                             const char* value);
   void Clear() {
-    trace_parsed_.Clear();
+    trace_parsed_.GetList().clear();
     json_output_.json_output.clear();
   }
 
@@ -204,7 +204,7 @@ void TraceEventTestFixture::OnTraceDataCollected(
   ASSERT_TRUE(root->GetAsList(&root_list));
 
   // Move items into our aggregate collection
-  while (root_list->GetSize()) {
+  while (root_list->GetList().size()) {
     std::unique_ptr<Value> item;
     root_list->Remove(0, &item);
     trace_parsed_.Append(std::move(item));
@@ -260,7 +260,7 @@ static bool IsAllKeyValueInDict(const JsonKeyValue* key_values,
 DictionaryValue* TraceEventTestFixture::FindMatchingTraceEntry(
     const JsonKeyValue* key_values) {
   // Scan all items
-  size_t trace_parsed_count = trace_parsed_.GetSize();
+  size_t trace_parsed_count = trace_parsed_.GetList().size();
   for (size_t i = 0; i < trace_parsed_count; i++) {
     Value* value = nullptr;
     trace_parsed_.Get(i, &value);
@@ -276,8 +276,8 @@ DictionaryValue* TraceEventTestFixture::FindMatchingTraceEntry(
 
 void TraceEventTestFixture::DropTracedMetadataRecords() {
   std::unique_ptr<ListValue> old_trace_parsed(trace_parsed_.CreateDeepCopy());
-  size_t old_trace_parsed_size = old_trace_parsed->GetSize();
-  trace_parsed_.Clear();
+  size_t old_trace_parsed_size = old_trace_parsed->GetList().size();
+  trace_parsed_.GetList().clear();
 
   for (size_t i = 0; i < old_trace_parsed_size; i++) {
     Value* value = nullptr;
@@ -354,7 +354,7 @@ const DictionaryValue* FindTraceEntry(
     const char* string_to_match,
     const DictionaryValue* match_after_this_item = nullptr) {
   // Scan all items
-  size_t trace_parsed_count = trace_parsed.GetSize();
+  size_t trace_parsed_count = trace_parsed.GetList().size();
   for (size_t i = 0; i < trace_parsed_count; i++) {
     const Value* value = nullptr;
     trace_parsed.Get(i, &value);
@@ -377,7 +377,7 @@ std::vector<const DictionaryValue*> FindTraceEntries(
     const ListValue& trace_parsed,
     const char* string_to_match) {
   std::vector<const DictionaryValue*> hits;
-  size_t trace_parsed_count = trace_parsed.GetSize();
+  size_t trace_parsed_count = trace_parsed.GetList().size();
   for (size_t i = 0; i < trace_parsed_count; i++) {
     const Value* value = nullptr;
     trace_parsed.Get(i, &value);
@@ -1127,7 +1127,7 @@ void ValidateInstantEventPresentOnEveryThread(const ListValue& trace_parsed,
                                               int num_events) {
   std::map<int, std::map<int, bool> > results;
 
-  size_t trace_parsed_count = trace_parsed.GetSize();
+  size_t trace_parsed_count = trace_parsed.GetList().size();
   for (size_t i = 0; i < trace_parsed_count; i++) {
     const Value* value = nullptr;
     trace_parsed.Get(i, &value);
@@ -1189,7 +1189,7 @@ TEST_F(TraceEventTestFixture, DataDiscarded) {
 
   CancelTrace();
 
-  EXPECT_TRUE(trace_parsed_.empty());
+  EXPECT_TRUE(trace_parsed_.GetList().empty());
 }
 
 class MockEnabledStateChangedObserver :
@@ -1486,7 +1486,7 @@ TEST_F(TraceEventTestFixture, Categories) {
   TRACE_EVENT_INSTANT0("cat2", "name", TRACE_EVENT_SCOPE_THREAD);
   EndTraceAndFlush();
   DropTracedMetadataRecords();
-  EXPECT_TRUE(trace_parsed_.empty());
+  EXPECT_TRUE(trace_parsed_.GetList().empty());
 
   // Include existent category -> only events of that category
   Clear();
@@ -2565,7 +2565,7 @@ TEST_F(TraceEventTestFixture, TraceBufferVectorReportFull) {
   DropTracedMetadataRecords();
   const DictionaryValue* last_trace_event = nullptr;
   double last_trace_event_timestamp = 0;
-  EXPECT_TRUE(trace_parsed_.GetDictionary(trace_parsed_.GetSize() - 1,
+  EXPECT_TRUE(trace_parsed_.GetDictionary(trace_parsed_.GetList().size() - 1,
                                           &last_trace_event));
   EXPECT_TRUE(last_trace_event->GetDouble("ts", &last_trace_event_timestamp));
   EXPECT_LE(last_trace_event_timestamp, buffer_limit_reached_timestamp);
@@ -2919,7 +2919,7 @@ TEST_F(TraceEventTestFixture, TimeOffset) {
   double end_time = static_cast<double>(
       (TimeTicks::Now() - time_offset).ToInternalValue());
   double last_timestamp = 0;
-  for (size_t i = 0; i < trace_parsed_.GetSize(); ++i) {
+  for (size_t i = 0; i < trace_parsed_.GetList().size(); ++i) {
     const DictionaryValue* item;
     EXPECT_TRUE(trace_parsed_.GetDictionary(i, &item));
     double timestamp;

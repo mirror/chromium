@@ -117,7 +117,7 @@ bool IsValidSchema(const base::DictionaryValue* dict,
           break;
         case base::Value::Type::LIST:
           it.value().GetAsList(&list_value);
-          for (size_t i = 0; i < list_value->GetSize(); ++i) {
+          for (size_t i = 0; i < list_value->GetList().size(); ++i) {
             if (!list_value->GetString(i, &string_value) ||
                 !IsValidType(string_value)) {
               *error = "Invalid value for type attribute";
@@ -141,7 +141,7 @@ bool IsValidSchema(const base::DictionaryValue* dict,
           return false;
         }
       } else if (it.value().GetAsList(&list_value)) {
-        for (size_t i = 0; i < list_value->GetSize(); ++i) {
+        for (size_t i = 0; i < list_value->GetList().size(); ++i) {
           if (!list_value->GetDictionary(i, &dictionary_value)) {
             *error = base::StringPrintf(
                 "Invalid entry in items attribute at index %d",
@@ -238,7 +238,7 @@ bool IsValidSchema(const base::DictionaryValue* dict,
     // Validate the values contained in an "enum" attribute.
     if (it.key() == schema::kEnum) {
       it.value().GetAsList(&list_value);
-      for (size_t i = 0; i < list_value->GetSize(); ++i) {
+      for (size_t i = 0; i < list_value->GetList().size(); ++i) {
         const base::Value* value = nullptr;
         list_value->Get(i, &value);
         // Sometimes the enum declaration is a dictionary with the enum value
@@ -265,7 +265,7 @@ bool IsValidSchema(const base::DictionaryValue* dict,
     // Validate the schemas contained in a "choices" attribute.
     if (it.key() == schema::kChoices) {
       it.value().GetAsList(&list_value);
-      for (size_t i = 0; i < list_value->GetSize(); ++i) {
+      for (size_t i = 0; i < list_value->GetList().size(); ++i) {
         if (!list_value->GetDictionary(i, &dictionary_value)) {
           *error = "Invalid choices attribute";
           return false;
@@ -425,7 +425,7 @@ JSONSchemaValidator::JSONSchemaValidator(base::DictionaryValue* schema,
   if (!types)
     return;
 
-  for (size_t i = 0; i < types->GetSize(); ++i) {
+  for (size_t i = 0; i < types->GetList().size(); ++i) {
     base::DictionaryValue* type = nullptr;
     CHECK(types->GetDictionary(i, &type));
 
@@ -521,7 +521,7 @@ void JSONSchemaValidator::ValidateChoices(const base::Value* instance,
                                           const std::string& path) {
   size_t original_num_errors = errors_.size();
 
-  for (size_t i = 0; i < choices->GetSize(); ++i) {
+  for (size_t i = 0; i < choices->GetList().size(); ++i) {
     const base::DictionaryValue* choice = nullptr;
     CHECK(choices->GetDictionary(i, &choice));
 
@@ -542,7 +542,7 @@ void JSONSchemaValidator::ValidateChoices(const base::Value* instance,
 void JSONSchemaValidator::ValidateEnum(const base::Value* instance,
                                        const base::ListValue* choices,
                                        const std::string& path) {
-  for (size_t i = 0; i < choices->GetSize(); ++i) {
+  for (size_t i = 0; i < choices->GetList().size(); ++i) {
     const base::Value* choice = nullptr;
     CHECK(choices->Get(i, &choice));
     // Sometimes the enum declaration is a dictionary with the enum value under
@@ -660,7 +660,7 @@ void JSONSchemaValidator::ValidateArray(const base::ListValue* instance,
                                         const base::DictionaryValue* schema,
                                         const std::string& path) {
   const base::DictionaryValue* single_type = nullptr;
-  size_t instance_size = instance->GetSize();
+  size_t instance_size = instance->GetList().size();
   if (schema->GetDictionary(schema::kItems, &single_type)) {
     int min_items = 0;
     if (schema->GetInteger(schema::kMinItems, &min_items)) {
@@ -703,7 +703,7 @@ void JSONSchemaValidator::ValidateTuple(const base::ListValue* instance,
                                         const std::string& path) {
   const base::ListValue* tuple_type = nullptr;
   schema->GetList(schema::kItems, &tuple_type);
-  size_t tuple_size = tuple_type ? tuple_type->GetSize() : 0;
+  size_t tuple_size = tuple_type ? tuple_type->GetList().size() : 0;
   if (tuple_type) {
     for (size_t i = 0; i < tuple_size; ++i) {
       std::string i_str = base::NumberToString(i);
@@ -729,7 +729,7 @@ void JSONSchemaValidator::ValidateTuple(const base::ListValue* instance,
   if (SchemaAllowsAnyAdditionalItems(schema, &additional_properties_schema))
     return;
 
-  size_t instance_size = instance->GetSize();
+  size_t instance_size = instance->GetList().size();
   if (additional_properties_schema) {
     // Any additional properties must validate against the additionalProperties
     // schema.

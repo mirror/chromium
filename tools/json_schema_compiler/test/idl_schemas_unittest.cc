@@ -39,13 +39,13 @@ TEST(IdlCompiler, Basics) {
 
   // Test Function2, which takes an integer parameter.
   base::ListValue list;
-  list.AppendInteger(5);
+  list.GetList().emplace_back(5);
   std::unique_ptr<Function2::Params> f2_params =
       Function2::Params::Create(list);
   EXPECT_EQ(5, f2_params->x);
 
   // Test Function3, which takes a MyType1 parameter.
-  list.Clear();
+  list.GetList().clear();
   std::unique_ptr<base::DictionaryValue> tmp(new base::DictionaryValue());
   tmp->SetInteger("x", 17);
   tmp->SetString("y", "hello");
@@ -86,29 +86,29 @@ TEST(IdlCompiler, OptionalArguments) {
   std::unique_ptr<Function7::Params> f7_params =
       Function7::Params::Create(list);
   EXPECT_EQ(NULL, f7_params->arg.get());
-  list.AppendInteger(7);
+  list.GetList().emplace_back(7);
   f7_params = Function7::Params::Create(list);
   EXPECT_EQ(7, *(f7_params->arg));
 
   // Similar to above, but a function with one required and one optional
   // argument.
-  list.Clear();
-  list.AppendInteger(8);
+  list.GetList().clear();
+  list.GetList().emplace_back(8);
   std::unique_ptr<Function8::Params> f8_params =
       Function8::Params::Create(list);
   EXPECT_EQ(8, f8_params->arg1);
   EXPECT_EQ(NULL, f8_params->arg2.get());
-  list.AppendString("foo");
+  list.GetList().emplace_back("foo");
   f8_params = Function8::Params::Create(list);
   EXPECT_EQ(8, f8_params->arg1);
   EXPECT_EQ("foo", *(f8_params->arg2));
 
   // Test a function with an optional argument of custom type.
-  list.Clear();
+  list.GetList().clear();
   std::unique_ptr<Function9::Params> f9_params =
       Function9::Params::Create(list);
   EXPECT_EQ(NULL, f9_params->arg.get());
-  list.Clear();
+  list.GetList().clear();
   std::unique_ptr<base::DictionaryValue> tmp(new base::DictionaryValue());
   tmp->SetInteger("x", 17);
   tmp->SetString("y", "hello");
@@ -128,7 +128,7 @@ TEST(IdlCompiler, ArrayTypes) {
   // Tests of a function that takes an integer and an array of integers. First
   // use an empty array.
   base::ListValue list;
-  list.AppendInteger(33);
+  list.GetList().emplace_back(33);
   list.Append(std::make_unique<base::ListValue>());
   std::unique_ptr<Function10::Params> f10_params =
       Function10::Params::Create(list);
@@ -137,11 +137,11 @@ TEST(IdlCompiler, ArrayTypes) {
   EXPECT_TRUE(f10_params->y.empty());
 
   // Same function, but this time with 2 values in the array.
-  list.Clear();
-  list.AppendInteger(33);
+  list.GetList().clear();
+  list.GetList().emplace_back(33);
   std::unique_ptr<base::ListValue> sublist(new base::ListValue);
-  sublist->AppendInteger(34);
-  sublist->AppendInteger(35);
+  sublist->GetList().emplace_back(34);
+  sublist->GetList().emplace_back(35);
   list.Append(std::move(sublist));
   f10_params = Function10::Params::Create(list);
   ASSERT_TRUE(f10_params != NULL);
@@ -151,7 +151,7 @@ TEST(IdlCompiler, ArrayTypes) {
   EXPECT_EQ(35, f10_params->y[1]);
 
   // Now test a function which takes an array of a defined type.
-  list.Clear();
+  list.GetList().clear();
   MyType1 a;
   MyType1 b;
   a.x = 5;

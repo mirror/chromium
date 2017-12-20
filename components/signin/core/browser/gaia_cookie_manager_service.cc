@@ -170,14 +170,14 @@ void GaiaCookieManagerService::ExternalCcResultFetcher::
   }
 
   // If there is nothing to check, terminate immediately.
-  if (list->GetSize() == 0) {
+  if (list->GetList().size() == 0) {
     CleanupTransientState();
     GetCheckConnectionInfoCompleted(true);
     return;
   }
 
   // Start a fetcher for each connection URL that needs to be checked.
-  for (size_t i = 0; i < list->GetSize(); ++i) {
+  for (size_t i = 0; i < list->GetList().size(); ++i) {
     const base::DictionaryValue* dict;
     if (list->GetDictionary(i, &dict)) {
       std::string token;

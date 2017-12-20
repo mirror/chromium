@@ -104,14 +104,14 @@ class WebRequestRulesRegistryTest : public testing::Test {
   // https://www.example.com and cancels it
   linked_ptr<api::events::Rule> CreateRule1() {
     auto scheme_http = base::MakeUnique<base::ListValue>();
-    scheme_http->AppendString("http");
+    scheme_http->GetList().emplace_back("http");
     auto http_condition_dict = base::MakeUnique<base::DictionaryValue>();
     http_condition_dict->SetString(keys2::kHostSuffixKey, "example.com");
     base::DictionaryValue http_condition_url_filter;
     http_condition_url_filter.SetString(keys::kInstanceTypeKey,
                                         keys::kRequestMatcherType);
 
-    scheme_http->AppendString("https");
+    scheme_http->GetList().emplace_back("https");
     auto https_condition_dict = base::MakeUnique<base::DictionaryValue>();
     https_condition_dict->Set(keys2::kSchemesKey,
                               base::MakeUnique<base::ListValue>());

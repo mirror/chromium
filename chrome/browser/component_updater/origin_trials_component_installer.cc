@@ -101,7 +101,7 @@ void OriginTrialsComponentInstallerPolicy::ComponentReady(
   const bool manifest_has_disabled_features = manifest->GetList(
       kManifestDisabledFeaturesPath, &override_disabled_feature_list);
   if (manifest_has_disabled_features &&
-      !override_disabled_feature_list->empty()) {
+      !override_disabled_feature_list->GetList().empty()) {
     ListPrefUpdate update(local_state, prefs::kOriginTrialDisabledFeatures);
     update->Swap(override_disabled_feature_list);
   } else {
@@ -110,7 +110,8 @@ void OriginTrialsComponentInstallerPolicy::ComponentReady(
   base::ListValue* disabled_tokens_list = nullptr;
   const bool manifest_has_disabled_tokens = manifest->GetList(
       kManifestDisabledTokenSignaturesPath, &disabled_tokens_list);
-  if (manifest_has_disabled_tokens && !disabled_tokens_list->empty()) {
+  if (manifest_has_disabled_tokens &&
+      !disabled_tokens_list->GetList().empty()) {
     ListPrefUpdate update(local_state, prefs::kOriginTrialDisabledTokens);
     update->Swap(disabled_tokens_list);
   } else {

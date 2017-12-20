@@ -168,8 +168,9 @@ bool ScreenlockPrivateEventRouter::OnAuthAttempted(
     return false;
 
   std::unique_ptr<base::ListValue> args(new base::ListValue());
-  args->AppendString(screenlock::ToString(FromLockHandlerAuthType(auth_type)));
-  args->AppendString(value);
+  args->GetList().emplace_back(
+      screenlock::ToString(FromLockHandlerAuthType(auth_type)));
+  args->GetList().emplace_back(value);
 
   std::unique_ptr<Event> event(
       new Event(events::SCREENLOCK_PRIVATE_ON_AUTH_ATTEMPTED,

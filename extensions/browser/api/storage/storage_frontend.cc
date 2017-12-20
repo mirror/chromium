@@ -57,7 +57,8 @@ class DefaultObserver : public SettingsObserver {
     if (!changes)
       changes = std::make_unique<base::DictionaryValue>();
     args->Append(std::move(changes));
-    args->AppendString(settings_namespace::ToString(settings_namespace));
+    args->GetList().emplace_back(
+        settings_namespace::ToString(settings_namespace));
     std::unique_ptr<Event> event(new Event(events::STORAGE_ON_CHANGED,
                                            api::storage::OnChanged::kEventName,
                                            std::move(args)));

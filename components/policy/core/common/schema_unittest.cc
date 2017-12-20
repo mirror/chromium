@@ -619,7 +619,7 @@ TEST(SchemaTest, Validate) {
   {
     bundle.Clear();
     base::ListValue list;
-    list.AppendInteger(1);
+    list.GetList().emplace_back(1);
     bundle.SetKey("Array", std::move(list));
     TestSchemaValidation(schema, bundle, SCHEMA_STRICT, false);
   }
@@ -648,8 +648,8 @@ TEST(SchemaTest, Validate) {
 
   {
     base::ListValue list;
-    list.AppendString("a string");
-    list.AppendString("another string");
+    list.GetList().emplace_back("a string");
+    list.GetList().emplace_back("another string");
     bundle.SetKey("Array", std::move(list));
   }
 
@@ -665,8 +665,8 @@ TEST(SchemaTest, Validate) {
 
   {
     base::ListValue list;
-    list.AppendString("a string");
-    list.AppendString("another string");
+    list.GetList().emplace_back("a string");
+    list.GetList().emplace_back("another string");
     base::ListValue listlist;
     listlist.GetList().push_back(list.Clone());
     listlist.GetList().push_back(std::move(list));
@@ -783,7 +783,7 @@ TEST(SchemaTest, Validate) {
     TestSchemaValidation(subschema, root, SCHEMA_ALLOW_INVALID_TOPLEVEL, true);
     TestSchemaValidation(subschema, root, SCHEMA_ALLOW_INVALID, true);
     TestSchemaValidationWithPath(subschema, root, "items[0]");
-    root.Remove(root.GetSize() - 1, nullptr);
+    root.Remove(root.GetList().size() - 1, nullptr);
 
     // Invalid property.
     dict_value.reset(new base::DictionaryValue());
@@ -795,7 +795,7 @@ TEST(SchemaTest, Validate) {
     TestSchemaValidation(subschema, root, SCHEMA_ALLOW_INVALID_TOPLEVEL, true);
     TestSchemaValidation(subschema, root, SCHEMA_ALLOW_INVALID, true);
     TestSchemaValidationWithPath(subschema, root, "items[0].two");
-    root.Remove(root.GetSize() - 1, nullptr);
+    root.Remove(root.GetList().size() - 1, nullptr);
   }
 
   // Tests on ObjectOfArray.
@@ -808,7 +808,7 @@ TEST(SchemaTest, Validate) {
         root.SetList("List", base::MakeUnique<base::ListValue>());
 
     // Test that there are not errors here.
-    list_value->AppendInteger(12345);
+    list_value->GetList().emplace_back(12345);
     TestSchemaValidation(subschema, root, SCHEMA_STRICT, true);
     TestSchemaValidation(subschema, root, SCHEMA_ALLOW_UNKNOWN_TOPLEVEL, true);
     TestSchemaValidation(subschema, root, SCHEMA_ALLOW_UNKNOWN, true);
@@ -816,7 +816,7 @@ TEST(SchemaTest, Validate) {
     TestSchemaValidation(subschema, root, SCHEMA_ALLOW_INVALID, true);
 
     // Invalid list item.
-    list_value->AppendString("blabla");
+    list_value->GetList().emplace_back("blabla");
     TestSchemaValidation(subschema, root, SCHEMA_STRICT, false);
     TestSchemaValidation(subschema, root, SCHEMA_ALLOW_UNKNOWN_TOPLEVEL, false);
     TestSchemaValidation(subschema, root, SCHEMA_ALLOW_UNKNOWN, false);
@@ -837,7 +837,7 @@ TEST(SchemaTest, Validate) {
     root.Append(std::move(dict_value));
 
     // Test that there are not errors here.
-    list_value->AppendString("blabla");
+    list_value->GetList().emplace_back("blabla");
     TestSchemaValidation(subschema, root, SCHEMA_STRICT, true);
     TestSchemaValidation(subschema, root, SCHEMA_ALLOW_UNKNOWN_TOPLEVEL, true);
     TestSchemaValidation(subschema, root, SCHEMA_ALLOW_UNKNOWN, true);
@@ -845,7 +845,7 @@ TEST(SchemaTest, Validate) {
     TestSchemaValidation(subschema, root, SCHEMA_ALLOW_INVALID, true);
 
     // Invalid list item.
-    list_value->AppendInteger(12345);
+    list_value->GetList().emplace_back(12345);
     TestSchemaValidation(subschema, root, SCHEMA_STRICT, false);
     TestSchemaValidation(subschema, root, SCHEMA_ALLOW_UNKNOWN_TOPLEVEL, false);
     TestSchemaValidation(subschema, root, SCHEMA_ALLOW_UNKNOWN, false);

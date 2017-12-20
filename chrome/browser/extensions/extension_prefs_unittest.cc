@@ -171,9 +171,9 @@ class ExtensionPrefsGrantedPermissions : public ExtensionPrefsTest {
         permission_info->CreateAPIPermission());
     {
       std::unique_ptr<base::ListValue> value(new base::ListValue());
-      value->AppendString("tcp-connect:*.example.com:80");
-      value->AppendString("udp-bind::8080");
-      value->AppendString("udp-send-to::8888");
+      value->GetList().emplace_back("tcp-connect:*.example.com:80");
+      value->GetList().emplace_back("udp-bind::8080");
+      value->GetList().emplace_back("udp-send-to::8888");
       ASSERT_TRUE(permission->FromValue(value.get(), NULL, NULL));
     }
     api_perm_set1_.insert(permission.release());
@@ -567,7 +567,7 @@ class ExtensionPrefsFinishDelayedInstallInfo : public ExtensionPrefsTest {
     manifest.SetString(manifest_keys::kName, "test");
     manifest.SetString(manifest_keys::kVersion, "0.2");
     std::unique_ptr<base::ListValue> scripts(new base::ListValue);
-    scripts->AppendString("test.js");
+    scripts->GetList().emplace_back("test.js");
     manifest.Set(manifest_keys::kBackgroundScripts, std::move(scripts));
     base::FilePath path =
         prefs_.extensions_dir().AppendASCII("test_0.2");
@@ -602,7 +602,7 @@ class ExtensionPrefsFinishDelayedInstallInfo : public ExtensionPrefsTest {
     EXPECT_FALSE(manifest->GetString(manifest_keys::kBackgroundPage, &value));
     const base::ListValue* scripts;
     ASSERT_TRUE(manifest->GetList(manifest_keys::kBackgroundScripts, &scripts));
-    EXPECT_EQ(1u, scripts->GetSize());
+    EXPECT_EQ(1u, scripts->GetList().size());
   }
 
  protected:

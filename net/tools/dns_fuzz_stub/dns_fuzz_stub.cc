@@ -113,7 +113,7 @@ bool ReadTestCase(const char* filename,
     return false;
   }
 
-  size_t resp_size = resp_list->GetSize();
+  size_t resp_size = resp_list->GetList().size();
   resp_buf->clear();
   resp_buf->reserve(resp_size);
   for (size_t i = 0; i < resp_size; i++) {

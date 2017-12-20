@@ -55,7 +55,7 @@ std::unique_ptr<base::ListValue> GetHostPermissions(const Extension* ext,
   for (URLPatternSet::const_iterator perm = pattern_set.begin();
        perm != pattern_set.end();
        ++perm) {
-    permissions->AppendString(perm->GetAsString());
+    permissions->GetList().emplace_back(perm->GetAsString());
   }
 
   return permissions;
@@ -67,7 +67,7 @@ std::unique_ptr<base::ListValue> GetAPIPermissions(const Extension* ext) {
       ext->permissions_data()->active_permissions().GetAPIsAsStrings();
   for (std::set<std::string>::const_iterator perm = perm_list.begin();
        perm != perm_list.end(); ++perm) {
-    permissions->AppendString(*perm);
+    permissions->GetList().emplace_back(*perm);
   }
   return permissions;
 }

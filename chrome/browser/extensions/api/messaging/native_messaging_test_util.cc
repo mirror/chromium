@@ -37,7 +37,7 @@ void WriteTestNativeHostManifest(const base::FilePath& target_dir,
   manifest->SetString("path", host_path.AsUTF8Unsafe());
 
   std::unique_ptr<base::ListValue> origins(new base::ListValue());
-  origins->AppendString(base::StringPrintf(
+  origins->GetList().emplace_back(base::StringPrintf(
       "chrome-extension://%s/", ScopedTestNativeMessagingHost::kExtensionId));
   manifest->Set("allowed_origins", std::move(origins));
 

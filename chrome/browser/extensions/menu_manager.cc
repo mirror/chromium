@@ -80,7 +80,7 @@ MenuItem::OwnedList MenuItemsFromValue(const std::string& extension_id,
   if (!value || !value->GetAsList(&list))
     return items;
 
-  for (size_t i = 0; i < list->GetSize(); ++i) {
+  for (size_t i = 0; i < list->GetList().size(); ++i) {
     base::DictionaryValue* dict = nullptr;
     if (!list->GetDictionary(i, &dict))
       continue;
@@ -110,7 +110,7 @@ bool GetStringList(const base::DictionaryValue& dict,
   if (!dict.GetListWithoutPathExpansion(key, &list))
     return false;
 
-  for (size_t i = 0; i < list->GetSize(); ++i) {
+  for (size_t i = 0; i < list->GetList().size(); ++i) {
     std::string pattern;
     if (!list->GetString(i, &pattern))
       return false;
@@ -675,7 +675,7 @@ void MenuManager::ExecuteCommand(content::BrowserContext* context,
   }
 
   auto args = base::MakeUnique<base::ListValue>();
-  args->Reserve(2);
+  args->GetList().reserve(2);
   args->Append(std::move(properties));
   // |properties| is invalidated at this time, which is why |args| needs to be
   // queried for the pointer. The obtained pointer is guaranteed to stay valid

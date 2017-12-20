@@ -1062,7 +1062,7 @@ void AXPlatformNodeAuraLinux::AddAccessibilityTreeProperties(
   for (int i = ATK_STATE_INVALID; i < ATK_STATE_LAST_DEFINED; i++) {
     AtkStateType state_type = static_cast<AtkStateType>(i);
     if (atk_state_set_contains_state(state_set, state_type))
-      states->AppendString(atk_state_type_get_name(state_type));
+      states->GetList().emplace_back(atk_state_type_get_name(state_type));
   }
   dict->Set("states", std::move(states));
 }

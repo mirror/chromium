@@ -3525,7 +3525,7 @@ TEST_F(SpdyNetworkTransactionTest, NetLog) {
                      default_url_.scheme());
   expected.push_back(SpdyString(kHttp2MethodHeader) + ": GET");
   expected.push_back("user-agent: Chrome");
-  EXPECT_EQ(expected.size(), header_list->GetSize());
+  EXPECT_EQ(expected.size(), header_list->GetList().size());
   for (std::vector<SpdyString>::const_iterator it = expected.begin();
        it != expected.end(); ++it) {
     base::Value header(*it);

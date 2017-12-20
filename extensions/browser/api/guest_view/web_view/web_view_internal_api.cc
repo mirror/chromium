@@ -308,7 +308,7 @@ bool WebViewInternalCaptureVisibleRegionFunction::RunAsyncSafe(
   EXTENSION_FUNCTION_VALIDATE(params.get());
 
   std::unique_ptr<ImageDetails> image_details;
-  if (args_->GetSize() > 1) {
+  if (args_->GetList().size() > 1) {
     base::Value* spec = NULL;
     EXTENSION_FUNCTION_VALIDATE(args_->Get(1, &spec) && spec);
     image_details = ImageDetails::FromValue(*spec);

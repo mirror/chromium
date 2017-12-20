@@ -146,7 +146,7 @@ template<> void DownloadQueryTest::AddFilter(
   std::unique_ptr<base::ListValue> list(new base::ListValue());
   for (std::vector<base::string16>::const_iterator it = cpp_value.begin();
        it != cpp_value.end(); ++it) {
-    list->AppendString(*it);
+    list->GetList().emplace_back(*it);
   }
   CHECK(query_.AddFilter(name, *list.get()));
 }
@@ -156,7 +156,7 @@ template<> void DownloadQueryTest::AddFilter(
   std::unique_ptr<base::ListValue> list(new base::ListValue());
   for (std::vector<std::string>::const_iterator it = cpp_value.begin();
        it != cpp_value.end(); ++it) {
-    list->AppendString(*it);
+    list->GetList().emplace_back(*it);
   }
   CHECK(query_.AddFilter(name, *list.get()));
 }

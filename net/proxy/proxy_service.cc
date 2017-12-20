@@ -304,7 +304,7 @@ std::unique_ptr<base::Value> NetLogBadProxyListCallback(
 
   for (ProxyRetryInfoMap::const_iterator iter = retry_info->begin();
        iter != retry_info->end(); ++iter) {
-    list->AppendString(iter->first);
+    list->GetList().emplace_back(iter->first);
   }
   dict->Set("bad_proxy_list", std::move(list));
   return std::move(dict);

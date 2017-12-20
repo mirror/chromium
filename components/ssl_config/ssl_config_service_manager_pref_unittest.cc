@@ -69,8 +69,8 @@ TEST_F(SSLConfigServiceManagerPrefTest, GoodDisabledCipherSuites) {
   EXPECT_TRUE(old_config.disabled_cipher_suites.empty());
 
   auto list_value = base::MakeUnique<base::ListValue>();
-  list_value->AppendString("0x0004");
-  list_value->AppendString("0x0005");
+  list_value->GetList().emplace_back("0x0004");
+  list_value->GetList().emplace_back("0x0005");
   local_state.SetUserPref(ssl_config::prefs::kCipherSuiteBlacklist,
                           std::move(list_value));
 
@@ -106,10 +106,10 @@ TEST_F(SSLConfigServiceManagerPrefTest, BadDisabledCipherSuites) {
   EXPECT_TRUE(old_config.disabled_cipher_suites.empty());
 
   auto list_value = base::MakeUnique<base::ListValue>();
-  list_value->AppendString("0x0004");
-  list_value->AppendString("TLS_NOT_WITH_A_CIPHER_SUITE");
-  list_value->AppendString("0x0005");
-  list_value->AppendString("0xBEEFY");
+  list_value->GetList().emplace_back("0x0004");
+  list_value->GetList().emplace_back("TLS_NOT_WITH_A_CIPHER_SUITE");
+  list_value->GetList().emplace_back("0x0005");
+  list_value->GetList().emplace_back("0xBEEFY");
   local_state.SetUserPref(ssl_config::prefs::kCipherSuiteBlacklist,
                           std::move(list_value));
 

@@ -165,7 +165,7 @@ void AppendToTabIdList(Browser* browser, base::ListValue* tab_ids) {
   DCHECK(tab_ids);
   TabStripModel* tab_strip = browser->tab_strip_model();
   for (int i = 0; i < tab_strip->count(); ++i) {
-    tab_ids->AppendInteger(
+    tab_ids->GetList().emplace_back(
         ExtensionTabUtil::GetTabId(tab_strip->GetWebContentsAt(i)));
   }
 }

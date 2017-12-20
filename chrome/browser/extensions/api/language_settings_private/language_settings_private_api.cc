@@ -425,7 +425,7 @@ LanguageSettingsPrivateGetSpellcheckWordsFunction::GetSpellcheckWords() const {
   std::unique_ptr<base::ListValue> word_list(new base::ListValue());
   const std::set<std::string>& words = dictionary->GetWords();
   for (const std::string& word : words)
-    word_list->AppendString(word);
+    word_list->GetList().emplace_back(word);
   return word_list;
 }
 

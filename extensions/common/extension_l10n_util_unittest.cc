@@ -556,7 +556,7 @@ TEST(ExtensionL10nUtil, LocalizeManifestWithSearchProviderMsgs) {
   manifest.SetString(keys::kOverrideHomepage, "http://www.foo.__MSG_country__");
 
   auto startup_pages = std::make_unique<base::ListValue>();
-  startup_pages->AppendString("http://www.foo.__MSG_country__");
+  startup_pages->GetList().emplace_back("http://www.foo.__MSG_country__");
   manifest.Set(keys::kOverrideStartupPage, std::move(startup_pages));
 
   std::string error;

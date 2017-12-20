@@ -269,7 +269,7 @@ TEST_F(SigninCreateProfileHandlerTest, ReturnDefaultProfileNameAndIcons) {
 
   const base::ListValue* profile_icons;
   ASSERT_TRUE(web_ui()->call_data()[0]->arg2()->GetAsList(&profile_icons));
-  EXPECT_NE(0U, profile_icons->GetSize());
+  EXPECT_NE(0U, profile_icons->GetList().size());
 
   EXPECT_EQ(kTestWebUIResponse, web_ui()->call_data()[1]->function_name());
 
@@ -307,7 +307,7 @@ TEST_F(SigninCreateProfileHandlerTest, ReturnSignedInProfiles) {
 
   const base::ListValue* signed_in_profiles;
   ASSERT_TRUE(web_ui()->call_data()[0]->arg2()->GetAsList(&signed_in_profiles));
-  EXPECT_EQ(1U, signed_in_profiles->GetSize());
+  EXPECT_EQ(1U, signed_in_profiles->GetList().size());
 
   const base::DictionaryValue* signed_in_profile;
   ASSERT_TRUE(signed_in_profiles->GetDictionary(0, &signed_in_profile));
@@ -337,10 +337,10 @@ TEST_F(SigninCreateProfileHandlerTest, CreateProfile) {
 
   // Create a non-supervised profile.
   base::ListValue list_args;
-  list_args.AppendString(kTestProfileName);
-  list_args.AppendString(profiles::GetDefaultAvatarIconUrl(0));
-  list_args.AppendBoolean(false);  // create_shortcut
-  list_args.AppendBoolean(false);  // is_supervised
+  list_args.GetList().emplace_back(kTestProfileName);
+  list_args.GetList().emplace_back(profiles::GetDefaultAvatarIconUrl(0));
+  list_args.GetList().emplace_back(false);  // create_shortcut
+  list_args.GetList().emplace_back(false);  // is_supervised
   handler()->CreateProfile(&list_args);
 
   // Expect a JS callbacks with the new profile information.
@@ -384,10 +384,10 @@ TEST_F(SigninCreateProfileHandlerTest, CreateProfileWithForceSignin) {
   EXPECT_CALL(*handler(), OpenSigninDialogForProfile(_)).Times(1);
 
   base::ListValue list_args;
-  list_args.AppendString(kTestProfileName);
-  list_args.AppendString(profiles::GetDefaultAvatarIconUrl(0));
-  list_args.AppendBoolean(false);  // create_shortcut
-  list_args.AppendBoolean(false);  // is_supervised
+  list_args.GetList().emplace_back(kTestProfileName);
+  list_args.GetList().emplace_back(profiles::GetDefaultAvatarIconUrl(0));
+  list_args.GetList().emplace_back(false);  // create_shortcut
+  list_args.GetList().emplace_back(false);  // is_supervised
   handler()->CreateProfile(&list_args);
 
   // Expect a JS callbacks with the new profile information.
@@ -435,13 +435,13 @@ TEST_F(SigninCreateProfileHandlerTest, CreateSupervisedUser) {
 
   // Create a supervised profile.
   base::ListValue list_args;
-  list_args.Clear();
-  list_args.AppendString(kSupervisedUsername1);
-  list_args.AppendString(profiles::GetDefaultAvatarIconUrl(0));
-  list_args.AppendBoolean(false);  // create_shortcut
-  list_args.AppendBoolean(true);  // is_supervised
-  list_args.AppendString("");  // supervised_user_id
-  list_args.AppendString(custodian()->GetPath().value());
+  list_args.GetList().clear();
+  list_args.GetList().emplace_back(kSupervisedUsername1);
+  list_args.GetList().emplace_back(profiles::GetDefaultAvatarIconUrl(0));
+  list_args.GetList().emplace_back(false);  // create_shortcut
+  list_args.GetList().emplace_back(true);   // is_supervised
+  list_args.GetList().emplace_back("");     // supervised_user_id
+  list_args.GetList().emplace_back(custodian()->GetPath().value());
   handler()->CreateProfile(&list_args);
 
   // Expect a JS callbacks with the new profile information.
@@ -483,14 +483,13 @@ TEST_F(SigninCreateProfileHandlerTest, ImportSupervisedUser) {
 
   // Import a supervised profile.
   base::ListValue list_args;
-  list_args.Clear();
-  list_args.AppendString(kSupervisedUsername1);
-  list_args.AppendString(profiles::GetDefaultAvatarIconUrl(0));
-  list_args.AppendBoolean(false);   // create_shortcut
-  list_args.AppendBoolean(true);  // is_supervised
-  list_args.AppendString(
-      kSupervisedUserId1);  // supervised_user_id
-  list_args.AppendString(custodian()->GetPath().value());
+  list_args.GetList().clear();
+  list_args.GetList().emplace_back(kSupervisedUsername1);
+  list_args.GetList().emplace_back(profiles::GetDefaultAvatarIconUrl(0));
+  list_args.GetList().emplace_back(false);               // create_shortcut
+  list_args.GetList().emplace_back(true);                // is_supervised
+  list_args.GetList().emplace_back(kSupervisedUserId1);  // supervised_user_id
+  list_args.GetList().emplace_back(custodian()->GetPath().value());
   handler()->CreateProfile(&list_args);
 
   // Expect a JS callbacks with the new profile information.
@@ -518,13 +517,13 @@ TEST_F(SigninCreateProfileHandlerTest, ImportSupervisedUser) {
 TEST_F(SigninCreateProfileHandlerTest, ImportSupervisedUserAlreadyOnDevice) {
   // Import a supervised profile whose already on the current device.
   base::ListValue list_args;
-  list_args.Clear();
-  list_args.AppendString(kSupervisedUsername2);
-  list_args.AppendString(profiles::GetDefaultAvatarIconUrl(0));
-  list_args.AppendBoolean(false);
-  list_args.AppendBoolean(true);
-  list_args.AppendString(kSupervisedUserId2);
-  list_args.AppendString(custodian()->GetPath().value());
+  list_args.GetList().clear();
+  list_args.GetList().emplace_back(kSupervisedUsername2);
+  list_args.GetList().emplace_back(profiles::GetDefaultAvatarIconUrl(0));
+  list_args.GetList().emplace_back(false);
+  list_args.GetList().emplace_back(true);
+  list_args.GetList().emplace_back(kSupervisedUserId2);
+  list_args.GetList().emplace_back(custodian()->GetPath().value());
   handler()->CreateProfile(&list_args);
 
   // Expect a JS callbacks containing an error message.
@@ -554,13 +553,13 @@ TEST_F(SigninCreateProfileHandlerTest, CustodianNotAuthenticated) {
 
   // Create a supervised profile.
   base::ListValue list_args;
-  list_args.Clear();
-  list_args.AppendString(kSupervisedUsername1);
-  list_args.AppendString(profiles::GetDefaultAvatarIconUrl(0));
-  list_args.AppendBoolean(false);  // create_shortcut
-  list_args.AppendBoolean(true);  // is_supervised
-  list_args.AppendString("");  // supervised_user_id
-  list_args.AppendString(custodian()->GetPath().value());
+  list_args.GetList().clear();
+  list_args.GetList().emplace_back(kSupervisedUsername1);
+  list_args.GetList().emplace_back(profiles::GetDefaultAvatarIconUrl(0));
+  list_args.GetList().emplace_back(false);  // create_shortcut
+  list_args.GetList().emplace_back(true);   // is_supervised
+  list_args.GetList().emplace_back("");     // supervised_user_id
+  list_args.GetList().emplace_back(custodian()->GetPath().value());
   handler()->CreateProfile(&list_args);
 
   // Expect a JS callbacks containing an error message.
@@ -590,13 +589,13 @@ TEST_F(SigninCreateProfileHandlerTest, CustodianHasAuthError) {
 
   // Create a supervised profile.
   base::ListValue list_args;
-  list_args.Clear();
-  list_args.AppendString(kSupervisedUsername1);
-  list_args.AppendString(profiles::GetDefaultAvatarIconUrl(0));
-  list_args.AppendBoolean(false);  // create_shortcut
-  list_args.AppendBoolean(true);  // is_supervised
-  list_args.AppendString("");  // supervised_user_id
-  list_args.AppendString(custodian()->GetPath().value());
+  list_args.GetList().clear();
+  list_args.GetList().emplace_back(kSupervisedUsername1);
+  list_args.GetList().emplace_back(profiles::GetDefaultAvatarIconUrl(0));
+  list_args.GetList().emplace_back(false);  // create_shortcut
+  list_args.GetList().emplace_back(true);   // is_supervised
+  list_args.GetList().emplace_back("");     // supervised_user_id
+  list_args.GetList().emplace_back(custodian()->GetPath().value());
   handler()->CreateProfile(&list_args);
 
   // Expect a JS callbacks containing an error message.
@@ -623,13 +622,13 @@ TEST_F(SigninCreateProfileHandlerTest, NotAllowedToCreateSupervisedUser) {
 
   // Create a supervised profile.
   base::ListValue list_args;
-  list_args.Clear();
-  list_args.AppendString(kSupervisedUsername1);
-  list_args.AppendString(profiles::GetDefaultAvatarIconUrl(0));
-  list_args.AppendBoolean(false);  // create_shortcut
-  list_args.AppendBoolean(true);  // is_supervised
-  list_args.AppendString("");  // supervised_user_id
-  list_args.AppendString(custodian()->GetPath().value());
+  list_args.GetList().clear();
+  list_args.GetList().emplace_back(kSupervisedUsername1);
+  list_args.GetList().emplace_back(profiles::GetDefaultAvatarIconUrl(0));
+  list_args.GetList().emplace_back(false);  // create_shortcut
+  list_args.GetList().emplace_back(true);   // is_supervised
+  list_args.GetList().emplace_back("");     // supervised_user_id
+  list_args.GetList().emplace_back(custodian()->GetPath().value());
   handler()->CreateProfile(&list_args);
 
   // Expect a JS callbacks containing an error message.

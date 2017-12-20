@@ -32,7 +32,7 @@ void MergeDictionary(base::DictionaryValue* target,
       if (merge_value->GetAsList(&merge_list)) {
         base::ListValue* target_list = nullptr;
         if (target->GetListWithoutPathExpansion(it.key(), &target_list)) {
-          for (size_t i = 0; i < merge_list->GetSize(); ++i) {
+          for (size_t i = 0; i < merge_list->GetList().size(); ++i) {
             const base::Value* element = nullptr;
             CHECK(merge_list->Get(i, &element));
             target_list->Append(element->CreateDeepCopy());

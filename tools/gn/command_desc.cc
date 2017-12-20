@@ -84,7 +84,7 @@ void LabelHandler(std::string name, const base::Value* value) {
 void VisibilityHandler(const std::string& name, const base::Value* value) {
   const base::ListValue* list;
   if (value->GetAsList(&list)) {
-    if (list->empty()) {
+    if (list->GetList().empty()) {
       base::Value str("(no visibility)");
       DefaultHandler(name, &str);
     } else {

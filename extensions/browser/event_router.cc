@@ -412,7 +412,7 @@ std::set<std::string> EventRouter::GetRegisteredEvents(
     return events;
   }
 
-  for (size_t i = 0; i < events_value->GetSize(); ++i) {
+  for (size_t i = 0; i < events_value->GetList().size(); ++i) {
     std::string event;
     if (events_value->GetString(i, &event))
       events.insert(event);
@@ -462,7 +462,7 @@ void EventRouter::RemoveFilterFromEvent(const std::string& event_name,
     return;
   }
 
-  for (size_t i = 0; i < filter_list->GetSize(); i++) {
+  for (size_t i = 0; i < filter_list->GetList().size(); i++) {
     DictionaryValue* filter_value = nullptr;
     CHECK(filter_list->GetDictionary(i, &filter_value));
     if (filter_value->Equals(filter)) {
@@ -783,7 +783,7 @@ void EventRouter::SetRegisteredEvents(const std::string& extension_id,
   auto events_value = std::make_unique<base::ListValue>();
   for (std::set<std::string>::const_iterator iter = events.begin();
        iter != events.end(); ++iter) {
-    events_value->AppendString(*iter);
+    events_value->GetList().emplace_back(*iter);
   }
   const char* pref_key = type == RegisteredEventType::kLazy
                              ? kRegisteredLazyEvents

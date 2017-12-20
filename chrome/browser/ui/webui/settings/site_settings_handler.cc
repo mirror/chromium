@@ -330,7 +330,7 @@ void SiteSettingsHandler::HandleFetchUsageTotal(
     const base::ListValue* args) {
   AllowJavascript();
 
-  CHECK_EQ(1U, args->GetSize());
+  CHECK_EQ(1U, args->GetList().size());
   std::string host;
   CHECK(args->GetString(0, &host));
   usage_host_ = host;
@@ -343,7 +343,7 @@ void SiteSettingsHandler::HandleFetchUsageTotal(
 
 void SiteSettingsHandler::HandleClearUsage(
     const base::ListValue* args) {
-  CHECK_EQ(2U, args->GetSize());
+  CHECK_EQ(2U, args->GetList().size());
   std::string origin;
   CHECK(args->GetString(0, &origin));
   double storage_type;
@@ -372,7 +372,7 @@ void SiteSettingsHandler::HandleClearUsage(
 void SiteSettingsHandler::HandleFetchUsbDevices(const base::ListValue* args) {
   AllowJavascript();
 
-  CHECK_EQ(1U, args->GetSize());
+  CHECK_EQ(1U, args->GetList().size());
   const base::Value* callback_id;
   CHECK(args->Get(0, &callback_id));
 
@@ -386,7 +386,7 @@ void SiteSettingsHandler::HandleFetchUsbDevices(const base::ListValue* args) {
 }
 
 void SiteSettingsHandler::HandleRemoveUsbDevice(const base::ListValue* args) {
-  CHECK_EQ(3U, args->GetSize());
+  CHECK_EQ(3U, args->GetList().size());
 
   std::string origin_string;
   CHECK(args->GetString(0, &origin_string));
@@ -410,7 +410,7 @@ void SiteSettingsHandler::HandleRemoveUsbDevice(const base::ListValue* args) {
 
 void SiteSettingsHandler::HandleSetDefaultValueForContentType(
     const base::ListValue* args) {
-  CHECK_EQ(2U, args->GetSize());
+  CHECK_EQ(2U, args->GetList().size());
   std::string content_type;
   CHECK(args->GetString(0, &content_type));
   std::string setting;
@@ -449,7 +449,7 @@ void SiteSettingsHandler::HandleGetDefaultValueForContentType(
     const base::ListValue* args) {
   AllowJavascript();
 
-  CHECK_EQ(2U, args->GetSize());
+  CHECK_EQ(2U, args->GetList().size());
   const base::Value* callback_id;
   CHECK(args->Get(0, &callback_id));
   std::string type;
@@ -468,7 +468,7 @@ void SiteSettingsHandler::HandleGetDefaultValueForContentType(
 void SiteSettingsHandler::HandleGetExceptionList(const base::ListValue* args) {
   AllowJavascript();
 
-  CHECK_EQ(2U, args->GetSize());
+  CHECK_EQ(2U, args->GetList().size());
   const base::Value* callback_id;
   CHECK(args->Get(0, &callback_id));
   std::string type;
@@ -507,7 +507,7 @@ void SiteSettingsHandler::HandleGetOriginPermissions(
     const base::ListValue* args) {
   AllowJavascript();
 
-  CHECK_EQ(3U, args->GetSize());
+  CHECK_EQ(3U, args->GetList().size());
   const base::Value* callback_id;
   CHECK(args->Get(0, &callback_id));
   std::string origin;
@@ -518,7 +518,7 @@ void SiteSettingsHandler::HandleGetOriginPermissions(
   // Note: Invalid URLs will just result in default settings being shown.
   const GURL origin_url(origin);
   auto exceptions = base::MakeUnique<base::ListValue>();
-  for (size_t i = 0; i < types->GetSize(); ++i) {
+  for (size_t i = 0; i < types->GetList().size(); ++i) {
     std::string type;
     types->GetString(i, &type);
     ContentSettingsType content_type =
@@ -552,7 +552,7 @@ void SiteSettingsHandler::HandleGetOriginPermissions(
 
 void SiteSettingsHandler::HandleSetOriginPermissions(
     const base::ListValue* args) {
-  CHECK_EQ(3U, args->GetSize());
+  CHECK_EQ(3U, args->GetList().size());
   std::string origin_string;
   CHECK(args->GetString(0, &origin_string));
   const base::ListValue* types;
@@ -566,7 +566,7 @@ void SiteSettingsHandler::HandleSetOriginPermissions(
 
   ContentSetting setting;
   CHECK(content_settings::ContentSettingFromString(value, &setting));
-  for (size_t i = 0; i < types->GetSize(); ++i) {
+  for (size_t i = 0; i < types->GetList().size(); ++i) {
     std::string type;
     types->GetString(i, &type);
 
@@ -621,7 +621,7 @@ void SiteSettingsHandler::HandleSetOriginPermissions(
 
 void SiteSettingsHandler::HandleResetCategoryPermissionForPattern(
     const base::ListValue* args) {
-  CHECK_EQ(4U, args->GetSize());
+  CHECK_EQ(4U, args->GetList().size());
   std::string primary_pattern_string;
   CHECK(args->GetString(0, &primary_pattern_string));
   std::string secondary_pattern_string;
@@ -676,7 +676,7 @@ void SiteSettingsHandler::HandleResetCategoryPermissionForPattern(
 
 void SiteSettingsHandler::HandleSetCategoryPermissionForPattern(
     const base::ListValue* args) {
-  CHECK_EQ(5U, args->GetSize());
+  CHECK_EQ(5U, args->GetList().size());
   std::string primary_pattern_string;
   CHECK(args->GetString(0, &primary_pattern_string));
   // TODO(dschuyler): Review whether |secondary_pattern_string| should be used.
@@ -739,7 +739,7 @@ void SiteSettingsHandler::HandleSetCategoryPermissionForPattern(
 
 void SiteSettingsHandler::HandleIsOriginValid(const base::ListValue* args) {
   AllowJavascript();
-  CHECK_EQ(2U, args->GetSize());
+  CHECK_EQ(2U, args->GetList().size());
   const base::Value* callback_id;
   CHECK(args->Get(0, &callback_id));
   std::string origin_string;
@@ -751,7 +751,7 @@ void SiteSettingsHandler::HandleIsOriginValid(const base::ListValue* args) {
 
 void SiteSettingsHandler::HandleIsPatternValid(
     const base::ListValue* args) {
-  CHECK_EQ(2U, args->GetSize());
+  CHECK_EQ(2U, args->GetList().size());
   const base::Value* callback_id;
   CHECK(args->Get(0, &callback_id));
   std::string pattern_string;
@@ -875,7 +875,7 @@ void SiteSettingsHandler::SendZoomLevels() {
 }
 
 void SiteSettingsHandler::HandleRemoveZoomLevel(const base::ListValue* args) {
-  CHECK_EQ(1U, args->GetSize());
+  CHECK_EQ(1U, args->GetList().size());
 
   std::string origin;
   CHECK(args->GetString(0, &origin));

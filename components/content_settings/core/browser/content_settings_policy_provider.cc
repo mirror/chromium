@@ -208,7 +208,7 @@ void PolicyProvider::GetContentSettingsFromPreferences(
       return;
     }
 
-    for (size_t j = 0; j < pattern_str_list->GetSize(); ++j) {
+    for (size_t j = 0; j < pattern_str_list->GetList().size(); ++j) {
       std::string original_pattern_str;
       if (!pattern_str_list->GetString(j, &original_pattern_str)) {
         NOTREACHED() << "Could not read content settings pattern #" << j
@@ -282,7 +282,7 @@ void PolicyProvider::GetAutoSelectCertificateSettingsFromPreferences(
   //      }
   //   }
   // }
-  for (size_t j = 0; j < pattern_filter_str_list->GetSize(); ++j) {
+  for (size_t j = 0; j < pattern_filter_str_list->GetList().size(); ++j) {
     std::string pattern_filter_json;
     if (!pattern_filter_str_list->GetString(j, &pattern_filter_json)) {
       NOTREACHED();

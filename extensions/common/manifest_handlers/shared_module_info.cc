@@ -145,7 +145,7 @@ bool SharedModuleInfo::Parse(const Extension* extension,
         *error = base::ASCIIToUTF16(errors::kInvalidExportWhitelist);
         return false;
       }
-      for (size_t i = 0; i < whitelist->GetSize(); ++i) {
+      for (size_t i = 0; i < whitelist->GetList().size(); ++i) {
         std::string extension_id;
         if (!whitelist->GetString(i, &extension_id) ||
             !crx_file::id_util::IdIsValid(extension_id)) {
@@ -164,7 +164,7 @@ bool SharedModuleInfo::Parse(const Extension* extension,
       *error = base::ASCIIToUTF16(errors::kInvalidImport);
       return false;
     }
-    for (size_t i = 0; i < import_list->GetSize(); ++i) {
+    for (size_t i = 0; i < import_list->GetList().size(); ++i) {
       const base::DictionaryValue* import_entry = NULL;
       if (!import_list->GetDictionary(i, &import_entry)) {
         *error = base::ASCIIToUTF16(errors::kInvalidImport);

@@ -43,7 +43,7 @@ bool ParseDefaultApplications(base::DictionaryValue* dict,
     return false;
   }
 
-  size_t apps_number = list->GetSize();
+  size_t apps_number = list->GetList().size();
   if (apps_number > kMaximumNumberOfItems) {
     LOG(ERROR) << "\"" << kDefaultApplications << "\" must contain at most "
                << kMaximumNumberOfItems << " entries.";
@@ -114,7 +114,7 @@ bool ParseSupportedOrigins(base::DictionaryValue* dict,
     return false;
   }
 
-  size_t supported_origins_number = list->GetSize();
+  size_t supported_origins_number = list->GetList().size();
   const size_t kMaximumNumberOfSupportedOrigins = 100000;
   if (supported_origins_number > kMaximumNumberOfSupportedOrigins) {
     LOG(ERROR) << "\"" << kSupportedOrigins << "\" must contain at most "
@@ -282,7 +282,7 @@ bool PaymentManifestParser::ParseWebAppManifestIntoVector(
     return false;
   }
 
-  size_t related_applications_size = list->GetSize();
+  size_t related_applications_size = list->GetList().size();
   for (size_t i = 0; i < related_applications_size; ++i) {
     base::DictionaryValue* related_application = nullptr;
     if (!list->GetDictionary(i, &related_application) || !related_application) {
@@ -340,8 +340,8 @@ bool PaymentManifestParser::ParseWebAppManifestIntoVector(
 
     base::ListValue* fingerprints_list = nullptr;
     if (!related_application->GetList(kFingerprints, &fingerprints_list) ||
-        fingerprints_list->empty() ||
-        fingerprints_list->GetSize() > kMaximumNumberOfItems) {
+        fingerprints_list->GetList().empty() ||
+        fingerprints_list->GetList().size() > kMaximumNumberOfItems) {
       LOG(ERROR) << "\"" << kFingerprints
                  << "\" must be a non-empty list of at most "
                  << kMaximumNumberOfItems << " items.";
@@ -349,7 +349,7 @@ bool PaymentManifestParser::ParseWebAppManifestIntoVector(
       return false;
     }
 
-    size_t fingerprints_size = fingerprints_list->GetSize();
+    size_t fingerprints_size = fingerprints_list->GetList().size();
     for (size_t j = 0; j < fingerprints_size; ++j) {
       base::DictionaryValue* fingerprint_dict = nullptr;
       std::string fingerprint_type;

@@ -109,7 +109,7 @@ void AppHooksDelegate::OnGotInstallState(int request_id,
   // base::Value here when we're just going to later convert it to v8, but it's
   // not worth the specialization on APIRequestHandler for this oddball API.
   base::ListValue response;
-  response.AppendString(install_state);
+  response.GetList().emplace_back(install_state);
   request_handler_->CompleteRequest(request_id, response, std::string());
 }
 

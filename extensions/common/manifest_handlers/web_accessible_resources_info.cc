@@ -74,7 +74,7 @@ bool WebAccessibleResourcesHandler::Parse(Extension* extension,
     *error = base::ASCIIToUTF16(errors::kInvalidWebAccessibleResourcesList);
     return false;
   }
-  for (size_t i = 0; i < list_value->GetSize(); ++i) {
+  for (size_t i = 0; i < list_value->GetList().size(); ++i) {
     std::string relative_path;
     if (!list_value->GetString(i, &relative_path)) {
       *error = ErrorUtils::FormatErrorMessageUTF16(

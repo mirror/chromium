@@ -122,7 +122,7 @@ bool UpdateFromDict(const base::DictionaryValue* dict_value,
   if (list == nullptr)
     return true;
 
-  output->reserve(list->GetSize());
+  output->reserve(list->GetList().size());
   for (const auto& list_item : *list) {
     const base::DictionaryValue* item_values = nullptr;
     if (!list_item.GetAsDictionary(&item_values))

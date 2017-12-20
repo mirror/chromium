@@ -809,8 +809,9 @@ void EasyUnlockPrivateGetRemoteDevicesFunction::OnPSKDerivedForDevice(
 
   // If all PSKs are derived, then return from the API call.
   PA_LOG(INFO) << "Derived PSK for " << b64_public_key << ": "
-               << remote_devices_->GetSize() << "/" << expected_devices_count_;
-  if (remote_devices_->GetSize() == expected_devices_count_) {
+               << remote_devices_->GetList().size() << "/"
+               << expected_devices_count_;
+  if (remote_devices_->GetList().size() == expected_devices_count_) {
     SetResult(std::move(remote_devices_));
     SendResponse(true);
   }
@@ -949,9 +950,9 @@ bool EasyUnlockPrivateGetConnectionInfoFunction::DoWork(
 void EasyUnlockPrivateGetConnectionInfoFunction::OnConnectionInfo(
     const device::BluetoothDevice::ConnectionInfo& connection_info) {
   std::unique_ptr<base::ListValue> results(new base::ListValue());
-  results->AppendInteger(connection_info.rssi);
-  results->AppendInteger(connection_info.transmit_power);
-  results->AppendInteger(connection_info.max_transmit_power);
+  results->GetList().emplace_back(connection_info.rssi);
+  results->GetList().emplace_back(connection_info.transmit_power);
+  results->GetList().emplace_back(connection_info.max_transmit_power);
   SetResultList(std::move(results));
   SendResponse(true);
 }

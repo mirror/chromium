@@ -20,9 +20,9 @@ class DefaultSearchPolicyHandlerTest
     : public ConfigurationPolicyPrefStoreTest {
  public:
   DefaultSearchPolicyHandlerTest() {
-    default_alternate_urls_.AppendString(
+    default_alternate_urls_.GetList().emplace_back(
         "http://www.google.com/#q={searchTerms}");
-    default_alternate_urls_.AppendString(
+    default_alternate_urls_.GetList().emplace_back(
         "http://www.google.com/search#q={searchTerms}");
   }
 
@@ -75,8 +75,8 @@ const char DefaultSearchPolicyHandlerTest::kHostName[] = "test.com";
 void DefaultSearchPolicyHandlerTest::
     BuildDefaultSearchPolicy(PolicyMap* policy) {
   base::ListValue* encodings = new base::ListValue();
-  encodings->AppendString("UTF-16");
-  encodings->AppendString("UTF-8");
+  encodings->GetList().emplace_back("UTF-16");
+  encodings->GetList().emplace_back("UTF-8");
   policy->Set(key::kDefaultSearchProviderEnabled, POLICY_LEVEL_MANDATORY,
               POLICY_SCOPE_USER, POLICY_SOURCE_CLOUD,
               base::MakeUnique<base::Value>(true), nullptr);
@@ -216,8 +216,8 @@ TEST_F(DefaultSearchPolicyHandlerTest, FullyDefined) {
   EXPECT_EQ(kIconURL, value);
 
   base::ListValue encodings;
-  encodings.AppendString("UTF-16");
-  encodings.AppendString("UTF-8");
+  encodings.GetList().emplace_back("UTF-16");
+  encodings.GetList().emplace_back("UTF-8");
 
   EXPECT_TRUE(
       dictionary->GetList(DefaultSearchManager::kInputEncodings, &list_value));

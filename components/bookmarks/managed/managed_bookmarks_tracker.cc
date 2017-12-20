@@ -49,7 +49,7 @@ ManagedBookmarksTracker::GetInitialManagedBookmarks() {
 int64_t ManagedBookmarksTracker::LoadInitial(BookmarkNode* folder,
                                              const base::ListValue* list,
                                              int64_t next_node_id) {
-  for (size_t i = 0; i < list->GetSize(); ++i) {
+  for (size_t i = 0; i < list->GetList().size(); ++i) {
     // Extract the data for the next bookmark from the |list|.
     base::string16 title;
     GURL url;
@@ -117,7 +117,7 @@ void ManagedBookmarksTracker::ReloadManagedBookmarks() {
 void ManagedBookmarksTracker::UpdateBookmarks(const BookmarkNode* folder,
                                               const base::ListValue* list) {
   int folder_index = 0;
-  for (size_t i = 0; i < list->GetSize(); ++i) {
+  for (size_t i = 0; i < list->GetList().size(); ++i) {
     // Extract the data for the next bookmark from the |list|.
     base::string16 title;
     GURL url;

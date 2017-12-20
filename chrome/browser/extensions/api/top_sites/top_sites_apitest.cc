@@ -80,7 +80,7 @@ IN_PROC_BROWSER_TEST_F(TopSitesExtensionTest, GetTopSites) {
       get_top_sites_function.get(), "[]", browser()));
   base::ListValue* list;
   ASSERT_TRUE(result->GetAsList(&list));
-  EXPECT_GE(list->GetSize(), top_sites_prepopulated_pages_size());
+  EXPECT_GE(list->GetList().size(), top_sites_prepopulated_pages_size());
 }
 
 }  // namespace extensions

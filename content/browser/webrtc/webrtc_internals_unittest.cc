@@ -185,7 +185,7 @@ TEST_F(WebRtcInternalsTest, EnsureNoLogWhenNoObserver) {
 
   base::ListValue* list = nullptr;
   ASSERT_TRUE(observer.value()->GetAsList(&list));
-  EXPECT_EQ(1U, list->GetSize());
+  EXPECT_EQ(1U, list->GetList().size());
   base::DictionaryValue* dict = nullptr;
   ASSERT_TRUE((*list->begin()).GetAsDictionary(&dict));
   base::ListValue* log = nullptr;
@@ -211,7 +211,7 @@ TEST_F(WebRtcInternalsTest, EnsureLogIsRemovedWhenObserverIsRemoved) {
 
   base::ListValue* list = nullptr;
   ASSERT_TRUE(observer.value()->GetAsList(&list));
-  EXPECT_EQ(1U, list->GetSize());
+  EXPECT_EQ(1U, list->GetList().size());
   base::DictionaryValue* dict = nullptr;
   ASSERT_TRUE((*list->begin()).GetAsDictionary(&dict));
   base::ListValue* log = nullptr;
@@ -223,7 +223,7 @@ TEST_F(WebRtcInternalsTest, EnsureLogIsRemovedWhenObserverIsRemoved) {
   EXPECT_EQ("updateAllPeerConnections", observer.command());
 
   ASSERT_TRUE(observer.value()->GetAsList(&list));
-  EXPECT_EQ(1U, list->GetSize());
+  EXPECT_EQ(1U, list->GetList().size());
   ASSERT_TRUE((*list->begin()).GetAsDictionary(&dict));
   ASSERT_FALSE(dict->GetList("log", &log));
 
@@ -375,7 +375,7 @@ TEST_F(WebRtcInternalsTest, SendAllUpdatesWithPeerConnectionUpdate) {
 
   base::ListValue* list = nullptr;
   EXPECT_TRUE(observer.value()->GetAsList(&list));
-  EXPECT_EQ(1U, list->GetSize());
+  EXPECT_EQ(1U, list->GetList().size());
 
   base::DictionaryValue* dict = nullptr;
   EXPECT_TRUE((*list->begin()).GetAsDictionary(&dict));
@@ -389,7 +389,7 @@ TEST_F(WebRtcInternalsTest, SendAllUpdatesWithPeerConnectionUpdate) {
 
   base::ListValue* log = nullptr;
   ASSERT_TRUE(dict->GetList("log", &log));
-  EXPECT_EQ(1U, log->GetSize());
+  EXPECT_EQ(1U, log->GetList().size());
 
   EXPECT_TRUE((*log->begin()).GetAsDictionary(&dict));
   VerifyString(dict, "type", update_type);
@@ -409,8 +409,8 @@ TEST_F(WebRtcInternalsTest, OnAddStats) {
                                        kContraints);
 
   base::ListValue list;
-  list.AppendString("xxx");
-  list.AppendString("yyy");
+  list.GetList().emplace_back("xxx");
+  list.GetList().emplace_back("yyy");
   webrtc_internals.OnAddStats(pid, lid, list);
 
   loop.Run();

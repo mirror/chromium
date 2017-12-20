@@ -519,9 +519,10 @@ HttpServerPropertiesImpl::GetAlternativeServiceInfoAsValue() const {
       if (IsAlternativeServiceBroken(alternative_service)) {
         alternative_service_string.append(" (broken)");
       }
-      alternative_service_list->AppendString(alternative_service_string);
+      alternative_service_list->GetList().emplace_back(
+          alternative_service_string);
     }
-    if (alternative_service_list->empty())
+    if (alternative_service_list->GetList().empty())
       continue;
     std::unique_ptr<base::DictionaryValue> dict(new base::DictionaryValue());
     dict->SetString("server", server.Serialize());

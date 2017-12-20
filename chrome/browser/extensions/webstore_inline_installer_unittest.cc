@@ -100,7 +100,7 @@ bool WebstoreInlineInstallerTest::TestMultipleVerifiedSites(
   auto sites = base::MakeUnique<base::ListValue>();
   for (std::vector<std::string>::const_iterator it = verified_sites.begin();
        it != verified_sites.end(); ++it) {
-    sites->AppendString(*it);
+    sites->GetList().emplace_back(*it);
   }
   base::DictionaryValue webstore_data;
   webstore_data.Set("verified_sites", std::move(sites));

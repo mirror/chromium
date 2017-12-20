@@ -502,7 +502,7 @@ const char* GetIconClassForError(const std::string& error_domain,
 // suggestion to a separate set of strings for displaying as a button.
 void AddGoogleCachedCopyButton(base::ListValue* suggestions_summary_list,
                                base::DictionaryValue* error_strings) {
-  if (!suggestions_summary_list->empty()) {
+  if (!suggestions_summary_list->GetList().empty()) {
     base::DictionaryValue* suggestion;
     suggestions_summary_list->GetDictionary(0, &suggestion);
     int type = -1;
@@ -615,7 +615,7 @@ void GetSuggestionsSummaryList(int error_code,
     return;
 
   if (IsOnlySuggestion(suggestions, SUGGEST_CONTACT_ADMINISTRATOR)) {
-    DCHECK(suggestions_summary_list->empty());
+    DCHECK(suggestions_summary_list->GetList().empty());
     DCHECK(!(suggestions & ~SUGGEST_CONTACT_ADMINISTRATOR));
     AddSingleEntryDictionaryToList(suggestions_summary_list, "summary",
         IDS_ERRORPAGES_SUGGESTION_CONTACT_ADMIN_SUMMARY_STANDALONE, false);
@@ -627,7 +627,7 @@ void GetSuggestionsSummaryList(int error_code,
   }
 
   if (IsOnlySuggestion(suggestions, SUGGEST_COMPLETE_SETUP)) {
-    DCHECK(suggestions_summary_list->empty());
+    DCHECK(suggestions_summary_list->GetList().empty());
     DCHECK(!(suggestions & ~SUGGEST_COMPLETE_SETUP));
     AddSingleEntryDictionaryToList(suggestions_summary_list, "summary",
         IDS_ERRORPAGES_SUGGESTION_DIAGNOSE_CONNECTION_SUMMARY, false);
@@ -638,7 +638,7 @@ void GetSuggestionsSummaryList(int error_code,
   DCHECK(!IsSuggested(suggestions, SUGGEST_COMPLETE_SETUP));
 
   if (IsOnlySuggestion(suggestions,SUGGEST_REPOST_RELOAD)) {
-    DCHECK(suggestions_summary_list->empty());
+    DCHECK(suggestions_summary_list->GetList().empty());
     DCHECK(!(suggestions & ~SUGGEST_REPOST_RELOAD));
     // If the page was created by a post, it can't be reloaded in the same
     // way, so just add a suggestion instead.
@@ -651,7 +651,7 @@ void GetSuggestionsSummaryList(int error_code,
   DCHECK(!IsSuggested(suggestions, SUGGEST_REPOST_RELOAD));
 
   if (IsOnlySuggestion(suggestions, SUGGEST_NAVIGATE_TO_ORIGIN)) {
-    DCHECK(suggestions_summary_list->empty());
+    DCHECK(suggestions_summary_list->GetList().empty());
     DCHECK(!(suggestions & ~SUGGEST_NAVIGATE_TO_ORIGIN));
     url::Origin failed_origin = url::Origin::Create(failed_url);
     if (failed_origin.unique())
@@ -668,7 +668,7 @@ void GetSuggestionsSummaryList(int error_code,
   DCHECK(!IsSuggested(suggestions, SUGGEST_NAVIGATE_TO_ORIGIN));
 
   if (IsOnlySuggestion(suggestions, SUGGEST_LEARNMORE)) {
-    DCHECK(suggestions_summary_list->empty());
+    DCHECK(suggestions_summary_list->GetList().empty());
     AddLinkedSuggestionToList(error_code, locale, suggestions_summary_list,
                               true);
     return;
@@ -679,7 +679,7 @@ void GetSuggestionsSummaryList(int error_code,
   }
 
   if (suggestions & SUGGEST_DISABLE_EXTENSION) {
-    DCHECK(suggestions_summary_list->empty());
+    DCHECK(suggestions_summary_list->GetList().empty());
     AddSingleEntryDictionaryToList(suggestions_summary_list, "summary",
         IDS_ERRORPAGES_SUGGESTION_DISABLE_EXTENSION_SUMMARY, false);
     return;
@@ -779,7 +779,7 @@ base::DictionaryValue* AddSuggestionDetailDictionaryToList(
   list->Append(base::WrapUnique(suggestion_list_item));
   // |suggestion_list_item| is invalidated at this point, so it needs to be
   // reset.
-  list->GetDictionary(list->GetSize() - 1, &suggestion_list_item);
+  list->GetDictionary(list->GetList().size() - 1, &suggestion_list_item);
   return suggestion_list_item;
 }
 

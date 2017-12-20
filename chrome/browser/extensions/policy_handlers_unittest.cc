@@ -63,7 +63,7 @@ TEST(ExtensionListPolicyHandlerTest, CheckPolicySettings) {
   EXPECT_TRUE(handler.CheckPolicySettings(policy_map, &errors));
   EXPECT_TRUE(errors.empty());
 
-  list.AppendString("abcdefghijklmnopabcdefghijklmnop");
+  list.GetList().emplace_back("abcdefghijklmnopabcdefghijklmnop");
   policy_map.Set(policy::key::kExtensionInstallBlacklist,
                  policy::POLICY_LEVEL_MANDATORY, policy::POLICY_SCOPE_USER,
                  policy::POLICY_SOURCE_CLOUD, list.CreateDeepCopy(), nullptr);
@@ -71,7 +71,7 @@ TEST(ExtensionListPolicyHandlerTest, CheckPolicySettings) {
   EXPECT_TRUE(handler.CheckPolicySettings(policy_map, &errors));
   EXPECT_TRUE(errors.empty());
 
-  list.AppendString("*");
+  list.GetList().emplace_back("*");
   policy_map.Set(policy::key::kExtensionInstallBlacklist,
                  policy::POLICY_LEVEL_MANDATORY, policy::POLICY_SCOPE_USER,
                  policy::POLICY_SOURCE_CLOUD, list.CreateDeepCopy(), nullptr);
@@ -79,7 +79,7 @@ TEST(ExtensionListPolicyHandlerTest, CheckPolicySettings) {
   EXPECT_TRUE(handler.CheckPolicySettings(policy_map, &errors));
   EXPECT_TRUE(errors.empty());
 
-  list.AppendString("invalid");
+  list.GetList().emplace_back("invalid");
   policy_map.Set(policy::key::kExtensionInstallBlacklist,
                  policy::POLICY_LEVEL_MANDATORY, policy::POLICY_SCOPE_USER,
                  policy::POLICY_SOURCE_CLOUD, list.CreateDeepCopy(), nullptr);
@@ -147,8 +147,8 @@ TEST(ExtensionListPolicyHandlerTest, ApplyPolicySettings) {
   ExtensionListPolicyHandler handler(
       policy::key::kExtensionInstallBlacklist, kTestPref, false);
 
-  policy.AppendString("abcdefghijklmnopabcdefghijklmnop");
-  expected.AppendString("abcdefghijklmnopabcdefghijklmnop");
+  policy.GetList().emplace_back("abcdefghijklmnopabcdefghijklmnop");
+  expected.GetList().emplace_back("abcdefghijklmnopabcdefghijklmnop");
 
   policy_map.Set(policy::key::kExtensionInstallBlacklist,
                  policy::POLICY_LEVEL_MANDATORY, policy::POLICY_SCOPE_USER,
@@ -157,7 +157,7 @@ TEST(ExtensionListPolicyHandlerTest, ApplyPolicySettings) {
   EXPECT_TRUE(prefs.GetValue(kTestPref, &value));
   EXPECT_EQ(expected, *value);
 
-  policy.AppendString("invalid");
+  policy.GetList().emplace_back("invalid");
   policy_map.Set(policy::key::kExtensionInstallBlacklist,
                  policy::POLICY_LEVEL_MANDATORY, policy::POLICY_SCOPE_USER,
                  policy::POLICY_SOURCE_CLOUD, policy.CreateDeepCopy(), nullptr);
@@ -179,7 +179,8 @@ TEST(ExtensionInstallForcelistPolicyHandlerTest, CheckPolicySettings) {
   EXPECT_TRUE(handler.CheckPolicySettings(policy_map, &errors));
   EXPECT_TRUE(errors.empty());
 
-  list.AppendString("abcdefghijklmnopabcdefghijklmnop;http://example.com");
+  list.GetList().emplace_back(
+      "abcdefghijklmnopabcdefghijklmnop;http://example.com");
   policy_map.Set(policy::key::kExtensionInstallForcelist,
                  policy::POLICY_LEVEL_MANDATORY, policy::POLICY_SCOPE_USER,
                  policy::POLICY_SOURCE_CLOUD, list.CreateDeepCopy(), nullptr);
@@ -189,7 +190,7 @@ TEST(ExtensionInstallForcelistPolicyHandlerTest, CheckPolicySettings) {
 
   // Add an erroneous entry. This should generate an error, but the good
   // entry should still be translated successfully.
-  list.AppendString("adfasdf;http://example.com");
+  list.GetList().emplace_back("adfasdf;http://example.com");
   policy_map.Set(policy::key::kExtensionInstallForcelist,
                  policy::POLICY_LEVEL_MANDATORY, policy::POLICY_SCOPE_USER,
                  policy::POLICY_SOURCE_CLOUD, list.CreateDeepCopy(), nullptr);
@@ -198,7 +199,7 @@ TEST(ExtensionInstallForcelistPolicyHandlerTest, CheckPolicySettings) {
   EXPECT_EQ(1U, errors.size());
 
   // Add an entry with bad URL, which should generate another error.
-  list.AppendString("abcdefghijklmnopabcdefghijklmnop;nourl");
+  list.GetList().emplace_back("abcdefghijklmnopabcdefghijklmnop;nourl");
   policy_map.Set(policy::key::kExtensionInstallForcelist,
                  policy::POLICY_LEVEL_MANDATORY, policy::POLICY_SCOPE_USER,
                  policy::POLICY_SOURCE_CLOUD, list.CreateDeepCopy(), nullptr);
@@ -207,7 +208,7 @@ TEST(ExtensionInstallForcelistPolicyHandlerTest, CheckPolicySettings) {
   EXPECT_EQ(2U, errors.size());
 
   // Just an extension ID should also generate an error.
-  list.AppendString("abcdefghijklmnopabcdefghijklmnop");
+  list.GetList().emplace_back("abcdefghijklmnopabcdefghijklmnop");
   policy_map.Set(policy::key::kExtensionInstallForcelist,
                  policy::POLICY_LEVEL_MANDATORY, policy::POLICY_SCOPE_USER,
                  policy::POLICY_SOURCE_CLOUD, list.CreateDeepCopy(), nullptr);
@@ -235,7 +236,8 @@ TEST(ExtensionInstallForcelistPolicyHandlerTest, ApplyPolicySettings) {
   EXPECT_TRUE(prefs.GetValue(pref_names::kInstallForceList, &value));
   EXPECT_EQ(expected, *value);
 
-  policy.AppendString("abcdefghijklmnopabcdefghijklmnop;http://example.com");
+  policy.GetList().emplace_back(
+      "abcdefghijklmnopabcdefghijklmnop;http://example.com");
   extensions::ExternalPolicyLoader::AddExtension(
       &expected, "abcdefghijklmnopabcdefghijklmnop", "http://example.com");
   policy_map.Set(policy::key::kExtensionInstallForcelist,
@@ -245,7 +247,7 @@ TEST(ExtensionInstallForcelistPolicyHandlerTest, ApplyPolicySettings) {
   EXPECT_TRUE(prefs.GetValue(pref_names::kInstallForceList, &value));
   EXPECT_EQ(expected, *value);
 
-  policy.AppendString("invalid");
+  policy.GetList().emplace_back("invalid");
   policy_map.Set(policy::key::kExtensionInstallForcelist,
                  policy::POLICY_LEVEL_MANDATORY, policy::POLICY_SCOPE_USER,
                  policy::POLICY_SOURCE_CLOUD, policy.CreateDeepCopy(), nullptr);
@@ -268,7 +270,7 @@ TEST(ExtensionURLPatternListPolicyHandlerTest, CheckPolicySettings) {
   EXPECT_TRUE(handler.CheckPolicySettings(policy_map, &errors));
   EXPECT_TRUE(errors.empty());
 
-  list.AppendString("http://*.google.com/*");
+  list.GetList().emplace_back("http://*.google.com/*");
   policy_map.Set(policy::key::kExtensionInstallSources,
                  policy::POLICY_LEVEL_MANDATORY, policy::POLICY_SCOPE_USER,
                  policy::POLICY_SOURCE_CLOUD, list.CreateDeepCopy(), nullptr);
@@ -276,7 +278,7 @@ TEST(ExtensionURLPatternListPolicyHandlerTest, CheckPolicySettings) {
   EXPECT_TRUE(handler.CheckPolicySettings(policy_map, &errors));
   EXPECT_TRUE(errors.empty());
 
-  list.AppendString("<all_urls>");
+  list.GetList().emplace_back("<all_urls>");
   policy_map.Set(policy::key::kExtensionInstallSources,
                  policy::POLICY_LEVEL_MANDATORY, policy::POLICY_SCOPE_USER,
                  policy::POLICY_SOURCE_CLOUD, list.CreateDeepCopy(), nullptr);
@@ -284,7 +286,7 @@ TEST(ExtensionURLPatternListPolicyHandlerTest, CheckPolicySettings) {
   EXPECT_TRUE(handler.CheckPolicySettings(policy_map, &errors));
   EXPECT_TRUE(errors.empty());
 
-  list.AppendString("invalid");
+  list.GetList().emplace_back("invalid");
   policy_map.Set(policy::key::kExtensionInstallSources,
                  policy::POLICY_LEVEL_MANDATORY, policy::POLICY_SCOPE_USER,
                  policy::POLICY_SOURCE_CLOUD, list.CreateDeepCopy(), nullptr);
@@ -295,7 +297,7 @@ TEST(ExtensionURLPatternListPolicyHandlerTest, CheckPolicySettings) {
 
   // URLPattern syntax has a different way to express 'all urls'. Though '*'
   // would be compatible today, it would be brittle, so we disallow.
-  list.AppendString("*");
+  list.GetList().emplace_back("*");
   policy_map.Set(policy::key::kExtensionInstallSources,
                  policy::POLICY_LEVEL_MANDATORY, policy::POLICY_SCOPE_USER,
                  policy::POLICY_SOURCE_CLOUD, list.CreateDeepCopy(), nullptr);
@@ -313,7 +315,7 @@ TEST(ExtensionURLPatternListPolicyHandlerTest, ApplyPolicySettings) {
   ExtensionURLPatternListPolicyHandler handler(
       policy::key::kExtensionInstallSources, kTestPref);
 
-  list.AppendString("https://corp.monkey.net/*");
+  list.GetList().emplace_back("https://corp.monkey.net/*");
   policy_map.Set(policy::key::kExtensionInstallSources,
                  policy::POLICY_LEVEL_MANDATORY, policy::POLICY_SCOPE_USER,
                  policy::POLICY_SOURCE_CLOUD, list.CreateDeepCopy(), nullptr);

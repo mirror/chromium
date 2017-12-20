@@ -265,7 +265,7 @@ std::unique_ptr<base::DictionaryValue> ProxyConfig::ToValue() const {
       for (ProxyBypassRules::RuleList::const_iterator it =
               bypass.rules().begin();
            it != bypass.rules().end(); ++it) {
-        list->AppendString((*it)->ToString());
+        list->GetList().emplace_back((*it)->ToString());
       }
 
       dict->Set("bypass_list", std::move(list));

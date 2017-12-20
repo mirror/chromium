@@ -78,7 +78,7 @@ void CheckJSONIsStillTheSame(const Value& value) {
 void ValidateJsonList(const std::string& json) {
   std::unique_ptr<ListValue> list = ListValue::From(JSONReader::Read(json));
   ASSERT_TRUE(list);
-  ASSERT_EQ(1U, list->GetSize());
+  ASSERT_EQ(1U, list->GetList().size());
   Value* elt = nullptr;
   ASSERT_TRUE(list->Get(0, &elt));
   int value = 0;
@@ -381,7 +381,7 @@ TEST(JSONValueSerializerTest, JSONReaderComments) {
   std::unique_ptr<ListValue> list =
       ListValue::From(JSONReader::Read("[\"// ok\\n /* foo */ \"]"));
   ASSERT_TRUE(list);
-  ASSERT_EQ(1U, list->GetSize());
+  ASSERT_EQ(1U, list->GetList().size());
   Value* elt = nullptr;
   ASSERT_TRUE(list->Get(0, &elt));
   std::string value;

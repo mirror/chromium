@@ -231,7 +231,7 @@ std::unique_ptr<base::Value> NetLogSpdySendSettingsCallback(
     const uint32_t value = it->second;
     const char* settings_string;
     SettingsIdToString(id, &settings_string);
-    settings_list->AppendString(
+    settings_list->GetList().emplace_back(
         SpdyStringPrintf("[id:%u (%s) value:%u]", id, settings_string, value));
   }
   dict->Set("settings", std::move(settings_list));
@@ -1243,7 +1243,7 @@ std::unique_ptr<base::Value> SpdySession::GetInfoAsValue() const {
   if (!pooled_aliases_.empty()) {
     auto alias_list = std::make_unique<base::ListValue>();
     for (const auto& alias : pooled_aliases_) {
-      alias_list->AppendString(alias.host_port_pair().ToString());
+      alias_list->GetList().emplace_back(alias.host_port_pair().ToString());
     }
     dict->Set("aliases", std::move(alias_list));
   }

@@ -144,10 +144,10 @@ std::unique_ptr<base::DictionaryValue> UIResourceLayerImpl::LayerAsJson() {
   result->Set("ImageBounds", MathUtil::AsValue(image_bounds_));
 
   auto list = std::make_unique<base::ListValue>();
-  list->AppendDouble(vertex_opacity_[0]);
-  list->AppendDouble(vertex_opacity_[1]);
-  list->AppendDouble(vertex_opacity_[2]);
-  list->AppendDouble(vertex_opacity_[3]);
+  list->GetList().emplace_back(vertex_opacity_[0]);
+  list->GetList().emplace_back(vertex_opacity_[1]);
+  list->GetList().emplace_back(vertex_opacity_[2]);
+  list->GetList().emplace_back(vertex_opacity_[3]);
   result->Set("VertexOpacity", std::move(list));
 
   result->Set("UVTopLeft", MathUtil::AsValue(uv_top_left_));

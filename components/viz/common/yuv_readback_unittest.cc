@@ -107,7 +107,7 @@ class YUVReadbackTest : public testing::Test {
 
     base::ListValue* list;
     CHECK(trace_data->GetAsList(&list));
-    for (size_t i = 0; i < list->GetSize(); i++) {
+    for (size_t i = 0; i < list->GetList().size(); i++) {
       base::Value* item = nullptr;
       if (list->Get(i, &item)) {
         base::DictionaryValue* dict;

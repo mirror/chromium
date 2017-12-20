@@ -26,9 +26,9 @@ void SetCheckinInfo(const std::vector<gcm::CheckinActivity>& checkins,
                     base::ListValue* checkin_info) {
   for (const gcm::CheckinActivity& checkin : checkins) {
     auto row = std::make_unique<base::ListValue>();
-    row->AppendDouble(checkin.time.ToJsTime());
-    row->AppendString(checkin.event);
-    row->AppendString(checkin.details);
+    row->GetList().emplace_back(checkin.time.ToJsTime());
+    row->GetList().emplace_back(checkin.event);
+    row->GetList().emplace_back(checkin.details);
     checkin_info->Append(std::move(row));
   }
 }
@@ -37,9 +37,9 @@ void SetConnectionInfo(const std::vector<gcm::ConnectionActivity>& connections,
                        base::ListValue* connection_info) {
   for (const gcm::ConnectionActivity& connection : connections) {
     auto row = std::make_unique<base::ListValue>();
-    row->AppendDouble(connection.time.ToJsTime());
-    row->AppendString(connection.event);
-    row->AppendString(connection.details);
+    row->GetList().emplace_back(connection.time.ToJsTime());
+    row->GetList().emplace_back(connection.event);
+    row->GetList().emplace_back(connection.details);
     connection_info->Append(std::move(row));
   }
 }
@@ -49,11 +49,11 @@ void SetRegistrationInfo(
     base::ListValue* registration_info) {
   for (const gcm::RegistrationActivity& registration : registrations) {
     auto row = std::make_unique<base::ListValue>();
-    row->AppendDouble(registration.time.ToJsTime());
-    row->AppendString(registration.app_id);
-    row->AppendString(registration.source);
-    row->AppendString(registration.event);
-    row->AppendString(registration.details);
+    row->GetList().emplace_back(registration.time.ToJsTime());
+    row->GetList().emplace_back(registration.app_id);
+    row->GetList().emplace_back(registration.source);
+    row->GetList().emplace_back(registration.event);
+    row->GetList().emplace_back(registration.details);
     registration_info->Append(std::move(row));
   }
 }
@@ -62,12 +62,12 @@ void SetReceivingInfo(const std::vector<gcm::ReceivingActivity>& receives,
                       base::ListValue* receive_info) {
   for (const gcm::ReceivingActivity& receive : receives) {
     auto row = std::make_unique<base::ListValue>();
-    row->AppendDouble(receive.time.ToJsTime());
-    row->AppendString(receive.app_id);
-    row->AppendString(receive.from);
-    row->AppendString(base::IntToString(receive.message_byte_size));
-    row->AppendString(receive.event);
-    row->AppendString(receive.details);
+    row->GetList().emplace_back(receive.time.ToJsTime());
+    row->GetList().emplace_back(receive.app_id);
+    row->GetList().emplace_back(receive.from);
+    row->GetList().emplace_back(base::IntToString(receive.message_byte_size));
+    row->GetList().emplace_back(receive.event);
+    row->GetList().emplace_back(receive.details);
     receive_info->Append(std::move(row));
   }
 }
@@ -76,12 +76,12 @@ void SetSendingInfo(const std::vector<gcm::SendingActivity>& sends,
                     base::ListValue* send_info) {
   for (const gcm::SendingActivity& send : sends) {
     auto row = std::make_unique<base::ListValue>();
-    row->AppendDouble(send.time.ToJsTime());
-    row->AppendString(send.app_id);
-    row->AppendString(send.receiver_id);
-    row->AppendString(send.message_id);
-    row->AppendString(send.event);
-    row->AppendString(send.details);
+    row->GetList().emplace_back(send.time.ToJsTime());
+    row->GetList().emplace_back(send.app_id);
+    row->GetList().emplace_back(send.receiver_id);
+    row->GetList().emplace_back(send.message_id);
+    row->GetList().emplace_back(send.event);
+    row->GetList().emplace_back(send.details);
     send_info->Append(std::move(row));
   }
 }
@@ -91,9 +91,9 @@ void SetDecryptionFailureInfo(
     base::ListValue* failure_info) {
   for (const gcm::DecryptionFailureActivity& failure : failures) {
     auto row = std::make_unique<base::ListValue>();
-    row->AppendDouble(failure.time.ToJsTime());
-    row->AppendString(failure.app_id);
-    row->AppendString(failure.details);
+    row->GetList().emplace_back(failure.time.ToJsTime());
+    row->GetList().emplace_back(failure.app_id);
+    row->GetList().emplace_back(failure.details);
     failure_info->Append(std::move(row));
   }
 }

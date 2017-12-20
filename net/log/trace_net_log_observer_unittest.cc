@@ -99,7 +99,7 @@ class TraceNetLogObserverTest : public testing::Test {
       base::RunLoop* run_loop,
       const scoped_refptr<base::RefCountedString>& events_str,
       bool has_more_events) {
-    DCHECK(trace_events_->empty());
+    DCHECK(trace_events_->GetList().empty());
     trace_buffer_.Start();
     trace_buffer_.AddFragment(events_str->data());
     trace_buffer_.Finish();
@@ -135,7 +135,7 @@ class TraceNetLogObserverTest : public testing::Test {
       const base::ListValue& trace_events) {
     std::unique_ptr<base::ListValue> filtered_trace_events(
         new base::ListValue());
-    for (size_t i = 0; i < trace_events.GetSize(); i++) {
+    for (size_t i = 0; i < trace_events.GetList().size(); i++) {
       const base::DictionaryValue* dict = nullptr;
       if (!trace_events.GetDictionary(i, &dict)) {
         ADD_FAILURE() << "Unexpected non-dictionary event in trace_events";
@@ -177,7 +177,7 @@ TEST_F(TraceNetLogObserverTest, TracingNotEnabled) {
   EndTraceAndFlush();
   trace_net_log_observer()->StopWatchForTraceStart();
 
-  EXPECT_EQ(0u, trace_events()->GetSize());
+  EXPECT_EQ(0u, trace_events()->GetList().size());
 }
 
 // This test will result in a deadlock if EnabledStateObserver instead
@@ -218,7 +218,7 @@ TEST_F(TraceNetLogObserverTest, TraceEventCaptured) {
   EXPECT_EQ(3u, entries.size());
   EndTraceAndFlush();
   trace_net_log_observer()->StopWatchForTraceStart();
-  EXPECT_EQ(3u, trace_events()->GetSize());
+  EXPECT_EQ(3u, trace_events()->GetList().size());
   const base::DictionaryValue* item1 = nullptr;
   ASSERT_TRUE(trace_events()->GetDictionary(0, &item1));
   const base::DictionaryValue* item2 = nullptr;
@@ -272,7 +272,7 @@ TEST_F(TraceNetLogObserverTest, EnableAndDisableTracing) {
   TestNetLogEntry::List entries;
   net_log()->GetEntries(&entries);
   EXPECT_EQ(3u, entries.size());
-  EXPECT_EQ(2u, trace_events()->GetSize());
+  EXPECT_EQ(2u, trace_events()->GetList().size());
   const base::DictionaryValue* item1 = nullptr;
   ASSERT_TRUE(trace_events()->GetDictionary(0, &item1));
   const base::DictionaryValue* item2 = nullptr;
@@ -312,7 +312,7 @@ TEST_F(TraceNetLogObserverTest, DestroyObserverWhileTracing) {
   TestNetLogEntry::List entries;
   net_log()->GetEntries(&entries);
   EXPECT_EQ(2u, entries.size());
-  EXPECT_EQ(1u, trace_events()->GetSize());
+  EXPECT_EQ(1u, trace_events()->GetList().size());
 
   const base::DictionaryValue* item1 = nullptr;
   ASSERT_TRUE(trace_events()->GetDictionary(0, &item1));
@@ -341,7 +341,7 @@ TEST_F(TraceNetLogObserverTest, DestroyObserverWhileNotTracing) {
   TestNetLogEntry::List entries;
   net_log()->GetEntries(&entries);
   EXPECT_EQ(3u, entries.size());
-  EXPECT_EQ(0u, trace_events()->GetSize());
+  EXPECT_EQ(0u, trace_events()->GetList().size());
 }
 
 TEST_F(TraceNetLogObserverTest, CreateObserverAfterTracingStarts) {
@@ -359,7 +359,7 @@ TEST_F(TraceNetLogObserverTest, CreateObserverAfterTracingStarts) {
   TestNetLogEntry::List entries;
   net_log()->GetEntries(&entries);
   EXPECT_EQ(3u, entries.size());
-  EXPECT_EQ(1u, trace_events()->GetSize());
+  EXPECT_EQ(1u, trace_events()->GetList().size());
 }
 
 TEST_F(TraceNetLogObserverTest,
@@ -380,7 +380,7 @@ TEST_F(TraceNetLogObserverTest,
   TestNetLogEntry::List entries;
   net_log()->GetEntries(&entries);
   EXPECT_EQ(3u, entries.size());
-  EXPECT_EQ(0u, trace_events()->GetSize());
+  EXPECT_EQ(0u, trace_events()->GetList().size());
 }
 
 TEST_F(TraceNetLogObserverTest, EventsWithAndWithoutParameters) {
@@ -399,7 +399,7 @@ TEST_F(TraceNetLogObserverTest, EventsWithAndWithoutParameters) {
   TestNetLogEntry::List entries;
   net_log()->GetEntries(&entries);
   EXPECT_EQ(2u, entries.size());
-  EXPECT_EQ(2u, trace_events()->GetSize());
+  EXPECT_EQ(2u, trace_events()->GetList().size());
   const base::DictionaryValue* item1 = nullptr;
   ASSERT_TRUE(trace_events()->GetDictionary(0, &item1));
   const base::DictionaryValue* item2 = nullptr;

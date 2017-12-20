@@ -142,7 +142,7 @@ base::ListValue* DenialTimeUpdate::GetDenialTimes() {
     bool has_old_style =
         has_value && denial_value->GetAsDouble(&oldest_denial_time);
     if (has_old_style)
-      time_list->AppendDouble(oldest_denial_time);
+      time_list->GetList().emplace_back(oldest_denial_time);
     time_list_ = denial_time_dict->SetList(language_, std::move(time_list));
   }
   return time_list_;
@@ -158,9 +158,9 @@ base::Time DenialTimeUpdate::GetOldestDenialTime() {
 
 void DenialTimeUpdate::AddDenialTime(base::Time denial_time) {
   DCHECK(GetDenialTimes());
-  GetDenialTimes()->AppendDouble(denial_time.ToJsTime());
+  GetDenialTimes()->GetList().emplace_back(denial_time.ToJsTime());
 
-  while (GetDenialTimes()->GetSize() >= max_denial_count_)
+  while (GetDenialTimes()->GetList().size() >= max_denial_count_)
     GetDenialTimes()->Remove(0, nullptr);
 }
 
@@ -826,8 +826,8 @@ void TranslatePrefs::MigrateUserPrefs(PrefService* user_prefs,
       // Advance the iterator before removing the current element.
       iter.Advance();
       std::string target_lang;
-      if (list->empty() ||
-          !list->GetString(list->GetSize() - 1, &target_lang) ||
+      if (list->GetList().empty() ||
+          !list->GetString(list->GetList().size() - 1, &target_lang) ||
           target_lang.empty()) {
         dict->Remove(key, nullptr);
       } else {
@@ -839,7 +839,7 @@ void TranslatePrefs::MigrateUserPrefs(PrefService* user_prefs,
 
 bool TranslatePrefs::IsValueInList(const base::ListValue* list,
                                    const std::string& in_value) const {
-  for (size_t i = 0; i < list->GetSize(); ++i) {
+  for (size_t i = 0; i < list->GetList().size(); ++i) {
     std::string value;
     if (list->GetString(i, &value) && value == in_value)
       return true;
@@ -850,7 +850,8 @@ bool TranslatePrefs::IsValueInList(const base::ListValue* list,
 bool TranslatePrefs::IsValueBlacklisted(const char* pref_id,
                                         const std::string& value) const {
   const base::ListValue* blacklist = prefs_->GetList(pref_id);
-  return (blacklist && !blacklist->empty() && IsValueInList(blacklist, value));
+  return (blacklist && !blacklist->GetList().empty() &&
+          IsValueInList(blacklist, value));
 }
 
 void TranslatePrefs::BlacklistValue(const char* pref_id,
@@ -865,7 +866,7 @@ void TranslatePrefs::BlacklistValue(const char* pref_id,
   if (IsValueBlacklisted(pref_id, value)) {
     return;
   }
-  blacklist->AppendString(value);
+  blacklist->GetList().emplace_back(value);
 }
 
 void TranslatePrefs::RemoveValueFromBlacklist(const char* pref_id,
@@ -883,7 +884,7 @@ void TranslatePrefs::RemoveValueFromBlacklist(const char* pref_id,
 
 bool TranslatePrefs::IsListEmpty(const char* pref_id) const {
   const base::ListValue* blacklist = prefs_->GetList(pref_id);
-  return (blacklist == nullptr || blacklist->empty());
+  return (blacklist == nullptr || blacklist->GetList().empty());
 }
 
 bool TranslatePrefs::IsDictionaryEmpty(const char* pref_id) const {

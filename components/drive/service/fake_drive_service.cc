@@ -315,7 +315,7 @@ void FakeDriveService::AddTeamDrive(const std::string& id,
 void FakeDriveService::RemoveAppByProductId(const std::string& product_id) {
   base::ListValue* item_list;
   CHECK(app_info_value_->GetListWithoutPathExpansion("items", &item_list));
-  for (size_t i = 0; i < item_list->GetSize(); ++i) {
+  for (size_t i = 0; i < item_list->GetList().size(); ++i) {
     base::DictionaryValue* item;
     CHECK(item_list->GetDictionary(i, &item));
     const char kKeyProductId[] = "productId";
@@ -331,7 +331,7 @@ void FakeDriveService::RemoveAppByProductId(const std::string& product_id) {
 bool FakeDriveService::HasApp(const std::string& app_id) const {
   base::ListValue* item_list;
   CHECK(app_info_value_->GetListWithoutPathExpansion("items", &item_list));
-  for (size_t i = 0; i < item_list->GetSize(); ++i) {
+  for (size_t i = 0; i < item_list->GetList().size(); ++i) {
     base::DictionaryValue* item;
     CHECK(item_list->GetDictionary(i, &item));
     const char kKeyId[] = "id";
@@ -1425,7 +1425,7 @@ CancelCallback FakeDriveService::UninstallApp(
     return CancelCallback();
   }
 
-  for (size_t i = 0; i < items->GetSize(); ++i) {
+  for (size_t i = 0; i < items->GetList().size(); ++i) {
     base::DictionaryValue* item = nullptr;
     std::string id;
     if (items->GetDictionary(i, &item) && item->GetString("id", &id) &&

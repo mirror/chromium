@@ -116,7 +116,7 @@ TEST_F(URLBlacklistPolicyHandlerTest,
   EXPECT_TRUE(prefs_.GetValue(policy_prefs::kUrlBlacklist, &out));
   base::ListValue* out_list;
   EXPECT_TRUE(out->GetAsList(&out_list));
-  EXPECT_EQ(0U, out_list->GetSize());
+  EXPECT_EQ(0U, out_list->GetList().size());
 }
 
 TEST_F(URLBlacklistPolicyHandlerTest,
@@ -127,14 +127,14 @@ TEST_F(URLBlacklistPolicyHandlerTest,
   EXPECT_TRUE(prefs_.GetValue(policy_prefs::kUrlBlacklist, &out));
   base::ListValue* out_list;
   EXPECT_TRUE(out->GetAsList(&out_list));
-  EXPECT_EQ(0U, out_list->GetSize());
+  EXPECT_EQ(0U, out_list->GetList().size());
 }
 
 TEST_F(URLBlacklistPolicyHandlerTest,
        ApplyPolicySettings_DisabledSchemesWrongElementType) {
   // The policy expects string-valued elements. Give it booleans.
   std::unique_ptr<base::ListValue> in(new base::ListValue);
-  in->AppendBoolean(false);
+  in->GetList().emplace_back(false);
   SetPolicy(key::kDisabledSchemes, std::move(in));
   ApplyPolicies();
 
@@ -143,14 +143,14 @@ TEST_F(URLBlacklistPolicyHandlerTest,
   EXPECT_TRUE(prefs_.GetValue(policy_prefs::kUrlBlacklist, &out));
   base::ListValue* out_list;
   EXPECT_TRUE(out->GetAsList(&out_list));
-  EXPECT_EQ(0U, out_list->GetSize());
+  EXPECT_EQ(0U, out_list->GetList().size());
 }
 
 TEST_F(URLBlacklistPolicyHandlerTest,
        ApplyPolicySettings_URLBlacklistWrongElementType) {
   // The policy expects string-valued elements. Give it booleans.
   std::unique_ptr<base::ListValue> in(new base::ListValue);
-  in->AppendBoolean(false);
+  in->GetList().emplace_back(false);
   SetPolicy(key::kURLBlacklist, std::move(in));
   ApplyPolicies();
 
@@ -159,13 +159,13 @@ TEST_F(URLBlacklistPolicyHandlerTest,
   EXPECT_TRUE(prefs_.GetValue(policy_prefs::kUrlBlacklist, &out));
   base::ListValue* out_list;
   EXPECT_TRUE(out->GetAsList(&out_list));
-  EXPECT_EQ(0U, out_list->GetSize());
+  EXPECT_EQ(0U, out_list->GetList().size());
 }
 
 TEST_F(URLBlacklistPolicyHandlerTest,
        ApplyPolicySettings_DisabledSchemesSuccessful) {
   std::unique_ptr<base::ListValue> in_disabled_schemes(new base::ListValue);
-  in_disabled_schemes->AppendString(kTestDisabledScheme);
+  in_disabled_schemes->GetList().emplace_back(kTestDisabledScheme);
   SetPolicy(key::kDisabledSchemes, std::move(in_disabled_schemes));
   ApplyPolicies();
 
@@ -173,7 +173,7 @@ TEST_F(URLBlacklistPolicyHandlerTest,
   EXPECT_TRUE(prefs_.GetValue(policy_prefs::kUrlBlacklist, &out));
   base::ListValue* out_list;
   EXPECT_TRUE(out->GetAsList(&out_list));
-  EXPECT_EQ(1U, out_list->GetSize());
+  EXPECT_EQ(1U, out_list->GetList().size());
 
   std::string out_string;
   EXPECT_TRUE(out_list->GetString(0U, &out_string));
@@ -183,7 +183,7 @@ TEST_F(URLBlacklistPolicyHandlerTest,
 TEST_F(URLBlacklistPolicyHandlerTest,
        ApplyPolicySettings_URLBlacklistSuccessful) {
   std::unique_ptr<base::ListValue> in_url_blacklist(new base::ListValue);
-  in_url_blacklist->AppendString(kTestBlacklistValue);
+  in_url_blacklist->GetList().emplace_back(kTestBlacklistValue);
   SetPolicy(key::kURLBlacklist, std::move(in_url_blacklist));
   ApplyPolicies();
 
@@ -191,7 +191,7 @@ TEST_F(URLBlacklistPolicyHandlerTest,
   EXPECT_TRUE(prefs_.GetValue(policy_prefs::kUrlBlacklist, &out));
   base::ListValue* out_list;
   EXPECT_TRUE(out->GetAsList(&out_list));
-  EXPECT_EQ(1U, out_list->GetSize());
+  EXPECT_EQ(1U, out_list->GetList().size());
 
   std::string out_string;
   EXPECT_TRUE(out_list->GetString(0U, &out_string));
@@ -200,11 +200,11 @@ TEST_F(URLBlacklistPolicyHandlerTest,
 
 TEST_F(URLBlacklistPolicyHandlerTest, ApplyPolicySettings_MergeSuccessful) {
   std::unique_ptr<base::ListValue> in_disabled_schemes(new base::ListValue);
-  in_disabled_schemes->AppendString(kTestDisabledScheme);
+  in_disabled_schemes->GetList().emplace_back(kTestDisabledScheme);
   SetPolicy(key::kDisabledSchemes, std::move(in_disabled_schemes));
 
   std::unique_ptr<base::ListValue> in_url_blacklist(new base::ListValue);
-  in_url_blacklist->AppendString(kTestBlacklistValue);
+  in_url_blacklist->GetList().emplace_back(kTestBlacklistValue);
   SetPolicy(key::kURLBlacklist, std::move(in_url_blacklist));
 
   ApplyPolicies();
@@ -213,7 +213,7 @@ TEST_F(URLBlacklistPolicyHandlerTest, ApplyPolicySettings_MergeSuccessful) {
   EXPECT_TRUE(prefs_.GetValue(policy_prefs::kUrlBlacklist, &out));
   base::ListValue* out_list;
   EXPECT_TRUE(out->GetAsList(&out_list));
-  EXPECT_EQ(2U, out_list->GetSize());
+  EXPECT_EQ(2U, out_list->GetList().size());
 
   std::string out1;
   EXPECT_TRUE(out_list->GetString(0U, &out1));

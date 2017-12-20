@@ -101,7 +101,7 @@ bool ParseChildPermissions(const std::string& base_name,
       return true;
     }
 
-    for (size_t i = 0; i < permissions->GetSize(); ++i) {
+    for (size_t i = 0; i < permissions->GetList().size(); ++i) {
       std::string permission_str;
       if (!permissions->GetString(i, &permission_str)) {
         // permission should be a string
@@ -146,7 +146,7 @@ bool APIPermissionSet::ParseFromJSON(
     APIPermissionSet* api_permissions,
     base::string16* error,
     std::vector<std::string>* unhandled_permissions) {
-  for (size_t i = 0; i < permissions->GetSize(); ++i) {
+  for (size_t i = 0; i < permissions->GetList().size(); ++i) {
     std::string permission_str;
     const base::Value* permission_value = NULL;
     if (!permissions->GetString(i, &permission_str)) {
