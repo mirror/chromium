@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ee8b6f9c_7b11a5a4",
+        "filename": "ios/chrome/browser/ui/toolbar/legacy_toolbar_coordinator.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-12-20T01:02:10Z",
+      "side": 1,
+      "message": "I guess we could use an OR here and save some lines! We can do that once we move the code to the clean Coordinator, since this is blocking Dev.",
+      "range": {
+        "startLine": 309,
+        "startChar": 24,
+        "endLine": 309,
+        "endChar": 25
+      },
+      "revId": "b98602770dfd357d485ca9f4c008dcdf69afd2e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
