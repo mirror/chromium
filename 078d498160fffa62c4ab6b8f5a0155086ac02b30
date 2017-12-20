@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bbfeedad_739b0e3d",
+        "filename": "chrome/browser/media/cast_remoting_sender.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-12-20T00:49:23Z",
+      "side": 1,
+      "message": "If there are lots of frames backed-up (could be 100+), this call here could cause the stack to grow very deep. This is why the original code was to run tasks in the while-loop in ProcessInputQueue(). So, I\u0027d suggest restoring the ProcessInputQueue() scheme instead of using the new ProcessNextInput()/CompleteInput() scheme. (It also means the |waiting_for_acking_| boolean wouldn\u0027t be needed.)",
+      "range": {
+        "startLine": 357,
+        "startChar": 2,
+        "endLine": 357,
+        "endChar": 21
+      },
+      "revId": "078d498160fffa62c4ab6b8f5a0155086ac02b30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76435d04_30e6d190",
+        "filename": "chrome/browser/media/cast_remoting_sender.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-12-20T00:49:23Z",
+      "side": 1,
+      "message": "We shouldn\u0027t do this for cases where we explicitly send zero-byte frames.",
+      "range": {
+        "startLine": 406,
+        "startChar": 2,
+        "endLine": 406,
+        "endChar": 36
+      },
+      "revId": "078d498160fffa62c4ab6b8f5a0155086ac02b30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3045a1f4_5330ab26",
+        "filename": "media/remoting/demuxer_stream_adapter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-12-20T00:49:23Z",
+      "side": 1,
+      "message": "This means we\u0027d need to null-check |data_pipe_writer_| every time it is used. Instead, can we just add a Close() method to MojoDataPipeWriter to unbind the pipe, and call it here? Also, then we don\u0027t need the extra indirection of a std::unique_ptr\u003cMojoDataPipeWriter\u003e (my comment in the header file).",
+      "range": {
+        "startLine": 403,
+        "startChar": 4,
+        "endLine": 403,
+        "endChar": 30
+      },
+      "revId": "078d498160fffa62c4ab6b8f5a0155086ac02b30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ceeb7e93_b08298f5",
+        "filename": "media/remoting/demuxer_stream_adapter.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-12-20T00:49:23Z",
+      "side": 1,
+      "message": "Suggest just making this:\n\n  MojoDataPipeWriter data_pipe_writer_;\n\n(see comments in .cc file for why)",
+      "range": {
+        "startLine": 184,
+        "startChar": 2,
+        "endLine": 184,
+        "endChar": 56
+      },
+      "revId": "078d498160fffa62c4ab6b8f5a0155086ac02b30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
