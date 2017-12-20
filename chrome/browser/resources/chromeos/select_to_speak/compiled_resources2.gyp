@@ -40,5 +40,9 @@
        ],
        'includes': ['../../../../../third_party/closure_compiler/compile_js2.gypi'],
     },
+    {
+      'target_name': 'closure_shim',
+      'includes':  ['../../../../../third_party/closure_compiler/compile_js2.gypi'],
+    },
   ],
 }
