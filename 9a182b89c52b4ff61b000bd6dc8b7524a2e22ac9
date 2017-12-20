@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5c5fb1ea_05c4e21b",
+        "filename": "chrome/app/settings_strings.grdp",
+        "patchSetId": 4
+      },
+      "lineNbr": 2465,
+      "author": {
+        "id": 1235104
+      },
+      "writtenOn": "2017-12-20T17:23:28Z",
+      "side": 1,
+      "message": "Let\u0027s give our translators a bit more context. Suggest:\n\n\"Label for the sensors permission in Site Settings. Sensors are motion and light sensors, specifically accelerometers, gyroscope, magnetometers, and ambient-light sensors.\"",
+      "range": {
+        "startLine": 2465,
+        "startChar": 59,
+        "endLine": 2465,
+        "endChar": 105
+      },
+      "revId": "9a182b89c52b4ff61b000bd6dc8b7524a2e22ac9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
