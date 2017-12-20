@@ -86,3 +86,16 @@ const gValidUnits = [
   'turn', 's', 'ms', 'Hz', 'kHz',
   'dpi', 'dpcm', 'dppx', 'fr',
 ];
+
+function createInlineStyleMap(cssText) {
+  const elem = document.createElement('div');
+  elem.style = cssText;
+  return elem.attributeStyleMap;
+}
+
+function createComputedStyleMap(cssText) {
+  const elem = document.createElement('div');
+  elem.style = cssText;
+  document.body.appendChild(elem);
+  return elem.computedStyleMap();
+}

@@ -5,11 +5,10 @@
 <script src="../../../resources/testharness.js"></script>
 <script src="../../../resources/testharnessreport.js"></script>
 <script src="../../resources/testhelper.js"></script>
-<div id="target" style="width: 10px; --foo: auto; transition-duration: 1s, 2s;"></div>
 <script>
 'use strict';
 
-const styleMap = document.getElementById('target').attributeStyleMap;
+const styleMap = createInlineStyleMap('width: 10px; --foo: auto; transition-duration: 1s, 2s;');
 
 test(() => {
   assert_throws(new TypeError(), () => styleMap.get('lemon'));
