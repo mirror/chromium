@@ -126,6 +126,24 @@
     },
     {
       "key": {
+        "uuid": "e89d655a_afd691e7",
+        "filename": "components/printing/service/pdf_compositor_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2017-12-20T22:32:04Z",
+      "side": 1,
+      "message": "Yes, right now we are using the per request (frame+ page num) timeout.\nPer page keep alive information won\u0027t help in our case since we are waiting for subframe rendering, not the root frame. Currently, the subframe is rendered as a whole. This might be optimized if needed.\n\nI added a TODO for further investigation on the timeout value or the need to monitoring renderers.",
+      "parentUuid": "8da273bd_d6a95f49",
+      "revId": "b5518d9b9ea27c39e91aa840d117bce93729348c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "67016c24_00ddd4d3",
         "filename": "components/printing/service/pdf_compositor_impl.cc",
         "patchSetId": 12
