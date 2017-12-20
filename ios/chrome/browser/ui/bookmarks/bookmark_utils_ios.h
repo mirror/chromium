@@ -29,6 +29,10 @@ namespace ios {
 class ChromeBrowserState;
 }  // namespace ios
 
+namespace user_prefs {
+class PrefRegistrySyncable;
+}  // namespace user_prefs
+
 namespace bookmark_utils_ios {
 
 typedef std::vector<const bookmarks::BookmarkNode*> NodeVector;
@@ -193,21 +197,39 @@ std::vector<NodeVector::size_type> MissingNodesIndices(
 #pragma mark - Cache position in collection view.
 
 // Caches the active menu item, and the position in the collection view.
+// TODO(crbug.com/753599): This function is used in old bookmarks only.  Remove
+// it when cleanup old bookmarks.
 void CachePosition(CGFloat position, BookmarkMenuItem* item);
+
 // Returns YES if a valid cache exists.
 // |model| must be loaded.
 // |item| and |position| are out variables, only populated if the return is YES.
+// TODO(crbug.com/753599): This function is used in old bookmarks only.  Remove
+// it when cleanup old bookmarks.
 BOOL GetPositionCache(bookmarks::BookmarkModel* model,
                       BookmarkMenuItem* __autoreleasing* item,
                       CGFloat* position);
+
 // Method exists for testing.
+// TODO(crbug.com/753599): This function is used in old bookmarks only.  Remove
+// it when cleanup old bookmarks.
 void ClearPositionCache();
 
-// Caches the bookmark UI position that the user was last viewing.
-void CacheBookmarkUIPosition(BookmarkPathCache* cache);
+// Registers the feature preferences.
+void RegisterBrowserStatePrefs(user_prefs::PrefRegistrySyncable* registry);
 
-// Returns the bookmark UI position that the user was last viewing.
-BookmarkPathCache* GetBookmarkUIPositionCache(bookmarks::BookmarkModel* model);
+// Caches the bookmark UI position that the user was last viewing.
+void CacheBookmarkPosition(ios::ChromeBrowserState* browser_state,
+                           int64_t folderId,
+                           double scrollPosition);
+
+// Gets the bookmark UI position that the user was last viewing. Returns YES if
+// a valid cache exists. |folderId| and |scrollPosition| are out variables, only
+// populated if the return is YES.
+BOOL GetCachedBookmarkPosition(ios::ChromeBrowserState* browser_state,
+                               bookmarks::BookmarkModel* model,
+                               int64_t* folderId,
+                               double* scrollPosition);
 
 // Creates bookmark path for |folderId| passed in. For eg: for folderId = 76,
 // Root node(0) --> MobileBookmarks (3) --> Test1(76) will be returned as [0, 3,
@@ -215,7 +237,7 @@ BookmarkPathCache* GetBookmarkUIPositionCache(bookmarks::BookmarkModel* model);
 NSArray* CreateBookmarkPath(bookmarks::BookmarkModel* model, int64_t folderId);
 
 // Clears the bookmark UI position cache.
-void ClearBookmarkUIPositionCache();
+void ClearBookmarkUIPositionCache(ios::ChromeBrowserState* browser_state);
 
 }  // namespace bookmark_utils_ios
 
