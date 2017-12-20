@@ -108,8 +108,9 @@ void AuthenticatorImpl::MakeCredential(
   // Check that at least one of the cryptographic parameters is supported.
   // Only ES256 is currently supported by U2F_V2.
   if (!HasValidAlgorithm(options->public_key_parameters)) {
+    // TODO(engedy): Return something developer-friendly here.
     std::move(callback).Run(
-        webauth::mojom::AuthenticatorStatus::NOT_SUPPORTED_ERROR, nullptr);
+        webauth::mojom::AuthenticatorStatus::NOT_IMPLEMENTED, nullptr);
     return;
   }
 
