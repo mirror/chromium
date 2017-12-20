@@ -2,6 +2,57 @@
   "comments": [
     {
       "key": {
+        "uuid": "58ed6239_cc506ab0",
+        "filename": "chrome/browser/resources/md_extensions/code_section.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-12-20T02:21:08Z",
+      "side": 1,
+      "message": "Please keep blank line after copyright.",
+      "revId": "b76a2481785bd6a6338d3c05cc826caa5eefff22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0f496f3_cd809d5b",
+        "filename": "chrome/browser/resources/md_extensions/code_section.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-12-20T02:21:08Z",
+      "side": 1,
+      "message": "Please comment on the reason for the limit. Maybe:\nWe limit the number of lines shown for DOM performance.\n\nOr something that helps someone in the future decide whether the limit can be increased or removed.",
+      "revId": "b76a2481785bd6a6338d3c05cc826caa5eefff22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63aa049c_5b3ea4b8",
+        "filename": "chrome/browser/resources/md_extensions/code_section.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-12-20T02:21:08Z",
+      "side": 1,
+      "message": "The comment I ask for up in halfOrFill can be put here if you prefer (up to you).",
+      "revId": "b76a2481785bd6a6338d3c05cc826caa5eefff22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "190573e5_494b5a06",
         "filename": "chrome/browser/resources/md_extensions/code_section.js",
         "patchSetId": 11

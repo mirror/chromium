@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "4dec7a86_fae12703",
+        "filename": "chrome/browser/resources/md_extensions/code_section.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-12-20T02:21:08Z",
+      "side": 1,
+      "message": "optional: would it make sense to use an ellipses character? Even though I\u0027m mentioning it, I\u0027m going to vote against it (I prefer ...), but my opinion shouldn\u0027t stop us from considering both options.",
+      "revId": "d8057c5b32afd8d45c11a62ac9db99483318c345",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7144f567_4b6c8910",
         "filename": "chrome/browser/resources/md_extensions/code_section.js",
         "patchSetId": 9
@@ -101,6 +118,24 @@
       "side": 1,
       "message": "the substring logic will always snip next to a \\n, so split will always count one extra.",
       "parentUuid": "ea8449bd_6227f393",
+      "revId": "d8057c5b32afd8d45c11a62ac9db99483318c345",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "eac7d6bc_69abc8fc",
+        "filename": "chrome/browser/resources/md_extensions/code_section.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-12-20T02:21:08Z",
+      "side": 1,
+      "message": "That\u0027s cool, but how about a comment saying that (i.e. the code looks wrong without explanation).",
+      "parentUuid": "3ddfa2a2_36cba8c1",
       "revId": "d8057c5b32afd8d45c11a62ac9db99483318c345",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
