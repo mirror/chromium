@@ -114,7 +114,7 @@ class TerminatedArray {
 
   // Prohibit construction. Allocator makes TerminatedArray instances for
   // TerminatedArrayBuilder by pointer casting.
-  TerminatedArray();
+  TerminatedArray() = delete;
 
   template <typename, template <typename> class>
   friend class TerminatedArrayBuilder;

@@ -48,7 +48,7 @@ class ThreadControllerForTest : public internal::ThreadControllerImpl {
     return ThreadControllerImpl::IsNested();
   }
 
-  ~ThreadControllerForTest() override {}
+  ~ThreadControllerForTest() override = default;
 };
 
 }  // namespace

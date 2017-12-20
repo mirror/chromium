@@ -13,6 +13,6 @@ PlatformCredential* PlatformCredential::Create(const String& id) {
 PlatformCredential::PlatformCredential(const String& id)
     : id_(id), type_("credential") {}
 
-PlatformCredential::~PlatformCredential() {}
+PlatformCredential::~PlatformCredential() = default;
 
 }  // namespace blink

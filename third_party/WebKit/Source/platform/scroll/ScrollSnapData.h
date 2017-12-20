@@ -92,7 +92,7 @@ struct SnapAreaData {
   // axis. This is because the snap area has SnapAlignmentNone on that axis.
   static const int kInvalidScrollOffset = -1;
 
-  SnapAreaData() {}
+  SnapAreaData() = default;
 
   SnapAreaData(SnapAxis axis, ScrollOffset offset, bool msnap)
       : snap_axis(axis), snap_offset(offset), must_snap(msnap) {}

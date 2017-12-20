@@ -44,8 +44,8 @@ class PLATFORM_EXPORT StorageQuotaCallbacks
   WTF_MAKE_NONCOPYABLE(StorageQuotaCallbacks);
 
  public:
-  StorageQuotaCallbacks() {}
-  virtual ~StorageQuotaCallbacks() {}
+  StorageQuotaCallbacks() = default;
+  virtual ~StorageQuotaCallbacks() = default;
   virtual void Trace(blink::Visitor* visitor) {}
 
   virtual void DidQueryStorageUsageAndQuota(unsigned long long usage_in_bytes,

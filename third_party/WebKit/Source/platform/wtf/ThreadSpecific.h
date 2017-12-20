@@ -90,7 +90,7 @@ class ThreadSpecific {
   // unlikely that any user of this call will be in that situation - and having
   // a destructor defined can be confusing, given that it has such strong
   // pre-requisites to work correctly.
-  ~ThreadSpecific();
+  ~ThreadSpecific() = delete;
 
   T* Get();
   void Set(T*);

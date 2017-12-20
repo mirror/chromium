@@ -244,11 +244,10 @@ class HashMap<KeyArg,
  private:
   friend class HashMap;
 
-  // These are intentionally not implemented.
-  HashMapKeysProxy();
-  HashMapKeysProxy(const HashMapKeysProxy&);
-  HashMapKeysProxy& operator=(const HashMapKeysProxy&);
-  ~HashMapKeysProxy();
+  HashMapKeysProxy() = delete;
+  HashMapKeysProxy(const HashMapKeysProxy&) = delete;
+  HashMapKeysProxy& operator=(const HashMapKeysProxy&) = delete;
+  ~HashMapKeysProxy() = delete;
 };
 
 template <typename KeyArg,
@@ -292,11 +291,10 @@ class HashMap<KeyArg,
  private:
   friend class HashMap;
 
-  // These are intentionally not implemented.
-  HashMapValuesProxy();
-  HashMapValuesProxy(const HashMapValuesProxy&);
-  HashMapValuesProxy& operator=(const HashMapValuesProxy&);
-  ~HashMapValuesProxy();
+  HashMapValuesProxy() = delete;
+  HashMapValuesProxy(const HashMapValuesProxy&) = delete;
+  HashMapValuesProxy& operator=(const HashMapValuesProxy&) = delete;
+  ~HashMapValuesProxy() = delete;
 };
 
 template <typename KeyTraits, typename MappedTraits>

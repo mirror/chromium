@@ -133,7 +133,7 @@ class PLATFORM_EXPORT TaskQueueManager
 
   class PLATFORM_EXPORT Observer {
    public:
-    virtual ~Observer() {}
+    virtual ~Observer() = default;
 
     virtual void OnTriedToExecuteBlockedTask() = 0;
 
