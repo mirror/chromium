@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bc74ecc6_a794a9ba",
+        "filename": "chrome/browser/android/webapk/webapk_installer.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 489,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-12-20T04:38:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ac242d5f_f70a8d62",
+      "revId": "c4a279ecfb92a317a35b7c4646f377b8f99a9106",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5efd9d03_0c7bf8b0",
         "filename": "chrome/browser/android/webapk/webapk_installer.h",
         "patchSetId": 18
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "fbf59da4_513bac5e",
+        "filename": "chrome/browser/android/webapk/webapk_installer.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-12-20T04:38:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5efd9d03_0c7bf8b0",
+      "range": {
+        "startLine": 40,
+        "startChar": 2,
+        "endLine": 40,
+        "endChar": 9
+      },
+      "revId": "c4a279ecfb92a317a35b7c4646f377b8f99a9106",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f10fc937_0c35245e",
         "filename": "chrome/browser/android/webapk/webapk_installer.h",
         "patchSetId": 18
@@ -62,6 +104,30 @@
       "revId": "c4a279ecfb92a317a35b7c4646f377b8f99a9106",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6d85c78_cbed0284",
+        "filename": "chrome/browser/android/webapk/webapk_installer.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-12-20T04:38:05Z",
+      "side": 1,
+      "message": "Thanks for pointing it out. Will use Peter\u0027s suggestion.",
+      "parentUuid": "f10fc937_0c35245e",
+      "range": {
+        "startLine": 229,
+        "startChar": 2,
+        "endLine": 229,
+        "endChar": 33
+      },
+      "revId": "c4a279ecfb92a317a35b7c4646f377b8f99a9106",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
