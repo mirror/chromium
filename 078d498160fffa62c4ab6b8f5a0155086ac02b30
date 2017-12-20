@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d3881f10_c42c1c87",
+        "filename": "chrome/browser/media/cast_remoting_sender.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-12-20T19:36:56Z",
+      "side": 1,
+      "message": "Changed to always post the reading callback |OnFrameRead| to solve this issue. Also replaced |waiting_for_acking_| boolean with |is_reading_| boolean.",
+      "parentUuid": "bbfeedad_739b0e3d",
+      "range": {
+        "startLine": 357,
+        "startChar": 2,
+        "endLine": 357,
+        "endChar": 21
+      },
+      "revId": "078d498160fffa62c4ab6b8f5a0155086ac02b30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "76435d04_30e6d190",
         "filename": "chrome/browser/media/cast_remoting_sender.cc",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "078d498160fffa62c4ab6b8f5a0155086ac02b30",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c32f4a4_613703be",
+        "filename": "chrome/browser/media/cast_remoting_sender.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-12-20T19:36:56Z",
+      "side": 1,
+      "message": "Done. Removed the DCHECK.",
+      "parentUuid": "76435d04_30e6d190",
+      "range": {
+        "startLine": 406,
+        "startChar": 2,
+        "endLine": 406,
+        "endChar": 36
+      },
+      "revId": "078d498160fffa62c4ab6b8f5a0155086ac02b30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "7e38b1c4_4cf68607",
+        "filename": "media/mojo/interfaces/remoting.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-12-20T19:36:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4f597a93_55831dbb",
+      "range": {
+        "startLine": 20,
+        "startChar": 67,
+        "endLine": 20,
+        "endChar": 68
+      },
+      "revId": "078d498160fffa62c4ab6b8f5a0155086ac02b30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3045a1f4_5330ab26",
         "filename": "media/remoting/demuxer_stream_adapter.cc",
         "patchSetId": 3
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "2ed7ed8f_90a37e64",
+        "filename": "media/remoting/demuxer_stream_adapter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-12-20T19:36:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3045a1f4_5330ab26",
+      "range": {
+        "startLine": 403,
+        "startChar": 4,
+        "endLine": 403,
+        "endChar": 30
+      },
+      "revId": "078d498160fffa62c4ab6b8f5a0155086ac02b30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ceeb7e93_b08298f5",
         "filename": "media/remoting/demuxer_stream_adapter.h",
         "patchSetId": 3
@@ -114,6 +210,30 @@
       "revId": "078d498160fffa62c4ab6b8f5a0155086ac02b30",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b05f945_adc3a4ce",
+        "filename": "media/remoting/demuxer_stream_adapter.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-12-20T19:36:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ceeb7e93_b08298f5",
+      "range": {
+        "startLine": 184,
+        "startChar": 2,
+        "endLine": 184,
+        "endChar": 56
+      },
+      "revId": "078d498160fffa62c4ab6b8f5a0155086ac02b30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
