@@ -764,6 +764,8 @@ scoped_refptr<StaticBitmapImage> WebGLRenderingContextBase::GetImage(
     SnapshotReason reason) const {
   if (!GetDrawingBuffer())
     return nullptr;
+  if (Host()->Size().IsEmpty())
+    return nullptr;
   // If on the main thread, directly access the drawing buffer and create the
   // image snapshot.
   if (IsMainThread()) {
