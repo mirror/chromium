@@ -128,6 +128,24 @@
     },
     {
       "key": {
+        "uuid": "a2f7c101_884996fb",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-12-20T18:57:56Z",
+      "side": 1,
+      "message": "I guess the `if (additional_info \u003e 24 \u0026\u0026 additional_info \u003c 28)`, combined with the internals of ReadUnsignedInt, are what guarantee that the value will never be \u003e 255, right?\n\nIt \u0027feels\u0027 a little brittle; I\u0027d rather have a non-debug CHECK or error return. I\u0027d be surprised if that broke the performance bank (is this code really hot as used in Chrome?).\n\nThis is probably bike-shedding, though; a DCHECK is likely to suffice as protection against future code changes. An error return would enable you to write a unit test though... but perhaps that\u0027d be adding a dog house on the side of the bikeshed...",
+      "parentUuid": "67595cd4_c663b9af",
+      "revId": "d3a91ea6e1d5c2328aa306425ed9a298e59909ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ee1c9462_f3adbf5d",
         "filename": "content/browser/webauth/cbor/cbor_reader.h",
         "patchSetId": 12
@@ -151,6 +169,23 @@
     },
     {
       "key": {
+        "uuid": "cbc7b695_9e1b8af7",
+        "filename": "content/browser/webauth/cbor/cbor_reader.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-12-20T18:57:56Z",
+      "side": 1,
+      "message": "Why is |additional_info| a uint8_t here, but an int in |ReadUnsignedInt|?",
+      "revId": "d3a91ea6e1d5c2328aa306425ed9a298e59909ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b6e7b763_0f1d70d6",
         "filename": "content/browser/webauth/cbor/cbor_reader_unittest.cc",
         "patchSetId": 12
@@ -162,6 +197,24 @@
       "writtenOn": "2017-12-20T18:22:47Z",
       "side": 1,
       "message": "super nit: ... 28: unassigned. (For clarity, same below x4)",
+      "revId": "d3a91ea6e1d5c2328aa306425ed9a298e59909ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c6a1824_8640cc0f",
+        "filename": "content/browser/webauth/cbor/cbor_reader_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 516,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-12-20T18:57:56Z",
+      "side": 1,
+      "message": "Double-super-nit :) : \"additional information 28/29/30\".",
+      "parentUuid": "b6e7b763_0f1d70d6",
       "revId": "d3a91ea6e1d5c2328aa306425ed9a298e59909ab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
