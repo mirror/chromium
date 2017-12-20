@@ -52,6 +52,24 @@
       "revId": "e1483c93d0056c99982fc48b37f91ff5de065f67",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "217b6b82_852d4018",
+        "filename": "chrome/browser/chromeos/arc/user_session/arc_user_session_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-12-20T08:18:18Z",
+      "side": 1,
+      "message": "Thank you for the explanation.\nThe suggested comment is very informative, but I\u0027d like to avoid having too much details as it\u0027s difficult to maintain this comment when the mentioned classes\u0027 implementations change.\n\nAdded a simplified comment to make it clear that the owner of this object does not always destruct this object after calling OnConnectionClosed().",
+      "parentUuid": "54e20523_0985795b",
+      "revId": "e1483c93d0056c99982fc48b37f91ff5de065f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
