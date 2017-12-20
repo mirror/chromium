@@ -22,6 +22,30 @@
       "revId": "019235ca76ef117ec4eae303ca604b85ae2c584e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9559a7f_9132a729",
+        "filename": "components/vector_icons/usb_security_key.icon",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002270
+      },
+      "writtenOn": "2017-12-20T02:15:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8249a345_01e4db63",
+      "range": {
+        "startLine": 1,
+        "startChar": 1,
+        "endLine": 1,
+        "endChar": 25
+      },
+      "revId": "019235ca76ef117ec4eae303ca604b85ae2c584e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
