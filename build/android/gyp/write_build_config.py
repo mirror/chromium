@@ -697,7 +697,7 @@ def main(argv):
         p for p in deps_dex_files if not p in tested_apk_deps_dex_files]
 
   if options.proguard_configs:
-    assert options.type == 'java_library'
+    assert options.type in ('java_library', 'dist_jar')
     deps_info['proguard_configs'] = (
         build_utils.ParseGnList(options.proguard_configs))
 
