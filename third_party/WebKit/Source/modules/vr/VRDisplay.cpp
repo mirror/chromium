@@ -39,6 +39,11 @@
 #include <array>
 #include "core/dom/ExecutionContext.h"
 
+#if 0
+#undef DVLOG
+#define DVLOG(x) LOG(INFO)
+#endif
+
 namespace blink {
 
 namespace {
@@ -456,7 +461,14 @@ ScriptPromise VRDisplay::requestPresent(ScriptState* script_state,
 
     pending_present_resolvers_.push_back(resolver);
 
-    frame_transport_ = new XRFrameTransport();
+    Nullable<WebGLContextAttributes> attrs;
+    rendering_context_->getContextAttributes(attrs);
+    int sample_count = attrs.Get().antialias() ? 4 : 0;
+    LOG(INFO) << __FUNCTION__ << ";;; attrs.antialias="
+              << attrs.Get().antialias()
+              << " sample_count=" << sample_count;
+
+    frame_transport_ = new XRFrameTransport(sample_count);
     // Set up RequestPresentOptions based on canvas properties.
     device::mojom::blink::VRRequestPresentOptionsPtr options =
         device::mojom::blink::VRRequestPresentOptions::New();
@@ -711,30 +723,53 @@ void VRDisplay::submitFrame() {
     UpdateLayerBounds();
   }
 
+  DVLOG(2) << __FUNCTION__;
   frame_transport_->FramePreImage(context_gl_);
+  DVLOG(2) << __FUNCTION__;
 
-  scoped_refptr<Image> image_ref = GetFrameImage();
-  if (!image_ref)
-    return;
+  scoped_refptr<Image> image_ref = nullptr;
 
+  if (frame_transport_->DrawingIntoFBO()) {
+    // Unbind the FBO as a hint to the GL driver that it can start rendering
+    // its content. Must be after framePreImage to ensure it's separated
+    // by a GpuFence as needed.
+    DVLOG(2) << __FUNCTION__;
+    rendering_context_->SetCustomBackbufferFBO(0);
+  } else {
+    DVLOG(2) << __FUNCTION__;
+    image_ref = GetFrameImage();
+    if (!image_ref)
+      return;
+  }
+
+  DVLOG(2) << __FUNCTION__;
   DrawingBuffer::Client* drawing_buffer_client =
       static_cast<DrawingBuffer::Client*>(rendering_context_.Get());
-
   frame_transport_->FrameSubmit(vr_presentation_provider_.get(), context_gl_,
                                 drawing_buffer_client, std::move(image_ref),
                                 vr_frame_id_, present_image_needs_copy_);
+
+  DVLOG(2) << __FUNCTION__;
 
   did_submit_this_frame_ = true;
   // Reset our frame id, since anything we'd want to do (resizing/etc) can
   // no-longer happen to this frame.
   vr_frame_id_ = -1;
+
   // If we were deferring a rAF-triggered vsync request, do this now.
+  // TODO(klausw): does doing this just before submitting reduce downtime
+  // between frames?
   RequestVSync();
 
   // If preserveDrawingBuffer is false, must clear now. Normally this
   // happens as part of compositing, but that's not active while
-  // presenting, so run the responsible code directly.
-  rendering_context_->MarkCompositedAndClearBackbufferIfNeeded();
+  // presenting, so run the responsible code directly. Not needed
+  // if using a fresh FBO image every frame.
+  if (!frame_transport_->DrawingIntoFBO()) {
+    // TODO(klausw): do this in zero copy mode also. Getting errors?
+    rendering_context_->MarkCompositedAndClearBackbufferIfNeeded();
+  }
+  DVLOG(2) << __FUNCTION__;
 }
 
 Document* VRDisplay::GetDocument() {
@@ -743,7 +778,7 @@ Document* VRDisplay::GetDocument() {
 
 void VRDisplay::OnPresentChange() {
   if (frame_transport_)
-    frame_transport_->PresentChange();
+    frame_transport_->PresentChange(context_gl_, is_presenting_);
 
   DVLOG(1) << __FUNCTION__ << ": is_presenting_=" << is_presenting_;
   if (is_presenting_ && !is_valid_device_for_presenting_) {
@@ -794,6 +829,9 @@ void VRDisplay::StopPresenting() {
         UserMetricsAction("VR.WebVR.StopPresenting"));
   }
 
+  if (frame_transport_ && frame_transport_->DrawingIntoFBO()) {
+    rendering_context_->SetCustomBackbufferFBO(0);
+  }
   frame_transport_ = nullptr;
   rendering_context_ = nullptr;
   context_gl_ = nullptr;
@@ -895,8 +933,9 @@ void VRDisplay::OnPresentingVSync(
     device::mojom::blink::VRPosePtr pose,
     WTF::TimeDelta time_delta,
     int16_t frame_id,
-    device::mojom::blink::VRPresentationProvider::VSyncStatus status) {
-  DVLOG(2) << __FUNCTION__;
+    device::mojom::blink::VRPresentationProvider::VSyncStatus status,
+    const base::Optional<gpu::MailboxHolder>& buffer_holder,
+    const blink::WebSize& buffer_size) {
   switch (status) {
     case device::mojom::blink::VRPresentationProvider::VSyncStatus::SUCCESS:
       break;
@@ -907,6 +946,20 @@ void VRDisplay::OnPresentingVSync(
 
   frame_pose_ = std::move(pose);
   vr_frame_id_ = frame_id;
+
+  TRACE_EVENT_FLOW_STEP0("gpu", "vrframe", vr_frame_id_, "PresentingVSync");
+
+  DVLOG(3) << __FUNCTION__ << ";;; have buffer=" << !!buffer_holder;
+  if (frame_transport_ && frame_transport_->DrawingIntoFBO()) {
+    DCHECK(buffer_holder);
+    TRACE_EVENT0("gpu", "VRDisplay::BufferSetup");
+
+    DrawingBuffer::Client* drawing_buffer_client =
+        static_cast<DrawingBuffer::Client*>(rendering_context_.Get());
+    GLuint fbo = frame_transport_->BindAHBToBufferHolder(
+        context_gl_, drawing_buffer_client, buffer_holder, buffer_size);
+    rendering_context_->SetCustomBackbufferFBO(fbo);
+  }
 
   // Post a task to handle scheduled animations after the current
   // execution context finishes, so that we yield to non-mojo tasks in
