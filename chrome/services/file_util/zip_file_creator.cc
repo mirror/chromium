@@ -12,7 +12,7 @@
 #include "mojo/public/cpp/bindings/strong_binding.h"
 #include "third_party/zlib/google/zip.h"
 
-namespace chrome {
+namespace {
 
 namespace {
 
