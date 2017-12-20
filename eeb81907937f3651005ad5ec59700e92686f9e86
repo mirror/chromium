@@ -155,6 +155,30 @@
     },
     {
       "key": {
+        "uuid": "8b99e208_0241a043",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SignInPromo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-12-20T15:05:37Z",
+      "side": 1,
+      "message": "I\u0027ve discussed this with Mihai and we decided to go for the simpler solution. I\u0027ve removed the code for deferred updating of the suppression status. Sorry for my stubbornness :-)",
+      "parentUuid": "d4ba8d7a_14247dc6",
+      "range": {
+        "startLine": 148,
+        "startChar": 81,
+        "endLine": 149,
+        "endChar": 55
+      },
+      "revId": "eeb81907937f3651005ad5ec59700e92686f9e86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0bbefe64_12a43e8c",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SignInPromo.java",
         "patchSetId": 1
