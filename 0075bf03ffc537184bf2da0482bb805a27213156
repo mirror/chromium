@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7820b5b2_706c856f",
+        "filename": "chrome/browser/android/vr_shell/vr_gl_thread.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-12-20T22:26:29Z",
+      "side": 1,
+      "message": "Please add a todo/bug to generalize the asset.",
+      "revId": "0075bf03ffc537184bf2da0482bb805a27213156",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b6a0933_00b95061",
+        "filename": "chrome/browser/vr/elements/background.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-12-20T22:26:29Z",
+      "side": 1,
+      "message": "why not gl_FragColor \u003d color?",
+      "revId": "0075bf03ffc537184bf2da0482bb805a27213156",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1c66b97_23f041c5",
+        "filename": "chrome/browser/vr/elements/background.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-12-20T22:26:29Z",
+      "side": 1,
+      "message": "Is it possible to avoid the static here?",
+      "revId": "0075bf03ffc537184bf2da0482bb805a27213156",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0a93089_a5438462",
+        "filename": "chrome/browser/vr/ui_scene_creator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 693,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-12-20T22:26:29Z",
+      "side": 1,
+      "message": "nit: Create\u003cBackground\u003e(k2dBrowsingTexturedBackground, kPhaseBackground);\n\nhere and below.",
+      "revId": "0075bf03ffc537184bf2da0482bb805a27213156",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "facfd944_324e4895",
+        "filename": "chrome/browser/vr/ui_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-12-20T22:26:29Z",
+      "side": 1,
+      "message": "This change detector test has ceased to be useful. I know it\u0027s somewhat unrelated to your change, can you please nix?",
+      "revId": "0075bf03ffc537184bf2da0482bb805a27213156",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
