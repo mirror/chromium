@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "bef5310c_7a0429b5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 15
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-12-20T18:40:46Z",
+      "side": 1,
+      "message": "Just looked into the code and I think you\u0027re right. The way to solve the use case I described is by using UnsafeWallpaperDecoder (see https://cs.chromium.org/chromium/src/chrome/browser/chromeos/extensions/wallpaper_function_base.cc?rcl\u003dc3640a1002d9bec39a991fb3b495c7628b80aa28\u0026l\u003d63 here). If another decoding request arrives before the previous request is done, it will set a cancel flag to handle it. You might want to copy this logic when moving the decoding code to WallpaperController.",
+      "parentUuid": "8d7159f1_92fa3ab7",
+      "revId": "8858f35dca4632479ae31fc70259e9312743ca94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fb8c726a_8e1b05b3",
         "filename": "ash/wallpaper/wallpaper_controller.cc",
         "patchSetId": 15
@@ -107,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "28203cc8_973fc95b",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 1161,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-12-20T18:40:46Z",
+      "side": 1,
+      "message": "Sorry I didn\u0027t mean to delete the entire if-clause. Just delete if (base::SysInfo::IsRunningOnChromeOS()) and still preserve the LOG(ERROR) \u003c\u003c＂...\" here.",
+      "parentUuid": "8e032a19_dbe06702",
+      "revId": "8858f35dca4632479ae31fc70259e9312743ca94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c0f924fd_30ce7b8f",
         "filename": "ash/wallpaper/wallpaper_controller.cc",
         "patchSetId": 15
@@ -136,6 +172,24 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "c0f924fd_30ce7b8f",
+      "revId": "8858f35dca4632479ae31fc70259e9312743ca94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "afd68f2a_ac21f0ef",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 1455,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-12-20T18:40:46Z",
+      "side": 1,
+      "message": "the same as above",
+      "parentUuid": "8c4ae7e1_0495757a",
       "revId": "8858f35dca4632479ae31fc70259e9312743ca94",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
