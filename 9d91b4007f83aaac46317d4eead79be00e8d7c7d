@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0713e016_4264c0e3",
+        "filename": "android_webview/common/crash_reporter/crash_keys.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-12-20T12:49:55Z",
+      "side": 1,
+      "message": "C++ doesn\u0027t permit empty arrays, so that\u0027s why all the Register functions change. They\u0027ll be deleted next!",
+      "revId": "9d91b4007f83aaac46317d4eead79be00e8d7c7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ee95ed87_824f73b2",
+        "filename": "components/crash/core/common/crash_keys_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-12-20T12:49:55Z",
+      "side": 0,
+      "message": "I don\u0027t think this test adds value anymore. It is testing the sizing mechanism of the old crash key system, and the new API already has tests around this at a lower level.",
+      "revId": "52dad56b5151b36abee65b87c9e83adab2a144e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
