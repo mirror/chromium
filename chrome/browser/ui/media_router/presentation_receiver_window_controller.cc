@@ -6,10 +6,12 @@
 
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
+#include "base/strings/utf_string_conversions.h"
 #include "chrome/browser/media/router/receiver_presentation_service_delegate_impl.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/media_router/presentation_receiver_window.h"
 #include "content/public/browser/navigation_controller.h"
+#include "content/public/browser/navigation_entry.h"
 #include "content/public/browser/web_contents.h"
 #include "third_party/WebKit/public/web/WebPresentationReceiverFlags.h"
 #include "ui/views/widget/widget.h"
@@ -69,6 +71,11 @@ void PresentationReceiverWindowController::Terminate() {
   } else if (termination_callback_) {
     std::move(termination_callback_).Run();
   }
+}
+
+void PresentationReceiverWindowController::SetTitleChangeCallback(
+    base::RepeatingCallback<void(const std::string&)> callback) {
+  title_change_callback_ = std::move(callback);
 }
 
 void PresentationReceiverWindowController::CloseWindowForTest() {
@@ -134,6 +141,8 @@ void PresentationReceiverWindowController::DidStartNavigation(
 void PresentationReceiverWindowController::TitleWasSet(
     content::NavigationEntry* entry) {
   window_->UpdateWindowTitle();
+  if (entry && title_change_callback_)
+    title_change_callback_.Run(base::UTF16ToUTF8(entry->GetTitle()));
 }
 
 void PresentationReceiverWindowController::NavigationStateChanged(

@@ -92,6 +92,7 @@ static_library("router") {
     sources += [
       "independent_otr_profile_manager.cc",
       "independent_otr_profile_manager.h",
+      "wired_display_presentation_receiver.h",
     ]
   }
 }
