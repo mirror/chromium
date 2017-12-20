@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dad37035_8d6d6e7a",
+        "filename": "chrome/browser/chromeos/smb_client/smb_file_system.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1170114
+      },
+      "writtenOn": "2017-12-20T00:25:58Z",
+      "side": 1,
+      "message": "crbug.com/xxxxxx",
+      "revId": "28d8e8f0281e87dfe6327a2a5d224ca20c53ac11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a22e278c_c52a0d0c",
+        "filename": "chrome/browser/chromeos/smb_client/smb_file_system.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1170114
+      },
+      "writtenOn": "2017-12-20T00:25:58Z",
+      "side": 1,
+      "message": "Only need crbug.com/xxxxxx",
+      "revId": "28d8e8f0281e87dfe6327a2a5d224ca20c53ac11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5603b51_75cd6b62",
+        "filename": "chrome/browser/chromeos/smb_client/smb_file_system.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1170114
+      },
+      "writtenOn": "2017-12-20T00:25:58Z",
+      "side": 1,
+      "message": "nit: Just crbug.com/xxxxx",
+      "revId": "28d8e8f0281e87dfe6327a2a5d224ca20c53ac11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
