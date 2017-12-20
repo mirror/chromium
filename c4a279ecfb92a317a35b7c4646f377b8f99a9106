@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5efd9d03_0c7bf8b0",
+        "filename": "chrome/browser/android/webapk/webapk_installer.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-20T01:42:53Z",
+      "side": 1,
+      "message": "UNKNOWN or UNDETERMINED is probably better than NOT_SET.",
+      "range": {
+        "startLine": 40,
+        "startChar": 2,
+        "endLine": 40,
+        "endChar": 9
+      },
+      "revId": "c4a279ecfb92a317a35b7c4646f377b8f99a9106",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f10fc937_0c35245e",
+        "filename": "chrome/browser/android/webapk/webapk_installer.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-20T01:42:53Z",
+      "side": 1,
+      "message": "It\u0027s not great to have test-only member variables.\n\nHow about changing the private InstallAsync to have a new variable, override_space_status. Pass in NOT_SET from the static InstallAsync, and the test space status you want via InstallAsyncForTesting.",
+      "range": {
+        "startLine": 229,
+        "startChar": 2,
+        "endLine": 229,
+        "endChar": 33
+      },
+      "revId": "c4a279ecfb92a317a35b7c4646f377b8f99a9106",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
