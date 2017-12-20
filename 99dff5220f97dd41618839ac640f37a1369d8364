@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "3685ddc6_46cca26d",
+        "filename": "third_party/WebKit/LayoutTests/fast/events/inputevents/inputevent-ime.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-12-20T00:04:25Z",
+      "side": 1,
+      "message": "Can we use a new \u003cinput\u003e for each test, so that a test doesn\u0027t depend on the outcome of a previous one?",
+      "revId": "99dff5220f97dd41618839ac640f37a1369d8364",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "02a54e60_17d2ddbe",
         "filename": "third_party/WebKit/LayoutTests/fast/events/inputevents/inputevent-ime.html",
         "patchSetId": 2
