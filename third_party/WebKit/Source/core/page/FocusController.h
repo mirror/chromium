@@ -101,6 +101,8 @@ class CORE_EXPORT FocusController final
   void Trace(blink::Visitor*);
 
  private:
+  using SkippedNodeSet = HeapHashSet<Member<Node>>;
+
   explicit FocusController(Page*);
 
   Element* FindFocusableElement(WebFocusType, Element&, OwnerMap&);
@@ -122,7 +124,8 @@ class CORE_EXPORT FocusController final
   void FindFocusCandidateInContainer(Node& container,
                                      const LayoutRect& starting_rect,
                                      WebFocusType,
-                                     FocusCandidate& closest);
+                                     FocusCandidate& closest,
+                                     SkippedNodeSet& skipped_list);
 
   void NotifyFocusChangedObservers() const;
 
