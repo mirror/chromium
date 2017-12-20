@@ -140,6 +140,7 @@
 #include "core/frame/LocalFrameView.h"
 #include "core/frame/PageScaleConstraintsSet.h"
 #include "core/frame/PausableScriptExecutor.h"
+#include "core/frame/PausableTask.h"
 #include "core/frame/RemoteFrame.h"
 #include "core/frame/RemoteFrameOwner.h"
 #include "core/frame/ScreenOrientationController.h"
@@ -758,6 +759,20 @@ void WebLocalFrameImpl::RequestExecuteV8Function(
   PausableScriptExecutor::CreateAndRun(GetFrame(), ToIsolate(GetFrame()),
                                        context, function, receiver, argc, argv,
                                        callback);
+}
+
+void WebLocalFrameImpl::NotifyWhenNotPaused(PausableTaskCallback callback) {
+  DCHECK(GetFrame());
+  Document* document = GetFrame()->GetDocument();
+  DCHECK(document);
+  DCHECK(!document->IsContextDestroyed());
+  if (!document->IsContextPaused()) {
+    std::move(callback).Run(WebLocalFrame::PausableTaskResult::kReady);
+  } else {
+    // Manages its own lifetime and invokes the callback when script is
+    // unpaused.
+    new PausableTask(document, std::move(callback));
+  }
 }
 
 void WebLocalFrameImpl::ExecuteScriptInIsolatedWorld(

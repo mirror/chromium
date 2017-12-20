@@ -120,6 +120,7 @@
 #include "platform/weborigin/SchemeRegistry.h"
 #include "platform/weborigin/SecurityOrigin.h"
 #include "platform/wtf/Forward.h"
+#include "platform/wtf/Functional.h"
 #include "platform/wtf/PtrUtil.h"
 #include "platform/wtf/dtoa/utils.h"
 #include "public/platform/Platform.h"
@@ -564,6 +565,134 @@ TEST_P(ParameterizedWebFrameTest,
   RunPendingTasks();
   EXPECT_TRUE(callback_helper.DidComplete());
   EXPECT_EQ(true, callback_helper.BoolValue());
+}
+
+class ScriptNotPausedCallbackHelper {
+ public:
+  ScriptNotPausedCallbackHelper() {}
+  ~ScriptNotPausedCallbackHelper() = default;
+
+  WebLocalFrame::PausableTaskCallback GetCallback() {
+    return WTF::Bind(&ScriptNotPausedCallbackHelper::Run,
+                     WTF::Unretained(this));
+  }
+
+  void set_closure(base::OnceClosure closure) { closure_ = std::move(closure); }
+  const base::Optional<WebLocalFrame::PausableTaskResult> result() const {
+    return result_;
+  }
+
+ private:
+  void Run(WebLocalFrame::PausableTaskResult result) {
+    ASSERT_FALSE(result_) << "Callback invoked multiple times!";
+    result_ = result;
+    if (closure_)
+      std::move(*closure_).Run();
+  }
+
+  base::Optional<WebLocalFrame::PausableTaskResult> result_;
+  base::Optional<base::OnceClosure> closure_;
+};
+
+TEST_P(ParameterizedWebFrameTest, CallingNotifyWhenNotPausedWhileNotPaused) {
+  RegisterMockedHttpURLLoad("foo.html");
+
+  FrameTestHelpers::WebViewHelper web_view_helper;
+  web_view_helper.InitializeAndLoad(base_url_ + "foo.html");
+  WebLocalFrameImpl* main_frame = web_view_helper.LocalMainFrame();
+
+  ScriptState::Scope scope(ToScriptStateForMainWorld(main_frame->GetFrame()));
+
+  ScriptNotPausedCallbackHelper callback_helper;
+  main_frame->NotifyWhenNotPaused(callback_helper.GetCallback());
+  RunPendingTasks();
+
+  ASSERT_TRUE(callback_helper.result());
+  EXPECT_EQ(WebLocalFrame::PausableTaskResult::kReady,
+            *callback_helper.result());
+}
+
+TEST_P(ParameterizedWebFrameTest, CallingNotifyWhenNotPausedWhilePaused) {
+  RegisterMockedHttpURLLoad("foo.html");
+
+  FrameTestHelpers::WebViewHelper web_view_helper;
+  web_view_helper.InitializeAndLoad(base_url_ + "foo.html");
+  WebLocalFrameImpl* main_frame = web_view_helper.LocalMainFrame();
+
+  ScriptState::Scope scope(ToScriptStateForMainWorld(main_frame->GetFrame()));
+
+  // Suspend scheduled tasks so the script doesn't run.
+  main_frame->GetFrame()->GetDocument()->PauseScheduledTasks();
+
+  ScriptNotPausedCallbackHelper callback_helper;
+  main_frame->NotifyWhenNotPaused(callback_helper.GetCallback());
+  RunPendingTasks();
+  EXPECT_FALSE(callback_helper.result());
+
+  main_frame->GetFrame()->GetDocument()->UnpauseScheduledTasks();
+  RunPendingTasks();
+  ASSERT_TRUE(callback_helper.result());
+  EXPECT_EQ(WebLocalFrame::PausableTaskResult::kReady,
+            *callback_helper.result());
+}
+
+TEST_P(ParameterizedWebFrameTest, CallingNotifyWhenNotPausedAndNavigating) {
+  RegisterMockedHttpURLLoad("foo.html");
+  RegisterMockedHttpURLLoad("bar.html");
+
+  FrameTestHelpers::WebViewHelper web_view_helper;
+  web_view_helper.InitializeAndLoad(base_url_ + "foo.html");
+  WebLocalFrameImpl* main_frame = web_view_helper.LocalMainFrame();
+
+  ScriptState::Scope scope(ToScriptStateForMainWorld(main_frame->GetFrame()));
+
+  // Suspend scheduled tasks so the script doesn't run.
+  main_frame->GetFrame()->GetDocument()->PauseScheduledTasks();
+
+  ScriptNotPausedCallbackHelper callback_helper;
+  main_frame->NotifyWhenNotPaused(callback_helper.GetCallback());
+  RunPendingTasks();
+  EXPECT_FALSE(callback_helper.result());
+
+  // If the frame navigates, pending scripts should be removed, but the callback
+  // should always be ran.
+  FrameTestHelpers::LoadFrame(web_view_helper.GetWebView()->MainFrameImpl(),
+                              base_url_ + "bar.html");
+  ASSERT_TRUE(callback_helper.result());
+  EXPECT_EQ(WebLocalFrame::PausableTaskResult::kContextInvalidOrDestroyed,
+            *callback_helper.result());
+}
+
+TEST_P(ParameterizedWebFrameTest,
+       CallingNotifyWhenNotPausedAndDestroyingTheContext) {
+  RegisterMockedHttpURLLoad("foo.html");
+  RegisterMockedHttpURLLoad("bar.html");
+
+  FrameTestHelpers::WebViewHelper web_view_helper;
+  web_view_helper.InitializeAndLoad(base_url_ + "foo.html");
+  WebLocalFrameImpl* main_frame = web_view_helper.LocalMainFrame();
+
+  auto navigate_frame = [](FrameTestHelpers::WebViewHelper* web_view_helper,
+                           const std::string& url) {
+    FrameTestHelpers::LoadFrame(web_view_helper->GetWebView()->MainFrameImpl(),
+                                url);
+  };
+
+  ScriptNotPausedCallbackHelper callback_helper;
+  // Navigate the frame when the helper is notified that script can run. This
+  // will invalidate the context immediately.
+  callback_helper.set_closure(WTF::Bind(navigate_frame,
+                                        WTF::Unretained(&web_view_helper),
+                                        base_url_ + "bar.html"));
+
+  ScriptState::Scope scope(ToScriptStateForMainWorld(main_frame->GetFrame()));
+
+  main_frame->NotifyWhenNotPaused(callback_helper.GetCallback());
+  RunPendingTasks();
+
+  ASSERT_TRUE(callback_helper.result());
+  EXPECT_EQ(WebLocalFrame::PausableTaskResult::kReady,
+            *callback_helper.result());
 }
 
 TEST_P(ParameterizedWebFrameTest, IframeScriptRemovesSelf) {
