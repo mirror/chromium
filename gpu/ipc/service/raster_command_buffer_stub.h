@@ -17,6 +17,7 @@ class GPU_EXPORT RasterCommandBufferStub : public CommandBufferStub {
                           SequenceId sequence_id,
                           int32_t stream_id,
                           int32_t route_id);
+  ~RasterCommandBufferStub() override;
 
   // This must leave the GL context associated with the newly-created
   // CommandBufferStub current, so the GpuChannel can initialize
@@ -26,6 +27,7 @@ class GPU_EXPORT RasterCommandBufferStub : public CommandBufferStub {
       const GPUCreateCommandBufferConfig& init_params,
       std::unique_ptr<base::SharedMemory> shared_state_shm) override;
 
+ private:
   DISALLOW_COPY_AND_ASSIGN(RasterCommandBufferStub);
 };
 
