@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fcb6b1a5_ca9240a3",
+        "filename": "ios/chrome/browser/ui/omnibox/clipping_mask_view.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-12-20T12:51:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8a432c4d_473f4b37",
+      "range": {
+        "startLine": 11,
+        "startChar": 64,
+        "endLine": 11,
+        "endChar": 68
+      },
+      "revId": "9bfb840db94341611cd0a3772505a0e43e632bc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "520a53b1_7345291f",
         "filename": "ios/chrome/browser/ui/omnibox/clipping_mask_view.h",
         "patchSetId": 18
@@ -39,6 +63,24 @@
       "revId": "9bfb840db94341611cd0a3772505a0e43e632bc2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eedaa849_59e020cb",
+        "filename": "ios/chrome/browser/ui/omnibox/clipping_mask_view.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-12-20T12:51:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "520a53b1_7345291f",
+      "revId": "9bfb840db94341611cd0a3772505a0e43e632bc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "db7b03ea_f9fdef98",
+        "filename": "ios/chrome/browser/ui/omnibox/clipping_mask_view.mm",
+        "patchSetId": 18
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-12-20T12:51:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2bb39f3a_562e2f1d",
+      "range": {
+        "startLine": 18,
+        "startChar": 29,
+        "endLine": 18,
+        "endChar": 45
+      },
+      "revId": "9bfb840db94341611cd0a3772505a0e43e632bc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ec9883c6_702c0842",
         "filename": "ios/chrome/browser/ui/omnibox/clipping_mask_view.mm",
         "patchSetId": 18
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "e04530ff_89ec1d30",
+        "filename": "ios/chrome/browser/ui/omnibox/clipping_mask_view.mm",
+        "patchSetId": 18
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-12-20T12:51:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ec9883c6_702c0842",
+      "range": {
+        "startLine": 31,
+        "startChar": 27,
+        "endLine": 31,
+        "endChar": 45
+      },
+      "revId": "9bfb840db94341611cd0a3772505a0e43e632bc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "08438c06_c7fcc3ea",
         "filename": "ios/chrome/browser/ui/omnibox/clipping_mask_view.mm",
         "patchSetId": 18
@@ -102,6 +192,24 @@
       "revId": "9bfb840db94341611cd0a3772505a0e43e632bc2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38f7d033_26cdab71",
+        "filename": "ios/chrome/browser/ui/omnibox/clipping_mask_view.mm",
+        "patchSetId": 18
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-12-20T12:51:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "08438c06_c7fcc3ea",
+      "revId": "9bfb840db94341611cd0a3772505a0e43e632bc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -128,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "95e281fe_15e6557a",
+        "filename": "ios/chrome/browser/ui/omnibox/clipping_mask_view.mm",
+        "patchSetId": 18
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-12-20T12:51:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aac6c966_2bc91058",
+      "range": {
+        "startLine": 51,
+        "startChar": 43,
+        "endLine": 51,
+        "endChar": 55
+      },
+      "revId": "9bfb840db94341611cd0a3772505a0e43e632bc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ff4366db_1d371273",
         "filename": "ios/chrome/browser/ui/omnibox/clipping_mask_view.mm",
         "patchSetId": 18
@@ -148,6 +280,30 @@
       "revId": "9bfb840db94341611cd0a3772505a0e43e632bc2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6beea33c_bdbe22d6",
+        "filename": "ios/chrome/browser/ui/omnibox/clipping_mask_view.mm",
+        "patchSetId": 18
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-12-20T12:51:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ff4366db_1d371273",
+      "range": {
+        "startLine": 110,
+        "startChar": 6,
+        "endLine": 110,
+        "endChar": 21
+      },
+      "revId": "9bfb840db94341611cd0a3772505a0e43e632bc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -174,6 +330,30 @@
     },
     {
       "key": {
+        "uuid": "6609faf9_30247580",
+        "filename": "ios/chrome/browser/ui/omnibox/clipping_mask_view.mm",
+        "patchSetId": 18
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-12-20T12:51:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "08093854_28e7efc6",
+      "range": {
+        "startLine": 116,
+        "startChar": 6,
+        "endLine": 116,
+        "endChar": 22
+      },
+      "revId": "9bfb840db94341611cd0a3772505a0e43e632bc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f6be292e_7d374b70",
         "filename": "ios/chrome/browser/ui/omnibox/clipping_mask_view.mm",
         "patchSetId": 18
@@ -197,6 +377,30 @@
     },
     {
       "key": {
+        "uuid": "3dd66a33_882c8ee9",
+        "filename": "ios/chrome/browser/ui/omnibox/clipping_mask_view.mm",
+        "patchSetId": 18
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-12-20T12:51:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f6be292e_7d374b70",
+      "range": {
+        "startLine": 123,
+        "startChar": 6,
+        "endLine": 123,
+        "endChar": 22
+      },
+      "revId": "9bfb840db94341611cd0a3772505a0e43e632bc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "377c29b9_463aa0c8",
         "filename": "ios/chrome/browser/ui/omnibox/clipping_textfield_container.mm",
         "patchSetId": 18
@@ -211,6 +415,24 @@
       "revId": "9bfb840db94341611cd0a3772505a0e43e632bc2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78c826e4_8719c627",
+        "filename": "ios/chrome/browser/ui/omnibox/clipping_textfield_container.mm",
+        "patchSetId": 18
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-12-20T12:51:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "377c29b9_463aa0c8",
+      "revId": "9bfb840db94341611cd0a3772505a0e43e632bc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
