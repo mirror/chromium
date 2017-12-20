@@ -117,6 +117,30 @@
     },
     {
       "key": {
+        "uuid": "8d3c1ea0_bd0bac3b",
+        "filename": "third_party/WebKit/Source/core/frame/MHTMLTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 534,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-12-20T19:48:23Z",
+      "side": 1,
+      "message": "Actually, please ignore my comment above.  I\u0027ve realized that |document-\u003etitle()| would come from the HTML contents and *NOT* from the MHTML Subject header.  AFAICT, Chrome/Blink discards the MHTML Subject header - if this is true (can you confirm please) then we don\u0027t really need to verify that the Subject header \"round-trips\" (because there is no round-tripping - the Subject header is written by Chrome but is not read back).",
+      "parentUuid": "41378ce3_e0328506",
+      "range": {
+        "startLine": 534,
+        "startChar": 0,
+        "endLine": 534,
+        "endChar": 1
+      },
+      "revId": "a6ec7be68e9f7b466bba74effa6a171863c3a25d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "211d2012_515845b8",
         "filename": "third_party/WebKit/Source/platform/text/QuotedPrintable.cpp",
         "patchSetId": 2
