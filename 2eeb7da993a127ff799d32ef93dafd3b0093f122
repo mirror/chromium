@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9e57aea4_3c0b6f9c",
+        "filename": "content/browser/renderer_host/render_widget_host_view_base.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-12-20T15:55:12Z",
+      "side": 1,
+      "message": "Should there be a PreProcessGestureEvent as well? (maybe it can return a bool)? This seems like the odd man out",
+      "revId": "2eeb7da993a127ff799d32ef93dafd3b0093f122",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
