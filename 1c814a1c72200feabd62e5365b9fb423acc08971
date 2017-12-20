@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "260132e2_9f514bd4",
+        "filename": "third_party/WebKit/Source/core/editing/testing/SelectionSample.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-12-20T05:51:28Z",
+      "side": 1,
+      "message": "I mean, now we have 1:1 mapping of ElementShadow : ShadowRoot, we can merge the two classes\ninto one (which is crbug.com/624724) eventually.",
+      "parentUuid": "aedd575d_38ee1ce7",
+      "revId": "1c814a1c72200feabd62e5365b9fb423acc08971",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ff4f6014_a370026d",
         "filename": "third_party/WebKit/Source/core/editing/testing/SelectionSampleTest.cpp",
         "patchSetId": 7
