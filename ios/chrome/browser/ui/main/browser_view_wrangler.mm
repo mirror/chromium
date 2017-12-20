@@ -224,9 +224,10 @@
   return self.currentBVC.browserState;
 }
 
-- (void)haltAllTabs {
+- (void)cleanupTabsForTermination {
   [self.mainTabModel haltAllTabs];
-  [self.otrTabModel haltAllTabs];
+  [self.otrTabModel closeAllTabs];
+  [self.otrTabModel saveSessionImmediately:YES];
 }
 
 - (void)cleanDeviceSharingManager {

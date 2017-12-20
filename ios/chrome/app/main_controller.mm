@@ -918,8 +918,8 @@ const int kExternalFilesCleanupDelaySeconds = 60;
 
 #pragma mark - BrowserViewInformation implementation.
 
-- (void)haltAllTabs {
-  [_browserViewWrangler haltAllTabs];
+- (void)cleanupTabsForTermination {
+  [_browserViewWrangler cleanupTabsForTermination];
 }
 
 - (void)cleanDeviceSharingManager {
