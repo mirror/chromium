@@ -16,6 +16,24 @@
       "revId": "04917203544c237f0297238670d897a21bdcf8c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "567cbbed_f62e9d91",
+        "filename": "components/ukm/ukm_source.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-12-20T23:38:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a62f1ce5_75220de6",
+      "revId": "04917203544c237f0297238670d897a21bdcf8c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
