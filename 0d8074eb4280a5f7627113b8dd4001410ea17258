@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cf366875_65cf4711",
+        "filename": "third_party/WebKit/Source/modules/beacon/NavigatorBeacon.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-12-20T05:03:30Z",
+      "side": 1,
+      "message": "Should we directly put this on NavigatorBeacon.cpp only if this is not used outside NavigatorBeacon.cpp?",
+      "revId": "0d8074eb4280a5f7627113b8dd4001410ea17258",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
