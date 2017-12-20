@@ -50,10 +50,12 @@ class CONTENT_EXPORT DownloadRequestCore
 
   // All parameters are required. |request| and |delegate| must outlive
   // DownloadRequestCore. The request is not the main request if
-  // |is_parallel_request| is true.
+  // |is_parallel_request| is true.  |from_navigation| is true if the request is
+  // intercepted from navigation.
   DownloadRequestCore(net::URLRequest* request,
                       Delegate* delegate,
-                      bool is_parallel_request);
+                      bool is_parallel_request,
+                      bool from_navigation);
   ~DownloadRequestCore();
 
   // Should be called when the URLRequest::Delegate receives OnResponseStarted.
@@ -129,6 +131,7 @@ class CONTENT_EXPORT DownloadRequestCore
   bool fetch_error_body_;
   bool transient_;
   DownloadUrlParameters::OnStartedCallback on_started_callback_;
+  DownloadSource download_source_ = DownloadSource::UNKNOWN;
 
   // Data flow
   scoped_refptr<net::IOBuffer> read_buffer_;    // From URLRequest.
@@ -149,6 +152,7 @@ class CONTENT_EXPORT DownloadRequestCore
   int pause_count_;
   bool was_deferred_;
   bool is_partial_request_;
+  bool from_navigation_;
   bool started_;
 
   // When DownloadRequestCore initiates an abort (by blocking a redirect, for
