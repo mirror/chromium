@@ -1,0 +1,418 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "16abab33_5c914264",
+        "filename": "device/ctap/ctap_device_command.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-20T09:37:59Z",
+      "side": 1,
+      "message": "For long URLs it is usually fine to disregard the 80 char limit and simply have them on one line. This simplifies clicking the link from code search or text editors, if supported. Example: https://codesearch.chromium.org/chromium/src/device/u2f/u2f_ble_uuids.h",
+      "range": {
+        "startLine": 13,
+        "startChar": 3,
+        "endLine": 14,
+        "endChar": 64
+      },
+      "revId": "fa288dc936e074c1c6af65b0034f3bac8c230194",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "812ed124_73e6af10",
+        "filename": "device/ctap/ctap_device_command.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-20T09:37:59Z",
+      "side": 1,
+      "message": "Are these used anywhere yet? If not I\u0027d add them in the CL that also adds code that uses them.",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 34,
+        "endChar": 0
+      },
+      "revId": "fa288dc936e074c1c6af65b0034f3bac8c230194",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce0cf2d0_ed1c284f",
+        "filename": "device/ctap/ctap_get_assertion_request_param.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-20T09:37:59Z",
+      "side": 1,
+      "message": "Thank you for providing info on your design decisions. I like option three the best, and I suggest you use it everywhere for consistency.\n\nThis means this class will look like this:\n\nclass CTAPGetAssertionRequestParam : public CTAPRequestParam {\n public:\n  CTAPGetAssertionRequestParam(\n      std::string rp_id,\n      std::vector\u003cuint8_t\u003e client_data_hash);\n\n  ...\n\n  CTAPGetAssertionReqestParam\u0026 SetAllowList(std::vector\u003cPublicKeyCredentialDescriptor\u003e allow_list);\n  CTAPGetAssertionReqestParam\u0026 SetPinAuth(std::vector\u003cuint8_t\u003e pin_auth);\n  CTAPGetAssertionReqestParam\u0026 SetPinProtocol(uint8_t pin_protocol);\n\n...\n}\n\nI.e. take required params via the constructor and provide setters for the optional params. Returning a reference from the setters allows you to chain them, e.g. you can do the following:\n\nauto param \u003d CTAPGetAssertionRequestParam(\"...\", ...).SetAllowList(...).SetPinAuth(...).SetPinProtocol(...);\n\nFurthermore, note that you should CamelCase instead of unix_style for the setters, as they are not defined inline.\n\nLastly you should also provide a move assignment operator if you provide a move constructor.",
+      "range": {
+        "startLine": 23,
+        "startChar": 2,
+        "endLine": 56,
+        "endChar": 72
+      },
+      "revId": "fa288dc936e074c1c6af65b0034f3bac8c230194",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cb002a0_8b0b4063",
+        "filename": "device/ctap/ctap_make_credential_request_param.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-20T09:37:59Z",
+      "side": 1,
+      "message": "Same suggestions as for CTAPGetAssertionRequestParam apply here.",
+      "range": {
+        "startLine": 28,
+        "startChar": 6,
+        "endLine": 28,
+        "endChar": 36
+      },
+      "revId": "fa288dc936e074c1c6af65b0034f3bac8c230194",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d25da0a2_1e79356f",
+        "filename": "device/ctap/ctap_make_credential_request_param.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-20T09:37:59Z",
+      "side": 1,
+      "message": "Can you use enums instead of uint8_ts here?",
+      "range": {
+        "startLine": 42,
+        "startChar": 0,
+        "endLine": 43,
+        "endChar": 48
+      },
+      "revId": "fa288dc936e074c1c6af65b0034f3bac8c230194",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7839a54_42cdf464",
+        "filename": "device/ctap/ctap_request_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-20T09:37:59Z",
+      "side": 1,
+      "message": "please be consistent here, either make this a vector as well, or turn the vectors above into arrays",
+      "range": {
+        "startLine": 27,
+        "startChar": 2,
+        "endLine": 27,
+        "endChar": 22
+      },
+      "revId": "fa288dc936e074c1c6af65b0034f3bac8c230194",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4da56c14_edf450f1",
+        "filename": "device/ctap/ctap_response_code.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-20T09:37:59Z",
+      "side": 1,
+      "message": "Using a lowercase x is more common, also applies below",
+      "range": {
+        "startLine": 18,
+        "startChar": 28,
+        "endLine": 18,
+        "endChar": 30
+      },
+      "revId": "fa288dc936e074c1c6af65b0034f3bac8c230194",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f323e527_6668e466",
+        "filename": "device/ctap/public_key_credential_descriptor.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-20T09:37:59Z",
+      "side": 1,
+      "message": "consider declaring these strings as constants in this file, given that you using them in multiple places",
+      "range": {
+        "startLine": 28,
+        "startChar": 38,
+        "endLine": 28,
+        "endChar": 42
+      },
+      "revId": "fa288dc936e074c1c6af65b0034f3bac8c230194",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b45cbcc3_3f5e2201",
+        "filename": "device/ctap/public_key_credential_descriptor.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-20T09:37:59Z",
+      "side": 1,
+      "message": "Missing trailing \u0027_\u0027. Please run `git cl lint` before uploading to catch these kind of errors.",
+      "range": {
+        "startLine": 5,
+        "startChar": 8,
+        "endLine": 5,
+        "endChar": 54
+      },
+      "revId": "fa288dc936e074c1c6af65b0034f3bac8c230194",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5a8fc4e_2b10d33f",
+        "filename": "device/ctap/public_key_credential_descriptor.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-20T09:37:59Z",
+      "side": 1,
+      "message": "drop the get_",
+      "range": {
+        "startLine": 30,
+        "startChar": 20,
+        "endLine": 30,
+        "endChar": 24
+      },
+      "revId": "fa288dc936e074c1c6af65b0034f3bac8c230194",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfef876c_4e2c56cc",
+        "filename": "device/ctap/public_key_credential_descriptor.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-20T09:37:59Z",
+      "side": 1,
+      "message": "const std::string\u0026",
+      "range": {
+        "startLine": 30,
+        "startChar": 2,
+        "endLine": 30,
+        "endChar": 19
+      },
+      "revId": "fa288dc936e074c1c6af65b0034f3bac8c230194",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eda86edd_ad9f251f",
+        "filename": "device/ctap/public_key_credential_descriptor.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-20T09:37:59Z",
+      "side": 1,
+      "message": "same here",
+      "range": {
+        "startLine": 31,
+        "startChar": 29,
+        "endLine": 31,
+        "endChar": 33
+      },
+      "revId": "fa288dc936e074c1c6af65b0034f3bac8c230194",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb182682_d636f232",
+        "filename": "device/ctap/public_key_credential_descriptor.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-20T09:37:59Z",
+      "side": 1,
+      "message": "const std::vector\u003cuint8_t\u003e\u0026",
+      "range": {
+        "startLine": 31,
+        "startChar": 2,
+        "endLine": 31,
+        "endChar": 28
+      },
+      "revId": "fa288dc936e074c1c6af65b0034f3bac8c230194",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2c5a26e_c860b0fa",
+        "filename": "device/ctap/public_key_credential_descriptor.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-20T09:37:59Z",
+      "side": 1,
+      "message": "it\u0027s probably easier to simply allow copying and assigning and use the compiler generated copy constructor instead.",
+      "range": {
+        "startLine": 33,
+        "startChar": 0,
+        "endLine": 33,
+        "endChar": 46
+      },
+      "revId": "fa288dc936e074c1c6af65b0034f3bac8c230194",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "768fc8f5_4abefefc",
+        "filename": "device/ctap/public_key_credential_params.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-20T09:37:59Z",
+      "side": 1,
+      "message": "you could add a call to\n\n  credential_param_array.reserve(public_key_credential_param_list_.size());\n\nto guarantee that only one memory allocation happens for the array",
+      "range": {
+        "startLine": 22,
+        "startChar": 30,
+        "endLine": 22,
+        "endChar": 52
+      },
+      "revId": "fa288dc936e074c1c6af65b0034f3bac8c230194",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9f55800_3e28dbd3",
+        "filename": "device/ctap/public_key_credential_params.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-20T09:37:59Z",
+      "side": 1,
+      "message": "std::move(credential_param_array)",
+      "range": {
+        "startLine": 31,
+        "startChar": 25,
+        "endLine": 31,
+        "endChar": 47
+      },
+      "revId": "fa288dc936e074c1c6af65b0034f3bac8c230194",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c83c2ba3_2e139823",
+        "filename": "device/ctap/public_key_credential_user_entity.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-20T09:37:59Z",
+      "side": 1,
+      "message": "std::move()",
+      "range": {
+        "startLine": 57,
+        "startChar": 25,
+        "endLine": 57,
+        "endChar": 33
+      },
+      "revId": "fa288dc936e074c1c6af65b0034f3bac8c230194",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2abe4b47_ebf4e86b",
+        "filename": "device/ctap/public_key_credential_user_entity.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-20T09:37:59Z",
+      "side": 1,
+      "message": "Requires more type checking, similar to PublicKeyCredentialDescriptor::CreateFromCBORValue.",
+      "range": {
+        "startLine": 61,
+        "startChar": 31,
+        "endLine": 61,
+        "endChar": 50
+      },
+      "revId": "fa288dc936e074c1c6af65b0034f3bac8c230194",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

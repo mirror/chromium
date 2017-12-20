@@ -912,6 +912,30 @@
     },
     {
       "key": {
+        "uuid": "aec171e2_c57d390e",
+        "filename": "device/ctap/ctap_request_data.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-20T09:37:59Z",
+      "side": 1,
+      "message": "Could you add this as a comment to the source code?",
+      "parentUuid": "944e4769_7b045105",
+      "range": {
+        "startLine": 33,
+        "startChar": 27,
+        "endLine": 33,
+        "endChar": 42
+      },
+      "revId": "85cfb00851eec62759c8248e64d5aeb58d98b717",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "506adf99_94fd9710",
         "filename": "device/ctap/ctap_request_data.h",
         "patchSetId": 5
@@ -1558,6 +1582,30 @@
       "side": 1,
       "message": "List was used over vector since the sequential order of \u003cstring, int\u003e represents the preferred order of cryptographic algorithm and credential type. Please let me know if using vector is more optimal in this case! \n\nAlso, using a single map wouldn\u0027t work since in most cases, the key (credential type) are simply \"public-key\".  \n\nChanged list of maps to list of tuples\u003cstring, int\u003e .",
       "parentUuid": "e5b04a7f_c081d6e7",
+      "range": {
+        "startLine": 30,
+        "startChar": 2,
+        "endLine": 30,
+        "endChar": 11
+      },
+      "revId": "85cfb00851eec62759c8248e64d5aeb58d98b717",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "758e0920_a654273e",
+        "filename": "device/ctap/public_key_credential_params.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-20T09:37:59Z",
+      "side": 1,
+      "message": "Ack, thanks for the explanation. If I understand you correctly, you only want to be able to iterate through the list in order, for which a std::vector is best. Lists make sense if you expect to do many insertions and deletions in the middle, which I don\u0027t think is the case here.\n\nChanging map to tuple\u003cstring,int\u003e makes sense as well, given that these maps are always expected to have two elements of type string and int. I probably would use a std::pair instead of a two-element tuple, but I don\u0027t feel too strongly about this.",
+      "parentUuid": "b8bf65ad_9ccc31da",
       "range": {
         "startLine": 30,
         "startChar": 2,
