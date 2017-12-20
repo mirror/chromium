@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "acb00013_6d8577d4",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/offlinepages/prefetch/PrefetchBackgroundTaskUnitTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 415,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-12-20T01:24:12Z",
+      "side": 1,
+      "message": "oops, my bad, poor naming in my original changelist. Metered is a concept we apply to WiFi networks, we always assume 2G networks are metered.  So, please remove the word \"Metered\" from the test name.  \n\nAlso, set the /* metered */ input to true, since cell connections are always counted as metered.",
+      "revId": "7fb1fce65a793e241e8cb349c2847fbd8003e835",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
