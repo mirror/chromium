@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fc9bbdda_e64df46f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/ModalDialogManager.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-12-20T16:51:07Z",
+      "side": 1,
+      "message": "should this be final?",
+      "revId": "0278312f067339b0d95ee72c88cf6784aff43c38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2416e99b_67a8d1d2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/ModalDialogManager.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-12-20T16:51:07Z",
+      "side": 1,
+      "message": "nit, but early returns a bit nicer to read:\n\nif (mCancelCallback \u003d\u003d null) return;\n\nThen the rest can be less indented.",
+      "range": {
+        "startLine": 57,
+        "startChar": 14,
+        "endLine": 57,
+        "endChar": 15
+      },
+      "revId": "0278312f067339b0d95ee72c88cf6784aff43c38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
