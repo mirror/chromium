@@ -22,6 +22,30 @@
       "revId": "c265393f32273fd23dba0a17464d46168d2a770f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca28a55d_c7c06e39",
+        "filename": "third_party/closure_compiler/externs/developer_private.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 583,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-20T08:03:17Z",
+      "side": 1,
+      "message": "Right; currently this is a fire-and-forget mechanism.  We should be able to change this to instead wait for the update check to complete.  In the C++:\n\nExtensionFunction::ResponseAction DeveloperPrivateAutoUpdateFunction::Run() {\n  ExtensionUpdater* updater \u003d\n      ExtensionSystem::Get(browser_context())-\u003eextension_service()-\u003eupdater();\n  if (updater) {\n    ExtensionUpdater::CheckParams params;\n    params.fetch_priority \u003d ManifestFetchData::FetchPriority::FOREGROUND;\n    params.install_immediately \u003d true;\n    // START NEW\n    params.callback \u003d\n        base::Bind(\u0026DeveloperPrivateAutoUpdateFunction::OnComplete,\n                   this /* ref counted */);\n    // END NEW\n    updater-\u003eCheckNow(params);\n  }\n  return RespondLater();\n}\n\n// NEW\nvoid DeveloperPrivateAutoUpdateFunction::OnComplete() {\n  Respond(NoArguments());\n}",
+      "parentUuid": "c63c0f50_ae88f842",
+      "range": {
+        "startLine": 583,
+        "startChar": 45,
+        "endLine": 583,
+        "endChar": 68
+      },
+      "revId": "c265393f32273fd23dba0a17464d46168d2a770f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
