@@ -22,6 +22,30 @@
       "revId": "6eeb519be34a2ab111ee3d245c62454ab9eebc14",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d395ddea_2dbfd69d",
+        "filename": "third_party/custom_tabs_client/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1233200
+      },
+      "writtenOn": "2017-12-20T23:25:31Z",
+      "side": 1,
+      "message": "Yes, I remember without this, compile fails to include the android_support_v7_appcompat_java.",
+      "parentUuid": "5d5545f4_ccd0f456",
+      "range": {
+        "startLine": 34,
+        "startChar": 19,
+        "endLine": 34,
+        "endChar": 67
+      },
+      "revId": "6eeb519be34a2ab111ee3d245c62454ab9eebc14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
