@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9858f090_8c03fb91",
+        "filename": "content/common/BUILD.gn",
+        "patchSetId": 10
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-12-20T15:56:12Z",
+      "side": 1,
+      "message": "nit: clarify in the CL description that these files are being placed in //content/common/ because we still have event dispatching code in //content/renderer/. The struct traits should be able to be moved to //content/browser/ after we\u0027re done with this project.",
+      "revId": "2230a7b139d0c6bd05f18eb0f1b93176917b9ef3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff33f631_186a0fff",
+        "filename": "content/common/notifications/OWNERS",
+        "patchSetId": 10
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-12-20T15:56:12Z",
+      "side": 1,
+      "message": "nit: update the comment in that file to include this path",
+      "revId": "2230a7b139d0c6bd05f18eb0f1b93176917b9ef3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4631ee2c_412362e8",
+        "filename": "content/common/notifications/OWNERS",
+        "patchSetId": 10
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-12-20T15:56:12Z",
+      "side": 1,
+      "message": "Subtle :)",
+      "revId": "2230a7b139d0c6bd05f18eb0f1b93176917b9ef3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c4f9d66_f6e7f402",
+        "filename": "content/common/notifications/notification_struct_traits.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-12-20T15:56:12Z",
+      "side": 1,
+      "message": "const\u0026\n\n(This would make a copy, and we don\u0027t have to do any type conversions.)",
+      "revId": "2230a7b139d0c6bd05f18eb0f1b93176917b9ef3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb8a278b_7837fdfb",
+        "filename": "third_party/WebKit/Source/platform/mojo/NotificationStructTraitsTest.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-12-20T15:56:12Z",
+      "side": 1,
+      "message": "nit: why do we need this?",
+      "revId": "2230a7b139d0c6bd05f18eb0f1b93176917b9ef3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20151011_337d3eec",
+        "filename": "third_party/WebKit/Source/platform/mojo/NotificationStructTraitsTest.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-12-20T15:56:12Z",
+      "side": 1,
+      "message": "nit: why have a fixture if it doesn\u0027t do anything?",
+      "revId": "2230a7b139d0c6bd05f18eb0f1b93176917b9ef3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
