@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "85d6ab43_52a34969",
+        "filename": "content/browser/renderer_host/delegated_frame_host.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-12-20T22:22:37Z",
+      "side": 1,
+      "message": "I think that the idea is that resize_lock\u0027s expected size will be different (it\u0027s there to throttle resizes).\n\nThis is indeed not synchronized with changes in the local surface id, and probably needs some cleanup.",
+      "parentUuid": "1c20d8aa_f77b8115",
+      "range": {
+        "startLine": 387,
+        "startChar": 33,
+        "endLine": 387,
+        "endChar": 46
+      },
+      "revId": "eb823237d0a10006d3b0f3b42c59c8bbcb79d1ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4c9a1c81_708e1146",
         "filename": "content/browser/renderer_host/render_widget_host_view_aura.cc",
         "patchSetId": 8
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "070f445f_bb38f570",
+        "filename": "content/browser/renderer_host/render_widget_host_view_aura.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 785,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-12-20T22:22:37Z",
+      "side": 1,
+      "message": "The risk for races is in the use by RenderWidgetHostImpl.\n\nThere are a bunch of other probably-not-racy callers, but that\u0027s a bit harder to be sure of. I think I\u0027ll add nullptr as an option, and I can audit the callers with the viz folks later.",
+      "parentUuid": "4c9a1c81_708e1146",
+      "range": {
+        "startLine": 785,
+        "startChar": 2,
+        "endLine": 785,
+        "endChar": 26
+      },
+      "revId": "eb823237d0a10006d3b0f3b42c59c8bbcb79d1ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c2ab9252_3ead267e",
         "filename": "content/browser/renderer_host/render_widget_host_view_aura.cc",
         "patchSetId": 8
@@ -59,6 +107,30 @@
       "writtenOn": "2017-12-20T20:57:07Z",
       "side": 1,
       "message": "Why do we always call this? should this be in an else block?",
+      "range": {
+        "startLine": 885,
+        "startChar": 28,
+        "endLine": 885,
+        "endChar": 52
+      },
+      "revId": "eb823237d0a10006d3b0f3b42c59c8bbcb79d1ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81399792_097a8c91",
+        "filename": "content/browser/renderer_host/render_widget_host_view_aura.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 885,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-12-20T22:22:37Z",
+      "side": 1,
+      "message": "Uah, oops. It made sense in an earlier form of the patch. Fixed.",
+      "parentUuid": "c2ab9252_3ead267e",
       "range": {
         "startLine": 885,
         "startChar": 28,
