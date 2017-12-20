@@ -7,7 +7,9 @@
 
 #include "bindings/core/v8/ScriptPromise.h"
 #include "core/CoreExport.h"
+#include "core/clipboard/ClipboardClient.h"
 #include "core/dom/ContextLifecycleObserver.h"
+#include "third_party/WebKit/Source/core/CoreExport.h"
 #include "third_party/WebKit/common/clipboard/clipboard.mojom-blink.h"
 
 namespace blink {
@@ -15,14 +17,14 @@ namespace blink {
 class DataTransfer;
 class ScriptPromiseResolver;
 
-class ClipboardPromise final
+class CORE_EXPORT ClipboardPromise final
     : public GarbageCollectedFinalized<ClipboardPromise>,
       public ContextLifecycleObserver {
   USING_GARBAGE_COLLECTED_MIXIN(ClipboardPromise);
   WTF_MAKE_NONCOPYABLE(ClipboardPromise);
 
  public:
-  virtual ~ClipboardPromise(){};
+  virtual ~ClipboardPromise() = default;
 
   static ScriptPromise CreateForRead(ScriptState*);
   static ScriptPromise CreateForReadText(ScriptState*);
@@ -45,6 +47,7 @@ class ClipboardPromise final
   Member<ScriptPromiseResolver> script_promise_resolver_;
 
   mojom::ClipboardBuffer buffer_;
+  ClipboardClient clipboard_client_;
 };
 
 }  // namespace blink

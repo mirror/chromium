@@ -11,9 +11,7 @@
 #include "core/clipboard/DataTransferItemList.h"
 #include "platform/CrossThreadFunctional.h"
 #include "platform/clipboard/ClipboardMimeTypes.h"
-#include "public/platform/Platform.h"
 #include "public/platform/TaskType.h"
-#include "third_party/WebKit/public/platform/WebClipboard.h"
 
 namespace blink {
 
@@ -65,7 +63,7 @@ scoped_refptr<WebTaskRunner> ClipboardPromise::GetTaskRunner() {
 // TODO(garykac): This currently only handles plain text.
 void ClipboardPromise::HandleRead() {
   DCHECK(script_promise_resolver_);
-  String plain_text = Platform::Current()->Clipboard()->ReadPlainText(buffer_);
+  String plain_text = clipboard_client_.ReadPlainText(buffer_);
 
   const DataTransfer::DataTransferType type =
       DataTransfer::DataTransferType::kCopyAndPaste;
@@ -78,7 +76,7 @@ void ClipboardPromise::HandleRead() {
 
 void ClipboardPromise::HandleReadText() {
   DCHECK(script_promise_resolver_);
-  String text = Platform::Current()->Clipboard()->ReadPlainText(buffer_);
+  String text = clipboard_client_.ReadPlainText(buffer_);
   script_promise_resolver_->Resolve(text);
 }
 
@@ -92,7 +90,7 @@ void ClipboardPromise::HandleWrite(DataTransfer* data) {
     if (objectItem->Kind() == DataObjectItem::kStringKind &&
         objectItem->GetType() == kMimeTypeTextPlain) {
       String text = objectItem->GetAsString();
-      Platform::Current()->Clipboard()->WritePlainText(text);
+      clipboard_client_.WritePlainText(text);
       script_promise_resolver_->Resolve();
       return;
     }
@@ -102,7 +100,7 @@ void ClipboardPromise::HandleWrite(DataTransfer* data) {
 
 void ClipboardPromise::HandleWriteText(const String& data) {
   DCHECK(script_promise_resolver_);
-  Platform::Current()->Clipboard()->WritePlainText(data);
+  clipboard_client_.WritePlainText(data);
   script_promise_resolver_->Resolve();
 }
 

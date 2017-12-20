@@ -12,6 +12,7 @@
 #include "components/web_cache/renderer/web_cache_impl.h"
 #include "content/public/common/content_constants.h"
 #include "content/public/common/content_switches.h"
+#include "content/public/common/service_names.mojom.h"
 #include "content/public/renderer/render_frame.h"
 #include "content/public/renderer/render_thread.h"
 #include "content/public/renderer/render_view.h"
@@ -29,10 +30,13 @@
 #include "content/shell/test_runner/web_test_interfaces.h"
 #include "content/shell/test_runner/web_test_runner.h"
 #include "content/shell/test_runner/web_view_test_proxy.h"
+#include "content/test/mock_clipboard_host.h"
 #include "content/test/mock_webclipboard_impl.h"
 #include "media/base/audio_latency.h"
 #include "media/base/mime_util.h"
 #include "media/media_features.h"
+#include "services/service_manager/public/cpp/connector.h"
+#include "third_party/WebKit/public/platform/Platform.h"
 #include "third_party/WebKit/public/platform/WebAudioLatencyHint.h"
 #include "third_party/WebKit/public/platform/WebMediaStreamCenter.h"
 #include "third_party/WebKit/public/platform/WebRTCPeerConnectionHandler.h"
@@ -126,12 +130,15 @@ LayoutTestContentRendererClient::LayoutTestContentRendererClient() {
   EnableWebTestProxyCreation(base::Bind(&WebViewTestProxyCreated),
                              base::Bind(&WebWidgetTestProxyCreated),
                              base::Bind(&WebFrameTestProxyCreated));
+
+  clipboard_host_ = std::make_unique<MockClipboardHost>();
 }
 
 LayoutTestContentRendererClient::~LayoutTestContentRendererClient() {
 }
 
 void LayoutTestContentRendererClient::RenderThreadStarted() {
+  LOG(INFO) << __PRETTY_FUNCTION__;
 // Unless/until WebM files are added to the media layout tests, we need to
 // avoid removing MP4/H264/AAC so that layout tests can run on Android.
 // TODO(chcunningham): We should fix the tests to always use non-proprietary
@@ -141,6 +148,18 @@ void LayoutTestContentRendererClient::RenderThreadStarted() {
 #endif
   ShellContentRendererClient::RenderThreadStarted();
   shell_observer_.reset(new LayoutTestRenderThreadObserver());
+
+  service_manager::Connector::TestApi test_api(
+      blink::Platform::Current()->GetConnector());
+
+  LOG(INFO) << "Connector is "
+            << reinterpret_cast<int64_t>(
+                   content::ChildThread::Get()->GetConnector());
+
+  test_api.OverrideBinderForTesting(
+      content::mojom::kBrowserServiceName, blink::mojom::ClipboardHost::Name_,
+      base::BindRepeating(&MockClipboardHost::Bind,
+                          base::Unretained(clipboard_host_.get())));
 }
 
 void LayoutTestContentRendererClient::RenderFrameCreated(
