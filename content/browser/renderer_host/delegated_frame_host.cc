@@ -89,7 +89,8 @@ void DelegatedFrameHost::WasShown(const ui::LatencyInfo& latency_info) {
   if (!enable_surface_synchronization_ && !HasFallbackSurface() &&
       !released_front_lock_.get()) {
     if (compositor_)
-      released_front_lock_ = compositor_->GetCompositorLock(nullptr);
+      released_front_lock_ =
+          compositor_->lock_manager()->GetCompositorLock(nullptr);
   }
 
   if (compositor_)

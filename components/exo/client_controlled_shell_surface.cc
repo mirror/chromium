@@ -607,9 +607,9 @@ void ClientControlledShellSurface::UpdateBackdrop() {
 void ClientControlledShellSurface::
     EnsureCompositorIsLockedForOrientationChange() {
   if (!orientation_compositor_lock_) {
-    ui::Compositor* compositor =
-        widget_->GetNativeWindow()->layer()->GetCompositor();
-    orientation_compositor_lock_ = compositor->GetCompositorLock(
+    ui::CompositorLockManager* lock_manager =
+        widget_->GetNativeWindow()->layer()->GetCompositor()->lock_manager();
+    orientation_compositor_lock_ = lock_manager->GetCompositorLock(
         this, base::TimeDelta::FromMilliseconds(kOrientationLockTimeoutMs));
   }
 }

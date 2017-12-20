@@ -79,8 +79,6 @@ class Layer;
 class Reflector;
 class ScopedAnimationDurationScaleMode;
 
-constexpr int kCompositorLockTimeoutMs = 67;
-
 class COMPOSITOR_EXPORT ContextFactoryObserver {
  public:
   virtual ~ContextFactoryObserver() {}
@@ -361,16 +359,6 @@ class COMPOSITOR_EXPORT Compositor : public cc::LayerTreeHostClient,
   void RemoveAnimationObserver(CompositorAnimationObserver* observer);
   bool HasAnimationObserver(const CompositorAnimationObserver* observer) const;
 
-  // Creates a compositor lock. Returns NULL if it is not possible to lock at
-  // this time (i.e. we're waiting to complete a previous unlock). If the
-  // timeout is null, then no timeout is used.
-  std::unique_ptr<CompositorLock> GetCompositorLock(
-      CompositorLockClient* client,
-      base::TimeDelta timeout =
-          base::TimeDelta::FromMilliseconds(kCompositorLockTimeoutMs)) {
-    return lock_manager_.GetCompositorLock(client, timeout);
-  }
-
   // Registers a callback that is run when the next frame successfully makes it
   // to the screen (it's entirely possible some frames may be dropped between
   // the time this is called and the callback is run).
@@ -416,7 +404,7 @@ class COMPOSITOR_EXPORT Compositor : public cc::LayerTreeHostClient,
   // CompositorLockManagerClient implementation.
   void OnCompositorLockStateChanged(bool locked) override;
 
-  bool IsLocked() { return lock_manager_.IsLocked(); }
+  CompositorLockManager* lock_manager() { return &lock_manager_; }
 
   void SetOutputIsSecure(bool output_is_secure);
 
@@ -430,10 +418,6 @@ class COMPOSITOR_EXPORT Compositor : public cc::LayerTreeHostClient,
   const viz::FrameSinkId& frame_sink_id() const { return frame_sink_id_; }
   int activated_frame_count() const { return activated_frame_count_; }
   float refresh_rate() const { return refresh_rate_; }
-
-  void SetAllowLocksToExtendTimeout(bool allowed) {
-    lock_manager_.set_allow_locks_to_extend_timeout(allowed);
-  }
 
   // If true, all paint commands are recorded at pixel size instead of DIP.
   bool is_pixel_canvas() const { return is_pixel_canvas_; }
