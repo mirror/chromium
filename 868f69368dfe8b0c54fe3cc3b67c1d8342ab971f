@@ -34,6 +34,24 @@
       "revId": "868f69368dfe8b0c54fe3cc3b67c1d8342ab971f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "983dc718_c51fe07a",
+        "filename": "third_party/WebKit/public/platform/TaskType.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-12-20T10:00:57Z",
+      "side": 1,
+      "message": "I\u0027m fine with writing more generic explanations, but I\u0027m not sure this helps developers to determine which task type should be used. For example, I intended to use kInternalLoading for tasks posted in //content/renderer/loader, and there are various tasks e.g. task runner used at shared_memory_data_consumer_handle.cc:139 should be kInternalTaskType, but it is hard to tell the task is actually related to loading (this seems just notifying clients when some data is added to the buffer).\n\nI assume that task type should be determined just based on where the task is posted, but this is just my opinion.",
+      "parentUuid": "9b630cfd_8c546abd",
+      "revId": "868f69368dfe8b0c54fe3cc3b67c1d8342ab971f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
