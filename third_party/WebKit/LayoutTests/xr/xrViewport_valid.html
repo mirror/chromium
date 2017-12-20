@@ -62,7 +62,7 @@ xr_session_test( (t, session, mockService) => {
       t.done();
     }
 
-    session.requestFrame(onFrame);
+    session.requestAnimationFrame(onFrame);
   });
 }, fakeDisplays["Pixel"], { exclusive: true },
 "XRViewport attributes are valid");

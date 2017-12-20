@@ -52,7 +52,7 @@ xr_session_test( (t, session, mockService) => {
       t.done();
     }
 
-    session.requestFrame(onFrame);
+    session.requestAnimationFrame(onFrame);
   });
 }, fakeDisplays["Pixel"], { exclusive: true },
 "XRPresentationFrame contains the expected views");

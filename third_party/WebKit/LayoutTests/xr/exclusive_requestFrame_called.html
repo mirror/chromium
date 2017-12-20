@@ -21,8 +21,8 @@ xr_session_test( (t, session) => {
     t.done();
   }
 
-  session.requestFrame(onFrame);
+  session.requestAnimationFrame(onFrame);
 }, fakeDisplays["Pixel"], { exclusive: true },
-"XRSession requestFrame properly calls the provided callback");
+"XRSession requestAnimationFrame properly calls the provided callback");
 
 </script>

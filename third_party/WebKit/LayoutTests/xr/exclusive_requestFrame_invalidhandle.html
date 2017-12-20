@@ -17,18 +17,18 @@ xr_session_test( (t, session) => {
   let counter = 0;
 
   function onFrame(vrFrame) {
-    // Intentionally session.requestFrame at the beginning, ensuring that
+    // Intentionally session.requestAnimationFrame at the beginning, ensuring that
     // there's an outstanding callback when t.done() is called. This is to make
     // sure it doesn't cause any unexpected behavior like it did with
     // crbug.com/679401
-    session.requestFrame(onFrame);
+    session.requestAnimationFrame(onFrame);
     if (counter > 10) {
       t.done();
     }
     counter++;
   }
 
-  let handle = session.requestFrame(onFrame);
+  let handle = session.requestAnimationFrame(onFrame);
   session.cancelFrame(0);
   session.cancelFrame(-1);
   session.cancelFrame(handle + 1);

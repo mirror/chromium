@@ -27,11 +27,11 @@ xr_session_test( (t, session) => {
     counter++;
     if (counter >= 4) {
       t.done();
-      // Intentionally don't return immediately so that session.requestFrame
+      // Intentionally don't return immediately so that session.requestAnimationFrame
       // gets called again to make sure it doesn't cause unexpected behavior
       // like in crbug.com/679401
     }
-    session.requestFrame(onFrameGood);
+    session.requestAnimationFrame(onFrameGood);
 
     if (handle2 != 0) {
       // The first time we enter this callback the callback associated with
@@ -43,11 +43,11 @@ xr_session_test( (t, session) => {
     }
   }
 
-  let handle = session.requestFrame(onFrameBad);
+  let handle = session.requestAnimationFrame(onFrameBad);
   session.cancelFrame(handle);
-  session.requestFrame(onFrameGood);
-  handle2 = session.requestFrame(onFrameBad);
+  session.requestAnimationFrame(onFrameGood);
+  handle2 = session.requestAnimationFrame(onFrameBad);
 }, fakeDisplays["Pixel"], { exclusive: true },
-"XRSession requestFrame callbacks can be unregistered with cancelFrame");
+"XRSession requestAnimationFrame callbacks can be unregistered with cancelFrame");
 
 </script>

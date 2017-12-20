@@ -26,7 +26,7 @@ xr_session_test( (t, session, mockService) => {
       let rightView = xrFrame.views[1];
 
       if (counter == 0) {
-        session.requestFrame(onFrame);
+        session.requestAnimationFrame(onFrame);
 
         t.step( () => {
           let expectedLeftProjection = perspectiveFromFieldOfView(
@@ -66,7 +66,7 @@ xr_session_test( (t, session, mockService) => {
       counter++;
     }
 
-    session.requestFrame(onFrame);
+    session.requestAnimationFrame(onFrame);
   });
 }, fakeDisplays["Pixel"], { exclusive: true },
 "XRView projection matrices update near and far depths on the next frame");
