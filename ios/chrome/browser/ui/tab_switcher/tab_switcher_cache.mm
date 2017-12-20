@@ -91,13 +91,14 @@ const CGFloat kMaxFloatDelta = 0.01;
   UIImage* snapshot = [_cache objectForKey:[self keyForTab:tab]];
   if (snapshot && [snapshot size].width >= size.width) {
     // If tab is not in a state to take a snapshot, use the cached snapshot.
-    if (!tab.webState || !tab.webState->CanTakeSnapshot()) {
+    if (!tab.webState || !tab.webState->IsWebUsageEnabled()) {
       completionBlock(snapshot);
       return currentRequest;
     }
 
-    CGRect tabContentArea = UIEdgeInsetsInsetRect(
-        [tab.webState->GetView() bounds], [tab snapshotEdgeInsets]);
+    CGRect tabContentArea =
+        UIEdgeInsetsInsetRect([tab.webState->GetView() bounds],
+                              [tab snapshotEdgeInsetsForWebState:tab.webState]);
     CGFloat tabContentAreaRatio =
         tabContentArea.size.width / tabContentArea.size.height;
     CGFloat cachedSnapshotRatio =

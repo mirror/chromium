@@ -31,8 +31,6 @@ source_set("web") {
     "repost_form_tab_helper.mm",
     "sad_tab_tab_helper.h",
     "sad_tab_tab_helper.mm",
-    "tab_id_tab_helper.h",
-    "tab_id_tab_helper.mm",
   ]
   deps = [
     ":tab_helper_delegates",
@@ -40,6 +38,7 @@ source_set("web") {
     "//components/strings",
     "//ios/chrome/app/strings:ios_strings_grit",
     "//ios/chrome/browser",
+    "//ios/chrome/browser/snapshots",
     "//ios/chrome/browser/ui",
     "//ios/chrome/browser/ui/commands:commands",
     "//ios/chrome/browser/ui/util:util",
@@ -47,12 +46,26 @@ source_set("web") {
     "//ui/base",
     "//url",
   ]
+  public_deps = [
+    ":tab_id_tab_helper",
+  ]
+}
+
+source_set("tab_id_tab_helper") {
+  sources = [
+    "tab_id_tab_helper.h",
+    "tab_id_tab_helper.mm",
+  ]
+  deps = [
+    "//base",
+    "//ios/web/public",
+  ]
+  configs += [ "//build/config/compiler:enable_arc" ]
 }
 
 source_set("tab_helper_delegates") {
   configs += [ "//build/config/compiler:enable_arc" ]
   sources = [
-    "page_placeholder_tab_helper_delegate.h",
     "repost_form_tab_helper_delegate.h",
     "sad_tab_tab_helper_delegate.h",
   ]
@@ -82,6 +95,7 @@ source_set("unit_tests") {
     "//base:base",
     "//base/test:test_support",
     "//ios/chrome/browser/browser_state:test_support",
+    "//ios/chrome/browser/snapshots",
     "//ios/chrome/test:test_support",
     "//ios/web",
     "//ios/web/public/test",

@@ -9,6 +9,7 @@
 #import "ios/chrome/browser/tabs/legacy_tab_helper.h"
 #import "ios/chrome/browser/tabs/tab.h"
 #import "ios/chrome/browser/tabs/tab_helper_util.h"
+#import "ios/chrome/browser/web/page_placeholder_tab_helper.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
 #error "This file requires ARC support."
@@ -32,6 +33,7 @@ void TabModelWebStateListDelegate::WillAddWebState(web::WebState* web_state) {
     // to AttachTabHelpers once PreloadController is fixed to only create the
     // tab helpers that are required for pre-rendered tabs.
     SnapshotTabHelper::CreateForWebState(web_state);
+    PagePlaceholderTabHelper::CreateForWebState(web_state);
   }
 
   DCHECK(LegacyTabHelper::FromWebState(web_state));

@@ -36,11 +36,9 @@ class WebState;
 - (void)retrieveSnapshot:(void (^)(UIImage*))callback;
 
 // Gets a grey snapshot for the current page, calling |callback| once it has
-// been retrieved or regenerated. If |generate| is NO, then the snapshot will
-// not be generated if missing.  If the snapshot cannot be generated, the
+// been retrieved or regenerated. If the snapshot cannot be generated, the
 // |callback| will be called with nil.
-- (void)retrieveGreySnapshot:(void (^)(UIImage*))callback
-                    generate:(BOOL)generate;
+- (void)retrieveGreySnapshot:(void (^)(UIImage*))callback;
 
 // Invalidates the cached snapshot for the current page, generates and caches
 // a new snapshot. Returns the snapshot with or without the overlayed views
@@ -58,6 +56,9 @@ class WebState;
 
 // Requests deletion of the current page snapshot from disk and memory.
 - (void)removeSnapshot;
+
+// Returns an image to use as replacement of a missing snapshot.
++ (UIImage*)defaultSnapshotImage;
 
 // The SnapshotGenerator delegate.
 @property(nonatomic, weak) id<SnapshotGeneratorDelegate> delegate;

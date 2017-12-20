@@ -75,7 +75,6 @@ void AttachTabHelpers(web::WebState* web_state) {
   BlockedPopupTabHelper::CreateForWebState(web_state);
   FindTabHelper::CreateForWebState(web_state, tab.findInPageControllerDelegate);
   StoreKitTabHelper::CreateForWebState(web_state);
-  PagePlaceholderTabHelper::CreateForWebState(web_state, tab);
   HistoryTabHelper::CreateForWebState(web_state);
   LoadTimingTabHelper::CreateForWebState(web_state);
   CaptivePortalMetricsTabHelper::CreateForWebState(web_state);

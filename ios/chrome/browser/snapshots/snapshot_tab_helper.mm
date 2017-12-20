@@ -102,9 +102,8 @@ void SnapshotTabHelper::RetrieveColorSnapshot(void (^callback)(UIImage*)) {
   [snapshot_generator_ retrieveSnapshot:callback];
 }
 
-void SnapshotTabHelper::RetrieveGreySnapshot(void (^callback)(UIImage*),
-                                             bool generate) {
-  [snapshot_generator_ retrieveGreySnapshot:callback generate:generate];
+void SnapshotTabHelper::RetrieveGreySnapshot(void (^callback)(UIImage*)) {
+  [snapshot_generator_ retrieveGreySnapshot:callback];
 }
 
 UIImage* SnapshotTabHelper::UpdateSnapshot(bool with_overlays,
@@ -126,6 +125,11 @@ void SnapshotTabHelper::SetSnapshotCoalescingEnabled(bool enabled) {
 void SnapshotTabHelper::RemoveSnapshot() {
   DCHECK(web_state_);
   [snapshot_generator_ removeSnapshot];
+}
+
+// static
+UIImage* SnapshotTabHelper::DefautSnapshotImage() {
+  return [SnapshotGenerator defaultSnapshotImage];
 }
 
 SnapshotTabHelper::SnapshotTabHelper(web::WebState* web_state)
