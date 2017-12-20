@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bf660647_cbaf5399",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-20T18:51:36Z",
+      "side": 1,
+      "message": "Is there a bug this  CL can be associated with?",
+      "revId": "3df26bb7b8f6695db0924d31d106f0267388f577",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "814a24ac_2fef1d2f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/website/Website.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-20T18:51:36Z",
+      "side": 1,
+      "message": "nit: JavaDoc",
+      "revId": "3df26bb7b8f6695db0924d31d106f0267388f577",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
