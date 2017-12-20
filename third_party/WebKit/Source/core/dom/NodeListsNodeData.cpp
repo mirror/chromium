@@ -35,8 +35,11 @@
 namespace blink {
 
 void NodeListsNodeData::InvalidateCaches(const QualifiedName* attr_name) {
-  for (const auto& cache : atomic_name_caches_)
-    cache.value->InvalidateCacheForAttribute(attr_name);
+  for (const auto& cache : atomic_name_caches_) {
+    if (!cache.value->IsRootedAtTreeScope()) {
+      cache.value->InvalidateCacheForAttribute(attr_name);
+    }
+  }
 
   if (attr_name)
     return;
