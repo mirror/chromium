@@ -8,6 +8,26 @@ namespace content {
 
 SyncLoadResponse::SyncLoadResponse() {}
 
+SyncLoadResponse::SyncLoadResponse(SyncLoadResponse&& other)
+    : info(other.info),
+      error_code(other.error_code),
+      cors_error(other.cors_error),
+      url(std::move(other.url)),
+      data(std::move(other.data)),
+      downloaded_file_length(other.downloaded_file_length),
+      downloaded_tmp_file(std::move(other.downloaded_tmp_file)) {}
+
 SyncLoadResponse::~SyncLoadResponse() {}
+
+SyncLoadResponse& SyncLoadResponse::operator=(SyncLoadResponse&& other) {
+  this->info = other.info;
+  this->error_code = other.error_code;
+  this->cors_error = other.cors_error;
+  this->url = std::move(other.url);
+  this->data = std::move(other.data);
+  this->downloaded_file_length = other.downloaded_file_length;
+  this->downloaded_tmp_file = std::move(other.downloaded_tmp_file);
+  return *this;
+}
 
 }  // namespace content
