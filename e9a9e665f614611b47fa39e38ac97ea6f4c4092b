@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "35fa8dae_851fb6a9",
+        "filename": "ui/message_center/views/notification_view_md.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 672,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-20T17:22:50Z",
+      "side": 1,
+      "message": "it seems like SmsObserver (and perhaps others) fail this check?",
+      "parentUuid": "ee495cc8_67a83a71",
+      "revId": "e9a9e665f614611b47fa39e38ac97ea6f4c4092b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cbb71576_bd7324f7",
         "filename": "ui/message_center/views/notification_view_md.cc",
         "patchSetId": 2
@@ -174,6 +192,24 @@
       "revId": "e9a9e665f614611b47fa39e38ac97ea6f4c4092b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8473b863_e141856a",
+        "filename": "ui/message_center/views/notification_view_md.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 685,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-20T17:22:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "99528ba3_916da9f3",
+      "revId": "e9a9e665f614611b47fa39e38ac97ea6f4c4092b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
