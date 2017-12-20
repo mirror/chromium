@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "cba7f1d2_0aef07ba",
+        "filename": "content/renderer/browser_plugin/browser_plugin.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 461,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2017-12-20T19:35:32Z",
+      "side": 1,
+      "message": "I think so, but I\u0027m not %100 sure. lfg: are you familiar with the lifetime of BrowserPlugin with respect to its embedding RenderWidget?",
+      "parentUuid": "33d65772_c31790e2",
+      "revId": "97bbbbcfb2abda0aa95d91ba58104e90a8c222cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "79e2afb3_ddae1ac8",
         "filename": "content/renderer/browser_plugin/browser_plugin.cc",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "97bbbbcfb2abda0aa95d91ba58104e90a8c222cd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42787549_92c4edf5",
+        "filename": "content/renderer/browser_plugin/browser_plugin.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 472,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2017-12-20T19:35:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "79e2afb3_ddae1ac8",
+      "revId": "97bbbbcfb2abda0aa95d91ba58104e90a8c222cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
