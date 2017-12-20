@@ -22,6 +22,30 @@
       "revId": "41528af6488e28c31818398a1753c124c6d90ea3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8015477_9acf43ea",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 821,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-12-20T11:02:47Z",
+      "side": 1,
+      "message": "This was something I learned to avoid accidentally declaring global variables. But maybe \"use strict\" fixes that?",
+      "parentUuid": "7e374abd_2e270d25",
+      "range": {
+        "startLine": 821,
+        "startChar": 38,
+        "endLine": 821,
+        "endChar": 0
+      },
+      "revId": "41528af6488e28c31818398a1753c124c6d90ea3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
