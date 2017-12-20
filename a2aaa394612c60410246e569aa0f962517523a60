@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c051bc57_4638de8e",
+        "filename": "ios/web/web_state/js/context_menu_js_unittest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-20T01:33:57Z",
+      "side": 1,
+      "message": "Can we use MAYBE_ pattern?",
+      "range": {
+        "startLine": 253,
+        "startChar": 5,
+        "endLine": 253,
+        "endChar": 28
+      },
+      "revId": "a2aaa394612c60410246e569aa0f962517523a60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
