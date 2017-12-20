@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7b9f6a65_74178e35",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 2773,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-12-20T16:12:33Z",
+      "side": 1,
+      "message": "nit: This comment isn\u0027t really accurate anymore is it?",
+      "range": {
+        "startLine": 2773,
+        "startChar": 29,
+        "endLine": 2773,
+        "endChar": 55
+      },
+      "revId": "1fa84a3103856d09c742f8fc87e1d5fc10d0e25d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
