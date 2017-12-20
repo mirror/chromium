@@ -33,15 +33,8 @@ class ChromeRenderViewObserver : public content::RenderViewObserver {
 
  private:
   // RenderViewObserver implementation.
-  bool OnMessageReceived(const IPC::Message& message) override;
   void Navigate(const GURL& url) override;
   void OnDestruct() override;
-
-#if defined(OS_ANDROID)
-  void OnUpdateBrowserControlsState(content::BrowserControlsState constraints,
-                                    content::BrowserControlsState current,
-                                    bool animate);
-#endif
 
   // Determines if a host is in the strict security host set.
   bool IsStrictSecurityHost(const std::string& host);
