@@ -3,6 +3,10 @@
 # found in the LICENSE file.
 
 config("config") {
+  include_dirs = [ "forwarding_headers" ]
+}
+
+config("private_config") {
   include_dirs = [ "src/src" ]
   visibility = [ ":motion_interchange_objc" ]
 }
@@ -54,7 +58,7 @@ source_set("motion_interchange_objc") {
   ]
   configs -= [ "//build/config/compiler:chromium_code" ]
   configs += [
-    ":config",
+    ":private_config",
     "//build/config/compiler:enable_arc",
     "//build/config/compiler:no_chromium_code",
   ]
