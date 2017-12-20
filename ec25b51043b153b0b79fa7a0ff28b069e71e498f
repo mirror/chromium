@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "24d8ce57_d07d32b0",
+        "filename": "third_party/WebKit/Source/core/css/ComputedStyleCSSValueMapping.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 3410,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-12-20T23:33:35Z",
+      "side": 0,
+      "message": "In the case that the if statement below isn\u0027t satisfied we used to fall through into CSSPropertyTextCombineUpright. Now that you have removed that you wont be falling through anymore. Which is leading to your layouttest failures.",
+      "revId": "ec25b51043b153b0b79fa7a0ff28b069e71e498f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "238d8166_c51910f9",
+        "filename": "third_party/WebKit/Source/core/css/ComputedStyleCSSValueMapping.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 3415,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-12-20T23:33:35Z",
+      "side": 0,
+      "message": "In the case that the if statement below isn\u0027t satisfied we used to fall through into CSSPropertyTextOrientation. Now that you have removed that you wont be falling through anymore. Which is leading to your layouttest failures.",
+      "revId": "ec25b51043b153b0b79fa7a0ff28b069e71e498f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9c73720_8249832e",
+        "filename": "third_party/WebKit/Source/core/css/properties/longhands/Variable.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-12-20T23:33:35Z",
+      "side": 0,
+      "message": "erroneous new line",
+      "revId": "ec25b51043b153b0b79fa7a0ff28b069e71e498f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
