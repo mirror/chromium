@@ -121,6 +121,30 @@
     },
     {
       "key": {
+        "uuid": "cd6ea4a9_628dd47a",
+        "filename": "ui/gl/gl_image_ahardwarebuffer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-12-20T03:26:40Z",
+      "side": 1,
+      "message": "Can we always use preserved\u003dtrue for now? or is the preserved\u003dfalse case something that is critical to support for performance?",
+      "parentUuid": "f6eb6b5b_bcbc2b09",
+      "range": {
+        "startLine": 19,
+        "startChar": 43,
+        "endLine": 19,
+        "endChar": 57
+      },
+      "revId": "ceed94ea5c60c0a99e6eb774bcef2ac2ca022bac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "56d0c131_204188d2",
         "filename": "ui/gl/gl_image_native_pixmap.h",
         "patchSetId": 6
