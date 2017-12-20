@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c7b35f42_5501394d",
+        "filename": "chrome/browser/ui/views/overlay/overlay_window_views.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1121784
+      },
+      "writtenOn": "2017-12-20T20:02:32Z",
+      "side": 1,
+      "message": "Yes, this is currently temporary only while we don\u0027t have a size plumbed through, or video ratios taken into account for window sizing.",
+      "parentUuid": "d1dbd2a1_ca1b9c3e",
+      "revId": "039fdd17089b66dfdf4111f2033c685b2c281e5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "33321b9e_24911b5e",
         "filename": "chrome/browser/ui/views/overlay/overlay_window_views.cc",
         "patchSetId": 2
@@ -39,6 +57,30 @@
       "revId": "039fdd17089b66dfdf4111f2033c685b2c281e5c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ebfb574_1e8f5202",
+        "filename": "chrome/browser/ui/views/overlay/overlay_window_views.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1121784
+      },
+      "writtenOn": "2017-12-20T20:02:32Z",
+      "side": 1,
+      "message": "Updated.",
+      "parentUuid": "33321b9e_24911b5e",
+      "range": {
+        "startLine": 62,
+        "startChar": 36,
+        "endLine": 62,
+        "endChar": 53
+      },
+      "revId": "039fdd17089b66dfdf4111f2033c685b2c281e5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
