@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7cf8583d_fe118035",
+        "filename": "chrome/app/chromeos_strings.grdp",
+        "patchSetId": 1
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-12-20T05:59:45Z",
+      "side": 1,
+      "message": "Done.\nI think \"virtual disk\" would be the best one among these, considering it can be a cloud storage service directory which is not a file or a local storage device.",
+      "parentUuid": "52b3b9ac_58bbdac4",
+      "range": {
+        "startLine": 311,
+        "startChar": 39,
+        "endLine": 311,
+        "endChar": 59
+      },
+      "revId": "52afcec3847f72461a739448ce4b2a14f1adf234",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "12c3ac15_4c4f6479",
         "filename": "chrome/app/chromeos_strings.grdp",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-12-15T03:56:13Z",
       "side": 1,
       "message": "As in previous comment: \"Can\u0027t disconnect from X\" would be preferred. It gives the average user a little more of an idea of what the problem is by using slightly less technical language.",
+      "range": {
+        "startLine": 313,
+        "startChar": 3,
+        "endLine": 313,
+        "endChar": 23
+      },
+      "revId": "52afcec3847f72461a739448ce4b2a14f1adf234",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a1a17f9_c82125cc",
+        "filename": "chrome/app/chromeos_strings.grdp",
+        "patchSetId": 1
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-12-20T05:59:45Z",
+      "side": 1,
+      "message": "I found we don\u0027t usually repeat the title in the body text here. So I thought this part should be removed in this case.",
+      "parentUuid": "12c3ac15_4c4f6479",
       "range": {
         "startLine": 313,
         "startChar": 3,
