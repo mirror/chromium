@@ -48,29 +48,6 @@ ChromeRenderViewObserver::ChromeRenderViewObserver(
 ChromeRenderViewObserver::~ChromeRenderViewObserver() {
 }
 
-bool ChromeRenderViewObserver::OnMessageReceived(const IPC::Message& message) {
-#if defined(OS_ANDROID)
-  bool handled = true;
-  IPC_BEGIN_MESSAGE_MAP(ChromeRenderViewObserver, message)
-    IPC_MESSAGE_HANDLER(ChromeViewMsg_UpdateBrowserControlsState,
-                        OnUpdateBrowserControlsState)
-    IPC_MESSAGE_UNHANDLED(handled = false)
-  IPC_END_MESSAGE_MAP()
-  return handled;
-#else
-  return false;
-#endif
-}
-
-#if defined(OS_ANDROID)
-void ChromeRenderViewObserver::OnUpdateBrowserControlsState(
-    content::BrowserControlsState constraints,
-    content::BrowserControlsState current,
-    bool animate) {
-  render_view()->UpdateBrowserControlsState(constraints, current, animate);
-}
-#endif
-
 void ChromeRenderViewObserver::Navigate(const GURL& url) {
   // Execute cache clear operations that were postponed until a navigation
   // event (including tab reload).

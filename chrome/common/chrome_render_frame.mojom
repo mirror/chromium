@@ -13,6 +13,10 @@ enum ImageFormat {
   PNG,
 };
 
+
+[Native]
+enum BrowserControlsState;
+
 [Native]
 struct WebApplicationInfo;
 
@@ -47,4 +51,10 @@ interface ChromeRenderFrame {
 
   // Requests the web application info from the renderer.
   GetWebApplicationInfo() => (WebApplicationInfo web_application_info);
+
+  // Notifies the renderer whether hiding/showing the browser controls is enabled,
+  // what the current state should be, and whether or not to animate to the
+  // proper state.
+  UpdateBrowserControlsState(BrowserControlsState constraints,
+                             BrowserControlsState current, bool animate);
 };
