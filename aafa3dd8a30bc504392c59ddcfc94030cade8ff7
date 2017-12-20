@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "59453472_0e376ed8",
+        "filename": "third_party/WebKit/LayoutTests/accessibility/aom-computed-accessible-node.html",
+        "patchSetId": 13
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-20T07:20:09Z",
+      "side": 1,
+      "message": "I\u0027m okay with this for now, but I don\u0027t think the final implementation\ncan work this way. Here\u0027s what I\u0027m worried about:\n\nwindow.getComputedAccessibleNode(element).then(computedAXNode \u003d\u003e {\n  console.log(computedAXNode.visible);\n  element.className \u003d \u0027sometimesHidden\u0027;\n  console.log(computedAXNode.visible);\n})\n\nChanging the class name invalidates style and layout, so in order to\ndetermine if the ComputedAccessibleNode is now visible after the\nclass name change we\u0027d have to block until layout is clean. We don\u0027t\nwant to do that.\n\nI think what we want is something in-between a snapshot and a live object.\nWhen the DOM changes, the ComputedAccessibleNode will be guaranteed to\nupdate soon, but not necessarily instantly. We\u0027ll add a mechanism to\nregister a callback or listener for when it changes.",
+      "revId": "aafa3dd8a30bc504392c59ddcfc94030cade8ff7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f7249b8_a56063ee",
+        "filename": "third_party/WebKit/LayoutTests/webexposed/global-interface-listing-expected.txt",
+        "patchSetId": 13
+      },
+      "lineNbr": 1056,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-20T07:20:09Z",
+      "side": 1,
+      "message": "Is the constructor public?",
+      "revId": "aafa3dd8a30bc504392c59ddcfc94030cade8ff7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed0a0d26_6797b705",
+        "filename": "third_party/WebKit/Source/core/frame/Window.idl",
+        "patchSetId": 13
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-20T07:20:09Z",
+      "side": 1,
+      "message": "Nit: elt -\u003e element - elsewhere in this file it seems to be spelled out",
+      "revId": "aafa3dd8a30bc504392c59ddcfc94030cade8ff7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
