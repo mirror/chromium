@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b688eee8_563a4846",
+        "filename": "content/public/browser/file_url_loader.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-12-20T18:32:53Z",
+      "side": 1,
+      "message": "I can do that, but I won\u0027t be able to pass an instance of FileURLLoaderObserver into FileDataPipeProducer. I\u0027d have to have this class create it\u0027s own FileDataPipeProducer::Observer instance, and then marshal the parameters to the FileURLLoaderObserver.\n\nI\u0027m happy to do this, but wanted to point out the complexity before making this change. If you still want it let me know and I\u0027ll do it.",
+      "parentUuid": "63e06ba4_aeafec28",
+      "revId": "6e1d587dbe003a3e121a4eabd9acc87559d91171",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "111adfe3_9eb0f17a",
         "filename": "extensions/browser/content_verify_job.cc",
         "patchSetId": 9
@@ -33,6 +51,24 @@
       "revId": "6e1d587dbe003a3e121a4eabd9acc87559d91171",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e577cfad_00cb80e7",
+        "filename": "extensions/browser/content_verify_job.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-12-20T18:32:53Z",
+      "side": 1,
+      "message": "Doh! thx.",
+      "parentUuid": "111adfe3_9eb0f17a",
+      "revId": "6e1d587dbe003a3e121a4eabd9acc87559d91171",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "f49c76cc_87b1a607",
+        "filename": "mojo/public/cpp/system/file_data_pipe_producer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-12-20T18:32:53Z",
+      "side": 1,
+      "message": "np - thx for catching that.",
+      "parentUuid": "8d8fa4ca_cd784e85",
+      "revId": "6e1d587dbe003a3e121a4eabd9acc87559d91171",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f63e9f8f_9515dede",
         "filename": "mojo/public/cpp/system/file_data_pipe_producer.h",
         "patchSetId": 9
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "bca02efe_dfe6d498",
+        "filename": "mojo/public/cpp/system/file_data_pipe_producer.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-12-20T18:32:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f63e9f8f_9515dede",
+      "revId": "6e1d587dbe003a3e121a4eabd9acc87559d91171",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e7c7ea29_759a53ac",
         "filename": "mojo/public/cpp/system/file_data_pipe_producer.h",
         "patchSetId": 9
@@ -81,6 +153,24 @@
       "writtenOn": "2017-12-06T18:20:45Z",
       "side": 1,
       "message": "Can we instead make this once per successful read and get rid of the |read_result| arg? The use case we want this for shouldn\u0027t care whether an individual read fails, so it doesn\u0027t matter. We can always add it back if we want to later.",
+      "revId": "6e1d587dbe003a3e121a4eabd9acc87559d91171",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd70a862_b3c28b38",
+        "filename": "mojo/public/cpp/system/file_data_pipe_producer.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-12-20T18:32:53Z",
+      "side": 1,
+      "message": "For verification alone you are correct, but this CL also does UMA logging for read errors in FileLoaderObserver::OnBytesRead, and that needs to be preserved.",
+      "parentUuid": "e7c7ea29_759a53ac",
       "revId": "6e1d587dbe003a3e121a4eabd9acc87559d91171",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "8764cf27_2e76429d",
+        "filename": "mojo/public/cpp/system/file_data_pipe_producer.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-12-20T18:32:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "52894f02_69183e17",
+      "revId": "6e1d587dbe003a3e121a4eabd9acc87559d91171",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5c797afe_66d1e7a7",
         "filename": "mojo/public/cpp/system/file_data_pipe_producer.h",
         "patchSetId": 9
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "5d55117a_4f9b0794",
+        "filename": "mojo/public/cpp/system/file_data_pipe_producer.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-12-20T18:32:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5c797afe_66d1e7a7",
+      "revId": "6e1d587dbe003a3e121a4eabd9acc87559d91171",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "08df5709_f1c2799b",
         "filename": "mojo/public/cpp/system/tests/file_data_pipe_producer_unittest.cc",
         "patchSetId": 9
@@ -132,6 +258,24 @@
       "writtenOn": "2017-12-06T18:20:45Z",
       "side": 1,
       "message": "nit: could we just make num_read_errors etc public fields on this test object and not introduce DataPipeObserverData at all?",
+      "revId": "6e1d587dbe003a3e121a4eabd9acc87559d91171",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b04c3bc6_47d23609",
+        "filename": "mojo/public/cpp/system/tests/file_data_pipe_producer_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-12-20T18:32:53Z",
+      "side": 1,
+      "message": "Lifetime ownership of the observer is passed to the FileSequenceState which is be deleted when the writing is finished (in FileDataPipeProducer::OnWriteComplete). Do you see a cleaner way still?",
+      "parentUuid": "08df5709_f1c2799b",
       "revId": "6e1d587dbe003a3e121a4eabd9acc87559d91171",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
