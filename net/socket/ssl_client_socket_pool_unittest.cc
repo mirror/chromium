@@ -9,6 +9,7 @@
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/time/time.h"
+#include "build/build_config.h"
 #include "net/base/auth.h"
 #include "net/base/load_timing_info.h"
 #include "net/base/load_timing_info_test_util.h"
@@ -29,13 +30,16 @@
 #include "net/proxy/proxy_service.h"
 #include "net/socket/client_socket_handle.h"
 #include "net/socket/next_proto.h"
+#include "net/socket/socket_tag.h"
 #include "net/socket/socket_test_util.h"
 #include "net/spdy/chromium/spdy_session.h"
 #include "net/spdy/chromium/spdy_session_pool.h"
 #include "net/spdy/chromium/spdy_test_util_common.h"
 #include "net/ssl/ssl_config_service_defaults.h"
+#include "net/test/embedded_test_server/embedded_test_server.h"
 #include "net/test/gtest_util.h"
 #include "net/test/test_certificate_data.h"
+#include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -97,7 +101,8 @@ class SSLClientSocketPoolTest : public testing::Test {
             HostPortPair("host", 443),
             false,
             OnHostResolutionCallback(),
-            TransportSocketParams::COMBINE_CONNECT_AND_WRITE_DEFAULT)),
+            TransportSocketParams::COMBINE_CONNECT_AND_WRITE_DEFAULT,
+            SocketTag())),
         transport_socket_pool_(kMaxSockets,
                                kMaxSocketsPerGroup,
                                &socket_factory_),
@@ -105,7 +110,8 @@ class SSLClientSocketPoolTest : public testing::Test {
             HostPortPair("proxy", 443),
             false,
             OnHostResolutionCallback(),
-            TransportSocketParams::COMBINE_CONNECT_AND_WRITE_DEFAULT)),
+            TransportSocketParams::COMBINE_CONNECT_AND_WRITE_DEFAULT,
+            SocketTag())),
         socks_socket_params_(
             new SOCKSSocketParams(proxy_transport_socket_params_,
                                   true,
@@ -190,7 +196,7 @@ class SSLClientSocketPoolTest : public testing::Test {
 
   MockClientSocketFactory socket_factory_;
   MockCachingHostResolver host_resolver_;
-  std::unique_ptr<CertVerifier> cert_verifier_;
+  std::unique_ptr<MockCertVerifier> cert_verifier_;
   std::unique_ptr<TransportSecurityState> transport_security_state_;
   MultiLogCTVerifier ct_verifier_;
   CTPolicyEnforcer ct_policy_enforcer_;
@@ -944,6 +950,118 @@ TEST_F(SSLClientSocketPoolTest, IPPoolingChannelID) {
 
 // It would be nice to also test the timeouts in SSLClientSocketPool.
 
+// Test that SocketTag passed into SSLClientSocketPool is applied to returned
+// sockets.
+#if defined(OS_ANDROID)
+TEST_F(SSLClientSocketPoolTest, Tag) {
+  // Start test server.
+  EmbeddedTestServer test_server(net::EmbeddedTestServer::TYPE_HTTPS);
+  test_server.SetSSLConfig(net::EmbeddedTestServer::CERT_OK, SSLServerConfig());
+  test_server.AddDefaultHandlers(base::FilePath());
+  ASSERT_TRUE(test_server.Start());
+  AddressList addr_list;
+  ASSERT_TRUE(test_server.GetAddressList(&addr_list));
+
+  TransportClientSocketPool tcp_pool(
+      kMaxSockets, kMaxSocketsPerGroup, &host_resolver_,
+      ClientSocketFactory::GetDefaultFactory(), NULL, NULL);
+  cert_verifier_->set_default_result(OK);
+  SSLClientSocketPool pool(kMaxSockets, kMaxSocketsPerGroup,
+                           cert_verifier_.get(), NULL /* channel_id_service */,
+                           transport_security_state_.get(), &ct_verifier_,
+                           &ct_policy_enforcer_,
+                           std::string() /* ssl_session_cache_shard */,
+                           ClientSocketFactory::GetDefaultFactory(), &tcp_pool,
+                           NULL, NULL, NULL, NULL);
+  TestCompletionCallback callback;
+  ClientSocketHandle handle;
+  int32_t tag_val1 = 0x12345678;
+  SocketTag tag1(SocketTag::UNSET_UID, tag_val1);
+  int32_t tag_val2 = 0x87654321;
+  SocketTag tag2(getuid(), tag_val2);
+
+  // Test socket is tagged before connected.
+  uint64_t old_traffic = GetTaggedBytes(tag_val1);
+  scoped_refptr<TransportSocketParams> tcp_params1(new TransportSocketParams(
+      HostPortPair::FromIPEndPoint(addr_list[0]), false,
+      OnHostResolutionCallback(),
+      TransportSocketParams::COMBINE_CONNECT_AND_WRITE_DEFAULT, tag1));
+  scoped_refptr<SSLSocketParams> params1(new SSLSocketParams(
+      tcp_params1, NULL, NULL,
+      HostPortPair(test_server.GetURL("/").host(), addr_list[0].port()),
+      ssl_config_, PRIVACY_MODE_DISABLED, 0, false));
+  int rv =
+      handle.Init("a", params1, LOW, ClientSocketPool::RespectLimits::ENABLED,
+                  callback.callback(), &pool, NetLogWithSource());
+  EXPECT_THAT(rv, IsError(ERR_IO_PENDING));
+  EXPECT_THAT(callback.WaitForResult(), IsOk());
+  EXPECT_TRUE(handle.socket());
+  EXPECT_TRUE(handle.socket()->IsConnected());
+  EXPECT_GT(GetTaggedBytes(tag_val1), old_traffic);
+
+  // Test reused socket is retagged.
+  StreamSocket* socket = handle.socket();
+  handle.Reset();
+  old_traffic = GetTaggedBytes(tag_val2);
+  scoped_refptr<TransportSocketParams> tcp_params2(new TransportSocketParams(
+      HostPortPair::FromIPEndPoint(addr_list[0]), false,
+      OnHostResolutionCallback(),
+      TransportSocketParams::COMBINE_CONNECT_AND_WRITE_DEFAULT, tag2));
+  scoped_refptr<SSLSocketParams> params2(new SSLSocketParams(
+      tcp_params2, NULL, NULL,
+      HostPortPair(test_server.GetURL("/").host(), addr_list[0].port()),
+      ssl_config_, PRIVACY_MODE_DISABLED, 0, false));
+  rv = handle.Init("a", params2, LOW, ClientSocketPool::RespectLimits::ENABLED,
+                   callback.callback(), &pool, NetLogWithSource());
+  EXPECT_THAT(rv, IsOk());
+  EXPECT_TRUE(handle.socket());
+  EXPECT_TRUE(handle.socket()->IsConnected());
+  EXPECT_TRUE(handle.socket() == socket);
+  const char kRequest1[] = "GET / HTTP/1.1\r\n\r\n";
+  scoped_refptr<IOBufferWithSize> write_buffer1(
+      new IOBufferWithSize(strlen(kRequest1)));
+  memmove(write_buffer1->data(), kRequest1, strlen(kRequest1));
+  TestCompletionCallback write_callback1;
+  EXPECT_EQ(handle.socket()->Write(write_buffer1.get(), strlen(kRequest1),
+                                   write_callback1.callback(),
+                                   TRAFFIC_ANNOTATION_FOR_TESTS),
+            (int)strlen(kRequest1));
+  scoped_refptr<IOBufferWithSize> read_buffer(new IOBufferWithSize(1));
+  EXPECT_EQ(handle.socket()->Read(read_buffer.get(), read_buffer->size(),
+                                  callback.callback()),
+            ERR_IO_PENDING);
+  EXPECT_THAT(callback.WaitForResult(), read_buffer->size());
+  EXPECT_GT(GetTaggedBytes(tag_val2), old_traffic);
+  // Disconnect socket to prevent reuse.
+  handle.socket()->Disconnect();
+  handle.Reset();
+
+  // Test connect jobs that are orphaned and then adopted, appropriately apply
+  // new tag. Request socket with |tag1|.
+  rv = handle.Init("a", params1, LOW, ClientSocketPool::RespectLimits::ENABLED,
+                   callback.callback(), &pool, NetLogWithSource());
+  EXPECT_THAT(rv, IsError(ERR_IO_PENDING));
+  // Abort and request socket with |tag2|.
+  handle.Reset();
+  rv = handle.Init("a", params2, LOW, ClientSocketPool::RespectLimits::ENABLED,
+                   callback.callback(), &pool, NetLogWithSource());
+  EXPECT_THAT(rv, IsError(ERR_IO_PENDING));
+  EXPECT_THAT(callback.WaitForResult(), IsOk());
+  EXPECT_TRUE(handle.socket());
+  EXPECT_TRUE(handle.socket()->IsConnected());
+  // Verify socket has |tag2| applied.
+  old_traffic = GetTaggedBytes(tag_val2);
+  EXPECT_EQ(handle.socket()->Write(write_buffer1.get(), strlen(kRequest1),
+                                   write_callback1.callback(),
+                                   TRAFFIC_ANNOTATION_FOR_TESTS),
+            (int)strlen(kRequest1));
+  EXPECT_EQ(handle.socket()->Read(read_buffer.get(), read_buffer->size(),
+                                  callback.callback()),
+            ERR_IO_PENDING);
+  EXPECT_THAT(callback.WaitForResult(), read_buffer->size());
+  EXPECT_GT(GetTaggedBytes(tag_val2), old_traffic);
+}
+#endif
 }  // namespace
 
 }  // namespace net

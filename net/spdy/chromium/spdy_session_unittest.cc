@@ -29,6 +29,7 @@
 #include "net/log/test_net_log_util.h"
 #include "net/proxy/proxy_server.h"
 #include "net/socket/client_socket_pool_manager.h"
+#include "net/socket/socket_tag.h"
 #include "net/socket/socket_test_util.h"
 #include "net/spdy/chromium/spdy_http_utils.h"
 #include "net/spdy/chromium/spdy_session_pool.h"
@@ -1509,7 +1510,7 @@ TEST_F(SpdySessionTest, CancelPushAfterExpired) {
   // TestMockTimeTaskRunner.
   auto transport_params = base::MakeRefCounted<TransportSocketParams>(
       key_.host_port_pair(), false, OnHostResolutionCallback(),
-      TransportSocketParams::COMBINE_CONNECT_AND_WRITE_DEFAULT);
+      TransportSocketParams::COMBINE_CONNECT_AND_WRITE_DEFAULT, SocketTag());
 
   auto connection = std::make_unique<ClientSocketHandle>();
   TestCompletionCallback callback;
@@ -1617,7 +1618,7 @@ TEST_F(SpdySessionTest, ClaimPushedStreamBeforeExpires) {
   // TestMockTimeTaskRunner.
   auto transport_params = base::MakeRefCounted<TransportSocketParams>(
       key_.host_port_pair(), false, OnHostResolutionCallback(),
-      TransportSocketParams::COMBINE_CONNECT_AND_WRITE_DEFAULT);
+      TransportSocketParams::COMBINE_CONNECT_AND_WRITE_DEFAULT, SocketTag());
 
   auto connection = std::make_unique<ClientSocketHandle>();
   TestCompletionCallback callback;
@@ -3443,7 +3444,7 @@ TEST_F(SpdySessionTest, CloseOneIdleConnection) {
   HostPortPair host_port2("2.com", 80);
   scoped_refptr<TransportSocketParams> params2(new TransportSocketParams(
       host_port2, false, OnHostResolutionCallback(),
-      TransportSocketParams::COMBINE_CONNECT_AND_WRITE_DEFAULT));
+      TransportSocketParams::COMBINE_CONNECT_AND_WRITE_DEFAULT, SocketTag()));
   auto connection2 = std::make_unique<ClientSocketHandle>();
   EXPECT_EQ(ERR_IO_PENDING,
             connection2->Init(host_port2.ToString(), params2, DEFAULT_PRIORITY,
@@ -3522,7 +3523,7 @@ TEST_F(SpdySessionTest, CloseOneIdleConnectionWithAlias) {
   HostPortPair host_port3("3.com", 80);
   scoped_refptr<TransportSocketParams> params3(new TransportSocketParams(
       host_port3, false, OnHostResolutionCallback(),
-      TransportSocketParams::COMBINE_CONNECT_AND_WRITE_DEFAULT));
+      TransportSocketParams::COMBINE_CONNECT_AND_WRITE_DEFAULT, SocketTag()));
   auto connection3 = std::make_unique<ClientSocketHandle>();
   EXPECT_EQ(ERR_IO_PENDING,
             connection3->Init(host_port3.ToString(), params3, DEFAULT_PRIORITY,
@@ -3601,7 +3602,7 @@ TEST_F(SpdySessionTest, CloseSessionOnIdleWhenPoolStalled) {
   HostPortPair host_port2("2.com", 80);
   scoped_refptr<TransportSocketParams> params2(new TransportSocketParams(
       host_port2, false, OnHostResolutionCallback(),
-      TransportSocketParams::COMBINE_CONNECT_AND_WRITE_DEFAULT));
+      TransportSocketParams::COMBINE_CONNECT_AND_WRITE_DEFAULT, SocketTag()));
   auto connection2 = std::make_unique<ClientSocketHandle>();
   EXPECT_EQ(ERR_IO_PENDING,
             connection2->Init(host_port2.ToString(), params2, DEFAULT_PRIORITY,

@@ -12,6 +12,7 @@
 #include "net/base/test_completion_callback.h"
 #include "net/log/net_log_with_source.h"
 #include "net/socket/client_socket_handle.h"
+#include "net/socket/socket_tag.h"
 #include "net/socket/socket_test_util.h"
 #include "net/socket/transport_client_socket_pool.h"
 #include "net/test/gtest_util.h"
@@ -242,10 +243,10 @@ SequencedSocketDataTest::SequencedSocketDataTest()
           endpoint_,
           false,
           OnHostResolutionCallback(),
-          TransportSocketParams::COMBINE_CONNECT_AND_WRITE_DEFAULT)),
+          TransportSocketParams::COMBINE_CONNECT_AND_WRITE_DEFAULT,
+          SocketTag())),
       socket_pool_(10, 10, &socket_factory_),
-      expect_eof_(true) {
-}
+      expect_eof_(true) {}
 
 SequencedSocketDataTest::~SequencedSocketDataTest() {
   // Make sure no unexpected pending tasks will cause a failure.

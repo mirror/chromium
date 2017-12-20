@@ -68,6 +68,9 @@ class NET_EXPORT_PRIVATE SSLSocketParams
   const scoped_refptr<HttpProxySocketParams>&
       GetHttpProxyConnectionParams() const;
 
+  // Returns SocketTag from appropriate SocketParams.
+  const SocketTag& GetSocketTag() const;
+
   const HostPortPair& host_and_port() const { return host_and_port_; }
   const SSLConfig& ssl_config() const { return ssl_config_; }
   PrivacyMode privacy_mode() const { return privacy_mode_; }
