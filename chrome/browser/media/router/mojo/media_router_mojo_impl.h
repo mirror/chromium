@@ -127,6 +127,16 @@ class MediaRouterMojoImpl : public MediaRouterBase,
 
   content::BrowserContext* context() const { return context_; }
 
+  // MediaRouter implementation.
+  bool RegisterMediaSinksObserver(MediaSinksObserver* observer) override;
+  void UnregisterMediaSinksObserver(MediaSinksObserver* observer) override;
+
+  // mojom::MediaRouter implementation.
+  void OnSinksReceived(MediaRouteProviderId provider_id,
+                       const std::string& media_source,
+                       const std::vector<MediaSinkInternal>& internal_sinks,
+                       const std::vector<url::Origin>& origins) override;
+
   // Mojo pointers to media route providers. Providers are added via
   // RegisterMediaRouteProvider().
   base::flat_map<MediaRouteProviderId, mojom::MediaRouteProviderPtr>
@@ -311,8 +321,6 @@ class MediaRouterMojoImpl : public MediaRouterBase,
   };
 
   // MediaRouter implementation.
-  bool RegisterMediaSinksObserver(MediaSinksObserver* observer) override;
-  void UnregisterMediaSinksObserver(MediaSinksObserver* observer) override;
   void RegisterMediaRoutesObserver(MediaRoutesObserver* observer) override;
   void UnregisterMediaRoutesObserver(MediaRoutesObserver* observer) override;
   void RegisterRouteMessageObserver(RouteMessageObserver* observer) override;
@@ -327,10 +335,6 @@ class MediaRouterMojoImpl : public MediaRouterBase,
 
   // mojom::MediaRouter implementation.
   void OnIssue(const IssueInfo& issue) override;
-  void OnSinksReceived(MediaRouteProviderId provider_id,
-                       const std::string& media_source,
-                       const std::vector<MediaSinkInternal>& internal_sinks,
-                       const std::vector<url::Origin>& origins) override;
   void OnRoutesUpdated(
       MediaRouteProviderId provider_id,
       const std::vector<MediaRoute>& routes,

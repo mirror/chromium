@@ -38,15 +38,18 @@ class MockDialMediaSinkServiceImpl : public DialMediaSinkServiceImpl {
   MockDialMediaSinkServiceImpl(
       const OnSinksDiscoveredCallback& sinks_discovered_cb,
       const OnDialSinkAddedCallback& dial_sink_added_cb,
+      const OnAvailableSinksUpdatedCallback& available_sinks_updated_cb,
       const scoped_refptr<net::URLRequestContextGetter>& request_context,
       const scoped_refptr<base::SingleThreadTaskRunner>& task_runner)
       : DialMediaSinkServiceImpl(std::unique_ptr<service_manager::Connector>(),
                                  sinks_discovered_cb,
                                  dial_sink_added_cb,
+                                 available_sinks_updated_cb,
                                  request_context,
                                  task_runner),
         sinks_discovered_cb_(sinks_discovered_cb),
-        dial_sink_added_cb_(dial_sink_added_cb) {}
+        dial_sink_added_cb_(dial_sink_added_cb),
+        available_sinks_updated_cb_(available_sinks_updated_cb) {}
   ~MockDialMediaSinkServiceImpl() override = default;
 
   MOCK_METHOD0(Start, void());
@@ -58,9 +61,14 @@ class MockDialMediaSinkServiceImpl : public DialMediaSinkServiceImpl {
 
   OnDialSinkAddedCallback dial_sink_added_cb() { return dial_sink_added_cb_; }
 
+  OnAvailableSinksUpdatedCallback available_sinks_updated_cb() {
+    return available_sinks_updated_cb_;
+  }
+
  private:
   OnSinksDiscoveredCallback sinks_discovered_cb_;
   OnDialSinkAddedCallback dial_sink_added_cb_;
+  OnAvailableSinksUpdatedCallback available_sinks_updated_cb_;
 };
 
 class TestDialMediaSinkService : public DialMediaSinkService {
@@ -74,13 +82,14 @@ class TestDialMediaSinkService : public DialMediaSinkService {
   std::unique_ptr<DialMediaSinkServiceImpl, base::OnTaskRunnerDeleter>
   CreateImpl(const OnSinksDiscoveredCallback& sinks_discovered_cb,
              const OnDialSinkAddedCallback& dial_sink_added_cb,
+             const OnAvailableSinksUpdatedCallback& available_sinks_updated_cb,
              const scoped_refptr<net::URLRequestContextGetter>& request_context)
       override {
     auto mock_impl = std::unique_ptr<MockDialMediaSinkServiceImpl,
                                      base::OnTaskRunnerDeleter>(
-        new MockDialMediaSinkServiceImpl(sinks_discovered_cb,
-                                         dial_sink_added_cb, request_context,
-                                         task_runner_),
+        new MockDialMediaSinkServiceImpl(
+            sinks_discovered_cb, dial_sink_added_cb, available_sinks_updated_cb,
+            request_context, task_runner_),
         base::OnTaskRunnerDeleter(task_runner_));
     mock_impl_ = mock_impl.get();
     return mock_impl;
@@ -105,6 +114,9 @@ class DialMediaSinkServiceTest : public ::testing::Test {
                             base::Unretained(this)),
         base::BindRepeating(&DialMediaSinkServiceTest::OnDialSinkAdded,
                             base::Unretained(this)),
+        base::BindRepeating(
+            &DialMediaSinkServiceTest::OnAvailableSinksUpdatedCallback,
+            base::Unretained(this)),
         base::SequencedTaskRunnerHandle::Get());
     mock_impl_ = service_->mock_impl();
     ASSERT_TRUE(mock_impl_);
@@ -121,6 +133,9 @@ class DialMediaSinkServiceTest : public ::testing::Test {
 
   MOCK_METHOD1(OnSinksDiscovered, void(std::vector<MediaSinkInternal> sinks));
   MOCK_METHOD1(OnDialSinkAdded, void(const MediaSinkInternal& sink));
+  MOCK_METHOD2(OnAvailableSinksUpdatedCallback,
+               void(const std::string& app_name,
+                    const std::vector<MediaSinkInternal>& available_sinks));
 
  protected:
   content::TestBrowserThreadBundle thread_bundle_;

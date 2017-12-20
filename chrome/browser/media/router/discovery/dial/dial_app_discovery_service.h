@@ -109,9 +109,9 @@ class DialAppDiscoveryService {
   // which is specific to an app.
   // |request_context|: Used by the background URLFetchers.
   // |force_fetch|: If true, skip cache and always try to issue a new request.
-  void FetchDialAppInfo(const GURL& app_url,
-                        net::URLRequestContextGetter* request_context,
-                        bool force_fetch);
+  virtual void FetchDialAppInfo(const GURL& app_url,
+                                net::URLRequestContextGetter* request_context,
+                                bool force_fetch);
 
  private:
   friend class DialAppDiscoveryServiceTest;
