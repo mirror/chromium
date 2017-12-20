@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7b4de0f0_8620f9ae",
+        "filename": "net/http/http_stream_factory_impl_job.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 934,
+      "author": {
+        "id": 1228995
+      },
+      "writtenOn": "2017-12-20T21:57:37Z",
+      "side": 1,
+      "message": "The callback passed to quic_request_.Request() uses Unretained(this), so using Unretained(this) here should be fine too.",
+      "parentUuid": "34290c19_0d167d2e",
+      "range": {
+        "startLine": 934,
+        "startChar": 72,
+        "endLine": 934,
+        "endChar": 0
+      },
+      "revId": "731fe510d80b2d16a2546478816c7edbf8b98eb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7d3538e9_5d7b269b",
         "filename": "net/http/http_stream_factory_impl_job.cc",
         "patchSetId": 21
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "9b158ec6_40b5df14",
+        "filename": "net/http/http_stream_factory_impl_job.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 1027,
+      "author": {
+        "id": 1228995
+      },
+      "writtenOn": "2017-12-20T21:57:37Z",
+      "side": 1,
+      "message": "Implementation has changed since this comment.",
+      "parentUuid": "7d3538e9_5d7b269b",
+      "range": {
+        "startLine": 1027,
+        "startChar": 72,
+        "endLine": 1027,
+        "endChar": 0
+      },
+      "revId": "731fe510d80b2d16a2546478816c7edbf8b98eb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "41eff890_b629b375",
         "filename": "net/quic/chromium/quic_stream_factory.h",
         "patchSetId": 21
@@ -59,6 +107,30 @@
       "writtenOn": "2017-12-20T05:51:27Z",
       "side": 1,
       "message": "Can we also require that this is only called after Request() returns ERR_IO_PENDING, just to make it easier to think about?",
+      "range": {
+        "startLine": 122,
+        "startChar": 26,
+        "endLine": 122,
+        "endChar": 33
+      },
+      "revId": "731fe510d80b2d16a2546478816c7edbf8b98eb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2563755e_318a58bc",
+        "filename": "net/quic/chromium/quic_stream_factory.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1228995
+      },
+      "writtenOn": "2017-12-20T21:57:37Z",
+      "side": 1,
+      "message": "Done, but I only updated this comment. I don\u0027t actually have any DCHECKs that enforces this since I think that requires adding an extra class member. Should I do that?",
+      "parentUuid": "41eff890_b629b375",
       "range": {
         "startLine": 122,
         "startChar": 26,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "70188eb1_87685892",
+        "filename": "net/quic/chromium/quic_stream_factory.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1228995
+      },
+      "writtenOn": "2017-12-20T21:57:37Z",
+      "side": 1,
+      "message": "When an active session for that server_id already exists, I believe?",
+      "parentUuid": "c8d79089_f490b47a",
+      "range": {
+        "startLine": 123,
+        "startChar": 79,
+        "endLine": 123,
+        "endChar": 0
+      },
+      "revId": "731fe510d80b2d16a2546478816c7edbf8b98eb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8307a0ff_8b67637f",
         "filename": "net/quic/chromium/quic_stream_factory.h",
         "patchSetId": 21
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "9e51b325_053fe9c5",
+        "filename": "net/quic/chromium/quic_stream_factory.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1228995
+      },
+      "writtenOn": "2017-12-20T21:57:37Z",
+      "side": 1,
+      "message": "Implementation has changed since this comment.",
+      "parentUuid": "8307a0ff_8b67637f",
+      "range": {
+        "startLine": 128,
+        "startChar": 24,
+        "endLine": 128,
+        "endChar": 0
+      },
+      "revId": "731fe510d80b2d16a2546478816c7edbf8b98eb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7e2d1e97_fa004004",
         "filename": "net/quic/chromium/quic_stream_factory.h",
         "patchSetId": 21
@@ -137,6 +257,30 @@
       "revId": "731fe510d80b2d16a2546478816c7edbf8b98eb4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "523a0c0f_bf122b20",
+        "filename": "net/quic/chromium/quic_stream_factory.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1228995
+      },
+      "writtenOn": "2017-12-20T21:57:37Z",
+      "side": 1,
+      "message": "Implementation has changed since this comment.",
+      "parentUuid": "7e2d1e97_fa004004",
+      "range": {
+        "startLine": 129,
+        "startChar": 52,
+        "endLine": 129,
+        "endChar": 68
+      },
+      "revId": "731fe510d80b2d16a2546478816c7edbf8b98eb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

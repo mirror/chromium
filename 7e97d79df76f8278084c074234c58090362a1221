@@ -22,6 +22,30 @@
       "revId": "7e97d79df76f8278084c074234c58090362a1221",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21a15c35_1905a718",
+        "filename": "net/quic/chromium/quic_network_transaction_unittest.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 5799,
+      "author": {
+        "id": 1228995
+      },
+      "writtenOn": "2017-12-20T21:57:37Z",
+      "side": 0,
+      "message": "This CL requires it. In tip-of-tree code, the two requests created in this unittest will both resume their main job because the alt job\u0027s host resolution does not succeed immediately. AddHangingSocketData() is needed because the main jobs will attempt to connect, so a SocketDataProvider needs to be present for them.\n\nAfter my change, neither request will resume the main job because the alt job will succeed immediately after host resolution succeeds. So, SocketDataProviders for the two main jobs are no longer necessary.",
+      "parentUuid": "c2cbadf5_e1bc3a1c",
+      "range": {
+        "startLine": 5799,
+        "startChar": 0,
+        "endLine": 5799,
+        "endChar": 25
+      },
+      "revId": "7e97d79df76f8278084c074234c58090362a1221",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

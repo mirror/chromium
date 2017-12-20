@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8d642526_685ec82a",
+        "filename": "net/http/http_stream_factory_impl_job.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 926,
+      "author": {
+        "id": 1228995
+      },
+      "writtenOn": "2017-12-20T21:57:37Z",
+      "side": 1,
+      "message": "WaitForResultAfterHostResolution() doesn\u0027t return a net error code, it just returns a bool indicating whether or not to expect the callback to run. I think returning an error code is confusing since it would mean something different than the error code that the callback is called with.",
+      "parentUuid": "b47098a2_4a9305e3",
+      "range": {
+        "startLine": 926,
+        "startChar": 34,
+        "endLine": 926,
+        "endChar": 0
+      },
+      "revId": "5419cd1ccec9010850252d154e02468d8c982d18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "da9427f6_41e72edc",
         "filename": "net/http/http_stream_factory_impl_job.cc",
         "patchSetId": 23
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "a6a1375a_84677d24",
+        "filename": "net/http/http_stream_factory_impl_job.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 928,
+      "author": {
+        "id": 1228995
+      },
+      "writtenOn": "2017-12-20T21:57:37Z",
+      "side": 1,
+      "message": "The callback passed to quic_request_.Request() also has Unretained(this), so if that\u0027s fine, then using Unretained(this) for WaitForResultAfterHostResolution() is also fine since WaitForResultAfterHostResolution()\u0027s callback will always be called before Request()\u0027s callback.",
+      "parentUuid": "da9427f6_41e72edc",
+      "range": {
+        "startLine": 928,
+        "startChar": 57,
+        "endLine": 928,
+        "endChar": 67
+      },
+      "revId": "5419cd1ccec9010850252d154e02468d8c982d18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0bd34d36_6a7f2df7",
         "filename": "net/http/http_stream_factory_impl_job.h",
         "patchSetId": 23
@@ -65,6 +113,24 @@
     },
     {
       "key": {
+        "uuid": "38d637a5_61b52173",
+        "filename": "net/http/http_stream_factory_impl_job.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1228995
+      },
+      "writtenOn": "2017-12-20T21:57:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0bd34d36_6a7f2df7",
+      "revId": "5419cd1ccec9010850252d154e02468d8c982d18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c94bd8c4_003f7424",
         "filename": "net/http/http_stream_factory_impl_job.h",
         "patchSetId": 23
@@ -79,6 +145,24 @@
       "revId": "5419cd1ccec9010850252d154e02468d8c982d18",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81522531_8937b367",
+        "filename": "net/http/http_stream_factory_impl_job.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 473,
+      "author": {
+        "id": 1228995
+      },
+      "writtenOn": "2017-12-20T21:57:37Z",
+      "side": 1,
+      "message": "I agree with the name suggestion and will change it. On the other hand, I wasn\u0027t aware that QUIC host resolution always happens? Couldn\u0027t an active session for that server_id already exist?",
+      "parentUuid": "c94bd8c4_003f7424",
+      "revId": "5419cd1ccec9010850252d154e02468d8c982d18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -105,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "f16a0baf_63310976",
+        "filename": "net/quic/chromium/quic_stream_factory.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1228995
+      },
+      "writtenOn": "2017-12-20T21:57:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "24651d47_718ce7bf",
+      "range": {
+        "startLine": 357,
+        "startChar": 3,
+        "endLine": 357,
+        "endChar": 0
+      },
+      "revId": "5419cd1ccec9010850252d154e02468d8c982d18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9309863c_cfe3489f",
         "filename": "net/quic/chromium/quic_stream_factory.cc",
         "patchSetId": 23
@@ -119,6 +227,24 @@
       "revId": "5419cd1ccec9010850252d154e02468d8c982d18",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6ff088e_b152c93f",
+        "filename": "net/quic/chromium/quic_stream_factory.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 478,
+      "author": {
+        "id": 1228995
+      },
+      "writtenOn": "2017-12-20T21:57:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9309863c_cfe3489f",
+      "revId": "5419cd1ccec9010850252d154e02468d8c982d18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -145,6 +271,30 @@
     },
     {
       "key": {
+        "uuid": "515f1d19_cf7a0e45",
+        "filename": "net/quic/chromium/quic_stream_factory.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 1228995
+      },
+      "writtenOn": "2017-12-20T21:57:37Z",
+      "side": 1,
+      "message": "Done, decided to have both go through the factory.",
+      "parentUuid": "07af318d_cdabbf2b",
+      "range": {
+        "startLine": 480,
+        "startChar": 47,
+        "endLine": 480,
+        "endChar": 0
+      },
+      "revId": "5419cd1ccec9010850252d154e02468d8c982d18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "54068a2d_6ef9a1eb",
         "filename": "net/quic/chromium/quic_stream_factory.h",
         "patchSetId": 23
@@ -162,6 +312,24 @@
     },
     {
       "key": {
+        "uuid": "bcc68508_7986277a",
+        "filename": "net/quic/chromium/quic_stream_factory.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1228995
+      },
+      "writtenOn": "2017-12-20T21:57:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "54068a2d_6ef9a1eb",
+      "revId": "5419cd1ccec9010850252d154e02468d8c982d18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c6f85940_329ebb52",
         "filename": "net/quic/chromium/quic_stream_factory.h",
         "patchSetId": 23
@@ -176,6 +344,24 @@
       "revId": "5419cd1ccec9010850252d154e02468d8c982d18",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a98c7f51_911302b6",
+        "filename": "net/quic/chromium/quic_stream_factory.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1228995
+      },
+      "writtenOn": "2017-12-20T21:57:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c6f85940_329ebb52",
+      "revId": "5419cd1ccec9010850252d154e02468d8c982d18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -202,6 +388,30 @@
     },
     {
       "key": {
+        "uuid": "c9a781a5_152b57c2",
+        "filename": "net/quic/chromium/quic_stream_factory.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1228995
+      },
+      "writtenOn": "2017-12-20T21:57:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e5def103_bfba214c",
+      "range": {
+        "startLine": 163,
+        "startChar": 31,
+        "endLine": 163,
+        "endChar": 0
+      },
+      "revId": "5419cd1ccec9010850252d154e02468d8c982d18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ceb0d703_cb475ba8",
         "filename": "net/quic/chromium/quic_stream_factory.h",
         "patchSetId": 23
@@ -216,6 +426,24 @@
       "revId": "5419cd1ccec9010850252d154e02468d8c982d18",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75c2d289_4af22fe8",
+        "filename": "net/quic/chromium/quic_stream_factory.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1228995
+      },
+      "writtenOn": "2017-12-20T21:57:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ceb0d703_cb475ba8",
+      "revId": "5419cd1ccec9010850252d154e02468d8c982d18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
