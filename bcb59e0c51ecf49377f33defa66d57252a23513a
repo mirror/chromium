@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "399dcfe7_5beebad3",
+        "filename": "third_party/WebKit/Source/core/editing/iterators/TextIteratorTextNodeHandler.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-12-20T23:23:20Z",
+      "side": 1,
+      "message": "I think these should technically use size_t. See first bullet point of\nhttps://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/c++.md#types",
+      "revId": "bcb59e0c51ecf49377f33defa66d57252a23513a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
