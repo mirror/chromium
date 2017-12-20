@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "09018257_4e23b0f2",
+        "filename": "third_party/WebKit/LayoutTests/fast/css/usecounter-pseudo-shadow.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1251514
+      },
+      "writtenOn": "2017-12-20T08:04:12Z",
+      "side": 1,
+      "message": "I think we should prefer unit test to internals api for testing this.",
+      "revId": "5dfe5696512c981a229945cbccbf13d0ccf4db99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
