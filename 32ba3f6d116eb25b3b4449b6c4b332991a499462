@@ -117,6 +117,30 @@
       "revId": "32ba3f6d116eb25b3b4449b6c4b332991a499462",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd1fa638_d707a304",
+        "filename": "ios/chrome/browser/ui/fullscreen/chrome_coordinator+fullscreen_disabling.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-12-20T23:12:22Z",
+      "side": 1,
+      "message": "Okay, I\u0027ll land as-is for now.  I had originally created BrowserCoordinatorObserver that exposed the start/activated/stop/deactivated signals to arbitrary observer objects.  Maybe we can have a CoordinatorHelper type class that could be a combination of a BrowserCoordinatorObserver and BrowserCoordinatorUserData (or an ObjC equivalent, I suppose).  Then we could keep the observer/user data APIs in the private target for the coordinator directory.  That way we could expose this functionality and at least have some control over how it gets used.",
+      "parentUuid": "63f13ca1_10b72340",
+      "range": {
+        "startLine": 69,
+        "startChar": 4,
+        "endLine": 69,
+        "endChar": 28
+      },
+      "revId": "32ba3f6d116eb25b3b4449b6c4b332991a499462",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
