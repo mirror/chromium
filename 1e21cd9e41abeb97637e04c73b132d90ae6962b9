@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "03a96bfa_123e2625",
+        "filename": "content/browser/webauth/fido_attestation_statement.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-20T16:46:55Z",
+      "side": 1,
+      "message": "In build target //content:browser, we currently have:\n\n  if (is_linux) {\n    deps +\u003d [ \"//third_party/boringssl\" ]\n  }\n\nIt seems weird that this is only pulled in on Linux -- OTOH there do not seem to be any other usages of BoringSSL in content/browser apart from a seemingly needless include. I suppose we need to depend this unconditionally now?",
+      "revId": "1e21cd9e41abeb97637e04c73b132d90ae6962b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a4eab88_892204ff",
+        "filename": "content/browser/webauth/fido_attestation_statement.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-20T16:46:55Z",
+      "side": 1,
+      "message": "nit: Could you please link this in authenticator_utils.h as well above the definition for kU2fResponseLengthPos and rename the latter to kU2fResponseKeyHandleLengthPos for clarity?",
+      "revId": "1e21cd9e41abeb97637e04c73b132d90ae6962b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c030d8bf_9f0218d0",
+        "filename": "content/browser/webauth/fido_attestation_statement.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-20T16:46:55Z",
+      "side": 1,
+      "message": "It is my fault that most code in c/b/webauth indeed handles errors this way. This is less than ideal, though, plus makes it impossible to better handle errors in this very location without lots of refactoring in other places :-/.\n\nFWIW, could you please add:\n\n// TODO(https://crbug.com/796581): Handle errors in a more civilized way.",
+      "revId": "1e21cd9e41abeb97637e04c73b132d90ae6962b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "426c7079_37f1749d",
+        "filename": "content/browser/webauth/fido_attestation_statement.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-20T16:46:55Z",
+      "side": 1,
+      "message": "What will CBS_get_asn1_element() do if there are multiple certificates? Do we need to somehow split |cert| here somehow?\n\nGiven that this has never been supported, perfectly fine to do in a follow-up CL. But let\u0027s file a a tracking bug and leave the TODO in that case.",
+      "revId": "1e21cd9e41abeb97637e04c73b132d90ae6962b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f739e91f_7bde5ce7",
+        "filename": "content/browser/webauth/fido_attestation_statement.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-20T16:46:55Z",
+      "side": 1,
+      "message": "nit: Please std::move both arguments (not sure why that\u0027s not already the case).",
+      "range": {
+        "startLine": 45,
+        "startChar": 52,
+        "endLine": 45,
+        "endChar": 61
+      },
+      "revId": "1e21cd9e41abeb97637e04c73b132d90ae6962b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
