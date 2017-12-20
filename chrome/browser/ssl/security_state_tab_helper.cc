@@ -153,6 +153,16 @@ void SecurityStateTabHelper::DidFinishNavigation(
     // the number of times it was available.
     UMA_HISTOGRAM_BOOLEAN("interstitial.ssl.visited_site_after_warning", true);
   }
+
+  // Warn if the certificate is expiring soon.
+  if (security_info.certificate &&
+      !security_info.certificate->valid_expiry().is_null() &&
+      (security_info.certificate->valid_expiry() - base::Time::Now())
+              .InHours() < 48) {
+    web_contents()->GetMainFrame()->AddMessageToConsole(
+        content::CONSOLE_MESSAGE_LEVEL_WARNING,
+        "The SSL certificate for this page is expiring in less than 48 hours.");
+  }
 }
 
 void SecurityStateTabHelper::WebContentsDestroyed() {
