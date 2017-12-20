@@ -262,6 +262,24 @@
     },
     {
       "key": {
+        "uuid": "ea6d208f_3f810278",
+        "filename": "chrome/browser/chromeos/settings/device_settings_service.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-20T14:41:52Z",
+      "side": 1,
+      "message": "Yeah, it has to be admitted that the servicification of the policy code will be a nontrivial task due to the code\u0027s complexity and the lack of isolation for the Chrome OS specific code.\nWe (Managed Devices team) planned to take on this effort, but, unfortunately, it\u0027s not on our current hotlist and there\u0027s no concrete schedule for this at the moment.",
+      "parentUuid": "4ad9202a_bd0fa762",
+      "revId": "969d0f9e53918ca5f027a816cd8129d351fa80c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bd3b984e_ca757349",
         "filename": "chrome/browser/ui/views/ash/chrome_browser_main_extra_parts_ash.cc",
         "patchSetId": 5
