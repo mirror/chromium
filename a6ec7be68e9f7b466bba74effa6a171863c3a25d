@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba156243_f39ae597",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-12-20T19:37:50Z",
+      "side": 1,
+      "message": "Were you able to test in either 1) FAR file manager or 2) 7Zip plugin eDecoder pointed out by https://crbug.com/794835#c9 to verify that A) they cannot open the MHTML files produced by Chrome before this CL and B) they can open the MHTML files produced by Chrome after this CL?\n\nIf yes, then it might be useful to mention this manual testing in the CL description.",
+      "range": {
+        "startLine": 10,
+        "startChar": 21,
+        "endLine": 10,
+        "endChar": 22
+      },
+      "revId": "a6ec7be68e9f7b466bba74effa6a171863c3a25d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5972d96a_ec663f8b",
+        "filename": "third_party/WebKit/Source/core/frame/MHTMLTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-12-20T19:37:50Z",
+      "side": 1,
+      "message": "Some duplication in test code is probably okay, but I wonder if we might want to delete ExtractMHTMLHeaders function and instead use net::HttpResponseHeaders.  OTOH, I am not sure if WebKit is allowed to depend on //net (maybe this is okay for test code though?).\n\nAt any rate, this probably shouldn\u0027t block this CL.",
+      "range": {
+        "startLine": 153,
+        "startChar": 44,
+        "endLine": 153,
+        "endChar": 63
+      },
+      "revId": "a6ec7be68e9f7b466bba74effa6a171863c3a25d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8ecb1df5_bdee62d3",
+        "filename": "third_party/WebKit/Source/core/frame/MHTMLTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-12-20T19:37:50Z",
+      "side": 1,
+      "message": "This looks okay to me, but I note that \"UTF-8, UTF-16, UTF-32 String Literals\" are still on the \"C++11 Features To Be Discussed\" list at https://chromium-cpp.appspot.com/.  OTOH, it seems that the CL passed the trybots, so maybe this is okay?\n\nAnyway, just to be safe, would it be possible to use the \\x encoding here (see also the discussion at https://codereview.chromium.org/1407663004/diff/230001/chrome/browser/download/save_page_browsertest.cc#newcode1100).",
+      "range": {
+        "startLine": 301,
+        "startChar": 6,
+        "endLine": 301,
+        "endChar": 8
+      },
+      "revId": "a6ec7be68e9f7b466bba74effa6a171863c3a25d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "350eff33_aa559982",
+        "filename": "third_party/WebKit/Source/core/frame/MHTMLTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-12-20T19:37:50Z",
+      "side": 1,
+      "message": "I think that the primary concern in https://crbug.com/794835 was that an \u0027encoded-word\u0027 may not be more than 75 characters long.  Would it be possible to add test assertions that verify that this doesn\u0027t happen?  BTW: I guess verifying that no lines are longer than 75 characters might be easier to test and is a stricter requirement.",
+      "range": {
+        "startLine": 305,
+        "startChar": 25,
+        "endLine": 305,
+        "endChar": 29
+      },
+      "revId": "a6ec7be68e9f7b466bba74effa6a171863c3a25d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41378ce3_e0328506",
+        "filename": "third_party/WebKit/Source/core/frame/MHTMLTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 534,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-12-20T19:37:50Z",
+      "side": 1,
+      "message": "Would it be possible to add a test assertion that verifies that |document-\u003etitle()| is expected?",
+      "range": {
+        "startLine": 534,
+        "startChar": 0,
+        "endLine": 534,
+        "endChar": 1
+      },
+      "revId": "a6ec7be68e9f7b466bba74effa6a171863c3a25d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "211d2012_515845b8",
+        "filename": "third_party/WebKit/Source/platform/text/QuotedPrintable.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-12-20T19:37:50Z",
+      "side": 1,
+      "message": "I see that RFC 2047 and https://crbug.com/794835 say: \"separated by CRLF **SPACE**\".  We are not including the space character here, right?  Is this okay?",
+      "range": {
+        "startLine": 112,
+        "startChar": 6,
+        "endLine": 112,
+        "endChar": 59
+      },
+      "revId": "a6ec7be68e9f7b466bba74effa6a171863c3a25d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
