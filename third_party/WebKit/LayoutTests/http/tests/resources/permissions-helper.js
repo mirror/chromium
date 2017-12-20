@@ -27,6 +27,8 @@ var PermissionsHelper = (function() {
         return {name: "background-sync"};
       case "accessibility-events":
         return {name: "accessibility-events"};
+      case "clipboard-read":
+        return {name: "clipboard-read", allowWithoutGesture: true};
       default:
         throw "Invalid permission name provided";
     }
