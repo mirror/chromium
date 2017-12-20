@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4d636ce4_ae98c933",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SignInPromo.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-12-20T13:05:25Z",
+      "side": 1,
+      "message": "Do we even need this call in this method at all? It\u0027s only called from the constructor (where no callback is queued yet), or from the callback itself.",
+      "range": {
+        "startLine": 162,
+        "startChar": 12,
+        "endLine": 162,
+        "endChar": 51
+      },
+      "revId": "5a01cb95982c33a6a03779c26bfa6280f4ec3c11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
