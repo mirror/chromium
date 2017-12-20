@@ -169,6 +169,10 @@ static_library("test_support") {
     deps += [ "//ui/gfx/x" ]
   }
 
+  if (is_mac) {
+    deps += [ "//ui/accelerated_widget_mac" ]
+  }
+
   if (use_ozone) {
     sources += [ "test/test_compositor_host_ozone.cc" ]
 

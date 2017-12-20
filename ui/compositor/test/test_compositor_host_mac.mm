@@ -16,6 +16,7 @@
 #include "base/mac/scoped_nsobject.h"
 #include "base/macros.h"
 #include "base/threading/thread_task_runner_handle.h"
+#include "ui/accelerated_widget_mac/accelerated_widget_mac.h"
 #include "ui/compositor/compositor.h"
 #include "ui/gfx/geometry/rect.h"
 
@@ -25,28 +26,26 @@
   ui::Compositor* compositor_;
 }
 // Designated initializer.
--(id)init;
--(void)setCompositor:(ui::Compositor*)compositor;
+- (id)init;
+- (void)setCompositor:(ui::Compositor*)compositor;
 @end
 
 @implementation AcceleratedTestView
--(id)init {
+- (id)init {
   // The frame will be resized when reparented into the window's view hierarchy.
-  self = [super initWithFrame:NSZeroRect];
+  if ((self = [super initWithFrame:NSZeroRect])) {
+    [self setWantsLayer:YES];
+  }
   return self;
 }
 
--(void)setCompositor:(ui::Compositor*)compositor {
+- (void)setCompositor:(ui::Compositor*)compositor {
   compositor_ = compositor;
 }
 
 - (void)drawRect:(NSRect)rect {
   DCHECK(compositor_) << "Drawing with no compositor set.";
   compositor_->ScheduleFullRedraw();
-}
-
-- (gfx::AcceleratedWidget)widget {
-  return compositor_->widget();
 }
 @end
 
@@ -57,12 +56,8 @@ namespace ui {
 // exit.  The tests will leak otherwise.
 class FoundationHost {
  protected:
-  FoundationHost() {
-    pool_ = [[NSAutoreleasePool alloc] init];
-  }
-  virtual ~FoundationHost() {
-    [pool_ drain];
-  }
+  FoundationHost() { pool_ = [[NSAutoreleasePool alloc] init]; }
+  virtual ~FoundationHost() { [pool_ drain]; }
 
  private:
   NSAutoreleasePool* pool_;
@@ -74,18 +69,34 @@ class FoundationHost {
 // views, or controls.
 class AppKitHost : public FoundationHost {
  protected:
-  AppKitHost() {
-    [NSApplication sharedApplication];
-  }
+  AppKitHost() { [NSApplication sharedApplication]; }
   ~AppKitHost() override {}
+
  private:
   DISALLOW_COPY_AND_ASSIGN(AppKitHost);
 };
 
+class TestAcceleratedWidgetMacNSView : public AcceleratedWidgetMacNSView {
+ public:
+  TestAcceleratedWidgetMacNSView(NSView* view) : view_([view retain]) {}
+  virtual ~TestAcceleratedWidgetMacNSView() { [view_ release]; }
+
+  // AcceleratedWidgetMacNSView
+  NSView* AcceleratedWidgetGetNSView() const override { return view_; }
+  void AcceleratedWidgetGetVSyncParameters(
+      base::TimeTicks* timebase,
+      base::TimeDelta* interval) const override {}
+  void AcceleratedWidgetSwapCompleted() override {}
+
+ private:
+  NSView* view_ = nullptr;
+
+  DISALLOW_COPY_AND_ASSIGN(TestAcceleratedWidgetMacNSView);
+};
+
 // TestCompositorHostMac provides a window surface and a coordinated compositor
 // for use in the compositor unit tests.
-class TestCompositorHostMac : public TestCompositorHost,
-                              public AppKitHost {
+class TestCompositorHostMac : public TestCompositorHost, public AppKitHost {
  public:
   TestCompositorHostMac(const gfx::Rect& bounds,
                         ui::ContextFactory* context_factory,
@@ -100,6 +111,9 @@ class TestCompositorHostMac : public TestCompositorHost,
   gfx::Rect bounds_;
 
   ui::Compositor compositor_;
+  ui::AcceleratedWidgetMac accelerated_widget_;
+  std::unique_ptr<TestAcceleratedWidgetMacNSView>
+      test_accelerated_widget_nsview_;
 
   // Owned.  Released when window is closed.
   NSWindow* window_;
@@ -121,6 +135,7 @@ TestCompositorHostMac::TestCompositorHostMac(
       window_(nil) {}
 
 TestCompositorHostMac::~TestCompositorHostMac() {
+  accelerated_widget_.ResetNSView();
   // Release reference to |compositor_|.  Important because the |compositor_|
   // holds |this| as its delegate, so that reference must be removed here.
   [[window_ contentView] setCompositor:NULL];
@@ -137,16 +152,17 @@ TestCompositorHostMac::~TestCompositorHostMac() {
 void TestCompositorHostMac::Show() {
   DCHECK(!window_);
   window_ = [[NSWindow alloc]
-                initWithContentRect:NSMakeRect(bounds_.x(),
-                                               bounds_.y(),
-                                               bounds_.width(),
-                                               bounds_.height())
-                          styleMask:NSBorderlessWindowMask
-                            backing:NSBackingStoreBuffered
-                              defer:NO];
+      initWithContentRect:NSMakeRect(bounds_.x(), bounds_.y(), bounds_.width(),
+                                     bounds_.height())
+                styleMask:NSBorderlessWindowMask
+                  backing:NSBackingStoreBuffered
+                    defer:NO];
   base::scoped_nsobject<AcceleratedTestView> view(
       [[AcceleratedTestView alloc] init]);
-  compositor_.SetAcceleratedWidget([view widget]);
+  test_accelerated_widget_nsview_ =
+      base::MakeUnique<TestAcceleratedWidgetMacNSView>(view);
+  accelerated_widget_.SetNSView(test_accelerated_widget_nsview_.get());
+  compositor_.SetAcceleratedWidget(accelerated_widget_.accelerated_widget());
   compositor_.SetScaleAndSize(1.0f, bounds_.size());
   [view setCompositor:&compositor_];
   [window_ setContentView:view];

@@ -8,6 +8,7 @@
 #include "base/memory/ptr_util.h"
 #include "base/test/scoped_task_environment.h"
 #include "build/build_config.h"
+#include "gpu/ipc/service/image_transport_surface.h"
 #include "ui/compositor/compositor.h"
 #include "ui/compositor/compositor_switches.h"
 #include "ui/compositor/layer.h"
@@ -44,6 +45,10 @@ void CompositorTestSuite::Initialize() {
 
 #if defined(OS_WIN)
   display::win::SetDefaultDeviceScaleFactor(1.0f);
+#endif
+
+#if defined(OS_MACOSX)
+  gpu::ImageTransportSurface::SetAllowOSMesaForTesting(true);
 #endif
 
   scoped_task_environment_ =
