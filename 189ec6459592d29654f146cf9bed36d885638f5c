@@ -16,6 +16,47 @@
       "revId": "189ec6459592d29654f146cf9bed36d885638f5c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4ae0c348_27bc8752",
+        "filename": "chrome/browser/ui/cocoa/bookmarks/bookmark_button_cell.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-12-20T21:17:34Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "fecd4427_1247e7d0",
+      "revId": "189ec6459592d29654f146cf9bed36d885638f5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a8db058c_59d61d59",
+        "filename": "chrome/browser/ui/cocoa/bookmarks/bookmark_button_cell.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 409,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-12-20T21:17:34Z",
+      "side": 1,
+      "message": "I just realized what this comment means in the context of your comment above. Ooooooooooooooooh.",
+      "range": {
+        "startLine": 409,
+        "startChar": 68,
+        "endLine": 409,
+        "endChar": 75
+      },
+      "revId": "189ec6459592d29654f146cf9bed36d885638f5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
