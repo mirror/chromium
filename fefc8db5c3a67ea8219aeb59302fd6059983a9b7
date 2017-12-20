@@ -22,6 +22,30 @@
       "revId": "fefc8db5c3a67ea8219aeb59302fd6059983a9b7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5635e6c_bb1f018c",
+        "filename": "ui/app_list/views/app_list_folder_view.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-12-20T18:07:08Z",
+      "side": 1,
+      "message": "I have a lot of\nif (is_fullscreen_app_list_enabled_) {\n...\n} else {\n...\n}\n\nin this CL, does that mean I can remove the else part safely? (Old launcher will be broken.)",
+      "parentUuid": "a6c61a40_0f3d2f2a",
+      "range": {
+        "startLine": 128,
+        "startChar": 13,
+        "endLine": 128,
+        "endChar": 44
+      },
+      "revId": "fefc8db5c3a67ea8219aeb59302fd6059983a9b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
