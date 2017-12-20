@@ -207,6 +207,24 @@
     },
     {
       "key": {
+        "uuid": "1cba0d93_23273e01",
+        "filename": "extensions/browser/content_verifier/content_hash.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-12-20T23:26:17Z",
+      "side": 1,
+      "message": "This is obsolete now since we\u0027re using unique_ptr",
+      "parentUuid": "e6f76b0c_6c6a4a94",
+      "revId": "12d872548420cce4b696770e2d61e93ed6c92675",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "09ebaa53_d686c429",
         "filename": "extensions/browser/content_verifier/content_hash.cc",
         "patchSetId": 6
@@ -221,6 +239,24 @@
       "revId": "12d872548420cce4b696770e2d61e93ed6c92675",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09c06e14_38ec999a",
+        "filename": "extensions/browser/content_verifier/content_hash.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-12-20T23:26:17Z",
+      "side": 1,
+      "message": "obsolete",
+      "parentUuid": "09ebaa53_d686c429",
+      "revId": "12d872548420cce4b696770e2d61e93ed6c92675",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -329,6 +365,24 @@
     },
     {
       "key": {
+        "uuid": "63bb2fb5_ccd85053",
+        "filename": "extensions/browser/content_verifier/content_hash.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-12-20T23:26:17Z",
+      "side": 1,
+      "message": "Getting back to this: we copy this around.",
+      "parentUuid": "776ee30c_d0c09bb9",
+      "revId": "12d872548420cce4b696770e2d61e93ed6c92675",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5ed288fa_bf98e3ca",
         "filename": "extensions/browser/content_verifier/content_hash.h",
         "patchSetId": 6
@@ -376,6 +430,24 @@
       "side": 1,
       "message": "For flags, why not just have this be an enum, instead of enum class?  Then I think doing things like:\nint mode \u003d kSomeMode;\nshould just work.",
       "parentUuid": "8f393849_68b94f33",
+      "revId": "12d872548420cce4b696770e2d61e93ed6c92675",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4108232d_7f9cdc0e",
+        "filename": "extensions/browser/content_verifier/content_hash.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-12-20T23:26:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "431e6e3c_12968685",
       "revId": "12d872548420cce4b696770e2d61e93ed6c92675",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -432,6 +504,24 @@
       "revId": "12d872548420cce4b696770e2d61e93ed6c92675",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e31db41_288e1d71",
+        "filename": "extensions/browser/content_verifier/content_hash.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-12-20T23:26:17Z",
+      "side": 1,
+      "message": "I originally had this as unique_ptr and then was trying to allocate on stack. It seems unique_ptr to be the best choice at this point as I intend to cache ContentHash and that *might* require scoped_refptr of RefCounted.\n\nDone.",
+      "parentUuid": "789f6fa3_3ba947c5",
+      "revId": "12d872548420cce4b696770e2d61e93ed6c92675",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
