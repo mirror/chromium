@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f27c2b60_98e67087",
+        "filename": "third_party/WebKit/Source/core/frame/PausableTask.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-20T22:50:11Z",
+      "side": 1,
+      "message": "I don\u0027t know that it matters much here (since the context is already destroyed, we don\u0027t risk it being destroyed in the callback), but I don\u0027t think it will hurt, either.  And it\u0027s consistent.  Done.",
+      "parentUuid": "4b703afc_23a7e02e",
+      "revId": "9bc1e27a59c9cd9d90988bcbb39da4deebd4c5df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7733bfd3_d18a6336",
         "filename": "third_party/WebKit/Source/core/frame/PausableTask.h",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "9bc1e27a59c9cd9d90988bcbb39da4deebd4c5df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a59cdf78_3044f8ff",
+        "filename": "third_party/WebKit/Source/core/frame/PausableTask.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-20T22:50:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7733bfd3_d18a6336",
+      "revId": "9bc1e27a59c9cd9d90988bcbb39da4deebd4c5df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "7a2c36fc_e209fb7a",
+        "filename": "third_party/WebKit/Source/core/frame/WebLocalFrameImpl.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 764,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-20T22:50:11Z",
+      "side": 1,
+      "message": "I\u0027ve added a TODO to address that in a follow-up (since I\u0027ll also try converting PausableScriptExecutor to use this).",
+      "parentUuid": "a6a87c2d_846d6aa6",
+      "revId": "9bc1e27a59c9cd9d90988bcbb39da4deebd4c5df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7889450b_208791e3",
         "filename": "third_party/WebKit/Source/core/frame/WebLocalFrameImpl.cpp",
         "patchSetId": 7
@@ -67,6 +121,24 @@
       "revId": "9bc1e27a59c9cd9d90988bcbb39da4deebd4c5df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ea0986e_6e6e0b60",
+        "filename": "third_party/WebKit/Source/core/frame/WebLocalFrameImpl.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 768,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-20T22:50:11Z",
+      "side": 1,
+      "message": "This is a requirement we added to the API; (small) discussion with Jeremy here:\nhttps://chromium-review.googlesource.com/c/chromium/src/+/807346/3/third_party/WebKit/Source/core/exported/WebFrameTest.cpp#689\n\nBut this shouldn\u0027t be a problem, because this isn\u0027t from a posted task, so the caller *should* know if the context is valid.  Unless we\u0027re worried about a caller doing something like:\nPostTask(base::Bind(\u0026WebLocalFrame::PostPausableTask, frame, std::move(callback)));\n\nBut I think in that case (which seems like it would be very rare?), it\u0027s reasonable to require the caller to wrap the task and check context validity first.",
+      "parentUuid": "7889450b_208791e3",
+      "revId": "9bc1e27a59c9cd9d90988bcbb39da4deebd4c5df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "16887269_26d5aeab",
+        "filename": "third_party/WebKit/public/web/WebLocalFrame.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-20T22:50:11Z",
+      "side": 1,
+      "message": "I think a number of callers may be interested in the result, so that they don\u0027t have to separately track the context lifetime themselves.",
+      "parentUuid": "08a330c1_0468863f",
+      "revId": "9bc1e27a59c9cd9d90988bcbb39da4deebd4c5df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "28a49456_986b6fcb",
         "filename": "third_party/WebKit/public/web/WebLocalFrame.h",
         "patchSetId": 7
@@ -101,6 +191,24 @@
       "revId": "9bc1e27a59c9cd9d90988bcbb39da4deebd4c5df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6aa6df1_be83653f",
+        "filename": "third_party/WebKit/public/web/WebLocalFrame.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-20T22:50:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "28a49456_986b6fcb",
+      "revId": "9bc1e27a59c9cd9d90988bcbb39da4deebd4c5df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
