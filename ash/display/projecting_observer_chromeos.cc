@@ -5,20 +5,13 @@
 #include "ash/display/projecting_observer_chromeos.h"
 
 #include "base/logging.h"
+#include "chromeos/dbus/dbus_thread_manager.h"
 #include "chromeos/dbus/power_manager_client.h"
 #include "ui/display/types/display_snapshot.h"
 
 namespace ash {
 
-ProjectingObserver::ProjectingObserver(
-    chromeos::PowerManagerClient* power_manager_client)
-    : has_internal_output_(false),
-      output_count_(0),
-      casting_session_count_(0),
-      power_manager_client_(power_manager_client) {
-  DCHECK(power_manager_client);
-}
-
+ProjectingObserver::ProjectingObserver() = default;
 ProjectingObserver::~ProjectingObserver() = default;
 
 void ProjectingObserver::OnDisplayModeChanged(
@@ -56,7 +49,12 @@ void ProjectingObserver::SetIsProjecting() {
   bool projecting =
       has_internal_output_ && (output_count_ + casting_session_count_ > 1);
 
-  power_manager_client_->SetIsProjecting(projecting);
+  chromeos::PowerManagerClient* power_manager_client =
+      power_manager_client_for_test_
+          ? power_manager_client_for_test_
+          : chromeos::DBusThreadManager::Get()->GetPowerManagerClient();
+  if (power_manager_client)
+    power_manager_client->SetIsProjecting(projecting);
 }
 
 }  // namespace ash
