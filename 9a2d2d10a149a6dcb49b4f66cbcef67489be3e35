@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c355825f_daef1add",
+        "filename": "content/common/service_worker/service_worker_event_dispatcher.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-20T07:51:21Z",
+      "side": 1,
+      "message": "Please update this comment. Also: we usually use descriptive (e.g. Lets but not Let) comment.",
+      "revId": "9a2d2d10a149a6dcb49b4f66cbcef67489be3e35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "107f22b7_70a26d44",
+        "filename": "content/renderer/service_worker/service_worker_timeout_timer.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-20T07:51:21Z",
+      "side": 1,
+      "message": "become -\u003e becomes (my error)",
+      "revId": "9a2d2d10a149a6dcb49b4f66cbcef67489be3e35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b21ef1ff_f1605687",
+        "filename": "content/renderer/service_worker/service_worker_timeout_timer.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-20T07:51:21Z",
+      "side": 1,
+      "message": "True -\u003e Set to true",
+      "revId": "9a2d2d10a149a6dcb49b4f66cbcef67489be3e35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
