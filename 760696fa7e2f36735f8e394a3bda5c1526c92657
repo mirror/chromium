@@ -1,0 +1,136 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cbbafa16_b2f13230",
+        "filename": "device/usb/scoped_winusb_handle.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1136314
+      },
+      "writtenOn": "2017-12-20T00:45:15Z",
+      "side": 1,
+      "message": "Include guard?",
+      "revId": "760696fa7e2f36735f8e394a3bda5c1526c92657",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aaf8b4e9_a7708b5a",
+        "filename": "device/usb/usb_device_handle_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1136314
+      },
+      "writtenOn": "2017-12-20T00:45:15Z",
+      "side": 1,
+      "message": "USB_LOG?",
+      "range": {
+        "startLine": 336,
+        "startChar": 4,
+        "endLine": 336,
+        "endChar": 7
+      },
+      "revId": "760696fa7e2f36735f8e394a3bda5c1526c92657",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef772c21_77d9ec74",
+        "filename": "device/usb/usb_device_handle_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 1136314
+      },
+      "writtenOn": "2017-12-20T00:45:15Z",
+      "side": 1,
+      "message": "Remove? (or maybe replace with a TODO)",
+      "range": {
+        "startLine": 418,
+        "startChar": 2,
+        "endLine": 418,
+        "endChar": 24
+      },
+      "revId": "760696fa7e2f36735f8e394a3bda5c1526c92657",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1cc1659_4c21dd2e",
+        "filename": "device/usb/usb_device_handle_win.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1136314
+      },
+      "writtenOn": "2017-12-20T00:45:15Z",
+      "side": 1,
+      "message": "Unused?",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 15
+      },
+      "revId": "760696fa7e2f36735f8e394a3bda5c1526c92657",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f04d4cc_1655a838",
+        "filename": "device/usb/usb_device_handle_win.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1136314
+      },
+      "writtenOn": "2017-12-20T00:45:15Z",
+      "side": 1,
+      "message": "Should this be |interfaces_|?",
+      "range": {
+        "startLine": 160,
+        "startChar": 65,
+        "endLine": 160,
+        "endChar": 75
+      },
+      "revId": "760696fa7e2f36735f8e394a3bda5c1526c92657",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d19d615f_e4dba1e3",
+        "filename": "device/usb/usb_device_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1136314
+      },
+      "writtenOn": "2017-12-20T00:45:15Z",
+      "side": 1,
+      "message": "Probably just a merge error, but this can stay as std::make_unique",
+      "range": {
+        "startLine": 89,
+        "startChar": 20,
+        "endLine": 89,
+        "endChar": 36
+      },
+      "revId": "760696fa7e2f36735f8e394a3bda5c1526c92657",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
