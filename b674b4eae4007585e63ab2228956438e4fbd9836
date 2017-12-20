@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f40ed99b_8d07ac31",
+        "filename": "third_party/WebKit/Source/core/dom/ComputedAccessibleNode.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1256034
+      },
+      "writtenOn": "2017-12-20T04:03:05Z",
+      "side": 1,
+      "message": "As discussed earlier, this should be fine, as there is a test to cover re-requesting the ComputedAccessibleNode, so the promise is still resolved when this logic block is not executed.",
+      "parentUuid": "bcdf7e97_2a20b6b9",
+      "revId": "b674b4eae4007585e63ab2228956438e4fbd9836",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3c22b961_6a6947d6",
         "filename": "third_party/WebKit/Source/core/dom/ComputedAccessibleNode.h",
         "patchSetId": 12
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "0038a3fb_534fd122",
+        "filename": "third_party/WebKit/Source/core/dom/ComputedAccessibleNode.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1256034
+      },
+      "writtenOn": "2017-12-20T04:03:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3c22b961_6a6947d6",
+      "revId": "b674b4eae4007585e63ab2228956438e4fbd9836",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "09d6eeed_35bacfc7",
         "filename": "third_party/WebKit/Source/core/frame/Window.idl",
         "patchSetId": 12
@@ -50,6 +86,24 @@
       "revId": "b674b4eae4007585e63ab2228956438e4fbd9836",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5a500de_fd09bc80",
+        "filename": "third_party/WebKit/Source/core/frame/Window.idl",
+        "patchSetId": 12
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1256034
+      },
+      "writtenOn": "2017-12-20T04:03:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "09d6eeed_35bacfc7",
+      "revId": "b674b4eae4007585e63ab2228956438e4fbd9836",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
