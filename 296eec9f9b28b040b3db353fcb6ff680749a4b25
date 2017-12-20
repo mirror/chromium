@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e4ff64c8_4230158f",
+        "filename": "chrome/browser/subresource_filter/chrome_subresource_filter_client.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-12-20T14:05:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8793b860_997a51d2",
+      "revId": "296eec9f9b28b040b3db353fcb6ff680749a4b25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ed2cccb6_7f9d414b",
         "filename": "chrome/browser/subresource_filter/subresource_filter_settings_browsertest.cc",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "296eec9f9b28b040b3db353fcb6ff680749a4b25",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eca08378_75279e4b",
+        "filename": "chrome/browser/subresource_filter/subresource_filter_settings_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-12-20T14:05:04Z",
+      "side": 1,
+      "message": "Still gives a compile error",
+      "parentUuid": "ed2cccb6_7f9d414b",
+      "revId": "296eec9f9b28b040b3db353fcb6ff680749a4b25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

@@ -16,6 +16,24 @@
       "revId": "9739d021f5f138df32e481b163ce94e86af165df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57089634_8a547b5c",
+        "filename": "chrome/browser/ui/blocked_content/safe_browsing_triggered_popup_blocker_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-12-20T14:05:04Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "d755ba2b_e6a599a1",
+      "revId": "9739d021f5f138df32e481b163ce94e86af165df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
