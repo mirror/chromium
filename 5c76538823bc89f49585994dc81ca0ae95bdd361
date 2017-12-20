@@ -52,6 +52,24 @@
       "revId": "5c76538823bc89f49585994dc81ca0ae95bdd361",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a7e35ee_23b16669",
+        "filename": "content/browser/gpu/browser_gpu_channel_host_factory.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-12-20T17:47:42Z",
+      "side": 1,
+      "message": "\u003e \u003e \u003e This feels like a very odd place to do this, and I\u0027m not really sure we guarantee that this runs before renderers start.\n\u003e \u003e \n\u003e \u003e It\u0027s as early as can be done, since |gpu_memory_buffer_manager_| is created\n\u003e \u003e in l.226...\n\u003e \n\u003e Possibly, but that doesn\u0027t help if renderers are indeed created before this.\n\nLet me try to reply again :-) \n\nBrowserGpuChannelHostFactory is created [1] in BrowserThreadsStarted(),\nbefore even the GPU process is launched [2]; it\u0027s part of the \nEarlyInitialization() [3] and before the PreMainMessageLoop, where\nthe RenderProcessHostImpl is created, at least in Desktop, see the\ncallstack:\n\n#9  content::RenderProcessHostImpl::Init()\n#10 content::RenderFrameHostManager::CreateSpeculativeRenderFrameHost()\n#11 content::RenderFrameHostManager::GetFrameHostForNavigation()\n#12 content::RenderFrameHostManager::DidCreateNavigationRequest()\n#13 content::FrameTreeNode::CreatedNavigationRequest()\n#14 content::NavigatorImpl::RequestNavigation()\n#15 content::NavigatorImpl::NavigateToEntry()\n#16 content::NavigatorImpl::NavigateToPendingEntry()\n#17 content::NavigationControllerImpl::NavigateToPendingEntryInternal()\n#18 content::NavigationControllerImpl::NavigateToPendingEntry()\n#19 content::NavigationControllerImpl::LoadEntry()\n#20 content::NavigationControllerImpl::LoadURLWithParams()\n#21 (anonymous namespace)::LoadURLInContents()\n#22 Navigate()\n#23 StartupBrowserCreatorImpl::OpenTabsInBrowser()\n#24 StartupBrowserCreatorImpl::RestoreOrCreateBrowser()\n#25 StartupBrowserCreatorImpl::DetermineURLsAndLaunch()\n#26 StartupBrowserCreatorImpl::Launch()\n#27 StartupBrowserCreator::LaunchBrowser()\n#28 StartupBrowserCreator::ProcessLastOpenedProfiles()\n#29 StartupBrowserCreator::LaunchBrowserForLastProfiles()\n#30 StartupBrowserCreator::ProcessCmdLineImpl()\n#31 StartupBrowserCreator::Start()\n#32 ChromeBrowserMainParts::PreMainMessageLoopRunImpl()\n#33 ChromeBrowserMainParts::PreMainMessageLoopRun()\n#34 content::BrowserMainLoop::PreMainMessageLoopRun()\n\n[1] https://cs.chromium.org/chromium/src/content/browser/browser_main_loop.cc?sq\u003dpackage:chromium\u0026dr\u0026l\u003d1503\n[2] https://cs.chromium.org/chromium/src/content/browser/browser_main_loop.cc?sq\u003dpackage:chromium\u0026dr\u0026l\u003d1642\n[3] https://cs.chromium.org/chromium/src/content/browser/browser_main_runner.cc?sq\u003dpackage:chromium\u0026dr\u0026l\u003d100\n\n\u003e \n\u003e \n\u003e \u003e \u003e \n\u003e \u003e \u003e Is there a way to instead not expose chromium_image_ycbcr_420v in FeatureInfo when it is not supported natively?\n\u003e \u003e \n\u003e \u003e Indeed, there was some discussion re. whether to expose the flag or not: \n\u003e \u003e reveman@ argued convincingly that chromium_image_ycbcr_420v should be\n\u003e \u003e exposed in these platforms because in all actuality the platforms do \n\u003e \u003e support it and IIUC it\u0027s used by ARC++; what we want to limit is the \n\u003e \u003e use of it for VideoFrames because of performance reasons. Makes sense?\n\u003e \n\u003e How about adding another bit in gpu::Capabilities that explains that this format is usable, but slow?\n\nI thought about it (and even wrote a CL for it), but it\u0027s a bit more\ncomplicated: GPU knows if ycbcr_420 is available, but it\u0027s a policy \ndecision in the Browser process that knows if we should use it for \nVideoFrame storage or not (concretely the //gpu/ipc/host which lives \nin Browser process). So it\u0027s a 3 person party here: GPU knows if the\nextension should be marked available (to the Renderer), and Browser\ntells (to the Renderer as well) if we should use it for VideoFrames \nstorage.",
+      "parentUuid": "4da6fbdb_a358bdca",
+      "revId": "5c76538823bc89f49585994dc81ca0ae95bdd361",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
