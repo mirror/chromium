@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "1bdf091b_99ee5ca0",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3137,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-12-20T13:06:51Z",
+      "side": 1,
+      "message": "1. What\u0027s the use-case for multiple instances per-object? ie. why is support for that part of the upstream protocol?\n\n2. can we just add a has_input_timestamp_callback() helper to the wayland pointer delegate class and make sure we reset the callback when instance is destroyed?",
+      "parentUuid": "4aaae5e9_48f46d54",
+      "revId": "d0b5d519e322b239922bec8debb73b3f81c4896c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a8ff28cf_ef4207e3",
         "filename": "third_party/wayland-protocols/README.chromium",
         "patchSetId": 1

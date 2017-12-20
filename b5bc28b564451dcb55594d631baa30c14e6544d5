@@ -1,0 +1,214 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6f8cc6dc_9efcc3e0",
+        "filename": "components/exo/keyboard.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-12-20T13:06:51Z",
+      "side": 1,
+      "message": "nit: definition of simple getter like this can be in header. either move it there or rename it to GetDelegate()",
+      "revId": "b5bc28b564451dcb55594d631baa30c14e6544d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b66a8eea_f1f5a594",
+        "filename": "components/exo/pointer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-12-20T13:06:51Z",
+      "side": 1,
+      "message": "nit: definition of simple getter like this can be in header. either move it there or rename it to GetDelegate()",
+      "revId": "b5bc28b564451dcb55594d631baa30c14e6544d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d822fd44_1870d993",
+        "filename": "components/exo/touch.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-12-20T13:06:51Z",
+      "side": 1,
+      "message": "nit: definition of simple getter like this can be in header. either move it there or rename it to GetDelegate()",
+      "revId": "b5bc28b564451dcb55594d631baa30c14e6544d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af596b28_1e597083",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-12-20T13:06:51Z",
+      "side": 1,
+      "message": "do we need to add this struct and helper? can we just put this code in SendTimestamp function below instead?",
+      "revId": "b5bc28b564451dcb55594d631baa30c14e6544d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "882948c4_0abbb304",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3013,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-12-20T13:06:51Z",
+      "side": 1,
+      "message": "Sorry for not providing the best naming suggestion with previous feedback. Let\u0027s align the name of this and related functions/variables. How about:\n\nset_send_timestamp_callback\n(if needed has_send_timestamp_callback)\nsend_timestamp_callback_\nSendTimestamp\n\nie.\n\ns/input_timestamps_callback/send_timestamp_callback/\ns/NotifyInputTimestamp/SendTimestamp/",
+      "revId": "b5bc28b564451dcb55594d631baa30c14e6544d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7d9f7bd_af542a01",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3353,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-12-20T13:06:51Z",
+      "side": 1,
+      "message": "hm, can we add a base class called WaylandInputDelegate that WaylandPointerDelegate, WaylandKeyboardDelegate, etc. can derive from to avoid duplicating set_send_timestamp_callback, SendTimestamp and the member variable?",
+      "revId": "b5bc28b564451dcb55594d631baa30c14e6544d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86f9bd33_373de3b5",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 4563,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-12-20T13:06:51Z",
+      "side": 1,
+      "message": "nit: remove line as current pattern is to not have \"//\" line after \"interface:\"",
+      "revId": "b5bc28b564451dcb55594d631baa30c14e6544d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c32379b_e59f6d8f",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 4570,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-12-20T13:06:51Z",
+      "side": 1,
+      "message": "nit: blank line between ctor and other functions as I think that\u0027s pattern used in this file",
+      "revId": "b5bc28b564451dcb55594d631baa30c14e6544d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "732e48b0_2b5875c9",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 4577,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-12-20T13:06:51Z",
+      "side": 1,
+      "message": "nit: after this, blank line and DISALLOW_COPY_AND_ASSIGN",
+      "revId": "b5bc28b564451dcb55594d631baa30c14e6544d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f0e0a98_0101f7ce",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 4590,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-12-20T13:06:51Z",
+      "side": 1,
+      "message": "nit: remove line as current pattern is to not have \"//\" line after \"interface:\"",
+      "revId": "b5bc28b564451dcb55594d631baa30c14e6544d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9f5b500_c08b87ae",
+        "filename": "third_party/wayland-protocols/README.chromium",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-12-20T13:06:51Z",
+      "side": 1,
+      "message": "did you forget to add the xml file to the CL?",
+      "range": {
+        "startLine": 66,
+        "startChar": 27,
+        "endLine": 66,
+        "endChar": 85
+      },
+      "revId": "b5bc28b564451dcb55594d631baa30c14e6544d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "281ee5f5_ce65d775",
+        "filename": "third_party/wayland-protocols/include/protocol/input-timestamps-unstable-v1-client-protocol.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-12-20T13:06:51Z",
+      "side": 1,
+      "message": "nit: please use the version of wayland-scanner in third_party/wayland to generate these. I think that\u0027s 1.13.0 currently.",
+      "revId": "b5bc28b564451dcb55594d631baa30c14e6544d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
