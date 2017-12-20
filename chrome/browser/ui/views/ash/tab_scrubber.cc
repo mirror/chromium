@@ -77,7 +77,7 @@ TabScrubber::TabScrubber()
       weak_ptr_factory_(this) {
   // TODO(mash): Add window server API to observe swipe gestures. Observing
   // gestures on browser windows is not sufficient, as this feature works when
-  // the cursor is over the shelf, desktop, etc.
+  // the cursor is over the shelf, desktop, etc. http://crbug.com/796366.
   ash::Shell::Get()->AddPreTargetHandler(this);
   registrar_.Add(
       this,

@@ -12,12 +12,18 @@
 #include "chrome/browser/chrome_browser_main_linux.h"
 #include "chrome/browser/chromeos/external_metrics.h"
 #include "chrome/browser/memory/memory_kills_monitor.h"
+#include "chrome/common/features.h"
 #include "chromeos/system/version_loader.h"
 
+class AshInit;
 class NightLightClient;
 class NotificationPlatformBridge;
 class TabletModeClient;
 class WallpaperControllerClient;
+
+#if BUILDFLAG(ENABLE_WAYLAND_SERVER)
+class ExoParts;
+#endif
 
 namespace lock_screen_apps {
 class StateController;
@@ -50,8 +56,10 @@ class ExternalLoader;
 }
 
 namespace internal {
+class AshClients;
 class ChromeLauncherControllerInitializer;
 class DBusServices;
+class MashServices;
 class SystemTokenCertDBInitializer;
 }
 
@@ -118,6 +126,14 @@ class ChromeBrowserMainPartsChromeos : public ChromeBrowserMainPartsLinux {
 
   std::unique_ptr<LowDiskNotification> low_disk_notification_;
   std::unique_ptr<ArcKioskAppManager> arc_kiosk_app_manager_;
+
+  std::unique_ptr<AshInit> ash_init_;
+  std::unique_ptr<internal::MashServices> mash_services_;
+  std::unique_ptr<internal::AshClients> ash_clients_;
+
+#if BUILDFLAG(ENABLE_WAYLAND_SERVER)
+  std::unique_ptr<ExoParts> exo_parts_;
+#endif
 
   std::unique_ptr<memory::MemoryKillsMonitor::Handle> memory_kills_monitor_;
 

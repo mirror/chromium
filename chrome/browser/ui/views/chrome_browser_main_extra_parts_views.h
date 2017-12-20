@@ -11,6 +11,11 @@
 #include "chrome/browser/chrome_browser_main_extra_parts.h"
 #include "ui/views/layout/layout_provider.h"
 
+#if defined(OS_CHROMEOS)
+class ImmersiveContextMus;
+class ImmersiveHandlerFactoryMus;
+#endif
+
 namespace ui {
 class InputDeviceClient;
 }
@@ -39,9 +44,10 @@ class ChromeBrowserMainExtraPartsViews : public ChromeBrowserMainExtraParts {
   // Overridden from ChromeBrowserMainExtraParts:
   void ToolkitInitialized() override;
   void PreCreateThreads() override;
-  void PreProfileInit() override;
   void ServiceManagerConnectionStarted(
       content::ServiceManagerConnection* connection) override;
+  void PreProfileInit() override;
+  void PostProfileInit() override;
 
  private:
   std::unique_ptr<views::ViewsDelegate> views_delegate_;
@@ -59,6 +65,12 @@ class ChromeBrowserMainExtraPartsViews : public ChromeBrowserMainExtraParts {
 
   // Subscribes to updates about input-devices.
   std::unique_ptr<ui::InputDeviceClient> input_device_client_;
+#endif
+
+#if defined(OS_CHROMEOS)
+  // Only created when running in ash::Config::MASH.
+  std::unique_ptr<ImmersiveContextMus> immersive_context_;
+  std::unique_ptr<ImmersiveHandlerFactoryMus> immersive_handler_factory_;
 #endif
 
   DISALLOW_COPY_AND_ASSIGN(ChromeBrowserMainExtraPartsViews);
