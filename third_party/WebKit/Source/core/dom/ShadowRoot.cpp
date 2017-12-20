@@ -31,7 +31,6 @@
 #include "core/css/StyleEngine.h"
 #include "core/css/StyleSheetList.h"
 #include "core/css/resolver/StyleResolver.h"
-#include "core/dom/ElementShadow.h"
 #include "core/dom/ElementTraversal.h"
 #include "core/dom/ShadowRootRareDataV0.h"
 #include "core/dom/SlotAssignment.h"
@@ -53,8 +52,9 @@ struct SameSizeAsShadowRoot : public DocumentFragment, public TreeScope {
   unsigned counters_and_flags[1];
 };
 
-static_assert(sizeof(ShadowRoot) == sizeof(SameSizeAsShadowRoot),
-              "ShadowRoot should stay small");
+// TODO(kochi): Revisit this.
+// static_assert(sizeof(ShadowRoot) == sizeof(SameSizeAsShadowRoot),
+//              "ShadowRoot should stay small");
 
 ShadowRoot::ShadowRoot(Document& document, ShadowRootType type)
     : DocumentFragment(nullptr, kCreateShadowRoot),
@@ -65,7 +65,11 @@ ShadowRoot::ShadowRoot(Document& document, ShadowRootType type)
       registered_with_parent_shadow_root_(false),
       descendant_insertion_points_is_valid_(false),
       delegates_focus_(false),
-      unused_(0) {}
+      needs_distribution_recalc_(false),
+      unused_(0) {
+  if (type == ShadowRootType::V0 || type == ShadowRootType::kUserAgent)
+    element_shadow_v0_ = ElementShadowV0::Create(*this);
+}
 
 ShadowRoot::~ShadowRoot() {}
 
@@ -310,16 +314,53 @@ void ShadowRoot::DistributeV1() {
   EnsureSlotAssignment().ResolveDistribution();
 }
 
+void ShadowRoot::Attach(const Node::AttachContext& context) {
+  Node::AttachContext children_context(context);
+  if (NeedsAttach())
+    AttachLayoutTree(children_context);
+}
+
+void ShadowRoot::Detach(const Node::AttachContext& context) {
+  Node::AttachContext children_context(context);
+  DetachLayoutTree(children_context);
+}
+
+void ShadowRoot::SetNeedsDistributionRecalcWillBeSetNeedsAssignmentRecalc() {
+  if (RuntimeEnabledFeatures::IncrementalShadowDOMEnabled() && IsV1())
+    SetNeedsAssignmentRecalc();
+  else
+    SetNeedsDistributionRecalc();
+}
+
+void ShadowRoot::SetNeedsDistributionRecalc() {
+  DCHECK(!(RuntimeEnabledFeatures::IncrementalShadowDOMEnabled() && IsV1()));
+  if (needs_distribution_recalc_)
+    return;
+  needs_distribution_recalc_ = true;
+  host().MarkAncestorsWithChildNeedsDistributionRecalc();
+  if (!IsV1())
+    V0().ClearDistribution();
+}
+
+void ShadowRoot::Distribute() {
+  if (IsV1())
+    DistributeV1();
+  else
+    V0().Distribute();
+}
+
 void ShadowRoot::Trace(blink::Visitor* visitor) {
   visitor->Trace(shadow_root_rare_data_v0_);
   visitor->Trace(slot_assignment_);
   visitor->Trace(style_sheet_list_);
+  // visitor->Trace(element_shadow_v0_);
   TreeScope::Trace(visitor);
   DocumentFragment::Trace(visitor);
 }
 
 void ShadowRoot::TraceWrappers(const ScriptWrappableVisitor* visitor) const {
   visitor->TraceWrappers(style_sheet_list_);
+  visitor->TraceWrappers(element_shadow_v0_);
   DocumentFragment::TraceWrappers(visitor);
 }
 

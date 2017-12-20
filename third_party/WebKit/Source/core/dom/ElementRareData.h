@@ -29,11 +29,11 @@
 #include "core/dom/Attr.h"
 #include "core/dom/DOMTokenList.h"
 #include "core/dom/DatasetDOMStringMap.h"
-#include "core/dom/ElementShadow.h"
 #include "core/dom/NamedNodeMap.h"
 #include "core/dom/NodeRareData.h"
 #include "core/dom/PseudoElement.h"
 #include "core/dom/PseudoElementData.h"
+#include "core/dom/ShadowRoot.h"
 #include "core/html/custom/CustomElementDefinition.h"
 #include "core/html/custom/V0CustomElementDefinition.h"
 #include "core/intersection_observer/ElementIntersectionObserverData.h"
@@ -73,13 +73,11 @@ class ElementRareData : public NodeRareData {
     return cssom_map_wrapper_.Get();
   }
 
-  void ClearShadow() { shadow_ = nullptr; }
-  ElementShadow* Shadow() const { return shadow_.Get(); }
-  ElementShadow& EnsureShadow() {
-    if (!shadow_) {
-      shadow_ = ElementShadow::Create();
-    }
-    return *shadow_;
+  void ClearShadow() { shadow_root_ = nullptr; }
+  ShadowRoot* GetShadowRoot() const { return shadow_root_.Get(); }
+  void SetShadowRoot(ShadowRoot* shadow_root) {
+    DCHECK(!shadow_root_);
+    shadow_root_ = shadow_root;
   }
 
   NamedNodeMap* AttributeMap() const { return attribute_map_.Get(); }
@@ -176,9 +174,9 @@ class ElementRareData : public NodeRareData {
   AtomicString nonce_;
 
   TraceWrapperMember<DatasetDOMStringMap> dataset_;
-  TraceWrapperMember<ElementShadow> shadow_;
   TraceWrapperMember<DOMTokenList> class_list_;
   TraceWrapperMember<NamedNodeMap> attribute_map_;
+  Member<ShadowRoot> shadow_root_;
   Member<AttrNodeList> attr_node_list_;
   Member<InlineCSSStyleDeclaration> cssom_wrapper_;
   Member<InlineStylePropertyMap> cssom_map_wrapper_;
