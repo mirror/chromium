@@ -134,6 +134,8 @@ public class WebsitePermissionsFetcher {
         queue.add(new AutoplayExceptionInfoFetcher());
         // USB device permission is per-origin and per-embedder.
         queue.add(new UsbInfoFetcher());
+        // Sensors permission is per-origin.
+        queue.add(new SensorsInfoFetcher());
 
         queue.add(new PermissionsAvailableCallbackRunner());
 
@@ -198,6 +200,9 @@ public class WebsitePermissionsFetcher {
         } else if (category.showUsbDevices()) {
             // USB device permission is per-origin.
             queue.add(new UsbInfoFetcher());
+        } else if (category.showSensorsSites()) {
+            // Sensors permission is per-origin.
+            queue.add(new SensorsInfoFetcher());
         }
         queue.add(new PermissionsAvailableCallbackRunner());
         queue.next();
@@ -449,6 +454,17 @@ public class WebsitePermissionsFetcher {
                 if (origin == null) continue;
                 WebsiteAddress embedder = WebsiteAddress.create(info.getEmbedder());
                 findOrCreateSite(origin, embedder).addUsbInfo(info);
+            }
+        }
+    }
+
+    private class SensorsInfoFetcher extends Task {
+        @Override
+        public void run() {
+            for (SensorsInfo info : WebsitePreferenceBridge.getSensorsInfo()) {
+                WebsiteAddress origin = WebsiteAddress.create(info.getOrigin());
+                if (origin == null) continue;
+                findOrCreateSite(origin, null).setSensorsInfo(info);
             }
         }
     }

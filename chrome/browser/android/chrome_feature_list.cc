@@ -25,6 +25,7 @@
 #include "components/subresource_filter/core/browser/subresource_filter_features.h"
 #include "content/public/common/content_features.h"
 #include "jni/ChromeFeatureList_jni.h"
+#include "services/device/public/cpp/device_features.h"
 
 using base::android::ConvertJavaStringToUTF8;
 using base::android::ConvertUTF8ToJavaString;
@@ -45,6 +46,7 @@ const base::Feature* kFeaturesExposedToJava[] = {
     &features::kCopylessPaste,
     &features::kDownloadsForeground,
     &features::kDownloadsLocationChange,
+    &features::kGenericSensorExtraClasses,
     &features::kImportantSitesInCbd,
     &features::kMaterialDesignIncognitoNTP,
     &features::kServiceWorkerPaymentApps,
