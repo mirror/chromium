@@ -1,0 +1,182 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bba4b5d3_950192e4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/OfflinePagesDownloadManagerBridge.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-20T04:39:14Z",
+      "side": 1,
+      "message": "Will the implementation come in this cl?",
+      "revId": "3858184839ba70c5f474dec9a5a2ceda91e1a749",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19c6c288_a34e4132",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/OfflinePagesDownloadManagerBridge.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-20T04:39:14Z",
+      "side": 1,
+      "message": "This is not needed on C++ side, as we\u0027ll never set it.\nOur goal is to provide a minimal working API and not copy Java API to C++, here.\n\nI\u0027d also drop showNotification, and frankly any other field that we provide a constant for.",
+      "range": {
+        "startLine": 30,
+        "startChar": 20,
+        "endLine": 30,
+        "endChar": 43
+      },
+      "revId": "3858184839ba70c5f474dec9a5a2ceda91e1a749",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "060ab83f_b6ff0b5b",
+        "filename": "chrome/browser/offline_pages/android/offline_pages_download_manager_bridge.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-20T04:39:14Z",
+      "side": 1,
+      "message": "const ref?",
+      "range": {
+        "startLine": 63,
+        "startChar": 4,
+        "endLine": 63,
+        "endChar": 7
+      },
+      "revId": "3858184839ba70c5f474dec9a5a2ceda91e1a749",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8ea109e_692a3985",
+        "filename": "chrome/browser/offline_pages/android/offline_pages_download_manager_bridge.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-20T04:39:14Z",
+      "side": 1,
+      "message": "I am wondering which is going to be more common:\nmultiple or single IDs to delete...",
+      "range": {
+        "startLine": 63,
+        "startChar": 26,
+        "endLine": 63,
+        "endChar": 54
+      },
+      "revId": "3858184839ba70c5f474dec9a5a2ceda91e1a749",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61d479f6_2d5a4e81",
+        "filename": "chrome/browser/offline_pages/android/offline_pages_download_manager_bridge.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-20T04:39:14Z",
+      "side": 1,
+      "message": "how about just returning in one line?\\\nCurrent way leaves me feeling that there is some code that is missing.",
+      "range": {
+        "startLine": 69,
+        "startChar": 7,
+        "endLine": 69,
+        "endChar": 18
+      },
+      "revId": "3858184839ba70c5f474dec9a5a2ceda91e1a749",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9830973d_fa70745d",
+        "filename": "chrome/browser/offline_pages/android/offline_pages_download_manager_bridge.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-20T04:39:14Z",
+      "side": 1,
+      "message": "is there a value in passing all strings here by value?\nYou will likely be getting them from an offline item and won\u0027t be able to move them, and inside of implementation you have to convert them to java strings. I\u0027d consider going with good old const ref, unless there is some consideration I am missing.",
+      "range": {
+        "startLine": 22,
+        "startChar": 40,
+        "endLine": 22,
+        "endChar": 46
+      },
+      "revId": "3858184839ba70c5f474dec9a5a2ceda91e1a749",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe69d19d_46cfdf69",
+        "filename": "chrome/browser/offline_pages/android/offline_pages_download_manager_bridge.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-20T04:39:14Z",
+      "side": 1,
+      "message": "Inconsistent spelling with Java.\nAnd I know this word is messed up in that way.",
+      "range": {
+        "startLine": 30,
+        "startChar": 47,
+        "endLine": 30,
+        "endChar": 55
+      },
+      "revId": "3858184839ba70c5f474dec9a5a2ceda91e1a749",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c66515f2_63b83a82",
+        "filename": "chrome/browser/offline_pages/android/offline_pages_download_manager_bridge.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-20T04:39:14Z",
+      "side": 1,
+      "message": "either remove or disallow copy and assign below.",
+      "range": {
+        "startLine": 35,
+        "startChar": 8,
+        "endLine": 35,
+        "endChar": 9
+      },
+      "revId": "3858184839ba70c5f474dec9a5a2ceda91e1a749",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
