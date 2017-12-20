@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d6cd4ea9_c4736b75",
+        "filename": "components/viz/service/display/skia_renderer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-12-20T20:09:06Z",
+      "side": 1,
+      "message": "What is this checking exactly, if |render_pass_backings_| contains |render_pass_id| or if |gl_id| wasn\u0027t set to 0 originally? If you create a RenderPassBacking via map lookup does it zero initialize?",
+      "range": {
+        "startLine": 268,
+        "startChar": 17,
+        "endLine": 268,
+        "endChar": 22
+      },
+      "revId": "f804016c9dc509758687932a6248ba7b2d0b6fe1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05bc8803_b78864c8",
+        "filename": "components/viz/service/display/skia_renderer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-12-20T20:09:06Z",
+      "side": 1,
+      "message": "Should this be const or should something be here that can change flags?",
+      "revId": "f804016c9dc509758687932a6248ba7b2d0b6fe1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f1b80a4_4592af62",
+        "filename": "components/viz/service/display/skia_renderer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 838,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-12-20T20:09:06Z",
+      "side": 1,
+      "message": "Can you add (a) comment(s) to explain lines 838-854. I don\u0027t really understand the why for it and I\u0027m sure others won\u0027t too.",
+      "revId": "f804016c9dc509758687932a6248ba7b2d0b6fe1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "176ef71f_5631969a",
+        "filename": "components/viz/service/display/skia_renderer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 841,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-12-20T20:09:06Z",
+      "side": 1,
+      "message": "if (caps.texture_npot \u0026\u0026 texture_hint \u0026 ResourceTextureHint::kMipmap) {",
+      "revId": "f804016c9dc509758687932a6248ba7b2d0b6fe1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
