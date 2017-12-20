@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f304112b_11a8dfa2",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-12-20T01:27:40Z",
+      "side": 1,
+      "message": "Hmm, I\u0027m thinking we should just un-taint all three contexts by resetting context.current.containing_block_changed_under_filter at document boundary (at the top of this function). That makes sense because the use counter is counted against the document.",
+      "revId": "f9e87dc7bb975e3514eaa900a38e74fe13638801",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10ee154d_c933c07b",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-12-20T01:27:40Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "f9e87dc7bb975e3514eaa900a38e74fe13638801",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48b784d7_99f8be5f",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 1237,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-12-20T01:27:40Z",
+      "side": 1,
+      "message": "I think it should inherit the taint flag from the in-flow context instead of resetting it, since we did inherit a tainted context. :)\n\nWhether resetting or not doesn\u0027t make a difference in the context of this CL though, because if we are inheriting from a tainted context, at this point a use count already registered anyway.",
+      "revId": "f9e87dc7bb975e3514eaa900a38e74fe13638801",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
