@@ -30,6 +30,7 @@
 #include "base/trace_event/trace_event.h"
 #include "base/values.h"
 #include "build/build_config.h"
+#include "chrome/browser/data_saver/data_saver_util.h"
 #include "chrome/browser/io_thread.h"
 #include "chrome/browser/predictors/loading_predictor_config.h"
 #include "chrome/browser/prefs/session_startup_pref.h"
@@ -37,6 +38,7 @@
 #include "chrome/common/chrome_features.h"
 #include "chrome/common/chrome_switches.h"
 #include "chrome/common/pref_names.h"
+#include "components/data_reduction_proxy/core/common/data_reduction_proxy_features.h"
 #include "components/pref_registry/pref_registry_syncable.h"
 #include "components/prefs/pref_service.h"
 #include "components/prefs/scoped_user_pref_update.h"
@@ -978,14 +980,21 @@ void Predictor::LookupFinished(const GURL& url, bool found) {
 }
 
 bool Predictor::WouldLikelyProxyURL(const GURL& url) {
-  if (!proxy_service_)
-    return false;
+  if (proxy_service_) {
+    net::ProxyInfo info;
+    bool synchronous_success = proxy_service_->TryResolveProxySynchronously(
+        url, std::string(), &info, nullptr, net::NetLogWithSource());
 
-  net::ProxyInfo info;
-  bool synchronous_success = proxy_service_->TryResolveProxySynchronously(
-      url, std::string(), &info, nullptr, net::NetLogWithSource());
+    if (synchronous_success && !info.is_direct())
+      return true;
+  }
 
-  return synchronous_success && !info.is_direct();
+  if (base::FeatureList::IsEnabled(
+          data_reduction_proxy::features::kDisableDnsPreResolution) &&
+      chrome::WouldLikelyBeFetchedViaDataSaverIO(profile_io_data_, url)) {
+    return true;
+  }
+  return false;
 }
 
 void Predictor::AppendToResolutionQueue(

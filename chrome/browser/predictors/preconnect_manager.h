@@ -18,6 +18,8 @@
 #include "net/url_request/url_request_context_getter.h"
 #include "url/gurl.h"
 
+class Profile;
+
 namespace predictors {
 
 struct PreconnectRequest;
@@ -110,7 +112,8 @@ class PreconnectManager {
   static const size_t kMaxInflightPreresolves = 3;
 
   PreconnectManager(base::WeakPtr<Delegate> delegate,
-                    scoped_refptr<net::URLRequestContextGetter> context_getter);
+                    scoped_refptr<net::URLRequestContextGetter> context_getter,
+                    Profile* profile);
   virtual ~PreconnectManager();
 
   // Starts preconnect and preresolve jobs keyed by |url|.
@@ -135,6 +138,9 @@ class PreconnectManager {
   virtual int PreresolveUrl(const GURL& url,
                             const net::CompletionCallback& callback) const;
 
+ protected:
+  virtual bool WouldLikelyBeFetchedViaDataSaver(PreresolveInfo* info) const;
+
  private:
   void TryToLaunchPreresolveJobs();
   void OnPreresolveFinished(const PreresolveJob& job, int result);
@@ -147,6 +153,7 @@ class PreconnectManager {
   std::list<PreresolveJob> queued_jobs_;
   std::map<std::string, std::unique_ptr<PreresolveInfo>> preresolve_info_;
   size_t inflight_preresolves_count_ = 0;
+  Profile* profile_;
 
   base::WeakPtrFactory<PreconnectManager> weak_factory_;
 
