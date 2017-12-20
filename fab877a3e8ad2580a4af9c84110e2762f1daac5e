@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ce85ac43_32d0a444",
+        "filename": "ios/chrome/browser/ui/toolbar/legacy_toolbar_coordinator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-12-20T00:46:29Z",
+      "side": 1,
+      "message": "Please add some comments for these 2 methods. We will move them to the clean Coordinator later ,and they should definitely have comments there.",
+      "revId": "fab877a3e8ad2580a4af9c84110e2762f1daac5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1855df6c_f7fc0a07",
+        "filename": "ios/chrome/browser/ui/toolbar/legacy_toolbar_coordinator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-12-20T00:46:29Z",
+      "side": 1,
+      "message": "As per the offline conversation, we could check if BrowserState is nil here and early return.\nThat could make it clearer since we won\u0027t check if fullScreenController is nil.",
+      "range": {
+        "startLine": 307,
+        "startChar": 2,
+        "endLine": 307,
+        "endChar": 25
+      },
+      "revId": "fab877a3e8ad2580a4af9c84110e2762f1daac5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f92c2ed1_42f9904f",
+        "filename": "ios/chrome/browser/ui/toolbar/legacy_toolbar_coordinator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-12-20T00:46:29Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 321,
+        "startChar": 7,
+        "endLine": 321,
+        "endChar": 25
+      },
+      "revId": "fab877a3e8ad2580a4af9c84110e2762f1daac5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
