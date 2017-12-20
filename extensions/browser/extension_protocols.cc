@@ -637,8 +637,10 @@ ExtensionProtocolHandler::MaybeCreateJob(
   if (verifier) {
     verify_job =
         verifier->CreateJobFor(extension_id, directory_path, relative_path);
-    if (verify_job)
-      verify_job->Start();
+    if (verify_job) {
+      // XXX
+      verify_job->Start(/*verifier*/);
+    }
   }
 
   return new URLRequestExtensionJob(request,

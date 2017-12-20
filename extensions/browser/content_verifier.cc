@@ -305,4 +305,90 @@ bool ContentVerifier::ShouldVerifyAnyPaths(
   return false;
 }
 
+/*
+class ContentHashEntry : public base::RefCounted<ContentHashEntry> {
+ public:
+  ContentHashEntry() = default;
+
+ private:
+  friend class base::RefCounted<ContentHashEntry>;
+  DISALLOW_COPY_AND_ASSIGN(ContentHashEntry);
+};
+*/
+
+ContentVerifier::RequestKey::RequestKey(
+    const ExtensionId& extension_id,
+    const base::Version& extension_version)
+  : extension_id(extension_id),
+    extension_version(extension_version) {}
+
+ContentVerifier::RequestKey::~RequestKey() {}
+
+// TODO: FailureReason population.
+using VerifyFailedCallback = base::OnceCallback<
+    void(const ExtensionId& /* extension_id */,
+         ContentVerifyJob::FailureReason /* failure_reason */)>;
+
+class ContentVerifier::Loader {
+ public:
+  Loader(const ExtensionId& extension_id,
+         const base::Version& extension_version,
+         VerifyFailedCallback verify_failed_callback)
+      : verify_failed_callback_(std::move(verify_failed_callback)) {
+  }
+  ~Loader() {}
+
+  void Start() {
+    // TODO: AssertIO.
+    // TODO: Complete.
+    //base::PostTaskAndReplyWithResult(
+    //    GetExtensionFileTaskRunner().get(), FROM_HERE,
+    //    base::BindOnce(&ContentHashFetcherJob::LoadVerifiedContents, this),
+    //    base::BindOnce(&ContentHashFetcherJob::DoneCheckingForVerifiedContents,
+    //                 this));
+  }
+  void AddCallback(GotContentHashCallback callback) {
+    callbacks_.push_back(std::move(callback));
+  }
+
+ private:
+  //ContentHash Get() {
+  //  ContentHash content_hash = ContentHash::Create(
+  //      extension_key_, only_read_verified_contents,
+  //      force_,  // force_recreate_existing_computed_hashes_file
+  //      base::WrapRefCounted(this));
+  //  return content_hash;
+  //}
+  std::vector<GotContentHashCallback> callbacks_;
+
+  VerifyFailedCallback verify_failed_callback_;
+
+  DISALLOW_COPY_AND_ASSIGN(Loader);
+};
+
+
+void ContentVerifier::GetContentHashOnIO(
+    const ExtensionId& extension_id,
+    const base::Version& extension_version,
+    GotContentHashCallback callback) {
+  DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
+
+  // TODO(lazyboy): Add cache support, bug ID.
+  RequestKey key(extension_id, extension_version);
+  auto iter = inflight_loaders_.find(key);
+  if (iter != inflight_loaders_.end()) {
+    ContentVerifier::Loader* loader = iter->second.get();
+    loader->AddCallback(std::move(callback));
+  } else {
+    auto inserted = inflight_loaders_.emplace(
+        key,
+        std::make_unique<ContentVerifier::Loader>(
+            extension_id, extension_version,
+            base::BindOnce(&ContentVerifier::VerifyFailedGeneric, this)));
+    ContentVerifier::Loader* loader = inserted.first->second.get();
+    loader->AddCallback(std::move(callback));
+    loader->Start();
+  }
+}
+
 }  // namespace extensions

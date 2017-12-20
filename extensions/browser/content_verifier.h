@@ -17,6 +17,8 @@
 #include "extensions/browser/content_verify_job.h"
 #include "extensions/browser/extension_registry_observer.h"
 
+#include "extensions/browser/content_verifier/content_hash.h"
+
 namespace base {
 class FilePath;
 }
@@ -62,11 +64,12 @@ class ContentVerifier : public base::RefCountedThreadSafe<ContentVerifier>,
                                  const base::FilePath& extension_root,
                                  const base::FilePath& relative_path);
 
+ private:
   // Called (typically by a verification job) to indicate that verification
   // failed while reading some file in |extension_id|.
   void VerifyFailed(const std::string& extension_id,
                     ContentVerifyJob::FailureReason reason);
-
+ public:
   // ExtensionRegistryObserver interface
   void OnExtensionLoaded(content::BrowserContext* browser_context,
                          const Extension* extension) override;
@@ -74,11 +77,20 @@ class ContentVerifier : public base::RefCountedThreadSafe<ContentVerifier>,
                            const Extension* extension,
                            UnloadedExtensionReason reason) override;
 
- private:
-  DISALLOW_COPY_AND_ASSIGN(ContentVerifier);
+  using GotContentHashCallback =
+      base::OnceCallback<void(bool /* succeeded */,
+                              const ContentHash& /* entry */)>;
 
+  void GetContentHashOnIO(const ExtensionId& extension_id,
+                          const base::Version& extension_version,
+                          GotContentHashCallback callback);
+
+ private:
   friend class base::RefCountedThreadSafe<ContentVerifier>;
   ~ContentVerifier() override;
+
+  void VerifyFailedGeneric(const ExtensionId& extension_id,
+                           ContentVerifyJob::FailureReason failure_reason);
 
   void OnFetchComplete(
       const std::string& extension_id,
@@ -113,6 +125,23 @@ class ContentVerifier : public base::RefCountedThreadSafe<ContentVerifier>,
 
   // Data that should only be used on the IO thread.
   scoped_refptr<ContentVerifierIOData> io_data_;
+
+  struct RequestKey {
+    ExtensionId extension_id;
+    base::Version extension_version;
+
+    RequestKey(const ExtensionId& extension_id,
+               const base::Version& extension_version);
+    ~RequestKey();
+    bool operator<(const RequestKey& other) const {
+      return true;
+    }
+  };
+  class Loader;
+  std::map<RequestKey, std::unique_ptr<Loader>> inflight_loaders_;
+
+
+  DISALLOW_COPY_AND_ASSIGN(ContentVerifier);
 };
 
 }  // namespace extensions

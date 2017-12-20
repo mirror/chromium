@@ -32,6 +32,7 @@ class ContentHashReader : public base::RefCountedThreadSafe<ContentHashReader> {
 
   const std::string& extension_id() const { return extension_id_; }
   const base::FilePath& relative_path() const { return relative_path_; }
+  const base::Version& extension_version() const { return extension_version_; }
 
   // This should be called to initialize this object (reads the expected hashes
   // from storage, etc.). Must be called on a thread that is allowed to do file

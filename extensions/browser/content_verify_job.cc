@@ -14,6 +14,62 @@
 #include "crypto/sha2.h"
 #include "extensions/browser/content_hash_reader.h"
 
+// VerifierData -> consume into ContentVerifyJob.
+// CacheEntry inside ContentHash, RefCounted on IO would be cache.
+// Loader
+//   - uses key = {extension_id, extension_version}
+//   - If force = false succeeds, it can serve everything including (force =
+//   true), Q: will hash_mismatch_paths be wrong b/c we won't traverse directory
+//   anymore?
+
+// Current scenario:
+// Two sources are relevant: CVJ (per URLRequest) and CHF (singleton).
+// 1. CVJ:
+//   CHR inside CVJ.
+//   CVJ -> CV::VerifyFailed|-> CHF->DoFetch() -> CVDelegate::VerifyFailed.
+//                          |-> CVDelegate::VerifyFailed
+//
+// 2. CHF:
+//   CHFJ inside CHF
+//   CHF->CV::OnFetchComplete -> CVDelegate::VerifyFailed.
+//
+// Read, fetch if necessary, outputs to CVDelegate::VerifyFailed only in case
+//   of failure.
+//
+// New:
+// Let ContentVerifier::Loader wrap async aspect of fetcher and sync aspect of
+//     ContentHash.
+// Use Loader in CV to take care of inflight loads, caches (v2).
+// Usage:
+// CVJ (IO):
+//   - CVJ : RefCountedThreadSafe
+//   - Call CV::Get(kCVJ, Bind(Got, this))
+//   - CVJ::Got(success, scoped_refptr<ContentHash>)
+//     * scoped_refptr because we might run them later.
+//   - if (!success) -> Ignore, because CV will take care of VerifyFailed.
+// CV::OnExtensionLoaded/Unloaded (UI):
+//   - PostTask(IO, Helper, extension_id, extension_version)
+//   - CV::Helper(extension_id, extension_version) {
+//       // Loader logic.
+//       GetContentHashOnIO(extension_id, .., base::Bind(GotOnIOPrivate, this));
+//     }
+//   - CV::GotOnIOPrivate() {
+//
+// Loader: will retry through hash fetcher if missing all hashes, otherwise
+//   should result in CVDelegate::VerifyFailed, so delete CV::VerifyFailed?
+//   Currently CV::VerifyFailed consult with ExtensionRegistry to check if the
+//   extension in question is uninstalled or not.
+//
+// TODOs:
+//   1. MISSING_ALL_HASHES:
+//     If happens through fetcher, ENFORCE_STRICT -> CVDelegate::VerifyFailed.
+//     If happens through CVJ, DoFetch(true).
+//   2. URLRequest for browser image file: would have not created any jobs, this
+//     will be preserved as is through CVJ.
+//   3. During < ENFORCE_STRICT mode, CV::ShouldVerifyAnyPaths might be doing
+//     Q: we might be spending unneccessary cpu.
+//   4. No network case: make sure no regression occurs.
+
 namespace extensions {
 
 namespace {
@@ -60,7 +116,7 @@ ContentVerifyJob::~ContentVerifyJob() {
                        time_spent_.InMicroseconds());
 }
 
-void ContentVerifyJob::Start() {
+void ContentVerifyJob::Start(/*ContentVerifier* verifier*/) {
   DCHECK(thread_checker_.CalledOnValidThread());
   if (g_test_observer)
     g_test_observer->JobStarted(hash_reader_->extension_id(),
@@ -69,8 +125,22 @@ void ContentVerifyJob::Start() {
       FROM_HERE, {base::MayBlock(), base::TaskPriority::USER_VISIBLE},
       base::Bind(&ContentHashReader::Init, hash_reader_),
       base::Bind(&ContentVerifyJob::OnHashesReady, this));
+  // XXX
+//  verifier->GetContentHashOnIO(
+//      hash_reader_->extension_id(),
+//      hash_reader_->extension_version(),
+//      base::Bind(&ContentVerifyJob::DidGetContentHash, this));
 }
-
+//
+//void ContentVerifyJob::DidGetContentHash(
+//    bool succeeded,
+//    scoped_refptr<ContentHash> hash) {
+//  if (!succeeded) {
+//    // Ignore.
+//    return;
+//  }
+//}
+//
 void ContentVerifyJob::BytesRead(int count, const char* data) {
   ScopedElapsedTimer timer(&time_spent_);
   DCHECK(thread_checker_.CalledOnValidThread());
