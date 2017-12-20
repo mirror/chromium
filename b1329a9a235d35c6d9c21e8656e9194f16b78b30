@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "11c7201a_4f1117fa",
+        "filename": "third_party/WebKit/LayoutTests/TestExpectations",
+        "patchSetId": 8
+      },
+      "lineNbr": 733,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-12-20T06:23:53Z",
+      "side": 1,
+      "message": "nit: could you sort the line by path?",
+      "revId": "b1329a9a235d35c6d9c21e8656e9194f16b78b30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "396426cc_2319bf47",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/shadow-dom/DocumentOrShadowRoot-prototype-elementFromPoint.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-12-20T06:23:53Z",
+      "side": 1,
+      "message": "Usually you can use document.documentElement instead of document.body.parentElement.\n(same for all occurrences below)",
+      "revId": "b1329a9a235d35c6d9c21e8656e9194f16b78b30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f75db3a_6e2518c1",
+        "filename": "third_party/WebKit/Source/devtools/front_end/dom_extension/DOMExtension.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 758,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-12-20T06:23:53Z",
+      "side": 1,
+      "message": "Is this trying to fix for the test failures (instead of weird workaround in LayersTestRunner.js)?\n(I guess so, just checking)",
+      "revId": "b1329a9a235d35c6d9c21e8656e9194f16b78b30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
