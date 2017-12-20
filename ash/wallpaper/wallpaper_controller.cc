@@ -1184,9 +1184,11 @@ void WallpaperController::GetInternalDisplayCompositorLock() {
         Shell::GetRootWindowForDisplayId(display::Display::InternalDisplayId());
     if (root_window) {
       compositor_lock_ =
-          root_window->layer()->GetCompositor()->GetCompositorLock(
-              this,
-              base::TimeDelta::FromMilliseconds(kCompositorLockTimeoutMs));
+          root_window->layer()
+              ->GetCompositor()
+              ->lock_manager()
+              ->GetCompositorLock(this, base::TimeDelta::FromMilliseconds(
+                                            kCompositorLockTimeoutMs));
     }
   }
 }
