@@ -23,7 +23,7 @@ class LayoutTextControlItem : public LayoutBoxModel {
 
   explicit LayoutTextControlItem(std::nullptr_t) : LayoutBoxModel(nullptr) {}
 
-  LayoutTextControlItem() {}
+  LayoutTextControlItem() = default;
 
   scoped_refptr<ComputedStyle> CreateInnerEditorStyle(
       const ComputedStyle& start_style) const {

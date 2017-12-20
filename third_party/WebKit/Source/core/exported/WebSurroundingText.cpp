@@ -41,9 +41,9 @@
 
 namespace blink {
 
-WebSurroundingText::WebSurroundingText() {}
+WebSurroundingText::WebSurroundingText() = default;
 
-WebSurroundingText::~WebSurroundingText() {}
+WebSurroundingText::~WebSurroundingText() = default;
 
 void WebSurroundingText::InitializeFromCurrentSelection(WebLocalFrame* frame,
                                                         size_t max_length) {

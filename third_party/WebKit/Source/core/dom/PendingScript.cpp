@@ -37,7 +37,7 @@ PendingScript::PendingScript(ScriptElementBase* element,
       parser_blocking_load_start_time_(0),
       client_(nullptr) {}
 
-PendingScript::~PendingScript() {}
+PendingScript::~PendingScript() = default;
 
 void PendingScript::Dispose() {
   StopWatchingForLoad();

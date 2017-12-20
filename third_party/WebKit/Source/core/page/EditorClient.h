@@ -50,7 +50,8 @@ class CORE_EXPORT EditorClient {
   virtual bool HandleKeyboardEvent(LocalFrame*);
 
  protected:
-  EditorClient(){};
+  EditorClient() = default;
+  ;
 
  private:
   WebViewImpl* web_view_;

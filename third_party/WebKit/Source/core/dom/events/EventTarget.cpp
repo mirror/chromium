@@ -148,9 +148,9 @@ bool CheckTypeThenUseCount(const Event* event,
 
 }  // namespace
 
-EventTargetData::EventTargetData() {}
+EventTargetData::EventTargetData() = default;
 
-EventTargetData::~EventTargetData() {}
+EventTargetData::~EventTargetData() = default;
 
 void EventTargetData::Trace(blink::Visitor* visitor) {
   visitor->Trace(event_listener_map);
@@ -161,9 +161,9 @@ void EventTargetData::TraceWrappers(
   visitor->TraceWrappers(event_listener_map);
 }
 
-EventTarget::EventTarget() {}
+EventTarget::EventTarget() = default;
 
-EventTarget::~EventTarget() {}
+EventTarget::~EventTarget() = default;
 
 Node* EventTarget::ToNode() {
   return nullptr;

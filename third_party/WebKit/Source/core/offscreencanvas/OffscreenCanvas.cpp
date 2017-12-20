@@ -42,7 +42,7 @@ OffscreenCanvas* OffscreenCanvas::Create(unsigned width, unsigned height) {
       IntSize(clampTo<int>(width), clampTo<int>(height)));
 }
 
-OffscreenCanvas::~OffscreenCanvas() {}
+OffscreenCanvas::~OffscreenCanvas() = default;
 
 void OffscreenCanvas::Dispose() {
   if (context_) {

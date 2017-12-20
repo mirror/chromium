@@ -23,7 +23,7 @@ class CORE_EXPORT Script : public GarbageCollectedFinalized<Script> {
  public:
   virtual void Trace(blink::Visitor* visitor) {}
 
-  virtual ~Script() {}
+  virtual ~Script() = default;
 
   virtual ScriptType GetScriptType() const = 0;
 

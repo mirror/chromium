@@ -24,7 +24,7 @@ namespace {
 class TestSingleModuleClient final : public SingleModuleClient {
  public:
   TestSingleModuleClient() = default;
-  virtual ~TestSingleModuleClient() {}
+  virtual ~TestSingleModuleClient() = default;
 
   void Trace(blink::Visitor* visitor) {
     visitor->Trace(module_script_);
@@ -46,7 +46,7 @@ class TestSingleModuleClient final : public SingleModuleClient {
 
 class TestScriptModuleResolver final : public ScriptModuleResolver {
  public:
-  TestScriptModuleResolver() {}
+  TestScriptModuleResolver() = default;
 
   int RegisterModuleScriptCallCount() const {
     return register_module_script_call_count_;
@@ -81,7 +81,7 @@ class TestScriptModuleResolver final : public ScriptModuleResolver {
 class ModuleMapTestModulator final : public DummyModulator {
  public:
   ModuleMapTestModulator();
-  virtual ~ModuleMapTestModulator() {}
+  virtual ~ModuleMapTestModulator() = default;
 
   void Trace(blink::Visitor*);
 

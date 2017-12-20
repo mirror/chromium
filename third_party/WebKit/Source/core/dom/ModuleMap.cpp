@@ -21,7 +21,7 @@ class ModuleMap::Entry final : public GarbageCollectedFinalized<Entry>,
 
  public:
   static Entry* Create(ModuleMap* map) { return new Entry(map); }
-  ~Entry() override {}
+  ~Entry() override = default;
 
   void Trace(blink::Visitor*);
   void TraceWrappers(const ScriptWrappableVisitor*) const;

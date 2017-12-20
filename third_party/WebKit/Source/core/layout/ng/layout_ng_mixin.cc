@@ -19,7 +19,7 @@
 namespace blink {
 
 template <typename Base>
-LayoutNGMixin<Base>::~LayoutNGMixin() {}
+LayoutNGMixin<Base>::~LayoutNGMixin() = default;
 
 template <typename Base>
 bool LayoutNGMixin<Base>::IsOfType(LayoutObject::LayoutObjectType type) const {

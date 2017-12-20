@@ -36,7 +36,7 @@ ModulatorImplBase::ModulatorImplBase(scoped_refptr<ScriptState> script_state)
   DCHECK(task_runner_);
 }
 
-ModulatorImplBase::~ModulatorImplBase() {}
+ModulatorImplBase::~ModulatorImplBase() = default;
 
 ReferrerPolicy ModulatorImplBase::GetReferrerPolicy() {
   return GetExecutionContext()->GetReferrerPolicy();

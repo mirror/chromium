@@ -3242,7 +3242,7 @@ TEST_F(ViewportTest, viewportWarnings8) {
 
 class ViewportHistogramsTest : public SimTest {
  public:
-  ViewportHistogramsTest() {}
+  ViewportHistogramsTest() = default;
 
   void SetUp() override {
     SimTest::SetUp();

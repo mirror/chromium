@@ -25,7 +25,8 @@ typedef NGBfcRect NGLayoutOpportunity;
 class CORE_EXPORT NGExclusionSpace {
  public:
   NGExclusionSpace();
-  ~NGExclusionSpace(){};
+  ~NGExclusionSpace() = default;
+  ;
 
   void Add(const NGExclusion& exclusion);
 

@@ -117,7 +117,7 @@ enum class NamedItemType {
 struct FocusParams {
   STACK_ALLOCATED();
 
-  FocusParams() {}
+  FocusParams() = default;
   FocusParams(SelectionBehaviorOnFocus selection,
               WebFocusType focus_type,
               InputDeviceCapabilities* capabilities,
