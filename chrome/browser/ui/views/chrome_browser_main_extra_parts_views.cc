@@ -49,6 +49,12 @@
 
 #if defined(OS_CHROMEOS)
 #include "chrome/browser/chromeos/ash_config.h"
+#include "chrome/browser/ui/ash/ash_util.h"
+#include "chrome/browser/ui/views/ash/tab_scrubber.h"
+#include "chrome/browser/ui/views/frame/immersive_context_mus.h"
+#include "chrome/browser/ui/views/frame/immersive_handler_factory_mus.h"
+#include "chrome/browser/ui/views/select_file_dialog_extension.h"
+#include "chrome/browser/ui/views/select_file_dialog_extension_factory.h"
 #include "content/public/common/content_switches.h"
 #include "mash/common/config.h"                                   // nogncheck
 #include "mash/quick_launch/public/interfaces/constants.mojom.h"  // nogncheck
@@ -103,6 +109,49 @@ void ChromeBrowserMainExtraPartsViews::PreCreateThreads() {
   // ui::MaterialDesignController::Intialize() having already been called.
   if (!views::LayoutProvider::Get())
     layout_provider_ = ChromeLayoutProvider::CreateLayoutProvider();
+}
+
+void ChromeBrowserMainExtraPartsViews::ServiceManagerConnectionStarted(
+    content::ServiceManagerConnection* connection) {
+  DCHECK(connection);
+#if defined(USE_AURA)
+  if (aura::Env::GetInstance()->mode() == aura::Env::Mode::LOCAL)
+    return;
+
+#if defined(OS_CHROMEOS)
+  if (chromeos::GetAshConfig() == ash::Config::MASH) {
+    connection->GetConnector()->StartService(
+        service_manager::Identity(ui::mojom::kServiceName));
+    connection->GetConnector()->StartService(
+        service_manager::Identity(mash::common::GetWindowManagerServiceName()));
+    // Don't start QuickLaunch in tests because it changes the startup shelf
+    // state vs. classic ash.
+    if (!base::CommandLine::ForCurrentProcess()->HasSwitch(
+            switches::kTestType)) {
+      connection->GetConnector()->StartService(
+          service_manager::Identity(mash::quick_launch::mojom::kServiceName));
+    }
+  }
+#endif
+
+  input_device_client_ = base::MakeUnique<ui::InputDeviceClient>();
+  ui::mojom::InputDeviceServerPtr server;
+  connection->GetConnector()->BindInterface(ui::mojom::kServiceName, &server);
+  input_device_client_->Connect(std::move(server));
+
+#if defined(OS_CHROMEOS)
+  if (chromeos::GetAshConfig() != ash::Config::MASH)
+    return;
+#endif
+
+  // WMState is owned as a member, so don't have MusClient create it.
+  const bool create_wm_state = false;
+  mus_client_ = base::MakeUnique<views::MusClient>(
+      connection->GetConnector(), service_manager::Identity(),
+      content::BrowserThread::GetTaskRunnerForThread(
+          content::BrowserThread::IO),
+      create_wm_state);
+#endif  // defined(USE_AURA)
 }
 
 void ChromeBrowserMainExtraPartsViews::PreProfileInit() {
@@ -160,47 +209,24 @@ void ChromeBrowserMainExtraPartsViews::PreProfileInit() {
 
   exit(EXIT_FAILURE);
 #endif  // defined(OS_LINUX) && !defined(OS_CHROMEOS)
-}
-
-void ChromeBrowserMainExtraPartsViews::ServiceManagerConnectionStarted(
-    content::ServiceManagerConnection* connection) {
-  DCHECK(connection);
-#if defined(USE_AURA)
-  if (aura::Env::GetInstance()->mode() == aura::Env::Mode::LOCAL)
-    return;
 
 #if defined(OS_CHROMEOS)
-  if (chromeos::GetAshConfig() == ash::Config::MASH) {
-    connection->GetConnector()->StartService(
-        service_manager::Identity(ui::mojom::kServiceName));
-    connection->GetConnector()->StartService(
-        service_manager::Identity(mash::common::GetWindowManagerServiceName()));
-    // Don't start QuickLaunch in tests because it changes the startup shelf
-    // state vs. classic ash.
-    if (!base::CommandLine::ForCurrentProcess()->HasSwitch(
-            switches::kTestType)) {
-      connection->GetConnector()->StartService(
-          service_manager::Identity(mash::quick_launch::mojom::kServiceName));
-    }
+  ui::SelectFileDialog::SetFactory(new SelectFileDialogExtensionFactory);
+
+  if (ash_util::IsRunningInMash()) {
+    // Note: These are not explicitly destroyed.
+    immersive_context_ = std::make_unique<ImmersiveContextMus>();
+    immersive_handler_factory_ = std::make_unique<ImmersiveHandlerFactoryMus>();
   }
 #endif
+}
 
-  input_device_client_ = base::MakeUnique<ui::InputDeviceClient>();
-  ui::mojom::InputDeviceServerPtr server;
-  connection->GetConnector()->BindInterface(ui::mojom::kServiceName, &server);
-  input_device_client_->Connect(std::move(server));
-
+void ChromeBrowserMainExtraPartsViews::PostProfileInit() {
 #if defined(OS_CHROMEOS)
-  if (chromeos::GetAshConfig() != ash::Config::MASH)
-    return;
+  if (!ash_util::IsRunningInMash()) {
+    // Initialize TabScrubber after the Ash Shell has been initialized in
+    // PreProfileInit. TODO(mash): Port TabScrubber. http://crbug.com/796366.
+    TabScrubber::GetInstance();
+  }
 #endif
-
-  // WMState is owned as a member, so don't have MusClient create it.
-  const bool create_wm_state = false;
-  mus_client_ = base::MakeUnique<views::MusClient>(
-      connection->GetConnector(), service_manager::Identity(),
-      content::BrowserThread::GetTaskRunnerForThread(
-          content::BrowserThread::IO),
-      create_wm_state);
-#endif  // defined(USE_AURA)
 }

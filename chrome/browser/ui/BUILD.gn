@@ -1318,8 +1318,6 @@ split_static_library("ui") {
       "views/apps/app_info_dialog/arc_app_info_links_panel.h",
       "views/apps/chrome_native_app_window_views_aura_ash.cc",
       "views/apps/chrome_native_app_window_views_aura_ash.h",
-      "views/ash/chrome_browser_main_extra_parts_ash.cc",
-      "views/ash/chrome_browser_main_extra_parts_ash.h",
       "views/ash/tab_scrubber.cc",
       "views/ash/tab_scrubber.h",
       "views/chrome_views_delegate_chromeos.cc",

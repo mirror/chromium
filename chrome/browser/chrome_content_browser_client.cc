@@ -275,7 +275,6 @@
 #include "chrome/browser/metrics/leak_detector/leak_detector_remote_controller.h"
 #include "chrome/browser/ui/browser_dialogs.h"
 #include "chrome/browser/ui/browser_finder.h"
-#include "chrome/browser/ui/views/ash/chrome_browser_main_extra_parts_ash.h"
 #include "chromeos/chromeos_constants.h"
 #include "chromeos/chromeos_switches.h"
 #include "components/user_manager/user_manager.h"
@@ -894,11 +893,6 @@ content::BrowserMainParts* ChromeContentBrowserClient::CreateBrowserMainParts(
 #else
   main_parts->AddParts(new ChromeBrowserMainExtraPartsViews());
 #endif
-#endif
-
-#if defined(OS_CHROMEOS)
-  // TODO(jamescook): Combine with ChromeBrowserMainPartsChromeos.
-  main_parts->AddParts(new ChromeBrowserMainExtraPartsAsh());
 #endif
 
 #if defined(USE_X11)
