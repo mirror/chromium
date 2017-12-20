@@ -20,10 +20,12 @@
 #include "base/metrics/statistics_recorder.h"
 #include "base/task_scheduler/task_scheduler.h"
 #include "components/cronet/android/cronet_jni_registration.h"
+#include "components/cronet/cronet_global_state.h"
 #include "components/cronet/version.h"
 #include "jni/CronetLibraryLoader_jni.h"
 #include "net/android/network_change_notifier_factory_android.h"
 #include "net/base/network_change_notifier.h"
+#include "net/proxy/proxy_config_service_android.h"
 #include "url/url_features.h"
 #include "url/url_util.h"
 
@@ -106,6 +108,36 @@ ScopedJavaLocalRef<jstring> JNI_CronetLibraryLoader_GetCronetVersion(
     JNIEnv* env,
     const JavaParamRef<jclass>& jcaller) {
   return base::android::ConvertUTF8ToJavaString(env, CRONET_VERSION);
+}
+
+// static
+void CronetGlobalState::InitializeOnInitThread() {
+  // This method must be called once from the init thread.
+  // NativeInit();
+}
+
+// static
+bool CronetGlobalState::IsOnInitThread() {
+  return OnInitThread();
+}
+
+// static
+void CronetGlobalState::ConfigureProxyConfigService(
+    net::ProxyConfigService* service) {
+  net::ProxyConfigServiceAndroid* android_proxy_config_service =
+      static_cast<net::ProxyConfigServiceAndroid*>(service);
+  // If a PAC URL is present, ignore it and use the address and port of
+  // Android system's local HTTP proxy server. See: crbug.com/432539.
+  // TODO(csharrison) Architect the wrapper better so we don't need to cast for
+  // android ProxyConfigServices.
+  android_proxy_config_service->set_exclude_pac_url(true);
+}
+
+// static
+void CronetGlobalState::EnsureInitialized() {
+  // Cronet MUST be initialized from Java on Android.
+  // Last step in successful initialization is network change notifier.
+  CHECK(g_network_change_notifier);
 }
 
 }  // namespace cronet
