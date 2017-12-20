@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e11fac76_c1e36009",
+        "filename": "chrome/browser/extensions/bookmark_app_helper.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 736,
+      "author": {
+        "id": 1174915
+      },
+      "writtenOn": "2017-12-20T03:55:41Z",
+      "side": 1,
+      "message": "This DCHECK is inappropriate: just because an install_source is reportable, doesn\u0027t mean the app is actually installable (e.g. WebAppInstallSource::MENU).  This is why we moved the TrackInstallSource call into  bookmark_app_helper in the first place, because BookmarkAppHelper is in a position to know whether the app is installable or not.\n\nFixing by making the DCHECK condition part of the if expression.",
+      "range": {
+        "startLine": 735,
+        "startChar": 70,
+        "endLine": 736,
+        "endChar": 46
+      },
+      "revId": "0672d946cec398b80a460468616bced5bef890ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
