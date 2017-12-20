@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "da127419_c7b33f77",
+        "filename": "services/ui/public/cpp/gpu/gpu.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-12-20T21:46:17Z",
+      "side": 1,
+      "message": "I added a bit to the comment here to express that.",
+      "parentUuid": "3b5c0bc9_35e457ff",
+      "revId": "814c4254b6059cbb317a7de20f7bd627752c5c25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "24581cb5_4cf1d85b",
         "filename": "services/ui/public/cpp/gpu/gpu.cc",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "814c4254b6059cbb317a7de20f7bd627752c5c25",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f626b0d7_48da6b7f",
+        "filename": "services/ui/public/cpp/gpu/gpu.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-12-20T21:46:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "24581cb5_4cf1d85b",
+      "revId": "814c4254b6059cbb317a7de20f7bd627752c5c25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
