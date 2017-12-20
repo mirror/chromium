@@ -214,6 +214,30 @@
       "revId": "f3788be715de6dec71a9d41502ac1610662b29d1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d20412d2_c26fd930",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 2069,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-12-20T01:03:28Z",
+      "side": 1,
+      "message": "You could create a test page that navigates to chrome://crash after a delay.  Navigate to that page in a tab, then open a new tab before within that delay, then the background WebState should trigger a sad tab using the BVC\u0027s sad tab coordinator.  Not sure how easy that would be though because I think there are some permissions issues and a non chrome:// URL can\u0027t use JS to navigate to a chrome:// page.\n\nIn any case, I agree with your proposed approach.  We could just set it for the active tab here and then update it using TabModel/WebStateObserver callbacks.  Since we expose a setter on the delegate, I don\u0027t really see any problem with exposing a getter as well.",
+      "parentUuid": "90ccc8b0_ef8fdc60",
+      "range": {
+        "startLine": 2069,
+        "startChar": 4,
+        "endLine": 2069,
+        "endChar": 23
+      },
+      "revId": "f3788be715de6dec71a9d41502ac1610662b29d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
