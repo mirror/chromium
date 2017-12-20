@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "457b6296_a8200c4d",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_delegate_ukm.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-12-20T23:28:16Z",
+      "side": 1,
+      "message": "nit: DCHECK(browser_list)",
+      "revId": "1095355b3e43198bc69815a80ef2fd53c9a2ddd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bfbe3bba_57a86153",
         "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_delegate_ukm.cc",
         "patchSetId": 4
@@ -42,6 +59,23 @@
         "endLine": 63,
         "endChar": 31
       },
+      "revId": "1095355b3e43198bc69815a80ef2fd53c9a2ddd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5d68805_acae64d0",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_delegate_ukm.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-12-20T23:28:16Z",
+      "side": 1,
+      "message": "maybe add a comment here indicating that only the first one can be active tab?",
       "revId": "1095355b3e43198bc69815a80ef2fd53c9a2ddd4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
