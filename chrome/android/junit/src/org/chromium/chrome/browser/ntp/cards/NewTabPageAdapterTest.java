@@ -49,6 +49,7 @@ import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
 import org.robolectric.annotation.Implementation;
 import org.robolectric.annotation.Implements;
+import org.robolectric.shadows.ShadowLooper;
 import org.robolectric.shadows.ShadowResources;
 
 import org.chromium.base.Callback;
@@ -982,6 +983,32 @@ public class NewTabPageAdapterTest {
         mSource.setRemoteSuggestionsEnabled(true);
         suggestionsObserver.onCategoryStatusChanged(remoteCategory, CategoryStatus.AVAILABLE);
         assertTrue(isSignInPromoVisible());
+    }
+
+    @Test
+    @Feature({"Ntp"})
+    @Config(shadows = ShadowLooper.class)
+    public void testSigninPromoSuppression() {
+        when(mMockSigninManager.isSignInAllowed()).thenReturn(true);
+        when(mMockSigninManager.isSignedInOnNative()).thenReturn(false);
+
+        // Suppress promo.
+        ChromePreferenceManager preferenceManager = ChromePreferenceManager.getInstance();
+        preferenceManager.setNewTabPageSigninPromoSuppressionPeriodStart(
+                System.currentTimeMillis());
+
+        resetUiDelegate();
+        reloadNtp();
+        assertFalse(isSignInPromoVisible());
+
+        // Robolectric currently doesn't allow shadowing of System.currentTimeMillis(), so change
+        // suppression time and nudge SignInPromo to update it's state.
+        preferenceManager.setNewTabPageSigninPromoSuppressionPeriodStart(
+                System.currentTimeMillis() - SignInPromo.SUPPRESSION_PERIOD_MS);
+        ShadowLooper.runUiThreadTasksIncludingDelayedTasks();
+        assertTrue(isSignInPromoVisible());
+        // SignInPromo should clear shared preference when suppression period ends.
+        assertEquals(0, preferenceManager.getNewTabPageSigninPromoSuppressionPeriodStart());
     }
 
     @Test
