@@ -72,6 +72,9 @@ class UkmRecorderImpl : public UkmRecorder {
   std::map<SourceId, std::unique_ptr<UkmSource>> sources_;
   std::vector<mojom::UkmEntryPtr> entries_;
 
+  // URLs of sources that matched a whitelist url, but were not sent.
+  std::unordered_set<std::string> carryover_urls_whitelist_;
+
   // Whitelisted Entry hashes, only the ones in this set will be recorded.
   std::set<uint64_t> whitelisted_entry_hashes_;
 

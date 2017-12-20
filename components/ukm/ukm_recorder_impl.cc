@@ -123,6 +123,17 @@ GURL SanitizeURL(const GURL& url) {
   return url.ReplaceComponents(remove_params);
 }
 
+void BuildUrlWhitelist(
+    const std::map<SourceId, std::unique_ptr<UkmSource>>& sources,
+    std::unordered_set<std::string>* urls) {
+  for (const auto& kv : sources) {
+    if (IsWhitelistedSourceId(kv.first)) {
+      urls->insert(kv.second->url().spec());
+      urls->insert(kv.second->url().GetOrigin().spec());
+    }
+  }
+}
+
 }  // namespace
 
 UkmRecorderImpl::UkmRecorderImpl() : recording_enabled_(false) {}
@@ -154,16 +165,25 @@ void UkmRecorderImpl::StoreRecordingsInReport(Report* report) {
     ids_seen.insert(entry->source_id);
   }
 
+  std::unordered_set<std::string> url_whitelist;
+  carryover_urls_whitelist_.swap(url_whitelist);
+  BuildUrlWhitelist(sources_, &url_whitelist);
+
   std::vector<std::unique_ptr<UkmSource>> unsent_sources;
   for (auto& kv : sources_) {
     // If the source id is not whitelisted, don't send it unless it has
-    // associated entries. Note: If ShouldRestrictToWhitelistedSourceIds() is
-    // true, this logic will not be hit as the source would have already been
-    // filtered in UpdateSourceURL().
-    if (!IsWhitelistedSourceId(kv.first) &&
-        !base::ContainsKey(ids_seen, kv.first)) {
-      unsent_sources.push_back(std::move(kv.second));
-      continue;
+    // associated entries and the URL matches a URL of a whitelisted source.
+    // Note: If ShouldRestrictToWhitelistedSourceIds() is true, this logic will
+    // not be hit as the source would have already been filtered in
+    // UpdateSourceURL().
+    if (!IsWhitelistedSourceId(kv.first)) {
+      DCHECK(kv.second->initial_url().is_empty());
+      if (!url_whitelist.count(kv.second->url().spec()))
+        continue;
+      if (!base::ContainsKey(ids_seen, kv.first)) {
+        unsent_sources.push_back(std::move(kv.second));
+        continue;
+      }
     }
     Source* proto_source = report->add_sources();
     kv.second->PopulateProto(proto_source);
@@ -194,6 +214,7 @@ void UkmRecorderImpl::StoreRecordingsInReport(Report* report) {
   }
 
   for (auto& source : unsent_sources) {
+    carryover_urls_whitelist_.insert(source->url().spec());
     sources_.emplace(source->id(), std::move(source));
   }
   UMA_HISTOGRAM_COUNTS_1000("UKM.Sources.KeptSourcesCount", sources_.size());
