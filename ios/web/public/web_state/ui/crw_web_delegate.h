@@ -33,10 +33,6 @@ class GURL;
               sourceURL:(const GURL&)sourceURL
             linkClicked:(BOOL)linkClicked;
 
-// Called when a placeholder image should be displayed instead of the WebView.
-- (void)webController:(CRWWebController*)webController
-    retrievePlaceholderOverlayImage:(void (^)(UIImage*))block;
-
 @optional
 
 // Called to ask CRWWebDelegate if |CRWWebController| should open the given URL.

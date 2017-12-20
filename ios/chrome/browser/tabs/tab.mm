@@ -87,6 +87,7 @@
 #import "ios/chrome/browser/voice/voice_search_navigations_tab_helper.h"
 #import "ios/chrome/browser/web/external_app_launcher_tab_helper.h"
 #import "ios/chrome/browser/web/navigation_manager_util.h"
+#import "ios/chrome/browser/web/page_placeholder_tab_helper.h"
 #import "ios/chrome/browser/web/passkit_dialog_provider.h"
 #import "ios/chrome/browser/web/tab_id_tab_helper.h"
 #include "ios/chrome/grit/ios_strings.h"
@@ -195,7 +196,6 @@ bool IsItemRedirectItem(web::NavigationItem* item) {
 @implementation Tab
 
 @synthesize browserState = _browserState;
-@synthesize useGreyImageCache = useGreyImageCache_;
 @synthesize overscrollActionsController = _overscrollActionsController;
 @synthesize overscrollActionsControllerDelegate =
     overscrollActionsControllerDelegate_;
@@ -918,25 +918,6 @@ bool IsItemRedirectItem(web::NavigationItem* item) {
   return YES;
 }
 
-- (void)webController:(CRWWebController*)webController
-    retrievePlaceholderOverlayImage:(void (^)(UIImage*))block {
-  [self getPlaceholderOverlayImageWithCompletionHandler:block];
-}
-
-#pragma mark - PlaceholderOverlay
-
-- (void)getPlaceholderOverlayImageWithCompletionHandler:
-    (void (^)(UIImage*))completionHandler {
-  // The snapshot is always grey as this overlay represents an out-of-date
-  // website and is shown only until the load begins. If |useGreyImageCache_|
-  // is YES, the grey image is already cached in memory for swiping, and a
-  // cache miss is acceptable. In other cases, such as during startyp, either
-  // disk access or a greyspace conversion is required as there will be no
-  // grey snapshots in memory.
-  SnapshotTabHelper::FromWebState(self.webState)
-      ->RetrieveGreySnapshot(completionHandler, !useGreyImageCache_);
-}
-
 #pragma mark - CRWWebDelegate and CRWWebStateObserver protocol methods
 
 - (void)webStateDidSuppressDialog:(web::WebState*)webState {
@@ -1012,50 +993,16 @@ bool IsItemRedirectItem(web::NavigationItem* item) {
     self.webState->WasHidden();
 }
 
-#pragma mark - PagePlaceholderTabHelperDelegate
-
-- (void)displayPlaceholderForPagePlaceholderTabHelper:
-    (PagePlaceholderTabHelper*)tabHelper {
-  // Lazily create page placeholder view.
-  if (!_pagePlaceholder) {
-    _pagePlaceholder = [[UIImageView alloc] init];
-    _pagePlaceholder.autoresizingMask =
-        UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-    _pagePlaceholder.contentMode = UIViewContentModeScaleAspectFill;
-  }
-
-  // Update page placeholder image.
-  _pagePlaceholder.image = [CRWWebController defaultSnapshotImage];
-  [self getPlaceholderOverlayImageWithCompletionHandler:^(UIImage* image) {
-    _pagePlaceholder.image = image;
-  }];
-
-  // Display the placeholder on top of WebState's view.
-  UIView* webStateView = self.webState->GetView();
-  _pagePlaceholder.frame = webStateView.bounds;
-  [webStateView addSubview:_pagePlaceholder];
-}
-
-// Removes page placeholder view with fade-out animation.
-- (void)removePlaceholderForPagePlaceholderTabHelper:
-    (PagePlaceholderTabHelper*)tabHelper {
-  __weak UIView* weakPagePlaceholder = _pagePlaceholder;
-  [UIView animateWithDuration:0.5
-      animations:^{
-        weakPagePlaceholder.alpha = 0.0f;
-      }
-      completion:^(BOOL finished) {
-        [weakPagePlaceholder removeFromSuperview];
-      }];
-}
-
 #pragma mark - SnapshotGeneratorDelegate
 
-- (UIImage*)defaultSnapshotImage {
-  return [CRWWebController defaultSnapshotImage];
+- (BOOL)canTakeSnapshotForWebState:(web::WebState*)webState {
+  DCHECK_EQ(_webStateImpl, webState);
+  return !PagePlaceholderTabHelper::FromWebState(webState)
+              ->displaying_placeholder();
 }
 
-- (UIEdgeInsets)snapshotEdgeInsets {
+- (UIEdgeInsets)snapshotEdgeInsetsForWebState:(web::WebState*)webState {
+  DCHECK_EQ(_webStateImpl, webState);
   if (self.tabSnapshottingDelegate)
     return [self.tabSnapshottingDelegate snapshotEdgeInsetsForTab:self];
 
@@ -1067,7 +1014,9 @@ bool IsItemRedirectItem(web::NavigationItem* item) {
   return UIEdgeInsetsZero;
 }
 
-- (NSArray<SnapshotOverlay*>*)snapshotOverlays {
+- (NSArray<SnapshotOverlay*>*)snapshotOverlaysForWebState:
+    (web::WebState*)webState {
+  DCHECK_EQ(_webStateImpl, webState);
   return [snapshotOverlayProvider_ snapshotOverlaysForTab:self];
 }
 
