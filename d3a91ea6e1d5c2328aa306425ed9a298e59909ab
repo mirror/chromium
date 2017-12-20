@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0f52a811_3e6d26fc",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2017-12-20T17:30:04Z",
+      "side": 1,
+      "message": "This should still be UNSUPPORTED_SIMPLE_VALUE or a dedicated error for floats. Floats are not their own major type.",
+      "range": {
+        "startLine": 149,
+        "startChar": 32,
+        "endLine": 149,
+        "endChar": 54
+      },
+      "revId": "d3a91ea6e1d5c2328aa306425ed9a298e59909ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
