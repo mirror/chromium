@@ -65,8 +65,10 @@ class TestObserver final : public HostScannerOperation::Observer {
       : has_received_update(false), has_final_scan_result_been_sent(false) {}
 
   void OnTetherAvailabilityResponse(
-      std::vector<HostScannerOperation::ScannedDeviceInfo>&
+      const std::vector<HostScannerOperation::ScannedDeviceInfo>&
           scanned_device_list_so_far,
+      const std::vector<cryptauth::RemoteDevice>&
+          gms_core_notifications_disabled_devices,
       bool is_final_scan_result) override {
     has_received_update = true;
     scanned_devices_so_far = scanned_device_list_so_far;
