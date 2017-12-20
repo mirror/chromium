@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9f65d876_12515c70",
+        "filename": "ash/shelf/shelf_button.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 440,
+      "author": {
+        "id": 1244341
+      },
+      "writtenOn": "2017-12-20T20:16:19Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "42d84c2f_f44b2e4c",
+      "range": {
+        "startLine": 440,
+        "startChar": 17,
+        "endLine": 440,
+        "endChar": 18
+      },
+      "revId": "b7712bbb47becf743b6af7818698dc4a34bff91f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ad0e496b_92150a6b",
         "filename": "chrome/browser/unload_browsertest.cc",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "b7712bbb47becf743b6af7818698dc4a34bff91f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f79f5498_8d33e28b",
+        "filename": "chrome/browser/unload_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1244341
+      },
+      "writtenOn": "2017-12-20T20:16:19Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "ad0e496b_92150a6b",
+      "range": {
+        "startLine": 245,
+        "startChar": 60,
+        "endLine": 245,
+        "endChar": 63
+      },
+      "revId": "b7712bbb47becf743b6af7818698dc4a34bff91f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "af14533c_0fe8440c",
+        "filename": "media/audio/audio_power_monitor_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1244341
+      },
+      "writtenOn": "2017-12-20T20:16:19Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "035ac41c_c3d158a2",
+      "range": {
+        "startLine": 84,
+        "startChar": 50,
+        "endLine": 84,
+        "endChar": 56
+      },
+      "revId": "b7712bbb47becf743b6af7818698dc4a34bff91f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "04056672_8d04be2e",
         "filename": "net/proxy/proxy_config_service_linux.cc",
         "patchSetId": 6
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "260bc031_291da21c",
+        "filename": "net/proxy/proxy_config_service_linux.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1244341
+      },
+      "writtenOn": "2017-12-20T20:16:19Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "04056672_8d04be2e",
+      "range": {
+        "startLine": 228,
+        "startChar": 15,
+        "endLine": 228,
+        "endChar": 20
+      },
+      "revId": "b7712bbb47becf743b6af7818698dc4a34bff91f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b8bad8d0_5c17a3ce",
         "filename": "third_party/WebKit/LayoutTests/fast/forms/form-associated-element-crash3-expected.txt",
         "patchSetId": 6
@@ -105,6 +201,24 @@
       "writtenOn": "2017-12-19T10:41:09Z",
       "side": 0,
       "message": "Dunno if patching third_party files is the right thing to do. They originate from somewhere, after all, and we probably want to keep the diff as small as possible,",
+      "revId": "b7712bbb47becf743b6af7818698dc4a34bff91f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc44fe02_bdeaabbf",
+        "filename": "third_party/WebKit/LayoutTests/fast/forms/form-associated-element-crash3-expected.txt",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1244341
+      },
+      "writtenOn": "2017-12-20T20:16:19Z",
+      "side": 0,
+      "message": "I thought this was just in //third_party/ for historical reasons though, surely this is blink-specific nowadays?",
+      "parentUuid": "b8bad8d0_5c17a3ce",
       "revId": "b7712bbb47becf743b6af7818698dc4a34bff91f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
