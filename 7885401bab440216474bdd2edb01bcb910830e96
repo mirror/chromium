@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "18512b26_9f08cb7a",
+        "filename": "third_party/WebKit/LayoutTests/synthetic_gestures/synthetic-pinch-zoom-gesture.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-12-20T22:24:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "972fccfb_be124dfb",
+      "range": {
+        "startLine": 72,
+        "startChar": 27,
+        "endLine": 72,
+        "endChar": 32
+      },
+      "revId": "7885401bab440216474bdd2edb01bcb910830e96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1efcb53d_07d1c016",
         "filename": "third_party/WebKit/LayoutTests/synthetic_gestures/synthetic-pinch-zoom-gesture.html",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "7885401bab440216474bdd2edb01bcb910830e96",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44b43326_6d69b80b",
+        "filename": "third_party/WebKit/LayoutTests/synthetic_gestures/synthetic-pinch-zoom-gesture.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-12-20T22:24:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1efcb53d_07d1c016",
+      "range": {
+        "startLine": 79,
+        "startChar": 10,
+        "endLine": 79,
+        "endChar": 17
+      },
+      "revId": "7885401bab440216474bdd2edb01bcb910830e96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
