@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "ea2f833c_a181c855",
+        "filename": "chrome/browser/chromeos/printing/external_printers_factory.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-12-20T19:41:32Z",
+      "side": 1,
+      "message": "Sorry, copied the wrong word... should be DISALLOW_COPY_AND_ASSIGN",
+      "parentUuid": "ee125714_38f9c482",
+      "revId": "bb4832367786cd32ddfe1b57175ebb2fb3d4d874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "99cbe07b_52b3c803",
         "filename": "chrome/browser/chromeos/printing/external_printers_pref_bridge.h",
         "patchSetId": 6
