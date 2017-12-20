@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6effb237_a14cceac",
+        "filename": "chrome/browser/resources/md_extensions/code_section.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-12-20T19:27:40Z",
+      "side": 1,
+      "message": "I also considered that, and I thought result-wise it doesn\u0027t make too much of a difference, but code readability-wise \"...\" is better than \"\u0026#8230;\".",
+      "parentUuid": "4dec7a86_fae12703",
+      "revId": "d8057c5b32afd8d45c11a62ac9db99483318c345",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7144f567_4b6c8910",
         "filename": "chrome/browser/resources/md_extensions/code_section.js",
         "patchSetId": 9
@@ -136,6 +154,24 @@
       "side": 1,
       "message": "That\u0027s cool, but how about a comment saying that (i.e. the code looks wrong without explanation).",
       "parentUuid": "3ddfa2a2_36cba8c1",
+      "revId": "d8057c5b32afd8d45c11a62ac9db99483318c345",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dcb9e207_fc7f9310",
+        "filename": "chrome/browser/resources/md_extensions/code_section.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-12-20T19:27:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eac7d6bc_69abc8fc",
       "revId": "d8057c5b32afd8d45c11a62ac9db99483318c345",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
