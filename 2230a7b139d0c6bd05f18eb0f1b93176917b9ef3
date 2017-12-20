@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "028c99a2_c5c92e58",
+        "filename": "content/common/BUILD.gn",
+        "patchSetId": 10
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-12-20T17:32:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9858f090_8c03fb91",
+      "revId": "2230a7b139d0c6bd05f18eb0f1b93176917b9ef3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ff33f631_186a0fff",
         "filename": "content/common/notifications/OWNERS",
         "patchSetId": 10
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "90753252_9ab57410",
+        "filename": "content/common/notifications/OWNERS",
+        "patchSetId": 10
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-12-20T17:32:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ff33f631_186a0fff",
+      "revId": "2230a7b139d0c6bd05f18eb0f1b93176917b9ef3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4631ee2c_412362e8",
         "filename": "content/common/notifications/OWNERS",
         "patchSetId": 10
@@ -47,6 +83,24 @@
       "writtenOn": "2017-12-20T15:56:12Z",
       "side": 1,
       "message": "Subtle :)",
+      "revId": "2230a7b139d0c6bd05f18eb0f1b93176917b9ef3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f80350f_4e9b9252",
+        "filename": "content/common/notifications/OWNERS",
+        "patchSetId": 10
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-12-20T17:32:07Z",
+      "side": 1,
+      "message": "I can take it out! I thought it would make sense given I added the directory, but maybe that was a wrong assumption..",
+      "parentUuid": "4631ee2c_412362e8",
       "revId": "2230a7b139d0c6bd05f18eb0f1b93176917b9ef3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "d6d329db_9178a3ca",
+        "filename": "content/common/notifications/notification_struct_traits.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-12-20T17:32:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6c4f9d66_f6e7f402",
+      "revId": "2230a7b139d0c6bd05f18eb0f1b93176917b9ef3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eb8a278b_7837fdfb",
         "filename": "third_party/WebKit/Source/platform/mojo/NotificationStructTraitsTest.cpp",
         "patchSetId": 10
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "f76f7867_58314e80",
+        "filename": "third_party/WebKit/Source/platform/mojo/NotificationStructTraitsTest.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-12-20T17:32:07Z",
+      "side": 1,
+      "message": "We don\u0027t - removed.",
+      "parentUuid": "eb8a278b_7837fdfb",
+      "revId": "2230a7b139d0c6bd05f18eb0f1b93176917b9ef3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "20151011_337d3eec",
         "filename": "third_party/WebKit/Source/platform/mojo/NotificationStructTraitsTest.cpp",
         "patchSetId": 10
@@ -101,6 +191,24 @@
       "revId": "2230a7b139d0c6bd05f18eb0f1b93176917b9ef3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5d8a5d0_a59a7571",
+        "filename": "third_party/WebKit/Source/platform/mojo/NotificationStructTraitsTest.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-12-20T17:32:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "20151011_337d3eec",
+      "revId": "2230a7b139d0c6bd05f18eb0f1b93176917b9ef3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
