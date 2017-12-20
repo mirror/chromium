@@ -16,6 +16,24 @@
       "revId": "504536ed56a962d2bef7bbe88ebfefa271a8aa4c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67defdae_67347c53",
+        "filename": "chrome/browser/resources/chromeos/select_to_speak/manifest.json.jinja2",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2017-12-20T22:06:37Z",
+      "side": 1,
+      "message": "There are no BUILD.gn changes. It worked OK without them, so I just left them out!",
+      "parentUuid": "2943af38_41526d62",
+      "revId": "504536ed56a962d2bef7bbe88ebfefa271a8aa4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
