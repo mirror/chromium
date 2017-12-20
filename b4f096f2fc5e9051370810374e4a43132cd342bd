@@ -1,0 +1,186 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5546cfd8_70c08bd1",
+        "filename": "content/browser/renderer_host/media/peer_connection_tracker_host.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-20T05:51:52Z",
+      "side": 1,
+      "message": "Why does this need the UI thread hop now? Can we just bind the interface directly on the UI thread and avoid this hop? If it was alreayd on the UI thread before, maybe it doesn\u0027t need to be associated?",
+      "revId": "b4f096f2fc5e9051370810374e4a43132cd342bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ef02243_1ec41064",
+        "filename": "content/common/media/peer_connection_tracker.mojom",
+        "patchSetId": 15
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-20T05:51:52Z",
+      "side": 1,
+      "message": "Add a brief comment to describe the purpose of this interface, and what processes it connects (in this case, it\u0027s the renderer to talk to the browser and do \u003cx\u003e - I\u0027m not quite sure what \u003cx\u003e is because it\u0027s not clear to me how the methods relate to being a \u0027peer connection tracker host\u0027)",
+      "revId": "b4f096f2fc5e9051370810374e4a43132cd342bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27a0b9c9_c3fcf74a",
+        "filename": "content/common/media/peer_connection_tracker.mojom",
+        "patchSetId": 15
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-20T05:51:52Z",
+      "side": 1,
+      "message": "Nit: space before {",
+      "range": {
+        "startLine": 7,
+        "startChar": 35,
+        "endLine": 7,
+        "endChar": 36
+      },
+      "revId": "b4f096f2fc5e9051370810374e4a43132cd342bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dea36435_14356e68",
+        "filename": "content/common/media/peer_connection_tracker.mojom",
+        "patchSetId": 15
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-20T05:51:52Z",
+      "side": 1,
+      "message": "What\u0027s a lid\" Can we document that in comments?",
+      "revId": "b4f096f2fc5e9051370810374e4a43132cd342bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47ba6fe9_01ba690c",
+        "filename": "content/common/media/peer_connection_tracker.mojom",
+        "patchSetId": 15
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-20T05:51:52Z",
+      "side": 1,
+      "message": "What types of strings do |type| and |value| contain?",
+      "revId": "b4f096f2fc5e9051370810374e4a43132cd342bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ae5fa80_b6a69d21",
+        "filename": "content/common/media/peer_connection_tracker.mojom",
+        "patchSetId": 15
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-20T05:51:52Z",
+      "side": 1,
+      "message": "Nit: please include the entire original comment. And make this more descriptive about what GetUserMedia does (it\u0027s not really easy to tell from this comment)",
+      "revId": "b4f096f2fc5e9051370810374e4a43132cd342bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4897e45_5de50daa",
+        "filename": "content/common/media/peer_connection_tracker.mojom",
+        "patchSetId": 15
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-20T05:51:52Z",
+      "side": 1,
+      "message": "Nit: please line this up with the (",
+      "revId": "b4f096f2fc5e9051370810374e4a43132cd342bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5ea5490_f096d6ee",
+        "filename": "content/common/media/peer_connection_tracker.mojom",
+        "patchSetId": 15
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-20T05:51:52Z",
+      "side": 1,
+      "message": "Nit: space after //",
+      "range": {
+        "startLine": 20,
+        "startChar": 4,
+        "endLine": 20,
+        "endChar": 5
+      },
+      "revId": "b4f096f2fc5e9051370810374e4a43132cd342bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8fef250_63ff985d",
+        "filename": "content/renderer/media/peer_connection_tracker.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-20T05:51:52Z",
+      "side": 1,
+      "message": "I would suggest just creating a test-constructor that allows a mojom::PeerConnectionTrackerHostAssociatedPtr to be passed in, and remove the need to have two separate pointer fields.",
+      "revId": "b4f096f2fc5e9051370810374e4a43132cd342bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bdb7946_5d66afe4",
+        "filename": "content/renderer/media/peer_connection_tracker_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-20T05:51:52Z",
+      "side": 1,
+      "message": "Delete this?",
+      "revId": "b4f096f2fc5e9051370810374e4a43132cd342bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
