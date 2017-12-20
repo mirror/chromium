@@ -26,9 +26,15 @@
 // NSWindowDidChangeOcclusionStateNotification.
 @property(nonatomic) BOOL pretendIsOccluded;
 
+// Whether to handle the key view loop as if full keyboard access is enabled.
+@property(nonatomic) BOOL pretendFullKeyboardAccessIsEnabled;
+
 // Whether to use or ignore the default contraints for window sizing and
 // placement.
 @property(nonatomic) BOOL useDefaultConstraints;
+
+// All of the window's valid key views, in order.
+@property(nonatomic, readonly) NSArray<NSView*>* validKeyViews;
 
 // Init a borderless non-deferred window with a backing store.
 - (id)initWithContentRect:(NSRect)contentRect;
