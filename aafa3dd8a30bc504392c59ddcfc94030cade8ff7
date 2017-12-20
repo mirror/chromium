@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "f68011bf_c87c6059",
+        "filename": "third_party/WebKit/LayoutTests/webexposed/global-interface-listing-expected.txt",
+        "patchSetId": 13
+      },
+      "lineNbr": 1056,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-12-20T07:36:40Z",
+      "side": 1,
+      "message": "We were thrown by this as well, but literally every interface lists a constructor, including ones which have private constructors and don\u0027t list a constructor in the IDL.",
+      "parentUuid": "9f7249b8_a56063ee",
+      "revId": "aafa3dd8a30bc504392c59ddcfc94030cade8ff7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ed0a0d26_6797b705",
         "filename": "third_party/WebKit/Source/core/frame/Window.idl",
         "patchSetId": 13
