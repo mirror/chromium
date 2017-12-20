@@ -81,7 +81,8 @@ void WebIDBCallbacksImpl::OnError(const WebIDBDatabaseError& error) {
     return;
 
   probe::AsyncTask async_task(request_->GetExecutionContext(), this, "error");
-  request_->HandleResponse(DOMException::Create(error.Code(), error.Message()));
+  request_->HandleResponse(DOMException::Create(error.Code(), error.Message()),
+                           true);
 }
 
 void WebIDBCallbacksImpl::OnSuccess(
@@ -96,7 +97,7 @@ void WebIDBCallbacksImpl::OnSuccess(
 #if DCHECK_IS_ON()
   DCHECK(!request_->TransactionHasQueuedResults());
 #endif  // DCHECK_IS_ON()
-  request_->EnqueueResponse(string_list);
+  request_->EnqueueResponse(string_list, true);
 }
 
 void WebIDBCallbacksImpl::OnSuccess(WebIDBCursor* cursor,
@@ -108,7 +109,8 @@ void WebIDBCallbacksImpl::OnSuccess(WebIDBCursor* cursor,
 
   probe::AsyncTask async_task(request_->GetExecutionContext(), this, "success");
   request_->HandleResponse(WTF::WrapUnique(cursor), key, primary_key,
-                           IDBValue::Create(value, request_->GetIsolate()));
+                           IDBValue::Create(value, request_->GetIsolate()),
+                           true);
 }
 
 void WebIDBCallbacksImpl::OnSuccess(WebIDBDatabase* backend,
@@ -120,7 +122,8 @@ void WebIDBCallbacksImpl::OnSuccess(WebIDBDatabase* backend,
 #if DCHECK_IS_ON()
     DCHECK(!request_->TransactionHasQueuedResults());
 #endif  // DCHECK_IS_ON()
-    request_->EnqueueResponse(std::move(db), IDBDatabaseMetadata(metadata));
+    request_->EnqueueResponse(std::move(db), IDBDatabaseMetadata(metadata),
+                              true);
   } else if (db) {
     db->Close();
   }
@@ -131,7 +134,7 @@ void WebIDBCallbacksImpl::OnSuccess(const WebIDBKey& key) {
     return;
 
   probe::AsyncTask async_task(request_->GetExecutionContext(), this, "success");
-  request_->HandleResponse(key);
+  request_->HandleResponse(key, true);
 }
 
 void WebIDBCallbacksImpl::OnSuccess(const WebIDBValue& value) {
@@ -139,7 +142,8 @@ void WebIDBCallbacksImpl::OnSuccess(const WebIDBValue& value) {
     return;
 
   probe::AsyncTask async_task(request_->GetExecutionContext(), this, "success");
-  request_->HandleResponse(IDBValue::Create(value, request_->GetIsolate()));
+  request_->HandleResponse(IDBValue::Create(value, request_->GetIsolate()),
+                           true);
 }
 
 void WebIDBCallbacksImpl::OnSuccess(const WebVector<WebIDBValue>& values) {
@@ -150,7 +154,7 @@ void WebIDBCallbacksImpl::OnSuccess(const WebVector<WebIDBValue>& values) {
   Vector<std::unique_ptr<IDBValue>> idb_values(values.size());
   for (size_t i = 0; i < values.size(); ++i)
     idb_values[i] = IDBValue::Create(values[i], request_->GetIsolate());
-  request_->HandleResponse(std::move(idb_values));
+  request_->HandleResponse(std::move(idb_values), true);
 }
 
 void WebIDBCallbacksImpl::OnSuccess(long long value) {
@@ -158,7 +162,7 @@ void WebIDBCallbacksImpl::OnSuccess(long long value) {
     return;
 
   probe::AsyncTask async_task(request_->GetExecutionContext(), this, "success");
-  request_->HandleResponse(value);
+  request_->HandleResponse(value, true);
 }
 
 void WebIDBCallbacksImpl::OnSuccess() {
@@ -166,7 +170,7 @@ void WebIDBCallbacksImpl::OnSuccess() {
     return;
 
   probe::AsyncTask async_task(request_->GetExecutionContext(), this, "success");
-  request_->HandleResponse();
+  request_->HandleResponse(true);
 }
 
 void WebIDBCallbacksImpl::OnSuccess(const WebIDBKey& key,
@@ -176,8 +180,8 @@ void WebIDBCallbacksImpl::OnSuccess(const WebIDBKey& key,
     return;
 
   probe::AsyncTask async_task(request_->GetExecutionContext(), this, "success");
-  request_->HandleResponse(key, primary_key,
-                           IDBValue::Create(value, request_->GetIsolate()));
+  request_->HandleResponse(
+      key, primary_key, IDBValue::Create(value, request_->GetIsolate()), true);
 }
 
 void WebIDBCallbacksImpl::OnBlocked(long long old_version) {
@@ -188,7 +192,7 @@ void WebIDBCallbacksImpl::OnBlocked(long long old_version) {
 #if DCHECK_IS_ON()
   DCHECK(!request_->TransactionHasQueuedResults());
 #endif  // DCHECK_IS_ON()
-  request_->EnqueueBlocked(old_version);
+  request_->EnqueueBlocked(old_version, true);
 }
 
 void WebIDBCallbacksImpl::OnUpgradeNeeded(long long old_version,
@@ -205,7 +209,7 @@ void WebIDBCallbacksImpl::OnUpgradeNeeded(long long old_version,
 #endif  // DCHECK_IS_ON()
     request_->EnqueueUpgradeNeeded(
         old_version, std::move(db), IDBDatabaseMetadata(metadata),
-        static_cast<WebIDBDataLoss>(data_loss), data_loss_message);
+        static_cast<WebIDBDataLoss>(data_loss), data_loss_message, true);
   } else {
     db->Close();
   }

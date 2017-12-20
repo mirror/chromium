@@ -192,7 +192,7 @@ class MODULES_EXPORT IDBTransaction final
   void RevertDatabaseMetadata();
 
   // Called when a transaction is completed (committed or aborted).
-  void Finished();
+  void Finished(bool tell_database = true);
 
   enum State {
     kInactive,   // Created or started, but not in an event callback

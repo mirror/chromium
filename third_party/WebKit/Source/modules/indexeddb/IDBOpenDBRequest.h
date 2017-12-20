@@ -47,14 +47,16 @@ class MODULES_EXPORT IDBOpenDBRequest final : public IDBRequest {
   ~IDBOpenDBRequest() override;
   virtual void Trace(blink::Visitor*);
 
-  void EnqueueBlocked(int64_t existing_version) override;
+  void EnqueueBlocked(int64_t existing_version, bool can_dispatch_now) override;
   void EnqueueUpgradeNeeded(int64_t old_version,
                             std::unique_ptr<WebIDBDatabase>,
                             const IDBDatabaseMetadata&,
                             WebIDBDataLoss,
-                            String data_loss_message) override;
+                            String data_loss_message,
+                            bool can_dispatch_now) override;
   void EnqueueResponse(std::unique_ptr<WebIDBDatabase>,
-                       const IDBDatabaseMetadata&) override;
+                       const IDBDatabaseMetadata&,
+                       bool can_dispatch_now) override;
 
   // PausableObject
   void ContextDestroyed(ExecutionContext*) final;
@@ -66,7 +68,7 @@ class MODULES_EXPORT IDBOpenDBRequest final : public IDBRequest {
   DEFINE_ATTRIBUTE_EVENT_LISTENER(upgradeneeded);
 
  protected:
-  void EnqueueResponse(int64_t old_version) override;
+  void EnqueueResponse(int64_t old_version, bool can_dispatch_now) override;
 
   bool ShouldEnqueueEvent() const override;
 

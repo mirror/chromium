@@ -235,41 +235,42 @@ void IDBRequestQueueItem::EnqueueResponse() {
     case kCursorKeyPrimaryKeyValue:
       DCHECK_EQ(values_.size(), 1U);
       request_->EnqueueResponse(std::move(cursor_), key_, primary_key_,
-                                std::move(values_.front()));
+                                std::move(values_.front()), true);
       break;
 
     case kError:
       DCHECK(error_);
-      request_->EnqueueResponse(error_);
+      request_->EnqueueResponse(error_, true);
       break;
 
     case kKeyPrimaryKeyValue:
       DCHECK_EQ(values_.size(), 1U);
-      request_->EnqueueResponse(key_, primary_key_, std::move(values_.front()));
+      request_->EnqueueResponse(key_, primary_key_, std::move(values_.front()),
+                                true);
       break;
 
     case kKey:
       DCHECK_EQ(values_.size(), 0U);
-      request_->EnqueueResponse(key_);
+      request_->EnqueueResponse(key_, true);
       break;
 
     case kNumber:
       DCHECK_EQ(values_.size(), 0U);
-      request_->EnqueueResponse(int64_value_);
+      request_->EnqueueResponse(int64_value_, true);
       break;
 
     case kValue:
       DCHECK_EQ(values_.size(), 1U);
-      request_->EnqueueResponse(std::move(values_.front()));
+      request_->EnqueueResponse(std::move(values_.front()), true);
       break;
 
     case kValueArray:
-      request_->EnqueueResponse(std::move(values_));
+      request_->EnqueueResponse(std::move(values_), true);
       break;
 
     case kVoid:
       DCHECK_EQ(values_.size(), 0U);
-      request_->EnqueueResponse();
+      request_->EnqueueResponse(true);
       break;
   }
 }

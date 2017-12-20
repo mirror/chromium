@@ -430,8 +430,11 @@ void IDBTransaction::OnComplete() {
 
   // Enqueue events before notifying database, as database may close which
   // enqueues more events and order matters.
-  EnqueueEvent(Event::Create(EventTypeNames::complete));
-  Finished();
+  Finished(false);
+  Event* event = Event::Create(EventTypeNames::complete);
+  database_->TransactionFinished(this);
+  event->SetTarget(this);
+  DispatchEvent(event);
 }
 
 bool IDBTransaction::HasPendingActivity() const {
@@ -547,8 +550,9 @@ void IDBTransaction::EnqueueEvent(Event* event) {
   if (!GetExecutionContext())
     return;
 
-  EventQueue* event_queue = GetExecutionContext()->GetEventQueue();
   event->SetTarget(this);
+  // DispatchEvent(event);
+  EventQueue* event_queue = GetExecutionContext()->GetEventQueue();
   event_queue->EnqueueEvent(FROM_HERE, event);
 }
 
@@ -593,14 +597,15 @@ void IDBTransaction::RevertDatabaseMetadata() {
   database_->SetDatabaseMetadata(old_database_metadata_);
 }
 
-void IDBTransaction::Finished() {
+void IDBTransaction::Finished(bool tell_database) {
 #if DCHECK_IS_ON()
   DCHECK(!finish_called_);
   finish_called_ = true;
 #endif  // DCHECK_IS_ON()
 
-  database_->TransactionFinished(this);
-
+  if (tell_database) {
+    database_->TransactionFinished(this);
+  }
   // Remove references to the IDBObjectStore and IDBIndex instances held by
   // this transaction, so Oilpan can garbage-collect the instances that aren't
   // used by JavaScript.

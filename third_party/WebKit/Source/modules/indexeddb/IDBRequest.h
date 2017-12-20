@@ -237,33 +237,41 @@ class MODULES_EXPORT IDBRequest : public EventTargetWithInlineData,
   // having WebIDBCallbacksImpl call directly into EnqueueResponse(),
   // EnqueueBlocked(), or EnqueueUpgradeNeeded().
 
-  void HandleResponse(DOMException*);
-  void HandleResponse(IDBKey*);
+  void HandleResponse(DOMException*, bool can_dispatch_now);
+  void HandleResponse(IDBKey*, bool can_dispatch_now);
   void HandleResponse(std::unique_ptr<WebIDBCursor>,
                       IDBKey*,
                       IDBKey* primary_key,
-                      std::unique_ptr<IDBValue>);
-  void HandleResponse(IDBKey*, IDBKey* primary_key, std::unique_ptr<IDBValue>);
-  void HandleResponse(std::unique_ptr<IDBValue>);
-  void HandleResponse(Vector<std::unique_ptr<IDBValue>>);
-  void HandleResponse(int64_t);
-  void HandleResponse();
+                      std::unique_ptr<IDBValue>,
+                      bool can_dispatch_now);
+  void HandleResponse(IDBKey*,
+                      IDBKey* primary_key,
+                      std::unique_ptr<IDBValue>,
+                      bool can_dispatch_now);
+  void HandleResponse(std::unique_ptr<IDBValue>, bool can_dispatch_now);
+  void HandleResponse(Vector<std::unique_ptr<IDBValue>>, bool can_dispatch_now);
+  void HandleResponse(int64_t, bool can_dispatch_now);
+  void HandleResponse(bool can_dispatch_now);
 
   // Only used in webkitGetDatabaseNames(), which is deprecated and hopefully
   // going away soon.
-  void EnqueueResponse(const Vector<String>&);
+  void EnqueueResponse(const Vector<String>&, bool can_dispatch_now);
 
   // Only IDBOpenDBRequest instances should receive these:
-  virtual void EnqueueBlocked(int64_t old_version) { NOTREACHED(); }
+  virtual void EnqueueBlocked(int64_t old_version, bool can_dispatch_now) {
+    NOTREACHED();
+  }
   virtual void EnqueueUpgradeNeeded(int64_t old_version,
                                     std::unique_ptr<WebIDBDatabase>,
                                     const IDBDatabaseMetadata&,
                                     WebIDBDataLoss,
-                                    String data_loss_message) {
+                                    String data_loss_message,
+                                    bool can_dispatch_now) {
     NOTREACHED();
   }
   virtual void EnqueueResponse(std::unique_ptr<WebIDBDatabase>,
-                               const IDBDatabaseMetadata&) {
+                               const IDBDatabaseMetadata&,
+                               bool can_dispatch_now) {
     NOTREACHED();
   }
 
@@ -320,11 +328,11 @@ class MODULES_EXPORT IDBRequest : public EventTargetWithInlineData,
   void EnqueueEvent(Event*);
   void DequeueEvent(Event*);
   virtual bool ShouldEnqueueEvent() const;
-  void EnqueueResultInternal(IDBAny*);
+  void EnqueueResultInternal(IDBAny*, bool can_dispatch_now);
   void SetResult(IDBAny*);
 
   // Overridden by IDBOpenDBRequest.
-  virtual void EnqueueResponse(int64_t);
+  virtual void EnqueueResponse(int64_t, bool can_dispatch_now);
 
   // EventTarget
   DispatchEventResult DispatchEventInternal(Event*) override;
@@ -349,20 +357,26 @@ class MODULES_EXPORT IDBRequest : public EventTargetWithInlineData,
   void SetResultCursor(IDBCursor*,
                        IDBKey*,
                        IDBKey* primary_key,
-                       std::unique_ptr<IDBValue>);
+                       std::unique_ptr<IDBValue>,
+                       bool can_dispatch_now);
   void AckReceivedBlobs(const IDBValue&);
   void AckReceivedBlobs(const Vector<std::unique_ptr<IDBValue>>&);
 
-  void EnqueueResponse(DOMException*);
-  void EnqueueResponse(IDBKey*);
+  void EnqueueResponse(DOMException*, bool can_dispatch_now);
+  void EnqueueResponse(IDBKey*, bool can_dispatch_now);
   void EnqueueResponse(std::unique_ptr<WebIDBCursor>,
                        IDBKey*,
                        IDBKey* primary_key,
-                       std::unique_ptr<IDBValue>);
-  void EnqueueResponse(IDBKey*, IDBKey* primary_key, std::unique_ptr<IDBValue>);
-  void EnqueueResponse(std::unique_ptr<IDBValue>);
-  void EnqueueResponse(Vector<std::unique_ptr<IDBValue>>);
-  void EnqueueResponse();
+                       std::unique_ptr<IDBValue>,
+                       bool can_dispatch_now);
+  void EnqueueResponse(IDBKey*,
+                       IDBKey* primary_key,
+                       std::unique_ptr<IDBValue>,
+                       bool can_dispatch_now);
+  void EnqueueResponse(std::unique_ptr<IDBValue>, bool can_dispatch_now);
+  void EnqueueResponse(Vector<std::unique_ptr<IDBValue>>,
+                       bool can_dispatch_now);
+  void EnqueueResponse(bool can_dispatch_now);
 
   void ClearPutOperationBlobs() { transit_blob_handles_.clear(); }
 
