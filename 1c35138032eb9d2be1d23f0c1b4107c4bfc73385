@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f39742fe_233f3227",
+        "filename": "third_party/WebKit/Source/core/editing/spellcheck/SpellChecker.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-12-20T23:27:42Z",
+      "side": 1,
+      "message": "rlanday: FYI since you have taken crbug.com/754453.\n\nThis part doesn\u0027t seem necessary, and we probably shouldn\u0027t inspect typing progress here. So this part may need rewriting if you start to fix crbug.com/754453.",
+      "range": {
+        "startLine": 355,
+        "startChar": 0,
+        "endLine": 357,
+        "endChar": 30
+      },
+      "revId": "1c35138032eb9d2be1d23f0c1b4107c4bfc73385",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
