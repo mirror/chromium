@@ -2,6 +2,98 @@
   "comments": [
     {
       "key": {
+        "uuid": "31729358_76bd106f",
+        "filename": "content/browser/renderer_host/p2p/socket_host_tcp.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-12-20T21:29:07Z",
+      "side": 1,
+      "message": "Please change this to \nsocket_ \u003d std::make_unique\u003cnetwork::ProxyResolvingClientSocket\u003e(",
+      "range": {
+        "startLine": 124,
+        "startChar": 2,
+        "endLine": 124,
+        "endChar": 56
+      },
+      "revId": "98cdf1b9dc8c5d858af6f8fffbe1b9d7a11dc8c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b29eb23_7170fbb1",
+        "filename": "remoting/signaling/xmpp_signal_strategy.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-12-20T21:29:07Z",
+      "side": 1,
+      "message": "std::make_unique\u003c\u003e",
+      "range": {
+        "startLine": 181,
+        "startChar": 10,
+        "endLine": 181,
+        "endChar": 19
+      },
+      "revId": "98cdf1b9dc8c5d858af6f8fffbe1b9d7a11dc8c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4943d6b2_1959594f",
+        "filename": "services/network/public/cpp/proxy_resolving_client_socket.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-12-20T21:29:07Z",
+      "side": 1,
+      "message": "this should be BindOnce() - the task is posted to a task runner where it\u0027s executed only once.",
+      "range": {
+        "startLine": 161,
+        "startChar": 14,
+        "endLine": 161,
+        "endChar": 27
+      },
+      "revId": "98cdf1b9dc8c5d858af6f8fffbe1b9d7a11dc8c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2110468f_2a5de1ef",
+        "filename": "services/network/public/cpp/proxy_resolving_client_socket.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-12-20T21:29:07Z",
+      "side": 1,
+      "message": "BindOnce.\nI think all BindRepeting() in this file can be replaced with BindOnce()",
+      "range": {
+        "startLine": 208,
+        "startChar": 12,
+        "endLine": 208,
+        "endChar": 25
+      },
+      "revId": "98cdf1b9dc8c5d858af6f8fffbe1b9d7a11dc8c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2c59c46a_6d1a803b",
         "filename": "services/network/public/cpp/proxy_resolving_client_socket_unittest.cc",
         "patchSetId": 27
