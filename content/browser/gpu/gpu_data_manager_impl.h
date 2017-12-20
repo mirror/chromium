@@ -73,7 +73,6 @@ class CONTENT_EXPORT GpuDataManagerImpl : public GpuDataManager {
   void RequestVideoMemoryUsageStatsUpdate(
       const base::Callback<void(const gpu::VideoMemoryUsageStats& stats)>&
           callback) const override;
-  bool ShouldUseSwiftShader() const override;
   // TODO(kbr): the threading model for the GpuDataManagerObservers is
   // not well defined, and it's impossible for callers to correctly
   // delete observers from anywhere except in one of the observer's
@@ -176,6 +175,8 @@ class CONTENT_EXPORT GpuDataManagerImpl : public GpuDataManager {
 
   // Called when GPU process initialization failed.
   void OnGpuProcessInitFailure();
+
+  void DisableSwiftShader();
 
  private:
   friend class GpuDataManagerImplPrivate;
