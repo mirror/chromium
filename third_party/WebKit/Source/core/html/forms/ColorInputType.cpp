@@ -202,8 +202,10 @@ void ColorInputType::DidEndChooser() {
 }
 
 void ColorInputType::EndColorChooser() {
-  if (chooser_)
+  if (chooser_) {
     chooser_->EndChooser();
+    chooser_.Clear();
+  }
 }
 
 void ColorInputType::UpdateView() {
@@ -238,8 +240,8 @@ bool ColorInputType::ShouldShowSuggestions() const {
   return GetElement().FastHasAttribute(listAttr);
 }
 
-Vector<ColorSuggestion> ColorInputType::Suggestions() const {
-  Vector<ColorSuggestion> suggestions;
+Vector<mojom::blink::ColorSuggestionPtr> ColorInputType::Suggestions() const {
+  Vector<mojom::blink::ColorSuggestionPtr> suggestions;
   HTMLDataListElement* data_list = GetElement().DataList();
   if (data_list) {
     HTMLDataListOptionsCollection* options = data_list->options();
@@ -251,9 +253,8 @@ Vector<ColorSuggestion> ColorInputType::Suggestions() const {
       Color color;
       if (!color.SetFromString(option->value()))
         continue;
-      ColorSuggestion suggestion(
-          color, option->label().Left(kMaxSuggestionLabelLength));
-      suggestions.push_back(suggestion);
+      suggestions.push_back(mojom::blink::ColorSuggestion::New(
+          color.Rgb(), option->label().Left(kMaxSuggestionLabelLength)));
       if (suggestions.size() >= kMaxSuggestions)
         break;
     }
