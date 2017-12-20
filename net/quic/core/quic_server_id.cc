@@ -8,6 +8,7 @@
 
 #include "net/quic/platform/api/quic_estimate_memory_usage.h"
 #include "net/quic/platform/api/quic_str_cat.h"
+#include "net/quic/platform/api/quic_url.h"
 
 using std::string;
 
