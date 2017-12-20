@@ -49,6 +49,15 @@ LockScreen* instance_ = nullptr;
 
 }  // namespace
 
+LockScreen::TestApi::TestApi(LockScreen* lock_screen)
+    : lock_screen_(lock_screen) {}
+
+LockScreen::TestApi::~TestApi() = default;
+
+LockContentsView* LockScreen::TestApi::contents_view() const {
+  return reinterpret_cast<LockContentsView*>(lock_screen_->contents_view_);
+}
+
 LockScreen::LockScreen(ScreenType type)
     : type_(type), tray_action_observer_(this), session_observer_(this) {
   tray_action_observer_.Add(ash::Shell::Get()->tray_action());
@@ -68,7 +77,7 @@ void LockScreen::Show(ScreenType type) {
   instance_ = new LockScreen(type);
 
   auto data_dispatcher = std::make_unique<LoginDataDispatcher>();
-  auto* contents = BuildContentsView(
+  auto* contents = instance_->contents_view_ = BuildContentsView(
       ash::Shell::Get()->tray_action()->GetLockScreenNoteState(),
       data_dispatcher.get());
 
