@@ -11,6 +11,7 @@
 #include "core/events/PointerEventFactory.h"
 #include "core/input/BoundaryEventDispatcher.h"
 #include "core/input/TouchEventManager.h"
+#include "core/page/TouchAdjustment.h"
 #include "platform/wtf/Allocator.h"
 #include "platform/wtf/HashMap.h"
 #include "public/platform/WebInputEventResult.h"
@@ -35,7 +36,8 @@ class CORE_EXPORT PointerEventManager
   // through this function.
   WebInputEventResult HandlePointerEvent(
       const WebPointerEvent&,
-      const Vector<WebPointerEvent>& coalesced_events);
+      const Vector<WebPointerEvent>& coalesced_events,
+      bool should_adjust = false);
 
   // Sends the mouse pointer events and the boundary events
   // that it may cause. It also sends the compat mouse events
@@ -95,6 +97,8 @@ class CORE_EXPORT PointerEventManager
   // it also clears any state that might have kept since the last call to this
   // function.
   WebInputEventResult FlushEvents();
+
+  TouchAdjustmentResult adjusted_result;
 
  private:
   typedef HeapHashMap<int,
@@ -196,6 +200,10 @@ class CORE_EXPORT PointerEventManager
   bool GetPointerCaptureState(int pointer_id,
                               EventTarget** pointer_capture_target,
                               EventTarget** pending_pointer_capture_target);
+
+  // Adjust coordinates so it can be used to find the best clickable target.
+  // The coordinates should be based on root frame.
+  bool AdjustPointerEvent(WebPointerEvent*);
 
   // NOTE: If adding a new field to this class please ensure that it is
   // cleared in |PointerEventManager::clear()|.
