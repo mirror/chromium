@@ -2,6 +2,46 @@
   "comments": [
     {
       "key": {
+        "uuid": "21d4d549_c803339c",
+        "filename": "device/u2f/mock_u2f_ble_connection.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-12-20T01:16:07Z",
+      "side": 1,
+      "message": "The style guide requires all parameters passed by reference to be const. Use ControlPointLengthCallback* instead.",
+      "range": {
+        "startLine": 25,
+        "startChar": 47,
+        "endLine": 25,
+        "endChar": 74
+      },
+      "revId": "11b239e2246985d7cfb0fc53aafc2eb348a44b26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f5235de_77163cae",
+        "filename": "device/u2f/u2f_ble_device.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-12-20T01:16:07Z",
+      "side": 1,
+      "message": "You may want to use a WeakPtrFactory to check if running |callback| has freed |this| like we do in U2fHidDevice.",
+      "revId": "11b239e2246985d7cfb0fc53aafc2eb348a44b26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "853621d1_8412f811",
         "filename": "device/u2f/u2f_ble_device_unittest.cc",
         "patchSetId": 2
@@ -19,6 +59,87 @@
     },
     {
       "key": {
+        "uuid": "c8242347_4bd5be1a",
+        "filename": "device/u2f/u2f_ble_device_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-12-20T01:16:07Z",
+      "side": 1,
+      "message": "I think this is fine for now. The important thing is to lay the groundwork for writing tests to exercise bugs we find later.",
+      "parentUuid": "853621d1_8412f811",
+      "revId": "11b239e2246985d7cfb0fc53aafc2eb348a44b26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e0059c4_ae28bfa4",
+        "filename": "device/u2f/u2f_ble_transaction.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-12-20T01:16:07Z",
+      "side": 1,
+      "message": "invocation",
+      "range": {
+        "startLine": 43,
+        "startChar": 39,
+        "endLine": 43,
+        "endChar": 50
+      },
+      "revId": "11b239e2246985d7cfb0fc53aafc2eb348a44b26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "926b6956_f6447001",
+        "filename": "device/u2f/u2f_ble_transaction.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-12-20T01:16:07Z",
+      "side": 1,
+      "message": "OnRequestFragmentWritten",
+      "range": {
+        "startLine": 43,
+        "startChar": 53,
+        "endLine": 43,
+        "endChar": 70
+      },
+      "revId": "11b239e2246985d7cfb0fc53aafc2eb348a44b26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f97c092e_c87e735b",
+        "filename": "device/u2f/u2f_ble_transaction.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-12-20T01:16:07Z",
+      "side": 1,
+      "message": "Write this as a switch?",
+      "revId": "11b239e2246985d7cfb0fc53aafc2eb348a44b26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b4f8b13b_f5432ca0",
         "filename": "device/u2f/u2f_ble_transaction.h",
         "patchSetId": 2
@@ -30,6 +151,41 @@
       "writtenOn": "2017-12-19T21:40:36Z",
       "side": 1,
       "message": "I\u0027m a bit torn about this. In theory this class could live in an anonymous namespace in u2f_ble_device.cc, as U2fBleDevice should be the only class using this. However, I feel like the class is a bit too large for being in the anon namespace, which is why I decided to move it into its own file. But I must admit I\u0027m not very happy about this either. WDYT?",
+      "revId": "11b239e2246985d7cfb0fc53aafc2eb348a44b26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99d473b1_1c2ffb38",
+        "filename": "device/u2f/u2f_ble_transaction.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-12-20T01:16:07Z",
+      "side": 1,
+      "message": "I think this is fine, just add a class-level comment describing the relationship between this and U2fBleDevice. I like how the fragment management state machine is kept separate from the device connection state machine.",
+      "parentUuid": "b4f8b13b_f5432ca0",
+      "revId": "11b239e2246985d7cfb0fc53aafc2eb348a44b26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55134dbb_f211d86b",
+        "filename": "device/u2f/u2f_hid_device.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-12-20T01:16:07Z",
+      "side": 1,
+      "message": "This is redundant with your change to u2f_hid_device.h.",
       "revId": "11b239e2246985d7cfb0fc53aafc2eb348a44b26",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
