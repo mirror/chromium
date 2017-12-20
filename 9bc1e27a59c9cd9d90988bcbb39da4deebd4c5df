@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4b703afc_23a7e02e",
+        "filename": "third_party/WebKit/Source/core/frame/PausableTask.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-12-20T05:04:39Z",
+      "side": 1,
+      "message": "Shouldn\u0027t we call Dispose before calling Run?",
+      "revId": "9bc1e27a59c9cd9d90988bcbb39da4deebd4c5df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7733bfd3_d18a6336",
+        "filename": "third_party/WebKit/Source/core/frame/PausableTask.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-12-20T05:04:39Z",
+      "side": 1,
+      "message": "Add a class-level comment.",
+      "revId": "9bc1e27a59c9cd9d90988bcbb39da4deebd4c5df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6a87c2d_846d6aa6",
+        "filename": "third_party/WebKit/Source/core/frame/WebLocalFrameImpl.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 764,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-12-20T05:04:39Z",
+      "side": 1,
+      "message": "(Optional) You can add LocalFrame::PostPausableTask and move the entire logic to that method. WebLocalFrameImpl::NotifyWhenNotPaused can just redirect to LocalFrame::PostPausableTask. Then other call sites (except //content/) can use LocalFrame::PostPausableTask.",
+      "revId": "9bc1e27a59c9cd9d90988bcbb39da4deebd4c5df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7889450b_208791e3",
+        "filename": "third_party/WebKit/Source/core/frame/WebLocalFrameImpl.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 768,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-12-20T05:04:39Z",
+      "side": 1,
+      "message": "Why can we guarantee this? I think it\u0027s possible that the callback is posted after the context is destroyed (because there is no easy way for the call site to know the destruction.)",
+      "revId": "9bc1e27a59c9cd9d90988bcbb39da4deebd4c5df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08a330c1_0468863f",
+        "filename": "third_party/WebKit/public/web/WebLocalFrame.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-12-20T05:04:39Z",
+      "side": 1,
+      "message": "Does the caller site really need this?",
+      "revId": "9bc1e27a59c9cd9d90988bcbb39da4deebd4c5df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28a49456_986b6fcb",
+        "filename": "third_party/WebKit/public/web/WebLocalFrame.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-12-20T05:04:39Z",
+      "side": 1,
+      "message": "NotifyWhenNotPaused \u003d\u003e PostPausableTask",
+      "revId": "9bc1e27a59c9cd9d90988bcbb39da4deebd4c5df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
