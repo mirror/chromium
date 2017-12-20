@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "055bf2ed_21523da8",
+        "filename": "net/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 2483,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-12-20T01:55:34Z",
+      "side": 1,
+      "message": "Looking at BUILD.gn before the first CL landed, I think we had:\n\n\n    \"data/ssl/certificates/quic_chain.crt\",\n    \"data/ssl/certificates/quic_intermediate.crt\",\n    \"data/ssl/certificates/quic_intermediate.key\",\n    \"data/ssl/certificates/quic_root.crt\",\n    \"data/ssl/certificates/quic_root.key\",\n\nso we had a root cert and key, an intermediate cert and key, and a cert chain without the key.\n\nAre these the same files that your new certs represent? If not, the other QUIC certs were:\n\n    \"data/ssl/certificates/quic_test.example.com.crt\",\n    \"data/ssl/certificates/quic_test.example.com.key\",\n    \"data/ssl/certificates/quic_test.example.com.key.pkcs8\",\n    \"data/ssl/certificates/quic_test.example.com.key.pkcs8.pem\",\n    \"data/ssl/certificates/quic_test.example.com.key.sct\",\n    \"data/ssl/certificates/quic_test_ecc.example.com.crt\",\n    \"data/ssl/certificates/quic_test_ecc.example.com.key\",\n    \"data/ssl/certificates/quic_test_ecc.example.com.sct\",\n\nIn this case, we have a cert, a key (in 3 different formats), and a signed SCT all for \"test.example.com\". Because these all have the hostname as part of the file name, it\u0027s obvious they\u0027re not the intermediate, the root, or a full chain.\n\nThe new files here are:\n\n    \"data/ssl/certificates/quic-cert.key\",\n    \"data/ssl/certificates/quic-chain.pem\",\n    \"data/ssl/certificates/quic-root.pem\",\n    \"data/ssl/certificates/quic.key.pkcs8.pem\",\n    \"data/ssl/certificates/quic.key.sct\",\n\nI\u0027m not sure what those names mean. Presumably quic-chain.pem is the full chain (no keys) and quic-root.pem is the root cert (no keys?). But I\u0027m not sure which cert the various *key* files correspond to. DO they correspond to the leaf, the intermediate or the root?",
+      "parentUuid": "0ec0b0d8_55815195",
+      "range": {
+        "startLine": 2483,
+        "startChar": 41,
+        "endLine": 2483,
+        "endChar": 0
+      },
+      "revId": "1d87d251bfe5b3b9f80fa1625f070ac3886f1d19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8ab962bc_90dc4dff",
         "filename": "net/data/ssl/scripts/generate-quic-chain.sh",
         "patchSetId": 5
