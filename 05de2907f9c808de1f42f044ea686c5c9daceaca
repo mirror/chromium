@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b5c494b9_fb4f53ba",
+        "filename": "chrome/common/chrome_render_frame.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-12-20T17:23:40Z",
+      "side": 1,
+      "message": "nit: 80 cols",
+      "range": {
+        "startLine": 54,
+        "startChar": 1,
+        "endLine": 54,
+        "endChar": 2
+      },
+      "revId": "05de2907f9c808de1f42f044ea686c5c9daceaca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be2732c2_b0fc0bbf",
+        "filename": "chrome/common/chrome_render_frame.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-12-20T17:23:40Z",
+      "side": 1,
+      "message": "nit: I believe the prevailing mojom style is one per line.",
+      "range": {
+        "startLine": 58,
+        "startChar": 59,
+        "endLine": 58,
+        "endChar": 63
+      },
+      "revId": "05de2907f9c808de1f42f044ea686c5c9daceaca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
