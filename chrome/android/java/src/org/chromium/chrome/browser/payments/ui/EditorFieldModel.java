@@ -13,6 +13,7 @@ import org.chromium.base.ContextUtils;
 import org.chromium.chrome.browser.preferences.autofill.AutofillProfileBridge.DropdownKeyValue;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -117,6 +118,10 @@ public class EditorFieldModel {
     @Nullable private List<Integer> mIconResourceIds;
     @Nullable private List<Integer> mIconDescriptionsForAccessibility;
     @Nullable private List<DropdownKeyValue> mDropdownKeyValues;
+    @Nullable
+    private HashMap<String, CharSequence> mDropdownKeyToValueMap;
+    @Nullable
+    private HashMap<CharSequence, String> mDropdownValueToKeyMap;
     @Nullable private Set<String> mDropdownKeys;
     @Nullable private List<CharSequence> mSuggestions;
     @Nullable
@@ -137,6 +142,7 @@ public class EditorFieldModel {
     private int mActionIconResourceId;
     private int mActionIconDescriptionForAccessibility;
     private boolean mIsFullLine = true;
+    private boolean mPlusIconIncluded = false;
 
     /**
      * Constructs a label to show in the editor. This can be, for example, description of a server
@@ -401,15 +407,67 @@ public class EditorFieldModel {
         return mDropdownKeys;
     }
 
+    /**
+     * In the dropdown list, finds the key that corresponds to the value.
+     * If the value is not in the list, returns null.
+     * This assumes a one-to-one relation between keys and values.
+     * @param value The value to lookup.
+     * @return The key that corresponds to the value. */
+    public String getDropdownKeyByValue(CharSequence value) {
+        assert mInputTypeHint == INPUT_TYPE_HINT_DROPDOWN;
+        if (mDropdownValueToKeyMap != null) {
+            return mDropdownValueToKeyMap.get(value);
+        }
+        return null;
+    }
+
+    /**
+     * In the dropdown list, finds the value that corresponds to the key.
+     * If the key is not in the list, returns null.
+     * This assumes a one-to-one relation between keys and values.
+     * @param key The key to lookup.
+     * @return The value that corresponds to the key. */
+    public CharSequence getDropdownValueByKey(String key) {
+        assert mInputTypeHint == INPUT_TYPE_HINT_DROPDOWN;
+        if (mDropdownKeyToValueMap != null) {
+            return mDropdownKeyToValueMap.get(key);
+        }
+        return null;
+    }
+
     /** Updates the dropdown key values. */
     public void setDropdownKeyValues(List<DropdownKeyValue> dropdownKeyValues) {
         assert mInputTypeHint == INPUT_TYPE_HINT_DROPDOWN;
         mDropdownKeyValues = dropdownKeyValues;
         mDropdownKeys = new HashSet<>();
+        mDropdownKeyToValueMap = new HashMap<>();
+        mDropdownValueToKeyMap = new HashMap<>();
         for (int i = 0; i < mDropdownKeyValues.size(); i++) {
             mDropdownKeys.add(mDropdownKeyValues.get(i).getKey());
+            mDropdownValueToKeyMap.put(
+                    mDropdownKeyValues.get(i).getValue(), mDropdownKeyValues.get(i).getKey());
+            mDropdownKeyToValueMap.put(
+                    mDropdownKeyValues.get(i).getKey(), mDropdownKeyValues.get(i).getValue());
         }
         assert mDropdownKeyValues.size() == mDropdownKeys.size();
+    }
+
+    /** @return True if the last visible item on the dropdown list, needs a '+' icon on the right.
+     */
+    public boolean isPlusIconIncluded() {
+        assert mInputTypeHint == INPUT_TYPE_HINT_DROPDOWN;
+        return mPlusIconIncluded;
+    }
+
+    /**
+     * Sets whether the last item of the this dropdown list needs a '+' icon on the right. By
+     * default, the item doesn't need that.
+     *
+     * @param plusIconIncluded Whether the last item of the this dropdown list needs a '+' icon.
+     */
+    public void setPlusIconIncluded(boolean plusIconIncluded) {
+        assert mInputTypeHint == INPUT_TYPE_HINT_DROPDOWN;
+        mPlusIconIncluded = plusIconIncluded;
     }
 
     /** @return The human-readable label for this field. */
@@ -537,6 +595,9 @@ public class EditorFieldModel {
         return mValidator == null ? false : mValidator.isLengthMaximum(mValue);
     }
 
+    public boolean isValueEmpty() {
+        return (mValue == null || mValue.length() == 0);
+    }
     /**
      * Sets the dropdown callback.
      *
