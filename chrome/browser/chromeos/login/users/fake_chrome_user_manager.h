@@ -169,6 +169,8 @@ class FakeChromeUserManager : public ChromeUserManager {
       const AffiliationIDSet& user_affiliation_ids) override;
   bool ShouldReportUser(const std::string& user_id) const override;
 
+  bool IsManagedDevice() const override;
+
   void set_ephemeral_users_enabled(bool ephemeral_users_enabled) {
     fake_ephemeral_users_enabled_ = ephemeral_users_enabled;
   }
