@@ -34,6 +34,24 @@
       "revId": "ec28ea98fcdbfabbdc758f21c7ef2cc07bceaa0a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f53fc67d_8d038a8c",
+        "filename": "ui/gl/test/gl_image_test_support.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-12-20T19:03:32Z",
+      "side": 1,
+      "message": "Thanks, LG.",
+      "parentUuid": "552ac667_13214e2a",
+      "revId": "ec28ea98fcdbfabbdc758f21c7ef2cc07bceaa0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
