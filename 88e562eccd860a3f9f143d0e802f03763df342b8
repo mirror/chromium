@@ -179,6 +179,24 @@
     },
     {
       "key": {
+        "uuid": "98ce88a6_5bc1dcb2",
+        "filename": "media/gpu/vaapi/vaapi_drm_picture.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1230115
+      },
+      "writtenOn": "2017-12-20T15:02:40Z",
+      "side": 1,
+      "message": "Done: https://chromium-review.googlesource.com/c/chromium/src/+/817563",
+      "parentUuid": "41144aa0_3a4b8af6",
+      "revId": "88e562eccd860a3f9f143d0e802f03763df342b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dae3588f_5722098e",
         "filename": "ui/gfx/linux/native_pixmap_dmabuf.cc",
         "patchSetId": 17
