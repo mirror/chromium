@@ -36675,6 +36675,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 
 <histogram name="Memory.Experimental.Browser.PrivateMemoryFootprint.MacOS"
     units="MB">
+  <obsolete>
+    Deprecated 12/2017. Replaced by Memory.Browser.PrivateMemoryFootprint.
+  </obsolete>
   <owner>erikchen@chromium.org</owner>
   <summary>
     A rough estimate of the private memory footprint of the browser process.
@@ -36761,6 +36764,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 
 <histogram name="Memory.Experimental.Extension.PrivateMemoryFootprint.MacOS"
     units="MB">
+  <obsolete>
+    Deprecated 12/2017. Replaced by Memory.Extension.PrivateMemoryFootprint.
+  </obsolete>
   <owner>erikchen@chromium.org</owner>
   <summary>
     A rough estimate of the private memory footprint of an extension process.
@@ -36789,6 +36795,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 
 <histogram name="Memory.Experimental.Gpu.PrivateMemoryFootprint.MacOS"
     units="MB">
+  <obsolete>
+    Deprecated 12/2017. Replaced by Memory.Gpu.PrivateMemoryFootprint.
+  </obsolete>
   <owner>erikchen@chromium.org</owner>
   <summary>
     A rough estimate of the private memory footprint of the GPU process.
@@ -36881,6 +36890,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 
 <histogram name="Memory.Experimental.Renderer.PrivateMemoryFootprint.MacOS"
     units="MB">
+  <obsolete>
+    Deprecated 12/2017. Replaced by Memory.Renderer.PrivateMemoryFootprint.
+  </obsolete>
   <owner>erikchen@chromium.org</owner>
   <summary>
     A rough estimate of the private memory footprint of a renderer process.

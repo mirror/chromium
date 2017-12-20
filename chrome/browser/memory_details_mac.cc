@@ -66,14 +66,6 @@ void CollectProcessDataForChromeProcess(
   base::ProcessMetrics::TaskVMInfo vm_info = metrics->GetTaskVMInfo();
   info.phys_footprint = vm_info.phys_footprint;
 
-  // TODO(erikchen): Remove this temporary estimate for private memory once the
-  // memory infra service emits the same metric. https://crbug.com/720541.
-  if (base::mac::IsAtLeastOS10_12()) {
-    info.private_memory_footprint = vm_info.phys_footprint;
-  } else {
-    info.private_memory_footprint = vm_info.internal + vm_info.compressed;
-  }
-
   processes->push_back(info);
 }
 
