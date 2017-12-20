@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0d8b227e_5ea0dd61",
+        "filename": "ash/login/ui/lock_window_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1248360
+      },
+      "writtenOn": "2017-12-20T02:28:01Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "8c0daf02_ae48900a",
+      "revId": "ccc0f7ab97ab2f7034242f1d442d10f769752c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6845ce94_4e95cff7",
         "filename": "ash/login/ui/lock_window_unittest.cc",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "ccc0f7ab97ab2f7034242f1d442d10f769752c4f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c12ac94f_5a8e6937",
+        "filename": "ash/login/ui/lock_window_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1248360
+      },
+      "writtenOn": "2017-12-20T02:28:01Z",
+      "side": 1,
+      "message": "If lock screen didn\u0027t show then further testing doesn\u0027t make sense? WDYT?",
+      "parentUuid": "6845ce94_4e95cff7",
+      "revId": "ccc0f7ab97ab2f7034242f1d442d10f769752c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "c7b02c29_e90f7202",
+        "filename": "ash/login/ui/lock_window_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1248360
+      },
+      "writtenOn": "2017-12-20T02:28:01Z",
+      "side": 1,
+      "message": "Done. And this method got removed.",
+      "parentUuid": "dedf3237_88b56711",
+      "revId": "ccc0f7ab97ab2f7034242f1d442d10f769752c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bcb1426e_fbbec146",
         "filename": "ash/login/ui/lock_window_unittest.cc",
         "patchSetId": 3
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "4ab43101_c3822c7d",
+        "filename": "ash/login/ui/lock_window_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1248360
+      },
+      "writtenOn": "2017-12-20T02:28:01Z",
+      "side": 1,
+      "message": "This tests is a little bit more of a black box. I test the LockWindow widget, so I allowed for LoginController to initiate creation of LockWindow, LockContentsView. The test data_dispatcher_ is not injected because of that.",
+      "parentUuid": "bcb1426e_fbbec146",
+      "revId": "ccc0f7ab97ab2f7034242f1d442d10f769752c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "38a253cf_14aa76a0",
         "filename": "ash/login/ui/lock_window_unittest.cc",
         "patchSetId": 3
@@ -84,6 +156,24 @@
       "revId": "ccc0f7ab97ab2f7034242f1d442d10f769752c4f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "244e367f_deaf8cc4",
+        "filename": "ash/login/ui/lock_window_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1248360
+      },
+      "writtenOn": "2017-12-20T02:28:01Z",
+      "side": 1,
+      "message": "Cannot assert in non void method, because assert has hidden return[*].\n\nI could pass return value by pointer out argument or by using base::Optional. Pointer is not too nice solution and for Optional I will need to assert anyway. \n\nAfter adding LockScreen::TestApi I don\u0027t think this method is needed anyway, so I removed it.\n \n[*] I realized that those asserts won\u0027t break test execution, so I added ASSERT_NO_FATAL_FAILURE where needed.  \nhttps://g3doc.corp.google.com/devtools/library_club/g3doc/totw/113.md#assert",
+      "parentUuid": "38a253cf_14aa76a0",
+      "revId": "ccc0f7ab97ab2f7034242f1d442d10f769752c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
