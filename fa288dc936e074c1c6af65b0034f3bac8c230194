@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e422e85b_f4aec013",
+        "filename": "device/ctap/ctap_device_command.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-20T19:06:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "16abab33_5c914264",
+      "range": {
+        "startLine": 13,
+        "startChar": 3,
+        "endLine": 14,
+        "endChar": 64
+      },
+      "revId": "fa288dc936e074c1c6af65b0034f3bac8c230194",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "812ed124_73e6af10",
         "filename": "device/ctap/ctap_device_command.h",
         "patchSetId": 13
@@ -45,6 +69,30 @@
       "revId": "fa288dc936e074c1c6af65b0034f3bac8c230194",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1328fdec_3f3b0601",
+        "filename": "device/ctap/ctap_device_command.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-20T19:06:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "812ed124_73e6af10",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 34,
+        "endChar": 0
+      },
+      "revId": "fa288dc936e074c1c6af65b0034f3bac8c230194",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "4d67f1f0_f262e904",
+        "filename": "device/ctap/ctap_get_assertion_request_param.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-20T19:06:38Z",
+      "side": 1,
+      "message": "Thanks for the advice! I\u0027ll use this approach on other following CL\u0027s in this directory as well.  :)",
+      "parentUuid": "ce0cf2d0_ed1c284f",
+      "range": {
+        "startLine": 23,
+        "startChar": 2,
+        "endLine": 56,
+        "endChar": 72
+      },
+      "revId": "fa288dc936e074c1c6af65b0034f3bac8c230194",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0cb002a0_8b0b4063",
         "filename": "device/ctap/ctap_make_credential_request_param.h",
         "patchSetId": 13
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "8a039911_13a3ea31",
+        "filename": "device/ctap/ctap_make_credential_request_param.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-20T19:06:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0cb002a0_8b0b4063",
+      "range": {
+        "startLine": 28,
+        "startChar": 6,
+        "endLine": 28,
+        "endChar": 36
+      },
+      "revId": "fa288dc936e074c1c6af65b0034f3bac8c230194",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d25da0a2_1e79356f",
         "filename": "device/ctap/ctap_make_credential_request_param.h",
         "patchSetId": 13
@@ -105,6 +201,30 @@
       "writtenOn": "2017-12-20T09:37:59Z",
       "side": 1,
       "message": "Can you use enums instead of uint8_ts here?",
+      "range": {
+        "startLine": 42,
+        "startChar": 0,
+        "endLine": 43,
+        "endChar": 48
+      },
+      "revId": "fa288dc936e074c1c6af65b0034f3bac8c230194",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0da1522f_d5efa3b6",
+        "filename": "device/ctap/ctap_make_credential_request_param.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-20T19:06:38Z",
+      "side": 1,
+      "message": "|pin_auth| corresponds to first 16 bytes of the hash of client data bytes using \"pin token\" generated every power cycle of the authenticator. \n\nFor |pin_protocol|, the CTAP procotol does not provide a strict set of protocols other than that pin_protocol is defaulted to 1.",
+      "parentUuid": "d25da0a2_1e79356f",
       "range": {
         "startLine": 42,
         "startChar": 0,
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "c01ddf4e_2292f327",
+        "filename": "device/ctap/ctap_request_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-20T19:06:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d7839a54_42cdf464",
+      "range": {
+        "startLine": 27,
+        "startChar": 2,
+        "endLine": 27,
+        "endChar": 22
+      },
+      "revId": "fa288dc936e074c1c6af65b0034f3bac8c230194",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4da56c14_edf450f1",
         "filename": "device/ctap/ctap_response_code.h",
         "patchSetId": 13
@@ -160,6 +304,30 @@
       "revId": "fa288dc936e074c1c6af65b0034f3bac8c230194",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b116f3f3_afd1d5fa",
+        "filename": "device/ctap/ctap_response_code.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-20T19:06:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4da56c14_edf450f1",
+      "range": {
+        "startLine": 18,
+        "startChar": 28,
+        "endLine": 18,
+        "endChar": 30
+      },
+      "revId": "fa288dc936e074c1c6af65b0034f3bac8c230194",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "fd4f2a56_7e643ed5",
+        "filename": "device/ctap/public_key_credential_descriptor.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-20T19:06:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f323e527_6668e466",
+      "range": {
+        "startLine": 28,
+        "startChar": 38,
+        "endLine": 28,
+        "endChar": 42
+      },
+      "revId": "fa288dc936e074c1c6af65b0034f3bac8c230194",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b45cbcc3_3f5e2201",
         "filename": "device/ctap/public_key_credential_descriptor.h",
         "patchSetId": 13
@@ -206,6 +398,30 @@
       "revId": "fa288dc936e074c1c6af65b0034f3bac8c230194",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a0fdead_7a1227d6",
+        "filename": "device/ctap/public_key_credential_descriptor.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-20T19:06:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b45cbcc3_3f5e2201",
+      "range": {
+        "startLine": 5,
+        "startChar": 8,
+        "endLine": 5,
+        "endChar": 54
+      },
+      "revId": "fa288dc936e074c1c6af65b0034f3bac8c230194",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -255,6 +471,54 @@
     },
     {
       "key": {
+        "uuid": "af4845d0_a96363b7",
+        "filename": "device/ctap/public_key_credential_descriptor.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-20T19:06:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bfef876c_4e2c56cc",
+      "range": {
+        "startLine": 30,
+        "startChar": 2,
+        "endLine": 30,
+        "endChar": 19
+      },
+      "revId": "fa288dc936e074c1c6af65b0034f3bac8c230194",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e0a8d29e_8eb779fa",
+        "filename": "device/ctap/public_key_credential_descriptor.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-20T19:06:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f5a8fc4e_2b10d33f",
+      "range": {
+        "startLine": 30,
+        "startChar": 20,
+        "endLine": 30,
+        "endChar": 24
+      },
+      "revId": "fa288dc936e074c1c6af65b0034f3bac8c230194",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eda86edd_ad9f251f",
         "filename": "device/ctap/public_key_credential_descriptor.h",
         "patchSetId": 13
@@ -301,6 +565,54 @@
     },
     {
       "key": {
+        "uuid": "0d6a6f6f_53a83d9b",
+        "filename": "device/ctap/public_key_credential_descriptor.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-20T19:06:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cb182682_d636f232",
+      "range": {
+        "startLine": 31,
+        "startChar": 2,
+        "endLine": 31,
+        "endChar": 28
+      },
+      "revId": "fa288dc936e074c1c6af65b0034f3bac8c230194",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7ac88bcd_514d1233",
+        "filename": "device/ctap/public_key_credential_descriptor.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-20T19:06:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eda86edd_ad9f251f",
+      "range": {
+        "startLine": 31,
+        "startChar": 29,
+        "endLine": 31,
+        "endChar": 33
+      },
+      "revId": "fa288dc936e074c1c6af65b0034f3bac8c230194",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f2c5a26e_c860b0fa",
         "filename": "device/ctap/public_key_credential_descriptor.h",
         "patchSetId": 13
@@ -312,6 +624,30 @@
       "writtenOn": "2017-12-20T09:37:59Z",
       "side": 1,
       "message": "it\u0027s probably easier to simply allow copying and assigning and use the compiler generated copy constructor instead.",
+      "range": {
+        "startLine": 33,
+        "startChar": 0,
+        "endLine": 33,
+        "endChar": 46
+      },
+      "revId": "fa288dc936e074c1c6af65b0034f3bac8c230194",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a911d26_cc5e7274",
+        "filename": "device/ctap/public_key_credential_descriptor.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-20T19:06:38Z",
+      "side": 1,
+      "message": "Since user defined move constructor deletes the implicit copy constructor, added default definition of copy constructor / copy assign operator. Please let me know if this conflicts with you comment!",
+      "parentUuid": "f2c5a26e_c860b0fa",
       "range": {
         "startLine": 33,
         "startChar": 0,
@@ -347,6 +683,30 @@
     },
     {
       "key": {
+        "uuid": "407103b5_624c7599",
+        "filename": "device/ctap/public_key_credential_params.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-20T19:06:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "768fc8f5_4abefefc",
+      "range": {
+        "startLine": 22,
+        "startChar": 30,
+        "endLine": 22,
+        "endChar": 52
+      },
+      "revId": "fa288dc936e074c1c6af65b0034f3bac8c230194",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a9f55800_3e28dbd3",
         "filename": "device/ctap/public_key_credential_params.cc",
         "patchSetId": 13
@@ -367,6 +727,30 @@
       "revId": "fa288dc936e074c1c6af65b0034f3bac8c230194",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c149c98b_5ab6b9f7",
+        "filename": "device/ctap/public_key_credential_params.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-20T19:06:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a9f55800_3e28dbd3",
+      "range": {
+        "startLine": 31,
+        "startChar": 25,
+        "endLine": 31,
+        "endChar": 47
+      },
+      "revId": "fa288dc936e074c1c6af65b0034f3bac8c230194",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -393,6 +777,30 @@
     },
     {
       "key": {
+        "uuid": "ade69413_50047920",
+        "filename": "device/ctap/public_key_credential_user_entity.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-20T19:06:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c83c2ba3_2e139823",
+      "range": {
+        "startLine": 57,
+        "startChar": 25,
+        "endLine": 57,
+        "endChar": 33
+      },
+      "revId": "fa288dc936e074c1c6af65b0034f3bac8c230194",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2abe4b47_ebf4e86b",
         "filename": "device/ctap/public_key_credential_user_entity.cc",
         "patchSetId": 13
@@ -413,6 +821,30 @@
       "revId": "fa288dc936e074c1c6af65b0034f3bac8c230194",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33b1f48b_ba20748c",
+        "filename": "device/ctap/public_key_credential_user_entity.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-20T19:06:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2abe4b47_ebf4e86b",
+      "range": {
+        "startLine": 61,
+        "startChar": 31,
+        "endLine": 61,
+        "endChar": 50
+      },
+      "revId": "fa288dc936e074c1c6af65b0034f3bac8c230194",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
