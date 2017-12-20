@@ -181,11 +181,15 @@ using bookmarks::BookmarkNode;
 
   if (base::FeatureList::IsEnabled(kBookmarkNewGeneration)) {
     [self.bookmarkBrowser setRootNode:self.bookmarkModel->root_node()];
+    int64_t unusedFolderId;
+    double unusedScrollPosition;
     // If cache is present then reconstruct the last visited bookmark from
     // cache.  If bookmarkModel is not loaded yet, the following checking will
     // be done again at bookmarkModelLoaded in BookmarkHomeViewController to
     // prevent crbug.com/765503.
-    if (bookmark_utils_ios::GetBookmarkUIPositionCache(self.bookmarkModel)) {
+    if (bookmark_utils_ios::GetBookmarkUIPositionCache(
+            _currentBrowserState, self.bookmarkModel, &unusedFolderId,
+            &unusedScrollPosition)) {
       self.bookmarkBrowser.isReconstructingFromCache = YES;
     }
     FormSheetNavigationController* navController =
