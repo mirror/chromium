@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2f983daf_9cc3fa57",
+        "filename": "chrome/browser/ssl/ssl_browsertest.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 6669,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-20T18:39:13Z",
+      "side": 1,
+      "message": "nit:  Maybe add \"which then overrides the certificate error\"",
+      "range": {
+        "startLine": 6669,
+        "startChar": 24,
+        "endLine": 6669,
+        "endChar": 31
+      },
+      "revId": "5c97f2bf27f33493f5e76c419227484cc0d29728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4dacef65_e2285530",
+        "filename": "content/browser/network_service_instance.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-20T18:39:13Z",
+      "side": 1,
+      "message": "nit:  Static not needed, since these are in an anonymous namespace.",
+      "range": {
+        "startLine": 22,
+        "startChar": 7,
+        "endLine": 22,
+        "endChar": 25
+      },
+      "revId": "5c97f2bf27f33493f5e76c419227484cc0d29728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edb42f26_6f433272",
+        "filename": "content/network/network_service_impl.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-20T18:39:13Z",
+      "side": 1,
+      "message": "Can we just remove this?  I\u0027m not sure we want network/service to include the features::kNetworkService flag, once we move this there.  Or maybe we do?",
+      "range": {
+        "startLine": 145,
+        "startChar": 16,
+        "endLine": 145,
+        "endChar": 27
+      },
+      "revId": "5c97f2bf27f33493f5e76c419227484cc0d29728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
