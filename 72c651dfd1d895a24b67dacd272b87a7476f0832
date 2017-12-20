@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "27e05511_2444f918",
+        "filename": "third_party/WebKit/LayoutTests/gamepad/gamepad-vibration.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2017-12-20T18:17:59Z",
+      "side": 1,
+      "message": "LOL at the fake gamepad names. :D",
+      "revId": "72c651dfd1d895a24b67dacd272b87a7476f0832",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
