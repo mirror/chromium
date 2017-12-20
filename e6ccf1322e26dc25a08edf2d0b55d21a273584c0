@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ac46661_f28e25f1",
+        "filename": "components/autofill/ios/browser/autofill_agent.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 828,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-20T16:59:45Z",
+      "side": 1,
+      "message": "This can never happen with WKWebView. No need for this check. WebState::GetCurrentURL is deprecated, but it\u0027s hard to remove this API.",
+      "range": {
+        "startLine": 828,
+        "startChar": 25,
+        "endLine": 828,
+        "endChar": 50
+      },
+      "revId": "e6ccf1322e26dc25a08edf2d0b55d21a273584c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f96d080_fa7f8d00",
+        "filename": "ios/chrome/browser/web/chrome_web_client.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-20T16:59:45Z",
+      "side": 1,
+      "message": "Is it possible to change this pref while app is running? This method will be called once for Incognito and once for Non-Incognito browser state.",
+      "range": {
+        "startLine": 193,
+        "startChar": 10,
+        "endLine": 193,
+        "endChar": 43
+      },
+      "revId": "e6ccf1322e26dc25a08edf2d0b55d21a273584c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
