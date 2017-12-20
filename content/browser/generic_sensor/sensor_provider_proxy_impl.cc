@@ -22,7 +22,8 @@ SensorProviderProxyImpl::SensorProviderProxyImpl(
     PermissionManager* permission_manager,
     RenderFrameHost* render_frame_host)
     : permission_manager_(permission_manager),
-      render_frame_host_(render_frame_host) {
+      render_frame_host_(render_frame_host),
+      weak_factory_(this) {
   DCHECK(permission_manager);
   DCHECK(render_frame_host);
 }
@@ -37,37 +38,42 @@ void SensorProviderProxyImpl::Bind(
 void SensorProviderProxyImpl::GetSensor(
     device::mojom::SensorType type,
     GetSensorCallback callback) {
-  ServiceManagerConnection* connection =
-      ServiceManagerConnection::GetForProcess();
-
-  if (!connection || !CheckPermission(type)) {
-    std::move(callback).Run(nullptr);
-    return;
-  }
 
   if (!sensor_provider_) {
+    ServiceManagerConnection* connection =
+        ServiceManagerConnection::GetForProcess();
+
+    if (!connection) {
+      std::move(callback).Run(nullptr);
+      return;
+    }
+
     connection->GetConnector()->BindInterface(
         device::mojom::kServiceName, mojo::MakeRequest(&sensor_provider_));
     sensor_provider_.set_connection_error_handler(base::BindOnce(
         &SensorProviderProxyImpl::OnConnectionError, base::Unretained(this)));
   }
-  sensor_provider_->GetSensor(type, std::move(callback));
+
+  // TODO(shalamov): base::BindOnce should be used (https://crbug.com/714018),
+  // however, PermissionManager::RequestPermission enforces use of repeating
+  // callback.
+  permission_manager_->RequestPermission(
+      PermissionType::SENSORS, render_frame_host_,
+      render_frame_host_->GetLastCommittedURL(), false,
+      base::Bind(&SensorProviderProxyImpl::OnPermissionRequestCompleted,
+                 weak_factory_.GetWeakPtr(), type,
+                 base::Passed(std::move(callback))));
 }
 
-bool SensorProviderProxyImpl::CheckPermission(
-    device::mojom::SensorType type) const {
-  content::WebContents* web_contents =
-      content::WebContents::FromRenderFrameHost(render_frame_host_);
-  if (!web_contents)
-    return false;
-
-  const GURL& embedding_origin = web_contents->GetLastCommittedURL();
-  const GURL& requesting_origin = render_frame_host_->GetLastCommittedURL();
-
-  blink::mojom::PermissionStatus permission_status =
-      permission_manager_->GetPermissionStatus(
-          PermissionType::SENSORS, requesting_origin, embedding_origin);
-  return permission_status == blink::mojom::PermissionStatus::GRANTED;
+void SensorProviderProxyImpl::OnPermissionRequestCompleted(
+    device::mojom::SensorType type,
+    GetSensorCallback callback,
+    blink::mojom::PermissionStatus status) {
+  if (status != blink::mojom::PermissionStatus::GRANTED || !sensor_provider_) {
+    std::move(callback).Run(nullptr);
+    return;
+  }
+  sensor_provider_->GetSensor(type, std::move(callback));
 }
 
 void SensorProviderProxyImpl::OnConnectionError() {
