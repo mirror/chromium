@@ -99,3 +99,10 @@ function createComputedStyleMap(cssText) {
   document.body.appendChild(elem);
   return elem.computedStyleMap();
 }
+
+function createDeclaredStyleMap(cssText) {
+  const style = document.createElement('style');
+  document.head.appendChild(style);
+  const rule = style.sheet.cssRules[style.sheet.insertRule('#test { ' + cssText + '}')];
+  return rule.attributeStyleMap;
+}
