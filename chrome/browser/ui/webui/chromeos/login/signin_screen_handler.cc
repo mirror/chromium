@@ -41,6 +41,7 @@
 #include "chrome/browser/chromeos/language_preferences.h"
 #include "chrome/browser/chromeos/lock_screen_apps/state_controller.h"
 #include "chrome/browser/chromeos/login/error_screens_histogram_helper.h"
+#include "chrome/browser/chromeos/login/helper.h"
 #include "chrome/browser/chromeos/login/hwid_checker.h"
 #include "chrome/browser/chromeos/login/lock/screen_locker.h"
 #include "chrome/browser/chromeos/login/lock/webui_screen_locker.h"
@@ -87,6 +88,7 @@
 #include "chromeos/network/network_state.h"
 #include "chromeos/network/network_state_handler.h"
 #include "components/login/localized_values_builder.h"
+#include "components/policy/core/common/policy_service.h"
 #include "components/prefs/pref_registry_simple.h"
 #include "components/prefs/pref_service.h"
 #include "components/prefs/scoped_user_pref_update.h"
@@ -96,10 +98,17 @@
 #include "components/user_manager/user_manager.h"
 #include "components/user_manager/user_type.h"
 #include "components/version_info/version_info.h"
+#include "content/public/browser/notification_source.h"
 #include "content/public/browser/render_frame_host.h"
+#include "content/public/browser/storage_partition.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/common/service_manager_connection.h"
 #include "google_apis/gaia/gaia_auth_util.h"
+#include "net/http/http_auth_cache.h"
+#include "net/http/http_network_session.h"
+#include "net/http/http_transaction_factory.h"
+#include "net/url_request/url_request_context.h"
+#include "net/url_request/url_request_context_getter.h"
 #include "services/service_manager/public/cpp/connector.h"
 #include "third_party/cros_system_api/dbus/service_constants.h"
 #include "ui/base/ime/chromeos/ime_keyboard.h"
@@ -139,6 +148,9 @@ const char kAvailableLockScreenApps[] = "LOCK_SCREEN_APPS_STATE.AVAILABLE";
 const char kNewNoteRequestTap[] = "NEW_NOTE_REQUEST.TAP";
 const char kNewNoteRequestSwipe[] = "NEW_NOTE_REQUEST.SWIPE";
 const char kNewNoteRequestKeyboard[] = "NEW_NOTE_REQUEST.KEYBOARD";
+
+// Delay for transferring the auth cache to the system profile.
+const long int kAuthCacheTransferDelayMs = 2000;
 
 class CallOnReturn {
  public:
@@ -215,6 +227,44 @@ std::string GetNetworkName(const std::string& service_path) {
   if (!network)
     return std::string();
   return network->name();
+}
+
+// Makes a call to the policy subsystem to reload the policy when we detect
+// authentication change.
+void RefreshPoliciesOnUIThread() {
+  if (g_browser_process->policy_service()) {
+    g_browser_process->policy_service()->RefreshPolicies(
+        base::RepeatingClosure());
+  }
+}
+
+// Copies any authentication details that were entered in the login webview to
+// the main profile to make sure all subsystems of Chrome can access the network
+// with the provided authentication which are possibly for a proxy server.
+void TransferContextAuthenticationsOnIOThread(
+    net::URLRequestContextGetter* webview_context_getter,
+    net::URLRequestContextGetter* browser_process_context_getter,
+    base::OnceClosure done_callback) {
+  net::HttpAuthCache* system_request_context_cache =
+      browser_process_context_getter->GetURLRequestContext()
+          ->http_transaction_factory()
+          ->GetSession()
+          ->http_auth_cache();
+
+  net::HttpAuthCache* webview_cache =
+      webview_context_getter->GetURLRequestContext()
+          ->http_transaction_factory()
+          ->GetSession()
+          ->http_auth_cache();
+  system_request_context_cache->UpdateAllFrom(*webview_cache);
+
+  VLOG(1) << "Main request context populated with authentication data.";
+  // Last but not least tell the policy subsystem to refresh now as it might
+  // have been stuck until now too.
+  content::BrowserThread::PostTask(content::BrowserThread::UI, FROM_HERE,
+                                   std::move(done_callback));
+  content::BrowserThread::PostTask(content::BrowserThread::UI, FROM_HERE,
+                                   base::BindOnce(&RefreshPoliciesOnUIThread));
 }
 
 }  // namespace
@@ -1076,6 +1126,51 @@ void SigninScreenHandler::ShowUnrecoverableCrypthomeErrorDialog() {
   CallJS("login.UnrecoverableCryptohomeErrorScreen.show");
 }
 
+void SigninScreenHandler::TriggerProxyAuthTransfer() {
+  // Possibly the user has authenticated against a proxy server and we might
+  // need the credentials for enrollment and other system requests from the
+  // main |g_browser_process| request context (see bug
+  // http://crosbug.com/24861). So we transfer any credentials to the global
+  // request context here.
+  // The issue we have here is that the NOTIFICATION_AUTH_SUPPLIED is sent
+  // just after the UI is closed but before the new credentials were stored
+  // in the profile. Therefore we have to give it some time to make sure it
+  // has been updated before we copy it.
+  // TODO(pmarko): Find a better way to do it without
+  // |kAuthCacheTransferDelayMs| - see https://crbug.com/796512.
+  VLOG(1) << "Authentication was entered manually, possibly for proxyauth.";
+  scoped_refptr<net::URLRequestContextGetter> browser_process_context_getter =
+      g_browser_process->system_request_context();
+  DCHECK(browser_process_context_getter.get());
+
+  content::StoragePartition* signin_partition = login::GetSigninPartition();
+  if (!signin_partition) {
+    ProxyAuthTransferDone();
+    return;
+  }
+
+  scoped_refptr<net::URLRequestContextGetter> webview_context_getter =
+      signin_partition->GetURLRequestContext();
+  DCHECK(webview_context_getter.get());
+  content::BrowserThread::PostDelayedTask(
+      content::BrowserThread::IO, FROM_HERE,
+      base::BindOnce(&TransferContextAuthenticationsOnIOThread,
+                     base::RetainedRef(webview_context_getter),
+                     base::RetainedRef(browser_process_context_getter),
+                     base::BindOnce(&SigninScreenHandler::ProxyAuthTransferDone,
+                                    weak_factory_.GetWeakPtr())),
+      base::TimeDelta::FromMilliseconds(kAuthCacheTransferDelayMs));
+}
+
+void SigninScreenHandler::ProxyAuthTransferDone() {
+  has_pending_auth_ui_ = false;
+  // Reload auth extension as proxy credentials are supplied.
+  if (!IsSigninScreenHiddenByError() && ui_state_ == UI_STATE_GAIA_SIGNIN) {
+    ReloadGaia(true /* force_reload*/);
+  }
+  update_state_closure_.Cancel();
+}
+
 void SigninScreenHandler::Observe(int type,
                                   const content::NotificationSource& source,
                                   const content::NotificationDetails& details) {
@@ -1084,13 +1179,10 @@ void SigninScreenHandler::Observe(int type,
       has_pending_auth_ui_ = true;
       break;
     }
-    case chrome::NOTIFICATION_AUTH_SUPPLIED:
-      has_pending_auth_ui_ = false;
-      // Reload auth extension as proxy credentials are supplied.
-      if (!IsSigninScreenHiddenByError() && ui_state_ == UI_STATE_GAIA_SIGNIN)
-        ReloadGaia(true);
-      update_state_closure_.Cancel();
+    case chrome::NOTIFICATION_AUTH_SUPPLIED: {
+      TriggerProxyAuthTransfer();
       break;
+    }
     case chrome::NOTIFICATION_AUTH_CANCELLED: {
       // Don't reload auth extension if proxy auth dialog was cancelled.
       has_pending_auth_ui_ = false;

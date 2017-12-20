@@ -73,7 +73,6 @@
 #include "components/policy/core/common/cloud/cloud_policy_store.h"
 #include "components/policy/core/common/cloud/device_management_service.h"
 #include "components/policy/core/common/policy_map.h"
-#include "components/policy/core/common/policy_service.h"
 #include "components/policy/core/common/policy_types.h"
 #include "components/policy/policy_constants.h"
 #include "components/policy/proto/cloud_policy.pb.h"
@@ -92,9 +91,6 @@
 #include "content/public/browser/storage_partition.h"
 #include "google_apis/gaia/gaia_auth_util.h"
 #include "google_apis/gaia/google_service_auth_error.h"
-#include "net/http/http_auth_cache.h"
-#include "net/http/http_network_session.h"
-#include "net/http/http_transaction_factory.h"
 #include "net/url_request/url_request_context.h"
 #include "net/url_request/url_request_context_getter.h"
 #include "ui/accessibility/ax_enums.h"
@@ -122,55 +118,8 @@ enum LoginPasswordChangeFlow {
   LOGIN_PASSWORD_CHANGE_FLOW_COUNT,  // Must be the last entry.
 };
 
-// Delay for transferring the auth cache to the system profile.
-const long int kAuthCacheTransferDelayMs = 2000;
-
 // Delay for restarting the ui if safe-mode login has failed.
 const long int kSafeModeRestartUiDelayMs = 30000;
-
-// Makes a call to the policy subsystem to reload the policy when we detect
-// authentication change.
-void RefreshPoliciesOnUIThread() {
-  if (g_browser_process->policy_service())
-    g_browser_process->policy_service()->RefreshPolicies(base::Closure());
-}
-
-// Copies any authentication details that were entered in the login profile to
-// the main profile to make sure all subsystems of Chrome can access the network
-// with the provided authentication which are possibly for a proxy server.
-void TransferContextAuthenticationsOnIOThread(
-    net::URLRequestContextGetter* default_profile_context_getter,
-    net::URLRequestContextGetter* webview_context_getter,
-    net::URLRequestContextGetter* browser_process_context_getter) {
-  net::HttpAuthCache* new_cache =
-      browser_process_context_getter->GetURLRequestContext()
-          ->http_transaction_factory()
-          ->GetSession()
-          ->http_auth_cache();
-  net::HttpAuthCache* old_cache =
-      default_profile_context_getter->GetURLRequestContext()
-          ->http_transaction_factory()
-          ->GetSession()
-          ->http_auth_cache();
-  new_cache->UpdateAllFrom(*old_cache);
-
-  // Copy the auth cache from webview's context since the proxy authentication
-  // information is saved in webview's context.
-  if (webview_context_getter) {
-    net::HttpAuthCache* webview_cache =
-        webview_context_getter->GetURLRequestContext()
-            ->http_transaction_factory()
-            ->GetSession()
-            ->http_auth_cache();
-    new_cache->UpdateAllFrom(*webview_cache);
-  }
-
-  VLOG(1) << "Main request context populated with authentication data.";
-  // Last but not least tell the policy subsystem to refresh now as it might
-  // have been stuck until now too.
-  content::BrowserThread::PostTask(content::BrowserThread::UI, FROM_HERE,
-                                   base::BindOnce(&RefreshPoliciesOnUIThread));
-}
 
 // Record UMA for password login of regular user when Easy sign-in is enabled.
 void RecordPasswordLoginEvent(const UserContext& user_context) {
@@ -313,8 +262,6 @@ ExistingUserController::ExistingUserController(LoginDisplayHost* host)
 
   registrar_.Add(this, chrome::NOTIFICATION_USER_LIST_CHANGED,
                  content::NotificationService::AllSources());
-  registrar_.Add(this, chrome::NOTIFICATION_AUTH_SUPPLIED,
-                 content::NotificationService::AllSources());
   registrar_.Add(this, chrome::NOTIFICATION_SESSION_STARTED,
                  content::NotificationService::AllSources());
   show_user_names_subscription_ = cros_settings_->AddSettingsObserver(
@@ -424,40 +371,6 @@ void ExistingUserController::Observe(
   if (type == chrome::NOTIFICATION_USER_LIST_CHANGED) {
     DeviceSettingsChanged();
     return;
-  }
-  if (type == chrome::NOTIFICATION_AUTH_SUPPLIED) {
-    // Possibly the user has authenticated against a proxy server and we might
-    // need the credentials for enrollment and other system requests from the
-    // main |g_browser_process| request context (see bug
-    // http://crosbug.com/24861). So we transfer any credentials to the global
-    // request context here.
-    // The issue we have here is that the NOTIFICATION_AUTH_SUPPLIED is sent
-    // just after the UI is closed but before the new credentials were stored
-    // in the profile. Therefore we have to give it some time to make sure it
-    // has been updated before we copy it.
-    VLOG(1) << "Authentication was entered manually, possibly for proxyauth.";
-    scoped_refptr<net::URLRequestContextGetter> browser_process_context_getter =
-        g_browser_process->system_request_context();
-    Profile* signin_profile = ProfileHelper::GetSigninProfile();
-    scoped_refptr<net::URLRequestContextGetter> signin_profile_context_getter =
-        signin_profile->GetRequestContext();
-    DCHECK(browser_process_context_getter.get());
-    DCHECK(signin_profile_context_getter.get());
-
-    content::StoragePartition* signin_partition = login::GetSigninPartition();
-    scoped_refptr<net::URLRequestContextGetter> webview_context_getter;
-    if (signin_partition) {
-      webview_context_getter = signin_partition->GetURLRequestContext();
-      DCHECK(webview_context_getter.get());
-    }
-
-    content::BrowserThread::PostDelayedTask(
-        content::BrowserThread::IO, FROM_HERE,
-        base::BindOnce(&TransferContextAuthenticationsOnIOThread,
-                       base::RetainedRef(signin_profile_context_getter),
-                       base::RetainedRef(webview_context_getter),
-                       base::RetainedRef(browser_process_context_getter)),
-        base::TimeDelta::FromMilliseconds(kAuthCacheTransferDelayMs));
   }
 }
 

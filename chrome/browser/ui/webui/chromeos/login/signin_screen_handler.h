@@ -330,6 +330,9 @@ class SigninScreenHandler
   // based on wallpaper color extraction results.
   void UpdateAccountPickerColors();
 
+  void TriggerProxyAuthTransfer();
+  void ProxyAuthTransferDone();
+
   // BaseScreenHandler implementation:
   void DeclareLocalizedValues(
       ::login::LocalizedValuesBuilder* builder) override;
