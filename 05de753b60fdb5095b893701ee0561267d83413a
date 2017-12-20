@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a8992def_d01f46c7",
+        "filename": "content/browser/network_service_restart_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-20T19:54:57Z",
+      "side": 1,
+      "message": "I think this call should be done on the IO thread as well.  Calling RunLoop\u0027s QuitClosure on one thread while calling the RunLoop\u0027s Run() method on the other isn\u0027t guaranteed to work.\n\nSo instead, we should move all the SimpleURLLoaderTestHelper code to the IOThread (Including the WAitForCallbackCall), Use PostTaskAndReply and use anther RunLoop\u0027s QuitClosure.  To get the net error code, you can just create a stack variable, and pass a pointer to it to the closure.",
+      "range": {
+        "startLine": 72,
+        "startChar": 23,
+        "endLine": 72,
+        "endChar": 38
+      },
+      "revId": "05de753b60fdb5095b893701ee0561267d83413a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6e23850_a58db8ec",
+        "filename": "content/browser/network_service_restart_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-20T19:54:57Z",
+      "side": 1,
+      "message": "nit:  Can just make this public",
+      "range": {
+        "startLine": 132,
+        "startChar": 18,
+        "endLine": 132,
+        "endChar": 33
+      },
+      "revId": "05de753b60fdb5095b893701ee0561267d83413a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b502862e_2d9b5ec3",
+        "filename": "content/browser/network_service_restart_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-20T19:54:57Z",
+      "side": 1,
+      "message": "I think we also need to flush the getter\u0027s URLLoaderFactory on the IO thread?",
+      "range": {
+        "startLine": 296,
+        "startChar": 13,
+        "endLine": 296,
+        "endChar": 44
+      },
+      "revId": "05de753b60fdb5095b893701ee0561267d83413a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0998f50_d8dca4a3",
+        "filename": "content/browser/network_service_restart_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-20T19:54:57Z",
+      "side": 1,
+      "message": "Why don\u0027t we do a real navigation?\n\nui_test_utils::NavigateToUrl?  We\u0027ll still need to flush the parition (And the getter as well, I think?) after the crash.",
+      "range": {
+        "startLine": 306,
+        "startChar": 23,
+        "endLine": 306,
+        "endChar": 47
+      },
+      "revId": "05de753b60fdb5095b893701ee0561267d83413a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36b16a26_b110262b",
+        "filename": "content/browser/url_loader_factory_getter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-20T19:54:57Z",
+      "side": 1,
+      "message": "I don\u0027t think we can guarantee that.  This is a reference counted class, with a reference being held on the IO thread, and by tasks posted to call this method on the UI thread.  Suppose this happens:\n\nIO Thread:  Something calls GetNetworkFactory(), and we discover we need to create one, so post a task to the UI thread to get a URLLoaderFactory.\nUI Thread:  Teardown of the profile starts.  We post a task to destroy our IO thread objects, and then destroy the StoragePartition.\nUI Thread:  This task gets run.  We discover there\u0027s no storage partition.  To fully express how sad this makes us, we try and dereference it anyways, and crash.\n\nSo how to fix this?  We could use a weak pointer, but I think it\u0027s better to have StorageParititionImpl just call into its url_loader_factory_getter_ on destruction, and tell if that the StorageParititonImpl is about to be destroyed.  That makes lifetime relationships clearer.\n\nThen in this method, if |partition_| is nullptr, we can just do nothing.\n\nI\u0027m not sure there\u0027s a good way to reliably test that case, though - I\u0027m not familiar enough with profile teardown to be sure, one way or another.",
+      "range": {
+        "startLine": 106,
+        "startChar": 33,
+        "endLine": 106,
+        "endChar": 43
+      },
+      "revId": "05de753b60fdb5095b893701ee0561267d83413a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "315c32d0_b5a1d6c9",
+        "filename": "content/browser/url_loader_factory_getter.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-20T19:54:57Z",
+      "side": 1,
+      "message": "I don\u0027t think we need a weak pointer?  It\u0027s fine to just document that the partition must outlive the loader factory.  In fact, taking a WeakPtr implies this class handles the case where the partition is destroyed first.",
+      "range": {
+        "startLine": 30,
+        "startChar": 30,
+        "endLine": 30,
+        "endChar": 37
+      },
+      "revId": "05de753b60fdb5095b893701ee0561267d83413a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb906da3_e5b07adf",
+        "filename": "content/browser/url_loader_factory_getter.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-20T19:54:57Z",
+      "side": 1,
+      "message": "Should document these methods (And add a blank line before each method)",
+      "range": {
+        "startLine": 70,
+        "startChar": 41,
+        "endLine": 70,
+        "endChar": 0
+      },
+      "revId": "05de753b60fdb5095b893701ee0561267d83413a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
