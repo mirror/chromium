@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "048883d1_3eac6bee",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_utils_ios.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1115986
+      },
+      "writtenOn": "2017-12-20T16:16:31Z",
+      "side": 1,
+      "message": "We\u0027ve been trying to remove stuff from classes named _util, any reason why you could not keep this functionality in a separate file instead of folding all of it in this file?",
+      "range": {
+        "startLine": 219,
+        "startChar": 5,
+        "endLine": 219,
+        "endChar": 30
+      },
+      "revId": "58bfe48deb04d748d5e69aa30e1b07eaab6494c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a298b805_63d26997",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_utils_ios.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1115986
+      },
+      "writtenOn": "2017-12-20T16:16:31Z",
+      "side": 1,
+      "message": "Can these functions take a PrefService instead of a a very generic browser_state? This would make testing easier as well I believe.",
+      "range": {
+        "startLine": 222,
+        "startChar": 54,
+        "endLine": 222,
+        "endChar": 67
+      },
+      "revId": "58bfe48deb04d748d5e69aa30e1b07eaab6494c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
