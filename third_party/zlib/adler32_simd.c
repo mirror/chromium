@@ -74,7 +74,7 @@ uint32_t ZLIB_INTERNAL adler32_simd_(  /* SSSE3 */
 
     while (blocks)
     {
-        unsigned n = NMAX / BLOCK_SIZE;  /* The NMAX constraint. */
+        z_size_t n = NMAX / BLOCK_SIZE;  /* The NMAX constraint. */
         if (n > blocks)
             n = blocks;
         blocks -= n;
@@ -235,7 +235,7 @@ uint32_t ZLIB_INTERNAL adler32_simd_(  /* NEON */
 
     while (blocks)
     {
-        unsigned n = NMAX / BLOCK_SIZE;  /* The NMAX constraint. */
+        z_size_t n = NMAX / BLOCK_SIZE;  /* The NMAX constraint. */
         if (n > blocks)
             n = blocks;
         blocks -= n;
