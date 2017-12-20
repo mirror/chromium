@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "190573e5_494b5a06",
+        "filename": "chrome/browser/resources/md_extensions/code_section.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-20T00:42:59Z",
+      "side": 1,
+      "message": "@param, @return, @private",
+      "revId": "b76a2481785bd6a6338d3c05cc826caa5eefff22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8196af37_c146f9d2",
+        "filename": "chrome/browser/resources/md_extensions/code_section.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-20T00:42:59Z",
+      "side": 1,
+      "message": "No longer used?",
+      "range": {
+        "startLine": 169,
+        "startChar": 6,
+        "endLine": 169,
+        "endChar": 39
+      },
+      "revId": "b76a2481785bd6a6338d3c05cc826caa5eefff22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
