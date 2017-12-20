@@ -2354,12 +2354,6 @@ const FeatureEntry kFeatureEntries[] = {
          "disallowFetchForDocWrittenScriptsInMainFrame=true",
          switches::kBlinkSettings,
          "disallowFetchForDocWrittenScriptsInMainFrame=false")},
-#if defined(OS_ANDROID)
-    {"enable-ntp-popular-sites", flag_descriptions::kNtpPopularSitesName,
-     flag_descriptions::kNtpPopularSitesDescription, kOsAndroid,
-     ENABLE_DISABLE_VALUE_TYPE(ntp_tiles::switches::kEnableNTPPopularSites,
-                               ntp_tiles::switches::kDisableNTPPopularSites)},
-#endif  // OS_ANDROID
 #if defined(OS_WIN)
     {"trace-export-events-to-etw",
      flag_descriptions::kTraceExportEventsToEtwName,
