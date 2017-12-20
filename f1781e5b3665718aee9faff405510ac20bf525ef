@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d84b4b7b_0972ddd1",
+        "filename": "docs/chrome_os_logging.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-20T22:55:00Z",
+      "side": 1,
+      "message": "sure, seems reasonable to mention. do you know if anything from session_manager actually ends up there in practice? i didn\u0027t see anything on the system that i checked just now.",
+      "parentUuid": "10e4b9f0_b54f1955",
+      "range": {
+        "startLine": 8,
+        "startChar": 2,
+        "endLine": 8,
+        "endChar": 25
+      },
+      "revId": "f1781e5b3665718aee9faff405510ac20bf525ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "aa5f161a_be56490b",
         "filename": "docs/chrome_os_logging.md",
         "patchSetId": 1
@@ -39,6 +63,24 @@
       "revId": "f1781e5b3665718aee9faff405510ac20bf525ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d368062_0cf4b8a0",
+        "filename": "docs/chrome_os_logging.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-20T22:55:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aa5f161a_be56490b",
+      "revId": "f1781e5b3665718aee9faff405510ac20bf525ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "56eb68bc_08127779",
+        "filename": "docs/chrome_os_logging.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-20T22:55:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1faaab03_916f45e2",
+      "revId": "f1781e5b3665718aee9faff405510ac20bf525ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2ef75989_4ba84fbb",
         "filename": "docs/chrome_os_logging.md",
         "patchSetId": 1
@@ -73,6 +133,24 @@
       "revId": "f1781e5b3665718aee9faff405510ac20bf525ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0002a3ac_a9deded6",
+        "filename": "docs/chrome_os_logging.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-20T22:55:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2ef75989_4ba84fbb",
+      "revId": "f1781e5b3665718aee9faff405510ac20bf525ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
