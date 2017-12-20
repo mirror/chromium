@@ -16,6 +16,24 @@
       "revId": "4a08a792f138bd49f3789674693e39131bee432d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78113640_924dba2d",
+        "filename": "cc/scheduler/scheduler_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 3101,
+      "author": {
+        "id": 1244969
+      },
+      "writtenOn": "2017-12-20T15:10:45Z",
+      "side": 1,
+      "message": "I added checks that we are in WillBeginImplFrame and called set_needs_redraw. I think this is as close as we can get? I guess if we know we called set_needs_redraw we know we called ProcessScheduledActions.",
+      "parentUuid": "314d782d_444e552f",
+      "revId": "4a08a792f138bd49f3789674693e39131bee432d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
