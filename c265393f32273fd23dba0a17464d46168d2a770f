@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c63c0f50_ae88f842",
+        "filename": "third_party/closure_compiler/externs/developer_private.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 583,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-20T01:15:50Z",
+      "side": 1,
+      "message": "How is this implemented? Looking at the C++ code, it just triggers updating, but it returns immediately. See https://cs.chromium.org/chromium/src/chrome/browser/extensions/api/developer_private/developer_private_api.cc?sq\u003dpackage:chromium\u0026dr\u003dCSs\u0026l\u003d592.",
+      "range": {
+        "startLine": 583,
+        "startChar": 45,
+        "endLine": 583,
+        "endChar": 68
+      },
+      "revId": "c265393f32273fd23dba0a17464d46168d2a770f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
