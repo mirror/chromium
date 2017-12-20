@@ -104,9 +104,6 @@ source_set("zlib_inflate_chunk_simd") {
     }
   }
 
-  configs -= [ "//build/config/compiler:chromium_code" ]
-  configs += [ "//build/config/compiler:no_chromium_code" ]
-
   public_configs = [ ":zlib_inflate_chunk_simd_config" ]
 }
 
