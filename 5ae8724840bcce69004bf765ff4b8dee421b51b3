@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "91435be5_841d4ae8",
+        "filename": "ash/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-12-20T02:48:22Z",
+      "side": 1,
+      "message": "Thanks for the move_source_file.py.\nI move the files to ash/accelerators.",
+      "parentUuid": "d28e7592_85033b00",
+      "revId": "5ae8724840bcce69004bf765ff4b8dee421b51b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ad66cf0e_0ac3bc12",
         "filename": "ash/DEPS",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "11c016cd_98894045",
+        "filename": "ash/DEPS",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-12-20T02:48:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ad66cf0e_0ac3bc12",
+      "revId": "5ae8724840bcce69004bf765ff4b8dee421b51b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "463ce011_9b3d18ee",
         "filename": "ash/keyboard_shortcut_viewer_controller/keyboard_shortcut_data.cc",
         "patchSetId": 1
@@ -47,6 +83,24 @@
       "writtenOn": "2017-12-13T16:02:14Z",
       "side": 1,
       "message": "Is every accelerator action going to have all this metadata? If so, it seems like this should be built into the master accelerator table.",
+      "revId": "5ae8724840bcce69004bf765ff4b8dee421b51b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe152608_6d4d5353",
+        "filename": "ash/keyboard_shortcut_viewer_controller/keyboard_shortcut_data.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-12-20T02:48:22Z",
+      "side": 1,
+      "message": "Discussed offline. Will keep this separated metadata, and ensure each accelerator has at least one metadata.\nThe reason is that, at chrome side, we do not need this metadata for accelerators for other platforms. It would be cleaner to keep the metadata in a separate file.",
+      "parentUuid": "463ce011_9b3d18ee",
       "revId": "5ae8724840bcce69004bf765ff4b8dee421b51b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "618ea995_02a8f89d",
+        "filename": "ash/keyboard_shortcut_viewer_controller/keyboard_shortcut_data.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-12-20T02:48:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d4675522_07a2779d",
+      "revId": "5ae8724840bcce69004bf765ff4b8dee421b51b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "37350e92_e03869a9",
         "filename": "ash/keyboard_shortcut_viewer_controller/keyboard_shortcut_data.h",
         "patchSetId": 1
@@ -81,6 +153,24 @@
       "writtenOn": "2017-12-13T16:02:14Z",
       "side": 1,
       "message": "nit: provide an example in the comment, \"Press \u003cfoo\u003e or \u003cbar\u003e to change resolution up or down\" or whatever it is.",
+      "revId": "5ae8724840bcce69004bf765ff4b8dee421b51b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83d3bc84_54952f9f",
+        "filename": "ash/keyboard_shortcut_viewer_controller/keyboard_shortcut_data.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-12-20T02:48:22Z",
+      "side": 1,
+      "message": "Added an example.",
+      "parentUuid": "37350e92_e03869a9",
       "revId": "5ae8724840bcce69004bf765ff4b8dee421b51b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "c23ae813_acfc34d7",
+        "filename": "ash/keyboard_shortcut_viewer_controller/keyboard_shortcut_viewer_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-12-20T02:48:22Z",
+      "side": 1,
+      "message": "Mojom file modified for this purpose.",
+      "parentUuid": "7d025206_26373663",
+      "revId": "5ae8724840bcce69004bf765ff4b8dee421b51b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b7870a6f_dec2c6a6",
         "filename": "ash/public/interfaces/keyboard_shortcut_viewer_controller.mojom",
         "patchSetId": 1
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "7ecea986_ac119698",
+        "filename": "ash/public/interfaces/keyboard_shortcut_viewer_controller.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-12-20T02:48:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b7870a6f_dec2c6a6",
+      "revId": "5ae8724840bcce69004bf765ff4b8dee421b51b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "247e88c6_881e42af",
         "filename": "ash/public/interfaces/keyboard_shortcut_viewer_controller.mojom",
         "patchSetId": 1
@@ -132,6 +258,24 @@
       "writtenOn": "2017-12-13T16:02:14Z",
       "side": 1,
       "message": "Is this a string id? See below.",
+      "revId": "5ae8724840bcce69004bf765ff4b8dee421b51b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c6a3cba_c9e6ddef",
+        "filename": "ash/public/interfaces/keyboard_shortcut_viewer_controller.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-12-20T02:48:22Z",
+      "side": 1,
+      "message": "Yes, it is string id. Changed to |shortcut_id|.",
+      "parentUuid": "247e88c6_881e42af",
       "revId": "5ae8724840bcce69004bf765ff4b8dee421b51b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "c9906cb1_fd3f5782",
+        "filename": "ash/public/interfaces/keyboard_shortcut_viewer_controller.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-12-20T02:48:22Z",
+      "side": 1,
+      "message": "Changed to |shortcut_id|. Need to be a string id, so that in the string, we can put placeholder \u003cph\u003e, and later to get the offset of the modifiers and key in the string. And the offset will be used to add different styles/views ranges in StlyedLabel.",
+      "parentUuid": "5cdc135b_0a73b03c",
+      "revId": "5ae8724840bcce69004bf765ff4b8dee421b51b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a630f10d_316f097c",
         "filename": "ash/public/interfaces/keyboard_shortcut_viewer_controller.mojom",
         "patchSetId": 1
@@ -166,6 +328,24 @@
       "writtenOn": "2017-12-13T16:02:14Z",
       "side": 1,
       "message": "This whole struct could benefit from a comment with an example. Maybe something like \"Allows a shortcut like Ctrl-Shift+Plus to be displayed as \"Press \u003cCtrl-Shift-+ icon\u003e and \u003cCtrl-Shift-Minus\u003e to zoom out\". Or is this not for shortcuts with multiple strings? I can\u0027t actually tell from the docs here *why* the replacements are happening.",
+      "revId": "5ae8724840bcce69004bf765ff4b8dee421b51b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4882210f_a563598f",
+        "filename": "ash/public/interfaces/keyboard_shortcut_viewer_controller.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-12-20T02:48:22Z",
+      "side": 1,
+      "message": "Talked offline and added an example.",
+      "parentUuid": "a630f10d_316f097c",
       "revId": "5ae8724840bcce69004bf765ff4b8dee421b51b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "03632f97_f6c045ab",
+        "filename": "ash/public/interfaces/keyboard_shortcut_viewer_controller.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-12-20T02:48:22Z",
+      "side": 1,
+      "message": "It is just a Show(). Modified the mojom.",
+      "parentUuid": "2cfbdb92_5416d1b3",
+      "revId": "5ae8724840bcce69004bf765ff4b8dee421b51b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "46bf40dc_c9e14e3f",
         "filename": "chrome/browser/chromeos/arc/voice_interaction/internal",
         "patchSetId": 1
@@ -200,6 +398,24 @@
       "writtenOn": "2017-12-13T16:02:14Z",
       "side": 1,
       "message": "I don\u0027t think you want to commit this.",
+      "revId": "5ae8724840bcce69004bf765ff4b8dee421b51b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f58fffb_4b93957a",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/internal",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-12-20T02:48:22Z",
+      "side": 1,
+      "message": "Should be removed.",
+      "parentUuid": "46bf40dc_c9e14e3f",
       "revId": "5ae8724840bcce69004bf765ff4b8dee421b51b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -223,6 +439,24 @@
     },
     {
       "key": {
+        "uuid": "28a87954_bb435044",
+        "filename": "chrome/browser/chromeos/chrome_browser_main_chromeos.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1101,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-12-20T02:48:22Z",
+      "side": 1,
+      "message": "Ha, I added a flag in a previous cl, but forget to include the flag here! Added to the Shell.cc as well.",
+      "parentUuid": "f49778c9_8f33ca0f",
+      "revId": "5ae8724840bcce69004bf765ff4b8dee421b51b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ee77f215_7d7037c7",
         "filename": "components/keyboard_shortcut_viewer_strings.grdp",
         "patchSetId": 1
@@ -234,6 +468,24 @@
       "writtenOn": "2017-12-13T16:02:14Z",
       "side": 1,
       "message": "These duplicate strings in https://cs.chromium.org/chromium/src/chrome/app/chromeos_strings.grdp?type\u003dcs\u0026q\u003df:grd+Ctrl\u0026sq\u003dpackage:chromium\u0026l\u003d202\n\nMaybe all those strings could move into ui/strings near here?\n\nhttps://cs.chromium.org/chromium/src/ui/strings/ui_strings.grd?type\u003dcs\u0026q\u003df:grd+Ctrl\u0026sq\u003dpackage:chromium\u0026l\u003d556",
+      "revId": "5ae8724840bcce69004bf765ff4b8dee421b51b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30e0adf4_8059fe02",
+        "filename": "components/keyboard_shortcut_viewer_strings.grdp",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-12-20T02:48:22Z",
+      "side": 1,
+      "message": "The strings for Ctrl, Alt, Shift, and Search are not needed in this cl. Will make the changes in the next cl when using them. Alternative, similar to using \"underlying characters for keys\", we might just use string \"Ctrl\" etc in the future because we are not going to translate them anyway.",
+      "parentUuid": "ee77f215_7d7037c7",
       "revId": "5ae8724840bcce69004bf765ff4b8dee421b51b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -257,6 +509,24 @@
     },
     {
       "key": {
+        "uuid": "c37121a8_4a598a9d",
+        "filename": "components/keyboard_shortcut_viewer_strings.grdp",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-12-20T02:48:22Z",
+      "side": 1,
+      "message": "You are right. We normally can use the underlying characters for the keys and we are not going to translate them. But some keys [1] e.g. VKEY_BACK, we might translate \"Backspace\" to different languages. In other case, ui::VKEY_VOLUME_UP, we need to replace with translated text (for search purpose in other language) and display in form of icon for \"vol. up\".\n\nCurrent plan is that, we will have a similar mapping in [1], for those keys having mapping, we will use I18n strings. For those keys without the mapping, we will fallback to \"underlying characters for the keys\".\n\"+\" and \"-\" are in the mappings.\n\n[1] https://cs.chromium.org/chromium/src/chrome/browser/resources/chromeos/keyboard_overlay.js?l\u003d39\u0026rcl\u003db457d926a263ff8c41f7902897c38e113afe0970",
+      "parentUuid": "9d112c53_445411fb",
+      "revId": "5ae8724840bcce69004bf765ff4b8dee421b51b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "84100152_cd71ec30",
         "filename": "components/keyboard_shortcut_viewer_strings.grdp",
         "patchSetId": 1
@@ -268,6 +538,24 @@
       "writtenOn": "2017-12-13T16:02:14Z",
       "side": 1,
       "message": "Could we just have a couple generic grouped-action descriptions, rather than tying this one to screen resolution in particular? It seems like \"Ctrl-Shift and Plus or Minus\" might be a common pattern used for more than one group.",
+      "revId": "5ae8724840bcce69004bf765ff4b8dee421b51b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26ccde1e_b1a32be2",
+        "filename": "components/keyboard_shortcut_viewer_strings.grdp",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-12-20T02:48:22Z",
+      "side": 1,
+      "message": "Thanks. Good suggestion! We could use generic patterns: e.g.\n1. modifier1 + key1, e.g. Ctrl + V\n2. modifier1 and key1, e.g. Ctrl and +\n3. key1 (only), e.g. Overview mode key\n4. modifier1 or modifier2 and key1, e.g. Alt or Search and up arrow\n5. modifier1 + key1 or key2, e.g. Ctrl + Shift and + or -\n6. modifier1 + key1 through key2, e.g. Ctrl + 1 through 8\n...\n\nIn a discussion with UX, we do not need to put the keys into a bubbles for case 6 (should apply case 5 as well). So most likely for the grouped_actions and extra_actions, we do not use generic patterns because we have customized description for each of them. But for most of the \"standard\" actions with shortcut in form of \"Ctrl + V\", we can use the generic patterns.",
+      "parentUuid": "84100152_cd71ec30",
       "revId": "5ae8724840bcce69004bf765ff4b8dee421b51b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
