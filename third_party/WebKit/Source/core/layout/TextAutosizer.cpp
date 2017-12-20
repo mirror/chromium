@@ -594,8 +594,7 @@ void TextAutosizer::UpdatePageInfo() {
              ->GetViewportDescription()
              .IsSpecifiedByAuthor()) {
       page_info_.device_scale_adjustment_ =
-          document_->GetPage()->GetChromeClient().WindowToViewportScalar(
-              document_->GetSettings()->GetDeviceScaleAdjustment());
+          document_->GetSettings()->GetDeviceScaleAdjustment();
     } else {
       page_info_.device_scale_adjustment_ = 1.0f;
     }
@@ -1128,12 +1127,13 @@ void TextAutosizer::ApplyMultiplier(LayoutObject* layout_object,
     multiplier = 1;
   }
 
-  if (current_style.TextAutosizingMultiplier() == multiplier)
+  if (current_style.TextAutosizingMultiplier() == multiplier &&
+      current_style.TextAutosizingZoom() == current_style.EffectiveZoom())
     return;
 
   // We need to clone the layoutObject style to avoid breaking style sharing.
   scoped_refptr<ComputedStyle> style = ComputedStyle::Clone(current_style);
-  style->SetTextAutosizingMultiplier(multiplier);
+  style->SetTextAutosizingMultiplier(multiplier, true);
   style->SetUnique();
 
   switch (relayout_behavior) {

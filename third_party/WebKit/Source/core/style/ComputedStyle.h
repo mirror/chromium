@@ -1132,7 +1132,8 @@ class ComputedStyle : public ComputedStyleBase,
     SetEmptyStateInternal(b);
   }
 
-  CORE_EXPORT void SetTextAutosizingMultiplier(float);
+  CORE_EXPORT void SetTextAutosizingMultiplier(float multiplier,
+                                               bool update_zoom = false);
 
   // Column utility functions.
   void ClearMultiCol();

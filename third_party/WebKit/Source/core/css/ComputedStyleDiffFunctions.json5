@@ -61,6 +61,7 @@
                 "-webkit-text-stroke-width", "line-height", "font", 
                 "-webkit-border-horizontal-spacing", 
                 "-webkit-border-vertical-spacing", "TextAutosizingMultiplier", 
+                "TextAutosizingZoom",
                 "NamedGridColumnLines", "NamedGridRowLines", "OrderedNamedGridColumnLines", 
                 "OrderedNamedGridRowLines", "AutoRepeatNamedGridColumnLines", 
                 "AutoRepeatNamedGridRowLines", "AutoRepeatOrderedNamedGridColumnLines", 
