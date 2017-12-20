@@ -1,5 +1,6 @@
 include_rules = [
   "+chromeos/disks",
+  "+components/crash/core/common/crash_key.h",
   "+content/public/browser",
   "+content/public/test",
   "+device/media_transfer_protocol",
