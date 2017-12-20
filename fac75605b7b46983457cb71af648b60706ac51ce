@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5f7d62ad_96233440",
+        "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/automation_predicate.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 502,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-20T01:01:47Z",
+      "side": 1,
+      "message": "What if a node is contenteditable with role\u003dtextbox but it explicitly\nhas aria-multiline\u003dfalse? We should probably respect the author in that\ncase, and if not explicitly set I wonder if we should use the height as\na heuristic?",
+      "revId": "fac75605b7b46983457cb71af648b60706ac51ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "118241d6_cf465703",
+        "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/braille_command_handler.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-20T01:01:47Z",
+      "side": 1,
+      "message": "Keep in mind that for contenteditable, current.start.node might be\na descendant of the contenteditable element. So while EDITABLE is\nset on the whole contenteditable subtree, MULTILINE is typically\nonly set on the root.",
+      "revId": "fac75605b7b46983457cb71af648b60706ac51ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
