@@ -13,6 +13,11 @@ const char kAMDSwitchable[] = "amd-switchable";
 const char kDisableGpuDriverBugWorkarounds[] =
     "disable-gpu-driver-bug-workarounds";
 
+// Disable using a single multiplanar GpuMemoryBuffer to store multiplanar
+// VideoFrames (e.g. NV12 or I420), see https://crbug.com/791676.
+const char kDisableMultiplanarGpuMemoryBuffersForVideoFrames[] =
+    "disable-multiplanar-gpu-memory-buffers-for-video-frames";
+
 // Disable GPU rasterization, i.e. rasterize on the CPU only.
 // Overrides the kEnableGpuRasterization and kForceGpuRasterization flags.
 const char kDisableGpuRasterization[] = "disable-gpu-rasterization";

@@ -32,6 +32,7 @@
 #include "content/browser/browser_child_process_host_impl.h"
 #include "content/browser/browser_main_loop.h"
 #include "content/browser/field_trial_recorder.h"
+#include "content/browser/gpu/browser_gpu_memory_buffer_manager.h"
 #include "content/browser/gpu/compositor_util.h"
 #include "content/browser/gpu/gpu_data_manager_impl.h"
 #include "content/browser/gpu/gpu_main_thread_factory.h"
@@ -1104,6 +1105,21 @@ bool GpuProcessHost::LaunchGpuProcess() {
 
   GetContentClient()->browser()->AppendExtraCommandLineSwitches(
       cmd_line.get(), process_->GetData().id);
+
+  BrowserGpuMemoryBufferManager* gpu_memory_buffer_manager =
+      BrowserGpuMemoryBufferManager::current();
+  DCHECK(gpu_memory_buffer_manager);
+  // For performance reasons, discourage storing videoFrames in a multiplanar
+  // GpuMemoryBuffer if this is not native, see https://crbug.com/791676.
+  if (!gpu_memory_buffer_manager->IsNativeGpuMemoryBufferConfiguration(
+          gfx::BufferFormat::YUV_420_BIPLANAR,
+          gfx::BufferUsage::GPU_READ_CPU_READ_WRITE) &&
+      !gpu_memory_buffer_manager->IsNativeGpuMemoryBufferConfiguration(
+          gfx::BufferFormat::YVU_420,
+          gfx::BufferUsage::GPU_READ_CPU_READ_WRITE)) {
+    cmd_line->AppendArg(
+        switches::kDisableMultiplanarGpuMemoryBuffersForVideoFrames);
+  }
 
   GpuDataManagerImpl::GetInstance()->AppendGpuCommandLine(cmd_line.get());
   if (cmd_line->HasSwitch(switches::kUseGL)) {
