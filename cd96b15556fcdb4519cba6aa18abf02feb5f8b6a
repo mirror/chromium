@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d584b2d5_439c6658",
+        "filename": "content/public/test/test_browser_thread_bundle.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-12-20T21:23:27Z",
+      "side": 1,
+      "message": "I\u0027d say keep \"is a convenience class \" followed by \"which allows...\" as you wrote it.",
+      "revId": "cd96b15556fcdb4519cba6aa18abf02feb5f8b6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23188bbb_c609bea0",
+        "filename": "content/public/test/test_browser_thread_bundle.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-12-20T21:23:27Z",
+      "side": 1,
+      "message": "s/when possible/otherwise/ ?",
+      "revId": "cd96b15556fcdb4519cba6aa18abf02feb5f8b6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
