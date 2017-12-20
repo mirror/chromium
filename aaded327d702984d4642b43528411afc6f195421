@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "44cd4a68_b36b28ce",
+        "filename": "base/android/java/src/org/chromium/base/library_loader/LibraryLoader.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 472,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-12-20T20:02:18Z",
+      "side": 1,
+      "message": "nit: hitting this would be a build-time error, so probably better as an assert.",
+      "revId": "aaded327d702984d4642b43528411afc6f195421",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d2797b7_15ac52fb",
+        "filename": "build/config/android/rules.gni",
+        "patchSetId": 7
+      },
+      "lineNbr": 2030,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-12-20T20:02:18Z",
+      "side": 1,
+      "message": "could even put the assert here.",
+      "revId": "aaded327d702984d4642b43528411afc6f195421",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
