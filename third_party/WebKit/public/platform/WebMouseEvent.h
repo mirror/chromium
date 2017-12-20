@@ -87,14 +87,6 @@ class WebMouseEvent : public WebInputEvent, public WebPointerProperties {
   BLINK_PLATFORM_EXPORT WebMouseEvent FlattenTransform() const;
 #endif
 
-  void SetPositionInWidget(float x, float y) {
-    position_in_widget_ = WebFloatPoint(x, y);
-  }
-
-  void SetPositionInScreen(float x, float y) {
-    position_in_screen_ = WebFloatPoint(x, y);
-  }
-
  protected:
   WebMouseEvent(unsigned size_param, PointerId id_param)
       : WebInputEvent(size_param), WebPointerProperties(id_param) {}
