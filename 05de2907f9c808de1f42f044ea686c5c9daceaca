@@ -2,6 +2,98 @@
   "comments": [
     {
       "key": {
+        "uuid": "adc6ce06_1aaacd5f",
+        "filename": "chrome/browser/android/tab_android.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-20T22:42:41Z",
+      "side": 1,
+      "message": "Delete",
+      "range": {
+        "startLine": 49,
+        "startChar": 24,
+        "endLine": 49,
+        "endChar": 39
+      },
+      "revId": "05de2907f9c808de1f42f044ea686c5c9daceaca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afb12838_bc55cf30",
+        "filename": "chrome/browser/android/tab_android.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 724,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-20T22:42:41Z",
+      "side": 1,
+      "message": "Should this be MainFrame()? I\u0027m not particularly knowledgeable about the frame tree here, but I believe that the RenderFrameObserver interface is only registered on main frames.",
+      "range": {
+        "startLine": 724,
+        "startChar": 22,
+        "endLine": 724,
+        "endChar": 37
+      },
+      "revId": "05de2907f9c808de1f42f044ea686c5c9daceaca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db3b9e33_62c51808",
+        "filename": "chrome/browser/android/tab_android.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 726,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-20T22:42:41Z",
+      "side": 1,
+      "message": "Could just be:\n\nweb_contents()-\u003eGetMainFrame()-\u003eGetRemoteAssociatedInterfaces()-\u003eGetInterface(\u0026renderer);\n\nSo you can remove the temporary which is otherwise unused.",
+      "range": {
+        "startLine": 726,
+        "startChar": 2,
+        "endLine": 726,
+        "endChar": 77
+      },
+      "revId": "05de2907f9c808de1f42f044ea686c5c9daceaca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d3a046b_27f66668",
+        "filename": "chrome/browser/android/tab_android.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 735,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-20T22:42:41Z",
+      "side": 1,
+      "message": "Similarly:\n\nweb_contents()-\u003eGetInterstitialPage()-\u003eGetMainFrame()-\u003eGetRemoteAssociatedInterfaces()-\u003eGetInterface(\u0026interstitial_renderer);",
+      "range": {
+        "startLine": 734,
+        "startChar": 3,
+        "endLine": 735,
+        "endChar": 32
+      },
+      "revId": "05de2907f9c808de1f42f044ea686c5c9daceaca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b5c494b9_fb4f53ba",
         "filename": "chrome/common/chrome_render_frame.mojom",
         "patchSetId": 3
@@ -41,6 +133,190 @@
         "startChar": 59,
         "endLine": 58,
         "endChar": 63
+      },
+      "revId": "05de2907f9c808de1f42f044ea686c5c9daceaca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5896549_1af4b305",
+        "filename": "chrome/renderer/chrome_render_frame_observer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-20T22:42:41Z",
+      "side": 1,
+      "message": "I think this should just be render_frame()-\u003eGetRenderView()-\u003eUpdateBrowserControlsState(...), which appears to be what the code is doing before this CL.\n\nThen you can get rid of the previous static_casts.\n\nAlso, this whole method should be #if defined, not just within the method body.",
+      "range": {
+        "startLine": 480,
+        "startChar": 2,
+        "endLine": 480,
+        "endChar": 47
+      },
+      "revId": "05de2907f9c808de1f42f044ea686c5c9daceaca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "818fbb59_1db96213",
+        "filename": "chrome/renderer/chrome_render_frame_observer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-20T22:42:41Z",
+      "side": 1,
+      "message": "This method is #if defined(OS_ANDROID) everywhere, so we should do it here as well.\n\n\n#if defined(OS_ANDROID)\n  void UpdateBrowserControlsState(...);\n#endif\n\nWe should also only register the Mojo interface on Android to avoid adding unused interfaces on other platforms.",
+      "range": {
+        "startLine": 79,
+        "startChar": 7,
+        "endLine": 79,
+        "endChar": 33
+      },
+      "revId": "05de2907f9c808de1f42f044ea686c5c9daceaca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d345a87e_5622b8f2",
+        "filename": "chrome/renderer/chrome_render_view_observer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-20T22:42:41Z",
+      "side": 1,
+      "message": "I think all of these can be deleted.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 55
+      },
+      "revId": "05de2907f9c808de1f42f044ea686c5c9daceaca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3fcc6df_af6a8ba9",
+        "filename": "chrome/renderer/chrome_render_view_observer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-20T22:42:41Z",
+      "side": 1,
+      "message": "I think these lines can be deleted too.",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 40,
+        "endChar": 31
+      },
+      "revId": "05de2907f9c808de1f42f044ea686c5c9daceaca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d32f6f6_1818d49b",
+        "filename": "chrome/renderer/chrome_render_view_observer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-20T22:42:41Z",
+      "side": 1,
+      "message": "Delete",
+      "range": {
+        "startLine": 8,
+        "startChar": 10,
+        "endLine": 8,
+        "endChar": 13
+      },
+      "revId": "05de2907f9c808de1f42f044ea686c5c9daceaca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04bf45b6_bf32e882",
+        "filename": "chrome/renderer/chrome_render_view_observer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-20T22:42:41Z",
+      "side": 1,
+      "message": "Delete",
+      "range": {
+        "startLine": 10,
+        "startChar": 10,
+        "endLine": 10,
+        "endChar": 16
+      },
+      "revId": "05de2907f9c808de1f42f044ea686c5c9daceaca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f306de86_e3ca8d3a",
+        "filename": "chrome/renderer/chrome_render_view_observer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-20T22:42:41Z",
+      "side": 1,
+      "message": "Delete",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 31
+      },
+      "revId": "05de2907f9c808de1f42f044ea686c5c9daceaca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b5f03c1_817bd4b6",
+        "filename": "chrome/renderer/chrome_render_view_observer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-20T22:42:41Z",
+      "side": 1,
+      "message": "Delete",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 41
       },
       "revId": "05de2907f9c808de1f42f044ea686c5c9daceaca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
