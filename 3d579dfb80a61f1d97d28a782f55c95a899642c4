@@ -42,6 +42,24 @@
     },
     {
       "key": {
+        "uuid": "cd42b689_001c1b35",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2017-12-20T21:55:20Z",
+      "side": 1,
+      "message": "I also mildly prefer using a uint64_t for the \"length\" and returning OUT_OF_RANGE_INTEGER_VALUE in the UNSIGNED and NEGATIVE cases for values \u003e\u003d2^63. I wrote in https://canary-chromium-review.googlesource.com/c/chromium/src/+/777807/14/content/browser/webauth/cbor/cbor_reader.cc#84 that I didn\u0027t mind waiting until we actually need floats to fix that, but Balazs stumbling over it makes me think that maybe it\u0027ll be more of an impediment to reading the code than it\u0027s worth.",
+      "parentUuid": "df3830f9_59cc9e76",
+      "revId": "3d579dfb80a61f1d97d28a782f55c95a899642c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "eab4fa9a_de7727db",
         "filename": "content/browser/webauth/cbor/cbor_reader.cc",
         "patchSetId": 19
@@ -70,6 +88,24 @@
       "writtenOn": "2017-12-20T21:07:58Z",
       "side": 1,
       "message": "While I understand that the standard requires two\u0027s complement representation for signed integers, which makes this safe, but could we instead rely on safe_math.h to do this for us?",
+      "revId": "3d579dfb80a61f1d97d28a782f55c95a899642c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45096329_39b32eee",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2017-12-20T21:55:20Z",
+      "side": 1,
+      "message": "The standard only has a 2\u0027s-complement requirement for the intN_t types, although I believe Chrome insists on 2\u0027s-complement for all ints.\n\nI have no objections to spelling this `(-base::CheckedNumeric\u003cint64_t\u003e(length) - 1).ValueOrDie()`.",
+      "parentUuid": "61c9965a_8b4fa5f2",
       "revId": "3d579dfb80a61f1d97d28a782f55c95a899642c4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -167,6 +203,29 @@
     },
     {
       "key": {
+        "uuid": "47649780_a0a2e256",
+        "filename": "content/browser/webauth/cbor/cbor_reader_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 714,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2017-12-20T21:55:20Z",
+      "side": 1,
+      "message": "Leave the const auto\u0026 everywhere.",
+      "range": {
+        "startLine": 714,
+        "startChar": 7,
+        "endLine": 714,
+        "endChar": 11
+      },
+      "revId": "3d579dfb80a61f1d97d28a782f55c95a899642c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "23f86e92_67572f82",
         "filename": "content/browser/webauth/cbor/cbor_values.h",
         "patchSetId": 19
@@ -178,6 +237,24 @@
       "writtenOn": "2017-12-20T21:07:58Z",
       "side": 1,
       "message": "nit: If there is only one getter anyway, does the user of CBORValue really care if it\u0027s signed or unsigned? Alternatively, can we add is_integer()?",
+      "revId": "3d579dfb80a61f1d97d28a782f55c95a899642c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "322f273b_30a05633",
+        "filename": "content/browser/webauth/cbor/cbor_values.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2017-12-20T21:55:20Z",
+      "side": 1,
+      "message": "is_integer() seems fine to me. Callers probably don\u0027t care about the major type, and if they do, they can check the range of the value returned from GetInteger().",
+      "parentUuid": "23f86e92_67572f82",
       "revId": "3d579dfb80a61f1d97d28a782f55c95a899642c4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -235,6 +312,24 @@
       "writtenOn": "2017-12-20T21:07:58Z",
       "side": 1,
       "message": "nit: With the CHECK above, the value can never be out of range. I\u0027m not sure if we really want to keep this?",
+      "revId": "3d579dfb80a61f1d97d28a782f55c95a899642c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b38c2263_b56811b6",
+        "filename": "content/browser/webauth/cbor/cbor_writer.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2017-12-20T21:55:20Z",
+      "side": 1,
+      "message": "It doesn\u0027t seem to hurt to have extra checked_cast\u003c\u003es, especially if the CHECK moves from the previous line to another file.",
+      "parentUuid": "ccce4b54_2c058ea7",
       "revId": "3d579dfb80a61f1d97d28a782f55c95a899642c4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
