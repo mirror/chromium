@@ -123,7 +123,9 @@ void DelegatedFrameHost::MaybeCreateResizeLock() {
   if (!client_->DelegatedFrameCanCreateResizeLock())
     return;
 
-  gfx::Size desired_size = client_->DelegatedFrameHostDesiredSizeInDIP();
+  gfx::Size desired_size;
+  client_->DelegatedFrameHostGetDesiredFrameParams(&desired_size, nullptr,
+                                                   nullptr);
   if (desired_size.IsEmpty())
     return;
   if (desired_size == current_frame_size_in_dip_)
@@ -301,13 +303,16 @@ void DelegatedFrameHost::OnAggregatedSurfaceDamage(
 void DelegatedFrameHost::WasResized() {
   const viz::SurfaceId* primary_surface_id =
       client_->DelegatedFrameHostGetLayer()->GetPrimarySurfaceId();
+  viz::LocalSurfaceId new_local_surface_id;
+  gfx::Size new_dip_size;
+  client_->DelegatedFrameHostGetDesiredFrameParams(&new_dip_size, nullptr,
+                                                   &new_local_surface_id);
   if (enable_surface_synchronization_ &&
       client_->DelegatedFrameHostIsVisible() &&
-      (!primary_surface_id || primary_surface_id->local_surface_id() !=
-                                  client_->GetLocalSurfaceId())) {
-    current_frame_size_in_dip_ = client_->DelegatedFrameHostDesiredSizeInDIP();
-
-    viz::SurfaceId surface_id(frame_sink_id_, client_->GetLocalSurfaceId());
+      (!primary_surface_id ||
+       primary_surface_id->local_surface_id() != new_local_surface_id)) {
+    viz::SurfaceId surface_id(frame_sink_id_, new_local_surface_id);
+    current_frame_size_in_dip_ = new_dip_size;
     client_->DelegatedFrameHostGetLayer()->SetShowPrimarySurface(
         surface_id, current_frame_size_in_dip_, GetSurfaceReferenceFactory());
     if (compositor_)
@@ -317,8 +322,7 @@ void DelegatedFrameHost::WasResized() {
     return;
   }
 
-  if (client_->DelegatedFrameHostDesiredSizeInDIP() !=
-          current_frame_size_in_dip_ &&
+  if (new_dip_size != current_frame_size_in_dip_ &&
       !client_->DelegatedFrameHostIsVisible()) {
     EvictDelegatedFrame();
   }
@@ -345,14 +349,15 @@ void DelegatedFrameHost::UpdateGutters() {
     return;
   }
 
-  if (current_frame_size_in_dip_.width() <
-      client_->DelegatedFrameHostDesiredSizeInDIP().width()) {
+  gfx::Size dip_size;
+  client_->DelegatedFrameHostGetDesiredFrameParams(&dip_size, nullptr, nullptr);
+
+  if (current_frame_size_in_dip_.width() < dip_size.width()) {
     right_gutter_.reset(new ui::Layer(ui::LAYER_SOLID_COLOR));
     right_gutter_->SetColor(GetGutterColor());
-    int width = client_->DelegatedFrameHostDesiredSizeInDIP().width() -
-                current_frame_size_in_dip_.width();
+    int width = dip_size.width() - current_frame_size_in_dip_.width();
     // The right gutter also includes the bottom-right corner, if necessary.
-    int height = client_->DelegatedFrameHostDesiredSizeInDIP().height();
+    int height = dip_size.height();
     right_gutter_->SetBounds(
         gfx::Rect(current_frame_size_in_dip_.width(), 0, width, height));
 
@@ -361,13 +366,11 @@ void DelegatedFrameHost::UpdateGutters() {
     right_gutter_.reset();
   }
 
-  if (current_frame_size_in_dip_.height() <
-      client_->DelegatedFrameHostDesiredSizeInDIP().height()) {
+  if (current_frame_size_in_dip_.height() < dip_size.height()) {
     bottom_gutter_.reset(new ui::Layer(ui::LAYER_SOLID_COLOR));
     bottom_gutter_->SetColor(GetGutterColor());
     int width = current_frame_size_in_dip_.width();
-    int height = client_->DelegatedFrameHostDesiredSizeInDIP().height() -
-                 current_frame_size_in_dip_.height();
+    int height = dip_size.height() - current_frame_size_in_dip_.height();
     bottom_gutter_->SetBounds(
         gfx::Rect(0, current_frame_size_in_dip_.height(), width, height));
     client_->DelegatedFrameHostGetLayer()->Add(bottom_gutter_.get());
@@ -379,8 +382,10 @@ void DelegatedFrameHost::UpdateGutters() {
 gfx::Size DelegatedFrameHost::GetRequestedRendererSize() const {
   if (resize_lock_)
     return resize_lock_->expected_size();
-  else
-    return client_->DelegatedFrameHostDesiredSizeInDIP();
+
+  gfx::Size dip_size;
+  client_->DelegatedFrameHostGetDesiredFrameParams(&dip_size, nullptr, nullptr);
+  return dip_size;
 }
 
 void DelegatedFrameHost::CheckResizeLock() {

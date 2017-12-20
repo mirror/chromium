@@ -64,12 +64,13 @@ class CONTENT_EXPORT DelegatedFrameHostClient {
   // Returns the color that the resize gutters should be drawn with. Takes the
   // suggested color from the current page background.
   virtual SkColor DelegatedFrameHostGetGutterColor(SkColor color) const = 0;
-  virtual gfx::Size DelegatedFrameHostDesiredSizeInDIP() const = 0;
-
+  virtual void DelegatedFrameHostGetDesiredFrameParams(
+      gfx::Size* size_in_dip,
+      float* scale_factor,
+      viz::LocalSurfaceId* local_surface_id) = 0;
   virtual bool DelegatedFrameCanCreateResizeLock() const = 0;
   virtual std::unique_ptr<CompositorResizeLock>
   DelegatedFrameHostCreateResizeLock() = 0;
-  virtual viz::LocalSurfaceId GetLocalSurfaceId() const = 0;
 
   virtual void OnBeginFrame(base::TimeTicks frame_time) = 0;
   virtual bool IsAutoResizeEnabled() const = 0;

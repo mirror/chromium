@@ -512,19 +512,18 @@ SkColor BrowserCompositorMac::DelegatedFrameHostGetGutterColor(
   return client_->BrowserCompositorMacGetGutterColor(color);
 }
 
-gfx::Size BrowserCompositorMac::DelegatedFrameHostDesiredSizeInDIP() const {
-  gfx::Size dip_size;
-  GetViewProperties(&dip_size, nullptr, nullptr);
-  return dip_size;
+void BrowserCompositorMac::DelegatedFrameHostGetDesiredFrameParams(
+    gfx::Size* dip_size,
+    float* scale_factor,
+    viz::LocalSurfaceId* local_surface_id) {
+  GetViewProperties(dip_size, scale_factor, nullptr);
+  if (local_surface_id)
+    *local_surface_id = delegated_frame_host_surface_id_;
 }
 
 bool BrowserCompositorMac::DelegatedFrameCanCreateResizeLock() const {
   // Mac uses the RenderWidgetResizeHelper instead of a resize lock.
   return false;
-}
-
-viz::LocalSurfaceId BrowserCompositorMac::GetLocalSurfaceId() const {
-  return delegated_frame_host_surface_id_;
 }
 
 std::unique_ptr<CompositorResizeLock>

@@ -41,9 +41,16 @@ SkColor DelegatedFrameHostClientAura::DelegatedFrameHostGetGutterColor(
   return color;
 }
 
-gfx::Size DelegatedFrameHostClientAura::DelegatedFrameHostDesiredSizeInDIP()
-    const {
-  return render_widget_host_view_->window_->bounds().size();
+void DelegatedFrameHostClientAura::DelegatedFrameHostGetDesiredFrameParams(
+    gfx::Size* size_in_dip,
+    float* scale_factor,
+    viz::LocalSurfaceId* local_surface_id) {
+  if (size_in_dip)
+    *size_in_dip = render_widget_host_view_->window_->bounds().size();
+  if (scale_factor)
+    *scale_factor = render_widget_host_view_->device_scale_factor_;
+  if (local_surface_id)
+    *local_surface_id = render_widget_host_view_->window_->GetLocalSurfaceId();
 }
 
 bool DelegatedFrameHostClientAura::DelegatedFrameCanCreateResizeLock() const {
@@ -71,10 +78,6 @@ DelegatedFrameHostClientAura::DelegatedFrameHostCreateResizeLock() {
 
   gfx::Size desired_size = render_widget_host_view_->window_->bounds().size();
   return std::make_unique<CompositorResizeLock>(this, desired_size);
-}
-
-viz::LocalSurfaceId DelegatedFrameHostClientAura::GetLocalSurfaceId() const {
-  return render_widget_host_view_->GetLocalSurfaceId();
 }
 
 void DelegatedFrameHostClientAura::OnBeginFrame(base::TimeTicks frame_time) {

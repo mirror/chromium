@@ -1527,7 +1527,10 @@ RenderWidgetHostImpl* RenderWidgetHostViewMac::GetRenderWidgetHostImpl() const {
 
 viz::LocalSurfaceId RenderWidgetHostViewMac::GetLocalSurfaceId() const {
   // Call to the DelegatedFrameHost interface.
-  return browser_compositor_->GetLocalSurfaceId();
+  viz::LocalSurfaceId local_surface_id;
+  browser_compositor_->DelegatedFrameHostGetDesiredFrameParams(
+      nullptr, nullptr, &local_surface_id);
+  return local_surface_id;
 }
 
 viz::FrameSinkId RenderWidgetHostViewMac::GetFrameSinkId() {
