@@ -70,6 +70,24 @@
       "revId": "868f69368dfe8b0c54fe3cc3b67c1d8342ab971f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a32eea3_bfb264ba",
+        "filename": "third_party/WebKit/public/platform/TaskType.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-12-20T12:02:49Z",
+      "side": 1,
+      "message": "I think that matching every directory with associated task type is not quite what we want.\n\nThe spec part of task type describes the nature of the task and I believe that the non-spec part of TaskType should match this as well. However, in 90% of the cases the directory matches the nature of the task, so it\u0027s a very strong hint (almost all tasks from core/loader are loading-related). However, there might be directories and files without a strong associations (e.g. core/dom/Document.cpp posts some async tasks and it\u0027s rather hard to guess what they are from just filename).\n\nSo I believe that we need some descriptions of what these tasks to provide a guideline in non-obvious contexts.",
+      "parentUuid": "983dc718_c51fe07a",
+      "revId": "868f69368dfe8b0c54fe3cc3b67c1d8342ab971f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
