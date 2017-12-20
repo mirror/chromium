@@ -73,9 +73,9 @@ class PowerButtonTestBase : public AshTestBase {
   void SendAccelerometerUpdate(const gfx::Vector3dF& screen,
                                const gfx::Vector3dF& keyboard);
 
-  // Sets the flag for forcing clamshell-like power button behavior and resets
-  // |power_button_controller_|.
-  void ForceClamshellPowerButton();
+  // Sets the flag for forcing no display off when tap the power button in a
+  // convertible device and resets |power_button_controller_|.
+  void ForceNoDisplayOff();
 
   // Simulates a power button press.
   void PressPowerButton();

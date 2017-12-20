@@ -97,12 +97,12 @@ class ASH_EXPORT PowerButtonController
   }
 
  private:
-  // Updates |button_type_| and |force_clamshell_power_button_| based on the
+  // Updates |button_type_| and |force_no_display_off_| based on the
   // current command line.
   void ProcessCommandLine();
 
   // Called by |display_off_timer_| to force backlights off shortly after the
-  // screen is locked. Only used when |force_clamshell_power_button_| is true.
+  // screen is locked. Only used when |force_no_display_off_| is true.
   void ForceDisplayOffAfterLock();
 
   // Used to force backlights off, when needed.
@@ -127,9 +127,9 @@ class ASH_EXPORT PowerButtonController
   // mode.
   bool enable_tablet_mode_ = false;
 
-  // True if the device should use non-tablet-style power button behavior even
-  // if it is a convertible device.
-  bool force_clamshell_power_button_ = false;
+  // True if display of the device should not off when tap the power button
+  // even if it is a convertible device.
+  bool force_no_display_off_ = false;
 
   // True if the lock animation was started for the last power button down
   // event.
@@ -150,7 +150,7 @@ class ASH_EXPORT PowerButtonController
   std::unique_ptr<TabletPowerButtonController> tablet_controller_;
 
   // Used to run ForceDisplayOffAfterLock() shortly after the screen is locked.
-  // Only started when |force_clamshell_power_button_| is true.
+  // Only started when |force_no_display_off_| is true.
   base::OneShotTimer display_off_timer_;
 
   DISALLOW_COPY_AND_ASSIGN(PowerButtonController);

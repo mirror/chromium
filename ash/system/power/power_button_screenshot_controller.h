@@ -34,7 +34,7 @@ class ASH_EXPORT PowerButtonScreenshotController : public ui::EventHandler {
   PowerButtonScreenshotController(
       TabletPowerButtonController* tablet_controller,
       base::TickClock* tick_clock,
-      bool force_clamshell_power_button);
+      bool force_no_display_off);
   ~PowerButtonScreenshotController() override;
 
   // Returns true if power button event is consumed by |this|, otherwise false.
@@ -91,9 +91,9 @@ class ASH_EXPORT PowerButtonScreenshotController : public ui::EventHandler {
   // Time source for performed action times.
   base::TickClock* tick_clock_;  // Not owned.
 
-  // Initialized by PowerButtonController to indicate using non-tablet-style
-  // power button behavior even if we're running on a convertible device.
-  const bool force_clamshell_power_button_;
+  // Initialized by PowerButtonController to indicate forcing no display off
+  // when tap the power button even if we're running on a convertible device.
+  const bool force_no_display_off_;
 
   DISALLOW_COPY_AND_ASSIGN(PowerButtonScreenshotController);
 };

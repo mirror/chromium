@@ -522,7 +522,7 @@ TEST_F(TabletPowerButtonControllerTest, EnableOnAccelerometerUpdate) {
   // TabletPowerButtonController shouldn't be initialized in response to
   // accelerometer events.
   base::CommandLine::ForCurrentProcess()->AppendSwitch(
-      switches::kForceClamshellPowerButton);
+      switches::kForceNoDisplayOff);
   ResetPowerButtonController();
   SendAccelerometerUpdate(kSidewaysVector, kSidewaysVector);
   EXPECT_FALSE(tablet_controller_);
@@ -613,12 +613,12 @@ TEST_F(TabletPowerButtonControllerTest, TouchscreenEnabledClamshell) {
   ASSERT_TRUE(power_manager_client_->backlights_forced_off());
   ASSERT_FALSE(GetGlobalTouchscreenEnabled());
 
-  // Simulates a system reboot with |kForceClamshellPowerButton| requested by
+  // Simulates a system reboot with |kForceNoDisplayOff| requested by
   // flag, resetting backlights forced off state in powerd and
   // PowerButtonController.
   power_manager_client_->SetBacklightsForcedOff(false);
   base::CommandLine::ForCurrentProcess()->AppendSwitch(
-      switches::kForceClamshellPowerButton);
+      switches::kForceNoDisplayOff);
   ResetPowerButtonController();
   // Run the event loop for PowerButtonDisplayController to get backlight state.
   base::RunLoop().RunUntilIdle();

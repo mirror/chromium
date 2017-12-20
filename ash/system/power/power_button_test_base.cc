@@ -108,9 +108,9 @@ void PowerButtonTestBase::SendAccelerometerUpdate(
       power_button_controller_->screenshot_controller_for_test();
 }
 
-void PowerButtonTestBase::ForceClamshellPowerButton() {
+void PowerButtonTestBase::ForceNoDisplayOff() {
   base::CommandLine::ForCurrentProcess()->AppendSwitch(
-      switches::kForceClamshellPowerButton);
+      switches::kForceNoDisplayOff);
   ResetPowerButtonController();
 }
 

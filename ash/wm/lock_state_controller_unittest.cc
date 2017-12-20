@@ -970,9 +970,9 @@ TEST_F(LockStateControllerTest, TestHiddenWallpaperLockUnlock) {
 }
 
 // Test that backlights are forced off shortly after the screen is locked when
-// clamshell-style power button behavior is forced.
+// it is forced to have no display off in a convertible device.
 TEST_F(LockStateControllerTest, ClamshellDisplayOffAfterLock) {
-  ForceClamshellPowerButton();
+  ForceNoDisplayOff();
   Initialize(ButtonType::NORMAL, LoginStatus::USER);
 
   // If the power button isn't held long enough for the screen to be locked, the
@@ -1012,7 +1012,7 @@ TEST_F(LockStateControllerTest, ClamshellDisplayOffAfterLock) {
 // Test that user activity prevents backlights from being forced off after the
 // screen is locked.
 TEST_F(LockStateControllerTest, CancelClamshellDisplayOffAfterLock) {
-  ForceClamshellPowerButton();
+  ForceNoDisplayOff();
   Initialize(ButtonType::NORMAL, LoginStatus::USER);
 
   // If a key is pressed shortly after locking, the display-off timer should be

@@ -32,10 +32,10 @@ constexpr base::TimeDelta
 PowerButtonScreenshotController::PowerButtonScreenshotController(
     TabletPowerButtonController* tablet_controller,
     base::TickClock* tick_clock,
-    bool force_clamshell_power_button)
+    bool force_no_display_off)
     : tablet_controller_(tablet_controller),
       tick_clock_(tick_clock),
-      force_clamshell_power_button_(force_clamshell_power_button) {
+      force_no_display_off_(force_no_display_off) {
   DCHECK(tick_clock_);
   // Using prepend to make sure this event handler is put in front of
   // AcceleratorFilter. See Shell::Init().
@@ -68,9 +68,10 @@ bool PowerButtonScreenshotController::OnPowerButtonEvent(
     return false;
   }
 
-  // If forced clamshell power button, start a timer waiting volume down key
-  // pressed. When timing out, perform this delayed power button behavior.
-  if (force_clamshell_power_button_ && !volume_down_key_pressed_ && down) {
+  // If forced no display off when tap the power button, start a timer waiting
+  // volume down key pressed. When timing out, perform this delayed power
+  // button behavior.
+  if (force_no_display_off_ && !volume_down_key_pressed_ && down) {
     clamshell_power_button_timer_.Start(
         FROM_HERE, kScreenshotChordDelay, this,
         &PowerButtonScreenshotController::OnClamshellPowerButtonTimeout);

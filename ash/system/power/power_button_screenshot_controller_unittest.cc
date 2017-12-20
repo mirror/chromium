@@ -327,7 +327,7 @@ class ClamshellPowerButtonScreenshotControllerTest
   // PowerButtonScreenshotControllerTest:
   void SetUp() override {
     PowerButtonScreenshotControllerTest::SetUp();
-    ForceClamshellPowerButton();
+    ForceNoDisplayOff();
     SendAccelerometerUpdate(kSidewaysVector, kSidewaysVector);
     InitScreenshotTestApi();
   }
