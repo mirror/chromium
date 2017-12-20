@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "860b1e31_f64cf8a6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1241620
+      },
+      "writtenOn": "2017-12-20T04:48:06Z",
+      "side": 1,
+      "message": "Extension example is:\nhttps://chrome.google.com/webstore/detail/кнопка-импорта-резюме-в-t/njiecgjpookikhndnojndhfidpmjpakj/reviews\n\nIt contains the following strings in the manifest:\n\n\"icons\": {\n  \"128\": \"./icons/disabled.png\"\n},\n  \n\"browser_action\": {\n  \"default_icon\": \"icons/disabled.png\"\n},\n\n\n\nI\u0027m in doubt, is ExtensionIconSet::GetPaths a correct abstraction level to fix the issue. Should ExtensionIconSet store normalized relative paths in the map_ member or they should be unified in GetPath method? May be it is a responsibility of ExtensionsClient::GetBrowserImagePaths method?",
+      "revId": "3f9df56d199e32b7a74989fa0ae2caf06cbff840",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
