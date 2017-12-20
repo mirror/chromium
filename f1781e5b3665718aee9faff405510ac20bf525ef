@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "10e4b9f0_b54f1955",
+        "filename": "docs/chrome_os_logging.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1135824
+      },
+      "writtenOn": "2017-12-20T22:43:10Z",
+      "side": 1,
+      "message": "Might make sense to clarify that this is actually session_manager\u0027s stdout/stderr, and Chrome inherits this. So the file may also contain output from session_manager.",
+      "range": {
+        "startLine": 8,
+        "startChar": 2,
+        "endLine": 8,
+        "endChar": 25
+      },
+      "revId": "f1781e5b3665718aee9faff405510ac20bf525ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
