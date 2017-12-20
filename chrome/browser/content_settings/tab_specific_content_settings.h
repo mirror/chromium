@@ -267,6 +267,12 @@ class TabSpecificContentSettings
     return midi_usages_state_;
   }
 
+  // Returns the ContentSettingsUsageState that controls the device's sensors
+  // usage on this page.
+  const ContentSettingsUsagesState& sensors_usages_state() const {
+    return sensors_usages_state_;
+  }
+
   // Call to indicate that there is a protocol handler pending user approval.
   void set_pending_protocol_handler(const ProtocolHandler& handler) {
     pending_protocol_handler_ = handler;
@@ -378,6 +384,11 @@ class TabSpecificContentSettings
   void OnMidiSysExAccessed(const GURL& reqesting_origin);
   void OnMidiSysExAccessBlocked(const GURL& requesting_origin);
 
+  // These methods are called to update the status about access to device's
+  // sensors.
+  void OnSensorsAccessed(const GURL& reqesting_origin);
+  void OnSensorsAccessBlocked(const GURL& requesting_origin);
+
   // Adds the given |SiteDataObserver|. The |observer| is notified when a
   // locale shared object, like for example a cookie, is accessed.
   void AddSiteDataObserver(SiteDataObserver* observer);
@@ -427,6 +438,9 @@ class TabSpecificContentSettings
   // Clears the MIDI settings.
   void ClearMidiContentSettings();
 
+  // Clears the sensors content settings.
+  void ClearSensorsContentSettings();
+
   // Clears settings changed by the user via PageInfo since the last navigation.
   void ClearContentSettingsChangedViaPageInfo();
 
@@ -435,6 +449,9 @@ class TabSpecificContentSettings
 
   // Updates MIDI settings on navigation.
   void MidiDidNavigate(content::NavigationHandle* navigation_handle);
+
+  // Updates content settings for sensors on navigation.
+  void SensorsDidNavigate(content::NavigationHandle* navigation_handle);
 
   // All currently registered |SiteDataObserver|s.
   base::ObserverList<SiteDataObserver> observer_list_;
@@ -456,6 +473,9 @@ class TabSpecificContentSettings
 
   // Manages information about MIDI usages in this page.
   ContentSettingsUsagesState midi_usages_state_;
+
+  // Manages information about sensor usages in this page.
+  ContentSettingsUsagesState sensors_usages_state_;
 
   // The pending protocol handler, if any. This can be set if
   // registerProtocolHandler was invoked without user gesture.

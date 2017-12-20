@@ -4,8 +4,12 @@
 
 #include "chrome/browser/generic_sensor/sensor_permission_context.h"
 
+#include "base/feature_list.h"
+#include "chrome/browser/content_settings/tab_specific_content_settings.h"
+#include "chrome/browser/permissions/permission_request_id.h"
 #include "components/content_settings/core/common/content_settings.h"
 #include "components/content_settings/core/common/content_settings_types.h"
+#include "services/device/public/cpp/device_features.h"
 #include "third_party/WebKit/common/feature_policy/feature_policy_feature.h"
 #include "url/gurl.h"
 
@@ -15,6 +19,27 @@ SensorPermissionContext::SensorPermissionContext(Profile* profile)
                             blink::FeaturePolicyFeature::kNotFound) {}
 
 SensorPermissionContext::~SensorPermissionContext() {}
+
+void SensorPermissionContext::UpdateTabContext(const PermissionRequestID& id,
+                                               const GURL& requesting_frame,
+                                               bool allowed) {
+  // Show location bar indicator only when features::kGenericSensorExtraClasses
+  // feature is enabled.
+  if (!base::FeatureList::IsEnabled(features::kGenericSensorExtraClasses))
+    return;
+
+  TabSpecificContentSettings* content_settings =
+      TabSpecificContentSettings::GetForFrame(id.render_process_id(),
+                                              id.render_frame_id());
+  if (!content_settings)
+    return;
+
+  if (allowed) {
+    content_settings->OnSensorsAccessed(requesting_frame);
+  } else {
+    content_settings->OnSensorsAccessBlocked(requesting_frame);
+  }
+}
 
 ContentSetting SensorPermissionContext::GetPermissionStatusInternal(
     content::RenderFrameHost* render_frame_host,

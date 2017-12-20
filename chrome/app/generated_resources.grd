@@ -9458,6 +9458,38 @@ Please help our engineers fix this problem. Tell us what happened right before y
         Block
       </message>
 
+      <!-- Sensor messages -->
+      <message name="IDS_SENSORS_ALLOWED_TOOLTIP" desc="Location bar icon tooltip text when a page is allowed to use device's sensors.">
+        This page is using motion or light sensors.
+      </message>
+      <message name="IDS_SENSORS_BLOCKED_TOOLTIP" desc="Location bar icon tooltip text when a page is blocked from using device's sensors.">
+        This page has been blocked from using motion and light sensors.
+      </message>
+      <message name="IDS_BLOCKED_SENSORS_UNBLOCK" desc="Radio button choice to unblock a site from using device's sensors, displayed in bubble when blocked indicator icon is clicked.">
+        Always allow access to device's motion or light sensors on <ph name="HOST">$1<ex>mail.google.com</ex></ph>
+      </message>
+      <message name="IDS_BLOCKED_SENSORS_NO_ACTION" desc="Radio button choice to continue blocking a site from using device's motion or light sensors, displayed in bubble when blocked indicator icon is clicked.">
+        Continue blocking access to device's motion and light sensors
+      </message>
+      <message name="IDS_ALLOWED_SENSORS_TITLE" desc="Bubble info header text when a page is allowed to use device's sensors.">
+        Access to sensors allowed
+      </message>
+      <message name="IDS_BLOCKED_SENSORS_TITLE" desc="Bubble info header text when a page is not allowed to use device's sensors.">
+        Access to sensors blocked
+      </message>
+      <message name="IDS_ALLOWED_SENSORS_MESSAGE" desc="Message for the page action when access to sensors was allowed">
+        Access to device's motion or light sensors was allowed on this page.
+      </message>
+      <message name="IDS_BLOCKED_SENSORS_MESSAGE" desc="Message for the page action when access to sensors was blocked">
+        Access to device's motion and light sensors was blocked on this page.
+      </message>
+      <message name="IDS_ALLOWED_SENSORS_NO_ACTION" desc="Radio button choice to keep allowing a site to use device's sensors, displayed in bubble when location bar is clicked.">
+        Continue allowing access to device's motion or light sensors
+      </message>
+      <message name="IDS_ALLOWED_SENSORS_BLOCK" desc="Radio button choice to block a site from accessing device's sensors, displayed in bubble when location bar indicator inside is clicked.">
+        Always block access to device's motion and light sensors on <ph name="HOST">$1<ex>mail.google.com</ex></ph>
+      </message>
+
       <!-- Quota messages -->
       <if expr="is_android">
         <message name="IDS_REQUEST_QUOTA_INFOBAR_QUESTION" desc="Mobile: For Android device. Question asked on the info bar whenever webapp requests new (larger) quota to persistently store data on the device (e.g. for persistent-type filesystem).">
