@@ -1,0 +1,124 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "af6fb0d6_cc44589d",
+        "filename": "chrome/browser/resources/print_preview/new/color_settings.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-20T18:18:16Z",
+      "side": 1,
+      "message": "@private",
+      "revId": "0ee1b56226fa942e5529f89a555aa77c1ab502a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecef3fc3_9560fbfc",
+        "filename": "chrome/browser/resources/print_preview/new/color_settings.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-20T18:18:16Z",
+      "side": 1,
+      "message": "Same here.",
+      "revId": "0ee1b56226fa942e5529f89a555aa77c1ab502a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "835cdc14_4fe456ff",
+        "filename": "chrome/browser/resources/print_preview/new/copies_settings.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-20T18:18:16Z",
+      "side": 1,
+      "message": "Is this used anywhere?",
+      "range": {
+        "startLine": 16,
+        "startChar": 44,
+        "endLine": 16,
+        "endChar": 61
+      },
+      "revId": "0ee1b56226fa942e5529f89a555aa77c1ab502a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42075b7d_8e8a5e5d",
+        "filename": "chrome/browser/resources/print_preview/new/copies_settings.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-20T18:18:16Z",
+      "side": 1,
+      "message": "Is this class used anywhere? Maybe turn this to an ID instead and use it from JS, instead of $$(\u0027input[type\u003d\"checkbox\"]\u0027).",
+      "range": {
+        "startLine": 20,
+        "startChar": 24,
+        "endLine": 20,
+        "endChar": 31
+      },
+      "revId": "0ee1b56226fa942e5529f89a555aa77c1ab502a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a32c62fd_0d861903",
+        "filename": "chrome/browser/resources/print_preview/new/layout_settings.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-20T18:18:16Z",
+      "side": 1,
+      "message": "@private here and below.",
+      "revId": "0ee1b56226fa942e5529f89a555aa77c1ab502a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e209e5b_e75a60f4",
+        "filename": "chrome/browser/resources/print_preview/new/layout_settings.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-20T18:18:16Z",
+      "side": 1,
+      "message": "onLayoutSettingChange_() has an argument that already holds this value. Is there a benefit of re-querying the model itself? Maybe change to\n\nonLayoutSettingChange_: function(value) {\n  this.$$(\u0027select\u0027).value \u003d value ? \u0027landscape\u0027 : \u0027portrait\u0027;\n},",
+      "range": {
+        "startLine": 14,
+        "startChar": 8,
+        "endLine": 14,
+        "endChar": 39
+      },
+      "revId": "0ee1b56226fa942e5529f89a555aa77c1ab502a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
