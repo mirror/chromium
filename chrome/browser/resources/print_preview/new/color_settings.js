@@ -4,4 +4,30 @@
 
 Polymer({
   is: 'print-preview-color-settings',
+
+  behaviors: [SettingsBehavior],
+
+  properties: {
+    selectedValue_: {
+      type: String,
+      observer: 'onSelectedValueChange_',
+    },
+  },
+
+  observers: ['onColorChange_(settings.color.value)'],
+
+  setColor_: false,
+
+  onColorChange_: function() {
+    if (this.setColor_) {
+      this.setColor_ = false;
+      return;
+    }
+    this.selectedValue_ = this.getSetting('color').value ? 'color' : 'bw';
+  },
+
+  onSelectedValueChange_: function() {
+    this.setColor_ = true;
+    this.setSetting('color', this.selectedValue_ == 'color');
+  },
 });
