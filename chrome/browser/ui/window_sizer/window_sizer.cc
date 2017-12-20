@@ -149,7 +149,7 @@ class DefaultTargetDisplayProvider : public WindowSizer::TargetDisplayProvider {
                                     const gfx::Rect& bounds) const override {
 #if defined(OS_CHROMEOS)
     // Use the target display on ash.
-    if (ash_util::ShouldOpenAshOnStartup()) {
+    if (!ash_util::IsRunningInMash()) {
       aura::Window* target = ash::Shell::GetRootWindowForNewWindows();
       return screen->GetDisplayNearestWindow(target);
     }
