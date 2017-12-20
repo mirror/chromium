@@ -28,6 +28,8 @@
 @property(nonatomic, readonly, strong) MainContentUIStateUpdater* updater;
 // The WebStateList whose active WebState's scroll state is being forwaded.
 @property(nonatomic, readonly) WebStateList* webStateList;
+// The WebStateList's active WebState.
+@property(nonatomic, assign) web::WebState* webState;
 // The scroll view proxy whose scroll events are forwarded to |updater|.
 @property(nonatomic, readonly, strong) CRWWebViewScrollViewProxy* proxy;
 @end
@@ -35,6 +37,7 @@
 @implementation WebScrollViewMainContentUIForwarder
 @synthesize updater = _updater;
 @synthesize webStateList = _webStateList;
+@synthesize webState = _webState;
 @synthesize proxy = _proxy;
 
 - (instancetype)initWithUpdater:(MainContentUIStateUpdater*)updater
@@ -48,6 +51,7 @@
     _webStateList->AddObserver(_bridge.get());
     web::WebState* activeWebState = webStateList->GetActiveWebState();
     if (activeWebState) {
+      _webState = activeWebState;
       _proxy = activeWebState->GetWebViewProxy().scrollViewProxy;
       [_proxy addObserver:self];
     }
@@ -62,6 +66,14 @@
 }
 
 #pragma mark Accessors
+
+- (void)setWebState:(web::WebState*)webState {
+  if (_webState == webState)
+    return;
+  _webState = webState;
+  self.proxy =
+      _webState ? _webState->GetWebViewProxy().scrollViewProxy : nullptr;
+}
 
 - (void)setProxy:(CRWWebViewScrollViewProxy*)proxy {
   if (_proxy == proxy)
@@ -113,7 +125,7 @@
           withWebState:(web::WebState*)newWebState
                atIndex:(int)atIndex {
   if (newWebState == webStateList->GetActiveWebState())
-    self.proxy = newWebState->GetWebViewProxy().scrollViewProxy;
+    self.webState = newWebState;
 }
 
 - (void)webStateList:(WebStateList*)webStateList
@@ -121,7 +133,7 @@
                 oldWebState:(web::WebState*)oldWebState
                     atIndex:(int)atIndex
                  userAction:(BOOL)userAction {
-  self.proxy = newWebState->GetWebViewProxy().scrollViewProxy;
+  self.webState = newWebState;
 }
 
 @end
