@@ -32,7 +32,7 @@ const char* ScriptModuleStateToString(ScriptModuleState state) {
   return "";
 }
 
-ScriptModule::ScriptModule() {}
+ScriptModule::ScriptModule() = default;
 
 ScriptModule::ScriptModule(v8::Isolate* isolate, v8::Local<v8::Module> module)
     : module_(SharedPersistent<v8::Module>::Create(module, isolate)),
@@ -40,7 +40,7 @@ ScriptModule::ScriptModule(v8::Isolate* isolate, v8::Local<v8::Module> module)
   DCHECK(!module_->IsEmpty());
 }
 
-ScriptModule::~ScriptModule() {}
+ScriptModule::~ScriptModule() = default;
 
 ScriptModule ScriptModule::Compile(v8::Isolate* isolate,
                                    const String& source,
