@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "c30bbcac_bcd7890b",
+        "filename": "chrome/browser/data_saver/data_saver_util.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-12-20T15:37:59Z",
+      "side": 1,
+      "message": "We try to avoid the top-level chrome namespace. Having //chrome things be in the top-level namespace is fine, although it might be nice to namespace this in a class as a static method?",
+      "range": {
+        "startLine": 11,
+        "startChar": 10,
+        "endLine": 11,
+        "endChar": 16
+      },
+      "revId": "15a01131331acc2c9861e2fb15e9481b39d7a7fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a6cb1262_62736d97",
         "filename": "chrome/browser/net/predictor.cc",
         "patchSetId": 5
