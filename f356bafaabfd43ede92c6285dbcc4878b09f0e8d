@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87b7eed0_180e5623",
+        "filename": "content/browser/renderer_host/render_widget_host_view_mac.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 1094,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-12-20T19:51:16Z",
+      "side": 0,
+      "message": "This was not having any effects, so I\u0027ve removed it. I have a hunch that DidAllocateLocalSurfaceIdForAutoResize may not have application on macOS.",
+      "revId": "f356bafaabfd43ede92c6285dbcc4878b09f0e8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b909155e_67714da6",
+        "filename": "content/browser/renderer_host/render_widget_host_view_mac.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 1793,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-12-20T19:51:16Z",
+      "side": 0,
+      "message": "RWHImpl::WasResized was being called by UpdateBackingStoreProperties (in RWHVBase), so this was redundant.",
+      "revId": "f356bafaabfd43ede92c6285dbcc4878b09f0e8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
