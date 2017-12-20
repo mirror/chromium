@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cb5f80e5_d18aa019",
+        "filename": "content/browser/gpu/gpu_data_manager_impl_private.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 706,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-12-20T01:09:17Z",
+      "side": 0,
+      "message": "Just to confirm, code that does something similar (fallback to SwiftShader/Mesa in these situations) already exists on the GPU process side?",
+      "range": {
+        "startLine": 706,
+        "startChar": 40,
+        "endLine": 706,
+        "endChar": 67
+      },
+      "revId": "8b4260c1a49a208825854010b4a3bedcf46e3b88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
