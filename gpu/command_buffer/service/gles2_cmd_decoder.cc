@@ -541,7 +541,7 @@ base::StringPiece GLES2Decoder::GetLogPrefix() {
 // cmd stuff to outside this class.
 class GLES2DecoderImpl : public GLES2Decoder, public ErrorStateClient {
  public:
-  GLES2DecoderImpl(GLES2DecoderClient* client,
+  GLES2DecoderImpl(DecoderClient* client,
                    CommandBufferServiceBase* command_buffer_service,
                    Outputter* outputter,
                    ContextGroup* group);
@@ -559,7 +559,7 @@ class GLES2DecoderImpl : public GLES2Decoder, public ErrorStateClient {
                               int* entries_processed);
 
   // Overridden from GLES2Decoder.
-  base::WeakPtr<GLES2Decoder> AsWeakPtr() override;
+  base::WeakPtr<DecoderInterface> AsWeakPtr() override;
   gpu::ContextResult Initialize(
       const scoped_refptr<gl::GLSurface>& surface,
       const scoped_refptr<gl::GLContext>& context,
@@ -2307,7 +2307,7 @@ class GLES2DecoderImpl : public GLES2Decoder, public ErrorStateClient {
 
   #undef GLES2_CMD_OP
 
-  GLES2DecoderClient* client_;
+  DecoderClient* client_;
 
   // The GL context this decoder renders to on behalf of the client.
   scoped_refptr<gl::GLSurface> surface_;
@@ -3149,7 +3149,7 @@ GLenum BackFramebuffer::CheckStatus() {
 }
 
 GLES2Decoder* GLES2Decoder::Create(
-    GLES2DecoderClient* client,
+    DecoderClient* client,
     CommandBufferServiceBase* command_buffer_service,
     Outputter* outputter,
     ContextGroup* group) {
@@ -3160,8 +3160,12 @@ GLES2Decoder* GLES2Decoder::Create(
   return new GLES2DecoderImpl(client, command_buffer_service, outputter, group);
 }
 
+bool GLES2Decoder::initialized() const {
+  return initialized_;
+}
+
 GLES2DecoderImpl::GLES2DecoderImpl(
-    GLES2DecoderClient* client,
+    DecoderClient* client,
     CommandBufferServiceBase* command_buffer_service,
     Outputter* outputter,
     ContextGroup* group)
@@ -3232,7 +3236,7 @@ GLES2DecoderImpl::GLES2DecoderImpl(
 
 GLES2DecoderImpl::~GLES2DecoderImpl() = default;
 
-base::WeakPtr<GLES2Decoder> GLES2DecoderImpl::AsWeakPtr() {
+base::WeakPtr<DecoderInterface> GLES2DecoderImpl::AsWeakPtr() {
   return weak_ptr_factory_.GetWeakPtr();
 }
 
