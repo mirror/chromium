@@ -124,6 +124,24 @@
       "revId": "47839b3b465bd9e699c424263cef35d632648cc7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9fb12d25_4ab49e83",
+        "filename": "chrome/browser/resources/settings/site_settings/site_details_permission.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-12-20T23:59:38Z",
+      "side": 1,
+      "message": "OK - SGTM, just wanted to clarify. Thanks!",
+      "parentUuid": "b013c27b_7d3eeeb0",
+      "revId": "47839b3b465bd9e699c424263cef35d632648cc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
