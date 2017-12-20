@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "12c34d6a_70c8231b",
+        "filename": "content/browser/renderer_host/p2p/socket_host_tcp.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-12-20T21:55:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "31729358_76bd106f",
+      "range": {
+        "startLine": 124,
+        "startChar": 2,
+        "endLine": 124,
+        "endChar": 56
+      },
+      "revId": "98cdf1b9dc8c5d858af6f8fffbe1b9d7a11dc8c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6b29eb23_7170fbb1",
         "filename": "remoting/signaling/xmpp_signal_strategy.cc",
         "patchSetId": 27
@@ -45,6 +69,30 @@
       "revId": "98cdf1b9dc8c5d858af6f8fffbe1b9d7a11dc8c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3fe2980_9478e2fb",
+        "filename": "remoting/signaling/xmpp_signal_strategy.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-12-20T21:55:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6b29eb23_7170fbb1",
+      "range": {
+        "startLine": 181,
+        "startChar": 10,
+        "endLine": 181,
+        "endChar": 19
+      },
+      "revId": "98cdf1b9dc8c5d858af6f8fffbe1b9d7a11dc8c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "79f117bf_d18c992c",
+        "filename": "services/network/public/cpp/proxy_resolving_client_socket.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-12-20T21:55:19Z",
+      "side": 1,
+      "message": "Done. I have changed this one and the other one in PostTask.",
+      "parentUuid": "4943d6b2_1959594f",
+      "range": {
+        "startLine": 161,
+        "startChar": 14,
+        "endLine": 161,
+        "endChar": 27
+      },
+      "revId": "98cdf1b9dc8c5d858af6f8fffbe1b9d7a11dc8c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2110468f_2a5de1ef",
         "filename": "services/network/public/cpp/proxy_resolving_client_socket.cc",
         "patchSetId": 27
@@ -82,6 +154,30 @@
       "writtenOn": "2017-12-20T21:29:07Z",
       "side": 1,
       "message": "BindOnce.\nI think all BindRepeting() in this file can be replaced with BindOnce()",
+      "range": {
+        "startLine": 208,
+        "startChar": 12,
+        "endLine": 208,
+        "endChar": 25
+      },
+      "revId": "98cdf1b9dc8c5d858af6f8fffbe1b9d7a11dc8c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ff50de4_99add795",
+        "filename": "services/network/public/cpp/proxy_resolving_client_socket.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-12-20T21:55:19Z",
+      "side": 1,
+      "message": "Not this one. net::CompletionCallback is not a once closure. There is a discussion to refactor it, but we are not there yet.\n\nhttps://groups.google.com/a/chromium.org/d/msg/net-dev/KsTlK2hcbg4/ljeprdKdCgAJ",
+      "parentUuid": "2110468f_2a5de1ef",
       "range": {
         "startLine": 208,
         "startChar": 12,
