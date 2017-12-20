@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9478430d_be442ff8",
+        "filename": "chrome/browser/chromeos/login/existing_user_controller_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 852,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-20T17:59:07Z",
+      "side": 1,
+      "message": "Think you don\u0027t need to do this since device policy should not affect your CL.",
+      "range": {
+        "startLine": 852,
+        "startChar": 4,
+        "endLine": 852,
+        "endChar": 23
+      },
+      "revId": "4ec8dba052370ec403c472b00b45230ee34a67e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
