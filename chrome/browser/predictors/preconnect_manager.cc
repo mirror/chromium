@@ -6,8 +6,13 @@
 
 #include <utility>
 
+#include "base/feature_list.h"
 #include "base/memory/ptr_util.h"
+#include "chrome/browser/data_saver/data_saver_util.h"
 #include "chrome/browser/predictors/resource_prefetch_predictor.h"
+#include "chrome/browser/profiles/profile.h"
+#include "chrome/browser/profiles/profile_io_data.h"
+#include "components/data_reduction_proxy/core/common/data_reduction_proxy_features.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/resource_hints.h"
 #include "net/base/net_errors.h"
@@ -58,10 +63,12 @@ PreresolveJob::~PreresolveJob() = default;
 
 PreconnectManager::PreconnectManager(
     base::WeakPtr<Delegate> delegate,
-    scoped_refptr<net::URLRequestContextGetter> context_getter)
+    scoped_refptr<net::URLRequestContextGetter> context_getter,
+    Profile* profile)
     : delegate_(std::move(delegate)),
       context_getter_(std::move(context_getter)),
       inflight_preresolves_count_(0),
+      profile_(profile),
       weak_factory_(this) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   DCHECK(context_getter_);
@@ -152,6 +159,19 @@ int PreconnectManager::PreresolveUrl(
   return content::PreresolveUrl(context_getter_.get(), url, callback);
 }
 
+bool PreconnectManager::WouldLikelyBeFetchedViaDataSaver(
+    PreresolveInfo* info) const {
+  DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
+
+  content::ResourceContext* rc = profile_->GetResourceContext();
+  ProfileIOData* profile_io_data = ProfileIOData::FromResourceContext(rc);
+
+  return info &&
+         base::FeatureList::IsEnabled(
+             data_reduction_proxy::features::kDisableDnsPreResolution) &&
+         chrome::WouldLikelyBeFetchedViaDataSaverIO(profile_io_data, info->url);
+}
+
 void PreconnectManager::TryToLaunchPreresolveJobs() {
   DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
 
@@ -160,7 +180,8 @@ void PreconnectManager::TryToLaunchPreresolveJobs() {
     auto& job = queued_jobs_.front();
     PreresolveInfo* info = job.info;
 
-    if (!info || !info->was_canceled) {
+    if (!WouldLikelyBeFetchedViaDataSaver(info) &&
+        (!info || !info->was_canceled)) {
       int status = PreresolveUrl(
           job.url, base::Bind(&PreconnectManager::OnPreresolveFinished,
                               weak_factory_.GetWeakPtr(), job));

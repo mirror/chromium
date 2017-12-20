@@ -53,12 +53,25 @@ class MockPreconnectManager : public PreconnectManager {
   MOCK_CONST_METHOD2(PreresolveUrl,
                      int(const GURL& url,
                          const net::CompletionCallback& callback));
+
+  void SetWouldLikelyBeFetchedViaDataSaver(
+      bool would_likely_be_fetched_via_data_saver) {
+    would_likely_be_fetched_via_data_saver_ =
+        would_likely_be_fetched_via_data_saver;
+  }
+
+  bool WouldLikelyBeFetchedViaDataSaver(PreresolveInfo* info) const override {
+    return would_likely_be_fetched_via_data_saver_;
+  }
+
+ private:
+  bool would_likely_be_fetched_via_data_saver_ = false;
 };
 
 MockPreconnectManager::MockPreconnectManager(
     base::WeakPtr<Delegate> delegate,
     scoped_refptr<net::URLRequestContextGetter> context_getter)
-    : PreconnectManager(delegate, context_getter) {}
+    : PreconnectManager(delegate, context_getter, nullptr) {}
 
 class PreconnectManagerTest : public testing::Test {
  public:
@@ -85,6 +98,21 @@ PreconnectManagerTest::PreconnectManagerTest()
           context_getter_)) {}
 
 PreconnectManagerTest::~PreconnectManagerTest() = default;
+
+TEST_F(PreconnectManagerTest, TestStartOneUrlPreresolveDataSaverFetch) {
+  GURL main_frame_url("http://google.com");
+  GURL url_to_preresolve("http://cdn.google.com");
+
+  preconnect_manager_->SetWouldLikelyBeFetchedViaDataSaver(true);
+
+  EXPECT_CALL(*preconnect_manager_, PreresolveUrl(url_to_preresolve, _))
+      .Times(0);
+  EXPECT_CALL(*mock_delegate_, PreconnectFinishedProxy(main_frame_url));
+  preconnect_manager_->Start(main_frame_url,
+                             {PreconnectRequest(url_to_preresolve, 0)});
+  // Wait for PreconnectFinished task posted to the UI thread.
+  base::RunLoop().RunUntilIdle();
+}
 
 TEST_F(PreconnectManagerTest, TestStartOneUrlPreresolve) {
   GURL main_frame_url("http://google.com");
