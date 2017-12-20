@@ -595,7 +595,7 @@ void AppListView::HandleClickOrTap(ui::LocatedEvent* event) {
   // No-op if app list is on fullscreen all apps state and the event location is
   // within apps grid view's bounds.
   if (app_list_state_ == AppListViewState::FULLSCREEN_ALL_APPS &&
-      GetAppsGridView()->GetBoundsInScreen().Contains(event->location())) {
+      GetRootAppsGridView()->GetBoundsInScreen().Contains(event->location())) {
     return;
   }
 
@@ -769,11 +769,8 @@ void AppListView::SetChildViewsForStateTransition(
       target_state != AppListViewState::FULLSCREEN_ALL_APPS)
     return;
 
-  AppsContainerView* apps_container_view =
-      app_list_main_view_->contents_view()->apps_container_view();
-
-  if (apps_container_view->IsInFolderView())
-    apps_container_view->ResetForShowApps();
+  if (GetAppsContainerView()->IsInFolderView())
+    GetAppsContainerView()->ResetForShowApps();
 
   if (target_state == AppListViewState::PEEKING) {
     app_list_main_view_->contents_view()->SetActiveState(
@@ -786,7 +783,7 @@ void AppListView::SetChildViewsForStateTransition(
     }
   } else {
     // Set timer to ignore further scroll events for this transition.
-    GetAppsGridView()->StartTimerToIgnoreScrollEvents();
+    GetRootAppsGridView()->StartTimerToIgnoreScrollEvents();
 
     app_list_main_view_->contents_view()->SetActiveState(
         AppListModel::STATE_APPS, !is_side_shelf_);
@@ -862,10 +859,16 @@ display::Display AppListView::GetDisplayNearestView() const {
   return display::Screen::GetScreen()->GetDisplayNearestView(parent_window());
 }
 
-AppsGridView* AppListView::GetAppsGridView() const {
-  return app_list_main_view_->contents_view()
-      ->apps_container_view()
-      ->apps_grid_view();
+AppsContainerView* AppListView::GetAppsContainerView() const {
+  return app_list_main_view_->contents_view()->apps_container_view();
+}
+
+AppsGridView* AppListView::GetRootAppsGridView() const {
+  return GetAppsContainerView()->apps_grid_view();
+}
+
+AppsGridView* AppListView::GetFolderAppsGridView() const {
+  return GetAppsContainerView()->app_list_folder_view()->items_grid_view();
 }
 
 AppListStateTransitionSource AppListView::GetAppListStateTransitionSource(
@@ -1168,12 +1171,16 @@ bool AppListView::HandleScroll(int offset, ui::EventType type) {
     return false;
 
   // Let the Apps grid view handle the event first in FULLSCREEN_ALL_APPS.
-  if (app_list_state_ == AppListViewState::FULLSCREEN_ALL_APPS &&
-      GetAppsGridView()->HandleScrollFromAppListView(offset, type)) {
-    // Set the scroll ignore timer to avoid processing the tail end of the
-    // stream of scroll events, which would close the view.
-    SetOrRestartScrollIgnoreTimer();
-    return true;
+  if (app_list_state_ == AppListViewState::FULLSCREEN_ALL_APPS) {
+    AppsGridView* apps_grid_view = GetAppsContainerView()->IsInFolderView()
+                                       ? GetFolderAppsGridView()
+                                       : GetRootAppsGridView();
+    if (apps_grid_view->HandleScrollFromAppListView(offset, type)) {
+      // Set the scroll ignore timer to avoid processing the tail end of the
+      // stream of scroll events, which would close the view.
+      SetOrRestartScrollIgnoreTimer();
+      return true;
+    }
   }
 
   if (ShouldIgnoreScrollEvents())
@@ -1233,10 +1240,7 @@ void AppListView::SetState(AppListViewState new_state) {
 
   // Updates the visibility of app list items according to the change of
   // |app_list_state_|.
-  app_list_main_view_->contents_view()
-      ->apps_container_view()
-      ->apps_grid_view()
-      ->UpdateControlVisibility(app_list_state_, is_in_drag_);
+  GetAppsContainerView()->UpdateControlVisibility(app_list_state_, is_in_drag_);
 }
 
 void AppListView::StartAnimationForState(AppListViewState target_state) {
@@ -1358,7 +1362,7 @@ void AppListView::UpdateYPositionAndOpacity(int y_position_in_screen,
 }
 
 PaginationModel* AppListView::GetAppsPaginationModel() const {
-  return GetAppsGridView()->pagination_model();
+  return GetRootAppsGridView()->pagination_model();
 }
 
 gfx::Rect AppListView::GetAppInfoDialogBounds() const {
@@ -1378,10 +1382,7 @@ void AppListView::SetIsInDrag(bool is_in_drag) {
     return;
 
   is_in_drag_ = is_in_drag;
-  app_list_main_view_->contents_view()
-      ->apps_container_view()
-      ->apps_grid_view()
-      ->UpdateControlVisibility(app_list_state_, is_in_drag_);
+  GetAppsContainerView()->UpdateControlVisibility(app_list_state_, is_in_drag_);
 }
 
 int AppListView::GetScreenBottom() {
@@ -1399,7 +1400,7 @@ void AppListView::DraggingLayout() {
 
   // Updates the opacity of the items in the app list.
   search_box_view_->UpdateOpacity();
-  GetAppsGridView()->UpdateOpacity();
+  GetAppsContainerView()->UpdateOpacity();
 
   Layout();
 }
@@ -1410,12 +1411,10 @@ void AppListView::RedirectKeyEventToSearchBox(ui::KeyEvent* event) {
 
   views::Textfield* search_box = search_box_view_->search_box();
   const bool is_search_box_focused = search_box->HasFocus();
-  const bool is_folder_header_view_focused =
-      app_list_main_view_->contents_view()
-          ->apps_container_view()
-          ->app_list_folder_view()
-          ->folder_header_view()
-          ->HasTextFocus();
+  const bool is_folder_header_view_focused = GetAppsContainerView()
+                                                 ->app_list_folder_view()
+                                                 ->folder_header_view()
+                                                 ->HasTextFocus();
   if (is_search_box_focused || is_folder_header_view_focused) {
     // Do not redirect the key event to the |search_box_| when focus is on a
     // text field.
