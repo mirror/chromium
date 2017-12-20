@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "60d9071d_ceca9afe",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-12-20T21:05:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "070a3327_bcbe5b49",
+      "range": {
+        "startLine": 9,
+        "startChar": 59,
+        "endLine": 9,
+        "endChar": 65
+      },
+      "revId": "82746bf4940c41afd1ed7f26558bb22ef425294f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e5288bef_1b657651",
         "filename": "build/fuchsia/runner_common.py",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-12-20T20:56:23Z",
       "side": 1,
       "message": "Do we still need this one?",
+      "range": {
+        "startLine": 147,
+        "startChar": 4,
+        "endLine": 147,
+        "endChar": 36
+      },
+      "revId": "82746bf4940c41afd1ed7f26558bb22ef425294f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a36e7e7_31d52613",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-12-20T21:05:04Z",
+      "side": 1,
+      "message": "Yes, we want to keep both, I think, so that if e.g. we have similar named executables under different paths, we can distinguish them.\n\n(I think once I\u0027ve got code in place to make use of build-Id data in backtraces, we should get rid of the path-based matching, until/unless we find another case where it\u0027s necessary.)",
+      "parentUuid": "e5288bef_1b657651",
       "range": {
         "startLine": 147,
         "startChar": 4,
