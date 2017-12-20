@@ -122,6 +122,7 @@ class ASH_EXPORT LoginPasswordView
 
  private:
   class EasyUnlockIcon;
+  class LoginTextfield;
   friend class TestApi;
 
   // Enables/disables the submit button and changes the color of the separator
@@ -137,7 +138,7 @@ class ASH_EXPORT LoginPasswordView
 
   views::View* password_row_ = nullptr;
 
-  views::Textfield* textfield_ = nullptr;
+  LoginTextfield* textfield_ = nullptr;
   LoginButton* submit_button_ = nullptr;
   views::ImageView* capslock_icon_ = nullptr;
   views::Separator* separator_ = nullptr;
