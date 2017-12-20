@@ -87,6 +87,24 @@
       "revId": "296eec9f9b28b040b3db353fcb6ff680749a4b25",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2970864c_315e787d",
+        "filename": "chrome/browser/subresource_filter/subresource_filter_settings_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-12-20T15:12:37Z",
+      "side": 1,
+      "message": "Oh I see, you mean inclusion for the sake of completeness, I thought to be able to access testing::_ instead of ::testing::_ which I was able to do in safe_browsing_triggered_popup_blocker_browsertest.cc\n with the same includes. On including gmock.h, if I try to access testing::_ instead of ::testing::_, it still gives a compile time error.\nAnyways, it seems to me gtest.h should be sufficient for this, but let me know if you find otherwise.",
+      "parentUuid": "cc8f4855_24744cfd",
+      "revId": "296eec9f9b28b040b3db353fcb6ff680749a4b25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
