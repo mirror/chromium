@@ -28,6 +28,7 @@
 #include "ui/android/resources/resource_manager_impl.h"
 #include "ui/android/resources/ui_resource_provider.h"
 #include "ui/android/window_android_compositor.h"
+#include "ui/compositor/compositor_lock.h"
 #include "ui/display/display_observer.h"
 
 struct ANativeWindow;
@@ -57,6 +58,7 @@ class CONTENT_EXPORT CompositorImpl
     : public Compositor,
       public cc::LayerTreeHostClient,
       public cc::LayerTreeHostSingleThreadClient,
+      public ui::CompositorLockManagerClient,
       public ui::UIResourceProvider,
       public ui::WindowAndroidCompositor,
       public viz::HostFrameSinkClient,
@@ -71,6 +73,8 @@ class CONTENT_EXPORT CompositorImpl
   static viz::HostFrameSinkManager* GetHostFrameSinkManager();
   static viz::FrameSinkId AllocateFrameSinkId();
 
+  ui::CompositorLockManager* lock_manager() { return &lock_manager_; }
+
   // ui::ResourceProvider implementation.
   cc::UIResourceId CreateUIResource(cc::UIResourceClient* client) override;
   void DeleteUIResource(cc::UIResourceId resource_id) override;
@@ -82,7 +86,6 @@ class CONTENT_EXPORT CompositorImpl
   void SetSurface(jobject surface) override;
   void SetBackgroundColor(int color) override;
   void SetWindowBounds(const gfx::Size& size) override;
-  void SetDeferCommits(bool defer_commits) override;
   void SetRequiresAlphaChannel(bool flag) override;
   void SetNeedsComposite() override;
   ui::UIResourceProvider& GetUIResourceProvider() override;
@@ -132,6 +135,9 @@ class CONTENT_EXPORT CompositorImpl
   // display::DisplayObserver implementation.
   void OnDisplayMetricsChanged(const display::Display& display,
                                uint32_t changed_metrics) override;
+
+  // ui::CompositorLockManagerClient implementation.
+  void OnCompositorLockStateChanged(bool locked) override;
 
   void SetVisible(bool visible);
   void CreateLayerTreeHost();
@@ -195,6 +201,7 @@ class CONTENT_EXPORT CompositorImpl
   bool has_layer_tree_frame_sink_ = false;
   std::unordered_set<viz::FrameSinkId, viz::FrameSinkIdHash>
       pending_child_frame_sink_ids_;
+  ui::CompositorLockManager lock_manager_;
   base::WeakPtrFactory<CompositorImpl> weak_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(CompositorImpl);

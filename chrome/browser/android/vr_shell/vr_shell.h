@@ -295,6 +295,9 @@ class VrShell : device::GvrGamepadDataProvider,
   gfx::SizeF display_size_meters_;
   gfx::Size display_size_pixels_;
 
+  // Lock which, when held, defers/prevents commits on the compositor.
+  std::unique_ptr<ui::CompositorLock> compositor_lock_;
+
   base::WeakPtrFactory<VrShell> weak_ptr_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(VrShell);
