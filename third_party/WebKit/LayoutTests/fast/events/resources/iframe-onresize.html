@@ -1,0 +1,36 @@
+<title>iframe for resize-display-none-iframe.html test.</title>
+<div id="blah"></div>
+
+<script>
+function resize() {
+  var el = document.getElementById('blah');
+  el.style.width = window.innerWidth;
+  el.style.height = window.innerHeight;
+}
+resize();
+window.onresize = resize;
+</script>
+
+<script src="../../../resources/testharness.js"></script>
+<script>
+  const el = document.getElementById('blah');
+
+  test(() => {
+     assert_true(el.style.width == "0px", "div started with non-zero width");
+     assert_true(el.style.height == "0px", "div started with non-zero height");
+  }, 'At first, the width/height must be 0');
+
+  var t = async_test("Width/height should change from zero to non-zero.");
+  function pollResize() {
+    if (el.style.width == "0px" || el.style.height == "0px" ) {
+      window.setTimeout(pollResize, 0);
+      return;
+    }
+    t.step(function() {
+      assert_true(el.style.width == "50px", "div has width of window");
+      assert_true(el.style.height == "40px", "div has height of window");
+    });
+    t.done();
+  }
+  pollResize();
+</script>
