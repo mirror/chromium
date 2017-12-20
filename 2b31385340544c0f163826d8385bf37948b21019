@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "407a7817_ca57877b",
+        "filename": "ios/chrome/browser/ui/tab_switcher/tab_switcher_controller.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-12-20T10:48:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bce4bcd6_b70f869d",
+      "revId": "2b31385340544c0f163826d8385bf37948b21019",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5e7ca83a_3916d686",
         "filename": "ios/chrome/browser/ui/tab_switcher/tab_switcher_controller.mm",
         "patchSetId": 15
@@ -33,6 +51,24 @@
       "revId": "2b31385340544c0f163826d8385bf37948b21019",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50aadf1d_796083aa",
+        "filename": "ios/chrome/browser/ui/tab_switcher/tab_switcher_controller.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 1048,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-12-20T10:48:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e7ca83a_3916d686",
+      "revId": "2b31385340544c0f163826d8385bf37948b21019",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
