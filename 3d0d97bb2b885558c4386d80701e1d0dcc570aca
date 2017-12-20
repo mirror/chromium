@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "145324c4_c5b3e3f8",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerClients.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-20T05:37:45Z",
+      "side": 1,
+      "message": "I think this code is only applicable to threaded in-process worker/worklets?",
+      "revId": "3d0d97bb2b885558c4386d80701e1d0dcc570aca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
