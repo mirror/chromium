@@ -171,7 +171,7 @@ class VTTCue final : public TextTrackCue {
   bool TextPositionIsAuto() const;
 
   VTTDisplayParameters CalculateDisplayParameters() const;
-  float CalculateComputedTextPosition() const;
+  double CalculateComputedTextPosition() const;
   CueAlignment CalculateComputedCueAlignment() const;
 
   enum CueSetting {
@@ -186,9 +186,9 @@ class VTTCue final : public TextTrackCue {
   CueSetting SettingName(VTTScanner&) const;
 
   String text_;
-  float line_position_;
-  float text_position_;
-  float cue_size_;
+  double line_position_;
+  double text_position_;
+  double cue_size_;
   WritingDirection writing_direction_;
   CueAlignment cue_alignment_;
 
