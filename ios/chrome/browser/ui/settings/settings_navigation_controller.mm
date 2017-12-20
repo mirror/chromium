@@ -7,6 +7,7 @@
 #include "base/ios/ios_util.h"
 #include "base/mac/foundation_util.h"
 #include "components/strings/grit/components_strings.h"
+#import "ios/chrome/app/deferred_initialization_runner.h"
 #include "ios/chrome/browser/browser_state/chrome_browser_state.h"
 #include "ios/chrome/browser/sync/sync_setup_service.h"
 #include "ios/chrome/browser/sync/sync_setup_service_factory.h"
@@ -128,11 +129,10 @@
 
 #pragma mark - SettingsNavigationController methods.
 
-+ (SettingsNavigationController*)
-newSettingsMainControllerWithBrowserState:(ios::ChromeBrowserState*)browserState
-                                 delegate:
-                                     (id<SettingsNavigationControllerDelegate>)
-                                         delegate {
++ (SettingsNavigationController*)newSettingsMainControllerWithDelegate:
+    (id<SettingsNavigationControllerDelegate, SettingsBrowserStateProvider>)
+        delegate {
+  ios::ChromeBrowserState* browserState = [delegate browserStateForSettings];
   SettingsCollectionViewController* controller =
       [[SettingsCollectionViewController alloc]
           initWithBrowserState:browserState
@@ -304,12 +304,21 @@ initWithRootViewController:(UIViewController*)rootViewController
              ? [super initWithRootViewController:rootViewController]
              : [super init];
   if (self) {
+    [[DeferredInitializationRunner sharedInstance]
+        runBlockIfNecessary:kPrefObserverInit];
     mainBrowserState_ = browserState;
     delegate_ = delegate;
     shouldCommitSyncChangesOnDismissal_ = YES;
     [self configureUI];
   }
   return self;
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+  [super viewWillDisappear:animated];
+  if (self.isBeingDismissed) {
+    [self settingsWillBeDismissed];
+  }
 }
 
 - (void)settingsWillBeDismissed {
@@ -333,7 +342,15 @@ initWithRootViewController:(UIViewController*)rootViewController
 }
 
 - (void)closeSettings {
-  [delegate_ closeSettings];
+  if ([delegate_ respondsToSelector:@selector(closeSettings)]) {
+    [delegate_ closeSettings];
+  } else {
+    [self settingsWillBeDismissed];
+    UIViewController* presentingViewController =
+        [self presentingViewController];
+    DCHECK(presentingViewController);
+    [presentingViewController dismissViewControllerAnimated:YES completion:nil];
+  }
 }
 
 - (void)back {
