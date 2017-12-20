@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "869776ed_26c72458",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 2071,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-12-20T20:15:11Z",
+      "side": 1,
+      "message": "I think you would need to add this to tools/metrics/histograms/enums.xml",
+      "range": {
+        "startLine": 2071,
+        "startChar": 41,
+        "endLine": 2071,
+        "endChar": 76
+      },
+      "revId": "1cece5858664e4476012e4bf227e4b613c319739",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3fa1038_65cb77f0",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_network_delegate_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 926,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-12-20T20:15:11Z",
+      "side": 1,
+      "message": "nit: s/tests/is_data_reduction_proxy_enabled/",
+      "range": {
+        "startLine": 926,
+        "startChar": 7,
+        "endLine": 926,
+        "endChar": 12
+      },
+      "revId": "1cece5858664e4476012e4bf227e4b613c319739",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
