@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0d48e1a8_110026bf",
+        "filename": "tools/perf/core/perf_data_generator_unittest.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1128909
+      },
+      "writtenOn": "2017-12-20T17:31:18Z",
+      "side": 0,
+      "message": "I don\u0027t think this test makes sense to have any more.\n\nIt used to make sense because both permanent and temporary disables were done on a class/static basis so, when we called ShouldBenchmarkBeScheduled on the class, it was checking that the permanent disable would cause a benchmark not to get scheduled, but a temporary disable wouldn\u0027t.\n\nIt doesn\u0027t make sense now because permanent disables are still done on a class/static basis, but temporary disables are done on a object/instance basis. For obvious reasons, there\u0027s no way that these temporary disables could have an effect on whether benchmarks are schedule given that the call looks like:\n\nperf_data_generator.ShouldBenchmarksBeScheduled(\n    RegularBenchmark, \u0027bot_name\u0027, os, None))\n\nwe don\u0027t even pass an instance of the class, so obviously any temporary disables that operate at the instance level can\u0027t have an effect.",
+      "range": {
+        "startLine": 286,
+        "startChar": 6,
+        "endLine": 286,
+        "endChar": 57
+      },
+      "revId": "3d31864dcbbd9cb6c2704ea1fe5805cbef258ce6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
