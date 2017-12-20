@@ -16,6 +16,24 @@
       "revId": "bcb59e0c51ecf49377f33defa66d57252a23513a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56185efa_3e38223f",
+        "filename": "third_party/WebKit/Source/core/editing/iterators/TextIteratorTextNodeHandler.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-12-20T23:31:52Z",
+      "side": 1,
+      "message": "True, but... There\u0027s quite some mixed use of int, unsigned and size_t in our code base, including this one.\n\n(And I just want to get rid of a TODO here)\n\nMaybe we need some global refactoring to tidy things up.",
+      "parentUuid": "399dcfe7_5beebad3",
+      "revId": "bcb59e0c51ecf49377f33defa66d57252a23513a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
