@@ -23,6 +23,7 @@
 #include "ui/base/ui_base_switches.h"
 
 #if defined(OS_WIN)
+#include "content/browser/renderer_host/dwrite_font_proxy_message_filter_win.h"
 #include "content/common/font_cache_dispatcher_win.h"
 #endif
 
@@ -47,6 +48,8 @@ class ConnectionFilterImpl : public ConnectionFilter {
         base::BindRepeating(&device::GeolocationConfig::Create));
 #if defined(OS_WIN)
     registry_.AddInterface(base::BindRepeating(&FontCacheDispatcher::Create));
+    registry_.AddInterface(
+        base::BindRepeating(&DWriteFontProxyMessageFilter::Create));
 #endif
     if (!IsRunningWithMus()) {
       // For mus, the mojom::discardable_memory::DiscardableSharedMemoryManager

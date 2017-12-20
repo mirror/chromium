@@ -244,12 +244,12 @@ void RenderViewTest::SetUp() {
   SetRendererClientForTesting(content_renderer_client_.get());
 
 #if defined(OS_WIN)
-  // This needs to happen sometime before PlatformInitialize.
-  // This isn't actually necessary for most tests: most tests are able to
-  // connect to their browser process which runs the real proxy host. However,
-  // some tests route IPCs to MockRenderThread, which is unable to process the
-  // font IPCs, causing all font loading to fail.
-  SetDWriteFontProxySenderForTesting(CreateFakeCollectionSender());
+// This needs to happen sometime before PlatformInitialize.
+// This isn't actually necessary for most tests: most tests are able to
+// connect to their browser process which runs the real proxy host. However,
+// some tests route IPCs to MockRenderThread, which is unable to process the
+// font IPCs, causing all font loading to fail.
+// SetDWriteFontProxySenderForTesting(CreateFakeCollectionSender());
 #endif
 
 #if defined(OS_MACOSX)

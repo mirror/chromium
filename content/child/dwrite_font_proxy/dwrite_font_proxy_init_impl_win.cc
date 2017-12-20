@@ -46,10 +46,10 @@ void CreateDirectWriteFactory(IDWriteFactory** factory) {
 }  // namespace
 
 void UpdateDWriteFontProxySender(IPC::Sender* sender) {
-  if (g_font_collection)
-    g_font_collection.Get()->SetSenderOverride(sender);
-  if (g_font_fallback)
-    g_font_fallback.Get()->SetSenderOverride(sender);
+  // if (g_font_collection)
+  // g_font_collection.Get()->SetSenderOverride(sender);
+  // if (g_font_fallback)
+  // g_font_fallback.Get()->SetSenderOverride(sender);
 }
 
 void InitializeDWriteFontProxy() {
@@ -67,13 +67,14 @@ void InitializeDWriteFontProxy() {
 
   if (!g_font_collection) {
     DWriteFontCollectionProxy::Create(&g_font_collection, factory.Get(),
-                                      sender);
+                                      nullptr);
+    // sender);
   }
 
   mswr::ComPtr<IDWriteFactory2> factory2;
 
   if (SUCCEEDED(factory.As(&factory2)) && factory2.Get()) {
-    FontFallback::Create(&g_font_fallback, g_font_collection.Get(), sender);
+    FontFallback::Create(&g_font_fallback, g_font_collection.Get());
   }
 
   sk_sp<SkFontMgr> skia_font_manager = SkFontMgr_New_DirectWrite(
