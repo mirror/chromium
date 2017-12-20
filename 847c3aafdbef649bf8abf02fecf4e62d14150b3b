@@ -22,6 +22,30 @@
       "revId": "847c3aafdbef649bf8abf02fecf4e62d14150b3b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8ffc5fd_83725339",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-12-20T00:56:22Z",
+      "side": 0,
+      "message": "Done. Also updated _LookupDebugBinary() and _SymbolizeBacktrace() to refer to this map as symbols_mapping.",
+      "parentUuid": "84164416_f702414e",
+      "range": {
+        "startLine": 145,
+        "startChar": 4,
+        "endLine": 145,
+        "endChar": 29
+      },
+      "revId": "847c3aafdbef649bf8abf02fecf4e62d14150b3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
