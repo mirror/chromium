@@ -550,7 +550,7 @@ void InternalPopupMenu::Update() {
       OwnerElement().GetDocument().View());
   AddProperty("anchorRectInScreen", anchor_rect_in_screen, data.get());
   PagePopupClient::AddString("}\n", data.get());
-  popup_->PostMessage(String::FromUTF8(data->Data(), data->size()));
+  popup_->PostJavaScriptMessage(String::FromUTF8(data->Data(), data->size()));
 }
 
 void InternalPopupMenu::DisconnectClient() {
