@@ -137,6 +137,29 @@
       "revId": "ba0492e8418740a11830e1578c2a4dc3fa7dfe9d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1fbd78b_7f84800f",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 97476,
+      "author": {
+        "id": 1116265
+      },
+      "writtenOn": "2017-12-20T19:00:06Z",
+      "side": 1,
+      "message": "The summery implies that the value type is like a boolean(error, no error) but actually its a type of an error",
+      "range": {
+        "startLine": 97476,
+        "startChar": 11,
+        "endLine": 97476,
+        "endChar": 18
+      },
+      "revId": "ba0492e8418740a11830e1578c2a4dc3fa7dfe9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
