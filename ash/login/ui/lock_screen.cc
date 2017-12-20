@@ -57,6 +57,11 @@ LockScreen::LockScreen(ScreenType type)
 LockScreen::~LockScreen() = default;
 
 // static
+bool LockScreen::HasInstance() {
+  return instance_;
+}
+
+// static
 LockScreen* LockScreen::Get() {
   CHECK(instance_);
   return instance_;

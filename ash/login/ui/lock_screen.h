@@ -29,6 +29,8 @@ class ASH_EXPORT LockScreen : public TrayActionObserver,
   // The UI that this instance is displaying.
   enum class ScreenType { kLogin, kLock };
 
+  static bool HasInstance();
+
   // Fetch the global lock screen instance. |Show()| must have been called
   // before this.
   static LockScreen* Get();
@@ -39,6 +41,8 @@ class ASH_EXPORT LockScreen : public TrayActionObserver,
 
   // Check if the lock screen is currently shown.
   static bool IsShown();
+
+  LockWindow* window() { return window_; }
 
   // Destroys an existing lock screen instance.
   void Destroy();
