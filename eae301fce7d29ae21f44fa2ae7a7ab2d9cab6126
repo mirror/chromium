@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e0c1df4e_79556d32",
+        "filename": "chrome/browser/chromeos/customization/customization_wallpaper_util.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-12-20T00:00:30Z",
+      "side": 1,
+      "message": "put it in anonymous namespace?",
+      "revId": "eae301fce7d29ae21f44fa2ae7a7ab2d9cab6126",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "786735aa_be5b5f18",
+        "filename": "chrome/browser/chromeos/customization/customization_wallpaper_util.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-12-20T00:00:30Z",
+      "side": 1,
+      "message": "no line break here",
+      "revId": "eae301fce7d29ae21f44fa2ae7a7ab2d9cab6126",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "486243c5_bdd6177b",
+        "filename": "chrome/browser/chromeos/customization/customization_wallpaper_util.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-12-20T00:00:30Z",
+      "side": 1,
+      "message": "Seems to me that only this function and GetCustomizedDefaultWallpaperPath() and ShouldUseCustomizedDefaultWallpaper() needs to be declared in the head file. Others can be put in the anonymous namespace in the cc file.",
+      "revId": "eae301fce7d29ae21f44fa2ae7a7ab2d9cab6126",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
