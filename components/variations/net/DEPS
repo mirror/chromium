@@ -3,3 +3,9 @@ include_rules = [
   "+components/metrics",
   "+net",
 ]
+
+specific_include_rules = {
+  "variations_http_headers_unittest\.cc": [
+    "+content/public/test",
+  ]
+}

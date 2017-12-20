@@ -10,6 +10,7 @@
 
 namespace net {
 class HttpRequestHeaders;
+class URLRequest;
 }
 
 class GURL;
@@ -34,6 +35,11 @@ void AppendVariationHeaders(const GURL& url,
 
 // Returns the HTTP header names which are added by AppendVariationHeaders().
 std::set<std::string> GetVariationHeaderNames();
+
+// Strips the variation header if |new_location| does not point to a location
+// that should receive it.
+void StripVariationHeaderIfNeeded(net::URLRequest* request,
+                                  const GURL& new_location);
 
 namespace internal {
 
