@@ -124,7 +124,21 @@ static inline bool IsCollapsibleSpace(UChar c) {
 // Characters needing a separate control item than other text items.
 // It makes the line breaker easier to handle.
 static inline bool IsControlItemCharacter(UChar c) {
+  // https://drafts.csswg.org/css-text-3/#white-space-processing
+  // U+000D should be dropped: https://github.com/w3c/csswg-drafts/issues/855
   return c == kTabulationCharacter || c == kNewlineCharacter;
+}
+
+static inline bool ShouldIgnore(UChar c) {
+  return c == kCarriageReturnCharacter || c == kFormFeedCharacter;
+}
+
+static inline bool IsCollapsibleSpaceOrIgnore(UChar c) {
+  return IsControlItemCharacter(c) || ShouldIgnore(c);
+}
+
+static inline bool IsControlItemOrIgnore(UChar c) {
+  return IsControlItemCharacter(c) || ShouldIgnore(c);
 }
 
 template <typename OffsetMappingBuilder>
@@ -202,12 +216,18 @@ void NGInlineItemsBuilderTemplate<OffsetMappingBuilder>::
       continue;
     }
 
+    if (ShouldIgnore(c)) {
+      mapping_builder_.AppendCollapsedMapping(1);
+      i++;
+      continue;
+    }
+
     if (last_collapsible_space_ == CollapsibleSpace::kNewline) {
       RemoveTrailingCollapsibleNewlineIfNeeded(string, i, style);
       start_offset = std::min(start_offset, text_.length());
     }
 
-    size_t end_of_non_space = string.Find(IsCollapsibleSpace, i + 1);
+    size_t end_of_non_space = string.Find(IsCollapsibleSpaceOrIgnore, i + 1);
     if (end_of_non_space == kNotFound)
       end_of_non_space = string.length();
     text_.Append(string, i, end_of_non_space - i);
@@ -241,8 +261,13 @@ void NGInlineItemsBuilderTemplate<OffsetMappingBuilder>::
       start++;
       continue;
     }
+    if (ShouldIgnore(c)) {
+      mapping_builder_.AppendCollapsedMapping(1);
+      start++;
+      continue;
+    }
 
-    size_t end = string.Find(IsControlItemCharacter, start + 1);
+    size_t end = string.Find(IsControlItemOrIgnore, start + 1);
     if (end == kNotFound)
       end = string.length();
     unsigned start_offset = text_.length();
