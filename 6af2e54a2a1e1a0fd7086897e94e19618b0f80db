@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "19447739_9c0906f4",
+        "filename": "third_party/WebKit/Source/core/layout/ng/layout_ng_mixin.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-12-20T19:13:39Z",
+      "side": 0,
+      "message": "nit: There\u0027s no usage in this file. We can simply remove it.",
+      "revId": "6af2e54a2a1e1a0fd7086897e94e19618b0f80db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bfd6608a_97074db4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-12-20T19:13:39Z",
+      "side": 1,
+      "message": "nit: Could you use crbug.com/636993?",
+      "revId": "1ff43f5661addb5ec3eac5c18988035b065efd69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
