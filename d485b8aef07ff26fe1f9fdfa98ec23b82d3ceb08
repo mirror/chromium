@@ -68,6 +68,30 @@
       "revId": "d485b8aef07ff26fe1f9fdfa98ec23b82d3ceb08",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27bd7514_8f5ccb49",
+        "filename": "chrome/browser/ui/cocoa/l10n_util.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-12-20T19:22:40Z",
+      "side": 1,
+      "message": "What would you recommend instead? (I\u0027ve been using `-cr_localizedRect:` in my own RTL code, and there\u0027s `FlipAllSubviewsIfNecessary(NSView*)`, below, but those both require views, not raw rects.)",
+      "parentUuid": "04c457ff_c6c92787",
+      "range": {
+        "startLine": 64,
+        "startChar": 7,
+        "endLine": 64,
+        "endChar": 29
+      },
+      "revId": "d485b8aef07ff26fe1f9fdfa98ec23b82d3ceb08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
