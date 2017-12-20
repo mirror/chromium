@@ -245,6 +245,24 @@
       "revId": "073f92de29e73ff978174ee51506b82183b09051",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aceb186f_a9bf9522",
+        "filename": "third_party/WebKit/public/platform/WebWorkerFetchContext.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-12-20T11:32:35Z",
+      "side": 1,
+      "message": "As we talked offline, I added base/synchronization/waitable_event.h in code/DEPS and updated audit-non-blink-usage.py in patch set 14.",
+      "parentUuid": "9f8b308b_3fd23ad2",
+      "revId": "073f92de29e73ff978174ee51506b82183b09051",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
