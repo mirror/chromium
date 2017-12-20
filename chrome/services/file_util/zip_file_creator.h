@@ -15,8 +15,6 @@ namespace base {
 class FilePath;
 }
 
-namespace chrome {
-
 class ZipFileCreator : public chrome::mojom::ZipFileCreator {
  public:
   explicit ZipFileCreator(
@@ -35,7 +33,5 @@ class ZipFileCreator : public chrome::mojom::ZipFileCreator {
 
   DISALLOW_COPY_AND_ASSIGN(ZipFileCreator);
 };
-
-}  // namespace chrome
 
 #endif  // CHROME_SERVICES_FILE_UTIL_ZIP_FILE_CREATOR_H_
