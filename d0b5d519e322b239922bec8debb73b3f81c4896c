@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "78dfcf5e_2967f639",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3137,
+      "author": {
+        "id": 1250511
+      },
+      "writtenOn": "2017-12-20T14:34:26Z",
+      "side": 1,
+      "message": "1. It\u0027s part of the protocol by convention rather than necessity (e.g. in the same way that pointer gestures allows for multiple instances, although there are probably not many use cases for it either). There are some cases where it makes life easier for the client, though. For example, if the client actually needs to handle the events in different components. In that case a simpler design may be possible, since each component could create its own instance instead of the client implementing a more central pub/sub system.\n\n2. Sure, that\u0027s the kind of a more capable add/remove system I was referring to.",
+      "parentUuid": "1bdf091b_99ee5ca0",
+      "revId": "d0b5d519e322b239922bec8debb73b3f81c4896c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a8ff28cf_ef4207e3",
         "filename": "third_party/wayland-protocols/README.chromium",
         "patchSetId": 1
