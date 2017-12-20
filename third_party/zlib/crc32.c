@@ -29,6 +29,7 @@
 #endif /* MAKECRCH */
 
 #include "deflate.h"
+#include "crc32_simd.h"
 #include "x86.h"
 #include "zutil.h"      /* for STDC and FAR definitions */
 
@@ -207,6 +208,28 @@ unsigned long ZEXPORT crc32_z(crc, buf, len)
     z_size_t len;
 {
     if (buf == Z_NULL) return 0UL;
+
+#if defined(CRC32_SIMD_SSE42_PCLMUL)
+    /*
+     * Use x86 sse4.2+pclmul SIMD to compute the crc32. Since this
+     * routine can be freely used, check the cpu features here, to
+     * stop TSAN complaining about thread data races accessing the
+     * x86 feature variable x86_cpu_enable_simd.
+     */
+    x86_check_features();
+
+    if (x86_cpu_enable_simd && len >= Z_CRC32_SSE42_MINIMUM_LENGTH) {
+        /* crc32 16-byte chunks */
+        z_size_t chunk_size = len & ~Z_CRC32_SSE42_CHUNKSIZE_MASK;
+        crc = ~crc32_chunk_simd_(buf, chunk_size, ~(uint32_t)crc);
+        /* check remaining data */
+        len -= chunk_size;
+        if (!len)
+            return crc;
+        /* Fall into the default crc32 for the remaining buf data. */
+        buf += chunk_size;
+    }
+#endif /* CRC32_SIMD_SSE42_PCLMUL */
 
 #ifdef DYNAMIC_CRC_TABLE
     if (crc_table_empty)
