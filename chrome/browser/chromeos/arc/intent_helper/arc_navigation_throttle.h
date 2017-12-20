@@ -6,6 +6,7 @@
 #define CHROME_BROWSER_CHROMEOS_ARC_INTENT_HELPER_ARC_NAVIGATION_THROTTLE_H_
 
 #include <memory>
+#include <set>
 #include <string>
 #include <utility>
 #include <vector>
@@ -154,6 +155,12 @@ class ArcNavigationThrottle : public content::NavigationThrottle {
       const GURL& url,
       const std::string& package_name,
       arc::ArcNavigationThrottle::CloseReason close_reason);
+  // Determines whether or not the newly queried set of app candidates is the
+  // same as the previously shown to the user.
+  bool IsSameSetOfApps(
+      const std::vector<mojom::IntentHandlerInfoPtr>& handlers);
+  void UpdateLastSetOfApps(
+      const std::vector<mojom::IntentHandlerInfoPtr>& handlers);
 
   // Keeps a referrence to the starting GURL.
   GURL starting_gurl_;
@@ -164,6 +171,9 @@ class ArcNavigationThrottle : public content::NavigationThrottle {
   // preferred app or asked the UI to be shown, this flag ensures we never
   // trigger the UI twice for the same throttle.
   bool ui_displayed_;
+
+  // Keeps track of the last set of apps presented to the user.
+  std::set<std::string> last_set_of_app_candidates_;
 
   // This has to be the last member of the class.
   base::WeakPtrFactory<ArcNavigationThrottle> weak_ptr_factory_;

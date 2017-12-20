@@ -14,6 +14,7 @@
 #include "chrome/browser/ui/browser_commands.h"
 #include "chrome/browser/ui/browser_finder.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
+#include "chrome/browser/ui/views/intent_picker_bubble_view.h"
 #include "components/arc/arc_bridge_service.h"
 #include "components/arc/arc_service_manager.h"
 #include "components/arc/intent_helper/arc_intent_helper_bridge.h"
@@ -116,8 +117,10 @@ ArcNavigationThrottle::WillStartRequest() {
   starting_gurl_ = GetStartingGURL();
   Browser* browser =
       chrome::FindBrowserWithWebContents(navigation_handle()->GetWebContents());
-  if (browser)
+  if (browser) {
     chrome::SetIntentPickerViewVisibility(browser, false);
+    IntentPickerBubbleView::CloseCurrentBubble();
+  }
   return HandleRequest();
 }
 
@@ -125,19 +128,11 @@ content::NavigationThrottle::ThrottleCheckResult
 ArcNavigationThrottle::WillRedirectRequest() {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
 
-  // TODO(djacobo): Consider what to do when there is another url during the
-  // same navigation that could be handled by ARC apps, two ideas are: 1) update
-  // the bubble with a mix of both app candidates (if different) 2) show a
-  // bubble based on the last url, thus closing all the previous ones.
-  if (ui_displayed_)
-    return content::NavigationThrottle::PROCEED;
-
   return HandleRequest();
 }
 
 content::NavigationThrottle::ThrottleCheckResult
 ArcNavigationThrottle::HandleRequest() {
-  DCHECK(!ui_displayed_);
   content::NavigationHandle* handle = navigation_handle();
   const GURL& url = handle->GetURL();
 
@@ -183,9 +178,6 @@ ArcNavigationThrottle::HandleRequest() {
   if (!instance)
     return content::NavigationThrottle::PROCEED;
 
-  // Assume the UI or a preferred app was found, reset to false only if we don't
-  // find a valid app candidate.
-  ui_displayed_ = true;
   instance->RequestUrlHandlerList(
       url.spec(), base::Bind(&ArcNavigationThrottle::OnAppCandidatesReceived,
                              weak_ptr_factory_.GetWeakPtr()));
@@ -216,6 +208,20 @@ GURL ArcNavigationThrottle::GetStartingGURL() const {
 
 void ArcNavigationThrottle::OnAppCandidatesReceived(
     std::vector<mojom::IntentHandlerInfoPtr> handlers) {
+  // Each redirection url has the chance of querying different app candidates,
+  // since the picker will be available after the redirections ends, it sounds
+  // like a good idea to show the last set of apps that can handle the
+  // navigation corresponding to this throttle. We can only see the history of
+  // previous navigations, so one approach would be to show the UI only if the
+  // set of apps is different between sucesive redirection urls. Be careful to
+  // only keep one instance of the picker UI at the time.
+  if (ui_displayed_) {
+    if (IsSameSetOfApps(handlers)) {
+      Resume();
+      return;
+    }
+  }
+
   if (FoundPreferredOrVerifiedArcApp(std::move(handlers))) {
     content::WebContents* tab = navigation_handle()->GetWebContents();
     if (tab && tab->GetController().IsInitialNavigation())
@@ -238,7 +244,6 @@ bool ArcNavigationThrottle::FoundPreferredOrVerifiedArcApp(
     // This scenario shouldn't be accessed as ArcNavigationThrottle is created
     // iff there are ARC apps which can actually handle the given URL.
     DVLOG(1) << "There are no app candidates for this URL: " << url;
-    ui_displayed_ = false;
     // TODO(djacobo): Investigate whether or not to track this via UMA.
     return cancel_navigation;
   }
@@ -279,6 +284,10 @@ bool ArcNavigationThrottle::FoundPreferredOrVerifiedArcApp(
     for (const auto& handler : handlers)
       activities.emplace_back(handler->package_name, handler->activity_name);
 
+    // Retrieving the icons will be taken as if the UI was displayed.
+    ui_displayed_ = true;
+    IntentPickerBubbleView::CloseCurrentBubble();
+    UpdateLastSetOfApps(handlers);
     intent_helper_bridge->GetActivityIcons(
         activities,
         base::BindOnce(
@@ -483,6 +492,29 @@ void ArcNavigationThrottle::AsyncOnAppCandidatesReceived(
       activities,
       base::BindOnce(&ArcNavigationThrottle::AsyncOnAppIconsReceived, browser,
                      std::move(handlers), url));
+}
+
+bool ArcNavigationThrottle::IsSameSetOfApps(
+    const std::vector<arc::mojom::IntentHandlerInfoPtr>& handlers) {
+  if (handlers.size() == 0 ||
+      handlers.size() != last_set_of_app_candidates_.size()) {
+    return false;
+  }
+
+  for (const auto& handler : handlers) {
+    const auto it = last_set_of_app_candidates_.find(handler->package_name);
+    if (it == last_set_of_app_candidates_.end())
+      return false;
+  }
+  return true;
+}
+
+void ArcNavigationThrottle::UpdateLastSetOfApps(
+    const std::vector<arc::mojom::IntentHandlerInfoPtr>& handlers) {
+  last_set_of_app_candidates_.clear();
+
+  for (const auto& handler : handlers)
+    last_set_of_app_candidates_.insert(handler->package_name);
 }
 
 }  // namespace arc

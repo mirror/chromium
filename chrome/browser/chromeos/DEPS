@@ -8,6 +8,10 @@ include_rules = [
   # crbug.com/728877
   "+chrome/browser/ui/views/harmony/chrome_layout_provider.h",
 
+  # TODO(djacobo): Modify intent_picker_bubble_view to always make sure there
+  # is not other instance at the same time. Then remove CloseCurrentBubble.
+  "+chrome/browser/ui/views/intent_picker_bubble_view.h",
+
   "+components/constrained_window",
   "+components/drive/drive_pref_names.h",
   "+components/pairing",
