@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "29007e47_a8515811",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_delegate_ukm.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-12-20T11:19:00Z",
+      "side": 1,
+      "message": "When would |has_active_tab_| ever *not* be set to true? Can we set it outside the loop based on that?",
+      "range": {
+        "startLine": 63,
+        "startChar": 8,
+        "endLine": 63,
+        "endChar": 31
+      },
+      "revId": "1095355b3e43198bc69815a80ef2fd53c9a2ddd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
