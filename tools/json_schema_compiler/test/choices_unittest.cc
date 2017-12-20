@@ -113,7 +113,7 @@ TEST(JsonSchemaCompilerChoicesTest, PopulateChoiceType) {
 
   auto strings_value = std::make_unique<base::ListValue>();
   for (size_t i = 0; i < strings.size(); ++i)
-    strings_value->AppendString(strings[i]);
+    strings_value->GetList().emplace_back(strings[i]);
 
   base::DictionaryValue value;
   value.SetInteger("integers", 4);
@@ -132,9 +132,9 @@ TEST(JsonSchemaCompilerChoicesTest, PopulateChoiceType) {
 
 TEST(JsonSchemaCompilerChoicesTest, ChoiceTypeToValue) {
   auto strings_value = std::make_unique<base::ListValue>();
-  strings_value->AppendString("list");
-  strings_value->AppendString("of");
-  strings_value->AppendString("strings");
+  strings_value->GetList().emplace_back("list");
+  strings_value->GetList().emplace_back("of");
+  strings_value->GetList().emplace_back("strings");
 
   base::DictionaryValue value;
   value.SetInteger("integers", 5);
@@ -155,8 +155,8 @@ TEST(JsonSchemaCompilerChoicesTest, ReturnChoices) {
     ASSERT_TRUE(results_value);
 
     base::ListValue expected;
-    expected.AppendInteger(1);
-    expected.AppendInteger(2);
+    expected.GetList().emplace_back(1);
+    expected.GetList().emplace_back(2);
 
     EXPECT_TRUE(expected.Equals(results_value.get()));
   }

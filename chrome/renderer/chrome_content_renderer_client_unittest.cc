@@ -117,7 +117,7 @@ scoped_refptr<const extensions::Extension> CreateTestExtension(
   manifest.SetInteger("manifest_version", 2);
   if (is_hosted_app) {
     auto url_list = base::MakeUnique<base::ListValue>();
-    url_list->AppendString(app_url);
+    url_list->GetList().emplace_back(app_url);
     manifest.Set(extensions::manifest_keys::kWebURLs, std::move(url_list));
     manifest.SetString(extensions::manifest_keys::kLaunchWebURL, app_url);
   }

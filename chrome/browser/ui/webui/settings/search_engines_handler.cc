@@ -214,7 +214,7 @@ SearchEnginesHandler::CreateDictionaryForEngine(int index, bool is_default) {
 
 void SearchEnginesHandler::HandleGetSearchEnginesList(
     const base::ListValue* args) {
-  CHECK_EQ(1U, args->GetSize());
+  CHECK_EQ(1U, args->GetList().size());
   const base::Value* callback_id;
   CHECK(args->Get(0, &callback_id));
   AllowJavascript();
@@ -287,7 +287,7 @@ void SearchEnginesHandler::OnEditedKeyword(TemplateURL* template_url,
 
 void SearchEnginesHandler::HandleValidateSearchEngineInput(
     const base::ListValue* args) {
-  CHECK_EQ(3U, args->GetSize());
+  CHECK_EQ(3U, args->GetList().size());
 
   const base::Value* callback_id;
   std::string field_name;

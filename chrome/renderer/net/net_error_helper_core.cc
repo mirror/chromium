@@ -323,7 +323,7 @@ std::unique_ptr<error_page::ErrorPageParams> CreateErrorPageParams(
     // Allow reload page and web search query to be empty strings, but not
     // links.
     if ((*it)->url_correction.empty() ||
-        (params->override_suggestions->GetSize() >=
+        (params->override_suggestions->GetList().size() >=
          kMaxUrlCorrectionsToDisplay)) {
       continue;
     }
@@ -356,7 +356,8 @@ std::unique_ptr<error_page::ErrorPageParams> CreateErrorPageParams(
     }
   }
 
-  if (params->override_suggestions->empty() && !params->search_url.is_valid())
+  if (params->override_suggestions->GetList().empty() &&
+      !params->search_url.is_valid())
     params.reset();
   return params;
 }

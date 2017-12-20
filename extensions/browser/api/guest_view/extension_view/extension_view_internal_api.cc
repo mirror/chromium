@@ -79,8 +79,8 @@ bool ExtensionViewInternalParseSrcFunction::RunAsync() {
   // Return whether the src is valid and the current extension ID to
   // the callback.
   std::unique_ptr<base::ListValue> result_list(new base::ListValue());
-  result_list->AppendBoolean(is_src_valid);
-  result_list->AppendString(url.host());
+  result_list->GetList().emplace_back(is_src_valid);
+  result_list->GetList().emplace_back(url.host());
   SetResultList(std::move(result_list));
   SendResponse(true);
   return true;

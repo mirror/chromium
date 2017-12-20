@@ -67,8 +67,8 @@ TEST(IPCMessageTest, BasicMessageTest) {
 
 TEST(IPCMessageTest, ListValue) {
   base::ListValue input;
-  input.AppendDouble(42.42);
-  input.AppendString("forty");
+  input.GetList().emplace_back(42.42);
+  input.GetList().emplace_back("forty");
   input.Append(std::make_unique<base::Value>());
 
   IPC::Message msg(1, 2, IPC::Message::PRIORITY_NORMAL);
@@ -99,9 +99,9 @@ TEST(IPCMessageTest, DictionaryValue) {
   subdict->SetBoolean("bool", false);
 
   auto sublist = std::make_unique<base::ListValue>();
-  sublist->AppendDouble(42.42);
-  sublist->AppendString("forty");
-  sublist->AppendString("two");
+  sublist->GetList().emplace_back(42.42);
+  sublist->GetList().emplace_back("forty");
+  sublist->GetList().emplace_back("two");
   subdict->Set("list", std::move(sublist));
 
   input.Set("dict", std::move(subdict));

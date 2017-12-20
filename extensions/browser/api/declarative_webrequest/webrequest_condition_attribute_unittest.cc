@@ -54,7 +54,7 @@ TEST(WebRequestConditionAttributeTest, CreateConditionAttribute) {
   scoped_refptr<const WebRequestConditionAttribute> result;
   base::Value string_value("main_frame");
   base::ListValue resource_types;
-  resource_types.AppendString("main_frame");
+  resource_types.GetList().emplace_back("main_frame");
 
   // Test wrong condition name passed.
   error.clear();
@@ -95,7 +95,7 @@ TEST(WebRequestConditionAttributeTest, ResourceType) {
   base::ListValue resource_types;
   // The 'sub_frame' value is chosen arbitrarily, so as the corresponding
   // content::ResourceType is not 0, the default value.
-  resource_types.AppendString("sub_frame");
+  resource_types.GetList().emplace_back("sub_frame");
 
   scoped_refptr<const WebRequestConditionAttribute> attribute =
       WebRequestConditionAttribute::Create(
@@ -164,7 +164,7 @@ TEST(WebRequestConditionAttributeTest, ContentType) {
   base::RunLoop().Run();
 
   base::ListValue content_types;
-  content_types.AppendString("text/plain");
+  content_types.GetList().emplace_back("text/plain");
   scoped_refptr<const WebRequestConditionAttribute> attribute_include =
       WebRequestConditionAttribute::Create(
           keys::kContentTypeKey, &content_types, &error);
@@ -184,8 +184,8 @@ TEST(WebRequestConditionAttributeTest, ContentType) {
   EXPECT_FALSE(attribute_exclude->IsFulfilled(WebRequestData(
       &request_info, ON_HEADERS_RECEIVED, url_request->response_headers())));
 
-  content_types.Clear();
-  content_types.AppendString("something/invalid");
+  content_types.GetList().clear();
+  content_types.GetList().emplace_back("something/invalid");
   scoped_refptr<const WebRequestConditionAttribute> attribute_unincluded =
       WebRequestConditionAttribute::Create(
           keys::kContentTypeKey, &content_types, &error);
@@ -304,7 +304,7 @@ TEST(WebRequestConditionAttributeTest, Stages) {
   // Create an attribute with all possible applicable stages.
   base::ListValue all_stages;
   for (size_t i = 0; i < arraysize(active_stages); ++i)
-    all_stages.AppendString(active_stages[i].second);
+    all_stages.GetList().emplace_back(active_stages[i].second);
   scoped_refptr<const WebRequestConditionAttribute> attribute_with_all =
       WebRequestConditionAttribute::Create(keys::kStagesKey,
                                            &all_stages,
@@ -319,7 +319,7 @@ TEST(WebRequestConditionAttributeTest, Stages) {
 
   for (size_t i = 0; i < arraysize(active_stages); ++i) {
     base::ListValue single_stage_list;
-    single_stage_list.AppendString(active_stages[i].second);
+    single_stage_list.GetList().emplace_back(active_stages[i].second);
     one_stage_attributes.push_back(
         WebRequestConditionAttribute::Create(keys::kStagesKey,
                                              &single_stage_list,
@@ -398,7 +398,7 @@ std::unique_ptr<base::DictionaryValue> GetDictionaryFromArray(
           // Ignoring return value, we already verified the entry is there.
           dictionary->RemoveWithoutPathExpansion(*name, &entry_owned);
           list->Append(std::move(entry_owned));
-          list->AppendString(*value);
+          list->GetList().emplace_back(*value);
           dictionary->SetWithoutPathExpansion(*name, std::move(list));
           break;
         }

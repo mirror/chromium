@@ -46,7 +46,7 @@ unsigned int GetCommandCode(const std::string& data) {
 bool ConvertListValueToString(base::ListValue* bytes, std::string* out) {
   out->clear();
 
-  unsigned int byte_count = bytes->GetSize();
+  unsigned int byte_count = bytes->GetList().size();
   if (byte_count != 0) {
     out->reserve(byte_count);
     for (unsigned int i = 0; i < byte_count; i++) {
@@ -192,7 +192,7 @@ void SecurityKeyExtensionSession::SendMessageToClient(
 
   auto bytes = base::MakeUnique<base::ListValue>();
   for (std::string::const_iterator i = data.begin(); i != data.end(); ++i) {
-    bytes->AppendInteger(static_cast<unsigned char>(*i));
+    bytes->GetList().emplace_back(static_cast<unsigned char>(*i));
   }
   request.Set(kDataPayload, std::move(bytes));
 

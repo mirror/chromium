@@ -90,7 +90,7 @@ void SigninSupervisedUserImportHandler::RegisterMessages() {
 
 void SigninSupervisedUserImportHandler::AssignWebUICallbackId(
     const base::ListValue* args) {
-  CHECK_LE(1U, args->GetSize());
+  CHECK_LE(1U, args->GetList().size());
   CHECK(webui_callback_id_.empty());
   CHECK(args->GetString(0, &webui_callback_id_));
   AllowJavascript();
@@ -98,7 +98,7 @@ void SigninSupervisedUserImportHandler::AssignWebUICallbackId(
 
 void SigninSupervisedUserImportHandler::OpenUrlInLastActiveProfileBrowser(
     const base::ListValue* args) {
-  CHECK_EQ(1U, args->GetSize());
+  CHECK_EQ(1U, args->GetList().size());
   std::string url;
   bool success = args->GetString(0, &url);
   DCHECK(success);
@@ -133,7 +133,7 @@ void SigninSupervisedUserImportHandler::OpenUrlInLastActiveProfileBrowser(
 
 void SigninSupervisedUserImportHandler::AuthenticateCustodian(
     const base::ListValue* args) {
-  CHECK_EQ(1U, args->GetSize());
+  CHECK_EQ(1U, args->GetList().size());
 
   std::string email;
   bool success = args->GetString(0, &email);
@@ -146,7 +146,7 @@ void SigninSupervisedUserImportHandler::AuthenticateCustodian(
 
 void SigninSupervisedUserImportHandler::GetExistingSupervisedUsers(
     const base::ListValue* args) {
-  CHECK_EQ(2U, args->GetSize());
+  CHECK_EQ(2U, args->GetList().size());
   AssignWebUICallbackId(args);
 
   base::FilePath custodian_profile_path;

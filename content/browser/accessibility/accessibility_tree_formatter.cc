@@ -57,10 +57,11 @@ AccessibilityTreeFormatter::FilterAccessibilityTree(
   auto filtered_dict = std::make_unique<base::DictionaryValue>();
   ProcessTreeForOutput(dict, filtered_dict.get());
   const base::ListValue* children;
-  if (dict.GetList(kChildrenDictAttr, &children) && !children->empty()) {
+  if (dict.GetList(kChildrenDictAttr, &children) &&
+      !children->GetList().empty()) {
     const base::DictionaryValue* child_dict;
     auto filtered_children = std::make_unique<base::ListValue>();
-    for (size_t i = 0; i < children->GetSize(); i++) {
+    for (size_t i = 0; i < children->GetList().size(); i++) {
       children->GetDictionary(i, &child_dict);
       auto filtered_child = FilterAccessibilityTree(*child_dict);
       filtered_children->Append(std::move(filtered_child));
@@ -92,7 +93,7 @@ void AccessibilityTreeFormatter::RecursiveFormatAccessibilityTree(
   if (!dict.GetList(kChildrenDictAttr, &children))
     return;
   const base::DictionaryValue* child_dict;
-  for (size_t i = 0; i < children->GetSize(); i++) {
+  for (size_t i = 0; i < children->GetList().size(); i++) {
     children->GetDictionary(i, &child_dict);
     RecursiveFormatAccessibilityTree(*child_dict, contents, depth + 1);
   }

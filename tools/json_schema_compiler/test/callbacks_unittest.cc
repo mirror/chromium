@@ -35,7 +35,7 @@ TEST(JsonSchemaCompilerCallbacksTest, ReturnsMultipleResultCreate) {
       new base::DictionaryValue());
   expected_dict->SetString("state", "foo");
   base::ListValue expected;
-  expected.AppendInteger(5);
+  expected.GetList().emplace_back(5);
   expected.Append(std::move(expected_dict));
   EXPECT_TRUE(results->Equals(&expected));
 }

@@ -117,7 +117,7 @@ Status AutomationExtension::UpdateWindow(
 
 Status AutomationExtension::LaunchApp(const std::string& id) {
   base::ListValue args;
-  args.AppendString(id);
+  args.GetList().emplace_back(id);
   std::unique_ptr<base::Value> result;
   return web_view_->CallAsyncFunction(std::string(),
                                       "launchApp",

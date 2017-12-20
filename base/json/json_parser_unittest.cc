@@ -83,7 +83,7 @@ TEST_F(JSONParserTest, ConsumeList) {
   ASSERT_TRUE(value.get());
   base::ListValue* list;
   EXPECT_TRUE(value->GetAsList(&list));
-  EXPECT_EQ(2u, list->GetSize());
+  EXPECT_EQ(2u, list->GetList().size());
 }
 
 TEST_F(JSONParserTest, ConsumeDictionary) {

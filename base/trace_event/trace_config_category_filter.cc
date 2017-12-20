@@ -176,7 +176,7 @@ std::string TraceConfigCategoryFilter::ToFilterString() const {
 void TraceConfigCategoryFilter::SetCategoriesFromIncludedList(
     const ListValue& included_list) {
   included_categories_.clear();
-  for (size_t i = 0; i < included_list.GetSize(); ++i) {
+  for (size_t i = 0; i < included_list.GetList().size(); ++i) {
     std::string category;
     if (!included_list.GetString(i, &category))
       continue;
@@ -192,7 +192,7 @@ void TraceConfigCategoryFilter::SetCategoriesFromIncludedList(
 void TraceConfigCategoryFilter::SetCategoriesFromExcludedList(
     const ListValue& excluded_list) {
   excluded_categories_.clear();
-  for (size_t i = 0; i < excluded_list.GetSize(); ++i) {
+  for (size_t i = 0; i < excluded_list.GetList().size(); ++i) {
     std::string category;
     if (excluded_list.GetString(i, &category))
       excluded_categories_.push_back(category);
@@ -208,7 +208,7 @@ void TraceConfigCategoryFilter::AddCategoriesToDict(
 
   auto list = std::make_unique<ListValue>();
   for (const std::string& category : categories)
-    list->AppendString(category);
+    list->GetList().emplace_back(category);
   dict->Set(param, std::move(list));
 }
 

@@ -79,7 +79,7 @@ bool PaymentDetails::FromDictionaryValue(const base::DictionaryValue& value,
 
   const base::ListValue* display_items_list = nullptr;
   if (value.GetList(kPaymentDetailsDisplayItems, &display_items_list)) {
-    for (size_t i = 0; i < display_items_list->GetSize(); ++i) {
+    for (size_t i = 0; i < display_items_list->GetList().size(); ++i) {
       const base::DictionaryValue* payment_item_dict = nullptr;
       if (!display_items_list->GetDictionary(i, &payment_item_dict)) {
         return false;
@@ -94,7 +94,7 @@ bool PaymentDetails::FromDictionaryValue(const base::DictionaryValue& value,
 
   const base::ListValue* shipping_options_list = nullptr;
   if (value.GetList(kPaymentDetailsShippingOptions, &shipping_options_list)) {
-    for (size_t i = 0; i < shipping_options_list->GetSize(); ++i) {
+    for (size_t i = 0; i < shipping_options_list->GetList().size(); ++i) {
       const base::DictionaryValue* shipping_option_dict = nullptr;
       if (!shipping_options_list->GetDictionary(i, &shipping_option_dict)) {
         return false;
@@ -109,7 +109,7 @@ bool PaymentDetails::FromDictionaryValue(const base::DictionaryValue& value,
 
   const base::ListValue* modifiers_list = nullptr;
   if (value.GetList(kPaymentDetailsModifiers, &modifiers_list)) {
-    for (size_t i = 0; i < modifiers_list->GetSize(); ++i) {
+    for (size_t i = 0; i < modifiers_list->GetList().size(); ++i) {
       PaymentDetailsModifier modifier;
       const base::DictionaryValue* modifier_dict = nullptr;
       if (!modifiers_list->GetDictionary(i, &modifier_dict) ||
@@ -126,7 +126,8 @@ bool PaymentDetails::FromDictionaryValue(const base::DictionaryValue& value,
       const base::ListValue* additional_display_items_list = nullptr;
       if (modifier_dict->GetList(kPaymentDetailsAdditionalDisplayItems,
                                  &additional_display_items_list)) {
-        for (size_t j = 0; j < additional_display_items_list->GetSize(); ++j) {
+        for (size_t j = 0; j < additional_display_items_list->GetList().size();
+             ++j) {
           const base::DictionaryValue* additional_display_item_dict = nullptr;
           PaymentItem additional_display_item;
           if (!additional_display_items_list->GetDictionary(

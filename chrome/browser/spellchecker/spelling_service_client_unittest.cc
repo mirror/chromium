@@ -344,7 +344,7 @@ TEST_F(SpellingServiceClientTest, RequestTextCheck) {
     client_.SetExpectedTextCheckResult(kTests[i].success,
                                        kTests[i].corrected_text);
     base::ListValue dictionary;
-    dictionary.AppendString(kTests[i].language);
+    dictionary.GetList().emplace_back(kTests[i].language);
     pref->Set(spellcheck::prefs::kSpellCheckDictionaries, dictionary);
 
     client_.RequestTextCheck(
@@ -393,7 +393,7 @@ TEST_F(SpellingServiceClientTest, AvailableServices) {
   // superset of suggest.
   for (size_t i = 0; i < arraysize(kSupported); ++i) {
     base::ListValue dictionary;
-    dictionary.AppendString(kSupported[i]);
+    dictionary.GetList().emplace_back(kSupported[i]);
     pref->Set(spellcheck::prefs::kSpellCheckDictionaries, dictionary);
 
     EXPECT_FALSE(client_.IsAvailable(&profile_, kSuggest));
@@ -411,7 +411,7 @@ TEST_F(SpellingServiceClientTest, AvailableServices) {
   for (size_t i = 0; i < arraysize(kUnsupported); ++i) {
     SCOPED_TRACE(std::string("Expected language ") + kUnsupported[i]);
     base::ListValue dictionary;
-    dictionary.AppendString(kUnsupported[i]);
+    dictionary.GetList().emplace_back(kUnsupported[i]);
     pref->Set(spellcheck::prefs::kSpellCheckDictionaries, dictionary);
 
     EXPECT_TRUE(client_.IsAvailable(&profile_, kSuggest));

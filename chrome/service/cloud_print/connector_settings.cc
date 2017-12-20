@@ -70,7 +70,7 @@ void ConnectorSettings::InitFrom(ServiceProcessPrefs* prefs) {
 
   const base::ListValue* printers = prefs->GetList(prefs::kCloudPrintPrinters);
   if (printers) {
-    for (size_t i = 0; i < printers->GetSize(); ++i) {
+    for (size_t i = 0; i < printers->GetList().size(); ++i) {
       const base::DictionaryValue* dictionary = NULL;
       if (printers->GetDictionary(i, &dictionary) && dictionary) {
         std::string name;

@@ -115,7 +115,7 @@ class ProfileInfoHandlerTest : public testing::Test {
 
 TEST_F(ProfileInfoHandlerTest, GetProfileInfo) {
   base::ListValue list_args;
-  list_args.AppendString("get-profile-info-callback-id");
+  list_args.GetList().emplace_back("get-profile-info-callback-id");
   handler()->HandleGetProfileInfo(&list_args);
 
   EXPECT_EQ(1U, web_ui()->call_data().size());
@@ -153,7 +153,8 @@ TEST_F(ProfileInfoHandlerTest, PushProfileInfo) {
 
 TEST_F(ProfileInfoHandlerTest, GetProfileManagesSupervisedUsers) {
   base::ListValue list_args;
-  list_args.AppendString("get-profile-manages-supervised-users-callback-id");
+  list_args.GetList().emplace_back(
+      "get-profile-manages-supervised-users-callback-id");
   handler()->HandleGetProfileManagesSupervisedUsers(&list_args);
 
   EXPECT_EQ(1U, web_ui()->call_data().size());

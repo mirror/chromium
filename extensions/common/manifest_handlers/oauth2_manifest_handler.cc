@@ -81,7 +81,7 @@ bool OAuth2ManifestHandler::Parse(Extension* extension,
     return false;
   }
 
-  for (size_t i = 0; i < list->GetSize(); ++i) {
+  for (size_t i = 0; i < list->GetList().size(); ++i) {
     std::string scope;
     if (!list->GetString(i, &scope)) {
       *error = base::ASCIIToUTF16(errors::kInvalidOAuth2Scopes);

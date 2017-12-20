@@ -140,7 +140,7 @@ class Handler : public content::WebContentsObserver {
     if (result_list.Get(0u, &script_value)) {
       // If this is the main result, we put it at index 0. Otherwise, we just
       // append it at the end.
-      if (is_root_frame && !results_.empty())
+      if (is_root_frame && !results_.GetList().empty())
         CHECK(results_.Insert(0u, script_value->CreateDeepCopy()));
       else
         results_.Append(script_value->CreateDeepCopy());
@@ -161,7 +161,7 @@ class Handler : public content::WebContentsObserver {
       // We never finished the root frame injection.
       root_frame_error_ =
           root_is_main_frame_ ? kRendererDestroyed : kFrameRemoved;
-      results_.Clear();
+      results_.GetList().clear();
     }
 
     if (script_observers_.get() && root_frame_error_.empty() &&

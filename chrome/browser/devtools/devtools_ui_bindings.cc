@@ -1246,7 +1246,7 @@ void DevToolsUIBindings::SearchCompleted(
   base::ListValue file_paths_value;
   for (std::vector<std::string>::const_iterator it(file_paths.begin());
        it != file_paths.end(); ++it) {
-    file_paths_value.AppendString(*it);
+    file_paths_value.GetList().emplace_back(*it);
   }
   base::Value request_id_value(request_id);
   base::Value file_system_path_value(file_system_path);

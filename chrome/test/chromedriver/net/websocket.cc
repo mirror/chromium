@@ -86,7 +86,7 @@ void WebSocket::Connect(const net::CompletionCallback& callback) {
     }
     base::ListValue endpoints;
     for (auto endpoint : addresses)
-      endpoints.AppendString(endpoint.ToStringWithoutPort());
+      endpoints.GetList().emplace_back(endpoint.ToStringWithoutPort());
     std::string json;
     CHECK(base::JSONWriter::Write(endpoints, &json));
     VLOG(0) << "resolved " << url_.HostNoBracketsPiece() << " to " << json;

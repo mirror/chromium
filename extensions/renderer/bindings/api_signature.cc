@@ -266,7 +266,7 @@ bool ArgumentParser::ParseCallback(const ArgumentSpec& spec) {
 }  // namespace
 
 APISignature::APISignature(const base::ListValue& specification) {
-  signature_.reserve(specification.GetSize());
+  signature_.reserve(specification.GetList().size());
   for (const auto& value : specification) {
     const base::DictionaryValue* param = nullptr;
     CHECK(value.GetAsDictionary(&param));
@@ -341,7 +341,7 @@ bool APISignature::ConvertArgumentsIgnoringSchema(
   }
 
   auto json = std::make_unique<base::ListValue>();
-  json->Reserve(size);
+  json->GetList().reserve(size);
 
   std::unique_ptr<content::V8ValueConverter> converter =
       content::V8ValueConverter::Create();

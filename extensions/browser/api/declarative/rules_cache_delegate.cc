@@ -103,7 +103,7 @@ void RulesCacheDelegate::WriteToStorage(const std::string& extension_id,
   const base::ListValue* rules = NULL;
   CHECK(value->GetAsList(&rules));
   bool rules_stored_previously = GetDeclarativeRulesStored(extension_id);
-  bool store_rules = !rules->empty();
+  bool store_rules = !rules->GetList().empty();
   SetDeclarativeRulesStored(extension_id, store_rules);
   if (!rules_stored_previously && !store_rules)
     return;

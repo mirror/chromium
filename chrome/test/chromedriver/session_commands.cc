@@ -209,7 +209,7 @@ Status InitSessionHelper(const InitSessionParams& bound_params,
       tmp_list->Append(std::move(inner));
       first_match_list = tmp_list.get();
     }
-    for (size_t i = 0; i < first_match_list->GetSize(); ++i) {
+    for (size_t i = 0; i < first_match_list->GetList().size(); ++i) {
       const base::DictionaryValue* first_match;
       if (!first_match_list->GetDictionary(i, &first_match)) {
         continue;
@@ -436,7 +436,7 @@ Status ExecuteGetWindowHandles(Session* session,
   std::unique_ptr<base::ListValue> window_ids(new base::ListValue());
   for (std::list<std::string>::const_iterator it = web_view_ids.begin();
        it != web_view_ids.end(); ++it) {
-    window_ids->AppendString(WebViewIdToWindowHandle(*it));
+    window_ids->GetList().emplace_back(WebViewIdToWindowHandle(*it));
   }
   *value = std::move(window_ids);
   return Status(kOk);
@@ -986,7 +986,7 @@ Status ExecuteGetAvailableLogTypes(Session* session,
   for (std::vector<WebDriverLog*>::const_iterator log = logs.begin();
        log != logs.end();
        ++log) {
-    types->AppendString((*log)->type());
+    types->GetList().emplace_back((*log)->type());
   }
   *value = std::move(types);
   return Status(kOk);

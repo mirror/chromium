@@ -26,7 +26,7 @@ TEST(WebRequestUploadDataPresenterTest, ParsedData) {
 
   // Expected output.
   std::unique_ptr<base::ListValue> values(new base::ListValue);
-  values->AppendString("value");
+  values->GetList().emplace_back("value");
   base::DictionaryValue expected_form;
   expected_form.SetWithoutPathExpansion("key.with.dots", std::move(values));
 

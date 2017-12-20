@@ -652,7 +652,7 @@ TEST_F(MutableProfileOAuth2TokenServiceDelegateTest, GaiaIdMigration) {
 
     ListPrefUpdate update(&pref_service_,
                           AccountTrackerService::kAccountInfoPref);
-    update->Clear();
+    update->GetList().clear();
     auto dict = base::MakeUnique<base::DictionaryValue>();
     dict->SetString("account_id", base::UTF8ToUTF16(email));
     dict->SetString("email", base::UTF8ToUTF16(email));
@@ -710,7 +710,7 @@ TEST_F(MutableProfileOAuth2TokenServiceDelegateTest,
 
     ListPrefUpdate update(&pref_service_,
                           AccountTrackerService::kAccountInfoPref);
-    update->Clear();
+    update->GetList().clear();
     auto dict = base::MakeUnique<base::DictionaryValue>();
     dict->SetString("account_id", base::UTF8ToUTF16(email1));
     dict->SetString("email", base::UTF8ToUTF16(email1));

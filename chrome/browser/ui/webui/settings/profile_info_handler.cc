@@ -119,7 +119,7 @@ void ProfileInfoHandler::OnProfileAvatarChanged(
 void ProfileInfoHandler::HandleGetProfileInfo(const base::ListValue* args) {
   AllowJavascript();
 
-  CHECK_EQ(1U, args->GetSize());
+  CHECK_EQ(1U, args->GetList().size());
   const base::Value* callback_id;
   CHECK(args->Get(0, &callback_id));
 
@@ -152,7 +152,7 @@ void ProfileInfoHandler::HandleGetProfileManagesSupervisedUsers(
     const base::ListValue* args) {
   AllowJavascript();
 
-  CHECK_EQ(1U, args->GetSize());
+  CHECK_EQ(1U, args->GetList().size());
   const base::Value* callback_id;
   CHECK(args->Get(0, &callback_id));
 

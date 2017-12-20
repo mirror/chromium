@@ -182,7 +182,7 @@ class TestPrinterHandler : public PrinterHandler {
 
   void StartGetPrinters(const AddedPrintersCallback& added_printers_callback,
                         GetPrintersDoneCallback done_callback) override {
-    if (!printers_.empty())
+    if (!printers_.GetList().empty())
       added_printers_callback.Run(printers_);
     std::move(done_callback).Run();
   }

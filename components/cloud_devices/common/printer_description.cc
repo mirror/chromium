@@ -761,7 +761,7 @@ class PageRangeTraits : public ItemsTraits<kOptionPageRange> {
     const base::ListValue* list = nullptr;
     if (!dict.GetList(kPageRangeInterval, &list))
       return false;
-    for (size_t i = 0; i < list->GetSize(); ++i) {
+    for (size_t i = 0; i < list->GetList().size(); ++i) {
       const base::DictionaryValue* interval = nullptr;
       if (!list->GetDictionary(i, &interval))
         return false;

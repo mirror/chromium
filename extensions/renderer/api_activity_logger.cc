@@ -55,7 +55,7 @@ void APIActivityLogger::LogAPICall(
   ActivityLogConverterStrategy strategy;
   converter->SetFunctionAllowed(true);
   converter->SetStrategy(&strategy);
-  value_args->Reserve(arguments.size());
+  value_args->GetList().reserve(arguments.size());
   // TODO(devlin): This doesn't protect against custom properties, so it might
   // not perfectly reflect the passed arguments.
   for (const auto& arg : arguments) {
@@ -100,7 +100,7 @@ void APIActivityLogger::LogForJS(
   auto arguments = std::make_unique<base::ListValue>();
   v8::Local<v8::Array> arg_array = v8::Local<v8::Array>::Cast(args[2]);
   if (arg_array->Length() > 0) {
-    arguments->Reserve(arg_array->Length());
+    arguments->GetList().reserve(arg_array->Length());
     std::unique_ptr<content::V8ValueConverter> converter =
         content::V8ValueConverter::Create();
     ActivityLogConverterStrategy strategy;

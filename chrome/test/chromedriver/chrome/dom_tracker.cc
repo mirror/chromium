@@ -72,7 +72,7 @@ bool DomTracker::ProcessNodeList(const base::Value* nodes) {
   const base::ListValue* nodes_list;
   if (!nodes->GetAsList(&nodes_list))
     return false;
-  for (size_t i = 0; i < nodes_list->GetSize(); ++i) {
+  for (size_t i = 0; i < nodes_list->GetList().size(); ++i) {
     const base::Value* node;
     if (!nodes_list->Get(i, &node))
       return false;

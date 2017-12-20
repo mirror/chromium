@@ -469,7 +469,7 @@ IN_PROC_BROWSER_TEST_P(WebstoreInlineInstallerRedirectTest,
   // and it may (based on timing) pick up additional navigations that occur
   // shortly before the navigation we mainly care about here. Be somewhat
   // permissive in what we accept as redirect results.
-  ASSERT_LE(expected_redirect_domains.size(), redirect_list->GetSize());
+  ASSERT_LE(expected_redirect_domains.size(), redirect_list->GetList().size());
 
   for (const auto& value : *redirect_list) {
     std::string value_string;

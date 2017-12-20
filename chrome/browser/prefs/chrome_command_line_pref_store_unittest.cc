@@ -53,7 +53,7 @@ class TestCommandLinePrefStore : public ChromeCommandLinePrefStore {
     ASSERT_EQ(base::Value::Type::LIST, value->type());
     const base::ListValue* list_value =
         static_cast<const base::ListValue*>(value);
-    ASSERT_EQ(cipher_count, list_value->GetSize());
+    ASSERT_EQ(cipher_count, list_value->GetList().size());
 
     std::string cipher_string;
     for (base::ListValue::const_iterator it = list_value->begin();

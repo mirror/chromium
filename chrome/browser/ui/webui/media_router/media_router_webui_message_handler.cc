@@ -1027,7 +1027,7 @@ bool MediaRouterWebUIMessageHandler::ActOnIssueType(
     if (learn_more_url.empty())
       return false;
     auto open_args = base::MakeUnique<base::ListValue>();
-    open_args->AppendString(learn_more_url);
+    open_args->GetList().emplace_back(learn_more_url);
     web_ui()->CallJavascriptFunctionUnsafe(kWindowOpen, *open_args);
     return true;
   } else {

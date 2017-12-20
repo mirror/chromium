@@ -97,9 +97,9 @@ void ArgumentSpec::InitializeType(const base::DictionaryValue* dict) {
   {
     const base::ListValue* choices = nullptr;
     if (dict->GetList("choices", &choices)) {
-      DCHECK(!choices->empty());
+      DCHECK(!choices->GetList().empty());
       type_ = ArgumentType::CHOICES;
-      choices_.reserve(choices->GetSize());
+      choices_.reserve(choices->GetList().size());
       for (const auto& choice : *choices)
         choices_.push_back(std::make_unique<ArgumentSpec>(choice));
       return;
@@ -177,7 +177,7 @@ void ArgumentSpec::InitializeType(const base::DictionaryValue* dict) {
     // always update this if need be.
     const base::ListValue* enums = nullptr;
     if (dict->GetList("enum", &enums)) {
-      size_t size = enums->GetSize();
+      size_t size = enums->GetList().size();
       CHECK_GT(size, 0u);
       for (size_t i = 0; i < size; ++i) {
         std::string enum_value;

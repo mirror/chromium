@@ -78,7 +78,7 @@ void GcmInternalsUIMessageHandler::ReturnResults(
 
 void GcmInternalsUIMessageHandler::RequestAllInfo(
     const base::ListValue* args) {
-  if (args->GetSize() != 1) {
+  if (args->GetList().size() != 1) {
     NOTREACHED();
     return;
   }
@@ -106,7 +106,7 @@ void GcmInternalsUIMessageHandler::RequestAllInfo(
 }
 
 void GcmInternalsUIMessageHandler::SetRecording(const base::ListValue* args) {
-  if (args->GetSize() != 1) {
+  if (args->GetList().size() != 1) {
     NOTREACHED();
     return;
   }

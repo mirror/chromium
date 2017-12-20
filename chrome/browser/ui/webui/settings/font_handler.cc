@@ -73,7 +73,7 @@ void FontHandler::OnJavascriptDisallowed() {
 }
 
 void FontHandler::HandleFetchFontsData(const base::ListValue* args) {
-  CHECK_EQ(1U, args->GetSize());
+  CHECK_EQ(1U, args->GetList().size());
   std::string callback_id;
   CHECK(args->GetString(0, &callback_id));
 
@@ -127,7 +127,7 @@ void FontHandler::OnExtensionUnloaded(content::BrowserContext*,
 void FontHandler::FontListHasLoaded(std::string callback_id,
                                     std::unique_ptr<base::ListValue> list) {
   // Font list. Selects the directionality for the fonts in the given list.
-  for (size_t i = 0; i < list->GetSize(); i++) {
+  for (size_t i = 0; i < list->GetList().size(); i++) {
     base::ListValue* font;
     bool has_font = list->GetList(i, &font);
     DCHECK(has_font);
@@ -137,7 +137,7 @@ void FontHandler::FontListHasLoaded(std::string callback_id,
     DCHECK(has_value);
 
     bool has_rtl_chars = base::i18n::StringContainsStrongRTLChars(value);
-    font->AppendString(has_rtl_chars ? "rtl" : "ltr");
+    font->GetList().emplace_back(has_rtl_chars ? "rtl" : "ltr");
   }
 
   base::DictionaryValue response;

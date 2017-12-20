@@ -290,7 +290,7 @@ Status ParseWebViewsInfo(const std::string& data, WebViewsInfo* views_info) {
     return Status(kUnknownError, "DevTools did not return list");
 
   std::vector<WebViewInfo> temp_views_info;
-  for (size_t i = 0; i < list->GetSize(); ++i) {
+  for (size_t i = 0; i < list->GetList().size(); ++i) {
     base::DictionaryValue* info;
     if (!list->GetDictionary(i, &info))
       return Status(kUnknownError, "DevTools contains non-dictionary item");

@@ -165,22 +165,22 @@ void ClearBrowsingDataHandler::HandleClearBrowsingDataForTest() {
 
   std::unique_ptr<base::ListValue> data_types =
       std::make_unique<base::ListValue>();
-  data_types->AppendString("browser.clear_data.browsing_history");
+  data_types->GetList().emplace_back("browser.clear_data.browsing_history");
 
   std::unique_ptr<base::ListValue> important_sites =
       std::make_unique<base::ListValue>();
 
   base::ListValue list_args;
-  list_args.AppendString("webui_callback_id");
+  list_args.GetList().emplace_back("webui_callback_id");
   list_args.Append(std::move(data_types));
-  list_args.AppendInteger(1u);
+  list_args.GetList().emplace_back(1);
   list_args.Append(std::move(important_sites));
   HandleClearBrowsingData(&list_args);
 }
 
 void ClearBrowsingDataHandler::HandleClearBrowsingData(
     const base::ListValue* args) {
-  CHECK_EQ(4U, args->GetSize());
+  CHECK_EQ(4U, args->GetList().size());
   std::string webui_callback_id;
   CHECK(args->GetString(0, &webui_callback_id));
 

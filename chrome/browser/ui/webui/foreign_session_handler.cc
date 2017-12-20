@@ -117,7 +117,7 @@ std::unique_ptr<base::DictionaryValue> SessionWindowToValue(
       tab_values->Append(std::move(tab_value));
     }
   }
-  if (tab_values->GetSize() == 0)
+  if (tab_values->GetList().size() == 0)
     return nullptr;
   std::unique_ptr<base::DictionaryValue> dictionary(
       BuildWindowData(window.timestamp, window.window_id.id()));
@@ -320,7 +320,7 @@ void ForeignSessionHandler::HandleGetForeignSessions(
             tab_values->Append(std::move(tab_value));
           }
         }
-        if (tab_values->GetSize() != 0) {
+        if (tab_values->GetList().size() != 0) {
           std::unique_ptr<base::DictionaryValue> window_data(
               BuildWindowData(modification_time, 1));
           window_data->Set("tabs", std::move(tab_values));
@@ -337,14 +337,14 @@ void ForeignSessionHandler::HandleGetForeignSessions(
 
 void ForeignSessionHandler::HandleOpenForeignSession(
     const base::ListValue* args) {
-  size_t num_args = args->GetSize();
+  size_t num_args = args->GetList().size();
   // Expect either 1 or 8 args. For restoring an entire session, only
   // one argument is required -- the session tag. To restore a tab,
   // the additional args required are the window id, the tab id,
   // and 4 properties of the event object (button, altKey, ctrlKey,
   // metaKey, shiftKey) for determining how to open the tab.
   if (num_args != 8U && num_args != 1U) {
-    LOG(ERROR) << "openForeignSession called with " << args->GetSize()
+    LOG(ERROR) << "openForeignSession called with " << args->GetList().size()
                << " arguments.";
     return;
   }
@@ -385,7 +385,7 @@ void ForeignSessionHandler::HandleOpenForeignSession(
 
 void ForeignSessionHandler::HandleDeleteForeignSession(
     const base::ListValue* args) {
-  if (args->GetSize() != 1U) {
+  if (args->GetList().size() != 1U) {
     LOG(ERROR) << "Wrong number of args to deleteForeignSession";
     return;
   }
@@ -405,7 +405,7 @@ void ForeignSessionHandler::HandleDeleteForeignSession(
 
 void ForeignSessionHandler::HandleSetForeignSessionCollapsed(
     const base::ListValue* args) {
-  if (args->GetSize() != 2U) {
+  if (args->GetList().size() != 2U) {
     LOG(ERROR) << "Wrong number of args to setForeignSessionCollapsed";
     return;
   }

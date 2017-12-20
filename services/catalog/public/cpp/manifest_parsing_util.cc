@@ -67,7 +67,7 @@ base::Optional<RequiredFileMap> RetrieveRequiredFiles(
       return base::nullopt;
     }
 
-    for (size_t i = 0; i < all_platform_values->GetSize(); i++) {
+    for (size_t i = 0; i < all_platform_values->GetList().size(); i++) {
       const base::DictionaryValue* file_descriptor_value = nullptr;
       if (!all_platform_values->GetDictionary(i, &file_descriptor_value)) {
         DLOG(ERROR) << "Entry::Deserialize: value of entry at index " << i

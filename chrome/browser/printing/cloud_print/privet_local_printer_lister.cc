@@ -107,7 +107,7 @@ void PrivetLocalPrinterLister::OnPrivetInfoDone(
   bool has_local_printing = false;
   const base::ListValue* api_list = nullptr;
   if (json_value && json_value->GetList(kPrivetInfoKeyAPIList, &api_list)) {
-    for (size_t i = 0; i < api_list->GetSize(); ++i) {
+    for (size_t i = 0; i < api_list->GetList().size(); ++i) {
       std::string api;
       api_list->GetString(i, &api);
       if (api == kPrivetSubmitdocPath) {

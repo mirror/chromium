@@ -70,8 +70,8 @@ bool LoadColors(const base::DictionaryValue* theme_value,
       // The color must be a list...
       if (!iter.value().GetAsList(&color_list) ||
           // ... and either 3 items (RGB) or 4 (RGBA).
-          ((color_list->GetSize() != 3) &&
-           ((color_list->GetSize() != 4) ||
+          ((color_list->GetList().size() != 3) &&
+           ((color_list->GetList().size() != 4) ||
             // For RGBA, the fourth item must be a real or int alpha value.
             // Note that GetDouble() can get an integer value.
             !color_list->GetDouble(3, &alpha))) ||
@@ -101,10 +101,8 @@ bool LoadTints(const base::DictionaryValue* theme_value,
     const base::ListValue* tint_list = NULL;
     double v = 0.0;
     if (!iter.value().GetAsList(&tint_list) ||
-        tint_list->GetSize() != 3 ||
-        !tint_list->GetDouble(0, &v) ||
-        !tint_list->GetDouble(1, &v) ||
-        !tint_list->GetDouble(2, &v)) {
+        tint_list->GetList().size() != 3 || !tint_list->GetDouble(0, &v) ||
+        !tint_list->GetDouble(1, &v) || !tint_list->GetDouble(2, &v)) {
       *error = base::ASCIIToUTF16(errors::kInvalidThemeTints);
       return false;
     }

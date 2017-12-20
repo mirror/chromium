@@ -66,7 +66,7 @@ std::unique_ptr<base::Value> CopyAndMaybeConvert(const base::Value* value,
   std::unique_ptr<base::Value> copy = value->CreateDeepCopy();
   base::ListValue* list = NULL;
   if (copy->GetAsList(&list)) {
-    for (size_t i = 0; i < list->GetSize(); ++i) {
+    for (size_t i = 0; i < list->GetList().size(); ++i) {
       if (list->GetDictionary(i, &dict))
         list->Set(i, DictionaryToJSONString(*dict));
     }

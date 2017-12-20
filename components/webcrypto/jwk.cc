@@ -95,7 +95,7 @@ std::unique_ptr<base::ListValue> CreateJwkKeyOpsFromWebCryptoUsages(
   std::unique_ptr<base::ListValue> jwk_key_ops(new base::ListValue());
   for (size_t i = 0; i < arraysize(kJwkWebCryptoUsageMap); ++i) {
     if (usages & kJwkWebCryptoUsageMap[i].webcrypto_usage)
-      jwk_key_ops->AppendString(kJwkWebCryptoUsageMap[i].jwk_key_op);
+      jwk_key_ops->GetList().emplace_back(kJwkWebCryptoUsageMap[i].jwk_key_op);
   }
   return jwk_key_ops;
 }
@@ -107,7 +107,7 @@ Status GetWebCryptoUsagesFromJwkKeyOps(const base::ListValue* key_ops,
   std::set<std::string> unrecognized_usages;
 
   *usages = 0;
-  for (size_t i = 0; i < key_ops->GetSize(); ++i) {
+  for (size_t i = 0; i < key_ops->GetList().size(); ++i) {
     std::string key_op;
     if (!key_ops->GetString(i, &key_op)) {
       return Status::ErrorJwkMemberWrongType(

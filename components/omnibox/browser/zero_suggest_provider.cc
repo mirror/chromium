@@ -387,8 +387,7 @@ bool ZeroSuggestProvider::StoreSuggestionResponse(
   const base::ListValue* root_list = nullptr;
   const base::ListValue* results_list = nullptr;
   if (parsed_data.GetAsList(&root_list) &&
-      root_list->GetList(1, &results_list) &&
-      results_list->empty())
+      root_list->GetList(1, &results_list) && results_list->GetList().empty())
     return false;
 
   // We are finished with the request and want to bail early.

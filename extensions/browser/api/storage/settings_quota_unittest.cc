@@ -32,7 +32,7 @@ class ExtensionSettingsQuotaTest : public testing::Test {
         byte_value_16_("sixteen bytes."),
         delegate_(new TestingValueStore()) {
     for (int i = 1; i < 89; ++i) {
-      byte_value_256_.AppendInteger(i);
+      byte_value_256_.GetList().emplace_back(i);
     }
     ValidateByteValues();
   }

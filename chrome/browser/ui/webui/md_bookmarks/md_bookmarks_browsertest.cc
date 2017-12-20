@@ -42,7 +42,7 @@ void MdBookmarksBrowserTest::HandleSetIncognitoAvailability(
     const base::ListValue* args) {
   AllowJavascript();
 
-  ASSERT_EQ(2U, args->GetSize());
+  ASSERT_EQ(2U, args->GetList().size());
   const base::Value* callback_id;
   ASSERT_TRUE(args->Get(0, &callback_id));
   int pref_value;
@@ -57,7 +57,7 @@ void MdBookmarksBrowserTest::HandleSetCanEditBookmarks(
     const base::ListValue* args) {
   AllowJavascript();
 
-  ASSERT_EQ(2U, args->GetSize());
+  ASSERT_EQ(2U, args->GetList().size());
   const base::Value* callback_id;
   ASSERT_TRUE(args->Get(0, &callback_id));
   bool pref_value;

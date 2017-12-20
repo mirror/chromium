@@ -236,7 +236,7 @@ void TranslateInternalsHandler::SendSupportedLanguagesToJs() {
   for (std::vector<std::string>::iterator it = languages.begin();
        it != languages.end(); ++it) {
     const std::string& lang = *it;
-    languages_list->AppendString(lang);
+    languages_list->GetList().emplace_back(lang);
   }
 
   base::DictionaryValue dict;

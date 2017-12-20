@@ -330,7 +330,7 @@ bool ParseJSON(base::StringPiece json,
     return false;
   }
 
-  for (size_t i = 0; i < preload_entries->GetSize(); ++i) {
+  for (size_t i = 0; i < preload_entries->GetList().size(); ++i) {
     const base::DictionaryValue* parsed = nullptr;
     if (!preload_entries->GetDictionary(i, &parsed)) {
       LOG(ERROR) << "Could not parse entry " << base::NumberToString(i)
@@ -400,7 +400,7 @@ bool ParseJSON(base::StringPiece json,
     return false;
   }
 
-  for (size_t i = 0; i < pinsets_list->GetSize(); ++i) {
+  for (size_t i = 0; i < pinsets_list->GetList().size(); ++i) {
     const base::DictionaryValue* parsed = nullptr;
     if (!pinsets_list->GetDictionary(i, &parsed)) {
       LOG(ERROR) << "Could not parse pinset " << base::NumberToString(i)
@@ -422,7 +422,7 @@ bool ParseJSON(base::StringPiece json,
 
     const base::ListValue* pinset_static_hashes_list = nullptr;
     if (parsed->GetList("static_spki_hashes", &pinset_static_hashes_list)) {
-      for (size_t i = 0; i < pinset_static_hashes_list->GetSize(); ++i) {
+      for (size_t i = 0; i < pinset_static_hashes_list->GetList().size(); ++i) {
         std::string hash;
         pinset_static_hashes_list->GetString(i, &hash);
         pinset->AddStaticSPKIHash(hash);
@@ -432,7 +432,8 @@ bool ParseJSON(base::StringPiece json,
     const base::ListValue* pinset_bad_static_hashes_list = nullptr;
     if (parsed->GetList("bad_static_spki_hashes",
                         &pinset_bad_static_hashes_list)) {
-      for (size_t i = 0; i < pinset_bad_static_hashes_list->GetSize(); ++i) {
+      for (size_t i = 0; i < pinset_bad_static_hashes_list->GetList().size();
+           ++i) {
         std::string hash;
         pinset_bad_static_hashes_list->GetString(i, &hash);
         pinset->AddBadStaticSPKIHash(hash);

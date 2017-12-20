@@ -189,7 +189,7 @@ void SecurityKeyExtensionSessionTest::WaitForAndVerifyHostMessage() {
 
   // Skip first four bytes.
   for (size_t i = 4; i < sizeof(kRequestData); ++i) {
-    expected_data.AppendInteger(kRequestData[i]);
+    expected_data.GetList().emplace_back(kRequestData[i]);
   }
 
   std::string expected_data_json;

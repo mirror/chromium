@@ -79,7 +79,7 @@ TEST_F(ReportingDeliveryAgentTest, SuccessfulUpload) {
 
     base::ListValue* list;
     ASSERT_TRUE(value->GetAsList(&list));
-    EXPECT_EQ(1u, list->GetSize());
+    EXPECT_EQ(1u, list->GetList().size());
 
     base::DictionaryValue* report;
     ASSERT_TRUE(list->GetDictionary(0, &report));

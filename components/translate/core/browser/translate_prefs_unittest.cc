@@ -99,7 +99,7 @@ class TranslatePrefsTest : public testing::Test {
     const base::ListValue* const blacklist =
         prefs_->GetList(kTranslateBlockedLanguagesPref);
     const int input_size = list.size();
-    ASSERT_EQ(input_size, static_cast<int>(blacklist->GetSize()));
+    ASSERT_EQ(input_size, static_cast<int>(blacklist->GetList().size()));
     for (int i = 0; i < input_size; ++i) {
       std::string value;
       blacklist->GetString(i, &value);
@@ -245,7 +245,7 @@ TEST_F(TranslatePrefsTest, DenialTimeUpdate_ForceListExistence) {
   DenialTimeUpdate update(prefs_.get(), kTestLanguage, 2);
   base::ListValue* time_list = update.GetDenialTimes();
   EXPECT_TRUE(time_list);
-  EXPECT_EQ(0U, time_list->GetSize());
+  EXPECT_EQ(0U, time_list->GetList().size());
 }
 
 // Test that an existing update time record (which is a double in a dict)
@@ -270,7 +270,7 @@ TEST_F(TranslatePrefsTest, DenialTimeUpdate_Migrate) {
   has_list = denial_dict->GetList(kTestLanguage, &list_value);
   EXPECT_TRUE(has_list);
   EXPECT_EQ(time_list, list_value);
-  EXPECT_EQ(1U, time_list->GetSize());
+  EXPECT_EQ(1U, time_list->GetList().size());
   EXPECT_EQ(two_days_ago_, update.GetOldestDenialTime());
 }
 

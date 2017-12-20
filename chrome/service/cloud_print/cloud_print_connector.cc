@@ -243,7 +243,7 @@ CloudPrintConnector::HandlePrinterListResponse(
   const base::ListValue* printer_list = nullptr;
   // There may be no "printers" value in the JSON
   if (json_data->GetList(kPrinterListValue, &printer_list) && printer_list) {
-    for (size_t i = 0; i < printer_list->GetSize(); ++i) {
+    for (size_t i = 0; i < printer_list->GetList().size(); ++i) {
       const base::DictionaryValue* printer_data = nullptr;
       if (!printer_list->GetDictionary(i, &printer_data))
         continue;
@@ -416,7 +416,7 @@ void CloudPrintConnector::InitJobHandlerForPrinter(
       &printer_info_cloud.caps_hash);
   const base::ListValue* tags_list = nullptr;
   if (printer_data->GetList(kTagsValue, &tags_list) && tags_list) {
-    for (size_t i = 0; i < tags_list->GetSize(); ++i) {
+    for (size_t i = 0; i < tags_list->GetList().size(); ++i) {
       std::string tag;
       if (tags_list->GetString(i, &tag) &&
           base::StartsWith(tag, kCloudPrintServiceTagsHashTagName,
@@ -450,7 +450,7 @@ void CloudPrintConnector::UpdateSettingsFromPrintersList(
   int min_xmpp_timeout = std::numeric_limits<int>::max();
   // There may be no "printers" value in the JSON
   if (json_data->GetList(kPrinterListValue, &printer_list) && printer_list) {
-    for (size_t i = 0; i < printer_list->GetSize(); ++i) {
+    for (size_t i = 0; i < printer_list->GetList().size(); ++i) {
       const base::DictionaryValue* printer_data = nullptr;
       if (printer_list->GetDictionary(i, &printer_data)) {
         int xmpp_timeout = 0;

@@ -109,7 +109,7 @@ void PinnedTabCodec::WritePinnedTabs(Profile* profile,
 
   ListPrefUpdate update(prefs, prefs::kPinnedTabs);
   base::ListValue* values = update.Get();
-  values->Clear();
+  values->GetList().clear();
   for (StartupTabs::const_iterator i = tabs.begin(); i != tabs.end(); ++i)
     EncodeTab(*i, values);
 }
@@ -130,7 +130,7 @@ StartupTabs PinnedTabCodec::ReadPinnedTabs(const base::Value* value) {
   if (!value->GetAsList(&tabs_list))
     return results;
 
-  for (size_t i = 0, max = tabs_list->GetSize(); i < max; ++i) {
+  for (size_t i = 0, max = tabs_list->GetList().size(); i < max; ++i) {
     const base::DictionaryValue* tab_values = NULL;
     if (tabs_list->GetDictionary(i, &tab_values)) {
       StartupTab tab;

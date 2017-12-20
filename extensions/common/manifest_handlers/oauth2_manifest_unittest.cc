@@ -96,8 +96,8 @@ TEST_F(OAuth2ManifestTest, OAuth2SectionParsing) {
   base_manifest.SetInteger(keys::kManifestVersion, 2);
   base_manifest.SetString(keys::kOAuth2ClientId, "client1");
   auto scopes = std::make_unique<base::ListValue>();
-  scopes->AppendString("scope1");
-  scopes->AppendString("scope2");
+  scopes->GetList().emplace_back("scope1");
+  scopes->GetList().emplace_back("scope2");
   base_manifest.Set(keys::kOAuth2Scopes, std::move(scopes));
 
   // OAuth2 section should be parsed for an extension.

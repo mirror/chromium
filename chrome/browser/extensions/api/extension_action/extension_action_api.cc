@@ -492,7 +492,7 @@ ExtensionActionSetBadgeBackgroundColorFunction::RunExtensionAction() {
   if (color_value->is_list()) {
     base::ListValue* list = NULL;
     EXTENSION_FUNCTION_VALIDATE(details_->GetList("color", &list));
-    EXTENSION_FUNCTION_VALIDATE(list->GetSize() == 4);
+    EXTENSION_FUNCTION_VALIDATE(list->GetList().size() == 4);
 
     int color_array[4] = {0};
     for (size_t i = 0; i < arraysize(color_array); ++i) {
@@ -535,10 +535,10 @@ ExtensionFunction::ResponseAction
 ExtensionActionGetBadgeBackgroundColorFunction::RunExtensionAction() {
   std::unique_ptr<base::ListValue> list(new base::ListValue());
   SkColor color = extension_action_->GetBadgeBackgroundColor(tab_id_);
-  list->AppendInteger(static_cast<int>(SkColorGetR(color)));
-  list->AppendInteger(static_cast<int>(SkColorGetG(color)));
-  list->AppendInteger(static_cast<int>(SkColorGetB(color)));
-  list->AppendInteger(static_cast<int>(SkColorGetA(color)));
+  list->GetList().emplace_back(static_cast<int>(SkColorGetR(color)));
+  list->GetList().emplace_back(static_cast<int>(SkColorGetG(color)));
+  list->GetList().emplace_back(static_cast<int>(SkColorGetB(color)));
+  list->GetList().emplace_back(static_cast<int>(SkColorGetA(color)));
   return RespondNow(OneArgument(std::move(list)));
 }
 

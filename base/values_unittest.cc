@@ -722,7 +722,7 @@ TEST(ValuesTest, Basic) {
   ListValue* bookmark_list;
   ASSERT_TRUE(settings.GetList("global.toolbar.bookmarks", &bookmark_list));
   DictionaryValue* bookmark;
-  ASSERT_EQ(1U, bookmark_list->GetSize());
+  ASSERT_EQ(1U, bookmark_list->GetList().size());
   ASSERT_TRUE(bookmark_list->GetDictionary(0, &bookmark));
   std::string bookmark_name = "Unnamed";
   ASSERT_TRUE(bookmark->GetString("name", &bookmark_name));
@@ -738,7 +738,7 @@ TEST(ValuesTest, List) {
   mixed_list->Set(1, std::make_unique<Value>(42));
   mixed_list->Set(2, std::make_unique<Value>(88.8));
   mixed_list->Set(3, std::make_unique<Value>("foo"));
-  ASSERT_EQ(4u, mixed_list->GetSize());
+  ASSERT_EQ(4u, mixed_list->GetList().size());
 
   Value* value = nullptr;
   bool bool_value = false;
@@ -843,9 +843,9 @@ TEST(ValuesTest, StringValue) {
 TEST(ValuesTest, ListDeletion) {
   ListValue list;
   list.Append(std::make_unique<Value>());
-  EXPECT_FALSE(list.empty());
-  list.Clear();
-  EXPECT_TRUE(list.empty());
+  EXPECT_FALSE(list.GetList().empty());
+  list.GetList().clear();
+  EXPECT_TRUE(list.GetList().empty());
 }
 
 TEST(ValuesTest, ListRemoval) {
@@ -854,13 +854,13 @@ TEST(ValuesTest, ListRemoval) {
   {
     ListValue list;
     list.Append(std::make_unique<Value>());
-    EXPECT_EQ(1U, list.GetSize());
+    EXPECT_EQ(1U, list.GetList().size());
     EXPECT_FALSE(list.Remove(std::numeric_limits<size_t>::max(),
                              &removed_item));
     EXPECT_FALSE(list.Remove(1, &removed_item));
     EXPECT_TRUE(list.Remove(0, &removed_item));
     ASSERT_TRUE(removed_item);
-    EXPECT_EQ(0U, list.GetSize());
+    EXPECT_EQ(0U, list.GetList().size());
   }
   removed_item.reset();
 
@@ -868,7 +868,7 @@ TEST(ValuesTest, ListRemoval) {
     ListValue list;
     list.Append(std::make_unique<Value>());
     EXPECT_TRUE(list.Remove(0, nullptr));
-    EXPECT_EQ(0U, list.GetSize());
+    EXPECT_EQ(0U, list.GetList().size());
   }
 
   {
@@ -879,7 +879,7 @@ TEST(ValuesTest, ListRemoval) {
     size_t index = 0;
     list.Remove(original_value, &index);
     EXPECT_EQ(0U, index);
-    EXPECT_EQ(0U, list.GetSize());
+    EXPECT_EQ(0U, list.GetList().size());
   }
 }
 
@@ -1145,7 +1145,7 @@ TEST(ValuesTest, DeepCopy) {
   ListValue* copy_list = nullptr;
   ASSERT_TRUE(copy_value->GetAsList(&copy_list));
   ASSERT_TRUE(copy_list);
-  ASSERT_EQ(2U, copy_list->GetSize());
+  ASSERT_EQ(2U, copy_list->GetList().size());
 
   Value* copy_list_element_0;
   ASSERT_TRUE(copy_list->Get(0, &copy_list_element_0));
@@ -1289,8 +1289,8 @@ TEST(ValuesTest, Comparisons) {
   // Test Non Empty List Values.
   ListValue int_list1;
   ListValue int_list2;
-  int_list1.AppendInteger(1);
-  int_list2.AppendInteger(2);
+  int_list1.GetList().emplace_back(1);
+  int_list2.GetList().emplace_back(2);
   EXPECT_FALSE(int_list1 == int_list2);
   EXPECT_NE(int_list1, int_list2);
   EXPECT_LT(int_list1, int_list2);
@@ -1452,9 +1452,9 @@ TEST(ValuesTest, RemoveEmptyChildren) {
 
     ListValue* inner_value, *inner_value2;
     EXPECT_TRUE(root->GetList("list_with_empty_children", &inner_value));
-    EXPECT_EQ(1U, inner_value->GetSize());  // Dictionary was pruned.
+    EXPECT_EQ(1U, inner_value->GetList().size());  // Dictionary was pruned.
     EXPECT_TRUE(inner_value->GetList(0, &inner_value2));
-    EXPECT_EQ(1U, inner_value2->GetSize());
+    EXPECT_EQ(1U, inner_value2->GetList().size());
   }
 }
 

@@ -438,7 +438,7 @@ bool SearchSuggestionParser::ParseSuggestResults(
 
     // Discard this list if its size does not match that of the suggestions.
     if (extras->GetList("google:suggestrelevance", &relevances) &&
-        (relevances->GetSize() != results_list->GetSize()))
+        (relevances->GetList().size() != results_list->GetList().size()))
       relevances = nullptr;
     extras->GetInteger("google:verbatimrelevance",
                        &results->verbatim_relevance);
@@ -454,12 +454,13 @@ bool SearchSuggestionParser::ParseSuggestResults(
       client_data->GetInteger("phi", &prefetch_index);
 
     if (extras->GetList("google:suggestdetail", &suggestion_details) &&
-        suggestion_details->GetSize() != results_list->GetSize())
+        suggestion_details->GetList().size() != results_list->GetList().size())
       suggestion_details = nullptr;
 
     // Get subtype identifiers.
     if (extras->GetList("google:subtypeid", &subtype_identifiers) &&
-        subtype_identifiers->GetSize() != results_list->GetSize()) {
+        subtype_identifiers->GetList().size() !=
+            results_list->GetList().size()) {
       subtype_identifiers = nullptr;
     }
 

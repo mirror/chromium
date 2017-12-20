@@ -87,7 +87,7 @@ void OnGetSessions(const Status& status,
   ASSERT_TRUE(value.get());
   base::ListValue* sessions;
   ASSERT_TRUE(value->GetAsList(&sessions));
-  ASSERT_EQ(static_cast<size_t>(2), sessions->GetSize());
+  ASSERT_EQ(static_cast<size_t>(2), sessions->GetList().size());
 
   base::DictionaryValue* session1;
   base::DictionaryValue* session2;
@@ -509,7 +509,7 @@ TEST(CommandsTest, FailedFindElements) {
                                 nullptr).code());
   base::ListValue* list;
   ASSERT_TRUE(result->GetAsList(&list));
-  ASSERT_EQ(0U, list->GetSize());
+  ASSERT_EQ(0U, list->GetList().size());
 }
 
 TEST(CommandsTest, SuccessfulFindChildElement) {
@@ -588,7 +588,7 @@ TEST(CommandsTest, FailedFindChildElements) {
           1, &session, &web_view, element_id, params, &result).code());
   base::ListValue* list;
   ASSERT_TRUE(result->GetAsList(&list));
-  ASSERT_EQ(0U, list->GetSize());
+  ASSERT_EQ(0U, list->GetList().size());
 }
 
 TEST(CommandsTest, TimeoutInFindElement) {

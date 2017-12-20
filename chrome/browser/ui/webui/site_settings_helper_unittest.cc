@@ -68,7 +68,7 @@ TEST_F(SiteSettingsHelperTest, CheckExceptionOrder) {
   GetExceptionsFromHostContentSettingsMap(
       map, kContentType, /*extension_registry=*/nullptr, /*web_ui=*/nullptr,
       /*incognito=*/false, /*filter=*/nullptr, &exceptions);
-  EXPECT_EQ(0u, exceptions.GetSize());
+  EXPECT_EQ(0u, exceptions.GetList().size());
 
   map->SetDefaultContentSetting(kContentType, CONTENT_SETTING_ALLOW);
 
@@ -102,12 +102,12 @@ TEST_F(SiteSettingsHelperTest, CheckExceptionOrder) {
       map, std::move(extension_provider),
       HostContentSettingsMap::CUSTOM_EXTENSION_PROVIDER);
 
-  exceptions.Clear();
+  exceptions.GetList().clear();
   GetExceptionsFromHostContentSettingsMap(
       map, kContentType, /*extension_registry=*/nullptr, /*web_ui=*/nullptr,
       /*incognito=*/false, /*filter=*/nullptr, &exceptions);
 
-  EXPECT_EQ(5u, exceptions.GetSize());
+  EXPECT_EQ(5u, exceptions.GetList().size());
 
   // The policy exception should be returned first, the extension exception
   // second and pref exceptions afterwards.

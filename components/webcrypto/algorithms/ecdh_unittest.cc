@@ -80,7 +80,8 @@ TEST_F(WebCryptoEcdhTest, DeriveBitsKnownAnswer) {
   std::unique_ptr<base::ListValue> tests;
   ASSERT_TRUE(ReadJsonTestFileToList("ecdh.json", &tests));
 
-  for (size_t test_index = 0; test_index < tests->GetSize(); ++test_index) {
+  for (size_t test_index = 0; test_index < tests->GetList().size();
+       ++test_index) {
     SCOPED_TRACE(test_index);
 
     const base::DictionaryValue* test;
@@ -125,7 +126,8 @@ TEST_F(WebCryptoEcdhTest, DeriveBitsKnownAnswer) {
 
   const base::DictionaryValue* test = nullptr;
   bool valid_p521_keys = false;
-  for (size_t test_index = 0; test_index < tests->GetSize(); ++test_index) {
+  for (size_t test_index = 0; test_index < tests->GetList().size();
+       ++test_index) {
     SCOPED_TRACE(test_index);
     EXPECT_TRUE(tests->GetDictionary(test_index, &test));
     test->GetBoolean("valid_p521_keys", &valid_p521_keys);

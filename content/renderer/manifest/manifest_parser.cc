@@ -327,7 +327,7 @@ std::vector<Manifest::Icon> ManifestParser::ParseIcons(
     return icons;
   }
 
-  for (size_t i = 0; i < icons_list->GetSize(); ++i) {
+  for (size_t i = 0; i < icons_list->GetList().size(); ++i) {
     const base::DictionaryValue* icon_dictionary = nullptr;
     if (!icons_list->GetDictionary(i, &icon_dictionary))
       continue;
@@ -398,7 +398,7 @@ ManifestParser::ParseRelatedApplications(
     return applications;
   }
 
-  for (size_t i = 0; i < applications_list->GetSize(); ++i) {
+  for (size_t i = 0; i < applications_list->GetList().size(); ++i) {
     const base::DictionaryValue* application_dictionary = nullptr;
     if (!applications_list->GetDictionary(i, &application_dictionary))
       continue;

@@ -182,7 +182,7 @@ base::ListValue* IndexedDBContextImpl::GetAllOriginsDetails() {
       std::unique_ptr<base::ListValue> paths(
           std::make_unique<base::ListValue>());
       for (const base::FilePath& path : GetStoragePaths(origin))
-        paths->AppendString(path.value());
+        paths->GetList().emplace_back(path.value());
       info->Set("paths", std::move(paths));
     }
     info->SetDouble("connection_count", GetConnectionCount(origin));
@@ -261,7 +261,7 @@ base::ListValue* IndexedDBContextImpl::GetAllOriginsDetails() {
           for (const auto& id : transaction->scope()) {
             const auto& it = db->metadata().object_stores.find(id);
             if (it != db->metadata().object_stores.end())
-              scope->AppendString(it->second.name);
+              scope->GetList().emplace_back(it->second.name);
           }
 
           transaction_info->Set("scope", std::move(scope));

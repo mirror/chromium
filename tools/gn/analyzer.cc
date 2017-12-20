@@ -85,7 +85,7 @@ std::vector<std::string> GetStringVector(const base::DictionaryValue& dict,
     return strings;
   }
 
-  for (size_t i = 0; i < lst->GetSize(); i++) {
+  for (size_t i = 0; i < lst->GetList().size(); i++) {
     std::string s;
     ret = lst->GetString(i, &s);
     if (!ret) {
@@ -207,7 +207,7 @@ std::string OutputsToJSON(const Outputs& outputs,
     WriteString(*value, "status", outputs.status);
     if (outputs.compile_includes_all) {
       auto compile_targets = std::make_unique<base::ListValue>();
-      compile_targets->AppendString("all");
+      compile_targets->GetList().emplace_back("all");
       value->SetWithoutPathExpansion("compile_targets",
                                      std::move(compile_targets));
     } else {

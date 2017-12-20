@@ -658,7 +658,7 @@ TEST_F(SyncEncryptionHandlerImplTest, SetKeystoreMigratesAndUpdatesBootstrap) {
   base::ListValue* keystore_list = nullptr;
   deserialized_keystore_keys->GetAsList(&keystore_list);
   ASSERT_TRUE(keystore_list);
-  ASSERT_EQ(2U, keystore_list->GetSize());
+  ASSERT_EQ(2U, keystore_list->GetList().size());
   std::string test_string;
   keystore_list->GetString(0, &test_string);
   ASSERT_EQ(old_keystore_key, test_string);

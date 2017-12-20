@@ -140,7 +140,7 @@ void UpdateDevicePermissionEntry(BrowserContext* context,
     return;
   }
 
-  for (size_t i = 0; i < devices->GetSize(); ++i) {
+  for (size_t i = 0; i < devices->GetList().size(); ++i) {
     base::DictionaryValue* dict_value;
     if (!devices->GetDictionary(i, &dict_value)) {
       continue;
@@ -164,7 +164,7 @@ void RemoveDevicePermissionEntry(BrowserContext* context,
     return;
   }
 
-  for (size_t i = 0; i < devices->GetSize(); ++i) {
+  for (size_t i = 0; i < devices->GetList().size(); ++i) {
     base::DictionaryValue* dict_value;
     if (!devices->GetDictionary(i, &dict_value)) {
       continue;

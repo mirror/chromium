@@ -113,8 +113,8 @@ class ExtensionSpecialStoragePolicyTest : public testing::Test {
     manifest.SetString(keys::kVersion, "1");
     manifest.SetString(keys::kLaunchWebURL, "http://explicit/protected/start");
     auto list = base::MakeUnique<base::ListValue>();
-    list->AppendString("http://explicit/protected");
-    list->AppendString("*://*.wildcards/protected");
+    list->GetList().emplace_back("http://explicit/protected");
+    list->GetList().emplace_back("*://*.wildcards/protected");
     manifest.Set(keys::kWebURLs, std::move(list));
     std::string error;
     scoped_refptr<Extension> protected_app = Extension::Create(
@@ -135,11 +135,11 @@ class ExtensionSpecialStoragePolicyTest : public testing::Test {
     manifest.SetString(keys::kVersion, "1");
     manifest.SetString(keys::kLaunchWebURL, "http://explicit/unlimited/start");
     auto list = base::MakeUnique<base::ListValue>();
-    list->AppendString("unlimitedStorage");
+    list->GetList().emplace_back("unlimitedStorage");
     manifest.Set(keys::kPermissions, std::move(list));
     list = base::MakeUnique<base::ListValue>();
-    list->AppendString("http://explicit/unlimited");
-    list->AppendString("*://*.wildcards/unlimited");
+    list->GetList().emplace_back("http://explicit/unlimited");
+    list->GetList().emplace_back("*://*.wildcards/unlimited");
     manifest.Set(keys::kWebURLs, std::move(list));
     std::string error;
     scoped_refptr<Extension> unlimited_app = Extension::Create(

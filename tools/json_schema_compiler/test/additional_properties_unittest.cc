@@ -15,8 +15,8 @@ TEST(JsonSchemaCompilerAdditionalPropertiesTest,
     AdditionalPropertiesTypePopulate) {
   {
     std::unique_ptr<base::ListValue> list_value(new base::ListValue());
-    list_value->AppendString("asdf");
-    list_value->AppendInteger(4);
+    list_value->GetList().emplace_back("asdf");
+    list_value->GetList().emplace_back(4);
     std::unique_ptr<base::DictionaryValue> type_value(
         new base::DictionaryValue());
     type_value->SetString("string", "value");

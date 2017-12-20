@@ -44,7 +44,7 @@ void AppendPrintersAndRunCallbackIfDone(base::ListValue* printers_out,
                                         const base::Closure& callback,
                                         const base::ListValue& printers,
                                         bool done) {
-  for (size_t i = 0; i < printers.GetSize(); ++i) {
+  for (size_t i = 0; i < printers.GetList().size(); ++i) {
     const base::DictionaryValue* printer = NULL;
     EXPECT_TRUE(printers.GetDictionary(i, &printer))
         << "Found invalid printer value at index " << i << ": " << printers;
@@ -341,7 +341,7 @@ class PrinterProviderApiTest : public ShellApiTest {
   void ValidatePrinterListValue(
       const base::ListValue& printers,
       const std::vector<std::unique_ptr<base::Value>>& expected_printers) {
-    ASSERT_EQ(expected_printers.size(), printers.GetSize());
+    ASSERT_EQ(expected_printers.size(), printers.GetList().size());
     for (const auto& printer_value : expected_printers) {
       EXPECT_TRUE(printers.Find(*printer_value) != printers.end())
           << "Unable to find " << *printer_value << " in " << printers;
@@ -649,7 +649,7 @@ IN_PROC_BROWSER_TEST_F(PrinterProviderApiTest,
 
   run_loop.Run();
 
-  EXPECT_TRUE(printers.empty());
+  EXPECT_TRUE(printers.GetList().empty());
 }
 
 IN_PROC_BROWSER_TEST_F(PrinterProviderApiTest,
@@ -764,7 +764,7 @@ IN_PROC_BROWSER_TEST_F(PrinterProviderApiTest, GetPrintersNoListener) {
 
   run_loop.Run();
 
-  EXPECT_TRUE(printers.empty());
+  EXPECT_TRUE(printers.GetList().empty());
 }
 
 IN_PROC_BROWSER_TEST_F(PrinterProviderApiTest, GetPrintersNotArray) {
@@ -785,7 +785,7 @@ IN_PROC_BROWSER_TEST_F(PrinterProviderApiTest, GetPrintersNotArray) {
 
   run_loop.Run();
 
-  EXPECT_TRUE(printers.empty());
+  EXPECT_TRUE(printers.GetList().empty());
 }
 
 IN_PROC_BROWSER_TEST_F(PrinterProviderApiTest,
@@ -807,7 +807,7 @@ IN_PROC_BROWSER_TEST_F(PrinterProviderApiTest,
 
   run_loop.Run();
 
-  EXPECT_TRUE(printers.empty());
+  EXPECT_TRUE(printers.GetList().empty());
 }
 
 IN_PROC_BROWSER_TEST_F(PrinterProviderApiTest, GetPrintersInvalidPrinterValue) {
@@ -828,7 +828,7 @@ IN_PROC_BROWSER_TEST_F(PrinterProviderApiTest, GetPrintersInvalidPrinterValue) {
 
   run_loop.Run();
 
-  EXPECT_TRUE(printers.empty());
+  EXPECT_TRUE(printers.GetList().empty());
 }
 
 IN_PROC_BROWSER_TEST_F(PrinterProviderApiTest, GetUsbPrinterInfo) {

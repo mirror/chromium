@@ -203,7 +203,8 @@ void ShellDevToolsBindings::HandleMessageFromDevToolsFrontend(
   dict->GetInteger("id", &request_id);
   dict->GetList("params", &params);
 
-  if (method == "dispatchProtocolMessage" && params && params->GetSize() == 1) {
+  if (method == "dispatchProtocolMessage" && params &&
+      params->GetList().size() == 1) {
     std::string protocol_message;
     if (!agent_host_ || !params->GetString(0, &protocol_message))
       return;
@@ -211,7 +212,7 @@ void ShellDevToolsBindings::HandleMessageFromDevToolsFrontend(
   } else if (method == "loadCompleted") {
     web_contents()->GetMainFrame()->ExecuteJavaScriptForTests(
         base::ASCIIToUTF16("DevToolsAPI.setUseSoftMenu(true);"));
-  } else if (method == "loadNetworkResource" && params->GetSize() == 3) {
+  } else if (method == "loadNetworkResource" && params->GetList().size() == 3) {
     // TODO(pfeldman): handle some of the embedder messages in content.
     std::string url;
     std::string headers;

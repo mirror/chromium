@@ -142,7 +142,7 @@ void CTPolicyManager::CTDelegate::AddFilters(
     bool ct_required,
     base::ListValue* hosts,
     url_matcher::URLMatcherConditionSet::Vector* conditions) {
-  for (size_t i = 0; i < hosts->GetSize(); ++i) {
+  for (size_t i = 0; i < hosts->GetList().size(); ++i) {
     std::string pattern;
     if (!hosts->GetString(i, &pattern))
       continue;

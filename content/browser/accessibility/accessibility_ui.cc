@@ -250,7 +250,7 @@ void AccessibilityUIMessageHandler::ToggleAccessibility(
   int process_id;
   int route_id;
   int mode;
-  CHECK_EQ(3U, args->GetSize());
+  CHECK_EQ(3U, args->GetList().size());
   CHECK(args->GetString(0, &process_id_str));
   CHECK(args->GetString(1, &route_id_str));
   // TODO(695247): We should pass each ax flag seperately
@@ -287,7 +287,7 @@ void AccessibilityUIMessageHandler::ToggleAccessibility(
 void AccessibilityUIMessageHandler::SetGlobalFlag(const base::ListValue* args) {
   std::string flag_name_str;
   bool enabled;
-  CHECK_EQ(2U, args->GetSize());
+  CHECK_EQ(2U, args->GetList().size());
   CHECK(args->GetString(0, &flag_name_str));
   CHECK(args->GetBoolean(1, &enabled));
 
@@ -344,7 +344,7 @@ void AccessibilityUIMessageHandler::RequestWebContentsTree(
   std::string route_id_str;
   int process_id;
   int route_id;
-  CHECK_EQ(2U, args->GetSize());
+  CHECK_EQ(2U, args->GetList().size());
   CHECK(args->GetString(0, &process_id_str));
   CHECK(args->GetString(1, &route_id_str));
   CHECK(base::StringToInt(process_id_str, &process_id));

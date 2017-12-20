@@ -23,18 +23,18 @@ std::unique_ptr<base::Value> BackoffEntrySerializer::SerializeToValue(
     const BackoffEntry& entry,
     base::Time time_now) {
   std::unique_ptr<base::ListValue> serialized(new base::ListValue());
-  serialized->AppendInteger(kSerializationFormatVersion);
+  serialized->GetList().emplace_back(kSerializationFormatVersion);
 
-  serialized->AppendInteger(entry.failure_count());
+  serialized->GetList().emplace_back(entry.failure_count());
 
   // Can't use entry.GetTimeUntilRelease as it doesn't allow negative deltas.
   base::TimeDelta backoff_duration =
       entry.GetReleaseTime() - entry.GetTimeTicksNow();
   // Redundantly stores both the remaining time delta and the absolute time.
   // The delta is used to work around some cases where wall clock time changes.
-  serialized->AppendDouble(backoff_duration.InSecondsF());
+  serialized->GetList().emplace_back(backoff_duration.InSecondsF());
   base::Time absolute_release_time = backoff_duration + time_now;
-  serialized->AppendString(
+  serialized->GetList().emplace_back(
       base::Int64ToString(absolute_release_time.ToInternalValue()));
 
   return std::move(serialized);
@@ -48,7 +48,7 @@ std::unique_ptr<BackoffEntry> BackoffEntrySerializer::DeserializeFromValue(
   const base::ListValue* serialized_list = nullptr;
   if (!serialized.GetAsList(&serialized_list))
     return nullptr;
-  if (serialized_list->GetSize() != 4)
+  if (serialized_list->GetList().size() != 4)
     return nullptr;
   int version_number;
   if (!serialized_list->GetInteger(0, &version_number) ||

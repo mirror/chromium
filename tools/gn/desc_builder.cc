@@ -149,7 +149,7 @@ class BaseDescBuilder {
     for (const auto& config : configs) {
       std::string name(indent * 2, ' ');
       name.append(config.label.GetUserVisibleName(GetToolchainLabel()));
-      out->AppendString(name);
+      out->GetList().emplace_back(name);
       if (tree_)
         FillInConfigVector(out, config.ptr->configs(), indent + 1);
     }
@@ -240,7 +240,7 @@ class ConfigDescBuilder : public BaseDescBuilder {
     for (const T& cur : (values.*getter)())
       res->Append(RenderValue(cur));
 
-    return res->empty() ? nullptr : std::move(res);
+    return res->GetList().empty() ? nullptr : std::move(res);
   }
 
   const Config* config_;
@@ -285,7 +285,8 @@ class TargetDescBuilder : public BaseDescBuilder {
       if (what(variables::kAllowCircularIncludesFrom)) {
         auto labels = std::make_unique<base::ListValue>();
         for (const auto& cur : target_->allow_circular_includes_from())
-          labels->AppendString(cur.GetUserVisibleName(GetToolchainLabel()));
+          labels->GetList().emplace_back(
+              cur.GetUserVisibleName(GetToolchainLabel()));
 
         res->SetWithoutPathExpansion(variables::kAllowCircularIncludesFrom,
                                      std::move(labels));
@@ -351,7 +352,7 @@ class TargetDescBuilder : public BaseDescBuilder {
       if (what(variables::kArgs)) {
         auto args = std::make_unique<base::ListValue>();
         for (const auto& elem : target_->action_values().args().list())
-          args->AppendString(elem.AsString());
+          args->GetList().emplace_back(elem.AsString());
 
         res->SetWithoutPathExpansion(variables::kArgs, std::move(args));
       }
@@ -421,7 +422,7 @@ class TargetDescBuilder : public BaseDescBuilder {
       if (!all_libs.empty()) {
         auto libs = std::make_unique<base::ListValue>();
         for (size_t i = 0; i < all_libs.size(); i++)
-          libs->AppendString(all_libs[i].value());
+          libs->GetList().emplace_back(all_libs[i].value());
         res->SetWithoutPathExpansion(variables::kLibs, std::move(libs));
       }
     }
@@ -431,7 +432,7 @@ class TargetDescBuilder : public BaseDescBuilder {
       if (!all_lib_dirs.empty()) {
         auto lib_dirs = std::make_unique<base::ListValue>();
         for (size_t i = 0; i < all_lib_dirs.size(); i++)
-          lib_dirs->AppendString(FormatSourceDir(all_lib_dirs[i]));
+          lib_dirs->GetList().emplace_back(FormatSourceDir(all_lib_dirs[i]));
         res->SetWithoutPathExpansion(variables::kLibDirs, std::move(lib_dirs));
       }
     }
@@ -478,7 +479,7 @@ class TargetDescBuilder : public BaseDescBuilder {
         }
       }
 
-      out->AppendString(str);
+      out->GetList().emplace_back(str);
 
       if (print_children)
         RecursivePrintDeps(out, cur_dep, seen_targets, indent_level + 1);
@@ -532,14 +533,14 @@ class TargetDescBuilder : public BaseDescBuilder {
           str = "  ";
         } else {
           previous_from = pair.second;
-          res->AppendString(
+          res->GetList().emplace_back(
               str + "From " +
               pair.second->label().GetUserVisibleName(GetToolchainLabel()));
           str = "  ";
         }
       }
 
-      res->AppendString(str + pair.first.value());
+      res->GetList().emplace_back(str + pair.first.value());
     }
 
     return std::move(res);
@@ -553,7 +554,7 @@ class TargetDescBuilder : public BaseDescBuilder {
       if (target_->GetOutputFilesForSource(source, &tool_type, &outputs)) {
         auto list = std::make_unique<base::ListValue>();
         for (const auto& output : outputs)
-          list->AppendString(output.value());
+          list->GetList().emplace_back(output.value());
 
         dict->SetWithoutPathExpansion(source.value(), std::move(list));
       }
@@ -585,7 +586,8 @@ class TargetDescBuilder : public BaseDescBuilder {
 
     auto deps = std::make_unique<base::ListValue>();
     for (const auto* dep : bundle_data.bundle_deps())
-      deps->AppendString(dep->label().GetUserVisibleName(GetToolchainLabel()));
+      deps->GetList().emplace_back(
+          dep->label().GetUserVisibleName(GetToolchainLabel()));
 
     data->SetWithoutPathExpansion("deps", std::move(deps));
     res->SetWithoutPathExpansion("bundle_data", std::move(data));
@@ -595,7 +597,7 @@ class TargetDescBuilder : public BaseDescBuilder {
     if (target_->output_type() == Target::ACTION) {
       auto list = std::make_unique<base::ListValue>();
       for (const auto& elem : target_->action_values().outputs().list())
-        list->AppendString(elem.AsString());
+        list->GetList().emplace_back(elem.AsString());
 
       res->SetWithoutPathExpansion(variables::kOutputs, std::move(list));
     } else if (target_->output_type() == Target::CREATE_BUNDLE) {
@@ -610,7 +612,7 @@ class TargetDescBuilder : public BaseDescBuilder {
       if (!outputs.required_types().empty()) {
         auto patterns = std::make_unique<base::ListValue>();
         for (const auto& elem : outputs.list())
-          patterns->AppendString(elem.AsString());
+          patterns->GetList().emplace_back(elem.AsString());
 
         res->SetWithoutPathExpansion("output_patterns", std::move(patterns));
       }
@@ -657,18 +659,18 @@ class TargetDescBuilder : public BaseDescBuilder {
           // Source of this value is a config.
           std::string from =
               "From " + config->label().GetUserVisibleName(false);
-          res->AppendString(from);
+          res->GetList().emplace_back(from);
           if (iter.origin()) {
             Location location = iter.origin()->GetRange().begin();
             from = "     (Added by " + location.file()->name().value() + ":" +
                    base::IntToString(location.line_number()) + ")";
-            res->AppendString(from);
+            res->GetList().emplace_back(from);
           }
         } else {
           // Source of this value is the target itself.
           std::string from =
               "From " + target_->label().GetUserVisibleName(false);
-          res->AppendString(from);
+          res->GetList().emplace_back(from);
         }
       }
 
@@ -683,7 +685,7 @@ class TargetDescBuilder : public BaseDescBuilder {
         res->Append(std::move(rendered));
       }
     }
-    return res->empty() ? nullptr : std::move(res);
+    return res->GetList().empty() ? nullptr : std::move(res);
   }
 
   Label GetToolchainLabel() const override {

@@ -107,7 +107,7 @@ scoped_refptr<Extension> ConvertUserScriptToExtension(
   root->SetBoolean(keys::kConvertedFromUserScript, true);
 
   auto js_files = base::MakeUnique<base::ListValue>();
-  js_files->AppendString("script.js");
+  js_files->GetList().emplace_back("script.js");
 
   // If the script provides its own match patterns, we use those. Otherwise, we
   // generate some using the include globs.
@@ -115,12 +115,12 @@ scoped_refptr<Extension> ConvertUserScriptToExtension(
   if (!script.url_patterns().is_empty()) {
     for (URLPatternSet::const_iterator i = script.url_patterns().begin();
          i != script.url_patterns().end(); ++i) {
-      matches->AppendString(i->GetAsString());
+      matches->GetList().emplace_back(i->GetAsString());
     }
   } else {
     // TODO(aa): Derive tighter matches where possible.
-    matches->AppendString("http://*/*");
-    matches->AppendString("https://*/*");
+    matches->GetList().emplace_back("http://*/*");
+    matches->GetList().emplace_back("https://*/*");
   }
 
   // Read the exclude matches, if any are present.
@@ -129,17 +129,17 @@ scoped_refptr<Extension> ConvertUserScriptToExtension(
     for (URLPatternSet::const_iterator i =
          script.exclude_url_patterns().begin();
          i != script.exclude_url_patterns().end(); ++i) {
-      exclude_matches->AppendString(i->GetAsString());
+      exclude_matches->GetList().emplace_back(i->GetAsString());
     }
   }
 
   auto includes = base::MakeUnique<base::ListValue>();
   for (size_t i = 0; i < script.globs().size(); ++i)
-    includes->AppendString(script.globs().at(i));
+    includes->GetList().emplace_back(script.globs().at(i));
 
   auto excludes = base::MakeUnique<base::ListValue>();
   for (size_t i = 0; i < script.exclude_globs().size(); ++i)
-    excludes->AppendString(script.exclude_globs().at(i));
+    excludes->GetList().emplace_back(script.exclude_globs().at(i));
 
   auto content_script = base::MakeUnique<base::DictionaryValue>();
   content_script->Set(keys::kMatches, std::move(matches));

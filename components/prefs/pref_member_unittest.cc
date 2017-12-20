@@ -208,7 +208,7 @@ TEST_F(PrefMemberTest, BasicGetAndSet) {
   EXPECT_EQ(expected_vector, *string_list);
 
   // Try changing through the pref member.
-  expected_list.AppendString("foo");
+  expected_list.GetList().emplace_back("foo");
   expected_vector.push_back("foo");
   string_list.SetValue(expected_vector);
 
@@ -217,7 +217,7 @@ TEST_F(PrefMemberTest, BasicGetAndSet) {
   EXPECT_EQ(expected_vector, *string_list);
 
   // Try adding through the pref.
-  expected_list.AppendString("bar");
+  expected_list.GetList().emplace_back("bar");
   expected_vector.push_back("bar");
   prefs.Set(kStringListPref, expected_list);
 
@@ -242,13 +242,13 @@ TEST_F(PrefMemberTest, InvalidList) {
 
   // Try to add a valid list first.
   base::ListValue list;
-  list.AppendString("foo");
+  list.GetList().emplace_back("foo");
   std::vector<std::string> vector;
   EXPECT_TRUE(subtle::PrefMemberVectorStringUpdate(list, &vector));
   EXPECT_EQ(expected_vector, vector);
 
   // Now try to add an invalid list.  |vector| should not be changed.
-  list.AppendInteger(0);
+  list.GetList().emplace_back(0);
   EXPECT_FALSE(subtle::PrefMemberVectorStringUpdate(list, &vector));
   EXPECT_EQ(expected_vector, vector);
 }

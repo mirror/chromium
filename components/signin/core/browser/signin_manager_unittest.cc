@@ -436,7 +436,7 @@ TEST_F(SigninManagerTest, GaiaIdMigration) {
                              AccountTrackerService::MIGRATION_NOT_STARTED);
     ListPrefUpdate update(client_prefs,
                           AccountTrackerService::kAccountInfoPref);
-    update->Clear();
+    update->GetList().clear();
     auto dict = base::MakeUnique<base::DictionaryValue>();
     dict->SetString("account_id", base::UTF8ToUTF16(email));
     dict->SetString("email", base::UTF8ToUTF16(email));
@@ -466,7 +466,7 @@ TEST_F(SigninManagerTest, VeryOldProfileGaiaIdMigration) {
                              AccountTrackerService::MIGRATION_NOT_STARTED);
     ListPrefUpdate update(client_prefs,
                           AccountTrackerService::kAccountInfoPref);
-    update->Clear();
+    update->GetList().clear();
     auto dict = base::MakeUnique<base::DictionaryValue>();
     dict->SetString("account_id", base::UTF8ToUTF16(email));
     dict->SetString("email", base::UTF8ToUTF16(email));
@@ -496,7 +496,7 @@ TEST_F(SigninManagerTest, GaiaIdMigrationCrashInTheMiddle) {
                              AccountTrackerService::MIGRATION_NOT_STARTED);
     ListPrefUpdate update(client_prefs,
                           AccountTrackerService::kAccountInfoPref);
-    update->Clear();
+    update->GetList().clear();
     auto dict = base::MakeUnique<base::DictionaryValue>();
     dict->SetString("account_id", base::UTF8ToUTF16(email));
     dict->SetString("email", base::UTF8ToUTF16(email));

@@ -634,8 +634,8 @@ void BrowsingHistoryService::WebHistoryQueryComplete(
     const base::ListValue* events = nullptr;
     if (results_value->GetList("event", &events)) {
       state->remote_results.reserve(state->remote_results.size() +
-                                    events->GetSize());
-      for (unsigned int i = 0; i < events->GetSize(); ++i) {
+                                    events->GetList().size());
+      for (unsigned int i = 0; i < events->GetList().size(); ++i) {
         const base::DictionaryValue* event = nullptr;
         const base::DictionaryValue* result = nullptr;
         const base::ListValue* results = nullptr;
@@ -648,7 +648,7 @@ void BrowsingHistoryService::WebHistoryQueryComplete(
               event->GetList("result", &results) &&
               results->GetDictionary(0, &result) &&
               result->GetString("url", &url) && result->GetList("id", &ids) &&
-              ids->GetSize() > 0)) {
+              ids->GetList().size() > 0)) {
           continue;
         }
 
@@ -662,7 +662,7 @@ void BrowsingHistoryService::WebHistoryQueryComplete(
 
         // Extract the timestamps of all the visits to this URL.
         // They are referred to as "IDs" by the server.
-        for (int j = 0; j < static_cast<int>(ids->GetSize()); ++j) {
+        for (int j = 0; j < static_cast<int>(ids->GetList().size()); ++j) {
           const base::DictionaryValue* id = nullptr;
           std::string timestamp_string;
           int64_t timestamp_usec = 0;

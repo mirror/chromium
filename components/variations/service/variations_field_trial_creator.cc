@@ -278,8 +278,8 @@ std::string VariationsFieldTrialCreator::LoadPermanentConsistencyCountry(
   std::string stored_country;
 
   // Determine if the saved pref value is present and valid.
-  const bool is_pref_empty = list_value->empty();
-  const bool is_pref_valid = list_value->GetSize() == 2 &&
+  const bool is_pref_empty = list_value->GetList().empty();
+  const bool is_pref_valid = list_value->GetList().size() == 2 &&
                              list_value->GetString(0, &stored_version_string) &&
                              list_value->GetString(1, &stored_country) &&
                              base::Version(stored_version_string).IsValid();
@@ -339,8 +339,8 @@ void VariationsFieldTrialCreator::StorePermanentCountry(
     const base::Version& version,
     const std::string& country) {
   base::ListValue new_list_value;
-  new_list_value.AppendString(version.GetString());
-  new_list_value.AppendString(country);
+  new_list_value.GetList().emplace_back(version.GetString());
+  new_list_value.GetList().emplace_back(country);
   local_state()->Set(prefs::kVariationsPermanentConsistencyCountry,
                      new_list_value);
 }

@@ -616,7 +616,7 @@ static std::unique_ptr<base::ListValue> CreatePermissionList(
       tmp->Set(i->name(), std::move(detail));
       values->Append(std::move(tmp));
     } else {
-      values->AppendString(i->name());
+      values->GetList().emplace_back(i->name());
     }
   }
   return values;
@@ -1796,10 +1796,10 @@ void ExtensionPrefs::SetExtensionPrefFromContainer(
     const ExtensionIdContainer& strings) {
   ListPrefUpdate update(prefs_, pref);
   base::ListValue* list_of_values = update.Get();
-  list_of_values->Clear();
+  list_of_values->GetList().clear();
   for (typename ExtensionIdContainer::const_iterator iter = strings.begin();
        iter != strings.end(); ++iter) {
-    list_of_values->AppendString(*iter);
+    list_of_values->GetList().emplace_back(*iter);
   }
 }
 
