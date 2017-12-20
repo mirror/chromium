@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a3dca8c2_e3ec0c4a",
+        "filename": "third_party/WebKit/Source/platform/wtf/ConstructTraits.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-12-20T12:24:07Z",
+      "side": 1,
+      "message": "Eager tracing requires traits.",
+      "parentUuid": "cf6c9e52_2267ea8e",
+      "revId": "46f69954a4dd46a7a589227cef13b19ce6cb4325",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e801e8dd_bb7dbb9e",
         "filename": "third_party/WebKit/Source/platform/wtf/Vector.h",
         "patchSetId": 12
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-20T12:14:25Z",
       "side": 1,
       "message": "I\u0027m wondering if we can simply write this as:\n\n  Allocator::ConstructElement\u003cT\u003e(src, len);\n\nYou can put the \u0027new (NotNull, location) ...\u0027 statement to HeapAllocator\u003cT\u003e::ConstructElement and PartitionAllocator\u003cT\u003e::ConstructElement.\n\nThen you can inline NotifyNewObjects in HeapAllocator::ConstructElement.",
+      "revId": "46f69954a4dd46a7a589227cef13b19ce6cb4325",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e584f8d_e6ef92ac",
+        "filename": "third_party/WebKit/Source/platform/wtf/Vector.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-12-20T12:24:07Z",
+      "side": 1,
+      "message": "We could do that but then the specialization for Member\u003cT\u003e would involve HeapAllocator which does not seem like a good design.\n\nI got used to the concept of specializing on traits on not the allocator.\n\nLet me know if you feel strongly about this one.",
+      "parentUuid": "e801e8dd_bb7dbb9e",
       "revId": "46f69954a4dd46a7a589227cef13b19ce6cb4325",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
