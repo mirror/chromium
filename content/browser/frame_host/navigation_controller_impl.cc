@@ -35,6 +35,8 @@
 
 #include "content/browser/frame_host/navigation_controller_impl.h"
 
+#include <memory>
+#include <string>
 #include <utility>
 
 #include "base/bind.h"
@@ -396,8 +398,11 @@ void NavigationControllerImpl::Reload(ReloadType reload_type,
     // Permit reloading guests without further checks.
     bool is_for_guests_only = site_instance && site_instance->HasProcess() &&
         site_instance->GetProcess()->IsForGuestsOnly();
+    GURL base_url = entry->GetBaseURLForDataURL().is_empty()
+                        ? entry->GetURL()
+                        : entry->GetBaseURLForDataURL();
     if (!is_for_guests_only && site_instance &&
-        site_instance->HasWrongProcessForURL(entry->GetURL())) {
+        site_instance->HasWrongProcessForURL(base_url)) {
       // Create a navigation entry that resembles the current one, but do not
       // copy page id, site instance, content state, or timestamp.
       NavigationEntryImpl* nav_entry = NavigationEntryImpl::FromNavigationEntry(
