@@ -22,6 +22,30 @@
       "revId": "06753305ae1f5f770c7834d28a675d1a8da8e2b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4ae239d_221d9b36",
+        "filename": "content/browser/renderer_host/pepper/pepper_tcp_socket_message_filter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 721,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-12-20T10:05:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e082622f_4c297d5c",
+      "range": {
+        "startLine": 721,
+        "startChar": 21,
+        "endLine": 721,
+        "endChar": 42
+      },
+      "revId": "06753305ae1f5f770c7834d28a675d1a8da8e2b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
