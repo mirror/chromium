@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "606c6005_02ff1ee2",
+        "filename": "third_party/WebKit/Source/core/html/forms/HTMLInputElement.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1434,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-12-20T02:45:21Z",
+      "side": 1,
+      "message": "Is there any spec that setting size\u003d0 causes to set the actual size as\nkDefaultSize (\u003d20)?\n\nIf I read this,\nhttps://html.spec.whatwg.org/multipage/input.html#the-size-attribute\nif the size is set to zero (which is non-negative, but not greather than zero),\nthe size is *invalid* and thus the default size (\u003d20) is applied.\n\nAnyway, even if the behavior for size\u003d0 is not specified, it sounds a reasonable\nbehavior (unless someone tries to set size\u003d0 instead for \"disabled\" or\nstyle\u003d\"display: none\").",
+      "revId": "c83f9810cc1c242a6a0cefbcc2e3ef463d913ba5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
