@@ -177,6 +177,24 @@
     },
     {
       "key": {
+        "uuid": "a44b411e_8d83aa0f",
+        "filename": "ui/views/accessibility/native_view_accessibility_base.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-12-20T00:39:53Z",
+      "side": 1,
+      "message": "I suggest ViewAccessiblityFoo. This makes the inheritance clear and avoids the problem where NativeViewAccessibilityFoo is too closely named to NativeViewAccessible when they are really very different.",
+      "parentUuid": "f4f0176d_737d25ec",
+      "revId": "4b97d98bc89e0ee19156e3b403068e6ad8a01da5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d7091372_c2e9ddf8",
         "filename": "ui/views/accessibility/native_view_accessibility_stub.cc",
         "patchSetId": 1
