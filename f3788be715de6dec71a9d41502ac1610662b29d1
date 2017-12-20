@@ -238,6 +238,30 @@
       "revId": "f3788be715de6dec71a9d41502ac1610662b29d1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1da337a_cb47af47",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 2069,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-12-20T01:11:05Z",
+      "side": 1,
+      "message": "Actually, I just checked, and it looks like the SadTabTabHelper checks whether the WebState is visible before showing the SadTab UI.  It might still be a good idea to only set it on the active tab, but leaving it as is won\u0027t be an issue.",
+      "parentUuid": "d20412d2_c26fd930",
+      "range": {
+        "startLine": 2069,
+        "startChar": 4,
+        "endLine": 2069,
+        "endChar": 23
+      },
+      "revId": "f3788be715de6dec71a9d41502ac1610662b29d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
