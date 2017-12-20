@@ -214,6 +214,30 @@
     },
     {
       "key": {
+        "uuid": "2021460f_688bab64",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-20T18:22:47Z",
+      "side": 1,
+      "message": "Got it, thanks for the explanation. On the other hand, that\u0027s still a narrowing conversion, and it\u0027s good to make sure this CL stands on its own, so I\u0027d go with what I recommended in the other comment if Jeffrey and Chris agrees.",
+      "parentUuid": "42467d43_4b490715",
+      "range": {
+        "startLine": 153,
+        "startChar": 54,
+        "endLine": 153,
+        "endChar": 57
+      },
+      "revId": "c151160df613da6a8698298c0e355147aa02f38f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f5b8ffe7_b87f5aed",
         "filename": "content/browser/webauth/cbor/cbor_reader.cc",
         "patchSetId": 9

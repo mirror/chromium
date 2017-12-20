@@ -2,6 +2,92 @@
   "comments": [
     {
       "key": {
+        "uuid": "b68097aa_18ab4a88",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-20T18:22:47Z",
+      "side": 1,
+      "message": "nit: s/type// to avoid confusion.",
+      "range": {
+        "startLine": 45,
+        "startChar": 44,
+        "endLine": 45,
+        "endChar": 48
+      },
+      "revId": "d3a91ea6e1d5c2328aa306425ed9a298e59909ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "094da2e3_536740c8",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-20T18:22:47Z",
+      "side": 1,
+      "message": "We no longer need |major_type| as an argument, right?",
+      "revId": "d3a91ea6e1d5c2328aa306425ed9a298e59909ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3c855df_04bfd57d",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-20T18:22:47Z",
+      "side": 1,
+      "message": "nit: Let\u0027s make this uint8_t for type consistency?",
+      "range": {
+        "startLine": 111,
+        "startChar": 33,
+        "endLine": 111,
+        "endChar": 36
+      },
+      "revId": "d3a91ea6e1d5c2328aa306425ed9a298e59909ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ce8197e_22b36926",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-20T18:22:47Z",
+      "side": 1,
+      "message": "For type consistency, let\u0027s take an uint64_t as argument, and then contain whatever magic needs to be done in this method (see below).",
+      "range": {
+        "startLine": 146,
+        "startChar": 54,
+        "endLine": 146,
+        "endChar": 63
+      },
+      "revId": "d3a91ea6e1d5c2328aa306425ed9a298e59909ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0f52a811_3e6d26fc",
         "filename": "content/browser/webauth/cbor/cbor_reader.cc",
         "patchSetId": 12
@@ -18,6 +104,86 @@
         "startChar": 32,
         "endLine": 149,
         "endChar": 54
+      },
+      "revId": "d3a91ea6e1d5c2328aa306425ed9a298e59909ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67595cd4_c663b9af",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-20T18:22:47Z",
+      "side": 1,
+      "message": "At this point, value is at most 255 because of hold ReadUnsignedInt works, right? In that case, I\u0027d go out on a limb and propose the following:\n\nReadSimpleValue(..., uint64_t value) {\n\n // ...\n\n DCHECK_LE(value, 255);\n CBORValue::SimpleValue possibly_unsupported_simple_value \u003d\n   base::strict_cast\u003cCBORValue::SimpleValue\u003e(static_cast\u003cint\u003e(value));\n switch (possibly_unsupported_simple_value) {\n    case CBORValue::SimpleValue::FALSE_VALUE:\n    case CBORValue::SimpleValue::TRUE_VALUE:\n    case CBORValue::SimpleValue::NULL_VALUE:\n    case CBORValue::SimpleValue::UNDEFINED:\n      return CBORValue(possibly_unsupported_simple_value);\n}\n\nerror_code_ \u003d DecoderError::UNSUPPORTED_SIMPLE_VALUE;\nreturn base::nullopt;\n\nThe benefits are:\n -- It is less ugly.\n -- No performance cost of run-time checks.\n -- Compile-time checking that all known SimpleValues are accepted.\n\n@Jeffrey, @Chris, WDYT?",
+      "revId": "d3a91ea6e1d5c2328aa306425ed9a298e59909ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee1c9462_f3adbf5d",
+        "filename": "content/browser/webauth/cbor/cbor_reader.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-20T18:22:47Z",
+      "side": 1,
+      "message": "nit: Strictly speaking, the stop code is also not a simple value, so let\u0027s just remove the part in parens.",
+      "range": {
+        "startLine": 35,
+        "startChar": 56,
+        "endLine": 35,
+        "endChar": 70
+      },
+      "revId": "d3a91ea6e1d5c2328aa306425ed9a298e59909ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6e7b763_0f1d70d6",
+        "filename": "content/browser/webauth/cbor/cbor_reader_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 516,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-20T18:22:47Z",
+      "side": 1,
+      "message": "super nit: ... 28: unassigned. (For clarity, same below x4)",
+      "revId": "d3a91ea6e1d5c2328aa306425ed9a298e59909ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b68d6acb_95eebc9d",
+        "filename": "content/browser/webauth/cbor/cbor_reader_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 522,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-20T18:22:47Z",
+      "side": 1,
+      "message": "comment suggestion: // Major type 7, additional info 31: \"break\" stop code for indefinite-length items.",
+      "range": {
+        "startLine": 522,
+        "startChar": 9,
+        "endLine": 522,
+        "endChar": 21
       },
       "revId": "d3a91ea6e1d5c2328aa306425ed9a298e59909ab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
