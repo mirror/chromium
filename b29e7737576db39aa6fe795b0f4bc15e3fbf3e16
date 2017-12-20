@@ -34,6 +34,24 @@
       "revId": "b29e7737576db39aa6fe795b0f4bc15e3fbf3e16",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96f6f0d5_27e0f474",
+        "filename": "services/ui/service.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-12-20T05:26:45Z",
+      "side": 1,
+      "message": "Sure. A separate \u0027should_manage_displays\u0027 or something like that could also make sense.",
+      "parentUuid": "9c2acc6e_5c63a3eb",
+      "revId": "b29e7737576db39aa6fe795b0f4bc15e3fbf3e16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
