@@ -76,9 +76,13 @@ class SERVICES_RESOURCE_COORDINATOR_PUBLIC_CPP_EXPORT MemoryInstrumentation {
   const mojom::CoordinatorPtr& GetCoordinatorBindingForCurrentThread();
   void BindCoordinatorRequestOnConnectorThread(mojom::CoordinatorRequest);
 
+  const mojom::HeapProfilingPtr& GetHeapProfilingBindingForCurrentThread();
+  void BindHeapProfilingRequestOnConnectorThread(mojom::HeapProfilingRequest);
+
   service_manager::Connector* const connector_;
   scoped_refptr<base::SingleThreadTaskRunner> connector_task_runner_;
   base::ThreadLocalStorage::Slot tls_coordinator_;
+  base::ThreadLocalStorage::Slot tls_heap_profiling_;
   const std::string service_name_;
 
   DISALLOW_COPY_AND_ASSIGN(MemoryInstrumentation);
