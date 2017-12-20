@@ -406,7 +406,8 @@ class Predictor {
   // URL would likely go through a proxy, then return true.  Otherwise, return
   // false. This is used to avoid issuing DNS requests when a fixed proxy
   // configuration is in place, which improves efficiency, and is also important
-  // if the unproxied DNS may contain incorrect entries.
+  // if the unproxied DNS may contain incorrect entries. Also, returns true if
+  // |url| is likely to be fetcjed through the data saver proxy.
   bool WouldLikelyProxyURL(const GURL& url);
 
   // Applies the HSTS redirect for |url|, if any.

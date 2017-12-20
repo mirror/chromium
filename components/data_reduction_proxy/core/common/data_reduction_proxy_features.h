@@ -17,6 +17,7 @@ extern const base::Feature kDataReductionProxyLowMemoryDevicePromo;
 extern const base::Feature kMissingViaHeaderShortDuration;
 extern const base::Feature kDataReductionProxyRobustConnection;
 extern const base::Feature kDogfood;
+extern const base::Feature kDisableDnsPreResolution;
 
 }  // namespace features
 }  // namespace data_reduction_proxy

@@ -39,7 +39,8 @@ class MockPreconnectManager : public PreconnectManager {
  public:
   MockPreconnectManager(
       base::WeakPtr<Delegate> delegate,
-      scoped_refptr<net::URLRequestContextGetter> context_getter);
+      scoped_refptr<net::URLRequestContextGetter> context_getter,
+      Profile* profile);
 
   MOCK_METHOD2(StartProxy,
                void(const GURL& url,
@@ -59,8 +60,11 @@ class MockPreconnectManager : public PreconnectManager {
 
 MockPreconnectManager::MockPreconnectManager(
     base::WeakPtr<Delegate> delegate,
-    scoped_refptr<net::URLRequestContextGetter> context_getter)
-    : PreconnectManager(delegate, context_getter) {}
+    scoped_refptr<net::URLRequestContextGetter> context_getter,
+    Profile* profile)
+    : PreconnectManager(delegate,
+                        context_getter,
+                        profile->GetResourceContext()) {}
 
 }  // namespace
 
@@ -134,7 +138,8 @@ void LoadingPredictorPreconnectTest::SetUp() {
   LoadingPredictorTest::SetUp();
   auto mock_preconnect_manager =
       base::MakeUnique<StrictMock<MockPreconnectManager>>(
-          predictor_->GetWeakPtr(), profile_->GetRequestContext());
+          predictor_->GetWeakPtr(), profile_->GetRequestContext(),
+          profile_.get());
   mock_preconnect_manager_ = mock_preconnect_manager.get();
   predictor_->set_mock_preconnect_manager(std::move(mock_preconnect_manager));
 

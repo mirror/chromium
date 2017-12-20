@@ -48,5 +48,11 @@ const base::Feature kDataReductionProxyRobustConnection{
 const base::Feature kDogfood{"DataReductionProxyDogfood",
                              base::FEATURE_DISABLED_BY_DEFAULT};
 
+// When the feature is enabled, pre-resolution for HTTP URLs is disabled when
+// the data saver is enabled.
+const base::Feature kDisableDnsPreResolution{
+    "DataReductionProxyDisableDnsPreResolution",
+    base::FEATURE_DISABLED_BY_DEFAULT};
+
 }  // namespace features
 }  // namespace data_reduction_proxy
