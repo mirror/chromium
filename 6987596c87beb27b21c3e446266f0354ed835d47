@@ -16,6 +16,29 @@
       "revId": "6987596c87beb27b21c3e446266f0354ed835d47",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ad7df59_a52dbaa1",
+        "filename": "components/offline_pages/core/offline_page_feature.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-12-20T20:18:41Z",
+      "side": 1,
+      "message": "It\u0027d be better to adjust the name of the feature to clearly state that this is not about Pending Download, but about an alternative status indication. Something like IsOfflinePagesDescriptivePendingStatusEnabled :)",
+      "range": {
+        "startLine": 82,
+        "startChar": 5,
+        "endLine": 82,
+        "endChar": 41
+      },
+      "revId": "6987596c87beb27b21c3e446266f0354ed835d47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
