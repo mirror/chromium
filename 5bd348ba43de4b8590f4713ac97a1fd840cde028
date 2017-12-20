@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c9416e22_6d237d73",
+        "filename": "content/browser/media/capture/cursor_renderer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-12-20T23:32:08Z",
+      "side": 1,
+      "message": "Maybe early return if |rect_| is empty? And does |rect_| need to be cleared after Undo finishes to avoid the accidental re-using of it? Is it always the same VideoFrame should call TakeSanpshot() and Undo()? If yes, maybe we can record the VideoFrame ID (frame.unique_id()) when TakeSnapshot() was called and verify that this Undo() is called for the same VideoFrame. WDYT?",
+      "revId": "5bd348ba43de4b8590f4713ac97a1fd840cde028",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8024e09_b717fadc",
+        "filename": "content/browser/media/capture/cursor_renderer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-12-20T23:32:08Z",
+      "side": 1,
+      "message": "nit: Add a comment saying something like that the |frame| content will be restored to when the latest TakeSnapshot() was called.",
+      "range": {
+        "startLine": 174,
+        "startChar": 7,
+        "endLine": 174,
+        "endChar": 11
+      },
+      "revId": "5bd348ba43de4b8590f4713ac97a1fd840cde028",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
