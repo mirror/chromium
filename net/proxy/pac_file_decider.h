@@ -89,9 +89,7 @@ class NET_EXPORT_PRIVATE ProxyScriptDecider {
 
   const scoped_refptr<ProxyResolverScriptData>& script_data() const;
 
-  void set_quick_check_enabled(bool enabled) {
-    quick_check_enabled_ = enabled;
-  }
+  void set_quick_check_enabled(bool enabled) { quick_check_enabled_ = enabled; }
 
   bool quick_check_enabled() const { return quick_check_enabled_; }
 
@@ -99,14 +97,9 @@ class NET_EXPORT_PRIVATE ProxyScriptDecider {
   // Represents the sources from which we can get PAC files; two types of
   // auto-detect or a custom URL.
   struct PacSource {
-    enum Type {
-      WPAD_DHCP,
-      WPAD_DNS,
-      CUSTOM
-    };
+    enum Type { WPAD_DHCP, WPAD_DNS, CUSTOM };
 
-    PacSource(Type type, const GURL& url)
-        : type(type), url(url) {}
+    PacSource(Type type, const GURL& url) : type(type), url(url) {}
 
     // Returns a Value representing the PacSource.  |effective_pac_url| must
     // be non-NULL and point to the URL derived from information contained in
