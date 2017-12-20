@@ -11,24 +11,29 @@
 #include "base/supports_user_data.h"
 #include "components/data_reduction_proxy/core/browser/data_reduction_proxy_data.h"
 #include "components/previews/core/previews_user_data.h"
-#include "content/public/browser/navigation_data.h"
 #include "content/public/common/previews_state.h"
+
+namespace base {
+class Value;
+}
 
 namespace net {
 class URLRequest;
 }
 
-class ChromeNavigationData : public content::NavigationData,
-                             public base::SupportsUserData::Data {
+class ChromeNavigationData : public base::SupportsUserData::Data {
  public:
   ChromeNavigationData();
   ~ChromeNavigationData() override;
 
-  // Creates a new ChromeNavigationData that is a deep copy of the original. Any
-  // changes to the original after the clone is created will not be reflected in
-  // the clone.
-  // |data_reduction_proxy_data_| is deep copied.
-  std::unique_ptr<content::NavigationData> Clone() const override;
+  // Convert from/to a base::Value.
+  base::Value ToValue();
+  // Everytime a ChromeNavigationData is constructed from a base::Value, a new
+  // instance of it and all of its childs is built. If ChromeNavigationData
+  // becomes large or if many observer begin to use it, we should consider only
+  // deserializing the relevant part of ChromeNavigationData, not the whole
+  // object each time.
+  explicit ChromeNavigationData(const base::Value& value);
 
   // Takes ownership of |data_reduction_proxy_data|.
   void SetDataReductionProxyData(
