@@ -1009,9 +1009,9 @@ void RenderFrameHostManager::RenderProcessGone(SiteInstanceImpl* instance) {
 
 void RenderFrameHostManager::CancelPendingIfNecessary(
     RenderFrameHostImpl* render_frame_host) {
-  if (render_frame_host == pending_render_frame_host_.get())
+  if (render_frame_host == pending_render_frame_host_.get()) {
     CancelPending();
-  else if (render_frame_host == speculative_render_frame_host_.get()) {
+  } else if (render_frame_host == speculative_render_frame_host_.get()) {
     // TODO(nasko, clamy): This should just clean up the speculative RFH
     // without canceling the request.  See https://crbug.com/636119.
     if (frame_tree_node_->navigation_request() &&
@@ -2092,10 +2092,12 @@ RenderFrameHostManager::GetSiteInstanceForNavigationRequest(
           ? speculative_render_frame_host_->GetSiteInstance()
           : nullptr;
 
+  GURL base_url = request.common_params().base_url_for_data_url.is_empty()
+                      ? request.common_params().url
+                      : request.common_params().base_url_for_data_url;
   scoped_refptr<SiteInstance> dest_site_instance = GetSiteInstanceForNavigation(
-      request.common_params().url, request.source_site_instance(),
-      request.dest_site_instance(), candidate_site_instance,
-      request.common_params().transition,
+      base_url, request.source_site_instance(), request.dest_site_instance(),
+      candidate_site_instance, request.common_params().transition,
       request.restore_type() != RestoreType::NONE, request.is_view_source(),
       was_server_redirect);
 

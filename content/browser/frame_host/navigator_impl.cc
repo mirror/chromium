@@ -4,7 +4,9 @@
 
 #include "content/browser/frame_host/navigator_impl.h"
 
+#include <string>
 #include <utility>
+#include <vector>
 
 #include "base/logging.h"
 #include "base/metrics/histogram_macros.h"
@@ -396,9 +398,12 @@ bool NavigatorImpl::NavigateToEntry(
     }
 
   } else {
+    GURL base_url = entry.GetBaseURLForDataURL().is_empty()
+                        ? dest_url
+                        : entry.GetBaseURLForDataURL();
     RenderFrameHostImpl* dest_render_frame_host =
         frame_tree_node->render_manager()->Navigate(
-            dest_url, frame_entry, entry, reload_type != ReloadType::NONE);
+            base_url, frame_entry, entry, reload_type != ReloadType::NONE);
     if (!dest_render_frame_host)
       return false;  // Unable to create the desired RenderFrameHost.
 
@@ -408,7 +413,7 @@ bool NavigatorImpl::NavigateToEntry(
 
     // For security, we should never send non-Web-UI URLs to a Web UI renderer.
     // Double check that here.
-    CheckWebUIRendererDoesNotDisplayNormalURL(dest_render_frame_host, dest_url);
+    CheckWebUIRendererDoesNotDisplayNormalURL(dest_render_frame_host, base_url);
 
     // In the case of a transfer navigation, set the destination
     // RenderFrameHost as loading.  This ensures that the RenderFrameHost gets
@@ -608,10 +613,11 @@ void NavigatorImpl::DidNavigate(
   // error page.  In that case, the SiteInstance can still be considered unused
   // until a navigation to a real page.
   SiteInstanceImpl* site_instance = render_frame_host->GetSiteInstance();
+  GURL base_url = params.base_url.is_empty() ? params.url : params.base_url;
   if (!site_instance->HasSite() &&
-      SiteInstanceImpl::ShouldAssignSiteForURL(params.url) &&
+      SiteInstanceImpl::ShouldAssignSiteForURL(base_url) &&
       !params.url_is_unreachable) {
-    site_instance->SetSite(params.url);
+    site_instance->SetSite(base_url);
   }
 
   // Need to update MIME type here because it's referred to in
