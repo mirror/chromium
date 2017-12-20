@@ -123,6 +123,7 @@ class MockUserManager : public ChromeUserManager {
                           const base::Closure&,
                           std::string*));
   MOCK_CONST_METHOD1(IsValidDefaultUserImageId, bool(int));
+  MOCK_CONST_METHOD0(IsManagedDevice, bool(void));
 
   // You can't mock these functions easily because nobody can create
   // User objects but the ChromeUserManager and us.

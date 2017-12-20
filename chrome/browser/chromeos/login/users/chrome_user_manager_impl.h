@@ -150,6 +150,8 @@ class ChromeUserManagerImpl
       const std::string& user_email,
       const AffiliationIDSet& user_affiliation_ids) override;
 
+  bool IsManagedDevice() const override;
+
  protected:
   const std::string& GetApplicationLocale() const override;
   PrefService* GetLocalState() const override;
