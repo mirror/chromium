@@ -16,6 +16,24 @@
       "revId": "121910fcfd1252074903d5238ad4763ff2a17538",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e4c1d16_3541ce0a",
+        "filename": "third_party/WebKit/Source/core/layout/TextAutosizerTest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1237911
+      },
+      "writtenOn": "2017-12-20T02:31:06Z",
+      "side": 1,
+      "message": "If you see TextAutosizer::ApplyMultiplier(), there is a comparison between current_style.TextAutosizingMultiplier() and multiplier for skipping re-layout when multiplier is not changed. Without changing the multiplier, the device scale factor is not applied to the font size either.\n\nI thought there is no case updating the device scale factor in a device and it works as I expected.\n\nHowever, after seeing your comment and considering this issue a bit more, in the updated CL, I saved the previous zoom factor to ComputedStyle and added a comparison between current_style.TextAutosizingZoom() and current_style.EffectiveZoom() in TextAutosizer::ApplyMultiplier(). It is because in the future we will move the accessibility font scale factor to zoom factor. At the moment, the zoom factor can be changed in Android too.",
+      "parentUuid": "3177ecb3_9c74d53b",
+      "revId": "121910fcfd1252074903d5238ad4763ff2a17538",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
