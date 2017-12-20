@@ -16,6 +16,24 @@
       "revId": "ec28ea98fcdbfabbdc758f21c7ef2cc07bceaa0a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "552ac667_13214e2a",
+        "filename": "ui/gl/test/gl_image_test_support.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1230115
+      },
+      "writtenOn": "2017-12-20T15:04:29Z",
+      "side": 1,
+      "message": "This was on purpose but you are right this can confuse the caller. So I changed it to a DCHECK, similar to the existing DCHECK(allowed not empty) above. Also it saves some lines. Let me know if it is ok.",
+      "parentUuid": "a720549b_e9e9523c",
+      "revId": "ec28ea98fcdbfabbdc758f21c7ef2cc07bceaa0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
