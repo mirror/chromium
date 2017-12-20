@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4740d78f_9bf7ecca",
+        "filename": "chrome/browser/component_updater/sw_reporter_installer_win_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 693,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-12-20T22:56:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "745acd2d_8841dfaf",
+      "revId": "c3bdc083eca9760df2cc21c6a5ed5d64c390c73b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3b3a7b02_fc353832",
         "filename": "chrome/browser/component_updater/sw_reporter_installer_win_unittest.cc",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "c3bdc083eca9760df2cc21c6a5ed5d64c390c73b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7f93fec_607f3e5b",
+        "filename": "chrome/browser/component_updater/sw_reporter_installer_win_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 698,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-12-20T22:56:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3b3a7b02_fc353832",
+      "revId": "c3bdc083eca9760df2cc21c6a5ed5d64c390c73b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "8c808fa0_18f1d20c",
+        "filename": "chrome/browser/component_updater/sw_reporter_installer_win_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 707,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-12-20T22:56:11Z",
+      "side": 1,
+      "message": "Updated to a new, hopefully less fever-induced comment.",
+      "parentUuid": "64c12663_03341cfd",
+      "revId": "c3bdc083eca9760df2cc21c6a5ed5d64c390c73b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fb732b6c_a7d77f3e",
         "filename": "chrome/browser/component_updater/sw_reporter_installer_win_unittest.cc",
         "patchSetId": 7
@@ -64,6 +118,24 @@
       "writtenOn": "2017-12-20T22:23:10Z",
       "side": 1,
       "message": "Is there any way to also test that SwReporterInstallerPolicy\u0027s on_component_ready_callback_ gets called? (And that it doesn\u0027t get called in the Failure test?)",
+      "revId": "c3bdc083eca9760df2cc21c6a5ed5d64c390c73b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d56f8d7_3d5b7bc9",
+        "filename": "chrome/browser/component_updater/sw_reporter_installer_win_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 754,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-12-20T22:56:11Z",
+      "side": 1,
+      "message": "Not that I can think of at the moment. OnDemandUpdate eventually resulting in OnComponentReady is a component_updater implementation detail.",
+      "parentUuid": "fb732b6c_a7d77f3e",
       "revId": "c3bdc083eca9760df2cc21c6a5ed5d64c390c73b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
