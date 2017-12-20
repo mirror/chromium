@@ -10,18 +10,26 @@
 #include "base/macros.h"
 #include "chrome/browser/ui/app_list/arc/arc_vpn_provider_manager.h"
 #include "chrome/browser/ui/webui/settings/settings_page_ui_handler.h"
+#include "chromeos/components/tether/gms_core_notifications_state_tracker.h"
 #include "ui/gfx/native_widget_types.h"
 
 class Profile;
 
 namespace chromeos {
+
+namespace tether {
+class GmsCoreNotificationsStateTracker;
+}  // namespace tether
+
 namespace settings {
 
 // Chrome OS Internet settings page UI handler.
 // TODO(lgcheng/stevenjb): Rename this ThirdPartyVpnHandler once configuration
 // is handled in the Settings UI (crbug.com/380937
-class InternetHandler : public app_list::ArcVpnProviderManager::Observer,
-                        public ::settings::SettingsPageUIHandler {
+class InternetHandler
+    : public app_list::ArcVpnProviderManager::Observer,
+      public chromeos::tether::GmsCoreNotificationsStateTracker::Observer,
+      public ::settings::SettingsPageUIHandler {
  public:
   explicit InternetHandler(Profile* profile);
   ~InternetHandler() override;
@@ -39,6 +47,9 @@ class InternetHandler : public app_list::ArcVpnProviderManager::Observer,
   void OnArcVpnProviderRemoved(const std::string& package_name) override;
   void OnArcVpnProviderUpdated(app_list::ArcVpnProviderManager::ArcVpnProvider*
                                    arc_vpn_provider) override;
+
+  // chromeos::tether::GmsCoreNotificationsStateTracker::Observer:
+  void OnGmsCoreNotificationStateChanged() override;
 
  private:
   // Settings JS handlers.
@@ -59,8 +70,7 @@ class InternetHandler : public app_list::ArcVpnProviderManager::Observer,
 
   // Sets list of names of devices whose "Google Play Services" notifications
   // are disabled.
-  void SetGmsCoreNotificationsDisabledDeviceNames(
-      const std::vector<std::string>& device_names);
+  void SetGmsCoreNotificationsDisabledDeviceNames();
 
   // Sends the list of names.
   void SendGmsCoreNotificationsDisabledDeviceNames();
@@ -75,6 +85,8 @@ class InternetHandler : public app_list::ArcVpnProviderManager::Observer,
   Profile* const profile_;
 
   app_list::ArcVpnProviderManager* arc_vpn_provider_manager_;
+  chromeos::tether::GmsCoreNotificationsStateTracker*
+      gms_core_notifications_state_tracker_;
 
   DISALLOW_COPY_AND_ASSIGN(InternetHandler);
 };
