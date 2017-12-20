@@ -34,6 +34,24 @@
       "revId": "4851339e64798a8d643dd295754e7fca69e265dd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8182ee78_353509d0",
+        "filename": "cc/layers/picture_layer_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 645,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-12-20T18:17:00Z",
+      "side": 1,
+      "message": "nit: Seems Ok to me, but as you say, we\u0027re adding (unnecessary) extra size to the pending tree in cases where we weren\u0027t showing the top bar to start. I think I\u0027m OK with this, but I wonder if we can do something better for Android tablets, where the top bar isn\u0027t hidden/shown dynamically? If it\u0027s easy to query this, can you add it? Otherwise seems fine.",
+      "parentUuid": "6744c9b3_00a7f995",
+      "revId": "4851339e64798a8d643dd295754e7fca69e265dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
