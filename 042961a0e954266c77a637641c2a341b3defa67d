@@ -150,6 +150,24 @@
       "revId": "042961a0e954266c77a637641c2a341b3defa67d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5dad217a_3531c005",
+        "filename": "content/browser/accessibility/browser_accessibility_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-20T21:33:01Z",
+      "side": 1,
+      "message": "This is legal in C++ now, I think it\u0027s more foolproof to do it here.",
+      "parentUuid": "0d61ba56_25ea1463",
+      "revId": "042961a0e954266c77a637641c2a341b3defa67d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
