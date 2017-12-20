@@ -55,6 +55,8 @@
 #include "net/proxy/proxy_service.h"
 #include "net/socket/next_proto.h"
 #include "net/ssl/channel_id_service.h"
+#include "net/ssl/ssl_config.h"
+#include "net/ssl/ssl_config_service.h"
 #include "net/url_request/data_protocol_handler.h"
 #include "net/url_request/file_protocol_handler.h"
 #include "net/url_request/url_request_context.h"
@@ -173,6 +175,24 @@ std::unique_ptr<net::URLRequestJobFactory> CreateJobFactory(
 
   return job_factory;
 }
+
+// For Android WebView, do not enforce the policies outlined in
+// https://security.googleblog.com/2017/09/chromes-plan-to-distrust-symantec.html
+// as those will be handled by Android itself on its own schedule. Otherwise,
+// it returns the default SSLConfig.
+class AwSSLConfigService : public net::SSLConfigService {
+ public:
+  AwSSLConfigService() { default_config_.symantec_enforcement_disabled = true; }
+
+  void GetSSLConfig(net::SSLConfig* config) override {
+    *config = default_config_;
+  }
+
+ private:
+  ~AwSSLConfigService() override = default;
+
+  net::SSLConfig default_config_;
+};
 
 }  // namespace
 
@@ -315,6 +335,8 @@ void AwURLRequestContextGetter::InitializeURLRequestContext() {
   builder.SetHttpAuthHandlerFactory(
       CreateAuthHandlerFactory(host_resolver.get()));
   builder.set_host_resolver(std::move(host_resolver));
+
+  builder.set_ssl_config_service(base::MakeRefCounted<AwSSLConfigService>());
 
   url_request_context_ = builder.Build();
 #if DCHECK_IS_ON()
