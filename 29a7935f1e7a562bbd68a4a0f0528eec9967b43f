@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3f1c3e03_b790fa3b",
+        "filename": "chrome/browser/resources/optimize_webui_test.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-20T00:51:25Z",
+      "side": 1,
+      "message": "With this change, file_name can actually hold a path. Can you rename to file_path?",
+      "range": {
+        "startLine": 26,
+        "startChar": 35,
+        "endLine": 26,
+        "endChar": 44
+      },
+      "revId": "29a7935f1e7a562bbd68a4a0f0528eec9967b43f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a3c9986_d6ac65a0",
+        "filename": "chrome/browser/resources/optimize_webui_test.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-20T00:51:25Z",
+      "side": 1,
+      "message": "Does this work on Windows? Did not see any green tryjobs in previous patches.",
+      "range": {
+        "startLine": 64,
+        "startChar": 47,
+        "endLine": 64,
+        "endChar": 48
+      },
+      "revId": "29a7935f1e7a562bbd68a4a0f0528eec9967b43f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
