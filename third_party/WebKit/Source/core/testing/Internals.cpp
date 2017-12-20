@@ -759,9 +759,7 @@ void Internals::setBrowserControlsShownRatio(float ratio) {
 
 ShadowRoot* Internals::shadowRoot(Element* host) {
   DCHECK(host);
-  if (ElementShadow* shadow = host->Shadow())
-    return &shadow->GetShadowRoot();
-  return nullptr;
+  return host->GetShadowRoot();
 }
 
 String Internals::shadowRootType(const Node* root,
