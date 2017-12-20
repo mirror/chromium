@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "62953f6d_fa904dbe",
+        "filename": "cc/scheduler/scheduler_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 3106,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-20T18:16:17Z",
+      "side": 1,
+      "message": "Can you explain this more in terms of intent too, like the point is that we don\u0027t re-enter the scheduler when setting redraw inside the implframe scheduler action and try to run another action.",
+      "revId": "dff96f26284257252581a5441ec359995b761a8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
