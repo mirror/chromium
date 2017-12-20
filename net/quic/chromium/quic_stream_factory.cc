@@ -352,6 +352,10 @@ class QuicStreamFactory::Job {
     return stream_requests_;
   }
 
+  bool IsHostResolutionComplete() const {
+    return io_state_ == STATE_NONE || io_state_ >= STATE_CONNECT;
+  }
+
  private:
   enum IoState {
     STATE_NONE,
@@ -378,6 +382,7 @@ class QuicStreamFactory::Job {
   base::TimeTicks dns_resolution_start_time_;
   base::TimeTicks dns_resolution_end_time_;
   std::set<QuicStreamRequest*> stream_requests_;
+  bool should_notify_requests_of_result_after_host_resolution_;
   base::WeakPtrFactory<Job> weak_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(Job);
@@ -405,6 +410,7 @@ QuicStreamFactory::Job::Job(QuicStreamFactory* factory,
                                  NetLogSourceType::QUIC_STREAM_FACTORY_JOB)),
       num_sent_client_hellos_(0),
       session_(nullptr),
+      should_notify_requests_of_result_after_host_resolution_(false),
       weak_factory_(this) {
   net_log_.BeginEvent(
       NetLogEventType::QUIC_STREAM_FACTORY_JOB,
@@ -426,6 +432,12 @@ QuicStreamFactory::Job::~Job() {
 
 int QuicStreamFactory::Job::Run(const CompletionCallback& callback) {
   int rv = DoLoop(OK);
+
+  // If host resolution completes synchronously with the Run() call, clear this
+  // variable so request->OnResultAfterHostResolution() won't be called
+  // in OnIOComplete() in the future.
+  should_notify_requests_of_result_after_host_resolution_ = false;
+
   if (rv == ERR_IO_PENDING)
     callback_ = callback;
 
@@ -463,6 +475,11 @@ int QuicStreamFactory::Job::DoLoop(int rv) {
 
 void QuicStreamFactory::Job::OnIOComplete(int rv) {
   rv = DoLoop(rv);
+  if (should_notify_requests_of_result_after_host_resolution_) {
+    for (QuicStreamRequest* request : stream_requests_)
+      request->OnResultAfterHostResolution(rv);
+    should_notify_requests_of_result_after_host_resolution_ = false;
+  }
   if (rv != ERR_IO_PENDING && !callback_.is_null()) {
     base::ResetAndReturn(&callback_).Run(rv);
   }
@@ -493,6 +510,9 @@ int QuicStreamFactory::Job::DoResolveHost() {
 
 int QuicStreamFactory::Job::DoResolveHostComplete(int rv) {
   dns_resolution_end_time_ = base::TimeTicks::Now();
+
+  should_notify_requests_of_result_after_host_resolution_ = true;
+
   if (rv != OK)
     return rv;
 
@@ -581,7 +601,7 @@ int QuicStreamFactory::Job::DoConnectComplete(int rv) {
 }
 
 QuicStreamRequest::QuicStreamRequest(QuicStreamFactory* factory)
-    : factory_(factory) {}
+    : factory_(factory), expect_host_resolution_(false) {}
 
 QuicStreamRequest::~QuicStreamRequest() {
   if (factory_ && !callback_.is_null())
@@ -600,22 +620,37 @@ int QuicStreamRequest::Request(const HostPortPair& destination,
   DCHECK_NE(quic_version, QUIC_VERSION_UNSUPPORTED);
   DCHECK(net_error_details);
   DCHECK(callback_.is_null());
+  DCHECK(host_resolution_callback_.is_null());
   DCHECK(factory_);
 
   net_error_details_ = net_error_details;
   server_id_ = QuicServerId(HostPortPair::FromURL(url), privacy_mode);
 
   int rv = factory_->Create(server_id_, destination, quic_version, priority,
-                            cert_verify_flags, url, net_log, this);
+                            cert_verify_flags, url, net_log, this,
+                            &expect_host_resolution_);
   if (rv == ERR_IO_PENDING) {
     net_log_ = net_log;
     callback_ = callback;
   } else {
+    DCHECK(!expect_host_resolution_);
     factory_ = nullptr;
   }
+
   if (rv == OK)
     DCHECK(session_);
   return rv;
+}
+
+bool QuicStreamRequest::WaitForResultAfterHostResolution(
+    const CompletionCallback& callback) {
+  DCHECK(host_resolution_callback_.is_null());
+  // This function must be called after Request().
+  DCHECK(net_error_details_);
+  if (expect_host_resolution_) {
+    host_resolution_callback_ = callback;
+  }
+  return expect_host_resolution_;
 }
 
 void QuicStreamRequest::SetSession(
@@ -626,6 +661,14 @@ void QuicStreamRequest::SetSession(
 void QuicStreamRequest::OnRequestComplete(int rv) {
   factory_ = nullptr;
   base::ResetAndReturn(&callback_).Run(rv);
+}
+
+void QuicStreamRequest::OnResultAfterHostResolution(int rv) {
+  DCHECK(expect_host_resolution_);
+  expect_host_resolution_ = false;
+  if (!host_resolution_callback_.is_null()) {
+    base::ResetAndReturn(&host_resolution_callback_).Run(rv);
+  }
 }
 
 base::TimeDelta QuicStreamRequest::GetTimeDelayForWaitingJob() const {
@@ -893,7 +936,10 @@ int QuicStreamFactory::Create(const QuicServerId& server_id,
                               int cert_verify_flags,
                               const GURL& url,
                               const NetLogWithSource& net_log,
-                              QuicStreamRequest* request) {
+                              QuicStreamRequest* request,
+                              bool* expect_host_resolution) {
+  *expect_host_resolution = false;
+
   if (clock_skew_detector_.ClockSkewDetected(base::TimeTicks::Now(),
                                              base::Time::Now())) {
     while (!active_sessions_.empty()) {
@@ -943,6 +989,7 @@ int QuicStreamFactory::Create(const QuicServerId& server_id,
         NetLogEventType::HTTP_STREAM_JOB_BOUND_TO_QUIC_STREAM_FACTORY_JOB,
         job_net_log.source().ToEventParametersCallback());
     it->second->AddRequest(request);
+    *expect_host_resolution = !it->second->IsHostResolutionComplete();
     return ERR_IO_PENDING;
   }
 
@@ -973,6 +1020,7 @@ int QuicStreamFactory::Create(const QuicServerId& server_id,
                                base::Unretained(this), job.get()));
   if (rv == ERR_IO_PENDING) {
     job->AddRequest(request);
+    *expect_host_resolution = !job->IsHostResolutionComplete();
     active_jobs_[server_id] = std::move(job);
     return rv;
   }
