@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<script src="../../resources/testharness.js"></script>
+<script src="../../resources/testharnessreport.js"></script>
+<style id="theme"></style>
+<div id="target"></div>
+<script>
+'use strict';
+
+const theme = document.getElementById('theme');
+const target = document.getElementById('target');
+
+function assertShadowPseudoCounted(shadowPseudo, counter) {
+    getComputedStyle(target);
+    assert_false(internals.isUseCounted(document, counter), shadowPseudo);
+    theme.textContent = '::' + shadowPseudo + ' { color: black; }';
+    getComputedStyle(target);
+    assert_true(internals.isUseCounted(document, counter), shadowPseudo);
+}
+
+test(() => {
+    // From web_feature.mojom
+    const kCSSSelectorCue = 2278;
+    const kCSSSelectorInternalMediaControlsOverlayCastButton = 1064;
+    const kCSSSelectorWebkitCalendarPickerIndicator = 2279;
+    const kCSSSelectorWebkitClearButton = 2280;
+    const kCSSSelectorWebkitColorSwatch = 2281;
+    const kCSSSelectorWebkitColorSwatchWrapper = 2282;
+    const kCSSSelectorWebkitDateAndTimeValue = 2283;
+    const kCSSSelectorWebkitDatetimeEdit = 2284;
+    const kCSSSelectorWebkitDatetimeEditAmpmField = 2285;
+    const kCSSSelectorWebkitDatetimeEditDayField = 2286;
+    const kCSSSelectorWebkitDatetimeEditFieldsWrapper = 2287;
+    const kCSSSelectorWebkitDatetimeEditHourField = 2288;
+    const kCSSSelectorWebkitDatetimeEditMillisecondField = 2289;
+    const kCSSSelectorWebkitDatetimeEditMinuteField = 2290;
+    const kCSSSelectorWebkitDatetimeEditMonthField = 2291;
+    const kCSSSelectorWebkitDatetimeEditSecondField = 2292;
+    const kCSSSelectorWebkitDatetimeEditText = 2293;
+    const kCSSSelectorWebkitDatetimeEditWeekField = 2294;
+    const kCSSSelectorWebkitDatetimeEditYearField = 2295;
+    const kCSSSelectorWebkitDetailsMarker = 2296;
+    const kCSSSelectorWebkitFileUploadButton = 2297;
+    const kCSSSelectorWebkitInnerSpinButton = 2298;
+    const kCSSSelectorWebkitInputPlaceholder = 2299;
+    const kCSSSelectorWebkitMediaControls = 2037;
+    const kCSSSelectorWebkitMediaControlsCurrentTimeDisplay = 2043;
+    const kCSSSelectorWebkitMediaControlsEnclosure = 2040;
+    const kCSSSelectorWebkitMediaControlsFullscreenButton = 2049;
+    const kCSSSelectorWebkitMediaControlsMuteButton = 2047;
+    const kCSSSelectorWebkitMediaControlsOverlayEnclosure = 2038;
+    const kCSSSelectorWebkitMediaControlsOverlayPlayButton = 2039;
+    const kCSSSelectorWebkitMediaControlsPanel = 2041;
+    const kCSSSelectorWebkitMediaControlsPlayButton = 2042;
+    const kCSSSelectorWebkitMediaControlsTimeRemainingDisplay = 2044;
+    const kCSSSelectorWebkitMediaControlsTimeline = 2045;
+    const kCSSSelectorWebkitMediaControlsTimelineContainer = 2046;
+    const kCSSSelectorWebkitMediaControlsToggleClosedCaptionsButton = 2050;
+    const kCSSSelectorWebkitMediaControlsVolumeSlider = 2048;
+    const kCSSSelectorWebkitMediaSliderContainer = 2300;
+    const kCSSSelectorWebkitMediaSliderThumb = 2301;
+    const kCSSSelectorWebkitMediaTextTrackContainer = 2302;
+    const kCSSSelectorWebkitMediaTextTrackDisplay = 2303;
+    const kCSSSelectorWebkitMediaTextTrackRegion = 2304;
+    const kCSSSelectorWebkitMediaTextTrackRegionContainer = 2305;
+    const kCSSSelectorWebkitMeterBar = 2306;
+    const kCSSSelectorWebkitMeterEvenLessGoodValue = 2307;
+    const kCSSSelectorWebkitMeterInnerElement = 2308;
+    const kCSSSelectorWebkitMeterOptimumValue = 2309;
+    const kCSSSelectorWebkitMeterSuboptimumValue = 2310;
+    const kCSSSelectorWebkitProgressBar = 2311;
+    const kCSSSelectorWebkitProgressInnerElement = 2312;
+    const kCSSSelectorWebkitProgressValue = 2313;
+    const kCSSSelectorWebkitSearchCancelButton = 2314;
+    const kCSSSelectorWebkitSliderContainer = 2315;
+    const kCSSSelectorWebkitSliderRunnableTrack = 2316;
+    const kCSSSelectorWebkitSliderThumb = 2317;
+    const kCSSSelectorWebkitTextfieldDecorationContainer = 2318;
+    const kCSSSelectorWebkitUnknownPseudo = 2319;
+
+    assertShadowPseudoCounted('cue', kCSSSelectorCue);
+    assertShadowPseudoCounted('-internal-media-controls-overlay-cast-button', kCSSSelectorInternalMediaControlsOverlayCastButton);
+    assertShadowPseudoCounted('-webkit-calendar-picker-indicator', kCSSSelectorWebkitCalendarPickerIndicator);
+    assertShadowPseudoCounted('-webkit-clear-button', kCSSSelectorWebkitClearButton);
+    assertShadowPseudoCounted('-webkit-color-swatch', kCSSSelectorWebkitColorSwatch);
+    assertShadowPseudoCounted('-webkit-color-swatch-wrapper', kCSSSelectorWebkitColorSwatchWrapper);
+    assertShadowPseudoCounted('-webkit-date-and-time-value', kCSSSelectorWebkitDateAndTimeValue);
+    assertShadowPseudoCounted('-webkit-datetime-edit', kCSSSelectorWebkitDatetimeEdit);
+    assertShadowPseudoCounted('-webkit-datetime-edit-ampm-field', kCSSSelectorWebkitDatetimeEditAmpmField);
+    assertShadowPseudoCounted('-webkit-datetime-edit-day-field', kCSSSelectorWebkitDatetimeEditDayField);
+    assertShadowPseudoCounted('-webkit-datetime-edit-fields-wrapper', kCSSSelectorWebkitDatetimeEditFieldsWrapper);
+    assertShadowPseudoCounted('-webkit-datetime-edit-hour-field', kCSSSelectorWebkitDatetimeEditHourField);
+    assertShadowPseudoCounted('-webkit-datetime-edit-millisecond-field', kCSSSelectorWebkitDatetimeEditMillisecondField);
+    assertShadowPseudoCounted('-webkit-datetime-edit-minute-field', kCSSSelectorWebkitDatetimeEditMinuteField);
+    assertShadowPseudoCounted('-webkit-datetime-edit-month-field', kCSSSelectorWebkitDatetimeEditMonthField);
+    assertShadowPseudoCounted('-webkit-datetime-edit-second-field', kCSSSelectorWebkitDatetimeEditSecondField);
+    assertShadowPseudoCounted('-webkit-datetime-edit-text', kCSSSelectorWebkitDatetimeEditText);
+    assertShadowPseudoCounted('-webkit-datetime-edit-week-field', kCSSSelectorWebkitDatetimeEditWeekField);
+    assertShadowPseudoCounted('-webkit-datetime-edit-year-field', kCSSSelectorWebkitDatetimeEditYearField);
+    assertShadowPseudoCounted('-webkit-details-marker', kCSSSelectorWebkitDetailsMarker);
+    assertShadowPseudoCounted('-webkit-file-upload-button', kCSSSelectorWebkitFileUploadButton);
+    assertShadowPseudoCounted('-webkit-inner-spin-button', kCSSSelectorWebkitInnerSpinButton);
+    assertShadowPseudoCounted('-webkit-input-placeholder', kCSSSelectorWebkitInputPlaceholder);
+    assertShadowPseudoCounted('-webkit-media-controls', kCSSSelectorWebkitMediaControls);
+    assertShadowPseudoCounted('-webkit-media-controls-current-time-display', kCSSSelectorWebkitMediaControlsCurrentTimeDisplay);
+    assertShadowPseudoCounted('-webkit-media-controls-enclosure', kCSSSelectorWebkitMediaControlsEnclosure);
+    assertShadowPseudoCounted('-webkit-media-controls-fullscreen-button', kCSSSelectorWebkitMediaControlsFullscreenButton);
+    assertShadowPseudoCounted('-webkit-media-controls-mute-button', kCSSSelectorWebkitMediaControlsMuteButton);
+    assertShadowPseudoCounted('-webkit-media-controls-overlay-enclosure', kCSSSelectorWebkitMediaControlsOverlayEnclosure);
+    assertShadowPseudoCounted('-webkit-media-controls-overlay-play-button', kCSSSelectorWebkitMediaControlsOverlayPlayButton);
+    assertShadowPseudoCounted('-webkit-media-controls-panel', kCSSSelectorWebkitMediaControlsPanel);
+    assertShadowPseudoCounted('-webkit-media-controls-play-button', kCSSSelectorWebkitMediaControlsPlayButton);
+    assertShadowPseudoCounted('-webkit-media-controls-timeline', kCSSSelectorWebkitMediaControlsTimeline);
+    assertShadowPseudoCounted('-webkit-media-controls-timeline-container', kCSSSelectorWebkitMediaControlsTimelineContainer);
+    assertShadowPseudoCounted('-webkit-media-controls-time-remaining-display', kCSSSelectorWebkitMediaControlsTimeRemainingDisplay);
+    assertShadowPseudoCounted('-webkit-media-controls-toggle-closed-captions-button', kCSSSelectorWebkitMediaControlsToggleClosedCaptionsButton);
+    assertShadowPseudoCounted('-webkit-media-controls-volume-slider', kCSSSelectorWebkitMediaControlsVolumeSlider);
+    assertShadowPseudoCounted('-webkit-media-slider-container', kCSSSelectorWebkitMediaSliderContainer);
+    assertShadowPseudoCounted('-webkit-media-slider-thumb', kCSSSelectorWebkitMediaSliderThumb);
+    assertShadowPseudoCounted('-webkit-media-text-track-container', kCSSSelectorWebkitMediaTextTrackContainer);
+    assertShadowPseudoCounted('-webkit-media-text-track-display', kCSSSelectorWebkitMediaTextTrackDisplay);
+    assertShadowPseudoCounted('-webkit-media-text-track-region', kCSSSelectorWebkitMediaTextTrackRegion);
+    assertShadowPseudoCounted('-webkit-media-text-track-region-container', kCSSSelectorWebkitMediaTextTrackRegionContainer);
+    assertShadowPseudoCounted('-webkit-meter-bar', kCSSSelectorWebkitMeterBar);
+    assertShadowPseudoCounted('-webkit-meter-even-less-good-value', kCSSSelectorWebkitMeterEvenLessGoodValue);
+    assertShadowPseudoCounted('-webkit-meter-inner-element', kCSSSelectorWebkitMeterInnerElement);
+    assertShadowPseudoCounted('-webkit-meter-optimum-value', kCSSSelectorWebkitMeterOptimumValue);
+    assertShadowPseudoCounted('-webkit-meter-suboptimum-value', kCSSSelectorWebkitMeterSuboptimumValue);
+    assertShadowPseudoCounted('-webkit-progress-bar', kCSSSelectorWebkitProgressBar);
+    assertShadowPseudoCounted('-webkit-progress-inner-element', kCSSSelectorWebkitProgressInnerElement);
+    assertShadowPseudoCounted('-webkit-progress-value', kCSSSelectorWebkitProgressValue);
+    assertShadowPseudoCounted('-webkit-search-cancel-button', kCSSSelectorWebkitSearchCancelButton);
+    assertShadowPseudoCounted('-webkit-slider-container', kCSSSelectorWebkitSliderContainer);
+    assertShadowPseudoCounted('-webkit-slider-runnable-track', kCSSSelectorWebkitSliderRunnableTrack);
+    assertShadowPseudoCounted('-webkit-slider-thumb', kCSSSelectorWebkitSliderThumb);
+    assertShadowPseudoCounted('-webkit-textfield-decoration-container', kCSSSelectorWebkitTextfieldDecorationContainer);
+    assertShadowPseudoCounted('-webkit-unrecognized', kCSSSelectorWebkitUnknownPseudo);
+}, 'Shadow pseudoclasses are use counted');
+</script>
