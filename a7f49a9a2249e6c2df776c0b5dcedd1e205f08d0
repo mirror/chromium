@@ -104,6 +104,24 @@
       "revId": "a7f49a9a2249e6c2df776c0b5dcedd1e205f08d0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f93d5bdc_aa7d0c79",
+        "filename": "components/viz/service/display/scoped_render_pass_texture.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-20T18:20:05Z",
+      "side": 1,
+      "message": "Sorry I mean have the caller of BindForSampling() simply call BindTexture() itself, instead of having a method wrapping BindTexture on this class.",
+      "parentUuid": "2ed7e069_e3be3d7c",
+      "revId": "a7f49a9a2249e6c2df776c0b5dcedd1e205f08d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
