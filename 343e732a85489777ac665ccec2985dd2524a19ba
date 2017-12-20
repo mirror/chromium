@@ -1,0 +1,280 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7dd6cbae_d7a4d07e",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-12-20T21:51:27Z",
+      "side": 1,
+      "message": "snap_offset is being used both as an input and an output. I prefer if we can avoid this .\n\n\nI think we can just update the current_offset to have the selected offset on snapped \naxis. For example:\n1. use current point to select snap offset for at least one axis among visible areas with search area \u003d full area\n2. if necessary redo step one with current point \u003d current point \u0026 snap with search area \u003d area.visibilitly_area   \n\n\nDid I miss something here that requires us to keep the current_offset the same?\n\nAnother awkwardness, is that on first call, current_offset and snap_offset are the \nsame which mean we are computing the same thing twice. The above fixes this issue\nas well.",
+      "range": {
+        "startLine": 382,
+        "startChar": 58,
+        "endLine": 382,
+        "endChar": 69
+      },
+      "revId": "343e732a85489777ac665ccec2985dd2524a19ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33511105_69e852c7",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-12-20T21:51:27Z",
+      "side": 1,
+      "message": "nit: perhaps a better name is |search_area|. I think the current name can be confused with\narea.visible_area and it is also not always about visibility.",
+      "range": {
+        "startLine": 391,
+        "startChar": 11,
+        "endLine": 391,
+        "endChar": 33
+      },
+      "revId": "343e732a85489777ac665ccec2985dd2524a19ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a3673bd_177e61bb",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-12-20T21:51:27Z",
+      "side": 1,
+      "message": "Should we not just return FindSnapOffset result above?",
+      "range": {
+        "startLine": 441,
+        "startChar": 2,
+        "endLine": 441,
+        "endChar": 13
+      },
+      "revId": "343e732a85489777ac665ccec2985dd2524a19ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae80de00_b7711ef8",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 470,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-12-20T21:51:27Z",
+      "side": 1,
+      "message": "nit: maybe make this a local variable and give it a readable name.",
+      "range": {
+        "startLine": 470,
+        "startChar": 6,
+        "endLine": 470,
+        "endChar": 79
+      },
+      "revId": "343e732a85489777ac665ccec2985dd2524a19ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28622526_ca9e4786",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-12-20T21:51:27Z",
+      "side": 1,
+      "message": "we don\u0027t return any offset. Should say returns false if no snap offset\nexists that meets all conditions.",
+      "range": {
+        "startLine": 76,
+        "startChar": 5,
+        "endLine": 76,
+        "endChar": 73
+      },
+      "revId": "343e732a85489777ac665ccec2985dd2524a19ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed2a9490_39414fc4",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-12-20T21:51:27Z",
+      "side": 1,
+      "message": "I think we should rename this to |search_area|. This is more appropriate.",
+      "range": {
+        "startLine": 80,
+        "startChar": 5,
+        "endLine": 80,
+        "endChar": 27
+      },
+      "revId": "343e732a85489777ac665ccec2985dd2524a19ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf1f6770_56c2e55f",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-12-20T21:51:27Z",
+      "side": 1,
+      "message": "nit: I think there is too much implementation related details on exactly\nwhat the parameters should be on first and second calls. I suggest just describing\nwhat the parameter is used for here (e.g., you first line). The details here\nmay be more appropriate as comments in the function implementation.",
+      "range": {
+        "startLine": 85,
+        "startChar": 19,
+        "endLine": 87,
+        "endChar": 62
+      },
+      "revId": "343e732a85489777ac665ccec2985dd2524a19ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e81b6cef_3228e1d5",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinatorTest.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-12-20T21:51:27Z",
+      "side": 1,
+      "message": "I have two concerns about these:\n\n1) I think these can be a rect  instead of the individual doubles.\n2) I think these better not be member variables specially as they are overridden in\nsome tests. How about having a helper function that computes them given \nscroller_element \u0026 area details (right, left, margin, padding).\n\nThen each test calls the function with appropriate parameters.\nSimilar thing can be done for scrollable_x_ and scrollable_y_ btw.",
+      "range": {
+        "startLine": 143,
+        "startChar": 0,
+        "endLine": 146,
+        "endChar": 36
+      },
+      "revId": "343e732a85489777ac665ccec2985dd2524a19ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c58273e2_21f0dce4",
+        "filename": "third_party/WebKit/Source/platform/scroll/ScrollSnapData.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-12-20T21:51:27Z",
+      "side": 1,
+      "message": "nit: s/scroll_offset/scroll offset/",
+      "range": {
+        "startLine": 113,
+        "startChar": 37,
+        "endLine": 113,
+        "endChar": 50
+      },
+      "revId": "343e732a85489777ac665ccec2985dd2524a19ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a49d6d12_ab28fb91",
+        "filename": "third_party/WebKit/Source/platform/scroll/ScrollSnapData.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-12-20T21:51:27Z",
+      "side": 1,
+      "message": "nit: technically it is \"visible\" in the scrollport of snap container. This is not the same as being visible to the user. Maybe make it clear in the comment.",
+      "range": {
+        "startLine": 113,
+        "startChar": 22,
+        "endLine": 113,
+        "endChar": 29
+      },
+      "revId": "343e732a85489777ac665ccec2985dd2524a19ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e4ef294_e3e69b1c",
+        "filename": "third_party/WebKit/Source/platform/scroll/ScrollSnapData.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-12-20T21:51:27Z",
+      "side": 1,
+      "message": "nit: area.visible_area naming is a bit confusing. Particularly, in this case \"area\" is \nreferring to a region in snap container in which this snap area becomes visible.\n\nHow about visibility_region? So you get area.visibility_region.",
+      "range": {
+        "startLine": 115,
+        "startChar": 12,
+        "endLine": 115,
+        "endChar": 24
+      },
+      "revId": "343e732a85489777ac665ccec2985dd2524a19ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9208bad5_eec1847d",
+        "filename": "third_party/WebKit/Source/platform/scroll/ScrollSnapData.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-12-20T21:51:27Z",
+      "side": 1,
+      "message": "Not related to this patch. But I was thinking if we can leverage the visible_area to\nachieve this. For example, what if the region is not a rect but can be a union of multiple\nrects. So for large snap area the middle section (where no edge is not visible) is not in this\nregion. So in effect you have the border region. This when user is scrolling in the middle,\nwe won\u0027t snap to the large area but we will when near one of the edges.\n\nThink of it as \"snap eligibility region\" as oppose to visibility region.",
+      "range": {
+        "startLine": 121,
+        "startChar": 2,
+        "endLine": 121,
+        "endChar": 57
+      },
+      "revId": "343e732a85489777ac665ccec2985dd2524a19ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
