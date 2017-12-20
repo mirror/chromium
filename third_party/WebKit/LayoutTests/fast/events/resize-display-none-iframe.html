@@ -1,0 +1,17 @@
+<!doctype html>
+<title>When an iframe changes from display:none to display:block, the onresize handler should be called.</title>
+<link rel="help" href="https://bugs.chromium.org/p/chromium/issues/detail?id=795661#c7">
+<iframe id="iframe" width="50" height="40" style="display: none" src="resources/iframe-onresize.html"></iframe>
+
+<script src="../../resources/testharness.js"></script>
+<script src="../../resources/testharnessreport.js"></script>
+<script>
+'use strict';
+
+var childContext = document.getElementById("iframe");
+childContext.onload = function() {
+  childContext.style.display = "block";
+};
+fetch_tests_from_window(childContext.contentWindow);
+
+</script>
