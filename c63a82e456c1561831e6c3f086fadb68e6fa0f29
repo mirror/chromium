@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6379e9bd_a7eb0f90",
+        "filename": "components/ntp_tiles/constants.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-12-20T13:47:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a84d5d8_0d44d452",
+      "range": {
+        "startLine": 29,
+        "startChar": 73,
+        "endLine": 29,
+        "endChar": 76
+      },
+      "revId": "c63a82e456c1561831e6c3f086fadb68e6fa0f29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "35c15117_0864023b",
         "filename": "components/ntp_tiles/field_trial.cc",
         "patchSetId": 5
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "4ca89abb_77ab19ba",
+        "filename": "components/ntp_tiles/field_trial.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-12-20T13:47:42Z",
+      "side": 1,
+      "message": "Gone",
+      "parentUuid": "35c15117_0864023b",
+      "range": {
+        "startLine": 11,
+        "startChar": 30,
+        "endLine": 11,
+        "endChar": 0
+      },
+      "revId": "c63a82e456c1561831e6c3f086fadb68e6fa0f29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a1481c85_72351353",
         "filename": "testing/variations/fieldtrial_testing_config.json",
         "patchSetId": 5
@@ -59,6 +107,30 @@
       "writtenOn": "2017-12-20T13:08:28Z",
       "side": 1,
       "message": "Is there any point in listing multiple experiments here? AFAIK only the first (or last?) one takes effect.",
+      "range": {
+        "startLine": 2106,
+        "startChar": 39,
+        "endLine": 2106,
+        "endChar": 0
+      },
+      "revId": "c63a82e456c1561831e6c3f086fadb68e6fa0f29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40d31095_f318a934",
+        "filename": "testing/variations/fieldtrial_testing_config.json",
+        "patchSetId": 5
+      },
+      "lineNbr": 2106,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-12-20T13:47:42Z",
+      "side": 1,
+      "message": "That would be bad - either params or Disabling features would then be untested by this (there are unit tests for those, though).\n\nAlso Finch complains (when pushing configs) about every missing group here .... so, can we keep them for the sole purpose of suppressing these errors?",
+      "parentUuid": "a1481c85_72351353",
       "range": {
         "startLine": 2106,
         "startChar": 39,
