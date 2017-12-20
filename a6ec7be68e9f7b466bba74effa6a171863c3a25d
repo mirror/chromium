@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d2b8336a_8885aa09",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-12-20T22:14:00Z",
+      "side": 1,
+      "message": "I tested both and they can now work with the fix.\n\nAdded to the description.",
+      "parentUuid": "ba156243_f39ae597",
+      "range": {
+        "startLine": 10,
+        "startChar": 21,
+        "endLine": 10,
+        "endChar": 22
+      },
+      "revId": "a6ec7be68e9f7b466bba74effa6a171863c3a25d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5972d96a_ec663f8b",
         "filename": "third_party/WebKit/Source/core/frame/MHTMLTest.cpp",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-12-20T19:37:50Z",
       "side": 1,
       "message": "Some duplication in test code is probably okay, but I wonder if we might want to delete ExtractMHTMLHeaders function and instead use net::HttpResponseHeaders.  OTOH, I am not sure if WebKit is allowed to depend on //net (maybe this is okay for test code though?).\n\nAt any rate, this probably shouldn\u0027t block this CL.",
+      "range": {
+        "startLine": 153,
+        "startChar": 44,
+        "endLine": 153,
+        "endChar": 63
+      },
+      "revId": "a6ec7be68e9f7b466bba74effa6a171863c3a25d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3209c077_d2b10ffb",
+        "filename": "third_party/WebKit/Source/core/frame/MHTMLTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-12-20T22:14:00Z",
+      "side": 1,
+      "message": "I thought about using it before but unfortunately //net is not allowed as a dependency.",
+      "parentUuid": "5972d96a_ec663f8b",
       "range": {
         "startLine": 153,
         "startChar": 44,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "a5f25f8f_2c10dede",
+        "filename": "third_party/WebKit/Source/core/frame/MHTMLTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-12-20T22:14:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8ecb1df5_bdee62d3",
+      "range": {
+        "startLine": 301,
+        "startChar": 6,
+        "endLine": 301,
+        "endChar": 8
+      },
+      "revId": "a6ec7be68e9f7b466bba74effa6a171863c3a25d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "350eff33_aa559982",
         "filename": "third_party/WebKit/Source/core/frame/MHTMLTest.cpp",
         "patchSetId": 2
@@ -82,6 +154,30 @@
       "writtenOn": "2017-12-20T19:37:50Z",
       "side": 1,
       "message": "I think that the primary concern in https://crbug.com/794835 was that an \u0027encoded-word\u0027 may not be more than 75 characters long.  Would it be possible to add test assertions that verify that this doesn\u0027t happen?  BTW: I guess verifying that no lines are longer than 75 characters might be easier to test and is a stricter requirement.",
+      "range": {
+        "startLine": 305,
+        "startChar": 25,
+        "endLine": 305,
+        "endChar": 29
+      },
+      "revId": "a6ec7be68e9f7b466bba74effa6a171863c3a25d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7895c2fd_99d8a9ec",
+        "filename": "third_party/WebKit/Source/core/frame/MHTMLTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-12-20T22:14:00Z",
+      "side": 1,
+      "message": "The primary concern for bug 794835 is not about line longer than 75 characters. The main issue is that an incorrect soft line break is used to split lines which cause some 3rd party MHTML parsers to fail. I don\u0027t think any MHTML parsers care about 75-character limit. I verified that with all MHTML utilities I know about plus those 2 mentioned in the bug. None of them have problem with line longer that 75-character.",
+      "parentUuid": "350eff33_aa559982",
       "range": {
         "startLine": 305,
         "startChar": 25,
@@ -141,6 +237,30 @@
     },
     {
       "key": {
+        "uuid": "1216accc_b19fb510",
+        "filename": "third_party/WebKit/Source/core/frame/MHTMLTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 534,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-12-20T22:14:00Z",
+      "side": 1,
+      "message": "The only MHTML header parsed by Blink is Content-Type header. I did manually verify that the 3rd party MHTML tool can get the subject correctly.",
+      "parentUuid": "8d3c1ea0_bd0bac3b",
+      "range": {
+        "startLine": 534,
+        "startChar": 0,
+        "endLine": 534,
+        "endChar": 1
+      },
+      "revId": "a6ec7be68e9f7b466bba74effa6a171863c3a25d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "211d2012_515845b8",
         "filename": "third_party/WebKit/Source/platform/text/QuotedPrintable.cpp",
         "patchSetId": 2
@@ -152,6 +272,30 @@
       "writtenOn": "2017-12-20T19:37:50Z",
       "side": 1,
       "message": "I see that RFC 2047 and https://crbug.com/794835 say: \"separated by CRLF **SPACE**\".  We are not including the space character here, right?  Is this okay?",
+      "range": {
+        "startLine": 112,
+        "startChar": 6,
+        "endLine": 112,
+        "endChar": 59
+      },
+      "revId": "a6ec7be68e9f7b466bba74effa6a171863c3a25d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "377f07e7_03843d5f",
+        "filename": "third_party/WebKit/Source/platform/text/QuotedPrintable.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-12-20T22:14:00Z",
+      "side": 1,
+      "message": "The \"***SPACE**\" could be either space or tab. Chrome tends to use tab, as in the Content-Type header case. The tab is added at line 114.",
+      "parentUuid": "211d2012_515845b8",
       "range": {
         "startLine": 112,
         "startChar": 6,
