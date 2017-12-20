@@ -275,7 +275,7 @@ void WebSharedWorkerImpl::OnScriptLoaderFinished() {
   Document* document = shadow_page_->GetDocument();
   const SecurityOrigin* starter_origin = document->GetSecurityOrigin();
 
-  WorkerClients* worker_clients = WorkerClients::Create();
+  WorkerClients* worker_clients = WorkerClients::Create(document);
   CoreInitializer::GetInstance().ProvideLocalFileSystemToWorker(
       *worker_clients);
   CoreInitializer::GetInstance().ProvideIndexedDBClientToWorker(
