@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "45731016_7676f920",
+        "filename": "third_party/WebKit/Source/core/html/HTMLMetaElement.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-12-20T18:47:35Z",
+      "side": 1,
+      "message": "I think we should be consistent about the meaning of fields in the ViewportDescription object.  If they\u0027re supposed to be physical pixels, they should be physical pixels from the start.\n\nHowever, these fields have type Length, which usually means CSS pixels.",
+      "range": {
+        "startLine": 443,
+        "startChar": 44,
+        "endLine": 443,
+        "endChar": 52
+      },
+      "revId": "b9abc4f2427eac107fe4451b69550cf816bc0c37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
