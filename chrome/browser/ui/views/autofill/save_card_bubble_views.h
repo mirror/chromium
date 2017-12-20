@@ -82,6 +82,8 @@ class SaveCardBubbleViews : public SaveCardBubbleView,
   views::View* GetFootnoteViewForTesting();
 
  private:
+  friend class SaveCardBubbleViewsBrowserTestBase;
+
   // The current step of the save card flow.  Accounts for:
   //  1) Local save vs. Upload save
   //  2) Upload save can have all information or be missing CVC

@@ -30,6 +30,7 @@ found in the LICENSE file.
     <button id="fill_form" type="button">Fill entire form with default (MasterCard) values</button>
     <button id="fill_form_amex" type="button">Fill entire form, but with AMEX CC values</button>
     <button id="fill_invalid_cvc" type="button">Fill the CVC field with an invalid value</button>
+    <button id="fill_card_only" type="button">Fill the credit card number and expiration fields only</button>
     <button id="clear_cvc" type="button">Clear the CVC field</button>
     <button id="clear_name" type="button">Clear the name fields</button>
     <button id="clear_address" type="button">Clear the address fields</button>
@@ -64,6 +65,14 @@ found in the LICENSE file.
       "click",
       function() {
         document.getElementsByName("cc_cvc")[0].value = "12345";
+      });
+
+  document.getElementById("fill_card_only").addEventListener(
+      "click",
+      function() {
+        document.getElementsByName("cc_number")[0].value = "5454545454545454";
+        document.getElementsByName("cc_month_exp")[0].value = "12";
+        document.getElementsByName("cc_year_exp")[0].value = "2023";
       });
 
   document.getElementById("clear_cvc").addEventListener(

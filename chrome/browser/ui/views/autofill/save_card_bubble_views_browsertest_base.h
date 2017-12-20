@@ -62,15 +62,9 @@ class SaveCardBubbleViewsBrowserTestBase
   void OnReceivedGetUploadDetailsResponse() override;
   void OnSentUploadCardRequest() override;
 
-  // Experiments.
-  void DisableRequestCvcIfMissingAndSendDetectedValuesExperiments();
-  void DisableSendDetectedValuesExperiment();
-  void DisableSecondaryUiMdExperiment();
-  void EnableRequestCvcIfMissingExperiment();
-  void EnableSecondaryUiMdExperiment();
-
   // Will call JavaScript to fill and submit the form in different ways.
   void FillAndSubmitForm();
+  void FillAndSubmitFormWithCardDetailsOnly();
   void FillAndSubmitFormWithoutCvc();
   void FillAndSubmitFormWithInvalidCvc();
   void FillAndSubmitFormWithAmexWithoutCvc();
@@ -93,6 +87,9 @@ class SaveCardBubbleViewsBrowserTestBase
   // Gets the views::View* instance of the save credit card bubble.
   SaveCardBubbleViews* GetSaveCardBubbleViews();
 
+  // Clicks the top-right [X] Close button in order to close the bubble.
+  void ClickCloseButton();
+
   content::WebContents* GetActiveWebContents();
 
   // Resets the event waiter for a given |event_sequence|.
@@ -100,10 +97,11 @@ class SaveCardBubbleViewsBrowserTestBase
   // Wait for the event(s) passed to ResetEventWaiter*() to occur.
   void WaitForObservedEvent();
 
+  base::test::ScopedFeatureList scoped_feature_list_;
+
  private:
   std::unique_ptr<DialogEventWaiter<DialogEvent>> event_waiter_;
   std::unique_ptr<net::FakeURLFetcherFactory> url_fetcher_factory_;
-  base::test::ScopedFeatureList scoped_feature_list_;
   const std::string test_file_path_;
 
   // FakeGeolocation setup:
