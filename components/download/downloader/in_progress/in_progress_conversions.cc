@@ -7,7 +7,6 @@
 #include <utility>
 #include "base/logging.h"
 
-// TODO(jming): Write unit tests for conversion methods.
 namespace download {
 
 DownloadEntry InProgressConversions::DownloadEntryFromProto(
@@ -48,16 +47,16 @@ DownloadSource InProgressConversions::DownloadSourceFromProto(
       return DownloadSource::EXTENSION_API;
     case metadata_pb::DownloadSource::EXTENSION_INSTALLER:
       return DownloadSource::EXTENSION_INSTALLER;
-    case metadata_pb::DownloadSource::PLUGIN:
-      return DownloadSource::PLUGIN;
-    case metadata_pb::DownloadSource::PLUGIN_INSTALLER:
-      return DownloadSource::PLUGIN_INSTALLER;
     case metadata_pb::DownloadSource::INTERNAL_API:
       return DownloadSource::INTERNAL_API;
-    case metadata_pb::DownloadSource::SAVE_PACKAGE:
-      return DownloadSource::SAVE_PACKAGE;
+    case metadata_pb::DownloadSource::WEB_CONTENTS_API:
+      return DownloadSource::WEB_CONTENTS_API;
     case metadata_pb::DownloadSource::OFFLINE_PAGE:
       return DownloadSource::OFFLINE_PAGE;
+    case metadata_pb::DownloadSource::CONTEXT_MENU:
+      return DownloadSource::CONTEXT_MENU;
+    case metadata_pb::DownloadSource::COUNT:
+      return DownloadSource::COUNT;
   }
   NOTREACHED();
   return DownloadSource::UNKNOWN;
@@ -83,17 +82,16 @@ metadata_pb::DownloadSource InProgressConversions::DownloadSourceToProto(
       return metadata_pb::DownloadSource::EXTENSION_API;
     case DownloadSource::EXTENSION_INSTALLER:
       return metadata_pb::DownloadSource::EXTENSION_INSTALLER;
-    case DownloadSource::PLUGIN:
-      return metadata_pb::DownloadSource::PLUGIN;
-    case DownloadSource::PLUGIN_INSTALLER:
-      return metadata_pb::DownloadSource::PLUGIN_INSTALLER;
     case DownloadSource::INTERNAL_API:
       return metadata_pb::DownloadSource::INTERNAL_API;
-    case DownloadSource::SAVE_PACKAGE:
-      return metadata_pb::DownloadSource::SAVE_PACKAGE;
+    case DownloadSource::WEB_CONTENTS_API:
+      return metadata_pb::DownloadSource::WEB_CONTENTS_API;
     case DownloadSource::OFFLINE_PAGE:
       return metadata_pb::DownloadSource::OFFLINE_PAGE;
+    case DownloadSource::CONTEXT_MENU:
+      return metadata_pb::DownloadSource::CONTEXT_MENU;
     case DownloadSource::COUNT:
+      return metadata_pb::DownloadSource::COUNT;
       break;
   }
 

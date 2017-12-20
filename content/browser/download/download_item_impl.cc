@@ -48,6 +48,7 @@
 #include "content/browser/download/download_request_handle.h"
 #include "content/browser/download/download_stats.h"
 #include "content/browser/download/download_task_runner.h"
+#include "content/browser/download/download_utils.h"
 #include "content/browser/download/parallel_download_utils.h"
 #include "content/browser/renderer_host/render_view_host_impl.h"
 #include "content/browser/web_contents/web_contents_impl.h"
@@ -1252,11 +1253,13 @@ void DownloadItemImpl::OnAllDataSaved(
 
   if (received_bytes_at_length_mismatch_ > 0) {
     if (total_bytes > received_bytes_at_length_mismatch_) {
-      RecordDownloadCount(
-          MORE_BYTES_RECEIVED_AFTER_CONTENT_LENGTH_MISMATCH_COUNT);
+      RecordDownloadCountWithSource(
+          MORE_BYTES_RECEIVED_AFTER_CONTENT_LENGTH_MISMATCH_COUNT,
+          download_source_);
     } else if (total_bytes == received_bytes_at_length_mismatch_) {
-      RecordDownloadCount(
-          NO_BYTES_RECEIVED_AFTER_CONTENT_LENGTH_MISMATCH_COUNT);
+      RecordDownloadCountWithSource(
+          NO_BYTES_RECEIVED_AFTER_CONTENT_LENGTH_MISMATCH_COUNT,
+          download_source_);
     } else {
       // This could happen if the content changes on the server.
     }
@@ -1371,6 +1374,13 @@ void DownloadItemImpl::Init(bool active,
                          std::move(active_data));
   }
 
+  // TODO(xingliu): Waiting on in progress cahce to add entry in
+  // DownloadManagerIMpl::StartDownloadWithId.
+  // Update |download_source_|.
+  auto in_progress_entry = GetInProgressEntry(guid_, GetBrowserContext());
+  if (in_progress_entry)
+    download_source_ = ToDownloadSource(in_progress_entry->download_source);
+
   DVLOG(20) << __func__ << "() " << DebugString(true);
 }
 
@@ -1382,7 +1392,7 @@ void DownloadItemImpl::Start(
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   DCHECK(!download_file_.get());
   DVLOG(20) << __func__ << "() this=" << DebugString(true);
-  RecordDownloadCount(START_COUNT);
+  RecordDownloadCountWithSource(START_COUNT, download_source_);
 
   download_file_ = std::move(file);
   job_ = DownloadJobFactory::CreateJob(this, std::move(req_handle),
@@ -1438,14 +1448,15 @@ void DownloadItemImpl::Start(
   }
 
   if (state_ == INITIAL_INTERNAL) {
-    RecordDownloadCount(NEW_DOWNLOAD_COUNT);
+    RecordDownloadCountWithSource(NEW_DOWNLOAD_COUNT, download_source_);
     if (job_->IsParallelizable()) {
       RecordParallelizableDownloadCount(NEW_DOWNLOAD_COUNT,
                                         IsParallelDownloadEnabled());
     }
     RecordDownloadMimeType(mime_type_);
     if (!GetBrowserContext()->IsOffTheRecord()) {
-      RecordDownloadCount(NEW_DOWNLOAD_COUNT_NORMAL_PROFILE);
+      RecordDownloadCountWithSource(NEW_DOWNLOAD_COUNT_NORMAL_PROFILE,
+                                    download_source_);
       RecordDownloadMimeTypeForNormalProfile(mime_type_);
     }
   }
@@ -1494,7 +1505,8 @@ void DownloadItemImpl::DetermineDownloadTarget() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   DVLOG(20) << __func__ << "() " << DebugString(true);
 
-  RecordDownloadCount(DETERMINE_DOWNLOAD_TARGET_COUNT);
+  RecordDownloadCountWithSource(DETERMINE_DOWNLOAD_TARGET_COUNT,
+                                download_source_);
   delegate_->DetermineDownloadTarget(
       this, base::Bind(&DownloadItemImpl::OnDownloadTargetDetermined,
                        weak_ptr_factory_.GetWeakPtr()));
@@ -1520,7 +1532,8 @@ void DownloadItemImpl::OnDownloadTargetDetermined(
             << DownloadInterruptReasonToString(interrupt_reason)
             << " this:" << DebugString(true);
 
-  RecordDownloadCount(DOWNLOAD_TARGET_DETERMINED_COUNT);
+  RecordDownloadCountWithSource(DOWNLOAD_TARGET_DETERMINED_COUNT,
+                                download_source_);
 
   if (IsCancellation(interrupt_reason) || target_path.empty()) {
     Cancel(true);
@@ -1769,9 +1782,11 @@ void DownloadItemImpl::Completed() {
   TransitionTo(COMPLETE_INTERNAL);
 
   bool is_parallelizable = job_ && job_->IsParallelizable();
-  RecordDownloadCompleted(start_tick_, GetReceivedBytes(), is_parallelizable);
+  RecordDownloadCompleted(start_tick_, GetReceivedBytes(), is_parallelizable,
+                          download_source_);
   if (!GetBrowserContext()->IsOffTheRecord()) {
-    RecordDownloadCount(COMPLETED_COUNT_NORMAL_PROFILE);
+    RecordDownloadCountWithSource(COMPLETED_COUNT_NORMAL_PROFILE,
+                                  download_source_);
   }
   if (is_parallelizable) {
     RecordParallelizableDownloadCount(COMPLETED_COUNT,
@@ -1933,7 +1948,7 @@ void DownloadItemImpl::InterruptWithPartialState(
           GetDangerType(), GetTargetFilePath());
     }
 
-    RecordDownloadCount(CANCELLED_COUNT);
+    RecordDownloadCountWithSource(CANCELLED_COUNT, download_source_);
     if (job_ && job_->IsParallelizable()) {
       RecordParallelizableDownloadCount(CANCELLED_COUNT,
                                         IsParallelDownloadEnabled());
@@ -1945,12 +1960,13 @@ void DownloadItemImpl::InterruptWithPartialState(
 
   RecordDownloadInterrupted(reason, GetReceivedBytes(), total_bytes_,
                             job_ && job_->IsParallelizable(),
-                            IsParallelDownloadEnabled());
+                            IsParallelDownloadEnabled(), download_source_);
   if (reason == DOWNLOAD_INTERRUPT_REASON_SERVER_CONTENT_LENGTH_MISMATCH)
     received_bytes_at_length_mismatch_ = GetReceivedBytes();
 
   if (!GetWebContents())
-    RecordDownloadCount(INTERRUPTED_WITHOUT_WEBCONTENTS);
+    RecordDownloadCountWithSource(INTERRUPTED_WITHOUT_WEBCONTENTS,
+                                  download_source_);
 
   // TODO(asanka): This is not good. We can transition to interrupted from
   // target-pending, which is something we don't want to do. Perhaps we should
@@ -2284,17 +2300,9 @@ void DownloadItemImpl::ResumeInterruptedDownload(
   download_params->set_hash_state(std::move(hash_state_));
   download_params->set_fetch_error_body(fetch_error_body_);
 
-  auto* manager_delegate = GetBrowserContext()->GetDownloadManagerDelegate();
-  if (manager_delegate) {
-    download::InProgressCache* in_progress_cache =
-        manager_delegate->GetInProgressCache();
-    if (in_progress_cache) {
-      base::Optional<download::DownloadEntry> entry =
-          in_progress_cache->RetrieveEntry(GetGuid());
-      if (entry)
-        download_params->set_request_origin(entry.value().request_origin);
-    }
-  }
+  auto entry = GetInProgressEntry(GetGuid(), GetBrowserContext());
+  if (entry)
+    download_params->set_request_origin(entry.value().request_origin);
 
   // Note that resumed downloads disallow redirects. Hence the referrer URL
   // (which is the contents of the Referer header for the last download request)
@@ -2303,9 +2311,9 @@ void DownloadItemImpl::ResumeInterruptedDownload(
       Referrer(GetReferrerUrl(), blink::kWebReferrerPolicyAlways));
 
   TransitionTo(RESUMING_INTERNAL);
-  RecordDownloadSource(source == ResumptionRequestSource::USER
-                           ? INITIATED_BY_MANUAL_RESUMPTION
-                           : INITIATED_BY_AUTOMATIC_RESUMPTION);
+  download_params->set_download_source(source == ResumptionRequestSource::USER
+                                           ? DownloadSource::MANUAL_RESUMPTION
+                                           : DownloadSource::AUTO_RESUMPTION);
   delegate_->ResumeInterruptedDownload(std::move(download_params), GetId());
 
   if (job_)

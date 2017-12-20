@@ -70,6 +70,7 @@ class DownloadRequestData : public base::SupportsUserData::Data {
     return on_started_callback_;
   }
   std::string request_origin() const { return request_origin_; }
+  DownloadSource download_source() const { return download_source_; }
 
  private:
   static const int kKey;
@@ -81,6 +82,7 @@ class DownloadRequestData : public base::SupportsUserData::Data {
   bool transient_ = false;
   DownloadUrlParameters::OnStartedCallback on_started_callback_;
   std::string request_origin_;
+  DownloadSource download_source_ = DownloadSource::UNKNOWN;
 };
 
 // static
@@ -99,6 +101,7 @@ void DownloadRequestData::Attach(net::URLRequest* request,
   request_data->transient_ = parameters->is_transient();
   request_data->on_started_callback_ = parameters->callback();
   request_data->request_origin_ = parameters->request_origin();
+  request_data->download_source_ = parameters->download_source();
   request->SetUserData(&kKey, std::move(request_data));
 }
 
@@ -142,7 +145,8 @@ std::string DownloadRequestUtils::GetRequestOriginFromRequest(
 
 DownloadRequestCore::DownloadRequestCore(net::URLRequest* request,
                                          Delegate* delegate,
-                                         bool is_parallel_request)
+                                         bool is_parallel_request,
+                                         bool from_navigation)
     : delegate_(delegate),
       request_(request),
       download_id_(DownloadItem::kInvalidId),
@@ -152,6 +156,7 @@ DownloadRequestCore::DownloadRequestCore(net::URLRequest* request,
       pause_count_(0),
       was_deferred_(false),
       is_partial_request_(false),
+      from_navigation_(from_navigation),
       started_(false),
       abort_reason_(DOWNLOAD_INTERRUPT_REASON_NONE) {
   DCHECK(request_);
@@ -184,6 +189,7 @@ DownloadRequestCore::DownloadRequestCore(net::URLRequest* request,
     fetch_error_body_ = request_data->fetch_error_body();
     transient_ = request_data->is_transient();
     on_started_callback_ = request_data->callback();
+    download_source_ = request_data->download_source();
     DownloadRequestData::Detach(request_);
     is_partial_request_ = save_info_->offset > 0;
   } else {
@@ -218,6 +224,8 @@ DownloadRequestCore::CreateDownloadCreateInfo(DownloadInterruptReason result) {
   create_info->response_headers = request()->response_headers();
   create_info->offset = create_info->save_info->offset;
   create_info->fetch_error_body = fetch_error_body_;
+  create_info->download_source =
+      from_navigation_ ? DownloadSource::NAVIGATION : download_source_;
   return create_info;
 }
 

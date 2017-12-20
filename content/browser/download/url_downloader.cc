@@ -90,7 +90,10 @@ UrlDownloader::UrlDownloader(
     bool is_parallel_request)
     : request_(std::move(request)),
       delegate_(delegate),
-      core_(request_.get(), this, is_parallel_request),
+      core_(request_.get(),
+            this,
+            is_parallel_request,
+            false /* from_navigation*/),
       weak_ptr_factory_(this) {}
 
 UrlDownloader::~UrlDownloader() {
