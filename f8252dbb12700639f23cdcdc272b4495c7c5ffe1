@@ -157,6 +157,24 @@
       "revId": "f8252dbb12700639f23cdcdc272b4495c7c5ffe1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60d55b9f_ab3ab7a6",
+        "filename": "third_party/WebKit/Source/core/dom/TreeScope.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1247388
+      },
+      "writtenOn": "2017-12-20T06:00:54Z",
+      "side": 1,
+      "message": "OK! Done",
+      "parentUuid": "b362b7a4_0f06ddba",
+      "revId": "f8252dbb12700639f23cdcdc272b4495c7c5ffe1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
