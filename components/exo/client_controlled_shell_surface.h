@@ -71,6 +71,29 @@ class ClientControlledShellSurface
     state_changed_callback_ = state_changed_callback;
   }
 
+  // Set the callback to run when the surface bounds changed.
+  using BoundsChangedCallback = base::RepeatingCallback<void(
+      ash::mojom::WindowStateType current_state_type,
+      const gfx::Rect& bounds,
+      bool drag,
+      bool resize)>;
+  void set_bounds_changed_callback(
+      const BoundsChangedCallback& bounds_changed_callback) {
+    bounds_changed_callback_ = bounds_changed_callback;
+  }
+
+  // Set the callback to run when the surface bounds changed.
+  using StartResizeCallback = base::RepeatingCallback<void(int direction)>;
+  void set_start_resize_callback(
+      const StartResizeCallback& start_resize_callback) {
+    start_resize_callback_ = start_resize_callback;
+  }
+  // Set the callback to run when the surface bounds changed.
+  using EndResizeCallback = base::RepeatingCallback<void()>;
+  void set_end_resize_callback(const EndResizeCallback& end_resize_callback) {
+    end_resize_callback_ = end_resize_callback;
+  }
+
   // Pin/unpin the surface. Pinned surface cannot be switched to
   // other windows unless its explicitly unpinned.
   void SetPinned(ash::mojom::WindowPinType type);
@@ -98,6 +121,15 @@ class ClientControlledShellSurface
   // Sends the window state change event to client.
   void OnWindowStateChangeEvent(ash::mojom::WindowStateType old_state,
                                 ash::mojom::WindowStateType next_state);
+
+  void OnBoundsChangeEvent(ash::mojom::WindowStateType current_state,
+                           const gfx::Rect& bounds,
+                           bool drag,
+                           bool resize);
+  void StartDrag(int component);
+  void EndDrag();
+
+  void StartMove();
 
   // Overridden from SurfaceDelegate:
   void OnSurfaceCommit() override;
@@ -154,6 +186,8 @@ class ClientControlledShellSurface
 
   void UpdateBackdrop();
 
+  void AttemptToStartDrag(int component) override;
+
   // Lock the compositor if it's not already locked, or extends the
   // lock timeout if it's already locked.
   // TODO(reveman): Remove this when using configure callbacks for orientation.
@@ -172,6 +206,9 @@ class ClientControlledShellSurface
   double pending_scale_ = 1.0;
 
   StateChangedCallback state_changed_callback_;
+  BoundsChangedCallback bounds_changed_callback_;
+  StartResizeCallback start_resize_callback_;
+  EndResizeCallback end_resize_callback_;
 
   // TODO(reveman): Use configure callbacks for orientation. crbug.com/765954
   Orientation pending_orientation_ = Orientation::LANDSCAPE;
@@ -181,6 +218,8 @@ class ClientControlledShellSurface
   ash::wm::ClientControlledState* client_controlled_state_ = nullptr;
 
   ui::WindowShowState pending_show_state_ = ui::SHOW_STATE_NORMAL;
+
+  std::unique_ptr<ash::DragDetails> drag_details_;
 
   std::unique_ptr<ui::CompositorLock> orientation_compositor_lock_;
 

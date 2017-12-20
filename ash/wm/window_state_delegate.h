@@ -30,6 +30,10 @@ class ASH_EXPORT WindowStateDelegate {
   // and no additional work is needed, false otherwise.
   virtual bool RestoreAlwaysOnTop(WindowState* window_state);
 
+  virtual void StartDrag(int component) {}
+
+  virtual void EndDrag() {}
+
  private:
   DISALLOW_COPY_AND_ASSIGN(WindowStateDelegate);
 };
