@@ -11,6 +11,7 @@
 
 #include "build/build_config.h"
 #include "components/signin/core/browser/fake_signin_manager.h"
+#include "components/signin/core/browser/signin_error_controller.h"
 #include "components/sync/driver/fake_sync_service.h"
 #include "components/sync_preferences/testing_pref_service_syncable.h"
 
@@ -74,6 +75,7 @@ class RemoteSuggestionsTestUtils {
   std::unique_ptr<FakeProfileOAuth2TokenService> token_service_;
   std::unique_ptr<TestSigninClient> signin_client_;
   std::unique_ptr<AccountTrackerService> account_tracker_;
+  SigninErrorController signin_error_controller_;
 };
 
 }  // namespace test

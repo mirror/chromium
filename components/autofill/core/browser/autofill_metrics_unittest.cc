@@ -39,6 +39,7 @@
 #include "components/prefs/pref_service.h"
 #include "components/signin/core/browser/account_tracker_service.h"
 #include "components/signin/core/browser/fake_signin_manager.h"
+#include "components/signin/core/browser/signin_error_controller.h"
 #include "components/signin/core/browser/signin_pref_names.h"
 #include "components/signin/core/browser/test_signin_client.h"
 #include "components/ukm/test_ukm_recorder.h"
@@ -300,6 +301,7 @@ int GetFieldTypeGroupMetric(ServerFieldType field_type,
 
 class AutofillMetricsTest : public testing::Test {
  public:
+  AutofillMetricsTest();
   ~AutofillMetricsTest() override;
 
   void SetUp() override;
@@ -326,6 +328,7 @@ class AutofillMetricsTest : public testing::Test {
   ukm::TestAutoSetUkmRecorder test_ukm_recorder_;
   MockAutofillClient autofill_client_;
   std::unique_ptr<AccountTrackerService> account_tracker_;
+  SigninErrorController signin_error_controller_;
   std::unique_ptr<FakeSigninManagerBase> signin_manager_;
   std::unique_ptr<TestSigninClient> signin_client_;
   std::unique_ptr<TestAutofillDriver> autofill_driver_;
@@ -337,6 +340,10 @@ class AutofillMetricsTest : public testing::Test {
  private:
   void CreateTestAutofillProfiles();
 };
+
+AutofillMetricsTest::AutofillMetricsTest()
+    : signin_error_controller_(
+          SigninErrorController::AccountMode::ANY_ACCOUNT) {}
 
 AutofillMetricsTest::~AutofillMetricsTest() {
   // Order of destruction is important as AutofillManager relies on
@@ -355,8 +362,8 @@ void AutofillMetricsTest::SetUp() {
   account_tracker_.reset(new AccountTrackerService());
   account_tracker_->Initialize(signin_client_.get());
 
-  signin_manager_.reset(
-      new FakeSigninManagerBase(signin_client_.get(), account_tracker_.get()));
+  signin_manager_.reset(new FakeSigninManagerBase(
+      signin_client_.get(), account_tracker_.get(), &signin_error_controller_));
   signin_manager_->Initialize(autofill_client_.GetPrefs());
 
   personal_data_.reset(new TestPersonalDataManager());

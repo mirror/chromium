@@ -12,6 +12,7 @@
 #include "chrome/browser/signin/chrome_signin_client_factory.h"
 #include "chrome/browser/signin/gaia_cookie_manager_service_factory.h"
 #include "chrome/browser/signin/profile_oauth2_token_service_factory.h"
+#include "chrome/browser/signin/signin_error_controller_factory.h"
 #include "chrome/browser/signin/signin_manager_factory.h"
 #include "chrome/test/base/testing_profile.h"
 #include "components/signin/core/browser/fake_signin_manager.h"
@@ -41,7 +42,8 @@ std::unique_ptr<KeyedService> BuildSigninManagerFake(
   std::unique_ptr<FakeSigninManager> manager(new FakeSigninManager(
       signin_client, ProfileOAuth2TokenServiceFactory::GetForProfile(profile),
       account_tracker_service,
-      GaiaCookieManagerServiceFactory::GetForProfile(profile)));
+      GaiaCookieManagerServiceFactory::GetForProfile(profile),
+      SigninErrorControllerFactory::GetForProfile(profile)));
   manager->Initialize(g_browser_process->local_state());
   return std::move(manager);
 #endif

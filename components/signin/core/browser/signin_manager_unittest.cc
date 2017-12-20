@@ -24,6 +24,7 @@
 #include "components/signin/core/browser/fake_profile_oauth2_token_service.h"
 #include "components/signin/core/browser/profile_management_switches.h"
 #include "components/signin/core/browser/profile_oauth2_token_service.h"
+#include "components/signin/core/browser/signin_error_controller.h"
 #include "components/signin/core/browser/signin_pref_names.h"
 #include "components/signin/core/browser/test_signin_client.h"
 #include "components/sync_preferences/testing_pref_service_syncable.h"
@@ -83,6 +84,8 @@ class SigninManagerTest : public testing::Test {
  public:
   SigninManagerTest()
       : test_signin_client_(&user_prefs_),
+        signin_error_controller_(
+            SigninErrorController::AccountMode::MAIN_ACCOUNT),
         cookie_manager_service_(&token_service_,
                                 GaiaConstants::kChromeSource,
                                 &test_signin_client_),
@@ -132,7 +135,7 @@ class SigninManagerTest : public testing::Test {
     DCHECK(!manager_);
     manager_ = std::make_unique<SigninManager>(
         &test_signin_client_, &token_service_, &account_tracker_,
-        &cookie_manager_service_);
+        &cookie_manager_service_, &signin_error_controller_);
     manager_->Initialize(&local_state_);
     manager_->AddObserver(&test_observer_);
   }
@@ -170,6 +173,7 @@ class SigninManagerTest : public testing::Test {
   FakeProfileOAuth2TokenService token_service_;
   TestSigninClient test_signin_client_;
   AccountTrackerService account_tracker_;
+  SigninErrorController signin_error_controller_;
   FakeGaiaCookieManagerService cookie_manager_service_;
   FakeAccountFetcherService account_fetcher_;
   net::FakeURLFetcherFactory url_fetcher_factory_;

@@ -12,6 +12,7 @@
 
 #include "components/autofill/core/common/password_form.h"
 #include "components/signin/core/browser/account_tracker_service.h"
+#include "components/signin/core/browser/signin_error_controller.h"
 #include "components/signin/core/browser/signin_manager_base.h"
 #include "components/signin/core/browser/test_signin_client.h"
 #include "components/sync/base/model_type.h"
@@ -62,8 +63,11 @@ class SyncUsernameTestBase : public testing::Test {
   class FakeSigninManagerBase : public SigninManagerBase {
    public:
     FakeSigninManagerBase(SigninClient* client,
-                          AccountTrackerService* account_tracker_service)
-        : SigninManagerBase(client, account_tracker_service) {}
+                          AccountTrackerService* account_tracker_service,
+                          SigninErrorController* signin_error_controller)
+        : SigninManagerBase(client,
+                            account_tracker_service,
+                            signin_error_controller) {}
 
     using SigninManagerBase::clear_authenticated_user;
   };
@@ -71,6 +75,7 @@ class SyncUsernameTestBase : public testing::Test {
   sync_preferences::TestingPrefServiceSyncable prefs_;
   TestSigninClient signin_client_;
   AccountTrackerService account_tracker_;
+  SigninErrorController signin_error_controller_;
   FakeSigninManagerBase signin_manager_;
   LocalFakeSyncService sync_service_;
 };
