@@ -22,6 +22,30 @@
       "revId": "8838a16177c2abe918003a58776ff107ad8d53a8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8f625d0_f29cc7fb",
+        "filename": "ui/gfx/test/ui_cocoa_test_helper.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-12-20T21:03:41Z",
+      "side": 1,
+      "message": "This whole class is for testing (this property works the same way as the other pretend* properties above it).",
+      "parentUuid": "33d4af76_c4559894",
+      "range": {
+        "startLine": 30,
+        "startChar": 26,
+        "endLine": 30,
+        "endChar": 60
+      },
+      "revId": "8838a16177c2abe918003a58776ff107ad8d53a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
