@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3daadcb2_98f2177e",
+        "filename": "ash/login/ui/lock_screen.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-12-20T17:07:08Z",
+      "side": 1,
+      "message": "What about caching the LockContentsView instance similar to how window_ is cached? I\u0027d like to avoid these casts.",
+      "revId": "94d0e762b256354ab4c53aa8d46fa765902a1d2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "877cdb4a_aed9a941",
+        "filename": "ash/login/ui/lock_screen.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-12-20T17:07:08Z",
+      "side": 1,
+      "message": "Did you run `git cl format`? The {} should have a space before it.\n\nMove ctor body to cc file.",
+      "revId": "94d0e762b256354ab4c53aa8d46fa765902a1d2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7b83701_860eefde",
+        "filename": "ash/login/ui/lock_window_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-12-20T17:07:08Z",
+      "side": 1,
+      "message": "ash::LockScreen::Get() will never return null (it will crash if there is no lock screen).\n\n  if (ash::LockScreen::IsShown())\n    ash::LockScreen::Get()-\u003eDestroy();",
+      "revId": "94d0e762b256354ab4c53aa8d46fa765902a1d2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76f29535_600bf6dd",
+        "filename": "ash/login/ui/lock_window_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-12-20T17:07:08Z",
+      "side": 1,
+      "message": "Since we only support loading one user let\u0027s just hardcode |name| here (ie, don\u0027t accept a parameter).",
+      "revId": "94d0e762b256354ab4c53aa8d46fa765902a1d2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "150fd3ef_179d662e",
+        "filename": "ash/login/ui/lock_window_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-12-20T17:07:08Z",
+      "side": 1,
+      "message": "nit: prefer LockContentsView* over auto, since the type is not immediately clear.",
+      "revId": "94d0e762b256354ab4c53aa8d46fa765902a1d2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
