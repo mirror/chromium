@@ -16,6 +16,24 @@
       "revId": "8ad6e6d023f43d68f7bb69d3aaab4c401b1157d9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db5410bb_63e42a2e",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1505,
+      "author": {
+        "id": 1243466
+      },
+      "writtenOn": "2017-12-20T08:25:22Z",
+      "side": 0,
+      "message": "\u003e To not check those dead ends again, they could be added to the skip_list as well... That\u0027s also slightly complicated so....\n\nIf we simply change based on current implementation, no need list or set but only one pointer is needed in bottom-up phase. Because only one child is already visited.\n\n\n\u003e Idea: I don\u0027t think spatnav should prioritize \"focusables\" within the same container. Why doesn\u0027t spatnav always go to the element that is visually closest to current F (ignoring DOM tree structure)? I mean, isn\u0027t that what\u0027s the user and web developer is expecting anyways?\n\nI think the major reason is consideration about scrolling case. We should consider not only scrolling parent of focused element, but also scrollable candidate in search.\n\n\n\u003e I outlined this idea at: https://docs.google.com/document/d/19ym1sAu-u3szeH_kvLWMipAlu1fV1v5NmG4XTwntNLU/edit\n\nGood! I think this doc is very valuable. We may discuss about this algorithm with general perspective. Let\u0027s advance this doc ! :)",
+      "parentUuid": "1b9071d2_02f6e382",
+      "revId": "8ad6e6d023f43d68f7bb69d3aaab4c401b1157d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

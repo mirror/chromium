@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "564e34ae_791412f8",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1385,
+      "author": {
+        "id": 1243466
+      },
+      "writtenOn": "2017-12-20T08:25:22Z",
+      "side": 1,
+      "message": "This function is removed. Done.",
+      "parentUuid": "5bb5110e_e72b9676",
+      "revId": "d72d71adde22770047248f88e2b43777d66de45c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "31a421dd_c3d787d1",
         "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
         "patchSetId": 2
@@ -65,6 +83,24 @@
       "writtenOn": "2017-12-14T18:53:18Z",
       "side": 1,
       "message": "Here and at line 1409 we call into our caller, AdvanceFocusDirectionallyInContainer. These recursions are bit hidden. I think they are hard to follow.\n\nIdea to avoid recursions: Merge AdvanceFocusDirectionallyIn* with FindFocusCandidateInContainer and make it traverse the DOM tree *once* with ElementTraversal.",
+      "revId": "d72d71adde22770047248f88e2b43777d66de45c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8772108_3a095d3e",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1425,
+      "author": {
+        "id": 1243466
+      },
+      "writtenOn": "2017-12-20T08:25:22Z",
+      "side": 1,
+      "message": "Removed recursions. But not merged AdvanceFocusDirectionallyIn* with FindFocusCandidateInContainer.",
+      "parentUuid": "31a421dd_c3d787d1",
       "revId": "d72d71adde22770047248f88e2b43777d66de45c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -94,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "1b588e6b_05016bf3",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1455,
+      "author": {
+        "id": 1243466
+      },
+      "writtenOn": "2017-12-20T08:25:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "23c9fa88_14a9d868",
+      "range": {
+        "startLine": 1455,
+        "startChar": 50,
+        "endLine": 1455,
+        "endChar": 51
+      },
+      "revId": "d72d71adde22770047248f88e2b43777d66de45c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "134f467d_c2d8b668",
         "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
         "patchSetId": 2
@@ -105,6 +165,30 @@
       "writtenOn": "2017-12-14T18:53:18Z",
       "side": 1,
       "message": "AdvanceFocusDirectionally()",
+      "range": {
+        "startLine": 1456,
+        "startChar": 17,
+        "endLine": 1456,
+        "endChar": 49
+      },
+      "revId": "d72d71adde22770047248f88e2b43777d66de45c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5aaee6b_20e1d988",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1456,
+      "author": {
+        "id": 1243466
+      },
+      "writtenOn": "2017-12-20T08:25:22Z",
+      "side": 1,
+      "message": "\u003e AdvanceFocusDirectionally()\n\nI think \u0027the spatial navigation algorithm\u0027 is more proper here.",
+      "parentUuid": "134f467d_c2d8b668",
       "range": {
         "startLine": 1456,
         "startChar": 17,
