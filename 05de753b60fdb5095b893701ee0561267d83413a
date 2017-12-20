@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ecf7bfc9_43dc0f50",
+        "filename": "content/browser/network_service_restart_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1166494
+      },
+      "writtenOn": "2017-12-20T21:39:52Z",
+      "side": 1,
+      "message": "I was getting some complains from Win bots about \u0027Cannot nest an IO message loop!\u0027 if I put |WaitForCallback()| inside the task and have another runloop outside...\n\nAnyway will dig into what else I can do.",
+      "parentUuid": "a8992def_d01f46c7",
+      "range": {
+        "startLine": 72,
+        "startChar": 23,
+        "endLine": 72,
+        "endChar": 38
+      },
+      "revId": "05de753b60fdb5095b893701ee0561267d83413a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c6e23850_a58db8ec",
         "filename": "content/browser/network_service_restart_browsertest.cc",
         "patchSetId": 5
@@ -71,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "188ce238_0a0e8e4d",
+        "filename": "content/browser/network_service_restart_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1166494
+      },
+      "writtenOn": "2017-12-20T21:39:52Z",
+      "side": 1,
+      "message": "Yes we are calling |url_loader_factory_getter_-\u003eFlushNetworkInterfaceOnIOThreadForTesting()| inside |partition-\u003eFlushNetworkInterfaceForTesting()|.\n\nOr do you prefer moving it out?",
+      "parentUuid": "b502862e_2d9b5ec3",
+      "range": {
+        "startLine": 296,
+        "startChar": 13,
+        "endLine": 296,
+        "endChar": 44
+      },
+      "revId": "05de753b60fdb5095b893701ee0561267d83413a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f0998f50_d8dca4a3",
         "filename": "content/browser/network_service_restart_browsertest.cc",
         "patchSetId": 5
@@ -94,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "f3b92b38_9fcbae53",
+        "filename": "content/browser/network_service_restart_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1166494
+      },
+      "writtenOn": "2017-12-20T21:39:52Z",
+      "side": 1,
+      "message": "Ah I\u0027m not aware that there is an utility method. Will use that instead, thanks for the hint!",
+      "parentUuid": "f0998f50_d8dca4a3",
+      "range": {
+        "startLine": 306,
+        "startChar": 23,
+        "endLine": 306,
+        "endChar": 47
+      },
+      "revId": "05de753b60fdb5095b893701ee0561267d83413a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "36b16a26_b110262b",
         "filename": "content/browser/url_loader_factory_getter.cc",
         "patchSetId": 5
@@ -105,6 +177,30 @@
       "writtenOn": "2017-12-20T19:54:57Z",
       "side": 1,
       "message": "I don\u0027t think we can guarantee that.  This is a reference counted class, with a reference being held on the IO thread, and by tasks posted to call this method on the UI thread.  Suppose this happens:\n\nIO Thread:  Something calls GetNetworkFactory(), and we discover we need to create one, so post a task to the UI thread to get a URLLoaderFactory.\nUI Thread:  Teardown of the profile starts.  We post a task to destroy our IO thread objects, and then destroy the StoragePartition.\nUI Thread:  This task gets run.  We discover there\u0027s no storage partition.  To fully express how sad this makes us, we try and dereference it anyways, and crash.\n\nSo how to fix this?  We could use a weak pointer, but I think it\u0027s better to have StorageParititionImpl just call into its url_loader_factory_getter_ on destruction, and tell if that the StorageParititonImpl is about to be destroyed.  That makes lifetime relationships clearer.\n\nThen in this method, if |partition_| is nullptr, we can just do nothing.\n\nI\u0027m not sure there\u0027s a good way to reliably test that case, though - I\u0027m not familiar enough with profile teardown to be sure, one way or another.",
+      "range": {
+        "startLine": 106,
+        "startChar": 33,
+        "endLine": 106,
+        "endChar": 43
+      },
+      "revId": "05de753b60fdb5095b893701ee0561267d83413a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff63e1b1_1553ea36",
+        "filename": "content/browser/url_loader_factory_getter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1166494
+      },
+      "writtenOn": "2017-12-20T21:39:52Z",
+      "side": 1,
+      "message": "Thanks for the detailed explanation! Will change it to a raw pointer and clear from |StorageParititonImpl|.",
+      "parentUuid": "36b16a26_b110262b",
       "range": {
         "startLine": 106,
         "startChar": 33,
