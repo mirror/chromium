@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "af428b65_8b734b00",
+        "filename": "third_party/WebKit/LayoutTests/accessibility/aom-computed-accessible-node.html",
+        "patchSetId": 13
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1256034
+      },
+      "writtenOn": "2017-12-20T22:32:57Z",
+      "side": 1,
+      "message": "Hmm, okay that makes sense. Is there somewhere I can add a TODO in the code to reflect that this is only the temporary behaviour? This CL is basically just a skeleton for things to come, so it will probably look completely different within a few weeks.",
+      "parentUuid": "59453472_0e376ed8",
+      "revId": "aafa3dd8a30bc504392c59ddcfc94030cade8ff7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9f7249b8_a56063ee",
         "filename": "third_party/WebKit/LayoutTests/webexposed/global-interface-listing-expected.txt",
         "patchSetId": 13
@@ -54,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "0421bbe9_90c1b7b6",
+        "filename": "third_party/WebKit/LayoutTests/webexposed/global-interface-listing-expected.txt",
+        "patchSetId": 13
+      },
+      "lineNbr": 1056,
+      "author": {
+        "id": 1256034
+      },
+      "writtenOn": "2017-12-20T22:32:57Z",
+      "side": 1,
+      "message": "Yeah, omitting the constructor here caused the test for this file to fail. Not sure why that is the case, but the constructor and @@ToStringTag appear to be required.",
+      "parentUuid": "f68011bf_c87c6059",
+      "revId": "aafa3dd8a30bc504392c59ddcfc94030cade8ff7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ed0a0d26_6797b705",
         "filename": "third_party/WebKit/Source/core/frame/Window.idl",
         "patchSetId": 13
@@ -68,6 +104,24 @@
       "revId": "aafa3dd8a30bc504392c59ddcfc94030cade8ff7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a32a4121_b2cba376",
+        "filename": "third_party/WebKit/Source/core/frame/Window.idl",
+        "patchSetId": 13
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1256034
+      },
+      "writtenOn": "2017-12-20T22:32:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed0a0d26_6797b705",
+      "revId": "aafa3dd8a30bc504392c59ddcfc94030cade8ff7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
