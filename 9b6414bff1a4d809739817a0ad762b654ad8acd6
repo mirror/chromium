@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6c42d10c_4a32ccaa",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 15
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-12-20T22:48:17Z",
+      "side": 1,
+      "message": "Oops.  Done.",
+      "parentUuid": "fbfad779_34269cb3",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 15
+      },
+      "revId": "9b6414bff1a4d809739817a0ad762b654ad8acd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "969df01b_9b2deeda",
         "filename": "content/browser/frame_host/navigation_controller_impl.cc",
         "patchSetId": 15
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "a59beb68_0e1ff4c5",
+        "filename": "content/browser/frame_host/navigation_controller_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-12-20T22:48:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "969df01b_9b2deeda",
+      "range": {
+        "startLine": 383,
+        "startChar": 9,
+        "endLine": 383,
+        "endChar": 19
+      },
+      "revId": "9b6414bff1a4d809739817a0ad762b654ad8acd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f1677085_2fefa35c",
         "filename": "content/browser/frame_host/navigation_controller_impl_unittest.cc",
         "patchSetId": 15
@@ -62,6 +110,24 @@
       "revId": "9b6414bff1a4d809739817a0ad762b654ad8acd6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6dabe713_7f2956e7",
+        "filename": "content/browser/frame_host/navigation_controller_impl_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 963,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-12-20T22:48:17Z",
+      "side": 1,
+      "message": "Good point.  I\u0027ve added SitePerProcessBrowserTest.CommittedOriginIncompatibleWithOriginLock and verified that it passes after my CL and fails before my CL.\n\nI\u0027ve decided to add the test to SitePerProcessBrowserTest and not to SecurityExploitBrowserTest, because my test only makes sense in presence of an origin lock (so - in presence of either --site-per-process or --isolated-origins).\n\nWhen working on the new test, I\u0027ve found out that SecurityExploitBrowserTest.MismatchedOriginOnCommit is broken - it now hits RFH_INTERFACE_PROVIDER_MISSING because it incorrectly simulates DidCommitProvisionalLoad IPC (it doesn\u0027t pass an service_manager::mojom::InterfaceProviderRequest.  Because of this it doesn\u0027t really test the right kills - the test always passes because of another kill that is unrelated to the kill the test wanted to verify.  I\u0027ve fixed the test.",
+      "parentUuid": "f1677085_2fefa35c",
+      "revId": "9b6414bff1a4d809739817a0ad762b654ad8acd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "18308d87_a4707238",
+        "filename": "content/browser/frame_host/navigation_controller_impl_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 1957,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-12-20T22:48:17Z",
+      "side": 1,
+      "message": "Good catch.  Done.\n\nI think the navigating RFH first changes after |controller.GoForward()| (because we are navigating from url1 -\u003e url2) and then it changes again because of the redirect - this is why I\u0027ve got 2 calls to GetNavigatingRenderFrameHost() instead of introducing a |navigating_rfh| variable.",
+      "parentUuid": "05eada5d_30050e62",
+      "range": {
+        "startLine": 1957,
+        "startChar": 60,
+        "endLine": 1957,
+        "endChar": 64
+      },
+      "revId": "9b6414bff1a4d809739817a0ad762b654ad8acd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d4f60759_06ad87dc",
         "filename": "content/browser/frame_host/navigation_controller_impl_unittest.cc",
         "patchSetId": 15
@@ -99,6 +189,24 @@
       "writtenOn": "2017-12-19T02:33:06Z",
       "side": 1,
       "message": "Could you also use NavigationSimulator here to avoid the navigating_rfh, by doing CreateRendererInitiated() + Start() here, and Commit() after checking for the interstitial?",
+      "revId": "9b6414bff1a4d809739817a0ad762b654ad8acd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbd5dc6c_542f2899",
+        "filename": "content/browser/frame_host/navigation_controller_impl_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 3082,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-12-20T22:48:17Z",
+      "side": 1,
+      "message": "Good idea.\n\nI should use CreateBrowserInitiated though, because of ui::PAGE_TRANSITION_TYPED, right?\n\nI am also not sure what you mean by \"after checking for the interstitial\".  AFAICT, the test doesn\u0027t check that the interstitial is actually visible - the first verification (on line 3103) happens after committing the normal page.",
+      "parentUuid": "d4f60759_06ad87dc",
       "revId": "9b6414bff1a4d809739817a0ad762b654ad8acd6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -128,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "1064e844_4efb9e53",
+        "filename": "content/browser/frame_host/navigation_controller_impl_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 3468,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-12-20T22:48:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6449390e_3e9017de",
+      "range": {
+        "startLine": 3466,
+        "startChar": 40,
+        "endLine": 3468,
+        "endChar": 73
+      },
+      "revId": "9b6414bff1a4d809739817a0ad762b654ad8acd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a41b178c_1b141bfe",
         "filename": "content/browser/frame_host/navigation_controller_impl_unittest.cc",
         "patchSetId": 15
@@ -142,6 +274,24 @@
       "revId": "9b6414bff1a4d809739817a0ad762b654ad8acd6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c6b762b_54261282",
+        "filename": "content/browser/frame_host/navigation_controller_impl_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 3843,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-12-20T22:48:17Z",
+      "side": 1,
+      "message": "We still detect a bad message in IsURLSameDocumentNavigation, but we kill another process ( |rph| is the old process from before the swapping that can occur on line 3838 here).  Instead of special-casing AreAllSitesIsolatedForTesting() I should be updating |rph| instead.  Done?",
+      "parentUuid": "a41b178c_1b141bfe",
+      "revId": "9b6414bff1a4d809739817a0ad762b654ad8acd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -168,6 +318,30 @@
     },
     {
       "key": {
+        "uuid": "f901ee15_0224009d",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 843,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-12-20T22:48:17Z",
+      "side": 1,
+      "message": "Done (but renamed to |base_url| for consistency with navigation_controller_impl.cc).",
+      "parentUuid": "1110b4c9_b0a30d1a",
+      "range": {
+        "startLine": 843,
+        "startChar": 14,
+        "endLine": 843,
+        "endChar": 27
+      },
+      "revId": "9b6414bff1a4d809739817a0ad762b654ad8acd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0297301c_606e965a",
         "filename": "content/browser/frame_host/navigation_request.cc",
         "patchSetId": 15
@@ -188,6 +362,30 @@
       "revId": "9b6414bff1a4d809739817a0ad762b654ad8acd6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd86fcdc_e01b1235",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 858,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-12-20T22:48:17Z",
+      "side": 1,
+      "message": "Thanks for pointing out the other places.\n\n\u003e There are a few other places where SetSite may be called, and I\u0027m curious whether we need to fall back to base URL in any of those:\n\u003e - DidNavigate, which uses params.url.  (I\u0027m assuming it\u0027s not the base URL, because there\u0027s also params.base_url.)\n\nGood catch - initially I didn\u0027t see that we have access to |params.base_url| here.  I\u0027ve changed the SetSite callsite above to use |base_url| if possible.\n\nOne other notes (probably not quite related to the CL under review): I wonder if we should use |params.url| VS |params.origin| when calculating the site URL.  I\u0027ve started a discussion about this at https://groups.google.com/a/chromium.org/d/topic/site-isolation-dev/36Cy9IzLi90/discussion\n\n\u003e - BrowsingInstance::GetSiteInstanceForURL() - which may matter if we are creating a new BrowsingInstance via LoadDataWithBaseURL, if that\u0027s even possible?\n\nI think that BrowsingInstance::GetSiteInstanceForURL() would matter only if LoadDataWithBaseURL could create a new frame within an *existing* (not new) browsing instance.  And I think this is not possible - LoadDataWithBaseURL is always a top-level, browser-initiated navigation (and therefore should be happening in a new browsing instance I think).\n\nOTOH, I am not quite sure if all browser-initiated navigations result in a *new* browsing instance.  I don\u0027t think that\u0027s true.  But then - this might be a separate bug (?).\n\n\u003e - a case in DetermineSiteInstanceForURL which may matter for session restore (actually, might be worth trying session restore with a base URL)\n\nGood catch.  I think that in this case, we need to ensure that |dest_url| passed to DetermineSiteInstanceForURL takes base URL into account.  This argument comes from either:\n\n- RenderFrameHostManager::GetSiteInstanceForNavigationRequest - I\u0027ve made changes to take into account |request.common_params().base_url_for_data_url|.\n\n- NavigatorImpl::NavigateToEntry - this is a non-PlzNavigate path.  Nevertheless, I\u0027ve made changes to pass base URL if needed.\n\nI do notice that the changed |dest_url| is used in quite a few places.  But it seems to me that all of them should be happy with having the base URL instead:\n\n- RenderFrameHostManager::DetermineSiteInstanceForURL passes |dest_url| to:\n    - constructor of SiteInstanceDescriptor\n    - ContentBrowserClient::ShouldStayInParentProcessForNTP\n    - RenderProcessHost::ShouldUseProcessPerSite\n    - RenderProcessHostImpl::GetProcessHostForSite\n        - QUESTION: Is it okay that base URL might be a full URL, rather than a \"site\"?\n                    (this question potentially applies to other uses of |dest_url|)\n    - HasWrongProcessForURL\n        - This is great.  It matches my changes in NavigationControllerImpl::Reload\n          which also needs to call HasWrongProcessForURL with the base URL if present.\n    - WebUIControllerFactoryRegistry::UseWebUIForURL\n        - Should be fine I think.  Should be a no-op in all legitimate cases I would hope.\n          (not sure if LoadDataWithBaseURL can be used for chrome://... URLs)\n    - SiteInstanceImpl::ShouldAssignSiteForURL\n        - This is great.  It matches my changes above where we also need to call\n          ShouldAssignSiteForURL with the base URL\n    - IsRendererDebugURL\n    - comparison of |dest_url| with about:blank, about:srcdoc and data:...\n        - Should be fine - this just reuses |source_instance|.\n          Also - I don\u0027t know why anyone would use about:blank or data:...\n          as a base URL - seems unlikely.\n    - IsCurrentlySameSite\n    - SiteInstanceImpl::DoesSiteRequireDedicatedProcess\n        - This is great.  It matches my changes above where we also need to call\n          DoesSiteRequireDedicatedProcess with the base URL\n\n- RenderFrameHostManager::GetSiteInstanceForNavigation passes |dest_url| to:\n    - SiteInstanceImpl::GetEffectiveURL / ShouldSwapBrowsingInstancesForNavigation\n    - DetermineSiteInstanceForURL (already covered above)\n\n- RenderFrameHostManager::UpdateStateForNavigate passes |dest_url| to:\n    - GetSiteInstanceForNavigation (already covered above)\n    - CanSubframeSwapProcess\n    - UpdatePendingWebUI\n    - UpdatePendingWebUIOnCurrentFrameHost\n\n- RenderFrameHostManager::Navigate passes |dest_url| to:\n    - UpdateStateForNavigate (already covered above)\n\n\nPS. After your comment about SiteInstanceImpl::SetSite, I\u0027ve also looked at callers of\n\n- SiteInstanceImpl::ShouldAssignSiteForURL (all callers covered by this CL)\n- HasWrongProcessForURL\n    - NavigationControllerImpl::Reload is covered by this CL\n    - RFHM::DetermineSiteInstanceForURL is covered (after you comment)\n    - RFHM::IsRendererTransferNeededForNavigation is not covered,\n      but this is non-PlzNavigate, so maybe this is okay?\n    - RFHM::IsCurrentlySameSite\n        - Calls from RFHM::RFHM::DetermineSiteInstanceForURL are covered by this CL\n        - Call from RFHM::IsRendererTransferNeededForNavigation is not covered,\n          but (as above) this is non-PlzNavigate, so maybe okay?\n- DoesSiteRequireDedicatedProcess\n    - NavigationRequest::OnResponseStarted is covered by this CL\n    - For RFHM::DetermineSiteInstanceForURL + RFHM::IsRendererTransferNeededForNavigation\n      see the comments above\n    - SiteInstanceImpl::RequiresDedicatedProcess is fine, because\n      it passes |site_| which is already covered by SiteInstanceImpl::SetSite analysis\n    - SiteInstanceImpl::ShouldLockToOrigin\n        - Called by SiteInstanceImpl::LockToOriginIfNeeded which is fine,\n          because it passes |site_| which is already covered by\n          SiteInstanceImpl::SetSite analysis\n        - Also called by RenderProcessHostImpl::IsSuitableHost.\n          This seems fine, although I admit that I haven\u0027t gone through all\n           the transitive callers.",
+      "parentUuid": "0297301c_606e965a",
+      "range": {
+        "startLine": 858,
+        "startChar": 0,
+        "endLine": 858,
+        "endChar": 39
+      },
+      "revId": "9b6414bff1a4d809739817a0ad762b654ad8acd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -214,6 +412,30 @@
     },
     {
       "key": {
+        "uuid": "13ef5bd7_d3f85038",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 3272,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-12-20T22:48:17Z",
+      "side": 1,
+      "message": "\u003e Since we typically call GetSiteForURL on the URL rather than origin, I\u0027m wondering if it makes sense at all to use |url| instead of |origin_url| here, since both are passed in?  (We\u0027ve already checked that origin_url and url match up above...)\n\n\u003e This would allow it to resolve the right site URL for hosted apps, and maybe that will help with the ShouldLockToOrigin hosted apps issue you mention below?\n\nThat is a really good point and something I haven\u0027t thought about myself - thanks for pointing this out.  I think identifying hosted apps based on |url| (rather than |origin|) has some potential and we could try doing it in the NO_LOCK case that is currently problematic for hosted apps.  OTOH, when doing this we would have to carve out an exception for about:blank and this might require some careful thinking:\n\n1) would the NO_LOCK case still offer a valuable protection in presence of the about:blank protection?  A compromised renderer could just say that is commits about:blank at isolated origin.\n\n2) we would definitely want to keep the WRONG_LOCK case free of any exceptions\n \n\u003e In the future, once we start locking hosted apps to their underlying origin, it seems that we\u0027ll want to also somehow pass that underlying origin to CheckOriginLock() somehow, instead of the site_url?  (Not sure what the plumbing for that will look like yet...)\n\nI don\u0027t know :-(",
+      "parentUuid": "1e8472e3_c5ee71be",
+      "range": {
+        "startLine": 3272,
+        "startChar": 63,
+        "endLine": 3272,
+        "endChar": 73
+      },
+      "revId": "9b6414bff1a4d809739817a0ad762b654ad8acd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "19db17c2_0fc78dc1",
         "filename": "content/browser/frame_host/render_frame_host_impl.cc",
         "patchSetId": 15
@@ -237,6 +459,30 @@
     },
     {
       "key": {
+        "uuid": "d182067c_e04b8605",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 3283,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-12-20T22:48:17Z",
+      "side": 1,
+      "message": "Yes - this is what I meant :-).  Done.",
+      "parentUuid": "19db17c2_0fc78dc1",
+      "range": {
+        "startLine": 3283,
+        "startChar": 9,
+        "endLine": 3283,
+        "endChar": 37
+      },
+      "revId": "9b6414bff1a4d809739817a0ad762b654ad8acd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "339583fe_12faaaf0",
         "filename": "content/browser/web_contents/web_contents_impl_unittest.cc",
         "patchSetId": 15
@@ -248,6 +494,30 @@
       "writtenOn": "2017-12-19T02:33:06Z",
       "side": 1,
       "message": "Would it be better to leave the cross-site navigation in and either use the NavigationSimulator or compute navigating_rfh instead, like the other tests, so we still have cross-process navigation coverage of interstitial dismissal via --site-per-process?  (Same for ShowInterstitialOnInterstitial below)",
+      "range": {
+        "startLine": 1821,
+        "startChar": 0,
+        "endLine": 1821,
+        "endChar": 42
+      },
+      "revId": "9b6414bff1a4d809739817a0ad762b654ad8acd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c27af60f_180123f9",
+        "filename": "content/browser/web_contents/web_contents_impl_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 1821,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-12-20T22:48:17Z",
+      "side": 1,
+      "message": "I am not sure.  This goes against the principle that a test should test one and only one thing.  If cross-site navigation coverage is important, it should have another test.\n\nI understand that the same concern applies to navigation_controller_impl_unittest.cc - I was also wondering what is the right thing to do over there.  One difference is that here there are only 3 tests affected + here we haven\u0027t had to use |navigating_rfh| trick yet.\n\nSo - I think making the tests same-site here might be okay?",
+      "parentUuid": "339583fe_12faaaf0",
       "range": {
         "startLine": 1821,
         "startChar": 0,
@@ -280,6 +550,30 @@
       "revId": "9b6414bff1a4d809739817a0ad762b654ad8acd6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71305ce1_a57ad913",
+        "filename": "content/browser/web_contents/web_contents_impl_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 3302,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-12-20T22:48:17Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "2138b52d_8fd59148",
+      "range": {
+        "startLine": 3302,
+        "startChar": 15,
+        "endLine": 3302,
+        "endChar": 20
+      },
+      "revId": "9b6414bff1a4d809739817a0ad762b654ad8acd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

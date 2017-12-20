@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "85c59e99_b1cb6218",
+        "filename": "content/browser/frame_host/navigation_controller_impl_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 995,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-12-20T22:48:17Z",
+      "side": 1,
+      "message": "Oh, indeed we can use NavigationSimulator here.  I don\u0027t know why I missed this before.\n\nBTW: I see that the old code is passing |true| as |user_gesture| argument for SendRendererInitiatedNavigationRequest - fortunately this matches the default value of  NavigationSimulator::has_user_gesture_.",
+      "parentUuid": "b37430ca_156a2792",
+      "range": {
+        "startLine": 995,
+        "startChar": 23,
+        "endLine": 995,
+        "endChar": 37
+      },
+      "revId": "8d9ce25723362ca9d623f433e24a4c2ef7674287",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "726db7a0_fabbeac4",
         "filename": "content/browser/frame_host/navigation_controller_impl_unittest.cc",
         "patchSetId": 13
@@ -225,6 +249,30 @@
       "side": 1,
       "message": "Could CreateHistoryNavigation() help here?  (GoForward is basically that plus commit)",
       "parentUuid": "07e4ec2c_3fa45b77",
+      "range": {
+        "startLine": 1874,
+        "startChar": 2,
+        "endLine": 1874,
+        "endChar": 25
+      },
+      "revId": "8d9ce25723362ca9d623f433e24a4c2ef7674287",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "348158fa_d402661f",
+        "filename": "content/browser/frame_host/navigation_controller_impl_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1874,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-12-20T22:48:17Z",
+      "side": 1,
+      "message": "I think |controller.GoForward()| is cleaner (it is definitely shorter).  I also note that the test inspects *pending* entries below - avoiding a commit via NavigationSimulator probably requires calling NavigationSimulator::Start, but not Commit (which I think would result in a more difficult to understand than what we have today).",
+      "parentUuid": "1f0a254e_f18869c6",
       "range": {
         "startLine": 1874,
         "startChar": 2,

@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "77950cce_f902902a",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 3247,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-12-20T22:48:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f510ddcb_146f12f7",
+      "range": {
+        "startLine": 3247,
+        "startChar": 2,
+        "endLine": 3247,
+        "endChar": 22
+      },
+      "revId": "ea4496b399cb0802685dd4fe6be8825262abee16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a4006f7c_769eeffe",
         "filename": "content/browser/frame_host/render_frame_host_impl.cc",
         "patchSetId": 14
@@ -107,6 +131,30 @@
       "side": 1,
       "message": "Ack, makes sense.  I guess this is orthogonal to the origin lock checks in SiteInstanceImpl::LockToOriginIfNeeded(), in the sense that LockToOriginIfNeeded() will prevent a new, not-yet-locked SiteInstance from committing a navigation in a process with an incompatible origin lock, whereas these checks will guard a process that has already committed something and locked to an origin from committing incompatible origins.  (Right?)",
       "parentUuid": "a4006f7c_769eeffe",
+      "range": {
+        "startLine": 3274,
+        "startChar": 6,
+        "endLine": 3274,
+        "endChar": 19
+      },
+      "revId": "ea4496b399cb0802685dd4fe6be8825262abee16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "18fa9b34_9980368a",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 3274,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-12-20T22:48:17Z",
+      "side": 1,
+      "message": "Correct - the new checks will guard a process that has already committed something.  Today we only guard a process that is locked to an origin, from committing incompatible origins.  In the long-term it would be desirable to also prevent an unlocked process from committing an origin that requires isolation (in ShouldLockToOrigin sense) - this long-term goal is difficult, because WebView guests are not locked to an origin + they can commit isolated origins.\n\nDoes that explanation help?  I am not sure if I fully understood your question (and/or the concern behind your question/comment).",
+      "parentUuid": "9cb86fc5_5ee99e17",
       "range": {
         "startLine": 3274,
         "startChar": 6,
@@ -177,6 +225,30 @@
       "side": 1,
       "message": "Ack.  And \u003cwebview\u003e should work once we check ShouldLockToOrigin() here, because ShouldLockToOrigin returns false for chrome-guest://, right?",
       "parentUuid": "42e54993_bf0db904",
+      "range": {
+        "startLine": 3276,
+        "startChar": 0,
+        "endLine": 3281,
+        "endChar": 54
+      },
+      "revId": "ea4496b399cb0802685dd4fe6be8825262abee16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b8fb1e07_bc3b6a7a",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 3281,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-12-20T22:48:17Z",
+      "side": 1,
+      "message": "\u003e Ack.  And \u003cwebview\u003e should work once we check ShouldLockToOrigin() here, because ShouldLockToOrigin returns false for chrome-guest://, right?\n\nAn earlier version of this CL covered NO_LOCK case, but back then the CL was also exiting early for WebView case:\n\nFrom https://chromium-review.googlesource.com/c/chromium/src/+/769647/5/content/browser/frame_host/render_frame_host_impl.cc:\n\n  // WebView guests can commit any origin.\n  // This is safe, because:\n  // 1) WebView guests are in a different StoragePartition, essentially outside\n  //    the browser.\n  // 2) The user has to trust the app that\u0027s providing the webview (e.g.\n  //    WebViews don\u0027t have reliable address bars so the user has to trust that\n  //    the WebView won\u0027t contain any malicious or phishing sites).\n  // This is difficult to change, because:\n  // 1) WebView guests cannot contain OOPIFs today.\n  // 2) extensions::ProcessMap doesn\u0027t track webview accessible resources\n  //    (see WebViewTest.ReloadWebviewAccessibleResource).\n  //\n  // TODO(lukasza): https://crbug.com/614463: Removes this exception once\n  // WebView guests support OOPIFs.\n  if (GetSiteInstance()-\u003eGetSiteURL().SchemeIs(kGuestScheme))\n    return true;",
+      "parentUuid": "eddefed2_89f8b987",
       "range": {
         "startLine": 3276,
         "startChar": 0,
