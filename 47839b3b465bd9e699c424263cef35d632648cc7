@@ -106,6 +106,24 @@
       "revId": "47839b3b465bd9e699c424263cef35d632648cc7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b013c27b_7d3eeeb0",
+        "filename": "chrome/browser/resources/settings/site_settings/site_details_permission.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-12-20T23:40:23Z",
+      "side": 1,
+      "message": "Yes, though it\u0027s not that I\u0027m in favor of large numbers of parameters. When I see how much goes into storing those values in the DOM as element data and setting up properties, well, 14 parameters seems smaller/more reasonable. If you disagree let me know.",
+      "parentUuid": "f40b88e6_28db968b",
+      "revId": "47839b3b465bd9e699c424263cef35d632648cc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
