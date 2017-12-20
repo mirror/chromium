@@ -15,6 +15,7 @@
 #include "components/signin/core/browser/account_tracker_service.h"
 #include "components/signin/core/browser/fake_profile_oauth2_token_service.h"
 #include "components/signin/core/browser/fake_signin_manager.h"
+#include "components/signin/core/browser/signin_error_controller.h"
 #include "components/signin/core/browser/test_signin_client.h"
 #include "net/http/http_status_code.h"
 #include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
@@ -216,8 +217,12 @@ std::string TestingWebHistoryService::GetExpectedAudioHistoryValue() {
 class WebHistoryServiceTest : public testing::Test {
  public:
   WebHistoryServiceTest()
-      : signin_client_(nullptr),
-        signin_manager_(&signin_client_, &account_tracker_),
+      : signin_error_controller_(
+            SigninErrorController::AccountMode::ANY_ACCOUNT),
+        signin_client_(nullptr),
+        signin_manager_(&signin_client_,
+                        &account_tracker_,
+                        &signin_error_controller_),
         url_request_context_(new net::TestURLRequestContextGetter(
             base::ThreadTaskRunnerHandle::Get())),
         web_history_service_(&token_service_,
@@ -241,6 +246,7 @@ class WebHistoryServiceTest : public testing::Test {
   base::test::ScopedTaskEnvironment scoped_task_environment_;
   FakeProfileOAuth2TokenService token_service_;
   AccountTrackerService account_tracker_;
+  SigninErrorController signin_error_controller_;
   TestSigninClient signin_client_;
   FakeSigninManagerBase signin_manager_;
   scoped_refptr<net::URLRequestContextGetter> url_request_context_;

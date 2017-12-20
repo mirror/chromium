@@ -10,6 +10,7 @@
 #include "components/signin/core/browser/fake_profile_oauth2_token_service.h"
 #include "components/signin/core/browser/fake_signin_manager.h"
 #include "components/signin/core/browser/profile_management_switches.h"
+#include "components/signin/core/browser/signin_error_controller.h"
 #include "components/signin/core/browser/test_signin_client.h"
 #include "components/sync_preferences/testing_pref_service_syncable.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -76,14 +77,19 @@ class TestIdentityManagerObserver : IdentityManager::Observer {
 class IdentityManagerTest : public testing::Test {
  public:
   IdentityManagerTest()
-      : signin_client_(&pref_service_),
+      : signin_error_controller_(
+            SigninErrorController::AccountMode::ANY_ACCOUNT),
+        signin_client_(&pref_service_),
 #if defined(OS_CHROMEOS)
-        signin_manager_(&signin_client_, &account_tracker_)
+        signin_manager_(&signin_client_,
+                        &account_tracker_,
+                        &signin_error_controller_)
 #else
         signin_manager_(&signin_client_,
                         &token_service_,
                         &account_tracker_,
-                        nullptr)
+                        nullptr,
+                        &signin_error_controller_)
 #endif
   {
     AccountTrackerService::RegisterPrefs(pref_service_.registry());
@@ -114,6 +120,7 @@ class IdentityManagerTest : public testing::Test {
   base::MessageLoop message_loop_;
   sync_preferences::TestingPrefServiceSyncable pref_service_;
   AccountTrackerService account_tracker_;
+  SigninErrorController signin_error_controller_;
   TestSigninClient signin_client_;
   SigninManagerForTest signin_manager_;
   FakeProfileOAuth2TokenService token_service_;

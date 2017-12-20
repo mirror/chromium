@@ -38,7 +38,8 @@ WebViewSigninErrorControllerFactory::WebViewSigninErrorControllerFactory()
 std::unique_ptr<KeyedService>
 WebViewSigninErrorControllerFactory::BuildServiceInstanceFor(
     web::BrowserState* context) const {
-  return base::MakeUnique<SigninErrorController>();
+  return base::MakeUnique<SigninErrorController>(
+      SigninErrorController::AccountMode::ANY_ACCOUNT);
 }
 
 }  // namespace ios_web_view

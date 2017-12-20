@@ -47,7 +47,9 @@ class MutableProfileOAuth2TokenServiceDelegateTest
       public OAuth2TokenService::Observer {
  public:
   MutableProfileOAuth2TokenServiceDelegateTest()
-      : factory_(NULL),
+      : factory_(nullptr),
+        signin_error_controller_(
+            SigninErrorController::AccountMode::ANY_ACCOUNT),
         access_token_success_count_(0),
         access_token_failure_count_(0),
         access_token_failure_(GoogleServiceAuthError::NONE),

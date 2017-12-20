@@ -231,13 +231,17 @@ ProfileSyncServiceBundle::ProfileSyncServiceBundle()
     : db_thread_(base::ThreadTaskRunnerHandle::Get()),
       worker_pool_owner_(2, "sync test worker pool"),
       signin_client_(&pref_service_),
+      signin_error_controller_(SigninErrorController::AccountMode::ANY_ACCOUNT),
 #if defined(OS_CHROMEOS)
-      signin_manager_(&signin_client_, &account_tracker_),
+      signin_manager_(&signin_client_,
+                      &account_tracker_,
+                      &signin_error_controller_),
 #else
       signin_manager_(&signin_client_,
                       &auth_service_,
                       &account_tracker_,
-                      nullptr),
+                      nullptr,
+                      &signin_error_controller_),
 #endif
       url_request_context_(new net::TestURLRequestContextGetter(
           base::ThreadTaskRunnerHandle::Get())) {

@@ -17,6 +17,7 @@
 #include "components/signin/core/browser/fake_profile_oauth2_token_service.h"
 #include "components/signin/core/browser/fake_signin_manager.h"
 #include "components/signin/core/browser/profile_management_switches.h"
+#include "components/signin/core/browser/signin_error_controller.h"
 #include "components/signin/core/browser/test_signin_client.h"
 #include "components/sync_preferences/testing_pref_service_syncable.h"
 #include "testing/gmock/include/gmock/gmock.h"
@@ -41,7 +42,10 @@ class PrimaryAccountAccessTokenFetcherTest : public testing::Test {
   using TestTokenCallback =
       StrictMock<MockCallback<PrimaryAccountAccessTokenFetcher::TokenCallback>>;
 
-  PrimaryAccountAccessTokenFetcherTest() : signin_client_(&pref_service_) {
+  PrimaryAccountAccessTokenFetcherTest()
+      : signin_client_(&pref_service_),
+        signin_error_controller_(
+            SigninErrorController::AccountMode::ANY_ACCOUNT) {
     AccountTrackerService::RegisterPrefs(pref_service_.registry());
     signin::RegisterAccountConsistencyProfilePrefs(pref_service_.registry());
 #if defined(OS_CHROMEOS)
@@ -60,11 +64,11 @@ class PrimaryAccountAccessTokenFetcherTest : public testing::Test {
 
 #if defined(OS_CHROMEOS)
     signin_manager_ = base::MakeUnique<FakeSigninManagerBase>(
-        &signin_client_, account_tracker_.get());
+        &signin_client_, account_tracker_.get(), &signin_error_controller_);
 #else
     signin_manager_ = base::MakeUnique<FakeSigninManager>(
         &signin_client_, &token_service_, account_tracker_.get(),
-        /*cookie_manager_service=*/nullptr);
+        /*cookie_manager_service=*/nullptr, &signin_error_controller_);
 #endif  // OS_CHROMEOS
   }
 
@@ -95,6 +99,7 @@ class PrimaryAccountAccessTokenFetcherTest : public testing::Test {
   FakeProfileOAuth2TokenService token_service_;
 
   std::unique_ptr<AccountTrackerService> account_tracker_;
+  SigninErrorController signin_error_controller_;
   std::unique_ptr<SigninManagerForTest> signin_manager_;
 };
 

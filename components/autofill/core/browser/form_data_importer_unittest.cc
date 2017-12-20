@@ -45,6 +45,7 @@
 #include "components/prefs/pref_service.h"
 #include "components/signin/core/browser/account_tracker_service.h"
 #include "components/signin/core/browser/fake_signin_manager.h"
+#include "components/signin/core/browser/signin_error_controller.h"
 #include "components/signin/core/browser/test_signin_client.h"
 #include "components/webdata/common/web_data_service_base.h"
 #include "components/webdata/common/web_database_service.h"
@@ -113,7 +114,10 @@ void ExpectSameElements(const std::vector<T*>& expectations,
 
 class FormDataImporterTestBase {
  protected:
-  FormDataImporterTestBase() : autofill_table_(nullptr) {}
+  FormDataImporterTestBase()
+      : signin_error_controller_(
+            SigninErrorController::AccountMode::ANY_ACCOUNT),
+        autofill_table_(nullptr) {}
 
   void ResetPersonalDataManager(UserMode user_mode) {
     bool is_incognito = (user_mode == USER_MODE_INCOGNITO);
@@ -228,6 +232,7 @@ class FormDataImporterTestBase {
   base::MessageLoopForUI message_loop_;
   std::unique_ptr<PrefService> prefs_;
   std::unique_ptr<AccountTrackerService> account_tracker_;
+  SigninErrorController signin_error_controller_;
   std::unique_ptr<FakeSigninManagerBase> signin_manager_;
   std::unique_ptr<TestSigninClient> signin_client_;
   scoped_refptr<AutofillWebDataService> autofill_database_service_;
@@ -254,7 +259,8 @@ class FormDataImporterTest : public FormDataImporterTestBase,
     account_tracker_.reset(new AccountTrackerService());
     account_tracker_->Initialize(signin_client_.get());
     signin_manager_.reset(new FakeSigninManagerBase(signin_client_.get(),
-                                                    account_tracker_.get()));
+                                                    account_tracker_.get(),
+                                                    &signin_error_controller_));
     signin_manager_->Initialize(prefs_.get());
 
     // Hacky: hold onto a pointer but pass ownership.

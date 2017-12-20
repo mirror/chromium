@@ -25,7 +25,10 @@ SyncUsernameTestBase::LocalFakeSyncService::GetPreferredDataTypes() const {
 
 SyncUsernameTestBase::SyncUsernameTestBase()
     : signin_client_(&prefs_),
-      signin_manager_(&signin_client_, &account_tracker_) {
+      signin_error_controller_(SigninErrorController::AccountMode::ANY_ACCOUNT),
+      signin_manager_(&signin_client_,
+                      &account_tracker_,
+                      &signin_error_controller_) {
   SigninManagerBase::RegisterProfilePrefs(prefs_.registry());
   AccountTrackerService::RegisterPrefs(prefs_.registry());
   account_tracker_.Initialize(&signin_client_);

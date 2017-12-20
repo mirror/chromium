@@ -19,6 +19,7 @@
 #include "components/signin/core/browser/account_tracker_service.h"
 #include "components/signin/core/browser/fake_profile_oauth2_token_service.h"
 #include "components/signin/core/browser/fake_signin_manager.h"
+#include "components/signin/core/browser/signin_error_controller.h"
 #include "components/signin/core/browser/test_signin_client.h"
 #include "components/sync/driver/fake_sync_client.h"
 #include "components/sync/driver/sync_api_component_factory_mock.h"
@@ -173,6 +174,7 @@ class ProfileSyncServiceBundle {
   sync_preferences::TestingPrefServiceSyncable pref_service_;
   TestSigninClient signin_client_;
   AccountTrackerService account_tracker_;
+  SigninErrorController signin_error_controller_;
   FakeSigninManagerType signin_manager_;
   FakeProfileOAuth2TokenService auth_service_;
   syncer::SyncApiComponentFactoryMock component_factory_;
