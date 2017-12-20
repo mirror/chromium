@@ -210,21 +210,6 @@ void DevToolsAgent::SendProtocolMessage(int session_id,
                              state_cookie.Utf8());
 }
 
-bool DevToolsAgent::RequestDevToolsForFrame(int session_id,
-                                            blink::WebLocalFrame* webFrame) {
-  RenderFrameImpl* frame = RenderFrameImpl::FromWebFrame(webFrame);
-  if (!frame)
-    return false;
-  auto it = hosts_.find(session_id);
-  if (it == hosts_.end())
-    return false;
-  it->second->RequestNewWindow(
-      frame->GetRoutingID(),
-      base::Bind(&DevToolsAgent::OnRequestNewWindowCompleted,
-                 weak_factory_.GetWeakPtr(), session_id));
-  return true;
-}
-
 void DevToolsAgent::SendChunkedProtocolMessage(int session_id,
                                                int call_id,
                                                std::string message,
@@ -264,11 +249,6 @@ void DevToolsAgent::InspectElement(int session_id, const gfx::Point& point) {
   frame_->GetRenderWidget()->ConvertWindowToViewport(&point_rect);
   GetWebAgent()->InspectElementAt(session_id,
                                   WebPoint(point_rect.x, point_rect.y));
-}
-
-void DevToolsAgent::OnRequestNewWindowCompleted(int session_id, bool success) {
-  if (!success)
-    GetWebAgent()->FailedToRequestDevTools(session_id);
 }
 
 void DevToolsAgent::ContinueProgram() {

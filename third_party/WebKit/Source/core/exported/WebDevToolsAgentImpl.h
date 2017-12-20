@@ -97,7 +97,6 @@ class CORE_EXPORT WebDevToolsAgentImpl final
                                   const WebString& method,
                                   const WebString& message) override;
   void InspectElementAt(int session_id, const WebPoint&) override;
-  void FailedToRequestDevTools(int session_id) override;
   WebString EvaluateInWebInspectorOverlay(const WebString& script) override;
 
  private:
@@ -111,7 +110,6 @@ class CORE_EXPORT WebDevToolsAgentImpl final
 
   // InspectorPageAgent::Client implementation.
   void PageLayoutInvalidated(bool resized) override;
-  void WaitForCreateWindow(InspectorPageAgent*, LocalFrame*) override;
 
   // InspectorLayerTreeAgent::Client implementation.
   bool IsInspectorLayer(GraphicsLayer*) override;
