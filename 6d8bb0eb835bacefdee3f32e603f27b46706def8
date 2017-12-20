@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "46f264cf_e91a4d8a",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-12-20T23:19:24Z",
+      "side": 1,
+      "message": "We should probably do something like NGBoxType for text fragments and use that to indicate a hard break. For now this will do.",
+      "revId": "6d8bb0eb835bacefdee3f32e603f27b46706def8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "992a2106_24b61080",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-12-20T23:19:24Z",
+      "side": 1,
+      "message": "last_line may be null here. Did you mean to have the condition above check if it *ISN\u0027T* null instead of checking if it is?",
+      "range": {
+        "startLine": 53,
+        "startChar": 27,
+        "endLine": 53,
+        "endChar": 36
+      },
+      "revId": "6d8bb0eb835bacefdee3f32e603f27b46706def8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9587d3ee_3d7ca57e",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-12-20T23:19:24Z",
+      "side": 1,
+      "message": "Nit: Remove unnecessary comment.",
+      "range": {
+        "startLine": 192,
+        "startChar": 2,
+        "endLine": 192,
+        "endChar": 3
+      },
+      "revId": "6d8bb0eb835bacefdee3f32e603f27b46706def8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95e33829_05f840b9",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-12-20T23:19:24Z",
+      "side": 1,
+      "message": "I\u0027d like kojii to review this method.",
+      "range": {
+        "startLine": 206,
+        "startChar": 16,
+        "endLine": 206,
+        "endChar": 38
+      },
+      "revId": "6d8bb0eb835bacefdee3f32e603f27b46706def8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a137782_d391c158",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-12-20T23:19:24Z",
+      "side": 1,
+      "message": "You might want to move these to a different header, like ng_caret_rect_internal or something to help enforce that it isn\u0027t used outside of the class itself and tests.",
+      "revId": "6d8bb0eb835bacefdee3f32e603f27b46706def8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
