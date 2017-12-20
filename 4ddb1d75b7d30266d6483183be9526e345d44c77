@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "695bb927_663fcf26",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-12-20T19:20:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cc857163_6680c386",
+      "revId": "4ddb1d75b7d30266d6483183be9526e345d44c77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d0c706f1_91db81cb",
         "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.cc",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "4ddb1d75b7d30266d6483183be9526e345d44c77",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4749555_a2035d23",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-12-20T19:20:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d0c706f1_91db81cb",
+      "revId": "4ddb1d75b7d30266d6483183be9526e345d44c77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "28924c8b_a4f35d7c",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-12-20T19:20:02Z",
+      "side": 1,
+      "message": "It\u0027s specified here [1]. I believe this is to make sure that WebContents and the window are closed properly before we destroy the controller.\n\n[1] https://cs.chromium.org/chromium/src/chrome/browser/ui/media_router/presentation_receiver_window_controller.h?l\u003d34",
+      "parentUuid": "fd809596_9f8f0bb2",
+      "revId": "4ddb1d75b7d30266d6483183be9526e345d44c77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "55cfb779_809bfb95",
         "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.h",
         "patchSetId": 3
@@ -64,6 +118,24 @@
       "writtenOn": "2017-12-18T19:12:51Z",
       "side": 1,
       "message": "This is a layering problem - the code in chrome/browser/media/router shouldn\u0027t depend on code in chrome/browser/ui.",
+      "revId": "4ddb1d75b7d30266d6483183be9526e345d44c77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8186c58f_4aa5140f",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-12-20T19:20:02Z",
+      "side": 1,
+      "message": "I took a look at some permissions [1] and extensions [2] code and it seems they simply reach into c/b/ui/. I added an interface in c/b/media/router/ that PresentationReceiverWindowController implements, and made WiredDisplayMRP use PRWC through the interface (except for instantiation. This was done also to be able to mock PRWC in tests). Please let me know if there\u0027s more I can do.\n\n[1] https://cs.chromium.org/chromium/src/chrome/browser/permissions/permission_request_manager.h?l\u003d14\n[2] https://cs.chromium.org/chromium/src/chrome/browser/extensions/extension_disabled_ui.cc?l\u003d26",
+      "parentUuid": "55cfb779_809bfb95",
       "revId": "4ddb1d75b7d30266d6483183be9526e345d44c77",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "3087bcc1_6a550573",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-12-20T19:20:02Z",
+      "side": 1,
+      "message": "It\u0027s used in the unit tests as well.",
+      "parentUuid": "61f5256b_7d01b9cf",
+      "revId": "4ddb1d75b7d30266d6483183be9526e345d44c77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dd632ac5_76b4fff4",
         "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.h",
         "patchSetId": 3
@@ -101,6 +191,24 @@
       "revId": "4ddb1d75b7d30266d6483183be9526e345d44c77",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b098759c_9df0c6de",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-12-20T19:20:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dd632ac5_76b4fff4",
+      "revId": "4ddb1d75b7d30266d6483183be9526e345d44c77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "66f442e8_79ab02b9",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-12-20T19:20:02Z",
+      "side": 1,
+      "message": "Removed this class. Added DISALLOW_COPY_AND_ASSIGN to WiredDisplayMRP class.\nI didn\u0027t put it on the Presentation struct since it seems we don\u0027t usually put it on structs, although copying a struct with a unique_ptr doesn\u0027t seem to make too much sense.",
+      "parentUuid": "bb0ee83f_00911325",
+      "revId": "4ddb1d75b7d30266d6483183be9526e345d44c77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2ccdc0de_4d2f67f5",
         "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.h",
         "patchSetId": 3
@@ -135,6 +261,24 @@
       "revId": "4ddb1d75b7d30266d6483183be9526e345d44c77",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a938e995_0ab99f5b",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-12-20T19:20:02Z",
+      "side": 1,
+      "message": "The original profile. Added a comment.",
+      "parentUuid": "2ccdc0de_4d2f67f5",
+      "revId": "4ddb1d75b7d30266d6483183be9526e345d44c77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
