@@ -182,6 +182,24 @@
     },
     {
       "key": {
+        "uuid": "ccdff3bc_e522c032",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-20T20:26:56Z",
+      "side": 1,
+      "message": "Got it.  I\u0027m fine with a CHECK if the rest of my proposal makes sense to you.",
+      "parentUuid": "9e9d838b_d2ad3064",
+      "revId": "d3a91ea6e1d5c2328aa306425ed9a298e59909ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ee1c9462_f3adbf5d",
         "filename": "content/browser/webauth/cbor/cbor_reader.h",
         "patchSetId": 12
