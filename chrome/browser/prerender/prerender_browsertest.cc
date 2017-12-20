@@ -883,7 +883,7 @@ class PrerenderBrowserTest : public test_utils::PrerenderInProcessBrowserTest {
     base::ListValue* history_list;
     if (!prerender_dict->GetList("history", &history_list))
       return std::numeric_limits<size_t>::max();
-    return history_list->GetSize();
+    return history_list->GetList().size();
   }
 
   void SetLoaderHostOverride(const std::string& host) {

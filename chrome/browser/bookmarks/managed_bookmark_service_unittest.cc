@@ -114,7 +114,7 @@ class ManagedBookmarkServiceTest : public testing::Test {
     if (node->is_folder()) {
       const base::ListValue* children = NULL;
       if (!dict->GetList("children", &children) ||
-          node->child_count() != static_cast<int>(children->GetSize())) {
+          node->child_count() != static_cast<int>(children->GetList().size())) {
         return false;
       }
       for (int i = 0; i < node->child_count(); ++i) {

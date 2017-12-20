@@ -152,8 +152,8 @@ TEST_F(SigninSupervisedUserImportHandlerTest, NotAuthenticated) {
 
   // Test the JS -> C++ -> JS callback path.
   base::ListValue list_args;
-  list_args.AppendString(kTestCallbackId);
-  list_args.AppendString(profile()->GetPath().AsUTF16Unsafe());
+  list_args.GetList().emplace_back(kTestCallbackId);
+  list_args.GetList().emplace_back(profile()->GetPath().AsUTF16Unsafe());
   handler()->GetExistingSupervisedUsers(&list_args);
 
   // Expect an error response.
@@ -177,8 +177,8 @@ TEST_F(SigninSupervisedUserImportHandlerTest, AuthError) {
 
   // Test the JS -> C++ -> JS callback path.
   base::ListValue list_args;
-  list_args.AppendString(kTestCallbackId);
-  list_args.AppendString(profile()->GetPath().AsUTF16Unsafe());
+  list_args.GetList().emplace_back(kTestCallbackId);
+  list_args.GetList().emplace_back(profile()->GetPath().AsUTF16Unsafe());
   handler()->GetExistingSupervisedUsers(&list_args);
 
   // Expect an error response.
@@ -202,8 +202,9 @@ TEST_F(SigninSupervisedUserImportHandlerTest, CustodianIsSupervised) {
 
   // Test the JS -> C++ -> JS callback path.
   base::ListValue list_args;
-  list_args.AppendString(kTestCallbackId);
-  list_args.AppendString(supervised_profile->GetPath().AsUTF16Unsafe());
+  list_args.GetList().emplace_back(kTestCallbackId);
+  list_args.GetList().emplace_back(
+      supervised_profile->GetPath().AsUTF16Unsafe());
   handler()->GetExistingSupervisedUsers(&list_args);
 
   // Expect to do nothing.
@@ -213,8 +214,8 @@ TEST_F(SigninSupervisedUserImportHandlerTest, CustodianIsSupervised) {
 TEST_F(SigninSupervisedUserImportHandlerTest, SendExistingSupervisedUsers) {
   // Test the JS -> C++ -> JS callback path.
   base::ListValue list_args;
-  list_args.AppendString(kTestCallbackId);
-  list_args.AppendString(profile()->GetPath().AsUTF16Unsafe());
+  list_args.GetList().emplace_back(kTestCallbackId);
+  list_args.GetList().emplace_back(profile()->GetPath().AsUTF16Unsafe());
   handler()->GetExistingSupervisedUsers(&list_args);
 
   // Expect a success response.
@@ -222,7 +223,7 @@ TEST_F(SigninSupervisedUserImportHandlerTest, SendExistingSupervisedUsers) {
 
   const base::ListValue* supervised_users;
   ASSERT_TRUE(web_ui()->call_data()[0]->arg3()->GetAsList(&supervised_users));
-  EXPECT_EQ(1U, supervised_users->GetSize());
+  EXPECT_EQ(1U, supervised_users->GetList().size());
 
   const base::DictionaryValue* supervised_user;
   ASSERT_TRUE(supervised_users->GetDictionary(0, &supervised_user));

@@ -318,8 +318,8 @@ IN_PROC_BROWSER_TEST_F(ExtensionTabsTest, GetAllWindows) {
                                                             "[]", browser())));
 
   base::ListValue* windows = result.get();
-  EXPECT_EQ(window_ids.size(), windows->GetSize());
-  for (size_t i = 0; i < windows->GetSize(); ++i) {
+  EXPECT_EQ(window_ids.size(), windows->GetList().size());
+  for (size_t i = 0; i < windows->GetList().size(); ++i) {
     base::DictionaryValue* result_window = nullptr;
     EXPECT_TRUE(windows->GetDictionary(i, &result_window));
     result_ids.insert(GetWindowId(result_window));
@@ -340,8 +340,8 @@ IN_PROC_BROWSER_TEST_F(ExtensionTabsTest, GetAllWindows) {
                                               browser())));
 
   windows = result.get();
-  EXPECT_EQ(window_ids.size(), windows->GetSize());
-  for (size_t i = 0; i < windows->GetSize(); ++i) {
+  EXPECT_EQ(window_ids.size(), windows->GetList().size());
+  for (size_t i = 0; i < windows->GetList().size(); ++i) {
     base::DictionaryValue* result_window = nullptr;
     EXPECT_TRUE(windows->GetDictionary(i, &result_window));
     result_ids.insert(GetWindowId(result_window));
@@ -391,8 +391,8 @@ IN_PROC_BROWSER_TEST_F(ExtensionTabsTest, GetAllWindowsAllTypes) {
           browser())));
 
   base::ListValue* windows = result.get();
-  EXPECT_EQ(window_ids.size(), windows->GetSize());
-  for (size_t i = 0; i < windows->GetSize(); ++i) {
+  EXPECT_EQ(window_ids.size(), windows->GetList().size());
+  for (size_t i = 0; i < windows->GetList().size(); ++i) {
     base::DictionaryValue* result_window = nullptr;
     EXPECT_TRUE(windows->GetDictionary(i, &result_window));
     result_ids.insert(GetWindowId(result_window));
@@ -415,8 +415,8 @@ IN_PROC_BROWSER_TEST_F(ExtensionTabsTest, GetAllWindowsAllTypes) {
       browser())));
 
   windows = result.get();
-  EXPECT_EQ(window_ids.size(), windows->GetSize());
-  for (size_t i = 0; i < windows->GetSize(); ++i) {
+  EXPECT_EQ(window_ids.size(), windows->GetList().size());
+  for (size_t i = 0; i < windows->GetList().size(); ++i) {
     base::DictionaryValue* result_window = nullptr;
     EXPECT_TRUE(windows->GetDictionary(i, &result_window));
     result_ids.insert(GetWindowId(result_window));
@@ -632,8 +632,8 @@ IN_PROC_BROWSER_TEST_F(ExtensionTabsTest, QueryCurrentWindowTabs) {
 
   base::ListValue* result_tabs = result.get();
   // We should have one initial tab and one added tab.
-  EXPECT_EQ(2u, result_tabs->GetSize());
-  for (size_t i = 0; i < result_tabs->GetSize(); ++i) {
+  EXPECT_EQ(2u, result_tabs->GetList().size());
+  for (size_t i = 0; i < result_tabs->GetList().size(); ++i) {
     base::DictionaryValue* result_tab = nullptr;
     EXPECT_TRUE(result_tabs->GetDictionary(i, &result_tab));
     EXPECT_EQ(window_id, GetTabWindowId(result_tab));
@@ -649,7 +649,7 @@ IN_PROC_BROWSER_TEST_F(ExtensionTabsTest, QueryCurrentWindowTabs) {
 
   result_tabs = result.get();
   // We should have one tab for each extra window.
-  EXPECT_EQ(kExtraWindows, result_tabs->GetSize());
+  EXPECT_EQ(kExtraWindows, result_tabs->GetList().size());
   for (size_t i = 0; i < kExtraWindows; ++i) {
     base::DictionaryValue* result_tab = nullptr;
     EXPECT_TRUE(result_tabs->GetDictionary(i, &result_tab));
@@ -680,8 +680,8 @@ IN_PROC_BROWSER_TEST_F(ExtensionTabsTest, QueryAllTabsWithDevTools) {
   std::set<int> result_ids;
   base::ListValue* result_tabs = result.get();
   // We should have one tab per browser except for DevTools.
-  EXPECT_EQ(kNumWindows, result_tabs->GetSize());
-  for (size_t i = 0; i < result_tabs->GetSize(); ++i) {
+  EXPECT_EQ(kNumWindows, result_tabs->GetList().size());
+  for (size_t i = 0; i < result_tabs->GetList().size(); ++i) {
     base::DictionaryValue* result_tab = nullptr;
     EXPECT_TRUE(result_tabs->GetDictionary(i, &result_tab));
     result_ids.insert(GetTabWindowId(result_tab));
@@ -1392,14 +1392,14 @@ IN_PROC_BROWSER_TEST_F(ExtensionTabsTest, DiscardedProperty) {
         RunQueryFunction("[{\"discarded\": false}]"));
 
     // The two created plus the default tab.
-    EXPECT_EQ(3u, result->GetSize());
+    EXPECT_EQ(3u, result->GetList().size());
   }
 
   // Get discarded tabs.
   {
     std::unique_ptr<base::ListValue> result(
         RunQueryFunction("[{\"discarded\": true}]"));
-    EXPECT_EQ(0u, result->GetSize());
+    EXPECT_EQ(0u, result->GetList().size());
   }
 
   TabStripModel* tab_strip_model = browser()->tab_strip_model();
@@ -1422,14 +1422,14 @@ IN_PROC_BROWSER_TEST_F(ExtensionTabsTest, DiscardedProperty) {
   {
     std::unique_ptr<base::ListValue> result(
         RunQueryFunction("[{\"discarded\": false}]"));
-    EXPECT_EQ(2u, result->GetSize());
+    EXPECT_EQ(2u, result->GetList().size());
   }
 
   // Get discarded tabs after discarding one tab.
   {
     std::unique_ptr<base::ListValue> result(
         RunQueryFunction("[{\"discarded\": true}]"));
-    EXPECT_EQ(1u, result->GetSize());
+    EXPECT_EQ(1u, result->GetList().size());
 
     // Make sure the returned tab is the correct one.
     int tab_id_a = ExtensionTabUtil::GetTabId(web_contents_a);
@@ -1449,7 +1449,7 @@ IN_PROC_BROWSER_TEST_F(ExtensionTabsTest, DiscardedProperty) {
   {
     std::unique_ptr<base::ListValue> result(
         RunQueryFunction("[{\"discarded\": false}]"));
-    EXPECT_EQ(1u, result->GetSize());
+    EXPECT_EQ(1u, result->GetList().size());
 
     // Make sure the returned tab is the correct one.
     int tab_id_c =
@@ -1467,7 +1467,7 @@ IN_PROC_BROWSER_TEST_F(ExtensionTabsTest, DiscardedProperty) {
   {
     std::unique_ptr<base::ListValue> result(
         RunQueryFunction("[{\"discarded\": true}]"));
-    EXPECT_EQ(2u, result->GetSize());
+    EXPECT_EQ(2u, result->GetList().size());
   }
 
   // Activates the first created tab.
@@ -1477,14 +1477,14 @@ IN_PROC_BROWSER_TEST_F(ExtensionTabsTest, DiscardedProperty) {
   {
     std::unique_ptr<base::ListValue> result(
         RunQueryFunction("[{\"discarded\": false}]"));
-    EXPECT_EQ(2u, result->GetSize());
+    EXPECT_EQ(2u, result->GetList().size());
   }
 
   // Get discarded tabs after activating a discarded tab.
   {
     std::unique_ptr<base::ListValue> result(
         RunQueryFunction("[{\"discarded\": true}]"));
-    EXPECT_EQ(1u, result->GetSize());
+    EXPECT_EQ(1u, result->GetList().size());
   }
 }
 
@@ -1660,11 +1660,11 @@ IN_PROC_BROWSER_TEST_F(ExtensionTabsTest, AutoDiscardableProperty) {
   // Get auto-discardable tabs. Returns all since tabs are auto-discardable
   // by default.
   query_result.reset(RunQueryFunction(kAutoDiscardableQueryInfo));
-  EXPECT_EQ(3u, query_result->GetSize());
+  EXPECT_EQ(3u, query_result->GetList().size());
 
   // Get non auto-discardable tabs.
   query_result.reset(RunQueryFunction(kNonAutoDiscardableQueryInfo));
-  EXPECT_EQ(0u, query_result->GetSize());
+  EXPECT_EQ(0u, query_result->GetList().size());
 
   // Update the auto-discardable state of web contents A.
   int tab_id_a = ExtensionTabUtil::GetTabId(web_contents_a);
@@ -1681,11 +1681,11 @@ IN_PROC_BROWSER_TEST_F(ExtensionTabsTest, AutoDiscardableProperty) {
 
   // Get auto-discardable tabs after changing the status of web contents A.
   query_result.reset(RunQueryFunction(kAutoDiscardableQueryInfo));
-  EXPECT_EQ(2u, query_result->GetSize());
+  EXPECT_EQ(2u, query_result->GetList().size());
 
   // Get non auto-discardable tabs after changing the status of web contents A.
   query_result.reset(RunQueryFunction(kNonAutoDiscardableQueryInfo));
-  EXPECT_EQ(1u, query_result->GetSize());
+  EXPECT_EQ(1u, query_result->GetList().size());
 
   // Make sure the returned tab is the correct one.
   int id = -1;
@@ -1704,7 +1704,7 @@ IN_PROC_BROWSER_TEST_F(ExtensionTabsTest, AutoDiscardableProperty) {
 
   // Get auto-discardable tabs after changing the status of both created tabs.
   query_result.reset(RunQueryFunction(kAutoDiscardableQueryInfo));
-  EXPECT_EQ(1u, query_result->GetSize());
+  EXPECT_EQ(1u, query_result->GetList().size());
 
   // Make sure the returned tab is the correct one.
   id = -1;
@@ -1716,7 +1716,7 @@ IN_PROC_BROWSER_TEST_F(ExtensionTabsTest, AutoDiscardableProperty) {
 
   // Get auto-discardable tabs after changing the status of both created tabs.
   query_result.reset(RunQueryFunction(kNonAutoDiscardableQueryInfo));
-  EXPECT_EQ(2u, query_result->GetSize());
+  EXPECT_EQ(2u, query_result->GetList().size());
 
   // Resets the first tab back to auto-discardable.
   update_result.reset(RunUpdateFunction(
@@ -1727,11 +1727,11 @@ IN_PROC_BROWSER_TEST_F(ExtensionTabsTest, AutoDiscardableProperty) {
 
   // Get auto-discardable tabs after resetting the status of web contents A.
   query_result.reset(RunQueryFunction(kAutoDiscardableQueryInfo));
-  EXPECT_EQ(2u, query_result->GetSize());
+  EXPECT_EQ(2u, query_result->GetList().size());
 
   // Get non auto-discardable tabs after resetting the status of web contents A.
   query_result.reset(RunQueryFunction(kNonAutoDiscardableQueryInfo));
-  EXPECT_EQ(1u, query_result->GetSize());
+  EXPECT_EQ(1u, query_result->GetList().size());
 }
 
 // Tester class for the tabs.zoom* api functions.

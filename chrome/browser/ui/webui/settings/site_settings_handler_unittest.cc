@@ -155,7 +155,7 @@ class SiteSettingsHandlerTest : public testing::Test {
 
     const base::ListValue* exceptions;
     ASSERT_TRUE(data.arg3()->GetAsList(&exceptions));
-    EXPECT_EQ(1U, exceptions->GetSize());
+    EXPECT_EQ(1U, exceptions->GetList().size());
     const base::DictionaryValue* exception;
     ASSERT_TRUE(exceptions->GetDictionary(0, &exception));
     std::string origin, embedding_origin, display_name, setting, source;
@@ -191,7 +191,7 @@ class SiteSettingsHandlerTest : public testing::Test {
 
     const base::ListValue* exceptions;
     ASSERT_TRUE(data.arg3()->GetAsList(&exceptions));
-    EXPECT_EQ(0U, exceptions->GetSize());
+    EXPECT_EQ(0U, exceptions->GetList().size());
   }
 
   void ValidatePattern(bool expected_validity, size_t expected_total_calls) {
@@ -243,9 +243,9 @@ class SiteSettingsHandlerTest : public testing::Test {
     const base::ListValue* exceptions;
     ASSERT_TRUE(data.arg2()->GetAsList(&exceptions));
     if (expected_host.empty()) {
-      EXPECT_EQ(0U, exceptions->GetSize());
+      EXPECT_EQ(0U, exceptions->GetList().size());
     } else {
-      EXPECT_EQ(1U, exceptions->GetSize());
+      EXPECT_EQ(1U, exceptions->GetList().size());
 
       const base::DictionaryValue* exception;
       ASSERT_TRUE(exceptions->GetDictionary(0, &exception));
@@ -292,16 +292,16 @@ class SiteSettingsHandlerTest : public testing::Test {
 TEST_F(SiteSettingsHandlerTest, GetAndSetDefault) {
   // Test the JS -> C++ -> JS callback path for getting and setting defaults.
   base::ListValue get_args;
-  get_args.AppendString(kCallbackId);
-  get_args.AppendString(kNotifications);
+  get_args.GetList().emplace_back(kCallbackId);
+  get_args.GetList().emplace_back(kNotifications);
   handler()->HandleGetDefaultValueForContentType(&get_args);
   ValidateDefault(CONTENT_SETTING_ASK,
                   site_settings::SiteSettingSource::kDefault, 1U);
 
   // Set the default to 'Blocked'.
   base::ListValue set_args;
-  set_args.AppendString(kNotifications);
-  set_args.AppendString(
+  set_args.GetList().emplace_back(kNotifications);
+  set_args.GetList().emplace_back(
       content_settings::ContentSettingToString(CONTENT_SETTING_BLOCK));
   handler()->HandleSetDefaultValueForContentType(&set_args);
 
@@ -320,12 +320,12 @@ TEST_F(SiteSettingsHandlerTest, Origins) {
     // Test the JS -> C++ -> JS callback path for configuring origins, by
     // setting Google.com to blocked.
     base::ListValue set_args;
-    set_args.AppendString(google);  // Primary pattern.
-    set_args.AppendString(google);  // Secondary pattern.
-    set_args.AppendString(kNotifications);
-    set_args.AppendString(
+    set_args.GetList().emplace_back(google);  // Primary pattern.
+    set_args.GetList().emplace_back(google);  // Secondary pattern.
+    set_args.GetList().emplace_back(kNotifications);
+    set_args.GetList().emplace_back(
         content_settings::ContentSettingToString(CONTENT_SETTING_BLOCK));
-    set_args.AppendBoolean(false);  // Incognito.
+    set_args.GetList().emplace_back(false);  // Incognito.
     base::HistogramTester histograms;
     handler()->HandleSetCategoryPermissionForPattern(&set_args);
     EXPECT_EQ(1U, web_ui()->call_data().size());
@@ -337,8 +337,8 @@ TEST_F(SiteSettingsHandlerTest, Origins) {
   }
 
   base::ListValue get_exception_list_args;
-  get_exception_list_args.AppendString(kCallbackId);
-  get_exception_list_args.AppendString(kNotifications);
+  get_exception_list_args.GetList().emplace_back(kCallbackId);
+  get_exception_list_args.GetList().emplace_back(kNotifications);
   handler()->HandleGetExceptionList(&get_exception_list_args);
   ValidateOrigin(google, google, google, CONTENT_SETTING_BLOCK,
                  site_settings::SiteSettingSource::kPreference, 2U);
@@ -346,10 +346,10 @@ TEST_F(SiteSettingsHandlerTest, Origins) {
   {
     // Reset things back to how they were.
     base::ListValue reset_args;
-    reset_args.AppendString(google);
-    reset_args.AppendString(google);
-    reset_args.AppendString(kNotifications);
-    reset_args.AppendBoolean(false);  // Incognito.
+    reset_args.GetList().emplace_back(google);
+    reset_args.GetList().emplace_back(google);
+    reset_args.GetList().emplace_back(kNotifications);
+    reset_args.GetList().emplace_back(false);  // Incognito.
     base::HistogramTester histograms;
     handler()->HandleResetCategoryPermissionForPattern(&reset_args);
     EXPECT_EQ(3U, web_ui()->call_data().size());
@@ -371,10 +371,10 @@ TEST_F(SiteSettingsHandlerTest, DefaultSettingSource) {
                                            CONTENT_SETTINGS_TYPE_NOTIFICATIONS);
 
   base::ListValue get_origin_permissions_args;
-  get_origin_permissions_args.AppendString(kCallbackId);
-  get_origin_permissions_args.AppendString(google);
+  get_origin_permissions_args.GetList().emplace_back(kCallbackId);
+  get_origin_permissions_args.GetList().emplace_back(google);
   auto category_list = base::MakeUnique<base::ListValue>();
-  category_list->AppendString(kNotifications);
+  category_list->GetList().emplace_back(kNotifications);
   get_origin_permissions_args.Append(std::move(category_list));
 
   // Test Chrome built-in defaults are marked as default.
@@ -383,8 +383,8 @@ TEST_F(SiteSettingsHandlerTest, DefaultSettingSource) {
                  site_settings::SiteSettingSource::kDefault, 1U);
 
   base::ListValue default_value_args;
-  default_value_args.AppendString(kNotifications);
-  default_value_args.AppendString(
+  default_value_args.GetList().emplace_back(kNotifications);
+  default_value_args.GetList().emplace_back(
       content_settings::ContentSettingToString(CONTENT_SETTING_BLOCK));
   handler()->HandleSetDefaultValueForContentType(&default_value_args);
   // A user-set global default should also show up as default.
@@ -393,12 +393,12 @@ TEST_F(SiteSettingsHandlerTest, DefaultSettingSource) {
                  site_settings::SiteSettingSource::kDefault, 3U);
 
   base::ListValue set_notification_pattern_args;
-  set_notification_pattern_args.AppendString("[*.]google.com");
-  set_notification_pattern_args.AppendString("*");
-  set_notification_pattern_args.AppendString(kNotifications);
-  set_notification_pattern_args.AppendString(
+  set_notification_pattern_args.GetList().emplace_back("[*.]google.com");
+  set_notification_pattern_args.GetList().emplace_back("*");
+  set_notification_pattern_args.GetList().emplace_back(kNotifications);
+  set_notification_pattern_args.GetList().emplace_back(
       content_settings::ContentSettingToString(CONTENT_SETTING_ALLOW));
-  set_notification_pattern_args.AppendBoolean(false);
+  set_notification_pattern_args.GetList().emplace_back(false);
   handler()->HandleSetCategoryPermissionForPattern(
       &set_notification_pattern_args);
   // A user-set pattern should not show up as default.
@@ -407,12 +407,12 @@ TEST_F(SiteSettingsHandlerTest, DefaultSettingSource) {
                  site_settings::SiteSettingSource::kPreference, 5U);
 
   base::ListValue set_notification_origin_args;
-  set_notification_origin_args.AppendString(google);
-  set_notification_origin_args.AppendString(google);
-  set_notification_origin_args.AppendString(kNotifications);
-  set_notification_origin_args.AppendString(
+  set_notification_origin_args.GetList().emplace_back(google);
+  set_notification_origin_args.GetList().emplace_back(google);
+  set_notification_origin_args.GetList().emplace_back(kNotifications);
+  set_notification_origin_args.GetList().emplace_back(
       content_settings::ContentSettingToString(CONTENT_SETTING_BLOCK));
-  set_notification_origin_args.AppendBoolean(false);
+  set_notification_origin_args.GetList().emplace_back(false);
   handler()->HandleSetCategoryPermissionForPattern(
       &set_notification_origin_args);
   // A user-set per-origin permission should not show up as default.
@@ -432,11 +432,11 @@ TEST_F(SiteSettingsHandlerTest, GetAndSetOriginPermissions) {
   // The display name won't show the port if it's default for that scheme.
   const std::string origin("https://www.example.com");
   base::ListValue get_args;
-  get_args.AppendString(kCallbackId);
-  get_args.AppendString(origin_with_port);
+  get_args.GetList().emplace_back(kCallbackId);
+  get_args.GetList().emplace_back(origin_with_port);
   {
     auto category_list = base::MakeUnique<base::ListValue>();
-    category_list->AppendString(kNotifications);
+    category_list->GetList().emplace_back(kNotifications);
     get_args.Append(std::move(category_list));
   }
   handler()->HandleGetOriginPermissions(&get_args);
@@ -446,24 +446,24 @@ TEST_F(SiteSettingsHandlerTest, GetAndSetOriginPermissions) {
 
   // Block notifications.
   base::ListValue set_args;
-  set_args.AppendString(origin_with_port);
+  set_args.GetList().emplace_back(origin_with_port);
   {
     auto category_list = base::MakeUnique<base::ListValue>();
-    category_list->AppendString(kNotifications);
+    category_list->GetList().emplace_back(kNotifications);
     set_args.Append(std::move(category_list));
   }
-  set_args.AppendString(
+  set_args.GetList().emplace_back(
       content_settings::ContentSettingToString(CONTENT_SETTING_BLOCK));
   handler()->HandleSetOriginPermissions(&set_args);
   EXPECT_EQ(2U, web_ui()->call_data().size());
 
   // Reset things back to how they were.
   base::ListValue reset_args;
-  reset_args.AppendString(origin_with_port);
+  reset_args.GetList().emplace_back(origin_with_port);
   auto category_list = base::MakeUnique<base::ListValue>();
-  category_list->AppendString(kNotifications);
+  category_list->GetList().emplace_back(kNotifications);
   reset_args.Append(std::move(category_list));
-  reset_args.AppendString(
+  reset_args.GetList().emplace_back(
       content_settings::ContentSettingToString(CONTENT_SETTING_DEFAULT));
 
   handler()->HandleSetOriginPermissions(&reset_args);
@@ -480,11 +480,11 @@ TEST_F(SiteSettingsHandlerTest, GetAndSetForInvalidURLs) {
   const std::string origin("arbitrary string");
   EXPECT_FALSE(GURL(origin).is_valid());
   base::ListValue get_args;
-  get_args.AppendString(kCallbackId);
-  get_args.AppendString(origin);
+  get_args.GetList().emplace_back(kCallbackId);
+  get_args.GetList().emplace_back(origin);
   {
     auto category_list = base::MakeUnique<base::ListValue>();
-    category_list->AppendString(kNotifications);
+    category_list->GetList().emplace_back(kNotifications);
     get_args.Append(std::move(category_list));
   }
   handler()->HandleGetOriginPermissions(&get_args);
@@ -496,13 +496,13 @@ TEST_F(SiteSettingsHandlerTest, GetAndSetForInvalidURLs) {
 
   // Make sure setting a permission on an invalid origin doesn't crash.
   base::ListValue set_args;
-  set_args.AppendString(origin);
+  set_args.GetList().emplace_back(origin);
   {
     auto category_list = base::MakeUnique<base::ListValue>();
-    category_list->AppendString(kNotifications);
+    category_list->GetList().emplace_back(kNotifications);
     set_args.Append(std::move(category_list));
   }
-  set_args.AppendString(
+  set_args.GetList().emplace_back(
       content_settings::ContentSettingToString(CONTENT_SETTING_ALLOW));
   handler()->HandleSetOriginPermissions(&set_args);
 
@@ -532,11 +532,11 @@ TEST_F(SiteSettingsHandlerTest, ExceptionHelpers) {
   CHECK(exception->GetBoolean(site_settings::kIncognito, &incognito));
 
   base::ListValue args;
-  args.AppendString(primary_pattern);
-  args.AppendString(secondary_pattern);
-  args.AppendString(kNotifications);  // Chosen arbitrarily.
-  args.AppendString(type);
-  args.AppendBoolean(incognito);
+  args.GetList().emplace_back(primary_pattern);
+  args.GetList().emplace_back(secondary_pattern);
+  args.GetList().emplace_back(kNotifications);  // Chosen arbitrarily.
+  args.GetList().emplace_back(type);
+  args.GetList().emplace_back(incognito);
 
   // We don't need to check the results. This is just to make sure it doesn't
   // crash on the input.
@@ -585,11 +585,11 @@ TEST_F(SiteSettingsHandlerTest, ExtensionDisplayName) {
   extension_registry->AddEnabled(extension);
 
   base::ListValue get_origin_permissions_args;
-  get_origin_permissions_args.AppendString(kCallbackId);
-  get_origin_permissions_args.AppendString(test_extension_url);
+  get_origin_permissions_args.GetList().emplace_back(kCallbackId);
+  get_origin_permissions_args.GetList().emplace_back(test_extension_url);
   {
     auto category_list = base::MakeUnique<base::ListValue>();
-    category_list->AppendString(kNotifications);
+    category_list->GetList().emplace_back(kNotifications);
     get_origin_permissions_args.Append(std::move(category_list));
   }
   handler()->HandleGetOriginPermissions(&get_origin_permissions_args);
@@ -601,15 +601,15 @@ TEST_F(SiteSettingsHandlerTest, ExtensionDisplayName) {
 TEST_F(SiteSettingsHandlerTest, Patterns) {
   base::ListValue args;
   std::string pattern("[*.]google.com");
-  args.AppendString(kCallbackId);
-  args.AppendString(pattern);
+  args.GetList().emplace_back(kCallbackId);
+  args.GetList().emplace_back(pattern);
   handler()->HandleIsPatternValid(&args);
   ValidatePattern(true, 1U);
 
   base::ListValue invalid;
   std::string bad_pattern(";");
-  invalid.AppendString(kCallbackId);
-  invalid.AppendString(bad_pattern);
+  invalid.GetList().emplace_back(kCallbackId);
+  invalid.GetList().emplace_back(bad_pattern);
   handler()->HandleIsPatternValid(&invalid);
   ValidatePattern(false, 2U);
 
@@ -618,8 +618,8 @@ TEST_F(SiteSettingsHandlerTest, Patterns) {
   // (crbug.com/709539).
   base::ListValue invalid_wildcard;
   std::string bad_pattern_wildcard("*");
-  invalid_wildcard.AppendString(kCallbackId);
-  invalid_wildcard.AppendString(bad_pattern_wildcard);
+  invalid_wildcard.GetList().emplace_back(kCallbackId);
+  invalid_wildcard.GetList().emplace_back(bad_pattern_wildcard);
   handler()->HandleIsPatternValid(&invalid_wildcard);
   ValidatePattern(false, 3U);
 }
@@ -649,7 +649,7 @@ TEST_F(SiteSettingsHandlerTest, ZoomLevels) {
   handler()->HandleFetchZoomLevels(&args);
   ValidateZoom(host, "122%", 2U);
 
-  args.AppendString("http://www.google.com");
+  args.GetList().emplace_back("http://www.google.com");
   handler()->HandleRemoveZoomLevel(&args);
   ValidateZoom("", "", 3U);
 
@@ -775,13 +775,13 @@ TEST_F(SiteSettingsHandlerInfobarTest, SettingPermissionsTriggersInfobar) {
 
   // Block notifications.
   base::ListValue set_args;
-  set_args.AppendString(origin_anchor_string);
+  set_args.GetList().emplace_back(origin_anchor_string);
   {
     auto category_list = base::MakeUnique<base::ListValue>();
-    category_list->AppendString(kNotifications);
+    category_list->GetList().emplace_back(kNotifications);
     set_args.Append(std::move(category_list));
   }
-  set_args.AppendString(
+  set_args.GetList().emplace_back(
       content_settings::ContentSettingToString(CONTENT_SETTING_BLOCK));
   handler()->HandleSetOriginPermissions(&set_args);
 
@@ -833,11 +833,11 @@ TEST_F(SiteSettingsHandlerInfobarTest, SettingPermissionsTriggersInfobar) {
 
   // Reset all permissions.
   base::ListValue reset_args;
-  reset_args.AppendString(origin_anchor_string);
+  reset_args.GetList().emplace_back(origin_anchor_string);
   auto category_list = base::MakeUnique<base::ListValue>();
-  category_list->AppendString(kNotifications);
+  category_list->GetList().emplace_back(kNotifications);
   reset_args.Append(std::move(category_list));
-  reset_args.AppendString(
+  reset_args.GetList().emplace_back(
       content_settings::ContentSettingToString(CONTENT_SETTING_DEFAULT));
   handler()->HandleSetOriginPermissions(&reset_args);
 
@@ -876,12 +876,12 @@ TEST_F(SiteSettingsHandlerTest, SessionOnlyException) {
   const std::string google_with_port("https://www.google.com:443");
   const std::string uma_base("WebsiteSettings.Menu.PermissionChanged");
   base::ListValue set_args;
-  set_args.AppendString(google_with_port);  // Primary pattern.
-  set_args.AppendString(google_with_port);  // Secondary pattern.
-  set_args.AppendString(kCookies);
-  set_args.AppendString(
+  set_args.GetList().emplace_back(google_with_port);  // Primary pattern.
+  set_args.GetList().emplace_back(google_with_port);  // Secondary pattern.
+  set_args.GetList().emplace_back(kCookies);
+  set_args.GetList().emplace_back(
       content_settings::ContentSettingToString(CONTENT_SETTING_SESSION_ONLY));
-  set_args.AppendBoolean(false);  // Incognito.
+  set_args.GetList().emplace_back(false);  // Incognito.
   base::HistogramTester histograms;
   handler()->HandleSetCategoryPermissionForPattern(&set_args);
   EXPECT_EQ(1U, web_ui()->call_data().size());

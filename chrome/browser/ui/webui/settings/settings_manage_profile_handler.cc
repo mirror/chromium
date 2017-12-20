@@ -107,7 +107,7 @@ void ManageProfileHandler::HandleGetAvailableIcons(
 
   profiles::UpdateGaiaProfileInfoIfNeeded(profile_);
 
-  CHECK_EQ(1U, args->GetSize());
+  CHECK_EQ(1U, args->GetList().size());
   const base::Value* callback_id;
   CHECK(args->Get(0, &callback_id));
   ResolveJavascriptCallback(*callback_id, *GetAvailableIcons());
@@ -162,7 +162,7 @@ void ManageProfileHandler::HandleSetProfileIconToDefaultAvatar(
     const base::ListValue* args) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   DCHECK(args);
-  DCHECK_EQ(1u, args->GetSize());
+  DCHECK_EQ(1u, args->GetList().size());
 
   std::string icon_url;
   CHECK(args->GetString(0, &icon_url));
@@ -182,7 +182,7 @@ void ManageProfileHandler::HandleSetProfileIconToDefaultAvatar(
 void ManageProfileHandler::HandleSetProfileName(const base::ListValue* args) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   DCHECK(args);
-  DCHECK_EQ(1u, args->GetSize());
+  DCHECK_EQ(1u, args->GetList().size());
 
   if (profile_->IsLegacySupervised())
     return;
@@ -203,7 +203,7 @@ void ManageProfileHandler::HandleRequestProfileShortcutStatus(
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   DCHECK(ProfileShortcutManager::IsFeatureEnabled());
 
-  CHECK_EQ(1U, args->GetSize());
+  CHECK_EQ(1U, args->GetList().size());
   std::string callback_id;
   CHECK(args->GetString(0, &callback_id));
 

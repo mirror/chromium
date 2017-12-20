@@ -43,7 +43,7 @@ std::unique_ptr<protocol::Value> toProtocolValue(const base::Value* value,
     const base::ListValue* list = nullptr;
     value->GetAsList(&list);
     std::unique_ptr<protocol::ListValue> result = protocol::ListValue::create();
-    for (size_t i = 0; i < list->GetSize(); i++) {
+    for (size_t i = 0; i < list->GetList().size(); i++) {
       const base::Value* item = nullptr;
       list->Get(i, &item);
       std::unique_ptr<protocol::Value> converted =

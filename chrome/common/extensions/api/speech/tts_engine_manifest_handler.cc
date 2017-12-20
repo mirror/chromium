@@ -70,7 +70,7 @@ bool TtsEngineManifestHandler::Parse(Extension* extension,
     return false;
   }
 
-  for (size_t i = 0; i < tts_voices->GetSize(); i++) {
+  for (size_t i = 0; i < tts_voices->GetList().size(); i++) {
     const base::DictionaryValue* one_tts_voice = NULL;
     if (!tts_voices->GetDictionary(i, &one_tts_voice)) {
       *error = base::ASCIIToUTF16(errors::kInvalidTtsVoices);
@@ -118,7 +118,7 @@ bool TtsEngineManifestHandler::Parse(Extension* extension,
             errors::kInvalidTtsVoicesEventTypes);
         return false;
       }
-      for (size_t i = 0; i < event_types_list->GetSize(); i++) {
+      for (size_t i = 0; i < event_types_list->GetList().size(); i++) {
         std::string event_type;
         if (!event_types_list->GetString(i, &event_type)) {
           *error = base::ASCIIToUTF16(errors::kInvalidTtsVoicesEventTypes);

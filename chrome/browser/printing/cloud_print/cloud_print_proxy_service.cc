@@ -149,7 +149,7 @@ void CloudPrintProxyService::GetPrinters(const PrintersCallback& callback) {
     base::ListValue* list = NULL;
     std::vector<std::string> printers;
     if (value && value->GetAsList(&list) && list) {
-      for (size_t i = 0; i < list->GetSize(); ++i) {
+      for (size_t i = 0; i < list->GetList().size(); ++i) {
         std::string printer;
         if (list->GetString(i, &printer))
           printers.push_back(printer);

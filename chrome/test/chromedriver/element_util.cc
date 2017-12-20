@@ -141,7 +141,7 @@ Status ScrollElementRegionIntoViewHelper(
   WebPoint tmp_location = *location;
   base::ListValue args;
   args.Append(CreateElement(element_id));
-  args.AppendBoolean(center);
+  args.GetList().emplace_back(center);
   args.Append(CreateValueFrom(region));
   std::unique_ptr<base::Value> result;
   Status status = web_view->CallFunction(
@@ -173,7 +173,7 @@ Status GetElementEffectiveStyle(
     std::string* value) {
   base::ListValue args;
   args.Append(CreateElement(element_id));
-  args.AppendString(property);
+  args.GetList().emplace_back(property);
   std::unique_ptr<base::Value> result;
   Status status = web_view->CallFunction(
       frame, webdriver::atoms::asString(webdriver::atoms::GET_EFFECTIVE_STYLE),
@@ -272,7 +272,7 @@ Status FindElement(int interval_ms,
         base::ListValue* result;
         if (!temp->GetAsList(&result))
           return Status(kUnknownError, "script returns unexpected result");
-        if (result->GetSize() > 0U) {
+        if (result->GetList().size() > 0U) {
           *value = std::move(temp);
           return Status(kOk);
         }
@@ -326,7 +326,7 @@ Status GetElementAttribute(Session* session,
                            std::unique_ptr<base::Value>* value) {
   base::ListValue args;
   args.Append(CreateElement(element_id));
-  args.AppendString(attribute_name);
+  args.GetList().emplace_back(attribute_name);
   return CallAtomsJs(
       session->GetCurrentFrameId(), web_view, webdriver::atoms::GET_ATTRIBUTE,
       args, value);
@@ -489,7 +489,7 @@ Status IsElementDisplayed(
     bool* is_displayed) {
   base::ListValue args;
   args.Append(CreateElement(element_id));
-  args.AppendBoolean(ignore_opacity);
+  args.GetList().emplace_back(ignore_opacity);
   std::unique_ptr<base::Value> result;
   Status status = CallAtomsJs(
       session->GetCurrentFrameId(), web_view, webdriver::atoms::IS_DISPLAYED,
@@ -563,7 +563,7 @@ Status SetOptionElementSelected(
   // TODO(171034): need to fix throwing error if an alert is triggered.
   base::ListValue args;
   args.Append(CreateElement(element_id));
-  args.AppendBoolean(selected);
+  args.GetList().emplace_back(selected);
   std::unique_ptr<base::Value> result;
   return CallAtomsJs(
       session->GetCurrentFrameId(), web_view, webdriver::atoms::CLICK,
@@ -626,9 +626,8 @@ Status ScrollElementRegionIntoView(
   for (std::list<FrameInfo>::reverse_iterator rit = session->frames.rbegin();
        rit != session->frames.rend(); ++rit) {
     base::ListValue args;
-    args.AppendString(
-        base::StringPrintf("//*[@cd_frame_id_ = '%s']",
-                           rit->chromedriver_frame_id.c_str()));
+    args.GetList().emplace_back(base::StringPrintf(
+        "//*[@cd_frame_id_ = '%s']", rit->chromedriver_frame_id.c_str()));
     std::unique_ptr<base::Value> result;
     status = web_view->CallFunction(
         rit->parent_frame_id, kFindSubFrameScript, args, &result);

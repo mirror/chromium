@@ -172,10 +172,10 @@ class EasyUnlockAppEventConsumer
       return;
     }
 
-    if (args->GetSize() != 1u) {
+    if (args->GetList().size() != 1u) {
       ADD_FAILURE()
           << "Invalid argument list size for onUserInfoUpdated event: "
-          << args->GetSize() << " expected: " << 1u;
+          << args->GetList().size() << " expected: " << 1u;
       return;
     }
 
@@ -194,7 +194,7 @@ class EasyUnlockAppEventConsumer
   // Processes screenlockPrivate.onAuthAttempted event.
   void ConsumeAuthAttempted(base::ListValue* args) {
     ASSERT_TRUE(args);
-    ASSERT_EQ(2u, args->GetSize());
+    ASSERT_EQ(2u, args->GetList().size());
 
     std::string auth_type;
     ASSERT_TRUE(args->GetString(0u, &auth_type));

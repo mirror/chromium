@@ -472,7 +472,7 @@ void CertificatesHandler::HandleViewCertificate(const base::ListValue* args) {
 }
 
 void CertificatesHandler::AssignWebUICallbackId(const base::ListValue* args) {
-  CHECK_LE(1U, args->GetSize());
+  CHECK_LE(1U, args->GetList().size());
   CHECK(webui_callback_id_.empty());
   CHECK(args->GetString(0, &webui_callback_id_));
 }
@@ -480,7 +480,7 @@ void CertificatesHandler::AssignWebUICallbackId(const base::ListValue* args) {
 void CertificatesHandler::HandleGetCATrust(const base::ListValue* args) {
   AllowJavascript();
 
-  CHECK_EQ(2U, args->GetSize());
+  CHECK_EQ(2U, args->GetList().size());
   AssignWebUICallbackId(args);
   std::string node_id;
   CHECK(args->GetString(1, &node_id));
@@ -505,7 +505,7 @@ void CertificatesHandler::HandleGetCATrust(const base::ListValue* args) {
 }
 
 void CertificatesHandler::HandleEditCATrust(const base::ListValue* args) {
-  CHECK_EQ(5U, args->GetSize());
+  CHECK_EQ(5U, args->GetList().size());
   AssignWebUICallbackId(args);
   std::string node_id;
   CHECK(args->GetString(1, &node_id));
@@ -538,7 +538,7 @@ void CertificatesHandler::HandleEditCATrust(const base::ListValue* args) {
 }
 
 void CertificatesHandler::HandleExportPersonal(const base::ListValue* args) {
-  CHECK_EQ(2U, args->GetSize());
+  CHECK_EQ(2U, args->GetList().size());
   AssignWebUICallbackId(args);
   std::string node_id;
   CHECK(args->GetString(1, &node_id));
@@ -571,7 +571,7 @@ void CertificatesHandler::ExportPersonalFileSelected(
 
 void CertificatesHandler::HandleExportPersonalPasswordSelected(
     const base::ListValue* args) {
-  CHECK_EQ(2U, args->GetSize());
+  CHECK_EQ(2U, args->GetList().size());
   AssignWebUICallbackId(args);
   CHECK(args->GetString(1, &password_));
 
@@ -625,7 +625,7 @@ void CertificatesHandler::ExportPersonalFileWritten(const int* write_errno,
 }
 
 void CertificatesHandler::HandleImportPersonal(const base::ListValue* args) {
-  CHECK_EQ(2U, args->GetSize());
+  CHECK_EQ(2U, args->GetList().size());
   AssignWebUICallbackId(args);
   CHECK(args->GetBoolean(1, &use_hardware_backed_));
 
@@ -706,7 +706,7 @@ void CertificatesHandler::ImportPersonalFileRead(const int* read_errno,
 
 void CertificatesHandler::HandleImportPersonalPasswordSelected(
     const base::ListValue* args) {
-  CHECK_EQ(2U, args->GetSize());
+  CHECK_EQ(2U, args->GetList().size());
   AssignWebUICallbackId(args);
   CHECK(args->GetString(1, &password_));
 
@@ -786,7 +786,7 @@ void CertificatesHandler::ImportExportCleanup() {
 }
 
 void CertificatesHandler::HandleImportServer(const base::ListValue* args) {
-  CHECK_EQ(1U, args->GetSize());
+  CHECK_EQ(1U, args->GetList().size());
   AssignWebUICallbackId(args);
 
   select_file_dialog_ = ui::SelectFileDialog::Create(
@@ -853,7 +853,7 @@ void CertificatesHandler::ImportServerFileRead(const int* read_errno,
 }
 
 void CertificatesHandler::HandleImportCA(const base::ListValue* args) {
-  CHECK_EQ(1U, args->GetSize());
+  CHECK_EQ(1U, args->GetList().size());
   AssignWebUICallbackId(args);
 
   select_file_dialog_ = ui::SelectFileDialog::Create(
@@ -911,7 +911,7 @@ void CertificatesHandler::ImportCAFileRead(const int* read_errno,
 
 void CertificatesHandler::HandleImportCATrustSelected(
     const base::ListValue* args) {
-  CHECK_EQ(4U, args->GetSize());
+  CHECK_EQ(4U, args->GetList().size());
   AssignWebUICallbackId(args);
 
   bool trust_ssl = false;
@@ -958,7 +958,7 @@ void CertificatesHandler::HandleExportCertificate(const base::ListValue* args) {
 }
 
 void CertificatesHandler::HandleDeleteCertificate(const base::ListValue* args) {
-  CHECK_EQ(2U, args->GetSize());
+  CHECK_EQ(2U, args->GetList().size());
   AssignWebUICallbackId(args);
   std::string node_id;
   CHECK(args->GetString(1, &node_id));

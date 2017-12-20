@@ -558,8 +558,8 @@ TEST_F(PeopleHandlerTest, TestSyncEverything) {
   std::string args = GetConfiguration(
       NULL, SYNC_ALL_DATA, GetAllTypes(), std::string(), ENCRYPT_PASSWORDS);
   base::ListValue list_args;
-  list_args.AppendString(kTestCallbackId);
-  list_args.AppendString(args);
+  list_args.GetList().emplace_back(kTestCallbackId);
+  list_args.GetList().emplace_back(args);
   EXPECT_CALL(*mock_pss_, IsPassphraseRequiredForDecryption())
       .WillRepeatedly(Return(false));
   EXPECT_CALL(*mock_pss_, IsPassphraseRequired())
@@ -575,8 +575,8 @@ TEST_F(PeopleHandlerTest, TestPassphraseStillRequired) {
   std::string args = GetConfiguration(
       NULL, SYNC_ALL_DATA, GetAllTypes(), std::string(), ENCRYPT_PASSWORDS);
   base::ListValue list_args;
-  list_args.AppendString(kTestCallbackId);
-  list_args.AppendString(args);
+  list_args.GetList().emplace_back(kTestCallbackId);
+  list_args.GetList().emplace_back(args);
   EXPECT_CALL(*mock_pss_, IsPassphraseRequiredForDecryption())
       .WillRepeatedly(Return(true));
   EXPECT_CALL(*mock_pss_, IsPassphraseRequired())
@@ -597,8 +597,8 @@ TEST_F(PeopleHandlerTest, EnterExistingFrozenImplicitPassword) {
   std::string args = GetConfiguration(&dict, SYNC_ALL_DATA, GetAllTypes(),
                                       "oldGaiaPassphrase", ENCRYPT_PASSWORDS);
   base::ListValue list_args;
-  list_args.AppendString(kTestCallbackId);
-  list_args.AppendString(args);
+  list_args.GetList().emplace_back(kTestCallbackId);
+  list_args.GetList().emplace_back(args);
   // Act as if an encryption passphrase is required the first time, then never
   // again after that.
   EXPECT_CALL(*mock_pss_, IsPassphraseRequired()).WillOnce(Return(true));
@@ -620,8 +620,8 @@ TEST_F(PeopleHandlerTest, SetNewCustomPassphrase) {
   std::string args = GetConfiguration(&dict, SYNC_ALL_DATA, GetAllTypes(),
                                       "custom_passphrase", ENCRYPT_ALL_DATA);
   base::ListValue list_args;
-  list_args.AppendString(kTestCallbackId);
-  list_args.AppendString(args);
+  list_args.GetList().emplace_back(kTestCallbackId);
+  list_args.GetList().emplace_back(args);
   EXPECT_CALL(*mock_pss_, IsPassphraseRequiredForDecryption())
       .WillRepeatedly(Return(false));
   EXPECT_CALL(*mock_pss_, IsPassphraseRequired())
@@ -643,8 +643,8 @@ TEST_F(PeopleHandlerTest, EnterWrongExistingPassphrase) {
   std::string args = GetConfiguration(&dict, SYNC_ALL_DATA, GetAllTypes(),
                                       "invalid_passphrase", ENCRYPT_ALL_DATA);
   base::ListValue list_args;
-  list_args.AppendString(kTestCallbackId);
-  list_args.AppendString(args);
+  list_args.GetList().emplace_back(kTestCallbackId);
+  list_args.GetList().emplace_back(args);
   EXPECT_CALL(*mock_pss_, IsPassphraseRequiredForDecryption())
       .WillRepeatedly(Return(true));
   EXPECT_CALL(*mock_pss_, IsPassphraseRequired())
@@ -671,8 +671,8 @@ TEST_F(PeopleHandlerTest, EnterBlankExistingPassphrase) {
                                       "",
                                       ENCRYPT_PASSWORDS);
   base::ListValue list_args;
-  list_args.AppendString(kTestCallbackId);
-  list_args.AppendString(args);
+  list_args.GetList().emplace_back(kTestCallbackId);
+  list_args.GetList().emplace_back(args);
   EXPECT_CALL(*mock_pss_, IsPassphraseRequiredForDecryption())
       .WillRepeatedly(Return(true));
   EXPECT_CALL(*mock_pss_, IsPassphraseRequired())
@@ -702,8 +702,8 @@ TEST_F(PeopleHandlerTest, TestSyncIndividualTypes) {
                                         std::string(),
                                         ENCRYPT_PASSWORDS);
     base::ListValue list_args;
-    list_args.AppendString(kTestCallbackId);
-    list_args.AppendString(args);
+    list_args.GetList().emplace_back(kTestCallbackId);
+    list_args.GetList().emplace_back(args);
     EXPECT_CALL(*mock_pss_, IsPassphraseRequiredForDecryption())
         .WillRepeatedly(Return(false));
     EXPECT_CALL(*mock_pss_, IsPassphraseRequired())
@@ -725,8 +725,8 @@ TEST_F(PeopleHandlerTest, TestSyncAllManually) {
                                       std::string(),
                                       ENCRYPT_PASSWORDS);
   base::ListValue list_args;
-  list_args.AppendString(kTestCallbackId);
-  list_args.AppendString(args);
+  list_args.GetList().emplace_back(kTestCallbackId);
+  list_args.GetList().emplace_back(args);
   EXPECT_CALL(*mock_pss_, IsPassphraseRequiredForDecryption())
       .WillRepeatedly(Return(false));
   EXPECT_CALL(*mock_pss_, IsPassphraseRequired())
@@ -942,8 +942,8 @@ TEST_F(PeopleHandlerTest, TurnOnEncryptAllDisallowed) {
   std::string args = GetConfiguration(
       NULL, SYNC_ALL_DATA, GetAllTypes(), std::string(), ENCRYPT_ALL_DATA);
   base::ListValue list_args;
-  list_args.AppendString(kTestCallbackId);
-  list_args.AppendString(args);
+  list_args.GetList().emplace_back(kTestCallbackId);
+  list_args.GetList().emplace_back(args);
   EXPECT_CALL(*mock_pss_, IsPassphraseRequiredForDecryption())
       .WillRepeatedly(Return(false));
   EXPECT_CALL(*mock_pss_, IsPassphraseRequired())

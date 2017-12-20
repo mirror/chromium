@@ -927,7 +927,7 @@ IN_PROC_BROWSER_TEST_F(DownloadExtensionTest,
   download_item = NULL;
   base::ListValue* result_list = NULL;
   ASSERT_TRUE(result->GetAsList(&result_list));
-  ASSERT_EQ(1UL, result_list->GetSize());
+  ASSERT_EQ(1UL, result_list->GetList().size());
   int element = -1;
   ASSERT_TRUE(result_list->GetInteger(0, &element));
   EXPECT_EQ(id, element);
@@ -1082,7 +1082,7 @@ IN_PROC_BROWSER_TEST_F(DownloadExtensionTest,
   ASSERT_TRUE(result.get());
   base::ListValue* result_list = NULL;
   ASSERT_TRUE(result->GetAsList(&result_list));
-  ASSERT_EQ(1UL, result_list->GetSize());
+  ASSERT_EQ(1UL, result_list->GetList().size());
 }
 
 #if !defined(OS_CHROMEOS)
@@ -1133,7 +1133,7 @@ IN_PROC_BROWSER_TEST_F(DownloadExtensionTest,
   ASSERT_TRUE(result.get());
   base::ListValue* result_list = NULL;
   ASSERT_TRUE(result->GetAsList(&result_list));
-  ASSERT_EQ(1UL, result_list->GetSize());
+  ASSERT_EQ(1UL, result_list->GetList().size());
   base::DictionaryValue* item_value = NULL;
   ASSERT_TRUE(result_list->GetDictionary(0, &item_value));
   int item_id = -1;
@@ -1161,7 +1161,7 @@ IN_PROC_BROWSER_TEST_F(DownloadExtensionTest,
   ASSERT_TRUE(result.get());
   base::ListValue* result_list = NULL;
   ASSERT_TRUE(result->GetAsList(&result_list));
-  ASSERT_EQ(1UL, result_list->GetSize());
+  ASSERT_EQ(1UL, result_list->GetList().size());
   base::DictionaryValue* item_value = NULL;
   ASSERT_TRUE(result_list->GetDictionary(0, &item_value));
   int item_id = -1;
@@ -1189,7 +1189,7 @@ IN_PROC_BROWSER_TEST_F(DownloadExtensionTest,
   ASSERT_TRUE(result.get());
   base::ListValue* result_list = NULL;
   ASSERT_TRUE(result->GetAsList(&result_list));
-  ASSERT_EQ(0UL, result_list->GetSize());
+  ASSERT_EQ(0UL, result_list->GetList().size());
 }
 
 // Test a single |orderBy| parameter for search().
@@ -1212,7 +1212,7 @@ IN_PROC_BROWSER_TEST_F(DownloadExtensionTest,
   ASSERT_TRUE(result.get());
   base::ListValue* result_list = NULL;
   ASSERT_TRUE(result->GetAsList(&result_list));
-  ASSERT_EQ(2UL, result_list->GetSize());
+  ASSERT_EQ(2UL, result_list->GetList().size());
   base::DictionaryValue* item0_value = NULL;
   base::DictionaryValue* item1_value = NULL;
   ASSERT_TRUE(result_list->GetDictionary(0, &item0_value));
@@ -1245,7 +1245,7 @@ IN_PROC_BROWSER_TEST_F(DownloadExtensionTest,
   ASSERT_TRUE(result.get());
   base::ListValue* result_list = NULL;
   ASSERT_TRUE(result->GetAsList(&result_list));
-  ASSERT_EQ(2UL, result_list->GetSize());
+  ASSERT_EQ(2UL, result_list->GetList().size());
   base::DictionaryValue* item0_value = NULL;
   base::DictionaryValue* item1_value = NULL;
   ASSERT_TRUE(result_list->GetDictionary(0, &item0_value));
@@ -1282,7 +1282,7 @@ IN_PROC_BROWSER_TEST_F(DownloadExtensionTest,
   ASSERT_TRUE(result.get());
   base::ListValue* result_list = NULL;
   ASSERT_TRUE(result->GetAsList(&result_list));
-  ASSERT_EQ(1UL, result_list->GetSize());
+  ASSERT_EQ(1UL, result_list->GetList().size());
 }
 
 // Test the |state| option for search().
@@ -1306,7 +1306,7 @@ IN_PROC_BROWSER_TEST_F(DownloadExtensionTest,
   ASSERT_TRUE(result.get());
   base::ListValue* result_list = NULL;
   ASSERT_TRUE(result->GetAsList(&result_list));
-  ASSERT_EQ(1UL, result_list->GetSize());
+  ASSERT_EQ(1UL, result_list->GetList().size());
 }
 
 // Test the |limit| option for search().
@@ -1328,7 +1328,7 @@ IN_PROC_BROWSER_TEST_F(DownloadExtensionTest,
   ASSERT_TRUE(result.get());
   base::ListValue* result_list = NULL;
   ASSERT_TRUE(result->GetAsList(&result_list));
-  ASSERT_EQ(1UL, result_list->GetSize());
+  ASSERT_EQ(1UL, result_list->GetList().size());
 }
 
 // Test invalid search parameters.
@@ -1376,7 +1376,7 @@ IN_PROC_BROWSER_TEST_F(DownloadExtensionTest,
   ASSERT_TRUE(result.get());
   base::ListValue* result_list = NULL;
   ASSERT_TRUE(result->GetAsList(&result_list));
-  ASSERT_EQ(1UL, result_list->GetSize());
+  ASSERT_EQ(1UL, result_list->GetList().size());
   base::DictionaryValue* item_value = NULL;
   ASSERT_TRUE(result_list->GetDictionary(0, &item_value));
   base::FilePath::StringType item_name;
@@ -1422,7 +1422,7 @@ IN_PROC_BROWSER_TEST_F(DownloadExtensionTest,
       new DownloadsSearchFunction(), "[{}]"));
   ASSERT_TRUE(result_value.get());
   ASSERT_TRUE(result_value->GetAsList(&result_list));
-  ASSERT_EQ(2UL, result_list->GetSize());
+  ASSERT_EQ(2UL, result_list->GetList().size());
   ASSERT_TRUE(result_list->GetDictionary(0, &result_dict));
   ASSERT_TRUE(result_dict->GetString("filename", &filename));
   ASSERT_TRUE(result_dict->GetBoolean("incognito", &is_incognito));
@@ -1441,7 +1441,7 @@ IN_PROC_BROWSER_TEST_F(DownloadExtensionTest,
       new DownloadsSearchFunction(), "[{}]"));
   ASSERT_TRUE(result_value.get());
   ASSERT_TRUE(result_value->GetAsList(&result_list));
-  ASSERT_EQ(1UL, result_list->GetSize());
+  ASSERT_EQ(1UL, result_list->GetList().size());
   ASSERT_TRUE(result_list->GetDictionary(0, &result_dict));
   ASSERT_TRUE(result_dict->GetString("filename", &filename));
   EXPECT_TRUE(on_item->GetTargetFilePath() == base::FilePath(filename));

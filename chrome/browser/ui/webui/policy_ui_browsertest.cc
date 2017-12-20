@@ -242,12 +242,12 @@ void PolicyUITest::VerifyPolicies(
   ASSERT_TRUE(value_ptr->GetAsList(&actual_policies));
 
   // Verify that the cells contain the expected strings for all policies.
-  ASSERT_EQ(expected_policies.size(), actual_policies->GetSize());
+  ASSERT_EQ(expected_policies.size(), actual_policies->GetList().size());
   for (size_t i = 0; i < expected_policies.size(); ++i) {
     const std::vector<std::string> expected_policy = expected_policies[i];
     const base::ListValue* actual_policy;
     ASSERT_TRUE(actual_policies->GetList(i, &actual_policy));
-    ASSERT_EQ(expected_policy.size(), actual_policy->GetSize());
+    ASSERT_EQ(expected_policy.size(), actual_policy->GetList().size());
     for (size_t j = 0; j < expected_policy.size(); ++j) {
       std::string value;
       ASSERT_TRUE(actual_policy->GetString(j, &value));
@@ -297,9 +297,9 @@ IN_PROC_BROWSER_TEST_F(PolicyUITest, WritePoliciesToJSONFile) {
   base::DictionaryValue expected_values;
 
   base::ListValue popups_blocked_for_urls;
-  popups_blocked_for_urls.AppendString("aaa");
-  popups_blocked_for_urls.AppendString("bbb");
-  popups_blocked_for_urls.AppendString("ccc");
+  popups_blocked_for_urls.GetList().emplace_back("aaa");
+  popups_blocked_for_urls.GetList().emplace_back("bbb");
+  popups_blocked_for_urls.GetList().emplace_back("ccc");
   values.Set(policy::key::kPopupsBlockedForUrls, policy::POLICY_LEVEL_MANDATORY,
              policy::POLICY_SCOPE_MACHINE, policy::POLICY_SOURCE_PLATFORM,
              popups_blocked_for_urls.CreateDeepCopy(), nullptr);
@@ -354,7 +354,7 @@ IN_PROC_BROWSER_TEST_F(PolicyUITest, WritePoliciesToJSONFile) {
                     "mandatory", "machine", "sourcePlatform",
                     base::Value(false));
 
-  popups_blocked_for_urls.AppendString("ddd");
+  popups_blocked_for_urls.GetList().emplace_back("ddd");
   values.Set(policy::key::kPopupsBlockedForUrls, policy::POLICY_LEVEL_MANDATORY,
              policy::POLICY_SCOPE_MACHINE, policy::POLICY_SOURCE_PLATFORM,
              popups_blocked_for_urls.CreateDeepCopy(), nullptr);
@@ -402,9 +402,9 @@ IN_PROC_BROWSER_TEST_F(PolicyUITest, SendPolicyValues) {
 
   // Set the values of four existing policies.
   std::unique_ptr<base::ListValue> restore_on_startup_urls(new base::ListValue);
-  restore_on_startup_urls->AppendString("aaa");
-  restore_on_startup_urls->AppendString("bbb");
-  restore_on_startup_urls->AppendString("ccc");
+  restore_on_startup_urls->GetList().emplace_back("aaa");
+  restore_on_startup_urls->GetList().emplace_back("bbb");
+  restore_on_startup_urls->GetList().emplace_back("ccc");
   values.Set(policy::key::kRestoreOnStartupURLs, policy::POLICY_LEVEL_MANDATORY,
              policy::POLICY_SCOPE_USER, policy::POLICY_SOURCE_CLOUD,
              std::move(restore_on_startup_urls), nullptr);

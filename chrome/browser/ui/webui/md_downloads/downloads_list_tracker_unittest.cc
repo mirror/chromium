@@ -156,7 +156,7 @@ TEST_F(DownloadsListTrackerTest, SetSearchTerms) {
   EXPECT_FALSE(tracker()->SetSearchTerms(empty_terms));
 
   base::ListValue search_terms;
-  search_terms.AppendString("search");
+  search_terms.GetList().emplace_back("search");
   EXPECT_TRUE(tracker()->SetSearchTerms(search_terms));
 
   EXPECT_FALSE(tracker()->SetSearchTerms(search_terms));

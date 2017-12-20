@@ -140,14 +140,13 @@ IN_PROC_BROWSER_TEST_F(WebrtcAudioPrivateTest, GetSinks) {
   JSONWriter::Write(*result, &result_string);
   VLOG(2) << result_string;
 
-  EXPECT_EQ(devices.size(), sink_list->GetSize());
+  EXPECT_EQ(devices.size(), sink_list->GetList().size());
 
   // Iterate through both lists in lockstep and compare. The order
   // should be identical.
   size_t ix = 0;
   AudioDeviceDescriptions::const_iterator it = devices.begin();
-  for (; ix < sink_list->GetSize() && it != devices.end();
-       ++ix, ++it) {
+  for (; ix < sink_list->GetList().size() && it != devices.end(); ++ix, ++it) {
     base::DictionaryValue* dict = NULL;
     sink_list->GetDictionary(ix, &dict);
     std::string sink_id;
@@ -195,8 +194,8 @@ IN_PROC_BROWSER_TEST_F(WebrtcAudioPrivateTest, GetAssociatedSink) {
         raw_device_id);
 
     base::ListValue parameters;
-    parameters.AppendString(origin.spec());
-    parameters.AppendString(source_id_in_origin);
+    parameters.GetList().emplace_back(origin.spec());
+    parameters.GetList().emplace_back(source_id_in_origin);
     std::string parameter_string;
     JSONWriter::Write(parameters, &parameter_string);
 

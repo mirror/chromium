@@ -161,7 +161,7 @@ void SyncFileSystemInternalsHandler::GetLog(
     list.Append(std::move(dict));
     last_log_id_sent = log_entry->id;
   }
-  if (list.empty())
+  if (list.GetList().empty())
     return;
 
   web_ui()->CallJavascriptFunctionUnsafe("SyncService.onGetLog", list);

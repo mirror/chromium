@@ -72,7 +72,7 @@ void ClientHintsObserver::PersistClientHints(
 
   std::unique_ptr<base::ListValue> expiration_times_list =
       base::MakeUnique<base::ListValue>();
-  expiration_times_list->Reserve(client_hints.size());
+  expiration_times_list->GetList().reserve(client_hints.size());
 
   // Use wall clock since the expiration time would be persisted across embedder
   // restarts.
@@ -80,7 +80,7 @@ void ClientHintsObserver::PersistClientHints(
       (base::Time::Now() + expiration_duration).ToDoubleT();
 
   for (const auto& entry : client_hints)
-    expiration_times_list->AppendInteger(static_cast<int>(entry));
+    expiration_times_list->GetList().emplace_back(static_cast<int>(entry));
 
   auto expiration_times_dictionary = std::make_unique<base::DictionaryValue>();
   expiration_times_dictionary->SetList("client_hints",

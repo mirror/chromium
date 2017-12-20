@@ -210,8 +210,8 @@ TEST(ExtensionProxyApiHelpers, GetBypassListFromExtensionPref) {
   EXPECT_FALSE(bad_message);
 
   auto bypass_list = base::MakeUnique<base::ListValue>();
-  bypass_list->AppendString("host1");
-  bypass_list->AppendString("host2");
+  bypass_list->GetList().emplace_back("host1");
+  bypass_list->GetList().emplace_back("host2");
   auto proxy_rules = base::MakeUnique<base::DictionaryValue>();
   proxy_rules->Set(keys::kProxyConfigBypassList, std::move(bypass_list));
   proxy_config.Set(keys::kProxyConfigRules, std::move(proxy_rules));
@@ -299,9 +299,9 @@ TEST(ExtensionProxyApiHelpers, GetProxyServer) {
 TEST(ExtensionProxyApiHelpers, JoinUrlList) {
   bool bad_message = false;
   base::ListValue list;
-  list.AppendString("s1");
-  list.AppendString("s2");
-  list.AppendString("s3");
+  list.GetList().emplace_back("s1");
+  list.GetList().emplace_back("s2");
+  list.GetList().emplace_back("s3");
 
   std::string out;
   std::string error;
@@ -331,7 +331,7 @@ TEST(ExtensionProxyApiHelpers, CreateProxyRulesDict) {
   expected->Set("fallbackProxy",
                 CreateTestProxyServerDict("socks4", "proxy4", 80));
   auto bypass_list = base::MakeUnique<base::ListValue>();
-  bypass_list->AppendString("localhost");
+  bypass_list->GetList().emplace_back("localhost");
   expected->Set(keys::kProxyConfigBypassList, std::move(bypass_list));
 
   EXPECT_EQ(*expected, *extension_pref);
@@ -359,7 +359,7 @@ TEST(ExtensionProxyApiHelpers, CreateProxyRulesDictMultipleProxies) {
   expected->Set("fallbackProxy",
                 CreateTestProxyServerDict("socks4", "proxy4", 80));
   auto bypass_list = base::MakeUnique<base::ListValue>();
-  bypass_list->AppendString("localhost");
+  bypass_list->GetList().emplace_back("localhost");
   expected->Set(keys::kProxyConfigBypassList, std::move(bypass_list));
 
   EXPECT_EQ(*expected, *extension_pref);
@@ -399,9 +399,9 @@ TEST(ExtensionProxyApiHelpers, CreatePacScriptDictWidthData) {
 
 TEST(ExtensionProxyApiHelpers, TokenizeToStringList) {
   base::ListValue expected;
-  expected.AppendString("s1");
-  expected.AppendString("s2");
-  expected.AppendString("s3");
+  expected.GetList().emplace_back("s1");
+  expected.GetList().emplace_back("s2");
+  expected.GetList().emplace_back("s3");
 
   std::unique_ptr<base::ListValue> out(TokenizeToStringList("s1;s2;s3", ";"));
   EXPECT_EQ(expected, *out);

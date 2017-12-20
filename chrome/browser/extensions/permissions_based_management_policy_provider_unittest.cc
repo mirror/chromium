@@ -92,12 +92,12 @@ class PermissionsBasedManagementPolicyProviderTest : public testing::Test {
 TEST_F(PermissionsBasedManagementPolicyProviderTest, APIPermissions) {
   // Prepares the extension manifest.
   base::ListValue required_permissions;
-  required_permissions.AppendString(
+  required_permissions.GetList().emplace_back(
       GetAPIPermissionName(APIPermission::kDownloads));
-  required_permissions.AppendString(
+  required_permissions.GetList().emplace_back(
       GetAPIPermissionName(APIPermission::kCookie));
   base::ListValue optional_permissions;
-  optional_permissions.AppendString(
+  optional_permissions.GetList().emplace_back(
       GetAPIPermissionName(APIPermission::kProxy));
 
   scoped_refptr<const Extension> extension =

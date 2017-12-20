@@ -494,7 +494,7 @@ IN_PROC_BROWSER_TEST_F(SpellcheckServiceBrowserTest, PreferencesMigrated) {
 // Checks that preferences are not migrated when they shouldn't be.
 IN_PROC_BROWSER_TEST_F(SpellcheckServiceBrowserTest, PreferencesNotMigrated) {
   base::ListValue dictionaries;
-  dictionaries.AppendString("en-US");
+  dictionaries.GetList().emplace_back("en-US");
   GetPrefs()->Set(spellcheck::prefs::kSpellCheckDictionaries, dictionaries);
   GetPrefs()->SetString(spellcheck::prefs::kSpellCheckDictionary, "fr");
 
@@ -516,7 +516,7 @@ IN_PROC_BROWSER_TEST_F(SpellcheckServiceBrowserTest, PreferencesNotMigrated) {
 IN_PROC_BROWSER_TEST_F(SpellcheckServiceBrowserTest,
                        SpellcheckingDisabledPreferenceMigration) {
   base::ListValue dictionaries;
-  dictionaries.AppendString("en-US");
+  dictionaries.GetList().emplace_back("en-US");
   GetPrefs()->Set(spellcheck::prefs::kSpellCheckDictionaries, dictionaries);
   GetPrefs()->SetBoolean(spellcheck::prefs::kEnableSpellcheck, false);
 
@@ -527,15 +527,16 @@ IN_PROC_BROWSER_TEST_F(SpellcheckServiceBrowserTest,
       GetPrefs()->GetBoolean(spellcheck::prefs::kEnableSpellcheck));
   EXPECT_EQ(1U, GetPrefs()
                     ->GetList(spellcheck::prefs::kSpellCheckDictionaries)
-                    ->GetSize());
+                    ->GetList()
+                    .size());
 }
 
 // Make sure preferences get preserved and spellchecking stays enabled.
 IN_PROC_BROWSER_TEST_F(SpellcheckServiceBrowserTest,
                        MultilingualPreferenceNotMigrated) {
   base::ListValue dictionaries;
-  dictionaries.AppendString("en-US");
-  dictionaries.AppendString("fr");
+  dictionaries.GetList().emplace_back("en-US");
+  dictionaries.GetList().emplace_back("fr");
   GetPrefs()->Set(spellcheck::prefs::kSpellCheckDictionaries, dictionaries);
   GetPrefs()->SetBoolean(spellcheck::prefs::kEnableSpellcheck, true);
 
@@ -546,7 +547,8 @@ IN_PROC_BROWSER_TEST_F(SpellcheckServiceBrowserTest,
       GetPrefs()->GetBoolean(spellcheck::prefs::kEnableSpellcheck));
   EXPECT_EQ(2U, GetPrefs()
                     ->GetList(spellcheck::prefs::kSpellCheckDictionaries)
-                    ->GetSize());
+                    ->GetList()
+                    .size());
   std::string pref;
   ASSERT_TRUE(GetPrefs()
                   ->GetList(spellcheck::prefs::kSpellCheckDictionaries)

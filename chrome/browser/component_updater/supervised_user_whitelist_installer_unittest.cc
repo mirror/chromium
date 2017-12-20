@@ -237,8 +237,8 @@ class SupervisedUserWhitelistInstallerTest : public testing::Test {
     crx_dict->SetString("name", kName);
     std::unique_ptr<base::ListValue> clients =
         std::make_unique<base::ListValue>();
-    clients->AppendString(kClientId);
-    clients->AppendString(kOtherClientId);
+    clients->GetList().emplace_back(kClientId);
+    clients->GetList().emplace_back(kOtherClientId);
     crx_dict->Set("clients", std::move(clients));
     pref_.Set(kCrxId, std::move(crx_dict));
   }

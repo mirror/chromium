@@ -54,8 +54,8 @@ TEST(ExtensionPermissionsAPIHelpers, Pack) {
   EXPECT_TRUE(value->GetList("permissions", &api_list));
   EXPECT_TRUE(value->GetList("origins", &origin_list));
 
-  EXPECT_EQ(3u, api_list->GetSize());
-  EXPECT_EQ(2u, origin_list->GetSize());
+  EXPECT_EQ(3u, api_list->GetList().size());
+  EXPECT_EQ(2u, origin_list->GetList().size());
 
   std::string expected_apis[] = {"tabs", "fileBrowserHandler",
                                  "fileBrowserHandlerInternal"};
@@ -86,9 +86,9 @@ TEST(ExtensionPermissionsAPIHelpers, Pack) {
 // into PermissionSets.
 TEST(ExtensionPermissionsAPIHelpers, Unpack) {
   std::unique_ptr<base::ListValue> apis(new base::ListValue());
-  apis->AppendString("tabs");
+  apis->GetList().emplace_back("tabs");
   std::unique_ptr<base::ListValue> origins(new base::ListValue());
-  origins->AppendString("http://a.com/*");
+  origins->GetList().emplace_back("http://a.com/*");
 
   std::unique_ptr<base::DictionaryValue> value(new base::DictionaryValue());
   std::unique_ptr<const PermissionSet> permissions;
@@ -122,7 +122,7 @@ TEST(ExtensionPermissionsAPIHelpers, Unpack) {
     Permissions permissions_object;
     value->Clear();
     std::unique_ptr<base::ListValue> invalid_apis = apis->CreateDeepCopy();
-    invalid_apis->AppendInteger(3);
+    invalid_apis->GetList().emplace_back(3);
     value->Set("permissions", std::move(invalid_apis));
     EXPECT_FALSE(Permissions::Populate(*value, &permissions_object));
   }
@@ -133,7 +133,7 @@ TEST(ExtensionPermissionsAPIHelpers, Unpack) {
     value->Clear();
     std::unique_ptr<base::ListValue> invalid_origins =
         origins->CreateDeepCopy();
-    invalid_origins->AppendInteger(3);
+    invalid_origins->GetList().emplace_back(3);
     value->Set("origins", std::move(invalid_origins));
     EXPECT_FALSE(Permissions::Populate(*value, &permissions_object));
   }
@@ -171,7 +171,7 @@ TEST(ExtensionPermissionsAPIHelpers, Unpack) {
     Permissions permissions_object;
     value->Clear();
     std::unique_ptr<base::ListValue> invalid_apis = apis->CreateDeepCopy();
-    invalid_apis->AppendString("unknown_permission");
+    invalid_apis->GetList().emplace_back("unknown_permission");
     value->Set("permissions", std::move(invalid_apis));
     EXPECT_TRUE(Permissions::Populate(*value, &permissions_object));
     permissions = UnpackPermissionSet(permissions_object, true, &error);

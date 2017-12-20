@@ -79,7 +79,7 @@ TEST(WebDriverLog, Levels) {
 
   std::unique_ptr<base::ListValue> entries(log.GetAndClearEntries());
 
-  ASSERT_EQ(2u, entries->GetSize());
+  ASSERT_EQ(2u, entries->GetList().size());
   ValidateLogEntry(entries.get(), 0, "INFO", "info message");
   ValidateLogEntry(entries.get(), 1, "SEVERE", "severe message");
 }
@@ -91,7 +91,7 @@ TEST(WebDriverLog, Off) {
 
   std::unique_ptr<base::ListValue> entries(log.GetAndClearEntries());
 
-  ASSERT_EQ(0u, entries->GetSize());
+  ASSERT_EQ(0u, entries->GetList().size());
 }
 
 TEST(WebDriverLog, All) {
@@ -101,7 +101,7 @@ TEST(WebDriverLog, All) {
 
   std::unique_ptr<base::ListValue> entries(log.GetAndClearEntries());
 
-  ASSERT_EQ(2u, entries->GetSize());
+  ASSERT_EQ(2u, entries->GetList().size());
   ValidateLogEntry(entries.get(), 0, "SEVERE", "severe message");
   ValidateLogEntry(entries.get(), 1, "DEBUG", "debug message");
 }
@@ -181,7 +181,7 @@ TEST(Logging, OverflowLogs) {
   log.AddEntry(Log::kError, "the 1st error is in the 2nd batch");
   ASSERT_EQ("the 1st error is in the 2nd batch", log.GetFirstErrorMessage());
   std::unique_ptr<base::ListValue> entries = log.GetAndClearEntries();
-  ASSERT_EQ(internal::kMaxReturnedEntries, entries->GetSize());
+  ASSERT_EQ(internal::kMaxReturnedEntries, entries->GetList().size());
   entries = log.GetAndClearEntries();
-  ASSERT_EQ(1u, entries->GetSize());
+  ASSERT_EQ(1u, entries->GetList().size());
 }

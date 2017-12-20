@@ -437,7 +437,7 @@ Status WebViewImpl::GetCookies(std::unique_ptr<base::ListValue>* cookies,
   if (browser_info_->build_no >= 3029 &&
       browser_info_->browser_name != "webview") {
     base::ListValue url_list;
-    url_list.AppendString(current_page_url);
+    url_list.GetList().emplace_back(current_page_url);
     params.SetKey("urls", url_list.Clone());
     Status status =
         client_->SendCommandAndGetResult("Network.getCookies", params, &result);
@@ -585,7 +585,7 @@ Status WebViewImpl::SetFileInputFiles(
       return Status(kUnknownError,
                     "path is not canonical: " + files[i].AsUTF8Unsafe());
     }
-    file_list.AppendString(files[i].value());
+    file_list.GetList().emplace_back(files[i].value());
   }
 
   int context_id;
@@ -755,10 +755,11 @@ Status WebViewImpl::CallAsyncFunctionInternal(
     const base::TimeDelta& timeout,
     std::unique_ptr<base::Value>* result) {
   base::ListValue async_args;
-  async_args.AppendString("return (" + function + ").apply(null, arguments);");
+  async_args.GetList().emplace_back("return (" + function +
+                                    ").apply(null, arguments);");
   async_args.Append(args.CreateDeepCopy());
-  async_args.AppendBoolean(is_user_supplied);
-  async_args.AppendInteger(timeout.InMilliseconds());
+  async_args.GetList().emplace_back(is_user_supplied);
+  async_args.GetList().emplace_back(timeout.InMilliseconds());
   std::unique_ptr<base::Value> tmp;
   Status status = CallFunction(
       frame, kExecuteAsyncScriptScript, async_args, &tmp);

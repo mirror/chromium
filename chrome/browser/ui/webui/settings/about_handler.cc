@@ -462,7 +462,7 @@ void AboutHandler::PromoteUpdater(const base::ListValue* args) {
 #endif
 
 void AboutHandler::HandleOpenFeedbackDialog(const base::ListValue* args) {
-  DCHECK(args->empty());
+  DCHECK(args->GetList().empty());
   Browser* browser =
       chrome::FindBrowserWithWebContents(web_ui()->GetWebContents());
   chrome::OpenFeedbackDialog(browser,
@@ -470,7 +470,7 @@ void AboutHandler::HandleOpenFeedbackDialog(const base::ListValue* args) {
 }
 
 void AboutHandler::HandleOpenHelpPage(const base::ListValue* args) {
-  DCHECK(args->empty());
+  DCHECK(args->GetList().empty());
   Browser* browser =
       chrome::FindBrowserWithWebContents(web_ui()->GetWebContents());
   chrome::ShowHelp(browser, chrome::HELP_SOURCE_WEBUI);

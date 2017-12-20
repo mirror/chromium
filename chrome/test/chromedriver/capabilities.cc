@@ -208,7 +208,7 @@ Status ParseSwitches(const base::Value& option,
   const base::ListValue* switches_list = NULL;
   if (!option.GetAsList(&switches_list))
     return Status(kUnknownError, "must be a list");
-  for (size_t i = 0; i < switches_list->GetSize(); ++i) {
+  for (size_t i = 0; i < switches_list->GetList().size(); ++i) {
     std::string arg_string;
     if (!switches_list->GetString(i, &arg_string))
       return Status(kUnknownError, "each argument must be a string");
@@ -221,7 +221,7 @@ Status ParseExtensions(const base::Value& option, Capabilities* capabilities) {
   const base::ListValue* extensions = NULL;
   if (!option.GetAsList(&extensions))
     return Status(kUnknownError, "must be a list");
-  for (size_t i = 0; i < extensions->GetSize(); ++i) {
+  for (size_t i = 0; i < extensions->GetList().size(); ++i) {
     std::string extension;
     if (!extensions->GetString(i, &extension)) {
       return Status(kUnknownError,
@@ -304,7 +304,7 @@ Status ParseExcludeSwitches(const base::Value& option,
   const base::ListValue* switches = NULL;
   if (!option.GetAsList(&switches))
     return Status(kUnknownError, "must be a list");
-  for (size_t i = 0; i < switches->GetSize(); ++i) {
+  for (size_t i = 0; i < switches->GetList().size(); ++i) {
     std::string switch_name;
     if (!switches->GetString(i, &switch_name)) {
       return Status(kUnknownError,
@@ -402,7 +402,7 @@ Status ParseDevToolsEventsLoggingPrefs(const base::Value& option,
   const base::ListValue* devtools_events_logging_prefs = nullptr;
   if (!option.GetAsList(&devtools_events_logging_prefs))
     return Status(kUnknownError, "must be a list");
-  if (devtools_events_logging_prefs->empty())
+  if (devtools_events_logging_prefs->GetList().empty())
     return Status(kUnknownError, "list must contain values");
   capabilities->devtools_events_logging_prefs.reset(
       devtools_events_logging_prefs->DeepCopy());
@@ -414,7 +414,7 @@ Status ParseWindowTypes(const base::Value& option, Capabilities* capabilities) {
   if (!option.GetAsList(&window_types))
     return Status(kUnknownError, "must be a list");
   std::set<WebViewInfo::Type> window_types_tmp;
-  for (size_t i = 0; i < window_types->GetSize(); ++i) {
+  for (size_t i = 0; i < window_types->GetList().size(); ++i) {
     std::string window_type;
     if (!window_types->GetString(i, &window_type)) {
       return Status(kUnknownError, "each window type must be a string");

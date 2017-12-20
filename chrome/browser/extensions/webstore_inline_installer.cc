@@ -162,10 +162,10 @@ std::string WebstoreInlineInstaller::GetJsonPostData() {
         // landing page is the first thing in the list.
         // Furthermore each entry may contain a series of server redirects
         // stored in the same order.
-        redirect_chain->AppendString(referrer_chain_entry.url());
+        redirect_chain->GetList().emplace_back(referrer_chain_entry.url());
         for (const auto& server_side_redirect :
              referrer_chain_entry.server_redirect_chain()) {
-          redirect_chain->AppendString(server_side_redirect.url());
+          redirect_chain->GetList().emplace_back(server_side_redirect.url());
         }
       }
     }
@@ -178,12 +178,12 @@ std::string WebstoreInlineInstaller::GetJsonPostData() {
       const std::vector<GURL>& redirect_urls =
           navigation_entry->GetRedirectChain();
       for (const GURL& url : redirect_urls) {
-        redirect_chain->AppendString(url.spec());
+        redirect_chain->GetList().emplace_back(url.spec());
       }
     }
   }
 
-  if (!redirect_chain->empty()) {
+  if (!redirect_chain->GetList().empty()) {
     base::DictionaryValue dictionary;
     dictionary.SetString("id", id());
     dictionary.SetString("referrer", requestor_url_.spec());

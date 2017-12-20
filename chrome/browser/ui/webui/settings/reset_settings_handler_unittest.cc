@@ -90,9 +90,9 @@ class ResetSettingsHandlerTest : public testing::Test {
 TEST_F(ResetSettingsHandlerTest, HandleResetProfileSettings) {
   base::ListValue list;
   std::string expected_callback_id("dummyCallbackId");
-  list.AppendString(expected_callback_id);
-  list.AppendBoolean(false);
-  list.AppendString("");
+  list.GetList().emplace_back(expected_callback_id);
+  list.GetList().emplace_back(false);
+  list.GetList().emplace_back("");
   handler()->HandleResetProfileSettings(&list);
   // Check that the delegate ProfileResetter was called.
   EXPECT_EQ(1u, handler()->resets());

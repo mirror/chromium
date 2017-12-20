@@ -26,7 +26,7 @@ void PluralStringHandler::AddLocalizedString(const std::string& name, int id) {
 
 void PluralStringHandler::HandleGetPluralString(const base::ListValue* args) {
   AllowJavascript();
-  CHECK_EQ(3U, args->GetSize());
+  CHECK_EQ(3U, args->GetList().size());
   const base::Value* callback_id;
   CHECK(args->Get(0, &callback_id));
 

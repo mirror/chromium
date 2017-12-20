@@ -877,7 +877,7 @@ void BrowserThemePack::BuildTintsFromJSON(
        iter.Advance()) {
     const base::ListValue* tint_list;
     if (iter.value().GetAsList(&tint_list) &&
-        (tint_list->GetSize() == 3)) {
+        (tint_list->GetList().size() == 3)) {
       color_utils::HSL hsl = { -1, -1, -1 };
 
       if (tint_list->GetDouble(0, &hsl.h) &&
@@ -935,13 +935,14 @@ void BrowserThemePack::ReadColorsFromJSON(
        iter.Advance()) {
     const base::ListValue* color_list;
     if (iter.value().GetAsList(&color_list) &&
-        ((color_list->GetSize() == 3) || (color_list->GetSize() == 4))) {
+        ((color_list->GetList().size() == 3) ||
+         (color_list->GetList().size() == 4))) {
       SkColor color = SK_ColorWHITE;
       int r, g, b;
       if (color_list->GetInteger(0, &r) && r >= 0 && r <= 255 &&
           color_list->GetInteger(1, &g) && g >= 0 && g <= 255 &&
           color_list->GetInteger(2, &b) && b >= 0 && b <= 255) {
-        if (color_list->GetSize() == 4) {
+        if (color_list->GetList().size() == 4) {
           double alpha;
           int alpha_int;
           if (color_list->GetDouble(3, &alpha) && alpha >= 0 && alpha <= 1) {

@@ -90,7 +90,8 @@ class WebrtcLoggingPrivateApiTest : public ExtensionApiTest {
     request_info->SetInteger(
         "tabId", extensions::ExtensionTabUtil::GetTabId(web_contents()));
     parameters->Append(std::move(request_info));
-    parameters->AppendString(web_contents()->GetURL().GetOrigin().spec());
+    parameters->GetList().emplace_back(
+        web_contents()->GetURL().GetOrigin().spec());
   }
 
   bool RunFunction(UIThreadExtensionFunction* function,
@@ -144,37 +145,37 @@ class WebrtcLoggingPrivateApiTest : public ExtensionApiTest {
   bool StartRtpDump(bool incoming, bool outgoing) {
     base::ListValue params;
     AppendTabIdAndUrl(&params);
-    params.AppendBoolean(incoming);
-    params.AppendBoolean(outgoing);
+    params.GetList().emplace_back(incoming);
+    params.GetList().emplace_back(outgoing);
     return RunFunction<WebrtcLoggingPrivateStartRtpDumpFunction>(params, false);
   }
 
   bool StopRtpDump(bool incoming, bool outgoing) {
     base::ListValue params;
     AppendTabIdAndUrl(&params);
-    params.AppendBoolean(incoming);
-    params.AppendBoolean(outgoing);
+    params.GetList().emplace_back(incoming);
+    params.GetList().emplace_back(outgoing);
     return RunFunction<WebrtcLoggingPrivateStopRtpDumpFunction>(params, false);
   }
 
   bool StoreLog(const std::string& log_id) {
     base::ListValue params;
     AppendTabIdAndUrl(&params);
-    params.AppendString(log_id);
+    params.GetList().emplace_back(log_id);
     return RunFunction<WebrtcLoggingPrivateStoreFunction>(params, false);
   }
 
   bool UploadStoredLog(const std::string& log_id) {
     base::ListValue params;
     AppendTabIdAndUrl(&params);
-    params.AppendString(log_id);
+    params.GetList().emplace_back(log_id);
     return RunFunction<WebrtcLoggingPrivateUploadStoredFunction>(params, true);
   }
 
   bool StartAudioDebugRecordings(int seconds) {
     base::ListValue params;
     AppendTabIdAndUrl(&params);
-    params.AppendInteger(seconds);
+    params.GetList().emplace_back(seconds);
     return RunFunction<WebrtcLoggingPrivateStartAudioDebugRecordingsFunction>(
         params, true);
   }
@@ -368,7 +369,7 @@ IN_PROC_BROWSER_TEST_F(WebrtcLoggingPrivateApiTest, TestStartStopRtpDump) {
 IN_PROC_BROWSER_TEST_F(WebrtcLoggingPrivateApiTest, TestStoreWithoutLog) {
   base::ListValue parameters;
   AppendTabIdAndUrl(&parameters);
-  parameters.AppendString("MyLogId");
+  parameters.GetList().emplace_back("MyLogId");
   scoped_refptr<WebrtcLoggingPrivateStoreFunction> store(
       CreateFunction<WebrtcLoggingPrivateStoreFunction>());
   const std::string error = utils::RunFunctionAndReturnError(
