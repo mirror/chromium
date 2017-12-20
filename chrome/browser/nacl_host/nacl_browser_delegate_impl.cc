@@ -190,6 +190,23 @@ bool NaClBrowserDelegateImpl::IsNonSfiModeAllowed(
 #endif
 }
 
+// static
+void NaClBrowserDelegateImpl::CreateInfoBarOnUiThread(int render_process_id,
+                                                      int render_view_id) {
+  content::RenderViewHost* rvh =
+      content::RenderViewHost::FromID(render_process_id, render_view_id);
+  if (!rvh)
+    return;
+  content::WebContents* web_contents =
+      content::WebContents::FromRenderViewHost(rvh);
+  if (!web_contents)
+    return;
+  InfoBarService* infobar_service =
+      InfoBarService::FromWebContents(web_contents);
+  if (infobar_service)
+    NaClInfoBarDelegate::Create(infobar_service);
+}
+
 #if BUILDFLAG(ENABLE_EXTENSIONS)
 scoped_refptr<extensions::InfoMap> NaClBrowserDelegateImpl::GetExtensionInfoMap(
     const base::FilePath& profile_directory) {

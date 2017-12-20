@@ -57,7 +57,7 @@ SessionCrashedInfoBarDelegate::~SessionCrashedInfoBarDelegate() {
 
 infobars::InfoBarDelegate::InfoBarIdentifier
 SessionCrashedInfoBarDelegate::GetIdentifier() const {
-  return SESSION_CRASHED_INFOBAR_DELEGATE;
+  return SESSION_CRASHED_INFOBAR_DELEGATE_MAC;
 }
 
 const gfx::VectorIcon& SessionCrashedInfoBarDelegate::GetVectorIcon() const {
