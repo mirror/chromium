@@ -139,7 +139,7 @@ void Cronet_PublicKeyPins_set_host(Cronet_PublicKeyPinsPtr self,
 }
 
 void Cronet_PublicKeyPins_add_pinsSha256(Cronet_PublicKeyPinsPtr self,
-                                         RawDataPtr pinsSha256) {
+                                         CharString pinsSha256) {
   DCHECK(self);
   self->pinsSha256.push_back(pinsSha256);
 }
@@ -160,12 +160,12 @@ uint32_t Cronet_PublicKeyPins_get_pinsSha256Size(Cronet_PublicKeyPinsPtr self) {
   DCHECK(self);
   return self->pinsSha256.size();
 }
-RawDataPtr Cronet_PublicKeyPins_get_pinsSha256AtIndex(
+CharString Cronet_PublicKeyPins_get_pinsSha256AtIndex(
     Cronet_PublicKeyPinsPtr self,
     uint32_t index) {
   DCHECK(self);
   DCHECK(index < self->pinsSha256.size());
-  return self->pinsSha256[index];
+  return self->pinsSha256[index].c_str();
 }
 
 bool Cronet_PublicKeyPins_get_includeSubdomains(Cronet_PublicKeyPinsPtr self) {
@@ -191,6 +191,12 @@ void Cronet_EngineParams_set_userAgent(Cronet_EngineParamsPtr self,
                                        CharString userAgent) {
   DCHECK(self);
   self->userAgent = userAgent;
+}
+
+void Cronet_EngineParams_set_acceptLanguage(Cronet_EngineParamsPtr self,
+                                            CharString acceptLanguage) {
+  DCHECK(self);
+  self->acceptLanguage = acceptLanguage;
 }
 
 void Cronet_EngineParams_set_storagePath(Cronet_EngineParamsPtr self,
@@ -253,10 +259,22 @@ void Cronet_EngineParams_set_enablePublicKeyPinningBypassForLocalTrustAnchors(
       enablePublicKeyPinningBypassForLocalTrustAnchors;
 }
 
+void Cronet_EngineParams_set_experimentalOptions(
+    Cronet_EngineParamsPtr self,
+    CharString experimentalOptions) {
+  DCHECK(self);
+  self->experimentalOptions = experimentalOptions;
+}
+
 // Struct Cronet_EngineParams getters.
 CharString Cronet_EngineParams_get_userAgent(Cronet_EngineParamsPtr self) {
   DCHECK(self);
   return self->userAgent.c_str();
+}
+
+CharString Cronet_EngineParams_get_acceptLanguage(Cronet_EngineParamsPtr self) {
+  DCHECK(self);
+  return self->acceptLanguage.c_str();
 }
 
 CharString Cronet_EngineParams_get_storagePath(Cronet_EngineParamsPtr self) {
@@ -319,6 +337,12 @@ bool Cronet_EngineParams_get_enablePublicKeyPinningBypassForLocalTrustAnchors(
     Cronet_EngineParamsPtr self) {
   DCHECK(self);
   return self->enablePublicKeyPinningBypassForLocalTrustAnchors;
+}
+
+CharString Cronet_EngineParams_get_experimentalOptions(
+    Cronet_EngineParamsPtr self) {
+  DCHECK(self);
+  return self->experimentalOptions.c_str();
 }
 
 // Struct Cronet_HttpHeader.
