@@ -44,10 +44,10 @@ class ExtensionIconSet {
   void Add(int size, const std::string& path);
 
   // Gets path value of the icon found when searching for |size| using
-  // |mathc_type|.
+  // |match_type|.
   const std::string& Get(int size, MatchType match_type) const;
 
-  // Returns true iff the set contains the specified path.
+  // Returns true if the set contains the specified path.
   bool ContainsPath(base::StringPiece path) const;
 
   // Returns icon size if the set contains the specified path or 0 if not found.
