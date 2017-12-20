@@ -71,7 +71,6 @@
 #include "content/public/browser/render_process_host.h"
 #include "content/public/browser/render_view_host.h"
 #include "content/public/browser/web_contents.h"
-#include "content/public/common/browser_controls_state.h"
 #include "content/public/common/resource_request_body.h"
 #include "jni/Tab_jni.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
@@ -720,19 +719,22 @@ void TabAndroid::UpdateBrowserControlsState(JNIEnv* env,
       static_cast<content::BrowserControlsState>(constraints);
   content::BrowserControlsState current_state =
       static_cast<content::BrowserControlsState>(current);
-  content::RenderViewHost* sender = web_contents()->GetRenderViewHost();
-  sender->Send(new ChromeViewMsg_UpdateBrowserControlsState(
-      sender->GetRoutingID(), constraints_state, current_state, animate));
+
+  content::RenderFrameHost* render_frame_host =
+      web_contents()->GetFocusedFrame();
+  chrome::mojom::ChromeRenderFrameAssociatedPtr renderer;
+  render_frame_host->GetRemoteAssociatedInterfaces()->GetInterface(&renderer);
+  renderer->UpdateBrowserControlsState(constraints_state, current_state,
+                                       animate);
 
   if (web_contents()->ShowingInterstitialPage()) {
-    content::RenderViewHost* interstitial_view_host =
-        web_contents()
-            ->GetInterstitialPage()
-            ->GetMainFrame()
-            ->GetRenderViewHost();
-    interstitial_view_host->Send(new ChromeViewMsg_UpdateBrowserControlsState(
-        interstitial_view_host->GetRoutingID(), constraints_state,
-        current_state, animate));
+    content::RenderFrameHost* interstitial_frame_host =
+        web_contents()->GetInterstitialPage()->GetMainFrame();
+    chrome::mojom::ChromeRenderFrameAssociatedPtr interstitial_renderer;
+    interstitial_frame_host->GetRemoteAssociatedInterfaces()->GetInterface(
+        &interstitial_renderer);
+    interstitial_renderer->UpdateBrowserControlsState(constraints_state,
+                                                      current_state, animate);
   }
 }
 
