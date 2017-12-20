@@ -57,7 +57,6 @@ const SkColor kFolderTitleHintTextColor = SkColorSetRGB(0xA0, 0xA0, 0xA0);
 // Color of the folder bubble shadow.
 const SkColor kFolderShadowColor = SkColorSetRGB(0xBF, 0xBF, 0xBF);
 const float kFolderBubbleOpacity = 0.12f;
-const int kFolderBackgroundBubbleRadius = 288;
 
 const SkColor kCardBackgroundColor = SkColorSetRGB(0xFA, 0xFA, 0xFC);
 
@@ -169,12 +168,23 @@ const int kShelfSize = 48;
 // Max items allowed in a folder.
 const size_t kMaxFolderItems = 20;
 
+// Max pages allowed in a folder for fullscreen app list.
+const size_t kFullscreenMaxFolderPages = 3;
+
+// Max items per page allowed in a folder for fullscreen app list.
+const size_t kFullscreenMaxFolderItemsPerPage = 16;
+
 // Maximum length of the folder name in chars.
 const size_t kMaxFolderNameChars = 80;
 
 // Font style for app item labels.
 const ui::ResourceBundle::FontStyle kItemTextFontStyle =
     ui::ResourceBundle::SmallFont;
+
+// Range of the height of centerline above screen bottom that all apps should
+// change opacity. NOTE: this is used to change page switcher's opacity as well.
+const float kAllAppsOpacityStartPx = 8.0f;
+const float kAllAppsOpacityEndPx = 144.0f;
 
 // The UMA histogram that logs usage of suggested and regular apps.
 const char kAppListAppLaunched[] = "Apps.AppListAppLaunched";
