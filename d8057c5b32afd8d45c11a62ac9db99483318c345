@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1f590b2d_6fe37fbb",
+        "filename": "chrome/browser/resources/md_extensions/code_section.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-12-20T00:03:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7144f567_4b6c8910",
+      "revId": "d8057c5b32afd8d45c11a62ac9db99483318c345",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b528a7d8_44abc0de",
         "filename": "chrome/browser/resources/md_extensions/code_section.js",
         "patchSetId": 9
@@ -33,6 +51,24 @@
       "revId": "d8057c5b32afd8d45c11a62ac9db99483318c345",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c74e732_b844e55e",
+        "filename": "chrome/browser/resources/md_extensions/code_section.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-12-20T00:03:55Z",
+      "side": 1,
+      "message": "I just tested in Chrome, even using white-space:pre it doesn\u0027t do anything with the \\r, so we\u0027ll get a correct count/split without handling \\r anyway.",
+      "parentUuid": "b528a7d8_44abc0de",
+      "revId": "d8057c5b32afd8d45c11a62ac9db99483318c345",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "3ddfa2a2_36cba8c1",
+        "filename": "chrome/browser/resources/md_extensions/code_section.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-12-20T00:03:55Z",
+      "side": 1,
+      "message": "the substring logic will always snip next to a \\n, so split will always count one extra.",
+      "parentUuid": "ea8449bd_6227f393",
+      "revId": "d8057c5b32afd8d45c11a62ac9db99483318c345",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "185545fe_79040c30",
         "filename": "chrome/browser/resources/md_extensions/code_section.js",
         "patchSetId": 9
@@ -67,6 +121,24 @@
       "revId": "d8057c5b32afd8d45c11a62ac9db99483318c345",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cd052aa_9ffd812a",
+        "filename": "chrome/browser/resources/md_extensions/code_section.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-12-20T00:03:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "185545fe_79040c30",
+      "revId": "d8057c5b32afd8d45c11a62ac9db99483318c345",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -138,6 +210,30 @@
       "revId": "d8057c5b32afd8d45c11a62ac9db99483318c345",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0964409f_3297bbeb",
+        "filename": "chrome/browser/resources/md_extensions/code_section.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-12-20T00:03:55Z",
+      "side": 1,
+      "message": "I\u0027ll use loadTimeData.substituteString so I don\u0027t have to refer to the token nor the string ID in the js code.",
+      "parentUuid": "ce491eb4_68c709b6",
+      "range": {
+        "startLine": 110,
+        "startChar": 37,
+        "endLine": 110,
+        "endChar": 39
+      },
+      "revId": "d8057c5b32afd8d45c11a62ac9db99483318c345",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
