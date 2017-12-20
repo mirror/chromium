@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "02f950a1_8e033ba4",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 7212,
+      "author": {
+        "id": 1221384
+      },
+      "writtenOn": "2017-12-20T17:21:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "34c6a08b_fc45e75b",
+      "revId": "cd6c590d75d9b85a572dc23412bd5a1fe703ecd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b6ee9d4f_0e1b7a98",
         "filename": "third_party/WebKit/Source/core/policy/DocumentPolicy.h",
         "patchSetId": 17
@@ -33,6 +51,24 @@
       "revId": "cd6c590d75d9b85a572dc23412bd5a1fe703ecd5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ce997e4_5a7b7bf7",
+        "filename": "third_party/WebKit/Source/core/policy/DocumentPolicy.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1221384
+      },
+      "writtenOn": "2017-12-20T17:21:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b6ee9d4f_0e1b7a98",
+      "revId": "cd6c590d75d9b85a572dc23412bd5a1fe703ecd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "47d3524e_8bf381c7",
+        "filename": "third_party/WebKit/Source/core/policy/IFramePolicy.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1221384
+      },
+      "writtenOn": "2017-12-20T17:21:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "50d0bc28_3d05cc25",
+      "revId": "cd6c590d75d9b85a572dc23412bd5a1fe703ecd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d1034c91_19623795",
         "filename": "third_party/WebKit/Source/core/policy/Policy.h",
         "patchSetId": 17
@@ -67,6 +121,24 @@
       "revId": "cd6c590d75d9b85a572dc23412bd5a1fe703ecd5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbc0d21a_bd268b2c",
+        "filename": "third_party/WebKit/Source/core/policy/Policy.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1221384
+      },
+      "writtenOn": "2017-12-20T17:21:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d1034c91_19623795",
+      "revId": "cd6c590d75d9b85a572dc23412bd5a1fe703ecd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
