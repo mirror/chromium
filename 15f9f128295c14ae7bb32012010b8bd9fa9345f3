@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "00f34d7c_3266eedc",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialsContainer.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-12-20T08:12:02Z",
+      "side": 1,
+      "message": "These should be unnecessary, as `about:` is a secure scheme: https://cs.chromium.org/chromium/src/url/url_util.cc?rcl\u003df84dd03781e2df91f343e3474a65e05edd3f7ac7\u0026l\u003d54 (though it doesn\u0027t really make sense to accept here...)",
+      "revId": "15f9f128295c14ae7bb32012010b8bd9fa9345f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "482728c9_9d211cf5",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialsContainer.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-12-20T08:12:02Z",
+      "side": 1,
+      "message": "Why the heck did we decide that `IsPotentiallyTrustworthy()` would DCHECK against `data:`? That makes no sense. :(",
+      "revId": "15f9f128295c14ae7bb32012010b8bd9fa9345f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
