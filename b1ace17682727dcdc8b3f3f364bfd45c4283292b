@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a2ed8c80_a8417aee",
+        "filename": "chrome/browser/loader/chrome_navigation_data.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-12-20T17:58:14Z",
+      "side": 1,
+      "message": "nit: s/observer/observers/",
+      "range": {
+        "startLine": 34,
+        "startChar": 30,
+        "endLine": 34,
+        "endChar": 38
+      },
+      "revId": "b1ace17682727dcdc8b3f3f364bfd45c4283292b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd157421_3142d9f3",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_data.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-12-20T17:58:14Z",
+      "side": 1,
+      "message": "Can you use an initialization list for this constructor? I think page_id is the only one that needs to be in the body.",
+      "revId": "b1ace17682727dcdc8b3f3f364bfd45c4283292b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ceccdad7_22343d9c",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_data.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-12-20T17:58:14Z",
+      "side": 1,
+      "message": "Can you declare/define page_id before the if statement? I think teasing the definition and condition apart would be more readable.",
+      "revId": "b1ace17682727dcdc8b3f3f364bfd45c4283292b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52f015fb_63e6436c",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_data.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-12-20T17:58:14Z",
+      "side": 1,
+      "message": "When you rebase, make sure you add support for bool lofi_policy_received_",
+      "revId": "b1ace17682727dcdc8b3f3f364bfd45c4283292b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
