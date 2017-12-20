@@ -22,6 +22,30 @@
       "revId": "877f0e44dca123b87dad07d347e07f79b271c9c9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98953ef6_bfee6d4c",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 633,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-12-20T16:05:28Z",
+      "side": 1,
+      "message": "OK, you convinced me - we need a browser test that is larger than just the thing above. So, I\u0027m fine landing this CL as is, as long as we do the browser test after the holidays.",
+      "parentUuid": "fab4a0bc_fae009b5",
+      "range": {
+        "startLine": 633,
+        "startChar": 34,
+        "endLine": 633,
+        "endChar": 42
+      },
+      "revId": "877f0e44dca123b87dad07d347e07f79b271c9c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
