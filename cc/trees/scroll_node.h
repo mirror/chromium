@@ -8,6 +8,7 @@
 #include "cc/base/region.h"
 #include "cc/cc_export.h"
 #include "cc/input/overscroll_behavior.h"
+#include "cc/input/scroll_snap_data.h"
 #include "cc/paint/filter_operations.h"
 #include "ui/gfx/geometry/size.h"
 
@@ -58,6 +59,8 @@ struct CC_EXPORT ScrollNode {
   int transform_id;
 
   OverscrollBehavior overscroll_behavior;
+
+  SnapContainerData snap_container_data;
 
   bool operator==(const ScrollNode& other) const;
   void AsValueInto(base::trace_event::TracedValue* value) const;
