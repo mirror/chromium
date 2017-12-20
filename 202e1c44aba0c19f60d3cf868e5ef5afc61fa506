@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3263b680_2abe93c9",
+        "filename": "chrome/browser/safe_browsing/safe_browsing_navigation_observer_browsertest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 2100,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-12-20T21:52:04Z",
+      "side": 1,
+      "message": "Woohoo! Now we don\u0027t need to test these two cases separately. \n\nCould you remove \"with user gesture.\" from the comment?",
+      "revId": "202e1c44aba0c19f60d3cf868e5ef5afc61fa506",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6b7b30e_e91f0c28",
+        "filename": "chrome/browser/safe_browsing/safe_browsing_navigation_observer_browsertest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 2102,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-12-20T21:52:04Z",
+      "side": 1,
+      "message": "And rename the test as \"DownloadViaHTML5FileApi\"",
+      "revId": "202e1c44aba0c19f60d3cf868e5ef5afc61fa506",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d24a3fd_d1ab3d12",
+        "filename": "chrome/browser/safe_browsing/safe_browsing_navigation_observer_browsertest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 2151,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-12-20T21:52:04Z",
+      "side": 1,
+      "message": "Let\u0027s delete \"DownloadViaHTML5FileApiWithoutUserGesture\" test case since it is the same as the above one.",
+      "revId": "202e1c44aba0c19f60d3cf868e5ef5afc61fa506",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
