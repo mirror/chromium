@@ -53,10 +53,6 @@ std::unique_ptr<service_manager::Service> CreateEmbeddedAshService(
   return base::MakeUnique<EmbeddedAshService>(task_runner);
 }
 
-bool ShouldOpenAshOnStartup() {
-  return !IsRunningInMash();
-}
-
 bool IsRunningInMash() {
   return chromeos::GetAshConfig() == ash::Config::MASH;
 }

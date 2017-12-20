@@ -27,9 +27,6 @@ namespace ash_util {
 std::unique_ptr<service_manager::Service> CreateEmbeddedAshService(
     const scoped_refptr<base::SingleThreadTaskRunner>& task_runner);
 
-// Returns true if Ash should be run at startup.
-bool ShouldOpenAshOnStartup();
-
 // Returns true if Chrome is running in the mash shell.
 // TODO(sky): convert to chromeos::GetAshConfig() and remove.
 bool IsRunningInMash();

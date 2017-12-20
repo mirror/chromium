@@ -758,7 +758,7 @@ TEST_F(WindowSizerAshTest, DefaultStateBecomesMaximized) {
 // in that this uses real ash shell implementations + StateProvider
 // TargetDisplayProvider, rather than mocks.
 TEST_F(WindowSizerAshTest, DefaultBoundsInTargetDisplay) {
-  if (!ash_util::ShouldOpenAshOnStartup())
+  if (ash_util::IsRunningInMash()) {
     return;
   UpdateDisplay("500x500,600x600");
 
