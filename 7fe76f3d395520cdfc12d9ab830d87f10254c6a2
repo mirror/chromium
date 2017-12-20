@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "901750b4_70b2f52e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-12-20T18:19:25Z",
+      "side": 1,
+      "message": "Please associate this CL with a bug (I guess https://crbug.com/795476 ?).",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 4
+      },
+      "revId": "7fe76f3d395520cdfc12d9ab830d87f10254c6a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

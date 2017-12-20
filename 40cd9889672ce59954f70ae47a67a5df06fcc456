@@ -94,6 +94,75 @@
     },
     {
       "key": {
+        "uuid": "37cda35d_2d9b3d2a",
+        "filename": "content/browser/loader/cross_site_document_resource_handler_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-12-20T18:19:25Z",
+      "side": 1,
+      "message": "Would it make sense to add another test, for CROSS_SITE_DOCUMENT_MIME_TYPE_OTHERS + has-parser-breaker-all-json + CORS \u003d not blocked?  AFAICT there is no such test currently.",
+      "range": {
+        "startLine": 362,
+        "startChar": 8,
+        "endLine": 362,
+        "endChar": 27
+      },
+      "revId": "40cd9889672ce59954f70ae47a67a5df06fcc456",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8dc3de51_2e714efa",
+        "filename": "content/browser/loader/cross_site_document_resource_handler_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-12-20T18:19:25Z",
+      "side": 1,
+      "message": "Great!  I wondered for a few seconds why this changed (as there is no explicit parser breaker here), before realizing that start of JSON also acts as a parser breaker.",
+      "range": {
+        "startLine": 368,
+        "startChar": 8,
+        "endLine": 368,
+        "endChar": 24
+      },
+      "revId": "40cd9889672ce59954f70ae47a67a5df06fcc456",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0129e724_e6c2df2f",
+        "filename": "content/browser/loader/cross_site_document_resource_handler_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 802,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-12-20T18:19:25Z",
+      "side": 1,
+      "message": "Nice test - covers stuff that wouldn\u0027t sniff as JSON",
+      "range": {
+        "startLine": 802,
+        "startChar": 20,
+        "endLine": 802,
+        "endChar": 21
+      },
+      "revId": "40cd9889672ce59954f70ae47a67a5df06fcc456",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1b3d9643_867c76d6",
         "filename": "content/common/cross_site_document_classifier.cc",
         "patchSetId": 4
