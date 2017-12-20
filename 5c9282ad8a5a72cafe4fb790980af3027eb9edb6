@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c2712299_eb2bceb6",
+        "filename": "ash/public/cpp/ash_switches.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1248360
+      },
+      "writtenOn": "2017-12-20T22:04:55Z",
+      "side": 1,
+      "message": "As stated in description it\u0027s to match IsUsingViewsLogin(). I find it much more readable if those two methods are consistent. Especially when both conditions need to be taken into account to determine one behavior. The switch name itself doesn\u0027t affect the reasoning while reading/writing the code.\nI could rename the switch itself, but I don\u0027t know how much it affects other people workflows. \nI am not strongly insisting on this change though if you don\u0027t find it useful. WDYT?",
+      "parentUuid": "75d51ab2_138208b4",
+      "revId": "5c9282ad8a5a72cafe4fb790980af3027eb9edb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1f7b660f_e437e8fc",
         "filename": "ui/login/display_manager.js",
         "patchSetId": 2
