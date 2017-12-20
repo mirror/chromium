@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "73a8f795_7ae79c73",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-12-20T22:25:58Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d2b8336a_8885aa09",
+      "range": {
+        "startLine": 10,
+        "startChar": 21,
+        "endLine": 10,
+        "endChar": 22
+      },
+      "revId": "a6ec7be68e9f7b466bba74effa6a171863c3a25d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5972d96a_ec663f8b",
         "filename": "third_party/WebKit/Source/core/frame/MHTMLTest.cpp",
         "patchSetId": 2
@@ -190,6 +214,30 @@
     },
     {
       "key": {
+        "uuid": "88272ddb_b20fcd5d",
+        "filename": "third_party/WebKit/Source/core/frame/MHTMLTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-12-20T22:25:58Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "7895c2fd_99d8a9ec",
+      "range": {
+        "startLine": 305,
+        "startChar": 25,
+        "endLine": 305,
+        "endChar": 29
+      },
+      "revId": "a6ec7be68e9f7b466bba74effa6a171863c3a25d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "41378ce3_e0328506",
         "filename": "third_party/WebKit/Source/core/frame/MHTMLTest.cpp",
         "patchSetId": 2
@@ -261,6 +309,30 @@
     },
     {
       "key": {
+        "uuid": "723e417f_93278052",
+        "filename": "third_party/WebKit/Source/core/frame/MHTMLTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 534,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-12-20T22:25:58Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "1216accc_b19fb510",
+      "range": {
+        "startLine": 534,
+        "startChar": 0,
+        "endLine": 534,
+        "endChar": 1
+      },
+      "revId": "a6ec7be68e9f7b466bba74effa6a171863c3a25d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "211d2012_515845b8",
         "filename": "third_party/WebKit/Source/platform/text/QuotedPrintable.cpp",
         "patchSetId": 2
@@ -296,6 +368,30 @@
       "side": 1,
       "message": "The \"***SPACE**\" could be either space or tab. Chrome tends to use tab, as in the Content-Type header case. The tab is added at line 114.",
       "parentUuid": "211d2012_515845b8",
+      "range": {
+        "startLine": 112,
+        "startChar": 6,
+        "endLine": 112,
+        "endChar": 59
+      },
+      "revId": "a6ec7be68e9f7b466bba74effa6a171863c3a25d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "714f930a_2e8ed85f",
+        "filename": "third_party/WebKit/Source/platform/text/QuotedPrintable.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-12-20T22:25:58Z",
+      "side": 1,
+      "message": "Things are probably fine as long as the affected 3rd party tools can read the fixed MHTML, but just for my education - can you help me understand why you say that SPACE can be either space or tab?  I\u0027ve tried looking at rfc2047 and as far as I can tell it doesn\u0027t clarify what is meant by SPACE (and it says in section \"2. Syntax of encoded-words\" that \"notation of RFC 822 is used\").  Looking at rfc822 I see SPACE defined as ascii character 32 (in section \"3.3. LEXICAL TOKENS\").  \n\nI guess things would be easier to understand if rfc2047 said \"LWSP-char\" instead of \"SPACE\".",
+      "parentUuid": "377f07e7_03843d5f",
       "range": {
         "startLine": 112,
         "startChar": 6,
