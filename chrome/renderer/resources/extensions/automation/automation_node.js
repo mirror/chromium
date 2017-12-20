@@ -227,6 +227,16 @@ var GetIntAttribute = natives.GetIntAttribute;
  * @param {number} axTreeID The id of the accessibility tree.
  * @param {number} nodeID The id of a node.
  * @param {string} attr The name of an attribute.
+ * @return {?Array.<number>} The ids of nodes who have a relationship pointing
+ *     to |nodeID| (a reverse relationship).
+ */
+var GetIntAttributeReverseRelations =
+    natives.GetIntAttributeReverseRelations;
+
+/**
+ * @param {number} axTreeID The id of the accessibility tree.
+ * @param {number} nodeID The id of a node.
+ * @param {string} attr The name of an attribute.
  * @return {?number} The value of this attribute, or undefined if the tree,
  *     node, or attribute wasn't found.
  */
@@ -241,6 +251,16 @@ var GetFloatAttribute = natives.GetFloatAttribute;
  */
 var GetIntListAttribute =
     natives.GetIntListAttribute;
+
+/**
+ * @param {number} axTreeID The id of the accessibility tree.
+ * @param {number} nodeID The id of a node.
+ * @param {string} attr The name of an attribute.
+ * @return {?Array.<number>} The ids of nodes who have a relationship pointing
+ *     to |nodeID| (a reverse relationship).
+ */
+var GetIntListAttributeReverseRelations =
+    natives.GetIntListAttributeReverseRelations;
 
 /**
  * @param {number} axTreeID The id of the accessibility tree.
@@ -876,12 +896,18 @@ var intAttributes = [
 
 var nodeRefAttributes = [
     ['activedescendantId', 'activeDescendant'],
+    ['detailsId', 'details'],
+    ['errorMessageId', 'errorMessage'],
     ['inPageLinkTargetId', 'inPageLinkTarget'],
     ['nextOnLineId', 'nextOnLine'],
     ['previousOnLineId', 'previousOnLine'],
     ['tableColumnHeaderId', 'tableColumnHeader'],
     ['tableHeaderId', 'tableHeader'],
     ['tableRowHeaderId', 'tableRowHeader']];
+
+var reverseNodeRefAttributes = [
+    ['detailsId', 'detailsFor'],
+    ['errorMessageId', 'errorMessageFor']];
 
 var intListAttributes = [
     'lineBreaks',
@@ -896,6 +922,12 @@ var nodeRefListAttributes = [
     ['describedbyIds', 'describedBy'],
     ['flowtoIds', 'flowTo'],
     ['labelledbyIds', 'labelledBy']];
+
+var reverseNodeRefListAttributes = [
+    ['controlsIds', 'controlledBy'],
+    ['describedbyIds', 'descriptionFor'],
+    ['flowtoIds', 'flowFrom'],
+    ['labelledbyIds', 'labelFor']];
 
 var floatAttributes = [
     'valueForRange',
@@ -953,6 +985,28 @@ $Array.forEach(nodeRefAttributes, function(params) {
   });
 });
 
+$Array.forEach(reverseNodeRefAttributes, function(params) {
+  var srcAttributeName = params[0];
+  var dstAttributeName = params[1];
+  $Array.push(publicAttributes, dstAttributeName);
+  $Object.defineProperty(AutomationNodeImpl.prototype, dstAttributeName, {
+    __proto__: null,
+    get: function() {
+      var ids = GetIntAttributeReverseRelations(
+          this.treeID, this.id, srcAttributeName);
+      if (!ids || !this.rootImpl)
+        return undefined;
+      var result = [];
+      for (var i = 0; i < ids.length; ++i) {
+        var node = this.rootImpl.get(ids[i]);
+        if (node)
+          $Array.push(result, node);
+      }
+      return result;
+    }
+  });
+});
+
 $Array.forEach(intListAttributes, function(attributeName) {
   $Array.push(publicAttributes, attributeName);
   $Object.defineProperty(AutomationNodeImpl.prototype, attributeName, {
@@ -971,6 +1025,28 @@ $Array.forEach(nodeRefListAttributes, function(params) {
     __proto__: null,
     get: function() {
       var ids = GetIntListAttribute(this.treeID, this.id, srcAttributeName);
+      if (!ids || !this.rootImpl)
+        return undefined;
+      var result = [];
+      for (var i = 0; i < ids.length; ++i) {
+        var node = this.rootImpl.get(ids[i]);
+        if (node)
+          $Array.push(result, node);
+      }
+      return result;
+    }
+  });
+});
+
+$Array.forEach(reverseNodeRefListAttributes, function(params) {
+  var srcAttributeName = params[0];
+  var dstAttributeName = params[1];
+  $Array.push(publicAttributes, dstAttributeName);
+  $Object.defineProperty(AutomationNodeImpl.prototype, dstAttributeName, {
+    __proto__: null,
+    get: function() {
+      var ids = GetIntListAttributeReverseRelations(
+          this.treeID, this.id, srcAttributeName);
       if (!ids || !this.rootImpl)
         return undefined;
       var result = [];
