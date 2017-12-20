@@ -23,8 +23,8 @@ namespace {
 
 class ScriptModuleResolverImplTestModulator final : public DummyModulator {
  public:
-  ScriptModuleResolverImplTestModulator() {}
-  virtual ~ScriptModuleResolverImplTestModulator() {}
+  ScriptModuleResolverImplTestModulator() = default;
+  virtual ~ScriptModuleResolverImplTestModulator() = default;
 
   void Trace(blink::Visitor*);
 

@@ -50,7 +50,7 @@ class PagePopup {
   virtual void PostMessage(const String& message) = 0;
 
  protected:
-  virtual ~PagePopup() {}
+  virtual ~PagePopup() = default;
 };
 
 }  // namespace blink

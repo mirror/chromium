@@ -151,7 +151,7 @@ class WorkerThreadableLoader::WaitableEventWithTasks final
   }
 
  private:
-  WaitableEventWithTasks() {}
+  WaitableEventWithTasks() = default;
 
   WaitableEvent event_;
   Vector<TaskWithLocation> tasks_;

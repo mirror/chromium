@@ -29,7 +29,7 @@ NGInlineBreakToken::NGInlineBreakToken(NGLayoutInputNode node)
       ignore_floats_(false),
       state_stack_(nullptr) {}
 
-NGInlineBreakToken::~NGInlineBreakToken() {}
+NGInlineBreakToken::~NGInlineBreakToken() = default;
 
 #ifndef NDEBUG
 

@@ -23,7 +23,7 @@ class LayoutEmbeddedItem : public LayoutEmbeddedContentItem {
   explicit LayoutEmbeddedItem(std::nullptr_t)
       : LayoutEmbeddedContentItem(nullptr) {}
 
-  LayoutEmbeddedItem() {}
+  LayoutEmbeddedItem() = default;
 
   void SetPluginAvailability(
       LayoutEmbeddedObject::PluginAvailability availability) {

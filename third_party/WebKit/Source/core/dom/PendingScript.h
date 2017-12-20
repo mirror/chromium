@@ -42,7 +42,7 @@ class PendingScript;
 
 class CORE_EXPORT PendingScriptClient : public GarbageCollectedMixin {
  public:
-  virtual ~PendingScriptClient() {}
+  virtual ~PendingScriptClient() = default;
 
   // Invoked when the pending script is ready. This could be during
   // WatchForLoad() (if the pending script was already ready), or when the

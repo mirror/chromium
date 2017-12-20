@@ -23,7 +23,7 @@ class LayoutViewItem : public LayoutBlockItem {
 
   explicit LayoutViewItem(std::nullptr_t) : LayoutBlockItem(nullptr) {}
 
-  LayoutViewItem() {}
+  LayoutViewItem() = default;
 
   bool UsesCompositing() const { return ToView()->UsesCompositing(); }
 

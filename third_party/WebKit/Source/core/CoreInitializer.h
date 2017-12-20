@@ -69,7 +69,7 @@ class CORE_EXPORT CoreInitializer {
     return *instance_;
   }
 
-  virtual ~CoreInitializer() {}
+  virtual ~CoreInitializer() = default;
 
   // Should be called by clients before trying to create Frames.
   virtual void Initialize();
@@ -121,7 +121,7 @@ class CORE_EXPORT CoreInitializer {
 
  protected:
   // CoreInitializer is only instantiated by subclass ModulesInitializer.
-  CoreInitializer() {}
+  CoreInitializer() = default;
 
  private:
   static CoreInitializer* instance_;

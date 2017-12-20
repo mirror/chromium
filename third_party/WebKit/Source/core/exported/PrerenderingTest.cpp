@@ -62,8 +62,8 @@ WebURL ToWebURL(const char* url) {
 
 class TestPrerendererClient : public WebPrerendererClient {
  public:
-  TestPrerendererClient() {}
-  virtual ~TestPrerendererClient() {}
+  TestPrerendererClient() = default;
+  virtual ~TestPrerendererClient() = default;
 
   void SetExtraDataForNextPrerender(WebPrerender::ExtraData* extra_data) {
     DCHECK(!extra_data_);

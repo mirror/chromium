@@ -742,7 +742,7 @@ Page::PageClients::PageClients()
     : chrome_client(nullptr),
       editor_client(nullptr) {}
 
-Page::PageClients::~PageClients() {}
+Page::PageClients::~PageClients() = default;
 
 template class CORE_TEMPLATE_EXPORT Supplement<Page>;
 
