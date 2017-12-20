@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4790bf95_f127749b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-12-20T02:21:42Z",
+      "side": 1,
+      "message": "Could you add a crbug number?",
+      "range": {
+        "startLine": 13,
+        "startChar": 1,
+        "endLine": 13,
+        "endChar": 4
+      },
+      "revId": "eb4ce1e71d219209577779e20c0c48213362f218",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a23c045_33e36ff6",
+        "filename": "third_party/WebKit/Source/core/loader/ImageLoader.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 838,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-12-20T02:21:42Z",
+      "side": 1,
+      "message": "nit: Can we |DCHECK(visible_time_.is_null());| instead?",
+      "range": {
+        "startLine": 838,
+        "startChar": 17,
+        "endLine": 838,
+        "endChar": 40
+      },
+      "revId": "eb4ce1e71d219209577779e20c0c48213362f218",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
