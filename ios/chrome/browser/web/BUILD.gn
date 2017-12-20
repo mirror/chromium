@@ -102,20 +102,27 @@ js_compile_bundle("chrome_bundle") {
   ]
 
   deps = [
+    ":autofill_controller",
     ":credential_manager",
     ":payment_request",
   ]
 }
 
-js_compile_unchecked("payment_request") {
+js_compile_checked("autofill_controller") {
   sources = [
-    "resources/payment_request.js",
+    "//components/autofill/ios/browser/resources/autofill_controller.js",
   ]
 }
 
 js_compile_checked("credential_manager") {
   sources = [
     "resources/credential_manager.js",
+  ]
+}
+
+js_compile_checked("payment_request") {
+  sources = [
+    "resources/payment_request.js",
   ]
 }
 
@@ -146,6 +153,7 @@ source_set("web_internal") {
   deps = [
     ":chrome_bundle",
     "//base",
+    "//components/autofill/core/common",
     "//components/content_settings/core/browser",
     "//components/dom_distiller/core",
     "//components/error_page/common",
@@ -225,6 +233,7 @@ source_set("unit_tests_internal") {
     ":web_internal",
     "//base",
     "//base/test:test_support",
+    "//components/autofill/core/common",
     "//components/content_settings/core/browser",
     "//components/infobars/core",
     "//components/payments/core",
