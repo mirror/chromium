@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6a55cc11_b2dfc9d7",
+        "filename": "components/ntp_tiles/constants.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-12-20T12:28:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e1d487be_3986ba6c",
+      "range": {
+        "startLine": 23,
+        "startChar": 5,
+        "endLine": 23,
+        "endChar": 32
+      },
+      "revId": "03288818a977bbab9260da602d5f6ebca9e7e271",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6c78c509_78fbf01a",
         "filename": "components/ntp_tiles/field_trial.cc",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "26fc36fd_ffe6501d",
+        "filename": "components/ntp_tiles/field_trial.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-12-20T12:28:48Z",
+      "side": 1,
+      "message": "Removed the switch - I just checked that the flag seems to take precedence over the config. Thanks for pointing that out!",
+      "parentUuid": "6c78c509_78fbf01a",
+      "range": {
+        "startLine": 33,
+        "startChar": 36,
+        "endLine": 33,
+        "endChar": 59
+      },
+      "revId": "03288818a977bbab9260da602d5f6ebca9e7e271",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f2e72231_6df236e9",
         "filename": "components/ntp_tiles/field_trial.cc",
         "patchSetId": 4
@@ -68,6 +116,30 @@
       "revId": "03288818a977bbab9260da602d5f6ebca9e7e271",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6a730ed_5e489669",
+        "filename": "components/ntp_tiles/field_trial.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-12-20T12:28:48Z",
+      "side": 1,
+      "message": "Thanks, removed the boiler plate.",
+      "parentUuid": "f2e72231_6df236e9",
+      "range": {
+        "startLine": 47,
+        "startChar": 28,
+        "endLine": 47,
+        "endChar": 37
+      },
+      "revId": "03288818a977bbab9260da602d5f6ebca9e7e271",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
