@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4385b4f1_70db2d50",
+        "filename": "third_party/WebKit/Source/core/dom/ScriptLoader.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-12-20T01:54:42Z",
+      "side": 1,
+      "message": "nit:I\u0027m not so sure |element_document| or |context_document| is the settings object here.",
+      "revId": "a14d5cfcc4e4f9b02fb72edc0daa146f3046f7be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
