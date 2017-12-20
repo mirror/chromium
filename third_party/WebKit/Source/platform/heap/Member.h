@@ -13,7 +13,7 @@
 #include "platform/wtf/HashTraits.h"
 
 namespace WTF {
-template <typename P, typename Allocator, bool>
+template <typename P, typename Allocator>
 class ConstructTraits;
 }  // namespace WTF
 
@@ -268,7 +268,7 @@ class Member : public MemberBase<T, TracenessMemberConfiguration::kTraced> {
 #endif  // BUILDFLAG(BLINK_HEAP_INCREMENTAL_MARKING)
   }
 
-  template <typename P, typename Allocator, bool>
+  template <typename P, typename Allocator>
   friend class WTF::ConstructTraits;
 };
 
@@ -583,8 +583,7 @@ struct IsTraceable<blink::TraceWrapperMember<T>> {
 };
 
 template <typename T, typename Allocator>
-class ConstructTraits<blink::Member<T>, Allocator, true>
-    : public ConstructTraitsBase<blink::Member<T>> {
+class ConstructTraits<blink::Member<T>, Allocator> {
   STATIC_ONLY(ConstructTraits);
 
  public:

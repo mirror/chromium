@@ -11,50 +11,17 @@
 
 namespace WTF {
 
-template <typename T>
-class ConstructTraitsBase {
-  STATIC_ONLY(ConstructTraitsBase);
-
- protected:
-  template <typename... Args>
-  static T* ConstructElementInternal(void* location, Args&&... args) {
-    return new (NotNull, location) T(std::forward<Args>(args)...);
-  }
-};
-
 // ConstructTraits is used to construct elements in WTF collections. Instead of
 // constructing elements using placement new, they should be constructed using
 // ConstructTraits.
-template <typename T,
-          typename Allocator,
-          bool = VectorTraits<T>::template IsTraceableInCollection<>::value>
-class ConstructTraits;
-
 template <typename T, typename Allocator>
-class ConstructTraits<T, Allocator, false /*IsTraceableInCollection*/>
-    : public ConstructTraitsBase<T> {
+class ConstructTraits {
   STATIC_ONLY(ConstructTraits);
 
  public:
   template <typename... Args>
   static T* ConstructElement(void* location, Args&&... args) {
-    return ConstructTraitsBase<T>::ConstructElementInternal(
-        location, std::forward<Args>(args)...);
-  }
-
-  static void ConstructElements(T* array, size_t len) {}
-};
-
-template <typename T, typename Allocator>
-class ConstructTraits<T, Allocator, true /*IsTraceableInCollection*/>
-    : public ConstructTraitsBase<T> {
-  STATIC_ONLY(ConstructTraits);
-
- public:
-  template <typename... Args>
-  static T* ConstructElement(void* location, Args&&... args) {
-    T* object = ConstructTraitsBase<T>::ConstructElementInternal(
-        location, std::forward<Args>(args)...);
+    T* object = new (NotNull, location) T(std::forward<Args>(args)...);
     Allocator::template NotifyNewObject<T, VectorTraits<T>>(object);
     return object;
   }
