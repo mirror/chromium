@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "f784aae1_dc59e324",
+        "filename": "chrome/browser/net/predictor.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 697,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-12-20T22:27:24Z",
+      "side": 1,
+      "message": "Yeah, I\u0027m fine with doing that in the next CL.",
+      "parentUuid": "0a78703a_99c916e2",
+      "range": {
+        "startLine": 697,
+        "startChar": 25,
+        "endLine": 697,
+        "endChar": 29
+      },
+      "revId": "64d539acabcd7a5b43de0baf214ff61949796c84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "21216e79_5b7ba73f",
         "filename": "chrome/browser/net/predictor.cc",
         "patchSetId": 3
@@ -180,6 +204,30 @@
       "side": 1,
       "message": "\u003e Can you leave this message as a comment in code?\n\nDone.\n\u003e \n\u003e Shouldn\u0027t we disable preconnecting to HTTP URLs as well in this case? In case of \"normal\" proxy we open an additional socket in the proxy socket pool. https://cs.chromium.org/chromium/src/net/socket/client_socket_pool_manager.cc?rcl\u003d17c2f92c8702eb08b1fee51d74d839f038c18eec\u0026l\u003d234\n\nIt does make sense to not preconnect to proxies that support HTTP2. It still makes sense to preconnect to HTTP proxies since Chrome can open up to 32 connections to an HTTP proxy at the same time. The number of parallel connections is limited to 1 for HTTP2 servers/proxies.\n\nCLs in https://bugs.chromium.org/p/chromium/issues/detail?id\u003d667471\u0026desc\u003d2 prevent Chrome from opening more than 1 preconnect to a proxy that supports request priorities (http2/quic).\n\n\u003e I\u0027m guessing that in the DRPProxy case we will preconnect to the actual host but the socket won\u0027t be used.\n\nCorrect, that was the original behavior before https://bugs.chromium.org/p/chromium/issues/detail?id\u003d667471\u0026desc\u003d2 was fixed.\n\u003e \n\u003e Notice, that the LoadingPredictor implementation requires the host to be explicitly resolved before attempting to preconnect. Thus, preconnects are already disabled for your experiment.",
       "parentUuid": "cd11a683_0144358f",
+      "range": {
+        "startLine": 1018,
+        "startChar": 14,
+        "endLine": 1018,
+        "endChar": 48
+      },
+      "revId": "64d539acabcd7a5b43de0baf214ff61949796c84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "efd49f8c_5b48b1f5",
+        "filename": "chrome/browser/net/predictor.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1018,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-12-20T22:27:24Z",
+      "side": 1,
+      "message": "Thanks for the explanation! I initially thought that the DRPProxy won\u0027t be resolved as a proxy during the preconnect and thus we will just ignore it.",
+      "parentUuid": "bb7ecba3_70ae4dd4",
       "range": {
         "startLine": 1018,
         "startChar": 14,
