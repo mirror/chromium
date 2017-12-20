@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "203c861b_1d797fa7",
+        "filename": "chrome/common/custom_handlers/protocol_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-12-20T19:17:58Z",
+      "side": 1,
+      "message": "Thank you!\n\nI think for spec-conformance it still needs some characters escaped:\n\n- `\\0`...`\\x1F` -\u003e `%00`...`%1F`\n- ` ` -\u003e `%20`,\n- `\"` -\u003e `%22`,\n- `#` -\u003e `%23`,\n- `\u003c` -\u003e `%3C`,\n- `\u003e` -\u003e `%3E`,\n- `?` -\u003e `%3F`,\n- ``` -\u003e `%60`,\n- `{` -\u003e `%7B`, and\n- `}` -\u003e `%7D`\n- `\\x7F`...`\\u{10FFFF}` -\u003e `%7F`...`%F4%8F%BF%BF`\n\nIs that what will happen now? And I guess given the regression this really needs unit test coverage too (I don\u0027t know how to fit it in WPT\u0027s test environment limitations, but if you do that would be great too.)",
+      "revId": "fd404ab0a5b99643e4fbec01f98ef93189272921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
