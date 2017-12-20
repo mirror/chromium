@@ -4,7 +4,8 @@
 
 #import "ios/chrome/browser/web/external_app_launcher_tab_helper.h"
 
-#include "base/callback.h"
+#import <UIKit/UIKit.h>
+
 #include "base/logging.h"
 #include "base/metrics/histogram_macros.h"
 #include "components/strings/grit/components_strings.h"
@@ -47,10 +48,51 @@ void LaunchMailClientApp(const GURL& url, MailtoHandler* handler) {
 #endif
 }
 
-// Shows a prompt for the user to choose which mail client app to use to handle
-// a mailto:// URL.
-void PromptForMailClientWithUrl(const GURL& url,
-                                MailtoHandlerManager* manager) {
+// Launches external app identified by |url| if |accept| is true, and record
+// metrics.
+void LaunchExternalApp(NSURL* url, bool accept) {
+  UMA_HISTOGRAM_BOOLEAN("Tab.ExternalApplicationOpened", accept);
+  if (accept)
+    OpenUrlWithCompletionHandler(url, nil);
+}
+
+}  // namespace
+
+ExternalAppLauncherTabHelper::ExternalAppLauncherTabHelper(
+    web::WebState* web_state)
+    : policy_decider_([[ExternalAppsLaunchPolicyDecider alloc] init]),
+      weak_factory_(this) {}
+
+ExternalAppLauncherTabHelper::~ExternalAppLauncherTabHelper() = default;
+
+void ExternalAppLauncherTabHelper::SetBaseViewController(
+    UIViewController* base_view_controller) {
+  base_view_controller_ = base_view_controller;
+}
+
+void ExternalAppLauncherTabHelper::HandleRepeatedAttemptsToLaunch(
+    const GURL& url,
+    const GURL& source_page_url,
+    bool allowed) {
+  if (allowed) {
+    // By confirming that user wants to launch the
+    // application, there is no need to check for
+    // |link_clicked|.
+    OpenUrl(url, /*link_clicked=*/true);
+  } else {
+    // TODO(crbug.com/674649): Once non modal
+    // dialogs are implemented, update this to
+    // always prompt instead of blocking the app.
+    [policy_decider_ blockLaunchingAppURL:url
+                        fromSourcePageURL:source_page_url];
+  }
+  UMA_HISTOGRAM_BOOLEAN("IOS.RepeatedExternalAppPromptResponse", allowed);
+  is_prompt_active_ = false;
+}
+
+void ExternalAppLauncherTabHelper::PromptForMailClientWithUrl(
+    const GURL& url,
+    MailtoHandlerManager* manager) {
   GURL copied_url_to_open = url;
   OpenMailHandlerViewController* mail_handler_chooser =
       [[OpenMailHandlerViewController alloc]
@@ -60,19 +102,16 @@ void PromptForMailClientWithUrl(const GURL& url,
           }];
   MDCBottomSheetController* bottom_sheet = [[MDCBottomSheetController alloc]
       initWithContentViewController:mail_handler_chooser];
-  [[[[UIApplication sharedApplication] keyWindow] rootViewController]
-      presentViewController:bottom_sheet
-                   animated:YES
-                 completion:nil];
+  [base_view_controller_ presentViewController:bottom_sheet
+                                      animated:YES
+                                    completion:nil];
 }
 
-// Presents an alert controller on the root view controller with |prompt| as
-// body text, |accept label| and |reject label| as button labels, and
-// a non null |responseHandler| that takes a boolean to handle user response.
-void ShowExternalAppLauncherPrompt(NSString* prompt,
-                                   NSString* accept_label,
-                                   NSString* reject_label,
-                                   base::OnceCallback<void(bool)> callback) {
+void ExternalAppLauncherTabHelper::ShowAlertWithCallback(
+    NSString* prompt,
+    NSString* accept_label,
+    NSString* reject_label,
+    base::OnceCallback<void(bool)> callback) {
   __block base::OnceCallback<void(bool)> block_callback = std::move(callback);
   UIAlertController* alert_controller =
       [UIAlertController alertControllerWithTitle:nil
@@ -93,36 +132,22 @@ void ShowExternalAppLauncherPrompt(NSString* prompt,
   [alert_controller addAction:reject_action];
   [alert_controller addAction:accept_action];
 
-  [[[[UIApplication sharedApplication] keyWindow] rootViewController]
-      presentViewController:alert_controller
-                   animated:YES
-                 completion:nil];
+  [base_view_controller_ presentViewController:alert_controller
+                                      animated:YES
+                                    completion:nil];
 }
 
-// Launches external app identified by |url| if |accept| is true.
-void LaunchExternalApp(NSURL* url, bool accept) {
-  UMA_HISTOGRAM_BOOLEAN("Tab.ExternalApplicationOpened", accept);
-  if (accept)
-    OpenUrlWithCompletionHandler(url, nil);
+void ExternalAppLauncherTabHelper::ShowAlertThenLaunchExternalAppIfUserAllowed(
+    NSURL* url,
+    NSString* prompt,
+    NSString* open_label) {
+  ShowAlertWithCallback(prompt, /*accept_label=*/open_label,
+                        /*reject_label=*/l10n_util::GetNSString(IDS_CANCEL),
+                        base::BindOnce(&LaunchExternalApp, url));
 }
 
-// Presents an alert controller with |prompt| and |open_label| as button label
-// on the root view controller before launching an external app identified by
-// |url|.
-void OpenExternalAppWithUrl(NSURL* url,
-                            NSString* prompt,
-                            NSString* open_label) {
-  ShowExternalAppLauncherPrompt(
-      prompt, /*accept_label=*/open_label,
-      /*reject_label=*/l10n_util::GetNSString(IDS_CANCEL),
-      base::BindOnce(&LaunchExternalApp, url));
-}
-
-// Opens URL in an external application if possible (optionally after
-// confirming via dialog in case that user didn't interact using
-// |link_clicked| or if the external application is face time) or returns NO
-// if there is no such application available.
-bool OpenUrl(const GURL& gurl, bool link_clicked) {
+bool ExternalAppLauncherTabHelper::OpenUrl(const GURL& gurl,
+                                           bool link_clicked) {
   // Don't open external application if chrome is not active.
   if ([[UIApplication sharedApplication] applicationState] !=
       UIApplicationStateActive) {
@@ -135,7 +160,7 @@ bool OpenUrl(const GURL& gurl, bool link_clicked) {
       NSString* prompt = l10n_util::GetNSString(IDS_IOS_OPEN_IN_ANOTHER_APP);
       NSString* open_label =
           l10n_util::GetNSString(IDS_IOS_APP_LAUNCHER_OPEN_APP_BUTTON_LABEL);
-      OpenExternalAppWithUrl(url, prompt, open_label);
+      ShowAlertThenLaunchExternalAppIfUserAllowed(url, prompt, open_label);
       return true;
     }
   } else {
@@ -143,7 +168,7 @@ bool OpenUrl(const GURL& gurl, bool link_clicked) {
     // facetime-audio: URL schemes are opened, so Chrome needs to present an
     // alert before placing a phone call.
     if (UrlHasPhoneCallScheme(gurl)) {
-      OpenExternalAppWithUrl(
+      ShowAlertThenLaunchExternalAppIfUserAllowed(
           url, /*prompt=*/GetFormattedAbsoluteUrlWithSchemeRemoved(url),
           /*open_label=*/GetPromptActionString(url.scheme));
       return true;
@@ -155,7 +180,7 @@ bool OpenUrl(const GURL& gurl, bool link_clicked) {
       NSString* prompt = l10n_util::GetNSString(IDS_IOS_OPEN_IN_ANOTHER_APP);
       NSString* open_label =
           l10n_util::GetNSString(IDS_IOS_APP_LAUNCHER_OPEN_APP_BUTTON_LABEL);
-      OpenExternalAppWithUrl(url, prompt, open_label);
+      ShowAlertThenLaunchExternalAppIfUserAllowed(url, prompt, open_label);
       return true;
     }
   }
@@ -182,35 +207,6 @@ bool OpenUrl(const GURL& gurl, bool link_clicked) {
   // updated. It's heavily nested so some refactoring is needed.
   return [[UIApplication sharedApplication] openURL:url];
 #pragma clang diagnostic pop
-}
-
-}  // namespace
-
-ExternalAppLauncherTabHelper::ExternalAppLauncherTabHelper(
-    web::WebState* web_state)
-    : policy_decider_([[ExternalAppsLaunchPolicyDecider alloc] init]),
-      weak_factory_(this) {}
-
-ExternalAppLauncherTabHelper::~ExternalAppLauncherTabHelper() = default;
-
-void ExternalAppLauncherTabHelper::HandleRepeatedAttemptsToLaunch(
-    const GURL& url,
-    const GURL& source_page_url,
-    bool allowed) {
-  if (allowed) {
-    // By confirming that user wants to launch the
-    // application, there is no need to check for
-    // |link_clicked|.
-    OpenUrl(url, /*link_clicked=*/true);
-  } else {
-    // TODO(crbug.com/674649): Once non modal
-    // dialogs are implemented, update this to
-    // always prompt instead of blocking the app.
-    [policy_decider_ blockLaunchingAppURL:url
-                        fromSourcePageURL:source_page_url];
-  }
-  UMA_HISTOGRAM_BOOLEAN("IOS.RepeatedExternalAppPromptResponse", allowed);
-  is_prompt_active_ = false;
 }
 
 bool ExternalAppLauncherTabHelper::RequestToOpenUrl(const GURL& url,
@@ -254,8 +250,8 @@ bool ExternalAppLauncherTabHelper::RequestToOpenUrl(const GURL& url,
           &ExternalAppLauncherTabHelper::HandleRepeatedAttemptsToLaunch,
           weak_factory_.GetWeakPtr(), url, source_page_url);
 
-      ShowExternalAppLauncherPrompt(prompt_body, allow_label, block_label,
-                                    std::move(callback));
+      ShowAlertWithCallback(prompt_body, allow_label, block_label,
+                            std::move(callback));
       return true;
     }
   }

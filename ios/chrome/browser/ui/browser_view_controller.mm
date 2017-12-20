@@ -211,6 +211,7 @@
 #include "ios/chrome/browser/upgrade/upgrade_center.h"
 #import "ios/chrome/browser/web/blocked_popup_tab_helper.h"
 #import "ios/chrome/browser/web/error_page_content.h"
+#import "ios/chrome/browser/web/external_app_launcher_tab_helper.h"
 #import "ios/chrome/browser/web/load_timing_tab_helper.h"
 #import "ios/chrome/browser/web/passkit_dialog_provider.h"
 #include "ios/chrome/browser/web/print_tab_helper.h"
@@ -2656,6 +2657,11 @@ bubblePresenterForFeature:(const base::Feature&)feature
               self.browserState)) {
     accountConsistencyService->SetWebStateHandler(tab.webState, self);
   }
+
+  if (ExternalAppLauncherTabHelper* externalAppLauncherTabHelper =
+          ExternalAppLauncherTabHelper::FromWebState(tab.webState)) {
+    externalAppLauncherTabHelper->SetBaseViewController(self);
+  }
 }
 
 - (void)uninstallDelegatesForTab:(Tab*)tab {
@@ -2687,6 +2693,10 @@ bubblePresenterForFeature:(const base::Feature&)feature
           ios::AccountConsistencyServiceFactory::GetForBrowserState(
               self.browserState)) {
     accountConsistencyService->RemoveWebStateHandler(tab.webState);
+  }
+  if (ExternalAppLauncherTabHelper* externalAppLauncherTabHelper =
+          ExternalAppLauncherTabHelper::FromWebState(tab.webState)) {
+    externalAppLauncherTabHelper->SetBaseViewController(nil);
   }
 }
 
