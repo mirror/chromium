@@ -687,6 +687,7 @@ crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/positioning/position-re
 
 # ====== IncrementalShadowDOM-only failures from here ======
 
+crbug.com/776656 virtual/incremental-shadow-dom/external/wpt/shadow-dom/DocumentOrShadowRoot-prototype-elementFromPoint.html [ Failure ]
 crbug.com/776656 virtual/incremental-shadow-dom/external/wpt/shadow-dom/HTMLSlotElement-interface.html [ Failure ]
 crbug.com/788608 virtual/incremental-shadow-dom/external/wpt/shadow-dom/leaktests/html-collection.html [ Failure Crash ]
 crbug.com/776656 virtual/incremental-shadow-dom/external/wpt/shadow-dom/slots-fallback-in-document.html [ Failure ]
