@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c9a13a9b_9b35fa9b",
+        "filename": "ios/chrome/browser/ui/main_content/web_scroll_view_main_content_ui_forwarder.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-12-20T20:10:47Z",
+      "side": 1,
+      "message": "Should we also reset self.webState here?",
+      "revId": "7a6e0303a1853bfcedddbb8383d19d549887a2bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
