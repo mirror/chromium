@@ -1,0 +1,228 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "641f81b8_37ef1707",
+        "filename": "third_party/WebKit/LayoutTests/css3/blending/svg-isolation-foreign-isolation.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-12-20T12:14:00Z",
+      "side": 1,
+      "message": "Please change the test so that the old pass condition still holds (\"red for pass\" is contradicting most guidelines on reftests.)",
+      "range": {
+        "startLine": 4,
+        "startChar": 70,
+        "endLine": 4,
+        "endChar": 81
+      },
+      "revId": "cda561b33a5ed26efa3eb8482d5897852c848edb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cba0dc4a_784760fe",
+        "filename": "third_party/WebKit/LayoutTests/css3/blending/svg-isolation-html-inline-blend.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-12-20T12:14:00Z",
+      "side": 1,
+      "message": "Ditto here.",
+      "range": {
+        "startLine": 11,
+        "startChar": 54,
+        "endLine": 11,
+        "endChar": 64
+      },
+      "revId": "cda561b33a5ed26efa3eb8482d5897852c848edb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4359576_8ae99e2f",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/svg/extensibility/foreignObject/containing-block.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-12-20T12:14:00Z",
+      "side": 1,
+      "message": "I think that having some margins here would make the test better. It seems now we can\u0027t necessarily tell which containing block is used. Preferably the \u003cfO\u003e would also have a position (x\u003d... and y\u003d...) but then we might start hitting some of our \u003cfO\u003e bugs...",
+      "range": {
+        "startLine": 5,
+        "startChar": 4,
+        "endLine": 5,
+        "endChar": 14
+      },
+      "revId": "cda561b33a5ed26efa3eb8482d5897852c848edb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6f02be1_ed1adc89",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/svg/extensibility/foreignObject/containing-block.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-12-20T12:14:00Z",
+      "side": 1,
+      "message": "Not needed. (Opened automatically by the HTML parser.)",
+      "range": {
+        "startLine": 19,
+        "startChar": 5,
+        "endLine": 19,
+        "endChar": 39
+      },
+      "revId": "cda561b33a5ed26efa3eb8482d5897852c848edb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c5b00b0_e8711bb7",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/svg/extensibility/foreignObject/containing-block.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-12-20T12:14:00Z",
+      "side": 1,
+      "message": "Doesn\u0027t have any effect. (Just a regular attribute as far the HTML parser/tree builder is concerned.)",
+      "range": {
+        "startLine": 20,
+        "startChar": 5,
+        "endLine": 20,
+        "endChar": 43
+      },
+      "revId": "cda561b33a5ed26efa3eb8482d5897852c848edb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16e6a2b7_0e659e80",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/svg/extensibility/foreignObject/stacking-context-expected.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-12-20T12:14:00Z",
+      "side": 1,
+      "message": "I\u0027d expect this reference to use simpler constructs - probably not using an \u003csvg\u003e at all (and this looks awfully similar to the actual test...)",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 79
+      },
+      "revId": "cda561b33a5ed26efa3eb8482d5897852c848edb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ee2d8d3_c52e8cbb",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/svg/extensibility/foreignObject/stacking-context.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-12-20T12:14:00Z",
+      "side": 1,
+      "message": "Like above.",
+      "range": {
+        "startLine": 18,
+        "startChar": 57,
+        "endLine": 19,
+        "endChar": 43
+      },
+      "revId": "cda561b33a5ed26efa3eb8482d5897852c848edb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc220a2a_bece71f3",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/svg/extensibility/foreignObject/stacking-context.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-12-20T12:14:00Z",
+      "side": 1,
+      "message": "This doesn\u0027t appear to add anything to the test.",
+      "range": {
+        "startLine": 20,
+        "startChar": 27,
+        "endLine": 20,
+        "endChar": 48
+      },
+      "revId": "cda561b33a5ed26efa3eb8482d5897852c848edb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85dc7885_ba4e4196",
+        "filename": "third_party/WebKit/LayoutTests/platform/linux/virtual/outofblink-cors/external/wpt/service-workers/service-worker/ServiceWorkerGlobalScope/registration-attribute.https-expected.txt",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-12-20T12:14:00Z",
+      "side": 1,
+      "message": "This looks like a spurious, unrelated, failure.",
+      "revId": "cda561b33a5ed26efa3eb8482d5897852c848edb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69ddcdaa_a8a2c7bc",
+        "filename": "third_party/WebKit/Source/core/dom/Element.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 1979,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-12-20T12:14:00Z",
+      "side": 1,
+      "message": "Nit/suggestion: Could even write this as:\n\nIsSVGElement() \u0026\u0026 (\u003cis outermost svg\u003e || \u003cis foreignObject\u003e)\n\nsince the Element in question can\u0027t be a \u003cfO\u003e if it\u0027s not an SVGElement. (And IsSVGElement is cheap.)",
+      "range": {
+        "startLine": 1978,
+        "startChar": 6,
+        "endLine": 1979,
+        "endChar": 38
+      },
+      "revId": "cda561b33a5ed26efa3eb8482d5897852c848edb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
