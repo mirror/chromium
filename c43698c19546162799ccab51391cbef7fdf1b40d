@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "36eb9a4c_6ac5ea33",
+        "filename": "components/viz/client/client_layer_tree_frame_sink.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-12-20T16:33:26Z",
+      "side": 1,
+      "message": "I believe you can do this:\n\nhit_test_region_list-\u003ebounds.SetRect(compositor_frame.size_in_pixels());",
+      "revId": "c43698c19546162799ccab51391cbef7fdf1b40d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
