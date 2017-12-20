@@ -1046,6 +1046,25 @@
             ]
         }
     ],
+    "DataReductionProxyDisableDnsPreResolution": [
+        {
+            "platforms": [
+                "android",
+                "win",
+                "mac",
+                "chromeos",
+                "linux"
+            ],
+            "experiments": [
+                {
+                    "name": "Enabled",
+                    "enable_features": [
+                        "DataReductionProxyDisableDnsPreResolution"
+                    ]
+                }
+            ]
+        }
+    ],
     "DataReductionProxyFREPromo": [
         {
             "platforms": [

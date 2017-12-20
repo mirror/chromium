@@ -13,6 +13,7 @@
 #include "base/strings/stringprintf.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "chrome/browser/predictors/resource_prefetch_predictor.h"
+#include "content/public/test/mock_resource_context.h"
 #include "content/public/test/test_browser_thread_bundle.h"
 #include "net/url_request/url_request_test_util.h"
 #include "testing/gmock/include/gmock/gmock.h"
@@ -43,7 +44,8 @@ class MockPreconnectManager : public PreconnectManager {
  public:
   MockPreconnectManager(
       base::WeakPtr<Delegate> delegate,
-      scoped_refptr<net::URLRequestContextGetter> context_getter);
+      scoped_refptr<net::URLRequestContextGetter> context_getter,
+      content::ResourceContext* resource_context);
 
   MOCK_CONST_METHOD4(PreconnectUrl,
                      void(const GURL& url,
@@ -53,12 +55,27 @@ class MockPreconnectManager : public PreconnectManager {
   MOCK_CONST_METHOD2(PreresolveUrl,
                      int(const GURL& url,
                          const net::CompletionCallback& callback));
+
+  void SetWouldLikelyBeFetchedViaDataSaver(
+      bool would_likely_be_fetched_via_data_saver) {
+    would_likely_be_fetched_via_data_saver_ =
+        would_likely_be_fetched_via_data_saver;
+  }
+
+  bool WouldLikelyBeFetchedViaDataSaver(const GURL& url) const override {
+    return would_likely_be_fetched_via_data_saver_ &&
+           url.SchemeIs(url::kHttpScheme);
+  }
+
+ private:
+  bool would_likely_be_fetched_via_data_saver_ = false;
 };
 
 MockPreconnectManager::MockPreconnectManager(
     base::WeakPtr<Delegate> delegate,
-    scoped_refptr<net::URLRequestContextGetter> context_getter)
-    : PreconnectManager(delegate, context_getter) {}
+    scoped_refptr<net::URLRequestContextGetter> context_getter,
+    content::ResourceContext* resource_context)
+    : PreconnectManager(delegate, context_getter, resource_context) {}
 
 class PreconnectManagerTest : public testing::Test {
  public:
@@ -69,6 +86,7 @@ class PreconnectManagerTest : public testing::Test {
   content::TestBrowserThreadBundle thread_bundle_;
   std::unique_ptr<StrictMock<MockPreconnectManagerDelegate>> mock_delegate_;
   scoped_refptr<net::URLRequestContextGetter> context_getter_;
+  std::unique_ptr<content::ResourceContext> resource_context_;
   std::unique_ptr<StrictMock<MockPreconnectManager>> preconnect_manager_;
 
  private:
@@ -80,11 +98,60 @@ PreconnectManagerTest::PreconnectManagerTest()
           base::MakeUnique<StrictMock<MockPreconnectManagerDelegate>>()),
       context_getter_(base::MakeRefCounted<net::TestURLRequestContextGetter>(
           base::ThreadTaskRunnerHandle::Get())),
+      resource_context_(base::MakeUnique<content::MockResourceContext>()),
       preconnect_manager_(base::MakeUnique<StrictMock<MockPreconnectManager>>(
           mock_delegate_->AsWeakPtr(),
-          context_getter_)) {}
+          context_getter_,
+          resource_context_.get())) {}
 
 PreconnectManagerTest::~PreconnectManagerTest() = default;
+
+TEST_F(PreconnectManagerTest, TestStartOneUrlPreresolveDataSaverFetch) {
+  GURL main_frame_url("http://google.com");
+  GURL url_to_preresolve("http://cdn.google.com");
+
+  preconnect_manager_->SetWouldLikelyBeFetchedViaDataSaver(true);
+
+  EXPECT_CALL(*preconnect_manager_, PreresolveUrl(url_to_preresolve, _))
+      .Times(0);
+  EXPECT_CALL(*mock_delegate_, PreconnectFinishedProxy(main_frame_url));
+  preconnect_manager_->Start(main_frame_url,
+                             {PreconnectRequest(url_to_preresolve, 0)});
+  // Wait for PreconnectFinished task posted to the UI thread.
+  base::RunLoop().RunUntilIdle();
+}
+
+TEST_F(PreconnectManagerTest,
+       TestStartOneUrlPreresolveDataSaverFetchHttpsMainFrame) {
+  GURL main_frame_url("https://google.com");
+  GURL url_to_preresolve("http://cdn.google.com");
+
+  preconnect_manager_->SetWouldLikelyBeFetchedViaDataSaver(true);
+
+  EXPECT_CALL(*preconnect_manager_, PreresolveUrl(url_to_preresolve, _))
+      .Times(0);
+  EXPECT_CALL(*mock_delegate_, PreconnectFinishedProxy(main_frame_url));
+  preconnect_manager_->Start(main_frame_url,
+                             {PreconnectRequest(url_to_preresolve, 0)});
+  // Wait for PreconnectFinished task posted to the UI thread.
+  base::RunLoop().RunUntilIdle();
+}
+
+TEST_F(PreconnectManagerTest,
+       TestStartOneUrlPreresolveDataSaverFetchHttpsSubresource) {
+  GURL main_frame_url("http://google.com");
+  GURL url_to_preresolve("https://cdn.google.com");
+
+  preconnect_manager_->SetWouldLikelyBeFetchedViaDataSaver(true);
+
+  EXPECT_CALL(*preconnect_manager_, PreresolveUrl(url_to_preresolve, _))
+      .WillOnce(Return(net::OK));
+  EXPECT_CALL(*mock_delegate_, PreconnectFinishedProxy(main_frame_url));
+  preconnect_manager_->Start(main_frame_url,
+                             {PreconnectRequest(url_to_preresolve, 0)});
+  // Wait for PreconnectFinished task posted to the UI thread.
+  base::RunLoop().RunUntilIdle();
+}
 
 TEST_F(PreconnectManagerTest, TestStartOneUrlPreresolve) {
   GURL main_frame_url("http://google.com");
