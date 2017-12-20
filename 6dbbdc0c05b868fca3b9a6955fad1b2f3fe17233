@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2557816d_de1ddd15",
+        "filename": "content/browser/service_worker/service_worker_registration.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-12-20T04:03:06Z",
+      "side": 1,
+      "message": "Ah, thanks! It seems the same, I didn\u0027t realize that. \nI\u0027m a little bit confused what the lame duck timer does. In my understanding, the timer checks if the waiting version is waiting too much (kMaxLameDuckTime). Is this correct?\nThis patch basically just changes when OnNoWork() is triggered, so I think we can keep the lame duck timer as is even after this change.",
+      "parentUuid": "f0794291_0688fce4",
+      "revId": "6dbbdc0c05b868fca3b9a6955fad1b2f3fe17233",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3633e9a0_45d42b88",
         "filename": "content/browser/service_worker/service_worker_registration.cc",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "6dbbdc0c05b868fca3b9a6955fad1b2f3fe17233",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5f431c8_92b3a3c0",
+        "filename": "content/browser/service_worker/service_worker_registration.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-12-20T04:03:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3633e9a0_45d42b88",
+      "revId": "6dbbdc0c05b868fca3b9a6955fad1b2f3fe17233",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "69f262d3_0afc00b6",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 641,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-12-20T04:03:06Z",
+      "side": 1,
+      "message": "Thanks, updated the comment.",
+      "parentUuid": "b8c3cdc9_49e206e9",
+      "revId": "6dbbdc0c05b868fca3b9a6955fad1b2f3fe17233",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa85a57a_db029d01",
         "filename": "content/browser/service_worker/service_worker_version.cc",
         "patchSetId": 5
@@ -67,6 +121,24 @@
       "revId": "6dbbdc0c05b868fca3b9a6955fad1b2f3fe17233",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28671f90_5cc60d35",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 730,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-12-20T04:03:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa85a57a_db029d01",
+      "revId": "6dbbdc0c05b868fca3b9a6955fad1b2f3fe17233",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "695a4fad_983d726b",
+        "filename": "content/renderer/service_worker/service_worker_timeout_timer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-12-20T04:03:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b54d8d43_44870aa0",
+      "revId": "6dbbdc0c05b868fca3b9a6955fad1b2f3fe17233",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6002941d_d630054a",
         "filename": "content/renderer/service_worker/service_worker_timeout_timer.h",
         "patchSetId": 5
@@ -98,6 +188,24 @@
       "writtenOn": "2017-12-19T15:25:57Z",
       "side": 1,
       "message": "It feels slightly weird to call this \u0027Immediately\u0027 given that it may not do anything but just set a flag when it\u0027s not idle",
+      "revId": "6dbbdc0c05b868fca3b9a6955fad1b2f3fe17233",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0e8cfe3_dfd78716",
+        "filename": "content/renderer/service_worker/service_worker_timeout_timer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-12-20T04:03:06Z",
+      "side": 1,
+      "message": "Agreed. Changed to SetIdleTimerDelayToZero(). \nHow about this?",
+      "parentUuid": "6002941d_d630054a",
       "revId": "6dbbdc0c05b868fca3b9a6955fad1b2f3fe17233",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
