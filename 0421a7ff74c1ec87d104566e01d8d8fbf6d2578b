@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c31cbd8d_56f40820",
+        "filename": "chrome/browser/extensions/api/cryptotoken_private/cryptotoken_private_api_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1003044
+      },
+      "writtenOn": "2017-12-20T05:42:47Z",
+      "side": 1,
+      "message": "I think you can avoid friending the PRM if you:\n- Use prompt_factory_-\u003eset_response_type instead of calling into the PRM directly\n- Use prompt_factory_-\u003eDocumentOnLo...()\n\nThen you probably won\u0027t need the RunLoop here either, since it looks like WaitForResponse() below will handle it.",
+      "revId": "0421a7ff74c1ec87d104566e01d8d8fbf6d2578b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e7a20e8_07c08b6f",
+        "filename": "chrome/browser/permissions/permission_request.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1003044
+      },
+      "writtenOn": "2017-12-20T05:42:47Z",
+      "side": 1,
+      "message": "ah... there\u0027s also the suffixes list PermissionRequestTypes in histograms.xml, which corresponds to GetPermissionRequestString.",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 38
+      },
+      "revId": "0421a7ff74c1ec87d104566e01d8d8fbf6d2578b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
