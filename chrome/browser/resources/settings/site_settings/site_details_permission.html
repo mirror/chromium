@@ -23,24 +23,34 @@
         </div>
         <div class="middle" id="permissionHeader">
           [[label]]
-          <div class="secondary"
-              hidden$="[[!hasPermissionInfoString_(site.source, category,
-                                                   site.setting)]]"
-              inner-h-t-m-l="[[permissionInfoString_(
-                site.source,
-                category,
-                site.setting,
-                '$i18nPolymer{siteSettingsSourceAdsBlacklist}',
-                '$i18nPolymer{siteSettingsAdsBlockSingular}',
-                '$i18nPolymer{siteSettingsSourceEmbargo}',
-                '$i18nPolymer{siteSettingsSourceInsecureOrigin}',
-                '$i18nPolymer{siteSettingsSourceKillSwitch}',
-                '$i18nPolymer{siteSettingsSourceExtensionAllow}',
-                '$i18nPolymer{siteSettingsSourceExtensionBlock}',
-                '$i18nPolymer{siteSettingsSourceExtensionAsk}',
-                '$i18nPolymer{siteSettingsSourcePolicyAllow}',
-                '$i18nPolymer{siteSettingsSourcePolicyBlock}',
-                '$i18nPolymer{siteSettingsSourcePolicyAsk}')]]">
+          <div id="permissionInfoString" data-permission-info-strings='{
+              "siteSettingsSourceNormal": "",
+              "siteSettingsSourceAdsBlacklist":
+                  "$i18nPolymer{siteSettingsSourceAdsBlacklist}",
+              "siteSettingsAdsBlockSingular":
+                  "$i18nPolymer{siteSettingsAdsBlockSingular}",
+              "siteSettingsSourceEmbargo":
+                  "$i18nPolymer{siteSettingsSourceEmbargo}",
+              "siteSettingsSourceInsecureOrigin":
+                  "$i18nPolymer{siteSettingsSourceInsecureOrigin}",
+              "siteSettingsSourceKillSwitch":
+                  "$i18nPolymer{siteSettingsSourceKillSwitch}",
+              "siteSettingsSourceExtensionAllow":
+                  "$i18nPolymer{siteSettingsSourceExtensionAllow}",
+              "siteSettingsSourceExtensionBlock":
+                  "$i18nPolymer{siteSettingsSourceExtensionBlock}",
+              "siteSettingsSourceExtensionAsk":
+                  "$i18nPolymer{siteSettingsSourceExtensionAsk}",
+              "siteSettingsSourcePolicyAllow":
+                  "$i18nPolymer{siteSettingsSourcePolicyAllow}",
+              "siteSettingsSourcePolicyBlock":
+                  "$i18nPolymer{siteSettingsSourcePolicyBlock}",
+              "siteSettingsSourcePolicyAsk":
+                  "$i18nPolymer{siteSettingsSourcePolicyAsk}"}'
+              class="secondary" hidden$="[[!hasPermissionInfoString_(
+                  site.source, category, site.setting)]]"
+              inner-h-t-m-l="[[permissionInfoString_(site.source, category,
+                  site.setting, infoStringMap_)]]">
           </div>
         </div>
         <div class="md-select-wrapper">
@@ -49,8 +59,7 @@
               on-change="onPermissionSelectionChange_"
               disabled$="[[!isPermissionUserControlled_(site.source, category,
                                                         site.setting)]]">
-            <option id="default" value$="[[ContentSetting.DEFAULT]]"
-                hidden$="[[isAdsCategory_(category)]]">
+            <option id="default" value$="[[ContentSetting.DEFAULT]]">
               [[defaultSettingString_(
                   defaultSetting_,
                   '$i18nPolymer{siteSettingsActionAskDefault}',
