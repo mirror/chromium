@@ -72,7 +72,7 @@ class BLINK_EXPORT WebEmbeddedWorker {
       // A handle for service_manager::mojom::blink::InterfaceProviderPtrInfo.
       mojo::ScopedMessagePipeHandle interface_provider);
 
-  virtual ~WebEmbeddedWorker() {}
+  virtual ~WebEmbeddedWorker() = default;
 
   // Starts and terminates WorkerThread and WorkerGlobalScope.
   virtual void StartWorkerContext(const WebEmbeddedWorkerStartData&) = 0;

@@ -64,7 +64,7 @@ class WebDevToolsAgentClient {
   }
 
  protected:
-  ~WebDevToolsAgentClient() {}
+  ~WebDevToolsAgentClient() = default;
 };
 
 }  // namespace blink

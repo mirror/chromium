@@ -127,7 +127,7 @@ struct WebURLError;
 
 class BLINK_EXPORT WebFrameClient {
  public:
-  virtual ~WebFrameClient() {}
+  virtual ~WebFrameClient() = default;
 
   // Initialization ------------------------------------------------------
   // Called exactly once during construction to notify the client about the
