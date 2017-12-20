@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2e970b94_df4ded9a",
+        "filename": "ios/chrome/browser/snapshots/fake_snapshot_generator_delegate.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-20T18:57:51Z",
+      "side": 1,
+      "message": "Not related to your CL, but can we return @[] instead of nil? It is inconvenient for callers to deal both nil and arrays, because they will need separate code to handle nil.",
+      "range": {
+        "startLine": 23,
+        "startChar": 9,
+        "endLine": 23,
+        "endChar": 12
+      },
+      "revId": "123e46d7a3fc64ab7041093e09f8d94b07753740",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20087366_5ea63a29",
+        "filename": "ios/chrome/browser/snapshots/snapshot_generator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-20T18:57:51Z",
+      "side": 1,
+      "message": "Maybe retrieveGreySnapshotWithCompletionHandler ?\n\nor just geGreySnapshotWithCompletionHandler ?",
+      "range": {
+        "startLine": 41,
+        "startChar": 8,
+        "endLine": 41,
+        "endChar": 28
+      },
+      "revId": "123e46d7a3fc64ab7041093e09f8d94b07753740",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d2aaa68_931d3428",
+        "filename": "ios/chrome/browser/snapshots/snapshot_generator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-20T18:57:51Z",
+      "side": 1,
+      "message": "Do we need this call? canTakeSnapshotForWebState: should return false if web usage is disabled.",
+      "range": {
+        "startLine": 203,
+        "startChar": 18,
+        "endLine": 203,
+        "endChar": 35
+      },
+      "revId": "123e46d7a3fc64ab7041093e09f8d94b07753740",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64f39245_e4fa543c",
+        "filename": "ios/chrome/browser/snapshots/snapshot_generator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-20T18:57:51Z",
+      "side": 1,
+      "message": "Should we use dispatch_once here? Or this code can only be used on UI thread?",
+      "range": {
+        "startLine": 248,
+        "startChar": 18,
+        "endLine": 248,
+        "endChar": 38
+      },
+      "revId": "123e46d7a3fc64ab7041093e09f8d94b07753740",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "818d204e_9db05648",
+        "filename": "ios/chrome/browser/snapshots/snapshot_tab_helper.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-20T18:57:51Z",
+      "side": 1,
+      "message": "Do we really need this method?",
+      "range": {
+        "startLine": 131,
+        "startChar": 28,
+        "endLine": 131,
+        "endChar": 47
+      },
+      "revId": "123e46d7a3fc64ab7041093e09f8d94b07753740",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f651a3db_a826da32",
+        "filename": "ios/chrome/browser/snapshots/snapshot_tab_helper_unittest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-20T18:57:51Z",
+      "side": 1,
+      "message": "Can we drop underscore from the method name?",
+      "range": {
+        "startLine": 179,
+        "startChar": 30,
+        "endLine": 179,
+        "endChar": 68
+      },
+      "revId": "123e46d7a3fc64ab7041093e09f8d94b07753740",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f75bd87c_f73c3b7c",
+        "filename": "ios/chrome/browser/web/page_placeholder_tab_helper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-20T18:57:51Z",
+      "side": 1,
+      "message": "nit: Cancels",
+      "range": {
+        "startLine": 27,
+        "startChar": 5,
+        "endLine": 27,
+        "endChar": 11
+      },
+      "revId": "123e46d7a3fc64ab7041093e09f8d94b07753740",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8547e1c_3d36613f",
+        "filename": "ios/chrome/browser/web/page_placeholder_tab_helper.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-20T18:57:51Z",
+      "side": 1,
+      "message": "This was delegated, because TabHepers should not deal with UI:\nhttps://chromium-review.googlesource.com/c/chromium/src/+/585221/3/ios/chrome/browser/web/placeholder_overlay_tab_helper.mm\n\nSame comment for line 85",
+      "range": {
+        "startLine": 103,
+        "startChar": 22,
+        "endLine": 103,
+        "endChar": 43
+      },
+      "revId": "123e46d7a3fc64ab7041093e09f8d94b07753740",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
