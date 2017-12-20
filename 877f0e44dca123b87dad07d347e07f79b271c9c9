@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fab4a0bc_fae009b5",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 633,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-12-20T14:58:06Z",
+      "side": 1,
+      "message": "I think we should add a test for this in |profile_chooser_view_browsertest.cc|. That way we\u0027re sure we will not regress in the future.\nThat would also allow you to write a browser test using the sign-in code which is also nice.\n\nTo get the user is a signed in state, do the following:\nSigninManager signin_manager \u003d SigninManagerFactory::GetForProfile(profile());\nsignin_manager-\u003eStartSignInWithRefreshToken(\"refresh_token\", \"foo_gaia_id\", \"foo_email@gmail.com\", \"password\", SigninManager::OAuthTokenFetchedCallback());",
+      "range": {
+        "startLine": 633,
+        "startChar": 34,
+        "endLine": 633,
+        "endChar": 42
+      },
+      "revId": "877f0e44dca123b87dad07d347e07f79b271c9c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
