@@ -16,6 +16,24 @@
       "revId": "a07ccbc1ca0c80b33184091a5207518a80090d0c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e5b6018_9e8520be",
+        "filename": "base/pickle.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1254135
+      },
+      "writtenOn": "2017-12-20T03:06:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a55224e_40f02c75",
+      "revId": "a07ccbc1ca0c80b33184091a5207518a80090d0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
