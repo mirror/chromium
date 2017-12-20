@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3a8fe9c8_9ac9e65a",
+        "filename": "chrome/browser/extensions/api/cryptotoken_private/cryptotoken_private_api_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1002270
+      },
+      "writtenOn": "2017-12-20T22:13:42Z",
+      "side": 1,
+      "message": "Done, thanks!",
+      "parentUuid": "c31cbd8d_56f40820",
+      "revId": "0421a7ff74c1ec87d104566e01d8d8fbf6d2578b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4e7a20e8_07c08b6f",
         "filename": "chrome/browser/permissions/permission_request.h",
         "patchSetId": 7
@@ -39,6 +57,30 @@
       "revId": "0421a7ff74c1ec87d104566e01d8d8fbf6d2578b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d797f4e7_b63c9f7a",
+        "filename": "chrome/browser/permissions/permission_request.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002270
+      },
+      "writtenOn": "2017-12-20T22:13:42Z",
+      "side": 1,
+      "message": "I\u0027ve edited this comment to (I think) list all the other places that need to reflect this enum.",
+      "parentUuid": "4e7a20e8_07c08b6f",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 38
+      },
+      "revId": "0421a7ff74c1ec87d104566e01d8d8fbf6d2578b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
