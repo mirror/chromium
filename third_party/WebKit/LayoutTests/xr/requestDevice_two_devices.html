@@ -18,9 +18,8 @@ vr_test( (t) => {
     }, "requestDevice returned result");
 
     t.step( () => {
-      assert_equals(device.deviceName, 'Google, Inc. Daydream View');
       assert_false(device.isExternal);
-    }, "Attributes for device are correct");
+    }, "Attribute for device is correct");
   }, (err) => {
     t.step( () => {
       assert_unreached("requestDevice rejected");
