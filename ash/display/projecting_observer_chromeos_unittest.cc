@@ -32,7 +32,9 @@ std::unique_ptr<display::DisplaySnapshot> CreateVGASnapshot() {
 
 class ProjectingObserverTest : public testing::Test {
  public:
-  ProjectingObserverTest() : observer_(&fake_power_client_) {}
+  ProjectingObserverTest() {
+    observer_.set_power_manager_client_for_test(&fake_power_client_);
+  }
 
   ~ProjectingObserverTest() override = default;
 
