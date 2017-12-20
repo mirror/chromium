@@ -286,6 +286,9 @@ AccessibilityManager::AccessibilityManager()
                               content::NotificationService::AllSources());
   notification_registrar_.Add(this, chrome::NOTIFICATION_PROFILE_DESTROYED,
                               content::NotificationService::AllSources());
+  notification_registrar_.Add(this,
+                              chrome::NOTIFICATION_SCREEN_LOCK_STATE_CHANGED,
+                              content::NotificationService::AllSources());
 
   input_method::InputMethodManager::Get()->AddObserver(this);
   session_manager::SessionManager::Get()->AddObserver(this);
@@ -1400,8 +1403,13 @@ void AccessibilityManager::Observe(
         SetProfile(NULL);
       break;
     }
+    case chrome::NOTIFICATION_SCREEN_LOCK_STATE_CHANGED: {
+      if (chromevox_panel_ && !((*content::Details<bool>(details).ptr())))
+        chromevox_panel_ = nullptr;
+      break;
+    }
   }
-}
+  }
 
 void AccessibilityManager::OnBrailleDisplayStateChanged(
     const DisplayState& display_state) {
