@@ -13,6 +13,7 @@
 #include "components/signin/core/browser/account_tracker_service.h"
 #include "components/signin/core/browser/fake_profile_oauth2_token_service.h"
 #include "components/signin/core/browser/fake_signin_manager.h"
+#include "components/signin/core/browser/signin_error_controller.h"
 #include "components/signin/core/browser/test_signin_client.h"
 #include "components/sync/base/model_type.h"
 #include "components/sync/driver/fake_sync_service.h"
@@ -65,9 +66,12 @@ class TestSyncService : public syncer::FakeSyncService {
 class HistoryNoticeUtilsTest : public ::testing::Test {
  public:
   HistoryNoticeUtilsTest()
-    : signin_client_(nullptr),
-      signin_manager_(&signin_client_, &account_tracker_) {
-  }
+      : signin_error_controller_(
+            SigninErrorController::AccountMode::ANY_ACCOUNT),
+        signin_client_(nullptr),
+        signin_manager_(&signin_client_,
+                        &account_tracker_,
+                        &signin_error_controller_) {}
 
   void SetUp() override {
     sync_service_.reset(new TestSyncService());
@@ -122,6 +126,7 @@ class HistoryNoticeUtilsTest : public ::testing::Test {
 
   FakeProfileOAuth2TokenService oauth2_token_service_;
   AccountTrackerService account_tracker_;
+  SigninErrorController signin_error_controller_;
   TestSigninClient signin_client_;
   FakeSigninManagerBase signin_manager_;
   scoped_refptr<net::URLRequestContextGetter> url_request_context_;

@@ -48,7 +48,9 @@ syncer::ModelTypeSet FakeSyncService::GetActiveDataTypes() const {
 }
 
 RemoteSuggestionsTestUtils::RemoteSuggestionsTestUtils()
-    : pref_service_(base::MakeUnique<TestingPrefServiceSyncable>()) {
+    : pref_service_(base::MakeUnique<TestingPrefServiceSyncable>()),
+      signin_error_controller_(
+          SigninErrorController::AccountMode::ANY_ACCOUNT) {
   AccountTrackerService::RegisterPrefs(pref_service_->registry());
 
 #if defined(OS_CHROMEOS)
@@ -73,11 +75,11 @@ RemoteSuggestionsTestUtils::~RemoteSuggestionsTestUtils() = default;
 void RemoteSuggestionsTestUtils::ResetSigninManager() {
 #if defined(OS_CHROMEOS)
   fake_signin_manager_ = base::MakeUnique<FakeSigninManagerBase>(
-      signin_client_.get(), account_tracker_.get());
+      signin_client_.get(), account_tracker_.get(), &signin_error_controller_);
 #else
   fake_signin_manager_ = base::MakeUnique<FakeSigninManager>(
       signin_client_.get(), token_service_.get(), account_tracker_.get(),
-      /*cookie_manager_service=*/nullptr);
+      /*cookie_manager_service=*/nullptr, &signin_error_controller_);
 #endif
 }
 

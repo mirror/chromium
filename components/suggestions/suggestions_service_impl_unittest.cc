@@ -17,6 +17,7 @@
 #include "components/signin/core/browser/account_tracker_service.h"
 #include "components/signin/core/browser/fake_profile_oauth2_token_service.h"
 #include "components/signin/core/browser/fake_signin_manager.h"
+#include "components/signin/core/browser/signin_error_controller.h"
 #include "components/signin/core/browser/test_signin_client.h"
 #include "components/suggestions/blacklist_store.h"
 #include "components/suggestions/features.h"
@@ -140,8 +141,12 @@ class SuggestionsServiceTest : public testing::Test {
   SuggestionsServiceTest()
       : task_runner_(new base::TestMockTimeTaskRunner()),
         task_runner_handle_(task_runner_),
+        signin_error_controller_(
+            SigninErrorController::AccountMode::ANY_ACCOUNT),
         signin_client_(&pref_service_),
-        signin_manager_(&signin_client_, &account_tracker_),
+        signin_manager_(&signin_client_,
+                        &account_tracker_,
+                        &signin_error_controller_),
         request_context_(
             new net::TestURLRequestContextGetter(task_runner_.get())),
         mock_thumbnail_manager_(nullptr),
@@ -230,6 +235,7 @@ class SuggestionsServiceTest : public testing::Test {
   base::ThreadTaskRunnerHandle task_runner_handle_;
   TestingPrefServiceSyncable pref_service_;
   AccountTrackerService account_tracker_;
+  SigninErrorController signin_error_controller_;
   TestSigninClient signin_client_;
   FakeSigninManagerBase signin_manager_;
   net::TestURLFetcherFactory factory_;

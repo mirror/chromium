@@ -17,6 +17,7 @@
 #include "components/signin/core/browser/fake_signin_manager.h"
 #include "components/signin/core/browser/profile_management_switches.h"
 #include "components/signin/core/browser/scoped_account_consistency.h"
+#include "components/signin/core/browser/signin_error_controller.h"
 #include "components/signin/core/browser/test_signin_client.h"
 #include "components/sync_preferences/testing_pref_service_syncable.h"
 #include "content/public/browser/web_contents.h"
@@ -37,10 +38,13 @@ class ProcessDiceHeaderDelegateImplTest
  public:
   ProcessDiceHeaderDelegateImplTest()
       : signin_client_(&pref_service_),
+        signin_error_controller_(
+            SigninErrorController::AccountMode::MAIN_ACCOUNT),
         signin_manager_(&signin_client_,
                         &token_service_,
                         &account_tracker_service_,
-                        nullptr),
+                        nullptr,
+                        &signin_error_controller_),
         enable_sync_called_(false),
         show_error_called_(false),
         account_id_("12345"),
@@ -93,6 +97,7 @@ class ProcessDiceHeaderDelegateImplTest
   TestSigninClient signin_client_;
   FakeProfileOAuth2TokenService token_service_;
   AccountTrackerService account_tracker_service_;
+  SigninErrorController signin_error_controller_;
   FakeSigninManager signin_manager_;
 
   bool enable_sync_called_;

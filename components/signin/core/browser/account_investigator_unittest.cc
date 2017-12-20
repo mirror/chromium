@@ -16,6 +16,7 @@
 #include "components/signin/core/browser/account_tracker_service.h"
 #include "components/signin/core/browser/fake_gaia_cookie_manager_service.h"
 #include "components/signin/core/browser/fake_signin_manager.h"
+#include "components/signin/core/browser/signin_error_controller.h"
 #include "components/signin/core/browser/signin_metrics.h"
 #include "components/signin/core/browser/signin_pref_names.h"
 #include "components/signin/core/browser/test_signin_client.h"
@@ -36,11 +37,14 @@ using signin_metrics::ReportingType;
 class AccountInvestigatorTest : public testing::Test {
  protected:
   AccountInvestigatorTest()
-      : signin_client_(&prefs_),
+      : signin_error_controller_(
+            SigninErrorController::AccountMode::ANY_ACCOUNT),
+        signin_client_(&prefs_),
         signin_manager_(&signin_client_,
                         nullptr,
                         &account_tracker_service_,
-                        nullptr),
+                        nullptr,
+                        &signin_error_controller_),
         gaia_cookie_manager_service_(nullptr,
                                      GaiaConstants::kChromeSource,
                                      &signin_client_),
@@ -157,6 +161,7 @@ class AccountInvestigatorTest : public testing::Test {
   base::MessageLoop message_loop_;
   sync_preferences::TestingPrefServiceSyncable prefs_;
   AccountTrackerService account_tracker_service_;
+  SigninErrorController signin_error_controller_;
   TestSigninClient signin_client_;
   FakeSigninManager signin_manager_;
   FakeGaiaCookieManagerService gaia_cookie_manager_service_;

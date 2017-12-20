@@ -23,6 +23,7 @@
 #include "components/signin/core/browser/profile_management_switches.h"
 #include "components/signin/core/browser/profile_oauth2_token_service.h"
 #include "components/signin/core/browser/scoped_account_consistency.h"
+#include "components/signin/core/browser/signin_error_controller.h"
 #include "components/signin/core/browser/signin_features.h"
 #include "components/signin/core/browser/signin_manager.h"
 #include "components/signin/core/browser/signin_metrics.h"
@@ -204,6 +205,7 @@ class AccountReconcilorTest : public ::testing::Test {
   FakeProfileOAuth2TokenService token_service_;
   DiceTestSigninClient test_signin_client_;
   AccountTrackerService account_tracker_;
+  SigninErrorController signin_error_controller_;
   FakeGaiaCookieManagerService cookie_manager_service_;
   FakeSigninManagerForTesting signin_manager_;
   std::unique_ptr<MockAccountReconcilor> mock_reconcilor_;
@@ -217,16 +219,20 @@ class AccountReconcilorTest : public ::testing::Test {
 AccountReconcilorTest::AccountReconcilorTest()
     : account_consistency_(signin::AccountConsistencyMethod::kDisabled),
       test_signin_client_(&pref_service_),
+      signin_error_controller_(SigninErrorController::AccountMode::ANY_ACCOUNT),
       cookie_manager_service_(&token_service_,
                               GaiaConstants::kChromeSource,
                               &test_signin_client_),
 #if defined(OS_CHROMEOS)
-      signin_manager_(&test_signin_client_, &account_tracker_),
+      signin_manager_(&test_signin_client_,
+                      &account_tracker_,
+                      &signin_error_controller_),
 #else
       signin_manager_(&test_signin_client_,
                       &token_service_,
                       &account_tracker_,
-                      &cookie_manager_service_),
+                      &cookie_manager_service_,
+                      &signin_error_controller_),
 #endif
       url_fetcher_factory_(nullptr) {
   signin::RegisterAccountConsistencyProfilePrefs(pref_service_.registry());
