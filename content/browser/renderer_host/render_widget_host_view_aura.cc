@@ -865,15 +865,15 @@ void RenderWidgetHostViewAura::SetTooltipText(
 }
 
 void RenderWidgetHostViewAura::UpdateScreenInfo(gfx::NativeView view) {
-  RenderWidgetHostViewBase::UpdateScreenInfo(view);
-  if (!host_->auto_resize_enabled())
-    return;
-
   window_->AllocateLocalSurfaceId();
-  host_->DidAllocateLocalSurfaceIdForAutoResize(
-      host_->last_auto_resize_request_number());
+  RenderWidgetHostViewBase::UpdateScreenInfo(view);
   if (delegated_frame_host_)
     delegated_frame_host_->WasResized();
+
+  if (host_->auto_resize_enabled()) {
+    host_->DidAllocateLocalSurfaceIdForAutoResize(
+        host_->last_auto_resize_request_number());
+  }
 }
 
 gfx::Size RenderWidgetHostViewAura::GetRequestedRendererSize() const {
