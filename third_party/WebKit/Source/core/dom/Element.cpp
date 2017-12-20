@@ -1974,8 +1974,12 @@ scoped_refptr<ComputedStyle> Element::StyleForLayoutObject() {
     }
   }
 
+  bool is_svg_stacking =
+      (IsSVGElement() && ToSVGElement(this)->IsOutermostSVGSVGElement()) ||
+      IsSVGForeignObjectElement(*this);
+
   style->UpdateIsStackingContext(this == GetDocument().documentElement(),
-                                 IsInTopLayer());
+                                 IsInTopLayer(), is_svg_stacking);
 
   return style;
 }
