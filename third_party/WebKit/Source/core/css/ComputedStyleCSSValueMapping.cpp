@@ -123,27 +123,6 @@ static CSSValueList* CreatePositionListForLayer(const CSSProperty& property,
   return position_list;
 }
 
-static CSSValue* ValueForFillSize(const FillSize& fill_size,
-                                  const ComputedStyle& style) {
-  if (fill_size.type == EFillSizeType::kContain)
-    return CSSIdentifierValue::Create(CSSValueContain);
-
-  if (fill_size.type == EFillSizeType::kCover)
-    return CSSIdentifierValue::Create(CSSValueCover);
-
-  if (fill_size.size.Height().IsAuto()) {
-    return ComputedStyleUtils::ZoomAdjustedPixelValueForLength(
-        fill_size.size.Width(), style);
-  }
-
-  CSSValueList* list = CSSValueList::CreateSpaceSeparated();
-  list->Append(*ComputedStyleUtils::ZoomAdjustedPixelValueForLength(
-      fill_size.size.Width(), style));
-  list->Append(*ComputedStyleUtils::ZoomAdjustedPixelValueForLength(
-      fill_size.size.Height(), style));
-  return list;
-}
-
 static CSSValue* ValueForFillRepeat(EFillRepeat x_repeat,
                                     EFillRepeat y_repeat) {
   // For backwards compatibility, if both values are equal, just return one of
@@ -647,7 +626,8 @@ static CSSValueList* ValuesForBackgroundShorthand(
         GetCSSPropertyBackgroundPosition(), *curr_layer, style));
     list->Append(*before_slash);
     CSSValueList* after_slash = CSSValueList::CreateSpaceSeparated();
-    after_slash->Append(*ValueForFillSize(curr_layer->Size(), style));
+    after_slash->Append(
+        *ComputedStyleUtils::ValueForFillSize(curr_layer->Size(), style));
     after_slash->Append(*CSSIdentifierValue::Create(curr_layer->Origin()));
     after_slash->Append(*CSSIdentifierValue::Create(curr_layer->Clip()));
     list->Append(*after_slash);
@@ -2243,33 +2223,8 @@ const CSSValue* ComputedStyleCSSValueMapping::Get(
   const SVGComputedStyle& svg_style = style.SvgStyle();
   const CSSProperty& resolved_property = property.ResolveDirectionAwareProperty(
       style.Direction(), style.GetWritingMode());
+
   switch (resolved_property.PropertyID()) {
-    case CSSPropertyBackgroundImage:
-    case CSSPropertyWebkitMaskImage: {
-      CSSValueList* list = CSSValueList::CreateCommaSeparated();
-      const FillLayer* curr_layer =
-          resolved_property.IDEquals(CSSPropertyWebkitMaskImage)
-              ? &style.MaskLayers()
-              : &style.BackgroundLayers();
-      for (; curr_layer; curr_layer = curr_layer->Next()) {
-        if (curr_layer->GetImage())
-          list->Append(*curr_layer->GetImage()->ComputedCSSValue());
-        else
-          list->Append(*CSSIdentifierValue::Create(CSSValueNone));
-      }
-      return list;
-    }
-    case CSSPropertyBackgroundSize:
-    case CSSPropertyWebkitMaskSize: {
-      CSSValueList* list = CSSValueList::CreateCommaSeparated();
-      const FillLayer* curr_layer =
-          resolved_property.IDEquals(CSSPropertyWebkitMaskSize)
-              ? &style.MaskLayers()
-              : &style.BackgroundLayers();
-      for (; curr_layer; curr_layer = curr_layer->Next())
-        list->Append(*ValueForFillSize(curr_layer->Size(), style));
-      return list;
-    }
     case CSSPropertyBackgroundRepeat:
     case CSSPropertyWebkitMaskRepeat: {
       CSSValueList* list = CSSValueList::CreateCommaSeparated();

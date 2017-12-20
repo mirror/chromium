@@ -5,7 +5,9 @@
 #include "core/css/properties/ComputedStyleUtils.h"
 
 #include "core/css/CSSColorValue.h"
+#include "core/css/CSSIdentifierValue.h"
 #include "core/css/CSSValue.h"
+#include "core/css/CSSValueList.h"
 #include "core/css/StyleColor.h"
 #include "core/css/ZoomAdjustedPixelValue.h"
 
@@ -43,6 +45,49 @@ CSSValue* ComputedStyleUtils::ZoomAdjustedPixelValueForLength(
   if (length.IsFixed())
     return ZoomAdjustedPixelValue(length.Value(), style);
   return CSSValue::Create(length, style.EffectiveZoom());
+}
+
+const CSSValue* ComputedStyleUtils::BackgroundImageOrWebkitMaskImage(
+    const FillLayer& fill_layer) {
+  CSSValueList* list = CSSValueList::CreateCommaSeparated();
+  const FillLayer* curr_layer = &fill_layer;
+  for (; curr_layer; curr_layer = curr_layer->Next()) {
+    if (curr_layer->GetImage())
+      list->Append(*curr_layer->GetImage()->ComputedCSSValue());
+    else
+      list->Append(*CSSIdentifierValue::Create(CSSValueNone));
+  }
+  return list;
+}
+
+const CSSValue* ComputedStyleUtils::ValueForFillSize(
+    const FillSize& fill_size,
+    const ComputedStyle& style) {
+  if (fill_size.type == EFillSizeType::kContain)
+    return CSSIdentifierValue::Create(CSSValueContain);
+
+  if (fill_size.type == EFillSizeType::kCover)
+    return CSSIdentifierValue::Create(CSSValueCover);
+
+  if (fill_size.size.Height().IsAuto()) {
+    return ZoomAdjustedPixelValueForLength(fill_size.size.Width(), style);
+  }
+
+  CSSValueList* list = CSSValueList::CreateSpaceSeparated();
+  list->Append(*ZoomAdjustedPixelValueForLength(fill_size.size.Width(), style));
+  list->Append(
+      *ZoomAdjustedPixelValueForLength(fill_size.size.Height(), style));
+  return list;
+}
+
+const CSSValue* ComputedStyleUtils::BackgroundImageOrWebkitMaskSize(
+    const ComputedStyle& style,
+    const FillLayer& fill_layer) {
+  CSSValueList* list = CSSValueList::CreateCommaSeparated();
+  const FillLayer* curr_layer = &fill_layer;
+  for (; curr_layer; curr_layer = curr_layer->Next())
+    list->Append(*ValueForFillSize(curr_layer->Size(), style));
+  return list;
 }
 
 }  // namespace blink
