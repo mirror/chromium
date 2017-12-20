@@ -26,6 +26,7 @@
 #include "gpu/command_buffer/service/shader_manager.h"
 #include "gpu/command_buffer/service/texture_manager.h"
 #include "gpu/command_buffer/service/transfer_buffer_manager.h"
+#include "gpu/ipc/service/command_buffer_stub.h"
 #include "ui/gl/gl_bindings.h"
 #include "ui/gl/gl_version_info.h"
 
@@ -128,7 +129,7 @@ ContextGroup::ContextGroup(
 }
 
 gpu::ContextResult ContextGroup::Initialize(
-    GLES2Decoder* decoder,
+    DecoderInterface* decoder,
     ContextType context_type,
     const DisallowedFeatures& disallowed_features) {
   switch (context_type) {
@@ -529,7 +530,7 @@ gpu::ContextResult ContextGroup::Initialize(
 
 namespace {
 
-bool IsNull(const base::WeakPtr<gles2::GLES2Decoder>& decoder) {
+bool IsNull(const base::WeakPtr<DecoderInterface>& decoder) {
   return !decoder;
 }
 
@@ -559,9 +560,9 @@ void ContextGroup::ReportProgress() {
     progress_reporter_->ReportProgress();
 }
 
-void ContextGroup::Destroy(GLES2Decoder* decoder, bool have_context) {
+void ContextGroup::Destroy(DecoderInterface* decoder, bool have_context) {
   decoders_.erase(std::remove_if(decoders_.begin(), decoders_.end(),
-                                 WeakPtrEquals<gles2::GLES2Decoder>(decoder)),
+                                 WeakPtrEquals<DecoderInterface>(decoder)),
                   decoders_.end());
   // If we still have contexts do nothing.
   if (HaveContexts()) {
