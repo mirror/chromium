@@ -10,8 +10,7 @@
 @protocol ApplicationCommands;
 @protocol BrowserCommands;
 @protocol SigninPresenter;
-@class SigninPromoViewConfigurator;
-@class SigninPromoViewMediator;
+@class SigninPromoView;
 @protocol SyncPresenter;
 
 namespace ios {
@@ -40,23 +39,19 @@ TabSwitcherPanelOverlayType PanelOverlayTypeFromSignInPanelsType(
     presenter;
 @property(nonatomic, readonly, weak) id<ApplicationCommands, BrowserCommands>
     dispatcher;
-@property(nonatomic) SigninPromoViewMediator* signinPromoViewMediator;
+// Sign-in promo view. Nil if the |overlayType| is not
+// |OVERLAY_PANEL_USER_SIGNED_OUT|.
+@property(nonatomic, readonly) SigninPromoView* signinPromoView;
+// Called when the panel becomes visible (can be nil).
+@property(nonatomic, copy) dispatch_block_t wasShownCallback;
+// Called when the panel becomes hidden (can be nil).
+@property(nonatomic, copy) dispatch_block_t wasHiddenCallback;
 
 - (instancetype)initWithFrame:(CGRect)frame
                  browserState:(ios::ChromeBrowserState*)browserState
                     presenter:(id<SigninPresenter, SyncPresenter>)presenter
                    dispatcher:
                        (id<ApplicationCommands, BrowserCommands>)dispatcher;
-
-// Should be called when the tab switcher was shown.
-- (void)wasShown;
-// Should be called when the tab switcher was hidden.
-- (void)wasHidden;
-
-// Called when the sign-in promo view should be reloaded.
-- (void)configureSigninPromoWithConfigurator:
-            (SigninPromoViewConfigurator*)configurator
-                             identityChanged:(BOOL)identityChanged;
 
 @end
 
