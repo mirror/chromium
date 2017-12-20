@@ -52,6 +52,24 @@
       "revId": "4851339e64798a8d643dd295754e7fca69e265dd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0bef5b70_1338191c",
+        "filename": "cc/layers/picture_layer_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 645,
+      "author": {
+        "id": 1116061
+      },
+      "writtenOn": "2017-12-20T18:49:26Z",
+      "side": 1,
+      "message": "Regarding extra size, I didn\u0027t want to bundle this here but it may make sense to be more conservative anyway and treat a pre-paint border as required for activation.  IIRC we have a pre-paint border on the active tree to prevent checker-boarding when scrolling.  There\u0027s an argument that for an animated page, we need the same for the pending tree.",
+      "parentUuid": "8182ee78_353509d0",
+      "revId": "4851339e64798a8d643dd295754e7fca69e265dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
