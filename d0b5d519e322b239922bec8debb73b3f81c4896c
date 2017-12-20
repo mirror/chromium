@@ -108,6 +108,24 @@
     },
     {
       "key": {
+        "uuid": "c8896a99_8a8611cc",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3137,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-12-20T14:55:12Z",
+      "side": 1,
+      "message": "Ok I would expect the use case where this helps the client to be one where the client would be creating multiple pointer/keyboard instances instead. Anyhow, not very important. Thanks for explaining.",
+      "parentUuid": "78dfcf5e_2967f639",
+      "revId": "d0b5d519e322b239922bec8debb73b3f81c4896c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a8ff28cf_ef4207e3",
         "filename": "third_party/wayland-protocols/README.chromium",
         "patchSetId": 1
