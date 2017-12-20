@@ -9,6 +9,7 @@
 
 #include "base/base_switches.h"
 #include "base/command_line.h"
+#include "base/metrics/field_trial_params.h"
 #include "base/time/time.h"
 #include "build/build_config.h"
 #include "chrome/browser/flag_descriptions.h"
@@ -65,6 +66,17 @@ std::string GetFeatureFlagStatus(const std::string& feature_name) {
   if (disabled_features.find(feature_name) != std::string::npos) {
     return "Disabled";
   }
+  return kDefaultFlagValue;
+}
+
+std::string GetNonFlagEctValue() {
+  std::map<std::string, std::string> nqe_params;
+  base::GetFieldTrialParams("NetworkQualityEstimator", &nqe_params);
+  const std::string trial_param = "force_effective_connection_type";
+  if (nqe_params.find(trial_param) != nqe_params.end()) {
+    return "Fieldtrial forced " + nqe_params[trial_param];
+  }
+
   return kDefaultFlagValue;
 }
 
@@ -199,7 +211,7 @@ void InterventionsInternalsPageHandler::GetPreviewsFlagsDetails(
   std::string ect_value =
       base::CommandLine::ForCurrentProcess()->GetSwitchValueASCII(
           switches::kForceEffectiveConnectionType);
-  ect_status->value = ect_value.empty() ? kDefaultFlagValue : ect_value;
+  ect_status->value = ect_value.empty() ? GetNonFlagEctValue() : ect_value;
   ect_status->htmlId = kEctFlagHtmlId;
   flags.push_back(std::move(ect_status));
 

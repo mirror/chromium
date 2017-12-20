@@ -13,6 +13,8 @@
 #include "base/base_switches.h"
 #include "base/command_line.h"
 #include "base/macros.h"
+#include "base/metrics/field_trial.h"
+#include "base/metrics/field_trial_params.h"
 #include "base/run_loop.h"
 #include "base/test/scoped_command_line.h"
 #include "base/test/scoped_feature_list.h"
@@ -246,7 +248,8 @@ class TestPreviewsUIService : public previews::PreviewsUIService {
 class InterventionsInternalsPageHandlerTest : public testing::Test {
  public:
   InterventionsInternalsPageHandlerTest()
-      : profile_manager_(TestingBrowserProcess::GetGlobal()) {}
+      : profile_manager_(TestingBrowserProcess::GetGlobal()),
+        field_trial_list_(nullptr) {}
 
   ~InterventionsInternalsPageHandlerTest() override {}
 
@@ -286,6 +289,7 @@ class InterventionsInternalsPageHandlerTest : public testing::Test {
 
  protected:
   TestingProfileManager profile_manager_;
+  base::FieldTrialList field_trial_list_;
 
   TestPreviewsLogger* logger_;
   std::unique_ptr<TestPreviewsUIService> previews_ui_service_;
@@ -457,6 +461,27 @@ TEST_F(InterventionsInternalsPageHandlerTest, GetFlagsForceEctValue) {
     EXPECT_EQ(expected_ect, ect_flag->second->value);
     EXPECT_EQ(kEctFlagLink, ect_flag->second->link);
   }
+}
+
+TEST_F(InterventionsInternalsPageHandlerTest, GetFlagsEctForceFieldtrialValue) {
+  const std::string trial_name = "NetworkQualityEstimator";
+  const std::string group_name = "Enabled";
+  const std::string expected_ect = "Slow-2G";
+
+  std::map<std::string, std::string> params;
+  params["force_effective_connection_type"] = expected_ect;
+  ASSERT_TRUE(base::AssociateFieldTrialParams(trial_name, group_name, params));
+  base::FieldTrialList::CreateFieldTrial(trial_name, group_name);
+
+  page_handler_->GetPreviewsFlagsDetails(
+      base::BindOnce(&MockGetPreviewsFlagsCallback));
+
+  auto ect_flag = passed_in_flags.find(kEctFlagHtmlId);
+  ASSERT_NE(passed_in_flags.end(), ect_flag);
+  EXPECT_EQ(flag_descriptions::kForceEffectiveConnectionTypeName,
+            ect_flag->second->description);
+  EXPECT_EQ("Fieldtrial forced " + expected_ect, ect_flag->second->value);
+  EXPECT_EQ(kEctFlagLink, ect_flag->second->link);
 }
 
 TEST_F(InterventionsInternalsPageHandlerTest, GetFlagsNoScriptDefaultValue) {
