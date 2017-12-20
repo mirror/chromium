@@ -16,6 +16,24 @@
       "revId": "174a5478a26e0ae27c62cbb1ad5e2435bce540d6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8ac784f_56d8d27e",
+        "filename": "ash/wm/lock_window_state.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1214366
+      },
+      "writtenOn": "2017-12-20T04:44:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d78681c6_f86a1ba4",
+      "revId": "174a5478a26e0ae27c62cbb1ad5e2435bce540d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
