@@ -147,11 +147,12 @@ TEST_F(GetPagesTaskTest, GetPagesForMultipleClientIds) {
   OfflinePageItem item_1 = generator()->CreateItem();
   store_util()->InsertItem(item_1);
   OfflinePageItem item_2 = generator()->CreateItem();
+  item_2.client_id = ClientId("last_n", "153");
   store_util()->InsertItem(item_2);
   OfflinePageItem item_3 = generator()->CreateItem();
   store_util()->InsertItem(item_3);
 
-  std::vector<ClientId> client_ids{item_1.client_id, item_2.client_id};
+  std::vector<ClientId> client_ids{item_1.client_id, ClientId("last_n", "153")};
 
   runner()->RunTask(GetPagesTask::CreateTaskMatchingClientIds(
       store(), get_pages_callback(), client_ids));

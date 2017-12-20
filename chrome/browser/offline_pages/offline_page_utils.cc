@@ -60,7 +60,7 @@ void OnGetPagesByURLDone(
       }
     } else {
       // This is consistent with exact match against original url done in
-      // OfflinePageModelImpl.
+      // GetPagesTask.
       DCHECK(url == page.original_url);
       if (!selected_page_for_original_url ||
           page.creation_time > selected_page_for_original_url->creation_time) {
@@ -136,6 +136,11 @@ void DoCalculateSizeBetween(
     const offline_pages::MultipleOfflinePageItemResult& result) {
   int64_t total_size = 0;
   for (auto& page : result) {
+    LOG(ERROR) << "ROMAX page.creation_time: "
+               << page.creation_time.ToInternalValue();
+    LOG(ERROR) << "ROMAX begin_time: " << begin_time.ToInternalValue();
+    LOG(ERROR) << "ROMAX end_time: " << end_time.ToInternalValue();
+
     if (begin_time <= page.creation_time && page.creation_time < end_time)
       total_size += page.file_size;
   }

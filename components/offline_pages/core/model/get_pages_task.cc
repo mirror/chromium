@@ -91,6 +91,15 @@ ReadResult ReadPagesByClientIdsSync(const std::vector<ClientId>& client_ids,
   if (!transaction.Begin())
     return result;
 
+  LOG(ERROR) << "ROMAX Listing all pages in Database:";
+  sql::Statement t_s(db->GetCachedStatement(SQL_FROM_HERE,
+                                            "SELECT " OFFLINE_PAGE_PROJECTION
+                                            " FROM offlinepages_v1"));
+  while (t_s.Step()) {
+    OfflinePageItem item(MakeOfflinePageItem(&t_s));
+    LOG(ERROR) << "ROMAX " << item.client_id;
+  }
+
   static const char kSql[] = "SELECT " OFFLINE_PAGE_PROJECTION
                              " FROM offlinepages_v1"
                              " WHERE client_namespace = ? AND client_id = ?";
@@ -98,8 +107,9 @@ ReadResult ReadPagesByClientIdsSync(const std::vector<ClientId>& client_ids,
     sql::Statement statement(db->GetCachedStatement(SQL_FROM_HERE, kSql));
     statement.BindString(0, client_id.name_space);
     statement.BindString(1, client_id.id);
-    while (statement.Step())
+    while (statement.Step()) {
       result.pages.emplace_back(MakeOfflinePageItem(&statement));
+    }
   }
 
   if (!transaction.Commit()) {
@@ -359,6 +369,11 @@ void GetPagesTask::ReadRequests() {
 }
 
 void GetPagesTask::CompleteWithResult(ReadResult result) {
+  LOG(ERROR) << "ROMAX get_pages_task result.size: " << result.pages.size();
+  for (const auto page : result.pages) {
+    LOG(ERROR) << "ROMAX offline_id: " << page.offline_id
+               << ", client_id: " << page.client_id;
+  }
   callback_.Run(result.pages);
   TaskComplete();
 }

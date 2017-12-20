@@ -10,21 +10,23 @@
 #include "base/path_service.h"
 #include "base/single_thread_task_runner.h"
 #include "base/threading/thread_task_runner_handle.h"
+#include "base/time/default_clock.h"
 #include "chrome/common/chrome_constants.h"
 #include "components/offline_pages/core/archive_manager.h"
-#include "components/offline_pages/core/offline_page_model_impl.h"
-#include "components/offline_pages/core/offline_page_test_store.h"
+#include "components/offline_pages/core/model/offline_page_model_taskified.h"
+#include "components/offline_pages/core/offline_page_metadata_store_sql.h"
 #include "content/public/browser/browser_context.h"
 
 namespace offline_pages {
 
 std::unique_ptr<KeyedService> BuildTestOfflinePageModel(
     content::BrowserContext* context) {
+  LOG(ERROR) << "ROMAX BuildTestOfflinePageModel";
   scoped_refptr<base::SingleThreadTaskRunner> task_runner =
       base::ThreadTaskRunnerHandle::Get();
 
-  std::unique_ptr<OfflinePageTestStore> metadata_store(
-      new OfflinePageTestStore(task_runner));
+  std::unique_ptr<OfflinePageMetadataStoreSQL> metadata_store(
+      new OfflinePageMetadataStoreSQL(task_runner));
 
   base::FilePath persistent_archives_dir =
       context->GetPath().Append(chrome::kOfflinePageArchivesDirname);
@@ -37,9 +39,11 @@ std::unique_ptr<KeyedService> BuildTestOfflinePageModel(
   }
   std::unique_ptr<ArchiveManager> archive_manager(new ArchiveManager(
       temporary_archives_dir, persistent_archives_dir, task_runner));
+  std::unique_ptr<base::Clock> clock(new base::DefaultClock);
 
-  return std::unique_ptr<KeyedService>(new OfflinePageModelImpl(
-      std::move(metadata_store), std::move(archive_manager), task_runner));
+  return std::unique_ptr<KeyedService>(new OfflinePageModelTaskified(
+      std::move(metadata_store), std::move(archive_manager), task_runner,
+      std::move(clock)));
 }
 
 }  // namespace offline_pages

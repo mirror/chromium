@@ -241,12 +241,12 @@ void RecentTabHelperTest::FailLoad(const GURL& url) {
 }
 
 const std::vector<OfflinePageItem>& RecentTabHelperTest::GetAllPages() {
-  if (all_pages_needs_updating_) {
-    model()->GetAllPages(base::Bind(&RecentTabHelperTest::OnGetAllPagesDone,
-                                    weak_ptr_factory_.GetWeakPtr()));
-    RunUntilIdle();
-    all_pages_needs_updating_ = false;
-  }
+  //  if (all_pages_needs_updating_) {
+  model()->GetAllPages(base::Bind(&RecentTabHelperTest::OnGetAllPagesDone,
+                                  weak_ptr_factory_.GetWeakPtr()));
+  RunUntilIdle();
+  //    all_pages_needs_updating_ = false;
+  //  }
   return all_pages_;
 }
 
@@ -407,6 +407,9 @@ TEST_F(RecentTabHelperTest, TwoCapturesSamePageLoad) {
   FastForwardSnapshotController();
   EXPECT_EQ(0U, page_added_count());
 
+  LOG(ERROR) << "ROMAX " << model();
+
+  LOG(ERROR) << "ROMAX part1";
   // Tab is hidden and a snapshot should be saved.
   recent_tab_helper()->WasHidden();
   RunUntilIdle();
@@ -416,6 +419,7 @@ TEST_F(RecentTabHelperTest, TwoCapturesSamePageLoad) {
   EXPECT_EQ(kTestPageUrl, GetAllPages()[0].url);
   int64_t first_offline_id = GetAllPages()[0].offline_id;
 
+  LOG(ERROR) << "ROMAX part2";
   // Set page loading state to the 2nd and last snapshot-able stage. No new
   // capture should happen.
   recent_tab_helper()->DocumentOnLoadCompletedInMainFrame();
@@ -424,6 +428,7 @@ TEST_F(RecentTabHelperTest, TwoCapturesSamePageLoad) {
   EXPECT_EQ(0U, model_removed_count());
   ASSERT_EQ(1U, GetAllPages().size());
 
+  LOG(ERROR) << "ROMAX part3";
   // Tab is hidden again. At this point a higher quality snapshot is expected so
   // a new one should be captured and replace the previous one.
   recent_tab_helper()->WasHidden();

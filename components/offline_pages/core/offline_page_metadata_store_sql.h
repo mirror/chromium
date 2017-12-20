@@ -132,17 +132,25 @@ class OfflinePageMetadataStoreSQL : public OfflinePageMetadataStore {
       return;
     }
 
+    /*
     // Ensure that any scheduled close operations are canceled.
     closing_weak_ptr_factory_.InvalidateWeakPtrs();
+    */
 
     sql::Connection* db = state_ == StoreState::LOADED ? db_.get() : nullptr;
 
     base::PostTaskAndReplyWithResult(
         background_task_runner_.get(), FROM_HERE,
         base::BindOnce(std::move(run_callback), db),
+        std::move(result_callback));
+    /*
+    base::PostTaskAndReplyWithResult(
+        background_task_runner_.get(), FROM_HERE,
+        base::BindOnce(std::move(run_callback), db),
         base::BindOnce(&OfflinePageMetadataStoreSQL::RescheduleClosing<T>,
                        weak_ptr_factory_.GetWeakPtr(),
                        std::move(result_callback)));
+                       */
   }
 
   // Helper function used to force incorrect state for testing purposes.

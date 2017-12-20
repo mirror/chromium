@@ -430,14 +430,17 @@ bool InitDatabase(sql::Connection* db,
   return CreateSchema(db);
 }
 
+/*
 void CloseDatabaseSync(
     sql::Connection* db,
     scoped_refptr<base::SingleThreadTaskRunner> callback_runner,
     base::OnceClosure callback) {
+  LOG(ERROR) << "ROMAX StoreSQL::CloseDatabaseSync";
   if (db)
     db->Close();
   callback_runner->PostTask(FROM_HERE, std::move(callback));
 }
+*/
 
 void RecordLoadResult(OfflinePageMetadataStore::LoadStatus status,
                       int32_t page_count) {
@@ -742,6 +745,8 @@ void OfflinePageMetadataStoreSQL::OnInitializeInternalDone(
 }
 
 void OfflinePageMetadataStoreSQL::CloseInternal() {
+  /*
+  LOG(ERROR) << "ROMAX StoreSQL::CloseInternal";
   if (state_ != StoreState::LOADED) {
     ReportStoreEvent(OfflinePagesStoreEvent::STORE_CLOSE_SKIPPED);
     return;
@@ -757,10 +762,12 @@ void OfflinePageMetadataStoreSQL::CloseInternal() {
           &CloseDatabaseSync, db_.get(), base::ThreadTaskRunnerHandle::Get(),
           base::BindOnce(&OfflinePageMetadataStoreSQL::CloseInternalDone,
                          weak_ptr_factory_.GetWeakPtr(), std::move(db_))));
+                         */
 }
 
 void OfflinePageMetadataStoreSQL::CloseInternalDone(
     std::unique_ptr<sql::Connection> db) {
+  LOG(ERROR) << "ROMAX StoreSQL::CloseInternalDone";
   db.reset();
 }
 

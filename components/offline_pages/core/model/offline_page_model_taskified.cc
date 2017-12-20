@@ -121,6 +121,7 @@ OfflinePageModelTaskified::OfflinePageModelTaskified(
       policy_controller_(new ClientPolicyController()),
       task_queue_(this),
       clock_(std::move(clock)),
+      skip_clearing_original_url_for_testing_(false),
       weak_ptr_factory_(this) {
   CreateArchivesDirectoryIfNeeded();
   PostClearLegacyTemporaryPagesTask();
@@ -144,11 +145,14 @@ void OfflinePageModelTaskified::SavePage(
     const SavePageParams& save_page_params,
     std::unique_ptr<OfflinePageArchiver> archiver,
     const SavePageCallback& callback) {
+  LOG(ERROR) << "ROMAX SavePage";
   auto task = base::MakeUnique<CreateArchiveTask>(
       GetArchiveDirectory(save_page_params.client_id.name_space),
-      save_page_params, archiver.get(),
+      save_page_params, archiver.get(), clock_.get(),
       base::Bind(&OfflinePageModelTaskified::OnCreateArchiveDone,
                  weak_ptr_factory_.GetWeakPtr(), callback));
+  if (skip_clearing_original_url_for_testing_)
+    task->set_skip_clearing_original_url_for_testing();
   pending_archivers_.push_back(std::move(archiver));
   task_queue_.AddTask(std::move(task));
 }
@@ -171,6 +175,7 @@ void OfflinePageModelTaskified::MarkPageAccessed(int64_t offline_id) {
 void OfflinePageModelTaskified::DeletePagesByOfflineId(
     const std::vector<int64_t>& offline_ids,
     const DeletePageCallback& callback) {
+  LOG(ERROR) << "ROMAX DeletePagesByOfflineId";
   auto task = DeletePageTask::CreateTaskMatchingOfflineIds(
       store_.get(),
       base::BindOnce(&OfflinePageModelTaskified::OnDeleteDone,
@@ -182,6 +187,7 @@ void OfflinePageModelTaskified::DeletePagesByOfflineId(
 void OfflinePageModelTaskified::DeletePagesByClientIds(
     const std::vector<ClientId>& client_ids,
     const DeletePageCallback& callback) {
+  LOG(ERROR) << "ROMAX DeletePagesByClientId";
   auto task = DeletePageTask::CreateTaskMatchingClientIds(
       store_.get(),
       base::BindOnce(&OfflinePageModelTaskified::OnDeleteDone,
@@ -193,6 +199,7 @@ void OfflinePageModelTaskified::DeletePagesByClientIds(
 void OfflinePageModelTaskified::DeleteCachedPagesByURLPredicate(
     const UrlPredicate& predicate,
     const DeletePageCallback& callback) {
+  LOG(ERROR) << "ROMAX DeletePagesByPredicate";
   auto task = DeletePageTask::CreateTaskMatchingUrlPredicateForCachedPages(
       store_.get(),
       base::BindOnce(&OfflinePageModelTaskified::OnDeleteDone,
@@ -203,6 +210,7 @@ void OfflinePageModelTaskified::DeleteCachedPagesByURLPredicate(
 
 void OfflinePageModelTaskified::GetAllPages(
     const MultipleOfflinePageItemCallback& callback) {
+  LOG(ERROR) << "ROMAX GetAllPages";
   auto task = GetPagesTask::CreateTaskMatchingAllPages(store_.get(), callback);
   task_queue_.AddTask(std::move(task));
 }
@@ -210,6 +218,7 @@ void OfflinePageModelTaskified::GetAllPages(
 void OfflinePageModelTaskified::GetPageByOfflineId(
     int64_t offline_id,
     const SingleOfflinePageItemCallback& callback) {
+  LOG(ERROR) << "ROMAX GetPageByOfflineId";
   auto task = GetPagesTask::CreateTaskMatchingOfflineId(store_.get(), callback,
                                                         offline_id);
   task_queue_.AddTask(std::move(task));
@@ -218,6 +227,7 @@ void OfflinePageModelTaskified::GetPageByOfflineId(
 void OfflinePageModelTaskified::GetPagesByClientIds(
     const std::vector<ClientId>& client_ids,
     const MultipleOfflinePageItemCallback& callback) {
+  LOG(ERROR) << "ROMAX GetPagesByClientIds";
   auto task = GetPagesTask::CreateTaskMatchingClientIds(store_.get(), callback,
                                                         client_ids);
   task_queue_.AddTask(std::move(task));
@@ -227,6 +237,7 @@ void OfflinePageModelTaskified::GetPagesByURL(
     const GURL& url,
     URLSearchMode url_search_mode,
     const MultipleOfflinePageItemCallback& callback) {
+  LOG(ERROR) << "ROMAX GetPagesByURL";
   auto task = GetPagesTask::CreateTaskMatchingUrl(store_.get(), callback, url);
   task_queue_.AddTask(std::move(task));
 }
@@ -234,6 +245,7 @@ void OfflinePageModelTaskified::GetPagesByURL(
 void OfflinePageModelTaskified::GetPagesByNamespace(
     const std::string& name_space,
     const MultipleOfflinePageItemCallback& callback) {
+  LOG(ERROR) << "ROMAX GetPagesByNamespace";
   auto task = GetPagesTask::CreateTaskMatchingNamespace(store_.get(), callback,
                                                         name_space);
   task_queue_.AddTask(std::move(task));
@@ -241,6 +253,7 @@ void OfflinePageModelTaskified::GetPagesByNamespace(
 
 void OfflinePageModelTaskified::GetPagesRemovedOnCacheReset(
     const MultipleOfflinePageItemCallback& callback) {
+  LOG(ERROR) << "ROMAX GetPagesRemovedOnCacheReset";
   auto task = GetPagesTask::CreateTaskMatchingPagesRemovedOnCacheReset(
       store_.get(), callback, policy_controller_.get());
   task_queue_.AddTask(std::move(task));
@@ -248,6 +261,7 @@ void OfflinePageModelTaskified::GetPagesRemovedOnCacheReset(
 
 void OfflinePageModelTaskified::GetPagesSupportedByDownloads(
     const MultipleOfflinePageItemCallback& callback) {
+  LOG(ERROR) << "ROMAX GetPagesSupportedByDownloads";
   auto task = GetPagesTask::CreateTaskMatchingPagesSupportedByDownloads(
       store_.get(), callback, policy_controller_.get());
   task_queue_.AddTask(std::move(task));
@@ -256,6 +270,7 @@ void OfflinePageModelTaskified::GetPagesSupportedByDownloads(
 void OfflinePageModelTaskified::GetPagesByRequestOrigin(
     const std::string& request_origin,
     const MultipleOfflinePageItemCallback& callback) {
+  LOG(ERROR) << "ROMAX GetPagesByRequestOrigin";
   auto task = GetPagesTask::CreateTaskMatchingRequestOrigin(
       store_.get(), callback, request_origin);
   task_queue_.AddTask(std::move(task));
@@ -264,6 +279,7 @@ void OfflinePageModelTaskified::GetPagesByRequestOrigin(
 void OfflinePageModelTaskified::GetOfflineIdsForClientId(
     const ClientId& client_id,
     const MultipleOfflineIdCallback& callback) {
+  LOG(ERROR) << "ROMAX GetOfflineIdsForClientId " << client_id;
   // We're currently getting offline IDs by querying offline items based on
   // client ids, and then extract the offline IDs from the items. This is fine
   // since we're not expecting many pages with the same client ID.
@@ -360,6 +376,7 @@ void OfflinePageModelTaskified::OnAddPageForSavePageDone(
     const OfflinePageItem& page_attempted,
     AddPageResult add_page_result,
     int64_t offline_id) {
+  LOG(ERROR) << "ROMAX OnAddPageForSavePageDone " << page_attempted.client_id;
   SavePageResult save_page_result =
       AddPageResultToSavePageResult(add_page_result);
   InformSavePageDone(callback, save_page_result, page_attempted);
@@ -387,6 +404,7 @@ void OfflinePageModelTaskified::OnDeleteDone(
   UMA_HISTOGRAM_ENUMERATION("OfflinePages.DeletePageResult", result,
                             DeletePageResult::RESULT_COUNT);
 
+  LOG(ERROR) << "ROMAX OnDeleteDone size: " << infos.size();
   // Notify observers and run callback.
   for (const auto& info : infos) {
     UMA_HISTOGRAM_ENUMERATION(
@@ -448,6 +466,7 @@ void OfflinePageModelTaskified::OnClearCachedPagesDone(
     base::Time start_time,
     size_t deleted_page_count,
     ClearStorageResult result) {
+  DLOG(ERROR) << "ROMAX OnClearCachedPagesDone count: " << deleted_page_count;
   last_clear_cached_pages_time_ = start_time;
 }
 
@@ -482,6 +501,7 @@ void OfflinePageModelTaskified::CheckPersistentPagesConsistency() {
 
 void OfflinePageModelTaskified::RemovePagesMatchingUrlAndNamespace(
     const OfflinePageItem& page) {
+  LOG(ERROR) << "ROMAX RemovePagesMatchingUrlAndNamespace";
   auto task = DeletePageTask::CreateTaskDeletingForPageLimit(
       store_.get(),
       base::BindOnce(&OfflinePageModelTaskified::OnDeleteDone,

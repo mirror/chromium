@@ -187,6 +187,7 @@ bool RecentTabHelper::EnsureInitialized() {
   if (snapshots_enabled_) {
     page_model_ = OfflinePageModelFactory::GetForBrowserContext(
         web_contents()->GetBrowserContext());
+    LOG(ERROR) << "ROMAX EnsureInitialized page_model_: " << page_model_;
   }
 
   return snapshots_enabled_;
@@ -276,7 +277,9 @@ void RecentTabHelper::DocumentAvailableInMainFrame() {
 }
 
 void RecentTabHelper::DocumentOnLoadCompletedInMainFrame() {
+  LOG(ERROR) << "ROMAX DocumentOnLoadCompletedInMainFrame()";
   EnsureInitialized();
+  LOG(ERROR) << "ROMAX going to snapshot_controller for DOLCInMainFrame()";
   snapshot_controller_->DocumentOnLoadCompletedInMainFrame();
 }
 
@@ -327,6 +330,7 @@ void RecentTabHelper::WasHidden() {
   DCHECK(last_n_ongoing_snapshot_info_->IsForLastN());
   DCHECK(snapshots_enabled_);
   // Remove previously captured pages for this tab.
+  LOG(ERROR) << "ROMAX WasHidden(): GetOfflineIdsForClientId";
   page_model_->GetOfflineIdsForClientId(
       GetRecentPagesClientId(),
       base::Bind(&RecentTabHelper::ContinueSnapshotWithIdsToPurge,
@@ -351,12 +355,14 @@ void RecentTabHelper::WillCloseTab() {
 // TODO(carlosk): rename this to RequestSnapshot and make it return a bool
 // representing the acceptance of the snapshot request.
 void RecentTabHelper::StartSnapshot() {
+  LOG(ERROR) << "ROMAX RecentTabHelper::StartSNapshot";
   DCHECK_NE(PageQuality::POOR, snapshot_controller_->current_page_quality());
 
   // As long as snapshots are enabled for this tab, there are two situations
   // that allow for a navigation event to start a snapshot:
   // 1) There is a request on hold waiting for the page to be minimally loaded.
   if (snapshots_enabled_ && downloads_snapshot_on_hold_) {
+    LOG(ERROR) << "ROMAX StartSnapshot 1";
     DVLOG(1) << "Resuming downloads snapshot request for: "
              << web_contents()->GetLastCommittedURL().spec();
     downloads_snapshot_on_hold_ = false;
@@ -371,6 +377,7 @@ void RecentTabHelper::StartSnapshot() {
        downloads_latest_saved_snapshot_info_ &&
        downloads_latest_saved_snapshot_info_->expected_page_quality <
            snapshot_controller_->current_page_quality())) {
+    LOG(ERROR) << "ROMAX StartSnapshot 2";
     DVLOG(1) << "Upgrading last downloads snapshot for: "
              << web_contents()->GetLastCommittedURL().spec();
     SaveSnapshotForDownloads(true);
@@ -424,6 +431,7 @@ void RecentTabHelper::ContinueSnapshotWithIdsToPurge(
 
   DVLOG_IF(1, !page_ids.empty()) << "Deleting " << page_ids.size()
                                  << " offline pages...";
+  LOG(ERROR) << "ROMAX ContinueSnapshotWithIdsToPurge " << page_ids.size();
   page_model_->DeletePagesByOfflineId(
       page_ids, base::Bind(&RecentTabHelper::ContinueSnapshotAfterPurge,
                            weak_ptr_factory_.GetWeakPtr(), snapshot_info));
@@ -432,6 +440,7 @@ void RecentTabHelper::ContinueSnapshotWithIdsToPurge(
 void RecentTabHelper::ContinueSnapshotAfterPurge(
     SnapshotProgressInfo* snapshot_info,
     OfflinePageModel::DeletePageResult result) {
+  LOG(ERROR) << "ROMAX ContinueSnapshotAfterPurge ";
   if (result != OfflinePageModel::DeletePageResult::SUCCESS) {
     ReportSnapshotCompleted(snapshot_info, false);
     return;

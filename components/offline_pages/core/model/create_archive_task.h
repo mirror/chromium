@@ -58,15 +58,12 @@ class CreateArchiveTask : public Task {
   CreateArchiveTask(const base::FilePath& archives_dir,
                     const OfflinePageModel::SavePageParams& save_page_params,
                     OfflinePageArchiver* archiver,
+                    base::Clock* clock,
                     const CreateArchiveTaskCallback& callback);
   ~CreateArchiveTask() override;
 
   // Task implementation.
   void Run() override;
-
-  void set_clock_for_testing(std::unique_ptr<base::Clock> clock) {
-    clock_ = std::move(clock);
-  }
 
   void set_skip_clearing_original_url_for_testing() {
     skip_clearing_original_url_for_testing_ = true;
@@ -83,7 +80,7 @@ class CreateArchiveTask : public Task {
   // The archiver used in the task. Not owned.
   OfflinePageArchiver* archiver_;
   CreateArchiveTaskCallback callback_;
-  std::unique_ptr<base::Clock> clock_;
+  base::Clock* clock_;
 
   bool skip_clearing_original_url_for_testing_;
 

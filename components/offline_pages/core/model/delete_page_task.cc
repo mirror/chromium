@@ -118,6 +118,7 @@ DeletePageTaskResult DeletePagesByDeletedPageInfoWrappersSync(
     sql::Connection* db,
     const std::vector<DeletedPageInfoWrapper>& info_wrappers) {
   std::vector<OfflinePageModel::DeletedPageInfo> deleted_page_infos;
+  LOG(ERROR) << "ROMAX infos.size(): " << info_wrappers.size();
 
   // If there's no page to delete, return an empty list with SUCCESS.
   if (info_wrappers.size() == 0)
@@ -317,7 +318,7 @@ GetDeletedPageInfoWrappersForPageLimitDeletion(sql::Connection* db,
   }
 
   // Since the page information was selected by ascending order of last access
-  // time, only the first |size - limit + 1| pages needs to be deleted.
+  // time, only the first |size - limit| pages needs to be deleted.
   int page_to_delete = info_wrappers.size() - limit;
   if (page_to_delete < 0)
     page_to_delete = 0;
