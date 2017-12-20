@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d7eb7816_909ecdbb",
+        "filename": "net/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 2483,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-12-20T01:23:27Z",
+      "side": 1,
+      "message": "Should these be quic-cert.key.\u003csomething\u003e or do they pair with some other key?",
+      "range": {
+        "startLine": 2483,
+        "startChar": 41,
+        "endLine": 2483,
+        "endChar": 0
+      },
+      "revId": "1d87d251bfe5b3b9f80fa1625f070ac3886f1d19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ab962bc_90dc4dff",
+        "filename": "net/data/ssl/scripts/generate-quic-chain.sh",
+        "patchSetId": 5
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-12-20T01:23:27Z",
+      "side": 1,
+      "message": "to be consistent with quic-cert.key, should this be named quic-cert.key.pkcs8.pem?",
+      "range": {
+        "startLine": 97,
+        "startChar": 107,
+        "endLine": 97,
+        "endChar": 108
+      },
+      "revId": "1d87d251bfe5b3b9f80fa1625f070ac3886f1d19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41fc1c86_a82d3e4d",
+        "filename": "net/url_request/url_request_quic_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-12-20T01:23:27Z",
+      "side": 1,
+      "message": "Looks like we\u0027re losing the SCT here. Is that important?",
+      "range": {
+        "startLine": 151,
+        "startChar": 27,
+        "endLine": 151,
+        "endChar": 0
+      },
+      "revId": "1d87d251bfe5b3b9f80fa1625f070ac3886f1d19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
