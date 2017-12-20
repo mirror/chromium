@@ -33,6 +33,24 @@
       "revId": "1eb91ef7cbdae83006e74f66ce8ca4c3efc0bd89",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfc05c55_a17f72c6",
+        "filename": "ui/views/accessibility/view_accessibility.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-20T17:33:10Z",
+      "side": 1,
+      "message": "\u003e I think we perhaps want AXAuraObjWrapper to inherit from ViewAccessibility\n\nNot so easy, because Chrome OS has wrappers for Widget and aura::Window too.\nI\u0027m thinking about how to best merge these classes but it\u0027s not going to be\nso easy.\n\nI think all we need for now is for AXAuraObjCache and ViewAccessibility to\nuse the same ID space.",
+      "parentUuid": "0450b1e7_3f9d79d3",
+      "revId": "1eb91ef7cbdae83006e74f66ce8ca4c3efc0bd89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
