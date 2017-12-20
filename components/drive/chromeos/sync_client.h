@@ -111,6 +111,7 @@ class SyncClient {
     ClientContext context;
     base::Callback<base::Closure(const ClientContext& context)> task;
     bool should_run_again;
+    bool should_wait_updating;
     base::Closure cancel_closure;
     std::vector<SyncTaskKey> dependent_tasks;
     std::vector<FileOperationCallback> waiting_callbacks;

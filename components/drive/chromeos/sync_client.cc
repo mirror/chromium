@@ -38,7 +38,7 @@ namespace {
 //
 // TODO(satorux): We should find a way to handle the upload case more nicely,
 // and shorten the delay. crbug.com/134774
-const int kDelaySeconds = 1;
+const int kDelaySeconds = 2;
 
 // The delay constant is used to delay retrying a sync task on server errors.
 const int kLongDelaySeconds = 600;
@@ -134,7 +134,7 @@ FileError GetParentResourceEntry(ResourceMetadata* metadata,
 }  // namespace
 
 SyncClient::SyncTask::SyncTask()
-    : state(SUSPENDED), context(BACKGROUND), should_run_again(false) {}
+    : state(SUSPENDED), context(BACKGROUND), should_run_again(false), should_wait_updating(false) {}
 SyncClient::SyncTask::SyncTask(const SyncTask& other) = default;
 SyncClient::SyncTask::~SyncTask() {}
 
@@ -312,6 +312,8 @@ void SyncClient::AddTask(const SyncTasks::key_type& key,
         break;
       case PENDING:
         // The same task will run, do nothing.
+        if (key.first == UPDATE)
+          it->second.should_wait_updating = true;
         return;
       case RUNNING:
         // Something has changed since the task started. Schedule rerun.
@@ -329,6 +331,17 @@ void SyncClient::AddTask(const SyncTasks::key_type& key,
 }
 
 void SyncClient::StartTask(const SyncTasks::key_type& key) {
+  SyncTasks::iterator it = tasks_.find(key);
+  if (it->second.should_wait_updating) {
+    LOG(ERROR) << "postponed";
+    it->second.should_wait_updating = false;
+    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+        FROM_HERE,
+        base::Bind(&SyncClient::StartTask, weak_ptr_factory_.GetWeakPtr(), key),
+        delay_);
+    return;
+  }
+  LOG(ERROR) << "actually start";
   ResourceEntry* parent = new ResourceEntry;
   base::PostTaskAndReplyWithResult(
       blocking_task_runner_.get(),

@@ -515,5 +515,38 @@ TEST_F(SyncClientTest, WaitForUpdateTaskToComplete) {
   EXPECT_EQ(FILE_ERROR_OK, error);
 }
 
+TEST_F(SyncClientTest, WaitRepeatedUpdate) {
+  // Create directories locally.
+  const base::FilePath kPath1(FILE_PATH_LITERAL("drive/root/dir1"));
+
+  ResourceEntry parent;
+  EXPECT_EQ(FILE_ERROR_OK,
+            metadata_->GetResourceEntryByPath(kPath1.DirName(), &parent));
+
+  ResourceEntry entry1;
+  entry1.set_parent_local_id(parent.local_id());
+  entry1.set_title(kPath1.BaseName().AsUTF8Unsafe());
+  entry1.mutable_file_info()->set_is_directory(true);
+  entry1.set_metadata_edit_state(ResourceEntry::DIRTY);
+  std::string local_id1;
+  EXPECT_EQ(FILE_ERROR_OK, metadata_->AddEntry(entry1, &local_id1));
+
+  sync_client_->set_delay_for_testing(base::TimeDelta::FromSeconds(1));
+  // Start syncing the file.
+  sync_client_->AddUpdateTask(ClientContext(USER_INITIATED), local_id1);
+  // The file is being written actively.
+  sync_client_->AddUpdateTask(ClientContext(USER_INITIATED), local_id1);
+  usleep(2*1000 * 1000);
+  base::RunLoop().RunUntilIdle();
+  // The entry is not synced yet.
+  EXPECT_EQ(FILE_ERROR_OK, metadata_->GetResourceEntryById(local_id1, &entry1));
+  EXPECT_EQ(ResourceEntry::DIRTY, entry1.metadata_edit_state());
+
+  usleep(2*1000 * 1000);
+  base::RunLoop().RunUntilIdle();
+  EXPECT_EQ(FILE_ERROR_OK, metadata_->GetResourceEntryById(local_id1, &entry1));
+  EXPECT_EQ(ResourceEntry::CLEAN, entry1.metadata_edit_state());
+}
+
 }  // namespace internal
 }  // namespace drive
