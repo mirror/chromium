@@ -1,0 +1,261 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d2a5aa1c_bb3f882f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-12-20T01:23:42Z",
+      "side": 1,
+      "message": "s/availability/support? the key system is *supported* when the CDM is *available*.\n\nAlso, \"new service\" is vague, use the real service name in CL title?",
+      "range": {
+        "startLine": 7,
+        "startChar": 29,
+        "endLine": 7,
+        "endChar": 41
+      },
+      "revId": "0cddf4e01a503fd30e1bd6fa973d524a54928ab0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "212a0734_ecec276f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-12-20T01:23:42Z",
+      "side": 1,
+      "message": "s/Chrome/the browser/",
+      "range": {
+        "startLine": 9,
+        "startChar": 26,
+        "endLine": 9,
+        "endChar": 32
+      },
+      "revId": "0cddf4e01a503fd30e1bd6fa973d524a54928ab0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ac12f32_7e47bf14",
+        "filename": "chrome/browser/media/encrypted_media_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-12-20T01:23:42Z",
+      "side": 1,
+      "message": "Since you are here, please help remove this comment.",
+      "revId": "0cddf4e01a503fd30e1bd6fa973d524a54928ab0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f18c6d5c_4b58a61a",
+        "filename": "chrome/browser/media/encrypted_media_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-12-20T01:23:42Z",
+      "side": 1,
+      "message": "Add a comment why we still need this, e.g. for loading the pepper plugin etc",
+      "revId": "0cddf4e01a503fd30e1bd6fa973d524a54928ab0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4398f031_bb5b82e4",
+        "filename": "chrome/renderer/media/chrome_key_systems.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-12-20T01:23:42Z",
+      "side": 1,
+      "message": "Now IsInternalPluginAvailableForMimeType() is not used anywhere, do you want to remove it as well?\n\nYou can also remove the \"additional params\" we push when registering the CDM with PluginInfo.",
+      "revId": "0cddf4e01a503fd30e1bd6fa973d524a54928ab0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d639739_f1a2f555",
+        "filename": "chrome/renderer/media/chrome_key_systems.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-12-20T01:23:42Z",
+      "side": 1,
+      "message": "In real life in most cases we\u0027ll only make this call once since we have the CDM bundled by default. Even for other clients where the CDM is not bundled, make a connection every time we need it isn\u0027t too bad at all.\n\nWith that, can we drop this static variable since in most cases it\u0027ll only be used once?",
+      "revId": "0cddf4e01a503fd30e1bd6fa973d524a54928ab0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29ca142f_cfbf14a1",
+        "filename": "chrome/renderer/media/chrome_key_systems.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-12-20T01:23:42Z",
+      "side": 1,
+      "message": "The service is registered at content/ layer, so does most of the library_cdm support. Therefore, it\u0027d be nice to provide this as a helper function at content/ layer as well, which will only be called here in ChromeKeySystem.\n\nThen hopefully we can add a unittest at content/ layer.",
+      "revId": "0cddf4e01a503fd30e1bd6fa973d524a54928ab0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ca3d74b_c59f8e10",
+        "filename": "content/browser/media/key_system_info_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-12-20T01:23:42Z",
+      "side": 1,
+      "message": "Now the pepper path is depending on this code, we should double check that we also have the CDM registered in the PluginInfo.",
+      "revId": "0cddf4e01a503fd30e1bd6fa973d524a54928ab0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "147c6f2e_61768f31",
+        "filename": "content/browser/media/key_system_info_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-12-20T01:23:42Z",
+      "side": 1,
+      "message": "Can we add a unittest for this? (also see comment above). This will be similar to how we test client/service paris in meida/mojo.",
+      "revId": "0cddf4e01a503fd30e1bd6fa973d524a54928ab0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fa5b40c_84e13b96",
+        "filename": "media/mojo/interfaces/key_system_info.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-12-20T01:23:42Z",
+      "side": 1,
+      "message": "\"Info\" sounds more like a struct than an interface. How about KeySystemSupport?",
+      "range": {
+        "startLine": 7,
+        "startChar": 10,
+        "endLine": 7,
+        "endChar": 23
+      },
+      "revId": "0cddf4e01a503fd30e1bd6fa973d524a54928ab0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08a7762d_e43c76ea",
+        "filename": "media/mojo/interfaces/key_system_info.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-12-20T01:23:42Z",
+      "side": 1,
+      "message": "Please expand this to clarify where the client/service runs, e.g. the client runs in the renderer process and the service runs in the browser process.",
+      "range": {
+        "startLine": 8,
+        "startChar": 5,
+        "endLine": 8,
+        "endChar": 47
+      },
+      "revId": "0cddf4e01a503fd30e1bd6fa973d524a54928ab0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ec92177_c2ed31ab",
+        "filename": "media/mojo/interfaces/key_system_info.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-12-20T01:23:42Z",
+      "side": 1,
+      "message": "persistent license sessions",
+      "range": {
+        "startLine": 10,
+        "startChar": 57,
+        "endLine": 10,
+        "endChar": 76
+      },
+      "revId": "0cddf4e01a503fd30e1bd6fa973d524a54928ab0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "051106e4_f0062ccf",
+        "filename": "media/mojo/interfaces/key_system_info.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-12-20T01:23:42Z",
+      "side": 1,
+      "message": "Please add a TODO to avoid string parsing (use enum instead?)",
+      "range": {
+        "startLine": 14,
+        "startChar": 8,
+        "endLine": 14,
+        "endChar": 38
+      },
+      "revId": "0cddf4e01a503fd30e1bd6fa973d524a54928ab0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
