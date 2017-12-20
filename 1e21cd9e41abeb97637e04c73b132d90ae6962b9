@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "dcc92e4a_1ecab568",
+        "filename": "content/browser/webauth/fido_attestation_statement.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002270
+      },
+      "writtenOn": "2017-12-20T19:30:21Z",
+      "side": 1,
+      "message": "Good point. (I\u0027ll do a different CL to clean up that stray #include.)\n\n\"browser\" already depends on BoringSSL indirectly on all platforms, so this isn\u0027t actually adding anything, but code should depend on what it uses.",
+      "parentUuid": "03a96bfa_123e2625",
+      "revId": "1e21cd9e41abeb97637e04c73b132d90ae6962b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4a4eab88_892204ff",
         "filename": "content/browser/webauth/fido_attestation_statement.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "1e21cd9e41abeb97637e04c73b132d90ae6962b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c22fed0_39b45ca6",
+        "filename": "content/browser/webauth/fido_attestation_statement.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002270
+      },
+      "writtenOn": "2017-12-20T19:30:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4a4eab88_892204ff",
+      "revId": "1e21cd9e41abeb97637e04c73b132d90ae6962b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "8b9e18b0_88b9c64e",
+        "filename": "content/browser/webauth/fido_attestation_statement.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002270
+      },
+      "writtenOn": "2017-12-20T19:30:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c030d8bf_9f0218d0",
+      "revId": "1e21cd9e41abeb97637e04c73b132d90ae6962b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "426c7079_37f1749d",
         "filename": "content/browser/webauth/fido_attestation_statement.cc",
         "patchSetId": 1
@@ -67,6 +121,24 @@
       "revId": "1e21cd9e41abeb97637e04c73b132d90ae6962b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56b53039_3b14ab9c",
+        "filename": "content/browser/webauth/fido_attestation_statement.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002270
+      },
+      "writtenOn": "2017-12-20T19:30:21Z",
+      "side": 1,
+      "message": "U2F only allows a single certificate. If more than one is contained in the response, this code will consider subsequent certificates to be part of the signature, but the U2F token would be invalid and wouldn\u0027t work anywhere.",
+      "parentUuid": "426c7079_37f1749d",
+      "revId": "1e21cd9e41abeb97637e04c73b132d90ae6962b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -90,6 +162,30 @@
       "revId": "1e21cd9e41abeb97637e04c73b132d90ae6962b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9a94e4d_043698b0",
+        "filename": "content/browser/webauth/fido_attestation_statement.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002270
+      },
+      "writtenOn": "2017-12-20T19:30:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f739e91f_7bde5ce7",
+      "range": {
+        "startLine": 45,
+        "startChar": 52,
+        "endLine": 45,
+        "endChar": 61
+      },
+      "revId": "1e21cd9e41abeb97637e04c73b132d90ae6962b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
