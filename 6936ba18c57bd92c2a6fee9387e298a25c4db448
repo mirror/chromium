@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0079bd6b_398a9f24",
+        "filename": "chrome/browser/resources/chromeos/select_to_speak/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-12-20T17:08:07Z",
+      "side": 1,
+      "message": "If you want to include these temporarily, I\u0027d rather you referenced the ChromeVox files directly and defined a \u0027closure_shim.js\u0027 file where you can shim out the closure specifics e.g. goog \u003d {}; goog.provide \u003d function() {}, etc.",
+      "revId": "6936ba18c57bd92c2a6fee9387e298a25c4db448",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
