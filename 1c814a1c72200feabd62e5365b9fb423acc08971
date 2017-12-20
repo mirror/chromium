@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "aedd575d_38ee1ce7",
+        "filename": "third_party/WebKit/Source/core/editing/testing/SelectionSample.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-12-20T05:30:58Z",
+      "side": 1,
+      "message": "Element::ShaodwRootIfV1(), which is an inline function and declared in ElementShadow.h\n(and moved from ShadowRoot.h in this CL).\nFor some circular dependency, ShadowRoot.h cannot include ElementShadow.h, and these\nfunctions (Element::ShadowRootIfV1(), {Node,Element}::GetShadowRoot()) are defined inline\nin ElementShadow.h.\n\nThis violates some rule about including only what\u0027s necessary or directly using, but\ngiven the original Node::YoungetShadowRoot() and Element::YoungestShadowRoot() were\ndefined inline in ElementShadow.h, I suspect there are similar redundant includes for\nElementShadow.h for other locations.\n\nI\u0027ll clean them up in a separate CL.",
+      "parentUuid": "305a7dff_de910d24",
+      "revId": "1c814a1c72200feabd62e5365b9fb423acc08971",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ff4f6014_a370026d",
         "filename": "third_party/WebKit/Source/core/editing/testing/SelectionSampleTest.cpp",
         "patchSetId": 7
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-19T12:02:46Z",
       "side": 1,
       "message": "I don\u0027t see any includes removed anywhere, so why did you need to add this here?",
+      "revId": "1c814a1c72200feabd62e5365b9fb423acc08971",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0f56443_289d2558",
+        "filename": "third_party/WebKit/Source/core/editing/testing/SelectionSampleTest.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-12-20T05:30:58Z",
+      "side": 1,
+      "message": "Same reason as SelectionSample.cpp.",
+      "parentUuid": "ff4f6014_a370026d",
       "revId": "1c814a1c72200feabd62e5365b9fb423acc08971",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
