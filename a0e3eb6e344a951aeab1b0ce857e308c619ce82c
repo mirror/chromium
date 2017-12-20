@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e904da7f_bc98b720",
+        "filename": "services/network/public/cpp/proxy_resolving_client_socket_unittest.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-20T18:49:52Z",
+      "side": 1,
+      "message": "Bug:  This overwrites the context getter used when is_direct is false.  So the second and fourth tests may have direct\u003dfalse, but the context_getter_with_proxy_ has already been overwritten by one without the proxy.\n\nYou need to create a scoped_refptr on the stack, and either make it point at context_getter_with_proxy_, or point at a new one, depending on the value of is_direct.\n\nAlternatively, could just add a context_getter_direct_ member to the test, and choose between the two.",
+      "range": {
+        "startLine": 81,
+        "startChar": 6,
+        "endLine": 81,
+        "endChar": 33
+      },
+      "revId": "a0e3eb6e344a951aeab1b0ce857e308c619ce82c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6dfed5bb_cbff615a",
+        "filename": "services/network/public/cpp/proxy_resolving_client_socket_unittest.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-20T18:49:52Z",
+      "side": 1,
+      "message": "Optional:  Could just do:\n\nfor (auto is_direct : {true, false})\n\nand get rid of KTestCases.",
+      "range": {
+        "startLine": 114,
+        "startChar": 18,
+        "endLine": 114,
+        "endChar": 19
+      },
+      "revId": "a0e3eb6e344a951aeab1b0ce857e308c619ce82c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18dd8198_7ff598dd",
+        "filename": "services/network/public/cpp/proxy_resolving_client_socket_unittest.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-20T18:49:52Z",
+      "side": 1,
+      "message": "Suggest not using context_getter_with_proxy_, and just using a new one.",
+      "range": {
+        "startLine": 120,
+        "startChar": 18,
+        "endLine": 120,
+        "endChar": 48
+      },
+      "revId": "a0e3eb6e344a951aeab1b0ce857e308c619ce82c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b4d8109_11bf6fa4",
+        "filename": "services/network/public/cpp/proxy_resolving_client_socket_unittest.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-20T18:49:52Z",
+      "side": 1,
+      "message": "This has the same issue as the first test.",
+      "range": {
+        "startLine": 187,
+        "startChar": 18,
+        "endLine": 187,
+        "endChar": 48
+      },
+      "revId": "a0e3eb6e344a951aeab1b0ce857e308c619ce82c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
