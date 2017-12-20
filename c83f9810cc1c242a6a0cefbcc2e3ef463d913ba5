@@ -16,6 +16,24 @@
       "revId": "c83f9810cc1c242a6a0cefbcc2e3ef463d913ba5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f58d901_fcd72454",
+        "filename": "third_party/WebKit/Source/core/html/forms/HTMLInputElement.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1434,
+      "author": {
+        "id": 1115933
+      },
+      "writtenOn": "2017-12-20T06:18:49Z",
+      "side": 1,
+      "message": "The only call site seems to be the setSize below so we should never get 0. I wonder if we could just inline this below.",
+      "parentUuid": "606c6005_02ff1ee2",
+      "revId": "c83f9810cc1c242a6a0cefbcc2e3ef463d913ba5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
