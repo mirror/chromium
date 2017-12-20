@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "81775ba3_8df585ca",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-12-20T20:27:51Z",
+      "side": 1,
+      "message": "Case to think about:\n\n* Paused on debugger\n* Notification #1 comes in from back end\n* Event #1 is queued\n* Debugger unpauses\n* Notification #2 comes in from back end\n\nEvents should go out in order: #1, #2. So in the final step we need to make sure #2 doesn\u0027t go out immediately even though we\u0027re not paused; we can\u0027t dispatch until #2 goes out.",
+      "revId": "c85cb535db309866a650739b6fba22459b52cb4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6d681ce_097e09c2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-12-20T20:27:51Z",
+      "side": 1,
+      "message": "Not really the event queue twice. Two separate tasks on the thread: the notification arriving from the back end, and the task in the event queue.\n\n(Unless I\u0027m horribly mistaken)",
+      "revId": "c85cb535db309866a650739b6fba22459b52cb4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e0d127f_efd8a8c3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-12-20T20:27:51Z",
+      "side": 1,
+      "message": "Per https://bugs.chromium.org/p/chromium/issues/detail?id\u003d732524 we\u0027re already busted in the debugger aren\u0027t we? Or is that unrelated...\n\nAlso, see: https://cs.chromium.org/chromium/src/third_party/WebKit/Source/modules/filesystem/FileSystemCallbacks.cpp?type\u003dcs\u0026l\u003d83",
+      "revId": "c85cb535db309866a650739b6fba22459b52cb4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
