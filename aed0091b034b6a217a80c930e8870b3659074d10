@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4b1fbb97_eed78ba7",
+        "filename": "extensions/browser/extension_web_contents_observer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-20T07:57:32Z",
+      "side": 1,
+      "message": "question: should we check live-ness here, too?\nif (!frame_extension || !render_frame_host-\u003eIsRenderFrameLive())\n  pm-\u003eUnregister...",
+      "revId": "aed0091b034b6a217a80c930e8870b3659074d10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
