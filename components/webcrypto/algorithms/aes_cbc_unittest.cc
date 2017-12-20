@@ -93,7 +93,8 @@ TEST_F(WebCryptoAesCbcTest, KnownAnswerEncryptDecrypt) {
   std::unique_ptr<base::ListValue> tests;
   ASSERT_TRUE(ReadJsonTestFileToList("aes_cbc.json", &tests));
 
-  for (size_t test_index = 0; test_index < tests->GetSize(); ++test_index) {
+  for (size_t test_index = 0; test_index < tests->GetList().size();
+       ++test_index) {
     SCOPED_TRACE(test_index);
     base::DictionaryValue* test;
     ASSERT_TRUE(tests->GetDictionary(test_index, &test));
@@ -266,7 +267,7 @@ TEST_F(WebCryptoAesCbcTest, ImportKeyJwkKeyOpsEncryptDecrypt) {
   base::ListValue* key_ops =
       dict.SetList("key_ops", base::MakeUnique<base::ListValue>());
 
-  key_ops->AppendString("encrypt");
+  key_ops->GetList().emplace_back("encrypt");
 
   EXPECT_EQ(Status::Success(),
             ImportKeyJwkFromDict(
@@ -275,7 +276,7 @@ TEST_F(WebCryptoAesCbcTest, ImportKeyJwkKeyOpsEncryptDecrypt) {
 
   EXPECT_EQ(blink::kWebCryptoKeyUsageEncrypt, key.Usages());
 
-  key_ops->AppendString("decrypt");
+  key_ops->GetList().emplace_back("decrypt");
 
   EXPECT_EQ(Status::Success(),
             ImportKeyJwkFromDict(
@@ -302,7 +303,7 @@ TEST_F(WebCryptoAesCbcTest, ImportKeyJwkKeyOpsNotSuperset) {
   dict.SetString("kty", "oct");
   dict.SetString("k", "GADWrMRHwQfoNaXU5fZvTg");
   auto key_ops = base::MakeUnique<base::ListValue>();
-  key_ops->AppendString("encrypt");
+  key_ops->GetList().emplace_back("encrypt");
   dict.Set("key_ops", std::move(key_ops));
 
   EXPECT_EQ(
@@ -367,7 +368,7 @@ TEST_F(WebCryptoAesCbcTest, ImportJwkKeyOpsLacksUsages) {
   dict.SetString("k", "GADWrMRHwQfoNaXU5fZvTg");
 
   auto key_ops = base::MakeUnique<base::ListValue>();
-  key_ops->AppendString("foo");
+  key_ops->GetList().emplace_back("foo");
   dict.Set("key_ops", std::move(key_ops));
   EXPECT_EQ(Status::ErrorJwkKeyopsInconsistent(),
             ImportKeyJwkFromDict(

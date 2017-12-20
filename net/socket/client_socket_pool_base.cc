@@ -679,14 +679,14 @@ ClientSocketPoolBaseHelper::GetInfoAsValue(const std::string& name,
          idle_socket != group->idle_sockets().end();
          idle_socket++) {
       int source_id = idle_socket->socket->NetLog().source().id;
-      idle_socket_list->AppendInteger(source_id);
+      idle_socket_list->GetList().emplace_back(source_id);
     }
     group_dict->Set("idle_sockets", std::move(idle_socket_list));
 
     auto connect_jobs_list = std::make_unique<base::ListValue>();
     for (auto job = group->jobs().begin(); job != group->jobs().end(); job++) {
       int source_id = (*job)->net_log().source().id;
-      connect_jobs_list->AppendInteger(source_id);
+      connect_jobs_list->GetList().emplace_back(source_id);
     }
     group_dict->Set("connect_jobs", std::move(connect_jobs_list));
 

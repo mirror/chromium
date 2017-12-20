@@ -244,7 +244,7 @@ bool SyncFileSystemGetFileStatusesFunction::RunAsync() {
 
   // Map each file path->SyncFileStatus in the callback map.
   // TODO(calvinlo): Overload GetFileSyncStatus to take in URL array.
-  num_expected_results_ = file_entry_urls->GetSize();
+  num_expected_results_ = file_entry_urls->GetList().size();
   num_results_received_ = 0;
   file_sync_statuses_.clear();
   sync_file_system::SyncFileSystemService* sync_file_system_service =

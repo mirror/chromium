@@ -99,9 +99,9 @@ void DownloadsListTracker::Reset() {
 
 bool DownloadsListTracker::SetSearchTerms(const base::ListValue& search_terms) {
   std::vector<base::string16> new_terms;
-  new_terms.resize(search_terms.GetSize());
+  new_terms.resize(search_terms.GetList().size());
 
-  for (size_t i = 0; i < search_terms.GetSize(); ++i)
+  for (size_t i = 0; i < search_terms.GetList().size(); ++i)
     search_terms.GetString(i, &new_terms[i]);
 
   if (new_terms == search_terms_)
@@ -121,7 +121,7 @@ void DownloadsListTracker::StartAndSendChunk() {
   std::advance(it, sent_to_page_);
 
   base::ListValue list;
-  while (it != sorted_items_.end() && list.GetSize() < chunk_size_) {
+  while (it != sorted_items_.end() && list.GetList().size() < chunk_size_) {
     list.Append(CreateDownloadItemValue(*it));
     ++it;
   }
@@ -130,7 +130,7 @@ void DownloadsListTracker::StartAndSendChunk() {
       "downloads.Manager.insertItems",
       base::Value(static_cast<int>(sent_to_page_)), list);
 
-  sent_to_page_ += list.GetSize();
+  sent_to_page_ += list.GetList().size();
 }
 
 void DownloadsListTracker::Stop() {

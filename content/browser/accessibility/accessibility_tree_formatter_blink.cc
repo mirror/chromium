@@ -216,11 +216,12 @@ void AccessibilityTreeFormatterBlink::AddProperties(
         if (ui::IsNodeIdIntListAttribute(attr)) {
           BrowserAccessibility* target = node.manager()->GetFromID(values[i]);
           if (target)
-            value_list->AppendString(ui::ToString(target->GetData().role));
+            value_list->GetList().emplace_back(
+                ui::ToString(target->GetData().role));
           else
-            value_list->AppendString("null");
+            value_list->GetList().emplace_back("null");
         } else {
-          value_list->AppendInteger(values[i]);
+          value_list->GetList().emplace_back(values[i]);
         }
       }
       dict->Set(ui::ToString(attr), std::move(value_list));
@@ -376,7 +377,7 @@ base::string16 AccessibilityTreeFormatterBlink::ProcessTreeForOutput(
       continue;
     std::string attr_string(ui::ToString(attr));
     attr_string.push_back('=');
-    for (size_t i = 0; i < value->GetSize(); ++i) {
+    for (size_t i = 0; i < value->GetList().size(); ++i) {
       if (i > 0)
         attr_string += ",";
       if (ui::IsNodeIdIntListAttribute(attr)) {

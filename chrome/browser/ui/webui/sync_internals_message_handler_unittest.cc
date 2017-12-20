@@ -291,7 +291,7 @@ TEST_F(SyncInternalsMessageHandlerTest,
 
 TEST_F(SyncInternalsMessageHandlerTest, HandleGetAllNodes) {
   ListValue args;
-  args.AppendInteger(0);
+  args.GetList().emplace_back(0);
   handler()->HandleGetAllNodes(&args);
   test_sync_service()->get_all_nodes_callback().Run(
       base::MakeUnique<ListValue>());
@@ -333,8 +333,8 @@ TEST_F(SyncInternalsMessageHandlerTest, SendAboutInfoSyncDisabled) {
 
 TEST_F(SyncInternalsMessageHandlerTest, WriteUserEvent) {
   ListValue args;
-  args.AppendString("1000000000000000000");
-  args.AppendString("-1");
+  args.GetList().emplace_back("1000000000000000000");
+  args.GetList().emplace_back("-1");
   handler()->HandleWriteUserEvent(&args);
 
   ASSERT_EQ(1u, fake_user_event_service()->GetRecordedUserEvents().size());
@@ -347,8 +347,8 @@ TEST_F(SyncInternalsMessageHandlerTest, WriteUserEvent) {
 
 TEST_F(SyncInternalsMessageHandlerTest, WriteUserEventBadParse) {
   ListValue args;
-  args.AppendString("123abc");
-  args.AppendString("abcdefghijklmnopqrstuvwxyz");
+  args.GetList().emplace_back("123abc");
+  args.GetList().emplace_back("abcdefghijklmnopqrstuvwxyz");
   handler()->HandleWriteUserEvent(&args);
 
   ASSERT_EQ(1u, fake_user_event_service()->GetRecordedUserEvents().size());
@@ -361,8 +361,8 @@ TEST_F(SyncInternalsMessageHandlerTest, WriteUserEventBadParse) {
 
 TEST_F(SyncInternalsMessageHandlerTest, WriteUserEventBlank) {
   ListValue args;
-  args.AppendString("");
-  args.AppendString("");
+  args.GetList().emplace_back("");
+  args.GetList().emplace_back("");
   handler()->HandleWriteUserEvent(&args);
 
   ASSERT_EQ(1u, fake_user_event_service()->GetRecordedUserEvents().size());
@@ -378,8 +378,8 @@ TEST_F(SyncInternalsMessageHandlerTest, WriteUserEventBlank) {
 
 TEST_F(SyncInternalsMessageHandlerTest, WriteUserEventZero) {
   ListValue args;
-  args.AppendString("0");
-  args.AppendString("0");
+  args.GetList().emplace_back("0");
+  args.GetList().emplace_back("0");
   handler()->HandleWriteUserEvent(&args);
 
   ASSERT_EQ(1u, fake_user_event_service()->GetRecordedUserEvents().size());

@@ -409,7 +409,7 @@ void ShippingAddressEditorViewController::UpdateEditorFields() {
   autofill::GetAddressComponents(chosen_country_code,
                                  state()->GetApplicationLocale(),
                                  components.get(), &language_code_);
-  for (size_t line_index = 0; line_index < components->GetSize();
+  for (size_t line_index = 0; line_index < components->GetList().size();
        ++line_index) {
     const base::ListValue* line = nullptr;
     if (!components->GetList(line_index, &line)) {
@@ -417,7 +417,7 @@ void ShippingAddressEditorViewController::UpdateEditorFields() {
       return;
     }
     DCHECK_NE(nullptr, line);
-    for (size_t component_index = 0; component_index < line->GetSize();
+    for (size_t component_index = 0; component_index < line->GetList().size();
          ++component_index) {
       const base::DictionaryValue* component = nullptr;
       if (!line->GetDictionary(component_index, &component)) {

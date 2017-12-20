@@ -305,7 +305,7 @@ void DeveloperPrivateApiUnitTest::GetProfileConfiguration(
   EXPECT_TRUE(RunFunction(function, args)) << function->GetError();
 
   ASSERT_TRUE(function->GetResultList());
-  ASSERT_EQ(1u, function->GetResultList()->GetSize());
+  ASSERT_EQ(1u, function->GetResultList()->GetList().size());
   const base::Value* response_value = nullptr;
   function->GetResultList()->Get(0u, &response_value);
   *profile_info =
@@ -371,7 +371,7 @@ TEST_F(DeveloperPrivateApiUnitTest, DeveloperPrivateReload) {
   scoped_refptr<UIThreadExtensionFunction> function(
       new api::DeveloperPrivateReloadFunction());
   base::ListValue reload_args;
-  reload_args.AppendString(extension_id);
+  reload_args.GetList().emplace_back(extension_id);
 
   TestExtensionRegistryObserver registry_observer(registry());
   EXPECT_TRUE(RunFunction(function, reload_args));
@@ -403,7 +403,7 @@ TEST_F(DeveloperPrivateApiUnitTest, DeveloperPrivatePackFunction) {
 
   // First, test a directory that should pack properly.
   base::ListValue pack_args;
-  pack_args.AppendString(temp_root_path.AsUTF8Unsafe());
+  pack_args.GetList().emplace_back(temp_root_path.AsUTF8Unsafe());
   EXPECT_TRUE(TestPackExtensionFunction(
       pack_args, api::developer_private::PACK_STATUS_SUCCESS, 0));
 
@@ -412,7 +412,7 @@ TEST_F(DeveloperPrivateApiUnitTest, DeveloperPrivatePackFunction) {
   EXPECT_TRUE(base::PathExists(pem_path));
 
   // Deliberately don't cleanup the files, and append the pem path.
-  pack_args.AppendString(pem_path.AsUTF8Unsafe());
+  pack_args.GetList().emplace_back(pem_path.AsUTF8Unsafe());
 
   // Try to pack again - we should get a warning abot overwriting the crx.
   EXPECT_TRUE(TestPackExtensionFunction(
@@ -421,7 +421,7 @@ TEST_F(DeveloperPrivateApiUnitTest, DeveloperPrivatePackFunction) {
       ExtensionCreator::kOverwriteCRX));
 
   // Try to pack again, with the overwrite flag; this should succeed.
-  pack_args.AppendInteger(ExtensionCreator::kOverwriteCRX);
+  pack_args.GetList().emplace_back(ExtensionCreator::kOverwriteCRX);
   EXPECT_TRUE(TestPackExtensionFunction(
       pack_args, api::developer_private::PACK_STATUS_SUCCESS, 0));
 
@@ -444,8 +444,8 @@ TEST_F(DeveloperPrivateApiUnitTest, DeveloperPrivateChoosePath) {
 
   // Try selecting a directory.
   base::ListValue choose_args;
-  choose_args.AppendString("FOLDER");
-  choose_args.AppendString("LOAD");
+  choose_args.GetList().emplace_back("FOLDER");
+  choose_args.GetList().emplace_back("LOAD");
   scoped_refptr<UIThreadExtensionFunction> function(
       new api::DeveloperPrivateChoosePathFunction());
   function->SetRenderFrameHost(web_contents->GetMainFrame());
@@ -459,9 +459,9 @@ TEST_F(DeveloperPrivateApiUnitTest, DeveloperPrivateChoosePath) {
   base::FilePath expected_file_path =
       data_dir().AppendASCII("good_unpacked.pem");
   api::EntryPicker::SkipPickerAndAlwaysSelectPathForTest(&expected_file_path);
-  choose_args.Clear();
-  choose_args.AppendString("FILE");
-  choose_args.AppendString("PEM");
+  choose_args.GetList().clear();
+  choose_args.GetList().emplace_back("FILE");
+  choose_args.GetList().emplace_back("PEM");
   function = new api::DeveloperPrivateChoosePathFunction();
   function->SetRenderFrameHost(web_contents->GetMainFrame());
   EXPECT_TRUE(RunFunction(function, choose_args)) << function->GetError();
@@ -985,10 +985,10 @@ TEST_F(DeveloperPrivateApiUnitTest, DeveloperPrivateGetExtensionsInfo) {
       new api::DeveloperPrivateGetExtensionsInfoFunction());
   EXPECT_TRUE(RunFunction(function, base::ListValue())) << function->GetError();
   const base::ListValue* results = function->GetResultList();
-  ASSERT_EQ(1u, results->GetSize());
+  ASSERT_EQ(1u, results->GetList().size());
   const base::ListValue* list = nullptr;
   ASSERT_TRUE(results->GetList(0u, &list));
-  ASSERT_EQ(1u, list->GetSize());
+  ASSERT_EQ(1u, list->GetList().size());
   const base::Value* value = nullptr;
   ASSERT_TRUE(list->Get(0u, &value));
   std::unique_ptr<api::developer_private::ExtensionInfo> info =
@@ -999,13 +999,13 @@ TEST_F(DeveloperPrivateApiUnitTest, DeveloperPrivateGetExtensionsInfo) {
   // sane value.
   function = new api::DeveloperPrivateGetItemsInfoFunction();
   base::ListValue args;
-  args.AppendBoolean(false);
-  args.AppendBoolean(false);
+  args.GetList().emplace_back(false);
+  args.GetList().emplace_back(false);
   EXPECT_TRUE(RunFunction(function, args)) << function->GetError();
   results = function->GetResultList();
-  ASSERT_EQ(1u, results->GetSize());
+  ASSERT_EQ(1u, results->GetList().size());
   ASSERT_TRUE(results->GetList(0u, &list));
-  ASSERT_EQ(1u, list->GetSize());
+  ASSERT_EQ(1u, list->GetList().size());
   ASSERT_TRUE(list->Get(0u, &value));
   std::unique_ptr<api::developer_private::ItemInfo> item_info =
       api::developer_private::ItemInfo::FromValue(*value);

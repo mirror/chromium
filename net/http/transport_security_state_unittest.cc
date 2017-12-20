@@ -227,7 +227,7 @@ void CompareCertificateChainWithList(
   ASSERT_TRUE(cert_chain);
   std::vector<std::string> pem_encoded_chain;
   cert_chain->GetPEMEncodedChain(&pem_encoded_chain);
-  EXPECT_EQ(pem_encoded_chain.size(), cert_list->GetSize());
+  EXPECT_EQ(pem_encoded_chain.size(), cert_list->GetList().size());
 
   for (size_t i = 0; i < pem_encoded_chain.size(); i++) {
     std::string list_cert;

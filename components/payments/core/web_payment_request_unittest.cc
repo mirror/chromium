@@ -33,7 +33,7 @@ TEST(PaymentRequestTest, ParsingPartiallyPopulatedRequestDictionaryFails) {
 
   // A non-dictionary value in the methodData list is incorrect.
   method_data_list.reset(new base::ListValue);
-  method_data_list->AppendString("fake method data dictionary");
+  method_data_list->GetList().emplace_back("fake method data dictionary");
   request_dict.Set("methodData", std::move(method_data_list));
 
   EXPECT_FALSE(output_request.FromDictionaryValue(request_dict));
@@ -87,7 +87,7 @@ TEST(PaymentRequestTest, ParsingFullyPopulatedRequestDictionarySucceeds) {
   auto method_data_list = std::make_unique<base::ListValue>();
   auto method_data_dict = std::make_unique<base::DictionaryValue>();
   auto supported_methods_list = std::make_unique<base::ListValue>();
-  supported_methods_list->AppendString("Visa");
+  supported_methods_list->GetList().emplace_back("Visa");
   method_data_dict->Set("supportedMethods", std::move(supported_methods_list));
   method_data_list->Append(std::move(method_data_dict));
   request_dict.Set("methodData", std::move(method_data_list));

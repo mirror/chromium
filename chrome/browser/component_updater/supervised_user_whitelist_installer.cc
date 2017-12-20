@@ -456,7 +456,7 @@ bool SupervisedUserWhitelistInstallerImpl::UnregisterWhitelistInternal(
 
   const bool removed = clients->Remove(base::Value(client_id), nullptr);
 
-  if (!clients->empty())
+  if (!clients->GetList().empty())
     return removed;
 
   pref_dict->RemoveWithoutPathExpansion(crx_id, nullptr);
@@ -515,7 +515,7 @@ void SupervisedUserWhitelistInstallerImpl::RegisterComponents() {
     // Skip whitelists with no clients. This can happen when a whitelist was
     // previously registered on the command line but isn't anymore.
     const base::ListValue* clients = nullptr;
-    if ((!dict->GetList(kClients, &clients) || clients->empty()) &&
+    if ((!dict->GetList(kClients, &clients) || clients->GetList().empty()) &&
         command_line_whitelists.count(id) == 0) {
       stale_whitelists.insert(id);
       continue;

@@ -137,7 +137,7 @@ void NotifierStateTracker::OnStringListPrefChanged(
   const PrefService* pref_service = profile_->GetPrefs();
   CHECK(pref_service);
   const base::ListValue* pref_list = pref_service->GetList(pref_name);
-  for (size_t i = 0; i < pref_list->GetSize(); ++i) {
+  for (size_t i = 0; i < pref_list->GetList().size(); ++i) {
     std::string element;
     if (pref_list->GetString(i, &element) && !element.empty())
       ids_field->insert(element);
@@ -165,7 +165,8 @@ void NotifierStateTracker::FirePermissionLevelChangedEvent(
       enabled ? extensions::api::notifications::PERMISSION_LEVEL_GRANTED
               : extensions::api::notifications::PERMISSION_LEVEL_DENIED;
   std::unique_ptr<base::ListValue> args(new base::ListValue());
-  args->AppendString(extensions::api::notifications::ToString(permission));
+  args->GetList().emplace_back(
+      extensions::api::notifications::ToString(permission));
   std::unique_ptr<extensions::Event> event(new extensions::Event(
       extensions::events::NOTIFICATIONS_ON_PERMISSION_LEVEL_CHANGED,
       extensions::api::notifications::OnPermissionLevelChanged::kEventName,

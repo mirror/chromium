@@ -217,7 +217,7 @@ void ReportPrintSettingsStats(const base::DictionaryValue& settings) {
 
   const base::ListValue* page_range_array = NULL;
   if (settings.GetList(printing::kSettingPageRange, &page_range_array) &&
-      !page_range_array->empty()) {
+      !page_range_array->GetList().empty()) {
     ReportPrintSettingHistogram(PAGE_RANGE);
   }
 
@@ -549,7 +549,7 @@ void PrintPreviewHandler::HandleGetPrinterCapabilities(
 }
 
 void PrintPreviewHandler::HandleGetPreview(const base::ListValue* args) {
-  DCHECK_EQ(3U, args->GetSize());
+  DCHECK_EQ(3U, args->GetList().size());
   std::string callback_id;
   std::string json_str;
 
@@ -1224,12 +1224,13 @@ void PrintPreviewHandler::OnAddedPrinters(printing::PrinterType printer_type,
   DCHECK(printer_type == PrinterType::kExtensionPrinter ||
          printer_type == PrinterType::kPrivetPrinter ||
          printer_type == PrinterType::kLocalPrinter);
-  DCHECK(!printers.empty());
+  DCHECK(!printers.GetList().empty());
   FireWebUIListener("printers-added", base::Value(printer_type), printers);
 
   if (printer_type == PrinterType::kLocalPrinter &&
       !has_logged_printers_count_) {
-    UMA_HISTOGRAM_COUNTS("PrintPreview.NumberOfPrinters", printers.GetSize());
+    UMA_HISTOGRAM_COUNTS("PrintPreview.NumberOfPrinters",
+                         printers.GetList().size());
     has_logged_printers_count_ = true;
   }
 }

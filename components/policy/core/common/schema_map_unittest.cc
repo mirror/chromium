@@ -157,8 +157,8 @@ TEST_F(SchemaMapTest, FilterBundle) {
   PolicyNamespace extension_ns(POLICY_DOMAIN_EXTENSIONS, "abc");
   PolicyMap& map = expected_bundle.Get(extension_ns);
   base::ListValue list;
-  list.AppendString("a");
-  list.AppendString("b");
+  list.GetList().emplace_back("a");
+  list.GetList().emplace_back("b");
   map.Set("list", POLICY_LEVEL_MANDATORY, POLICY_SCOPE_USER,
           POLICY_SOURCE_CLOUD, list.CreateDeepCopy(), nullptr);
   map.Set("boolean", POLICY_LEVEL_MANDATORY, POLICY_SCOPE_USER,

@@ -293,8 +293,8 @@ TEST_F(ActivityLogTest, ArgUrlExtraction) {
                                             Action::ACTION_DOM_ACCESS,
                                             "XMLHttpRequest.open");
   action->set_page_url(GURL("http://www.google.com/"));
-  action->mutable_args()->AppendString("POST");
-  action->mutable_args()->AppendString("http://api.google.com/");
+  action->mutable_args()->GetList().emplace_back("POST");
+  action->mutable_args()->GetList().emplace_back("http://api.google.com/");
   action->mutable_other()->SetInteger(activity_log_constants::kActionDomVerb,
                                       DomActionType::METHOD);
   activity_log->LogAction(action);
@@ -306,8 +306,8 @@ TEST_F(ActivityLogTest, ArgUrlExtraction) {
                       Action::ACTION_DOM_ACCESS,
                       "XMLHttpRequest.open");
   action->set_page_url(GURL("http://www.google.com/"));
-  action->mutable_args()->AppendString("POST");
-  action->mutable_args()->AppendString("/api/");
+  action->mutable_args()->GetList().emplace_back("POST");
+  action->mutable_args()->GetList().emplace_back("/api/");
   action->mutable_other()->SetInteger(activity_log_constants::kActionDomVerb,
                                       DomActionType::METHOD);
   activity_log->LogAction(action);
@@ -318,8 +318,8 @@ TEST_F(ActivityLogTest, ArgUrlExtraction) {
                       now - base::TimeDelta::FromSeconds(2),
                       Action::ACTION_DOM_ACCESS,
                       "XMLHttpRequest.open");
-  action->mutable_args()->AppendString("POST");
-  action->mutable_args()->AppendString("/api/");
+  action->mutable_args()->GetList().emplace_back("POST");
+  action->mutable_args()->GetList().emplace_back("/api/");
   action->mutable_other()->SetInteger(activity_log_constants::kActionDomVerb,
                                       DomActionType::METHOD);
   activity_log->LogAction(action);
@@ -396,7 +396,7 @@ TEST_F(ActivityLogTest, ArgUrlApiCalls) {
                         now - base::TimeDelta::FromSeconds(i),
                         Action::ACTION_DOM_ACCESS,
                         kUrlApiCalls[i]);
-    action->mutable_args()->AppendString("http://www.google.co.uk");
+    action->mutable_args()->GetList().emplace_back("http://www.google.co.uk");
     action->mutable_other()->SetInteger(activity_log_constants::kActionDomVerb,
                                         DomActionType::SETTER);
     activity_log->LogAction(action);

@@ -47,11 +47,12 @@ TEST(DomDistillerPageFeaturesTest, TestCalculateDerivedFeatures) {
 
   base::ListValue* input_entries;
   ASSERT_TRUE(input_json->GetAsList(&input_entries));
-  ASSERT_GT(input_entries->GetSize(), 0u);
+  ASSERT_GT(input_entries->GetList().size(), 0u);
 
   base::ListValue* expected_output_entries;
   ASSERT_TRUE(expected_output_json->GetAsList(&expected_output_entries));
-  ASSERT_EQ(expected_output_entries->GetSize(), input_entries->GetSize());
+  ASSERT_EQ(expected_output_entries->GetList().size(),
+            input_entries->GetList().size());
 
   // In the output, the features list is a sequence of labels followed by values
   // (so labels at even indices, values at odd indices).
@@ -60,13 +61,13 @@ TEST(DomDistillerPageFeaturesTest, TestCalculateDerivedFeatures) {
   ASSERT_TRUE(expected_output_entries->GetDictionary(0, &entry));
   ASSERT_TRUE(entry->GetList("features", &derived_features));
   std::vector<std::string> labels;
-  for (size_t i = 0; i < derived_features->GetSize(); i += 2) {
+  for (size_t i = 0; i < derived_features->GetList().size(); i += 2) {
     std::string label;
     ASSERT_TRUE(derived_features->GetString(i, &label));
     labels.push_back(label);
   }
 
-  for (size_t i = 0; i < input_entries->GetSize(); ++i) {
+  for (size_t i = 0; i < input_entries->GetList().size(); ++i) {
     base::DictionaryValue* core_features;
     ASSERT_TRUE(input_entries->GetDictionary(i, &entry));
     ASSERT_TRUE(entry->GetDictionary("features", &core_features));

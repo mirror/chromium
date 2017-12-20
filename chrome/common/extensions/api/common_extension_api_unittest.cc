@@ -428,7 +428,7 @@ scoped_refptr<Extension> CreateExtensionWithPermissions(
     std::unique_ptr<base::ListValue> permissions_list(new base::ListValue());
     for (std::set<std::string>::const_iterator i = permissions.begin();
         i != permissions.end(); ++i) {
-      permissions_list->AppendString(*i);
+      permissions_list->GetList().emplace_back(*i);
     }
     manifest.Set("permissions", std::move(permissions_list));
   }
@@ -533,7 +533,7 @@ scoped_refptr<Extension> CreatePackagedAppWithPermissions(
   auto app = base::MakeUnique<base::DictionaryValue>();
   auto background = base::MakeUnique<base::DictionaryValue>();
   auto scripts = base::MakeUnique<base::ListValue>();
-  scripts->AppendString("test.js");
+  scripts->GetList().emplace_back("test.js");
   background->Set("scripts", std::move(scripts));
   app->Set("background", std::move(background));
   values.Set(manifest_keys::kApp, std::move(app));
@@ -541,7 +541,7 @@ scoped_refptr<Extension> CreatePackagedAppWithPermissions(
     auto permissions_list = base::MakeUnique<base::ListValue>();
     for (std::set<std::string>::const_iterator i = permissions.begin();
         i != permissions.end(); ++i) {
-      permissions_list->AppendString(*i);
+      permissions_list->GetList().emplace_back(*i);
     }
     values.Set("permissions", std::move(permissions_list));
   }

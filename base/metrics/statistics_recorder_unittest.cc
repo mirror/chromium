@@ -386,7 +386,7 @@ TEST_P(StatisticsRecorderTest, ToJSON) {
 
   ListValue* histogram_list = nullptr;
   ASSERT_TRUE(root_dict->GetList("histograms", &histogram_list));
-  ASSERT_EQ(2u, histogram_list->GetSize());
+  ASSERT_EQ(2u, histogram_list->GetList().size());
 
   // Examine the first histogram.
   DictionaryValue* histogram_dict = nullptr;
@@ -408,7 +408,7 @@ TEST_P(StatisticsRecorderTest, ToJSON) {
   ASSERT_TRUE(root->GetAsDictionary(&root_dict));
   histogram_list = nullptr;
   ASSERT_TRUE(root_dict->GetList("histograms", &histogram_list));
-  ASSERT_EQ(2u, histogram_list->GetSize());
+  ASSERT_EQ(2u, histogram_list->GetList().size());
   histogram_dict = nullptr;
   ASSERT_TRUE(histogram_list->GetDictionary(0, &histogram_dict));
   sample_count = 0;

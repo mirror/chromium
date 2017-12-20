@@ -53,7 +53,7 @@ std::unique_ptr<base::Value> EnableDataReductionProxyCallback(
   dict->SetBoolean("secure_transport_restricted", secure_transport_restricted);
   std::unique_ptr<base::ListValue> http_proxy_list(new base::ListValue());
   for (const auto& proxy : proxies_for_http)
-    http_proxy_list->AppendString(proxy.ToURI());
+    http_proxy_list->GetList().emplace_back(proxy.ToURI());
 
   dict->Set("http_proxy_list", std::move(http_proxy_list));
 
@@ -149,7 +149,7 @@ std::unique_ptr<base::Value> EndConfigRequestCallback(
     net::NetLogCaptureMode /* capture_mode */) {
   std::unique_ptr<base::ListValue> http_proxy_list(new base::ListValue());
   for (const auto& proxy : proxies_for_http)
-    http_proxy_list->AppendString(proxy.ToURI());
+    http_proxy_list->GetList().emplace_back(proxy.ToURI());
   std::unique_ptr<base::DictionaryValue> dict(new base::DictionaryValue());
   dict->SetInteger("net_error", net_error);
   dict->SetInteger("http_response_code", http_response_code);

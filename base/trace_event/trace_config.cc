@@ -169,7 +169,7 @@ bool TraceConfig::EventFilterConfig::GetArgAsSet(
   const ListValue* list = nullptr;
   if (!args_->GetList(key, &list))
     return false;
-  for (size_t i = 0; i < list->GetSize(); ++i) {
+  for (size_t i = 0; i < list->GetList().size(); ++i) {
     std::string value;
     if (list->GetString(i, &value))
       out_set->insert(value);
@@ -379,7 +379,7 @@ void TraceConfig::SetMemoryDumpConfigFromConfigDict(
   memory_dump_config_.allowed_dump_modes.clear();
   const ListValue* allowed_modes_list;
   if (memory_dump_config.GetList(kAllowedDumpModesParam, &allowed_modes_list)) {
-    for (size_t i = 0; i < allowed_modes_list->GetSize(); ++i) {
+    for (size_t i = 0; i < allowed_modes_list->GetList().size(); ++i) {
       std::string level_of_detail_str;
       allowed_modes_list->GetString(i, &level_of_detail_str);
       memory_dump_config_.allowed_dump_modes.insert(
@@ -394,8 +394,8 @@ void TraceConfig::SetMemoryDumpConfigFromConfigDict(
   memory_dump_config_.triggers.clear();
   const ListValue* trigger_list = nullptr;
   if (memory_dump_config.GetList(kTriggersParam, &trigger_list) &&
-      trigger_list->GetSize() > 0) {
-    for (size_t i = 0; i < trigger_list->GetSize(); ++i) {
+      trigger_list->GetList().size() > 0) {
+    for (size_t i = 0; i < trigger_list->GetList().size(); ++i) {
       const DictionaryValue* trigger = nullptr;
       if (!trigger_list->GetDictionary(i, &trigger))
         continue;
@@ -451,7 +451,7 @@ void TraceConfig::SetEventFiltersFromConfigList(
   event_filters_.clear();
 
   for (size_t event_filter_index = 0;
-       event_filter_index < category_event_filters.GetSize();
+       event_filter_index < category_event_filters.GetList().size();
        ++event_filter_index) {
     const base::DictionaryValue* event_filter = nullptr;
     if (!category_event_filters.GetDictionary(event_filter_index,
@@ -506,7 +506,8 @@ std::unique_ptr<DictionaryValue> TraceConfig::ToDict() const {
   if (category_filter_.IsCategoryEnabled(MemoryDumpManager::kTraceCategory)) {
     auto allowed_modes = std::make_unique<ListValue>();
     for (auto dump_mode : memory_dump_config_.allowed_dump_modes)
-      allowed_modes->AppendString(MemoryDumpLevelOfDetailToString(dump_mode));
+      allowed_modes->GetList().emplace_back(
+          MemoryDumpLevelOfDetailToString(dump_mode));
 
     auto memory_dump_config = std::make_unique<DictionaryValue>();
     memory_dump_config->Set(kAllowedDumpModesParam, std::move(allowed_modes));

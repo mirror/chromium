@@ -453,14 +453,14 @@ void CastStreamingNativeHandler::CallCreateCallback(
 
 void CastStreamingNativeHandler::CallStartCallback(int stream_id) const {
   base::ListValue event_args;
-  event_args.AppendInteger(stream_id);
+  event_args.GetList().emplace_back(stream_id);
   bindings_system_->DispatchEventInContext("cast.streaming.rtpStream.onStarted",
                                            &event_args, nullptr, context());
 }
 
 void CastStreamingNativeHandler::CallStopCallback(int stream_id) const {
   base::ListValue event_args;
-  event_args.AppendInteger(stream_id);
+  event_args.GetList().emplace_back(stream_id);
   bindings_system_->DispatchEventInContext("cast.streaming.rtpStream.onStopped",
                                            &event_args, nullptr, context());
 }
@@ -469,8 +469,8 @@ void CastStreamingNativeHandler::CallErrorCallback(
     int stream_id,
     const std::string& message) const {
   base::ListValue event_args;
-  event_args.AppendInteger(stream_id);
-  event_args.AppendString(message);
+  event_args.GetList().emplace_back(stream_id);
+  event_args.GetList().emplace_back(message);
   bindings_system_->DispatchEventInContext("cast.streaming.rtpStream.onError",
                                            &event_args, nullptr, context());
 }

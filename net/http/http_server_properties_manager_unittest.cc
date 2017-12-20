@@ -1008,7 +1008,7 @@ TEST_P(HttpServerPropertiesManagerTest, UpdatePrefsWithCache) {
   base::ListValue* broken_alt_svc_list;
   ASSERT_TRUE(server_dict->GetList("broken_alternative_services",
                                    &broken_alt_svc_list));
-  ASSERT_EQ(2u, broken_alt_svc_list->GetSize());
+  ASSERT_EQ(2u, broken_alt_svc_list->GetList().size());
   base::DictionaryValue* broken_alt_svcs_list_entry;
   ASSERT_TRUE(
       broken_alt_svc_list->GetDictionary(0, &broken_alt_svcs_list_entry));
@@ -1227,7 +1227,7 @@ TEST_P(HttpServerPropertiesManagerTest, DoNotPersistExpiredAlternativeService) {
   const base::ListValue* altsvc_list;
   ASSERT_TRUE(example_pref_dict->GetList("alternative_service", &altsvc_list));
 
-  ASSERT_EQ(2u, altsvc_list->GetSize());
+  ASSERT_EQ(2u, altsvc_list->GetList().size());
 
   const base::DictionaryValue* altsvc_entry;
   std::string hostname;

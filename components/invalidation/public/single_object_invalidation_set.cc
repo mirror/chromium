@@ -99,7 +99,7 @@ std::unique_ptr<base::ListValue> SingleObjectInvalidationSet::ToValue() const {
 
 bool SingleObjectInvalidationSet::ResetFromValue(
     const base::ListValue& list) {
-  for (size_t i = 0; i < list.GetSize(); ++i) {
+  for (size_t i = 0; i < list.GetList().size(); ++i) {
     const base::DictionaryValue* dict;
     if (!list.GetDictionary(i, &dict)) {
       DLOG(WARNING) << "Could not find invalidation at index " << i;

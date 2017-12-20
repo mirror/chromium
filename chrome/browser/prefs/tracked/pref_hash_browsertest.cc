@@ -771,7 +771,7 @@ class PrefHashBrowserTestChangedAtomic : public PrefHashBrowserTestBase {
 
     ListPrefUpdate update(profile()->GetPrefs(),
                           prefs::kURLsToRestoreOnStartup);
-    update->AppendString("http://example.com");
+    update->GetList().emplace_back("http://example.com");
   }
 
   void AttackPreferencesOnDisk(
@@ -787,8 +787,8 @@ class PrefHashBrowserTestChangedAtomic : public PrefHashBrowserTestBase {
     EXPECT_TRUE(
         selected_prefs->GetList(prefs::kURLsToRestoreOnStartup, &startup_urls));
     EXPECT_TRUE(startup_urls);
-    EXPECT_EQ(1U, startup_urls->GetSize());
-    startup_urls->AppendString("http://example.org");
+    EXPECT_EQ(1U, startup_urls->GetList().size());
+    startup_urls->GetList().emplace_back("http://example.org");
   }
 
   void VerifyReactionToPrefAttack() override {
@@ -824,7 +824,8 @@ class PrefHashBrowserTestChangedAtomic : public PrefHashBrowserTestBase {
               profile()
                   ->GetPrefs()
                   ->GetList(prefs::kURLsToRestoreOnStartup)
-                  ->GetSize());
+                  ->GetList()
+                  .size());
 #endif
 
     // Nothing else should have triggered.

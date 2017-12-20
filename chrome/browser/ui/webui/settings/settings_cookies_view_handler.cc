@@ -290,7 +290,7 @@ void CookiesViewHandler::EnsureCookiesTreeModelCreated() {
 
 void CookiesViewHandler::HandleGetCookieDetails(const base::ListValue* args) {
   CHECK(request_.callback_id_.empty());
-  CHECK_EQ(2U, args->GetSize());
+  CHECK_EQ(2U, args->GetList().size());
   CHECK(args->GetString(0, &request_.callback_id_));
   std::string site;
   CHECK(args->GetString(1, &site));
@@ -310,7 +310,7 @@ void CookiesViewHandler::HandleGetCookieDetails(const base::ListValue* args) {
 
 void CookiesViewHandler::HandleGetDisplayList(const base::ListValue* args) {
   CHECK(request_.callback_id_.empty());
-  CHECK_EQ(2U, args->GetSize());
+  CHECK_EQ(2U, args->GetList().size());
   CHECK(args->GetString(0, &request_.callback_id_));
   base::string16 filter;
   CHECK(args->GetString(1, &filter));
@@ -329,7 +329,7 @@ void CookiesViewHandler::HandleGetDisplayList(const base::ListValue* args) {
 
 void CookiesViewHandler::HandleReloadCookies(const base::ListValue* args) {
   CHECK(request_.callback_id_.empty());
-  CHECK_EQ(1U, args->GetSize());
+  CHECK_EQ(1U, args->GetList().size());
   CHECK(args->GetString(0, &request_.callback_id_));
 
   AllowJavascript();
@@ -340,7 +340,7 @@ void CookiesViewHandler::HandleReloadCookies(const base::ListValue* args) {
 
 void CookiesViewHandler::HandleRemoveAll(const base::ListValue* args) {
   CHECK(request_.callback_id_.empty());
-  CHECK_EQ(1U, args->GetSize());
+  CHECK_EQ(1U, args->GetList().size());
   CHECK(args->GetString(0, &request_.callback_id_));
 
   AllowJavascript();
@@ -362,7 +362,7 @@ void CookiesViewHandler::HandleRemove(const base::ListValue* args) {
 }
 
 void CookiesViewHandler::HandleRemoveShownItems(const base::ListValue* args) {
-  CHECK_EQ(0U, args->GetSize());
+  CHECK_EQ(0U, args->GetList().size());
 
   AllowJavascript();
   CookieTreeNode* parent = cookies_tree_model_->GetRoot();
@@ -372,7 +372,7 @@ void CookiesViewHandler::HandleRemoveShownItems(const base::ListValue* args) {
 }
 
 void CookiesViewHandler::HandleRemoveItem(const base::ListValue* args) {
-  CHECK_EQ(1U, args->GetSize());
+  CHECK_EQ(1U, args->GetList().size());
   CHECK(request_.callback_id_.empty());
   base::string16 site;
   CHECK(args->GetString(0, &site));

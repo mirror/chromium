@@ -147,7 +147,8 @@ void PrintMockRenderThread::OnUpdatePrintSettings(
   const base::ListValue* page_range_array;
   printing::PageRanges new_ranges;
   if (job_settings.GetList(printing::kSettingPageRange, &page_range_array)) {
-    for (size_t index = 0; index < page_range_array->GetSize(); ++index) {
+    for (size_t index = 0; index < page_range_array->GetList().size();
+         ++index) {
       const base::DictionaryValue* dict;
       if (!page_range_array->GetDictionary(index, &dict))
         continue;

@@ -31,7 +31,7 @@ void StoreDismissedIDsToPrefs(PrefService* pref_service,
                               const std::set<std::string>& dismissed_ids) {
   base::ListValue list;
   for (const std::string& dismissed_id : dismissed_ids) {
-    list.AppendString(dismissed_id);
+    list.GetList().emplace_back(dismissed_id);
   }
   pref_service->Set(pref_name, list);
 }

@@ -38,7 +38,7 @@ bool ManifestPermission::Read(const base::Pickle* m,
   base::ListValue singleton;
   if (!IPC::ReadParam(m, iter, &singleton))
     return false;
-  if (singleton.GetSize() != 1)
+  if (singleton.GetList().size() != 1)
     return false;
   base::Value* value = NULL;
   if (!singleton.Get(0, &value))

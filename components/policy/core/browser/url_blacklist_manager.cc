@@ -161,7 +161,7 @@ URLBlacklist::~URLBlacklist() {}
 void URLBlacklist::AddFilters(bool allow,
                               const base::ListValue* list) {
   URLMatcherConditionSet::Vector all_conditions;
-  size_t size = std::min(kMaxFiltersPerPolicy, list->GetSize());
+  size_t size = std::min(kMaxFiltersPerPolicy, list->GetList().size());
   for (size_t i = 0; i < size; ++i) {
     std::string pattern;
     bool success = list->GetString(i, &pattern);

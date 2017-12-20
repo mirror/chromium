@@ -311,7 +311,8 @@ class NetErrorHelperCoreTest : public testing::Test,
     // Checks that the last error page params correspond to kDefaultSuggestions.
     ASSERT_TRUE(last_error_page_params());
     EXPECT_TRUE(last_error_page_params()->suggest_reload);
-    EXPECT_EQ(1u, last_error_page_params()->override_suggestions->GetSize());
+    EXPECT_EQ(1u,
+              last_error_page_params()->override_suggestions->GetList().size());
     EXPECT_EQ(GURL(kSearchUrl), last_error_page_params()->search_url);
     EXPECT_EQ(kSuggestedSearchTerms, last_error_page_params()->search_terms);
   }
@@ -1754,7 +1755,8 @@ TEST_F(NetErrorHelperCoreTest, CorrectionsWithoutSearch) {
   // Check params.
   ASSERT_TRUE(last_error_page_params());
   EXPECT_FALSE(last_error_page_params()->suggest_reload);
-  EXPECT_EQ(1u, last_error_page_params()->override_suggestions->GetSize());
+  EXPECT_EQ(1u,
+            last_error_page_params()->override_suggestions->GetList().size());
   EXPECT_FALSE(last_error_page_params()->search_url.is_valid());
   EXPECT_EQ("", last_error_page_params()->search_terms);
 
@@ -1802,7 +1804,8 @@ TEST_F(NetErrorHelperCoreTest, CorrectionsOnlySearchSuggestion) {
   // Check params.
   ASSERT_TRUE(last_error_page_params());
   EXPECT_FALSE(last_error_page_params()->suggest_reload);
-  EXPECT_EQ(0u, last_error_page_params()->override_suggestions->GetSize());
+  EXPECT_EQ(0u,
+            last_error_page_params()->override_suggestions->GetList().size());
   EXPECT_EQ(GURL(kSearchUrl), last_error_page_params()->search_url);
   EXPECT_EQ(kSuggestedSearchTerms, last_error_page_params()->search_terms);
 

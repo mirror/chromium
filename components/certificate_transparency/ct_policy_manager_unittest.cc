@@ -25,7 +25,7 @@ std::unique_ptr<base::ListValue> ListValueFromStrings(
     const std::vector<const char*>& strings) {
   std::unique_ptr<base::ListValue> result(new base::ListValue);
   for (auto* const str : strings) {
-    result->AppendString(str);
+    result->GetList().emplace_back(str);
   }
   return result;
 }

@@ -69,7 +69,7 @@ int32_t FontMessageFilter::OnHostMsgGetFontFamilies(
   std::unique_ptr<base::ListValue> list(GetFontList_SlowBlocking());
 
   std::string output;
-  for (size_t i = 0; i < list->GetSize(); i++) {
+  for (size_t i = 0; i < list->GetList().size(); i++) {
     base::ListValue* cur_font;
     if (!list->GetList(i, &cur_font))
       continue;

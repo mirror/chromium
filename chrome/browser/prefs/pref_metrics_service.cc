@@ -138,10 +138,10 @@ void PrefMetricsService::RecordLaunchPrefs() {
     const base::ListValue* url_list =
         prefs_->GetList(prefs::kURLsToRestoreOnStartup);
     UMA_HISTOGRAM_CUSTOM_COUNTS("Settings.StartupPageLoadURLs",
-                                url_list->GetSize(), 1, 50, 20);
+                                url_list->GetList().size(), 1, 50, 20);
     // Similarly, check startup pages for known search engine TLD+1s.
     std::string url_text;
-    for (size_t i = 0; i < url_list->GetSize(); ++i) {
+    for (size_t i = 0; i < url_list->GetList().size(); ++i) {
       if (url_list->GetString(i, &url_text)) {
         GURL start_url(url_text);
         if (start_url.is_valid()) {

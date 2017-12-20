@@ -50,7 +50,7 @@ bool DNRManifestHandler::Parse(Extension* extension, base::string16* error) {
   const base::ListValue* rules_file_list = nullptr;
   std::string json_ruleset_location;
   if (!dict->GetList(keys::kDeclarativeRuleResourcesKey, &rules_file_list) ||
-      rules_file_list->GetSize() != 1u ||
+      rules_file_list->GetList().size() != 1u ||
       !rules_file_list->GetString(0, &json_ruleset_location)) {
     *error = ErrorUtils::FormatErrorMessageUTF16(
         errors::kInvalidDeclarativeRulesFileKey,

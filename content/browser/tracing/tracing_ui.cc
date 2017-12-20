@@ -48,7 +48,7 @@ void OnGotCategories(const WebUIDataSource::GotDataCallback& callback,
   base::ListValue category_list;
   for (std::set<std::string>::const_iterator it = categorySet.begin();
        it != categorySet.end(); it++) {
-    category_list.AppendString(*it);
+    category_list.GetList().emplace_back(*it);
   }
 
   scoped_refptr<base::RefCountedString> res(new base::RefCountedString());
@@ -195,7 +195,8 @@ TracingUI::~TracingUI() {
 
 void TracingUI::DoUploadBase64Encoded(const base::ListValue* args) {
   std::string file_contents_base64;
-  if (!args || args->empty() || !args->GetString(0, &file_contents_base64)) {
+  if (!args || args->GetList().empty() ||
+      !args->GetString(0, &file_contents_base64)) {
     web_ui()->CallJavascriptFunctionUnsafe("onUploadError",
                                            base::Value("Missing data"));
     return;
@@ -211,7 +212,7 @@ void TracingUI::DoUploadBase64Encoded(const base::ListValue* args) {
 
 void TracingUI::DoUpload(const base::ListValue* args) {
   std::string file_contents;
-  if (!args || args->empty() || !args->GetString(0, &file_contents)) {
+  if (!args || args->GetList().empty() || !args->GetString(0, &file_contents)) {
     web_ui()->CallJavascriptFunctionUnsafe("onUploadError",
                                            base::Value("Missing data"));
     return;

@@ -100,7 +100,7 @@ void NTPTilesInternalsMessageHandler::HandleRegisterForEvents(
     SendTiles(NTPTilesVector(), FaviconResultMap());
     return;
   }
-  DCHECK(args->empty());
+  DCHECK(args->GetList().empty());
 
   suggestions_status_.clear();
   popular_sites_json_.clear();
@@ -116,7 +116,7 @@ void NTPTilesInternalsMessageHandler::HandleUpdate(
   }
 
   const base::DictionaryValue* dict = nullptr;
-  DCHECK_EQ(1u, args->GetSize());
+  DCHECK_EQ(1u, args->GetList().size());
   args->GetDictionary(0, &dict);
   DCHECK(dict);
 
@@ -170,7 +170,7 @@ void NTPTilesInternalsMessageHandler::HandleUpdate(
 
 void NTPTilesInternalsMessageHandler::HandleFetchSuggestions(
     const base::ListValue* args) {
-  DCHECK_EQ(0u, args->GetSize());
+  DCHECK_EQ(0u, args->GetList().size());
   if (!most_visited_sites_->DoesSourceExist(
           ntp_tiles::TileSource::SUGGESTIONS_SERVICE)) {
     return;
@@ -186,7 +186,7 @@ void NTPTilesInternalsMessageHandler::HandleFetchSuggestions(
 
 void NTPTilesInternalsMessageHandler::HandleViewPopularSitesJson(
     const base::ListValue* args) {
-  DCHECK_EQ(0u, args->GetSize());
+  DCHECK_EQ(0u, args->GetList().size());
   if (!most_visited_sites_->DoesSourceExist(ntp_tiles::TileSource::POPULAR)) {
     return;
   }

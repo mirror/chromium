@@ -91,7 +91,7 @@ TEST_F(PersistedLogsTest, EmptyLogList) {
 
   persisted_logs.PersistUnsentLogs();
   const base::ListValue* list_value = prefs_.GetList(kTestPrefName);
-  EXPECT_EQ(0U, list_value->GetSize());
+  EXPECT_EQ(0U, list_value->GetList().size());
 
   TestPersistedLogs result_persisted_logs(&prefs_, kLogByteLimit);
   result_persisted_logs.LoadPersistedUnsentLogs();

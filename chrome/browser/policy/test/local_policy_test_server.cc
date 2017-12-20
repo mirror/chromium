@@ -132,11 +132,11 @@ void LocalPolicyTestServer::RegisterClient(const std::string& dm_token,
 
   // Allow all policy types for now.
   std::unique_ptr<base::ListValue> types(new base::ListValue());
-  types->AppendString(dm_protocol::kChromeDevicePolicyType);
-  types->AppendString(dm_protocol::kChromeUserPolicyType);
-  types->AppendString(dm_protocol::kChromePublicAccountPolicyType);
-  types->AppendString(dm_protocol::kChromeExtensionPolicyType);
-  types->AppendString(dm_protocol::kChromeSigninExtensionPolicyType);
+  types->GetList().emplace_back(dm_protocol::kChromeDevicePolicyType);
+  types->GetList().emplace_back(dm_protocol::kChromeUserPolicyType);
+  types->GetList().emplace_back(dm_protocol::kChromePublicAccountPolicyType);
+  types->GetList().emplace_back(dm_protocol::kChromeExtensionPolicyType);
+  types->GetList().emplace_back(dm_protocol::kChromeSigninExtensionPolicyType);
 
   client_dict->Set(kClientStateKeyAllowedPolicyTypes, std::move(types));
   clients_.Set(dm_token, std::move(client_dict));

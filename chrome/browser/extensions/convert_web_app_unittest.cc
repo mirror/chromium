@@ -161,7 +161,7 @@ TEST(ExtensionFromWebApp, GetScopeURLFromBookmarkApp_WrongURLHandler) {
   //   }
   // }
   auto test_matches = base::MakeUnique<base::ListValue>();
-  test_matches->AppendString("http://*.aaronboodman.com/");
+  test_matches->GetList().emplace_back("http://*.aaronboodman.com/");
 
   auto test_handler = base::MakeUnique<base::DictionaryValue>();
   test_handler->SetList(keys::kMatches, std::move(test_matches));
@@ -207,7 +207,7 @@ TEST(ExtensionFromWebApp, GetScopeURLFromBookmarkApp_ExtraURLHandler) {
                                       base::ASCIIToUTF16("Test App"));
 
   auto test_matches = base::MakeUnique<base::ListValue>();
-  test_matches->AppendString("http://*.aaronboodman.com/");
+  test_matches->GetList().emplace_back("http://*.aaronboodman.com/");
 
   auto test_handler = base::MakeUnique<base::DictionaryValue>();
   test_handler->SetList(keys::kMatches, std::move(test_matches));

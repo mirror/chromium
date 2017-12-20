@@ -66,7 +66,7 @@ void MediaDevicesSelectionHandler::OnUpdateVideoDevices(
 
 void MediaDevicesSelectionHandler::GetDefaultCaptureDevices(
     const base::ListValue* args) {
-  DCHECK_EQ(1U, args->GetSize());
+  DCHECK_EQ(1U, args->GetList().size());
   std::string type;
   if (!args->GetString(0, &type)) {
     NOTREACHED();
@@ -82,7 +82,7 @@ void MediaDevicesSelectionHandler::GetDefaultCaptureDevices(
 
 void MediaDevicesSelectionHandler::SetDefaultCaptureDevice(
     const base::ListValue* args) {
-  DCHECK_EQ(2U, args->GetSize());
+  DCHECK_EQ(2U, args->GetList().size());
   std::string type, device;
   if (!(args->GetString(0, &type) && args->GetString(1, &device))) {
     NOTREACHED();

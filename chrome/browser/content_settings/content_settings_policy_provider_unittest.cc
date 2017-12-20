@@ -160,7 +160,7 @@ TEST_F(PolicyProviderTest, GettingManagedContentSettings) {
       profile.GetTestingPrefService();
 
   auto value = base::MakeUnique<base::ListValue>();
-  value->AppendString("[*.]google.com");
+  value->GetList().emplace_back("[*.]google.com");
   prefs->SetManagedPref(prefs::kManagedImagesBlockedForUrls, std::move(value));
 
   PolicyProvider provider(prefs);
@@ -215,7 +215,7 @@ TEST_F(PolicyProviderTest, ResourceIdentifier) {
       profile.GetTestingPrefService();
 
   auto value = base::MakeUnique<base::ListValue>();
-  value->AppendString("[*.]google.com");
+  value->GetList().emplace_back("[*.]google.com");
   prefs->SetManagedPref(prefs::kManagedPluginsAllowedForUrls, std::move(value));
 
   PolicyProvider provider(prefs);
@@ -261,7 +261,7 @@ TEST_F(PolicyProviderTest, AutoSelectCertificateList) {
   std::string pattern_str("\"pattern\":\"[*.]google.com\"");
   std::string filter_str("\"filter\":{\"ISSUER\":{\"CN\":\"issuer name\"}}");
   auto value = base::MakeUnique<base::ListValue>();
-  value->AppendString("{" + pattern_str + "," + filter_str + "}");
+  value->GetList().emplace_back("{" + pattern_str + "," + filter_str + "}");
   prefs->SetManagedPref(prefs::kManagedAutoSelectCertificateForUrls,
                         std::move(value));
   GURL youtube_url("https://www.youtube.com");

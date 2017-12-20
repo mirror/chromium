@@ -194,8 +194,8 @@ std::unique_ptr<base::Value> HttpRequestHeaders::NetLogCallback(
         ElideHeaderValueForNetLog(capture_mode, it->key, it->value);
     std::string escaped_name = EscapeNonASCII(it->key);
     std::string escaped_value = EscapeNonASCII(log_value);
-    headers->AppendString(base::StringPrintf("%s: %s", escaped_name.c_str(),
-                                             escaped_value.c_str()));
+    headers->GetList().emplace_back(base::StringPrintf(
+        "%s: %s", escaped_name.c_str(), escaped_value.c_str()));
   }
   dict->Set("headers", std::move(headers));
   return std::move(dict);

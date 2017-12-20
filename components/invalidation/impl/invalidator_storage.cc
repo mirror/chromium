@@ -28,7 +28,7 @@ const char kInvalidatorMaxInvalidationVersions[] =
 bool ValueToUnackedInvalidationStorageMap(
     const base::ListValue& value,
     syncer::UnackedInvalidationsMap* map) {
-  for (size_t i = 0; i != value.GetSize(); ++i) {
+  for (size_t i = 0; i != value.GetList().size(); ++i) {
     const base::DictionaryValue* dict;
     if (!value.GetDictionary(i, &dict) ||
         !syncer::UnackedInvalidationSet::DeserializeSetIntoMap(*dict, map)) {

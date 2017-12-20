@@ -98,7 +98,7 @@ void StartupPagesHandler::OnItemsRemoved(int start, int length) {
 }
 
 void StartupPagesHandler::HandleAddStartupPage(const base::ListValue* args) {
-  CHECK_EQ(2U, args->GetSize());
+  CHECK_EQ(2U, args->GetList().size());
 
   const base::Value* callback_id;
   CHECK(args->Get(0, &callback_id));
@@ -123,7 +123,7 @@ void StartupPagesHandler::HandleAddStartupPage(const base::ListValue* args) {
 }
 
 void StartupPagesHandler::HandleEditStartupPage(const base::ListValue* args) {
-  CHECK_EQ(args->GetSize(), 3U);
+  CHECK_EQ(args->GetList().size(), 3U);
   const base::Value* callback_id;
   CHECK(args->Get(0, &callback_id));
   int index;

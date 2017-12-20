@@ -134,7 +134,7 @@ void SyncInternalsMessageHandler::RegisterMessages() {
 
 void SyncInternalsMessageHandler::HandleRegisterForEvents(
     const ListValue* args) {
-  DCHECK(args->empty());
+  DCHECK(args->GetList().empty());
   AllowJavascript();
 
   // is_registered_ flag protects us from double-registering.  This could
@@ -152,7 +152,7 @@ void SyncInternalsMessageHandler::HandleRegisterForEvents(
 
 void SyncInternalsMessageHandler::HandleRegisterForPerTypeCounters(
     const ListValue* args) {
-  DCHECK(args->empty());
+  DCHECK(args->GetList().empty());
   AllowJavascript();
 
   SyncService* service = GetSyncService();
@@ -171,14 +171,14 @@ void SyncInternalsMessageHandler::HandleRegisterForPerTypeCounters(
 
 void SyncInternalsMessageHandler::HandleRequestUpdatedAboutInfo(
     const ListValue* args) {
-  DCHECK(args->empty());
+  DCHECK(args->GetList().empty());
   AllowJavascript();
   SendAboutInfo();
 }
 
 void SyncInternalsMessageHandler::HandleRequestListOfTypes(
     const ListValue* args) {
-  DCHECK(args->empty());
+  DCHECK(args->GetList().empty());
   AllowJavascript();
 
   DictionaryValue event_details;
@@ -186,14 +186,14 @@ void SyncInternalsMessageHandler::HandleRequestListOfTypes(
   ModelTypeSet protocol_types = syncer::ProtocolTypes();
   for (ModelTypeSet::Iterator it = protocol_types.First(); it.Good();
        it.Inc()) {
-    type_list->AppendString(ModelTypeToString(it.Get()));
+    type_list->GetList().emplace_back(ModelTypeToString(it.Get()));
   }
   event_details.Set(syncer::sync_ui_util::kTypes, std::move(type_list));
   DispatchEvent(syncer::sync_ui_util::kOnReceivedListOfTypes, event_details);
 }
 
 void SyncInternalsMessageHandler::HandleGetAllNodes(const ListValue* args) {
-  DCHECK_EQ(1U, args->GetSize());
+  DCHECK_EQ(1U, args->GetList().size());
   AllowJavascript();
 
   int request_id = 0;
@@ -214,7 +214,7 @@ void SyncInternalsMessageHandler::HandleGetAllNodes(const ListValue* args) {
 
 void SyncInternalsMessageHandler::HandleRequestUserEventsVisibility(
     const base::ListValue* args) {
-  DCHECK(args->empty());
+  DCHECK(args->GetList().empty());
   AllowJavascript();
   CallJavascriptFunction(
       syncer::sync_ui_util::kUserEventsVisibilityCallback,
@@ -223,14 +223,14 @@ void SyncInternalsMessageHandler::HandleRequestUserEventsVisibility(
 
 void SyncInternalsMessageHandler::HandleSetIncludeSpecifics(
     const ListValue* args) {
-  DCHECK_EQ(1U, args->GetSize());
+  DCHECK_EQ(1U, args->GetList().size());
   AllowJavascript();
   include_specifics_ = args->GetList()[0].GetBool();
 }
 
 void SyncInternalsMessageHandler::HandleWriteUserEvent(
     const base::ListValue* args) {
-  DCHECK_EQ(2U, args->GetSize());
+  DCHECK_EQ(2U, args->GetList().size());
   AllowJavascript();
 
   Profile* profile = Profile::FromWebUI(web_ui());

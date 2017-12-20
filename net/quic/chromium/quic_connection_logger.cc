@@ -119,7 +119,7 @@ std::unique_ptr<base::Value> NetLogQuicAckFrameCallback(
     for (QuicPacketNumber packet = frame->packets.Min();
          packet < frame->deprecated_largest_observed; ++packet) {
       if (!frame->packets.Contains(packet)) {
-        missing->AppendString(base::NumberToString(packet));
+        missing->GetList().emplace_back(base::NumberToString(packet));
       }
     }
   }
@@ -203,7 +203,7 @@ std::unique_ptr<base::Value> NetLogQuicVersionNegotiationPacketCallback(
   auto versions = std::make_unique<base::ListValue>();
   for (ParsedQuicVersionVector::const_iterator it = packet->versions.begin();
        it != packet->versions.end(); ++it) {
-    versions->AppendString(ParsedQuicVersionToString(*it));
+    versions->GetList().emplace_back(ParsedQuicVersionToString(*it));
   }
   dict->Set("versions", std::move(versions));
   return std::move(dict);

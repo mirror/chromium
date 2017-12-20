@@ -61,13 +61,13 @@ int64_t GetInt64PrefValue(const base::ListValue& list_value, size_t index) {
 // front, or appending "0"'s to the back.
 void MaintainContentLengthPrefsWindow(base::ListValue* list, size_t length) {
   // Remove data for old days from the front.
-  while (list->GetSize() > length)
+  while (list->GetList().size() > length)
     list->Remove(0, nullptr);
   // Newly added lists are empty. Add entries to back to fill the window,
   // each initialized to zero.
-  while (list->GetSize() < length)
-    list->AppendString(base::Int64ToString(0));
-  DCHECK_EQ(length, list->GetSize());
+  while (list->GetList().size() < length)
+    list->GetList().emplace_back(base::Int64ToString(0));
+  DCHECK_EQ(length, list->GetList().size());
 }
 
 // Increments an int64_t, stored as a string, in a ListPref at the specified
@@ -266,7 +266,7 @@ class DataReductionProxyCompressionStats::DailyContentLengthUpdate {
     } else if (days_since_last_update < -1) {
       // Erase all entries if the system went backwards in time by more than
       // a day.
-      update_->Clear();
+      update_->GetList().clear();
 
       days_since_last_update = kNumDaysInHistory;
     }
@@ -278,7 +278,7 @@ class DataReductionProxyCompressionStats::DailyContentLengthUpdate {
     for (int i = 0;
          i < days_since_last_update && i < static_cast<int>(kNumDaysInHistory);
          ++i) {
-      update_->AppendString(base::Int64ToString(0));
+      update_->GetList().emplace_back(base::Int64ToString(0));
     }
 
     // Entries for new days may have been appended. Maintain the invariant that
@@ -563,11 +563,11 @@ void DataReductionProxyCompressionStats::ResetStatistics() {
       GetList(prefs::kDailyHttpOriginalContentLength);
   base::ListValue* received_update =
       GetList(prefs::kDailyHttpReceivedContentLength);
-  original_update->Clear();
-  received_update->Clear();
+  original_update->GetList().clear();
+  received_update->GetList().clear();
   for (size_t i = 0; i < kNumDaysInHistory; ++i) {
-    original_update->AppendString(base::Int64ToString(0));
-    received_update->AppendString(base::Int64ToString(0));
+    original_update->GetList().emplace_back(base::Int64ToString(0));
+    received_update->GetList().emplace_back(base::Int64ToString(0));
   }
 }
 
@@ -583,7 +583,7 @@ ContentLengthList DataReductionProxyCompressionStats::GetDailyContentLengths(
     const char* pref_name) {
   ContentLengthList content_lengths;
   const base::ListValue* list_value = GetList(pref_name);
-  if (list_value->GetSize() == kNumDaysInHistory) {
+  if (list_value->GetList().size() == kNumDaysInHistory) {
     for (size_t i = 0; i < kNumDaysInHistory; ++i)
       content_lengths.push_back(GetInt64PrefValue(*list_value, i));
   }
@@ -602,8 +602,8 @@ void DataReductionProxyCompressionStats::GetContentLengths(
   const base::ListValue* received_list =
       GetList(prefs::kDailyHttpReceivedContentLength);
 
-  if (original_list->GetSize() != kNumDaysInHistory ||
-      received_list->GetSize() != kNumDaysInHistory) {
+  if (original_list->GetList().size() != kNumDaysInHistory ||
+      received_list->GetList().size() != kNumDaysInHistory) {
     *original_content_length = 0L;
     *received_content_length = 0L;
     *last_update_time = 0L;
@@ -745,7 +745,7 @@ void DataReductionProxyCompressionStats::ClearDataSavingStatistics() {
 
   for (auto iter = list_pref_map_.begin(); iter != list_pref_map_.end();
        ++iter) {
-    iter->second->Clear();
+    iter->second->GetList().clear();
   }
 }
 
@@ -760,7 +760,7 @@ void DataReductionProxyCompressionStats::DelayedWritePrefs() {
 void DataReductionProxyCompressionStats::TransferList(
     const base::ListValue& from_list,
     base::ListValue* to_list) {
-  to_list->Clear();
+  to_list->GetList().clear();
   from_list.CreateDeepCopy()->Swap(to_list);
 }
 

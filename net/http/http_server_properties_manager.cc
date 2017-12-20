@@ -1137,13 +1137,13 @@ void HttpServerPropertiesManager::SaveAlternativeServiceToServerPrefs(
     std::unique_ptr<base::ListValue> advertised_versions_list =
         std::make_unique<base::ListValue>();
     for (const auto& version : alternative_service_info.advertised_versions()) {
-      advertised_versions_list->AppendInteger(version);
+      advertised_versions_list->GetList().emplace_back(version);
     }
     alternative_service_dict->SetList(kAdvertisedVersionsKey,
                                       std::move(advertised_versions_list));
     alternative_service_list->Append(std::move(alternative_service_dict));
   }
-  if (alternative_service_list->GetSize() == 0)
+  if (alternative_service_list->GetList().size() == 0)
     return;
   server_pref_dict->SetWithoutPathExpansion(
       kAlternativeServiceKey, std::move(alternative_service_list));
@@ -1262,7 +1262,7 @@ void HttpServerPropertiesManager::SaveBrokenAlternativeServicesToPrefs(
     }
   }
 
-  DCHECK(!json_list->empty());
+  DCHECK(!json_list->GetList().empty());
   http_server_properties_dict->SetWithoutPathExpansion(
       kBrokenAlternativeServicesKey, std::move(json_list));
 }

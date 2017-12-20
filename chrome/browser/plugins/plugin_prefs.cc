@@ -131,7 +131,7 @@ void PluginPrefs::SetPrefs(PrefService* prefs) {
   {  // Scoped update of prefs::kPluginsPluginsList.
     ListPrefUpdate update(prefs_, prefs::kPluginsPluginsList);
     base::ListValue* saved_plugins_list = update.Get();
-    if (saved_plugins_list && !saved_plugins_list->empty()) {
+    if (saved_plugins_list && !saved_plugins_list->GetList().empty()) {
       for (auto& plugin_value : *saved_plugins_list) {
         base::DictionaryValue* plugin;
         if (!plugin_value.GetAsDictionary(&plugin)) {
@@ -253,7 +253,7 @@ void PluginPrefs::OnUpdatePreferences(
   PluginFinder* finder = PluginFinder::GetInstance();
   ListPrefUpdate update(prefs_, prefs::kPluginsPluginsList);
   base::ListValue* plugins_list = update.Get();
-  plugins_list->Clear();
+  plugins_list->GetList().clear();
 
   base::FilePath internal_dir;
   if (PathService::Get(chrome::DIR_INTERNAL_PLUGINS, &internal_dir))

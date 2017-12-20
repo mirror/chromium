@@ -69,7 +69,7 @@ bool AppIsolationHandler::Parse(Extension* extension, base::string16* error) {
   }
 
   bool has_isolated_storage = false;
-  for (size_t i = 0; i < isolation_list->GetSize(); ++i) {
+  for (size_t i = 0; i < isolation_list->GetList().size(); ++i) {
     std::string isolation_string;
     if (!isolation_list->GetString(i, &isolation_string)) {
       *error = ErrorUtils::FormatErrorMessageUTF16(

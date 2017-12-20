@@ -834,7 +834,7 @@ void ManagementEventRouter::BroadcastEvent(
     return;
   std::unique_ptr<base::ListValue> args(new base::ListValue());
   if (event_name == management::OnUninstalled::kEventName) {
-    args->AppendString(extension->id());
+    args->GetList().emplace_back(extension->id());
   } else {
     args->Append(CreateExtensionInfo(*extension, browser_context_).ToValue());
   }

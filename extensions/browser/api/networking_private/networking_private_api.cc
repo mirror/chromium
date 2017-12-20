@@ -481,16 +481,16 @@ NetworkingPrivateGetEnabledNetworkTypesFunction::Run() {
     if (!iter->GetAsString(&type))
       NOTREACHED();
     if (type == ::onc::network_type::kEthernet) {
-      enabled_networks_list->AppendString(
+      enabled_networks_list->GetList().emplace_back(
           private_api::ToString(private_api::NETWORK_TYPE_ETHERNET));
     } else if (type == ::onc::network_type::kWiFi) {
-      enabled_networks_list->AppendString(
+      enabled_networks_list->GetList().emplace_back(
           private_api::ToString(private_api::NETWORK_TYPE_WIFI));
     } else if (type == ::onc::network_type::kWimax) {
-      enabled_networks_list->AppendString(
+      enabled_networks_list->GetList().emplace_back(
           private_api::ToString(private_api::NETWORK_TYPE_WIMAX));
     } else if (type == ::onc::network_type::kCellular) {
-      enabled_networks_list->AppendString(
+      enabled_networks_list->GetList().emplace_back(
           private_api::ToString(private_api::NETWORK_TYPE_CELLULAR));
     } else {
       LOG(ERROR) << "networkingPrivate: Unexpected type: " << type;

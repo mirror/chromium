@@ -48,7 +48,7 @@ void PluginPolicyHandler::ProcessPolicy(const policy::PolicyMap& policies,
   if (!plugins)
     return;
 
-  const int size = plugins->GetSize();
+  const int size = plugins->GetList().size();
   for (int i = 0; i < size; ++i) {
     std::string plugin;
     if (!plugins->GetString(i, &plugin))
@@ -102,7 +102,7 @@ void PluginPolicyHandler::ApplyPolicySettings(const policy::PolicyMap& policies,
       GetListPolicy(policies, policy::key::kDisabledPluginsExceptions);
   if (!plugins)
     return;
-  const int size = plugins->GetSize();
+  const int size = plugins->GetList().size();
   for (int i = 0; i < size; ++i) {
     std::string plugin;
     if (!plugins->GetString(i, &plugin))

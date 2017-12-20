@@ -105,7 +105,7 @@ TEST_F(RestoreOnStartupPolicyHandlerTest,
       key::kRestoreOnStartup,
       base::WrapUnique(new base::Value(SessionStartupPref::kPrefValueLast)));
   std::unique_ptr<base::ListValue> urls(new base::ListValue);
-  urls->AppendString("http://foo.com");
+  urls->GetList().emplace_back("http://foo.com");
   SetPolicyValue(key::kCookiesSessionOnlyForUrls, std::move(urls));
   // Checking should succeed but add an error to the error map.
   EXPECT_TRUE(CheckPolicySettings());

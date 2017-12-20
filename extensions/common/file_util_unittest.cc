@@ -355,7 +355,7 @@ TEST_F(FileUtilTest, BackgroundScriptsMustExist) {
 
   base::ListValue* scripts =
       value->SetList("background.scripts", std::make_unique<base::ListValue>());
-  scripts->AppendString("foo.js");
+  scripts->GetList().emplace_back("foo.js");
 
   std::string error;
   std::vector<InstallWarning> warnings;
@@ -371,8 +371,8 @@ TEST_F(FileUtilTest, BackgroundScriptsMustExist) {
       error);
   EXPECT_EQ(0U, warnings.size());
 
-  scripts->Clear();
-  scripts->AppendString("http://google.com/foo.js");
+  scripts->GetList().clear();
+  scripts->GetList().emplace_back("http://google.com/foo.js");
 
   extension = LoadExtensionManifest(*value, temp.GetPath(), Manifest::UNPACKED,
                                     0, &error);

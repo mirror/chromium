@@ -22,7 +22,7 @@ struct ArrayTraits<base::ListValue> {
   using ConstIterator = base::ListValue::const_iterator;
 
   static size_t GetSize(const base::ListValue& input) {
-    return input.GetSize();
+    return input.GetList().size();
   }
 
   static ConstIterator GetBegin(const base::ListValue& input) {

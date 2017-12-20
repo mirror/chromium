@@ -207,7 +207,7 @@ bool InterpretCommonContents(const base::DictionaryValue& node, RenderNode* c) {
 
   const base::ListValue* transform;
   node.GetList("transform", &transform);
-  if (transform->GetSize() != 16) {
+  if (transform->GetList().size() != 16) {
     LOG(ERROR) << "4x4 transform matrix did not have 16 elements";
     return false;
   }
@@ -247,7 +247,7 @@ bool InterpretCommonContents(const base::DictionaryValue& node, RenderNode* c) {
     return false;
   const base::ListValue* tiles;
   tiles_dict->GetList("info", &tiles);
-  for (unsigned int i = 0; i < tiles->GetSize(); ++i) {
+  for (unsigned int i = 0; i < tiles->GetList().size(); ++i) {
     if (!VerifyListEntry(*tiles, i, Value::Type::DICTIONARY, "Tile info"))
       return false;
     const base::DictionaryValue* tdict;
@@ -286,7 +286,7 @@ bool InterpretCCData(const base::DictionaryValue& node, CCNode* c) {
   c->set_fragment_shader(ShaderIDFromString(fragment_shader_name));
   const base::ListValue* textures;
   node.GetList("textures", &textures);
-  for (unsigned int i = 0; i < textures->GetSize(); ++i) {
+  for (unsigned int i = 0; i < textures->GetList().size(); ++i) {
     if (!VerifyListEntry(*textures, i, Value::Type::DICTIONARY, "Tex list"))
       return false;
     const base::DictionaryValue* tex;
@@ -308,9 +308,10 @@ bool InterpretCCData(const base::DictionaryValue& node, CCNode* c) {
     t.format = TextureFormatFromString(formatName);
     if (t.format == GL_INVALID_ENUM) {
       LOG(ERROR) << "Unrecognized texture format in layer " << c->layerID()
-                 << " (format: " << formatName << ")\n"
-                                                  "The layer had "
-                 << textures->GetSize() << " children.";
+                 << " (format: " << formatName
+                 << ")\n"
+                    "The layer had "
+                 << textures->GetList().size() << " children.";
       return false;
     }
 
@@ -353,7 +354,7 @@ std::unique_ptr<RenderNode> InterpretContentLayer(
 
   const base::ListValue* children;
   node.GetList("children", &children);
-  for (unsigned int i = 0; i < children->GetSize(); ++i) {
+  for (unsigned int i = 0; i < children->GetList().size(); ++i) {
     const base::DictionaryValue* childNode;
     if (!children->GetDictionary(i, &childNode))
       continue;

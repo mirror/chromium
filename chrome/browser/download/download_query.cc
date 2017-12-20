@@ -55,7 +55,7 @@ template<> bool GetAs(const base::Value& in, std::vector<base::string16>* out) {
   const base::ListValue* list = NULL;
   if (!in.GetAsList(&list))
     return false;
-  for (size_t i = 0; i < list->GetSize(); ++i) {
+  for (size_t i = 0; i < list->GetList().size(); ++i) {
     base::string16 element;
     if (!list->GetString(i, &element)) {
       out->clear();

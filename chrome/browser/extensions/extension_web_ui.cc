@@ -379,7 +379,7 @@ bool ExtensionWebUI::HandleChromeURLOverride(
 
   // Iterate over the URL list looking for a suitable override. If a
   // valid non-component override is encountered it is chosen immediately.
-  for (size_t i = 0; i < url_list->GetSize(); ++i) {
+  for (size_t i = 0; i < url_list->GetList().size(); ++i) {
     const base::Value* val = NULL;
     url_list->Get(i, &val);
 

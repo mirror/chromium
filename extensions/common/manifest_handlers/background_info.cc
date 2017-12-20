@@ -133,7 +133,7 @@ bool BackgroundInfo::LoadBackgroundScripts(const Extension* extension,
 
   const base::ListValue* background_scripts = NULL;
   background_scripts_value->GetAsList(&background_scripts);
-  for (size_t i = 0; i < background_scripts->GetSize(); ++i) {
+  for (size_t i = 0; i < background_scripts->GetList().size(); ++i) {
     std::string script;
     if (!background_scripts->GetString(i, &script)) {
       *error = ErrorUtils::FormatErrorMessageUTF16(

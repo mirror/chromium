@@ -261,7 +261,7 @@ void ProximityAuthWebUIHandler::ClearLogBuffer(const base::ListValue* args) {
 void ProximityAuthWebUIHandler::ToggleUnlockKey(const base::ListValue* args) {
   std::string public_key_b64, public_key;
   bool make_unlock_key;
-  if (args->GetSize() != 2 || !args->GetString(0, &public_key_b64) ||
+  if (args->GetList().size() != 2 || !args->GetString(0, &public_key_b64) ||
       !args->GetBoolean(1, &make_unlock_key) ||
       !base::Base64UrlDecode(public_key_b64,
                              base::Base64UrlDecodePolicy::REQUIRE_PADDING,
@@ -341,7 +341,7 @@ void ProximityAuthWebUIHandler::ToggleConnection(const base::ListValue* args) {
 
   std::string b64_public_key;
   std::string public_key;
-  if (!enrollment_manager || !device_manager || !args->GetSize() ||
+  if (!enrollment_manager || !device_manager || !args->GetList().size() ||
       !args->GetString(0, &b64_public_key) ||
       !base::Base64UrlDecode(b64_public_key,
                              base::Base64UrlDecodePolicy::REQUIRE_PADDING,
@@ -401,9 +401,9 @@ void ProximityAuthWebUIHandler::OnFoundEligibleUnlockDevices(
     ineligible_devices.Append(IneligibleDeviceToDictionary(ineligible_device));
   }
 
-  PA_LOG(INFO) << "Found " << eligible_devices.GetSize()
-               << " eligible devices and " << ineligible_devices.GetSize()
-               << " ineligible devices.";
+  PA_LOG(INFO) << "Found " << eligible_devices.GetList().size()
+               << " eligible devices and "
+               << ineligible_devices.GetList().size() << " ineligible devices.";
   web_ui()->CallJavascriptFunctionUnsafe(
       "CryptAuthInterface.onGotEligibleDevices", eligible_devices,
       ineligible_devices);
@@ -594,7 +594,7 @@ ProximityAuthWebUIHandler::IneligibleDeviceToDictionary(
     const cryptauth::IneligibleDevice& ineligible_device) {
   std::unique_ptr<base::ListValue> ineligibility_reasons(new base::ListValue());
   for (const std::string& reason : ineligible_device.reasons()) {
-    ineligibility_reasons->AppendString(reason);
+    ineligibility_reasons->GetList().emplace_back(reason);
   }
 
   std::unique_ptr<base::DictionaryValue> device_dictionary =

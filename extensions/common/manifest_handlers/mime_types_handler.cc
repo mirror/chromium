@@ -105,7 +105,7 @@ bool MimeTypesHandlerParser::Parse(extensions::Extension* extension,
 
   std::unique_ptr<MimeTypesHandlerInfo> info(new MimeTypesHandlerInfo);
   info->handler_.set_extension_id(extension->id());
-  for (size_t i = 0; i < mime_types_value->GetSize(); ++i) {
+  for (size_t i = 0; i < mime_types_value->GetList().size(); ++i) {
     std::string filter;
     if (!mime_types_value->GetString(i, &filter)) {
       *error = base::ASCIIToUTF16(errors::kInvalidMIMETypes);

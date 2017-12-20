@@ -136,8 +136,8 @@ std::string PackKeystoreBootstrapToken(
 
   base::ListValue keystore_key_values;
   for (size_t i = 0; i < old_keystore_keys.size(); ++i)
-    keystore_key_values.AppendString(old_keystore_keys[i]);
-  keystore_key_values.AppendString(current_keystore_key);
+    keystore_key_values.GetList().emplace_back(old_keystore_keys[i]);
+  keystore_key_values.GetList().emplace_back(current_keystore_key);
 
   // Update the bootstrap token.
   // The bootstrap is a base64 encoded, encrypted, ListValue of keystore key
@@ -177,7 +177,7 @@ bool UnpackKeystoreBootstrapToken(const std::string& keystore_bootstrap_token,
   base::ListValue* internal_list_value = nullptr;
   if (!deserialized_keystore_keys->GetAsList(&internal_list_value))
     return false;
-  int number_of_keystore_keys = internal_list_value->GetSize();
+  int number_of_keystore_keys = internal_list_value->GetList().size();
   if (!internal_list_value->GetString(number_of_keystore_keys - 1,
                                       current_keystore_key)) {
     return false;

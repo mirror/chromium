@@ -75,8 +75,8 @@ std::unique_ptr<base::DictionaryValue> CreateURLHandlersForBookmarkApp(
     const GURL& scope_url,
     const base::string16& title) {
   auto matches = base::MakeUnique<base::ListValue>();
-  matches->AppendString(scope_url.GetOrigin().Resolve(scope_url.path()).spec() +
-                        "*");
+  matches->GetList().emplace_back(
+      scope_url.GetOrigin().Resolve(scope_url.path()).spec() + "*");
 
   auto scope_handler = base::MakeUnique<base::DictionaryValue>();
   scope_handler->SetList(keys::kMatches, std::move(matches));

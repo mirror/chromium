@@ -91,7 +91,7 @@ base::ListValue PolicyToolUIHandler::GetSessionsList() {
 
 void PolicyToolUIHandler::SetDefaultSessionName() {
   base::ListValue sessions = GetSessionsList();
-  if (sessions.empty()) {
+  if (sessions.GetList().empty()) {
     // If there are no sessions, fallback to the default session name.
     session_name_ = kPolicyToolDefaultSessionName;
   } else {
@@ -188,7 +188,7 @@ void PolicyToolUIHandler::ImportFile() {
 }
 
 void PolicyToolUIHandler::HandleInitializedAdmin(const base::ListValue* args) {
-  DCHECK_EQ(0U, args->GetSize());
+  DCHECK_EQ(0U, args->GetList().size());
   AllowJavascript();
   is_saving_enabled_ = true;
   SendPolicyNames();
@@ -204,7 +204,7 @@ bool PolicyToolUIHandler::IsValidSessionName(
 }
 
 void PolicyToolUIHandler::HandleLoadSession(const base::ListValue* args) {
-  DCHECK_EQ(1U, args->GetSize());
+  DCHECK_EQ(1U, args->GetList().size());
   base::FilePath::StringType new_session_name =
       base::FilePath::FromUTF8Unsafe(args->GetList()[0].GetString()).value();
   if (!IsValidSessionName(new_session_name)) {
@@ -234,7 +234,7 @@ void PolicyToolUIHandler::OnSessionUpdated(bool is_successful) {
 
 void PolicyToolUIHandler::HandleUpdateSession(const base::ListValue* args) {
   DCHECK(is_saving_enabled_);
-  DCHECK_EQ(1U, args->GetSize());
+  DCHECK_EQ(1U, args->GetList().size());
 
   const base::DictionaryValue* policy_values = nullptr;
   args->GetDictionary(0, &policy_values);
@@ -250,7 +250,7 @@ void PolicyToolUIHandler::HandleUpdateSession(const base::ListValue* args) {
 }
 
 void PolicyToolUIHandler::HandleResetSession(const base::ListValue* args) {
-  DCHECK_EQ(0U, args->GetSize());
+  DCHECK_EQ(0U, args->GetList().size());
   base::PostTaskWithTraitsAndReplyWithResult(
       FROM_HERE, {base::MayBlock(), base::TaskPriority::BACKGROUND},
       base::BindOnce(&PolicyToolUIHandler::DoUpdateSession,
@@ -266,7 +266,7 @@ void PolicyToolUIHandler::OnSessionDeleted(bool is_successful) {
 }
 
 void PolicyToolUIHandler::HandleDeleteSession(const base::ListValue* args) {
-  DCHECK_EQ(1U, args->GetSize());
+  DCHECK_EQ(1U, args->GetList().size());
   base::FilePath::StringType name =
       base::FilePath::FromUTF8Unsafe(args->GetList()[0].GetString()).value();
 

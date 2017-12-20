@@ -169,7 +169,7 @@ void SettingsOverridesAPI::OnExtensionLoaded(
                        manifest_keys::kSettingsOverride);
       }
       std::unique_ptr<base::ListValue> url_list(new base::ListValue);
-      url_list->AppendString(SubstituteInstallParam(
+      url_list->GetList().emplace_back(SubstituteInstallParam(
           settings->startup_pages[0].spec(), install_parameter));
       SetPref(extension->id(), prefs::kURLsToRestoreOnStartup,
               std::move(url_list));

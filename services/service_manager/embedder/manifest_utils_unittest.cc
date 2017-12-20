@@ -19,8 +19,8 @@ TEST(MergeManifestWithOverlayTest, Merge) {
   dict_value_original->SetString("key3", "original");
   manifest.Set("dictionary", std::move(dict_value_original));
   std::unique_ptr<base::ListValue> list(std::make_unique<base::ListValue>());
-  list->AppendString("A");
-  list->AppendString("B");
+  list->GetList().emplace_back("A");
+  list->GetList().emplace_back("B");
   manifest.Set("list", std::move(list));
 
   base::DictionaryValue overlay;
@@ -31,7 +31,7 @@ TEST(MergeManifestWithOverlayTest, Merge) {
   dict_value_replacement->SetString("key2", "new");
   overlay.Set("dictionary", std::move(dict_value_replacement));
   list = std::make_unique<base::ListValue>();
-  list->AppendString("C");
+  list->GetList().emplace_back("C");
   overlay.Set("list", std::move(list));
 
   MergeManifestWithOverlay(&manifest, &overlay);
@@ -58,7 +58,7 @@ TEST(MergeManifestWithOverlayTest, Merge) {
   // items from manifest.
   base::ListValue* out_list = nullptr;
   EXPECT_TRUE(manifest.GetList("list", &out_list));
-  EXPECT_EQ(3u, out_list->GetSize());
+  EXPECT_EQ(3u, out_list->GetList().size());
   std::string a, b, c;
   EXPECT_TRUE(out_list->GetString(0, &a));
   EXPECT_TRUE(out_list->GetString(1, &b));

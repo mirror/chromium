@@ -281,7 +281,7 @@ void WebRTCInternals::RemoveObserver(WebRTCInternalsUIObserver* observer) {
 
 void WebRTCInternals::UpdateObserver(WebRTCInternalsUIObserver* observer) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  if (peer_connection_data_.GetSize() > 0)
+  if (peer_connection_data_.GetList().size() > 0)
     observer->OnUpdate("updateAllPeerConnections", &peer_connection_data_);
 
   for (const auto& request : get_user_media_requests_) {
@@ -449,7 +449,7 @@ void WebRTCInternals::OnRendererExit(int render_process_id) {
 
   // Iterates from the end of the list to remove the PeerConnections created
   // by the exitting renderer.
-  for (int i = peer_connection_data_.GetSize() - 1; i >= 0; --i) {
+  for (int i = peer_connection_data_.GetList().size() - 1; i >= 0; --i) {
     base::DictionaryValue* record = nullptr;
     peer_connection_data_.GetDictionary(i, &record);
 
@@ -477,7 +477,7 @@ void WebRTCInternals::OnRendererExit(int render_process_id) {
   bool found_any = false;
   // Iterates from the end of the list to remove the getUserMedia requests
   // created by the exiting renderer.
-  for (int i = get_user_media_requests_.GetSize() - 1; i >= 0; --i) {
+  for (int i = get_user_media_requests_.GetList().size() - 1; i >= 0; --i) {
     base::DictionaryValue* record = nullptr;
     get_user_media_requests_.GetDictionary(i, &record);
 
@@ -591,7 +591,7 @@ base::DictionaryValue* WebRTCInternals::FindRecord(
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
   base::DictionaryValue* record = nullptr;
-  for (size_t i = 0; i < peer_connection_data_.GetSize(); ++i) {
+  for (size_t i = 0; i < peer_connection_data_.GetList().size(); ++i) {
     peer_connection_data_.GetDictionary(i, &record);
 
     int this_pid = 0, this_lid = 0;

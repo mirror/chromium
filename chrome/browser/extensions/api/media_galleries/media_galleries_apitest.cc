@@ -125,7 +125,7 @@ class MediaGalleriesPlatformAppBrowserTest : public PlatformAppBrowserTest {
 
     const char* custom_arg = NULL;
     std::string json_string;
-    if (!custom_arg_value.empty()) {
+    if (!custom_arg_value.GetList().empty()) {
       base::JSONWriter::Write(custom_arg_value, &json_string);
       custom_arg = json_string.c_str();
     }
@@ -307,7 +307,7 @@ IN_PROC_BROWSER_TEST_F(MediaGalleriesPlatformAppBrowserTest,
   MakeSingleFakeGallery(NULL);
 
   base::ListValue custom_args;
-  custom_args.AppendInteger(num_galleries() + 1);
+  custom_args.GetList().emplace_back(num_galleries() + 1);
 
   ASSERT_TRUE(RunMediaGalleriesTestWithArg("no_access", custom_args))
       << message_;
@@ -327,7 +327,7 @@ IN_PROC_BROWSER_TEST_F(MediaGalleriesPlatformAppBrowserTest,
   RemoveAllGalleries();
   MakeSingleFakeGallery(NULL);
   base::ListValue custom_args;
-  custom_args.AppendInteger(test_jpg_size());
+  custom_args.GetList().emplace_back(test_jpg_size());
 
   ASSERT_TRUE(RunMediaGalleriesTestWithArg("read_access", custom_args))
       << message_;
@@ -351,7 +351,7 @@ IN_PROC_BROWSER_TEST_F(MediaGalleriesPlatformAppBrowserTest,
                        MediaGalleriesDelete) {
   MakeSingleFakeGallery(NULL);
   base::ListValue custom_args;
-  custom_args.AppendInteger(num_galleries() + 1);
+  custom_args.GetList().emplace_back(num_galleries() + 1);
   ASSERT_TRUE(RunMediaGalleriesTestWithArg("delete_access", custom_args))
       << message_;
 }
@@ -361,8 +361,8 @@ IN_PROC_BROWSER_TEST_F(MediaGalleriesPlatformAppBrowserTest,
   AttachFakeDevice();
 
   base::ListValue custom_args;
-  custom_args.AppendInteger(num_galleries() + 1);
-  custom_args.AppendString(kDeviceName);
+  custom_args.GetList().emplace_back(num_galleries() + 1);
+  custom_args.GetList().emplace_back(kDeviceName);
 
   ASSERT_TRUE(RunMediaGalleriesTestWithArg("access_attached", custom_args))
       << message_;
@@ -376,8 +376,8 @@ IN_PROC_BROWSER_TEST_F(MediaGalleriesPlatformAppBrowserTest, ToURL) {
   MakeSingleFakeGallery(&pref_id);
 
   base::ListValue custom_args;
-  custom_args.AppendInteger(base::checked_cast<int>(pref_id));
-  custom_args.AppendString(
+  custom_args.GetList().emplace_back(base::checked_cast<int>(pref_id));
+  custom_args.GetList().emplace_back(
       browser()->profile()->GetPath().BaseName().MaybeAsASCII());
 
   ASSERT_TRUE(RunMediaGalleriesTestWithArg("tourl", custom_args)) << message_;
@@ -394,7 +394,7 @@ IN_PROC_BROWSER_TEST_F(MediaGalleriesPlatformAppBrowserTest, GetMetadata) {
 #if BUILDFLAG(USE_PROPRIETARY_CODECS)
   custom_args.AppendBoolean(true);
 #else
-  custom_args.AppendBoolean(false);
+  custom_args.GetList().emplace_back(false);
 #endif
   ASSERT_TRUE(RunMediaGalleriesTestWithArg("media_metadata", custom_args))
       << message_;

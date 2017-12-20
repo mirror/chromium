@@ -50,7 +50,7 @@ bool ListCapability<Option, Traits>::LoadFrom(
       description.GetListItem(Traits::GetCapabilityPath());
   if (!options)
     return false;
-  for (size_t i = 0; i < options->GetSize(); ++i) {
+  for (size_t i = 0; i < options->GetList().size(); ++i) {
     const base::DictionaryValue* option_value = NULL;
     if (!options->GetDictionary(i, &option_value))
       return false;  // Every entry must be a dictionary.
@@ -107,7 +107,7 @@ bool SelectionCapability<Option, Traits>::LoadFrom(
   const base::ListValue* options = NULL;
   if (!item->GetList(json::kKeyOption, &options))
     return false;
-  for (size_t i = 0; i < options->GetSize(); ++i) {
+  for (size_t i = 0; i < options->GetList().size(); ++i) {
     const base::DictionaryValue* option_value = NULL;
     if (!options->GetDictionary(i, &option_value))
       return false;  // Every entry must be a dictionary.

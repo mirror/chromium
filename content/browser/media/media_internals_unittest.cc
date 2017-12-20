@@ -77,8 +77,8 @@ class MediaInternalsTestBase {
                            const base::ListValue& expected_list) const {
     const base::ListValue* actual_list;
     ASSERT_TRUE(update_data_.GetList(key, &actual_list));
-    const size_t expected_size = expected_list.GetSize();
-    const size_t actual_size = actual_list->GetSize();
+    const size_t expected_size = expected_list.GetList().size();
+    const size_t actual_size = actual_list->GetList().size();
     ASSERT_EQ(expected_size, actual_size);
     for (size_t i = 0; i < expected_size; ++i) {
       std::string expected_value, actual_value;
@@ -210,7 +210,8 @@ TEST_F(MediaInternalsVideoCaptureDeviceTest,
 #endif
   ExpectString("name", "dummy");
   base::ListValue expected_list;
-  expected_list.AppendString(media::VideoCaptureFormat::ToString(format_hd));
+  expected_list.GetList().emplace_back(
+      media::VideoCaptureFormat::ToString(format_hd));
   ExpectListOfStrings("formats", expected_list);
 #if defined(OS_LINUX)
   ExpectString("captureApi", "V4L2 SPLANE");

@@ -47,10 +47,10 @@ bool WebPaymentRequest::FromDictionaryValue(
   const base::ListValue* method_data_list = nullptr;
   // At least one method is required.
   if (!value.GetList(kPaymentRequestMethodData, &method_data_list) ||
-      method_data_list->GetSize() == 0) {
+      method_data_list->GetList().size() == 0) {
     return false;
   }
-  for (size_t i = 0; i < method_data_list->GetSize(); ++i) {
+  for (size_t i = 0; i < method_data_list->GetList().size(); ++i) {
     const base::DictionaryValue* method_data_dict;
     if (!method_data_list->GetDictionary(i, &method_data_dict))
       return false;

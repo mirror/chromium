@@ -109,9 +109,9 @@ TEST(TraceEventArgumentTest, PassBaseValue) {
   dict_value->SetString("string", std::string("a") + "b");
 
   auto list_value = WrapUnique(new ListValue);
-  list_value->AppendBoolean(false);
-  list_value->AppendInteger(1);
-  list_value->AppendString("in_list");
+  list_value->GetList().emplace_back(false);
+  list_value->GetList().emplace_back(1);
+  list_value->GetList().emplace_back("in_list");
   list_value->Append(std::move(dict_value));
 
   std::unique_ptr<TracedValue> value(new TracedValue());

@@ -131,7 +131,7 @@ void APIRequestHandler::CompleteRequest(int request_id,
   std::unique_ptr<content::V8ValueConverter> converter =
       content::V8ValueConverter::Create();
   std::vector<v8::Local<v8::Value>> v8_args;
-  v8_args.reserve(response_args.GetSize());
+  v8_args.reserve(response_args.GetList().size());
   for (const auto& arg : response_args)
     v8_args.push_back(converter->ToV8Value(&arg, context));
 

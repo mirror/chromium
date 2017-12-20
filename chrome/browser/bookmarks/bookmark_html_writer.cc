@@ -342,7 +342,7 @@ class Writer : public base::RefCountedThreadSafe<Writer> {
     // Write the children.
     const base::ListValue* children =
         static_cast<const base::ListValue*>(child_values);
-    for (size_t i = 0; i < children->GetSize(); ++i) {
+    for (size_t i = 0; i < children->GetList().size(); ++i) {
       const base::Value* child_value;
       if (!children->Get(i, &child_value) ||
           child_value->type() != base::Value::Type::DICTIONARY) {

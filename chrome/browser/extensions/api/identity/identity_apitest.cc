@@ -526,9 +526,10 @@ class IdentityGetAccountsFunctionTest : public IdentityTestWithSignin {
     if (!callback_arguments)
       return GenerateFailureResult(accounts, NULL) << "NULL result";
 
-    if (callback_arguments->GetSize() != 1) {
+    if (callback_arguments->GetList().size() != 1) {
       return GenerateFailureResult(accounts, NULL)
-             << "Expected 1 argument but got " << callback_arguments->GetSize();
+             << "Expected 1 argument but got "
+             << callback_arguments->GetList().size();
     }
 
     const base::ListValue* results;

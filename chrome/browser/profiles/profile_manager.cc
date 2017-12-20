@@ -1134,7 +1134,7 @@ void ProfileManager::Observe(
     ListPrefUpdate update(local_state, prefs::kProfilesLastActive);
     base::ListValue* profile_list = update.Get();
 
-    profile_list->Clear();
+    profile_list->GetList().clear();
 
     // crbug.com/120112 -> several non-incognito profiles might have the same
     // GetPath().BaseName(). In that case, we cannot restore both
@@ -1152,7 +1152,7 @@ void ProfileManager::Observe(
           profile_path !=
               base::FilePath(chrome::kSystemProfileDir).AsUTF8Unsafe()) {
         profile_paths.insert(profile_path);
-        profile_list->AppendString(profile_path);
+        profile_list->GetList().emplace_back(profile_path);
       }
     }
   }

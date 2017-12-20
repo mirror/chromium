@@ -23,7 +23,7 @@ std::unique_ptr<base::ListValue> CharacteristicPropertiesToValue(
   for (std::vector<CharacteristicProperty>::const_iterator iter =
            properties.begin();
        iter != properties.end(); ++iter)
-    property_list->AppendString(ToString(*iter));
+    property_list->GetList().emplace_back(ToString(*iter));
   return property_list;
 }
 

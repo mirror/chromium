@@ -152,7 +152,8 @@ bool PrintSettingsFromJobSettings(const base::DictionaryValue& job_settings,
   PageRanges new_ranges;
   const base::ListValue* page_range_array = NULL;
   if (job_settings.GetList(kSettingPageRange, &page_range_array)) {
-    for (size_t index = 0; index < page_range_array->GetSize(); ++index) {
+    for (size_t index = 0; index < page_range_array->GetList().size();
+         ++index) {
       const base::DictionaryValue* dict;
       if (!page_range_array->GetDictionary(index, &dict))
         continue;

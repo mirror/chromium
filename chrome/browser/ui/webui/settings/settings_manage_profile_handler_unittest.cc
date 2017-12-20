@@ -51,8 +51,8 @@ class ManageProfileHandlerTest : public testing::Test {
 
     // Expect a non-empty list of dictionaries containing non-empty strings for
     // profile avatar icon urls and labels.
-    EXPECT_FALSE(icons->empty());
-    for (size_t i = 0; i < icons->GetSize(); ++i) {
+    EXPECT_FALSE(icons->GetList().empty());
+    for (size_t i = 0; i < icons->GetList().size(); ++i) {
       const base::DictionaryValue* icon = nullptr;
       EXPECT_TRUE(icons->GetDictionary(i, &icon));
       std::string icon_url;
@@ -87,7 +87,7 @@ TEST_F(ManageProfileHandlerTest, HandleSetProfileIconToGaiaAvatar) {
 
 TEST_F(ManageProfileHandlerTest, HandleSetProfileIconToDefaultAvatar) {
   base::ListValue list_args;
-  list_args.AppendString("chrome://theme/IDR_PROFILE_AVATAR_15");
+  list_args.GetList().emplace_back("chrome://theme/IDR_PROFILE_AVATAR_15");
   handler()->HandleSetProfileIconToDefaultAvatar(&list_args);
 
   PrefService* pref_service = profile()->GetPrefs();
@@ -98,7 +98,7 @@ TEST_F(ManageProfileHandlerTest, HandleSetProfileIconToDefaultAvatar) {
 
 TEST_F(ManageProfileHandlerTest, HandleSetProfileName) {
   base::ListValue list_args;
-  list_args.AppendString("New Profile Name");
+  list_args.GetList().emplace_back("New Profile Name");
   handler()->HandleSetProfileName(&list_args);
 
   PrefService* pref_service = profile()->GetPrefs();
@@ -107,7 +107,7 @@ TEST_F(ManageProfileHandlerTest, HandleSetProfileName) {
 
 TEST_F(ManageProfileHandlerTest, HandleGetAvailableIcons) {
   base::ListValue list_args;
-  list_args.AppendString("get-icons-callback-id");
+  list_args.GetList().emplace_back("get-icons-callback-id");
   handler()->HandleGetAvailableIcons(&list_args);
 
   EXPECT_EQ(1U, web_ui()->call_data().size());

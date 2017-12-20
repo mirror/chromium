@@ -412,10 +412,10 @@ void Schema::InternalStorage::DetermineStorageSizes(
     const base::ListValue* possible_values = nullptr;
     if (schema.GetList(schema::kEnum, &possible_values)) {
       if (type == base::Value::Type::INTEGER) {
-        sizes->int_enums += possible_values->GetSize();
+        sizes->int_enums += possible_values->GetList().size();
       } else if (type == base::Value::Type::STRING) {
-        sizes->string_enums += possible_values->GetSize();
-        sizes->strings += possible_values->GetSize();
+        sizes->string_enums += possible_values->GetList().size();
+        sizes->strings += possible_values->GetList().size();
       }
       sizes->restriction_nodes++;
     }
@@ -608,7 +608,7 @@ bool Schema::InternalStorage::ParseEnum(const base::DictionaryValue& schema,
     *error = "Enum attribute must be a list value";
     return false;
   }
-  if (possible_values->empty()) {
+  if (possible_values->GetList().empty()) {
     *error = "Enum attribute must be non-empty";
     return false;
   }
@@ -918,7 +918,7 @@ bool Schema::Normalize(base::Value* value,
     return true;
   } else if (value->GetAsList(&list)) {
     std::vector<size_t> drop_list;  // Contains the indexes to drop.
-    for (size_t index = 0; index < list->GetSize(); index++) {
+    for (size_t index = 0; index < list->GetList().size(); index++) {
       base::Value* sub_value = nullptr;
       list->Get(index, &sub_value);
       if (!sub_value || !GetItems().Normalize(sub_value,

@@ -20,7 +20,7 @@ base::ListValue* StringListToListValue(const StringListType& list) {
   for (typename StringListType::const_iterator it = list.begin();
        it != list.end();
        ++it) {
-    result->AppendString(*it);
+    result->GetList().emplace_back(*it);
   }
   return result;
 }

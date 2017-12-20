@@ -62,7 +62,7 @@ TEST_F(WebCryptoAesKwTest, ImportKeyJwkKeyOpsWrapUnwrap) {
   base::ListValue* key_ops =
       dict.SetList("key_ops", base::MakeUnique<base::ListValue>());
 
-  key_ops->AppendString("wrapKey");
+  key_ops->GetList().emplace_back("wrapKey");
 
   EXPECT_EQ(Status::Success(),
             ImportKeyJwkFromDict(
@@ -71,7 +71,7 @@ TEST_F(WebCryptoAesKwTest, ImportKeyJwkKeyOpsWrapUnwrap) {
 
   EXPECT_EQ(blink::kWebCryptoKeyUsageWrapKey, key.Usages());
 
-  key_ops->AppendString("unwrapKey");
+  key_ops->GetList().emplace_back("unwrapKey");
 
   EXPECT_EQ(Status::Success(),
             ImportKeyJwkFromDict(
@@ -190,7 +190,8 @@ TEST_F(WebCryptoAesKwTest, AesKwRawSymkeyWrapUnwrapKnownAnswer) {
   std::unique_ptr<base::ListValue> tests;
   ASSERT_TRUE(ReadJsonTestFileToList("aes_kw.json", &tests));
 
-  for (size_t test_index = 0; test_index < tests->GetSize(); ++test_index) {
+  for (size_t test_index = 0; test_index < tests->GetList().size();
+       ++test_index) {
     SCOPED_TRACE(test_index);
     base::DictionaryValue* test;
     ASSERT_TRUE(tests->GetDictionary(test_index, &test));

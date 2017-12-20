@@ -628,7 +628,7 @@ void NetInternalsMessageHandler::IOThreadImpl::CallbackHelper(
   // thread. |list_copy| will be deleted when the task is destroyed. The called
   // |method| cannot take ownership of |list_copy|.
   base::ListValue* list_copy =
-      (list && list->GetSize()) ? list->DeepCopy() : nullptr;
+      (list && list->GetList().size()) ? list->DeepCopy() : nullptr;
 
   BrowserThread::PostTask(
       BrowserThread::IO, FROM_HERE,

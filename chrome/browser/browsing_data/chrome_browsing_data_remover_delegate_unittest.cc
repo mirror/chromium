@@ -1880,8 +1880,8 @@ TEST_F(ChromeBrowsingDataRemoverDelegateTest, RemoveSelectedClientHints) {
 
   std::unique_ptr<base::ListValue> expiration_times_list =
       base::MakeUnique<base::ListValue>();
-  expiration_times_list->AppendInteger(0);
-  expiration_times_list->AppendInteger(2);
+  expiration_times_list->GetList().emplace_back(0);
+  expiration_times_list->GetList().emplace_back(2);
 
   double expiration_time =
       (base::Time::Now() + base::TimeDelta::FromHours(24)).ToDoubleT();
@@ -1939,8 +1939,8 @@ TEST_F(ChromeBrowsingDataRemoverDelegateTest, RemoveAllClientHints) {
 
   std::unique_ptr<base::ListValue> expiration_times_list =
       base::MakeUnique<base::ListValue>();
-  expiration_times_list->AppendInteger(0);
-  expiration_times_list->AppendInteger(2);
+  expiration_times_list->GetList().emplace_back(0);
+  expiration_times_list->GetList().emplace_back(2);
 
   double expiration_time =
       (base::Time::Now() + base::TimeDelta::FromHours(24)).ToDoubleT();

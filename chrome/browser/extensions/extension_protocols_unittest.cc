@@ -106,7 +106,7 @@ scoped_refptr<Extension> CreateTestResponseHeaderExtension() {
   manifest.SetString("version", "2");
 
   auto web_accessible_list = base::MakeUnique<base::ListValue>();
-  web_accessible_list->AppendString("test.dat");
+  web_accessible_list->GetList().emplace_back("test.dat");
   manifest.Set("web_accessible_resources", std::move(web_accessible_list));
 
   base::FilePath path = GetTestPath("response_headers");

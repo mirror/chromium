@@ -38,51 +38,57 @@ TEST(MediaGalleriesPermissionTest, GoodValues) {
 
   // access_type + all_detected
   std::unique_ptr<base::ListValue> value(new base::ListValue());
-  value->AppendString(MediaGalleriesPermission::kAllAutoDetectedPermission);
-  value->AppendString(MediaGalleriesPermission::kReadPermission);
+  value->GetList().emplace_back(
+      MediaGalleriesPermission::kAllAutoDetectedPermission);
+  value->GetList().emplace_back(MediaGalleriesPermission::kReadPermission);
   CheckFromValue(permission.get(), value.get(), true);
 
   value.reset(new base::ListValue());
-  value->AppendString(MediaGalleriesPermission::kAllAutoDetectedPermission);
-  value->AppendString(MediaGalleriesPermission::kCopyToPermission);
-  value->AppendString(MediaGalleriesPermission::kReadPermission);
-  value->AppendString(MediaGalleriesPermission::kDeletePermission);
+  value->GetList().emplace_back(
+      MediaGalleriesPermission::kAllAutoDetectedPermission);
+  value->GetList().emplace_back(MediaGalleriesPermission::kCopyToPermission);
+  value->GetList().emplace_back(MediaGalleriesPermission::kReadPermission);
+  value->GetList().emplace_back(MediaGalleriesPermission::kDeletePermission);
   CheckFromValue(permission.get(), value.get(), true);
 
   // all_detected
   value.reset(new base::ListValue());
-  value->AppendString(MediaGalleriesPermission::kAllAutoDetectedPermission);
+  value->GetList().emplace_back(
+      MediaGalleriesPermission::kAllAutoDetectedPermission);
   CheckFromValue(permission.get(), value.get(), true);
 
   // access_type
   value.reset(new base::ListValue());
-  value->AppendString(MediaGalleriesPermission::kReadPermission);
+  value->GetList().emplace_back(MediaGalleriesPermission::kReadPermission);
   CheckFromValue(permission.get(), value.get(), true);
 
   value.reset(new base::ListValue());
-  value->AppendString(MediaGalleriesPermission::kDeletePermission);
-  value->AppendString(MediaGalleriesPermission::kReadPermission);
+  value->GetList().emplace_back(MediaGalleriesPermission::kDeletePermission);
+  value->GetList().emplace_back(MediaGalleriesPermission::kReadPermission);
   CheckFromValue(permission.get(), value.get(), true);
 
   value.reset(new base::ListValue());
-  value->AppendString(MediaGalleriesPermission::kCopyToPermission);
-  value->AppendString(MediaGalleriesPermission::kDeletePermission);
-  value->AppendString(MediaGalleriesPermission::kReadPermission);
+  value->GetList().emplace_back(MediaGalleriesPermission::kCopyToPermission);
+  value->GetList().emplace_back(MediaGalleriesPermission::kDeletePermission);
+  value->GetList().emplace_back(MediaGalleriesPermission::kReadPermission);
   CheckFromValue(permission.get(), value.get(), true);
 
   // Repeats do not make a difference.
   value.reset(new base::ListValue());
-  value->AppendString(MediaGalleriesPermission::kAllAutoDetectedPermission);
-  value->AppendString(MediaGalleriesPermission::kAllAutoDetectedPermission);
+  value->GetList().emplace_back(
+      MediaGalleriesPermission::kAllAutoDetectedPermission);
+  value->GetList().emplace_back(
+      MediaGalleriesPermission::kAllAutoDetectedPermission);
   CheckFromValue(permission.get(), value.get(), true);
 
   value.reset(new base::ListValue());
-  value->AppendString(MediaGalleriesPermission::kAllAutoDetectedPermission);
-  value->AppendString(MediaGalleriesPermission::kReadPermission);
-  value->AppendString(MediaGalleriesPermission::kReadPermission);
-  value->AppendString(MediaGalleriesPermission::kDeletePermission);
-  value->AppendString(MediaGalleriesPermission::kDeletePermission);
-  value->AppendString(MediaGalleriesPermission::kDeletePermission);
+  value->GetList().emplace_back(
+      MediaGalleriesPermission::kAllAutoDetectedPermission);
+  value->GetList().emplace_back(MediaGalleriesPermission::kReadPermission);
+  value->GetList().emplace_back(MediaGalleriesPermission::kReadPermission);
+  value->GetList().emplace_back(MediaGalleriesPermission::kDeletePermission);
+  value->GetList().emplace_back(MediaGalleriesPermission::kDeletePermission);
+  value->GetList().emplace_back(MediaGalleriesPermission::kDeletePermission);
   CheckFromValue(permission.get(), value.get(), true);
 }
 
@@ -95,38 +101,42 @@ TEST(MediaGalleriesPermissionTest, BadValues) {
 
   // copyTo and delete without read
   std::unique_ptr<base::ListValue> value(new base::ListValue());
-  value->AppendString(MediaGalleriesPermission::kCopyToPermission);
+  value->GetList().emplace_back(MediaGalleriesPermission::kCopyToPermission);
   CheckFromValue(permission.get(), value.get(), false);
 
   value.reset(new base::ListValue());
-  value->AppendString(MediaGalleriesPermission::kDeletePermission);
+  value->GetList().emplace_back(MediaGalleriesPermission::kDeletePermission);
   CheckFromValue(permission.get(), value.get(), false);
 
   value.reset(new base::ListValue());
-  value->AppendString(MediaGalleriesPermission::kAllAutoDetectedPermission);
-  value->AppendString(MediaGalleriesPermission::kCopyToPermission);
-  value->AppendString(MediaGalleriesPermission::kDeletePermission);
+  value->GetList().emplace_back(
+      MediaGalleriesPermission::kAllAutoDetectedPermission);
+  value->GetList().emplace_back(MediaGalleriesPermission::kCopyToPermission);
+  value->GetList().emplace_back(MediaGalleriesPermission::kDeletePermission);
   CheckFromValue(permission.get(), value.get(), false);
 
   // copyTo without delete
   value.reset(new base::ListValue());
-  value->AppendString(MediaGalleriesPermission::kAllAutoDetectedPermission);
-  value->AppendString(MediaGalleriesPermission::kCopyToPermission);
-  value->AppendString(MediaGalleriesPermission::kReadPermission);
+  value->GetList().emplace_back(
+      MediaGalleriesPermission::kAllAutoDetectedPermission);
+  value->GetList().emplace_back(MediaGalleriesPermission::kCopyToPermission);
+  value->GetList().emplace_back(MediaGalleriesPermission::kReadPermission);
   CheckFromValue(permission.get(), value.get(), false);
 
   // Repeats do not make a difference.
   value.reset(new base::ListValue());
-  value->AppendString(MediaGalleriesPermission::kCopyToPermission);
-  value->AppendString(MediaGalleriesPermission::kCopyToPermission);
+  value->GetList().emplace_back(MediaGalleriesPermission::kCopyToPermission);
+  value->GetList().emplace_back(MediaGalleriesPermission::kCopyToPermission);
   CheckFromValue(permission.get(), value.get(), false);
 
   value.reset(new base::ListValue());
-  value->AppendString(MediaGalleriesPermission::kAllAutoDetectedPermission);
-  value->AppendString(MediaGalleriesPermission::kAllAutoDetectedPermission);
-  value->AppendString(MediaGalleriesPermission::kCopyToPermission);
-  value->AppendString(MediaGalleriesPermission::kDeletePermission);
-  value->AppendString(MediaGalleriesPermission::kDeletePermission);
+  value->GetList().emplace_back(
+      MediaGalleriesPermission::kAllAutoDetectedPermission);
+  value->GetList().emplace_back(
+      MediaGalleriesPermission::kAllAutoDetectedPermission);
+  value->GetList().emplace_back(MediaGalleriesPermission::kCopyToPermission);
+  value->GetList().emplace_back(MediaGalleriesPermission::kDeletePermission);
+  value->GetList().emplace_back(MediaGalleriesPermission::kDeletePermission);
   CheckFromValue(permission.get(), value.get(), false);
 }
 
@@ -141,8 +151,8 @@ TEST(MediaGalleriesPermissionTest, UnknownValues) {
 
   // A good one and an unknown one.
   std::unique_ptr<base::ListValue> value(new base::ListValue());
-  value->AppendString(MediaGalleriesPermission::kReadPermission);
-  value->AppendString("Unknown");
+  value->GetList().emplace_back(MediaGalleriesPermission::kReadPermission);
+  value->GetList().emplace_back("Unknown");
   EXPECT_TRUE(permission->FromValue(value.get(), &error, &unhandled));
   EXPECT_TRUE(error.empty());
   EXPECT_EQ(1U, unhandled.size());
@@ -151,8 +161,8 @@ TEST(MediaGalleriesPermissionTest, UnknownValues) {
 
   // Multiple unknown permissions.
   value.reset(new base::ListValue());
-  value->AppendString("Unknown1");
-  value->AppendString("Unknown2");
+  value->GetList().emplace_back("Unknown1");
+  value->GetList().emplace_back("Unknown2");
   EXPECT_TRUE(permission->FromValue(value.get(), &error, &unhandled));
   EXPECT_TRUE(error.empty());
   EXPECT_EQ(2U, unhandled.size());
@@ -161,7 +171,7 @@ TEST(MediaGalleriesPermissionTest, UnknownValues) {
 
   // Unnknown with a NULL argument.
   value.reset(new base::ListValue());
-  value->AppendString("Unknown1");
+  value->GetList().emplace_back("Unknown1");
   EXPECT_FALSE(permission->FromValue(value.get(), &error, NULL));
   EXPECT_FALSE(error.empty());
   error.clear();
@@ -177,44 +187,47 @@ TEST(MediaGalleriesPermissionTest, Equal) {
       permission_info->CreateAPIPermission());
 
   std::unique_ptr<base::ListValue> value(new base::ListValue());
-  value->AppendString(MediaGalleriesPermission::kAllAutoDetectedPermission);
-  value->AppendString(MediaGalleriesPermission::kReadPermission);
+  value->GetList().emplace_back(
+      MediaGalleriesPermission::kAllAutoDetectedPermission);
+  value->GetList().emplace_back(MediaGalleriesPermission::kReadPermission);
   ASSERT_TRUE(permission1->FromValue(value.get(), NULL, NULL));
 
   value.reset(new base::ListValue());
-  value->AppendString(MediaGalleriesPermission::kReadPermission);
-  value->AppendString(MediaGalleriesPermission::kAllAutoDetectedPermission);
+  value->GetList().emplace_back(MediaGalleriesPermission::kReadPermission);
+  value->GetList().emplace_back(
+      MediaGalleriesPermission::kAllAutoDetectedPermission);
   ASSERT_TRUE(permission2->FromValue(value.get(), NULL, NULL));
   EXPECT_TRUE(permission1->Equal(permission2.get()));
 
   value.reset(new base::ListValue());
-  value->AppendString(MediaGalleriesPermission::kReadPermission);
-  value->AppendString(MediaGalleriesPermission::kReadPermission);
-  value->AppendString(MediaGalleriesPermission::kAllAutoDetectedPermission);
+  value->GetList().emplace_back(MediaGalleriesPermission::kReadPermission);
+  value->GetList().emplace_back(MediaGalleriesPermission::kReadPermission);
+  value->GetList().emplace_back(
+      MediaGalleriesPermission::kAllAutoDetectedPermission);
   ASSERT_TRUE(permission2->FromValue(value.get(), NULL, NULL));
   EXPECT_TRUE(permission1->Equal(permission2.get()));
 
   value.reset(new base::ListValue());
-  value->AppendString(MediaGalleriesPermission::kReadPermission);
-  value->AppendString(MediaGalleriesPermission::kDeletePermission);
+  value->GetList().emplace_back(MediaGalleriesPermission::kReadPermission);
+  value->GetList().emplace_back(MediaGalleriesPermission::kDeletePermission);
   ASSERT_TRUE(permission1->FromValue(value.get(), NULL, NULL));
 
   value.reset(new base::ListValue());
-  value->AppendString(MediaGalleriesPermission::kDeletePermission);
-  value->AppendString(MediaGalleriesPermission::kReadPermission);
+  value->GetList().emplace_back(MediaGalleriesPermission::kDeletePermission);
+  value->GetList().emplace_back(MediaGalleriesPermission::kReadPermission);
   ASSERT_TRUE(permission2->FromValue(value.get(), NULL, NULL));
   EXPECT_TRUE(permission1->Equal(permission2.get()));
 
   value.reset(new base::ListValue());
-  value->AppendString(MediaGalleriesPermission::kReadPermission);
-  value->AppendString(MediaGalleriesPermission::kCopyToPermission);
-  value->AppendString(MediaGalleriesPermission::kDeletePermission);
+  value->GetList().emplace_back(MediaGalleriesPermission::kReadPermission);
+  value->GetList().emplace_back(MediaGalleriesPermission::kCopyToPermission);
+  value->GetList().emplace_back(MediaGalleriesPermission::kDeletePermission);
   ASSERT_TRUE(permission1->FromValue(value.get(), NULL, NULL));
 
   value.reset(new base::ListValue());
-  value->AppendString(MediaGalleriesPermission::kDeletePermission);
-  value->AppendString(MediaGalleriesPermission::kCopyToPermission);
-  value->AppendString(MediaGalleriesPermission::kReadPermission);
+  value->GetList().emplace_back(MediaGalleriesPermission::kDeletePermission);
+  value->GetList().emplace_back(MediaGalleriesPermission::kCopyToPermission);
+  value->GetList().emplace_back(MediaGalleriesPermission::kReadPermission);
   ASSERT_TRUE(permission2->FromValue(value.get(), NULL, NULL));
   EXPECT_TRUE(permission1->Equal(permission2.get()));
 }
@@ -229,15 +242,17 @@ TEST(MediaGalleriesPermissionTest, NotEqual) {
       permission_info->CreateAPIPermission());
 
   std::unique_ptr<base::ListValue> value(new base::ListValue());
-  value->AppendString(MediaGalleriesPermission::kAllAutoDetectedPermission);
-  value->AppendString(MediaGalleriesPermission::kReadPermission);
+  value->GetList().emplace_back(
+      MediaGalleriesPermission::kAllAutoDetectedPermission);
+  value->GetList().emplace_back(MediaGalleriesPermission::kReadPermission);
   ASSERT_TRUE(permission1->FromValue(value.get(), NULL, NULL));
 
   value.reset(new base::ListValue());
-  value->AppendString(MediaGalleriesPermission::kAllAutoDetectedPermission);
-  value->AppendString(MediaGalleriesPermission::kReadPermission);
-  value->AppendString(MediaGalleriesPermission::kDeletePermission);
-  value->AppendString(MediaGalleriesPermission::kCopyToPermission);
+  value->GetList().emplace_back(
+      MediaGalleriesPermission::kAllAutoDetectedPermission);
+  value->GetList().emplace_back(MediaGalleriesPermission::kReadPermission);
+  value->GetList().emplace_back(MediaGalleriesPermission::kDeletePermission);
+  value->GetList().emplace_back(MediaGalleriesPermission::kCopyToPermission);
   ASSERT_TRUE(permission2->FromValue(value.get(), NULL, NULL));
   EXPECT_FALSE(permission1->Equal(permission2.get()));
 }
@@ -252,8 +267,9 @@ TEST(MediaGalleriesPermissionTest, ToFromValue) {
       permission_info->CreateAPIPermission());
 
   std::unique_ptr<base::ListValue> value(new base::ListValue());
-  value->AppendString(MediaGalleriesPermission::kAllAutoDetectedPermission);
-  value->AppendString(MediaGalleriesPermission::kReadPermission);
+  value->GetList().emplace_back(
+      MediaGalleriesPermission::kAllAutoDetectedPermission);
+  value->GetList().emplace_back(MediaGalleriesPermission::kReadPermission);
   ASSERT_TRUE(permission1->FromValue(value.get(), NULL, NULL));
 
   std::unique_ptr<base::Value> vtmp(permission1->ToValue());
@@ -262,9 +278,9 @@ TEST(MediaGalleriesPermissionTest, ToFromValue) {
   EXPECT_TRUE(permission1->Equal(permission2.get()));
 
   value.reset(new base::ListValue());
-  value->AppendString(MediaGalleriesPermission::kReadPermission);
-  value->AppendString(MediaGalleriesPermission::kDeletePermission);
-  value->AppendString(MediaGalleriesPermission::kCopyToPermission);
+  value->GetList().emplace_back(MediaGalleriesPermission::kReadPermission);
+  value->GetList().emplace_back(MediaGalleriesPermission::kDeletePermission);
+  value->GetList().emplace_back(MediaGalleriesPermission::kCopyToPermission);
   ASSERT_TRUE(permission1->FromValue(value.get(), NULL, NULL));
 
   vtmp = permission1->ToValue();
@@ -273,8 +289,8 @@ TEST(MediaGalleriesPermissionTest, ToFromValue) {
   EXPECT_TRUE(permission1->Equal(permission2.get()));
 
   value.reset(new base::ListValue());
-  value->AppendString(MediaGalleriesPermission::kReadPermission);
-  value->AppendString(MediaGalleriesPermission::kDeletePermission);
+  value->GetList().emplace_back(MediaGalleriesPermission::kReadPermission);
+  value->GetList().emplace_back(MediaGalleriesPermission::kDeletePermission);
   ASSERT_TRUE(permission1->FromValue(value.get(), NULL, NULL));
 
   vtmp = permission1->ToValue();
