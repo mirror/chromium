@@ -1084,7 +1084,7 @@ TEST_F(PasswordControllerTest, SuggestionUpdateTests) {
   // we can test with an initially-empty username field. Testing with a
   // username field that contains input is performed by a specific test below.
   PasswordFormFillData form_data;
-  SetPasswordFormFillData(form_data, base_url, base_url, "u'", "user0", "p'",
+  SetPasswordFormFillData(form_data, base_url, base_url, "un", "user0", "pw",
                           "password0", "abc", "def", true);
   form_data.name = base::ASCIIToUTF16(FormName(0));
 
@@ -1255,7 +1255,8 @@ TEST_F(PasswordControllerTest, SelectingSuggestionShouldFillPasswordForm) {
     __block BOOL block_was_called = NO;
     [passwordController_
         retrieveSuggestionsForForm:form_name
-                             field:username_element
+                         fieldName:username_element
+                   fieldIdentifier:username_element
                          fieldType:@"text"
                               type:@"focus"
                         typedValue:@"abc"
@@ -1282,7 +1283,8 @@ TEST_F(PasswordControllerTest, SelectingSuggestionShouldFillPasswordForm) {
     };
     [passwordController_
         didSelectSuggestion:suggestion
-                   forField:@"u"
+                  fieldName:@"u"
+            fieldIdentifier:@"u"
                        form:base::SysUTF8ToNSString(FormName(0))
           completionHandler:completion];
     EXPECT_TRUE(
