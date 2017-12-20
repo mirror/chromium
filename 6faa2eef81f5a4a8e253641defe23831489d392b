@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "faf3e0aa_ed90c028",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_delegate_ukm.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-12-20T10:25:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "61de3b5c_c4840b93",
+      "revId": "6faa2eef81f5a4a8e253641defe23831489d392b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b1af073f_71d962aa",
         "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_delegate_ukm.cc",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "3c044caf_29522785",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_delegate_ukm.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-12-20T10:25:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b1af073f_71d962aa",
+      "revId": "6faa2eef81f5a4a8e253641defe23831489d392b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bbd15271_114a8118",
         "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_delegate_ukm.cc",
         "patchSetId": 3
@@ -50,6 +86,24 @@
       "revId": "6faa2eef81f5a4a8e253641defe23831489d392b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c6531ab_f662de12",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_delegate_ukm.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-12-20T10:25:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bbd15271_114a8118",
+      "revId": "6faa2eef81f5a4a8e253641defe23831489d392b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
