@@ -414,6 +414,8 @@ initWithBrowserLauncher:(id<BrowserLauncher>)browserLauncher
   // TODO(crbug.com/585700): remove this.
   web::RequestTrackerImpl::BlockUntilTrackersShutdown();
 
+  GetApplicationContext()->OnAppWillTerminate();
+
   [_startupInformation stopChromeMain];
 
   if (![[CrashReportBackgroundUploader sharedInstance]

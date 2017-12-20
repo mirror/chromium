@@ -70,6 +70,10 @@ void TestingApplicationContext::OnAppEnterBackground() {
   DCHECK(thread_checker_.CalledOnValidThread());
 }
 
+void TestingApplicationContext::OnAppWillTerminate() {
+  DCHECK(thread_checker_.CalledOnValidThread());
+}
+
 bool TestingApplicationContext::WasLastShutdownClean() {
   DCHECK(thread_checker_.CalledOnValidThread());
   return was_last_shutdown_clean_;

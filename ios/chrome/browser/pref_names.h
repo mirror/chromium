@@ -27,6 +27,7 @@ extern const char kIosBookmarkSigninPromoDisplayedCount[];
 extern const char kIosSettingsPromoAlreadySeen[];
 extern const char kIosSettingsSigninPromoDisplayedCount[];
 extern const char kLastSessionExitedCleanly[];
+extern const char kLastAppSessionWasDeliberatelyTerminated[];
 extern const char kMetricsReportingWifiOnly[];
 extern const char kNtpShownPage[];
 extern const char kSavingBrowserHistoryDisabled[];

@@ -712,6 +712,11 @@ const int kExternalFilesCleanupDelaySeconds = 60;
   [self createInitialUI:(startInIncognito ? ApplicationMode::INCOGNITO
                                           : ApplicationMode::NORMAL)];
 
+  PrefService* prefs = GetApplicationContext()->GetLocalState();
+  // It is now safe to reset this pref because creating the UI above ensures
+  // that the tab models have been created.
+  prefs->SetBoolean(prefs::kLastAppSessionWasDeliberatelyTerminated, false);
+
   [self scheduleStartupCleanupTasks];
   [MetricsMediator logLaunchMetricsWithStartupInformation:self
                                    browserViewInformation:_browserViewWrangler];
