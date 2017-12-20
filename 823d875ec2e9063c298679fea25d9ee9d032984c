@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5715bf22_249c791c",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 913,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-12-20T09:37:56Z",
+      "side": 1,
+      "message": "Nit: s/dummy/unused/g?",
+      "range": {
+        "startLine": 913,
+        "startChar": 10,
+        "endLine": 913,
+        "endChar": 15
+      },
+      "revId": "823d875ec2e9063c298679fea25d9ee9d032984c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20d0e8e9_ee7533bb",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_interaction_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-12-20T09:37:56Z",
+      "side": 1,
+      "message": "Change here too if you changed above.",
+      "range": {
+        "startLine": 184,
+        "startChar": 12,
+        "endLine": 184,
+        "endChar": 25
+      },
+      "revId": "823d875ec2e9063c298679fea25d9ee9d032984c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
