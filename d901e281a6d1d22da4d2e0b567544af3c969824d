@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1b4e33e3_f924d10e",
+        "filename": "ui/gfx/color_space.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-12-20T00:08:32Z",
+      "side": 1,
+      "message": "Nit: I don\u0027t love the two g_ classes that need to be used together, but for a single use in a single file, this seems fine.",
+      "range": {
+        "startLine": 33,
+        "startChar": 6,
+        "endLine": 33,
+        "endChar": 18
+      },
+      "revId": "d901e281a6d1d22da4d2e0b567544af3c969824d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
