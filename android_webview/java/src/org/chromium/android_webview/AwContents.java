@@ -2454,6 +2454,7 @@ public class AwContents implements SmartClipProvider {
         }
 
         if (WindowAndroid.activityFromContext(mContext) == null) {
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             mContext.startActivity(intent);
             return;
         }
