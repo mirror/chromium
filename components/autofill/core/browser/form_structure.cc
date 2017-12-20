@@ -672,6 +672,10 @@ bool FormStructure::ShouldBeQueried() const {
 }
 
 bool FormStructure::ShouldBeUploaded() const {
+  LOG(ERROR) << "ShouldBeUploaded has_password_field_=" << has_password_field_
+             << " active_field_count=" << active_field_count()
+             << " MinRequiredFieldsForUpload=" << MinRequiredFieldsForUpload()
+             << " ShouldBeParsed=" << ShouldBeParsed();
   return (has_password_field_ ||
           active_field_count() >= MinRequiredFieldsForUpload()) &&
          ShouldBeParsed();
@@ -1270,7 +1274,11 @@ void FormStructure::EncodeFormForUpload(AutofillUploadContents* upload) const {
         added_field->set_form_classifier_outcome(
             field->form_classifier_outcome());
       }
-
+      if (field_type == autofill::USERNAME) {
+        LOG(ERROR) << "username vote for " << field->name
+                   << " type=" << field->username_vote_type();
+        DCHECK(field->username_vote_type());
+      }
       if (field->username_vote_type())
         added_field->set_username_vote_type(field->username_vote_type());
 
