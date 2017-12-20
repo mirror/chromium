@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "0f5747e4_e1d5bf96",
+        "filename": "ash/login/ui/lock_screen.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-12-20T22:11:15Z",
+      "side": 1,
+      "message": "Yea, that\u0027s fine. I\u0027d prefer we also remove the |window| variable, but since it is already there it is fine to keep the |contents| variable, up to you which one you prefer.",
+      "parentUuid": "85a8907a_8ae16d58",
+      "revId": "d270f415d605942a723183696bac2b35f8a63569",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2b317f94_0d2e13a4",
         "filename": "ash/login/ui/lock_screen.h",
         "patchSetId": 5
