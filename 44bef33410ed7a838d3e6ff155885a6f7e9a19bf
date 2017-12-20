@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5aa926ec_9e5d030c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1121784
+      },
+      "writtenOn": "2017-12-20T20:02:14Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "9deb62a8_d7024441",
+      "revId": "44bef33410ed7a838d3e6ff155885a6f7e9a19bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1cbfb4eb_240910f8",
         "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.cpp",
         "patchSetId": 3
@@ -54,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "675378a1_39a6e57f",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 498,
+      "author": {
+        "id": 1121784
+      },
+      "writtenOn": "2017-12-20T20:02:14Z",
+      "side": 1,
+      "message": "Updated to check for video element.",
+      "parentUuid": "e2af1f06_4a4b2cff",
+      "revId": "44bef33410ed7a838d3e6ff155885a6f7e9a19bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "11a1c89e_ba5bff4c",
         "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.cpp",
         "patchSetId": 3
@@ -77,6 +113,30 @@
     },
     {
       "key": {
+        "uuid": "84edaa25_64b27fc2",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 919,
+      "author": {
+        "id": 1121784
+      },
+      "writtenOn": "2017-12-20T20:02:14Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "11a1c89e_ba5bff4c",
+      "range": {
+        "startLine": 918,
+        "startChar": 6,
+        "endLine": 919,
+        "endChar": 0
+      },
+      "revId": "44bef33410ed7a838d3e6ff155885a6f7e9a19bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e4db8f04_afca9806",
         "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlPictureInPictureButtonElement.cpp",
         "patchSetId": 3
@@ -91,6 +151,24 @@
       "revId": "44bef33410ed7a838d3e6ff155885a6f7e9a19bf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7478cd7_b3e07418",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlPictureInPictureButtonElement.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1121784
+      },
+      "writtenOn": "2017-12-20T20:02:14Z",
+      "side": 1,
+      "message": "Taking another look, UpdateOverflowString() and UpdateDisplayType() is used when the state of the button changes (e.g. play/pause, cast/uncast). Since we don\u0027t unpip via this button, I\u0027ve just removed this completely.",
+      "parentUuid": "e4db8f04_afca9806",
+      "revId": "44bef33410ed7a838d3e6ff155885a6f7e9a19bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -141,6 +219,24 @@
       "side": 1,
       "message": "Indeed, thanks for the reminder. I guess the gist of the comment still applies as we have different stylesheet and icons for the modern controls :)",
       "parentUuid": "4e170b39_a4557da5",
+      "revId": "44bef33410ed7a838d3e6ff155885a6f7e9a19bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b953053_1424bd8f",
+        "filename": "third_party/WebKit/Source/modules/media_controls/resources/legacyMediaControls.css",
+        "patchSetId": 3
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1121784
+      },
+      "writtenOn": "2017-12-20T20:02:14Z",
+      "side": 1,
+      "message": "Thanks for the info! I added a TODO for the SVG as well. How do we get the SVG?",
+      "parentUuid": "e148fb37_97782b3b",
       "revId": "44bef33410ed7a838d3e6ff155885a6f7e9a19bf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
