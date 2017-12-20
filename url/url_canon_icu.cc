@@ -22,8 +22,8 @@ namespace {
 
 // Called when converting a character that can not be represented, this will
 // append an escaped version of the numerical character reference for that code
-// point. It is of the form "&#1234;" and we will escape the non-digits to
-// "%26%231234%3B". Why? This is what Netscape did back in the olden days.
+// point. It is of the form "&#1234;". We will percent-encode '#' and end up
+// with "&%231234;" according to https://url.spec.whatwg.org/#query-state
 void appendURLEscapedChar(const void* context,
                           UConverterFromUnicodeArgs* from_args,
                           const UChar* code_units,
@@ -34,8 +34,8 @@ void appendURLEscapedChar(const void* context,
   if (reason == UCNV_UNASSIGNED) {
     *err = U_ZERO_ERROR;
 
-    const static int prefix_len = 6;
-    const static char prefix[prefix_len + 1] = "%26%23";  // "&#" percent-escaped
+    const static int prefix_len = 4;
+    const static char prefix[prefix_len + 1] = "&%23";
     ucnv_cbFromUWriteBytes(from_args, prefix, prefix_len, 0, err);
 
     DCHECK(code_point < 0x110000);
@@ -44,8 +44,8 @@ void appendURLEscapedChar(const void* context,
     int number_len = static_cast<int>(strlen(number));
     ucnv_cbFromUWriteBytes(from_args, number, number_len, 0, err);
 
-    const static int postfix_len = 3;
-    const static char postfix[postfix_len + 1] = "%3B";   // ";" percent-escaped
+    const static int postfix_len = 1;
+    const static char postfix[postfix_len + 1] = ";";
     ucnv_cbFromUWriteBytes(from_args, postfix, postfix_len, 0, err);
   }
 }

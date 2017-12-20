@@ -212,9 +212,9 @@ class URL_EXPORT CharsetConverter {
   //
   // If the input contains a character not representable in the output
   // character set, the converter should append the HTML entity sequence in
-  // decimal, (such as "&#20320;") with escaping of the ampersand, number
-  // sign, and semicolon (in the previous example it would be
-  // "%26%2320320%3B"). This rule is based on what IE does in this situation.
+  // decimal, (such as "&#20320;") with the number sign percent-encoded (in
+  // the previous example it would be "&%2320320;"). This rule is based on
+  // https://url.spec.whatwg.org/#query-state
   virtual void ConvertFromUTF16(const base::char16* input,
                                 int input_len,
                                 CanonOutput* output) = 0;
