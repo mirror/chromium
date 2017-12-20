@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e0652c82_a75c5a64",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2345,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-12-20T19:52:11Z",
+      "side": 1,
+      "message": "nit: the indentation seems off by one char\ndidn\u0027t  \u0027git cl format\u0027 fix it?",
+      "revId": "6987596c87beb27b21c3e446266f0354ed835d47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
