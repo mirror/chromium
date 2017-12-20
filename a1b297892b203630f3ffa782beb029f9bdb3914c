@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7e1797d6_2afc1e43",
+        "filename": "third_party/WebKit/Source/core/css/RuleSet.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-12-20T21:59:05Z",
+      "side": 1,
+      "message": "I think this should be \"28 bits above\" now.",
+      "revId": "a1b297892b203630f3ffa782beb029f9bdb3914c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
