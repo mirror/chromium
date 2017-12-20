@@ -16,7 +16,7 @@ namespace media {
 
 class FakeCdmVideoDecoder : public CdmVideoDecoder {
  public:
-  explicit FakeCdmVideoDecoder(cdm::Host* host);
+  explicit FakeCdmVideoDecoder(CdmHostProxy* cdm_host_proxy);
   ~FakeCdmVideoDecoder() override;
 
   // CdmVideoDecoder implementation.
@@ -32,8 +32,7 @@ class FakeCdmVideoDecoder : public CdmVideoDecoder {
  private:
   bool is_initialized_;
   cdm::Size video_size_;
-
-  cdm::Host* const host_;
+  CdmHostProxy* const cdm_host_proxy_;
 
   DISALLOW_COPY_AND_ASSIGN(FakeCdmVideoDecoder);
 };

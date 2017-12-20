@@ -13,7 +13,7 @@
 #include "base/compiler_specific.h"
 #include "base/macros.h"
 #include "base/time/time.h"
-#include "media/cdm/ppapi/external_clear_key/clear_key_cdm_common.h"
+#include "media/cdm/ppapi/external_clear_key/cdm_host_proxy.h"
 #include "media/ffmpeg/ffmpeg_deleters.h"
 
 struct AVCodecContext;
@@ -31,7 +31,7 @@ namespace media {
 // http://crbug.com/169203
 class FFmpegCdmAudioDecoder {
  public:
-  explicit FFmpegCdmAudioDecoder(ClearKeyCdmHost* host);
+  explicit FFmpegCdmAudioDecoder(CdmHostProxy* cdm_host_proxy);
   ~FFmpegCdmAudioDecoder();
   bool Initialize(const cdm::AudioDecoderConfig& config);
   void Deinitialize();
@@ -63,7 +63,7 @@ class FFmpegCdmAudioDecoder {
 
   bool is_initialized_;
 
-  ClearKeyCdmHost* const host_;
+  CdmHostProxy* const cdm_host_proxy_;
 
   // FFmpeg structures owned by this object.
   std::unique_ptr<AVCodecContext, ScopedPtrAVFreeContext> codec_context_;

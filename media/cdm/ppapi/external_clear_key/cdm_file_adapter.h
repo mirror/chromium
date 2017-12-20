@@ -14,6 +14,7 @@
 #include "base/compiler_specific.h"
 #include "base/macros.h"
 #include "media/cdm/api/content_decryption_module.h"
+#include "media/cdm/ppapi/external_clear_key/cdm_host_proxy.h"
 
 namespace media {
 
@@ -26,7 +27,7 @@ class CdmFileAdapter : public cdm::FileIOClient {
       base::OnceCallback<void(bool success, const std::vector<uint8_t>& data)>;
   using WriteCB = base::OnceCallback<void(bool success)>;
 
-  explicit CdmFileAdapter(cdm::ContentDecryptionModule_9::Host* host);
+  explicit CdmFileAdapter(CdmHostProxy* cdm_host_proxy);
   ~CdmFileAdapter() override;
 
   // Open the file with |name|. |open_cb| will be called when the file is

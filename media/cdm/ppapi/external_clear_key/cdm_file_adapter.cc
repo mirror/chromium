@@ -29,8 +29,8 @@ CdmFileAdapter::Status ConvertStatus(cdm::FileIOClient::Status status) {
 
 }  // namespace
 
-CdmFileAdapter::CdmFileAdapter(cdm::ContentDecryptionModule_9::Host* host) {
-  file_io_ = host->CreateFileIO(this);
+CdmFileAdapter::CdmFileAdapter(CdmHostProxy* cdm_host_proxy) {
+  file_io_ = cdm_host_proxy->CreateFileIO(this);
 }
 
 CdmFileAdapter::~CdmFileAdapter() {
