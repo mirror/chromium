@@ -7,8 +7,8 @@
 #include "base/logging.h"
 #include "build/build_config.h"
 #include "content/network/proxy_service_mojo.h"  // nogncheck
+#include "net/proxy/pac_file_fetcher_impl.h"
 #include "net/proxy/proxy_config_service.h"
-#include "net/proxy/proxy_script_fetcher_impl.h"
 
 namespace content {
 
