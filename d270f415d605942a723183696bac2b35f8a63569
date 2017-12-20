@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "85a8907a_8ae16d58",
+        "filename": "ash/login/ui/lock_screen.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1248360
+      },
+      "writtenOn": "2017-12-20T22:04:03Z",
+      "side": 1,
+      "message": "If I combine all the comments: changing contents_view_ type and removing local contents I won\u0027t setup DebugContentsView when needed and I need to pass it to the window.       \n\nLockContentsView* contents_view_ \u003d nullptr;\n\ninstance_-\u003econtents_view \u003d BuildContentsView(...);\n\nwindow-\u003eSetContentsView(instance_-\u003econtents_view_); \n  \nSo I need to keep some local variables. Can you confirm that we are on the same page with that?",
+      "parentUuid": "09a66f86_fdbe687f",
+      "revId": "d270f415d605942a723183696bac2b35f8a63569",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2b317f94_0d2e13a4",
         "filename": "ash/login/ui/lock_screen.h",
         "patchSetId": 5
