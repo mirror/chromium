@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "36cb32ae_b2271be0",
+        "filename": "components/offline_pages/core/model/mark_page_accessed_task.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-12-20T04:05:59Z",
+      "side": 1,
+      "message": "Should this constant be somewhere common, and used by everybody?  I worry that the table name might get changed elsewhere and not here.",
+      "range": {
+        "startLine": 21,
+        "startChar": 49,
+        "endLine": 21,
+        "endChar": 50
+      },
+      "revId": "8cc1a2d668d50ad6081aa53cbf48846ad663424e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3944dfbb_9d9fb9eb",
+        "filename": "components/offline_pages/core/model/mark_page_accessed_task.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-12-20T04:05:59Z",
+      "side": 1,
+      "message": "Should this move to after the update statement, so we don\u0027t count the histogram if the update fails?",
+      "range": {
+        "startLine": 46,
+        "startChar": 2,
+        "endLine": 46,
+        "endChar": 38
+      },
+      "revId": "8cc1a2d668d50ad6081aa53cbf48846ad663424e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
