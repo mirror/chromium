@@ -105,6 +105,24 @@
       "revId": "296eec9f9b28b040b3db353fcb6ff680749a4b25",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0e1b3b18_d2930ce3",
+        "filename": "chrome/browser/subresource_filter/subresource_filter_settings_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-12-20T15:15:01Z",
+      "side": 1,
+      "message": "EXPECT_CALL is defined in gmock so gtest isn\u0027t sufficient for IWYU rules.",
+      "parentUuid": "2970864c_315e787d",
+      "revId": "296eec9f9b28b040b3db353fcb6ff680749a4b25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
