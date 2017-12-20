@@ -14,6 +14,8 @@
 #include "content/browser/loader/resource_dispatcher_host_impl.h"
 #include "content/browser/web_contents/web_contents_impl.h"
 #include "content/common/frame_messages.h"
+#include "content/public/browser/devtools_agent_host.h"
+#include "content/public/browser/devtools_agent_host_client.h"
 #include "content/public/browser/navigation_controller.h"
 #include "content/public/browser/notification_types.h"
 #include "content/public/browser/web_contents.h"
@@ -62,6 +64,20 @@ class BrowserSideNavigationBrowserTest
     ASSERT_TRUE(embedded_test_server()->Start());
   }
 };
+
+namespace {
+
+// A DevToolsAgentHostClient implementation doing nothing.
+class StubDevToolsAgentHostClient : public content::DevToolsAgentHostClient {
+ public:
+  StubDevToolsAgentHostClient() {}
+  ~StubDevToolsAgentHostClient() override {}
+  void AgentHostClosed(content::DevToolsAgentHost* agent_host) override {}
+  void DispatchProtocolMessage(content::DevToolsAgentHost* agent_host,
+                               const std::string& message) override {}
+};
+
+}  // namespace
 
 // Ensure that browser initiated basic navigations work with browser side
 // navigation.
@@ -780,6 +796,31 @@ IN_PROC_BROWSER_TEST_F(NavigationMojoResponseBrowserTest, FailedNavigation) {
         shell()->web_contents()->GetController().GetLastCommittedEntry();
     EXPECT_EQ(PAGE_TYPE_ERROR, entry->GetPageType());
   }
+}
+
+// Regression test for https://crbug.com/795694.
+// * Open chrome://dino
+// * Open DevTools
+// * Reload from DevTools must work.
+IN_PROC_BROWSER_TEST_F(BrowserSideNavigationBrowserTest, ReloadDinoPage) {
+  // 1) Navigate to chrome://dino.
+  GURL dino_url(kChromeUIScheme + std::string("://") + kChromeUIDinoHost);
+  EXPECT_FALSE(NavigateToURL(shell(), dino_url));
+  EXPECT_FALSE(WaitForLoadStop(shell()->web_contents()));
+
+  // 2) Open DevTools.
+  scoped_refptr<DevToolsAgentHost> devtools_agent_host =
+      DevToolsAgentHost::GetOrCreateFor(shell()->web_contents());
+  StubDevToolsAgentHostClient devtools_agent_host_client;
+  devtools_agent_host->AttachClient(&devtools_agent_host_client);
+
+  // 3) Reload from DevTools.
+  TestNavigationObserver reload_observer(shell()->web_contents());
+  devtools_agent_host->DispatchProtocolMessage(
+      &devtools_agent_host_client,
+      R"({"id":1,"method": "Page.reload"})");
+  reload_observer.Wait();
+  devtools_agent_host->DetachClient(&devtools_agent_host_client);
 }
 
 }  // namespace content
