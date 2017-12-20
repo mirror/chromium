@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b9cfafd9_6644bdab",
+        "filename": "chrome/browser/predictors/preconnect_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-12-20T11:03:16Z",
+      "side": 1,
+      "message": "All methods of Profile class must only be called on the UI thread. This class lives in IO thread. I\u0027d like to avoid having a Profile* in this class.\nWe could pass content::ResourceContext object in ctor of the PreconnectManager and then store a ProfileIOData* as a member.\nIf we do that, we can remove context_getter_ from this class and use profile_io_data-\u003eGetMainRequestContext() instead (should give the same context?).",
+      "revId": "15a01131331acc2c9861e2fb15e9481b39d7a7fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7266dd86_7e140798",
+        "filename": "chrome/browser/predictors/preconnect_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-12-20T11:03:16Z",
+      "side": 1,
+      "message": "Use job.url here instead of info-\u003eurl.\n\ninfo-\u003eurl contains a URL of the main frame for which the prediction was requested. job.url is the actual URL that we\u0027re trying to preresolve.",
+      "range": {
+        "startLine": 183,
+        "startChar": 42,
+        "endLine": 183,
+        "endChar": 46
+      },
+      "revId": "15a01131331acc2c9861e2fb15e9481b39d7a7fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6d99e3a_d0c264dc",
+        "filename": "chrome/browser/predictors/preconnect_manager_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-12-20T11:03:16Z",
+      "side": 1,
+      "message": "Given that there is a bug in the code that checks the main_frame_url instead of url_to_preresolve, this test passes only because the main_frame_url has http scheme. Could you set it to https to cover this bug?",
+      "range": {
+        "startLine": 103,
+        "startChar": 27,
+        "endLine": 103,
+        "endChar": 28
+      },
+      "revId": "15a01131331acc2c9861e2fb15e9481b39d7a7fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

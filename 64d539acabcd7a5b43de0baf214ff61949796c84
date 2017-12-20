@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "e8258881_cc509a1f",
+        "filename": "chrome/browser/net/predictor.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 697,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-12-20T11:03:16Z",
+      "side": 1,
+      "message": "It\u0027s the RendererDnsPrefetch class in blink\nhttps://cs.chromium.org/chromium/src/components/network_hints/renderer/renderer_dns_prefetch.h?type\u003dcs\n\nThe IPC NetworkHintsMsg_DNSPrefetch message is sent to the browser process from RendererDnsPrefetch::DnsPrefetchNames().\n\nI glanced at all callers of this API and it seems like all of them initially have a KURL but then they call KURL::Host() to get a hostname. It should be possible to change this API to accept GURLs instead of string hostnames.",
+      "parentUuid": "8b632002_542b031a",
+      "range": {
+        "startLine": 697,
+        "startChar": 25,
+        "endLine": 697,
+        "endChar": 29
+      },
+      "revId": "64d539acabcd7a5b43de0baf214ff61949796c84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "21216e79_5b7ba73f",
         "filename": "chrome/browser/net/predictor.cc",
         "patchSetId": 3
@@ -93,6 +117,30 @@
       "revId": "64d539acabcd7a5b43de0baf214ff61949796c84",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cd11a683_0144358f",
+        "filename": "chrome/browser/net/predictor.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1018,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-12-20T11:03:16Z",
+      "side": 1,
+      "message": "Can you leave this message as a comment in code?\n\nShouldn\u0027t we disable preconnecting to HTTP URLs as well in this case? In case of \"normal\" proxy we open an additional socket in the proxy socket pool. https://cs.chromium.org/chromium/src/net/socket/client_socket_pool_manager.cc?rcl\u003d17c2f92c8702eb08b1fee51d74d839f038c18eec\u0026l\u003d234\nI\u0027m guessing that in the DRPProxy case we will preconnect to the actual host but the socket won\u0027t be used.\n\nNotice, that the LoadingPredictor implementation requires the host to be explicitly resolved before attempting to preconnect. Thus, preconnects are already disabled for your experiment.",
+      "parentUuid": "bb0727a8_d2ee9b08",
+      "range": {
+        "startLine": 1018,
+        "startChar": 14,
+        "endLine": 1018,
+        "endChar": 48
+      },
+      "revId": "64d539acabcd7a5b43de0baf214ff61949796c84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
@@ -319,6 +367,30 @@
       "side": 1,
       "message": "\u003e It\u0027s not the only path how the pre-resolution can be triggered in the LoadingPredictor (it\u0027s an experimental feature that should replace net::Predictor eventually).\n\u003e \n\u003e A robust way to stop all pre-resolutions from the LoadingPredictor would be to add this check in PreconnectManager::TryToLaunchPreresolveJobs(). https://cs.chromium.org/chromium/src/chrome/browser/predictors/preconnect_manager.cc?rcl\u003d7526172345eee3dc448e4ae057d2720b424ca052\u0026l\u003d163\n\u003e As a bonus we can get rid of UI version of WouldLikelyBeFetchedViaDataSaver.\n\nDone.\n\u003e \n\u003e (There is the same caveat with renderer hints, see PreconnectManager::StartPreresolveHosts())\n\nI am not sure I understand this comment.",
       "parentUuid": "b811cd4a_a938a398",
+      "range": {
+        "startLine": 373,
+        "startChar": 14,
+        "endLine": 373,
+        "endChar": 48
+      },
+      "revId": "64d539acabcd7a5b43de0baf214ff61949796c84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "252b7b44_3d0d1368",
+        "filename": "chrome/browser/predictors/loading_predictor.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-12-20T11:03:16Z",
+      "side": 1,
+      "message": "\u003e \u003e It\u0027s not the only path how the pre-resolution can be triggered in the LoadingPredictor (it\u0027s an experimental feature that should replace net::Predictor eventually).\n\u003e \u003e \n\u003e \u003e A robust way to stop all pre-resolutions from the LoadingPredictor would be to add this check in PreconnectManager::TryToLaunchPreresolveJobs(). https://cs.chromium.org/chromium/src/chrome/browser/predictors/preconnect_manager.cc?rcl\u003d7526172345eee3dc448e4ae057d2720b424ca052\u0026l\u003d163\n\u003e \u003e As a bonus we can get rid of UI version of WouldLikelyBeFetchedViaDataSaver.\n\u003e \n\u003e Done.\n\u003e\n\u003e \u003e \n\u003e \u003e (There is the same caveat with renderer hints, see PreconnectManager::StartPreresolveHosts())\n\u003e \n\u003e I am not sure I understand this comment.\n\nI meant that the LoadingPredictor also gets dns-prefetch hints from blink. They are dispatched in the browser process in ChromeRenderMessageFilter::OnDnsPrefetch()\nhttps://cs.chromium.org/chromium/src/chrome/browser/renderer_host/chrome_render_message_filter.cc?rcl\u003df404dd47d48903a78e558d5159220e1b8a1981d8\u0026l\u003d107\nWe get a renderer hint as a vector of hostname strings which we have to convert into GURLs, because underlying net-stack API accepts GURLs. To do that, we append \"http://\" prefix the same way as it done in the net::Predictor. Your experiment will discard all these URLs because they have an http scheme but in fact we don\u0027t know whether they were initially http or https.\n\nSorry for not being clear.",
+      "parentUuid": "1a461bbe_191accab",
       "range": {
         "startLine": 373,
         "startChar": 14,
