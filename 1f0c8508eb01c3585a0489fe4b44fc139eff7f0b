@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f2c2e282_9bc9033d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-12-20T20:27:41Z",
+      "side": 1,
+      "message": "I don\u0027t see that.",
+      "range": {
+        "startLine": 14,
+        "startChar": 46,
+        "endLine": 15,
+        "endChar": 68
+      },
+      "revId": "1f0c8508eb01c3585a0489fe4b44fc139eff7f0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c9c8a4a_338fad64",
+        "filename": "chrome/browser/ui/cocoa/bookmarks/bookmark_button_cell.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-12-20T20:27:41Z",
+      "side": 1,
+      "message": "This is right for LTR but not RTL.",
+      "range": {
+        "startLine": 410,
+        "startChar": 2,
+        "endLine": 410,
+        "endChar": 49
+      },
+      "revId": "1f0c8508eb01c3585a0489fe4b44fc139eff7f0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f55fd17_fd32cbd6",
+        "filename": "chrome/browser/ui/cocoa/bookmarks/bookmark_button_cell.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 411,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-12-20T20:27:41Z",
+      "side": 1,
+      "message": "In RTL, we have to mirror NSMinX/NSMaxX so this doesn\u0027t seem right either.",
+      "range": {
+        "startLine": 411,
+        "startChar": 43,
+        "endLine": 411,
+        "endChar": 59
+      },
+      "revId": "1f0c8508eb01c3585a0489fe4b44fc139eff7f0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ad00bf5_5a269b87",
+        "filename": "chrome/browser/ui/cocoa/bookmarks/bookmark_button_cell.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-12-20T20:27:41Z",
+      "side": 1,
+      "message": "In LTR, yes, you can resize by changing the width because the rect is anchored at the origin point which is on the left, but resizing a RTL rect also requires repositioning it. That\u0027s why I\u0027m a huge fan of NSDivideRect in RTL aware code.",
+      "range": {
+        "startLine": 413,
+        "startChar": 4,
+        "endLine": 413,
+        "endChar": 23
+      },
+      "revId": "1f0c8508eb01c3585a0489fe4b44fc139eff7f0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "165d6f8e_341fd21f",
+        "filename": "chrome/browser/ui/cocoa/bookmarks/bookmark_button_cell.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-12-20T20:27:41Z",
+      "side": 1,
+      "message": "Dunno how much I trust these numbers.",
+      "range": {
+        "startLine": 416,
+        "startChar": 24,
+        "endLine": 416,
+        "endChar": 79
+      },
+      "revId": "1f0c8508eb01c3585a0489fe4b44fc139eff7f0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
