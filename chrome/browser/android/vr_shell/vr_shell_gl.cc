@@ -162,8 +162,7 @@ VrShellGl::VrShellGl(GlBrowserInterface* browser_interface,
                      gvr_context* gvr_api,
                      bool reprojected_rendering,
                      bool daydream_support,
-                     bool start_in_web_vr_mode,
-                     bool assets_available)
+                     bool start_in_web_vr_mode)
     : ui_(std::move(ui)),
       web_vr_mode_(start_in_web_vr_mode),
       surfaceless_rendering_(reprojected_rendering),
@@ -177,7 +176,6 @@ VrShellGl::VrShellGl(GlBrowserInterface* browser_interface,
       webvr_js_wait_time_(kWebVRSlidingAverageSize),
       webvr_acquire_time_(kWebVRSlidingAverageSize),
       webvr_submit_time_(kWebVRSlidingAverageSize),
-      assets_available_(assets_available),
       weak_ptr_factory_(this) {
   GvrInit(gvr_api);
 }
@@ -254,11 +252,6 @@ void VrShellGl::InitializeGl(gfx::AcceleratedWidget window) {
 
   ui_->OnGlInitialized(content_texture_id,
                        vr::UiElementRenderer::kTextureLocationExternal, true);
-
-  if (assets_available_) {
-    vr::Assets::GetInstance()->Load(base::BindOnce(
-        &VrShellGl::OnAssetsLoaded, weak_ptr_factory_.GetWeakPtr()));
-  }
 
   webvr_vsync_align_ = base::FeatureList::IsEnabled(features::kWebVrVsyncAlign);
 
@@ -393,6 +386,11 @@ void VrShellGl::ConnectPresentingService(
 
 void VrShellGl::OnSwapContents(int new_content_id) {
   ui_->OnSwapContents(new_content_id);
+}
+
+void VrShellGl::OnAssetsLoaded(std::unique_ptr<SkBitmap> background_image,
+                               const base::Version& component_version) {
+  ui_->SetBackgroundImage(std::move(background_image));
 }
 
 void VrShellGl::OnContentFrameAvailable() {
@@ -1298,18 +1296,6 @@ void VrShellGl::ClosePresentationBindings() {
              device::mojom::VRPresentationProvider::VSyncStatus::CLOSING);
   }
   binding_.Close();
-}
-
-void VrShellGl::OnAssetsLoaded(vr::AssetsLoadStatus status,
-                               std::unique_ptr<SkBitmap> background_image,
-                               const base::Version& component_version) {
-  // TODO(793407): Handle adding background image to UI.
-  if (status == vr::AssetsLoadStatus::kSuccess) {
-    VLOG(1) << "Successfully loaded VR assets component";
-  } else {
-    VLOG(1) << "Failed to load VR assets component";
-  }
-  browser_->OnAssetsLoaded(status, component_version);
 }
 
 }  // namespace vr_shell

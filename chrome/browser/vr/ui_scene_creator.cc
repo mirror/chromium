@@ -11,6 +11,7 @@
 #include "chrome/browser/vr/databinding/binding.h"
 #include "chrome/browser/vr/databinding/vector_binding.h"
 #include "chrome/browser/vr/elements/audio_permission_prompt.h"
+#include "chrome/browser/vr/elements/background.h"
 #include "chrome/browser/vr/elements/button.h"
 #include "chrome/browser/vr/elements/content_element.h"
 #include "chrome/browser/vr/elements/controller.h"
@@ -277,8 +278,17 @@ void UiSceneCreator::Create2dBrowsingSubtreeRoots() {
   auto element = base::MakeUnique<UiElement>();
   element->SetName(k2dBrowsingRoot);
   element->set_hit_testable(false);
-  element->AddBinding(VR_BIND_FUNC(bool, Model, model_, browsing_mode(),
-                                   UiElement, element.get(), SetVisible));
+  element->AddBinding(base::MakeUnique<Binding<bool>>(
+      base::BindRepeating(
+          [](Model* m) {
+            bool ready = !m->background_available ||
+                         (m->background_available && m->background_loaded);
+            return m->browsing_mode() && ready;
+          },
+          base::Unretained(model_)),
+      base::BindRepeating([](UiElement* e, const bool& v) { e->SetVisible(v); },
+                          base::Unretained(element.get()))));
+
   scene_->AddUiElement(kRoot, std::move(element));
 
   element = base::MakeUnique<UiElement>();
@@ -679,6 +689,31 @@ void UiSceneCreator::CreateUnderDevelopmentNotice() {
 }
 
 void UiSceneCreator::CreateBackground() {
+  // Textured background.
+  auto background = base::MakeUnique<Background>();
+  background->SetName(k2dBrowsingTexturedBackground);
+  background->SetVisible(false);
+  background->SetDrawPhase(kPhaseBackground);
+  background->AddBinding(base::MakeUnique<Binding<bool>>(
+      base::BindRepeating(
+          [](Model* m) {
+            return m->background_available && m->background_loaded;
+          },
+          base::Unretained(model_)),
+      base::BindRepeating([](UiElement* e, const bool& v) { e->SetVisible(v); },
+                          base::Unretained(background.get()))));
+
+  scene_->AddUiElement(k2dBrowsingBackground, std::move(background));
+  auto element = base::MakeUnique<UiElement>();
+  element->SetName(k2dBrowsingDefaultBackground);
+  element->set_hit_testable(false);
+  element->AddBinding(base::MakeUnique<Binding<bool>>(
+      base::BindRepeating([](Model* m) { return !m->background_available; },
+                          base::Unretained(model_)),
+      base::BindRepeating([](UiElement* e, const bool& v) { e->SetVisible(v); },
+                          base::Unretained(element.get()))));
+  scene_->AddUiElement(k2dBrowsingBackground, std::move(element));
+
   // Background solid-color panels.
   struct Panel {
     UiElementName name;
@@ -713,7 +748,8 @@ void UiSceneCreator::CreateBackground() {
     panel_element->AddBinding(
         VR_BIND_FUNC(bool, Model, model_, should_render_web_vr() == false,
                      UiElement, panel_element.get(), SetVisible));
-    scene_->AddUiElement(k2dBrowsingBackground, std::move(panel_element));
+    scene_->AddUiElement(k2dBrowsingDefaultBackground,
+                         std::move(panel_element));
   }
 
   // Floor.
@@ -729,7 +765,7 @@ void UiSceneCreator::CreateBackground() {
   BindColor(model_, floor.get(), &ColorScheme::world_background,
             &Grid::SetEdgeColor);
   BindColor(model_, floor.get(), &ColorScheme::floor_grid, &Grid::SetGridColor);
-  scene_->AddUiElement(k2dBrowsingBackground, std::move(floor));
+  scene_->AddUiElement(k2dBrowsingDefaultBackground, std::move(floor));
 
   // Ceiling.
   auto ceiling = base::MakeUnique<Rect>();
@@ -743,9 +779,7 @@ void UiSceneCreator::CreateBackground() {
             &Rect::SetCenterColor);
   BindColor(model_, ceiling.get(), &ColorScheme::world_background,
             &Rect::SetEdgeColor);
-  scene_->AddUiElement(k2dBrowsingBackground, std::move(ceiling));
-
-  scene_->set_first_foreground_draw_phase(kPhaseForeground);
+  scene_->AddUiElement(k2dBrowsingDefaultBackground, std::move(ceiling));
 }
 
 void UiSceneCreator::CreateViewportAwareRoot() {
