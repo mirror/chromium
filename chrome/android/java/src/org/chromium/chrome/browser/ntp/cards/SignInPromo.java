@@ -6,12 +6,14 @@ package org.chromium.chrome.browser.ntp.cards;
 
 import android.accounts.Account;
 import android.content.Context;
+import android.os.Handler;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 
 import org.chromium.base.Callback;
 import org.chromium.base.ContextUtils;
+import org.chromium.base.ThreadUtils;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.base.metrics.RecordUserAction;
 import org.chromium.chrome.R;
@@ -41,12 +43,19 @@ import org.chromium.components.signin.AccountManagerFacade;
 import org.chromium.components.signin.AccountsChangeObserver;
 
 import java.util.Collections;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Shows a card prompting the user to sign in. This item is also an {@link OptionalLeaf}, and sign
  * in state changes control its visibility.
  */
 public class SignInPromo extends OptionalLeaf {
+    /**
+     * Period for which promos are suppressed if signin is refused in FRE.
+     */
+    @VisibleForTesting
+    static final long SUPPRESSION_PERIOD_MS = TimeUnit.DAYS.toMillis(1);
+
     /**
      * Whether the promo had been previously dismissed, before creating an instance of the
      * {@link SignInPromo}.
@@ -69,9 +78,15 @@ public class SignInPromo extends OptionalLeaf {
      */
     private boolean mCanShowPersonalizedSuggestions;
 
+    /**
+     * Whether signin promo was temporary suppressed.
+     */
+    private boolean mSuppressed;
+
     private final OneShotImpressionListener mOneShotImpressionTracker =
             new OneShotImpressionListener(this::onImpression);
 
+    private @Nullable Runnable mSuppressionStatusDeferredUpdater;
     private final @Nullable SigninObserver mSigninObserver;
 
     /**
@@ -84,6 +99,7 @@ public class SignInPromo extends OptionalLeaf {
     private final @Nullable SigninPromoController mSigninPromoController;
     private final @Nullable ProfileDataCache mProfileDataCache;
     private final @Nullable StatusCardViewHolder.DataSource mGenericPromoData;
+    private final Handler mHandler = new Handler(ThreadUtils.getUiThreadLooper());
 
     public SignInPromo(SuggestionsUiDelegate uiDelegate) {
         Context context = ContextUtils.getApplicationContext();
@@ -96,22 +112,23 @@ public class SignInPromo extends OptionalLeaf {
             mWasDismissed = preferenceManager.getNewTabPageGenericSigninPromoDismissed();
         }
 
-        SuggestionsSource suggestionsSource = uiDelegate.getSuggestionsSource();
-        SigninManager signinManager = SigninManager.get(context);
-
-        mCanSignIn = signinManager.isSignInAllowed() && !signinManager.isSignedInOnNative();
-        mCanShowPersonalizedSuggestions = suggestionsSource.areRemoteSuggestionsEnabled();
-        mDismissed = mWasDismissed;
-
-        updateVisibility();
-
         if (mWasDismissed) {
+            setVisibilityInternal(false);
             mSigninObserver = null;
             mProfileDataCache = null;
             mSigninPromoController = null;
             mGenericPromoData = null;
             return;
         }
+
+        SuggestionsSource suggestionsSource = uiDelegate.getSuggestionsSource();
+        SigninManager signinManager = SigninManager.get(context);
+
+        mCanSignIn = signinManager.isSignInAllowed() && !signinManager.isSignedInOnNative();
+        mCanShowPersonalizedSuggestions = suggestionsSource.areRemoteSuggestionsEnabled();
+        mSuppressed = updateSuppressionStatus();
+
+        updateVisibility();
 
         if (mArePersonalizedPromosEnabled) {
             int imageSize = context.getResources().getDimensionPixelSize(R.dimen.user_picture_size);
@@ -127,6 +144,48 @@ public class SignInPromo extends OptionalLeaf {
 
         mSigninObserver = new SigninObserver(signinManager, suggestionsSource);
         uiDelegate.addDestructionObserver(mSigninObserver);
+    }
+
+    /**
+     * Suppress signin promos in New Tab Page for {@link SUPPRESSION_PERIOD_MS}. This will not
+     * affect promos that were created before this call.
+     */
+    public static void temporarilySuppressPromos() {
+        ChromePreferenceManager.getInstance().setNewTabPageSigninPromoSuppressionPeriodStart(
+                System.currentTimeMillis());
+    }
+
+    private boolean updateSuppressionStatus() {
+        long suppressedFrom = ChromePreferenceManager.getInstance()
+                                      .getNewTabPageSigninPromoSuppressionPeriodStart();
+        if (suppressedFrom == 0) {
+            cancelSuppressionStatusDeferredUpdate();
+            return false;
+        }
+        long currentTime = System.currentTimeMillis();
+        long suppressedTo = suppressedFrom + SUPPRESSION_PERIOD_MS;
+        if (suppressedFrom <= currentTime && currentTime < suppressedTo) {
+            setupSuppressionStatusDeferredUpdate(suppressedTo - currentTime);
+            return true;
+        }
+        cancelSuppressionStatusDeferredUpdate();
+        ChromePreferenceManager.getInstance().clearNewTabPageSigninPromoSuppressionPeriodStart();
+        return false;
+    }
+
+    private void setupSuppressionStatusDeferredUpdate(long delayMillis) {
+        cancelSuppressionStatusDeferredUpdate();
+        mSuppressionStatusDeferredUpdater = () -> {
+            mSuppressed = updateSuppressionStatus();
+            updateVisibility();
+        };
+        mHandler.postDelayed(mSuppressionStatusDeferredUpdater, delayMillis);
+    }
+
+    private void cancelSuppressionStatusDeferredUpdate() {
+        if (mSuppressionStatusDeferredUpdater == null) return;
+        mHandler.removeCallbacks(mSuppressionStatusDeferredUpdater);
+        mSuppressionStatusDeferredUpdater = null;
     }
 
     @Override
@@ -180,7 +239,8 @@ public class SignInPromo extends OptionalLeaf {
     }
 
     private void updateVisibility() {
-        setVisibilityInternal(!mDismissed && mCanSignIn && mCanShowPersonalizedSuggestions);
+        setVisibilityInternal(
+                !mDismissed && mCanSignIn && mCanShowPersonalizedSuggestions && !mSuppressed);
     }
 
     @Override
@@ -205,6 +265,7 @@ public class SignInPromo extends OptionalLeaf {
             promoHeader = mGenericPromoData.getHeader();
         }
 
+        cancelSuppressionStatusDeferredUpdate();
         mSigninObserver.unregister();
         itemRemovedCallback.onResult(ContextUtils.getApplicationContext().getString(promoHeader));
     }
@@ -255,6 +316,7 @@ public class SignInPromo extends OptionalLeaf {
         // DestructionObserver implementation.
         @Override
         public void onDestroy() {
+            cancelSuppressionStatusDeferredUpdate();
             unregister();
         }
 
