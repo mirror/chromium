@@ -22,6 +22,30 @@
       "revId": "b98602770dfd357d485ca9f4c008dcdf69afd2e7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7040c543_b678fe1b",
+        "filename": "ios/chrome/browser/ui/toolbar/legacy_toolbar_coordinator.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-12-20T01:13:29Z",
+      "side": 1,
+      "message": "Yeah an OR would have also worked.  For early returns, I sometimes like to use separate return statements because it\u0027s easier to detect exactly what\u0027s going on when you\u0027re debugging instead of having to inspect the values of a bunch of boolean logic.  Since you\u0027re the owner of this file, I\u0027ll leave it to you to decide whether to consolidate these checks when we move it to the clean coordinator.",
+      "parentUuid": "ee8b6f9c_7b11a5a4",
+      "range": {
+        "startLine": 309,
+        "startChar": 24,
+        "endLine": 309,
+        "endChar": 25
+      },
+      "revId": "b98602770dfd357d485ca9f4c008dcdf69afd2e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
