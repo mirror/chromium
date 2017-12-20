@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "85b9dddc_f66446bc",
+        "filename": "ios/chrome/browser/web/external_app_launcher_tab_helper.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-12-20T21:33:45Z",
+      "side": 0,
+      "message": "Two instances of this were removed. This is the reason for this CL.",
+      "range": {
+        "startLine": 96,
+        "startChar": 3,
+        "endLine": 96,
+        "endChar": 69
+      },
+      "revId": "17f533a1b0d19ccc689b0a5b7a8837eef1395970",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba8337dc_0dccb531",
+        "filename": "ios/chrome/browser/web/external_app_launcher_tab_helper.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-12-20T21:33:45Z",
+      "side": 0,
+      "message": "Several renames in this file as well. It\u0027s easier to see them in the header file. The renames were to better correspond to their descriptions and comments.",
+      "range": {
+        "startLine": 112,
+        "startChar": 5,
+        "endLine": 112,
+        "endChar": 27
+      },
+      "revId": "17f533a1b0d19ccc689b0a5b7a8837eef1395970",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ca48591_c4a455b0",
+        "filename": "ios/chrome/browser/web/external_app_launcher_tab_helper.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-12-20T21:33:45Z",
+      "side": 0,
+      "message": "All of these are still in this file as-is. They appear moved because free functions were moved to member functions.",
+      "range": {
+        "startLine": 189,
+        "startChar": 0,
+        "endLine": 214,
+        "endChar": 1
+      },
+      "revId": "17f533a1b0d19ccc689b0a5b7a8837eef1395970",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
