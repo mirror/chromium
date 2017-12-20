@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ca9f6591_5f6cc6ce",
+        "filename": "content/shell/browser/layout_test/blink_test_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-12-20T23:10:38Z",
+      "side": 0,
+      "message": "ClusterFuzz seems to be showing that this DCHECK is sometimes violated (e.g. when handling IPCs after BlinkTestController has already been destroyed).  Therefore it makes sense to remove this DCHECK.\n\nAdditionally, after this CL, we check results of BlinkTestController::Get() to see if it is null or not.  Because of these changes, the old DCHECK doesn\u0027t make sense anymore (e.g. instead of hitting the DCHECK we want to fail safe).",
+      "range": {
+        "startLine": 322,
+        "startChar": 2,
+        "endLine": 322,
+        "endChar": 20
+      },
+      "revId": "95ba5b0d44f5f87fffef655da958022b70ac0001",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dc772d5f_1754e00e",
+        "filename": "content/shell/browser/layout_test/layout_test_browser_main.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-12-20T23:10:38Z",
+      "side": 0,
+      "message": "In this case it is easy to avoid getting the BlinkTestController from a global - we can easily get it via an explicit parameter.  I think avoiding globals is desirable.  This also makes it easy to see that |blink_test_controller| is never null (since the only caller passes an address to a stack-allocated variable).",
+      "range": {
+        "startLine": 46,
+        "startChar": 7,
+        "endLine": 46,
+        "endChar": 42
+      },
+      "revId": "95ba5b0d44f5f87fffef655da958022b70ac0001",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}

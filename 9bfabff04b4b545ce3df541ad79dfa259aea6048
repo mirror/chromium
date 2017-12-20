@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "14da14f8_e730e612",
+        "filename": "content/shell/browser/layout_test/layout_test_browser_main.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-12-20T23:10:38Z",
+      "side": 1,
+      "message": "This is a local variable constructed on line 79 above.",
+      "range": {
+        "startLine": 97,
+        "startChar": 52,
+        "endLine": 97,
+        "endChar": 68
+      },
+      "revId": "9bfabff04b4b545ce3df541ad79dfa259aea6048",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "126eeb3b_bbe88706",
+        "filename": "content/shell/browser/layout_test/layout_test_message_filter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-12-20T23:10:38Z",
+      "side": 1,
+      "message": "Based on arm-chair analysis (looking at Clusterfuzz callstack + looking at callers of BlinkTestController::OnLayoutTestRuntimeFlagsChanged), I think that in https://crbug.com/764879 the LayoutTestHostMsg_LayoutTestRuntimeFlagsChanged IPC arrives after BlinkTestController is already destroyed - this means that before this CL the call below could be made on a null object.\n\nAt least this is my hypothesis.  I hope the ClusterFuzz will confirm it after this CL lands...",
+      "range": {
+        "startLine": 213,
+        "startChar": 2,
+        "endLine": 213,
+        "endChar": 33
+      },
+      "revId": "9bfabff04b4b545ce3df541ad79dfa259aea6048",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
