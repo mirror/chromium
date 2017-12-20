@@ -118,6 +118,30 @@
       "revId": "f3788be715de6dec71a9d41502ac1610662b29d1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abebadd5_f7000f21",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 2069,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-12-20T00:46:51Z",
+      "side": 1,
+      "message": "This is an RBS, IMHO the less code we Cherrypick into M64 the better. \nSo I say lets keep it as simple as we can for now. There\u0027s a chance we introduce new bugs with the extra change.",
+      "parentUuid": "27bcb2e5_6b6f3e79",
+      "range": {
+        "startLine": 2069,
+        "startChar": 4,
+        "endLine": 2069,
+        "endChar": 23
+      },
+      "revId": "f3788be715de6dec71a9d41502ac1610662b29d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
