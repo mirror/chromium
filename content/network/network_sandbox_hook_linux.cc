@@ -5,8 +5,9 @@
 #include "content/network/network_sandbox_hook_linux.h"
 #include "sandbox/linux/syscall_broker/broker_command.h"
 
-#include "base/rand_util.h"
-#include "base/sys_info.h"
+#include "base/path_service.h"
+#include "build/build_config.h"
+#include "crypto/nss_util.h"
 
 using sandbox::syscall_broker::BrokerFilePermission;
 using sandbox::syscall_broker::MakeBrokerCommandSet;
@@ -14,9 +15,10 @@ using sandbox::syscall_broker::MakeBrokerCommandSet;
 namespace content {
 
 bool NetworkPreSandboxHook(service_manager::SandboxLinux::Options options) {
-  auto* instance = service_manager::SandboxLinux::GetInstance();
+  base::FilePath home_path;
+  base::PathService::Get(base::DIR_HOME, &home_path);
 
-  // TODO(tsepez): remove universal permission under filesytem root.
+  auto* instance = service_manager::SandboxLinux::GetInstance();
   instance->StartBrokerProcess(
       MakeBrokerCommandSet({
           sandbox::syscall_broker::COMMAND_ACCESS,
@@ -28,8 +30,24 @@ bool NetworkPreSandboxHook(service_manager::SandboxLinux::Options options) {
           sandbox::syscall_broker::COMMAND_STAT,
           sandbox::syscall_broker::COMMAND_UNLINK,
       }),
-      {BrokerFilePermission::ReadWriteCreateRecursive("/")},
+      {
+          BrokerFilePermission::ReadOnlyRecursive("/"),
+          BrokerFilePermission::ReadWriteCreateRecursive("/tmp/"),
+          BrokerFilePermission::ReadWriteCreateRecursive("/var/tmp/"),
+          BrokerFilePermission::ReadWriteCreateRecursive(
+              home_path.AppendASCII(".pki/").value()),
+          BrokerFilePermission::ReadWriteCreateRecursive(
+              home_path.AppendASCII(".cache/").value()),
+          BrokerFilePermission::ReadWriteCreateRecursive(
+              home_path.AppendASCII(".config/chromium/").value()),
+          BrokerFilePermission::ReadWriteCreateRecursive(
+              home_path.AppendASCII(".config/chrome/").value()),
+      },
       service_manager::SandboxLinux::PreSandboxHook(), options);
+
+  // This window allows us to initialize things without polluting
+  // the broker's address space.
+  crypto::EnsureNSSInit();
 
   instance->EngageNamespaceSandbox(false /* from_zygote */);
   return true;
