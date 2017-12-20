@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "1a70f099_e3ccd9c3",
+        "filename": "content/browser/renderer_host/compositor_impl_android.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 955,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-12-20T19:32:19Z",
+      "side": 1,
+      "message": "Done in a separate CL (https://chromium-review.googlesource.com/c/chromium/src/+/834882)",
+      "parentUuid": "8c59a51a_2c3d5cb1",
+      "range": {
+        "startLine": 955,
+        "startChar": 52,
+        "endLine": 955,
+        "endChar": 69
+      },
+      "revId": "42487a98d61baba7da09312f930cc0307e08d6d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "48ee8875_4fbb36d7",
         "filename": "content/browser/renderer_host/compositor_impl_android.cc",
         "patchSetId": 7
@@ -167,6 +191,30 @@
     },
     {
       "key": {
+        "uuid": "5f082a5d_18b3a709",
+        "filename": "content/browser/renderer_host/compositor_impl_android.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 967,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-12-20T19:32:19Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a287f3c4_1ba4debb",
+      "range": {
+        "startLine": 967,
+        "startChar": 16,
+        "endLine": 967,
+        "endChar": 25
+      },
+      "revId": "42487a98d61baba7da09312f930cc0307e08d6d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8c826838_e11395c3",
         "filename": "content/browser/renderer_host/compositor_impl_android.cc",
         "patchSetId": 7
@@ -178,6 +226,24 @@
       "writtenOn": "2017-12-19T00:57:25Z",
       "side": 1,
       "message": "just FYI, this means clients can extend the lock indefinitely, even for clients that expected to lock only for a certain duration. We explicitly wanted to prevent that on Aura, to avoid various things stomping on each other and extending the lock indefinitely (see ui::Compositor::allow_locks_to_extend_timeout_). But it\u0027s probably ok on Android.",
+      "revId": "42487a98d61baba7da09312f930cc0307e08d6d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53e8b4f9_d37fc66d",
+        "filename": "content/browser/renderer_host/compositor_impl_android.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 973,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-12-20T19:32:19Z",
+      "side": 1,
+      "message": "Refactored to a helper class and made it so Android never extends timeouts (just to be safe).",
+      "parentUuid": "8c826838_e11395c3",
       "revId": "42487a98d61baba7da09312f930cc0307e08d6d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -198,6 +264,24 @@
       "revId": "42487a98d61baba7da09312f930cc0307e08d6d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a573fa17_1f928008",
+        "filename": "ui/android/delegated_frame_host_android.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-12-20T19:32:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a82d887a_d4093a67",
+      "revId": "42487a98d61baba7da09312f930cc0307e08d6d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
