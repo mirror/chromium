@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7975b10e_e4ecf6e9",
+        "filename": "chromeos/cryptohome/tpm_util.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-12-20T14:36:16Z",
+      "side": 1,
+      "message": "Optional: do we want to move this to chromeos/tpm ?",
+      "revId": "cde637ef83b765998d22f3f97144ae7d75a5d595",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
