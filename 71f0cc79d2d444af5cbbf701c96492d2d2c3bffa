@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cac9ff00_c7a1f6d6",
+        "filename": "chrome/browser/permissions/permission_decision_auto_blocker.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-12-20T19:20:28Z",
+      "side": 1,
+      "message": "nit: return Value\u0026?",
+      "revId": "71f0cc79d2d444af5cbbf701c96492d2d2c3bffa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60141c5a_fe586aad",
+        "filename": "chrome/browser/supervised_user/legacy/supervised_user_shared_settings_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-12-20T19:20:28Z",
+      "side": 1,
+      "message": "nit: Value\u0026",
+      "revId": "71f0cc79d2d444af5cbbf701c96492d2d2c3bffa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba0e47ec_27b89f83",
+        "filename": "chromeos/dbus/fake_shill_device_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 521,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-12-20T19:20:28Z",
+      "side": 1,
+      "message": "Let\u0027s make ths if(...) { LOG(ERROR) \u003c\u003c ...; return; }\n(It\u0027s a fake implementation for debugging, so it may not be impossible; the NOTREACHED was (likely my) poor choice).",
+      "revId": "71f0cc79d2d444af5cbbf701c96492d2d2c3bffa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2760d44_1ef5d790",
+        "filename": "extensions/browser/api/web_request/upload_data_presenter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-12-20T19:20:28Z",
+      "side": 1,
+      "message": "Value\u0026",
+      "revId": "71f0cc79d2d444af5cbbf701c96492d2d2c3bffa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a787538_891fddc8",
+        "filename": "ui/app_list/search/history_data_store.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-12-20T19:20:28Z",
+      "side": 1,
+      "message": "Value\u0026",
+      "revId": "71f0cc79d2d444af5cbbf701c96492d2d2c3bffa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
