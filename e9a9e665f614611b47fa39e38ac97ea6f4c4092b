@@ -89,6 +89,41 @@
     },
     {
       "key": {
+        "uuid": "ee495cc8_67a83a71",
+        "filename": "ui/message_center/views/notification_view_md.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 672,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-12-20T03:29:23Z",
+      "side": 1,
+      "message": "OK. Can we ensure that this hack only applies to notifications created by CreateSystemNotification and vice versa?\n\nLet\u0027s add following DCHECK to the CreateSystemNotification:\n\nstd::unique_ptr\u003cNotification\u003e Notification::CreateSystemNotification(...) {\n  DCHECK(!notification.display_source().empty() || (notification.origin_url().is_empty() \u0026\u0026 notification.notifier_id().type \u003d\u003d NotifierId.SYSTEM_COMPONENT)));\n  ...\n}\n\nIt\u0027d be nice if we can also prevent normal Notification constructor to be used for creating system notification, but it\u0027s okay to leave this if there\u0027s no clear way. (The only way I could come up with is to add new attribute to RichNotificationData.)",
+      "parentUuid": "4d64f4db_4bb6c4c3",
+      "revId": "e9a9e665f614611b47fa39e38ac97ea6f4c4092b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbb71576_bd7324f7",
+        "filename": "ui/message_center/views/notification_view_md.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 676,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-12-20T03:29:23Z",
+      "side": 1,
+      "message": "Could you update this comment:\n// TODO(tetsui): Remove this. Move Notification::CreateSystemNotification() to ash/ and set the default |display_source| there.",
+      "revId": "e9a9e665f614611b47fa39e38ac97ea6f4c4092b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9b760337_4e248b83",
         "filename": "ui/message_center/views/notification_view_md.cc",
         "patchSetId": 2
@@ -118,6 +153,24 @@
       "side": 1,
       "message": "so we should copy L699-702?",
       "parentUuid": "9b760337_4e248b83",
+      "revId": "e9a9e665f614611b47fa39e38ac97ea6f4c4092b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99528ba3_916da9f3",
+        "filename": "ui/message_center/views/notification_view_md.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 685,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-12-20T03:29:23Z",
+      "side": 1,
+      "message": "yes.",
+      "parentUuid": "fb901ef7_ee75e33f",
       "revId": "e9a9e665f614611b47fa39e38ac97ea6f4c4092b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
