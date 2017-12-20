@@ -22,6 +22,30 @@
       "revId": "3877cff09fb6ea29b4f01c30e75f404ed75cf4d4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ea323e0_d92f3be4",
+        "filename": "headless/lib/browser/headless_browser_main_parts.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2017-12-20T12:17:05Z",
+      "side": 0,
+      "message": "Ah, it\u0027s the DCHECK in HeadlessBrowserImpl::browser_main_parts(). Never mind :)",
+      "parentUuid": "0e068d00_099c34cb",
+      "range": {
+        "startLine": 40,
+        "startChar": 0,
+        "endLine": 40,
+        "endChar": 40
+      },
+      "revId": "3877cff09fb6ea29b4f01c30e75f404ed75cf4d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
