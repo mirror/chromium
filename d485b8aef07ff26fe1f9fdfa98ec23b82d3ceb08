@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6a2447b4_ce5d47b0",
+        "filename": "chrome/browser/ui/cocoa/bookmarks/bookmark_button_cell.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 1171114
+      },
+      "writtenOn": "2017-12-20T19:18:56Z",
+      "side": 1,
+      "message": "It\u0027d be helpful to have a comment explaining this flip, saying basically what you wrote in the CL note.",
+      "range": {
+        "startLine": 406,
+        "startChar": 0,
+        "endLine": 406,
+        "endChar": 61
+      },
+      "revId": "d485b8aef07ff26fe1f9fdfa98ec23b82d3ceb08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8df11f9_12340169",
+        "filename": "chrome/browser/ui/cocoa/bookmarks/bookmark_button_cell.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 411,
+      "author": {
+        "id": 1171114
+      },
+      "writtenOn": "2017-12-20T19:18:56Z",
+      "side": 1,
+      "message": "Think this would read better as a separate if clause after. This expression already has a lot of terms, and a ternary makes it harder to parse.\n\nAnother way to go would be to calculate a local for trailing padding before setting width and doing\nNSWidth(theRect) - NSMinX(textRect) - trailingPadding",
+      "range": {
+        "startLine": 411,
+        "startChar": 0,
+        "endLine": 411,
+        "endChar": 23
+      },
+      "revId": "d485b8aef07ff26fe1f9fdfa98ec23b82d3ceb08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04c457ff_c6c92787",
+        "filename": "chrome/browser/ui/cocoa/l10n_util.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1171114
+      },
+      "writtenOn": "2017-12-20T19:18:56Z",
+      "side": 1,
+      "message": "I don\u0027t think this is necessary. There\u0027s not going to be a bunch of new Cocoa RTL written, so unless someone goes back and changes all uses it won\u0027t be the common idiom.",
+      "range": {
+        "startLine": 64,
+        "startChar": 7,
+        "endLine": 64,
+        "endChar": 29
+      },
+      "revId": "d485b8aef07ff26fe1f9fdfa98ec23b82d3ceb08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
