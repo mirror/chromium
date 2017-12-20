@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "bfba09dc_6579bf25",
+        "filename": "third_party/WebKit/Source/platform/wtf/ConstructTraits.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-12-20T05:09:43Z",
+      "side": 1,
+      "message": "So, I think this is related to the question I asked before... When is HeapAllocator \u0026 false possible?\n\nI think that the possible cases are:\n\n- PartitionAlloctor \u0026 false\n- HeapAllocator \u0026 true\n\nFor example, Vector\u003cObjectThatHasTrace\u003e is invalid because no one calls Trace of that object.",
+      "parentUuid": "9c8d9339_e2915613",
+      "revId": "5c95eb27ef490c6cacc0cd6b194a69fd58543fc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c4acc3eb_95985d18",
         "filename": "third_party/WebKit/Source/platform/wtf/ConstructTraits.h",
         "patchSetId": 7
@@ -381,6 +399,24 @@
       "side": 1,
       "message": "Then we would mix placement new and ConstructTraits calls across the code base.\n\nI\u0027d like to restrict access to placement new to the ConstructTraits in a followup.",
       "parentUuid": "db6a4069_100712d8",
+      "revId": "5c95eb27ef490c6cacc0cd6b194a69fd58543fc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "be77d077_2ebc40ea",
+        "filename": "third_party/WebKit/Source/platform/wtf/Vector.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-12-20T05:09:43Z",
+      "side": 1,
+      "message": "Sounds reasonable.",
+      "parentUuid": "d3c95082_f99b7df1",
       "revId": "5c95eb27ef490c6cacc0cd6b194a69fd58543fc7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
