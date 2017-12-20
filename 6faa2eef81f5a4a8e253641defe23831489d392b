@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "61de3b5c_c4840b93",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_delegate_ukm.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-20T09:10:01Z",
+      "side": 1,
+      "message": "nit: consider reducing indenting:\n\n  if (source_id \u003d\u003d ukm::kInvalidSourceId)\n    continue;",
+      "revId": "6faa2eef81f5a4a8e253641defe23831489d392b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1af073f_71d962aa",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_delegate_ukm.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-20T09:10:01Z",
+      "side": 1,
+      "message": "i don\u0027t see this ever getting set to false outside of the c\u0027tor. should you be resetting it near the source_ids_.clear() at the top of this method?",
+      "revId": "6faa2eef81f5a4a8e253641defe23831489d392b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbd15271_114a8118",
+        "filename": "chrome/browser/chromeos/power/ml/user_activity_logger_delegate_ukm.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-20T09:10:01Z",
+      "side": 1,
+      "message": "nit: how about this?\n\n  bool is_active \u003d\u003d has_active_tab_ \u0026\u0026 i \u003d\u003d 0;\n  umk::builders...\n      ...\n      .SetIsActive(is_active);\n      .Record(ukm_recorder_);\n\nthen you don\u0027t need two copies of this long call.",
+      "revId": "6faa2eef81f5a4a8e253641defe23831489d392b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
