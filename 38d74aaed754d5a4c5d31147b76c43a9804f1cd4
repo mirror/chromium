@@ -16,6 +16,24 @@
       "revId": "38d74aaed754d5a4c5d31147b76c43a9804f1cd4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6274ec3b_b1a5cf2f",
+        "filename": "chrome/browser/ui/cocoa/autofill/card_unmask_prompt_view_views.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-12-20T01:38:11Z",
+      "side": 1,
+      "message": "Good idea!",
+      "parentUuid": "ac125cfc_a5d137d6",
+      "revId": "38d74aaed754d5a4c5d31147b76c43a9804f1cd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
