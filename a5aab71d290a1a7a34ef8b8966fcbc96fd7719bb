@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7508bcc_5899713d",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/JavaBridgeBasicsTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 718,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-12-20T22:38:05Z",
+      "side": 1,
+      "message": "This doesn\u0027t work per the compile failures:\n\n../../content/public/android/javatests/src/org/chromium/content/browser/JavaBridgeBasicsTest.java:720: error: [JUnit4TestNotRun] This looks like a test method but is not run; please add @Test or @Ignore, or, if this is a helper method, reduce its visibility.\n    public void testReflectPrivateFieldRaisesException() throws Throwable {\n                ^\n    (see http://errorprone.info/bugpattern/JUnit4TestNotRun)\n  Did you mean \u0027@Test @DisabledTest(message \u003d \"https:\u0027 or \u0027@Test @Ignore @DisabledTest(message \u003d \"https:\u0027 or \u0027private void testReflectPrivateFieldRaisesException() throws Throwable {\u0027?",
+      "range": {
+        "startLine": 718,
+        "startChar": 8,
+        "endLine": 718,
+        "endChar": 15
+      },
+      "revId": "a5aab71d290a1a7a34ef8b8966fcbc96fd7719bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
