@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "34290c19_0d167d2e",
+        "filename": "net/http/http_stream_factory_impl_job.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 934,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-12-20T05:51:27Z",
+      "side": 1,
+      "message": "Is it safe to pass in base::Unretained here?",
+      "range": {
+        "startLine": 934,
+        "startChar": 72,
+        "endLine": 934,
+        "endChar": 0
+      },
+      "revId": "731fe510d80b2d16a2546478816c7edbf8b98eb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d3538e9_5d7b269b",
+        "filename": "net/http/http_stream_factory_impl_job.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 1027,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-12-20T05:51:27Z",
+      "side": 1,
+      "message": "Instead of setting this bool here, and then notifying the delegate after RunLoop, can we just notify the delegate here? Does something not work if we do that?",
+      "range": {
+        "startLine": 1027,
+        "startChar": 72,
+        "endLine": 1027,
+        "endChar": 0
+      },
+      "revId": "731fe510d80b2d16a2546478816c7edbf8b98eb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41eff890_b629b375",
+        "filename": "net/quic/chromium/quic_stream_factory.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-12-20T05:51:27Z",
+      "side": 1,
+      "message": "Can we also require that this is only called after Request() returns ERR_IO_PENDING, just to make it easier to think about?",
+      "range": {
+        "startLine": 122,
+        "startChar": 26,
+        "endLine": 122,
+        "endChar": 33
+      },
+      "revId": "731fe510d80b2d16a2546478816c7edbf8b98eb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8d79089_f490b47a",
+        "filename": "net/quic/chromium/quic_stream_factory.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-12-20T05:51:27Z",
+      "side": 1,
+      "message": "I\u0027m not entirely sure that I grok the implication of \"causes host resolution to occur\". When would that not be true?",
+      "range": {
+        "startLine": 123,
+        "startChar": 79,
+        "endLine": 123,
+        "endChar": 0
+      },
+      "revId": "731fe510d80b2d16a2546478816c7edbf8b98eb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8307a0ff_8b67637f",
+        "filename": "net/quic/chromium/quic_stream_factory.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-12-20T05:51:27Z",
+      "side": 1,
+      "message": "Seems like a better name for this would be something like\n\nbool WaitForHostResolution(callback);\n\nThat would allow the description to be simplified to something like:\n\nIf host resolution has already occurred, returns false. If host resolution has not yet occurred, returns true and will invoke |callback| when it does, unless the job finishes synchronously after host resolution in which case callback will not be invoked.",
+      "range": {
+        "startLine": 128,
+        "startChar": 24,
+        "endLine": 128,
+        "endChar": 0
+      },
+      "revId": "731fe510d80b2d16a2546478816c7edbf8b98eb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e2d1e97_fa004004",
+        "filename": "net/quic/chromium/quic_stream_factory.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-12-20T05:51:27Z",
+      "side": 1,
+      "message": "Can this be a OnceCallback()? (or is it OnceClosure)",
+      "range": {
+        "startLine": 129,
+        "startChar": 52,
+        "endLine": 129,
+        "endChar": 68
+      },
+      "revId": "731fe510d80b2d16a2546478816c7edbf8b98eb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
