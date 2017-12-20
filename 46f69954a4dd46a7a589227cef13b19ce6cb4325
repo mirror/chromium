@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "6f99cb6c_da09ccc3",
+        "filename": "third_party/WebKit/Source/platform/wtf/ConstructTraits.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-12-20T15:08:11Z",
+      "side": 1,
+      "message": "How are you planning to handle HeapHashTable, HeapTerminatedArray, HeapListHashSet...?",
+      "parentUuid": "a3dca8c2_e3ec0c4a",
+      "revId": "46f69954a4dd46a7a589227cef13b19ce6cb4325",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e801e8dd_bb7dbb9e",
         "filename": "third_party/WebKit/Source/platform/wtf/Vector.h",
         "patchSetId": 12
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "We could do that but then the specialization for Member\u003cT\u003e would involve HeapAllocator which does not seem like a good design.\n\nI got used to the concept of specializing on traits on not the allocator.\n\nLet me know if you feel strongly about this one.",
       "parentUuid": "e801e8dd_bb7dbb9e",
+      "revId": "46f69954a4dd46a7a589227cef13b19ce6cb4325",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37af05a8_f27aa646",
+        "filename": "third_party/WebKit/Source/platform/wtf/Vector.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-12-20T15:08:11Z",
+      "side": 1,
+      "message": "Okay.\n\nI\u0027d just say that the common pattern in oilpan is to define IsMember in Member.h and use IsMember\u003cT\u003e::value in other places (like HeapAllocator).",
+      "parentUuid": "0e584f8d_e6ef92ac",
       "revId": "46f69954a4dd46a7a589227cef13b19ce6cb4325",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
