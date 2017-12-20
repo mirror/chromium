@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "20e3d285_af98e83c",
+        "filename": "chrome/browser/ui/views/autofill/save_card_bubble_views_browsertest_base.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 444,
+      "author": {
+        "id": 1123929
+      },
+      "writtenOn": "2017-12-20T19:37:03Z",
+      "side": 1,
+      "message": "I think you could factor out the clicking logic in ClickOnDialogViewWithIdAndWait into a new ClickOnDialogView(views::View*) and have\n\n- your tests call ClickOnDialogView(save_card_bubble_views-\u003eGetBubbleFrameView()-\u003eGetCloseButtonForTest()) instead of this function\n- ClickOnDialogViewWithIdAndWait call ClickOnDialogView(FindViewInBubbleById(view_id))\n\nThis way you\u0027re not shortcutting through to the pressed handler directly and reducing the duplicated \"click on this view\" logic. WDYT?",
+      "revId": "6062ddd63445c5bd626ce429e8d973949ae286e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2a36d39c_8bd86c5a",
         "filename": "components/test/data/autofill/credit_card_upload_form_address_and_cc.html",
         "patchSetId": 1
@@ -13,6 +30,30 @@
       "writtenOn": "2017-12-20T19:17:14Z",
       "side": 1,
       "message": "is this going to cause issues in a few years or when run on a system with a system clock set a few years ahead?",
+      "range": {
+        "startLine": 75,
+        "startChar": 62,
+        "endLine": 75,
+        "endChar": 66
+      },
+      "revId": "6062ddd63445c5bd626ce429e8d973949ae286e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9530c0cc_6b30f82a",
+        "filename": "components/test/data/autofill/credit_card_upload_form_address_and_cc.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1123929
+      },
+      "writtenOn": "2017-12-20T19:37:03Z",
+      "side": 1,
+      "message": "Yeah, sebsg@ fixed some similar issues very recently in https://chromium-review.googlesource.com/c/chromium/src/+/809724. Any chance we can use a similar change here?",
+      "parentUuid": "2a36d39c_8bd86c5a",
       "range": {
         "startLine": 75,
         "startChar": 62,
