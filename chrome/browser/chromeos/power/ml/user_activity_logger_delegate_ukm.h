@@ -35,7 +35,11 @@ class UserActivityLoggerDelegateUkm : public UserActivityLoggerDelegate {
   ukm::UkmRecorder* ukm_recorder_;  // not owned
 
   // Source IDs of open tabs' URLs.
+  // The first URL is the active tab of the last active browser (if it exists).
+  // Subsequent URLs are arranged by last active browsers.
   std::vector<ukm::SourceId> source_ids_;
+
+  bool has_active_tab_ = false;
 
   DISALLOW_COPY_AND_ASSIGN(UserActivityLoggerDelegateUkm);
 };
