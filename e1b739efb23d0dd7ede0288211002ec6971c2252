@@ -19,6 +19,46 @@
     },
     {
       "key": {
+        "uuid": "82beeee5_a73ba05c",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-12-20T08:06:05Z",
+      "side": 1,
+      "message": "I guess using bare base::Histogram here is to pass the flag and to call AddCount() thaose are not supported in platform/Histogram.h. But could you modify Histogram.h to support them?\n\nI\u0027d keep metrics code in this source file to be consistent as possible, and having AddCount() and flag in blink sounds useful.\n\nAlso, static_casts\u0027 target type are not accurate here, they should be casts to Sample or uint32_t. For Sample type, this file has ToSample(), and we may need ToBucketCount() for ...hum... bucket_count is uint32_t in base/, but is int32_t in platform/Histogram :(",
+      "revId": "e1b739efb23d0dd7ede0288211002ec6971c2252",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "557863e0_05b15cb0",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-12-20T08:06:05Z",
+      "side": 1,
+      "message": "I think your new one can replace these metrics.\nIf you also agreed, can you remove these old metrics?\n\nI just didn\u0027t know that AddCount() can work nicely like your change.",
+      "range": {
+        "startLine": 184,
+        "startChar": 1,
+        "endLine": 216,
+        "endChar": 50
+      },
+      "revId": "e1b739efb23d0dd7ede0288211002ec6971c2252",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "40b09160_1ac976c6",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.cpp",
         "patchSetId": 1
