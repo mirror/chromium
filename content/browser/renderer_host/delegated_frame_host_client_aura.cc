@@ -10,6 +10,7 @@
 #include "ui/aura/window.h"
 #include "ui/aura/window_event_dispatcher.h"
 #include "ui/aura/window_tree_host.h"
+#include "ui/base/layout.h"
 #include "ui/compositor/layer.h"
 
 namespace content {
@@ -41,9 +42,18 @@ SkColor DelegatedFrameHostClientAura::DelegatedFrameHostGetGutterColor(
   return color;
 }
 
-gfx::Size DelegatedFrameHostClientAura::DelegatedFrameHostDesiredSizeInDIP()
-    const {
-  return render_widget_host_view_->window_->bounds().size();
+void DelegatedFrameHostClientAura::DelegatedFrameHostDesiredSize(
+    gfx::Size* size_in_dip,
+    float* scale_factor) const {
+  if (size_in_dip)
+    *size_in_dip = render_widget_host_view_->window_->bounds().size();
+  // This value is likely to race with allocation of local surface ids.
+  // TODO(ccameron): Ensure that this be updated atomically with the value
+  // returned by GetLocalSurfaceId.
+  if (scale_factor) {
+    *scale_factor =
+        ui::GetScaleFactorForNativeView(render_widget_host_view_->window_);
+  }
 }
 
 bool DelegatedFrameHostClientAura::DelegatedFrameCanCreateResizeLock() const {

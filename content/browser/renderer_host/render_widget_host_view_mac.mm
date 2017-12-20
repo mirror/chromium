@@ -1087,14 +1087,14 @@ void RenderWidgetHostViewMac::SetTooltipText(
 }
 
 void RenderWidgetHostViewMac::UpdateScreenInfo(gfx::NativeView view) {
-  RenderWidgetHostViewBase::UpdateScreenInfo(view);
-
-  if (!render_widget_host_ || !render_widget_host_->auto_resize_enabled())
-    return;
-
-  render_widget_host_->DidAllocateLocalSurfaceIdForAutoResize(
-      render_widget_host_->last_auto_resize_request_number());
   browser_compositor_->WasResized();
+  RenderWidgetHostViewBase::UpdateScreenInfo(view);
+}
+
+void RenderWidgetHostViewMac::GetRequestedRendererSize(
+    gfx::Size* dip_size,
+    float* scale_factor) const {
+  browser_compositor_->DelegatedFrameHostDesiredSize(dip_size, scale_factor);
 }
 
 bool RenderWidgetHostViewMac::SupportsSpeech() const {
@@ -1782,19 +1782,6 @@ void RenderWidgetHostViewMac::OnDisplayMetricsChanged(
   display::Screen* screen = display::Screen::GetScreen();
   if (display.id() != screen->GetDisplayNearestView(cocoa_view_).id())
     return;
-
-  if (changed_metrics & DisplayObserver::DISPLAY_METRIC_DEVICE_SCALE_FACTOR) {
-    RenderWidgetHostImpl* host =
-        RenderWidgetHostImpl::From(GetRenderWidgetHost());
-    if (host) {
-      if (host->auto_resize_enabled()) {
-        host->DidAllocateLocalSurfaceIdForAutoResize(
-            host->last_auto_resize_request_number());
-      }
-      host->WasResized();
-    }
-  }
-
   UpdateBackingStoreProperties();
 }
 

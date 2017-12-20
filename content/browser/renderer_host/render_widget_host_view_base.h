@@ -185,7 +185,8 @@ class CONTENT_EXPORT RenderWidgetHostViewBase : public RenderWidgetHostView,
 
   // The requested size of the renderer. May differ from GetViewBounds().size()
   // when the view requires additional throttling.
-  virtual gfx::Size GetRequestedRendererSize() const;
+  virtual void GetRequestedRendererSize(gfx::Size* dip_size,
+                                        float* scale_factor) const;
 
   // The size of the view's backing surface in non-DPI-adjusted pixels.
   virtual gfx::Size GetPhysicalBackingSize() const;
