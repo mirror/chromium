@@ -1217,11 +1217,15 @@ group("devtools_eslint") {
     ".eslintignore",
     ".eslintrc.js",
     "front_end/",
-    "scripts/buildbot/run_eslint.py",
-    "scripts/local_node/",
+    "scripts/lint_javascript.py",
+    "scripts/local_node.py",
     "//testing/scripts/common.py",
     "//testing/scripts/run_devtools_check.py",
     "//testing/xvfb.py",
     "//third_party/devtools-node-modules/",
+    "//third_party/node/node.py",
+
+    # This should only be run on Linux bots
+    "//third_party/node/linux/node-linux-x64/"
   ]
 }
