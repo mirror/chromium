@@ -63,8 +63,8 @@ void MemoryInstrumentation::RequestGlobalDumpAndAppendToTrace(
 
 void MemoryInstrumentation::GetVmRegionsForHeapProfiler(
     RequestGlobalDumpCallback callback) {
-  const auto& coordinator = GetCoordinatorBindingForCurrentThread();
-  coordinator->GetVmRegionsForHeapProfiler(callback);
+  const auto& heap_profiling = GetHeapProfilingBindingForCurrentThread();
+  heap_profiling->GetVmRegionsForHeapProfiler(callback);
 }
 
 const mojom::CoordinatorPtr&
@@ -92,6 +92,35 @@ MemoryInstrumentation::GetCoordinatorBindingForCurrentThread() {
 void MemoryInstrumentation::BindCoordinatorRequestOnConnectorThread(
     mojom::CoordinatorRequest coordinator_request) {
   connector_->BindInterface(service_name_, std::move(coordinator_request));
+}
+
+const mojom::HeapProfilingPtr&
+MemoryInstrumentation::GetHeapProfilingBindingForCurrentThread() {
+  mojom::HeapProfilingPtr* heap_profiling =
+      reinterpret_cast<mojom::HeapProfilingPtr*>(tls_heap_profiling_.Get());
+  if (!heap_profiling) {
+    heap_profiling = new mojom::HeapProfilingPtr();
+    tls_heap_profiling_.Set(heap_profiling);
+    mojom::HeapProfilingRequest heap_profiling_req =
+        mojo::MakeRequest(heap_profiling);
+
+    // The connector is not thread safe and BindInterface must be called on its
+    // own thread. Thankfully, the binding can happen _after_ having started
+    // invoking methods on the |heap_profiling| proxy objects.
+    connector_task_runner_->PostTask(
+        FROM_HERE,
+        base::Bind(
+            &MemoryInstrumentation::BindHeapProfilingRequestOnConnectorThread,
+            base::Unretained(this),
+            base::Passed(std::move(heap_profiling_req))));
+  }
+  DCHECK(*heap_profiling);
+  return *heap_profiling;
+}
+
+void MemoryInstrumentation::BindHeapProfilingRequestOnConnectorThread(
+    mojom::HeapProfilingRequest heap_profiling_request) {
+  connector_->BindInterface(service_name_, std::move(heap_profiling_request));
 }
 
 }  // namespace memory_instrumentation
