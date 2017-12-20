@@ -83,13 +83,14 @@ class ServiceTestClient : public service_manager::test::ServiceTestClient,
   base::OnceCallback<void(service_manager::Connector*)> connector_callback_;
 };
 
-constexpr int kInitialValue = 1;
-constexpr int kUpdatedValue = 2;
-constexpr char kKey[] = "some_key";
-constexpr char kOtherKey[] = "some_other_key";
-constexpr char kDictionaryKey[] = "a.dictionary.pref";
-constexpr char kInitialKey[] = "initial_key";
-constexpr char kOtherInitialKey[] = "other_initial_key";
+constexpr int kPrefServiceFactoryUnittestInitialValue = 1;
+constexpr int kPrefServiceFactoryUnittestUpdatedValue = 2;
+constexpr char kPrefServiceFactoryUnittestKey[] = "some_key";
+constexpr char kPrefServiceFactoryUnittestOtherKey[] = "some_other_key";
+constexpr char kPrefServiceFactoryUnittestDictionaryKey[] = "a.dictionary.pref";
+constexpr char kPrefServiceFactoryUnittestInitialKey[] = "initial_key";
+constexpr char kPrefServiceFactoryUnittestOtherInitialKey[] =
+    "other_initial_key";
 
 class PrefServiceFactoryTest : public service_manager::test::ServiceTest {
  public:
@@ -169,31 +170,38 @@ class PrefServiceFactoryTest : public service_manager::test::ServiceTest {
   scoped_refptr<PrefRegistrySimple> GetInitialPrefRegistry() {
     if (!pref_registry_) {
       pref_registry_ = base::MakeRefCounted<PrefRegistrySimple>();
-      pref_registry_->RegisterIntegerPref(kInitialKey, kInitialValue,
-                                          PrefRegistry::PUBLIC);
-      pref_registry_->RegisterIntegerPref(kOtherInitialKey, kInitialValue,
-                                          PrefRegistry::PUBLIC);
+      pref_registry_->RegisterIntegerPref(
+          kPrefServiceFactoryUnittestInitialKey,
+          kPrefServiceFactoryUnittestInitialValue, PrefRegistry::PUBLIC);
+      pref_registry_->RegisterIntegerPref(
+          kPrefServiceFactoryUnittestOtherInitialKey,
+          kPrefServiceFactoryUnittestInitialValue, PrefRegistry::PUBLIC);
     }
     return pref_registry_;
   }
 
   scoped_refptr<PrefRegistrySimple> CreateDefaultPrefRegistry() {
     auto pref_registry = base::MakeRefCounted<PrefRegistrySimple>();
-    pref_registry->RegisterIntegerPref(kKey, kInitialValue,
+    pref_registry->RegisterIntegerPref(kPrefServiceFactoryUnittestKey,
+                                       kPrefServiceFactoryUnittestInitialValue,
                                        PrefRegistry::PUBLIC);
-    pref_registry->RegisterIntegerPref(kOtherKey, kInitialValue,
+    pref_registry->RegisterIntegerPref(kPrefServiceFactoryUnittestOtherKey,
+                                       kPrefServiceFactoryUnittestInitialValue,
                                        PrefRegistry::PUBLIC);
-    pref_registry->RegisterDictionaryPref(kDictionaryKey, PrefRegistry::PUBLIC);
-    pref_registry->RegisterForeignPref(kInitialKey);
-    pref_registry->RegisterForeignPref(kOtherInitialKey);
+    pref_registry->RegisterDictionaryPref(
+        kPrefServiceFactoryUnittestDictionaryKey, PrefRegistry::PUBLIC);
+    pref_registry->RegisterForeignPref(kPrefServiceFactoryUnittestInitialKey);
+    pref_registry->RegisterForeignPref(
+        kPrefServiceFactoryUnittestOtherInitialKey);
     return pref_registry;
   }
 
   scoped_refptr<PrefRegistrySimple> CreateDefaultForeignPrefRegistry() {
     auto pref_registry = base::MakeRefCounted<PrefRegistrySimple>();
-    pref_registry->RegisterForeignPref(kKey);
-    pref_registry->RegisterForeignPref(kOtherKey);
-    pref_registry->RegisterForeignPref(kDictionaryKey);
+    pref_registry->RegisterForeignPref(kPrefServiceFactoryUnittestKey);
+    pref_registry->RegisterForeignPref(kPrefServiceFactoryUnittestOtherKey);
+    pref_registry->RegisterForeignPref(
+        kPrefServiceFactoryUnittestDictionaryKey);
     return pref_registry;
   }
 
@@ -253,9 +261,12 @@ class PrefServiceFactoryTest : public service_manager::test::ServiceTest {
 TEST_F(PrefServiceFactoryTest, Basic) {
   auto pref_service = Create();
 
-  EXPECT_EQ(kInitialValue, pref_service->GetInteger(kKey));
-  pref_service->SetInteger(kKey, kUpdatedValue);
-  EXPECT_EQ(kUpdatedValue, pref_service->GetInteger(kKey));
+  EXPECT_EQ(kPrefServiceFactoryUnittestInitialValue,
+            pref_service->GetInteger(kPrefServiceFactoryUnittestKey));
+  pref_service->SetInteger(kPrefServiceFactoryUnittestKey,
+                           kPrefServiceFactoryUnittestUpdatedValue);
+  EXPECT_EQ(kPrefServiceFactoryUnittestUpdatedValue,
+            pref_service->GetInteger(kPrefServiceFactoryUnittestKey));
 }
 
 // Check that updates in one client eventually propagates to the other.
@@ -263,28 +274,43 @@ TEST_F(PrefServiceFactoryTest, MultipleClients) {
   auto pref_service = Create();
   auto pref_service2 = CreateForeign();
 
-  EXPECT_EQ(kInitialValue, pref_service->GetInteger(kKey));
-  EXPECT_EQ(kInitialValue, pref_service2->GetInteger(kKey));
-  pref_service->SetInteger(kKey, kUpdatedValue);
-  WaitForPrefChange(pref_service2.get(), kKey);
-  EXPECT_EQ(kUpdatedValue, pref_service2->GetInteger(kKey));
+  EXPECT_EQ(kPrefServiceFactoryUnittestInitialValue,
+            pref_service->GetInteger(kPrefServiceFactoryUnittestKey));
+  EXPECT_EQ(kPrefServiceFactoryUnittestInitialValue,
+            pref_service2->GetInteger(kPrefServiceFactoryUnittestKey));
+  pref_service->SetInteger(kPrefServiceFactoryUnittestKey,
+                           kPrefServiceFactoryUnittestUpdatedValue);
+  WaitForPrefChange(pref_service2.get(), kPrefServiceFactoryUnittestKey);
+  EXPECT_EQ(kPrefServiceFactoryUnittestUpdatedValue,
+            pref_service2->GetInteger(kPrefServiceFactoryUnittestKey));
 }
 
 // Check that updates in one client eventually propagates to the other.
 TEST_F(PrefServiceFactoryTest, InternalAndExternalClients) {
   auto pref_service2 = Create();
 
-  EXPECT_EQ(kInitialValue, pref_service()->GetInteger(kInitialKey));
-  EXPECT_EQ(kInitialValue, pref_service2->GetInteger(kInitialKey));
-  EXPECT_EQ(kInitialValue, pref_service()->GetInteger(kOtherInitialKey));
-  EXPECT_EQ(kInitialValue, pref_service2->GetInteger(kOtherInitialKey));
-  pref_service()->SetInteger(kInitialKey, kUpdatedValue);
-  WaitForPrefChange(pref_service2.get(), kInitialKey);
-  EXPECT_EQ(kUpdatedValue, pref_service2->GetInteger(kInitialKey));
+  EXPECT_EQ(kPrefServiceFactoryUnittestInitialValue,
+            pref_service()->GetInteger(kPrefServiceFactoryUnittestInitialKey));
+  EXPECT_EQ(kPrefServiceFactoryUnittestInitialValue,
+            pref_service2->GetInteger(kPrefServiceFactoryUnittestInitialKey));
+  EXPECT_EQ(
+      kPrefServiceFactoryUnittestInitialValue,
+      pref_service()->GetInteger(kPrefServiceFactoryUnittestOtherInitialKey));
+  EXPECT_EQ(
+      kPrefServiceFactoryUnittestInitialValue,
+      pref_service2->GetInteger(kPrefServiceFactoryUnittestOtherInitialKey));
+  pref_service()->SetInteger(kPrefServiceFactoryUnittestInitialKey,
+                             kPrefServiceFactoryUnittestUpdatedValue);
+  WaitForPrefChange(pref_service2.get(), kPrefServiceFactoryUnittestInitialKey);
+  EXPECT_EQ(kPrefServiceFactoryUnittestUpdatedValue,
+            pref_service2->GetInteger(kPrefServiceFactoryUnittestInitialKey));
 
-  pref_service2->SetInteger(kOtherInitialKey, kUpdatedValue);
-  WaitForPrefChange(pref_service(), kOtherInitialKey);
-  EXPECT_EQ(kUpdatedValue, pref_service()->GetInteger(kOtherInitialKey));
+  pref_service2->SetInteger(kPrefServiceFactoryUnittestOtherInitialKey,
+                            kPrefServiceFactoryUnittestUpdatedValue);
+  WaitForPrefChange(pref_service(), kPrefServiceFactoryUnittestOtherInitialKey);
+  EXPECT_EQ(
+      kPrefServiceFactoryUnittestUpdatedValue,
+      pref_service()->GetInteger(kPrefServiceFactoryUnittestOtherInitialKey));
 }
 
 TEST_F(PrefServiceFactoryTest, MultipleConnectionsFromSingleClient) {
@@ -303,12 +329,14 @@ TEST_F(PrefServiceFactoryTest, MultipleClients_Defaults) {
     auto done_closure = base::BarrierClosure(2, run_loop.QuitClosure());
 
     auto pref_registry = base::MakeRefCounted<PrefRegistrySimple>();
-    pref_registry->RegisterIntegerPref(kKey, kInitialValue,
+    pref_registry->RegisterIntegerPref(kPrefServiceFactoryUnittestKey,
+                                       kPrefServiceFactoryUnittestInitialValue,
                                        PrefRegistry::PUBLIC);
-    pref_registry->RegisterForeignPref(kOtherKey);
+    pref_registry->RegisterForeignPref(kPrefServiceFactoryUnittestOtherKey);
     auto pref_registry2 = base::MakeRefCounted<PrefRegistrySimple>();
-    pref_registry2->RegisterForeignPref(kKey);
-    pref_registry2->RegisterIntegerPref(kOtherKey, kInitialValue,
+    pref_registry2->RegisterForeignPref(kPrefServiceFactoryUnittestKey);
+    pref_registry2->RegisterIntegerPref(kPrefServiceFactoryUnittestOtherKey,
+                                        kPrefServiceFactoryUnittestInitialValue,
                                         PrefRegistry::PUBLIC);
     CreateAsync(std::move(pref_registry), connector(), done_closure,
                 &pref_service);
@@ -317,28 +345,36 @@ TEST_F(PrefServiceFactoryTest, MultipleClients_Defaults) {
     run_loop.Run();
   }
 
-  EXPECT_EQ(kInitialValue, pref_service->GetInteger(kKey));
-  EXPECT_EQ(kInitialValue, pref_service2->GetInteger(kKey));
-  EXPECT_EQ(kInitialValue, pref_service->GetInteger(kOtherKey));
-  EXPECT_EQ(kInitialValue, pref_service2->GetInteger(kOtherKey));
+  EXPECT_EQ(kPrefServiceFactoryUnittestInitialValue,
+            pref_service->GetInteger(kPrefServiceFactoryUnittestKey));
+  EXPECT_EQ(kPrefServiceFactoryUnittestInitialValue,
+            pref_service2->GetInteger(kPrefServiceFactoryUnittestKey));
+  EXPECT_EQ(kPrefServiceFactoryUnittestInitialValue,
+            pref_service->GetInteger(kPrefServiceFactoryUnittestOtherKey));
+  EXPECT_EQ(kPrefServiceFactoryUnittestInitialValue,
+            pref_service2->GetInteger(kPrefServiceFactoryUnittestOtherKey));
 }
 
 // Check that read-only pref store changes are observed.
 TEST_F(PrefServiceFactoryTest, ReadOnlyPrefStore) {
   auto pref_service = Create();
 
-  EXPECT_EQ(kInitialValue, pref_service->GetInteger(kKey));
+  EXPECT_EQ(kPrefServiceFactoryUnittestInitialValue,
+            pref_service->GetInteger(kPrefServiceFactoryUnittestKey));
 
   below_user_prefs_pref_store()->SetValue(
-      kKey, std::make_unique<base::Value>(kUpdatedValue), 0);
-  WaitForPrefChange(pref_service.get(), kKey);
-  EXPECT_EQ(kUpdatedValue, pref_service->GetInteger(kKey));
-  pref_service->SetInteger(kKey, 3);
-  EXPECT_EQ(3, pref_service->GetInteger(kKey));
-  above_user_prefs_pref_store()->SetValue(kKey,
+      kPrefServiceFactoryUnittestKey,
+      std::make_unique<base::Value>(kPrefServiceFactoryUnittestUpdatedValue),
+      0);
+  WaitForPrefChange(pref_service.get(), kPrefServiceFactoryUnittestKey);
+  EXPECT_EQ(kPrefServiceFactoryUnittestUpdatedValue,
+            pref_service->GetInteger(kPrefServiceFactoryUnittestKey));
+  pref_service->SetInteger(kPrefServiceFactoryUnittestKey, 3);
+  EXPECT_EQ(3, pref_service->GetInteger(kPrefServiceFactoryUnittestKey));
+  above_user_prefs_pref_store()->SetValue(kPrefServiceFactoryUnittestKey,
                                           std::make_unique<base::Value>(4), 0);
-  WaitForPrefChange(pref_service.get(), kKey);
-  EXPECT_EQ(4, pref_service->GetInteger(kKey));
+  WaitForPrefChange(pref_service.get(), kPrefServiceFactoryUnittestKey);
+  EXPECT_EQ(4, pref_service->GetInteger(kPrefServiceFactoryUnittestKey));
 }
 
 // Check that updates to read-only pref stores are correctly layered.
@@ -346,18 +382,27 @@ TEST_F(PrefServiceFactoryTest, ReadOnlyPrefStore_Layering) {
   auto pref_service = Create();
 
   above_user_prefs_pref_store()->SetValue(
-      kKey, std::make_unique<base::Value>(kInitialValue), 0);
-  WaitForPrefChange(pref_service.get(), kKey);
-  EXPECT_EQ(kInitialValue, pref_service->GetInteger(kKey));
+      kPrefServiceFactoryUnittestKey,
+      std::make_unique<base::Value>(kPrefServiceFactoryUnittestInitialValue),
+      0);
+  WaitForPrefChange(pref_service.get(), kPrefServiceFactoryUnittestKey);
+  EXPECT_EQ(kPrefServiceFactoryUnittestInitialValue,
+            pref_service->GetInteger(kPrefServiceFactoryUnittestKey));
 
   below_user_prefs_pref_store()->SetValue(
-      kKey, std::make_unique<base::Value>(kUpdatedValue), 0);
-  // This update is needed to check that the change to kKey has propagated even
-  // though we will not observe it change.
+      kPrefServiceFactoryUnittestKey,
+      std::make_unique<base::Value>(kPrefServiceFactoryUnittestUpdatedValue),
+      0);
+  // This update is needed to check that the change to
+  // kPrefServiceFactoryUnittestKey has propagated even though we will not
+  // observe it change.
   below_user_prefs_pref_store()->SetValue(
-      kOtherKey, std::make_unique<base::Value>(kUpdatedValue), 0);
-  WaitForPrefChange(pref_service.get(), kOtherKey);
-  EXPECT_EQ(kInitialValue, pref_service->GetInteger(kKey));
+      kPrefServiceFactoryUnittestOtherKey,
+      std::make_unique<base::Value>(kPrefServiceFactoryUnittestUpdatedValue),
+      0);
+  WaitForPrefChange(pref_service.get(), kPrefServiceFactoryUnittestOtherKey);
+  EXPECT_EQ(kPrefServiceFactoryUnittestInitialValue,
+            pref_service->GetInteger(kPrefServiceFactoryUnittestKey));
 }
 
 // Check that writes to user prefs are correctly layered with read-only
@@ -365,18 +410,19 @@ TEST_F(PrefServiceFactoryTest, ReadOnlyPrefStore_Layering) {
 TEST_F(PrefServiceFactoryTest, ReadOnlyPrefStore_UserPrefStoreLayering) {
   auto pref_service = Create();
 
-  above_user_prefs_pref_store()->SetValue(kKey,
+  above_user_prefs_pref_store()->SetValue(kPrefServiceFactoryUnittestKey,
                                           std::make_unique<base::Value>(2), 0);
-  WaitForPrefChange(pref_service.get(), kKey);
-  EXPECT_EQ(2, pref_service->GetInteger(kKey));
+  WaitForPrefChange(pref_service.get(), kPrefServiceFactoryUnittestKey);
+  EXPECT_EQ(2, pref_service->GetInteger(kPrefServiceFactoryUnittestKey));
 
-  pref_service->SetInteger(kKey, 3);
-  EXPECT_EQ(2, pref_service->GetInteger(kKey));
+  pref_service->SetInteger(kPrefServiceFactoryUnittestKey, 3);
+  EXPECT_EQ(2, pref_service->GetInteger(kPrefServiceFactoryUnittestKey));
 }
 
 void Fail(PrefService* pref_service) {
   FAIL() << "Unexpected change notification: "
-         << *pref_service->GetDictionary(kDictionaryKey);
+         << *pref_service->GetDictionary(
+                kPrefServiceFactoryUnittestDictionaryKey);
 }
 
 TEST_F(PrefServiceFactoryTest, MultipleClients_SubPrefUpdates_Basic) {
@@ -499,11 +545,12 @@ TEST_F(PrefServiceFactoryTest, MultipleClients_SubPrefUpdates_Basic) {
         EXPECT_EQ(dict, *out);
       },
   };
-  int current_value = kInitialValue + 1;
+  int current_value = kPrefServiceFactoryUnittestInitialValue + 1;
   for (auto& mutation : updates) {
     base::Value expected_value;
     {
-      ScopedDictionaryPrefUpdate update(pref_service.get(), kDictionaryKey);
+      ScopedDictionaryPrefUpdate update(
+          pref_service.get(), kPrefServiceFactoryUnittestDictionaryKey);
       EXPECT_EQ(update->AsConstDictionary()->empty(), update->empty());
       EXPECT_EQ(update->AsConstDictionary()->size(), update->size());
       mutation(&update);
@@ -512,27 +559,33 @@ TEST_F(PrefServiceFactoryTest, MultipleClients_SubPrefUpdates_Basic) {
       expected_value = update->AsConstDictionary()->Clone();
     }
 
-    EXPECT_EQ(expected_value, *pref_service->GetDictionary(kDictionaryKey));
-    WaitForPrefChange(pref_service2.get(), kDictionaryKey);
-    EXPECT_EQ(expected_value, *pref_service2->GetDictionary(kDictionaryKey));
+    EXPECT_EQ(expected_value, *pref_service->GetDictionary(
+                                  kPrefServiceFactoryUnittestDictionaryKey));
+    WaitForPrefChange(pref_service2.get(),
+                      kPrefServiceFactoryUnittestDictionaryKey);
+    EXPECT_EQ(expected_value, *pref_service2->GetDictionary(
+                                  kPrefServiceFactoryUnittestDictionaryKey));
 
     {
       // Apply the same mutation again. Each mutation should be idempotent so
       // should not trigger a notification.
-      ScopedDictionaryPrefUpdate update(pref_service.get(), kDictionaryKey);
+      ScopedDictionaryPrefUpdate update(
+          pref_service.get(), kPrefServiceFactoryUnittestDictionaryKey);
       mutation(&update);
       EXPECT_EQ(expected_value, *update->AsConstDictionary());
     }
     {
-      // Watch for an unexpected change to kDictionaryKey.
+      // Watch for an unexpected change to
+      // kPrefServiceFactoryUnittestDictionaryKey.
       PrefChangeRegistrar registrar;
       registrar.Init(pref_service2.get());
-      registrar.Add(kDictionaryKey, base::Bind(&Fail, pref_service2.get()));
+      registrar.Add(kPrefServiceFactoryUnittestDictionaryKey,
+                    base::Bind(&Fail, pref_service2.get()));
 
       // Make and wait for a change to another pref to ensure an unexpected
-      // change to kDictionaryKey is detected.
-      pref_service->SetInteger(kKey, ++current_value);
-      WaitForPrefChange(pref_service2.get(), kKey);
+      // change to kPrefServiceFactoryUnittestDictionaryKey is detected.
+      pref_service->SetInteger(kPrefServiceFactoryUnittestKey, ++current_value);
+      WaitForPrefChange(pref_service2.get(), kPrefServiceFactoryUnittestKey);
     }
   }
 }
@@ -541,18 +594,26 @@ TEST_F(PrefServiceFactoryTest, MultipleClients_SubPrefUpdates_Erase) {
   auto pref_service = Create();
   auto pref_service2 = CreateForeign();
   {
-    ScopedDictionaryPrefUpdate update(pref_service.get(), kDictionaryKey);
+    ScopedDictionaryPrefUpdate update(pref_service.get(),
+                                      kPrefServiceFactoryUnittestDictionaryKey);
     update->SetInteger("path.to.integer", 1);
   }
-  WaitForPrefChange(pref_service2.get(), kDictionaryKey);
-  EXPECT_FALSE(pref_service2->GetDictionary(kDictionaryKey)->empty());
+  WaitForPrefChange(pref_service2.get(),
+                    kPrefServiceFactoryUnittestDictionaryKey);
+  EXPECT_FALSE(
+      pref_service2->GetDictionary(kPrefServiceFactoryUnittestDictionaryKey)
+          ->empty());
 
   {
-    ScopedDictionaryPrefUpdate update(pref_service.get(), kDictionaryKey);
+    ScopedDictionaryPrefUpdate update(pref_service.get(),
+                                      kPrefServiceFactoryUnittestDictionaryKey);
     ASSERT_TRUE(update->RemovePath("path.to.integer", nullptr));
   }
-  WaitForPrefChange(pref_service2.get(), kDictionaryKey);
-  EXPECT_TRUE(pref_service2->GetDictionary(kDictionaryKey)->empty());
+  WaitForPrefChange(pref_service2.get(),
+                    kPrefServiceFactoryUnittestDictionaryKey);
+  EXPECT_TRUE(
+      pref_service2->GetDictionary(kPrefServiceFactoryUnittestDictionaryKey)
+          ->empty());
 }
 
 TEST_F(PrefServiceFactoryTest, MultipleClients_SubPrefUpdates_ClearDictionary) {
@@ -560,18 +621,26 @@ TEST_F(PrefServiceFactoryTest, MultipleClients_SubPrefUpdates_ClearDictionary) {
   auto pref_service2 = CreateForeign();
 
   {
-    ScopedDictionaryPrefUpdate update(pref_service.get(), kDictionaryKey);
+    ScopedDictionaryPrefUpdate update(pref_service.get(),
+                                      kPrefServiceFactoryUnittestDictionaryKey);
     update->SetInteger("path.to.integer", 1);
   }
-  WaitForPrefChange(pref_service2.get(), kDictionaryKey);
-  EXPECT_FALSE(pref_service2->GetDictionary(kDictionaryKey)->empty());
+  WaitForPrefChange(pref_service2.get(),
+                    kPrefServiceFactoryUnittestDictionaryKey);
+  EXPECT_FALSE(
+      pref_service2->GetDictionary(kPrefServiceFactoryUnittestDictionaryKey)
+          ->empty());
 
   {
-    ScopedDictionaryPrefUpdate update(pref_service.get(), kDictionaryKey);
+    ScopedDictionaryPrefUpdate update(pref_service.get(),
+                                      kPrefServiceFactoryUnittestDictionaryKey);
     update->Clear();
   }
-  WaitForPrefChange(pref_service2.get(), kDictionaryKey);
-  EXPECT_TRUE(pref_service2->GetDictionary(kDictionaryKey)->empty());
+  WaitForPrefChange(pref_service2.get(),
+                    kPrefServiceFactoryUnittestDictionaryKey);
+  EXPECT_TRUE(
+      pref_service2->GetDictionary(kPrefServiceFactoryUnittestDictionaryKey)
+          ->empty());
 }
 
 TEST_F(PrefServiceFactoryTest,
@@ -580,26 +649,36 @@ TEST_F(PrefServiceFactoryTest,
   auto pref_service2 = CreateForeign();
 
   {
-    ScopedDictionaryPrefUpdate update(pref_service.get(), kDictionaryKey);
-    update->SetInteger(kKey, kInitialValue);
+    ScopedDictionaryPrefUpdate update(pref_service.get(),
+                                      kPrefServiceFactoryUnittestDictionaryKey);
+    update->SetInteger(kPrefServiceFactoryUnittestKey,
+                       kPrefServiceFactoryUnittestInitialValue);
   }
-  WaitForPrefChange(pref_service2.get(), kDictionaryKey);
+  WaitForPrefChange(pref_service2.get(),
+                    kPrefServiceFactoryUnittestDictionaryKey);
   {
-    ScopedDictionaryPrefUpdate update(pref_service.get(), kDictionaryKey);
-    update->Remove(kKey, nullptr);
+    ScopedDictionaryPrefUpdate update(pref_service.get(),
+                                      kPrefServiceFactoryUnittestDictionaryKey);
+    update->Remove(kPrefServiceFactoryUnittestKey, nullptr);
   }
-  WaitForPrefChange(pref_service2.get(), kDictionaryKey);
-  EXPECT_TRUE(pref_service2->GetDictionary(kDictionaryKey)->empty());
+  WaitForPrefChange(pref_service2.get(),
+                    kPrefServiceFactoryUnittestDictionaryKey);
+  EXPECT_TRUE(
+      pref_service2->GetDictionary(kPrefServiceFactoryUnittestDictionaryKey)
+          ->empty());
 
   {
-    ScopedDictionaryPrefUpdate update(pref_service.get(), kDictionaryKey);
+    ScopedDictionaryPrefUpdate update(pref_service.get(),
+                                      kPrefServiceFactoryUnittestDictionaryKey);
     update->Clear();
   }
   PrefChangeRegistrar registrar;
   registrar.Init(pref_service2.get());
-  registrar.Add(kDictionaryKey, base::Bind(&Fail, pref_service2.get()));
-  pref_service->SetInteger(kKey, kUpdatedValue);
-  WaitForPrefChange(pref_service2.get(), kKey);
+  registrar.Add(kPrefServiceFactoryUnittestDictionaryKey,
+                base::Bind(&Fail, pref_service2.get()));
+  pref_service->SetInteger(kPrefServiceFactoryUnittestKey,
+                           kPrefServiceFactoryUnittestUpdatedValue);
+  WaitForPrefChange(pref_service2.get(), kPrefServiceFactoryUnittestKey);
 }
 
 class IncognitoPrefServiceFactoryTest
@@ -623,7 +702,9 @@ class IncognitoPrefServiceFactoryTest
 
   std::vector<const char*> GetOverlayPrefNames() {
     if (GetParam())
-      return {kInitialKey, kOtherInitialKey, kKey};
+      return {kPrefServiceFactoryUnittestInitialKey,
+              kPrefServiceFactoryUnittestOtherInitialKey,
+              kPrefServiceFactoryUnittestKey};
     return {};
   }
 };
@@ -632,17 +713,28 @@ class IncognitoPrefServiceFactoryTest
 TEST_P(IncognitoPrefServiceFactoryTest, InternalAndExternalClients) {
   auto pref_service2 = Create();
 
-  EXPECT_EQ(kInitialValue, pref_service()->GetInteger(kInitialKey));
-  EXPECT_EQ(kInitialValue, pref_service2->GetInteger(kInitialKey));
-  EXPECT_EQ(kInitialValue, pref_service()->GetInteger(kOtherInitialKey));
-  EXPECT_EQ(kInitialValue, pref_service2->GetInteger(kOtherInitialKey));
-  pref_service()->SetInteger(kInitialKey, kUpdatedValue);
-  WaitForPrefChange(pref_service2.get(), kInitialKey);
-  EXPECT_EQ(kUpdatedValue, pref_service2->GetInteger(kInitialKey));
+  EXPECT_EQ(kPrefServiceFactoryUnittestInitialValue,
+            pref_service()->GetInteger(kPrefServiceFactoryUnittestInitialKey));
+  EXPECT_EQ(kPrefServiceFactoryUnittestInitialValue,
+            pref_service2->GetInteger(kPrefServiceFactoryUnittestInitialKey));
+  EXPECT_EQ(
+      kPrefServiceFactoryUnittestInitialValue,
+      pref_service()->GetInteger(kPrefServiceFactoryUnittestOtherInitialKey));
+  EXPECT_EQ(
+      kPrefServiceFactoryUnittestInitialValue,
+      pref_service2->GetInteger(kPrefServiceFactoryUnittestOtherInitialKey));
+  pref_service()->SetInteger(kPrefServiceFactoryUnittestInitialKey,
+                             kPrefServiceFactoryUnittestUpdatedValue);
+  WaitForPrefChange(pref_service2.get(), kPrefServiceFactoryUnittestInitialKey);
+  EXPECT_EQ(kPrefServiceFactoryUnittestUpdatedValue,
+            pref_service2->GetInteger(kPrefServiceFactoryUnittestInitialKey));
 
-  pref_service2->SetInteger(kOtherInitialKey, kUpdatedValue);
-  WaitForPrefChange(pref_service(), kOtherInitialKey);
-  EXPECT_EQ(kUpdatedValue, pref_service()->GetInteger(kOtherInitialKey));
+  pref_service2->SetInteger(kPrefServiceFactoryUnittestOtherInitialKey,
+                            kPrefServiceFactoryUnittestUpdatedValue);
+  WaitForPrefChange(pref_service(), kPrefServiceFactoryUnittestOtherInitialKey);
+  EXPECT_EQ(
+      kPrefServiceFactoryUnittestUpdatedValue,
+      pref_service()->GetInteger(kPrefServiceFactoryUnittestOtherInitialKey));
 }
 
 // Check that updates in one client eventually propagates to the other.
@@ -650,11 +742,15 @@ TEST_P(IncognitoPrefServiceFactoryTest, MultipleClients) {
   auto pref_service = Create();
   auto pref_service2 = CreateForeign();
 
-  EXPECT_EQ(kInitialValue, pref_service->GetInteger(kKey));
-  EXPECT_EQ(kInitialValue, pref_service2->GetInteger(kKey));
-  pref_service->SetInteger(kKey, kUpdatedValue);
-  WaitForPrefChange(pref_service2.get(), kKey);
-  EXPECT_EQ(kUpdatedValue, pref_service2->GetInteger(kKey));
+  EXPECT_EQ(kPrefServiceFactoryUnittestInitialValue,
+            pref_service->GetInteger(kPrefServiceFactoryUnittestKey));
+  EXPECT_EQ(kPrefServiceFactoryUnittestInitialValue,
+            pref_service2->GetInteger(kPrefServiceFactoryUnittestKey));
+  pref_service->SetInteger(kPrefServiceFactoryUnittestKey,
+                           kPrefServiceFactoryUnittestUpdatedValue);
+  WaitForPrefChange(pref_service2.get(), kPrefServiceFactoryUnittestKey);
+  EXPECT_EQ(kPrefServiceFactoryUnittestUpdatedValue,
+            pref_service2->GetInteger(kPrefServiceFactoryUnittestKey));
 }
 
 INSTANTIATE_TEST_CASE_P(UnderlayOrOverlayPref,

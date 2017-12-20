@@ -18,9 +18,6 @@
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
-using testing::Invoke;
-using testing::WithoutArgs;
-
 namespace prefs {
 namespace {
 
@@ -72,8 +69,8 @@ class MockPrefStore : public ValueMapPrefStore {
   base::ObserverList<PrefStore::Observer, true> observers_;
 };
 
-constexpr char kKey[] = "path.to.key";
-constexpr char kOtherKey[] = "path.to.other_key";
+constexpr char kPrefStoreImplUnittestKey[] = "path.to.key";
+constexpr char kPrefStoreImplUnittestOtherKey[] = "path.to.other_key";
 
 void ExpectInitializationComplete(PrefStore* pref_store, bool success) {
   PrefStoreObserverMock observer;
@@ -81,7 +78,8 @@ void ExpectInitializationComplete(PrefStore* pref_store, bool success) {
   base::RunLoop run_loop;
   EXPECT_CALL(observer, OnPrefValueChanged("")).Times(0);
   EXPECT_CALL(observer, OnInitializationCompleted(success))
-      .WillOnce(WithoutArgs(Invoke([&run_loop]() { run_loop.Quit(); })));
+      .WillOnce(testing::WithoutArgs(
+          testing::Invoke([&run_loop]() { run_loop.Quit(); })));
   run_loop.Run();
   pref_store->RemoveObserver(&observer);
 }
@@ -91,7 +89,8 @@ void ExpectPrefChange(PrefStore* pref_store, base::StringPiece key) {
   pref_store->AddObserver(&observer);
   base::RunLoop run_loop;
   EXPECT_CALL(observer, OnPrefValueChanged(key.as_string()))
-      .WillOnce(WithoutArgs(Invoke([&run_loop]() { run_loop.Quit(); })));
+      .WillOnce(testing::WithoutArgs(
+          testing::Invoke([&run_loop]() { run_loop.Quit(); })));
   run_loop.Run();
   pref_store->RemoveObserver(&observer);
 }
@@ -114,7 +113,9 @@ class PrefStoreImplTest : public testing::Test {
     impl_ = std::make_unique<PrefStoreImpl>(std::move(backing_pref_store));
 
     if (observed_prefs.empty())
-      observed_prefs.insert(observed_prefs.end(), {kKey, kOtherKey});
+      observed_prefs.insert(
+          observed_prefs.end(),
+          {kPrefStoreImplUnittestKey, kPrefStoreImplUnittestOtherKey});
     pref_store_ = base::MakeRefCounted<PrefStoreClient>(
         impl_->AddObserver(observed_prefs));
   }
@@ -133,7 +134,8 @@ class PrefStoreImplTest : public testing::Test {
 
 TEST_F(PrefStoreImplTest, InitializationSuccess) {
   auto backing_pref_store = base::MakeRefCounted<MockPrefStore>();
-  backing_pref_store->SetValue(kKey, std::make_unique<base::Value>("value"), 0);
+  backing_pref_store->SetValue(kPrefStoreImplUnittestKey,
+                               std::make_unique<base::Value>("value"), 0);
   CreateImpl(backing_pref_store);
   EXPECT_FALSE(pref_store()->IsInitializationComplete());
 
@@ -144,7 +146,8 @@ TEST_F(PrefStoreImplTest, InitializationSuccess) {
 
 TEST_F(PrefStoreImplTest, InitializationFailure) {
   auto backing_pref_store = base::MakeRefCounted<MockPrefStore>();
-  backing_pref_store->SetValue(kKey, std::make_unique<base::Value>("value"), 0);
+  backing_pref_store->SetValue(kPrefStoreImplUnittestKey,
+                               std::make_unique<base::Value>("value"), 0);
   CreateImpl(backing_pref_store);
   EXPECT_FALSE(pref_store()->IsInitializationComplete());
 
@@ -161,7 +164,8 @@ TEST_F(PrefStoreImplTest, ValueChangesBeforeInitializationCompletes) {
   EXPECT_FALSE(pref_store()->IsInitializationComplete());
 
   const base::Value value("value");
-  backing_pref_store->SetValue(kKey, value.CreateDeepCopy(), 0);
+  backing_pref_store->SetValue(kPrefStoreImplUnittestKey,
+                               value.CreateDeepCopy(), 0);
   backing_pref_store->CompleteInitialization(true);
 
   // The update occurs before initialization has completed, so should not
@@ -171,30 +175,32 @@ TEST_F(PrefStoreImplTest, ValueChangesBeforeInitializationCompletes) {
   EXPECT_TRUE(pref_store()->IsInitializationComplete());
 
   const base::Value* output = nullptr;
-  ASSERT_TRUE(pref_store()->GetValue(kKey, &output));
+  ASSERT_TRUE(pref_store()->GetValue(kPrefStoreImplUnittestKey, &output));
   EXPECT_TRUE(value.Equals(output));
 }
 
 TEST_F(PrefStoreImplTest, InitialValue) {
   auto backing_pref_store = base::MakeRefCounted<ValueMapPrefStore>();
   const base::Value value("value");
-  backing_pref_store->SetValue(kKey, value.CreateDeepCopy(), 0);
+  backing_pref_store->SetValue(kPrefStoreImplUnittestKey,
+                               value.CreateDeepCopy(), 0);
   CreateImpl(backing_pref_store);
   ASSERT_TRUE(pref_store()->IsInitializationComplete());
   const base::Value* output = nullptr;
-  ASSERT_TRUE(pref_store()->GetValue(kKey, &output));
+  ASSERT_TRUE(pref_store()->GetValue(kPrefStoreImplUnittestKey, &output));
   EXPECT_TRUE(value.Equals(output));
 }
 
 TEST_F(PrefStoreImplTest, InitialValueWithoutPathExpansion) {
   auto backing_pref_store = base::MakeRefCounted<ValueMapPrefStore>();
   base::DictionaryValue dict;
-  dict.SetKey(kKey, base::Value("value"));
-  backing_pref_store->SetValue(kKey, dict.CreateDeepCopy(), 0);
+  dict.SetKey(kPrefStoreImplUnittestKey, base::Value("value"));
+  backing_pref_store->SetValue(kPrefStoreImplUnittestKey, dict.CreateDeepCopy(),
+                               0);
   CreateImpl(backing_pref_store);
   ASSERT_TRUE(pref_store()->IsInitializationComplete());
   const base::Value* output = nullptr;
-  ASSERT_TRUE(pref_store()->GetValue(kKey, &output));
+  ASSERT_TRUE(pref_store()->GetValue(kPrefStoreImplUnittestKey, &output));
   EXPECT_TRUE(dict.Equals(output));
 }
 
@@ -204,25 +210,27 @@ TEST_F(PrefStoreImplTest, WriteObservedByClient) {
   ASSERT_TRUE(pref_store()->IsInitializationComplete());
 
   const base::Value value("value");
-  backing_pref_store->SetValue(kKey, value.CreateDeepCopy(), 0);
+  backing_pref_store->SetValue(kPrefStoreImplUnittestKey,
+                               value.CreateDeepCopy(), 0);
 
-  ExpectPrefChange(pref_store(), kKey);
+  ExpectPrefChange(pref_store(), kPrefStoreImplUnittestKey);
   const base::Value* output = nullptr;
-  ASSERT_TRUE(pref_store()->GetValue(kKey, &output));
+  ASSERT_TRUE(pref_store()->GetValue(kPrefStoreImplUnittestKey, &output));
   EXPECT_TRUE(value.Equals(output));
 }
 
 TEST_F(PrefStoreImplTest, WriteToUnregisteredPrefNotObservedByClient) {
   auto backing_pref_store = base::MakeRefCounted<ValueMapPrefStore>();
-  CreateImpl(backing_pref_store, {kKey});
+  CreateImpl(backing_pref_store, {kPrefStoreImplUnittestKey});
   ASSERT_TRUE(pref_store()->IsInitializationComplete());
 
-  backing_pref_store->SetValue(kOtherKey, std::make_unique<base::Value>(123),
-                               0);
-  backing_pref_store->SetValue(kKey, std::make_unique<base::Value>("value"), 0);
+  backing_pref_store->SetValue(kPrefStoreImplUnittestOtherKey,
+                               std::make_unique<base::Value>(123), 0);
+  backing_pref_store->SetValue(kPrefStoreImplUnittestKey,
+                               std::make_unique<base::Value>("value"), 0);
 
-  ExpectPrefChange(pref_store(), kKey);
-  EXPECT_FALSE(pref_store()->GetValue(kOtherKey, nullptr));
+  ExpectPrefChange(pref_store(), kPrefStoreImplUnittestKey);
+  EXPECT_FALSE(pref_store()->GetValue(kPrefStoreImplUnittestOtherKey, nullptr));
 }
 
 TEST_F(PrefStoreImplTest, WriteWithoutPathExpansionObservedByClient) {
@@ -231,71 +239,77 @@ TEST_F(PrefStoreImplTest, WriteWithoutPathExpansionObservedByClient) {
   ASSERT_TRUE(pref_store()->IsInitializationComplete());
 
   base::DictionaryValue dict;
-  dict.SetKey(kKey, base::Value("value"));
-  backing_pref_store->SetValue(kKey, dict.CreateDeepCopy(), 0);
+  dict.SetKey(kPrefStoreImplUnittestKey, base::Value("value"));
+  backing_pref_store->SetValue(kPrefStoreImplUnittestKey, dict.CreateDeepCopy(),
+                               0);
 
-  ExpectPrefChange(pref_store(), kKey);
+  ExpectPrefChange(pref_store(), kPrefStoreImplUnittestKey);
   const base::Value* output = nullptr;
-  ASSERT_TRUE(pref_store()->GetValue(kKey, &output));
+  ASSERT_TRUE(pref_store()->GetValue(kPrefStoreImplUnittestKey, &output));
   EXPECT_TRUE(dict.Equals(output));
 }
 
 TEST_F(PrefStoreImplTest, RemoveObservedByClient) {
   auto backing_pref_store = base::MakeRefCounted<ValueMapPrefStore>();
   const base::Value value("value");
-  backing_pref_store->SetValue(kKey, value.CreateDeepCopy(), 0);
+  backing_pref_store->SetValue(kPrefStoreImplUnittestKey,
+                               value.CreateDeepCopy(), 0);
   CreateImpl(backing_pref_store);
   ASSERT_TRUE(pref_store()->IsInitializationComplete());
 
   const base::Value* output = nullptr;
-  ASSERT_TRUE(pref_store()->GetValue(kKey, &output));
+  ASSERT_TRUE(pref_store()->GetValue(kPrefStoreImplUnittestKey, &output));
   EXPECT_TRUE(value.Equals(output));
-  backing_pref_store->RemoveValue(kKey, 0);
+  backing_pref_store->RemoveValue(kPrefStoreImplUnittestKey, 0);
 
   // This should be a no-op and shouldn't trigger a notification for the other
   // client.
-  backing_pref_store->RemoveValue(kKey, 0);
+  backing_pref_store->RemoveValue(kPrefStoreImplUnittestKey, 0);
 
-  ExpectPrefChange(pref_store(), kKey);
-  EXPECT_FALSE(pref_store()->GetValue(kKey, &output));
+  ExpectPrefChange(pref_store(), kPrefStoreImplUnittestKey);
+  EXPECT_FALSE(pref_store()->GetValue(kPrefStoreImplUnittestKey, &output));
 }
 
 TEST_F(PrefStoreImplTest, RemoveOfUnregisteredPrefNotObservedByClient) {
   auto backing_pref_store = base::MakeRefCounted<ValueMapPrefStore>();
   const base::Value value("value");
-  backing_pref_store->SetValue(kKey, value.CreateDeepCopy(), 0);
-  backing_pref_store->SetValue(kOtherKey, value.CreateDeepCopy(), 0);
-  CreateImpl(backing_pref_store, {kKey});
+  backing_pref_store->SetValue(kPrefStoreImplUnittestKey,
+                               value.CreateDeepCopy(), 0);
+  backing_pref_store->SetValue(kPrefStoreImplUnittestOtherKey,
+                               value.CreateDeepCopy(), 0);
+  CreateImpl(backing_pref_store, {kPrefStoreImplUnittestKey});
   ASSERT_TRUE(pref_store()->IsInitializationComplete());
 
-  backing_pref_store->RemoveValue(kOtherKey, 0);
-  backing_pref_store->RemoveValue(kKey, 0);
+  backing_pref_store->RemoveValue(kPrefStoreImplUnittestOtherKey, 0);
+  backing_pref_store->RemoveValue(kPrefStoreImplUnittestKey, 0);
 
-  ExpectPrefChange(pref_store(), kKey);
+  ExpectPrefChange(pref_store(), kPrefStoreImplUnittestKey);
 }
 
 TEST_F(PrefStoreImplTest, RemoveWithoutPathExpansionObservedByOtherClient) {
   auto backing_pref_store = base::MakeRefCounted<ValueMapPrefStore>();
   base::DictionaryValue dict;
-  dict.SetKey(kKey, base::Value("value"));
-  backing_pref_store->SetValue(kKey, dict.CreateDeepCopy(), 0);
+  dict.SetKey(kPrefStoreImplUnittestKey, base::Value("value"));
+  backing_pref_store->SetValue(kPrefStoreImplUnittestKey, dict.CreateDeepCopy(),
+                               0);
   CreateImpl(backing_pref_store);
   ASSERT_TRUE(pref_store()->IsInitializationComplete());
 
   const base::Value* output = nullptr;
-  ASSERT_TRUE(pref_store()->GetValue(kKey, &output));
+  ASSERT_TRUE(pref_store()->GetValue(kPrefStoreImplUnittestKey, &output));
   EXPECT_TRUE(dict.Equals(output));
 
   base::Value* mutable_value = nullptr;
-  dict.SetKey(kKey, base::Value("value"));
-  ASSERT_TRUE(backing_pref_store->GetMutableValue(kKey, &mutable_value));
+  dict.SetKey(kPrefStoreImplUnittestKey, base::Value("value"));
+  ASSERT_TRUE(backing_pref_store->GetMutableValue(kPrefStoreImplUnittestKey,
+                                                  &mutable_value));
   base::DictionaryValue* mutable_dict = nullptr;
   ASSERT_TRUE(mutable_value->GetAsDictionary(&mutable_dict));
-  mutable_dict->RemoveWithoutPathExpansion(kKey, nullptr);
-  backing_pref_store->ReportValueChanged(kKey, 0);
+  mutable_dict->RemoveWithoutPathExpansion(kPrefStoreImplUnittestKey, nullptr);
+  backing_pref_store->ReportValueChanged(kPrefStoreImplUnittestKey, 0);
 
-  ExpectPrefChange(pref_store(), kKey);
-  ASSERT_TRUE(pref_store()->GetValue(kKey, &output));
+  ExpectPrefChange(pref_store(), kPrefStoreImplUnittestKey);
+  ASSERT_TRUE(pref_store()->GetValue(kPrefStoreImplUnittestKey, &output));
   const base::DictionaryValue* dict_value = nullptr;
   ASSERT_TRUE(output->GetAsDictionary(&dict_value));
   EXPECT_TRUE(dict_value->empty());
