@@ -552,7 +552,7 @@ void UserManagerScreenHandler::HandleLaunchGuest(const base::ListValue* args) {
 void UserManagerScreenHandler::HandleAreAllProfilesLocked(
     const base::ListValue* args) {
   std::string webui_callback_id;
-  CHECK_EQ(1U, args->GetSize());
+  CHECK_EQ(1U, args->GetList().size());
   bool success = args->GetString(0, &webui_callback_id);
   DCHECK(success);
 

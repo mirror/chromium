@@ -654,7 +654,7 @@ bool Connection::RegisterIntentToUpload() const {
     root_dict->SetInteger(kVersionKey, kVersion);
 
     std::unique_ptr<base::ListValue> dumps(new base::ListValue);
-    dumps->AppendString(histogram_tag_);
+    dumps->GetList().emplace_back(histogram_tag_);
     root_dict->Set(kDiagnosticDumpsKey, std::move(dumps));
 
     root = std::move(root_dict);
@@ -680,7 +680,7 @@ bool Connection::RegisterIntentToUpload() const {
     if (!root_dict->GetList(kDiagnosticDumpsKey, &dumps))
       return false;
 
-    const size_t size = dumps->GetSize();
+    const size_t size = dumps->GetList().size();
     for (size_t i = 0; i < size; ++i) {
       std::string s;
 
@@ -690,7 +690,7 @@ bool Connection::RegisterIntentToUpload() const {
     }
 
     // Record intention to proceed with upload.
-    dumps->AppendString(histogram_tag_);
+    dumps->GetList().emplace_back(histogram_tag_);
     root = std::move(root_dict);
   }
 

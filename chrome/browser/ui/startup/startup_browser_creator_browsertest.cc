@@ -1069,7 +1069,7 @@ IN_PROC_BROWSER_TEST_F(StartupBrowserCreatorFirstRunTest,
       base::WrapUnique(new base::Value(SessionStartupPref::kPrefValueURLs)),
       nullptr);
   base::ListValue startup_urls;
-  startup_urls.AppendString(
+  startup_urls.GetList().emplace_back(
       embedded_test_server()->GetURL("/title1.html").spec());
   policy_map_.Set(policy::key::kRestoreOnStartupURLs,
                   policy::POLICY_LEVEL_MANDATORY, policy::POLICY_SCOPE_USER,

@@ -90,7 +90,7 @@ class MultiLogCTVerifierTest : public ::testing::Test {
 
     const TestNetLogEntry& parsed = entries[1];
     base::ListValue* scts;
-    if (!parsed.GetListValue("scts", &scts) || scts->GetSize() != 1) {
+    if (!parsed.GetListValue("scts", &scts) || scts->GetList().size() != 1) {
       return false;
     }
 

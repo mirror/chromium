@@ -19,7 +19,7 @@ bool GetAsStringVector(const base::Value* value,
   if (!value->GetAsList(&value_as_list))
     return false;
 
-  size_t number_types = value_as_list->GetSize();
+  size_t number_types = value_as_list->GetList().size();
   for (size_t i = 0; i < number_types; ++i) {
     std::string item;
     if (!value_as_list->GetString(i, &item))

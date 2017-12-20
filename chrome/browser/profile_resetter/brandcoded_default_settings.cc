@@ -94,9 +94,8 @@ BrandcodedDefaultSettings::GetUrlsToRestoreOnStartup() const {
 std::unique_ptr<base::ListValue> BrandcodedDefaultSettings::ExtractList(
     const char* pref_name) const {
   const base::ListValue* value = NULL;
-  if (master_dictionary_ &&
-      master_dictionary_->GetList(pref_name, &value) &&
-      !value->empty()) {
+  if (master_dictionary_ && master_dictionary_->GetList(pref_name, &value) &&
+      !value->GetList().empty()) {
     return std::unique_ptr<base::ListValue>(value->DeepCopy());
   }
   return std::unique_ptr<base::ListValue>();

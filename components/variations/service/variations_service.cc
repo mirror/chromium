@@ -787,7 +787,7 @@ std::string VariationsService::GetStoredPermanentCountry() {
       local_state_->GetList(prefs::kVariationsPermanentConsistencyCountry);
   std::string stored_country;
 
-  if (list_value->GetSize() == 2) {
+  if (list_value->GetList().size() == 2) {
     list_value->GetString(1, &stored_country);
   }
 
@@ -805,8 +805,8 @@ bool VariationsService::OverrideStoredPermanentCountry(
       local_state_->GetList(prefs::kVariationsPermanentConsistencyCountry);
 
   std::string stored_country;
-  const bool got_stored_country =
-      list_value->GetSize() == 2 && list_value->GetString(1, &stored_country);
+  const bool got_stored_country = list_value->GetList().size() == 2 &&
+                                  list_value->GetString(1, &stored_country);
 
   if (got_stored_country && stored_country == country_override)
     return false;

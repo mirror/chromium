@@ -1299,7 +1299,7 @@ void UsbResetDeviceFunction::OnComplete(bool success) {
     ReleaseDeviceHandle(parameters_->handle);
 
     std::unique_ptr<base::ListValue> error_args(new base::ListValue());
-    error_args->AppendBoolean(false);
+    error_args->GetList().emplace_back(false);
     // Using ErrorWithArguments is discouraged but required to maintain
     // compatibility with existing applications.
     Respond(ErrorWithArguments(std::move(error_args), kErrorResetDevice));

@@ -122,7 +122,7 @@ TEST_F(PairingRegistryTest, GetAllPairings) {
       base::Bind(&PairingRegistryTest::set_pairings,
                  base::Unretained(this)));
 
-  ASSERT_EQ(2u, pairings_->GetSize());
+  ASSERT_EQ(2u, pairings_->GetList().size());
   const base::DictionaryValue* actual_pairing_1;
   const base::DictionaryValue* actual_pairing_2;
   ASSERT_TRUE(pairings_->GetDictionary(0, &actual_pairing_1));
@@ -156,7 +156,7 @@ TEST_F(PairingRegistryTest, DeletePairing) {
       base::Bind(&PairingRegistryTest::set_pairings,
                  base::Unretained(this)));
 
-  ASSERT_EQ(1u, pairings_->GetSize());
+  ASSERT_EQ(1u, pairings_->GetList().size());
   const base::DictionaryValue* actual_pairing_2;
   ASSERT_TRUE(pairings_->GetDictionary(0, &actual_pairing_2));
   std::string actual_client_id;
@@ -180,7 +180,7 @@ TEST_F(PairingRegistryTest, ClearAllPairings) {
       base::Bind(&PairingRegistryTest::set_pairings,
                  base::Unretained(this)));
 
-  EXPECT_TRUE(pairings_->empty());
+  EXPECT_TRUE(pairings_->GetList().empty());
 }
 
 ACTION_P(QuitMessageLoop, callback) {
@@ -192,7 +192,7 @@ MATCHER_P(EqualsClientName, client_name, "") {
 }
 
 MATCHER(NoPairings, "") {
-  return arg->empty();
+  return arg->GetList().empty();
 }
 
 TEST_F(PairingRegistryTest, SerializedRequests) {

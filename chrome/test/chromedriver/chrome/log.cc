@@ -58,12 +58,12 @@ std::unique_ptr<base::Value> SmartDeepCopy(const base::Value* value) {
     return std::move(dict_copy);
   } else if (value->GetAsList(&list)) {
     std::unique_ptr<base::ListValue> list_copy(new base::ListValue());
-    for (size_t i = 0; i < list->GetSize(); ++i) {
+    for (size_t i = 0; i < list->GetList().size(); ++i) {
       const base::Value* child = NULL;
       if (!list->Get(i, &child))
         continue;
-      if (list_copy->GetSize() >= kMaxChildren - 1) {
-        list_copy->AppendString("...");
+      if (list_copy->GetList().size() >= kMaxChildren - 1) {
+        list_copy->GetList().emplace_back("...");
         break;
       }
       list_copy->Append(SmartDeepCopy(child));

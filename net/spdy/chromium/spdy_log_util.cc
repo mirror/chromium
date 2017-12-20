@@ -28,7 +28,7 @@ std::unique_ptr<base::ListValue> ElideSpdyHeaderBlockForNetLog(
   auto headers_list = std::make_unique<base::ListValue>();
   for (SpdyHeaderBlock::const_iterator it = headers.begin();
        it != headers.end(); ++it) {
-    headers_list->AppendString(
+    headers_list->GetList().emplace_back(
         it->first.as_string() + ": " +
         ElideHeaderValueForNetLog(capture_mode, it->first.as_string(),
                                   it->second.as_string()));

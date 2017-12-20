@@ -480,12 +480,12 @@ void GpuControlList::Entry::GetFeatureNames(
   for (size_t ii = 0; ii < feature_size; ++ii) {
     auto iter = feature_map.find(features[ii]);
     DCHECK(iter != feature_map.end());
-    feature_names->AppendString(iter->second);
+    feature_names->GetList().emplace_back(iter->second);
   }
   for (size_t ii = 0; ii < disabled_extension_size; ++ii) {
     std::string name =
         base::StringPrintf("disable(%s)", disabled_extensions[ii]);
-    feature_names->AppendString(name);
+    feature_names->GetList().emplace_back(name);
   }
 }
 
@@ -607,7 +607,7 @@ void GpuControlList::GetReasons(base::ListValue* problem_list,
 
     auto cr_bugs = std::make_unique<base::ListValue>();
     for (size_t jj = 0; jj < entry.cr_bug_size; ++jj)
-      cr_bugs->AppendInteger(entry.cr_bugs[jj]);
+      cr_bugs->GetList().emplace_back(static_cast<int>(entry.cr_bugs[jj]));
     problem->Set("crBugs", std::move(cr_bugs));
 
     auto features = std::make_unique<base::ListValue>();

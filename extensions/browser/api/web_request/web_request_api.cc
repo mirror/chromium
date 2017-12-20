@@ -468,7 +468,7 @@ bool ExtensionWebRequestEventRouter::RequestFilter::InitFromValue(
       const base::ListValue* urls_value = NULL;
       if (!it.value().GetAsList(&urls_value))
         return false;
-      for (size_t i = 0; i < urls_value->GetSize(); ++i) {
+      for (size_t i = 0; i < urls_value->GetList().size(); ++i) {
         std::string url;
         URLPattern pattern(URLPattern::SCHEME_HTTP | URLPattern::SCHEME_HTTPS |
                            URLPattern::SCHEME_FTP | URLPattern::SCHEME_FILE |
@@ -486,7 +486,7 @@ bool ExtensionWebRequestEventRouter::RequestFilter::InitFromValue(
       const base::ListValue* types_value = NULL;
       if (!it.value().GetAsList(&types_value))
         return false;
-      for (size_t i = 0; i < types_value->GetSize(); ++i) {
+      for (size_t i = 0; i < types_value->GetList().size(); ++i) {
         std::string type_str;
         types.push_back(WebRequestResourceType::OTHER);
         if (!types_value->GetString(i, &type_str) ||
@@ -1539,14 +1539,14 @@ std::unique_ptr<base::DictionaryValue> SummarizeResponseDelta(
     modified_headers->Append(
         helpers::CreateHeaderDictionary(iter.name(), iter.value()));
   }
-  if (!modified_headers->empty()) {
+  if (!modified_headers->GetList().empty()) {
     details->Set(activity_log::kModifiedRequestHeadersKey,
                  std::move(modified_headers));
   }
 
   std::unique_ptr<base::ListValue> deleted_headers(new base::ListValue());
   deleted_headers->AppendStrings(delta.deleted_request_headers);
-  if (!deleted_headers->empty()) {
+  if (!deleted_headers->GetList().empty()) {
     details->Set(activity_log::kDeletedRequestHeadersKey,
                  std::move(deleted_headers));
   }
@@ -2149,7 +2149,7 @@ WebRequestInternalEventHandledFunction::Run() {
                                                    &headers_value));
       }
 
-      for (size_t i = 0; i < headers_value->GetSize(); ++i) {
+      for (size_t i = 0; i < headers_value->GetList().size(); ++i) {
         base::DictionaryValue* header_value = NULL;
         std::string name;
         std::string value;

@@ -260,7 +260,7 @@ void ExtractUrls(scoped_refptr<Action> action, Profile* profile) {
   int url_index = api_info->arg_url_index;
 
   if (!action->args() || url_index < 0 ||
-      static_cast<size_t>(url_index) >= action->args()->GetSize())
+      static_cast<size_t>(url_index) >= action->args()->GetList().size())
     return;
 
   // Do not overwrite an existing arg_url value in the Action, so that callers
@@ -318,7 +318,7 @@ void ExtractUrls(scoped_refptr<Action> action, Profile* profile) {
         // A list of possible IDs to translate.  Work through in reverse order
         // so the last one translated is left in arg_url.
         int extracted_index = -1;  // Which list item is copied to arg_url?
-        for (int i = tab_list->GetSize() - 1; i >= 0; --i) {
+        for (int i = tab_list->GetList().size() - 1; i >= 0; --i) {
           if (tab_list->GetInteger(i, &tab_id) &&
               GetUrlForTabId(tab_id, profile, &arg_url, &arg_incognito)) {
             if (!arg_incognito)
@@ -779,7 +779,7 @@ void ActivityLog::OnScriptsExecuted(
       for (std::set<std::string>::const_iterator it2 = it->second.begin();
            it2 != it->second.end();
            ++it2) {
-        action->mutable_args()->AppendString(*it2);
+        action->mutable_args()->GetList().emplace_back(*it2);
       }
       LogAction(action);
     }

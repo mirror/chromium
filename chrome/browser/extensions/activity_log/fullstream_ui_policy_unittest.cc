@@ -242,7 +242,7 @@ class FullStreamUIPolicyTest : public testing::Test {
                    mock_clock->Now() - base::TimeDelta::FromMinutes(40),
                    Action::ACTION_DOM_ACCESS,
                    "lets1");
-    action->mutable_args()->AppendString("vamoose1");
+    action->mutable_args()->GetList().emplace_back("vamoose1");
     action->set_page_url(GURL("http://www.google1.com"));
     action->set_page_title("Google1");
     action->set_arg_url(GURL("http://www.args-url1.com"));
@@ -255,7 +255,7 @@ class FullStreamUIPolicyTest : public testing::Test {
                         mock_clock->Now() - base::TimeDelta::FromMinutes(30),
                         Action::ACTION_API_CALL,
                         "lets2");
-    action->mutable_args()->AppendString("vamoose2");
+    action->mutable_args()->GetList().emplace_back("vamoose2");
     action->set_page_url(GURL("http://www.google2.com"));
     action->set_page_title("Google2");
     action->set_arg_url(GURL("http://www.args-url2.com"));
@@ -548,14 +548,14 @@ TEST_F(FullStreamUIPolicyTest, GetTodaysActions) {
                  mock_clock->Now() - base::TimeDelta::FromMinutes(40),
                  Action::ACTION_API_CALL,
                  "brewster");
-  action->mutable_args()->AppendString("woof");
+  action->mutable_args()->GetList().emplace_back("woof");
   action->set_arg_url(GURL("http://www.arg-url.com"));
   action->set_page_title("Page Title");
   policy->ProcessAction(action);
 
   action =
       new Action("punky", mock_clock->Now(), Action::ACTION_DOM_ACCESS, "lets");
-  action->mutable_args()->AppendString("vamoose");
+  action->mutable_args()->GetList().emplace_back("vamoose");
   action->set_page_url(GURL("http://www.google.com"));
   action->set_arg_url(GURL("http://www.arg-url.com"));
   action->set_page_title("Page Title");
@@ -563,7 +563,7 @@ TEST_F(FullStreamUIPolicyTest, GetTodaysActions) {
 
   action = new Action(
       "scoobydoo", mock_clock->Now(), Action::ACTION_DOM_ACCESS, "lets");
-  action->mutable_args()->AppendString("vamoose");
+  action->mutable_args()->GetList().emplace_back("vamoose");
   action->set_page_url(GURL("http://www.google.com"));
   action->set_arg_url(GURL("http://www.arg-url.com"));
   policy->ProcessAction(action);
@@ -595,14 +595,14 @@ TEST_F(FullStreamUIPolicyTest, GetOlderActions) {
                      base::TimeDelta::FromMinutes(40),
                  Action::ACTION_API_CALL,
                  "brewster");
-  action->mutable_args()->AppendString("woof");
+  action->mutable_args()->GetList().emplace_back("woof");
   policy->ProcessAction(action);
 
   action = new Action("punky",
                       mock_clock->Now() - base::TimeDelta::FromDays(3),
                       Action::ACTION_DOM_ACCESS,
                       "lets");
-  action->mutable_args()->AppendString("vamoose");
+  action->mutable_args()->GetList().emplace_back("vamoose");
   action->set_page_url(GURL("http://www.google.com"));
   policy->ProcessAction(action);
 
@@ -610,7 +610,7 @@ TEST_F(FullStreamUIPolicyTest, GetOlderActions) {
                       mock_clock->Now(),
                       Action::ACTION_DOM_ACCESS,
                       "lets");
-  action->mutable_args()->AppendString("too new");
+  action->mutable_args()->GetList().emplace_back("too new");
   action->set_page_url(GURL("http://www.google.com"));
   policy->ProcessAction(action);
 
@@ -618,7 +618,7 @@ TEST_F(FullStreamUIPolicyTest, GetOlderActions) {
                       mock_clock->Now() - base::TimeDelta::FromDays(7),
                       Action::ACTION_DOM_ACCESS,
                       "lets");
-  action->mutable_args()->AppendString("too old");
+  action->mutable_args()->GetList().emplace_back("too old");
   action->set_page_url(GURL("http://www.google.com"));
   policy->ProcessAction(action);
 
@@ -645,7 +645,7 @@ TEST_F(FullStreamUIPolicyTest, RemoveAllURLs) {
   scoped_refptr<Action> action =
       new Action("punky", mock_clock->Now(),
                  Action::ACTION_DOM_ACCESS, "lets");
-  action->mutable_args()->AppendString("vamoose");
+  action->mutable_args()->GetList().emplace_back("vamoose");
   action->set_page_url(GURL("http://www.google.com"));
   action->set_page_title("Google");
   action->set_arg_url(GURL("http://www.google.com"));
@@ -654,7 +654,7 @@ TEST_F(FullStreamUIPolicyTest, RemoveAllURLs) {
   mock_clock->Advance(base::TimeDelta::FromSeconds(1));
   action = new Action(
       "punky", mock_clock->Now(), Action::ACTION_API_CALL, "lets");
-  action->mutable_args()->AppendString("vamoose");
+  action->mutable_args()->GetList().emplace_back("vamoose");
   action->set_page_url(GURL("http://www.google2.com"));
   action->set_page_title("Google");
   // Deliberately no arg url set to make sure it still works when there is no
@@ -688,7 +688,7 @@ TEST_F(FullStreamUIPolicyTest, RemoveSpecificURLs) {
   // This should have the page url and args url cleared.
   scoped_refptr<Action> action = new Action("punky", mock_clock->Now(),
                                             Action::ACTION_DOM_ACCESS, "lets");
-  action->mutable_args()->AppendString("vamoose");
+  action->mutable_args()->GetList().emplace_back("vamoose");
   action->set_page_url(GURL("http://www.google1.com"));
   action->set_page_title("Google");
   action->set_arg_url(GURL("http://www.google1.com"));
@@ -698,7 +698,7 @@ TEST_F(FullStreamUIPolicyTest, RemoveSpecificURLs) {
   mock_clock->Advance(base::TimeDelta::FromSeconds(1));
   action = new Action(
       "punky", mock_clock->Now(), Action::ACTION_DOM_ACCESS, "lets");
-  action->mutable_args()->AppendString("vamoose");
+  action->mutable_args()->GetList().emplace_back("vamoose");
   action->set_page_url(GURL("http://www.google1.com"));
   action->set_page_title("Google");
   action->set_arg_url(GURL("http://www.google.com"));
@@ -709,7 +709,7 @@ TEST_F(FullStreamUIPolicyTest, RemoveSpecificURLs) {
   mock_clock->Advance(base::TimeDelta::FromSeconds(1));
   action = new Action(
       "punky", mock_clock->Now(), Action::ACTION_DOM_ACCESS, "lets");
-  action->mutable_args()->AppendString("vamoose");
+  action->mutable_args()->GetList().emplace_back("vamoose");
   action->set_page_url(GURL("http://www.google2.com"));
   action->set_page_title("Google");
   policy->ProcessAction(action);
@@ -718,7 +718,7 @@ TEST_F(FullStreamUIPolicyTest, RemoveSpecificURLs) {
   mock_clock->Advance(base::TimeDelta::FromSeconds(1));
   action = new Action(
       "punky", mock_clock->Now(), Action::ACTION_DOM_ACCESS, "lets");
-  action->mutable_args()->AppendString("vamoose");
+  action->mutable_args()->GetList().emplace_back("vamoose");
   action->set_page_url(GURL("http://www.google.com"));
   action->set_page_title("Google");
   action->set_arg_url(GURL("http://www.google1.com"));
@@ -728,7 +728,7 @@ TEST_F(FullStreamUIPolicyTest, RemoveSpecificURLs) {
   mock_clock->Advance(base::TimeDelta::FromSeconds(1));
   action = new Action(
       "punky", mock_clock->Now(), Action::ACTION_DOM_ACCESS, "lets");
-  action->mutable_args()->AppendString("vamoose");
+  action->mutable_args()->GetList().emplace_back("vamoose");
   action->set_page_url(GURL("http://www.google.com"));
   action->set_page_title("Google");
   action->set_arg_url(GURL("http://www.args-url.com"));
@@ -765,7 +765,7 @@ TEST_F(FullStreamUIPolicyTest, RemoveExtensionData) {
                                             mock_clock->Now(),
                                             Action::ACTION_DOM_ACCESS,
                                             "lets");
-  action->mutable_args()->AppendString("vamoose");
+  action->mutable_args()->GetList().emplace_back("vamoose");
   action->set_page_title("Google");
   action->set_arg_url(GURL("http://www.google.com"));
   policy->ProcessAction(action);
@@ -776,7 +776,7 @@ TEST_F(FullStreamUIPolicyTest, RemoveExtensionData) {
                                              mock_clock->Now(),
                                              Action::ACTION_DOM_ACCESS,
                                              "lets");
-  action->mutable_args()->AppendString("vamoose");
+  action->mutable_args()->GetList().emplace_back("vamoose");
   action->set_page_title("Google");
   action->set_arg_url(GURL("http://www.google.com"));
   policy->ProcessAction(action2);

@@ -287,7 +287,7 @@ std::unique_ptr<base::Value> URLRequest::GetStateAsValue() const {
   if (url_chain_.size() > 1) {
     std::unique_ptr<base::ListValue> list(new base::ListValue());
     for (const GURL& url : url_chain_) {
-      list->AppendString(url.possibly_invalid_spec());
+      list->GetList().emplace_back(url.possibly_invalid_spec());
     }
     dict->Set("url_chain", std::move(list));
   }

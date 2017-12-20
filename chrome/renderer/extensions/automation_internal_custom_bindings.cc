@@ -1208,7 +1208,7 @@ void AutomationInternalCustomBindings::OnAccessibilityEvent(
   if (!tree_wrapper->OnAccessibilityEvent(params, is_active_profile)) {
     LOG(ERROR) << tree_wrapper->tree()->error();
     base::ListValue args;
-    args.AppendInteger(tree_id);
+    args.GetList().emplace_back(tree_id);
     bindings_system_->DispatchEventInContext(
         "automationInternal.onAccessibilityTreeSerializationError", &args,
         nullptr, context());
@@ -1294,10 +1294,10 @@ void AutomationInternalCustomBindings::SendTreeChangeEvent(
     }
 
     base::ListValue args;
-    args.AppendInteger(observer.id);
-    args.AppendInteger(tree_id);
-    args.AppendInteger(node->id());
-    args.AppendString(ToString(change_type));
+    args.GetList().emplace_back(observer.id);
+    args.GetList().emplace_back(tree_id);
+    args.GetList().emplace_back(node->id());
+    args.GetList().emplace_back(ToString(change_type));
     bindings_system_->DispatchEventInContext("automationInternal.onTreeChange",
                                              &args, nullptr, context());
   }
@@ -1329,8 +1329,8 @@ void AutomationInternalCustomBindings::SendChildTreeIDEvent(ui::AXTree* tree,
   int tree_id = iter->second->tree_id();
 
   base::ListValue args;
-  args.AppendInteger(tree_id);
-  args.AppendInteger(node->id());
+  args.GetList().emplace_back(tree_id);
+  args.GetList().emplace_back(node->id());
   bindings_system_->DispatchEventInContext("automationInternal.onChildTreeID",
                                            &args, nullptr, context());
 }
@@ -1345,11 +1345,11 @@ void AutomationInternalCustomBindings::SendNodesRemovedEvent(
   int tree_id = iter->second->tree_id();
 
   base::ListValue args;
-  args.AppendInteger(tree_id);
+  args.GetList().emplace_back(tree_id);
   {
     auto nodes = base::MakeUnique<base::ListValue>();
     for (auto id : ids)
-      nodes->AppendInteger(id);
+      nodes->GetList().emplace_back(id);
     args.Append(std::move(nodes));
   }
 

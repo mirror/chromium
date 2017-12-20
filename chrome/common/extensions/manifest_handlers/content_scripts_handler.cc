@@ -58,7 +58,7 @@ bool LoadGlobsHelper(const base::DictionaryValue* content_script,
     return false;
   }
 
-  for (size_t i = 0; i < list->GetSize(); ++i) {
+  for (size_t i = 0; i < list->GetList().size(); ++i) {
     std::string glob;
     if (!list->GetString(i, &glob)) {
       *error = ErrorUtils::FormatErrorMessageUTF16(
@@ -137,13 +137,13 @@ std::unique_ptr<UserScript> LoadUserScriptFromDictionary(
     return std::unique_ptr<UserScript>();
   }
 
-  if (matches->GetSize() == 0) {
+  if (matches->GetList().size() == 0) {
     *error = ErrorUtils::FormatErrorMessageUTF16(
         errors::kInvalidMatchCount,
         base::IntToString(definition_index));
     return std::unique_ptr<UserScript>();
   }
-  for (size_t j = 0; j < matches->GetSize(); ++j) {
+  for (size_t j = 0; j < matches->GetList().size(); ++j) {
     std::string match_str;
     if (!matches->GetString(j, &match_str)) {
       *error = ErrorUtils::FormatErrorMessageUTF16(
@@ -197,7 +197,7 @@ std::unique_ptr<UserScript> LoadUserScriptFromDictionary(
       return std::unique_ptr<UserScript>();
     }
 
-    for (size_t j = 0; j < exclude_matches->GetSize(); ++j) {
+    for (size_t j = 0; j < exclude_matches->GetList().size(); ++j) {
       std::string match_str;
       if (!exclude_matches->GetString(j, &match_str)) {
         *error = ErrorUtils::FormatErrorMessageUTF16(
@@ -254,7 +254,8 @@ std::unique_ptr<UserScript> LoadUserScriptFromDictionary(
   }
 
   // The manifest needs to have at least one js or css user script definition.
-  if (((js ? js->GetSize() : 0) + (css ? css->GetSize() : 0)) == 0) {
+  if (((js ? js->GetList().size() : 0) + (css ? css->GetList().size() : 0)) ==
+      0) {
     *error = ErrorUtils::FormatErrorMessageUTF16(
         errors::kMissingFile,
         base::IntToString(definition_index));
@@ -262,8 +263,8 @@ std::unique_ptr<UserScript> LoadUserScriptFromDictionary(
   }
 
   if (js) {
-    result->js_scripts().reserve(js->GetSize());
-    for (size_t script_index = 0; script_index < js->GetSize();
+    result->js_scripts().reserve(js->GetList().size());
+    for (size_t script_index = 0; script_index < js->GetList().size();
          ++script_index) {
       const base::Value* value;
       std::string relative;
@@ -281,8 +282,8 @@ std::unique_ptr<UserScript> LoadUserScriptFromDictionary(
   }
 
   if (css) {
-    result->css_scripts().reserve(css->GetSize());
-    for (size_t script_index = 0; script_index < css->GetSize();
+    result->css_scripts().reserve(css->GetList().size());
+    for (size_t script_index = 0; script_index < css->GetList().size();
          ++script_index) {
       const base::Value* value;
       std::string relative;
@@ -395,7 +396,7 @@ bool ContentScriptsHandler::Parse(Extension* extension, base::string16* error) {
     return false;
   }
 
-  for (size_t i = 0; i < scripts_list->GetSize(); ++i) {
+  for (size_t i = 0; i < scripts_list->GetList().size(); ++i) {
     const base::DictionaryValue* script_dict = NULL;
     if (!scripts_list->GetDictionary(i, &script_dict)) {
       *error = ErrorUtils::FormatErrorMessageUTF16(

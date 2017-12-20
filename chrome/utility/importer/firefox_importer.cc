@@ -625,7 +625,7 @@ void FirefoxImporter::GetSearchEnginesXMLDataFromJSON(
 
     const std::string kFilePath("filePath");
     const std::string kHidden("_hidden");
-    for (size_t i = 0; i < search_engines->GetSize(); ++i) {
+    for (size_t i = 0; i < search_engines->GetList().size(); ++i) {
       const base::DictionaryValue* engine_info = NULL;
       if (!search_engines->GetDictionary(i, &engine_info))
         continue;

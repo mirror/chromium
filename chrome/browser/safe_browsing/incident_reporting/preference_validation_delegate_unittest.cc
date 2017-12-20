@@ -148,8 +148,8 @@ class PreferenceValidationDelegateValues
       }
       case Value::Type::LIST: {
         std::unique_ptr<base::ListValue> value(new base::ListValue());
-        value->AppendInteger(22);
-        value->AppendInteger(47);
+        value->GetList().emplace_back(22);
+        value->GetList().emplace_back(47);
         return std::move(value);
       }
       default:

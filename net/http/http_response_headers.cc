@@ -1265,7 +1265,7 @@ std::unique_ptr<base::Value> HttpResponseHeaders::NetLogCallback(
     NetLogCaptureMode capture_mode) const {
   auto dict = std::make_unique<base::DictionaryValue>();
   auto headers = std::make_unique<base::ListValue>();
-  headers->AppendString(EscapeNonASCII(GetStatusLine()));
+  headers->GetList().emplace_back(EscapeNonASCII(GetStatusLine()));
   size_t iterator = 0;
   std::string name;
   std::string value;
@@ -1274,8 +1274,8 @@ std::unique_ptr<base::Value> HttpResponseHeaders::NetLogCallback(
         ElideHeaderValueForNetLog(capture_mode, name, value);
     std::string escaped_name = EscapeNonASCII(name);
     std::string escaped_value = EscapeNonASCII(log_value);
-    headers->AppendString(base::StringPrintf("%s: %s", escaped_name.c_str(),
-                                             escaped_value.c_str()));
+    headers->GetList().emplace_back(base::StringPrintf(
+        "%s: %s", escaped_name.c_str(), escaped_value.c_str()));
   }
   dict->Set("headers", std::move(headers));
   return std::move(dict);

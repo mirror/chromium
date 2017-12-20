@@ -135,7 +135,7 @@ void GetPartOfMessageArguments(IPC::Message* message,
             message->type());
   ASSERT_TRUE(ExtensionMsg_DispatchEvent::Read(message, param));
   const base::ListValue& list = std::get<1>(*param);
-  ASSERT_EQ(1u, list.GetSize());
+  ASSERT_EQ(1u, list.GetList().size());
   ASSERT_TRUE(list.GetDictionary(0, out));
 }
 
@@ -534,7 +534,7 @@ bool GenerateInfoSpec(const std::string& values, int* result) {
   for (const std::string& cur :
        base::SplitString(values, ",", base::KEEP_WHITESPACE,
                          base::SPLIT_WANT_NONEMPTY))
-    list_value.AppendString(cur);
+    list_value.GetList().emplace_back(cur);
   return ExtraInfoSpec::InitFromValue(list_value, result);
 }
 
@@ -1247,7 +1247,7 @@ TEST_P(ExtensionWebRequestHeaderModificationTest, TestModifications) {
                                         &request_headers));
 
     net::HttpRequestHeaders observed_headers;
-    for (size_t j = 0; j < request_headers->GetSize(); ++j) {
+    for (size_t j = 0; j < request_headers->GetList().size(); ++j) {
       const base::DictionaryValue* header = nullptr;
       ASSERT_TRUE(request_headers->GetDictionary(j, &header));
       std::string key;
@@ -1484,11 +1484,11 @@ TEST(ExtensionWebRequestHelpersTest,
 
 TEST(ExtensionWebRequestHelpersTest, TestStringToCharList) {
   base::ListValue list_value;
-  list_value.AppendInteger('1');
-  list_value.AppendInteger('2');
-  list_value.AppendInteger('3');
-  list_value.AppendInteger(0xFE);
-  list_value.AppendInteger(0xD1);
+  list_value.GetList().emplace_back('1');
+  list_value.GetList().emplace_back('2');
+  list_value.GetList().emplace_back('3');
+  list_value.GetList().emplace_back(0xFE);
+  list_value.GetList().emplace_back(0xD1);
 
   unsigned char char_value[] = {'1', '2', '3', 0xFE, 0xD1};
   std::string string_value(reinterpret_cast<char *>(char_value), 5);

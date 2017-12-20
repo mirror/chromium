@@ -164,7 +164,7 @@ std::unique_ptr<base::DictionaryValue> HistoryEntryToValue(
   // Pass the timestamps in a list.
   std::unique_ptr<base::ListValue> timestamps(new base::ListValue);
   for (int64_t timestamp : entry.all_timestamps) {
-    timestamps->AppendDouble(
+    timestamps->GetList().emplace_back(
         base::Time::FromInternalValue(timestamp).ToJsTime());
   }
   result->Set("allTimestamps", std::move(timestamps));
@@ -286,14 +286,14 @@ void BrowsingHistoryHandler::HandleQueryHistory(const base::ListValue* args) {
 
 void BrowsingHistoryHandler::HandleQueryHistoryContinuation(
     const base::ListValue* args) {
-  DCHECK(args->empty());
+  DCHECK(args->GetList().empty());
   DCHECK(query_history_continuation_);
   std::move(query_history_continuation_).Run();
 }
 
 void BrowsingHistoryHandler::HandleRemoveVisits(const base::ListValue* args) {
   std::vector<BrowsingHistoryService::HistoryEntry> items_to_remove;
-  items_to_remove.reserve(args->GetSize());
+  items_to_remove.reserve(args->GetList().size());
   for (base::ListValue::const_iterator it = args->begin();
        it != args->end(); ++it) {
     const base::DictionaryValue* deletion = NULL;
@@ -306,7 +306,7 @@ void BrowsingHistoryHandler::HandleRemoveVisits(const base::ListValue* args) {
       NOTREACHED() << "Unable to extract arguments";
       return;
     }
-    DCHECK_GT(timestamps->GetSize(), 0U);
+    DCHECK_GT(timestamps->GetList().size(), 0U);
     BrowsingHistoryService::HistoryEntry entry;
     entry.url = GURL(url);
 

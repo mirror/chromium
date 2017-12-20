@@ -307,7 +307,7 @@ void HostCache::ClearForHosts(
 void HostCache::GetAsListValue(base::ListValue* entry_list,
                                bool include_staleness) const {
   DCHECK(entry_list);
-  entry_list->Clear();
+  entry_list->GetList().clear();
 
   for (const auto& pair : entries_) {
     const Key& key = pair.first;
@@ -343,7 +343,8 @@ void HostCache::GetAsListValue(base::ListValue* entry_list,
       // Append all of the resolved addresses.
       auto addresses_value = std::make_unique<base::ListValue>();
       for (size_t i = 0; i < addresses.size(); ++i)
-        addresses_value->AppendString(addresses[i].ToStringWithoutPort());
+        addresses_value->GetList().emplace_back(
+            addresses[i].ToStringWithoutPort());
       entry_dict->SetList(kAddressesKey, std::move(addresses_value));
     }
 
@@ -402,7 +403,7 @@ bool HostCache::RestoreFromListValue(const base::ListValue& old_cache) {
                           expiration_time, network_changes_ - 1));
     }
   }
-  restore_size_ = old_cache.GetSize();
+  restore_size_ = old_cache.GetList().size();
   return true;
 }
 

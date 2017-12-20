@@ -148,7 +148,7 @@ std::string ProxyList::ToPacString() const {
 std::unique_ptr<base::ListValue> ProxyList::ToValue() const {
   std::unique_ptr<base::ListValue> list(new base::ListValue());
   for (size_t i = 0; i < proxies_.size(); ++i)
-    list->AppendString(proxies_[i].ToURI());
+    list->GetList().emplace_back(proxies_[i].ToURI());
   return list;
 }
 

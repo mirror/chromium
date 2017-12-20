@@ -545,14 +545,14 @@ TEST_F(MediaRouterWebUIMessageHandlerTest, UpdateIssue) {
 
 TEST_F(MediaRouterWebUIMessageHandlerTest, RecordCastModeSelection) {
   base::ListValue args;
-  args.AppendInteger(MediaCastMode::PRESENTATION);
+  args.GetList().emplace_back(MediaCastMode::PRESENTATION);
   EXPECT_CALL(*mock_media_router_ui_,
               RecordCastModeSelection(MediaCastMode::PRESENTATION))
       .Times(1);
   handler_->OnReportSelectedCastMode(&args);
 
-  args.Clear();
-  args.AppendInteger(MediaCastMode::TAB_MIRROR);
+  args.GetList().clear();
+  args.GetList().emplace_back(MediaCastMode::TAB_MIRROR);
   EXPECT_CALL(*mock_media_router_ui_,
               RecordCastModeSelection(MediaCastMode::TAB_MIRROR))
       .Times(1);
@@ -598,7 +598,7 @@ TEST_F(MediaRouterWebUIMessageHandlerTest, OnRouteDetailsOpenedAndClosed) {
   EXPECT_CALL(*mock_media_router_ui_, OnMediaControllerUIAvailable(route_id));
   handler_->OnMediaControllerAvailable(&args_list);
 
-  args_list.Clear();
+  args_list.GetList().clear();
   EXPECT_CALL(*mock_media_router_ui_, OnMediaControllerUIClosed());
   handler_->OnMediaControllerClosed(&args_list);
 }

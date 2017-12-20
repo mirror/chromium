@@ -320,7 +320,7 @@ Status ExecuteSendKeysToElement(Session* session,
   if (is_input && is_file) {
     // Compress array into a single string.
     base::FilePath::StringType paths_string;
-    for (size_t i = 0; i < key_list->GetSize(); ++i) {
+    for (size_t i = 0; i < key_list->GetList().size(); ++i) {
       base::FilePath::StringType path_part;
       if (!key_list->GetString(i, &path_part))
         return Status(kUnknownError, "'value' is invalid");

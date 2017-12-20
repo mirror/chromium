@@ -368,15 +368,15 @@ void NinePatchGenerator::AppendQuads(LayerImpl* layer_impl,
 
 void NinePatchGenerator::AsJson(base::DictionaryValue* dictionary) const {
   auto list = std::make_unique<base::ListValue>();
-  list->AppendInteger(image_aperture_.origin().x());
-  list->AppendInteger(image_aperture_.origin().y());
-  list->AppendInteger(image_aperture_.size().width());
-  list->AppendInteger(image_aperture_.size().height());
+  list->GetList().emplace_back(image_aperture_.origin().x());
+  list->GetList().emplace_back(image_aperture_.origin().y());
+  list->GetList().emplace_back(image_aperture_.size().width());
+  list->GetList().emplace_back(image_aperture_.size().height());
   dictionary->Set("ImageAperture", std::move(list));
 
   list = std::make_unique<base::ListValue>();
-  list->AppendInteger(image_bounds_.width());
-  list->AppendInteger(image_bounds_.height());
+  list->GetList().emplace_back(image_bounds_.width());
+  list->GetList().emplace_back(image_bounds_.height());
   dictionary->Set("ImageBounds", std::move(list));
 
   dictionary->Set("Border", MathUtil::AsValue(border_));
@@ -384,10 +384,10 @@ void NinePatchGenerator::AsJson(base::DictionaryValue* dictionary) const {
   dictionary->SetBoolean("FillCenter", fill_center_);
 
   list = std::make_unique<base::ListValue>();
-  list->AppendInteger(output_occlusion_.x());
-  list->AppendInteger(output_occlusion_.y());
-  list->AppendInteger(output_occlusion_.width());
-  list->AppendInteger(output_occlusion_.height());
+  list->GetList().emplace_back(output_occlusion_.x());
+  list->GetList().emplace_back(output_occlusion_.y());
+  list->GetList().emplace_back(output_occlusion_.width());
+  list->GetList().emplace_back(output_occlusion_.height());
   dictionary->Set("OutputOcclusion", std::move(list));
 }
 

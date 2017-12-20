@@ -127,7 +127,7 @@ Status GetVisibleCookies(WebView* web_view,
   if (status.IsError())
     return status;
   std::list<Cookie> cookies_tmp;
-  for (size_t i = 0; i < internal_cookies->GetSize(); ++i) {
+  for (size_t i = 0; i < internal_cookies->GetList().size(); ++i) {
     base::DictionaryValue* cookie_dict;
     if (!internal_cookies->GetDictionary(i, &cookie_dict))
       return Status(kUnknownError, "DevTools returns a non-dictionary cookie");
@@ -163,8 +163,8 @@ Status ScrollCoordinateInToView(
     int* offset_y) {
   std::unique_ptr<base::Value> value;
   base::ListValue args;
-  args.AppendInteger(x);
-  args.AppendInteger(y);
+  args.GetList().emplace_back(x);
+  args.GetList().emplace_back(y);
   Status status = web_view->CallFunction(
       std::string(),
       "function(x, y) {"
@@ -406,7 +406,7 @@ Status ExecuteSwitchToFrame(Session* session,
     } else {
       return Status(kUnknownError, "invalid 'id'");
     }
-    args.AppendString(xpath);
+    args.GetList().emplace_back(xpath);
   }
   std::string frame;
   Status status = web_view->GetFrameByFunction(
@@ -430,7 +430,7 @@ Status ExecuteSwitchToFrame(Session* session,
       "}";
   base::ListValue new_args;
   new_args.Append(element->CreateDeepCopy());
-  new_args.AppendString(chrome_driver_id);
+  new_args.GetList().emplace_back(chrome_driver_id);
   result.reset(NULL);
   status = web_view->CallFunction(
       session->GetCurrentFrameId(), kSetFrameIdentifier, new_args, &result);
@@ -779,7 +779,7 @@ Status ProcessInputActionSequence(Session* session,
   }
 
   bool found = false;
-  for (size_t i = 0; i < session->active_input_sources->GetSize(); i++) {
+  for (size_t i = 0; i < session->active_input_sources->GetList().size(); i++) {
     session->active_input_sources->GetDictionary(i, &source);
     DCHECK(source);
 
@@ -853,7 +853,7 @@ Status ProcessInputActionSequence(Session* session,
   }
 
   std::unique_ptr<base::ListValue> ret(new base::ListValue);
-  for (size_t i = 0; i < actions->GetSize(); i++) {
+  for (size_t i = 0; i < actions->GetList().size(); i++) {
     std::unique_ptr<base::DictionaryValue> action(new base::DictionaryValue());
     const base::DictionaryValue* action_item;
     if (!actions->GetDictionary(i, &action_item))
@@ -1002,7 +1002,7 @@ Status ExecutePerformActions(Session* session,
   // the type of each action list in actions_by_tick
   std::list<std::string> action_list_types;
 
-  for (size_t i = 0; i < actions->GetSize(); i++) {
+  for (size_t i = 0; i < actions->GetList().size(); i++) {
     std::unique_ptr<base::ListValue> input_source_actions(
         new base::ListValue());
     // proccess input action sequence
@@ -1027,14 +1027,14 @@ Status ExecutePerformActions(Session* session,
     actions_by_tick.Append(std::move(input_source_actions));
   }
 
-  for (size_t i = 0; i < actions_by_tick.GetSize(); i++) {
+  for (size_t i = 0; i < actions_by_tick.GetList().size(); i++) {
     // compute duration
     int max_duration = 0;
     int duration;
     base::ListValue* action_sequence;
     actions_by_tick.GetList(i, &action_sequence);
     DCHECK(action_sequence);
-    for (size_t j = 0; j < action_sequence->GetSize(); j++) {
+    for (size_t j = 0; j < action_sequence->GetList().size(); j++) {
       base::DictionaryValue* action;
       if (!action_sequence->GetDictionary(i, &action))
         return Status(kInvalidArgument, "each argument must be a dictionary");
@@ -1054,7 +1054,7 @@ Status ExecutePerformActions(Session* session,
     if (type == "key") {
       KeyEventBuilder builder;
       std::list<KeyEvent> key_events;
-      for (size_t j = 0; j < action_sequence->GetSize(); j++) {
+      for (size_t j = 0; j < action_sequence->GetList().size(); j++) {
         base::DictionaryValue* action;
         if (!action_sequence->GetDictionary(j, &action))
           return Status(kInvalidArgument, "each argument must be a dictionary");
@@ -1195,7 +1195,7 @@ Status ExecuteGetStorageItem(const char* storage,
   if (!params.GetString("key", &key))
     return Status(kUnknownError, "'key' must be a string");
   base::ListValue args;
-  args.AppendString(key);
+  args.GetList().emplace_back(key);
   return web_view->CallFunction(
       session->GetCurrentFrameId(),
       base::StringPrintf("function(key) { return %s[key]; }", storage),
@@ -1234,8 +1234,8 @@ Status ExecuteSetStorageItem(const char* storage,
   if (!params.GetString("value", &storage_value))
     return Status(kUnknownError, "'value' must be a string");
   base::ListValue args;
-  args.AppendString(key);
-  args.AppendString(storage_value);
+  args.GetList().emplace_back(key);
+  args.GetList().emplace_back(storage_value);
   return web_view->CallFunction(
       session->GetCurrentFrameId(),
       base::StringPrintf("function(key, value) { %s[key] = value; }", storage),
@@ -1253,7 +1253,7 @@ Status ExecuteRemoveStorageItem(const char* storage,
   if (!params.GetString("key", &key))
     return Status(kUnknownError, "'key' must be a string");
   base::ListValue args;
-  args.AppendString(key);
+  args.GetList().emplace_back(key);
   return web_view->CallFunction(
       session->GetCurrentFrameId(),
       base::StringPrintf("function(key) { %s.removeItem(key) }", storage),

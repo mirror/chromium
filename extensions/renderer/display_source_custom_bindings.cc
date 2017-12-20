@@ -251,7 +251,7 @@ void DisplaySourceCustomBindings::OnSessionStarted(
 
 void DisplaySourceCustomBindings::DispatchSessionTerminated(int sink_id) const {
   base::ListValue event_args;
-  event_args.AppendInteger(sink_id);
+  event_args.GetList().emplace_back(sink_id);
   bindings_system_->DispatchEventInContext("displaySource.onSessionTerminated",
                                            &event_args, nullptr, context());
 }
@@ -266,7 +266,7 @@ void DisplaySourceCustomBindings::DispatchSessionError(
     error_info.description.reset(new std::string(message));
 
   base::ListValue event_args;
-  event_args.AppendInteger(sink_id);
+  event_args.GetList().emplace_back(sink_id);
   event_args.Append(error_info.ToValue());
   bindings_system_->DispatchEventInContext(
       "displaySource.onSessionErrorOccured", &event_args, nullptr, context());

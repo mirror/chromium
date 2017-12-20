@@ -83,7 +83,7 @@ bool CheckPepperFlashInterfaces(const base::DictionaryValue& manifest) {
   if (!manifest.GetList("x-ppapi-required-interfaces", &interface_list))
     return true;
 
-  for (size_t i = 0; i < interface_list->GetSize(); i++) {
+  for (size_t i = 0; i < interface_list->GetList().size(); i++) {
     std::string interface_string;
     if (!interface_list->GetString(i, &interface_string))
       return false;

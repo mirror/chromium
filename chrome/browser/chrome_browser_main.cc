@@ -429,7 +429,7 @@ Profile* CreatePrimaryProfile(const content::MainFunctionParams& parameters,
     ListPrefUpdate update(g_browser_process->local_state(),
                           prefs::kProfilesLastActive);
     base::ListValue* profile_list = update.Get();
-    profile_list->Clear();
+    profile_list->GetList().clear();
   }
 
   Profile* profile = nullptr;

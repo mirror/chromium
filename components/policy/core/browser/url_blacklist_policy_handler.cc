@@ -62,7 +62,7 @@ void URLBlacklistPolicyHandler::ApplyPolicySettings(const PolicyMap& policies,
       std::string entry_value;
       if (entry.GetAsString(&entry_value)) {
         entry_value.append("://*");
-        merged_url_blacklist->AppendString(entry_value);
+        merged_url_blacklist->GetList().emplace_back(entry_value);
       }
     }
   }

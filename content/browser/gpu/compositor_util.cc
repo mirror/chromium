@@ -346,7 +346,7 @@ std::unique_ptr<base::ListValue> GetProblems() {
         "GPU process was unable to boot: " + gpu_access_blocked_reason);
     problem->Set("crBugs", std::make_unique<base::ListValue>());
     auto disabled_features = std::make_unique<base::ListValue>();
-    disabled_features->AppendString("all");
+    disabled_features->GetList().emplace_back("all");
     problem->Set("affectedGpuSettings", std::move(disabled_features));
     problem->SetString("tag", "disabledFeatures");
     problem_list->Insert(0, std::move(problem));
@@ -360,7 +360,7 @@ std::unique_ptr<base::ListValue> GetProblems() {
       problem->SetString("description", gpu_feature_data.disabled_description);
       problem->Set("crBugs", std::make_unique<base::ListValue>());
       auto disabled_features = std::make_unique<base::ListValue>();
-      disabled_features->AppendString(gpu_feature_data.name);
+      disabled_features->GetList().emplace_back(gpu_feature_data.name);
       problem->Set("affectedGpuSettings", std::move(disabled_features));
       problem->SetString("tag", "disabledFeatures");
       problem_list->Append(std::move(problem));

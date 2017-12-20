@@ -155,7 +155,7 @@ void IdentityInternalsUIMessageHandler::OnTokenRevokerDone(
 
   // Update view about the token being removed.
   base::ListValue result;
-  result.AppendString(token_revoker->access_token());
+  result.GetList().emplace_back(token_revoker->access_token());
   web_ui()->CallJavascriptFunctionUnsafe("identity_internals.tokenRevokeDone",
                                          result);
 
@@ -187,7 +187,7 @@ std::unique_ptr<base::ListValue> IdentityInternalsUIMessageHandler::GetScopes(
   for (std::set<std::string>::const_iterator
            iter = token_cache_key.scopes.begin();
        iter != token_cache_key.scopes.end(); ++iter) {
-    scopes_value->AppendString(*iter);
+    scopes_value->GetList().emplace_back(*iter);
   }
   return scopes_value;
 }

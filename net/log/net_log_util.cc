@@ -295,7 +295,8 @@ std::unique_ptr<base::DictionaryValue> GetNetConstants() {
     for (base::FieldTrial::ActiveGroups::const_iterator it =
              active_groups.begin();
          it != active_groups.end(); ++it) {
-      field_trial_groups->AppendString(it->trial_name + ":" + it->group_name);
+      field_trial_groups->GetList().emplace_back(it->trial_name + ":" +
+                                                 it->group_name);
     }
     constants_dict->Set("activeFieldTrialGroups",
                         std::move(field_trial_groups));

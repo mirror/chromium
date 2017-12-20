@@ -152,7 +152,7 @@ WebRequestConditionAttributeResourceType::Create(
     return scoped_refptr<const WebRequestConditionAttribute>(NULL);
   }
 
-  size_t number_types = value_as_list->GetSize();
+  size_t number_types = value_as_list->GetList().size();
 
   std::vector<WebRequestResourceType> passed_types;
   passed_types.reserve(number_types);

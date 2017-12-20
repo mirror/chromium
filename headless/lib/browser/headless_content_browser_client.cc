@@ -181,7 +181,7 @@ HeadlessContentBrowserClient::GetBrowserServiceManifestOverlay() {
   CHECK(manifest_dictionary->GetList(kCapabilityPath, &capability_list));
 
   for (std::string service_name : browser_->options()->mojo_service_names) {
-    capability_list->AppendString(service_name);
+    capability_list->GetList().emplace_back(service_name);
   }
 
   return manifest;

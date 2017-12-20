@@ -695,7 +695,7 @@ bool ParseEventsFromJson(const std::string& json,
   if (!root.get() || !root->GetAsList(&root_list))
     return false;
 
-  for (size_t i = 0; i < root_list->GetSize(); ++i) {
+  for (size_t i = 0; i < root_list->GetList().size(); ++i) {
     base::Value* item = nullptr;
     if (root_list->Get(i, &item)) {
       TraceEvent event;

@@ -200,7 +200,7 @@ TEST(ValuesUtilTest, PopIntArray) {
   // Create the expected value.
   std::unique_ptr<base::ListValue> list_value(new base::ListValue);
   for (size_t i = 0; i != data.size(); ++i)
-    list_value->AppendInteger(data[i]);
+    list_value->GetList().emplace_back(data[i]);
 
   // Pop an int32_t array.
   MessageReader reader(response.get());
@@ -223,7 +223,7 @@ TEST(ValuesUtilTest, PopStringArray) {
   // Create the expected value.
   std::unique_ptr<base::ListValue> list_value(new base::ListValue);
   for (size_t i = 0; i != data.size(); ++i)
-    list_value->AppendString(data[i]);
+    list_value->GetList().emplace_back(data[i]);
 
   // Pop a string array.
   MessageReader reader(response.get());
@@ -250,10 +250,10 @@ TEST(ValuesUtilTest, PopStruct) {
 
   // Create the expected value.
   base::ListValue list_value;
-  list_value.AppendBoolean(kBoolValue);
-  list_value.AppendInteger(kInt32Value);
-  list_value.AppendDouble(kDoubleValue);
-  list_value.AppendString(kStringValue);
+  list_value.GetList().emplace_back(kBoolValue);
+  list_value.GetList().emplace_back(kInt32Value);
+  list_value.GetList().emplace_back(kDoubleValue);
+  list_value.GetList().emplace_back(kStringValue);
 
   // Pop a struct.
   MessageReader reader(response.get());
@@ -517,8 +517,8 @@ TEST(ValuesUtilTest, AppendDictionary) {
   const std::string kStringValue = "fifty";
 
   auto list_value = std::make_unique<base::ListValue>();
-  list_value->AppendBoolean(kBoolValue);
-  list_value->AppendInteger(kInt32Value);
+  list_value->GetList().emplace_back(kBoolValue);
+  list_value->GetList().emplace_back(kInt32Value);
 
   auto dictionary_value = std::make_unique<base::DictionaryValue>();
   dictionary_value->SetBoolean(kKey1, kBoolValue);
@@ -564,8 +564,8 @@ TEST(ValuesUtilTest, AppendDictionaryAsVariant) {
   const std::string kStringValue = "fifty";
 
   auto list_value = std::make_unique<base::ListValue>();
-  list_value->AppendBoolean(kBoolValue);
-  list_value->AppendInteger(kInt32Value);
+  list_value->GetList().emplace_back(kBoolValue);
+  list_value->GetList().emplace_back(kInt32Value);
 
   auto dictionary_value = std::make_unique<base::DictionaryValue>();
   dictionary_value->SetBoolean(kKey1, kBoolValue);
@@ -607,8 +607,8 @@ TEST(ValuesUtilTest, AppendList) {
   const std::string kStringValue = "fifty";
 
   std::unique_ptr<base::ListValue> list_value(new base::ListValue());
-  list_value->AppendBoolean(kBoolValue);
-  list_value->AppendInteger(kInt32Value);
+  list_value->GetList().emplace_back(kBoolValue);
+  list_value->GetList().emplace_back(kInt32Value);
 
   std::unique_ptr<base::DictionaryValue> dictionary_value(
       new base::DictionaryValue());
@@ -616,10 +616,10 @@ TEST(ValuesUtilTest, AppendList) {
   dictionary_value->SetInteger(kKey2, kDoubleValue);
 
   base::ListValue test_list;
-  test_list.AppendBoolean(kBoolValue);
-  test_list.AppendInteger(kInt32Value);
-  test_list.AppendDouble(kDoubleValue);
-  test_list.AppendString(kStringValue);
+  test_list.GetList().emplace_back(kBoolValue);
+  test_list.GetList().emplace_back(kInt32Value);
+  test_list.GetList().emplace_back(kDoubleValue);
+  test_list.GetList().emplace_back(kStringValue);
   test_list.Append(std::move(list_value));
   test_list.Append(std::move(dictionary_value));
 
@@ -651,8 +651,8 @@ TEST(ValuesUtilTest, AppendListAsVariant) {
   const std::string kStringValue = "fifty";
 
   std::unique_ptr<base::ListValue> list_value(new base::ListValue());
-  list_value->AppendBoolean(kBoolValue);
-  list_value->AppendInteger(kInt32Value);
+  list_value->GetList().emplace_back(kBoolValue);
+  list_value->GetList().emplace_back(kInt32Value);
 
   std::unique_ptr<base::DictionaryValue> dictionary_value(
       new base::DictionaryValue());
@@ -660,10 +660,10 @@ TEST(ValuesUtilTest, AppendListAsVariant) {
   dictionary_value->SetInteger(kKey2, kDoubleValue);
 
   base::ListValue test_list;
-  test_list.AppendBoolean(kBoolValue);
-  test_list.AppendInteger(kInt32Value);
-  test_list.AppendDouble(kDoubleValue);
-  test_list.AppendString(kStringValue);
+  test_list.GetList().emplace_back(kBoolValue);
+  test_list.GetList().emplace_back(kInt32Value);
+  test_list.GetList().emplace_back(kDoubleValue);
+  test_list.GetList().emplace_back(kStringValue);
   test_list.Append(std::move(list_value));
   test_list.Append(std::move(dictionary_value));
 

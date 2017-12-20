@@ -117,7 +117,7 @@ void BindURLToStatement(const TemplateURLData& data,
   // See: crbug.com/153520
   base::ListValue alternate_urls_value;
   for (size_t i = 0; i < data.alternate_urls.size(); ++i)
-    alternate_urls_value.AppendString(data.alternate_urls[i]);
+    alternate_urls_value.GetList().emplace_back(data.alternate_urls[i]);
   std::string alternate_urls;
   base::JSONWriter::Write(alternate_urls_value, &alternate_urls);
 
@@ -480,7 +480,7 @@ bool KeywordTable::GetKeywordDataFromStatement(const sql::Statement& s,
   base::ListValue* alternate_urls_value;
   if (value.get() && value->GetAsList(&alternate_urls_value)) {
     std::string alternate_url;
-    for (size_t i = 0; i < alternate_urls_value->GetSize(); ++i) {
+    for (size_t i = 0; i < alternate_urls_value->GetList().size(); ++i) {
       if (alternate_urls_value->GetString(i, &alternate_url))
         data->alternate_urls.push_back(alternate_url);
     }

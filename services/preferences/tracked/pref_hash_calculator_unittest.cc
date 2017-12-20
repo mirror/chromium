@@ -107,9 +107,9 @@ TEST(PrefHashCalculatorTest, CatchHashChanges) {
   dict_value->Set("f", std::move(nested_empty_list));
 
   auto list_value = std::make_unique<base::ListValue>();
-  list_value->AppendBoolean(true);
-  list_value->AppendInteger(100);
-  list_value->AppendDouble(1.0);
+  list_value->GetList().emplace_back(true);
+  list_value->GetList().emplace_back(100);
+  list_value->GetList().emplace_back(1.0);
 
   ASSERT_EQ(base::Value::Type::NONE, null_value->type());
   ASSERT_EQ(base::Value::Type::BOOLEAN, bool_value->type());

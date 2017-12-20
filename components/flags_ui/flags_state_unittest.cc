@@ -215,7 +215,7 @@ TEST_F(FlagsStateTest, AddTwoFlagsRemoveOne) {
       prefs_.GetList(prefs::kEnabledLabsExperiments);
   ASSERT_TRUE(entries_list != nullptr);
 
-  ASSERT_EQ(2u, entries_list->GetSize());
+  ASSERT_EQ(2u, entries_list->GetList().size());
 
   std::string s0;
   ASSERT_TRUE(entries_list->GetString(0, &s0));
@@ -230,7 +230,7 @@ TEST_F(FlagsStateTest, AddTwoFlagsRemoveOne) {
 
   entries_list = prefs_.GetList(prefs::kEnabledLabsExperiments);
   ASSERT_TRUE(entries_list != nullptr);
-  ASSERT_EQ(1u, entries_list->GetSize());
+  ASSERT_EQ(1u, entries_list->GetList().size());
   ASSERT_TRUE(entries_list->GetString(0, &s0));
   EXPECT_TRUE(s0 == kFlags1);
 }
@@ -247,7 +247,7 @@ TEST_F(FlagsStateTest, AddTwoFlagsRemoveBoth) {
   flags_state_->SetFeatureEntryEnabled(&flags_storage_, kFlags1, false);
   flags_state_->SetFeatureEntryEnabled(&flags_storage_, kFlags2, false);
   entries_list = prefs_.GetList(prefs::kEnabledLabsExperiments);
-  EXPECT_TRUE(entries_list == nullptr || entries_list->GetSize() == 0);
+  EXPECT_TRUE(entries_list == nullptr || entries_list->GetList().size() == 0);
 }
 
 TEST_F(FlagsStateTest, ConvertFlagsToSwitches) {
@@ -566,7 +566,7 @@ TEST_F(FlagsStateTest, PersistAndPrune) {
   const base::ListValue* entries_list =
       prefs_.GetList(prefs::kEnabledLabsExperiments);
   ASSERT_TRUE(entries_list);
-  EXPECT_EQ(2U, entries_list->GetSize());
+  EXPECT_EQ(2U, entries_list->GetList().size());
   std::string s0;
   ASSERT_TRUE(entries_list->GetString(0, &s0));
   EXPECT_EQ(kFlags1, s0);
@@ -621,7 +621,7 @@ TEST_F(FlagsStateTest, CheckValues) {
   const base::ListValue* entries_list =
       prefs_.GetList(prefs::kEnabledLabsExperiments);
   ASSERT_TRUE(entries_list);
-  EXPECT_EQ(2U, entries_list->GetSize());
+  EXPECT_EQ(2U, entries_list->GetList().size());
   std::string s0;
   ASSERT_TRUE(entries_list->GetString(0, &s0));
   EXPECT_EQ(kFlags1, s0);
@@ -823,10 +823,10 @@ TEST_F(FlagsStateTest, GetFlagFeatureEntries) {
                                       &supported_entries, &unsupported_entries,
                                       base::Bind(&SkipFeatureEntry));
   // All |kEntries| except for |kFlags3| should be supported.
-  EXPECT_EQ(9u, supported_entries.GetSize());
-  EXPECT_EQ(1u, unsupported_entries.GetSize());
-  EXPECT_EQ(arraysize(kEntries),
-            supported_entries.GetSize() + unsupported_entries.GetSize());
+  EXPECT_EQ(9u, supported_entries.GetList().size());
+  EXPECT_EQ(1u, unsupported_entries.GetList().size());
+  EXPECT_EQ(arraysize(kEntries), supported_entries.GetList().size() +
+                                     unsupported_entries.GetList().size());
 }
 
 }  // namespace flags_ui

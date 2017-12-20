@@ -402,7 +402,7 @@ TEST(DisplayItemListTest, AsValueWithNoOps) {
 
       // The layer_rect field is present by empty.
       ASSERT_TRUE(params_dict->GetList("layer_rect", &list));
-      ASSERT_EQ(4u, list->GetSize());
+      ASSERT_EQ(4u, list->GetList().size());
       EXPECT_TRUE(list->GetDouble(0, &d) && d == 0) << d;
       EXPECT_TRUE(list->GetDouble(1, &d) && d == 0) << d;
       EXPECT_TRUE(list->GetDouble(2, &d) && d == 0) << d;
@@ -410,7 +410,7 @@ TEST(DisplayItemListTest, AsValueWithNoOps) {
 
       // The items list is there but empty.
       ASSERT_TRUE(params_dict->GetList("items", &list));
-      EXPECT_EQ(0u, list->GetSize());
+      EXPECT_EQ(0u, list->GetList().size());
     }
   }
 
@@ -429,7 +429,7 @@ TEST(DisplayItemListTest, AsValueWithNoOps) {
 
       // The layer_rect field is present by empty.
       ASSERT_TRUE(params_dict->GetList("layer_rect", &list));
-      ASSERT_EQ(4u, list->GetSize());
+      ASSERT_EQ(4u, list->GetList().size());
       EXPECT_TRUE(list->GetDouble(0, &d) && d == 0) << d;
       EXPECT_TRUE(list->GetDouble(1, &d) && d == 0) << d;
       EXPECT_TRUE(list->GetDouble(2, &d) && d == 0) << d;
@@ -494,7 +494,7 @@ TEST(DisplayItemListTest, AsValueWithOps) {
 
       // The layer_rect field is present and has the bounds of the rtree.
       ASSERT_TRUE(params_dict->GetList("layer_rect", &list));
-      ASSERT_EQ(4u, list->GetSize());
+      ASSERT_EQ(4u, list->GetList().size());
       EXPECT_TRUE(list->GetDouble(0, &d) && d == 2) << d;
       EXPECT_TRUE(list->GetDouble(1, &d) && d == 3) << d;
       EXPECT_TRUE(list->GetDouble(2, &d) && d == 8) << d;
@@ -502,7 +502,7 @@ TEST(DisplayItemListTest, AsValueWithOps) {
 
       // The items list has 3 things in it since we built 3 visual rects.
       ASSERT_TRUE(params_dict->GetList("items", &list));
-      EXPECT_EQ(6u, list->GetSize());
+      EXPECT_EQ(6u, list->GetList().size());
 
       for (int i = 0; i < 6; ++i) {
         const base::DictionaryValue* item_dict;
@@ -531,7 +531,7 @@ TEST(DisplayItemListTest, AsValueWithOps) {
 
       // The layer_rect field is present and has the bounds of the rtree.
       ASSERT_TRUE(params_dict->GetList("layer_rect", &list));
-      ASSERT_EQ(4u, list->GetSize());
+      ASSERT_EQ(4u, list->GetList().size());
       EXPECT_TRUE(list->GetDouble(0, &d) && d == 2) << d;
       EXPECT_TRUE(list->GetDouble(1, &d) && d == 3) << d;
       EXPECT_TRUE(list->GetDouble(2, &d) && d == 8) << d;

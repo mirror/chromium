@@ -265,7 +265,7 @@ APIBinding::APIBinding(const std::string& api_name,
   }
 
   if (event_definitions) {
-    events_.reserve(event_definitions->GetSize());
+    events_.reserve(event_definitions->GetList().size());
     for (const auto& event : *event_definitions) {
       const base::DictionaryValue* event_dict = nullptr;
       CHECK(event.GetAsDictionary(&event_dict));
@@ -274,8 +274,8 @@ APIBinding::APIBinding(const std::string& api_name,
       std::string full_name =
           base::StringPrintf("%s.%s", api_name_.c_str(), name.c_str());
       const base::ListValue* filters = nullptr;
-      bool supports_filters =
-          event_dict->GetList("filters", &filters) && !filters->empty();
+      bool supports_filters = event_dict->GetList("filters", &filters) &&
+                              !filters->GetList().empty();
 
       std::vector<std::string> rule_actions;
       std::vector<std::string> rule_conditions;

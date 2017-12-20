@@ -1149,7 +1149,7 @@ bool PermissionsInsertRequest::GetContentData(std::string* upload_content_type,
       root.SetString("role", "reader");
       {
         auto list = base::MakeUnique<base::ListValue>();
-        list->AppendString("commenter");
+        list->GetList().emplace_back("commenter");
         root.Set("additionalRoles", std::move(list));
       }
       break;

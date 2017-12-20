@@ -81,28 +81,35 @@ void LeakDetector::OnLeakDetectionComplete(
   if (previous_result_.number_of_live_audio_nodes <
       result.number_of_live_audio_nodes) {
     auto list = std::make_unique<base::ListValue>();
-    list->AppendInteger(previous_result_.number_of_live_audio_nodes);
-    list->AppendInteger(result.number_of_live_audio_nodes);
+    list->GetList().emplace_back(
+        static_cast<int>(previous_result_.number_of_live_audio_nodes));
+    list->GetList().emplace_back(
+        static_cast<int>(result.number_of_live_audio_nodes));
     detail.Set("numberOfLiveAudioNodes", std::move(list));
   }
   if (previous_result_.number_of_live_documents <
       result.number_of_live_documents) {
     auto list = std::make_unique<base::ListValue>();
-    list->AppendInteger(previous_result_.number_of_live_documents);
-    list->AppendInteger(result.number_of_live_documents);
+    list->GetList().emplace_back(
+        static_cast<int>(previous_result_.number_of_live_documents));
+    list->GetList().emplace_back(
+        static_cast<int>(result.number_of_live_documents));
     detail.Set("numberOfLiveDocuments", std::move(list));
   }
   if (previous_result_.number_of_live_nodes < result.number_of_live_nodes) {
     auto list = std::make_unique<base::ListValue>();
-    list->AppendInteger(previous_result_.number_of_live_nodes);
-    list->AppendInteger(result.number_of_live_nodes);
+    list->GetList().emplace_back(
+        static_cast<int>(previous_result_.number_of_live_nodes));
+    list->GetList().emplace_back(static_cast<int>(result.number_of_live_nodes));
     detail.Set("numberOfLiveNodes", std::move(list));
   }
   if (previous_result_.number_of_live_layout_objects <
       result.number_of_live_layout_objects) {
     auto list = std::make_unique<base::ListValue>();
-    list->AppendInteger(previous_result_.number_of_live_layout_objects);
-    list->AppendInteger(result.number_of_live_layout_objects);
+    list->GetList().emplace_back(
+        static_cast<int>(previous_result_.number_of_live_layout_objects));
+    list->GetList().emplace_back(
+        static_cast<int>(result.number_of_live_layout_objects));
     detail.Set("numberOfLiveLayoutObjects", std::move(list));
   }
   // Resources associated with User Agent CSS should be excluded from leak
@@ -111,42 +118,54 @@ void LeakDetector::OnLeakDetectionComplete(
       (result.number_of_live_resources -
        result.number_of_live_ua_css_resources)) {
     auto list = std::make_unique<base::ListValue>();
-    list->AppendInteger(previous_result_.number_of_live_resources);
-    list->AppendInteger(result.number_of_live_resources);
+    list->GetList().emplace_back(
+        static_cast<int>(previous_result_.number_of_live_resources));
+    list->GetList().emplace_back(
+        static_cast<int>(result.number_of_live_resources));
     detail.Set("numberOfLiveResources", std::move(list));
   }
   if (previous_result_.number_of_live_pausable_objects <
       result.number_of_live_pausable_objects) {
     auto list = std::make_unique<base::ListValue>();
-    list->AppendInteger(previous_result_.number_of_live_pausable_objects);
-    list->AppendInteger(result.number_of_live_pausable_objects);
+    list->GetList().emplace_back(
+        static_cast<int>(previous_result_.number_of_live_pausable_objects));
+    list->GetList().emplace_back(
+        static_cast<int>(result.number_of_live_pausable_objects));
     detail.Set("numberOfLivePausableObjects", std::move(list));
   }
   if (previous_result_.number_of_live_script_promises <
       result.number_of_live_script_promises) {
     auto list = std::make_unique<base::ListValue>();
-    list->AppendInteger(previous_result_.number_of_live_script_promises);
-    list->AppendInteger(result.number_of_live_script_promises);
+    list->GetList().emplace_back(
+        static_cast<int>(previous_result_.number_of_live_script_promises));
+    list->GetList().emplace_back(
+        static_cast<int>(result.number_of_live_script_promises));
     detail.Set("numberOfLiveScriptPromises", std::move(list));
   }
   if (previous_result_.number_of_live_frames < result.number_of_live_frames) {
     auto list = std::make_unique<base::ListValue>();
-    list->AppendInteger(previous_result_.number_of_live_frames);
-    list->AppendInteger(result.number_of_live_frames);
+    list->GetList().emplace_back(
+        static_cast<int>(previous_result_.number_of_live_frames));
+    list->GetList().emplace_back(
+        static_cast<int>(result.number_of_live_frames));
     detail.Set("numberOfLiveFrames", std::move(list));
   }
   if (previous_result_.number_of_live_v8_per_context_data <
       result.number_of_live_v8_per_context_data) {
     auto list = std::make_unique<base::ListValue>();
-    list->AppendInteger(previous_result_.number_of_live_v8_per_context_data);
-    list->AppendInteger(result.number_of_live_v8_per_context_data);
+    list->GetList().emplace_back(
+        static_cast<int>(previous_result_.number_of_live_v8_per_context_data));
+    list->GetList().emplace_back(
+        static_cast<int>(result.number_of_live_v8_per_context_data));
     detail.Set("numberOfLiveV8PerContextData", std::move(list));
   }
   if (previous_result_.number_of_worker_global_scopes <
       result.number_of_worker_global_scopes) {
     auto list = std::make_unique<base::ListValue>();
-    list->AppendInteger(previous_result_.number_of_worker_global_scopes);
-    list->AppendInteger(result.number_of_worker_global_scopes);
+    list->GetList().emplace_back(
+        static_cast<int>(previous_result_.number_of_worker_global_scopes));
+    list->GetList().emplace_back(
+        static_cast<int>(result.number_of_worker_global_scopes));
     detail.Set("numberOfWorkerGlobalScopes", std::move(list));
   }
 

@@ -131,25 +131,25 @@ void ExtensionLoaderHandler::GetManifestError(
 }
 
 void ExtensionLoaderHandler::HandleRetry(const base::ListValue* args) {
-  DCHECK(args->empty());
+  DCHECK(args->GetList().empty());
   const base::FilePath file_path = failed_paths_.back();
   failed_paths_.pop_back();
   LoadUnpackedExtension(file_path);
 }
 
 void ExtensionLoaderHandler::HandleIgnoreFailure(const base::ListValue* args) {
-  DCHECK(args->empty());
+  DCHECK(args->GetList().empty());
   failed_paths_.pop_back();
 }
 
 void ExtensionLoaderHandler::HandleDisplayFailures(
     const base::ListValue* args) {
-  DCHECK(args->empty());
+  DCHECK(args->GetList().empty());
   ui_ready_ = true;
 
   // Notify the frontend of any load failures that were triggered while the
   // chrome://extensions page was loading.
-  if (!failures_.empty())
+  if (!failures_.GetList().empty())
     NotifyFrontendOfFailure();
 }
 
@@ -220,7 +220,7 @@ void ExtensionLoaderHandler::AddFailure(
 void ExtensionLoaderHandler::NotifyFrontendOfFailure() {
   web_ui()->CallJavascriptFunctionUnsafe(
       "extensions.ExtensionLoader.notifyLoadFailed", failures_);
-  failures_.Clear();
+  failures_.GetList().clear();
 }
 
 }  // namespace extensions

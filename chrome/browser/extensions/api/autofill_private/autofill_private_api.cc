@@ -144,7 +144,7 @@ void RemoveDuplicatePhoneNumberAtIndex(
 
   bool is_duplicate = false;
   std::string app_locale = g_browser_process->GetApplicationLocale();
-  for (size_t i = 0; i < list->GetSize() && !is_duplicate; ++i) {
+  for (size_t i = 0; i < list->GetList().size() && !is_duplicate; ++i) {
     if (i == index)
       continue;
 

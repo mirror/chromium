@@ -356,7 +356,7 @@ void EasyUnlockServiceRegular::SetRemoteDevices(
 
   DictionaryPrefUpdate pairing_update(profile()->GetPrefs(),
                                       prefs::kEasyUnlockPairing);
-  if (devices.empty())
+  if (devices.GetList().empty())
     pairing_update->RemoveWithoutPathExpansion(kKeyDevices, NULL);
   else
     pairing_update->SetKey(kKeyDevices, devices.Clone());
@@ -368,7 +368,7 @@ void EasyUnlockServiceRegular::SetRemoteDevices(
 // here to set the (public key, device address) pair for BLE devices.
 void EasyUnlockServiceRegular::SetRemoteBleDevices(
     const base::ListValue& devices) {
-  DCHECK(devices.GetSize() == 1);
+  DCHECK(devices.GetList().size() == 1);
   const base::DictionaryValue* dict = nullptr;
   if (devices.GetDictionary(0, &dict)) {
     std::string address, b64_public_key;

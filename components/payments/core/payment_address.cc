@@ -52,7 +52,7 @@ std::unique_ptr<base::DictionaryValue> PaymentAddress::ToDictionaryValue()
   auto address_line_list = std::make_unique<base::ListValue>();
   for (const base::string16& address_line_string : address_line) {
     if (!address_line_string.empty())
-      address_line_list->AppendString(address_line_string);
+      address_line_list->GetList().emplace_back(address_line_string);
   }
   result->Set(kAddressAddressLine, std::move(address_line_list));
   result->SetString(kAddressRegion, region);

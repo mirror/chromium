@@ -37,7 +37,7 @@ namespace {
 // which cannot be converted will be skipped.
 std::vector<std::string> ListValueToStringVector(const base::ListValue* value) {
   std::vector<std::string> results;
-  results.reserve(value->GetSize());
+  results.reserve(value->GetList().size());
   std::string s;
   for (base::ListValue::const_iterator it = value->begin(); it != value->end();
        ++it) {

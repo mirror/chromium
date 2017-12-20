@@ -311,22 +311,22 @@ bool TestResultsTracker::SaveSummaryAsJSON(
 
   std::unique_ptr<ListValue> global_tags(new ListValue);
   for (const auto& global_tag : global_tags_) {
-    global_tags->AppendString(global_tag);
+    global_tags->GetList().emplace_back(global_tag);
   }
   for (const auto& tag : additional_tags) {
-    global_tags->AppendString(tag);
+    global_tags->GetList().emplace_back(tag);
   }
   summary_root->Set("global_tags", std::move(global_tags));
 
   std::unique_ptr<ListValue> all_tests(new ListValue);
   for (const auto& test : all_tests_) {
-    all_tests->AppendString(test);
+    all_tests->GetList().emplace_back(test);
   }
   summary_root->Set("all_tests", std::move(all_tests));
 
   std::unique_ptr<ListValue> disabled_tests(new ListValue);
   for (const auto& disabled_test : disabled_tests_) {
-    disabled_tests->AppendString(disabled_test);
+    disabled_tests->GetList().emplace_back(disabled_test);
   }
   summary_root->Set("disabled_tests", std::move(disabled_tests));
 

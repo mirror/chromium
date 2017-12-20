@@ -63,24 +63,24 @@ std::string GetClientCertType(SSLClientCertType type) {
 
 void GetKeyExchangesList(int key_exchange, base::ListValue* values) {
   if (key_exchange & BaseTestServer::SSLOptions::KEY_EXCHANGE_RSA)
-    values->AppendString("rsa");
+    values->GetList().emplace_back("rsa");
   if (key_exchange & BaseTestServer::SSLOptions::KEY_EXCHANGE_DHE_RSA)
-    values->AppendString("dhe_rsa");
+    values->GetList().emplace_back("dhe_rsa");
   if (key_exchange & BaseTestServer::SSLOptions::KEY_EXCHANGE_ECDHE_RSA)
-    values->AppendString("ecdhe_rsa");
+    values->GetList().emplace_back("ecdhe_rsa");
 }
 
 void GetCiphersList(int cipher, base::ListValue* values) {
   if (cipher & BaseTestServer::SSLOptions::BULK_CIPHER_RC4)
-    values->AppendString("rc4");
+    values->GetList().emplace_back("rc4");
   if (cipher & BaseTestServer::SSLOptions::BULK_CIPHER_AES128)
-    values->AppendString("aes128");
+    values->GetList().emplace_back("aes128");
   if (cipher & BaseTestServer::SSLOptions::BULK_CIPHER_AES256)
-    values->AppendString("aes256");
+    values->GetList().emplace_back("aes256");
   if (cipher & BaseTestServer::SSLOptions::BULK_CIPHER_3DES)
-    values->AppendString("3des");
+    values->GetList().emplace_back("3des");
   if (cipher & BaseTestServer::SSLOptions::BULK_CIPHER_AES128GCM)
-    values->AppendString("aes128gcm");
+    values->GetList().emplace_back("aes128gcm");
 }
 
 std::unique_ptr<base::Value> GetTLSIntoleranceType(
@@ -117,7 +117,7 @@ std::unique_ptr<base::ListValue> GetTokenBindingParams(
     std::vector<int> params) {
   std::unique_ptr<base::ListValue> values(new base::ListValue());
   for (int param : params) {
-    values->AppendInteger(param);
+    values->GetList().emplace_back(param);
   }
   return values;
 }
@@ -536,18 +536,18 @@ bool BaseTestServer::GenerateArguments(base::DictionaryValue* arguments) const {
                    << " doesn't exist. Can't launch https server.";
         return false;
       }
-      ssl_client_certs->AppendString(it->value());
+      ssl_client_certs->GetList().emplace_back(it->value());
     }
 
-    if (ssl_client_certs->GetSize())
+    if (ssl_client_certs->GetList().size())
       arguments->Set("ssl-client-ca", std::move(ssl_client_certs));
 
     std::unique_ptr<base::ListValue> client_cert_types(new base::ListValue());
     for (size_t i = 0; i < ssl_options_.client_cert_types.size(); i++) {
-      client_cert_types->AppendString(
+      client_cert_types->GetList().emplace_back(
           GetClientCertType(ssl_options_.client_cert_types[i]));
     }
-    if (client_cert_types->GetSize())
+    if (client_cert_types->GetList().size())
       arguments->Set("ssl-client-cert-type", std::move(client_cert_types));
   }
 
@@ -581,12 +581,12 @@ bool BaseTestServer::GenerateArguments(base::DictionaryValue* arguments) const {
     // Check key exchange argument.
     std::unique_ptr<base::ListValue> key_exchange_values(new base::ListValue());
     GetKeyExchangesList(ssl_options_.key_exchanges, key_exchange_values.get());
-    if (key_exchange_values->GetSize())
+    if (key_exchange_values->GetList().size())
       arguments->Set("ssl-key-exchange", std::move(key_exchange_values));
     // Check bulk cipher argument.
     std::unique_ptr<base::ListValue> bulk_cipher_values(new base::ListValue());
     GetCiphersList(ssl_options_.bulk_ciphers, bulk_cipher_values.get());
-    if (bulk_cipher_values->GetSize())
+    if (bulk_cipher_values->GetList().size())
       arguments->Set("ssl-bulk-cipher", std::move(bulk_cipher_values));
     if (ssl_options_.record_resume)
       arguments->Set("https-record-resume", std::make_unique<base::Value>());
@@ -612,14 +612,14 @@ bool BaseTestServer::GenerateArguments(base::DictionaryValue* arguments) const {
     if (!ssl_options_.alpn_protocols.empty()) {
       std::unique_ptr<base::ListValue> alpn_protocols(new base::ListValue());
       for (const std::string& proto : ssl_options_.alpn_protocols) {
-        alpn_protocols->AppendString(proto);
+        alpn_protocols->GetList().emplace_back(proto);
       }
       arguments->Set("alpn-protocols", std::move(alpn_protocols));
     }
     if (!ssl_options_.npn_protocols.empty()) {
       std::unique_ptr<base::ListValue> npn_protocols(new base::ListValue());
       for (const std::string& proto : ssl_options_.npn_protocols) {
-        npn_protocols->AppendString(proto);
+        npn_protocols->GetList().emplace_back(proto);
       }
       arguments->Set("npn-protocols", std::move(npn_protocols));
     }

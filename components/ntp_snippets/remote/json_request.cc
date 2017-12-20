@@ -314,7 +314,7 @@ std::string JsonRequest::Builder::BuildBody() const {
 
   auto excluded = base::MakeUnique<base::ListValue>();
   for (const auto& id : params_.excluded_ids) {
-    excluded->AppendString(id);
+    excluded->GetList().emplace_back(id);
   }
   request->Set("excludedSuggestionIds", std::move(excluded));
 

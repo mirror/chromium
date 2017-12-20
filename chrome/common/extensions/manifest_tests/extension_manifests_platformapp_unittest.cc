@@ -125,8 +125,8 @@ TEST_F(PlatformAppsManifestTest, CertainApisRequirePlatformApps) {
   // Create each manifest.
   for (const char* api_name : kPlatformAppExperimentalApis) {
     auto permissions = base::MakeUnique<base::ListValue>();
-    permissions->AppendString("experimental");
-    permissions->AppendString(api_name);
+    permissions->GetList().emplace_back("experimental");
+    permissions->GetList().emplace_back(api_name);
     manifest->Set("permissions", std::move(permissions));
     manifests.push_back(
         base::MakeUnique<ManifestData>(manifest->CreateDeepCopy(), ""));

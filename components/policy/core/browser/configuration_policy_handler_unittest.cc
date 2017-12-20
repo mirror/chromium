@@ -97,17 +97,17 @@ TEST(ListPolicyHandlerTest, CheckPolicySettings) {
   errors.Clear();
 
   // List with an int is OK, but error is added.
-  list.AppendInteger(175);  // hex af, 255's sake.
+  list.GetList().emplace_back(175);  // hex af, 255's sake.
   policy_map.Set(kTestPolicy, policy::POLICY_LEVEL_MANDATORY,
                  policy::POLICY_SCOPE_USER, policy::POLICY_SOURCE_CLOUD,
                  list.CreateDeepCopy(), nullptr);
   EXPECT_TRUE(handler.CheckPolicySettings(policy_map, &errors));
   EXPECT_FALSE(errors.empty());
-  list.Clear();
+  list.GetList().clear();
   errors.Clear();
 
   // List with a string is OK.
-  list.AppendString("any_string");
+  list.GetList().emplace_back("any_string");
   policy_map.Set(kTestPolicy, policy::POLICY_LEVEL_MANDATORY,
                  policy::POLICY_SCOPE_USER, policy::POLICY_SOURCE_CLOUD,
                  list.CreateDeepCopy(), nullptr);
@@ -132,27 +132,27 @@ TEST(StringListPolicyHandlerTest, ApplyPolicySettings) {
   EXPECT_EQ(expected, *value);
 
   // List with any string applies that string.
-  list.AppendString("any_string");
-  expected.AppendString("any_string");
+  list.GetList().emplace_back("any_string");
+  expected.GetList().emplace_back("any_string");
   policy_map.Set(kTestPolicy, POLICY_LEVEL_MANDATORY, POLICY_SCOPE_USER,
                  POLICY_SOURCE_CLOUD, list.CreateDeepCopy(), nullptr);
   handler.ApplyPolicySettings(policy_map, &prefs);
   EXPECT_TRUE(prefs.GetValue(kTestPref, &value));
   EXPECT_EQ(expected, *value);
-  list.Clear();
-  expected.Clear();
+  list.GetList().clear();
+  expected.GetList().clear();
 
   // List with a string and an integer filters out the integer.
-  list.AppendString("any_string");
-  list.AppendInteger(42);
-  expected.AppendString("any_string");
+  list.GetList().emplace_back("any_string");
+  list.GetList().emplace_back(42);
+  expected.GetList().emplace_back("any_string");
   policy_map.Set(kTestPolicy, POLICY_LEVEL_MANDATORY, POLICY_SCOPE_USER,
                  POLICY_SOURCE_CLOUD, list.CreateDeepCopy(), nullptr);
   handler.ApplyPolicySettings(policy_map, &prefs);
   EXPECT_TRUE(prefs.GetValue(kTestPref, &value));
   EXPECT_EQ(expected, *value);
-  list.Clear();
-  expected.Clear();
+  list.GetList().clear();
+  expected.GetList().clear();
 }
 
 TEST(StringToIntEnumListPolicyHandlerTest, CheckPolicySettings) {
@@ -170,14 +170,14 @@ TEST(StringToIntEnumListPolicyHandlerTest, CheckPolicySettings) {
   EXPECT_TRUE(handler.CheckPolicySettings(policy_map, &errors));
   EXPECT_TRUE(errors.empty());
 
-  list.AppendString("one");
+  list.GetList().emplace_back("one");
   policy_map.Set(kTestPolicy, POLICY_LEVEL_MANDATORY, POLICY_SCOPE_USER,
                  POLICY_SOURCE_CLOUD, list.CreateDeepCopy(), nullptr);
   errors.Clear();
   EXPECT_TRUE(handler.CheckPolicySettings(policy_map, &errors));
   EXPECT_TRUE(errors.empty());
 
-  list.AppendString("invalid");
+  list.GetList().emplace_back("invalid");
   policy_map.Set(kTestPolicy, POLICY_LEVEL_MANDATORY, POLICY_SCOPE_USER,
                  POLICY_SOURCE_CLOUD, list.CreateDeepCopy(), nullptr);
   errors.Clear();
@@ -211,15 +211,15 @@ TEST(StringMappingListPolicyHandlerTest, ApplyPolicySettings) {
   EXPECT_TRUE(prefs.GetValue(kTestPref, &value));
   EXPECT_EQ(expected, *value);
 
-  list.AppendString("two");
-  expected.AppendInteger(2);
+  list.GetList().emplace_back("two");
+  expected.GetList().emplace_back(2);
   policy_map.Set(kTestPolicy, POLICY_LEVEL_MANDATORY, POLICY_SCOPE_USER,
                  POLICY_SOURCE_CLOUD, list.CreateDeepCopy(), nullptr);
   handler.ApplyPolicySettings(policy_map, &prefs);
   EXPECT_TRUE(prefs.GetValue(kTestPref, &value));
   EXPECT_EQ(expected, *value);
 
-  list.AppendString("invalid");
+  list.GetList().emplace_back("invalid");
   policy_map.Set(kTestPolicy, POLICY_LEVEL_MANDATORY, POLICY_SCOPE_USER,
                  POLICY_SOURCE_CLOUD, list.CreateDeepCopy(), nullptr);
   handler.ApplyPolicySettings(policy_map, &prefs);

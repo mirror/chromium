@@ -115,8 +115,8 @@ TEST_F(ManagementApiUnitTest, ManagementSetEnabled) {
       new ManagementSetEnabledFunction());
 
   base::ListValue disable_args;
-  disable_args.AppendString(extension_id);
-  disable_args.AppendBoolean(false);
+  disable_args.GetList().emplace_back(extension_id);
+  disable_args.GetList().emplace_back(false);
 
   // Test disabling an (enabled) extension.
   EXPECT_TRUE(registry()->enabled_extensions().Contains(extension_id));
@@ -124,8 +124,8 @@ TEST_F(ManagementApiUnitTest, ManagementSetEnabled) {
   EXPECT_TRUE(registry()->disabled_extensions().Contains(extension_id));
 
   base::ListValue enable_args;
-  enable_args.AppendString(extension_id);
-  enable_args.AppendBoolean(true);
+  enable_args.GetList().emplace_back(extension_id);
+  enable_args.GetList().emplace_back(true);
 
   // Test re-enabling it.
   function = new ManagementSetEnabledFunction();
@@ -155,7 +155,7 @@ TEST_F(ManagementApiUnitTest, ManagementUninstall) {
   std::string extension_id = extension->id();
 
   base::ListValue uninstall_args;
-  uninstall_args.AppendString(extension->id());
+  uninstall_args.GetList().emplace_back(extension->id());
 
   // Auto-accept any uninstalls.
   {
@@ -238,7 +238,7 @@ TEST_F(ManagementApiUnitTest, ManagementUninstallBlacklisted) {
   scoped_refptr<UIThreadExtensionFunction> function(
       new ManagementUninstallFunction());
   base::ListValue uninstall_args;
-  uninstall_args.AppendString(id);
+  uninstall_args.GetList().emplace_back(id);
   EXPECT_TRUE(RunFunction(function, uninstall_args)) << function->GetError();
 
   EXPECT_EQ(nullptr, registry()->GetInstalledExtension(id));
@@ -257,8 +257,8 @@ TEST_F(ManagementApiUnitTest, ManagementEnableOrDisableBlacklisted) {
   // Test enabling it.
   {
     base::ListValue enable_args;
-    enable_args.AppendString(id);
-    enable_args.AppendBoolean(true);
+    enable_args.GetList().emplace_back(id);
+    enable_args.GetList().emplace_back(true);
     function = new ManagementSetEnabledFunction();
     EXPECT_TRUE(RunFunction(function, enable_args)) << function->GetError();
     EXPECT_FALSE(registry()->enabled_extensions().Contains(id));
@@ -268,8 +268,8 @@ TEST_F(ManagementApiUnitTest, ManagementEnableOrDisableBlacklisted) {
   // Test disabling it
   {
     base::ListValue disable_args;
-    disable_args.AppendString(id);
-    disable_args.AppendBoolean(false);
+    disable_args.GetList().emplace_back(id);
+    disable_args.GetList().emplace_back(false);
 
     function = new ManagementSetEnabledFunction();
     EXPECT_TRUE(RunFunction(function, disable_args)) << function->GetError();
@@ -399,8 +399,8 @@ TEST_F(ManagementApiUnitTest, SetEnabledAfterIncreasedPermissions) {
     function->set_browser_context(profile());
     function->SetRenderFrameHost(web_contents->GetMainFrame());
     base::ListValue args;
-    args.AppendString(extension_id);
-    args.AppendBoolean(true);
+    args.GetList().emplace_back(extension_id);
+    args.GetList().emplace_back(true);
     if (expect_success) {
       EXPECT_TRUE(RunFunction(function, args)) << function->GetError();
     } else {

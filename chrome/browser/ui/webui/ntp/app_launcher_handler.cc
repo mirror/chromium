@@ -363,7 +363,7 @@ void AppLauncherHandler::FillAppDictionary(base::DictionaryValue* dictionary) {
 
   const base::ListValue* app_page_names =
       prefs->GetList(prefs::kNtpAppPageNames);
-  if (!app_page_names || !app_page_names->GetSize()) {
+  if (!app_page_names || !app_page_names->GetList().size()) {
     ListPrefUpdate update(prefs, prefs::kNtpAppPageNames);
     base::ListValue* list = update.Get();
     list->Set(0, base::MakeUnique<base::Value>(
@@ -475,15 +475,15 @@ void AppLauncherHandler::HandleLaunchApp(const base::ListValue* args) {
   Profile* profile = extension_service_->profile();
 
   WindowOpenDisposition disposition =
-      args->GetSize() > 3 ? webui::GetDispositionFromClick(args, 3)
-                          : WindowOpenDisposition::CURRENT_TAB;
+      args->GetList().size() > 3 ? webui::GetDispositionFromClick(args, 3)
+                                 : WindowOpenDisposition::CURRENT_TAB;
   if (extension_id != extensions::kWebStoreAppId) {
     CHECK_NE(launch_bucket, extension_misc::APP_LAUNCH_BUCKET_INVALID);
     extensions::RecordAppLaunchType(launch_bucket, extension->GetType());
   } else {
     extensions::RecordWebStoreLaunch();
 
-    if (args->GetSize() > 2) {
+    if (args->GetList().size() > 2) {
       std::string source_value;
       CHECK(args->GetString(2, &source_value));
       if (!source_value.empty()) {
@@ -619,7 +619,7 @@ void AppLauncherHandler::HandleShowAppInfo(const base::ListValue* args) {
 }
 
 void AppLauncherHandler::HandleReorderApps(const base::ListValue* args) {
-  CHECK(args->GetSize() == 2);
+  CHECK(args->GetList().size() == 2);
 
   std::string dragged_app_id;
   const base::ListValue* app_order;
@@ -628,12 +628,12 @@ void AppLauncherHandler::HandleReorderApps(const base::ListValue* args) {
 
   std::string predecessor_to_moved_ext;
   std::string successor_to_moved_ext;
-  for (size_t i = 0; i < app_order->GetSize(); ++i) {
+  for (size_t i = 0; i < app_order->GetList().size(); ++i) {
     std::string value;
     if (app_order->GetString(i, &value) && value == dragged_app_id) {
       if (i > 0)
         CHECK(app_order->GetString(i - 1, &predecessor_to_moved_ext));
-      if (i + 1 < app_order->GetSize())
+      if (i + 1 < app_order->GetList().size())
         CHECK(app_order->GetString(i + 1, &successor_to_moved_ext));
       break;
     }

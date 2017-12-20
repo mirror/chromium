@@ -118,7 +118,7 @@ bool VerifiedContents::InitFrom(const base::FilePath& path) {
   if (!dictionary->GetList(kContentHashesKey, &hashes_list))
     return false;
 
-  for (size_t i = 0; i < hashes_list->GetSize(); i++) {
+  for (size_t i = 0; i < hashes_list->GetList().size(); i++) {
     DictionaryValue* hashes = NULL;
     if (!hashes_list->GetDictionary(i, &hashes))
       return false;
@@ -142,7 +142,7 @@ bool VerifiedContents::InitFrom(const base::FilePath& path) {
     if (!hashes->GetList(kFilesKey, &files))
       return false;
 
-    for (size_t j = 0; j < files->GetSize(); j++) {
+    for (size_t j = 0; j < files->GetList().size(); j++) {
       DictionaryValue* data = NULL;
       if (!files->GetDictionary(j, &data))
         return false;

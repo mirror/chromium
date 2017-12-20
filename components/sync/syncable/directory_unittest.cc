@@ -2134,7 +2134,7 @@ TEST_F(SyncableDirectoryTest, TestGetNodeDetailsForType) {
   ReadTransaction trans(FROM_HERE, dir().get());
   std::unique_ptr<base::ListValue> nodes(
       dir()->GetNodeDetailsForType(&trans, BOOKMARKS));
-  ASSERT_EQ(1U, nodes->GetSize());
+  ASSERT_EQ(1U, nodes->GetList().size());
 
   const base::DictionaryValue* first_result;
   ASSERT_TRUE(nodes->GetDictionary(0, &first_result));

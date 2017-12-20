@@ -290,9 +290,9 @@ TEST(SocketPermissionTest, IPC) {
         permission_info->CreateAPIPermission());
 
     std::unique_ptr<base::ListValue> value(new base::ListValue());
-    value->AppendString("tcp-connect:*.example.com:80");
-    value->AppendString("udp-bind::8080");
-    value->AppendString("udp-send-to::8888");
+    value->GetList().emplace_back("tcp-connect:*.example.com:80");
+    value->GetList().emplace_back("udp-bind::8080");
+    value->GetList().emplace_back("udp-send-to::8888");
     ASSERT_TRUE(permission1->FromValue(value.get(), NULL, NULL));
 
     EXPECT_FALSE(permission1->Equal(permission2.get()));
@@ -314,9 +314,9 @@ TEST(SocketPermissionTest, Value) {
       permission_info->CreateAPIPermission());
 
   std::unique_ptr<base::ListValue> value(new base::ListValue());
-  value->AppendString("tcp-connect:*.example.com:80");
-  value->AppendString("udp-bind::8080");
-  value->AppendString("udp-send-to::8888");
+  value->GetList().emplace_back("tcp-connect:*.example.com:80");
+  value->GetList().emplace_back("udp-bind::8080");
+  value->GetList().emplace_back("udp-send-to::8888");
   ASSERT_TRUE(permission1->FromValue(value.get(), NULL, NULL));
 
   EXPECT_FALSE(permission1->Equal(permission2.get()));

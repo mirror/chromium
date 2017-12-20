@@ -329,17 +329,17 @@ std::unique_ptr<base::Value> HttpNetworkSession::QuicInfoToValue() const {
 
   auto connection_options(std::make_unique<base::ListValue>());
   for (const auto& option : params_.quic_connection_options)
-    connection_options->AppendString(QuicTagToString(option));
+    connection_options->GetList().emplace_back(QuicTagToString(option));
   dict->Set("connection_options", std::move(connection_options));
 
   auto supported_versions(std::make_unique<base::ListValue>());
   for (const auto& version : params_.quic_supported_versions)
-    supported_versions->AppendString(QuicVersionToString(version));
+    supported_versions->GetList().emplace_back(QuicVersionToString(version));
   dict->Set("supported_versions", std::move(supported_versions));
 
   auto origins_to_force_quic_on(std::make_unique<base::ListValue>());
   for (const auto& origin : params_.origins_to_force_quic_on)
-    origins_to_force_quic_on->AppendString(origin.ToString());
+    origins_to_force_quic_on->GetList().emplace_back(origin.ToString());
   dict->Set("origins_to_force_quic_on", std::move(origins_to_force_quic_on));
 
   dict->SetInteger("max_packet_length", params_.quic_max_packet_length);

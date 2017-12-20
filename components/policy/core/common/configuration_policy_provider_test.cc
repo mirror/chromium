@@ -281,8 +281,8 @@ TEST_P(ConfigurationPolicyProviderTest, IntegerValue) {
 
 TEST_P(ConfigurationPolicyProviderTest, StringListValue) {
   base::ListValue expected_value;
-  expected_value.AppendString("first");
-  expected_value.AppendString("second");
+  expected_value.GetList().emplace_back("first");
+  expected_value.GetList().emplace_back("second");
   CheckValue(test_keys::kKeyStringList,
              expected_value,
              base::Bind(&PolicyProviderTestHarness::InstallStringListPolicy,
@@ -299,8 +299,8 @@ TEST_P(ConfigurationPolicyProviderTest, DictionaryValue) {
   expected_value.SetString("string", "omg");
 
   auto list = base::MakeUnique<base::ListValue>();
-  list->AppendString("first");
-  list->AppendString("second");
+  list->GetList().emplace_back("first");
+  list->GetList().emplace_back("second");
   expected_value.Set("array", std::move(list));
 
   auto dict = base::MakeUnique<base::DictionaryValue>();

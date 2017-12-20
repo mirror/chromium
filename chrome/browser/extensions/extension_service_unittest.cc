@@ -728,7 +728,7 @@ class ExtensionServiceTest
     auto list_value = base::MakeUnique<base::ListValue>();
     for (std::set<std::string>::const_iterator iter = value.begin();
          iter != value.end(); ++iter)
-      list_value->AppendString(*iter);
+      list_value->GetList().emplace_back(*iter);
 
     SetPref(extension_id, pref_path, std::move(list_value), msg);
   }
@@ -1745,7 +1745,7 @@ TEST_F(ExtensionServiceTest, GrantedAPIAndHostPermissions) {
   host_permissions.insert("http://*.google.com.hk/*");
 
   auto api_permissions = base::MakeUnique<base::ListValue>();
-  api_permissions->AppendString("tabs");
+  api_permissions->GetList().emplace_back("tabs");
   SetPref(extension_id, "granted_permissions.api", std::move(api_permissions),
           "granted_permissions.api");
   SetPrefStringSet(

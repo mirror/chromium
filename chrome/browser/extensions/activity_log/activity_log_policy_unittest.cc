@@ -23,7 +23,7 @@ TEST_F(ActivityLogPolicyUtilTest, StripPrivacySensitive) {
                  base::Time::Now(),
                  Action::ACTION_API_CALL,
                  "tabs.executeScript");
-  action->mutable_args()->AppendString("woof");
+  action->mutable_args()->GetList().emplace_back("woof");
   action->set_page_url(GURL("http://www.google.com/"));
   action->set_page_incognito(true);
   action->set_page_title("private");
@@ -71,14 +71,14 @@ TEST_F(ActivityLogPolicyUtilTest, StripArguments) {
                  base::Time::Now(),
                  Action::ACTION_API_CALL,
                  "tabs.executeScript");
-  action->mutable_args()->AppendString("woof");
+  action->mutable_args()->GetList().emplace_back("woof");
   ActivityLogPolicy::Util::StripArguments(whitelist, action);
   ASSERT_EQ("[\"woof\"]", ActivityLogPolicy::Util::Serialize(action->args()));
 
   // Not in whitelist: stripped.
   action = new Action(
       "punky", base::Time::Now(), Action::ACTION_API_CALL, "tabs.create");
-  action->mutable_args()->AppendString("woof");
+  action->mutable_args()->GetList().emplace_back("woof");
   ActivityLogPolicy::Util::StripArguments(whitelist, action);
   ASSERT_EQ("", ActivityLogPolicy::Util::Serialize(action->args()));
 }

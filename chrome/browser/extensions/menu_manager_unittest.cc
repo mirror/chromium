@@ -236,12 +236,12 @@ TEST_F(MenuManagerTest, PopulateFromValue) {
   ASSERT_TRUE(contexts.ToValue()->GetAsInteger(&contexts_value));
 
   auto document_url_patterns = base::MakeUnique<base::ListValue>();
-  document_url_patterns->AppendString("http://www.google.com/*");
-  document_url_patterns->AppendString("http://www.reddit.com/*");
+  document_url_patterns->GetList().emplace_back("http://www.google.com/*");
+  document_url_patterns->GetList().emplace_back("http://www.reddit.com/*");
 
   auto target_url_patterns = base::MakeUnique<base::ListValue>();
-  target_url_patterns->AppendString("http://www.yahoo.com/*");
-  target_url_patterns->AppendString("http://www.facebook.com/*");
+  target_url_patterns->GetList().emplace_back("http://www.yahoo.com/*");
+  target_url_patterns->GetList().emplace_back("http://www.facebook.com/*");
 
   base::DictionaryValue value;
   value.SetBoolean("incognito", incognito);
@@ -612,7 +612,7 @@ TEST_F(MenuManagerTest, ExecuteCommand) {
   manager_.ExecuteCommand(&profile, nullptr /* web_contents */,
                           nullptr /* render_frame_host */, params, id);
 
-  ASSERT_EQ(2u, list->GetSize());
+  ASSERT_EQ(2u, list->GetList().size());
 
   base::DictionaryValue* info;
   ASSERT_TRUE(list->GetDictionary(0, &info));

@@ -21,7 +21,7 @@ bool ListEntryMatches(base::ListValue* list,
                       FinalStatus expected_final_status,
                       Origin expected_origin,
                       const std::string& expected_end_time) {
-  if (index >= list->GetSize())
+  if (index >= list->GetList().size())
     return false;
   base::DictionaryValue* dict = NULL;
   if (!list->GetDictionary(index, &dict))
@@ -62,7 +62,7 @@ TEST(PrerenderHistoryTest, GetAsValue)  {
   entry_value = history.CopyEntriesAsValue();
   ASSERT_TRUE(entry_value.get() != NULL);
   ASSERT_TRUE(entry_value->GetAsList(&entry_list));
-  EXPECT_TRUE(entry_list->empty());
+  EXPECT_TRUE(entry_list->GetList().empty());
 
   // Base time used for all events.  Each event is given a time 1 millisecond
   // after that of the previous one.
@@ -78,7 +78,7 @@ TEST(PrerenderHistoryTest, GetAsValue)  {
   entry_value = history.CopyEntriesAsValue();
   ASSERT_TRUE(entry_value.get() != NULL);
   ASSERT_TRUE(entry_value->GetAsList(&entry_list));
-  EXPECT_EQ(1u, entry_list->GetSize());
+  EXPECT_EQ(1u, entry_list->GetList().size());
   EXPECT_TRUE(ListEntryMatches(entry_list, 0u, kFirstUrl, kFirstFinalStatus,
                                kFirstOrigin, "0"));
 
@@ -93,7 +93,7 @@ TEST(PrerenderHistoryTest, GetAsValue)  {
   entry_value = history.CopyEntriesAsValue();
   ASSERT_TRUE(entry_value.get() != NULL);
   ASSERT_TRUE(entry_value->GetAsList(&entry_list));
-  EXPECT_EQ(2u, entry_list->GetSize());
+  EXPECT_EQ(2u, entry_list->GetList().size());
   EXPECT_TRUE(ListEntryMatches(entry_list, 0u, kSecondUrl, kSecondFinalStatus,
                                kSecondOrigin, "1"));
   EXPECT_TRUE(ListEntryMatches(entry_list, 1u, kFirstUrl, kFirstFinalStatus,
@@ -110,7 +110,7 @@ TEST(PrerenderHistoryTest, GetAsValue)  {
   entry_value = history.CopyEntriesAsValue();
   ASSERT_TRUE(entry_value.get() != NULL);
   ASSERT_TRUE(entry_value->GetAsList(&entry_list));
-  EXPECT_EQ(2u, entry_list->GetSize());
+  EXPECT_EQ(2u, entry_list->GetList().size());
   EXPECT_TRUE(ListEntryMatches(entry_list, 0u, kThirdUrl, kThirdFinalStatus,
                                kThirdOrigin, "2"));
   EXPECT_TRUE(ListEntryMatches(entry_list, 1u, kSecondUrl, kSecondFinalStatus,
@@ -121,7 +121,7 @@ TEST(PrerenderHistoryTest, GetAsValue)  {
   entry_value = history.CopyEntriesAsValue();
   ASSERT_TRUE(entry_value.get() != NULL);
   ASSERT_TRUE(entry_value->GetAsList(&entry_list));
-  EXPECT_TRUE(entry_list->empty());
+  EXPECT_TRUE(entry_list->GetList().empty());
 }
 
 }  // namespace

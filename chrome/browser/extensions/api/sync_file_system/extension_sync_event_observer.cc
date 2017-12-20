@@ -108,9 +108,10 @@ void ExtensionSyncEventObserver::OnFileSynced(
       SyncActionToExtensionEnum(action);
   api::sync_file_system::SyncDirection direction_enum =
       SyncDirectionToExtensionEnum(direction);
-  params->AppendString(api::sync_file_system::ToString(status_enum));
-  params->AppendString(api::sync_file_system::ToString(action_enum));
-  params->AppendString(api::sync_file_system::ToString(direction_enum));
+  params->GetList().emplace_back(api::sync_file_system::ToString(status_enum));
+  params->GetList().emplace_back(api::sync_file_system::ToString(action_enum));
+  params->GetList().emplace_back(
+      api::sync_file_system::ToString(direction_enum));
 
   BroadcastOrDispatchEvent(
       url.origin(), events::SYNC_FILE_SYSTEM_ON_FILE_STATUS_CHANGED,

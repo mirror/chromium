@@ -250,7 +250,7 @@ bool BookmarkCodec::DecodeHelper(BookmarkNode* bb_node,
 
 bool BookmarkCodec::DecodeChildren(const base::ListValue& child_value_list,
                                    BookmarkNode* parent) {
-  for (size_t i = 0; i < child_value_list.GetSize(); ++i) {
+  for (size_t i = 0; i < child_value_list.GetList().size(); ++i) {
     const base::Value* child_value;
     if (!child_value_list.Get(i, &child_value))
       return false;

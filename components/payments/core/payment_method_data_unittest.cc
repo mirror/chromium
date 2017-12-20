@@ -24,16 +24,16 @@ TEST(PaymentMethodData, FromDictionaryValueSuccess_SupportedMethodsArray) {
 
   base::DictionaryValue method_data_dict;
   auto supported_methods_list = std::make_unique<base::ListValue>();
-  supported_methods_list->AppendString("visa");
-  supported_methods_list->AppendString("basic-card");
+  supported_methods_list->GetList().emplace_back("visa");
+  supported_methods_list->GetList().emplace_back("basic-card");
   method_data_dict.Set("supportedMethods", std::move(supported_methods_list));
   auto data_dict = std::make_unique<base::DictionaryValue>();
   auto supported_networks_list = std::make_unique<base::ListValue>();
-  supported_networks_list->AppendString("mastercard");
+  supported_networks_list->GetList().emplace_back("mastercard");
   data_dict->Set("supportedNetworks", std::move(supported_networks_list));
   auto supported_types_list = std::make_unique<base::ListValue>();
-  supported_types_list->AppendString("debit");
-  supported_types_list->AppendString("credit");
+  supported_types_list->GetList().emplace_back("debit");
+  supported_types_list->GetList().emplace_back("credit");
   data_dict->Set("supportedTypes", std::move(supported_types_list));
   method_data_dict.Set("data", std::move(data_dict));
 
@@ -59,11 +59,11 @@ TEST(PaymentMethodData, FromDictionaryValueSuccess_SupportedMethodsString) {
   method_data_dict.SetString("supportedMethods", "basic-card");
   auto data_dict = std::make_unique<base::DictionaryValue>();
   auto supported_networks_list = std::make_unique<base::ListValue>();
-  supported_networks_list->AppendString("mastercard");
+  supported_networks_list->GetList().emplace_back("mastercard");
   data_dict->Set("supportedNetworks", std::move(supported_networks_list));
   auto supported_types_list = std::make_unique<base::ListValue>();
-  supported_types_list->AppendString("debit");
-  supported_types_list->AppendString("credit");
+  supported_types_list->GetList().emplace_back("debit");
+  supported_types_list->GetList().emplace_back("credit");
   data_dict->Set("supportedTypes", std::move(supported_types_list));
   method_data_dict.Set("data", std::move(data_dict));
 
@@ -83,13 +83,13 @@ TEST(PaymentMethodData, FromDictionaryValueFailure) {
 
   // The value in the supported methods list must be a string.
   auto supported_methods_list1 = std::make_unique<base::ListValue>();
-  supported_methods_list1->AppendInteger(13);
+  supported_methods_list1->GetList().emplace_back(13);
   method_data_dict.Set("supportedMethods", std::move(supported_methods_list1));
   EXPECT_FALSE(actual.FromDictionaryValue(method_data_dict));
 
   // The value in the supported methods list must be a non-empty string.
   auto supported_methods_list2 = std::make_unique<base::ListValue>();
-  supported_methods_list2->AppendString("");
+  supported_methods_list2->GetList().emplace_back("");
   method_data_dict.Set("supportedMethods", std::move(supported_methods_list2));
   EXPECT_FALSE(actual.FromDictionaryValue(method_data_dict));
 

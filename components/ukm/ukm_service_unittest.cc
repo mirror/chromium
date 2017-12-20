@@ -118,7 +118,7 @@ class UkmServiceTest : public testing::Test {
   int GetPersistedLogCount() {
     const base::ListValue* list_value =
         prefs_.GetList(prefs::kUkmPersistedLogs);
-    return list_value->GetSize();
+    return list_value->GetList().size();
   }
 
   Report GetPersistedReport() {

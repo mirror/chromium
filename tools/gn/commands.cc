@@ -289,7 +289,7 @@ void PrintTargetsAsBuildfiles(const std::vector<const Target*>& targets,
     unique_files.insert(FilePathToUTF8(BuildFileForItem(target)));
 
   for (const std::string& file : unique_files) {
-    out->AppendString(file);
+    out->GetList().emplace_back(file);
   }
 }
 
@@ -306,8 +306,8 @@ void PrintTargetsAsLabels(const std::vector<const Target*>& targets,
 
   for (const Label& label : unique_labels) {
     // Print toolchain only for ones not in the default toolchain.
-    out->AppendString(label.GetUserVisibleName(label.GetToolchainLabel() !=
-                                               default_tc_label));
+    out->GetList().emplace_back(label.GetUserVisibleName(
+        label.GetToolchainLabel() != default_tc_label));
   }
 }
 
@@ -332,7 +332,7 @@ void PrintTargetsAsOutputs(const std::vector<const Target*>& targets,
     std::string result = RebasePath(output_as_source.value(),
                                     build_settings->build_dir(),
                                     build_settings->root_path_utf8());
-    out->AppendString(result);
+    out->GetList().emplace_back(result);
   }
 }
 

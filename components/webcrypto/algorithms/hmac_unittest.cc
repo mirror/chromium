@@ -52,7 +52,8 @@ class WebCryptoHmacTest : public WebCryptoTestBase {};
 TEST_F(WebCryptoHmacTest, HMACSampleSets) {
   std::unique_ptr<base::ListValue> tests;
   ASSERT_TRUE(ReadJsonTestFileToList("hmac.json", &tests));
-  for (size_t test_index = 0; test_index < tests->GetSize(); ++test_index) {
+  for (size_t test_index = 0; test_index < tests->GetList().size();
+       ++test_index) {
     SCOPED_TRACE(test_index);
     base::DictionaryValue* test;
     ASSERT_TRUE(tests->GetDictionary(test_index, &test));
@@ -234,7 +235,7 @@ TEST_F(WebCryptoHmacTest, ImportKeyJwkKeyOpsSignVerify) {
   base::ListValue* key_ops =
       dict.SetList("key_ops", base::MakeUnique<base::ListValue>());
 
-  key_ops->AppendString("sign");
+  key_ops->GetList().emplace_back("sign");
 
   EXPECT_EQ(Status::Success(),
             ImportKeyJwkFromDict(dict,
@@ -244,7 +245,7 @@ TEST_F(WebCryptoHmacTest, ImportKeyJwkKeyOpsSignVerify) {
 
   EXPECT_EQ(blink::kWebCryptoKeyUsageSign, key.Usages());
 
-  key_ops->AppendString("verify");
+  key_ops->GetList().emplace_back("verify");
 
   EXPECT_EQ(Status::Success(),
             ImportKeyJwkFromDict(dict,
@@ -265,9 +266,9 @@ TEST_F(WebCryptoHmacTest, ImportKeyJwkUseInconsisteWithKeyOps) {
   dict.SetString("use", "sig");
 
   auto key_ops = base::MakeUnique<base::ListValue>();
-  key_ops->AppendString("sign");
-  key_ops->AppendString("verify");
-  key_ops->AppendString("encrypt");
+  key_ops->GetList().emplace_back("sign");
+  key_ops->GetList().emplace_back("verify");
+  key_ops->GetList().emplace_back("encrypt");
   dict.Set("key_ops", std::move(key_ops));
   EXPECT_EQ(
       Status::ErrorJwkUseAndKeyopsInconsistent(),

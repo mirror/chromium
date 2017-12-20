@@ -123,7 +123,7 @@ void AppendStringIfNotEmpty(const AutofillProfile& profile,
                             base::ListValue* list) {
   const base::string16 value = profile.GetInfo(type, app_locale);
   if (!value.empty())
-    list->AppendString(value);
+    list->GetList().emplace_back(value);
 }
 
 // Returns a dictionary with the structure expected by Payments RPCs, containing
@@ -149,7 +149,7 @@ std::unique_ptr<base::DictionaryValue> BuildAddressDictionary(
                          address_lines.get());
   AppendStringIfNotEmpty(profile, ADDRESS_HOME_LINE3, app_locale,
                          address_lines.get());
-  if (!address_lines->empty())
+  if (!address_lines->GetList().empty())
     postal_address->Set("address_line", std::move(address_lines));
 
   SetStringIfNotEmpty(profile, ADDRESS_HOME_CITY, app_locale, "locality_name",
@@ -185,7 +185,7 @@ void SetActiveExperiments(const std::vector<const char*>& active_experiments,
   std::unique_ptr<base::ListValue> active_chrome_experiments(
       std::make_unique<base::ListValue>());
   for (const char* it : active_experiments)
-    active_chrome_experiments->AppendString(it);
+    active_chrome_experiments->GetList().emplace_back(it);
 
   request_dict->Set("active_chrome_experiments",
                     std::move(active_chrome_experiments));

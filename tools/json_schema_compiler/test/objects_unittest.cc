@@ -22,8 +22,8 @@ using namespace test::api::objects_movable_json;
 TEST(JsonSchemaCompilerObjectsTest, ObjectParamParamsCreate) {
   {
     auto strings = std::make_unique<base::ListValue>();
-    strings->AppendString("one");
-    strings->AppendString("two");
+    strings->GetList().emplace_back("one");
+    strings->GetList().emplace_back("two");
     auto info_value = std::make_unique<base::DictionaryValue>();
     info_value->Set("strings", std::move(strings));
     info_value->SetInteger("integer", 5);
@@ -42,8 +42,8 @@ TEST(JsonSchemaCompilerObjectsTest, ObjectParamParamsCreate) {
   }
   {
     auto strings = std::make_unique<base::ListValue>();
-    strings->AppendString("one");
-    strings->AppendString("two");
+    strings->GetList().emplace_back("one");
+    strings->GetList().emplace_back("two");
     auto info_value = std::make_unique<base::DictionaryValue>();
     info_value->Set("strings", std::move(strings));
     info_value->SetInteger("integer", 5);

@@ -38,7 +38,7 @@ namespace {
 
 Status FlattenStringArray(const base::ListValue* src, base::string16* dest) {
   base::string16 keys;
-  for (size_t i = 0; i < src->GetSize(); ++i) {
+  for (size_t i = 0; i < src->GetList().size(); ++i) {
     base::string16 keys_list_part;
     if (!src->GetString(i, &keys_list_part))
       return Status(kUnknownError, "keys should be a string");

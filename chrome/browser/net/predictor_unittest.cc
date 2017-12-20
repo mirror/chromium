@@ -53,12 +53,12 @@ class PredictorTest : public testing::Test {
 static const base::ListValue* FindSerializationMotivation(
     const GURL& motivation,
     const base::ListValue* referral_list) {
-  CHECK_LT(0u, referral_list->GetSize());  // Room for version.
+  CHECK_LT(0u, referral_list->GetList().size());  // Room for version.
   int format_version = -1;
   CHECK(referral_list->GetInteger(0, &format_version));
   CHECK_EQ(Predictor::kPredictorReferrerVersion, format_version);
   const base::ListValue* motivation_list(NULL);
-  for (size_t i = 1; i < referral_list->GetSize(); ++i) {
+  for (size_t i = 1; i < referral_list->GetList().size(); ++i) {
     referral_list->GetList(i, &motivation_list);
     std::string existing_spec;
     EXPECT_TRUE(motivation_list->GetString(0, &existing_spec));
@@ -78,7 +78,7 @@ static base::ListValue* FindSerializationMotivation(
 // Create a new empty serialization list.
 static base::ListValue* NewEmptySerializationList() {
   base::ListValue* list = new base::ListValue;
-  list->AppendInteger(Predictor::kPredictorReferrerVersion);
+  list->GetList().emplace_back(Predictor::kPredictorReferrerVersion);
   return list;
 }
 
@@ -95,14 +95,15 @@ static void AddToSerializedList(const GURL& motivation,
   if (!motivation_list) {
     // This is the first mention of this motivation, so build a list.
     motivation_list = new base::ListValue;
-    motivation_list->AppendString(motivation.spec());
+    motivation_list->GetList().emplace_back(motivation.spec());
     // Provide empty subresource list.
     motivation_list->Append(base::MakeUnique<base::ListValue>());
 
     // ...and make it part of the serialized referral_list.
     referral_list->Append(base::WrapUnique(motivation_list));
     // |motivation_list| is invalidated at this point, so it needs to be reset.
-    referral_list->GetList(referral_list->GetSize() - 1, &motivation_list);
+    referral_list->GetList(referral_list->GetList().size() - 1,
+                           &motivation_list);
   }
 
   base::ListValue* subresource_list(NULL);
@@ -113,8 +114,8 @@ static void AddToSerializedList(const GURL& motivation,
   // case, during deserialization, the latency value we supply plus the
   // existing value(s) will be added to the referrer.
 
-  subresource_list->AppendString(subresource.spec());
-  subresource_list->AppendDouble(use_rate);
+  subresource_list->GetList().emplace_back(subresource.spec());
+  subresource_list->GetList().emplace_back(use_rate);
 }
 
 // For a given motivation, and subresource, find what latency is currently
@@ -131,7 +132,7 @@ static bool GetDataFromSerialization(const GURL& motivation,
     return false;
   const base::ListValue* subresource_list;
   EXPECT_TRUE(motivation_list->GetList(1, &subresource_list));
-  for (size_t i = 0; i < subresource_list->GetSize();) {
+  for (size_t i = 0; i < subresource_list->GetList().size();) {
     std::string url_spec;
     EXPECT_TRUE(subresource_list->GetString(i++, &url_spec));
     EXPECT_TRUE(subresource_list->GetDouble(i++, use_rate));
@@ -153,7 +154,7 @@ TEST_F(PredictorTest, ReferrerSerializationNilTest) {
 
   std::unique_ptr<base::ListValue> referral_list(new base::ListValue);
   predictor.SerializeReferrers(referral_list.get());
-  EXPECT_EQ(1U, referral_list->GetSize());
+  EXPECT_EQ(1U, referral_list->GetList().size());
   EXPECT_FALSE(GetDataFromSerialization(
     GURL("http://a.com:79"), GURL("http://b.com:78"),
       *referral_list.get(), NULL));
@@ -178,7 +179,7 @@ TEST_F(PredictorTest, ReferrerSerializationSingleReferrerTest) {
 
   base::ListValue recovered_referral_list;
   predictor.SerializeReferrers(&recovered_referral_list);
-  EXPECT_EQ(2U, recovered_referral_list.GetSize());
+  EXPECT_EQ(2U, recovered_referral_list.GetList().size());
   double rate;
   EXPECT_TRUE(GetDataFromSerialization(
       motivation_url, subresource_url, recovered_referral_list, &rate));
@@ -377,20 +378,20 @@ TEST_F(PredictorTest, DiscardPredictorResults) {
   SimplePredictor predictor(true);
   base::ListValue referral_list;
   predictor.SerializeReferrers(&referral_list);
-  EXPECT_EQ(1U, referral_list.GetSize());
+  EXPECT_EQ(1U, referral_list.GetList().size());
 
   GURL host_1("http://test_1");
   GURL host_2("http://test_2");
   predictor.LearnFromNavigation(host_1, host_2);
 
-  referral_list.Clear();
+  referral_list.GetList().clear();
   predictor.SerializeReferrers(&referral_list);
-  EXPECT_EQ(2U, referral_list.GetSize());
+  EXPECT_EQ(2U, referral_list.GetList().size());
 
   predictor.DiscardAllResults();
-  referral_list.Clear();
+  referral_list.GetList().clear();
   predictor.SerializeReferrers(&referral_list);
-  EXPECT_EQ(1U, referral_list.GetSize());
+  EXPECT_EQ(1U, referral_list.GetList().size());
 
   predictor.Shutdown();
 }

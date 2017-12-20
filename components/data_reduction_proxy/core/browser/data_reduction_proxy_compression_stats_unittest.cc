@@ -164,16 +164,17 @@ class DataReductionProxyCompressionStatsTest : public testing::Test {
           i, base::MakeUnique<base::Value>(base::NumberToString(i)));
     }
 
-    received_daily_content_length_list->Clear();
+    received_daily_content_length_list->GetList().clear();
     for (size_t i = 0; i < kNumDaysInHistory / 2; ++i) {
-      received_daily_content_length_list->AppendString(base::NumberToString(i));
+      received_daily_content_length_list->GetList().emplace_back(
+          base::NumberToString(i));
     }
   }
 
   // Create daily pref list of |kNumDaysInHistory| zero values.
   void CreatePrefList(const char* pref) {
     base::ListValue* update = compression_stats_->GetList(pref);
-    update->Clear();
+    update->GetList().clear();
     for (size_t i = 0; i < kNumDaysInHistory; ++i) {
       update->Insert(0, base::MakeUnique<base::Value>(base::Int64ToString(0)));
     }
@@ -184,8 +185,8 @@ class DataReductionProxyCompressionStatsTest : public testing::Test {
   void VerifyPrefListWasWritten(const char* pref) {
     const base::ListValue* delayed_list = compression_stats_->GetList(pref);
     const base::ListValue* written_list = pref_service()->GetList(pref);
-    ASSERT_EQ(delayed_list->GetSize(), written_list->GetSize());
-    size_t count = delayed_list->GetSize();
+    ASSERT_EQ(delayed_list->GetList().size(), written_list->GetList().size());
+    size_t count = delayed_list->GetList().size();
 
     for (size_t i = 0; i < count; ++i) {
       EXPECT_EQ(GetListPrefInt64Value(*delayed_list, i),
@@ -229,7 +230,8 @@ class DataReductionProxyCompressionStatsTest : public testing::Test {
                       size_t num_days_in_history) {
     ASSERT_GE(num_days_in_history, count);
     base::ListValue* update = compression_stats_->GetList(pref);
-    ASSERT_EQ(num_days_in_history, update->GetSize()) << "Pref: " << pref;
+    ASSERT_EQ(num_days_in_history, update->GetList().size())
+        << "Pref: " << pref;
 
     for (size_t i = 0; i < count; ++i) {
       EXPECT_EQ(values[i],

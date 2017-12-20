@@ -65,7 +65,7 @@ bool PaymentMethodData::FromDictionaryValue(
   // The value of supportedMethods can be an array or a string.
   const base::ListValue* supported_methods_list = nullptr;
   if (value.GetList(kSupportedMethods, &supported_methods_list)) {
-    for (size_t i = 0; i < supported_methods_list->GetSize(); ++i) {
+    for (size_t i = 0; i < supported_methods_list->GetList().size(); ++i) {
       std::string supported_method;
       if (!supported_methods_list->GetString(i, &supported_method) ||
           !base::IsStringASCII(supported_method)) {
@@ -96,7 +96,7 @@ bool PaymentMethodData::FromDictionaryValue(
     data = json_data;
     const base::ListValue* supported_networks_list = nullptr;
     if (data_dict->GetList(kSupportedNetworks, &supported_networks_list)) {
-      for (size_t i = 0; i < supported_networks_list->GetSize(); ++i) {
+      for (size_t i = 0; i < supported_networks_list->GetList().size(); ++i) {
         std::string supported_network;
         if (!supported_networks_list->GetString(i, &supported_network) ||
             !base::IsStringASCII(supported_network)) {
@@ -107,7 +107,7 @@ bool PaymentMethodData::FromDictionaryValue(
     }
     const base::ListValue* supported_types_list = nullptr;
     if (data_dict->GetList(kSupportedTypes, &supported_types_list)) {
-      for (size_t i = 0; i < supported_types_list->GetSize(); ++i) {
+      for (size_t i = 0; i < supported_types_list->GetList().size(); ++i) {
         std::string supported_type;
         if (!supported_types_list->GetString(i, &supported_type) ||
             !base::IsStringASCII(supported_type)) {

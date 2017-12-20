@@ -98,7 +98,7 @@ std::unique_ptr<base::ListValue> ObjectIdInvalidationMap::ToValue() const {
 
 bool ObjectIdInvalidationMap::ResetFromValue(const base::ListValue& value) {
   map_.clear();
-  for (size_t i = 0; i < value.GetSize(); ++i) {
+  for (size_t i = 0; i < value.GetList().size(); ++i) {
     const base::DictionaryValue* dict;
     if (!value.GetDictionary(i, &dict)) {
       return false;

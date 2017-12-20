@@ -37,7 +37,7 @@ JobDetails ConstructJobDetailsFromJson(const base::DictionaryValue& job_data) {
   // Get tags for print job.
   const base::ListValue* tags = nullptr;
   if (job_data.GetList(kTagsValue, &tags)) {
-    for (size_t i = 0; i < tags->GetSize(); i++) {
+    for (size_t i = 0; i < tags->GetList().size(); i++) {
       std::string value;
       if (tags->GetString(i, &value))
         job_details.tags_.push_back(value);

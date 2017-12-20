@@ -107,7 +107,7 @@ std::unique_ptr<base::Value> CertVerifyResultCallback(
            verify_result.public_key_hashes.begin();
        it != verify_result.public_key_hashes.end();
        ++it) {
-    hashes->AppendString(it->ToString());
+    hashes->GetList().emplace_back(it->ToString());
   }
   results->Set("public_key_hashes", std::move(hashes));
 

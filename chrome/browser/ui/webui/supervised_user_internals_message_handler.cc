@@ -153,7 +153,7 @@ SupervisedUserInternalsMessageHandler::GetSupervisedUserService() {
 
 void SupervisedUserInternalsMessageHandler::HandleRegisterForEvents(
     const base::ListValue* args) {
-  DCHECK(args->empty());
+  DCHECK(args->GetList().empty());
   if (scoped_observer_.IsObservingSources())
     return;
 
@@ -167,7 +167,7 @@ void SupervisedUserInternalsMessageHandler::HandleGetBasicInfo(
 
 void SupervisedUserInternalsMessageHandler::HandleTryURL(
     const base::ListValue* args) {
-  DCHECK_EQ(1u, args->GetSize());
+  DCHECK_EQ(1u, args->GetList().size());
   std::string url_str;
   if (!args->GetString(0, &url_str))
     return;

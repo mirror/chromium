@@ -84,8 +84,8 @@ bool LegalMessageLine::Parse(const base::DictionaryValue& legal_message,
   const base::ListValue* lines_list = nullptr;
   if (legal_message.GetList("line", &lines_list)) {
     LegalMessageLines lines;
-    lines.reserve(lines_list->GetSize());
-    for (size_t i = 0; i < lines_list->GetSize(); ++i) {
+    lines.reserve(lines_list->GetList().size());
+    for (size_t i = 0; i < lines_list->GetList().size(); ++i) {
       lines.emplace_back(LegalMessageLine());
       const base::DictionaryValue* single_line;
       if (!lines_list->GetDictionary(i, &single_line) ||
@@ -111,11 +111,12 @@ bool LegalMessageLine::ParseLine(const base::DictionaryValue& line,
   // Process all the template parameters.
   const base::ListValue* template_parameters = nullptr;
   if (line.GetList("template_parameter", &template_parameters)) {
-    display_texts.resize(template_parameters->GetSize());
-    links_.reserve(template_parameters->GetSize());
+    display_texts.resize(template_parameters->GetList().size());
+    links_.reserve(template_parameters->GetList().size());
 
     for (size_t parameter_index = 0;
-         parameter_index < template_parameters->GetSize(); ++parameter_index) {
+         parameter_index < template_parameters->GetList().size();
+         ++parameter_index) {
       const base::DictionaryValue* single_parameter;
       std::string url;
       if (!template_parameters->GetDictionary(parameter_index,

@@ -582,7 +582,7 @@ void NetworkingPrivateLinux::SelectCellularMobileNetwork(
 std::unique_ptr<base::ListValue>
 NetworkingPrivateLinux::GetEnabledNetworkTypes() {
   std::unique_ptr<base::ListValue> network_list(new base::ListValue);
-  network_list->AppendString(::onc::network_type::kWiFi);
+  network_list->GetList().emplace_back(::onc::network_type::kWiFi);
   return network_list;
 }
 

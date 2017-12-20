@@ -131,10 +131,10 @@ std::string Region::ToString() const {
 std::unique_ptr<base::Value> Region::AsValue() const {
   std::unique_ptr<base::ListValue> result(new base::ListValue());
   for (gfx::Rect rect : *this) {
-    result->AppendInteger(rect.x());
-    result->AppendInteger(rect.y());
-    result->AppendInteger(rect.width());
-    result->AppendInteger(rect.height());
+    result->GetList().emplace_back(rect.x());
+    result->GetList().emplace_back(rect.y());
+    result->GetList().emplace_back(rect.width());
+    result->GetList().emplace_back(rect.height());
   }
   return std::move(result);
 }

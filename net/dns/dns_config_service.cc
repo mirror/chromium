@@ -66,12 +66,12 @@ std::unique_ptr<base::Value> DnsConfig::ToValue() const {
 
   auto list = std::make_unique<base::ListValue>();
   for (size_t i = 0; i < nameservers.size(); ++i)
-    list->AppendString(nameservers[i].ToString());
+    list->GetList().emplace_back(nameservers[i].ToString());
   dict->Set("nameservers", std::move(list));
 
   list = std::make_unique<base::ListValue>();
   for (size_t i = 0; i < search.size(); ++i)
-    list->AppendString(search[i]);
+    list->GetList().emplace_back(search[i]);
   dict->Set("search", std::move(list));
 
   dict->SetBoolean("unhandled_options", unhandled_options);

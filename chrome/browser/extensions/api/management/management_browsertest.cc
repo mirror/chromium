@@ -573,7 +573,7 @@ IN_PROC_BROWSER_TEST_F(ExtensionManagementTest, ExternalPolicyRefresh) {
       << kForceInstallNotEmptyHelp;
 
   base::ListValue forcelist;
-  forcelist.AppendString(BuildForceInstallPolicyValue(
+  forcelist.GetList().emplace_back(BuildForceInstallPolicyValue(
       kExtensionId, "http://localhost/autoupdate/manifest"));
   PolicyMap policies;
   policies.Set(policy::key::kExtensionInstallForcelist,
@@ -661,7 +661,7 @@ IN_PROC_BROWSER_TEST_F(ExtensionManagementTest,
 
   // Setup the force install policy. It should override the location.
   base::ListValue forcelist;
-  forcelist.AppendString(BuildForceInstallPolicyValue(
+  forcelist.GetList().emplace_back(BuildForceInstallPolicyValue(
       kExtensionId, "http://localhost/autoupdate/manifest"));
   PolicyMap policies;
   policies.Set(policy::key::kExtensionInstallForcelist,

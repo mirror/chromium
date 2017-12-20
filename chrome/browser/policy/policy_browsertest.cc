@@ -1027,8 +1027,8 @@ IN_PROC_BROWSER_TEST_F(PolicyTest, DefaultSearchProvider) {
                POLICY_SCOPE_USER, POLICY_SOURCE_CLOUD,
                base::MakeUnique<base::Value>(kSearchURL), nullptr);
   std::unique_ptr<base::ListValue> alternate_urls(new base::ListValue);
-  alternate_urls->AppendString(kAlternateURL0);
-  alternate_urls->AppendString(kAlternateURL1);
+  alternate_urls->GetList().emplace_back(kAlternateURL0);
+  alternate_urls->GetList().emplace_back(kAlternateURL1);
   policies.Set(key::kDefaultSearchProviderAlternateURLs, POLICY_LEVEL_MANDATORY,
                POLICY_SCOPE_USER, POLICY_SOURCE_CLOUD,
                std::move(alternate_urls), nullptr);
@@ -1485,7 +1485,7 @@ IN_PROC_BROWSER_TEST_F(PolicyTest, ExtensionInstallBlacklistSelective) {
   ASSERT_FALSE(service->GetExtensionById(kGoodCrxId, true));
   ASSERT_FALSE(service->GetExtensionById(kAdBlockCrxId, true));
   base::ListValue blacklist;
-  blacklist.AppendString(kGoodCrxId);
+  blacklist.GetList().emplace_back(kGoodCrxId);
   PolicyMap policies;
   policies.Set(key::kExtensionInstallBlacklist, POLICY_LEVEL_MANDATORY,
                POLICY_SCOPE_USER, POLICY_SOURCE_CLOUD,
@@ -1617,7 +1617,7 @@ IN_PROC_BROWSER_TEST_F(PolicyTest, MAYBE_ExtensionInstallBlacklistWildcard) {
   ASSERT_FALSE(service->GetExtensionById(kGoodCrxId, true));
   ASSERT_TRUE(service->GetExtensionById(kAdBlockCrxId, true));
   base::ListValue blacklist;
-  blacklist.AppendString("*");
+  blacklist.GetList().emplace_back("*");
   PolicyMap policies;
   policies.Set(key::kExtensionInstallBlacklist, POLICY_LEVEL_MANDATORY,
                POLICY_SCOPE_USER, POLICY_SOURCE_CLOUD,
@@ -1676,9 +1676,9 @@ IN_PROC_BROWSER_TEST_F(PolicyTest, ExtensionInstallBlacklistSharedModules) {
   // Blacklist "*" but force-install the importer extension. The shared module
   // should be automatically installed too.
   base::ListValue blacklist;
-  blacklist.AppendString("*");
+  blacklist.GetList().emplace_back("*");
   base::ListValue forcelist;
-  forcelist.AppendString(
+  forcelist.GetList().emplace_back(
       base::StringPrintf("%s;%s", kImporterId, update_xml_url.spec().c_str()));
   PolicyMap policies;
   policies.Set(key::kExtensionInstallBlacklist, POLICY_LEVEL_MANDATORY,
@@ -1728,9 +1728,9 @@ IN_PROC_BROWSER_TEST_F(PolicyTest, ExtensionInstallWhitelist) {
   ASSERT_FALSE(service->GetExtensionById(kGoodCrxId, true));
   ASSERT_FALSE(service->GetExtensionById(kAdBlockCrxId, true));
   base::ListValue blacklist;
-  blacklist.AppendString("*");
+  blacklist.GetList().emplace_back("*");
   base::ListValue whitelist;
-  whitelist.AppendString(kGoodCrxId);
+  whitelist.GetList().emplace_back(kGoodCrxId);
   PolicyMap policies;
   policies.Set(key::kExtensionInstallBlacklist, POLICY_LEVEL_MANDATORY,
                POLICY_SCOPE_USER, POLICY_SOURCE_CLOUD,
@@ -1766,7 +1766,7 @@ IN_PROC_BROWSER_TEST_F(PolicyTest, ExtensionInstallForcelist) {
 
   // Setting the forcelist extension should install "good_v1.crx".
   base::ListValue forcelist;
-  forcelist.AppendString(
+  forcelist.GetList().emplace_back(
       base::StringPrintf("%s;%s", kGoodCrxId, url.spec().c_str()));
   PolicyMap policies;
   policies.Set(key::kExtensionInstallForcelist, POLICY_LEVEL_MANDATORY,
@@ -1925,7 +1925,7 @@ IN_PROC_BROWSER_TEST_F(PolicyTest, ExtensionAllowedTypes) {
   ASSERT_FALSE(service->GetExtensionById(kHostedAppCrxId, true));
 
   base::ListValue allowed_types;
-  allowed_types.AppendString("hosted_app");
+  allowed_types.GetList().emplace_back("hosted_app");
   PolicyMap policies;
   policies.Set(key::kExtensionAllowedTypes, POLICY_LEVEL_MANDATORY,
                POLICY_SCOPE_USER, POLICY_SOURCE_CLOUD,
@@ -1983,8 +1983,8 @@ IN_PROC_BROWSER_TEST_F(PolicyTest, MAYBE_ExtensionInstallSources) {
 
   // Install the policy and trigger another download.
   base::ListValue install_sources;
-  install_sources.AppendString(install_source_url.spec());
-  install_sources.AppendString(referrer_url.spec());
+  install_sources.GetList().emplace_back(install_source_url.spec());
+  install_sources.GetList().emplace_back(referrer_url.spec());
   PolicyMap policies;
   policies.Set(key::kExtensionInstallSources, POLICY_LEVEL_MANDATORY,
                POLICY_SCOPE_USER, POLICY_SOURCE_CLOUD,
@@ -2487,7 +2487,7 @@ IN_PROC_BROWSER_TEST_F(PolicyTest, URLBlacklist) {
 
   // Set a blacklist.
   base::ListValue blacklist;
-  blacklist.AppendString("bbb.com");
+  blacklist.GetList().emplace_back("bbb.com");
   PolicyMap policies;
   policies.Set(key::kURLBlacklist, POLICY_LEVEL_MANDATORY, POLICY_SCOPE_USER,
                POLICY_SOURCE_CLOUD, blacklist.CreateDeepCopy(), nullptr);
@@ -2500,8 +2500,8 @@ IN_PROC_BROWSER_TEST_F(PolicyTest, URLBlacklist) {
 
   // Whitelist some sites of bbb.com.
   base::ListValue whitelist;
-  whitelist.AppendString("sub.bbb.com");
-  whitelist.AppendString("bbb.com/policy");
+  whitelist.GetList().emplace_back("sub.bbb.com");
+  whitelist.GetList().emplace_back("bbb.com/policy");
   policies.Set(key::kURLWhitelist, POLICY_LEVEL_MANDATORY, POLICY_SCOPE_USER,
                POLICY_SOURCE_CLOUD, whitelist.CreateDeepCopy(), nullptr);
   UpdateProviderPolicy(policies);
@@ -2519,13 +2519,13 @@ IN_PROC_BROWSER_TEST_F(PolicyTest, URLBlacklistAndWhitelist) {
   ASSERT_TRUE(embedded_test_server()->Start());
 
   base::ListValue blacklist;
-  blacklist.AppendString("*");
+  blacklist.GetList().emplace_back("*");
   PolicyMap policies;
   policies.Set(key::kURLBlacklist, POLICY_LEVEL_MANDATORY, POLICY_SCOPE_USER,
                POLICY_SOURCE_CLOUD, blacklist.CreateDeepCopy(), nullptr);
 
   base::ListValue whitelist;
-  whitelist.AppendString("aaa.com");
+  whitelist.GetList().emplace_back("aaa.com");
   policies.Set(key::kURLWhitelist, POLICY_LEVEL_MANDATORY, POLICY_SCOPE_USER,
                POLICY_SOURCE_CLOUD, whitelist.CreateDeepCopy(), nullptr);
   UpdateProviderPolicy(policies);
@@ -2549,8 +2549,8 @@ IN_PROC_BROWSER_TEST_F(PolicyTest, URLBlacklistSubresources) {
   // Set a blacklist containing the image and the iframe which are used by the
   // main document.
   base::ListValue blacklist;
-  blacklist.AppendString(image_url.spec().c_str());
-  blacklist.AppendString(subframe_url.spec().c_str());
+  blacklist.GetList().emplace_back(image_url.spec().c_str());
+  blacklist.GetList().emplace_back(subframe_url.spec().c_str());
   PolicyMap policies;
   policies.Set(key::kURLBlacklist, POLICY_LEVEL_MANDATORY, POLICY_SCOPE_USER,
                POLICY_SOURCE_CLOUD, blacklist.CreateDeepCopy(), nullptr);
@@ -2596,7 +2596,7 @@ IN_PROC_BROWSER_TEST_F(PolicyTest, MAYBE_FileURLBlacklist) {
 
   // Set a blacklist for all the files.
   base::ListValue blacklist;
-  blacklist.AppendString("file://*");
+  blacklist.GetList().emplace_back("file://*");
   PolicyMap policies;
   policies.Set(key::kURLBlacklist, POLICY_LEVEL_MANDATORY, POLICY_SCOPE_USER,
                POLICY_SOURCE_CLOUD, blacklist.CreateDeepCopy(), nullptr);
@@ -2618,7 +2618,7 @@ IN_PROC_BROWSER_TEST_F(PolicyTest, MAYBE_FileURLBlacklist) {
   EXPECT_EQ(list_url->Find(base::Value("file://*")), list_url->end());
 
   base::ListValue disabledscheme;
-  disabledscheme.AppendString("file");
+  disabledscheme.GetList().emplace_back("file");
   policies.Set(key::kDisabledSchemes, POLICY_LEVEL_MANDATORY, POLICY_SCOPE_USER,
                POLICY_SOURCE_CLOUD, disabledscheme.CreateDeepCopy(), nullptr);
   UpdateProviderPolicy(policies);
@@ -2629,10 +2629,10 @@ IN_PROC_BROWSER_TEST_F(PolicyTest, MAYBE_FileURLBlacklist) {
 
   // Whitelist one folder and blacklist an another just inside.
   base::ListValue whitelist;
-  whitelist.AppendString(base_path);
+  whitelist.GetList().emplace_back(base_path);
   policies.Set(key::kURLWhitelist, POLICY_LEVEL_MANDATORY, POLICY_SCOPE_USER,
                POLICY_SOURCE_CLOUD, whitelist.CreateDeepCopy(), nullptr);
-  blacklist.AppendString(folder_path);
+  blacklist.GetList().emplace_back(folder_path);
   policies.Set(key::kURLBlacklist, POLICY_LEVEL_MANDATORY, POLICY_SCOPE_USER,
                POLICY_SOURCE_CLOUD, blacklist.CreateDeepCopy(), nullptr);
   UpdateProviderPolicy(policies);
@@ -3108,7 +3108,7 @@ class RestoreOnStartupPolicyTest
     // Verifies that policy can set the startup pages to a list of URLs.
     base::ListValue urls;
     for (size_t i = 0; i < arraysize(kRestoredURLs); ++i) {
-      urls.AppendString(kRestoredURLs[i]);
+      urls.GetList().emplace_back(kRestoredURLs[i]);
       expected_urls_.push_back(GURL(kRestoredURLs[i]));
     }
     PolicyMap policies;
@@ -3319,10 +3319,11 @@ class MediaStreamDevicesControllerBrowserTest
       // of the setting of kAudioCapturedAllowed.
       std::unique_ptr<base::ListValue> list(new base::ListValue);
       if (allow_rule) {
-        list->AppendString(allow_rule);
+        list->GetList().emplace_back(allow_rule);
         request_url_allowed_via_whitelist_ = true;
       } else {
-        list->AppendString(ContentSettingsPattern::Wildcard().ToString());
+        list->GetList().emplace_back(
+            ContentSettingsPattern::Wildcard().ToString());
         // We should ignore all wildcard entries in the whitelist, so even
         // though we've added an entry, it should be ignored and our expectation
         // is that the request has not been allowed via the whitelist.
@@ -3585,7 +3586,8 @@ IN_PROC_BROWSER_TEST_F(PolicyTest,
   // Now exempt the URL from being blocked by setting policy.
   std::unique_ptr<base::ListValue> disabled_urls =
       base::MakeUnique<base::ListValue>();
-  disabled_urls->AppendString(https_server_ok.host_port_pair().HostForURL());
+  disabled_urls->GetList().emplace_back(
+      https_server_ok.host_port_pair().HostForURL());
 
   PolicyMap policies;
   policies.Set(key::kCertificateTransparencyEnforcementDisabledForUrls,
@@ -4201,7 +4203,7 @@ IN_PROC_BROWSER_TEST_F(PolicyVariationsServiceTest, VariationsURLIsValid) {
 
 IN_PROC_BROWSER_TEST_F(PolicyTest, NativeMessagingBlacklistSelective) {
   base::ListValue blacklist;
-  blacklist.AppendString("host.name");
+  blacklist.GetList().emplace_back("host.name");
   PolicyMap policies;
   policies.Set(key::kNativeMessagingBlacklist, POLICY_LEVEL_MANDATORY,
                POLICY_SCOPE_USER, POLICY_SOURCE_CLOUD,
@@ -4217,7 +4219,7 @@ IN_PROC_BROWSER_TEST_F(PolicyTest, NativeMessagingBlacklistSelective) {
 
 IN_PROC_BROWSER_TEST_F(PolicyTest, NativeMessagingBlacklistWildcard) {
   base::ListValue blacklist;
-  blacklist.AppendString("*");
+  blacklist.GetList().emplace_back("*");
   PolicyMap policies;
   policies.Set(key::kNativeMessagingBlacklist, POLICY_LEVEL_MANDATORY,
                POLICY_SCOPE_USER, POLICY_SOURCE_CLOUD,
@@ -4233,9 +4235,9 @@ IN_PROC_BROWSER_TEST_F(PolicyTest, NativeMessagingBlacklistWildcard) {
 
 IN_PROC_BROWSER_TEST_F(PolicyTest, NativeMessagingWhitelist) {
   base::ListValue blacklist;
-  blacklist.AppendString("*");
+  blacklist.GetList().emplace_back("*");
   base::ListValue whitelist;
-  whitelist.AppendString("host.name");
+  whitelist.GetList().emplace_back("host.name");
   PolicyMap policies;
   policies.Set(key::kNativeMessagingBlacklist, POLICY_LEVEL_MANDATORY,
                POLICY_SCOPE_USER, POLICY_SOURCE_CLOUD,

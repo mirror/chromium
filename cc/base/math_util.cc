@@ -617,10 +617,10 @@ std::unique_ptr<base::Value> MathUtil::AsValue(const gfx::Size& s) {
 
 std::unique_ptr<base::Value> MathUtil::AsValue(const gfx::Rect& r) {
   std::unique_ptr<base::ListValue> res(new base::ListValue());
-  res->AppendInteger(r.x());
-  res->AppendInteger(r.y());
-  res->AppendInteger(r.width());
-  res->AppendInteger(r.height());
+  res->GetList().emplace_back(r.x());
+  res->GetList().emplace_back(r.y());
+  res->GetList().emplace_back(r.width());
+  res->GetList().emplace_back(r.height());
   return std::move(res);
 }
 
@@ -629,7 +629,7 @@ bool MathUtil::FromValue(const base::Value* raw_value, gfx::Rect* out_rect) {
   if (!raw_value->GetAsList(&value))
     return false;
 
-  if (value->GetSize() != 4)
+  if (value->GetList().size() != 4)
     return false;
 
   int x, y, w, h;
@@ -647,8 +647,8 @@ bool MathUtil::FromValue(const base::Value* raw_value, gfx::Rect* out_rect) {
 
 std::unique_ptr<base::Value> MathUtil::AsValue(const gfx::PointF& pt) {
   std::unique_ptr<base::ListValue> res(new base::ListValue());
-  res->AppendDouble(pt.x());
-  res->AppendDouble(pt.y());
+  res->GetList().emplace_back(pt.x());
+  res->GetList().emplace_back(pt.y());
   return std::move(res);
 }
 

@@ -260,28 +260,28 @@ static std::unique_ptr<base::DictionaryValue> GetDictValueStats(
 
   for (const auto& v : report.values()) {
     const StatsReport::ValuePtr& value = v.second;
-    values->AppendString(value->display_name());
+    values->GetList().emplace_back(value->display_name());
     switch (value->type()) {
       case StatsReport::Value::kInt:
-        values->AppendInteger(value->int_val());
+        values->GetList().emplace_back(value->int_val());
         break;
       case StatsReport::Value::kFloat:
-        values->AppendDouble(value->float_val());
+        values->GetList().emplace_back(value->float_val());
         break;
       case StatsReport::Value::kString:
-        values->AppendString(value->string_val());
+        values->GetList().emplace_back(value->string_val());
         break;
       case StatsReport::Value::kStaticString:
-        values->AppendString(value->static_string_val());
+        values->GetList().emplace_back(value->static_string_val());
         break;
       case StatsReport::Value::kBool:
-        values->AppendBoolean(value->bool_val());
+        values->GetList().emplace_back(value->bool_val());
         break;
       case StatsReport::Value::kInt64:  // int64_t isn't supported, so use
                                         // string.
       case StatsReport::Value::kId:
       default:
-        values->AppendString(value->ToString());
+        values->GetList().emplace_back(value->ToString());
         break;
     }
   }
@@ -326,7 +326,7 @@ class InternalStatsObserver : public webrtc::StatsObserver {
         list->Append(std::move(report));
     }
 
-    if (!list->empty()) {
+    if (!list->GetList().empty()) {
       main_thread_->PostTask(
           FROM_HERE, base::BindOnce(&InternalStatsObserver::OnCompleteImpl,
                                     base::Passed(&list), lid_));
@@ -345,7 +345,7 @@ class InternalStatsObserver : public webrtc::StatsObserver {
   // Static since |this| will most likely have been deleted by the time we
   // get here.
   static void OnCompleteImpl(std::unique_ptr<base::ListValue> list, int lid) {
-    DCHECK(!list->empty());
+    DCHECK(!list->GetList().empty());
     RenderThreadImpl::current()->Send(
         new PeerConnectionTrackerHost_AddStats(lid, *list.get()));
   }

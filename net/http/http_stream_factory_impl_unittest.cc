@@ -1416,7 +1416,7 @@ int GetSpdySessionCount(HttpNetworkSession* session) {
   base::ListValue* session_list;
   if (!value || !value->GetAsList(&session_list))
     return -1;
-  return session_list->GetSize();
+  return session_list->GetList().size();
 }
 
 }  // namespace

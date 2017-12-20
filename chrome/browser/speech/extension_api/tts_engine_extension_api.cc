@@ -146,7 +146,7 @@ void TtsExtensionEngine::Speak(Utterance* utterance,
   bool sends_end_event = voice.events.find(TTS_EVENT_END) != voice.events.end();
 
   std::unique_ptr<base::ListValue> args(new base::ListValue());
-  args->AppendString(utterance->text());
+  args->GetList().emplace_back(utterance->text());
 
   // Pass through most options to the speech engine, but remove some
   // that are handled internally.
@@ -190,7 +190,7 @@ void TtsExtensionEngine::Speak(Utterance* utterance,
     options->SetString(constants::kLangKey, voice.lang);
 
   args->Append(std::move(options));
-  args->AppendInteger(utterance->id());
+  args->GetList().emplace_back(utterance->id());
 
   std::string json;
   base::JSONWriter::Write(*args, &json);

@@ -90,11 +90,11 @@ bool SuggestionAnswer::ImageLine::ParseImageLine(
 
   const base::ListValue* fields_json;
   if (!inner_json->GetList(kAnswerJsonText, &fields_json) ||
-      fields_json->GetSize() == 0)
+      fields_json->GetList().size() == 0)
     return false;
 
   bool found_num_lines = false;
-  for (size_t i = 0; i < fields_json->GetSize(); ++i) {
+  for (size_t i = 0; i < fields_json->GetList().size(); ++i) {
     const base::DictionaryValue* field_json;
     TextField text_field;
     if (!fields_json->GetDictionary(i, &field_json) ||
@@ -200,7 +200,7 @@ std::unique_ptr<SuggestionAnswer> SuggestionAnswer::ParseAnswer(
 
   const base::ListValue* lines_json;
   if (!answer_json->GetList(kAnswerJsonLines, &lines_json) ||
-      lines_json->GetSize() != 2)
+      lines_json->GetList().size() != 2)
     return nullptr;
 
   const base::DictionaryValue* first_line_json;

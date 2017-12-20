@@ -652,7 +652,7 @@ TEST_F(VariationsServiceTest, LoadPermanentConsistencyCountry) {
       for (const std::string& component :
            base::SplitString(test.pref_value_before, ",", base::TRIM_WHITESPACE,
                              base::SPLIT_WANT_ALL)) {
-        list_value.AppendString(component);
+        list_value.GetList().emplace_back(component);
       }
       prefs_.Set(prefs::kVariationsPermanentConsistencyCountry, list_value);
     }
@@ -673,7 +673,7 @@ TEST_F(VariationsServiceTest, LoadPermanentConsistencyCountry) {
     for (const std::string& component :
          base::SplitString(test.expected_pref_value_after, ",",
                            base::TRIM_WHITESPACE, base::SPLIT_WANT_ALL)) {
-      expected_list_value.AppendString(component);
+      expected_list_value.GetList().emplace_back(component);
     }
     const base::ListValue* pref_value =
         prefs_.GetList(prefs::kVariationsPermanentConsistencyCountry);
@@ -723,7 +723,7 @@ TEST_F(VariationsServiceTest, OverrideStoredPermanentCountry) {
       for (const std::string& component :
            base::SplitString(test.pref_value_before, ",", base::TRIM_WHITESPACE,
                              base::SPLIT_WANT_ALL)) {
-        list_value.AppendString(component);
+        list_value.GetList().emplace_back(component);
       }
       prefs_.Set(prefs::kVariationsPermanentConsistencyCountry, list_value);
     }
@@ -738,7 +738,7 @@ TEST_F(VariationsServiceTest, OverrideStoredPermanentCountry) {
     for (const std::string& component :
          base::SplitString(test.expected_pref_value_after, ",",
                            base::TRIM_WHITESPACE, base::SPLIT_WANT_ALL)) {
-      expected_list_value.AppendString(component);
+      expected_list_value.GetList().emplace_back(component);
     }
     const base::ListValue* pref_value =
         prefs_.GetList(prefs::kVariationsPermanentConsistencyCountry);

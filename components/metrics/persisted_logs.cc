@@ -148,12 +148,12 @@ void PersistedLogs::Purge() {
 }
 
 void PersistedLogs::ReadLogsFromPrefList(const base::ListValue& list_value) {
-  if (list_value.empty()) {
+  if (list_value.GetList().empty()) {
     metrics_->RecordLogReadStatus(PersistedLogsMetrics::LIST_EMPTY);
     return;
   }
 
-  const size_t log_count = list_value.GetSize();
+  const size_t log_count = list_value.GetList().size();
 
   DCHECK(list_.empty());
   list_.resize(log_count);
@@ -183,7 +183,7 @@ void PersistedLogs::ReadLogsFromPrefList(const base::ListValue& list_value) {
 }
 
 void PersistedLogs::WriteLogsToPrefList(base::ListValue* list_value) const {
-  list_value->Clear();
+  list_value->GetList().clear();
 
   // Keep the most recent logs which are smaller than |max_log_size_|.
   // We keep at least |min_log_bytes_| and |min_log_count_| of logs before

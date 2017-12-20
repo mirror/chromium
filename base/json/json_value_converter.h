@@ -260,8 +260,8 @@ class RepeatedValueConverter
       return false;
     }
 
-    field->reserve(list->GetSize());
-    for (size_t i = 0; i < list->GetSize(); ++i) {
+    field->reserve(list->GetList().size());
+    for (size_t i = 0; i < list->GetList().size(); ++i) {
       const base::Value* element = NULL;
       if (!list->Get(i, &element))
         continue;
@@ -294,8 +294,8 @@ class RepeatedMessageConverter
     if (!value.GetAsList(&list))
       return false;
 
-    field->reserve(list->GetSize());
-    for (size_t i = 0; i < list->GetSize(); ++i) {
+    field->reserve(list->GetList().size());
+    for (size_t i = 0; i < list->GetList().size(); ++i) {
       const base::Value* element = NULL;
       if (!list->Get(i, &element))
         continue;
@@ -331,8 +331,8 @@ class RepeatedCustomValueConverter
     if (!value.GetAsList(&list))
       return false;
 
-    field->reserve(list->GetSize());
-    for (size_t i = 0; i < list->GetSize(); ++i) {
+    field->reserve(list->GetList().size());
+    for (size_t i = 0; i < list->GetList().size(); ++i) {
       const base::Value* element = NULL;
       if (!list->Get(i, &element))
         continue;
