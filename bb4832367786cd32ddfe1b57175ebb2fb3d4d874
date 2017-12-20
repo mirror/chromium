@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aa3699cb_6f29fddd",
+        "filename": "chrome/browser/chromeos/printing/external_printers.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-12-20T19:40:23Z",
+      "side": 1,
+      "message": "You used LOG(ERROR) here bug used LOG(WARNING) in other places. might be better to make them consistent?",
+      "revId": "bb4832367786cd32ddfe1b57175ebb2fb3d4d874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee125714_38f9c482",
+        "filename": "chrome/browser/chromeos/printing/external_printers_factory.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-12-20T19:40:23Z",
+      "side": 1,
+      "message": "ExternalPrintersPrefBridge",
+      "revId": "bb4832367786cd32ddfe1b57175ebb2fb3d4d874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99cbe07b_52b3c803",
+        "filename": "chrome/browser/chromeos/printing/external_printers_pref_bridge.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-12-20T19:40:23Z",
+      "side": 1,
+      "message": "DISALLOW_COPY_AND_ASSIGN?",
+      "revId": "bb4832367786cd32ddfe1b57175ebb2fb3d4d874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
