@@ -243,6 +243,10 @@ void RecentTabHelper::DidFinishNavigation(
   // Always reset so that posted tasks get canceled.
   snapshot_controller_->Reset();
 
+  // If we loaded an error page, mark it as an error so it does not get saved.
+  if (navigation_handle->IsErrorPage())
+    snapshot_controller_->LoadedErrorPage();
+
   // Check for conditions that should stop last_n from creating snapshots of
   // this page:
   // - It is an error page.
@@ -351,6 +355,8 @@ void RecentTabHelper::WillCloseTab() {
 // TODO(carlosk): rename this to RequestSnapshot and make it return a bool
 // representing the acceptance of the snapshot request.
 void RecentTabHelper::StartSnapshot() {
+  DVLOG(0) << "@@@@@@ Last N check to see if we should snapshot "
+           << web_contents()->GetLastCommittedURL().spec() << " " << __func__;
   DCHECK_NE(PageQuality::POOR, snapshot_controller_->current_page_quality());
 
   // As long as snapshots are enabled for this tab, there are two situations
@@ -387,6 +393,7 @@ void RecentTabHelper::RunRenovations() {
 
 void RecentTabHelper::SaveSnapshotForDownloads(bool replace_latest) {
   DCHECK_NE(PageQuality::POOR, snapshot_controller_->current_page_quality());
+  DVLOG(0) << "@@@@@@ " << __func__;
 
   if (replace_latest) {
     // Start by requesting the deletion of the existing previous snapshot of
