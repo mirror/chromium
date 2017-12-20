@@ -70,6 +70,30 @@
       "revId": "fee1ce902914d72196a9eaa20c2103158e2c4b5c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92f2615e_ca42290f",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 2766,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-12-20T14:37:32Z",
+      "side": 1,
+      "message": "Oh, right ImageTransportFactory doesn\u0027t exist in mus. The existing logic shouldn\u0027t change. Either ENABLE_MUS needs an ImageTransportFactory or ENABLE_MUS has to get the value from somewhere else. I don\u0027t think you want to add an ImageTransportFactory, so I would do something like this for now, it will avoid the crash and make it clear what is actually happening.\n\n#if !defined(OS_ANDROID) \u0026\u0026 !defined(OS_CHROMEOS)\n#if !defined(ENABLE_MUS)\n...\n#endif\n// TODO(tonikitoo): Check if renderer should use software compositing\n// through some mechanism that isn\u0027t ImageTransportFactory with mus.\n#endif",
+      "parentUuid": "203513b4_65302d1d",
+      "range": {
+        "startLine": 2766,
+        "startChar": 39,
+        "endLine": 2766,
+        "endChar": 49
+      },
+      "revId": "fee1ce902914d72196a9eaa20c2103158e2c4b5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
