@@ -394,9 +394,7 @@ gfx::Rect BrowserPlugin::FrameRectInPixels() const {
 }
 
 float BrowserPlugin::GetDeviceScaleFactor() const {
-  return RenderFrameImpl::FromWebFrame(Container()->GetDocument().GetFrame())
-      ->GetRenderWidget()
-      ->GetOriginalDeviceScaleFactor();
+  return embedding_render_widget_->GetOriginalDeviceScaleFactor();
 }
 
 void BrowserPlugin::UpdateInternalInstanceId() {
@@ -460,15 +458,19 @@ bool BrowserPlugin::Initialize(WebPluginContainer* container) {
   compositing_helper_.reset(ChildFrameCompositingHelper::CreateForBrowserPlugin(
       weak_ptr_factory_.GetWeakPtr()));
 
-  RenderWidget* render_widget =
+  embedding_render_widget_ =
       RenderFrameImpl::FromWebFrame(container_->GetDocument().GetFrame())
           ->GetRenderWidget();
-  pending_resize_params_.screen_info = render_widget->screen_info();
+  pending_resize_params_.screen_info = embedding_render_widget_->screen_info();
+  embedding_render_widget_->RegisterBrowserPlugin(this);
 
   return true;
 }
 
 void BrowserPlugin::Destroy() {
+  if (embedding_render_widget_)
+    embedding_render_widget_->UnregisterBrowserPlugin(this);
+
   if (container_) {
     // The BrowserPlugin's WebPluginContainer is deleted immediately after this
     // call returns, so let's not keep a reference to it around.
@@ -526,10 +528,7 @@ void BrowserPlugin::UpdateGeometry(const WebRect& plugin_rect_in_viewport,
   // We will use the local root's RenderWidget to convert coordinates to Window.
   // If this local root belongs to an OOPIF, on the browser side we will have to
   // consider the displacement of the child frame in root window.
-  RenderWidget* render_widget =
-      RenderFrameImpl::FromWebFrame(Container()->GetDocument().GetFrame())
-          ->GetRenderWidget();
-  render_widget->ConvertViewportToWindow(&rect_in_css);
+  embedding_render_widget_->ConvertViewportToWindow(&rect_in_css);
   gfx::Rect frame_rect = rect_in_css;
 
   if (!ready_) {
@@ -539,7 +538,7 @@ void BrowserPlugin::UpdateGeometry(const WebRect& plugin_rect_in_viewport,
   }
 
   pending_resize_params_.frame_rect = frame_rect;
-  pending_resize_params_.screen_info = render_widget->screen_info();
+  pending_resize_params_.screen_info = embedding_render_widget_->screen_info();
   WasResized();
 }
 
