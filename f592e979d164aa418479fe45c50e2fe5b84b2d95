@@ -22,6 +22,30 @@
       "revId": "f592e979d164aa418479fe45c50e2fe5b84b2d95",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "feafcda1_7b671177",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/DownloadPreferences.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-12-20T19:32:37Z",
+      "side": 1,
+      "message": "Done. Also open to changing the strings (ie. using different text, using the actual file path).",
+      "parentUuid": "e1b94980_7fb6cd21",
+      "range": {
+        "startLine": 58,
+        "startChar": 31,
+        "endLine": 58,
+        "endChar": 39
+      },
+      "revId": "f592e979d164aa418479fe45c50e2fe5b84b2d95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
