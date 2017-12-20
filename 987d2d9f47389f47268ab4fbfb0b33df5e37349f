@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "97216737_87260be6",
+        "filename": "chrome/browser/data_use_measurement/chrome_data_use_ascriber.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-12-20T23:00:46Z",
+      "side": 0,
+      "message": "There are a lot of chrome:// urls that have main frame requests to chrome:// and then have sub resoruces that hit the network.",
+      "parentUuid": "16e23897_1411eade",
+      "range": {
+        "startLine": 110,
+        "startChar": 22,
+        "endLine": 110,
+        "endChar": 41
+      },
+      "revId": "987d2d9f47389f47268ab4fbfb0b33df5e37349f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b488ad64_02928438",
         "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_data_use_observer.cc",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-12-20T22:48:40Z",
       "side": 0,
       "message": "Does this work for redirected requests too.",
+      "range": {
+        "startLine": 119,
+        "startChar": 13,
+        "endLine": 119,
+        "endChar": 27
+      },
+      "revId": "987d2d9f47389f47268ab4fbfb0b33df5e37349f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "503dd5fb_45e654e2",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_data_use_observer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-12-20T23:00:46Z",
+      "side": 0,
+      "message": "For server redirects, the request doesn\u0027t complete until it is at the end of the redirect chain.\n\nFor Client redirects, that is treated as a new page load.",
+      "parentUuid": "b488ad64_02928438",
       "range": {
         "startLine": 119,
         "startChar": 13,
