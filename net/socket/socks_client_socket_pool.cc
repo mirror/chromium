@@ -221,8 +221,10 @@ int SOCKSClientSocketPool::RequestSocket(const std::string& group_name,
   const scoped_refptr<SOCKSSocketParams>* casted_socket_params =
       static_cast<const scoped_refptr<SOCKSSocketParams>*>(socket_params);
 
-  return base_.RequestSocket(group_name, *casted_socket_params, priority,
-                             respect_limits, handle, callback, net_log);
+  return base_.RequestSocket(
+      group_name, *casted_socket_params, priority, respect_limits, handle,
+      callback, net_log,
+      (*casted_socket_params)->transport_params()->socket_tag());
 }
 
 void SOCKSClientSocketPool::RequestSockets(

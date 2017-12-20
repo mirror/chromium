@@ -107,6 +107,12 @@ HttpProxySocketParams::HttpProxySocketParams(
              : !transport_params && ssl_params);
 }
 
+const SocketTag& HttpProxySocketParams::GetSocketTag() const {
+  if (transport_params())
+    return transport_params()->socket_tag();
+  return ssl_params()->GetSocketTag();
+}
+
 const HostResolver::RequestInfo& HttpProxySocketParams::destination() const {
   if (transport_params_.get() == NULL) {
     return ssl_params_->GetDirectConnectionParams()->destination();
@@ -298,7 +304,8 @@ int HttpProxyClientSocketPool::RequestSocket(const std::string& group_name,
       static_cast<const scoped_refptr<HttpProxySocketParams>*>(socket_params);
 
   return base_.RequestSocket(group_name, *casted_socket_params, priority,
-                             respect_limits, handle, callback, net_log);
+                             respect_limits, handle, callback, net_log,
+                             (*casted_socket_params)->GetSocketTag());
 }
 
 void HttpProxyClientSocketPool::RequestSockets(

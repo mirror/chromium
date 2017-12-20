@@ -95,6 +95,18 @@ SSLSocketParams::GetHttpProxyConnectionParams() const {
   return http_proxy_params_;
 }
 
+const SocketTag& SSLSocketParams::GetSocketTag() const {
+  switch (GetConnectionType()) {
+    case SSLSocketParams::DIRECT:
+      return GetDirectConnectionParams()->socket_tag();
+    case SSLSocketParams::SOCKS_PROXY:
+      return GetSocksProxyConnectionParams()->transport_params()->socket_tag();
+    case SSLSocketParams::HTTP_PROXY:
+      return GetHttpProxyConnectionParams()->GetSocketTag();
+  }
+  CHECK(false);
+}
+
 // Timeout for the SSL handshake portion of the connect.
 static const int kSSLHandshakeTimeoutInSeconds = 30;
 
@@ -643,7 +655,8 @@ int SSLClientSocketPool::RequestSocket(const std::string& group_name,
       static_cast<const scoped_refptr<SSLSocketParams>*>(socket_params);
 
   return base_.RequestSocket(group_name, *casted_socket_params, priority,
-                             respect_limits, handle, callback, net_log);
+                             respect_limits, handle, callback, net_log,
+                             (*casted_socket_params)->GetSocketTag());
 }
 
 void SSLClientSocketPool::RequestSockets(
