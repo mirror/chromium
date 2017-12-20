@@ -75,6 +75,7 @@ bool BrokerPermissionList::GetFileNameIfAllowedToAccess(
       return true;
     }
   }
+  LOG(ERROR) << "Rejected " << requested_filename << " at " << __LINE__;
   return false;
 }
 
@@ -100,6 +101,7 @@ bool BrokerPermissionList::GetFileNameIfAllowedToOpen(
       return true;
     }
   }
+  LOG(ERROR) << "Rejected " << requested_filename << " at " << __LINE__;
   return false;
 }
 
@@ -113,6 +115,7 @@ bool BrokerPermissionList::GetFileNameIfAllowedToStat(
     if (permissions_array_[i].CheckStat(requested_filename, file_to_stat))
       return true;
   }
+  LOG(ERROR) << "Rejected " << requested_filename << " at " << __LINE__;
   return false;
 }
 
