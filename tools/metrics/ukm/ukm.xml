@@ -2184,6 +2184,11 @@ be describing additional metrics about the same event.
       The ID of the activity that happened while a page was open.
     </summary>
   </metric>
+  <metric name="IsActive">
+    <summary>
+      Boolean value representing whether this tab was the active one.
+    </summary>
+  </metric>
 </event>
 
 <event name="TabManager.TabMetrics">

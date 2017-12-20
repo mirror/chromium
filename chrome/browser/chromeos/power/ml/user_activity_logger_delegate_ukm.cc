@@ -35,16 +35,35 @@ void UserActivityLoggerDelegateUkm::UpdateOpenTabsURLs() {
     return;
 
   source_ids_.clear();
-  for (Browser* browser : *BrowserList::GetInstance()) {
+  has_active_tab_ = false;
+  BrowserList* browser_list = BrowserList::GetInstance();
+  // Go through all browsers starting from last active ones.
+  for (auto browser_iterator = browser_list->begin_last_active();
+       browser_iterator != browser_list->end_last_active();
+       ++browser_iterator) {
+    Browser* browser = *browser_iterator;
     const TabStripModel* const tab_strip_model = browser->tab_strip_model();
     DCHECK(tab_strip_model);
+
+    int active_tab_index = -1;
+    if (browser_iterator == browser_list->begin_last_active()) {
+      active_tab_index = tab_strip_model->active_index();
+    }
+
     for (int i = 0; i < tab_strip_model->count(); ++i) {
       content::WebContents* contents = tab_strip_model->GetWebContentsAt(i);
       DCHECK(contents);
       ukm::SourceId source_id =
           ukm::GetSourceIdForWebContentsDocument(contents);
-      if (source_id != ukm::kInvalidSourceId)
+      if (source_id == ukm::kInvalidSourceId)
+        continue;
+
+      if (i == active_tab_index) {
+        source_ids_.insert(source_ids_.begin(), source_id);
+        has_active_tab_ = true;
+      } else {
         source_ids_.push_back(source_id);
+      }
     }
   }
 }
@@ -83,9 +102,13 @@ void UserActivityLoggerDelegateUkm::LogActivity(
 
   user_activity.Record(ukm_recorder_);
 
-  for (const ukm::SourceId& id : source_ids_) {
-    ukm::builders::UserActivityId(id).SetActivityId(source_id).Record(
-        ukm_recorder_);
+  for (size_t i = 0; i < source_ids_.size(); ++i) {
+    const ukm::SourceId& id = source_ids_[i];
+    bool is_active = has_active_tab_ && i == 0;
+    ukm::builders::UserActivityId(id)
+        .SetActivityId(source_id)
+        .SetIsActive(is_active)
+        .Record(ukm_recorder_);
   }
 }
 
