@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "29fe6095_73324b29",
+        "filename": "cc/layers/picture_layer_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 645,
+      "author": {
+        "id": 1116061
+      },
+      "writtenOn": "2017-12-20T17:40:00Z",
+      "side": 1,
+      "message": "Do you know if this works in both old (at the top) and new (at the bottom) omnibox locations?",
+      "revId": "4851339e64798a8d643dd295754e7fca69e265dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
