@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4aeecce4_8117dffd",
+        "filename": "ash/message_center/message_center_bubble.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-12-20T19:11:25Z",
+      "side": 1,
+      "message": "I assume this is a child view? It would be helpful to have a comment in the header explain that.",
+      "revId": "ab8bd7dacecb957aef3b8b9f44be6c10ea1543bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
