@@ -22,6 +22,57 @@
       "revId": "f1781e5b3665718aee9faff405510ac20bf525ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa5f161a_be56490b",
+        "filename": "docs/chrome_os_logging.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-12-20T22:44:14Z",
+      "side": 1,
+      "message": "nit: I think \u0027at the login screen\u0027 is more ambiguous than helpful; \u0027before a user has logged in\u0027 seems sufficient.",
+      "revId": "f1781e5b3665718aee9faff405510ac20bf525ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1faaab03_916f45e2",
+        "filename": "docs/chrome_os_logging.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-12-20T22:44:14Z",
+      "side": 1,
+      "message": "nit: move the --vmodule info to a separate section, I think it is worth calling out.",
+      "revId": "f1781e5b3665718aee9faff405510ac20bf525ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ef75989_4ba84fbb",
+        "filename": "docs/chrome_os_logging.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-12-20T22:44:14Z",
+      "side": 1,
+      "message": "Maybe also note that --vmodule can be enabled for debugging in /etc/chrome_dev.conf (or whatever that file is? I often forget so one more reference won\u0027t hurt...)",
+      "revId": "f1781e5b3665718aee9faff405510ac20bf525ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
