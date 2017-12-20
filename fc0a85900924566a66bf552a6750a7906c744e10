@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d047ec5f_10299f2b",
+        "filename": "ios/chrome/browser/passwords/password_controller_unittest.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 795,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-12-20T10:47:27Z",
+      "side": 0,
+      "message": "@dvadym: this test case is not used anymore as there should not be identifier collisions.\nIs that OK?",
+      "range": {
+        "startLine": 795,
+        "startChar": 7,
+        "endLine": 795,
+        "endChar": 15
+      },
+      "revId": "fc0a85900924566a66bf552a6750a7906c744e10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
