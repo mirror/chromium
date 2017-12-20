@@ -22,6 +22,30 @@
       "revId": "b0f84844e10134c0423e2d196bcbe411267a5af1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e249cca3_3c649f34",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1191450
+      },
+      "writtenOn": "2017-12-20T22:27:14Z",
+      "side": 1,
+      "message": "Hi Theresa, thank you for reviewing this. I understand you concerns.\n\nThe point of this patch is to make the chromium more robust and NPE-proof. For the sake of testing, maybe we want it to crash so that we can notice the missing preference. But for the sake of production to actual users, crash could be very bad user experience. So, I would like propose this approach in production code and catch the missing preference error in testing.\n\nAs for current scenarios where we may be missing preference, there isn\u0027t any for chromium so far. But other browsers which are based on chromium, they may remove many preference on purpose and crash every time updating preference \u003d_\u003d\n\nPlease take a second thought. If crashing for non-existing preference is still preferred approach, then I totally understand.\n\nBtw, for the code change, the current code may seems a little cluttered because it\u0027s calling findPreference method twice when changing. I can introduce an interface to avoid that if you preferred :)\n\nThank you",
+      "parentUuid": "be0f9d1d_261ce2cc",
+      "range": {
+        "startLine": 13,
+        "startChar": 21,
+        "endLine": 13,
+        "endChar": 75
+      },
+      "revId": "b0f84844e10134c0423e2d196bcbe411267a5af1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
