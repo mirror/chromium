@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d4c54331_e69bafe1",
+        "filename": "components/viz/service/display/skia_renderer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-20T20:11:53Z",
+      "side": 1,
+      "message": "When SkiaRenderer runs with software compositing, this is going to fail (well itll crash earlier but ya). It\u0027s indirectly checking that render_pass_id is in the map also.",
+      "parentUuid": "d6cd4ea9_c4736b75",
+      "range": {
+        "startLine": 268,
+        "startChar": 17,
+        "endLine": 268,
+        "endChar": 22
+      },
+      "revId": "f804016c9dc509758687932a6248ba7b2d0b6fe1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "05bc8803_b78864c8",
         "filename": "components/viz/service/display/skia_renderer.cc",
         "patchSetId": 4
@@ -36,6 +60,24 @@
       "writtenOn": "2017-12-20T20:09:06Z",
       "side": 1,
       "message": "Should this be const or should something be here that can change flags?",
+      "revId": "f804016c9dc509758687932a6248ba7b2d0b6fe1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c709dca_66647954",
+        "filename": "components/viz/service/display/skia_renderer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-20T20:11:53Z",
+      "side": 1,
+      "message": "I can make it const, but I usually steer away from const local variables. It\u0027s just giving a name to the 0 in this case.",
+      "parentUuid": "05bc8803_b78864c8",
       "revId": "f804016c9dc509758687932a6248ba7b2d0b6fe1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "6f83e42d_e4208f1f",
+        "filename": "components/viz/service/display/skia_renderer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 838,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-20T20:11:53Z",
+      "side": 1,
+      "message": "Sure I\u0027ll take a crack at it :)",
+      "parentUuid": "7f1b80a4_4592af62",
+      "revId": "f804016c9dc509758687932a6248ba7b2d0b6fe1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "176ef71f_5631969a",
         "filename": "components/viz/service/display/skia_renderer.cc",
         "patchSetId": 4
@@ -70,6 +130,24 @@
       "writtenOn": "2017-12-20T20:09:06Z",
       "side": 1,
       "message": "if (caps.texture_npot \u0026\u0026 texture_hint \u0026 ResourceTextureHint::kMipmap) {",
+      "revId": "f804016c9dc509758687932a6248ba7b2d0b6fe1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3dfa6f9_800fd8e3",
+        "filename": "components/viz/service/display/skia_renderer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 841,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-20T20:11:53Z",
+      "side": 1,
+      "message": "Yeh.. that mixes \u0026\u0026 and \u0026 in the same if statement which means ()s and i hate nested looking if statements, do u feel strongly?",
+      "parentUuid": "176ef71f_5631969a",
       "revId": "f804016c9dc509758687932a6248ba7b2d0b6fe1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
