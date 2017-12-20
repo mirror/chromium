@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b8a87060_e8a6e8b2",
+        "filename": "components/cbor/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-20T21:48:27Z",
+      "side": 1,
+      "message": "nit: Tests use stuff in base, so please add //base as a direct dependency here too.",
+      "revId": "41910794afe10b2306d62f68261f442b0dac7105",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff156832_aafcc948",
+        "filename": "components/cbor/OWNERS",
+        "patchSetId": 4
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-20T21:48:27Z",
+      "side": 1,
+      "message": "Jun, is either you or Kim a Chromium committer? Given the amount of code that you two have contributed, it would be only fair to add you as OWNERs, but being a Commiter is a formal requirement for that.",
+      "revId": "41910794afe10b2306d62f68261f442b0dac7105",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "df529e76_7e41fbb1",
+        "filename": "components/cbor/cbor_reader.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-20T21:48:27Z",
+      "side": 0,
+      "message": "Hmm, so either everybody misunderstood [1], or we need to mark all exported symbols with CBOR_EXPORT that is defined similarly to [2].\n\n[1] https://chromium.googlesource.com/chromium/src/+/f407f479ac2b02b2a28d46ed2ed4b2590ad790e2/docs/component_build.md\n\n[2]: https://cs.chromium.org/chromium/src/components/wifi/wifi_export.h?q\u003df:export+file:%5Esrc/components/+package:%5Echromium$\u0026dr",
+      "range": {
+        "startLine": 47,
+        "startChar": 6,
+        "endLine": 47,
+        "endChar": 20
+      },
+      "revId": "01e526376476bf02c445e992ac7a9359f4482b29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
