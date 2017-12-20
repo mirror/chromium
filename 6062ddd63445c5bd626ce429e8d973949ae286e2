@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2a36d39c_8bd86c5a",
+        "filename": "components/test/data/autofill/credit_card_upload_form_address_and_cc.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-20T19:17:14Z",
+      "side": 1,
+      "message": "is this going to cause issues in a few years or when run on a system with a system clock set a few years ahead?",
+      "range": {
+        "startLine": 75,
+        "startChar": 62,
+        "endLine": 75,
+        "endChar": 66
+      },
+      "revId": "6062ddd63445c5bd626ce429e8d973949ae286e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
