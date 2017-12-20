@@ -21,6 +21,7 @@
 #include "net/quic/core/quic_versions.h"
 #include "net/quic/test_tools/mock_clock.h"
 #include "net/quic/test_tools/mock_random.h"
+#include "net/socket/socket_tag.h"
 #include "net/socket/socket_test_util.h"
 #include "net/ssl/channel_id_service.h"
 #include "net/ssl/default_channel_id_store.h"
@@ -253,7 +254,8 @@ TEST_P(HttpProxyClientSocketWrapperTest, QuicProxy) {
   scoped_refptr<TransportSocketParams> transport_params =
       new TransportSocketParams(
           proxy_host_port_, false, OnHostResolutionCallback(),
-          TransportSocketParams::COMBINE_CONNECT_AND_WRITE_DEFAULT);
+          TransportSocketParams::COMBINE_CONNECT_AND_WRITE_DEFAULT,
+          SocketTag());
 
   scoped_refptr<SSLSocketParams> ssl_params =
       new SSLSocketParams(transport_params, nullptr, nullptr, proxy_host_port_,
