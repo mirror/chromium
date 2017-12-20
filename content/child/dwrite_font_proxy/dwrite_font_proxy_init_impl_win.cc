@@ -29,7 +29,8 @@ namespace {
 
 mswr::ComPtr<DWriteFontCollectionProxy> g_font_collection;
 mswr::ComPtr<FontFallback> g_font_fallback;
-IPC::Sender* g_sender_override = nullptr;
+base::RepeatingCallback<mojom::DWriteFontProxyPtr(void)>*
+    g_connection_callback_override = nullptr;
 
 // Windows-only DirectWrite support. These warm up the DirectWrite paths
 // before sandbox lock down to allow Skia access to the Font Manager service.
@@ -46,10 +47,10 @@ void CreateDirectWriteFactory(IDWriteFactory** factory) {
 }  // namespace
 
 void UpdateDWriteFontProxySender(IPC::Sender* sender) {
-  if (g_font_collection)
-    g_font_collection.Get()->SetSenderOverride(sender);
-  if (g_font_fallback)
-    g_font_fallback.Get()->SetSenderOverride(sender);
+  // if (g_font_collection)
+  // g_font_collection.Get()->SetSenderOverride(sender);
+  // if (g_font_fallback)
+  // g_font_fallback.Get()->SetSenderOverride(sender);
 }
 
 void InitializeDWriteFontProxy() {
@@ -57,23 +58,26 @@ void InitializeDWriteFontProxy() {
 
   CreateDirectWriteFactory(&factory);
 
-  IPC::Sender* sender = g_sender_override;
+  mojom::DWriteFontProxyPtr dwrite_font_proxy;
+  if (g_connection_callback_override) {
+    dwrite_font_proxy = g_connection_callback_override->Run();
+  }
 
   // Hack for crbug.com/631254: set the sender if we can get one, so that when
   // Flash calls into the font proxy from a different thread we will have a
   // sender available.
-  if (!sender && ChildThreadImpl::current())
-    sender = ChildThreadImpl::current()->thread_safe_sender();
+  // if (!sender && ChildThreadImpl::current())
+  // sender = ChildThreadImpl::current()->thread_safe_sender();
 
   if (!g_font_collection) {
     DWriteFontCollectionProxy::Create(&g_font_collection, factory.Get(),
-                                      sender);
+                                      std::move(dwrite_font_proxy));
   }
 
   mswr::ComPtr<IDWriteFactory2> factory2;
 
   if (SUCCEEDED(factory.As(&factory2)) && factory2.Get()) {
-    FontFallback::Create(&g_font_fallback, g_font_collection.Get(), sender);
+    FontFallback::Create(&g_font_fallback, g_font_collection.Get());
   }
 
   sk_sp<SkFontMgr> skia_font_manager = SkFontMgr_New_DirectWrite(
@@ -100,8 +104,16 @@ void UninitializeDWriteFontProxy() {
     g_font_collection->Unregister();
 }
 
-void SetDWriteFontProxySenderForTesting(IPC::Sender* sender) {
-  g_sender_override = sender;
+void SetDWriteFontProxySenderForTesting(
+    base::RepeatingCallback<mojom::DWriteFontProxyPtr(void)> sender) {
+  g_connection_callback_override =
+      new base::RepeatingCallback<mojom::DWriteFontProxyPtr(void)>(
+          std::move(sender));
+}
+
+void ClearDWriteFontProxySenderForTesting() {
+  delete g_connection_callback_override;
+  g_connection_callback_override = nullptr;
 }
 
 }  // namespace content
