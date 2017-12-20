@@ -631,6 +631,8 @@ scoped_refptr<StaticBitmapImage> blink::CanvasRenderingContext2D::GetImage(
     SnapshotReason reason) const {
   if (!HasCanvas2DBuffer())
     return nullptr;
+  if (Host()->Size().IsEmpty())
+    return nullptr;
   return canvas()->Canvas2DBuffer()->NewImageSnapshot(hint, reason);
 }
 
