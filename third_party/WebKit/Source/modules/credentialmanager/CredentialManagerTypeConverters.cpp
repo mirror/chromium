@@ -45,9 +45,6 @@ TypeConverter<blink::WebCredentialManagerError, AuthenticatorStatus>::Convert(
     case webauth::mojom::blink::AuthenticatorStatus::NOT_SUPPORTED_ERROR:
       return blink::WebCredentialManagerError::
           kWebCredentialManagerNotSupportedError;
-    case webauth::mojom::blink::AuthenticatorStatus::SECURITY_ERROR:
-      return blink::WebCredentialManagerError::
-          kWebCredentialManagerSecurityError;
     case webauth::mojom::blink::AuthenticatorStatus::UNKNOWN_ERROR:
       return blink::WebCredentialManagerError::
           kWebCredentialManagerUnknownError;
