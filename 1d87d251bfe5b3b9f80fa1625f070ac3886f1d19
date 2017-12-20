@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "02ad134c_2ce375d9",
+        "filename": "net/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 2483,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-12-20T15:10:52Z",
+      "side": 1,
+      "message": "I think there\u0027s a typo in one of these statements, right?\n\n  \"quic_test.example.com.key.pkcs8 with quic-cert.key\"\n  \"quic.key.pkcs8.pem is just a pkcs8 version of quic-cert.key\"\n\nSince the first one says that quic-cert.key is a pkcs8 key and the second says it\u0027s not. I assume the first sentence should be:\n\n  \"quic_test.example.com.keywith quic-cert.key\"\n\nAssuming this is correct, the current mapping is:\n\nquic_test.example.com.key\u003d\u003e quic-cert.key (leaf cert\u0027s key)\nquic_test.example.com.key.pkcs8.pem \u003d\u003e quic.key.pkcs8.pem (leaf cert\u0027s key in pkcs8)\nquic_test.example.com.key.sct \u003d\u003e quic.key.sct (leaf cert\u0027s fake SCT)\nquic_root.crt \u003d\u003e quic-root.pem (root cert)\nquic_chain.crt with quic-chain.pem (root, intermediate and leaf cert)\n\nDo I have that right?\n\nIf so, quic-root.pem and quic-chain.pem seem well named, since root and chain seem fairly self explanatory. So we\u0027re good there.\n\nOn the other hand, the 3 files:\n\n  quic-cert.key \n  quic.key.pkcs8.pem\n  quic.key.sct\n\nHave names which do not suggest that they\u0027re all information about the same leaf cert. (One says \"quic-cert\" and other other two are just \"quic\".) At a minimum, it would be good to rename them to quic-cert.key*:\n\n  quic-cert.key \n  quic-cert.key.pkcs8.pem\n  quic-cert.key.sct\n\nSo that it\u0027s obvious that they\u0027re all related. Though better might be quic-leaf-cert.key*, to make it clear these are keys for the leaf certificate.",
+      "parentUuid": "85c5136e_f9cc2b17",
+      "range": {
+        "startLine": 2483,
+        "startChar": 41,
+        "endLine": 2483,
+        "endChar": 0
+      },
+      "revId": "1d87d251bfe5b3b9f80fa1625f070ac3886f1d19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8ab962bc_90dc4dff",
         "filename": "net/data/ssl/scripts/generate-quic-chain.sh",
         "patchSetId": 5
