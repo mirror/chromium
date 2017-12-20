@@ -139,6 +139,7 @@ pylib/base/test_run_factory.py
 pylib/base/test_server.py
 pylib/constants/__init__.py
 pylib/constants/host_paths.py
+pylib/constants/render_tests.py
 pylib/gtest/__init__.py
 pylib/gtest/gtest_test_instance.py
 pylib/instrumentation/__init__.py

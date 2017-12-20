@@ -26,6 +26,7 @@ from pylib import valgrind_tools
 from pylib.base import base_test_result
 from pylib.base import output_manager
 from pylib.constants import host_paths
+from pylib.constants import render_tests
 from pylib.instrumentation import instrumentation_test_instance
 from pylib.local.device import local_device_environment
 from pylib.local.device import local_device_test_run
@@ -77,13 +78,6 @@ _EXTRA_TEST_LIST = (
 UI_CAPTURE_DIRS = ['chromium_tests_root', 'UiCapture']
 
 FEATURE_ANNOTATION = 'Feature'
-RENDER_TEST_FEATURE_ANNOTATION = 'RenderTest'
-
-# This needs to be kept in sync with formatting in |RenderUtils.imageName|
-RE_RENDER_IMAGE_NAME = re.compile(
-      r'(?P<test_class>\w+)\.'
-      r'(?P<description>[-\w]+)\.'
-      r'(?P<device_model_sdk>[-\w]+)\.png')
 
 @contextlib.contextmanager
 def _LogTestEndpoints(device, test_name):
@@ -809,6 +803,8 @@ class LocalDeviceInstrumentationTestRun(
         html_results.flush()
       for result in results:
         result.SetLink(failure_filename, html_results.Link())
+        result.SetLink(render_tests.DIRECT_LINK_PREFIX + failure_filename,
+                failure_link)
 
   #override
   def _ShouldRetry(self, test, result):
@@ -856,5 +852,5 @@ def _IsRenderTest(test):
   """Determines if a test or list of tests has a RenderTest amongst them."""
   if not isinstance(test, list):
     test = [test]
-  return any([RENDER_TEST_FEATURE_ANNOTATION in t['annotations'].get(
+  return any([render_tests.TEST_ANNOTATION in t['annotations'].get(
               FEATURE_ANNOTATION, {}).get('value', ()) for t in test])
