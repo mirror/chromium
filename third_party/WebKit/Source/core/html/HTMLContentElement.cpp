@@ -28,7 +28,6 @@
 
 #include "core/css/SelectorChecker.h"
 #include "core/css/parser/CSSParser.h"
-#include "core/dom/ElementShadow.h"
 #include "core/dom/ElementShadowV0.h"
 #include "core/dom/QualifiedName.h"
 #include "core/dom/ShadowRoot.h"
@@ -76,8 +75,9 @@ void HTMLContentElement::ParseAttribute(
     const AttributeModificationParams& params) {
   if (params.name == selectAttr) {
     if (ShadowRoot* root = ContainingShadowRoot()) {
-      if (!root->IsV1() && root->Owner())
-        root->Owner()->V0().WillAffectSelector();
+      // TODO(kochi): Is ->host() check valid?
+      if (!root->IsV1() /* && root->host()*/)
+        root->V0().WillAffectSelector();
     }
     should_parse_select_ = true;
     select_ = params.new_value;

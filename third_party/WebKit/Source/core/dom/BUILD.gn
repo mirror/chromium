@@ -112,8 +112,6 @@ blink_core_sources("dom") {
     "ElementDataCache.h",
     "ElementRareData.cpp",
     "ElementRareData.h",
-    "ElementShadow.cpp",
-    "ElementShadow.h",
     "ElementShadowV0.cpp",
     "ElementShadowV0.h",
     "ElementTraversal.h",
