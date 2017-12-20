@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "9f879e8a_21ea9063",
+        "filename": "chrome/app/settings_strings.grdp",
+        "patchSetId": 2
+      },
+      "lineNbr": 2466,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-12-20T00:40:16Z",
+      "side": 1,
+      "message": "I\u0027m also wondering if the short string should be \"Motion and light sensors\" rather than just \"Sensors\". Could you file a bug to work out the strings and loop in srahim@chromium.org (our strings person) and maxwalker@chromium.org (UX) and owencm (PM).\n\nIt doesn\u0027t have to block this CL but it would be good to work out before we ship.",
+      "revId": "5b5e398cfe50d584ad97f7bdf07b7219600d5e30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "36076eef_27eaf00d",
         "filename": "chrome/app/settings_strings.grdp",
         "patchSetId": 2
@@ -19,6 +36,57 @@
         "endLine": 2556,
         "endChar": 32
       },
+      "revId": "5b5e398cfe50d584ad97f7bdf07b7219600d5e30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66cc2d6a_6ddbc854",
+        "filename": "chrome/app/theme/theme_resources.grd",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-12-20T00:40:16Z",
+      "side": 1,
+      "message": "We will also need appropriate icons here. Please file a bug and loop in maxwalker@chromium.org (our UX person). Also owencm@ who is PM.",
+      "revId": "5b5e398cfe50d584ad97f7bdf07b7219600d5e30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fa1330b_435e6692",
+        "filename": "chrome/browser/generic_sensor/sensor_permission_context.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-12-20T00:40:16Z",
+      "side": 1,
+      "message": "These comments are probably out of date now with the current plan for feature policy. We won\u0027t need cross-origin checks anymore, we will need to add feature policy checks though.",
+      "revId": "5b5e398cfe50d584ad97f7bdf07b7219600d5e30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a40dca89_e48cfe08",
+        "filename": "chrome/browser/generic_sensor/sensor_permission_context.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-12-20T00:40:16Z",
+      "side": 1,
+      "message": "nit: I think the second sentence is covered by the paragraph above, right?",
       "revId": "5b5e398cfe50d584ad97f7bdf07b7219600d5e30",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -59,6 +127,23 @@
       "writtenOn": "2017-12-19T16:46:35Z",
       "side": 1,
       "message": "nit: () \u003d\u003e loadTimeData.getBoolean(\u0027enableSensorsContentSetting\u0027)",
+      "revId": "5b5e398cfe50d584ad97f7bdf07b7219600d5e30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c3ed9f8_678cfcf7",
+        "filename": "chrome/browser/ui/page_info/page_info_ui.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-12-20T00:40:16Z",
+      "side": 1,
+      "message": "Can we make the changes to PageInfo in a separate patch? (same with page_info_strings)",
       "revId": "5b5e398cfe50d584ad97f7bdf07b7219600d5e30",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
