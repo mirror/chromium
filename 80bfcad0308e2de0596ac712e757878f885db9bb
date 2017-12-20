@@ -1,0 +1,293 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3be27eef_ea2392c8",
+        "filename": "media/audio/audio_debug_file_writer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-12-20T14:08:17Z",
+      "side": 1,
+      "message": "\"StartRecording\"?",
+      "revId": "80bfcad0308e2de0596ac712e757878f885db9bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f91ed43_895e8ec3",
+        "filename": "media/audio/audio_debug_recording_helper.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-12-20T14:08:17Z",
+      "side": 1,
+      "message": "DCHECK(task_runner_-\u003eBelongsToCurrentThread());",
+      "revId": "80bfcad0308e2de0596ac712e757878f885db9bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb0affd3_bfb65112",
+        "filename": "media/audio/audio_debug_recording_helper.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-12-20T14:08:17Z",
+      "side": 1,
+      "message": "\"CreateFileCallback\"\n\nDefine both in the helper",
+      "revId": "80bfcad0308e2de0596ac712e757878f885db9bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "893b6c7f_1941cffb",
+        "filename": "media/audio/audio_debug_recording_helper.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-12-20T14:08:17Z",
+      "side": 1,
+      "message": "ToFile?",
+      "revId": "80bfcad0308e2de0596ac712e757878f885db9bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "669895a1_b51a4326",
+        "filename": "media/audio/audio_debug_recording_helper.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-12-20T14:08:17Z",
+      "side": 1,
+      "message": "We were asked to use \"callback\" instead of \"cb\" for servicification work. Could you please rename?",
+      "revId": "80bfcad0308e2de0596ac712e757878f885db9bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "caaa2305_76e6dc92",
+        "filename": "media/audio/audio_debug_recording_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-12-20T14:08:17Z",
+      "side": 1,
+      "message": "Extension piece needs to be moved back to the writer, as we discussed.",
+      "revId": "80bfcad0308e2de0596ac712e757878f885db9bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "703c1ebd_bdd64559",
+        "filename": "media/audio/audio_debug_recording_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-12-20T14:08:17Z",
+      "side": 1,
+      "message": "File creation must be done on File task runner, since it is heavy blocking operation.\nNote that reply callback must run on the thread CreateFile is called on.\nSo CreateFile should post file creation to the file thread and reply with callback to the caller thread.",
+      "revId": "80bfcad0308e2de0596ac712e757878f885db9bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e178ccce_68d1365f",
+        "filename": "media/audio/audio_debug_recording_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-12-20T14:08:17Z",
+      "side": 1,
+      "message": "base::Unretained should always have a comment why it is safe.",
+      "revId": "80bfcad0308e2de0596ac712e757878f885db9bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "856d89fa_2025938b",
+        "filename": "media/audio/audio_debug_recording_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-12-20T14:08:17Z",
+      "side": 1,
+      "message": "No need to complicate things and pass it as a parameter, just bind CreateFile inside the function.\n\nChromium style is to not add extra stuff which may be useful in the future, because in most cases everything changes many times before that \"future\" comes - if it ever comes.",
+      "revId": "80bfcad0308e2de0596ac712e757878f885db9bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25c76a83_b5cf1943",
+        "filename": "media/audio/audio_debug_recording_manager.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-12-20T14:08:17Z",
+      "side": 1,
+      "message": "OnFileCreatedCallback; (this is a typical naming)\ncb -\u003e callback.",
+      "revId": "80bfcad0308e2de0596ac712e757878f885db9bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23a8421c_da120d64",
+        "filename": "media/audio/audio_debug_recording_manager.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-12-20T14:08:17Z",
+      "side": 1,
+      "message": "Do we really want an individual task runner per each helper, and one more file task runner in the manager? Why not to have one in the manager and share it across its members? What may be a problem with that?",
+      "revId": "80bfcad0308e2de0596ac712e757878f885db9bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d441904c_4afb8780",
+        "filename": "media/audio/audio_debug_recording_manager_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-12-20T14:08:17Z",
+      "side": 1,
+      "message": "Should it be  EXPECT_CALL(*this, DoEnableDebugRecording(true))?",
+      "revId": "80bfcad0308e2de0596ac712e757878f885db9bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "858f54ea_0db38835",
+        "filename": "media/audio/audio_debug_recording_manager_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-12-20T14:08:17Z",
+      "side": 1,
+      "message": "So what was the issue with file deletion?",
+      "revId": "80bfcad0308e2de0596ac712e757878f885db9bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f494f233_77a4d6eb",
+        "filename": "media/audio/audio_input_controller_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-12-20T14:08:17Z",
+      "side": 1,
+      "message": "Not relevant to this CL?",
+      "revId": "80bfcad0308e2de0596ac712e757878f885db9bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e0bd4f2_c23cf338",
+        "filename": "media/audio/audio_input_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-12-20T14:08:17Z",
+      "side": 1,
+      "message": "Not relevant to this CL?",
+      "revId": "80bfcad0308e2de0596ac712e757878f885db9bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8236fa92_106d9a0c",
+        "filename": "media/audio/audio_output_controller_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-12-20T14:08:17Z",
+      "side": 1,
+      "message": "Not relevant",
+      "revId": "80bfcad0308e2de0596ac712e757878f885db9bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5431d651_8a8f9c06",
+        "filename": "media/audio/audio_output_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-12-20T14:08:17Z",
+      "side": 1,
+      "message": "Please remove not relevant changes from the CL.",
+      "revId": "80bfcad0308e2de0596ac712e757878f885db9bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
