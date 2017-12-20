@@ -12,6 +12,8 @@
 
 #if defined(OS_WIN)
 #include <windows.h>
+// Undefine problematic macros
+#undef PostMessage
 #elif defined(OS_POSIX)
 #include <errno.h>
 #include <pthread.h>

@@ -101,7 +101,7 @@ void MessagePumpForUI::ScheduleWork() {
     return;  // Someone else continued the pumping.
 
   // Make sure the MessagePump does some work for us.
-  BOOL ret = PostMessage(message_window_.hwnd(), kMsgHaveWork, 0, 0);
+  BOOL ret = PostMessageW(message_window_.hwnd(), kMsgHaveWork, 0, 0);
   if (ret)
     return;  // There was room in the Window Message queue.
 
