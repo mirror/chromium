@@ -131,6 +131,30 @@
     },
     {
       "key": {
+        "uuid": "d4ba8d7a_14247dc6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SignInPromo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-12-20T11:01:27Z",
+      "side": 1,
+      "message": "\u003e This can make a difference if SignInPromo is created shortly before suppression period ends.\n\nHm, true. I guess it ultimately boils down to a product decision... But if we do the more complicated thing, there are a few more issues (see my other comment):",
+      "parentUuid": "215ac356_14416fdf",
+      "range": {
+        "startLine": 148,
+        "startChar": 81,
+        "endLine": 149,
+        "endChar": 55
+      },
+      "revId": "eeb81907937f3651005ad5ec59700e92686f9e86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0bbefe64_12a43e8c",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SignInPromo.java",
         "patchSetId": 1
@@ -142,6 +166,24 @@
       "writtenOn": "2017-12-19T20:24:09Z",
       "side": 1,
       "message": "According to this comment, checking suppression value in constructor is not enough. This is strange, because I\u0027ve checked my CL manually and it indeed suppresses signin promos in NTP after refusing signin in NTP. Is the comment outdated or was I just lucky?\nIf NTP can be created before FRE is completed, then I have to listen to shared preference that stores suppression status.",
+      "revId": "eeb81907937f3651005ad5ec59700e92686f9e86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31169dd5_9230e440",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SignInPromo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-12-20T11:01:27Z",
+      "side": 1,
+      "message": "+Nicolas, who wrote that code\n\nIt\u0027s entirely possible that this dates back from when we used to show the FRE over an NTP and we don\u0027t do that now anymore.",
+      "parentUuid": "0bbefe64_12a43e8c",
       "revId": "eeb81907937f3651005ad5ec59700e92686f9e86",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

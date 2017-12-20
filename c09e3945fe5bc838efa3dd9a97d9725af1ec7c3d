@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e08f1084_eadb731f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SignInPromo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-12-20T11:01:27Z",
+      "side": 1,
+      "message": "I think you want to treat this case as \"not suppressed\" and update the flag. Otherwise you could run into an issue when there is more than one SigninPromo around: the callback for the first one fires and clears the preference, then the callback for the second one runs and returns here.\n\nI guess there is also the question of avoiding memory leaks -- I don\u0027t know whether the Handler is garbage-collected if it has a callback enqueued (and therefore the callback itself is collected, and therefore the SigninPromo)...",
+      "range": {
+        "startLine": 161,
+        "startChar": 12,
+        "endLine": 161,
+        "endChar": 31
+      },
+      "revId": "c09e3945fe5bc838efa3dd9a97d9725af1ec7c3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52ac4ab8_915477d6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SignInPromo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-12-20T11:01:27Z",
+      "side": 1,
+      "message": "You could inline this method and then pull duplicate code out of the two branches of the if-statement in updateSuppressionStatus. Then if you get rid of the return there, you could directly call updateVisibility() from in there :)",
+      "range": {
+        "startLine": 174,
+        "startChar": 17,
+        "endLine": 174,
+        "endChar": 53
+      },
+      "revId": "c09e3945fe5bc838efa3dd9a97d9725af1ec7c3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
