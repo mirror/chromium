@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "dea8bb60_b1bc1ca2",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-20T21:16:01Z",
+      "side": 1,
+      "message": "Sorry for cryptic notation, what I meant was to remove \"type\", to make sure we are on the correct meta-level. Type can be ambiguous.",
+      "parentUuid": "6cc041aa_f37d5a01",
+      "range": {
+        "startLine": 45,
+        "startChar": 44,
+        "endLine": 45,
+        "endChar": 48
+      },
+      "revId": "d3a91ea6e1d5c2328aa306425ed9a298e59909ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "094da2e3_536740c8",
         "filename": "content/browser/webauth/cbor/cbor_reader.cc",
         "patchSetId": 12
@@ -326,6 +350,24 @@
       "side": 1,
       "message": "Thank you for the suggestion! :) \n\nChanged \n\nbase::strict_cast\u003cCBORValue::SimpleValue\u003e(static_cast\u003cint\u003e(value));\nto \nstatic_cast\u003cCBORValue::SimpleValue\u003e(static_cast\u003cint\u003e(value)); \n\ndue to compile time error\n\nand changed DCHECK_LE in Balazs\u0027 suggestion to CHECK_LE.",
       "parentUuid": "ccdff3bc_e522c032",
+      "revId": "d3a91ea6e1d5c2328aa306425ed9a298e59909ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "deaebeec_b60e4962",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-20T21:16:01Z",
+      "side": 1,
+      "message": "That looks good to me.",
+      "parentUuid": "06265f91_5fb5f984",
       "revId": "d3a91ea6e1d5c2328aa306425ed9a298e59909ab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

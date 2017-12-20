@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6950b3f4_51189b7f",
+        "filename": "content/browser/webauth/cbor/cbor_writer.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-20T21:16:01Z",
+      "side": 1,
+      "message": "Thanks for fixing this!",
+      "revId": "90225201b0ae2046f196d864ca759343575ef41b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
