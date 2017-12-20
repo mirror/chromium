@@ -1,0 +1,717 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "79ff9200_f0eaed7c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-20T21:22:37Z",
+      "side": 1,
+      "message": "have",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 3
+      },
+      "revId": "2c74527dc7474306a5a8784dfa5933659a8a1544",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf01f576_70727964",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-20T21:22:37Z",
+      "side": 1,
+      "message": "in order to?",
+      "range": {
+        "startLine": 26,
+        "startChar": 20,
+        "endLine": 26,
+        "endChar": 30
+      },
+      "revId": "2c74527dc7474306a5a8784dfa5933659a8a1544",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a51c909_a5143fd4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-20T21:22:37Z",
+      "side": 1,
+      "message": "You don\u0027t need this if in the commit message. Whatever this CL ends up to be, Chrome will be implemented similarly.",
+      "range": {
+        "startLine": 29,
+        "startChar": 3,
+        "endLine": 29,
+        "endChar": 17
+      },
+      "revId": "2c74527dc7474306a5a8784dfa5933659a8a1544",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "749f163a_468ca8b7",
+        "filename": "ash/accelerators/keyboard_shortcut_viewer_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-20T21:22:37Z",
+      "side": 1,
+      "message": "You should probably set the error handler for when the connection is lost to reset the client_ to nullptr.",
+      "range": {
+        "startLine": 24,
+        "startChar": 2,
+        "endLine": 24,
+        "endChar": 9
+      },
+      "revId": "2c74527dc7474306a5a8784dfa5933659a8a1544",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76f17e5e_c5ed35da",
+        "filename": "ash/accelerators/keyboard_shortcut_viewer_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-20T21:22:37Z",
+      "side": 1,
+      "message": "Nit: add comment that you\u0027re using an empty client shortcut list.",
+      "range": {
+        "startLine": 34,
+        "startChar": 31,
+        "endLine": 34,
+        "endChar": 49
+      },
+      "revId": "2c74527dc7474306a5a8784dfa5933659a8a1544",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f818161d_e23ffd13",
+        "filename": "ash/accelerators/keyboard_shortcut_viewer_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-20T21:22:37Z",
+      "side": 1,
+      "message": "!empty()",
+      "range": {
+        "startLine": 41,
+        "startChar": 27,
+        "endLine": 41,
+        "endChar": 38
+      },
+      "revId": "2c74527dc7474306a5a8784dfa5933659a8a1544",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c67157eb_67c00324",
+        "filename": "ash/accelerators/keyboard_shortcut_viewer_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-20T21:22:37Z",
+      "side": 1,
+      "message": "Just say \"Gathers ...\"?",
+      "range": {
+        "startLine": 19,
+        "startChar": 3,
+        "endLine": 19,
+        "endChar": 22
+      },
+      "revId": "2c74527dc7474306a5a8784dfa5933659a8a1544",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "972e3313_4f341105",
+        "filename": "ash/accelerators/keyboard_shortcut_viewer_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-20T21:22:37Z",
+      "side": 1,
+      "message": "It doesn\u0027t have to be in chrome, right?",
+      "range": {
+        "startLine": 45,
+        "startChar": 25,
+        "endLine": 45,
+        "endChar": 31
+      },
+      "revId": "2c74527dc7474306a5a8784dfa5933659a8a1544",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27e3c73e_e67acc84",
+        "filename": "ash/accelerators/keyboard_shortcut_viewer_metadata.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-20T21:22:37Z",
+      "side": 1,
+      "message": "Either use: \n\nenum class GroupedAction {\n  kChangeScreenResolution,\n};\n\nor\n\nenum GroupedAction {\n  kGroupedActionChangeScreenResolution,\n}\n\nSince the first has to be accessed as GroupedAction::kChangeScreenResolution, while the latter can be accessed without scoping like: kGroupedActionChangeScreenResolution.",
+      "range": {
+        "startLine": 24,
+        "startChar": 5,
+        "endLine": 24,
+        "endChar": 18
+      },
+      "revId": "2c74527dc7474306a5a8784dfa5933659a8a1544",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93d2df38_85c596df",
+        "filename": "ash/accelerators/keyboard_shortcut_viewer_metadata.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-20T21:22:37Z",
+      "side": 1,
+      "message": "kItemName: https://google.github.io/styleguide/cppguide.html#Enumerator_Names",
+      "range": {
+        "startLine": 25,
+        "startChar": 2,
+        "endLine": 25,
+        "endChar": 26
+      },
+      "revId": "2c74527dc7474306a5a8784dfa5933659a8a1544",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1812bf9b_29c816ca",
+        "filename": "ash/accelerators/keyboard_shortcut_viewer_metadata.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-20T21:22:37Z",
+      "side": 1,
+      "message": "Per our offline discussion, let\u0027s unify this in a single array.",
+      "range": {
+        "startLine": 32,
+        "startChar": 0,
+        "endLine": 57,
+        "endChar": 2
+      },
+      "revId": "2c74527dc7474306a5a8784dfa5933659a8a1544",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1c972cc_58307345",
+        "filename": "ash/accelerators/keyboard_shortcut_viewer_metadata.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-20T21:22:37Z",
+      "side": 1,
+      "message": "const\u0026",
+      "range": {
+        "startLine": 136,
+        "startChar": 4,
+        "endLine": 136,
+        "endChar": 26
+      },
+      "revId": "2c74527dc7474306a5a8784dfa5933659a8a1544",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9a9c105_9d125741",
+        "filename": "ash/accelerators/keyboard_shortcut_viewer_metadata.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-20T21:22:37Z",
+      "side": 1,
+      "message": "Since the above find() gets you the iterator (if found) there\u0027s no need to re-query the map again.\n\nauto iter \u003d ***.find(action);\nif (iter \u003d\u003d ***.end())\n  continue;\n\nKSVItemInfo info \u003d iter-\u003esecond;\n\nDo you actually mean to copy this?",
+      "range": {
+        "startLine": 145,
+        "startChar": 0,
+        "endLine": 147,
+        "endChar": 41
+      },
+      "revId": "2c74527dc7474306a5a8784dfa5933659a8a1544",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49364897_13c875c8",
+        "filename": "ash/accelerators/keyboard_shortcut_viewer_metadata.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-20T21:22:37Z",
+      "side": 1,
+      "message": "You can push the vkey that corrsponds to the modifier to avoid having to mark an entry as a modifier or key.",
+      "range": {
+        "startLine": 153,
+        "startChar": 39,
+        "endLine": 153,
+        "endChar": 47
+      },
+      "revId": "2c74527dc7474306a5a8784dfa5933659a8a1544",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce0277dc_86858a90",
+        "filename": "ash/accelerators/keyboard_shortcut_viewer_metadata.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-20T21:22:37Z",
+      "side": 1,
+      "message": "emplace_back() here and elsewhere",
+      "range": {
+        "startLine": 153,
+        "startChar": 29,
+        "endLine": 153,
+        "endChar": 38
+      },
+      "revId": "2c74527dc7474306a5a8784dfa5933659a8a1544",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17a512f8_fa0eb1d4",
+        "filename": "ash/accelerators/keyboard_shortcut_viewer_metadata.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-20T21:22:37Z",
+      "side": 1,
+      "message": "Don\u0027t copy. Just use entry.shortcut_info directly inside New().",
+      "range": {
+        "startLine": 167,
+        "startChar": 16,
+        "endLine": 167,
+        "endChar": 20
+      },
+      "revId": "2c74527dc7474306a5a8784dfa5933659a8a1544",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad2fa7f0_258272a9",
+        "filename": "ash/accelerators/keyboard_shortcut_viewer_metadata.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-20T21:22:37Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 175,
+        "startChar": 16,
+        "endLine": 175,
+        "endChar": 20
+      },
+      "revId": "2c74527dc7474306a5a8784dfa5933659a8a1544",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6255ce1_d2fb7cf9",
+        "filename": "ash/accelerators/keyboard_shortcut_viewer_metadata.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-20T21:22:37Z",
+      "side": 1,
+      "message": "This is defined twice: once here, and another one in KeyboardShortcutViewerController::KSVItemInfoPtrList.\n\nI\u0027d keep the former and kill the latter.",
+      "range": {
+        "startLine": 16,
+        "startChar": 6,
+        "endLine": 16,
+        "endChar": 24
+      },
+      "revId": "2c74527dc7474306a5a8784dfa5933659a8a1544",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebd1fd02_59be84d0",
+        "filename": "ash/accelerators/keyboard_shortcut_viewer_metadata.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-20T21:22:37Z",
+      "side": 1,
+      "message": "Please document.",
+      "range": {
+        "startLine": 19,
+        "startChar": 30,
+        "endLine": 19,
+        "endChar": 67
+      },
+      "revId": "2c74527dc7474306a5a8784dfa5933659a8a1544",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "214ca6fe_1b091064",
+        "filename": "chrome/browser/chromeos/chrome_browser_main_chromeos.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1103,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-20T21:22:37Z",
+      "side": 1,
+      "message": "std::make_unique\u003c\u003e",
+      "range": {
+        "startLine": 1103,
+        "startChar": 8,
+        "endLine": 1103,
+        "endChar": 24
+      },
+      "revId": "2c74527dc7474306a5a8784dfa5933659a8a1544",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f9b33af_0eb4a649",
+        "filename": "components/keyboard_shortcut_viewer/common/keyboard_shortcut_info.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-20T21:22:37Z",
+      "side": 1,
+      "message": "placeholder",
+      "range": {
+        "startLine": 16,
+        "startChar": 55,
+        "endLine": 16,
+        "endChar": 64
+      },
+      "revId": "2c74527dc7474306a5a8784dfa5933659a8a1544",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc569a36_ba820ecb",
+        "filename": "components/keyboard_shortcut_viewer/common/keyboard_shortcut_info.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-20T21:22:37Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be \"Alt\"? since we are talking about Alt+left arrow.",
+      "range": {
+        "startLine": 17,
+        "startChar": 23,
+        "endLine": 17,
+        "endChar": 40
+      },
+      "revId": "2c74527dc7474306a5a8784dfa5933659a8a1544",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac66f553_43cfa7e0",
+        "filename": "components/keyboard_shortcut_viewer/common/keyboard_shortcut_info.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-20T21:22:37Z",
+      "side": 1,
+      "message": "Can you clarify that these are actually the IDs of the translated strings of the categories this shortcut belongs to, rather than the categories themselves?",
+      "range": {
+        "startLine": 21,
+        "startChar": 5,
+        "endLine": 21,
+        "endChar": 43
+      },
+      "revId": "2c74527dc7474306a5a8784dfa5933659a8a1544",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd7cb21c_3d22c99b",
+        "filename": "components/keyboard_shortcut_viewer/common/keyboard_shortcut_info.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-20T21:22:37Z",
+      "side": 1,
+      "message": "what \"the shortcut is\"?\nwhat \"the shortcut keys are\"?",
+      "range": {
+        "startLine": 29,
+        "startChar": 55,
+        "endLine": 29,
+        "endChar": 61
+      },
+      "revId": "2c74527dc7474306a5a8784dfa5933659a8a1544",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f396ca58_85d6e864",
+        "filename": "components/keyboard_shortcut_viewer/common/keyboard_shortcut_info.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-20T21:22:37Z",
+      "side": 1,
+      "message": "representation",
+      "range": {
+        "startLine": 39,
+        "startChar": 45,
+        "endLine": 39,
+        "endChar": 54
+      },
+      "revId": "2c74527dc7474306a5a8784dfa5933659a8a1544",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8aab349_80b0cb1d",
+        "filename": "components/keyboard_shortcut_viewer/common/keyboard_shortcut_info.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-20T21:22:37Z",
+      "side": 1,
+      "message": "an icon",
+      "range": {
+        "startLine": 42,
+        "startChar": 68,
+        "endLine": 42,
+        "endChar": 72
+      },
+      "revId": "2c74527dc7474306a5a8784dfa5933659a8a1544",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "996e2b43_cdf78bfb",
+        "filename": "components/keyboard_shortcut_viewer/common/keyboard_shortcut_info.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-20T21:22:37Z",
+      "side": 1,
+      "message": "remove \"need\"",
+      "range": {
+        "startLine": 48,
+        "startChar": 34,
+        "endLine": 48,
+        "endChar": 38
+      },
+      "revId": "2c74527dc7474306a5a8784dfa5933659a8a1544",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06ce570e_4a7ddba0",
+        "filename": "components/keyboard_shortcut_viewer/common/keyboard_shortcut_info.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-20T21:22:37Z",
+      "side": 1,
+      "message": "Explain why it\u0027s extensible or remove that.",
+      "range": {
+        "startLine": 50,
+        "startChar": 0,
+        "endLine": 50,
+        "endChar": 12
+      },
+      "revId": "2c74527dc7474306a5a8784dfa5933659a8a1544",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "409424b3_d9b17771",
+        "filename": "components/keyboard_shortcut_viewer/common/keyboard_shortcut_info.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-20T21:22:37Z",
+      "side": 1,
+      "message": "The new style of enum items is kItemName: https://google.github.io/styleguide/cppguide.html#Enumerator_Names",
+      "range": {
+        "startLine": 53,
+        "startChar": 2,
+        "endLine": 53,
+        "endChar": 10
+      },
+      "revId": "2c74527dc7474306a5a8784dfa5933659a8a1544",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92e8e63e_a9a0f18a",
+        "filename": "components/keyboard_shortcut_viewer/common/keyboard_shortcut_info.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-20T21:22:37Z",
+      "side": 1,
+      "message": "I\u0027m not entirely sure why we need three states? It should be either a text form or an icon form, correct? It doesn\u0027t matter if we\u0027re talking about modifiers or keys, does it?",
+      "range": {
+        "startLine": 54,
+        "startChar": 2,
+        "endLine": 57,
+        "endChar": 11
+      },
+      "revId": "2c74527dc7474306a5a8784dfa5933659a8a1544",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0a43b39_693bf514",
+        "filename": "components/keyboard_shortcut_viewer/common/keyboard_shortcut_info.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-20T21:22:37Z",
+      "side": 1,
+      "message": "This detail is not important. It\u0027s just an API that provides a way to request the shortcuts data that the client wants to show in the KSV. \n\nBut \"when\" the controller requests it, is not important.",
+      "range": {
+        "startLine": 74,
+        "startChar": 5,
+        "endLine": 74,
+        "endChar": 78
+      },
+      "revId": "2c74527dc7474306a5a8784dfa5933659a8a1544",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
