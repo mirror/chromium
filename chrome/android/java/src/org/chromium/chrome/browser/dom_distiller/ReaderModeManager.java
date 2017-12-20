@@ -28,7 +28,6 @@ import org.chromium.chrome.browser.util.IntentUtils;
 import org.chromium.components.dom_distiller.content.DistillablePageUtils;
 import org.chromium.components.dom_distiller.core.DomDistillerUrlUtils;
 import org.chromium.components.navigation_interception.InterceptNavigationDelegate;
-import org.chromium.components.navigation_interception.NavigationParams;
 import org.chromium.content.browser.ContentViewCore;
 import org.chromium.content_public.browser.LoadUrlParams;
 import org.chromium.content_public.browser.NavigationController;
@@ -78,26 +77,11 @@ public class ReaderModeManager extends TabModelSelectorTabObserver {
     /** The primary means of getting the currently active tab. */
     private TabModelSelector mTabModelSelector;
 
-    /** If Reader Mode is detecting all pages as distillable. */
-    private boolean mIsReaderHeuristicAlwaysTrue;
-
-    // Hold on to the InterceptNavigationDelegate that the custom tab uses.
-    InterceptNavigationDelegate mCustomTabNavigationDelegate;
-
     public ReaderModeManager(TabModelSelector selector, ChromeActivity activity) {
         super(selector);
         mTabModelSelector = selector;
         mChromeActivity = activity;
         mTabStatusMap = new HashMap<>();
-        mIsReaderHeuristicAlwaysTrue = isDistillerHeuristicAlwaysTrue();
-    }
-
-    /**
-     * This function wraps a method that calls native code and is overridden by tests.
-     * @return True if the heuristic is ALWAYS_TRUE.
-     */
-    protected boolean isDistillerHeuristicAlwaysTrue() {
-        return DomDistillerTabUtils.isHeuristicAlwaysTrue();
     }
 
     /**
@@ -133,29 +117,26 @@ public class ReaderModeManager extends TabModelSelectorTabObserver {
         ContentViewCore cvc = tab.getContentViewCore();
         if (cvc == null) return;
 
-        mCustomTabNavigationDelegate = new InterceptNavigationDelegate() {
-            @Override
-            public boolean shouldIgnoreNavigation(NavigationParams params) {
-                if (DomDistillerUrlUtils.isDistilledPage(params.url) || params.isExternalProtocol) {
-                    return false;
-                }
-
-                Intent returnIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(params.url));
-                returnIntent.setClassName(mChromeActivity, ChromeLauncherActivity.class.getName());
-
-                // Set the parent ID of the tab to be created.
-                returnIntent.putExtra(EXTRA_READER_MODE_PARENT,
-                        IntentUtils.safeGetInt(mChromeActivity.getIntent().getExtras(),
-                                EXTRA_READER_MODE_PARENT, Tab.INVALID_TAB_ID));
-
-                mChromeActivity.startActivity(returnIntent);
-                mChromeActivity.finish();
-                return true;
+        InterceptNavigationDelegate customTabNavigationDelegate = params1 -> {
+            if (DomDistillerUrlUtils.isDistilledPage(params1.url) || params1.isExternalProtocol) {
+                return false;
             }
+
+            Intent returnIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(params1.url));
+            returnIntent.setClassName(mChromeActivity, ChromeLauncherActivity.class.getName());
+
+            // Set the parent ID of the tab to be created.
+            returnIntent.putExtra(EXTRA_READER_MODE_PARENT,
+                    IntentUtils.safeGetInt(mChromeActivity.getIntent().getExtras(),
+                            EXTRA_READER_MODE_PARENT, Tab.INVALID_TAB_ID));
+
+            mChromeActivity.startActivity(returnIntent);
+            mChromeActivity.finish();
+            return true;
         };
 
         DomDistillerTabUtils.setInterceptNavigationDelegate(
-                mCustomTabNavigationDelegate, cvc.getWebContents());
+                customTabNavigationDelegate, cvc.getWebContents());
     }
 
     @Override
@@ -428,7 +409,7 @@ public class ReaderModeManager extends TabModelSelectorTabObserver {
         // ALWAYS_TRUE.
         boolean usingRequestDesktopSite = getBasePageWebContents() != null
                 && getBasePageWebContents().getNavigationController().getUseDesktopUserAgent()
-                && !mIsReaderHeuristicAlwaysTrue;
+                && !DomDistillerTabUtils.isHeuristicAlwaysTrue();
 
         if (!mTabStatusMap.containsKey(currentTabId) || usingRequestDesktopSite
                 || mTabStatusMap.get(currentTabId).getStatus() != POSSIBLE
@@ -515,10 +496,11 @@ public class ReaderModeManager extends TabModelSelectorTabObserver {
             return;
         }
 
-        DistillablePageUtils.setDelegate(currentTab.getWebContents(),
-                new DistillablePageUtils.PageDistillableDelegate() {
+        DistillablePageUtils.setDelegate(
+                currentTab.getWebContents(), new DistillablePageUtils.PageDistillableDelegate() {
                     @Override
-                    public void onIsPageDistillableResult(boolean isDistillable, boolean isLast) {
+                    public void onIsPageDistillableResult(
+                            boolean isDistillable, boolean isLast, boolean isMobileOptimized) {
                         if (mTabModelSelector == null) return;
 
                         ReaderModeTabInfo tabInfo = mTabStatusMap.get(tabId);
@@ -532,7 +514,9 @@ public class ReaderModeManager extends TabModelSelectorTabObserver {
                         // Make sure the page didn't navigate while waiting for a response.
                         if (!readerTab.getUrl().equals(tabInfo.getUrl())) return;
 
-                        if (isDistillable) {
+                        boolean excluded = DomDistillerTabUtils.shouldExcludeMobileFriendly()
+                                && isMobileOptimized;
+                        if (isDistillable && !excluded) {
                             tabInfo.setStatus(POSSIBLE);
                             // The user may have changed tabs.
                             if (tabId == mTabModelSelector.getCurrentTabId()) {

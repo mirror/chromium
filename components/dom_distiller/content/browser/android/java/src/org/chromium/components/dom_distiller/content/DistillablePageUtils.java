@@ -43,7 +43,8 @@ public final class DistillablePageUtils {
          * @param isDistillable Whether the page is distillable.
          * @param isLast Whether the update is the last one for this page.
          */
-        public void onIsPageDistillableResult(boolean isDistillable, boolean isLast);
+        public void onIsPageDistillableResult(
+                boolean isDistillable, boolean isLast, boolean isMobileOptimized);
     }
 
     public static void setDelegate(WebContents webContents,
@@ -52,10 +53,10 @@ public final class DistillablePageUtils {
     }
 
     @CalledByNative
-    private static void callOnIsPageDistillableUpdate(
-            PageDistillableDelegate delegate, boolean isDistillable, boolean isLast) {
+    private static void callOnIsPageDistillableUpdate(PageDistillableDelegate delegate,
+            boolean isDistillable, boolean isLast, boolean isMobileOptimized) {
         if (delegate != null) {
-            delegate.onIsPageDistillableResult(isDistillable, isLast);
+            delegate.onIsPageDistillableResult(isDistillable, isLast, isMobileOptimized);
         }
     }
 
