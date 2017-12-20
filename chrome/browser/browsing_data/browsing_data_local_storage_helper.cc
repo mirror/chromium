@@ -2,6 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include "base/debug/stack_trace.h"
 #include "chrome/browser/browsing_data/browsing_data_local_storage_helper.h"
 
 #include <vector>
@@ -70,6 +71,7 @@ void BrowsingDataLocalStorageHelper::StartFetching(
     const FetchCallback& callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   DCHECK(!callback.is_null());
+  LOG(ERROR) << "BrowsingDataLocalStorageHelper::StartFetching";
   dom_storage_context_->GetLocalStorageUsage(
       base::Bind(&GetUsageInfoCallback, callback));
 }
@@ -131,6 +133,7 @@ void CannedBrowsingDataLocalStorageHelper::StartFetching(
 
 void CannedBrowsingDataLocalStorageHelper::DeleteOrigin(
     const GURL& origin_url) {
+  LOG(ERROR) << "CannedBrowsingDataLocalStorageHelper::DeleteOrigin";
   pending_local_storage_info_.erase(origin_url);
   // All suborigins associated with |origin_url| must be removed.
   // BrowsingDataLocalStorageHelper::DeleteOrigin takes care of doing that on

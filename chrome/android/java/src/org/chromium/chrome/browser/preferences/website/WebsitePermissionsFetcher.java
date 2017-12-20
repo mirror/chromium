@@ -7,6 +7,7 @@ package org.chromium.chrome.browser.preferences.website;
 import android.util.Pair;
 
 import org.chromium.base.Callback;
+import org.chromium.base.Log;
 import org.chromium.chrome.browser.ContentSettingsType;
 
 import java.util.ArrayList;
@@ -351,6 +352,7 @@ public class WebsitePermissionsFetcher {
             WebsitePreferenceBridge.fetchLocalStorageInfo(new Callback<HashMap>() {
                 @Override
                 public void onResult(HashMap result) {
+                    Log.e("FOOO", "LocalStorage" + result.size());
                     for (Object o : result.entrySet()) {
                         @SuppressWarnings("unchecked")
                         Map.Entry<String, LocalStorageInfo> entry =
@@ -371,6 +373,8 @@ public class WebsitePermissionsFetcher {
             WebsitePreferenceBridge.fetchStorageInfo(new Callback<ArrayList>() {
                 @Override
                 public void onResult(ArrayList result) {
+                    Log.e("FOOO", "WebStorage" + result.size());
+
                     @SuppressWarnings("unchecked")
                     ArrayList<StorageInfo> infoArray = result;
 

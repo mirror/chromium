@@ -123,7 +123,7 @@ class CONTENT_EXPORT LocalStorageContextMojo
 
   // The (possibly delayed) implementation of GetStorageUsage(). Can be called
   // directly from that function, or through |on_database_open_callbacks_|.
-  void RetrieveStorageUsage(GetStorageUsageCallback callback);
+  void RetrieveStorageUsage(GetStorageUsageCallback callback, std::string s);
   void OnGotMetaData(GetStorageUsageCallback callback,
                      leveldb::mojom::DatabaseError status,
                      std::vector<leveldb::mojom::KeyValuePtr> data);

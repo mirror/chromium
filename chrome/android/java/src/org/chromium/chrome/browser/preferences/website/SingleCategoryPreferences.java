@@ -29,6 +29,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import org.chromium.base.Log;
 import org.chromium.base.metrics.RecordUserAction;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.help.HelpAndFeedback;
@@ -44,7 +45,6 @@ import org.chromium.chrome.browser.preferences.ManagedPreferencesUtils;
 import org.chromium.chrome.browser.preferences.PrefServiceBridge;
 import org.chromium.chrome.browser.preferences.PreferenceUtils;
 import org.chromium.chrome.browser.preferences.ProtectedContentResetCredentialConfirmDialogFragment;
-import org.chromium.chrome.browser.preferences.website.Website.StoredDataClearedCallback;
 import org.chromium.chrome.browser.profiles.Profile;
 import org.chromium.chrome.browser.widget.TintedDrawable;
 import org.chromium.ui.widget.Toast;
@@ -201,7 +201,7 @@ public class SingleCategoryPreferences extends PreferenceFragment
                 ChromeSwitchPreference globalToggle = (ChromeSwitchPreference)
                         getPreferenceScreen().findPreference(READ_WRITE_TOGGLE_KEY);
                 updateAllowedHeader(mAllowedSiteCount,
-                                    (globalToggle != null ? globalToggle.isChecked() : true));
+                        (globalToggle != null ? globalToggle.isChecked() : true));
             } else {
                 displayEmptyScreenMessage();
                 updateBlockedHeader(0);
@@ -212,6 +212,7 @@ public class SingleCategoryPreferences extends PreferenceFragment
 
     /**
      * Returns whether a website is on the Blocked list for the category currently showing.
+     *
      * @param website The website to check.
      */
     private boolean isOnBlockList(WebsitePreference website) {
@@ -247,7 +248,8 @@ public class SingleCategoryPreferences extends PreferenceFragment
 
     /**
      * Update the Category Header for the Allowed list.
-     * @param numAllowed The number of sites that are on the Allowed list
+     *
+     * @param numAllowed  The number of sites that are on the Allowed list
      * @param toggleValue The value the global toggle will have once precessing ends.
      */
     private void updateAllowedHeader(int numAllowed, boolean toggleValue) {
@@ -331,16 +333,17 @@ public class SingleCategoryPreferences extends PreferenceFragment
 
         // The goal is to refresh the info for origins again after we've cleared all of them, so we
         // wait until the last website is cleared to refresh the origin list.
-        final int[] numLeft = new int[1];
-        numLeft[0] = mWebsites.size();
+        int[] numLeft = {mWebsites.size()};
         for (int i = 0; i < mWebsites.size(); i++) {
             WebsitePreference preference = mWebsites.get(i);
-            preference.site().clearAllStoredData(new StoredDataClearedCallback() {
-                @Override
-                public void onStoredDataCleared() {
-                    if (--numLeft[0] <= 0) {
-                        getInfoForOrigins();
-                    }
+            preference.site().clearAllStoredData(() -> {
+                if (--numLeft[0] <= 0) {
+                    Log.e("FOOO", "getInfo");
+                    // This still returns old data.
+                    getInfoForOrigins();
+                    // Running this with a slight delay seems to fix the issue but that means the
+                    // callback was called too early.
+                    //new Handler().post(this ::getInfoForOrigins);
                 }
             });
         }
@@ -573,7 +576,7 @@ public class SingleCategoryPreferences extends PreferenceFragment
     // OnPreferenceClickListener:
     @Override
     public boolean onPreferenceClick(Preference preference) {
-        if (ALLOWED_GROUP.equals(preference.getKey()))  {
+        if (ALLOWED_GROUP.equals(preference.getKey())) {
             mAllowListExpanded = !mAllowListExpanded;
         } else {
             mBlockListExpanded = !mBlockListExpanded;
@@ -672,8 +675,7 @@ public class SingleCategoryPreferences extends PreferenceFragment
                     getPreferenceScreen().findPreference(EXPLAIN_PROTECTED_MEDIA_KEY));
         }
 
-        if (mCategory.showAllSites()
-                    || mCategory.showStorageSites()) {
+        if (mCategory.showAllSites() || mCategory.showStorageSites()) {
             getPreferenceScreen().removePreference(globalToggle);
             getPreferenceScreen().removePreference(
                     getPreferenceScreen().findPreference(ALLOWED_GROUP));
