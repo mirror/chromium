@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "359e8bf4_caf2279d",
+        "filename": "net/data/ssl/certificates/README",
+        "patchSetId": 8
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-12-20T17:21:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "605a893c_374dbb2b",
+      "range": {
+        "startLine": 121,
+        "startChar": 0,
+        "endLine": 121,
+        "endChar": 25
+      },
+      "revId": "3dd714df8d5bdb653da43a09cfd24b28e397bc0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ca73c198_f7b3d454",
         "filename": "net/data/ssl/scripts/generate-quic-chain.sh",
         "patchSetId": 8
@@ -45,6 +69,30 @@
       "revId": "3dd714df8d5bdb653da43a09cfd24b28e397bc0e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5a754b1_fe418516",
+        "filename": "net/data/ssl/scripts/generate-quic-chain.sh",
+        "patchSetId": 8
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-12-20T17:21:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ca73c198_f7b3d454",
+      "range": {
+        "startLine": 97,
+        "startChar": 0,
+        "endLine": 97,
+        "endChar": 7
+      },
+      "revId": "3dd714df8d5bdb653da43a09cfd24b28e397bc0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
