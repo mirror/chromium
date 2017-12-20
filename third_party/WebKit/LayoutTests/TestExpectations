@@ -730,6 +730,7 @@ crbug.com/776656 virtual/incremental-shadow-dom/shadow-dom/slots-fallback-2.html
 crbug.com/776656 virtual/incremental-shadow-dom/shadow-dom/slots-fallback-3.html [ Failure ]
 crbug.com/776656 virtual/incremental-shadow-dom/shadow-dom/slots-text-nodes.html [ Failure ]
 crbug.com/776656 virtual/incremental-shadow-dom/shadow-dom/slotted-pseudo-element-dynamic-attribute-change.html [ Failure ]
+crbug.com/776656 virtual/incremental-shadow-dom/external/wpt/shadow-dom/DocumentOrShadowRoot-prototype-elementFromPoint.html [ Failure ]
 
 # ====== IncrementalShadowDOM-only failures until here ======
 
