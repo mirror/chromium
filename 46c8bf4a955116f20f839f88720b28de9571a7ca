@@ -16,6 +16,24 @@
       "revId": "46c8bf4a955116f20f839f88720b28de9571a7ca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93d2f36b_18ea37c5",
+        "filename": "content/browser/devtools/protocol/system_info_handler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-12-20T20:44:13Z",
+      "side": 0,
+      "message": "That flag has no effects right now.  But the SystemInfoHandler is still waiting for GPU process returning GPU info regardless. piman\u0027s idea is we establish a GPU channel for the GPU info.",
+      "parentUuid": "52b53ba7_9510a922",
+      "revId": "46c8bf4a955116f20f839f88720b28de9571a7ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
