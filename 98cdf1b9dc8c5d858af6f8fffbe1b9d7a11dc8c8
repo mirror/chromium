@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2c59c46a_6d1a803b",
+        "filename": "services/network/public/cpp/proxy_resolving_client_socket_unittest.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-12-20T20:43:00Z",
+      "side": 1,
+      "message": "Hi Matt, I ended up changing the test expectation and not removing the duplicate retry path in this CL. \nI will address it in the follow-up crbug.\n\nWith a connect error using non-direct, this class retries on all error codes, which is incorrect.",
+      "revId": "98cdf1b9dc8c5d858af6f8fffbe1b9d7a11dc8c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
