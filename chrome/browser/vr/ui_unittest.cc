@@ -82,6 +82,7 @@ const std::set<UiElementType> kHitTestableElementTypes = {
 const std::set<UiElementName> kElementsVisibleWithExitWarning = {
     kScreenDimmer, kExitWarningBackground, kExitWarningText};
 const std::vector<std::string> kElementsInDrawOrder = {
+    "k2dBrowsingTexturedBackground",
     "kBackgroundFront",
     "kBackgroundLeft",
     "kBackgroundBack",
@@ -1039,6 +1040,33 @@ TEST_F(UiTest, TransientToastsWithDelayedFirstFrame) {
   // naive, we would start to hide the transient element.
   OnBeginFrame(MsToDelta(40000));
   VerifyOnlyElementsVisible("Autopresented", {kWebVrUrlToast});
+}
+
+TEST_F(UiTest, DefaultBackgroundWhenNoAssetAvailable) {
+  UiInitialState state;
+  state.assets_available = false;
+  CreateScene(state);
+
+  EXPECT_FALSE(IsVisible(k2dBrowsingTexturedBackground));
+  EXPECT_TRUE(IsVisible(k2dBrowsingDefaultBackground));
+  EXPECT_TRUE(IsVisible(kContentQuad));
+}
+
+TEST_F(UiTest, TextureBackgroundAfterAssetLoaded) {
+  UiInitialState state;
+  state.assets_available = true;
+  CreateScene(state);
+
+  EXPECT_FALSE(IsVisible(k2dBrowsingTexturedBackground));
+  EXPECT_FALSE(IsVisible(k2dBrowsingDefaultBackground));
+  EXPECT_FALSE(IsVisible(kContentQuad));
+
+  auto bitmap = base::MakeUnique<SkBitmap>();
+  ui_->SetBackgroundImage(std::move(bitmap));
+
+  EXPECT_TRUE(IsVisible(k2dBrowsingTexturedBackground));
+  EXPECT_TRUE(IsVisible(kContentQuad));
+  EXPECT_FALSE(IsVisible(k2dBrowsingDefaultBackground));
 }
 
 }  // namespace vr
