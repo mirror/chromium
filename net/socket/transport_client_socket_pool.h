@@ -18,6 +18,7 @@
 #include "net/socket/client_socket_pool.h"
 #include "net/socket/client_socket_pool_base.h"
 #include "net/socket/connection_attempts.h"
+#include "net/socket/socket_tag.h"
 
 namespace net {
 
@@ -49,7 +50,8 @@ class NET_EXPORT_PRIVATE TransportSocketParams
       const HostPortPair& host_port_pair,
       bool disable_resolver_cache,
       const OnHostResolutionCallback& host_resolution_callback,
-      CombineConnectAndWritePolicy combine_connect_and_write);
+      CombineConnectAndWritePolicy combine_connect_and_write,
+      const SocketTag& socket_tag);
 
   const HostResolver::RequestInfo& destination() const { return destination_; }
   const OnHostResolutionCallback& host_resolution_callback() const {
@@ -60,6 +62,8 @@ class NET_EXPORT_PRIVATE TransportSocketParams
     return combine_connect_and_write_;
   }
 
+  const SocketTag& socket_tag() const { return socket_tag_; }
+
  private:
   friend class base::RefCounted<TransportSocketParams>;
   ~TransportSocketParams();
@@ -67,6 +71,7 @@ class NET_EXPORT_PRIVATE TransportSocketParams
   HostResolver::RequestInfo destination_;
   const OnHostResolutionCallback host_resolution_callback_;
   CombineConnectAndWritePolicy combine_connect_and_write_;
+  const SocketTag socket_tag_;
 
   DISALLOW_COPY_AND_ASSIGN(TransportSocketParams);
 };

@@ -297,8 +297,16 @@ int HttpProxyClientSocketPool::RequestSocket(const std::string& group_name,
   const scoped_refptr<HttpProxySocketParams>* casted_socket_params =
       static_cast<const scoped_refptr<HttpProxySocketParams>*>(socket_params);
 
+  SocketTag socket_tag;
+  if ((*casted_socket_params)->transport_params()) {
+    socket_tag = (*casted_socket_params)->transport_params()->socket_tag();
+  } else {
+    socket_tag = (*casted_socket_params)->ssl_params()->GetSocketTag();
+  }
+
   return base_.RequestSocket(group_name, *casted_socket_params, priority,
-                             respect_limits, handle, callback, net_log);
+                             respect_limits, handle, callback, net_log,
+                             socket_tag);
 }
 
 void HttpProxyClientSocketPool::RequestSockets(

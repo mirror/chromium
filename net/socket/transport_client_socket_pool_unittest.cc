@@ -11,6 +11,7 @@
 #include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
 #include "base/threading/platform_thread.h"
+#include "build/build_config.h"
 #include "net/base/ip_address.h"
 #include "net/base/ip_endpoint.h"
 #include "net/base/load_timing_info.h"
@@ -21,10 +22,13 @@
 #include "net/log/net_log_with_source.h"
 #include "net/log/test_net_log.h"
 #include "net/socket/client_socket_handle.h"
+#include "net/socket/socket_tag.h"
 #include "net/socket/socket_test_util.h"
 #include "net/socket/stream_socket.h"
 #include "net/socket/transport_client_socket_pool_test_util.h"
+#include "net/test/embedded_test_server/embedded_test_server.h"
 #include "net/test/gtest_util.h"
+#include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -50,7 +54,8 @@ class TransportClientSocketPoolTest : public testing::Test {
             HostPortPair("www.google.com", 80),
             false,
             OnHostResolutionCallback(),
-            TransportSocketParams::COMBINE_CONNECT_AND_WRITE_DEFAULT)),
+            TransportSocketParams::COMBINE_CONNECT_AND_WRITE_DEFAULT,
+            SocketTag())),
         host_resolver_(new MockHostResolver),
         client_socket_factory_(&net_log_),
         pool_(kMaxSockets,
@@ -68,13 +73,13 @@ class TransportClientSocketPoolTest : public testing::Test {
   scoped_refptr<TransportSocketParams> CreateParamsForTCPFastOpen() {
     return new TransportSocketParams(
         HostPortPair("www.google.com", 80), false, OnHostResolutionCallback(),
-        TransportSocketParams::COMBINE_CONNECT_AND_WRITE_DESIRED);
+        TransportSocketParams::COMBINE_CONNECT_AND_WRITE_DESIRED, SocketTag());
   }
 
   int StartRequest(const std::string& group_name, RequestPriority priority) {
     scoped_refptr<TransportSocketParams> params(new TransportSocketParams(
         HostPortPair("www.google.com", 80), false, OnHostResolutionCallback(),
-        TransportSocketParams::COMBINE_CONNECT_AND_WRITE_DEFAULT));
+        TransportSocketParams::COMBINE_CONNECT_AND_WRITE_DEFAULT, SocketTag()));
     return test_base_.StartRequestUsingPool(
         &pool_, group_name, priority, ClientSocketPool::RespectLimits::ENABLED,
         params);
@@ -217,7 +222,7 @@ TEST_F(TransportClientSocketPoolTest, InitHostResolutionFailure) {
   HostPortPair host_port_pair("unresolvable.host.name", 80);
   scoped_refptr<TransportSocketParams> dest(new TransportSocketParams(
       host_port_pair, false, OnHostResolutionCallback(),
-      TransportSocketParams::COMBINE_CONNECT_AND_WRITE_DEFAULT));
+      TransportSocketParams::COMBINE_CONNECT_AND_WRITE_DEFAULT, SocketTag()));
   EXPECT_EQ(ERR_IO_PENDING,
             handle.Init("a", dest, kDefaultPriority,
                         ClientSocketPool::RespectLimits::ENABLED,
@@ -514,7 +519,8 @@ class RequestSocketCallback : public TestCompletionCallbackBase {
       within_callback_ = true;
       scoped_refptr<TransportSocketParams> dest(new TransportSocketParams(
           HostPortPair("www.google.com", 80), false, OnHostResolutionCallback(),
-          TransportSocketParams::COMBINE_CONNECT_AND_WRITE_DEFAULT));
+          TransportSocketParams::COMBINE_CONNECT_AND_WRITE_DEFAULT,
+          SocketTag()));
       int rv = handle_->Init("a", dest, LOWEST,
                              ClientSocketPool::RespectLimits::ENABLED,
                              callback(), pool_, NetLogWithSource());
@@ -535,7 +541,7 @@ TEST_F(TransportClientSocketPoolTest, RequestTwice) {
   RequestSocketCallback callback(&handle, &pool_);
   scoped_refptr<TransportSocketParams> dest(new TransportSocketParams(
       HostPortPair("www.google.com", 80), false, OnHostResolutionCallback(),
-      TransportSocketParams::COMBINE_CONNECT_AND_WRITE_DEFAULT));
+      TransportSocketParams::COMBINE_CONNECT_AND_WRITE_DEFAULT, SocketTag()));
   int rv =
       handle.Init("a", dest, LOWEST, ClientSocketPool::RespectLimits::ENABLED,
                   callback.callback(), &pool_, NetLogWithSource());
@@ -1142,6 +1148,93 @@ TEST_F(TransportClientSocketPoolTest,
   // Verify that TCP FastOpen was not turned on for the socket.
   EXPECT_FALSE(socket_data.IsUsingTCPFastOpen());
 }
+
+// Test that SocketTag passed into TransportClientSocketPool is applied to
+// returned sockets.
+#if defined(OS_ANDROID)
+TEST_F(TransportClientSocketPoolTest, Tag) {
+  // Start test server.
+  EmbeddedTestServer test_server;
+  test_server.AddDefaultHandlers(base::FilePath());
+  ASSERT_TRUE(test_server.Start());
+  AddressList addr_list;
+  ASSERT_TRUE(test_server.GetAddressList(&addr_list));
+
+  TransportClientSocketPool pool(
+      kMaxSockets, kMaxSocketsPerGroup, host_resolver_.get(),
+      ClientSocketFactory::GetDefaultFactory(), NULL, NULL);
+  TestCompletionCallback callback;
+  ClientSocketHandle handle;
+  int32_t tag_val1 = 0x12345678;
+  SocketTag tag1(SocketTag::UNSET_UID, tag_val1);
+  int32_t tag_val2 = 0x87654321;
+  SocketTag tag2(getuid(), tag_val2);
+
+  // Test socket is tagged before connected.
+  uint64_t old_traffic = GetTaggedBytes(tag_val1);
+  scoped_refptr<TransportSocketParams> params1(new TransportSocketParams(
+      HostPortPair::FromIPEndPoint(addr_list[0]), false,
+      OnHostResolutionCallback(),
+      TransportSocketParams::COMBINE_CONNECT_AND_WRITE_DEFAULT, tag1));
+  int rv =
+      handle.Init("a", params1, LOW, ClientSocketPool::RespectLimits::ENABLED,
+                  callback.callback(), &pool, NetLogWithSource());
+  EXPECT_THAT(rv, IsError(ERR_IO_PENDING));
+  EXPECT_THAT(callback.WaitForResult(), IsOk());
+  EXPECT_TRUE(handle.socket());
+  EXPECT_TRUE(handle.socket()->IsConnected());
+  EXPECT_GT(GetTaggedBytes(tag_val1), old_traffic);
+
+  // Test reused socket is retagged.
+  StreamSocket* socket = handle.socket();
+  handle.Reset();
+  old_traffic = GetTaggedBytes(tag_val2);
+  scoped_refptr<TransportSocketParams> params2(new TransportSocketParams(
+      HostPortPair::FromIPEndPoint(addr_list[0]), false,
+      OnHostResolutionCallback(),
+      TransportSocketParams::COMBINE_CONNECT_AND_WRITE_DEFAULT, tag2));
+  rv = handle.Init("a", params2, LOW, ClientSocketPool::RespectLimits::ENABLED,
+                   callback.callback(), &pool, NetLogWithSource());
+  EXPECT_THAT(rv, IsOk());
+  EXPECT_TRUE(handle.socket());
+  EXPECT_TRUE(handle.socket()->IsConnected());
+  EXPECT_TRUE(handle.socket() == socket);
+  const char kRequest1[] = "GET /";
+  scoped_refptr<IOBufferWithSize> write_buffer1(
+      new IOBufferWithSize(strlen(kRequest1)));
+  memmove(write_buffer1->data(), kRequest1, strlen(kRequest1));
+  TestCompletionCallback write_callback1;
+  EXPECT_EQ(handle.socket()->Write(write_buffer1.get(), strlen(kRequest1),
+                                   write_callback1.callback(),
+                                   TRAFFIC_ANNOTATION_FOR_TESTS),
+            (int)strlen(kRequest1));
+  EXPECT_GT(GetTaggedBytes(tag_val2), old_traffic);
+  // Disconnect socket to prevent reuse.
+  handle.socket()->Disconnect();
+  handle.Reset();
+
+  // Test connect jobs that are orphaned and then adopted, appropriately apply
+  // new tag. Request socket with |tag1|.
+  rv = handle.Init("a", params1, LOW, ClientSocketPool::RespectLimits::ENABLED,
+                   callback.callback(), &pool, NetLogWithSource());
+  EXPECT_THAT(rv, IsError(ERR_IO_PENDING));
+  // Abort and request socket with |tag2|.
+  handle.Reset();
+  rv = handle.Init("a", params2, LOW, ClientSocketPool::RespectLimits::ENABLED,
+                   callback.callback(), &pool, NetLogWithSource());
+  EXPECT_THAT(rv, IsError(ERR_IO_PENDING));
+  EXPECT_THAT(callback.WaitForResult(), IsOk());
+  EXPECT_TRUE(handle.socket());
+  EXPECT_TRUE(handle.socket()->IsConnected());
+  // Verify socket has |tag2| applied.
+  old_traffic = GetTaggedBytes(tag_val2);
+  EXPECT_EQ(handle.socket()->Write(write_buffer1.get(), strlen(kRequest1),
+                                   write_callback1.callback(),
+                                   TRAFFIC_ANNOTATION_FOR_TESTS),
+            (int)strlen(kRequest1));
+  EXPECT_GT(GetTaggedBytes(tag_val2), old_traffic);
+}
+#endif
 
 }  // namespace
 

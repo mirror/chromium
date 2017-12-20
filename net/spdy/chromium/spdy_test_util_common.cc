@@ -22,6 +22,7 @@
 #include "net/log/net_log_with_source.h"
 #include "net/socket/client_socket_handle.h"
 #include "net/socket/next_proto.h"
+#include "net/socket/socket_tag.h"
 #include "net/socket/ssl_client_socket.h"
 #include "net/socket/transport_client_socket_pool.h"
 #include "net/spdy/chromium/buffered_spdy_framer.h"
@@ -312,7 +313,7 @@ SpdySessionDependencies::SpdySessionDependencies(
       ct_policy_enforcer(std::make_unique<CTPolicyEnforcer>()),
       proxy_service(std::move(proxy_service)),
       ssl_config_service(base::MakeRefCounted<SSLConfigServiceDefaults>()),
-      socket_factory(std::make_unique<MockClientSocketFactory>()),
+      socket_factory(std::make_unique<MockTaggingClientSocketFactory>()),
       http_auth_handler_factory(
           HttpAuthHandlerFactory::CreateDefault(host_resolver.get())),
       http_server_properties(std::make_unique<HttpServerPropertiesImpl>()),
@@ -479,7 +480,7 @@ base::WeakPtr<SpdySession> CreateSpdySessionHelper(
   auto transport_params = base::MakeRefCounted<TransportSocketParams>(
       key.host_port_pair(), /* disable_resolver_cache = */ false,
       OnHostResolutionCallback(),
-      TransportSocketParams::COMBINE_CONNECT_AND_WRITE_DEFAULT);
+      TransportSocketParams::COMBINE_CONNECT_AND_WRITE_DEFAULT, SocketTag());
 
   auto connection = std::make_unique<ClientSocketHandle>();
   TestCompletionCallback callback;
