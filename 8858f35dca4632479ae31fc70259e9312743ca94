@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8d7159f1_92fa3ab7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 15
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-12-20T06:14:45Z",
+      "side": 1,
+      "message": "I see. I believe the implementation of PendingWallpaper can\u0027t handle this case. Since SetOnlineWallpaper and SetCustomWallpaper both have ImageSkia as parameter, so the decoding already finished by the time it reaches wallpaper manager. So in theory, the final wallpaper is always the one that finished decoding last, not the one that the user selected last. If PendingWallpaper starts rate limiting before decoding starts, then it can solve your use case.\n\nI just tried the wallpaper picker and it has progress bar for each image, it seems that it\u0027s able to always set the last selected wallpaper.. and I do plan to move the decoding code from wallpaper_api/priate_api to WallpaperController, so that we can implement a new PendingWallpaper that starts to work before decoding, if needed.",
+      "parentUuid": "433b73e6_30f9fee3",
+      "revId": "8858f35dca4632479ae31fc70259e9312743ca94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fb8c726a_8e1b05b3",
         "filename": "ash/wallpaper/wallpaper_controller.cc",
         "patchSetId": 15
@@ -33,6 +51,24 @@
       "revId": "8858f35dca4632479ae31fc70259e9312743ca94",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12de4d3d_c36c4e55",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 1155,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-12-20T06:14:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fb8c726a_8e1b05b3",
+      "revId": "8858f35dca4632479ae31fc70259e9312743ca94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "8e032a19_dbe06702",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 1161,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-12-20T06:14:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4f041ecc_bc929a5e",
+      "revId": "8858f35dca4632479ae31fc70259e9312743ca94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c0f924fd_30ce7b8f",
         "filename": "ash/wallpaper/wallpaper_controller.cc",
         "patchSetId": 15
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "8c4ae7e1_0495757a",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 1455,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-12-20T06:14:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c0f924fd_30ce7b8f",
+      "revId": "8858f35dca4632479ae31fc70259e9312743ca94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "00881f94_934d8fd3",
         "filename": "ash/wallpaper/wallpaper_controller.cc",
         "patchSetId": 15
@@ -81,6 +153,24 @@
       "writtenOn": "2017-12-19T19:54:08Z",
       "side": 1,
       "message": "it seems this if can be safely removed",
+      "revId": "8858f35dca4632479ae31fc70259e9312743ca94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d11ff77_9516e012",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 1495,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-12-20T06:14:45Z",
+      "side": 1,
+      "message": "Have to leave another TODO.. this part seems to handle the case of (info.location !\u003d empty \u0026\u0026 info.type\u003dDEFAULT). (e.g. after OnPolicyCleared() is called https://cs.chromium.org/chromium/src/chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.cc?q\u003donpolicycleared\u0026sq\u003dpackage:chromium\u0026dr\u003dCSs\u0026l\u003d1015) This is strange to me, I think OnPolicyCleared should call RemoveUserWallpaper, instead of just modifying the wallpaper type, without changing info.location. (The old info.location is not useful, since even if a new policy is set, OnPolicyFetched will be called again to fetch a new location).\n\nI need to investigate when refactoring this part.",
+      "parentUuid": "00881f94_934d8fd3",
       "revId": "8858f35dca4632479ae31fc70259e9312743ca94",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
