@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e77f8997_4978b0eb",
+        "filename": "content/renderer/loader/resource_dispatcher.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-20T07:41:18Z",
+      "side": 1,
+      "message": "nit: please document \u0027timeout\u0027 (especially about the unit, or rename the variable to make it clearer)",
+      "revId": "073f92de29e73ff978174ee51506b82183b09051",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b5f4a1b_341fae11",
+        "filename": "content/renderer/loader/resource_dispatcher.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-20T07:41:18Z",
+      "side": 1,
+      "message": "Please document this.",
+      "revId": "073f92de29e73ff978174ee51506b82183b09051",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64016260_8e9b03ef",
+        "filename": "content/renderer/loader/sync_load_context.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-20T07:41:18Z",
+      "side": 1,
+      "message": "FromSecondsD ?",
+      "revId": "073f92de29e73ff978174ee51506b82183b09051",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "808bc4cd_f414eb0d",
+        "filename": "content/renderer/loader/sync_load_response.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-20T07:41:18Z",
+      "side": 1,
+      "message": "nit: maybe save the dup\u0027ed lines by writing\n\n*this \u003d std::move(other)",
+      "revId": "073f92de29e73ff978174ee51506b82183b09051",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3763600f_d294fc85",
+        "filename": "content/renderer/loader/sync_load_response.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-20T07:41:18Z",
+      "side": 1,
+      "message": "nit: maybe this comment is not that informative (can remove)",
+      "revId": "073f92de29e73ff978174ee51506b82183b09051",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "168a82ae_3d9fae75",
+        "filename": "third_party/WebKit/public/platform/WebWorkerFetchContext.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-20T07:41:18Z",
+      "side": 1,
+      "message": "I think this needs better documentation about lifetime as it can\u0027t run after the context is destructed.\n\nAlso: it feels it\u0027s fine to just return a base::WaitableEvent* and let the client to call Signal(), which is a somewhat common pattern and understandable.",
+      "revId": "073f92de29e73ff978174ee51506b82183b09051",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
