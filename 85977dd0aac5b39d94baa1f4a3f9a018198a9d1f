@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ccd9371b_7dfb0217",
+        "filename": "content/browser/gpu/gpu_data_manager_impl_private.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-12-20T22:58:55Z",
+      "side": 1,
+      "message": "nit: should we add a reason if we return false?",
+      "revId": "85977dd0aac5b39d94baa1f4a3f9a018198a9d1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "358bc7a3_b57ee095",
+        "filename": "gpu/config/gpu_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-12-20T22:58:55Z",
+      "side": 1,
+      "message": "As mentioned, at this point we can probably treat this case just like other drivers (i.e. add blacklist entry for video decode)",
+      "revId": "85977dd0aac5b39d94baa1f4a3f9a018198a9d1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8f4a18a_7ea44d75",
+        "filename": "gpu/ipc/service/gpu_init.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-12-20T22:58:55Z",
+      "side": 1,
+      "message": "Should we do this also in the case where use_swiftshader was set on l.200? Right now we would skip this. I suggest moving this to l.248, but move the block on l.242 after that.",
+      "revId": "85977dd0aac5b39d94baa1f4a3f9a018198a9d1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83e44fb7_9813850b",
+        "filename": "gpu/ipc/service/gpu_init.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-12-20T22:58:55Z",
+      "side": 1,
+      "message": "Do we care about swiftshader-for-webgl in this case (in-process)?",
+      "revId": "85977dd0aac5b39d94baa1f4a3f9a018198a9d1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
