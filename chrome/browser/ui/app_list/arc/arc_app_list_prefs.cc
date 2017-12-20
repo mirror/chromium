@@ -76,13 +76,9 @@ class ScopedArcPrefUpdate : public DictionaryPrefUpdate {
 
   // DictionaryPrefUpdate overrides:
   base::DictionaryValue* Get() override {
-    base::DictionaryValue* dict = DictionaryPrefUpdate::Get();
-    base::Value* dict_item =
-        dict->FindKeyOfType(id_, base::Value::Type::DICTIONARY);
-    if (!dict_item) {
-      dict_item = dict->SetKey(id_, base::Value(base::Value::Type::DICTIONARY));
-    }
-    return static_cast<base::DictionaryValue*>(dict_item);
+    return static_cast<base::DictionaryValue*>(
+        &DictionaryPrefUpdate::Get()->FindOrCreateKeyOfType(
+            id_, base::Value::Type::DICTIONARY));
   }
 
  private:

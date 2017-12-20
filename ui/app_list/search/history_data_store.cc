@@ -202,17 +202,8 @@ base::Value* HistoryDataStore::GetAssociationDict() {
 }
 
 base::Value* HistoryDataStore::GetEntryDict(const std::string& query) {
-  base::Value* assoc_dict = GetAssociationDict();
-
-  base::Value* entry_dict =
-      assoc_dict->FindKeyOfType(query, base::Value::Type::DICTIONARY);
-  if (!entry_dict) {
-    // Creates one if none exists.
-    entry_dict =
-        assoc_dict->SetKey(query, base::Value(base::Value::Type::DICTIONARY));
-  }
-
-  return entry_dict;
+  return &GetAssociationDict()->FindOrCreateKeyOfType(
+      query, base::Value::Type::DICTIONARY);
 }
 
 void HistoryDataStore::OnDictionaryLoadedCallback(

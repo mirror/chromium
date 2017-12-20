@@ -291,12 +291,8 @@ void PasswordProtectionService::CacheVerdict(
   if (trigger_type == LoginReputationClientRequest::UNFAMILIAR_LOGIN_PAGE) {
     // All UNFAMILIAR_LOGIN_PAGE verdicts (a.k.a password on focus ping)
     // are cached under |kPasswordOnFocusCacheKey|.
-    verdict_dictionary = cache_dictionary->FindKeyOfType(
+    verdict_dictionary = &cache_dictionary->FindOrCreateKeyOfType(
         kPasswordOnFocusCacheKey, base::Value::Type::DICTIONARY);
-    if (!verdict_dictionary) {
-      verdict_dictionary = cache_dictionary->SetKey(
-          kPasswordOnFocusCacheKey, base::Value(base::Value::Type::DICTIONARY));
-    }
   } else {
     verdict_dictionary = cache_dictionary.get();
   }

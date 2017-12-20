@@ -173,26 +173,21 @@ void UpdateSyncItemInLocalStorage(
     const AppListSyncableService::SyncItem* sync_item) {
   DictionaryPrefUpdate pref_update(profile->GetPrefs(),
                                    prefs::kAppListLocalState);
-  base::Value* dict_item = pref_update->FindKeyOfType(
+  base::Value& dict_item = pref_update->FindOrCreateKeyOfType(
       sync_item->item_id, base::Value::Type::DICTIONARY);
-  if (!dict_item) {
-    dict_item = pref_update->SetKey(sync_item->item_id,
-                                    base::Value(base::Value::Type::DICTIONARY));
-  }
-
-  dict_item->SetKey(kNameKey, base::Value(sync_item->item_name));
-  dict_item->SetKey(kParentIdKey, base::Value(sync_item->parent_id));
-  dict_item->SetKey(kPositionKey,
-                    base::Value(sync_item->item_ordinal.IsValid()
-                                    ? sync_item->item_ordinal.ToInternalValue()
-                                    : std::string()));
-  dict_item->SetKey(
+  dict_item.SetKey(kNameKey, base::Value(sync_item->item_name));
+  dict_item.SetKey(kParentIdKey, base::Value(sync_item->parent_id));
+  dict_item.SetKey(kPositionKey,
+                   base::Value(sync_item->item_ordinal.IsValid()
+                                   ? sync_item->item_ordinal.ToInternalValue()
+                                   : std::string()));
+  dict_item.SetKey(
       kPinPositionKey,
       base::Value(sync_item->item_pin_ordinal.IsValid()
                       ? sync_item->item_pin_ordinal.ToInternalValue()
                       : std::string()));
-  dict_item->SetKey(kTypeKey,
-                    base::Value(static_cast<int>(sync_item->item_type)));
+  dict_item.SetKey(kTypeKey,
+                   base::Value(static_cast<int>(sync_item->item_type)));
 }
 
 bool IsDefaultSyncItem(const AppListSyncableService::SyncItem* sync_item) {
