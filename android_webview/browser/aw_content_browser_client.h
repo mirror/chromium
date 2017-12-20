@@ -160,6 +160,8 @@ class AwContentBrowserClient : public content::ContentBrowserClient {
  private:
   safe_browsing::UrlCheckerDelegate* GetSafeBrowsingUrlCheckerDelegate();
 
+  std::unique_ptr<net::NetLog> net_log_;
+
   // Android WebView currently has a single global (non-off-the-record) browser
   // context.
   std::unique_ptr<AwBrowserContext> browser_context_;
