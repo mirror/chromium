@@ -25,8 +25,7 @@
 namespace grpc_support {
 
 const char kTestServerDomain[] = "example.com";
-// This must match the certificate used (quic_test.example.com.crt and
-// quic_test.example.com.key.pkcs8).
+// This must match the certificate used (quic-chain.pem and quic-cert.key).
 const char kTestServerHost[] = "test.example.com";
 const char kTestServerUrl[] = "https://test.example.com/hello.txt";
 
