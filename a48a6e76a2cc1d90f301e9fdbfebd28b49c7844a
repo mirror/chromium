@@ -22,6 +22,30 @@
       "revId": "a48a6e76a2cc1d90f301e9fdbfebd28b49c7844a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "184f5948_83a95ce5",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_data_use_observer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-12-20T22:53:28Z",
+      "side": 1,
+      "message": "Doesn\u0027t happen in Android kills browser. Mentioned in doc but I guess your comment reveals I should mention here in the code.",
+      "parentUuid": "ec8a3a9e_a98a2868",
+      "range": {
+        "startLine": 147,
+        "startChar": 40,
+        "endLine": 147,
+        "endChar": 59
+      },
+      "revId": "a48a6e76a2cc1d90f301e9fdbfebd28b49c7844a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
