@@ -51,6 +51,7 @@
 #include "ipc/ipc_listener.h"
 #include "mojo/public/cpp/bindings/binding.h"
 #include "services/viz/public/interfaces/compositing/compositor_frame_sink.mojom.h"
+#include "services/viz/public/interfaces/hit_test/input_target_client.mojom.h"
 #include "third_party/WebKit/public/platform/WebDisplayMode.h"
 #include "ui/base/ime/text_input_mode.h"
 #include "ui/base/ime/text_input_type.h"
@@ -619,6 +620,9 @@ class CONTENT_EXPORT RenderWidgetHostImpl
       mojom::WidgetInputHandlerAssociatedPtr widget_input_handler,
       mojom::WidgetInputHandlerHostRequest host_request);
   void SetWidget(mojom::WidgetPtr widget);
+
+  void SetInputTargetClient(
+      viz::mojom::InputTargetClientPtr input_target_client);
 
   // InputRouterImplClient overrides.
   mojom::WidgetInputHandler* GetWidgetInputHandler() override;
