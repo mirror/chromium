@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "02f21df4_d6ee4d66",
+        "filename": "content/browser/network_service_restart_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-20T21:46:26Z",
+      "side": 1,
+      "message": "Ah, that\u0027s right.  So we\u0027ll need to post a task from the IO thread to the UI thread to quit SimpleLoaderHelper\u0027s runloop.\n\nThree options occur to me:\n* Have SimpleURLLoaderTestHelper record the message loop on which it was created, and always post the RunLoops QuicClosure to that message loop.\n* Have SimpleURLLoaderTestHelper always quit the message loop on the UI thread (And DCHECK that WaitForCallback is always called there)\n* Make SimpleLoaderHelper have an optional method to set the loop to quit the runloop on.\n\nI suppose there are other ways that may be easier on consumers, but I think those three are the simplest.  I\u0027d suggest the third, just to make it explicit what\u0027s going on.",
+      "parentUuid": "ecf7bfc9_43dc0f50",
+      "range": {
+        "startLine": 72,
+        "startChar": 23,
+        "endLine": 72,
+        "endChar": 38
+      },
+      "revId": "05de753b60fdb5095b893701ee0561267d83413a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c6e23850_a58db8ec",
         "filename": "content/browser/network_service_restart_browsertest.cc",
         "patchSetId": 5
