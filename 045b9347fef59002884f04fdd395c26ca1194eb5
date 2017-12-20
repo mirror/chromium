@@ -16,6 +16,24 @@
       "revId": "045b9347fef59002884f04fdd395c26ca1194eb5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ae0dc0b_1b6db573",
+        "filename": "chrome/browser/resources/chromeos/select_to_speak/closure_shim.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2017-12-20T23:02:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d60ddce0_994b0707",
+      "revId": "045b9347fef59002884f04fdd395c26ca1194eb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
