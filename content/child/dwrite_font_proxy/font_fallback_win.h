@@ -14,7 +14,9 @@
 
 #include "content/child/dwrite_font_proxy/dwrite_font_proxy_win.h"
 #include "content/common/content_export.h"
+#include "content/common/dwrite_font_proxy.mojom.h"
 #include "ipc/ipc_sender.h"
+#include "services/service_manager/public/cpp/connector.h"
 
 namespace content {
 
@@ -27,8 +29,7 @@ class FontFallback
  public:
   // Factory method to avoid exporting the class and all it derives from.
   static CONTENT_EXPORT HRESULT Create(FontFallback** font_fallback_out,
-                                       DWriteFontCollectionProxy* collection,
-                                       IPC::Sender* sender);
+                                       DWriteFontCollectionProxy* collection);
 
   // Use Create() to construct these objects. Direct calls to the constructor
   // are an error - it is only public because a WRL helper function creates the
@@ -49,10 +50,10 @@ class FontFallback
                 FLOAT* scale) override;
 
   HRESULT STDMETHODCALLTYPE
-  RuntimeClassInitialize(DWriteFontCollectionProxy* collection,
-                         IPC::Sender* sender_override);
+  RuntimeClassInitialize(DWriteFontCollectionProxy* collection);
 
-  void SetSenderOverride(IPC::Sender* sender) { sender_override_ = sender; }
+  // XXX: Fix multithread support...
+  // void SetSenderOverride(IPC::Sender* sender) { sender_override_ = sender; }
 
  protected:
   ~FontFallback() override;
@@ -69,7 +70,8 @@ class FontFallback
                        const wchar_t* base_family_name);
 
  private:
-  IPC::Sender* sender_override_;
+  mojom::DWriteFontProxy& GetFontProxy();
+
   Microsoft::WRL::ComPtr<DWriteFontCollectionProxy> collection_;
 
   // |fallback_family_cache_| keeps a mapping from base family name to a list

@@ -1,0 +1,55 @@
+// Copyright 2016 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+module content.mojom;
+
+import "mojo/common/file.mojom";
+import "mojo/common/file_path.mojom";
+import "mojo/common/string16.mojom";
+
+struct DWriteStringPair {
+  mojo.common.mojom.String16 first;
+  mojo.common.mojom.String16 second;
+};
+
+struct DWriteFontStyle {
+  uint16 font_weight;
+  uint8 font_slant;
+  uint8 font_stretch;
+};
+
+struct MapCharactersResult {
+  uint32 family_index;
+  mojo.common.mojom.String16 family_name;
+  uint32 mapped_length;
+  float scale;
+  DWriteFontStyle font_style;
+};
+
+interface DWriteFontProxy {
+  [Sync]
+  FindFamily(
+      mojo.common.mojom.String16 family_name) => (
+      uint32 out_index);
+  [Sync]
+  GetFamilyCount() => (
+      uint32 out_count);
+  [Sync]
+  GetFamilyNames(
+      uint32 family_index) => (
+      array<DWriteStringPair> out_family_names);
+  [Sync]
+  GetFontFiles(
+      uint32 family_index) => (
+      array<mojo.common.mojom.FilePath> file_paths,
+      array<mojo.common.mojom.File> file_handles);
+  [Sync]
+  MapCharacters(
+      mojo.common.mojom.String16 text,
+      DWriteFontStyle font_style,
+      mojo.common.mojom.String16 locale_name,
+      uint32 reading_direction,
+      mojo.common.mojom.String16 base_family_name) => (
+      MapCharactersResult out);
+};
