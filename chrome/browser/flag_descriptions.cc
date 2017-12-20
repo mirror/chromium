@@ -276,6 +276,11 @@ const char kEnableAutofillCreditCardBankNameDisplayName[] =
 const char kEnableAutofillCreditCardBankNameDisplayDescription[] =
     "If enabled, displays the issuer bank name of a credit card in autofill.";
 
+const char kEnableAutofillCreditCardGooglePayBrandingName[] =
+    "Show Google Pay logo in credit card autofill.";
+const char kEnableAutofillCreditCardGooglePayBrandingDescription[] =
+    "If enabled, shows Google Pay logo in autofill dropdown of credit cards.";
+
 const char kEnableAutofillCreditCardLastUsedDateDisplayName[] =
     "Display the last used date of a credit card in autofill.";
 const char kEnableAutofillCreditCardLastUsedDateDisplayDescription[] =

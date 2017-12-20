@@ -34,6 +34,8 @@ const base::Feature kAutofillScanCardholderName{
     "AutofillScanCardholderName", base::FEATURE_DISABLED_BY_DEFAULT};
 const base::Feature kAutofillCreditCardBankNameDisplay{
     "AutofillCreditCardBankNameDisplay", base::FEATURE_DISABLED_BY_DEFAULT};
+const base::Feature kAutofillCreditCardGooglePayBranding{
+    "AutofillCreditCardGooglePayBranding", base::FEATURE_DISABLED_BY_DEFAULT};
 const base::Feature kAutofillCreditCardAblationExperiment{
     "AutofillCreditCardAblationExperiment", base::FEATURE_DISABLED_BY_DEFAULT};
 const base::Feature kAutofillCreditCardPopupLayout{
@@ -134,6 +136,10 @@ bool IsAutofillCreditCardLastUsedDateDisplayExperimentEnabled() {
 
 bool IsAutofillCreditCardBankNameDisplayExperimentEnabled() {
   return base::FeatureList::IsEnabled(kAutofillCreditCardBankNameDisplay);
+}
+
+bool ShowGooglePayLogoInAutofillCreditCard() {
+  return base::FeatureList::IsEnabled(kAutofillCreditCardGooglePayBranding);
 }
 
 // |GetCreditCardPopupParameterUintValue| returns 0 if experiment parameter is
