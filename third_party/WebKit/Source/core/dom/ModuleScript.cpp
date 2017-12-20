@@ -76,8 +76,7 @@ ModuleScript* ModuleScript::Create(const String& source_text,
     // TODO(kouhei): Cache the url here instead of issuing
     // ResolveModuleSpecifier later again in ModuleTreeLinker.
     String failure_reason;
-    if (Modulator::ResolveModuleSpecifier(requested.specifier, base_url,
-                                          &failure_reason)
+    if (script->ResolveModuleSpecifier(requested.specifier, &failure_reason)
             .IsValid())
       continue;
 
@@ -197,6 +196,18 @@ ScriptValue ModuleScript::CreateErrorToRethrow() const {
   ScriptValue error(script_state, error_to_rethrow_.NewLocal(isolate));
   DCHECK(!error.IsEmpty());
   return error;
+}
+
+KURL ModuleScript::ResolveModuleSpecifier(const String& module_request,
+                                          String* failure_reason) {
+  auto found = resolved_specifiers_.find(module_request);
+  if (found != resolved_specifiers_.end())
+    return found->value;
+  KURL url = Modulator::ResolveModuleSpecifier(module_request, base_url_,
+                                               failure_reason);
+  if (url.IsValid())
+    resolved_specifiers_.insert(module_request, url);
+  return url;
 }
 
 void ModuleScript::Trace(blink::Visitor* visitor) {
