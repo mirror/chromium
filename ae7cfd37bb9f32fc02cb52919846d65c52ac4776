@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1ea05951_51d8f278",
+        "filename": "base/test/launcher/test_results_tracker.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 449,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-12-20T17:37:29Z",
+      "side": 1,
+      "message": "nit: The |size| parameter is an |int|.",
+      "range": {
+        "startLine": 449,
+        "startChar": 44,
+        "endLine": 449,
+        "endChar": 55
+      },
+      "revId": "ae7cfd37bb9f32fc02cb52919846d65c52ac4776",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8188a83_bf5bf7bf",
+        "filename": "base/test/launcher/test_results_tracker.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 450,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-12-20T17:37:29Z",
+      "side": 1,
+      "message": "nit: This should be |int|, to match the return value of WriteAtCurrentPos().",
+      "range": {
+        "startLine": 450,
+        "startChar": 18,
+        "endLine": 450,
+        "endChar": 25
+      },
+      "revId": "ae7cfd37bb9f32fc02cb52919846d65c52ac4776",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
