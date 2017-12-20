@@ -32,67 +32,82 @@ CSSValueList* CssValueListForPropertyID(CSSPropertyID property_id) {
   }
 }
 
-const CSSValue* StyleValueToCSSValue(CSSPropertyID property_id,
+const CSSValue* StyleValueToCSSValue(const CSSProperty& property,
                                      const CSSStyleValue& style_value,
                                      SecureContextMode secure_context_mode) {
+  const CSSPropertyID property_id = property.PropertyID();
   if (!CSSOMTypes::PropertyCanTake(property_id, style_value))
     return nullptr;
   return style_value.ToCSSValueWithProperty(property_id, secure_context_mode);
 }
 
-const CSSValue* CoerceStyleValuesOrStringsToCSSValues(
-    CSSPropertyID property_id,
+const CSSValue* CoerceStyleValueOrString(
+    const CSSProperty& property,
+    const CSSStyleValueOrString& value,
+    const ExecutionContext& execution_context) {
+  DCHECK(!property.IsRepeated());
+
+  if (value.IsCSSStyleValue()) {
+    if (!value.GetAsCSSStyleValue())
+      return nullptr;
+
+    return StyleValueToCSSValue(property, *value.GetAsCSSStyleValue(),
+                                execution_context.GetSecureContextMode());
+  } else {
+    DCHECK(value.IsString());
+    const auto values = StyleValueFactory::FromString(
+        property.PropertyID(), value.GetAsString(),
+        CSSParserContext::Create(execution_context));
+    DCHECK_NE(values.size(), 1U);
+
+    return StyleValueToCSSValue(property, *values[0],
+                                execution_context.GetSecureContextMode());
+  }
+}
+
+const CSSValue* CoerceStyleValuesOrStrings(
+    const CSSProperty& property,
     const HeapVector<CSSStyleValueOrString>& values,
-    const CSSParserContext* parser_context) {
+    const ExecutionContext& execution_context) {
+  DCHECK(property.IsRepeated());
   DCHECK(!values.IsEmpty());
 
-  const bool is_repeated = CSSProperty::Get(property_id).IsRepeated();
-  CSSValueList* result = nullptr;
-  if (is_repeated) {
-    result = CssValueListForPropertyID(property_id);
-  } else {
-    result = CSSValueList::CreateCommaSeparated();
-  }
+  const CSSParserContext* parser_context = nullptr;
 
+  HeapVector<Member<const CSSValue>> css_values;
   for (const auto& value : values) {
     if (value.IsCSSStyleValue()) {
       if (!value.GetAsCSSStyleValue())
         return nullptr;
 
-      const CSSValue* css_value =
-          StyleValueToCSSValue(property_id, *value.GetAsCSSStyleValue(),
-                               parser_context->GetSecureContextMode());
-      if (!css_value)
-        return nullptr;
-
-      result->Append(*css_value);
+      css_values.push_back(
+          StyleValueToCSSValue(property, *value.GetAsCSSStyleValue(),
+                               parser_context->GetSecureContextMode()));
     } else {
       DCHECK(value.IsString());
+      if (!parser_context)
+        parser_context = CSSParserContext::Create(execution_context);
+
       const auto subvalues = StyleValueFactory::FromString(
-          property_id, value.GetAsString(), parser_context);
+          property.PropertyID(), value.GetAsString(), parser_context);
       if (subvalues.IsEmpty())
         return nullptr;
 
       for (const auto& subvalue : subvalues) {
-        const CSSValue* css_value = StyleValueToCSSValue(
-            property_id, *subvalue, parser_context->GetSecureContextMode());
-        if (!css_value)
-          return nullptr;
-
-        result->Append(*css_value);
+        css_values.push_back(StyleValueToCSSValue(
+            property, *subvalue, execution_context.GetSecureContextMode()));
       }
     }
   }
 
-  const bool contains_wide_keyword =
-      std::any_of(result->begin(), result->end(),
-                  [](const auto& value) { return value->IsCSSWideKeyword(); });
-  if (!is_repeated || contains_wide_keyword) {
-    if (result->length() > 1)
+  CSSValueList* result = CssValueListForPropertyID(property.PropertyID());
+  for (const auto& css_value : css_values) {
+    if (!css_value)
       return nullptr;
+    if (css_value->IsCSSWideKeyword())
+      return css_values.size() == 1U ? css_value : nullptr;
 
-    DCHECK_NE(result->length(), 0U);
-    return &result->Item(0);
+    result->Append(*css_value);
   }
 
   return result;
@@ -115,8 +130,20 @@ void StylePropertyMap::set(const ExecutionContext* execution_context,
     return;
   }
 
-  const CSSValue* result = CoerceStyleValuesOrStringsToCSSValues(
-      property_id, values, CSSParserContext::Create(*execution_context));
+  const CSSProperty& property = CSSProperty::Get(property_id);
+
+  const CSSValue* result = nullptr;
+  if (property.IsRepeated()) {
+    result = CoerceStyleValuesOrStrings(property, values, *execution_context);
+  } else {
+    if (values.size() != 1U) {
+      exception_state.ThrowTypeError("Invalid type for property");
+      return;
+    }
+
+    result = CoerceStyleValueOrString(property, values[0], *execution_context);
+  }
+
   if (!result) {
     exception_state.ThrowTypeError("Invalid type for property");
     return;
@@ -140,7 +167,8 @@ void StylePropertyMap::append(const ExecutionContext* execution_context,
     return;
   }
 
-  if (!CSSProperty::Get(property_id).IsRepeated()) {
+  const CSSProperty& property = CSSProperty::Get(property_id);
+  if (!property.IsRepeated()) {
     exception_state.ThrowTypeError("Property does not support multiple values");
     return;
   }
@@ -153,8 +181,8 @@ void StylePropertyMap::append(const ExecutionContext* execution_context,
     current_value = CssValueListForPropertyID(property_id);
   }
 
-  const CSSValue* result = CoerceStyleValuesOrStringsToCSSValues(
-      property_id, values, CSSParserContext::Create(*execution_context));
+  const CSSValue* result =
+      CoerceStyleValuesOrStrings(property, values, *execution_context);
   if (!result) {
     exception_state.ThrowTypeError("Invalid type for property");
     return;
