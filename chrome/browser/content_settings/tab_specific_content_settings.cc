@@ -103,6 +103,10 @@ TabSpecificContentSettings::TabSpecificContentSettings(WebContents* tab)
           HostContentSettingsMapFactory::GetForProfile(
               Profile::FromBrowserContext(tab->GetBrowserContext())),
           CONTENT_SETTINGS_TYPE_MIDI_SYSEX),
+      sensors_usages_state_(
+          HostContentSettingsMapFactory::GetForProfile(
+              Profile::FromBrowserContext(tab->GetBrowserContext())),
+          CONTENT_SETTINGS_TYPE_SENSORS),
       pending_protocol_handler_(ProtocolHandler::EmptyProtocolHandler()),
       previous_protocol_handler_(ProtocolHandler::EmptyProtocolHandler()),
       pending_protocol_handler_setting_(CONTENT_SETTING_DEFAULT),
@@ -269,7 +273,8 @@ bool TabSpecificContentSettings::IsContentBlocked(
       content_type == CONTENT_SETTINGS_TYPE_PPAPI_BROKER ||
       content_type == CONTENT_SETTINGS_TYPE_MIDI_SYSEX ||
       content_type == CONTENT_SETTINGS_TYPE_ADS ||
-      content_type == CONTENT_SETTINGS_TYPE_SOUND) {
+      content_type == CONTENT_SETTINGS_TYPE_SOUND ||
+      content_type == CONTENT_SETTINGS_TYPE_SENSORS) {
     const auto& it = content_settings_status_.find(content_type);
     if (it != content_settings_status_.end())
       return it->second.blocked;
@@ -302,7 +307,8 @@ bool TabSpecificContentSettings::IsContentAllowed(
       content_type != CONTENT_SETTINGS_TYPE_MEDIASTREAM_MIC &&
       content_type != CONTENT_SETTINGS_TYPE_MEDIASTREAM_CAMERA &&
       content_type != CONTENT_SETTINGS_TYPE_PPAPI_BROKER &&
-      content_type != CONTENT_SETTINGS_TYPE_MIDI_SYSEX) {
+      content_type != CONTENT_SETTINGS_TYPE_MIDI_SYSEX &&
+      content_type != CONTENT_SETTINGS_TYPE_SENSORS) {
     return false;
   }
 
@@ -677,6 +683,18 @@ void TabSpecificContentSettings::OnMidiSysExAccessBlocked(
   OnContentBlocked(CONTENT_SETTINGS_TYPE_MIDI_SYSEX);
 }
 
+void TabSpecificContentSettings::OnSensorsAccessed(
+    const GURL& requesting_origin) {
+  sensors_usages_state_.OnPermissionSet(requesting_origin, true);
+  OnContentAllowed(CONTENT_SETTINGS_TYPE_SENSORS);
+}
+
+void TabSpecificContentSettings::OnSensorsAccessBlocked(
+    const GURL& requesting_origin) {
+  sensors_usages_state_.OnPermissionSet(requesting_origin, false);
+  OnContentBlocked(CONTENT_SETTINGS_TYPE_SENSORS);
+}
+
 void TabSpecificContentSettings::
 ClearContentSettingsExceptForNavigationRelatedSettings() {
   for (auto& status : content_settings_status_) {
@@ -839,6 +857,7 @@ void TabSpecificContentSettings::DidStartNavigation(
   ClearGeolocationContentSettings();
   ClearMidiContentSettings();
   ClearPendingProtocolHandler();
+  ClearSensorsContentSettings();
   ClearContentSettingsChangedViaPageInfo();
 }
 
@@ -854,6 +873,7 @@ void TabSpecificContentSettings::DidFinishNavigation(
   ClearContentSettingsExceptForNavigationRelatedSettings();
   GeolocationDidNavigate(navigation_handle);
   MidiDidNavigate(navigation_handle);
+  SensorsDidNavigate(navigation_handle);
 
   if (web_contents()->GetVisibleURL().SchemeIsHTTPOrHTTPS()) {
     content_settings::RecordPluginsAction(
@@ -895,6 +915,10 @@ void TabSpecificContentSettings::ClearMidiContentSettings() {
   midi_usages_state_.ClearStateMap();
 }
 
+void TabSpecificContentSettings::ClearSensorsContentSettings() {
+  sensors_usages_state_.ClearStateMap();
+}
+
 void TabSpecificContentSettings::ClearContentSettingsChangedViaPageInfo() {
   content_settings_changed_via_page_info_.clear();
 }
@@ -909,6 +933,12 @@ void TabSpecificContentSettings::MidiDidNavigate(
     content::NavigationHandle* navigation_handle) {
   midi_usages_state_.DidNavigate(navigation_handle->GetURL(),
                                  navigation_handle->GetPreviousURL());
+}
+
+void TabSpecificContentSettings::SensorsDidNavigate(
+    content::NavigationHandle* navigation_handle) {
+  sensors_usages_state_.DidNavigate(navigation_handle->GetURL(),
+                                    navigation_handle->GetPreviousURL());
 }
 
 void TabSpecificContentSettings::BlockAllContentForTesting() {
