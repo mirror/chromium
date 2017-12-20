@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e1b94980_7fb6cd21",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/DownloadPreferences.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-20T18:55:51Z",
+      "side": 1,
+      "message": "Since these descriptions are displayed in the UI it should be defined in android_chrome_strings.grd so that it gets translated.",
+      "range": {
+        "startLine": 58,
+        "startChar": 31,
+        "endLine": 58,
+        "endChar": 39
+      },
+      "revId": "f592e979d164aa418479fe45c50e2fe5b84b2d95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
