@@ -1,0 +1,228 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9b2c7f5f_a4511c43",
+        "filename": "chrome/browser/chromeos/arc/accessibility/arc_accessibility_helper_bridge.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-12-20T18:36:58Z",
+      "side": 1,
+      "message": "nit: use the guard clause pattern:\n\n  if (event_details.notification_type !\u003d\n          chromeos::ACCESSIBILITY_TOGGLE_SPOKEN_FEEDBACK \u0026\u0026\n      event_details.notification_type !\u003d\n          chromeos::ACCESSIBILITY_TOGGLE_FOCUS_HIGHLIGHT) {\n    return;\n  }\n  // rest",
+      "range": {
+        "startLine": 438,
+        "startChar": 0,
+        "endLine": 441,
+        "endChar": 59
+      },
+      "revId": "e6469f2f8b1bb816b25e0b70d797140be8fa10d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ab9b5dc_13e85336",
+        "filename": "chrome/browser/chromeos/arc/accessibility/arc_accessibility_helper_bridge.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-12-20T18:36:58Z",
+      "side": 1,
+      "message": "You need to check for nullptr here.",
+      "range": {
+        "startLine": 452,
+        "startChar": 2,
+        "endLine": 452,
+        "endChar": 10
+      },
+      "revId": "e6469f2f8b1bb816b25e0b70d797140be8fa10d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34d21a2f_0ba8c6b6",
+        "filename": "chrome/browser/chromeos/arc/accessibility/arc_accessibility_helper_bridge.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-12-20T18:36:58Z",
+      "side": 1,
+      "message": "nit: use the guard clause pattern:\n\n if (add_activation_observer \u003d\u003d activation_observer_added_)\n   return;\n exo::WMHelper* wm_helper \u003d exo::WMHelper::GetInstance();\n if (!wm_helper)\n   return;\n // rest",
+      "revId": "e6469f2f8b1bb816b25e0b70d797140be8fa10d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42efb063_0231d68d",
+        "filename": "chrome/browser/chromeos/arc/accessibility/arc_accessibility_helper_bridge.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 507,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-12-20T18:36:58Z",
+      "side": 1,
+      "message": "nit: braces can be elided with one-liners.",
+      "range": {
+        "startLine": 507,
+        "startChar": 35,
+        "endLine": 507,
+        "endChar": 37
+      },
+      "revId": "e6469f2f8b1bb816b25e0b70d797140be8fa10d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be5b34f7_478b3ef5",
+        "filename": "chrome/browser/chromeos/arc/accessibility/arc_accessibility_helper_bridge.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-12-20T18:36:58Z",
+      "side": 1,
+      "message": "Can you initialize this to false here instead of the ctor?",
+      "range": {
+        "startLine": 124,
+        "startChar": 7,
+        "endLine": 124,
+        "endChar": 33
+      },
+      "revId": "e6469f2f8b1bb816b25e0b70d797140be8fa10d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b13afff_a4d3b628",
+        "filename": "chrome/browser/chromeos/arc/accessibility/arc_accessibility_helper_bridge_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-12-20T18:36:58Z",
+      "side": 1,
+      "message": "Can this be moved to the beginning of SetUpOnMainThread? That way TearDownOnMainThread can reset it unconditionally.",
+      "range": {
+        "startLine": 54,
+        "startChar": 0,
+        "endLine": 61,
+        "endChar": 80
+      },
+      "revId": "e6469f2f8b1bb816b25e0b70d797140be8fa10d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0ab2780_bbb2e400",
+        "filename": "components/arc/test/fake_accessibility_helper_instance.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-12-20T18:36:58Z",
+      "side": 1,
+      "message": "Can you initialize the field in the header? That way you can have the constructor be \"\u003d default;\" here.",
+      "range": {
+        "startLine": 10,
+        "startChar": 6,
+        "endLine": 10,
+        "endChar": 55
+      },
+      "revId": "e6469f2f8b1bb816b25e0b70d797140be8fa10d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e22d8b27_fe8c73cd",
+        "filename": "components/arc/test/fake_accessibility_helper_instance.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-12-20T18:36:58Z",
+      "side": 1,
+      "message": "nit:\n\n Init(std::move(host_ptr), base::Bind(\u0026base::DoNothing));",
+      "range": {
+        "startLine": 14,
+        "startChar": 48,
+        "endLine": 14,
+        "endChar": 50
+      },
+      "revId": "e6469f2f8b1bb816b25e0b70d797140be8fa10d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "546ae586_5c78c6af",
+        "filename": "components/arc/test/fake_accessibility_helper_instance.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-12-20T18:36:58Z",
+      "side": 1,
+      "message": "IWYU: #include \u003cutility\u003e",
+      "range": {
+        "startLine": 19,
+        "startChar": 7,
+        "endLine": 19,
+        "endChar": 11
+      },
+      "revId": "e6469f2f8b1bb816b25e0b70d797140be8fa10d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9caab469_02b69c02",
+        "filename": "components/arc/test/fake_accessibility_helper_instance.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-12-20T18:36:58Z",
+      "side": 1,
+      "message": "IWYU: #include \u003cstring\u003e",
+      "range": {
+        "startLine": 29,
+        "startChar": 17,
+        "endLine": 29,
+        "endChar": 23
+      },
+      "revId": "e6469f2f8b1bb816b25e0b70d797140be8fa10d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
