@@ -213,6 +213,24 @@
     },
     {
       "key": {
+        "uuid": "e3ffd8c7_0d77aebf",
+        "filename": "components/viz/service/display/scoped_render_pass_texture.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2017-12-20T07:02:54Z",
+      "side": 1,
+      "message": "See below.",
+      "parentUuid": "aeec0140_1bcf891c",
+      "revId": "658caacc431ee01439523cb1dcb630a2d78f5108",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "930f3e8b_766a3948",
         "filename": "components/viz/service/display/scoped_render_pass_texture.cc",
         "patchSetId": 31
@@ -260,6 +278,24 @@
       "side": 1,
       "message": "But isn\u0027t that bad?\n\nScopedRenderPassTexture a;\nScopedRenderPassTexture b(...);\nLOG(ERROR) \u003c\u003c a.id();  // 0\nLOG(ERROR) \u003c\u003c b.id();  // non-0\na \u003d std::move(b);\nLOG(ERROR) \u003c\u003c a.id();  // 0\nLOG(ERROR) \u003c\u003c b.id();  // 0\n\nThere\u0027s no texture left now cuz it was freed?",
       "parentUuid": "fbe66154_7cee8f1a",
+      "revId": "658caacc431ee01439523cb1dcb630a2d78f5108",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1357da9_b73dfb8b",
+        "filename": "components/viz/service/display/scoped_render_pass_texture.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2017-12-20T07:02:54Z",
+      "side": 1,
+      "message": "After move, a.id() will be b.id(). \nIt will first free a.id(), then copy b.id() to a.id(). \n\nScopedRenderPassTexture a;\nScopedRenderPassTexture b(...);\nLOG(ERROR) \u003c\u003c a.id();  // 0\nLOG(ERROR) \u003c\u003c b.id();  // non-0\na \u003d std::move(b);\nLOG(ERROR) \u003c\u003c a.id();  // non-0\nLOG(ERROR) \u003c\u003c b.id();  // 0",
+      "parentUuid": "8269f6bf_2a916892",
       "revId": "658caacc431ee01439523cb1dcb630a2d78f5108",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -368,6 +404,24 @@
       "revId": "658caacc431ee01439523cb1dcb630a2d78f5108",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e01b903e_d5ee8267",
+        "filename": "components/viz/service/display/scoped_render_pass_texture.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2017-12-20T07:02:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba4f5f78_33fa5256",
+      "revId": "658caacc431ee01439523cb1dcb630a2d78f5108",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

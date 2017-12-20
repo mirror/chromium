@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3aaea4e7_58a779f6",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 3647,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2017-12-20T07:02:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2da15c87_877c442d",
+      "revId": "a7f49a9a2249e6c2df776c0b5dcedd1e205f08d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e30afd6c_f52bfc5a",
         "filename": "components/viz/service/display/scoped_render_pass_texture.cc",
         "patchSetId": 37
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "0c994e5a_468d1585",
+        "filename": "components/viz/service/display/scoped_render_pass_texture.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2017-12-20T07:02:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e30afd6c_f52bfc5a",
+      "revId": "a7f49a9a2249e6c2df776c0b5dcedd1e205f08d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5feded77_84d48d2f",
         "filename": "components/viz/service/display/scoped_render_pass_texture.cc",
         "patchSetId": 37
@@ -47,6 +83,24 @@
       "writtenOn": "2017-12-19T18:51:26Z",
       "side": 1,
       "message": "How about we drop this method and just have GLRenderer do this? The gl_id_ is exposed and it can make that call instead of indirecting through here?",
+      "revId": "a7f49a9a2249e6c2df776c0b5dcedd1e205f08d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ed7e069_e3be3d7c",
+        "filename": "components/viz/service/display/scoped_render_pass_texture.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2017-12-20T07:02:54Z",
+      "side": 1,
+      "message": "The creation of texture and bind are in different call path. If move this into texture creation, wrong texture maybe used.",
+      "parentUuid": "5feded77_84d48d2f",
       "revId": "a7f49a9a2249e6c2df776c0b5dcedd1e205f08d0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
