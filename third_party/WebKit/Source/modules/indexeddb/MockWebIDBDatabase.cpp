@@ -9,9 +9,9 @@
 
 namespace blink {
 
-MockWebIDBDatabase::MockWebIDBDatabase() {}
+MockWebIDBDatabase::MockWebIDBDatabase() = default;
 
-MockWebIDBDatabase::~MockWebIDBDatabase() {}
+MockWebIDBDatabase::~MockWebIDBDatabase() = default;
 
 std::unique_ptr<MockWebIDBDatabase> MockWebIDBDatabase::Create() {
   return WTF::WrapUnique(new MockWebIDBDatabase());

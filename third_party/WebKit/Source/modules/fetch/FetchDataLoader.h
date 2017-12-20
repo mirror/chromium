@@ -32,7 +32,7 @@ class MODULES_EXPORT FetchDataLoader
  public:
   class MODULES_EXPORT Client : public GarbageCollectedMixin {
    public:
-    virtual ~Client() {}
+    virtual ~Client() = default;
 
     // The method corresponding to createLoaderAs... is called on success.
     virtual void DidFetchDataLoadedBlobHandle(scoped_refptr<BlobDataHandle>) {
@@ -65,7 +65,7 @@ class MODULES_EXPORT FetchDataLoader
   static FetchDataLoader* CreateLoaderAsDataPipe(
       mojo::ScopedDataPipeProducerHandle out_data_pipe);
 
-  virtual ~FetchDataLoader() {}
+  virtual ~FetchDataLoader() = default;
 
   // |consumer| must not have a client when called.
   virtual void Start(BytesConsumer* /* consumer */, Client*) = 0;

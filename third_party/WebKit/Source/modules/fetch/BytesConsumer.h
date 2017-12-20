@@ -47,7 +47,7 @@ class MODULES_EXPORT BytesConsumer
   };
   class MODULES_EXPORT Error {
    public:
-    Error() {}
+    Error() = default;
     explicit Error(const String& message) : message_(message) {}
     const String& Message() const { return message_; }
     bool operator==(const Error& e) const { return e.message_ == message_; }
@@ -58,7 +58,7 @@ class MODULES_EXPORT BytesConsumer
   // Client gets notification from the associated ByteConsumer.
   class MODULES_EXPORT Client : public GarbageCollectedMixin {
    public:
-    virtual ~Client() {}
+    virtual ~Client() = default;
 
     // This function is called when the state changes (e.g., readable =>
     // errored). This function can be called more than needed, i.e., it can
@@ -77,7 +77,7 @@ class MODULES_EXPORT BytesConsumer
     virtual String DebugName() const = 0;
   };
 
-  virtual ~BytesConsumer() {}
+  virtual ~BytesConsumer() = default;
 
   // Begins a two-phase read. On success, the function stores a buffer
   // that contains the read data of length |*available| into |*buffer|.

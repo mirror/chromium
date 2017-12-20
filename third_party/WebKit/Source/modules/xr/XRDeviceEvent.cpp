@@ -6,7 +6,7 @@
 
 namespace blink {
 
-XRDeviceEvent::XRDeviceEvent() {}
+XRDeviceEvent::XRDeviceEvent() = default;
 
 XRDeviceEvent::XRDeviceEvent(const AtomicString& type, XRDevice* device)
     : Event(type, true, false), device_(device) {}
@@ -18,7 +18,7 @@ XRDeviceEvent::XRDeviceEvent(const AtomicString& type,
     device_ = initializer.device();
 }
 
-XRDeviceEvent::~XRDeviceEvent() {}
+XRDeviceEvent::~XRDeviceEvent() = default;
 
 const AtomicString& XRDeviceEvent::InterfaceName() const {
   return EventNames::XRDeviceEvent;

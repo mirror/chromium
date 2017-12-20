@@ -50,7 +50,7 @@ WebAuthenticationClient::WebAuthenticationClient(LocalFrame& frame) {
                 WrapWeakPersistent(this)));
 }
 
-WebAuthenticationClient::~WebAuthenticationClient() {}
+WebAuthenticationClient::~WebAuthenticationClient() = default;
 
 void WebAuthenticationClient::DispatchMakeCredential(
     const MakePublicKeyCredentialOptions& publicKey,

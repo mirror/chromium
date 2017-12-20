@@ -50,7 +50,7 @@ class MockBytesConsumerClient
   String DebugName() const override { return "MockBytesConsumerClient"; }
 
  protected:
-  MockBytesConsumerClient() {}
+  MockBytesConsumerClient() = default;
 };
 
 class MockDataConsumerHandle final : public WebDataConsumerHandle {

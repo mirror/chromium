@@ -19,7 +19,7 @@ void AnimationWorkletMessagingProxy::Trace(blink::Visitor* visitor) {
   ThreadedWorkletMessagingProxy::Trace(visitor);
 }
 
-AnimationWorkletMessagingProxy::~AnimationWorkletMessagingProxy() {}
+AnimationWorkletMessagingProxy::~AnimationWorkletMessagingProxy() = default;
 
 std::unique_ptr<WorkerThread>
 AnimationWorkletMessagingProxy::CreateWorkerThread() {

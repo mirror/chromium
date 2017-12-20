@@ -121,7 +121,7 @@ FetchEvent::FetchEvent(ScriptState* script_state,
   }
 }
 
-FetchEvent::~FetchEvent() {}
+FetchEvent::~FetchEvent() = default;
 
 void FetchEvent::OnNavigationPreloadResponse(
     ScriptState* script_state,

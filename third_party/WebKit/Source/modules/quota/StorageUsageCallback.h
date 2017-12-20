@@ -38,7 +38,7 @@ namespace blink {
 class StorageUsageCallback
     : public GarbageCollectedFinalized<StorageUsageCallback> {
  public:
-  virtual ~StorageUsageCallback() {}
+  virtual ~StorageUsageCallback() = default;
   virtual void Trace(blink::Visitor* visitor) {}
   virtual void handleEvent(uint64_t current_usage_in_bytes,
                            uint64_t current_quota_in_bytes) = 0;

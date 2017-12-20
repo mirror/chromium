@@ -16,7 +16,7 @@ CredentialManagerClient::CredentialManagerClient(
     WebCredentialManagerClient* client)
     : client_(client) {}
 
-CredentialManagerClient::~CredentialManagerClient() {}
+CredentialManagerClient::~CredentialManagerClient() = default;
 
 void CredentialManagerClient::Trace(blink::Visitor* visitor) {
   visitor->Trace(authentication_client_);

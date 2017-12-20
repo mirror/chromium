@@ -38,7 +38,7 @@ class EstimateCallbacks final : public StorageQuotaCallbacks {
   explicit EstimateCallbacks(ScriptPromiseResolver* resolver)
       : resolver_(resolver) {}
 
-  ~EstimateCallbacks() override {}
+  ~EstimateCallbacks() override = default;
 
   void DidQueryStorageUsageAndQuota(
       unsigned long long usage_in_bytes,

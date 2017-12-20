@@ -60,7 +60,7 @@ class VoidCallback;
 // or call an actual script callback (for asynchronous APIs).
 class ErrorCallbackBase : public GarbageCollectedFinalized<ErrorCallbackBase> {
  public:
-  virtual ~ErrorCallbackBase() {}
+  virtual ~ErrorCallbackBase() = default;
   virtual void Trace(blink::Visitor* visitor) {}
   virtual void Invoke(FileError::ErrorCode) = 0;
 };
@@ -102,7 +102,7 @@ class FileSystemCallbacksBase : public AsyncFileSystemCallbacks {
 class ScriptErrorCallback final : public ErrorCallbackBase {
  public:
   static ScriptErrorCallback* Wrap(ErrorCallback*);
-  ~ScriptErrorCallback() override {}
+  ~ScriptErrorCallback() override = default;
   void Trace(blink::Visitor*) override;
 
   void Invoke(FileError::ErrorCode) override;

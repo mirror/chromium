@@ -491,7 +491,7 @@ class FetchDataLoaderAsDataPipe final : public FetchDataLoader,
       : out_data_pipe_(std::move(out_data_pipe)),
         data_pipe_watcher_(FROM_HERE,
                            mojo::SimpleWatcher::ArmingPolicy::MANUAL) {}
-  ~FetchDataLoaderAsDataPipe() override {}
+  ~FetchDataLoaderAsDataPipe() override = default;
 
   void Start(BytesConsumer* consumer,
              FetchDataLoader::Client* client) override {

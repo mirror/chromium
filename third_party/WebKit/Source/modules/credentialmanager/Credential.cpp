@@ -9,7 +9,7 @@
 
 namespace blink {
 
-Credential::~Credential() {}
+Credential::~Credential() = default;
 
 Credential::Credential(PlatformCredential* credential)
     : platform_credential_(credential) {}

@@ -86,7 +86,7 @@ DirectoryReaderSync::DirectoryReaderSync(DOMFileSystemBase* file_system,
       callbacks_id_(0),
       error_code_(FileError::kOK) {}
 
-DirectoryReaderSync::~DirectoryReaderSync() {}
+DirectoryReaderSync::~DirectoryReaderSync() = default;
 
 EntrySyncHeapVector DirectoryReaderSync::readEntries(
     ExceptionState& exception_state) {

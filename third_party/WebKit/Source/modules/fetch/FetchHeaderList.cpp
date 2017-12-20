@@ -23,9 +23,9 @@ FetchHeaderList* FetchHeaderList::Clone() const {
   return list;
 }
 
-FetchHeaderList::FetchHeaderList() {}
+FetchHeaderList::FetchHeaderList() = default;
 
-FetchHeaderList::~FetchHeaderList() {}
+FetchHeaderList::~FetchHeaderList() = default;
 
 void FetchHeaderList::Append(const String& name, const String& value) {
   // https://fetch.spec.whatwg.org/#concept-header-list-append

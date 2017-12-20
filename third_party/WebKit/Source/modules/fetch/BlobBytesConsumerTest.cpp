@@ -86,7 +86,7 @@ class SyncLoadingTestThreadableLoader : public ThreadableLoader {
 
 class SyncErrorTestThreadableLoader : public ThreadableLoader {
  public:
-  ~SyncErrorTestThreadableLoader() override {}
+  ~SyncErrorTestThreadableLoader() override = default;
 
   void Start(const ResourceRequest& request) override {
     is_started_ = true;
