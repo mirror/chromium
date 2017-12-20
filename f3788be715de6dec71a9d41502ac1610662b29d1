@@ -142,6 +142,30 @@
       "revId": "f3788be715de6dec71a9d41502ac1610662b29d1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "983898cd_992ee514",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 2069,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-12-20T00:47:12Z",
+      "side": 1,
+      "message": "One other thing I just noticed is that since we\u0027re using the BVC\u0027s sad tab coordinator as the delegate for all the WebStates, it\u0027s possible for a background tab\u0027s WebState to have a renderer crash that displays the sad tab UI over the foreground tab.  I think instead of adding it as the delegate to all the WebStates, we should use a WebStateListObserver to only set it for the active WebState.",
+      "parentUuid": "27bcb2e5_6b6f3e79",
+      "range": {
+        "startLine": 2069,
+        "startChar": 4,
+        "endLine": 2069,
+        "endChar": 23
+      },
+      "revId": "f3788be715de6dec71a9d41502ac1610662b29d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
