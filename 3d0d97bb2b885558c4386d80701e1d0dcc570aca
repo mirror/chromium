@@ -16,6 +16,24 @@
       "revId": "3d0d97bb2b885558c4386d80701e1d0dcc570aca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f63011b_320e7c5d",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerClients.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-12-20T05:46:25Z",
+      "side": 1,
+      "message": "Regarding main-thread worklets (i.e., PaintWorklet), they don\u0027t create WorkerClients.\n\nRegarding threaded out-of-process workers (i.e., SharedWorker and ServiceWorker), this is also applicable to them for off-main-thread fetch.",
+      "parentUuid": "145324c4_c5b3e3f8",
+      "revId": "3d0d97bb2b885558c4386d80701e1d0dcc570aca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
