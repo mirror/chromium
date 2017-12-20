@@ -70,6 +70,24 @@
       "revId": "47839b3b465bd9e699c424263cef35d632648cc7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "067cb38b_97fb14b4",
+        "filename": "chrome/browser/resources/settings/site_settings/site_details_permission.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-12-20T22:38:22Z",
+      "side": 1,
+      "message": "Polymer (or Polymer v1) will not call the bound function until all the observed parameters have values. It might not be recognizing the dictionary. In this test it doesn\u0027t recognize a dictionary or a list:\nhttp://jsbin.com/lakebegowi/1/edit?html,console,output\n\nIt may be best to pass them as parameters as they were being passed.",
+      "parentUuid": "4a0dc33f_412fd63d",
+      "revId": "47839b3b465bd9e699c424263cef35d632648cc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
