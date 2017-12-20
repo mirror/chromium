@@ -538,7 +538,7 @@ TEST_F(AppStateWithThreadTest, willTerminate) {
   [[appNavigation expect] closeSettingsAnimated:NO completion:nil];
 
   [[browserViewInformation expect] cleanDeviceSharingManager];
-  [[browserViewInformation expect] haltAllTabs];
+  [[browserViewInformation expect] cleanupTabsForTermination];
 
   id startupInformation =
       [OCMockObject mockForProtocol:@protocol(StartupInformation)];

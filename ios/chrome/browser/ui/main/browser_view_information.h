@@ -29,8 +29,9 @@ class ChromeBrowserState;
 // otrBVC). The other, if present, is in suspended mode.
 @property(nonatomic, assign) BrowserViewController* currentBVC;
 
-// Halts all tabs from all TabModels.
-- (void)haltAllTabs;
+// Halts all tabs from the |mainTabModel| and closes all |otrTabModel| tabs to
+// prepare for a clean application termination.
+- (void)cleanupTabsForTermination;
 
 // Returns the browser state corresponding to the current browser view.
 - (ios::ChromeBrowserState*)currentBrowserState;
