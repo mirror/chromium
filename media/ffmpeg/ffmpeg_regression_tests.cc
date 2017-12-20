@@ -13,7 +13,7 @@
 //        "https://chrome-internal.googlesource.com/chrome/data/media"
 //
 // Many of the files here do not cause issues outside of tooling, so you'll need
-// to run this test under ASAN, TSAN, and Valgrind to ensure that all issues are
+// to run this test under ASAN/TSAN/MSAN/etc to ensure that all issues are
 // caught.
 //
 // Test cases labeled FLAKY may not always pass, but they should never crash or

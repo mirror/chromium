@@ -16,10 +16,10 @@ class BMPImageDecoderTest : public ImageDecoderTest {
     return new blink::WebImageDecoder(blink::WebImageDecoder::kTypeBMP);
   }
 
-  // The BMPImageDecoderTest tests are really slow under Valgrind.
+  // The BMPImageDecoderTest tests are really slow under TSAN etc.
   // Thus it is split into fast and slow versions. The threshold is
-  // set to 10KB because the fast test can finish under Valgrind in
-  // less than 30 seconds.
+  // set to 10KB because the fast test should be able to finish in
+  // less than 30 seconds, even with TSAN.
   static const int64_t kThresholdSize = 10240;
 };
 

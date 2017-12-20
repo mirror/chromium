@@ -84,7 +84,7 @@ void ViewsTestBase::TearDown() {
   ui::Clipboard::DestroyClipboardForCurrentThread();
 
   // Flush the message loop because we have pending release tasks
-  // and these tasks if un-executed would upset Valgrind.
+  // and these tasks if un-executed would upset tools like LSAN.
   RunPendingMessages();
   teardown_called_ = true;
   testing::Test::TearDown();

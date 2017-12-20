@@ -108,13 +108,13 @@ avoiding crashing in unpredictable ways. (See this thread for debate.)
 
 `BrowseThread` and `MessageLoopProxy::PostTask` will silently delete a task if
 the thread doesn't exist.  This is done to avoid having all the code that uses
-it have special cases if the target thread exists or not, and to make Valgrind
+it have special cases if the target thread exists or not, and to make ASan/TSan
 happy.  As usual, the task for `DeleteSoon/ReleaseSoon` doesn't do anything in
 its destructor, so this won't cause unexpected behavior with them.  But be wary
 of posted `Task` objects which have non-trivial destructors or smart pointers as
 members.  I'm still on the fence about this, since while the latter is
 theoretical now, it could lead to problems in the future.  I might change it so
-that the tasks are not deleted when I'm ready for more Valgrind fun.
+that the tasks are not deleted when I'm ready for more ASan/TSan fun.
 
 If you absolutely must know if a task was posted or not, you can check the
 return value of `PostTask` and friends.  But note that even if the task was
