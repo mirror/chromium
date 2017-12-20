@@ -52,6 +52,7 @@ cr.define('settings', function() {
     'PAPER-RIPPLE',
     'PAPER-SLIDER',
     'PAPER-SPINNER',
+    'PAPER-SPINNER-LITE',
     'STYLE',
     'TEMPLATE',
   ]);
