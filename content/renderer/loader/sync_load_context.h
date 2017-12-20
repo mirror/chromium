@@ -6,6 +6,9 @@
 #define CONTENT_RENDERER_LOADER_SYNC_LOAD_CONTEXT_H_
 
 #include "base/macros.h"
+#include "base/optional.h"
+#include "base/synchronization/waitable_event_watcher.h"
+#include "base/timer/timer.h"
 #include "content/public/common/url_loader_factory.mojom.h"
 #include "content/public/renderer/request_peer.h"
 #include "content/renderer/loader/resource_dispatcher.h"
@@ -39,12 +42,16 @@ class SyncLoadContext : public RequestPeer {
       mojom::URLLoaderFactoryPtrInfo url_loader_factory_pipe,
       std::vector<std::unique_ptr<URLLoaderThrottle>> throttles,
       SyncLoadResponse* response,
-      base::WaitableEvent* event);
+      base::WaitableEvent* completed_event,
+      base::WaitableEvent* abort_event,
+      double timeout);
 
   SyncLoadContext(ResourceRequest* request,
                   mojom::URLLoaderFactoryPtrInfo url_loader_factory,
                   SyncLoadResponse* response,
-                  base::WaitableEvent* event);
+                  base::WaitableEvent* completed_event,
+                  base::WaitableEvent* abort_event,
+                  double timeout);
   ~SyncLoadContext() override;
 
  private:
@@ -59,18 +66,26 @@ class SyncLoadContext : public RequestPeer {
   void OnCompletedRequest(
       const network::URLLoaderCompletionStatus& status) override;
 
+  void OnAbort(base::WaitableEvent* event);
+  void OnTimeout();
+
   // This raw pointer will remain valid for the lifetime of this object because
   // it remains on the stack until |event_| is signaled.
   SyncLoadResponse* response_;
 
   // This event is signaled when the request is complete.
-  base::WaitableEvent* event_;
+  base::WaitableEvent* completed_event_;
 
   // State necessary to run a request on an independent thread.
   mojom::URLLoaderFactoryPtr url_loader_factory_;
   std::unique_ptr<ResourceDispatcher> resource_dispatcher_;
 
   int request_id_;
+
+  base::Optional<int64_t> downloaded_file_length_;
+
+  base::WaitableEventWatcher abort_watcher_;
+  base::OneShotTimer timeout_timer_;
 
   DISALLOW_COPY_AND_ASSIGN(SyncLoadContext);
 };
