@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "82d99252_422c7c76",
+        "filename": "chrome/browser/ui/views/autofill/save_card_bubble_views_browsertest_base.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 444,
+      "author": {
+        "id": 1123929
+      },
+      "writtenOn": "2017-12-20T20:45:29Z",
+      "side": 1,
+      "message": "Sweet!\n\nYou probably want to replace your friend declaration with the FRIEND_TEST_ALL_PREFIXES macro: https://cs.chromium.org/chromium/src/base/gtest_prod_util.h?rcl\u003d369fae2d336df5c39ecf26e9f896e54ab1e2bdbf\u0026l\u003d21. That\u0027s because a gtest test case is actually a subclass of the test fixture, so class generated for the test case must be added as a friend.",
+      "parentUuid": "a48d35b8_9925efda",
+      "revId": "6062ddd63445c5bd626ce429e8d973949ae286e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2a36d39c_8bd86c5a",
         "filename": "components/test/data/autofill/credit_card_upload_form_address_and_cc.html",
         "patchSetId": 1
