@@ -51,7 +51,8 @@ ui::AXNodeData ViewAccessibility::GetAccessibleNodeData() const {
 
   // Views may misbehave if their widget is closed; return an unknown role
   // rather than possibly crashing.
-  if (!view_->GetWidget() || view_->GetWidget()->IsClosed()) {
+  views::Widget* widget = view_->GetWidget();
+  if (!widget || !widget->widget_delegate() || widget->IsClosed()) {
     data.role = ui::AX_ROLE_UNKNOWN;
     data.AddIntAttribute(ui::AX_ATTR_RESTRICTION, ui::AX_RESTRICTION_DISABLED);
     return data;
