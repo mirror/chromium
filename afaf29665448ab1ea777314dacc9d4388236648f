@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "963e02b0_6d59827b",
+        "filename": "components/omnibox/browser/autocomplete_input.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-12-20T00:20:05Z",
+      "side": 1,
+      "message": "Nit: You want this to be a sibling of the \"!compliant\" part of the check above, not of the pair of checks:\n\nif (host family neutral \u0026\u0026 (!compliant || domain is invalid)) ...\n\nThere should also probably be a comment added to the block above, e.g. \"Per RFC 6761, the .invalid TLD is considered non-navigable and thus is treated like a non-compliant hostname.\"",
+      "revId": "afaf29665448ab1ea777314dacc9d4388236648f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
