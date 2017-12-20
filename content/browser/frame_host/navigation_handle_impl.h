@@ -313,6 +313,8 @@ class CONTENT_EXPORT NavigationHandleImpl : public NavigationHandle {
   void WillFailRequest(base::Optional<net::SSLInfo> ssl_info,
                        const ThrottleChecksFinishedCallback& callback);
 
+  void SetExpectedProcessForErrorPage(RenderProcessHost* process);
+
   // Called when the URLRequest has delivered response headers and metadata.
   // |callback| will be called when all throttle checks have completed,
   // allowing the caller to cancel the navigation or let it proceed.

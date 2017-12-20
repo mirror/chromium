@@ -3188,7 +3188,7 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest, ProcessTransferAfterError) {
         " Site A ------------ proxies for B\n"
         "   +--Site B ------- proxies for A\n"
         "Where A = http://a.com/\n"
-        "      B = http://b.com/",
+        "      B = chrome-error://chromewebdata/",
         DepictFrameTree(root));
     EXPECT_NE(shell()->web_contents()->GetSiteInstance(),
               child->current_frame_host()->GetSiteInstance());
@@ -3227,10 +3227,10 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest, ProcessTransferAfterError) {
   // Ensure that we have created a new process for the subframe.
   // PlzNavigate: the subframe should still be in its separate process.
   EXPECT_EQ(
-      " Site A ------------ proxies for B\n"
-      "   +--Site B ------- proxies for A\n"
+      " Site A ------------ proxies for C\n"
+      "   +--Site C ------- proxies for A\n"
       "Where A = http://a.com/\n"
-      "      B = http://b.com/",
+      "      C = http://b.com/",
       DepictFrameTree(root));
   EXPECT_NE(shell()->web_contents()->GetSiteInstance(),
             child->current_frame_host()->GetSiteInstance());
@@ -8849,11 +8849,14 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest,
     load_observer.Wait();
   }
 
-  // The last successful url shouldn't be the blocked url.
-  EXPECT_EQ(old_subframe_url,
-            root->child_at(0)->current_frame_host()->last_successful_url());
-
   if (IsBrowserSideNavigationEnabled()) {
+    // The last successful url should be empty because the error page render
+    // frame host will have never loaded a successful URL.
+    EXPECT_TRUE(root->child_at(0)
+                    ->current_frame_host()
+                    ->last_successful_url()
+                    .is_empty());
+
     // The blocked frame should go to an error page. Errors currently commit
     // with the URL of the blocked page.
     EXPECT_EQ(blocked_url, root->child_at(0)->current_url());
@@ -8866,6 +8869,10 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest,
         &frame_title));
     EXPECT_EQ("Error", frame_title);
   } else {
+    // The last successful url shouldn't be the blocked url.
+    EXPECT_EQ(old_subframe_url,
+              root->child_at(0)->current_frame_host()->last_successful_url());
+
     // The blocked frame should stay at the old location.
     EXPECT_EQ(old_subframe_url, root->child_at(0)->current_url());
 
@@ -8943,11 +8950,14 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest,
     load_observer2.Wait();
   }
 
-  // The last successful url shouldn't be the blocked url.
-  EXPECT_EQ(old_subframe_url,
-            root->child_at(0)->current_frame_host()->last_successful_url());
-
   if (IsBrowserSideNavigationEnabled()) {
+    // The last successful url should be empty because the error page render
+    // frame host will have never loaded a successful URL.
+    EXPECT_TRUE(root->child_at(0)
+                    ->current_frame_host()
+                    ->last_successful_url()
+                    .is_empty());
+
     // The blocked frame should go to an error page. Errors currently commit
     // with the URL of the blocked page.
     EXPECT_EQ(blocked_url, root->child_at(0)->current_url());
@@ -8960,6 +8970,9 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest,
         &frame_title));
     EXPECT_EQ("Error", frame_title);
   } else {
+    EXPECT_EQ(old_subframe_url,
+              root->child_at(0)->current_frame_host()->last_successful_url());
+
     // The blocked frame should stay at the old location.
     EXPECT_EQ(old_subframe_url, root->child_at(0)->current_url());
 
@@ -9031,11 +9044,13 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest,
     load_observer2.Wait();
   }
 
-  // The last successful url shouldn't be the blocked url.
-  EXPECT_EQ(old_subframe_url,
-            navigating_frame->current_frame_host()->last_successful_url());
-
   if (IsBrowserSideNavigationEnabled()) {
+    // The last successful url should be empty because the error page render
+    // frame host will have never loaded a successful URL.
+    EXPECT_TRUE(navigating_frame->current_frame_host()
+                    ->last_successful_url()
+                    .is_empty());
+
     // The blocked frame should go to an error page. Errors currently commit
     // with the URL of the blocked page.
     EXPECT_EQ(blocked_url, navigating_frame->current_url());
@@ -9048,6 +9063,9 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest,
         &frame_title));
     EXPECT_EQ("Error", frame_title);
   } else {
+    EXPECT_EQ(old_subframe_url,
+              navigating_frame->current_frame_host()->last_successful_url());
+
     // The blocked frame should stay at the old location.
     EXPECT_EQ(old_subframe_url, navigating_frame->current_url());
 

@@ -1610,8 +1610,8 @@ class PlzNavigateNavigationHandleImplBrowserTest : public ContentBrowserTest {
 };
 
 // Test to verify that error pages caused by NavigationThrottle blocking a
-// request from being made are properly committed in the original process
-// that requested the navigation.
+// request from being made are properly committed in a separate error page
+// process.
 IN_PROC_BROWSER_TEST_F(PlzNavigateNavigationHandleImplBrowserTest,
                        ErrorPageBlockedNavigation) {
   SetupCrossSiteRedirector(embedded_test_server());
@@ -1637,7 +1637,7 @@ IN_PROC_BROWSER_TEST_F(PlzNavigateNavigationHandleImplBrowserTest,
 
   {
     // A blocked, renderer-initiated navigation should commit an error page
-    // in the process that originated the navigation.
+    // in a new process.
     NavigationHandleObserver observer(shell()->web_contents(), blocked_url);
     TestNavigationObserver navigation_observer(shell()->web_contents(), 1);
     EXPECT_TRUE(
@@ -1646,41 +1646,13 @@ IN_PROC_BROWSER_TEST_F(PlzNavigateNavigationHandleImplBrowserTest,
     navigation_observer.Wait();
     EXPECT_TRUE(observer.has_committed());
     EXPECT_TRUE(observer.is_error());
-    EXPECT_EQ(site_instance,
+    EXPECT_NE(site_instance,
               shell()->web_contents()->GetMainFrame()->GetSiteInstance());
-  }
-
-  {
-    // Reloading the blocked document from the renderer process should not
-    // transfer processes.
-    NavigationHandleObserver observer(shell()->web_contents(), blocked_url);
-    TestNavigationObserver navigation_observer(shell()->web_contents(), 1);
-
-    EXPECT_TRUE(ExecuteScript(shell(), "location.reload()"));
-    navigation_observer.Wait();
-    EXPECT_TRUE(observer.has_committed());
-    EXPECT_TRUE(observer.is_error());
-    EXPECT_EQ(site_instance,
-              shell()->web_contents()->GetMainFrame()->GetSiteInstance());
-  }
-
-  {
-    // Reloading the blocked document from the browser process ends up
-    // transferring processes in --site-per-process.
-    NavigationHandleObserver observer(shell()->web_contents(), blocked_url);
-    TestNavigationObserver navigation_observer(shell()->web_contents(), 1);
-
-    shell()->Reload();
-    navigation_observer.Wait();
-    EXPECT_TRUE(observer.has_committed());
-    EXPECT_TRUE(observer.is_error());
-    if (AreAllSitesIsolatedForTesting()) {
-      EXPECT_NE(site_instance,
-                shell()->web_contents()->GetMainFrame()->GetSiteInstance());
-    } else {
-      EXPECT_EQ(site_instance,
-                shell()->web_contents()->GetMainFrame()->GetSiteInstance());
-    }
+    EXPECT_EQ(kUnreachableWebDataURL, shell()
+                                          ->web_contents()
+                                          ->GetMainFrame()
+                                          ->GetSiteInstance()
+                                          ->GetSiteURL());
   }
 
   installer.reset();
@@ -1717,12 +1689,60 @@ IN_PROC_BROWSER_TEST_F(PlzNavigateNavigationHandleImplBrowserTest,
     EXPECT_TRUE(observer.is_error());
     EXPECT_NE(site_instance,
               shell()->web_contents()->GetMainFrame()->GetSiteInstance());
+    EXPECT_EQ(kUnreachableWebDataURL, shell()
+                                          ->web_contents()
+                                          ->GetMainFrame()
+                                          ->GetSiteInstance()
+                                          ->GetSiteURL());
+  }
+
+  {
+    // A blocked subframe navigation should commit an error page in the same
+    // process, unless --site-per-process is enabled.
+    installer.reset();
+    EXPECT_TRUE(NavigateToURL(shell(), start_url));
+    const std::string javascript =
+        "var i = document.createElement('iframe');"
+        "i.src = '" +
+        blocked_url.spec() +
+        "';"
+        "document.body.appendChild(i);";
+
+    installer = std::make_unique<TestNavigationThrottleInstaller>(
+        shell()->web_contents(), NavigationThrottle::BLOCK_REQUEST,
+        NavigationThrottle::PROCEED, NavigationThrottle::PROCEED,
+        NavigationThrottle::PROCEED);
+
+    content::RenderFrameHost* rfh = shell()->web_contents()->GetMainFrame();
+    TestNavigationObserver navigation_observer(shell()->web_contents(), 1);
+    ASSERT_TRUE(content::ExecuteScript(rfh, javascript));
+    navigation_observer.Wait();
+
+    std::vector<RenderFrameHost*> frames =
+        shell()->web_contents()->GetAllFrames();
+    ASSERT_EQ(2u, frames.size());
+    for (auto* const frame : frames) {
+      if (frame == shell()->web_contents()->GetMainFrame())
+        continue;
+      if (AreAllSitesIsolatedForTesting()) {
+        EXPECT_NE(site_instance,
+                  shell()->web_contents()->GetMainFrame()->GetSiteInstance());
+        EXPECT_EQ(kUnreachableWebDataURL, shell()
+                                              ->web_contents()
+                                              ->GetMainFrame()
+                                              ->GetSiteInstance()
+                                              ->GetSiteURL());
+      } else {
+        EXPECT_EQ(site_instance,
+                  shell()->web_contents()->GetMainFrame()->GetSiteInstance());
+      }
+    }
   }
 }
 
 // Test to verify that error pages caused by network error or other
 // recoverable error are properly committed in the process for the
-// destination URL.
+// error page URL.
 IN_PROC_BROWSER_TEST_F(PlzNavigateNavigationHandleImplBrowserTest,
                        ErrorPageNetworkError) {
   SetupCrossSiteRedirector(embedded_test_server());
@@ -1752,6 +1772,11 @@ IN_PROC_BROWSER_TEST_F(PlzNavigateNavigationHandleImplBrowserTest,
     EXPECT_TRUE(observer.is_error());
     EXPECT_NE(site_instance,
               shell()->web_contents()->GetMainFrame()->GetSiteInstance());
+    EXPECT_EQ(kUnreachableWebDataURL, shell()
+                                          ->web_contents()
+                                          ->GetMainFrame()
+                                          ->GetSiteInstance()
+                                          ->GetSiteURL());
   }
 }
 
