@@ -44,7 +44,8 @@ bool ScrollNode::operator==(const ScrollNode& other) const {
          user_scrollable_horizontal == other.user_scrollable_horizontal &&
          user_scrollable_vertical == other.user_scrollable_vertical &&
          element_id == other.element_id && transform_id == other.transform_id &&
-         overscroll_behavior == other.overscroll_behavior;
+         overscroll_behavior == other.overscroll_behavior &&
+         snap_container_data == other.snap_container_data;
 }
 
 void ScrollNode::AsValueInto(base::trace_event::TracedValue* value) const {

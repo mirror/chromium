@@ -173,6 +173,9 @@ class CC_EXPORT InputHandler {
   // returned SCROLL_STARTED.
   virtual void ScrollEnd(ScrollState* scroll_state) = 0;
 
+  // Called only at GestureScrollEnd to handle snap points.
+  virtual void HandleGestureScrollEnd(ScrollState* scroll_state) = 0;
+
   // Requests a callback to UpdateRootLayerStateForSynchronousInputHandler()
   // giving the current root scroll and page scale information.
   virtual void RequestUpdateForSynchronousInputHandler() = 0;
