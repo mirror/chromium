@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "4fe36269_3f6ffd9a",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 588,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-12-20T10:57:03Z",
+      "side": 1,
+      "message": "As it turns out, pretty easy :)  Now when any of the links/buttons is focused, no timeout applies. I think this qualifies as \"Turn off\" in the guidelines?\nI did not make this conditional on isAccessibleBrowser, because it seems like an improvement for everyone.",
+      "parentUuid": "b27fec44_2bbbf59c",
+      "range": {
+        "startLine": 588,
+        "startChar": 63,
+        "endLine": 588,
+        "endChar": 0
+      },
+      "revId": "cd9ec1bc45546bb212d94315a166dfcb9aef9d08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "33ece036_8731a425",
         "filename": "chrome/browser/search/local_ntp_source.cc",
         "patchSetId": 3
@@ -93,6 +117,30 @@
       "revId": "cd9ec1bc45546bb212d94315a166dfcb9aef9d08",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d110178_9fab66a0",
+        "filename": "chrome/browser/search/local_ntp_source.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-12-20T10:57:03Z",
+      "side": 1,
+      "message": "Okay, thanks! Resolved then.",
+      "parentUuid": "edf81788_9bd13005",
+      "range": {
+        "startLine": 171,
+        "startChar": 80,
+        "endLine": 171,
+        "endChar": 0
+      },
+      "revId": "cd9ec1bc45546bb212d94315a166dfcb9aef9d08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
