@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "20ed6fb2_5d1861e4",
+        "filename": "content/public/browser/storage_partition.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-12-20T23:52:40Z",
+      "side": 1,
+      "message": "btw I find this existing comment confusing, as it\u0027s not possible to send the raw Foo* (as opposed to FooPtr) to a subprocess.",
+      "range": {
+        "startLine": 83,
+        "startChar": 44,
+        "endLine": 85,
+        "endChar": 24
+      },
+      "revId": "0c776215bfa45d0446749afba6654d092ffcdc94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
