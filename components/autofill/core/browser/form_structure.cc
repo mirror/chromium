@@ -1273,6 +1273,8 @@ void FormStructure::EncodeFormForUpload(AutofillUploadContents* upload) const {
 
       if (field->username_vote_type())
         added_field->set_username_vote_type(field->username_vote_type());
+      else
+        DCHECK(field_type != autofill::USERNAME);
 
       added_field->set_signature(field->GetFieldSignature());
 
