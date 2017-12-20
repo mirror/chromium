@@ -111,6 +111,7 @@ void CreateContextMenuDownload(
   dl_params->set_request_origin(
       offline_pages::android::OfflinePageBridge::GetEncodedOriginApp(
           web_contents));
+  dl_params->set_download_source(content::DownloadSource::CONTEXT_MENU);
   RecordDownloadSource(DOWNLOAD_INITIATED_BY_CONTEXT_MENU);
   dlm->DownloadUrl(std::move(dl_params));
 }

@@ -5,6 +5,7 @@
 #ifndef CONTENT_BROWSER_DOWNLOAD_DOWNLOAD_UTILS_H_
 #define CONTENT_BROWSER_DOWNLOAD_DOWNLOAD_UTILS_H_
 
+#include "base/optional.h"
 #include "components/download/downloader/in_progress/download_source.h"
 #include "content/public/browser/download_interrupt_reasons.h"
 #include "content/public/browser/download_source.h"
@@ -12,12 +13,17 @@
 #include "net/cert/cert_status_flags.h"
 #include "net/http/http_response_headers.h"
 
+namespace download {
+struct DownloadEntry;
+}  // namespace download
+
 namespace net {
 class URLRequest;
-}
+}  // namespace net
 
 namespace content {
 
+class BrowserContext;
 class DownloadUrlParameters;
 struct ResourceRequest;
 struct DownloadCreateInfo;
@@ -53,6 +59,15 @@ CONTENT_EXPORT void HandleResponseHeaders(
 // Converts content::DownloadSource to download::DownloadSource.
 CONTENT_EXPORT download::DownloadSource ToDownloadSource(
     content::DownloadSource download_source);
+
+// Converts download::DownloadSource to content::DownloadSource.
+CONTENT_EXPORT content::DownloadSource ToDownloadSource(
+    download::DownloadSource download_source);
+
+// Get the entry based on |guid| from in progress cache.
+CONTENT_EXPORT base::Optional<download::DownloadEntry> GetInProgressEntry(
+    const std::string& guid,
+    BrowserContext* browser_context);
 
 }  // namespace content
 
