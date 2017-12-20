@@ -177,10 +177,13 @@ OpenPDFParamsParser.prototype = {
    * @param {number} pageNumber The page corresponding to the named destination
    *    requested.
    */
-  onNamedDestinationReceived: function(pageNumber) {
+  onNamedDestinationReceived: function(namedDestination) {
     var outstandingRequest = this.outstandingRequests_.shift();
-    if (pageNumber != -1)
-      outstandingRequest.params.page = pageNumber;
+    if (namedDestination.pageNumber != -1) {
+      outstandingRequest.params.page = namedDestination.pageNumber;
+      if (namedDestination.viewType == 3)
+        outstandingRequest.params.view = FittingType.FIT_TO_HEIGHT;
+    }
     outstandingRequest.callback(outstandingRequest.params);
   },
 };
