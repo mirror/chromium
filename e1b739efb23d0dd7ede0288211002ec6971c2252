@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c050b194_2bafb393",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-20T04:54:19Z",
+      "side": 1,
+      "message": "nit: TrafficMonitor is owned by ResourceLoadScheduler and FetchContext is a member of ResourceLoadScheduler, it feels it\u0027s possibly okay to have this as a reference (with comment), given that WeakPersistent have some overhead",
+      "revId": "e1b739efb23d0dd7ede0288211002ec6971c2252",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40b09160_1ac976c6",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-20T04:54:19Z",
+      "side": 1,
+      "message": "When this could be null?",
+      "revId": "e1b739efb23d0dd7ede0288211002ec6971c2252",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6334161_482e14b1",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-20T04:54:19Z",
+      "side": 1,
+      "message": "Are these somewhat overlapped with what we already have?  Looks like we have more detailed breakdown with GetFrameStatus.  Should we obsolete the old ones?",
+      "revId": "e1b739efb23d0dd7ede0288211002ec6971c2252",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
