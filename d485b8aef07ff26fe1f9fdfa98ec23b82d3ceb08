@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "173e8291_f70eb76f",
+        "filename": "chrome/browser/ui/cocoa/bookmarks/bookmark_button_cell.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-12-20T19:50:48Z",
+      "side": 1,
+      "message": "I have this comment in patchset 6, but then changed the code a bit in patchset 7. I can re-add a full comment if you think it\u0027d still be helpful.",
+      "parentUuid": "6a2447b4_ce5d47b0",
+      "range": {
+        "startLine": 406,
+        "startChar": 0,
+        "endLine": 406,
+        "endChar": 61
+      },
+      "revId": "d485b8aef07ff26fe1f9fdfa98ec23b82d3ceb08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e8df11f9_12340169",
         "filename": "chrome/browser/ui/cocoa/bookmarks/bookmark_button_cell.mm",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "d485b8aef07ff26fe1f9fdfa98ec23b82d3ceb08",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edcbdda7_e2bc5df2",
+        "filename": "chrome/browser/ui/cocoa/bookmarks/bookmark_button_cell.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 411,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-12-20T19:50:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e8df11f9_12340169",
+      "range": {
+        "startLine": 411,
+        "startChar": 0,
+        "endLine": 411,
+        "endChar": 23
+      },
+      "revId": "d485b8aef07ff26fe1f9fdfa98ec23b82d3ceb08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -116,6 +164,30 @@
       "revId": "d485b8aef07ff26fe1f9fdfa98ec23b82d3ceb08",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0ce86e0_cbdf9d17",
+        "filename": "chrome/browser/ui/cocoa/l10n_util.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-12-20T19:50:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9170ab84_d3350062",
+      "range": {
+        "startLine": 64,
+        "startChar": 7,
+        "endLine": 64,
+        "endChar": 29
+      },
+      "revId": "d485b8aef07ff26fe1f9fdfa98ec23b82d3ceb08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
