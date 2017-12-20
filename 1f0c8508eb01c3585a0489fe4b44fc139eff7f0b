@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "74254c80_87f1707b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-12-20T20:53:50Z",
+      "side": 1,
+      "message": "Removed. That was in an earlier patchset.",
+      "parentUuid": "f2c2e282_9bc9033d",
+      "range": {
+        "startLine": 14,
+        "startChar": 46,
+        "endLine": 15,
+        "endChar": 68
+      },
+      "revId": "1f0c8508eb01c3585a0489fe4b44fc139eff7f0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5c9c8a4a_338fad64",
         "filename": "chrome/browser/ui/cocoa/bookmarks/bookmark_button_cell.mm",
         "patchSetId": 8
