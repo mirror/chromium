@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3050565a_f7ff1b10",
+        "filename": "third_party/WebKit/LayoutTests/fast/forms/color/mock-colorchooser.js",
+        "patchSetId": 16
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-12-20T09:25:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5117b2eb_64311ca6",
+      "revId": "9fe873a7c7011ef71b213e2f62c90f3c014940cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6a97f078_931331ea",
         "filename": "third_party/WebKit/LayoutTests/fast/forms/color/mock-colorchooser.js",
         "patchSetId": 16
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "8a1c7727_50709d48",
+        "filename": "third_party/WebKit/LayoutTests/fast/forms/color/mock-colorchooser.js",
+        "patchSetId": 16
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-12-20T09:25:53Z",
+      "side": 1,
+      "message": "Thanks for picking this up.  I had the 1s timeout for debugging, but this doesn\u0027t require any waiting, it just needs to be delayed.",
+      "parentUuid": "6a97f078_931331ea",
+      "revId": "9fe873a7c7011ef71b213e2f62c90f3c014940cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b8a2098f_9fa3e998",
         "filename": "third_party/WebKit/LayoutTests/fast/forms/color/mock-colorchooser.js",
         "patchSetId": 16
@@ -50,6 +86,24 @@
       "revId": "9fe873a7c7011ef71b213e2f62c90f3c014940cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78acaa9a_9f959c03",
+        "filename": "third_party/WebKit/LayoutTests/fast/forms/color/mock-colorchooser.js",
+        "patchSetId": 16
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-12-20T09:25:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b8a2098f_9fa3e998",
+      "revId": "9fe873a7c7011ef71b213e2f62c90f3c014940cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
