@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a2e2866c_ffa2a049",
+        "filename": "components/download/internal/blob_task_proxy.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-12-20T22:01:07Z",
+      "side": 1,
+      "message": "Done, makes sense.",
+      "parentUuid": "c2ca1766_e177dd94",
+      "range": {
+        "startLine": 37,
+        "startChar": 33,
+        "endLine": 37,
+        "endChar": 34
+      },
+      "revId": "d4a0bdbb9b98d91444672fcfc29f0fa22be380aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d32e333b_7f6a3536",
         "filename": "components/download/internal/in_memory_download.cc",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "d4a0bdbb9b98d91444672fcfc29f0fa22be380aa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06a6a975_3585759f",
+        "filename": "components/download/internal/in_memory_download.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-12-20T22:01:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d32e333b_7f6a3536",
+      "range": {
+        "startLine": 127,
+        "startChar": 2,
+        "endLine": 128,
+        "endChar": 15
+      },
+      "revId": "d4a0bdbb9b98d91444672fcfc29f0fa22be380aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "44dc6db8_a26ad0b0",
+        "filename": "components/download/internal/in_memory_download.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-12-20T22:01:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9bd1bef0_3938aee5",
+      "range": {
+        "startLine": 149,
+        "startChar": 14,
+        "endLine": 149,
+        "endChar": 31
+      },
+      "revId": "d4a0bdbb9b98d91444672fcfc29f0fa22be380aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b0233a29_fde0880d",
         "filename": "components/download/internal/in_memory_download.h",
         "patchSetId": 3
@@ -91,6 +163,30 @@
       "revId": "d4a0bdbb9b98d91444672fcfc29f0fa22be380aa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eda479be_4d29a12e",
+        "filename": "components/download/internal/in_memory_download.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-12-20T22:01:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b0233a29_fde0880d",
+      "range": {
+        "startLine": 153,
+        "startChar": 28,
+        "endLine": 153,
+        "endChar": 33
+      },
+      "revId": "d4a0bdbb9b98d91444672fcfc29f0fa22be380aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
