@@ -713,9 +713,9 @@ public class JavaBridgeBasicsTest {
                 + "invoke(testObject, null)");
     }
 
-    @Test
-    @SmallTest
-    @Feature({"AndroidWebView", "Android-JavaBridge"})
+    //@Test
+    //@SmallTest
+    //@Feature({"AndroidWebView", "Android-JavaBridge"})
     @DisabledTest(message = "https://crbug.com/795378")
     public void testReflectPrivateFieldRaisesException() throws Throwable {
         mActivityTestRule.injectObjectAndReload(new Object() {
