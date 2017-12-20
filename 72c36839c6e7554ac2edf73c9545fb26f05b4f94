@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "0486f580_b4d384ef",
+        "filename": "ui/events/gesture_detection/scale_gesture_detector.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-12-20T02:19:20Z",
+      "side": 1,
+      "message": "I tried removing this and others but found out it\u0027s tricky...span isn\u0027t always computable like this. e.g., in the if block above, it\u0027s no longer the case. Similarly for prev_span_ because of the adjustment we do now. The only one is initial_span but I\u0027ve removed the x/y versions in the newer patch and removed the slop fix for the x/y versions.\n\nI removed it for x/y because it\u0027s not really consistent - If we scale along only a single axis, say y, we\u0027ll actually have a non-sensical prev_span_x and curr_span_x. I\u0027m not sure there\u0027s a right way to handle the components in a consistent way so I\u0027d rather not change them at all.\n\nI made the change originally because gesture_provider.cc computes its own scale based on span_y and it needs to be consistent with the total span because it uses GetScaleFactor(). I\u0027ve now just adjusted that code to make a similar adjustment at the call site, wdyt?",
+      "parentUuid": "d157cbca_61bd4984",
+      "range": {
+        "startLine": 176,
+        "startChar": 4,
+        "endLine": 176,
+        "endChar": 8
+      },
+      "revId": "72c36839c6e7554ac2edf73c9545fb26f05b4f94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f7ba3cb3_f441d08f",
         "filename": "ui/events/gesture_detection/scale_gesture_detector.cc",
         "patchSetId": 16
@@ -68,6 +92,30 @@
       "revId": "72c36839c6e7554ac2edf73c9545fb26f05b4f94",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6865d6c0_3d015e46",
+        "filename": "ui/events/gesture_detection/scale_gesture_detector.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-12-20T02:19:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f7ba3cb3_f441d08f",
+      "range": {
+        "startLine": 211,
+        "startChar": 7,
+        "endLine": 211,
+        "endChar": 25
+      },
+      "revId": "72c36839c6e7554ac2edf73c9545fb26f05b4f94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
