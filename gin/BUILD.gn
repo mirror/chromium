@@ -2,8 +2,17 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
+import("//build/buildflag_header.gni")
+import("//build/config/allocator.gni")
 import("//testing/test.gni")
 import("//v8/gni/v8.gni")
+
+buildflag_header("gin_features") {
+  header = "gin_features.h"
+  header_dir = "gin"
+
+  flags = [ "USE_PARTITION_ALLOC=$use_partition_alloc" ]
+}
 
 component("gin") {
   sources = [
@@ -78,6 +87,7 @@ component("gin") {
   defines = [ "GIN_IMPLEMENTATION" ]
 
   public_deps = [
+    ":gin_features",
     "//base",
     "//v8",
   ]
