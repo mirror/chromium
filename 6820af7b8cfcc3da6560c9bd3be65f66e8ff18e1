@@ -281,6 +281,30 @@
       "revId": "6820af7b8cfcc3da6560c9bd3be65f66e8ff18e1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7f8852f_3445e596",
+        "filename": "tools/battor_agent/battor_connection_impl_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1128909
+      },
+      "writtenOn": "2017-12-20T19:15:49Z",
+      "side": 1,
+      "message": "Yep, I like this a lot more. Thanks for reworking it!",
+      "parentUuid": "2e7313ad_01a58f19",
+      "range": {
+        "startLine": 396,
+        "startChar": 0,
+        "endLine": 404,
+        "endChar": 4
+      },
+      "revId": "6820af7b8cfcc3da6560c9bd3be65f66e8ff18e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
