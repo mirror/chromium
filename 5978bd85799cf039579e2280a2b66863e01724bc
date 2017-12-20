@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9d3170bf_9c66ae51",
+        "filename": "base/optional.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-12-20T07:02:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a58b338_8b96f70e",
+      "revId": "5978bd85799cf039579e2280a2b66863e01724bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c4fbae1e_7a24af4e",
         "filename": "base/optional.h",
         "patchSetId": 1
@@ -65,6 +83,24 @@
       "side": 1,
       "message": "!! would work throughout, it is equivalent to bool(). i wouldn\u0027t say changing things to has_value is worth the effort, but now that it\u0027s done here, it\u0027s fine too.",
       "parentUuid": "a76bf909_703b9f34",
+      "revId": "5978bd85799cf039579e2280a2b66863e01724bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27e6c013_400e6ae3",
+        "filename": "base/optional.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-12-20T07:02:56Z",
+      "side": 1,
+      "message": "Thank you for comment. Acknowledged.",
+      "parentUuid": "610218e6_9008dcb8",
       "revId": "5978bd85799cf039579e2280a2b66863e01724bc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
