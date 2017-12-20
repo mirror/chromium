@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a614016f_4d7de5a7",
+        "filename": "third_party/WebKit/Source/devtools/front_end/audits2/Audits2Panel.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1176943
+      },
+      "writtenOn": "2017-12-20T01:33:28Z",
+      "side": 1,
+      "message": "Done, but I still don\u0027t want to await _cancel :)",
+      "parentUuid": "38114387_0f58a2a2",
+      "revId": "a1f99c0d46341ed1a76b2bcf85726da35c3c2818",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b34de8be_6dac3178",
         "filename": "third_party/WebKit/Source/devtools/front_end/audits2/Audits2Panel.js",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "a1f99c0d46341ed1a76b2bcf85726da35c3c2818",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d17d66e_6066df51",
+        "filename": "third_party/WebKit/Source/devtools/front_end/audits2/Audits2Panel.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 501,
+      "author": {
+        "id": 1176943
+      },
+      "writtenOn": "2017-12-20T01:33:28Z",
+      "side": 1,
+      "message": "done - switch statement",
+      "parentUuid": "b34de8be_6dac3178",
+      "revId": "a1f99c0d46341ed1a76b2bcf85726da35c3c2818",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "803c4d88_34e755d0",
+        "filename": "third_party/WebKit/Source/devtools/front_end/audits2/Audits2Panel.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 559,
+      "author": {
+        "id": 1176943
+      },
+      "writtenOn": "2017-12-20T01:33:28Z",
+      "side": 1,
+      "message": "doh! yeah that makes a million times more sense",
+      "parentUuid": "8da29467_9a2770cc",
+      "revId": "a1f99c0d46341ed1a76b2bcf85726da35c3c2818",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "84b3e2c8_f8a81b4d",
         "filename": "third_party/WebKit/Source/devtools/front_end/audits2/Audits2Panel.js",
         "patchSetId": 3
@@ -67,6 +121,24 @@
       "revId": "a1f99c0d46341ed1a76b2bcf85726da35c3c2818",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d632450c_2ff97bfb",
+        "filename": "third_party/WebKit/Source/devtools/front_end/audits2/Audits2Panel.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 560,
+      "author": {
+        "id": 1176943
+      },
+      "writtenOn": "2017-12-20T01:33:28Z",
+      "side": 1,
+      "message": "don\u0027t know if I must ;) but done",
+      "parentUuid": "84b3e2c8_f8a81b4d",
+      "revId": "a1f99c0d46341ed1a76b2bcf85726da35c3c2818",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "a8b6e1e9_3b295e6e",
+        "filename": "third_party/WebKit/Source/devtools/front_end/audits2/Audits2Panel.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 588,
+      "author": {
+        "id": 1176943
+      },
+      "writtenOn": "2017-12-20T01:33:28Z",
+      "side": 1,
+      "message": "discussed in person, not pursuing",
+      "parentUuid": "fe82f08e_1eb697d6",
+      "revId": "a1f99c0d46341ed1a76b2bcf85726da35c3c2818",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3ea1979e_21158c96",
         "filename": "third_party/WebKit/Source/devtools/front_end/audits2/audits2Dialog.css",
         "patchSetId": 3
@@ -101,6 +191,24 @@
       "revId": "a1f99c0d46341ed1a76b2bcf85726da35c3c2818",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fe42d1f_559c6792",
+        "filename": "third_party/WebKit/Source/devtools/front_end/audits2/audits2Dialog.css",
+        "patchSetId": 3
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1176943
+      },
+      "writtenOn": "2017-12-20T01:33:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3ea1979e_21158c96",
+      "revId": "a1f99c0d46341ed1a76b2bcf85726da35c3c2818",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
