@@ -136,7 +136,67 @@ enum class TaskType : unsigned {
   // Tasks for tests or mock objects.
   kInternalTest = 26,
 
-  kCount = 27,
+  // Posted at //content/renderer/blob_storage
+  kInternalBlobStorage = 27,
+
+  // Posted at //content/renderer/devtools
+  kInternalDevTools = 28,
+
+  // Posted at gpu-related places:
+  // * //components/viz/common/gpu
+  // * //content/renderer/gpu/render_widget_compositor.cc
+  // * //gpu
+  // * //services/ui/public/cpp/gpu
+  kInternalGPU = 29,
+
+  // |RenderThreadImpl::idle_timer_|
+  kInternalIdle = 30,
+
+  // Posted at //content/renderer/indexed_db
+  kInternalIndexedDB = 31,
+
+  // |RenderWidget::task_runner_|
+  kInternalInitialization = 32,
+
+  // Posted at IPC-related places:
+  // * //content/renderer/child_message_filter.cc
+  // * //content/renderer/mojo
+  // * //ipc
+  // * //mojo
+  kInternalIPC = 33,
+
+  // This task type should be used for implementation details of loading
+  // process, for example notifying some component that loading has been
+  // finished. This task type should not run any javascript, use kNetworking or
+  // another appropriate task source in this case.
+  // This task type is typically used in //content/renderer/loader.
+  kInternalLoading = 34,
+
+  // Posted at //content/renderer/media or //media
+  kInternalMedia = 35,
+
+  // Posted at plugin-related places:
+  // * //components/plugins/renderer
+  // * //content/renderer/pepper
+  // * //ppapi
+  kInternalPlugin = 36,
+
+  // Posted at //services/service_manager or //content/common/service_manager/
+  kInternalServiceManager = 37,
+
+  // Posted at //base/trace_event
+  kInternalTracing = 38,
+
+  // Posted at //content/renderer/input/
+  kInternalUserInteraction = 39,
+
+  // Posted at //components/webcrypto
+  kInternalWebCrypto = 40,
+
+  // Posted at //content/renderer/service_worker
+  kInternalWorker = 41,
+
+  kCount = 42,
 };
 
 }  // namespace blink
