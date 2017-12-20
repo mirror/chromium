@@ -11,6 +11,7 @@ source_set("motion_transitioning_objc") {
   sources = [
     "src/src/MDMTransition.h",
     "src/src/MDMTransitionContext.h",
+    "src/src/MDMTransitionController.h",
     "src/src/MDMTransitionNavigationControllerDelegate.h",
     "src/src/MDMTransitionNavigationControllerDelegate.m",
     "src/src/MDMTransitionPresentationController.h",
@@ -28,6 +29,7 @@ source_set("motion_transitioning_objc") {
   public = [
     "src/src/MDMTransition.h",
     "src/src/MDMTransitionContext.h",
+    "src/src/MDMTransitionController.h",
     "src/src/MDMTransitionNavigationControllerDelegate.h",
     "src/src/MDMTransitionPresentationController.h",
     "src/src/MDMTransitionViewSnapshotter.h",
