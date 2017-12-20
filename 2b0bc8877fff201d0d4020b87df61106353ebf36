@@ -112,6 +112,30 @@
     },
     {
       "key": {
+        "uuid": "d0cf386f_0a9da627",
+        "filename": "components/arc/timer/arc_timer_bridge_unittest.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-12-20T18:12:11Z",
+      "side": 1,
+      "message": "See comment at line 30.",
+      "parentUuid": "9b668d92_7ba8e849",
+      "range": {
+        "startLine": 26,
+        "startChar": 57,
+        "endLine": 26,
+        "endChar": 68
+      },
+      "revId": "2b0bc8877fff201d0d4020b87df61106353ebf36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "24a705c3_11d05de4",
         "filename": "components/arc/timer/arc_timer_bridge_unittest.cc",
         "patchSetId": 26
@@ -123,6 +147,24 @@
       "writtenOn": "2017-12-20T14:19:19Z",
       "side": 1,
       "message": "For some reason, if you have to use IO_MAINLOOP, this call is on wrong thread. SetInstance must be called on UI thread.",
+      "revId": "2b0bc8877fff201d0d4020b87df61106353ebf36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3df74039_d1d72012",
+        "filename": "components/arc/timer/arc_timer_bridge_unittest.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-12-20T18:12:11Z",
+      "side": 1,
+      "message": "IO_MAINLOOP is required to watch file descriptors in FakeTimerInstance::WaitForExpiration(). IO_MAINLOOP sets the capabilities of the main thread, but doesn\u0027t change the fact that BrowserThread::UI refers to the main thread (i.e. DCHECK_CURRENTLY_ON(BrowserThread::UI) will succeed on the main thread, BrowserThread::GetTaskRunnerForThread(BrowserThread::UI) will return a TaskRunner for the main thread).",
+      "parentUuid": "24a705c3_11d05de4",
       "revId": "2b0bc8877fff201d0d4020b87df61106353ebf36",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
