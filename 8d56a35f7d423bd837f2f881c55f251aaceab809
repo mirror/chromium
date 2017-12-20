@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0e2bc91c_4cd67e71",
+        "filename": "chrome/browser/printing/background_printing_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-12-20T01:23:50Z",
+      "side": 0,
+      "message": "Now that we send the PDF from the print preview data store instead of re-rendering from the plugin, this should be able to go away entirely. The preview dialog will be removed by PrintPreviewHandler here:\nhttps://cs.chromium.org/chromium/src/chrome/browser/ui/webui/print_preview/print_preview_handler.cc?l\u003d1265",
+      "range": {
+        "startLine": 93,
+        "startChar": 0,
+        "endLine": 100,
+        "endChar": 1
+      },
+      "revId": "8d56a35f7d423bd837f2f881c55f251aaceab809",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

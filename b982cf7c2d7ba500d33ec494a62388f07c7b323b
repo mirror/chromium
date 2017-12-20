@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1c01260f_5bb73601",
+        "filename": "chrome/browser/printing/background_printing_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-12-20T01:23:50Z",
+      "side": 1,
+      "message": "This function seems to be unused? Maybe it can also be removed.",
+      "range": {
+        "startLine": 125,
+        "startChar": 0,
+        "endLine": 131,
+        "endChar": 1
+      },
+      "revId": "b982cf7c2d7ba500d33ec494a62388f07c7b323b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
