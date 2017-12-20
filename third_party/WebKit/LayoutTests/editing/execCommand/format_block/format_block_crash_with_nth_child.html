@@ -1,0 +1,18 @@
+<script src="../../../resources/testharness.js"></script>
+<script src="../../../resources/testharnessreport.js"></script>
+<style>
+  li:nth-child(2) {
+    display:table-column-group;
+  }
+</style>
+<body>
+  <li></li>
+  <canvas></canvas>
+<script>
+  document.designMode='on';
+  document.execCommand('selectall');
+  // Should not crash on executing FormatBlock.
+  document.execCommand('FormatBlock', false, '<pre>');
+  done();
+</script>
+</body>
