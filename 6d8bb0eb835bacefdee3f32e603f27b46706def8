@@ -42,6 +42,30 @@
     },
     {
       "key": {
+        "uuid": "f0232bc0_fd933a4c",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-12-20T23:54:37Z",
+      "side": 1,
+      "message": "L52 has checked if |last_line| is null.\n\nI\u0027m not sure if |last_line-\u003eChildren()| can be empty, though... Do we ever allow/generate empty line boxes?",
+      "parentUuid": "992a2106_24b61080",
+      "range": {
+        "startLine": 53,
+        "startChar": 27,
+        "endLine": 53,
+        "endChar": 36
+      },
+      "revId": "6d8bb0eb835bacefdee3f32e603f27b46706def8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9587d3ee_3d7ca57e",
         "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.cc",
         "patchSetId": 20
@@ -62,6 +86,30 @@
       "revId": "6d8bb0eb835bacefdee3f32e603f27b46706def8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "812c2ca3_a0d16f52",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-12-20T23:54:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9587d3ee_3d7ca57e",
+      "range": {
+        "startLine": 192,
+        "startChar": 2,
+        "endLine": 192,
+        "endChar": 3
+      },
+      "revId": "6d8bb0eb835bacefdee3f32e603f27b46706def8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -99,6 +147,24 @@
       "writtenOn": "2017-12-20T23:19:24Z",
       "side": 1,
       "message": "You might want to move these to a different header, like ng_caret_rect_internal or something to help enforce that it isn\u0027t used outside of the class itself and tests.",
+      "revId": "6d8bb0eb835bacefdee3f32e603f27b46706def8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30219138_db7c091c",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-12-20T23:54:37Z",
+      "side": 1,
+      "message": "With a second thought, I\u0027m not sure if we should limit NGCaretPosition to internal use or not... The class seems to have potential for general use.\n\nLet\u0027s keep it exposed for now.",
+      "parentUuid": "6a137782_d391c158",
       "revId": "6d8bb0eb835bacefdee3f32e603f27b46706def8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
