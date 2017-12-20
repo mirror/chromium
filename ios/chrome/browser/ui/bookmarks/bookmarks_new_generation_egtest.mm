@@ -143,7 +143,9 @@ id<GREYMatcher> TappableBookmarkNodeWithLabel(NSString* label) {
              @"Not all bookmarks were removed.");
   // Clear position cache so that Bookmarks starts at the root folder in next
   // test.
-  bookmark_utils_ios::ClearBookmarkUIPositionCache();
+  ios::ChromeBrowserState* browser_state =
+      chrome_test_util::GetOriginalBrowserState();
+  bookmark_utils_ios::ClearBookmarkUIPositionCache(browser_state);
 }
 
 #pragma mark - Tests
