@@ -110,6 +110,9 @@ class TesterForType {
       case CONTENT_SETTINGS_TYPE_POPUPS:
         policy_default_setting_ = prefs::kManagedDefaultPopupsSetting;
         break;
+      case CONTENT_SETTINGS_TYPE_ADS:
+        policy_default_setting_ = prefs::kManagedDefaultAdsSetting;
+        break;
       default:
         // Add support as needed.
         NOTREACHED();
@@ -196,6 +199,12 @@ TEST_F(HostContentSettingsMapTest, DefaultValues) {
   EXPECT_EQ(CONTENT_SETTING_ALLOW,
             host_content_settings_map->GetDefaultContentSetting(
                 CONTENT_SETTINGS_TYPE_POPUPS, NULL));
+
+  host_content_settings_map->SetDefaultContentSetting(CONTENT_SETTINGS_TYPE_ADS,
+                                                      CONTENT_SETTING_ALLOW);
+  EXPECT_EQ(CONTENT_SETTING_ALLOW,
+            host_content_settings_map->GetDefaultContentSetting(
+                CONTENT_SETTINGS_TYPE_ADS, nullptr));
 }
 
 TEST_F(HostContentSettingsMapTest, IndividualSettings) {
@@ -1202,6 +1211,22 @@ TEST_F(HostContentSettingsMapTest, ManagedDefaultContentSetting) {
             host_content_settings_map->GetDefaultContentSetting(
                 CONTENT_SETTINGS_TYPE_PLUGINS, NULL));
 #endif
+  EXPECT_EQ(CONTENT_SETTING_BLOCK,
+            host_content_settings_map->GetDefaultContentSetting(
+                CONTENT_SETTINGS_TYPE_ADS, NULL));
+
+  // Set managed-default-content-setting through the coresponding preferences.
+  prefs->SetManagedPref(prefs::kManagedDefaultAdsSetting,
+                        base::MakeUnique<base::Value>(CONTENT_SETTING_ALLOW));
+  EXPECT_EQ(CONTENT_SETTING_ALLOW,
+            host_content_settings_map->GetDefaultContentSetting(
+                CONTENT_SETTINGS_TYPE_ADS, nullptr));
+
+  // Remove managed-default-content-settings-preferences.
+  prefs->RemoveManagedPref(prefs::kManagedDefaultAdsSetting);
+  EXPECT_EQ(CONTENT_SETTING_BLOCK,
+            host_content_settings_map->GetDefaultContentSetting(
+                CONTENT_SETTINGS_TYPE_ADS, nullptr));
 }
 
 TEST_F(HostContentSettingsMapTest,
