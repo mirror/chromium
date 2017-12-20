@@ -63,6 +63,7 @@
 #include "core/html/forms/ExternalPopupMenu.h"
 #include "core/html/forms/FileChooser.h"
 #include "core/html/forms/HTMLInputElement.h"
+#include "core/html/forms/HTMLSelectElement.h"
 #include "core/html/forms/InternalPopupMenu.h"
 #include "core/inspector/DevToolsEmulator.h"
 #include "core/layout/HitTestResult.h"
@@ -105,6 +106,7 @@
 #include "public/web/WebNode.h"
 #include "public/web/WebPlugin.h"
 #include "public/web/WebPopupMenuInfo.h"
+#include "public/web/WebSelectElement.h"
 #include "public/web/WebSelection.h"
 #include "public/web/WebSettings.h"
 #include "public/web/WebTextDirection.h"
@@ -1065,6 +1067,13 @@ void ChromeClientImpl::TextFieldDataListChanged(HTMLInputElement& input) {
 void ChromeClientImpl::AjaxSucceeded(LocalFrame* frame) {
   if (auto* fill_client = AutofillClientFromFrame(frame))
     fill_client->AjaxSucceeded();
+}
+
+void ChromeClientImpl::SelectFieldOptionsChanged(HTMLSelectElement& select) {
+  if (auto* fill_client =
+          AutofillClientFromFrame(select.GetDocument().GetFrame())) {
+    fill_client->SelectFieldOptionsChanged(WebSelectElement(&select));
+  }
 }
 
 void ChromeClientImpl::RegisterViewportLayers() const {

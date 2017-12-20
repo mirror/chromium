@@ -184,6 +184,8 @@ class AutofillManager : public AutofillHandler,
   void OnHidePopup() override;
   void OnSetDataList(const std::vector<base::string16>& values,
                      const std::vector<base::string16>& labels) override;
+  void SelectFieldOptionsDidChange(const FormData& form,
+                                   const FormFieldData& field) override;
   void Reset() override;
 
   // Returns true if the value of the AutofillEnabled pref is true and the
@@ -556,6 +558,16 @@ class AutofillManager : public AutofillHandler,
 #if defined(OS_ANDROID) || defined(OS_IOS)
   AutofillAssistant autofill_assistant_;
 #endif
+
+  // For the dynamic filling. Clean this up before review.
+  AutofillProfile temp_data_model_;
+  FieldSignature pending_form_field_signature_;
+  FormSignature pending_form_signature_;
+
+  bool tried_ = false;
+
+  std::map<FormSignature, AutofillDataModel*> dynamic_;
+  ///////////////////////////////////////////////////////
 
   base::WeakPtrFactory<AutofillManager> weak_ptr_factory_;
 

@@ -58,6 +58,9 @@ class WebAutofillClient {
   virtual void DidCompleteFocusChangeInFrame() {}
   virtual void DidReceiveLeftMouseDownOrGestureTapInNode(const WebNode&) {}
 
+  virtual void SelectFieldOptionsChanged(
+      const blink::WebFormControlElement& element) {}
+
  protected:
   virtual ~WebAutofillClient() {}
 };

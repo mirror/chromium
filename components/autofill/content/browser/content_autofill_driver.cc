@@ -254,6 +254,12 @@ void ContentAutofillDriver::SetDataList(
   autofill_handler_->OnSetDataList(values, labels);
 }
 
+void ContentAutofillDriver::SelectFieldOptionsDidChange(
+    const FormData& form,
+    const FormFieldData& field) {
+  autofill_handler_->SelectFieldOptionsDidChange(form, field);
+}
+
 void ContentAutofillDriver::DidNavigateMainFrame(
     content::NavigationHandle* navigation_handle) {
   if (navigation_handle->IsSameDocument())

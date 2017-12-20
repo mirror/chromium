@@ -404,8 +404,11 @@ void AutofillAgent::DoAcceptDataListSuggestion(
 
 // mojom::AutofillAgent:
 void AutofillAgent::FillForm(int32_t id, const FormData& form) {
-  if (id != autofill_query_id_ && id != kNoQueryId)
-    return;
+  // if (id != autofill_query_id_ && id != kNoQueryId)
+  //  return;
+
+  LOG(ERROR) << "FillForm";
+  testing_value_ = true;
 
   was_query_node_autofilled_ = element_.IsAutofilled();
   form_util::FillForm(form, element_);
@@ -738,6 +741,37 @@ void AutofillAgent::DidReceiveLeftMouseDownOrGestureTapInNode(
 
   if (IsKeyboardAccessoryEnabled() || !focus_requires_scroll_)
     HandleFocusChangeComplete();
+}
+
+void AutofillAgent::SelectFieldOptionsChanged(
+    const blink::WebFormControlElement& element) {
+  if (!testing_value_) {
+    return;
+  }
+
+  FormData form;
+  FormFieldData field;
+  if (form_util::FindFormAndFieldForFormControlElement(element, &form,
+                                                       &field) &&
+      !field.option_values.empty()) {
+    if (on_select_update_timer_.IsRunning()) {
+      on_select_update_timer_.AbandonAndStop();
+    }
+
+    on_select_update_timer_.Start(
+        FROM_HERE, base::TimeDelta::FromMilliseconds(50),
+        base::Bind(&AutofillAgent::SelectWasUpdated,
+                   weak_ptr_factory_.GetWeakPtr(), form, field));
+  }
+}
+
+void AutofillAgent::SelectWasUpdated(FormData form, FormFieldData field) {
+  for (size_t i = 0; i < field.option_values.size(); ++i) {
+    LOG(ERROR) << field.option_values[i];
+    LOG(ERROR) << field.option_contents[i];
+  }
+
+  GetAutofillDriver()->SelectFieldOptionsDidChange(form, field);
 }
 
 void AutofillAgent::FormControlElementClicked(

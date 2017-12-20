@@ -762,6 +762,7 @@ void ForEachMatchingFormFieldCommon(
     // This case should be reachable only for pathological websites and tests,
     // which add or remove form fields while the user is interacting with the
     // Autofill popup.
+    LOG(ERROR) << "PROBLEM";
     return;
   }
 
@@ -779,6 +780,7 @@ void ForEachMatchingFormFieldCommon(
       // popup.  I (isherman) am not aware of any such websites, and so am
       // optimistically including a NOTREACHED().  If you ever trip this check,
       // please file a bug against me.
+      LOG(ERROR) << "PROBLEM";
       NOTREACHED();
       continue;
     }
@@ -807,8 +809,10 @@ void ForEachMatchingFormFieldCommon(
         (!element->HasAttribute(kValue) ||
          element->GetAttribute(kValue) != element->Value()) &&
         (!element->HasAttribute(kPlaceholder) ||
-         element->GetAttribute(kPlaceholder) != element->Value()))
+         element->GetAttribute(kPlaceholder) != element->Value())) {
+      LOG(ERROR) << "Skipped";
       continue;
+    }
 
     DCHECK(!g_prevent_layout || !(filters & FILTER_NON_FOCUSABLE_ELEMENTS))
         << "The callsite of this code wanted to both prevent layout and check "
@@ -864,6 +868,7 @@ void ForEachMatchingUnownedFormField(const WebElement& initiating_element,
 void FillFormField(const FormFieldData& data,
                    bool is_initiating_node,
                    blink::WebFormControlElement* field) {
+  LOG(ERROR) << "FillFormField " << data.value;
   // Nothing to fill.
   if (data.value.empty())
     return;
@@ -1652,6 +1657,7 @@ bool FindFormAndFieldForFormControlElement(const WebFormControlElement& element,
 void FillForm(const FormData& form, const WebFormControlElement& element) {
   WebFormElement form_element = element.Form();
   if (form_element.IsNull()) {
+    LOG(ERROR) << "unowned";
     ForEachMatchingUnownedFormField(element,
                                     form,
                                     FILTER_ALL_NON_EDITABLE_ELEMENTS,
@@ -1659,6 +1665,8 @@ void FillForm(const FormData& form, const WebFormControlElement& element) {
                                     &FillFormField);
     return;
   }
+
+  LOG(ERROR) << "Owned";
 
   ForEachMatchingFormField(form_element,
                            element,

@@ -751,6 +751,9 @@ void AutofillManager::FillOrPreviewProfileForm(
     address_form_event_logger_->OnDidFillSuggestion(
         profile, form_structure->form_parsed_timestamp());
 
+  LOG(ERROR) << "Setting the profile";
+  temp_data_model_ = profile;
+
   FillOrPreviewDataModelForm(
       action, query_id, form, field, profile, false /* is_credit_card */,
       base::string16() /* cvc */, form_structure, autofill_field);
@@ -819,7 +822,33 @@ void AutofillManager::OnDidFillAutofillFormData(const FormData& form,
   // form is not present in our cache, which will happen rarely.
   if (FindCachedForm(form, &form_structure)) {
     form_types = form_structure->GetFormTypes();
+
+    bool found_filled_country = false;
+    bool found_unfilled_state = false;
+    FieldSignature unfilled_state_signature;
+
+    // Look for a state field that did not fill
+    for (const auto& field : *form_structure) {
+      ServerFieldType field_type = field->Type().GetStorableType();
+
+      if (field_type == ADDRESS_HOME_COUNTRY && field->is_autofilled)
+        found_filled_country = true;
+
+      if (field_type == ADDRESS_HOME_STATE && !field->is_autofilled) {
+        found_unfilled_state = true;
+        unfilled_state_signature = CalculateFieldSignatureByNameAndType(
+            field->name, field->form_control_type);
+      }
+    }
+
+    if (found_filled_country && found_unfilled_state) {
+      LOG(ERROR) << "Setting the temp";
+      pending_form_field_signature_ = unfilled_state_signature;
+      pending_form_signature_ = form_structure->form_signature();
+      tried_ = false;
+    }
   }
+
   AutofillMetrics::LogUserHappinessMetric(AutofillMetrics::USER_DID_AUTOFILL,
                                           form_types);
   if (!user_did_autofill_) {
@@ -989,6 +1018,50 @@ void AutofillManager::OnSetDataList(const std::vector<base::string16>& values,
     return;
 
   external_delegate_->SetCurrentDataListValues(values, labels);
+}
+
+void AutofillManager::SelectFieldOptionsDidChange(const FormData& form,
+                                                  const FormFieldData& field) {
+  LOG(ERROR) << "In the callback";
+
+  if (tried_)
+    return;
+  tried_ = true;
+
+  FormFieldData* field_data;
+  FormData result = form;
+  FormStructure form_structure(result);
+
+  for (FormFieldData& iter : result.fields) {
+    if (iter.SameFieldAs(field)) {
+      field_data = &iter;
+      LOG(ERROR) << "Set the correct one";
+      break;
+    }
+  }
+
+  for (size_t i = 0; i < form_structure.field_count(); ++i) {
+    if (form_structure.field(i)->SameFieldAs(field)) {
+      LOG(ERROR) << temp_data_model_.GetInfo(ADDRESS_HOME_STATE, "en-us");
+      AutofillField* autofill_field = form_structure.field(i);
+      autofill_field->SetTypeTo(ADDRESS_HOME_STATE);
+      base::string16 cvc;
+      FillFieldWithValue(autofill_field, temp_data_model_, field_data,
+                         /*should_notify=*/false, cvc);
+      driver()->SendFormDataToRenderer(
+          1234, AutofillDriver::FORM_DATA_ACTION_FILL, result);
+      LOG(ERROR) << "Filled";
+      return;
+    }
+  }
+  /*
+    base::string16 cvc;
+    if (field_filler_.FillFormField(*autofill_field, temp_data_model_,
+                                    &field_data, cvc)) {
+      LOG(ERROR) << "Filled";
+    } else {
+      LOG(ERROR) << "Could not fill";
+    }*/
 }
 
 void AutofillManager::OnLoadedServerPredictions(
@@ -1909,6 +1982,7 @@ void AutofillManager::FillFieldWithValue(AutofillField* autofill_field,
                                          const base::string16& cvc) {
   if (field_filler_.FillFormField(*autofill_field, data_model, field_data,
                                   cvc)) {
+    LOG(ERROR) << "filling";
     // Mark the cached field as autofilled, so that we can detect when a
     // user edits an autofilled field (for metrics).
     autofill_field->is_autofilled = true;
@@ -1926,6 +2000,8 @@ void AutofillManager::FillFieldWithValue(AutofillField* autofill_field,
           /*profile_full_name=*/data_model.GetInfo(AutofillType(NAME_FULL),
                                                    app_locale_));
     }
+  } else {
+    LOG(ERROR) << "couyld not fill";
   }
 }
 

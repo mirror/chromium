@@ -13,6 +13,7 @@
 #include "base/memory/weak_ptr.h"
 #include "base/strings/string16.h"
 #include "base/time/time.h"
+#include "base/timer/timer.h"
 #include "components/autofill/content/common/autofill_agent.mojom.h"
 #include "components/autofill/content/common/autofill_driver.mojom.h"
 #include "components/autofill/content/renderer/form_cache.h"
@@ -108,6 +109,8 @@ class AutofillAgent : public content::RenderFrameObserver,
 
   FormTracker* form_tracker_for_testing() { return &form_tracker_; }
 
+  void SelectWasUpdated(FormData form, FormFieldData field);
+
  protected:
   // blink::WebAutofillClient:
   void DidAssociateFormControlsDynamically() override;
@@ -182,6 +185,8 @@ class AutofillAgent : public content::RenderFrameObserver,
   void DidCompleteFocusChangeInFrame() override;
   void DidReceiveLeftMouseDownOrGestureTapInNode(
       const blink::WebNode& node) override;
+  void SelectFieldOptionsChanged(
+      const blink::WebFormControlElement& element) override;
 
   void HandleFocusChangeComplete();
 
@@ -314,6 +319,10 @@ class AutofillAgent : public content::RenderFrameObserver,
   mojo::Binding<mojom::AutofillAgent> binding_;
 
   mojom::AutofillDriverPtr autofill_driver_;
+
+  bool testing_value_ = false;
+
+  base::OneShotTimer on_select_update_timer_;
 
   base::WeakPtrFactory<AutofillAgent> weak_ptr_factory_;
 
