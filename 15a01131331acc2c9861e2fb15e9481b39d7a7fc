@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "a6cb1262_62736d97",
+        "filename": "chrome/browser/net/predictor.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 982,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-12-20T15:30:09Z",
+      "side": 1,
+      "message": "nit: We will also need to update the documentation of this menthod in the header file.",
+      "revId": "15a01131331acc2c9861e2fb15e9481b39d7a7fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "252fa1ca_0a4a6451",
+        "filename": "chrome/browser/net/predictor.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 992,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-12-20T15:30:09Z",
+      "side": 1,
+      "message": "Why does this feature flag only apply to the |!proxy_service_| case?\nIs it true that when DRP is enabled, proxy_service_ \u003d\u003d nullptr? \nCould you add an inline comment on the relationship between DRP and |proxy_service_|?",
+      "revId": "15a01131331acc2c9861e2fb15e9481b39d7a7fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b9cfafd9_6644bdab",
         "filename": "chrome/browser/predictors/preconnect_manager.cc",
         "patchSetId": 5
