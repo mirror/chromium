@@ -10,8 +10,8 @@
 #include "base/files/file_util.h"
 #include "base/files/scoped_temp_dir.h"
 #include "base/run_loop.h"
-#include "base/single_thread_task_runner.h"
 #include "base/test/test_timeouts.h"
+#include "base/test/test_mock_time_task_runner.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "components/drive/chromeos/change_list_loader.h"
 #include "components/drive/chromeos/drive_test_util.h"
@@ -103,7 +103,11 @@ class SyncClientTestDriveService : public ::drive::FakeDriveService {
 
 class SyncClientTest : public testing::Test {
  public:
+  SyncClientTest() : mock_task_runner_(new base::TestMockTimeTaskRunner()), runner_(
+    base::ThreadTaskRunnerHandle::OverrideForTesting(mock_task_runner_)) {}
+
   void SetUp() override {
+    ASSERT_TRUE(base::ThreadTaskRunnerHandle::IsSet());
     ASSERT_TRUE(temp_dir_.CreateUniqueTempDir());
 
     pref_service_.reset(new TestingPrefServiceSimple);
@@ -165,7 +169,7 @@ class SyncClientTest : public testing::Test {
         title,
         false,  // shared_with_me
         google_apis::test_util::CreateCopyResultCallback(&error, &entry));
-    base::RunLoop().RunUntilIdle();
+    mock_task_runner_->RunUntilIdle();
     ASSERT_EQ(google_apis::HTTP_CREATED, error);
     ASSERT_TRUE(entry);
     resource_ids_[title] = entry->file_id();
@@ -193,7 +197,7 @@ class SyncClientTest : public testing::Test {
     FileError error = FILE_ERROR_FAILED;
     change_list_loader_->LoadIfNeeded(
         google_apis::test_util::CreateCopyResultCallback(&error));
-    base::RunLoop().RunUntilIdle();
+    mock_task_runner_->RunUntilIdle();
     EXPECT_EQ(FILE_ERROR_OK, error);
 
     // Prepare 3 pinned-but-not-present files.
@@ -222,7 +226,7 @@ class SyncClientTest : public testing::Test {
         util::GetDriveMyDriveRootPath().AppendASCII("removed"),
         false,  // is_recursive
         google_apis::test_util::CreateCopyResultCallback(&error));
-    base::RunLoop().RunUntilIdle();
+    mock_task_runner_->RunUntilIdle();
     EXPECT_EQ(FILE_ERROR_OK, error);
 
     // Prepare a moved file.
@@ -232,7 +236,7 @@ class SyncClientTest : public testing::Test {
         util::GetDriveMyDriveRootPath().AppendASCII("moved"),
         util::GetDriveMyDriveRootPath().AppendASCII("moved_new_title"),
         google_apis::test_util::CreateCopyResultCallback(&error));
-    base::RunLoop().RunUntilIdle();
+    mock_task_runner_->RunUntilIdle();
     EXPECT_EQ(FILE_ERROR_OK, error);
   }
 
@@ -264,11 +268,13 @@ class SyncClientTest : public testing::Test {
   std::unique_ptr<SyncClient> sync_client_;
 
   std::map<std::string, std::string> resource_ids_;  // Name-to-id map.
+  scoped_refptr<base::TestMockTimeTaskRunner> mock_task_runner_;
+  base::ScopedClosureRunner runner_;
 };
 
 TEST_F(SyncClientTest, StartProcessingBacklog) {
   sync_client_->StartProcessingBacklog();
-  base::RunLoop().RunUntilIdle();
+  mock_task_runner_->RunUntilIdle();
 
   ResourceEntry entry;
   // Pinned files get downloaded.
@@ -295,7 +301,7 @@ TEST_F(SyncClientTest, StartProcessingBacklog) {
   drive_service_->GetFileResource(
       resource_ids_["removed"],
       google_apis::test_util::CreateCopyResultCallback(&status, &server_entry));
-  base::RunLoop().RunUntilIdle();
+  mock_task_runner_->RunUntilIdle();
   EXPECT_EQ(google_apis::HTTP_SUCCESS, status);
   ASSERT_TRUE(server_entry);
   EXPECT_TRUE(server_entry->labels().is_trashed());
@@ -305,7 +311,7 @@ TEST_F(SyncClientTest, StartProcessingBacklog) {
   drive_service_->GetFileResource(
       resource_ids_["moved"],
       google_apis::test_util::CreateCopyResultCallback(&status, &server_entry));
-  base::RunLoop().RunUntilIdle();
+  mock_task_runner_->RunUntilIdle();
   EXPECT_EQ(google_apis::HTTP_SUCCESS, status);
   ASSERT_TRUE(server_entry);
   EXPECT_EQ("moved_new_title", server_entry->title());
@@ -313,7 +319,7 @@ TEST_F(SyncClientTest, StartProcessingBacklog) {
 
 TEST_F(SyncClientTest, AddFetchTask) {
   sync_client_->AddFetchTask(GetLocalId("foo"));
-  base::RunLoop().RunUntilIdle();
+  mock_task_runner_->RunUntilIdle();
 
   ResourceEntry entry;
   EXPECT_EQ(FILE_ERROR_OK,
@@ -325,7 +331,7 @@ TEST_F(SyncClientTest, AddFetchTaskAndCancelled) {
   // Trigger fetching of a file which results in cancellation.
   drive_service_->set_resource_id_to_be_cancelled(resource_ids_["foo"]);
   sync_client_->AddFetchTask(GetLocalId("foo"));
-  base::RunLoop().RunUntilIdle();
+  mock_task_runner_->RunUntilIdle();
 
   // The file should be unpinned if the user wants the download to be cancelled.
   ResourceEntry entry;
@@ -341,7 +347,7 @@ TEST_F(SyncClientTest, RemoveFetchTask) {
 
   sync_client_->RemoveFetchTask(GetLocalId("foo"));
   sync_client_->RemoveFetchTask(GetLocalId("baz"));
-  base::RunLoop().RunUntilIdle();
+  mock_task_runner_->RunUntilIdle();
 
   // Only "bar" should be fetched.
   ResourceEntry entry;
@@ -363,7 +369,7 @@ TEST_F(SyncClientTest, ExistingPinnedFiles) {
   // Start checking the existing pinned files. This will collect the resource
   // IDs of pinned files, with stale local cache files.
   sync_client_->StartCheckingExistingPinnedFiles();
-  base::RunLoop().RunUntilIdle();
+  mock_task_runner_->RunUntilIdle();
 
   // "fetched" and "dirty" are the existing pinned files.
   // The non-dirty one should be synced, but the dirty one should not.
@@ -397,7 +403,8 @@ TEST_F(SyncClientTest, RetryOnDisconnection) {
   sync_client_->AddFetchTask(GetLocalId("foo"));
   sync_client_->AddUpdateTask(ClientContext(USER_INITIATED),
                               GetLocalId("dirty"));
-  base::RunLoop().RunUntilIdle();
+  mock_task_runner_->FastForwardBy(TestTimeouts::tiny_timeout());
+  mock_task_runner_->RunUntilIdle();
 
   // Not yet fetched nor uploaded.
   ResourceEntry entry;
@@ -412,7 +419,7 @@ TEST_F(SyncClientTest, RetryOnDisconnection) {
   fake_network_change_notifier_->SetConnectionType(
       net::NetworkChangeNotifier::CONNECTION_WIFI);
   drive_service_->set_offline(false);
-  base::RunLoop().RunUntilIdle();
+  mock_task_runner_->RunUntilIdle();
 
   // Fetched and uploaded.
   EXPECT_EQ(FILE_ERROR_OK,
@@ -427,18 +434,18 @@ TEST_F(SyncClientTest, ScheduleRerun) {
   // Add a fetch task for "foo", this should result in being paused.
   drive_service_->set_resource_id_to_be_paused(resource_ids_["foo"]);
   sync_client_->AddFetchTask(GetLocalId("foo"));
-  base::RunLoop().RunUntilIdle();
+  mock_task_runner_->RunUntilIdle();
 
   // While the first task is paused, add a task again.
   // This results in scheduling rerun of the task.
   sync_client_->AddFetchTask(GetLocalId("foo"));
-  base::RunLoop().RunUntilIdle();
+  mock_task_runner_->RunUntilIdle();
 
   // Resume the paused task.
   drive_service_->set_resource_id_to_be_paused(std::string());
   ASSERT_FALSE(drive_service_->paused_action().is_null());
   drive_service_->paused_action().Run();
-  base::RunLoop().RunUntilIdle();
+  mock_task_runner_->RunUntilIdle();
 
   // Task should be run twice.
   EXPECT_EQ(2, drive_service_->download_file_count());
@@ -473,7 +480,7 @@ TEST_F(SyncClientTest, Dependencies) {
   sync_client_->AddUpdateTask(ClientContext(USER_INITIATED), local_id2);
   // Start syncing the parent later.
   sync_client_->AddUpdateTask(ClientContext(USER_INITIATED), local_id1);
-  base::RunLoop().RunUntilIdle();
+  mock_task_runner_->RunUntilIdle();
 
   // Both entries are synced.
   EXPECT_EQ(FILE_ERROR_OK, metadata_->GetResourceEntryById(local_id1, &entry1));
@@ -509,10 +516,44 @@ TEST_F(SyncClientTest, WaitForUpdateTaskToComplete) {
   EXPECT_TRUE(sync_client_->WaitForUpdateTaskToComplete(
       local_id, google_apis::test_util::CreateCopyResultCallback(&error)));
 
-  base::RunLoop().RunUntilIdle();
+  mock_task_runner_->RunUntilIdle();
 
   // The callback is called.
   EXPECT_EQ(FILE_ERROR_OK, error);
+}
+
+TEST_F(SyncClientTest, WaitRepeatedUpdate) {
+  // Create directories locally.
+  const base::FilePath kPath1(FILE_PATH_LITERAL("drive/root/dir1"));
+
+  ResourceEntry parent;
+  EXPECT_EQ(FILE_ERROR_OK,
+            metadata_->GetResourceEntryByPath(kPath1.DirName(), &parent));
+
+  ResourceEntry entry1;
+  entry1.set_parent_local_id(parent.local_id());
+  entry1.set_title(kPath1.BaseName().AsUTF8Unsafe());
+  entry1.mutable_file_info()->set_is_directory(true);
+  entry1.set_metadata_edit_state(ResourceEntry::DIRTY);
+  std::string local_id1;
+  EXPECT_EQ(FILE_ERROR_OK, metadata_->AddEntry(entry1, &local_id1));
+
+  base::TimeDelta delay = base::TimeDelta::FromSeconds(1);
+  sync_client_->set_delay_for_testing(delay);
+  // Start syncing the file.
+  sync_client_->AddUpdateTask(ClientContext(USER_INITIATED), local_id1);
+  // The file is being written actively.
+  sync_client_->AddUpdateTask(ClientContext(USER_INITIATED), local_id1);
+  mock_task_runner_->FastForwardBy(delay);
+  mock_task_runner_->RunUntilIdle();
+  // The entry is not synced yet.
+  EXPECT_EQ(FILE_ERROR_OK, metadata_->GetResourceEntryById(local_id1, &entry1));
+  EXPECT_EQ(ResourceEntry::DIRTY, entry1.metadata_edit_state());
+
+  mock_task_runner_->FastForwardBy(delay);
+  mock_task_runner_->RunUntilIdle();
+  EXPECT_EQ(FILE_ERROR_OK, metadata_->GetResourceEntryById(local_id1, &entry1));
+  EXPECT_EQ(ResourceEntry::CLEAN, entry1.metadata_edit_state());
 }
 
 }  // namespace internal
