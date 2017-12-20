@@ -37,6 +37,7 @@
 #include "chrome/common/pref_names.h"
 #include "chrome/test/base/in_process_browser_test.h"
 #include "chrome/test/base/ui_test_utils.h"
+#include "components/data_reduction_proxy/core/common/data_reduction_proxy_features.h"
 #include "components/prefs/pref_service.h"
 #include "content/public/browser/browsing_data_remover.h"
 #include "content/public/common/content_switches.h"
@@ -836,6 +837,93 @@ IN_PROC_BROWSER_TEST_F(PredictorBrowserTest, SingleLookupTest) {
   EXPECT_TRUE(observer()->HostFound(url));
   ExpectValidPeakPendingLookupsOnUI(1u);
   ExpectNoLookupsAreInProgressOnUIThread();
+}
+
+// Data saver and kDisableDnsPreResolution feature are enabled.
+IN_PROC_BROWSER_TEST_F(PredictorBrowserTest, DataSaverEnabled) {
+  base::test::ScopedFeatureList scoped_feature_list;
+  scoped_feature_list.InitAndEnableFeature(
+      data_reduction_proxy::features::kDisableDnsPreResolution);
+
+  bool data_saver_enabled = true;
+  PrefService* prefs = browser()->profile()->GetPrefs();
+  prefs->SetBoolean(prefs::kDataSaverEnabled, data_saver_enabled);
+  // Give the setting notification a chance to propagate.
+  content::RunAllPendingInMessageLoop();
+
+  DiscardAllResultsOnUIThread();
+  GURL http_url("http://www.example.test/");
+  GURL https_url("https://www.example.test/");
+
+  std::vector<GURL> names{http_url, https_url};
+  FloodResolveRequestsOnUIThread(names);
+  observer()->WaitUntilHostLookedUp(https_url);
+  ExpectFoundUrls({https_url}, {});
+
+  // |http_url| should not be pre-resolved when the data saver is enabled.
+  EXPECT_FALSE(observer()->HasHostBeenLookedUp(http_url));
+  // HTTPS URLs should be pre-resolved even when the data saver is enabled.
+  EXPECT_TRUE(observer()->HasHostBeenLookedUp(https_url));
+  ExpectValidPeakPendingLookupsOnUI(1u);
+}
+
+// Data saver is enabled, but the kDisableDnsPreResolution feature is not.
+IN_PROC_BROWSER_TEST_F(PredictorBrowserTest,
+                       DataSaverEnabledDnsPreResolutionFeatureNotEnabled) {
+  base::test::ScopedFeatureList scoped_feature_list;
+  scoped_feature_list.InitAndDisableFeature(
+      data_reduction_proxy::features::kDisableDnsPreResolution);
+
+  bool data_saver_enabled = true;
+  PrefService* prefs = browser()->profile()->GetPrefs();
+  prefs->SetBoolean(prefs::kDataSaverEnabled, data_saver_enabled);
+  // Give the setting notification a chance to propagate.
+  content::RunAllPendingInMessageLoop();
+
+  DiscardAllResultsOnUIThread();
+  GURL http_url("http://www.example.test/");
+  GURL https_url("https://www.example.test/");
+
+  std::vector<GURL> names{http_url, https_url};
+  FloodResolveRequestsOnUIThread(names);
+  WaitUntilHostsLookedUp(names);
+  ExpectFoundUrls({http_url, https_url}, {});
+
+  // |http_url| should be pre-resolved when the data saver is enabled since the
+  // |data_reduction_proxy::features::kDisableDnsPreResolution| feature is not
+  // enabled.
+  EXPECT_TRUE(observer()->HasHostBeenLookedUp(http_url));
+  // HTTPS URLs should be pre-resolved even when the data saver is enabled.
+  EXPECT_TRUE(observer()->HasHostBeenLookedUp(https_url));
+  ExpectValidPeakPendingLookupsOnUI(2u);
+}
+
+// Data saver is not enabled.
+IN_PROC_BROWSER_TEST_F(PredictorBrowserTest, DataSaverDisabled) {
+  base::test::ScopedFeatureList scoped_feature_list;
+  scoped_feature_list.InitAndEnableFeature(
+      data_reduction_proxy::features::kDisableDnsPreResolution);
+
+  bool data_saver_enabled = false;
+  PrefService* prefs = browser()->profile()->GetPrefs();
+  prefs->SetBoolean(prefs::kDataSaverEnabled, data_saver_enabled);
+  // Give the setting notification a chance to propagate.
+  content::RunAllPendingInMessageLoop();
+
+  DiscardAllResultsOnUIThread();
+  GURL http_url("http://www.example.test/");
+  GURL https_url("https://www.example.test/");
+
+  std::vector<GURL> names{http_url, https_url};
+  FloodResolveRequestsOnUIThread(names);
+  WaitUntilHostsLookedUp(names);
+  ExpectFoundUrls({http_url, https_url}, {});
+
+  // HTTP and HTTPS URLs should be pre-resolved when the data saver is not
+  // enabled.
+  EXPECT_TRUE(observer()->HasHostBeenLookedUp(http_url));
+  EXPECT_TRUE(observer()->HasHostBeenLookedUp(https_url));
+  ExpectValidPeakPendingLookupsOnUI(2u);
 }
 
 IN_PROC_BROWSER_TEST_F(PredictorBrowserTest, ConcurrentLookupTest) {

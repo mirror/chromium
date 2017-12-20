@@ -149,7 +149,7 @@ PreconnectManager* LoadingPredictor::preconnect_manager() {
   if (!preconnect_manager_ &&
       config_.IsPreconnectEnabledForSomeOrigin(profile_)) {
     preconnect_manager_ = base::MakeUnique<PreconnectManager>(
-        GetWeakPtr(), profile_->GetRequestContext());
+        GetWeakPtr(), profile_->GetRequestContext(), profile_);
   }
 
   return preconnect_manager_.get();

@@ -462,6 +462,8 @@ split_static_library("browser") {
     # //chrome/browser/extensions/BUILD.gn
     "assist_ranker/assist_ranker_service_factory.cc",
     "assist_ranker/assist_ranker_service_factory.h",
+    "data_saver/data_saver_util.cc",
+    "data_saver/data_saver_util.h",
     "external_protocol/external_protocol_handler.cc",
     "external_protocol/external_protocol_handler.h",
     "external_protocol/external_protocol_observer.cc",
