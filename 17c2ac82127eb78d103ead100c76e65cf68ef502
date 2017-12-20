@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a919863c_0c83f6cd",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1323,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-12-20T23:36:29Z",
+      "side": 1,
+      "message": "The code before this patch used BorderBoxRect().Location() instead of FloatPoint().\nIt sounds like from your CL description that this is wrong somehow due to overflow?\nOr is it wrong due to vertical use cases?",
+      "revId": "17c2ac82127eb78d103ead100c76e65cf68ef502",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a7b00c1_ab1d8b23",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1623,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-12-20T23:36:29Z",
+      "side": 1,
+      "message": "nit: composited",
+      "revId": "17c2ac82127eb78d103ead100c76e65cf68ef502",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5b11cb3_9efbd28a",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1633,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-12-20T23:36:29Z",
+      "side": 1,
+      "message": "Is this the equivalent logic to ComputeOffsetFromCompositedAncestor in CompositedLayerMapping.cpp for SPv1? If so, why is the logic different?",
+      "revId": "17c2ac82127eb78d103ead100c76e65cf68ef502",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
