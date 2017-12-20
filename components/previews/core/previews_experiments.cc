@@ -36,6 +36,10 @@ const char kEffectiveConnectionTypeThreshold[] =
 
 const char kClientLoFiExperimentName[] = "PreviewsClientLoFi";
 
+// Inflation parameters for estimating NoScript data savings.
+const char kNoScriptInflationPercent[] = "NoScriptInflationPercent";
+const char kNoScriptInflationBytes[] = "NoScriptInflationBytes";
+
 size_t GetParamValueAsSizeT(const std::string& trial_name,
                             const std::string& param_name,
                             size_t default_value) {
@@ -198,6 +202,16 @@ std::vector<std::string> GetBlackListedHostsForClientLoFiFieldTrial() {
       base::GetFieldTrialParamValue(kClientLoFiExperimentName,
                                     "short_host_blacklist"),
       ",", base::TRIM_WHITESPACE, base::SPLIT_WANT_NONEMPTY);
+}
+
+int NoScriptPreviewsInflationPercent() {
+  return GetFieldTrialParamByFeatureAsInt(features::kNoScriptPreviews,
+                                          kNoScriptInflationPercent, 80);
+}
+
+int NoScriptPreviewsInflationBytes() {
+  return GetFieldTrialParamByFeatureAsInt(features::kNoScriptPreviews,
+                                          kNoScriptInflationBytes, 0);
 }
 
 }  // namespace params
