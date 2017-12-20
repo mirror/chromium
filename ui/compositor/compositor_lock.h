@@ -41,6 +41,8 @@ class CompositorLockManagerClient {
 // classes which want to provide out compositor locking.
 class COMPOSITOR_EXPORT CompositorLockManager {
  public:
+  static constexpr int kCompositorLockTimeoutMs = 67;
+
   CompositorLockManager(scoped_refptr<base::SingleThreadTaskRunner> task_runner,
                         CompositorLockManagerClient* client);
   ~CompositorLockManager();
@@ -50,7 +52,8 @@ class COMPOSITOR_EXPORT CompositorLockManager {
   // timeout is null, then no timeout is used.
   std::unique_ptr<CompositorLock> GetCompositorLock(
       CompositorLockClient* client,
-      base::TimeDelta timeout);
+      base::TimeDelta timeout =
+          base::TimeDelta::FromMilliseconds(kCompositorLockTimeoutMs));
 
   void set_allow_locks_to_extend_timeout(bool allowed) {
     allow_locks_to_extend_timeout_ = allowed;

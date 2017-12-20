@@ -86,7 +86,7 @@ TEST_F(ShellSurfaceTest, AcknowledgeConfigure) {
   // Compositor should be locked until configure request is acknowledged.
   ui::Compositor* compositor =
       shell_surface->GetWidget()->GetNativeWindow()->layer()->GetCompositor();
-  EXPECT_TRUE(compositor->IsLocked());
+  EXPECT_TRUE(compositor->lock_manager()->IsLocked());
 
   shell_surface->AcknowledgeConfigure(kSerial);
   std::unique_ptr<Buffer> fullscreen_buffer(
@@ -97,7 +97,7 @@ TEST_F(ShellSurfaceTest, AcknowledgeConfigure) {
 
   EXPECT_EQ(gfx::Point().ToString(),
             surface->window()->GetBoundsInRootWindow().origin().ToString());
-  EXPECT_FALSE(compositor->IsLocked());
+  EXPECT_FALSE(compositor->lock_manager()->IsLocked());
 }
 
 TEST_F(ShellSurfaceTest, SetParent) {

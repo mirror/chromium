@@ -102,7 +102,7 @@ class CompositorObserverForLocks : public CompositorObserver {
   void OnCompositingEnded(Compositor* compositor) override {}
   void OnCompositingLockStateChanged(Compositor* compositor) override {
     changed_ = true;
-    locked_ = compositor->IsLocked();
+    locked_ = compositor->lock_manager()->IsLocked();
   }
   void OnCompositingChildResizing(Compositor* compositor) override {}
 
@@ -165,7 +165,8 @@ TEST_F(CompositorTestWithMockedTime, LocksAreObserved) {
 
   EXPECT_FALSE(observer.changed());
 
-  lock = compositor()->GetCompositorLock(nullptr, base::TimeDelta());
+  lock = compositor()->lock_manager()->GetCompositorLock(nullptr,
+                                                         base::TimeDelta());
   // The observer see that locks changed and that the compositor is locked
   // at the time.
   EXPECT_TRUE(observer.changed());

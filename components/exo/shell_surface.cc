@@ -187,9 +187,9 @@ void ShellSurface::OnPreWindowStateTypeChange(
     if (!configure_callback_.is_null()) {
       // Give client a chance to produce a frame that takes state change into
       // account by acquiring a compositor lock.
-      ui::Compositor* compositor =
-          widget_->GetNativeWindow()->layer()->GetCompositor();
-      configure_compositor_lock_ = compositor->GetCompositorLock(
+      ui::CompositorLockManager* lock_manager =
+          widget_->GetNativeWindow()->layer()->GetCompositor()->lock_manager();
+      configure_compositor_lock_ = lock_manager->GetCompositorLock(
           nullptr, base::TimeDelta::FromMilliseconds(
                        kMaximizedOrFullscreenOrPinnedLockTimeoutMs));
     } else {

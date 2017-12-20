@@ -531,7 +531,7 @@ bool Compositor::HasAnimationObserver(
 }
 
 void Compositor::BeginMainFrame(const viz::BeginFrameArgs& args) {
-  DCHECK(!IsLocked());
+  DCHECK(!lock_manager()->IsLocked());
   for (auto& observer : animation_observer_list_)
     observer.OnAnimationStep(args.frame_time);
   if (animation_observer_list_.might_have_observers())
@@ -572,7 +572,7 @@ void Compositor::DidFailToInitializeLayerTreeFrameSink() {
 }
 
 void Compositor::DidCommit() {
-  DCHECK(!IsLocked());
+  DCHECK(!lock_manager()->IsLocked());
   for (auto& observer : observer_list_)
     observer.OnCompositingDidCommit(this);
 }
