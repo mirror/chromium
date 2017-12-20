@@ -53,9 +53,9 @@ class AnimationWorkletGlobalScopeTest : public ::testing::Test {
     std::unique_ptr<AnimationWorkletThread> thread =
         AnimationWorkletThread::Create(nullptr, *reporting_proxy_);
 
-    WorkerClients* clients = WorkerClients::Create();
-
     Document* document = page_->GetFrame().GetDocument();
+    WorkerClients* clients = WorkerClients::Create(document);
+
     thread->Start(
         std::make_unique<GlobalScopeCreationParams>(
             document->Url(), document->UserAgent(),
