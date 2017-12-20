@@ -323,7 +323,7 @@ class WorkerThreadableLoaderTestHelper : public ThreadableLoaderTestHelper {
         ParentFrameTaskRunners::Create(dummy_page_holder_->GetFrame());
     worker_thread_ = std::make_unique<WorkerThreadForTest>(
         ThreadableLoadingContext::Create(GetDocument()), *reporting_proxy_);
-    WorkerClients* worker_clients = WorkerClients::Create();
+    WorkerClients* worker_clients = WorkerClients::Create(&GetDocument());
 
     ProvideWorkerFetchContextToWorker(
         worker_clients, std::make_unique<WebWorkerFetchContextForTest>(

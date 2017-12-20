@@ -382,7 +382,7 @@ void WebEmbeddedWorkerImpl::StartWorkerThread() {
   // (crbug.com/254993)
   const SecurityOrigin* starter_origin = document->GetSecurityOrigin();
 
-  WorkerClients* worker_clients = WorkerClients::Create();
+  WorkerClients* worker_clients = WorkerClients::Create(document);
   ProvideIndexedDBClientToWorker(worker_clients,
                                  IndexedDBClient::Create(*worker_clients));
 

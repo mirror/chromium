@@ -38,6 +38,8 @@
 
 namespace blink {
 
+class Document;
+
 // This is created on the main thread, passed to the worker thread and
 // attached to WorkerOrWorkletGlobalScope when it is created.
 // This class can be used to provide "client" implementations to workers or
@@ -47,7 +49,7 @@ class CORE_EXPORT WorkerClients final : public GarbageCollected<WorkerClients>,
   USING_GARBAGE_COLLECTED_MIXIN(WorkerClients);
 
  public:
-  static WorkerClients* Create() { return new WorkerClients; }
+  static WorkerClients* Create(Document*);
 
   void Trace(blink::Visitor* visitor) override {
     Supplementable<WorkerClients>::Trace(visitor);
