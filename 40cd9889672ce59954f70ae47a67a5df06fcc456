@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6a322cb6_422eb0a0",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-12-20T17:59:10Z",
+      "side": 1,
+      "message": "nit:s/this/this is/",
+      "range": {
+        "startLine": 239,
+        "startChar": 50,
+        "endLine": 239,
+        "endChar": 55
+      },
+      "revId": "40cd9889672ce59954f70ae47a67a5df06fcc456",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d0447da_fea1fe19",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-12-20T17:59:10Z",
+      "side": 1,
+      "message": "Feel free to ignore this comment.\n\nTook me a while to understand this, but I think I see that this is still true, because of the changes you made below, when setting |needs_sniffing_| at the end of CrossSiteDocumentResourceHandler::ShouldBlockBasedOnHeaders.",
+      "range": {
+        "startLine": 240,
+        "startChar": 54,
+        "endLine": 241,
+        "endChar": 28
+      },
+      "revId": "40cd9889672ce59954f70ae47a67a5df06fcc456",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fca1a562_ced9ec68",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-12-20T17:59:10Z",
+      "side": 1,
+      "message": "This is subtle - it took me a while to understand the interaction of the 2 topmost if statements/conditions.  Can we have a comment above line 274 saying something like: If CROSS_SITE_DOCUMENT_MIME_TYPE_OTHERS response didn\u0027t include a parser breaker, then do not block.",
+      "range": {
+        "startLine": 274,
+        "startChar": 8,
+        "endLine": 274,
+        "endChar": 63
+      },
+      "revId": "40cd9889672ce59954f70ae47a67a5df06fcc456",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d52c427d_472af1a6",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-12-20T17:59:10Z",
+      "side": 1,
+      "message": "nit: I wonder if it might be desirable to change this to CROSS_SITE_DOCUMENT_MIME_TYPE_MAX.  This way (if there is no \"default\" case) the compiler will warn if a new enum value is added, without adding a corresponding case here.  Not sure about it - feel free to do what you feel is best here.",
+      "range": {
+        "startLine": 352,
+        "startChar": 8,
+        "endLine": 352,
+        "endChar": 15
+      },
+      "revId": "40cd9889672ce59954f70ae47a67a5df06fcc456",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1b3d9643_867c76d6",
+        "filename": "content/common/cross_site_document_classifier.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-12-20T17:59:10Z",
+      "side": 1,
+      "message": "Is this part of the TODO obsolete after your CL?",
+      "range": {
+        "startLine": 238,
+        "startChar": 5,
+        "endLine": 238,
+        "endChar": 63
+      },
+      "revId": "40cd9889672ce59954f70ae47a67a5df06fcc456",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "037580ee_f5b519f9",
+        "filename": "content/common/cross_site_document_classifier.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-12-20T17:59:10Z",
+      "side": 1,
+      "message": "Were there other prefixes we\u0027ve considered and rejected?  If yes, we could document them in a comment here maybe?\n\nExample 1: I see [1] that ColdFusion by default prefixes with \"//\", but I am not sure if we would want to include this prefix (it is not-specific and can result in blocking binary data that happens by chance to include \"//\" as the first 2 bytes of the response;  I am not sure if this defense is robust [e.g. if part of the json response can still be intercepted by some javascript tricks - see https://bugs.dojotoolkit.org/ticket/6380]).\n\nExample 2: I see [2] that Spring Java framework (or its fork?) use \"{} \u0026\u0026 \".  OTOH, some docs [3] for the Spring Java framework indicate that one of prefixes already on the list above is used: \")]}\u0027,\" (note lack of \"\\n\").\n\nExample 3: I see [4] that Apache Struts uses \"{}\u0026\u0026\" (almost the same as previous example but without the whitespace).\n\n[1] https://www.petefreitag.com/item/720.cfm\n[2] https://github.com/stormpath/spring-mvc-rest-exhandler/blob/master/example/src/main/java/com/stormpath/blog/spring/http/converter/json/DefaultJacksonHttpMessageConverter.java#L105\n[3] https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/http/converter/json/MappingJackson2HttpMessageConverter.html\n[4] http://struts.apache.org/plugins/json/#wrapping and http://struts.apache.org/plugins/json/#prefix",
+      "range": {
+        "startLine": 295,
+        "startChar": 27,
+        "endLine": 295,
+        "endChar": 50
+      },
+      "revId": "40cd9889672ce59954f70ae47a67a5df06fcc456",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7c8f531_49e0416e",
+        "filename": "content/common/cross_site_document_classifier.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-12-20T17:59:10Z",
+      "side": 1,
+      "message": "How important is the \"\\n\" character at the end?  Do we want to include it to minimize the chance of this particular prefix occurring by chance in a binary data that is not really JSON?  If yes, would it make sense to document this in a comment (e.g. saying that we try to make the prefixes as long as practically possible to minimize the chance of finding the prefix in random, non-JSON, binary data).\n\nI note that docs for some frameworks [1] mention the pattern from line 297, but *without* the \u0027\\n\u0027 character.  I also note that we don\u0027t have \u0027\\n\u0027 character in the patterns below.\n\n[1] https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/http/converter/json/MappingJackson2HttpMessageConverter.html",
+      "range": {
+        "startLine": 300,
+        "startChar": 23,
+        "endLine": 300,
+        "endChar": 25
+      },
+      "revId": "40cd9889672ce59954f70ae47a67a5df06fcc456",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
