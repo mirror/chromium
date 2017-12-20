@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a4d4d9c4_fb59fee1",
+        "filename": "content/browser/gpu/gpu_process_host.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1121,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-12-20T23:54:15Z",
+      "side": 1,
+      "message": "nit: could you add a bool to GpuPreferences (including mojom and struct_traits in gpu/ipc/common/), and move this logic to GpuDataManagerImplPrivate::UpdateGpuPreferences (where you would set the bit), that way:\n1- we don\u0027t need to introduce new switches and do string parsing just to pass a bit\n2- it applies to both in-process and out-of-process GPU\n3- it\u0027s more testable",
+      "revId": "b5497bfb4756f29df854ed4ff5fa64ca0d7ba733",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
