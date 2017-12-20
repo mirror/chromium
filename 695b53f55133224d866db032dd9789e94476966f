@@ -1,0 +1,164 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "80fe315b_b4e88be9",
+        "filename": "content/browser/accessibility/browser_accessibility.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 867,
+      "author": {
+        "id": 1214309
+      },
+      "writtenOn": "2017-12-20T23:21:30Z",
+      "side": 1,
+      "message": "Now that I look at it, we\u0027re pretty inconsistent with manager_ verses manager(), and if we DCHECK, if check, or just use directly.",
+      "range": {
+        "startLine": 867,
+        "startChar": 9,
+        "endLine": 867,
+        "endChar": 17
+      },
+      "revId": "695b53f55133224d866db032dd9789e94476966f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b24b8c9c_c3953265",
+        "filename": "content/browser/accessibility/browser_accessibility.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 882,
+      "author": {
+        "id": 1214309
+      },
+      "writtenOn": "2017-12-20T23:21:30Z",
+      "side": 1,
+      "message": "could you remove (or move this comment).  I think it\u0027s in the wrong place now.",
+      "range": {
+        "startLine": 882,
+        "startChar": 3,
+        "endLine": 882,
+        "endChar": 25
+      },
+      "revId": "695b53f55133224d866db032dd9789e94476966f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cad5a13_81faa8c7",
+        "filename": "ui/accessibility/platform/ax_platform_node_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1074,
+      "author": {
+        "id": 1214309
+      },
+      "writtenOn": "2017-12-20T23:21:30Z",
+      "side": 1,
+      "message": "nit: i\u0027d move this addref down to where we assign it to the out *relation.",
+      "range": {
+        "startLine": 1074,
+        "startChar": 16,
+        "endLine": 1074,
+        "endChar": 22
+      },
+      "revId": "695b53f55133224d866db032dd9789e94476966f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1140be48_4ac464dd",
+        "filename": "ui/accessibility/platform/ax_platform_relation_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1214309
+      },
+      "writtenOn": "2017-12-20T23:21:30Z",
+      "side": 1,
+      "message": "shouldn\u0027t this just be under \u003cvector\u003e",
+      "revId": "695b53f55133224d866db032dd9789e94476966f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d021e72e_bb413a4b",
+        "filename": "ui/accessibility/platform/ax_platform_relation_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1214309
+      },
+      "writtenOn": "2017-12-20T23:21:30Z",
+      "side": 1,
+      "message": "Does it make any sense to return something other than empty string to help with debugging or flagging when someone is asking for a relation that isn\u0027t supported yet?",
+      "revId": "695b53f55133224d866db032dd9789e94476966f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5afc5b6c_8334e21b",
+        "filename": "ui/accessibility/platform/ax_platform_relation_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1214309
+      },
+      "writtenOn": "2017-12-20T23:21:30Z",
+      "side": 1,
+      "message": "It\u0027s not clear to me why this is static and is only run once.\n\nNit: it would be really helpful to add comments above each of the for loops to help readability.",
+      "revId": "695b53f55133224d866db032dd9789e94476966f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d49c36d_074f94bf",
+        "filename": "ui/accessibility/platform/ax_platform_relation_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1214309
+      },
+      "writtenOn": "2017-12-20T23:21:30Z",
+      "side": 1,
+      "message": "nit: you don\u0027t need the {} here",
+      "revId": "695b53f55133224d866db032dd9789e94476966f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05e0abb4_88cdfbb0",
+        "filename": "ui/accessibility/platform/ax_platform_relation_win.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1214309
+      },
+      "writtenOn": "2017-12-20T23:21:30Z",
+      "side": 1,
+      "message": "nit: bool if it\u0027s success or failure.",
+      "range": {
+        "startLine": 56,
+        "startChar": 9,
+        "endLine": 56,
+        "endChar": 13
+      },
+      "revId": "695b53f55133224d866db032dd9789e94476966f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
