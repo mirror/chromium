@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1ee50308_48e71b45",
+        "filename": "ash/login/ui/lock_screen.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-12-20T17:14:41Z",
+      "side": 1,
+      "message": "Use LockScreen::IsShown()",
+      "revId": "3978d4ec87f46957c06ba88fd1d7beb3fa45a3b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4281b0f0_e3d1d1ec",
+        "filename": "ash/shelf/login_shelf_view.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-12-20T17:14:41Z",
+      "side": 1,
+      "message": "Check ash::LockScreen::IsShown() here?",
+      "revId": "3978d4ec87f46957c06ba88fd1d7beb3fa45a3b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
