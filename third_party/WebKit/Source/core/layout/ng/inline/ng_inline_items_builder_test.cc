@@ -95,6 +95,22 @@ class NGInlineItemsBuilderTest : public ::testing::Test {
   scoped_refptr<ComputedStyle> style_;
 };
 
+class WithWhiteSpace : public NGInlineItemsBuilderTest,
+                       public ::testing::WithParamInterface<EWhiteSpace> {
+ protected:
+  void SetUp() override {
+    NGInlineItemsBuilderTest::SetUp();
+    SetWhiteSpace(GetParam());
+  }
+};
+
+INSTANTIATE_TEST_CASE_P(
+    NGInlineItemsBuilderTest,
+    WithWhiteSpace,
+    ::testing::ValuesIn({EWhiteSpace::kNormal, EWhiteSpace::kNowrap,
+                         EWhiteSpace::kPre, EWhiteSpace::kPreLine,
+                         EWhiteSpace::kPreWrap}));
+
 #define TestWhitespaceValue(expected_text, expected_collapsed, input,         \
                             whitespace)                                       \
   SetWhiteSpace(whitespace);                                                  \
@@ -344,7 +360,7 @@ TEST_F(NGInlineItemsBuilderTest, CollapseNewlineAfterObject) {
   EXPECT_EQ("{}", GetCollapsed(builder.GetOffsetMappingBuilder()));
 }
 
-TEST_F(NGInlineItemsBuilderTest, AppendEmptyString) {
+TEST_P(WithWhiteSpace, AppendEmptyString) {
   EXPECT_EQ("", TestAppend(""));
   EXPECT_EQ("{}", collapsed_);
   EXPECT_EQ(0u, items_.size());
@@ -361,6 +377,49 @@ TEST_F(NGInlineItemsBuilderTest, NewLines) {
   EXPECT_EQ(NGInlineItem::kControl, items_[3].Type());
   EXPECT_EQ(NGInlineItem::kText, items_[4].Type());
   EXPECT_EQ(NGInlineItem::kControl, items_[5].Type());
+}
+
+TEST_P(WithWhiteSpace, Ignorable) {
+  EXPECT_EQ("appleorangegrape", TestAppend("apple"
+                                           "\x0c"
+                                           "orange"
+                                           "\x0c"
+                                           "grape"));
+  EXPECT_EQ("{5, 12}", collapsed_);
+
+  EXPECT_EQ("apple", TestAppend("\x0c"
+                                "apple"));
+  EXPECT_EQ("{0}", collapsed_);
+
+  EXPECT_EQ("apple", TestAppend("apple"
+                                "\x0c"));
+  EXPECT_EQ("{5}", collapsed_);
+}
+
+TEST_F(NGInlineItemsBuilderTest, IgnorableWithCollapse) {
+  EXPECT_EQ("apple orange", TestAppend("apple "
+                                       "\x0c"
+                                       " orange"));
+  EXPECT_EQ("{6, 7}", collapsed_);
+}
+
+TEST_F(NGInlineItemsBuilderTest, IgnorableWithPreserve) {
+  SetWhiteSpace(EWhiteSpace::kPre);
+  EXPECT_EQ(
+      "appleorange"
+      "\n"
+      "grape",
+      TestAppend("apple"
+                 "\x0c"
+                 "orange"
+                 "\n"
+                 "grape"));
+  EXPECT_EQ("{5}", collapsed_);
+  EXPECT_EQ(4u, items_.size());
+  EXPECT_EQ(NGInlineItem::kText, items_[0].Type());
+  EXPECT_EQ(NGInlineItem::kText, items_[1].Type());
+  EXPECT_EQ(NGInlineItem::kControl, items_[2].Type());
+  EXPECT_EQ(NGInlineItem::kText, items_[3].Type());
 }
 
 TEST_F(NGInlineItemsBuilderTest, Empty) {
