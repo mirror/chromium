@@ -41,6 +41,7 @@ static_library("storage_monitor") {
 
   deps = [
     "//base",
+    "//components/crash/core/common:crash_key",  # Remove after fixing crbug.com/796094.
     "//content/public/browser",
     "//ui/base",
   ]
