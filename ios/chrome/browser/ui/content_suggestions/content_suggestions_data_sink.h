@@ -8,6 +8,7 @@
 @class CollectionViewItem;
 @class ContentSuggestionIdentifier;
 @class ContentSuggestionsSectionInformation;
+@class SuggestedContent;
 
 // Data sink for the ContentSuggestions. It will be notified when new data needs
 // to be pulled.
