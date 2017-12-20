@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7c13852e_a0428605",
+        "filename": "chrome/browser/ui/webui/quota_internals/quota_internals_proxy.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-20T05:20:23Z",
+      "side": 1,
+      "message": "Nit: using or blink:: but not both",
+      "range": {
+        "startLine": 44,
+        "startChar": 6,
+        "endLine": 44,
+        "endChar": 13
+      },
+      "revId": "aba7c06c06122550f28f49c0d74dfb52df175c72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25858490_d7807b93",
+        "filename": "content/renderer/renderer_blink_platform_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1371,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-20T05:20:23Z",
+      "side": 1,
+      "message": "Out of curiosity, will we look at consolidating this into blink::StorageType in a followup?",
+      "range": {
+        "startLine": 1371,
+        "startChar": 4,
+        "endLine": 1371,
+        "endChar": 30
+      },
+      "revId": "aba7c06c06122550f28f49c0d74dfb52df175c72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e962bcc_31c8f18b",
+        "filename": "third_party/WebKit/public/platform/WebStorageQuotaType.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-20T05:20:23Z",
+      "side": 1,
+      "message": "Oh nevermind my earlier comment.",
+      "revId": "aba7c06c06122550f28f49c0d74dfb52df175c72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

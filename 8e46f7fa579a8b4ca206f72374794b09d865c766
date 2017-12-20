@@ -2,6 +2,46 @@
   "comments": [
     {
       "key": {
+        "uuid": "6526e025_f45fa042",
+        "filename": "chrome/browser/browsing_data/browsing_data_quota_helper_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-20T05:20:23Z",
+      "side": 1,
+      "message": "Small nit: omit blink:: since we already have a using blink::StorageType above",
+      "range": {
+        "startLine": 66,
+        "startChar": 31,
+        "endLine": 66,
+        "endChar": 38
+      },
+      "revId": "8e46f7fa579a8b4ca206f72374794b09d865c766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d940285_113899dd",
+        "filename": "chrome/browser/browsing_data/browsing_data_quota_helper_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-20T05:20:23Z",
+      "side": 1,
+      "message": "Ditto",
+      "revId": "8e46f7fa579a8b4ca206f72374794b09d865c766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1491e49c_795ffc5d",
         "filename": "content/browser/storage_partition_impl.cc",
         "patchSetId": 6
