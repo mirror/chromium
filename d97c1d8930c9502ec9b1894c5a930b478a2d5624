@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "75a193a7_d99a78b9",
+        "filename": "ui/views/widget/desktop_aura/desktop_window_tree_host_x11.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2061,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-12-20T01:58:40Z",
+      "side": 1,
+      "message": "FWIW, I suspect almost all remote desktop software uses XTest. VNC does, for example (https://github.com/TigerVNC/tigervnc/blob/master/unix/x0vncserver/XDesktop.cxx#L241)",
+      "range": {
+        "startLine": 2060,
+        "startChar": 64,
+        "endLine": 2061,
+        "endChar": 20
+      },
+      "revId": "d97c1d8930c9502ec9b1894c5a930b478a2d5624",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
