@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "85de8552_5422a6e5",
+        "filename": "chrome/common/profiling/profiling_service.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-12-20T19:52:24Z",
+      "side": 1,
+      "message": "Add a note that you expect anonymize to be true only in paths that are uploading data to a server or something... Otherwise it\u0027s pretty hard to sort out the context for why it\u0027s true sometimes and false others.",
+      "range": {
+        "startLine": 49,
+        "startChar": 5,
+        "endLine": 49,
+        "endChar": 10
+      },
+      "revId": "82e3243117d596306d6c7f6c71a0eea5b6af96f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
