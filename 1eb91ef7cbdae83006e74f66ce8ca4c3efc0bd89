@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cecea7a4_5c271e46",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_view_views.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 772,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-20T06:17:38Z",
+      "side": 1,
+      "message": "can this now DCHECK_NE(0, popup_view_id)?",
+      "revId": "1eb91ef7cbdae83006e74f66ce8ca4c3efc0bd89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0450b1e7_3f9d79d3",
+        "filename": "ui/views/accessibility/view_accessibility.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-20T06:17:38Z",
+      "side": 1,
+      "message": "ChromeOS currently instantiates a ViewAccessibility, so it won\u0027t be happy with a pure virtual.\n\nI think we perhaps want AXAuraObjWrapper to inherit from ViewAccessibility, but you\u0027ll need to take care to use the one in AXAuraObjCache and not create a new one (or figure out some way to make things consistent here). Then GetId() can return the one on AXAuraObjWrapper. But it might not be straightforward.\n\nI left a comment on one of Dominic\u0027s CLs at https://chromium-review.googlesource.com/c/chromium/src/+/834997 regarding caching the |ax_node_| on NativeViewAccessibilityBase -- we might need the same thing for any new CrOS-specific subclass of ViewAccessibility to ensure AXAuraObjWrapper is still created lazily (assuming that\u0027s the case now.. I don\u0027t know much about a11y on CrOS).",
+      "revId": "1eb91ef7cbdae83006e74f66ce8ca4c3efc0bd89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
