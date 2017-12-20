@@ -264,7 +264,7 @@ TEST_F(BytesConsumerForDataConsumerHandleTest, drainAsBlobDataHandle) {
   // WebDataConsumerHandle::Reader::drainAsBlobDataHandle should return
   // nullptr from the second time, but we don't care that here.
   std::unique_ptr<MockDataConsumerHandle> handle =
-      WTF::WrapUnique(new MockDataConsumerHandle);
+      std::make_unique<MockDataConsumerHandle>();
   Persistent<MockDataConsumerHandle::MockReaderProxy> proxy = handle->Proxy();
   Persistent<BytesConsumer> consumer =
       new BytesConsumerForDataConsumerHandle(GetDocument(), std::move(handle));
@@ -283,7 +283,7 @@ TEST_F(BytesConsumerForDataConsumerHandleTest, drainAsBlobDataHandle) {
 
 TEST_F(BytesConsumerForDataConsumerHandleTest, drainAsFormData) {
   std::unique_ptr<MockDataConsumerHandle> handle =
-      WTF::WrapUnique(new MockDataConsumerHandle);
+      std::make_unique<MockDataConsumerHandle>();
   Persistent<MockDataConsumerHandle::MockReaderProxy> proxy = handle->Proxy();
   Persistent<BytesConsumer> consumer =
       new BytesConsumerForDataConsumerHandle(GetDocument(), std::move(handle));
