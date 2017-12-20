@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b48b4f10_67f6d803",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SignInPromo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-12-20T11:32:19Z",
+      "side": 1,
+      "message": "Good catch! I haven\u0027t thought about multiple instances of SignInPromo. Fixed. Also, I\u0027ve added return value to this method to reduce code duplication.\n\nThere shouldn\u0027t be any memory leaks, as DestructionObserver and dismiss() both call cancelSuppressionStatusDeferredUpdate.",
+      "parentUuid": "e08f1084_eadb731f",
+      "range": {
+        "startLine": 161,
+        "startChar": 12,
+        "endLine": 161,
+        "endChar": 31
+      },
+      "revId": "c09e3945fe5bc838efa3dd9a97d9725af1ec7c3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "52ac4ab8_915477d6",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SignInPromo.java",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-12-20T11:01:27Z",
       "side": 1,
       "message": "You could inline this method and then pull duplicate code out of the two branches of the if-statement in updateSuppressionStatus. Then if you get rid of the return there, you could directly call updateVisibility() from in there :)",
+      "range": {
+        "startLine": 174,
+        "startChar": 17,
+        "endLine": 174,
+        "endChar": 53
+      },
+      "revId": "c09e3945fe5bc838efa3dd9a97d9725af1ec7c3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cf6ad87_f3d3d05e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SignInPromo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-12-20T11:32:19Z",
+      "side": 1,
+      "message": "I deliberately avoided calling updateVisibility from updateSuppressionStatus() because of the constructor. Current structure of visibility-related code in constructor:\n\n mCanSignIn \u003d ...;\n mCanShowPersonalizedSuggestions \u003d ...;\n mSuppressed \u003d updateSuppressionStatus();\n\n updateVisibility();\n\nIf I were to call updateVisibility from updateSuppressionStatus:\n\n mCanSignIn \u003d ...;\n mCanShowPersonalizedSuggestions \u003d ...;\n updateSuppressionStatus(); // mSuppressed and visibility are updated here\n\nI find second snippet is harder to understand. I also like the duality of setupSuppressionStatusDeferredUpdate/cancelSuppressionStatusDeferredUpdate.\n\nHowever, it\u0027s not a strong opinion, so I can rewrite it if you want. Should I?",
+      "parentUuid": "52ac4ab8_915477d6",
       "range": {
         "startLine": 174,
         "startChar": 17,
