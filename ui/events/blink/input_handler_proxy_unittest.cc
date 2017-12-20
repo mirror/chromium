@@ -225,6 +225,8 @@ class MockInputHandler : public cc::InputHandler {
   }
   void set_is_scrolling_root(bool is) { is_scrolling_root_ = is; }
 
+  void HandleGestureScrollEnd(cc::ScrollState*) override;
+
  private:
   bool is_scrolling_root_ = true;
   DISALLOW_COPY_AND_ASSIGN(MockInputHandler);
