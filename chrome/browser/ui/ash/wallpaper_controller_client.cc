@@ -86,7 +86,8 @@ wallpaper::WallpaperFilesId HashWallpaperFilesIdStr(
 
 }  // namespace
 
-WallpaperControllerClient::WallpaperControllerClient() : binding_(this) {
+WallpaperControllerClient::WallpaperControllerClient()
+    : policy_handler_(this), binding_(this) {
   DCHECK(!g_instance);
   g_instance = this;
 }
@@ -101,8 +102,8 @@ void WallpaperControllerClient::Init() {
       ->GetConnector()
       ->BindInterface(ash::mojom::kServiceName, &wallpaper_controller_);
   BindAndSetClient();
-  // TODO(xdai): Get current device policy enforced flag from
-  // WallpaperPolicyHandler::IsDeviceWallpaperPolicyEnforced() and set here.
+  wallpaper_controller_->SetDeviceWallpaperPolicyEnforced(
+      policy_handler_.IsDeviceWallpaperPolicyEnforced());
 }
 
 void WallpaperControllerClient::InitForTesting(
