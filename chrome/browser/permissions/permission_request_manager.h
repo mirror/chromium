@@ -18,6 +18,10 @@
 enum class PermissionAction;
 class PermissionRequest;
 
+namespace extensions {
+class CryptoTokenPermissionTest;
+}
+
 namespace safe_browsing {
 class PermissionReporterBrowserTest;
 }
@@ -103,6 +107,7 @@ class PermissionRequestManager
 
   // TODO(felt): Update testing to use the TestApi so that it doesn't involve a
   // lot of friends.
+  friend class extensions::CryptoTokenPermissionTest;
   friend class GeolocationBrowserTest;
   friend class GeolocationPermissionContextTests;
   friend class MockPermissionPromptFactory;
