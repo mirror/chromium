@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "98356375_767d4c1c",
+        "filename": "components/offline_pages/core/model/create_archive_task.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-20T19:37:54Z",
+      "side": 1,
+      "message": "Add a comment that both the clock and this task are owned by the model, and they would be torn down together.",
+      "range": {
+        "startLine": 83,
+        "startChar": 8,
+        "endLine": 83,
+        "endChar": 13
+      },
+      "revId": "a04ad1ba5a0ad4ce62e18b874a78834578a5fd46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c6595fd_1ccf5511",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-20T19:37:54Z",
+      "side": 1,
+      "message": "Move the clock_ above task_queue_...\nI want the destruction order to be:\n1. tasks (some of which might be using the clock)\n2. clock\n\nSame applies to offline_event_logger_ if we ever provide it to the tasks.",
+      "range": {
+        "startLine": 206,
+        "startChar": 31,
+        "endLine": 206,
+        "endChar": 37
+      },
+      "revId": "a04ad1ba5a0ad4ce62e18b874a78834578a5fd46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7dec0ccb_cccd960f",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 54504,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-20T19:37:54Z",
+      "side": 1,
+      "message": "By putting it in this change you are adding metrics team to unrelated change. I\u0027d consider a simple one file change instead.",
+      "range": {
+        "startLine": 54504,
+        "startChar": 3,
+        "endLine": 54504,
+        "endChar": 11
+      },
+      "revId": "a04ad1ba5a0ad4ce62e18b874a78834578a5fd46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
