@@ -168,7 +168,15 @@ class SystemInfoHandlerGpuObserver : public content::GpuDataManagerObserver {
 
   void ObserverWatchdogCallback() {
     DCHECK_CURRENTLY_ON(BrowserThread::UI);
+#if defined(OS_CHROMEOS)
+    // TODO(zmo): CHECK everywhere once https://crbug.com/796386 is fixed.
+    gpu::GpuFeatureInfo gpu_feature_info =
+        gpu::ComputeGpuFeatureInfoWithHardwareAccelerationDisabled();
+    GpuDataManagerImpl::GetInstance()->UpdateGpuFeatureInfo(gpu_feature_info);
+    UnregisterAndSendResponse();
+#else
     CHECK(false) << "Gathering system GPU info took more than 5 seconds.";
+#endif
   }
 
   void UnregisterAndSendResponse() {
