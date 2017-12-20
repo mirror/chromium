@@ -146,6 +146,24 @@
     },
     {
       "key": {
+        "uuid": "15856575_10811c8e",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-20T19:25:40Z",
+      "side": 1,
+      "message": "When I ask myself: \"Is there a benefit to crashing the browser here?\", then the answer seems to be \"No.\"\n\nEven if the DCHECK failed, it presents no security risk to CBORReader itself, given that CBORReader must always assume anyway that the rest of the input may be invalid.\n\nIn particular, ReadSimpleValue() would safely choose one out of the 4 possible SimpleValues, and in the worst case the we would merrily finish parsing the rest of the (invalid) binary input, and produce a well-formed (but admittedly attacker-controlled) CBORValue output, let\u0027s call this `A`.\n\nBut whatever code will consume `A`, it will have to do some validation anyway, right? Otherwise the attacker could just use CBORWriter to serialize `A` into a well-formed binary representation, and feed *that* to CBORReader to circumvent the (D)CHECK.\n\nI am often afraid that over-using CHECK without justification seems to create a bigger problem in the form of a DoS vuln.? What is the guidance here? :)",
+      "parentUuid": "a2f7c101_884996fb",
+      "revId": "d3a91ea6e1d5c2328aa306425ed9a298e59909ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ee1c9462_f3adbf5d",
         "filename": "content/browser/webauth/cbor/cbor_reader.h",
         "patchSetId": 12
