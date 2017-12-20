@@ -46,6 +46,30 @@
       "revId": "8d56a35f7d423bd837f2f881c55f251aaceab809",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6c10eda_94a68bd0",
+        "filename": "chrome/browser/printing/background_printing_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-12-20T02:47:51Z",
+      "side": 0,
+      "message": "I believe that it should cover all the notifications in the event that the background printing manager actually has a print preview dialog. IIUC if it does not have a preview dialog it does nothing.\nOnPrintFailed() is due to a message from PrintRenderFrameHelper, which is now only sent during the native dialog printing workflow.\nSystemDialogCancelled() -\u003e the dialog is destroyed by PrintPreviewHandler before the system dialog is brought up, because we resolve the JS promise early.\nPrint document done/failed -\u003e in either case, we should go through PrintPreviewHandler::OnPrintResult (it is called as a callback from PrintViewManagerBase::StartLocalPrintJob), which destroys the dialog.\n\nIn general, with the new state of the code, the background printing manager should no longer care about print jobs, because its only task is to keep the print preview dialog alive long enough to issue the print request when the preview is done being generated. So it really shouldn\u0027t care about anything other than when the \"print\" promise is resolved/rejected, which happens in PrintPreviewHandler.",
+      "parentUuid": "c2a30dbf_72380cfb",
+      "range": {
+        "startLine": 93,
+        "startChar": 0,
+        "endLine": 100,
+        "endChar": 1
+      },
+      "revId": "8d56a35f7d423bd837f2f881c55f251aaceab809",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
