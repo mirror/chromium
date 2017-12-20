@@ -41,9 +41,12 @@ SkColor DelegatedFrameHostClientAura::DelegatedFrameHostGetGutterColor(
   return color;
 }
 
-gfx::Size DelegatedFrameHostClientAura::DelegatedFrameHostDesiredSizeInDIP()
-    const {
-  return render_widget_host_view_->window_->bounds().size();
+void DelegatedFrameHostClientAura::DelegatedFrameHostDesiredSize(
+    gfx::Size* size_in_dip,
+    float* scale_factor) const {
+  *size_in_dip = render_widget_host_view_->window_->bounds().size();
+  *scale_factor =
+      ui::GetScaleFactorForNativeView(render_widget_host_view_->window_);
 }
 
 bool DelegatedFrameHostClientAura::DelegatedFrameCanCreateResizeLock() const {
