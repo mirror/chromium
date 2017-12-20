@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "523b80ad_f50f812b",
+        "filename": "chrome/browser/ui/views/payments/shipping_address_editor_view_controller_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 681,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-12-20T22:32:09Z",
+      "side": 1,
+      "message": "local?",
+      "range": {
+        "startLine": 681,
+        "startChar": 39,
+        "endLine": 681,
+        "endChar": 52
+      },
+      "revId": "f83879635ea44548604c4e25eefe700c4614eb28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb2ac1e9_df2fe39d",
+        "filename": "chrome/browser/ui/views/payments/shipping_address_editor_view_controller_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 777,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-12-20T22:32:09Z",
+      "side": 1,
+      "message": "nit: but -\u003e even if it",
+      "range": {
+        "startLine": 777,
+        "startChar": 37,
+        "endLine": 777,
+        "endChar": 40
+      },
+      "revId": "f83879635ea44548604c4e25eefe700c4614eb28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c3af1fa_f1c516fe",
+        "filename": "components/autofill/core/browser/phone_number_i18n.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-12-20T22:32:09Z",
+      "side": 1,
+      "message": "Could you add a definition in the .h for this one too?",
+      "range": {
+        "startLine": 97,
+        "startChar": 5,
+        "endLine": 97,
+        "endChar": 26
+      },
+      "revId": "f83879635ea44548604c4e25eefe700c4614eb28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09e8ddd2_5f0bbc1e",
+        "filename": "components/autofill/core/browser/phone_number_i18n.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-12-20T22:32:09Z",
+      "side": 1,
+      "message": "could you annotate this one as well?",
+      "range": {
+        "startLine": 18,
+        "startChar": 1,
+        "endLine": 18,
+        "endChar": 0
+      },
+      "revId": "f83879635ea44548604c4e25eefe700c4614eb28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
