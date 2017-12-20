@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d0268b89_cd8cbf75",
+        "filename": "ios/build/bots/chromium.mac/ios-simulator-full-configs.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1116444
+      },
+      "writtenOn": "2017-12-20T01:29:44Z",
+      "side": 1,
+      "message": "See https://bugs.chromium.org/p/chromium/issues/detail?id\u003d475693#c285 for the reasons behind this constraint. It may need to be adjusted if these builders upgrade to 100% capacity.",
+      "range": {
+        "startLine": 31,
+        "startChar": 6,
+        "endLine": 31,
+        "endChar": 28
+      },
+      "revId": "ee59e8be77576d7088fa3bb9bfb3d80a759de18c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
