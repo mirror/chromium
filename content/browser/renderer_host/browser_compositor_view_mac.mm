@@ -125,7 +125,7 @@ RecyclableCompositorMac::~RecyclableCompositorMac() {
 void RecyclableCompositorMac::Suspend() {
   // Requests a compositor lock without a timeout.
   compositor_suspended_lock_ =
-      compositor_.GetCompositorLock(nullptr, base::TimeDelta());
+      compositor_.lock_manager()->GetCompositorLock(nullptr, base::TimeDelta());
 }
 
 void RecyclableCompositorMac::Unsuspend() {
