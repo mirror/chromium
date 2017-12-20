@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f4c7c204_b3482167",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 2359,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-12-20T13:08:28Z",
+      "side": 0,
+      "message": "Also remove the flag_descriptions strings",
+      "range": {
+        "startLine": 2359,
+        "startChar": 64,
+        "endLine": 2359,
+        "endChar": 0
+      },
+      "revId": "05400aa561a0f4b314910fce0e62af1c1e76a35a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

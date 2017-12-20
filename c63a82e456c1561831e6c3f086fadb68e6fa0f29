@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a84d5d8_0d44d452",
+        "filename": "components/ntp_tiles/constants.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-12-20T13:08:28Z",
+      "side": 1,
+      "message": "nit: I think it\u0027s called \"Chrome Home\" in code",
+      "range": {
+        "startLine": 29,
+        "startChar": 73,
+        "endLine": 29,
+        "endChar": 76
+      },
+      "revId": "c63a82e456c1561831e6c3f086fadb68e6fa0f29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35c15117_0864023b",
+        "filename": "components/ntp_tiles/field_trial.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-12-20T13:08:28Z",
+      "side": 1,
+      "message": "nit: not needed anymore",
+      "range": {
+        "startLine": 11,
+        "startChar": 30,
+        "endLine": 11,
+        "endChar": 0
+      },
+      "revId": "c63a82e456c1561831e6c3f086fadb68e6fa0f29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1481c85_72351353",
+        "filename": "testing/variations/fieldtrial_testing_config.json",
+        "patchSetId": 5
+      },
+      "lineNbr": 2106,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-12-20T13:08:28Z",
+      "side": 1,
+      "message": "Is there any point in listing multiple experiments here? AFAIK only the first (or last?) one takes effect.",
+      "range": {
+        "startLine": 2106,
+        "startChar": 39,
+        "endLine": 2106,
+        "endChar": 0
+      },
+      "revId": "c63a82e456c1561831e6c3f086fadb68e6fa0f29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
