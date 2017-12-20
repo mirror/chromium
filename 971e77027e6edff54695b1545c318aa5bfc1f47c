@@ -195,6 +195,24 @@
     },
     {
       "key": {
+        "uuid": "2f7bd42b_8416cd6b",
+        "filename": "third_party/WebKit/Source/modules/clipboard/ClipboardPromise.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1002421
+      },
+      "writtenOn": "2017-12-20T04:50:18Z",
+      "side": 1,
+      "message": "Ah, I thought that your rewrite already covered it. But I see now that it\u0027s missing the mention about Chrome being the foreground app.",
+      "parentUuid": "4e17ecf8_379972b8",
+      "revId": "971e77027e6edff54695b1545c318aa5bfc1f47c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87c22a7e_2f58bed4",
         "filename": "third_party/WebKit/Source/modules/clipboard/ClipboardPromise.cpp",
         "patchSetId": 9
@@ -336,6 +354,24 @@
     },
     {
       "key": {
+        "uuid": "9526121e_c4d6b3fd",
+        "filename": "third_party/WebKit/Source/modules/clipboard/ClipboardPromise.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1002421
+      },
+      "writtenOn": "2017-12-20T04:50:18Z",
+      "side": 1,
+      "message": "Discussed offline. Confusion was around using the Clipboard-read permission to control clipboard-write access.\n\nCode has been changed to use the clipboard-write permission here, but we\u0027ll need a follow-up cl once we decide how to handle clipboard writes when the clipboard-read permission is denied.",
+      "parentUuid": "4297c4f0_ea73b6e9",
+      "revId": "971e77027e6edff54695b1545c318aa5bfc1f47c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d76fd99c_900d76e5",
         "filename": "third_party/WebKit/Source/modules/clipboard/ClipboardPromise.cpp",
         "patchSetId": 9
@@ -383,6 +419,24 @@
       "side": 1,
       "message": "I don\u0027t think personally I agree that this is clearer - there\u0027s code duplication and it requires careful inspection . But perhaps this is a stylistic question I\u0027m not an OWNER of this code anyway so feel free to leave it as is.",
       "parentUuid": "2f5a091d_7bab3591",
+      "revId": "971e77027e6edff54695b1545c318aa5bfc1f47c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "82e4d1d4_6ee40bb0",
+        "filename": "third_party/WebKit/Source/modules/clipboard/ClipboardPromise.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1002421
+      },
+      "writtenOn": "2017-12-20T04:50:18Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "608f6663_289870f3",
       "revId": "971e77027e6edff54695b1545c318aa5bfc1f47c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
