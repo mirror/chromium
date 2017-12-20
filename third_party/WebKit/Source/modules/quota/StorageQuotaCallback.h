@@ -38,7 +38,7 @@ namespace blink {
 class StorageQuotaCallback
     : public GarbageCollectedFinalized<StorageQuotaCallback> {
  public:
-  virtual ~StorageQuotaCallback() {}
+  virtual ~StorageQuotaCallback() = default;
   virtual void Trace(blink::Visitor* visitor) {}
   virtual void handleEvent(uint64_t granted_quota_in_bytes) = 0;
 };

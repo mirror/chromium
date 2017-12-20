@@ -37,7 +37,8 @@ BytesConsumerTestUtil::ReplayingBytesConsumer::ReplayingBytesConsumer(
     ExecutionContext* execution_context)
     : execution_context_(execution_context) {}
 
-BytesConsumerTestUtil::ReplayingBytesConsumer::~ReplayingBytesConsumer() {}
+BytesConsumerTestUtil::ReplayingBytesConsumer::~ReplayingBytesConsumer() =
+    default;
 
 Result BytesConsumerTestUtil::ReplayingBytesConsumer::BeginRead(
     const char** buffer,

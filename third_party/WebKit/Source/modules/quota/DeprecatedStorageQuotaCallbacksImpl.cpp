@@ -44,7 +44,8 @@ DeprecatedStorageQuotaCallbacksImpl::DeprecatedStorageQuotaCallbacksImpl(
     StorageErrorCallback* error_callback)
     : quota_callback_(quota_callback), error_callback_(error_callback) {}
 
-DeprecatedStorageQuotaCallbacksImpl::~DeprecatedStorageQuotaCallbacksImpl() {}
+DeprecatedStorageQuotaCallbacksImpl::~DeprecatedStorageQuotaCallbacksImpl() =
+    default;
 
 void DeprecatedStorageQuotaCallbacksImpl::Trace(blink::Visitor* visitor) {
   visitor->Trace(usage_callback_);

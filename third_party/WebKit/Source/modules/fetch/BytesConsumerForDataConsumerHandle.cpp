@@ -21,7 +21,8 @@ BytesConsumerForDataConsumerHandle::BytesConsumerForDataConsumerHandle(
     : execution_context_(execution_context),
       reader_(handle->ObtainReader(this)) {}
 
-BytesConsumerForDataConsumerHandle::~BytesConsumerForDataConsumerHandle() {}
+BytesConsumerForDataConsumerHandle::~BytesConsumerForDataConsumerHandle() =
+    default;
 
 BytesConsumer::Result BytesConsumerForDataConsumerHandle::BeginRead(
     const char** buffer,

@@ -14,7 +14,7 @@ class DOMException;
 class RTCPeerConnectionErrorCallback
     : public GarbageCollectedFinalized<RTCPeerConnectionErrorCallback> {
  public:
-  virtual ~RTCPeerConnectionErrorCallback() {}
+  virtual ~RTCPeerConnectionErrorCallback() = default;
   virtual void handleEvent(DOMException*) = 0;
   virtual void Trace(blink::Visitor* visitor) {}
 };
