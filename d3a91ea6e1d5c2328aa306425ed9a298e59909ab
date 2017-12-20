@@ -164,6 +164,24 @@
     },
     {
       "key": {
+        "uuid": "9e9d838b_d2ad3064",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-12-20T19:53:57Z",
+      "side": 1,
+      "message": "It\u0027s true; I generally wouldn\u0027t want to CHECK in the browser/other privileged process as a result of goofy input, but I also don\u0027t want to let goofy input corrupt the browser/other privileged process. For code like this, that is likely to end up in components/ someday and get used in various contexts, I suspect the best strategy is to return an error and let the caller CHECK or DCHECK as appropriate for them. (E.g. crashing a renderer is perfectly fine.)\n\nWe don\u0027t consider DoS a vulnerability (https://chromium.googlesource.com/chromium/src/+/master/docs/security/faq.md#TOC-Are-denial-of-service-issues-considered-security-bugs-), but of course at the same time it\u0027s a total bummer so we prefer to avoid it. :) When I wrote the above I had forgotten that this code is still in content/browser; in my mind it is in components/ even if that\u0027s not yet true. Sorry about the confusion. :)",
+      "parentUuid": "15856575_10811c8e",
+      "revId": "d3a91ea6e1d5c2328aa306425ed9a298e59909ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ee1c9462_f3adbf5d",
         "filename": "content/browser/webauth/cbor/cbor_reader.h",
         "patchSetId": 12
