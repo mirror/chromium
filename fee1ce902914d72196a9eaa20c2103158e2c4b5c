@@ -94,6 +94,30 @@
       "revId": "fee1ce902914d72196a9eaa20c2103158e2c4b5c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ecbbc53_8134a67b",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 2766,
+      "author": {
+        "id": 1175809
+      },
+      "writtenOn": "2017-12-20T15:37:10Z",
+      "side": 1,
+      "message": "Done. Thank you, Kyle.",
+      "parentUuid": "92f2615e_ca42290f",
+      "range": {
+        "startLine": 2766,
+        "startChar": 39,
+        "endLine": 2766,
+        "endChar": 49
+      },
+      "revId": "fee1ce902914d72196a9eaa20c2103158e2c4b5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
