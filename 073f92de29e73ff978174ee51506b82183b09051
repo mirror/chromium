@@ -209,6 +209,24 @@
       "revId": "073f92de29e73ff978174ee51506b82183b09051",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20e06e27_45d49328",
+        "filename": "third_party/WebKit/public/platform/WebWorkerFetchContext.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-20T09:10:58Z",
+      "side": 1,
+      "message": "We already use it in platform, there\u0027s no corresponding type that\u0027s optimized for Blink, and base types are now allowed in core/ so it looks we can add it there?",
+      "parentUuid": "99d9c3a4_fa8a8d07",
+      "revId": "073f92de29e73ff978174ee51506b82183b09051",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
