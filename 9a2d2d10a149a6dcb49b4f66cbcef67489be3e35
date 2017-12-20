@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a611c2f1_634f1c91",
+        "filename": "content/common/service_worker/service_worker_event_dispatcher.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-12-20T08:19:23Z",
+      "side": 1,
+      "message": "I think this is not outdated; SetIdleTimerDelayToZero lets the idle timer request termination ASAP.\nTweaked a bit, how about this?",
+      "parentUuid": "c355825f_daef1add",
+      "revId": "9a2d2d10a149a6dcb49b4f66cbcef67489be3e35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "107f22b7_70a26d44",
         "filename": "content/renderer/service_worker/service_worker_timeout_timer.h",
         "patchSetId": 11
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "4997081d_65395c12",
+        "filename": "content/renderer/service_worker/service_worker_timeout_timer.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-12-20T08:19:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "107f22b7_70a26d44",
+      "revId": "9a2d2d10a149a6dcb49b4f66cbcef67489be3e35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b21ef1ff_f1605687",
         "filename": "content/renderer/service_worker/service_worker_timeout_timer.h",
         "patchSetId": 11
@@ -50,6 +86,24 @@
       "revId": "9a2d2d10a149a6dcb49b4f66cbcef67489be3e35",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61a7491d_2481fa7f",
+        "filename": "content/renderer/service_worker/service_worker_timeout_timer.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-12-20T08:19:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b21ef1ff_f1605687",
+      "revId": "9a2d2d10a149a6dcb49b4f66cbcef67489be3e35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
