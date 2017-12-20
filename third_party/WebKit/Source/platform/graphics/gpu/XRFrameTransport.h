@@ -32,15 +32,23 @@ class PLATFORM_EXPORT XRFrameTransport final
     : public GarbageCollectedFinalized<XRFrameTransport>,
       public device::mojom::blink::VRSubmitFrameClient {
  public:
-  XRFrameTransport();
+  explicit XRFrameTransport(int sample_count);
   ~XRFrameTransport();
 
   device::mojom::blink::VRSubmitFrameClientPtr GetSubmitFrameClient();
 
-  void PresentChange();
+  void PresentChange(gpu::gles2::GLES2Interface*, bool is_presenting);
 
   void SetTransportOptions(
       device::mojom::blink::VRDisplayFrameTransportOptionsPtr);
+
+  bool DrawingIntoFBO();
+
+  GLuint BindAHBToBufferHolder(
+      gpu::gles2::GLES2Interface*,
+      DrawingBuffer::Client*,
+      const base::Optional<gpu::MailboxHolder>& buffer_holder,
+      const blink::WebSize& buffer_size);
 
   // Call before finalizing the frame's image snapshot.
   void FramePreImage(gpu::gles2::GLES2Interface*);
@@ -80,6 +88,19 @@ class PLATFORM_EXPORT XRFrameTransport final
   device::mojom::blink::VRDisplayFrameTransportOptionsPtr transport_options_;
 
   std::unique_ptr<GpuMemoryBufferImageCopy> frame_copier_;
+
+  void AllocateAHBResources(gpu::gles2::GLES2Interface*);
+  void ReleaseAHBResources(gpu::gles2::GLES2Interface*);
+  void CreateAndBindAHBImage(
+      gpu::gles2::GLES2Interface*, DrawingBuffer::Client*,
+      const base::Optional<gpu::MailboxHolder>& buffer_holder);
+
+  int ahb_sample_count_;
+  int ahb_width_;
+  int ahb_height_;
+  GLuint ahb_fbo_ = 0;
+  GLuint ahb_depthbuffer_ = 0;
+  GLuint ahb_texture_ = 0;
 };
 
 }  // namespace blink
