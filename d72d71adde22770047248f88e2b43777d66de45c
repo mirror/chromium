@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "2884ab97_4ac16af8",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1425,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2017-12-20T14:48:38Z",
+      "side": 1,
+      "message": "Thanks a lot! I think it looks way cleaner now :)",
+      "parentUuid": "b8772108_3a095d3e",
+      "revId": "d72d71adde22770047248f88e2b43777d66de45c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "23c9fa88_14a9d868",
         "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
         "patchSetId": 2
@@ -198,6 +216,30 @@
       "revId": "d72d71adde22770047248f88e2b43777d66de45c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b39be47_68a87bf5",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1456,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2017-12-20T14:48:38Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f5aaee6b_20e1d988",
+      "range": {
+        "startLine": 1456,
+        "startChar": 17,
+        "endLine": 1456,
+        "endChar": 49
+      },
+      "revId": "d72d71adde22770047248f88e2b43777d66de45c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

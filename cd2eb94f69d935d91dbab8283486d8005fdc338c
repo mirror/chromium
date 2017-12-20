@@ -1,0 +1,296 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b5b12ad7_eedb5bcd",
+        "filename": "third_party/WebKit/LayoutTests/fast/spatial-navigation/snav-backtrack-out-of-non-navigable-iframe.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2017-12-20T14:48:38Z",
+      "side": 1,
+      "message": "... spatial navigation\u0027s search for candidates to focus: an iframe element ...",
+      "revId": "cd2eb94f69d935d91dbab8283486d8005fdc338c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47432768_ef63c9f6",
+        "filename": "third_party/WebKit/LayoutTests/fast/spatial-navigation/snav-backtrack-out-of-non-navigable-iframe.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2017-12-20T14:48:38Z",
+      "side": 1,
+      "message": "Not sure if this setting is needed?",
+      "revId": "cd2eb94f69d935d91dbab8283486d8005fdc338c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40f98a48_c299077b",
+        "filename": "third_party/WebKit/LayoutTests/fast/spatial-navigation/snav-backtrack-out-of-non-navigable-iframe.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2017-12-20T14:48:38Z",
+      "side": 1,
+      "message": "start",
+      "range": {
+        "startLine": 51,
+        "startChar": 80,
+        "endLine": 51,
+        "endChar": 81
+      },
+      "revId": "cd2eb94f69d935d91dbab8283486d8005fdc338c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45c8093f_e0255d75",
+        "filename": "third_party/WebKit/LayoutTests/fast/spatial-navigation/snav-backtrack-out-of-non-navigable-iframe.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2017-12-20T14:48:38Z",
+      "side": 1,
+      "message": "end",
+      "range": {
+        "startLine": 52,
+        "startChar": 78,
+        "endLine": 52,
+        "endChar": 79
+      },
+      "revId": "cd2eb94f69d935d91dbab8283486d8005fdc338c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cb85682_b5bc2331",
+        "filename": "third_party/WebKit/LayoutTests/fast/spatial-navigation/snav-backtrack-out-of-non-navigable-iframe.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2017-12-20T14:48:38Z",
+      "side": 1,
+      "message": "This stray \u003e should have been closing \u003ciframe\u003e start tag.",
+      "range": {
+        "startLine": 55,
+        "startChar": 6,
+        "endLine": 55,
+        "endChar": 7
+      },
+      "revId": "cd2eb94f69d935d91dbab8283486d8005fdc338c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03323d42_f171a1ea",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1396,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2017-12-20T14:48:38Z",
+      "side": 1,
+      "message": "SkipList already_checked;",
+      "range": {
+        "startLine": 1396,
+        "startChar": 17,
+        "endLine": 1396,
+        "endChar": 29
+      },
+      "revId": "cd2eb94f69d935d91dbab8283486d8005fdc338c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a37e3cc8_51cdd00d",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1401,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2017-12-20T14:48:38Z",
+      "side": 1,
+      "message": "st.top() does not remove the element so now you leave some already checked elements in the stack? Oh, that is the point I suppose? You want to check the same container until all its candidates have been checked (and skipped)? This algorithm is still O(focusables_bellow_root_container²) in the skewed worst case...",
+      "revId": "cd2eb94f69d935d91dbab8283486d8005fdc338c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23116b7f_4a13cd0c",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1402,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2017-12-20T14:48:38Z",
+      "side": 1,
+      "message": "What does \"pivot\" refer to here? Could you add a comment here to clarify?",
+      "range": {
+        "startLine": 1402,
+        "startChar": 15,
+        "endLine": 1402,
+        "endChar": 25
+      },
+      "revId": "cd2eb94f69d935d91dbab8283486d8005fdc338c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5db5748_1b164254",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1413,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2017-12-20T14:48:38Z",
+      "side": 1,
+      "message": "// Nothing to focus in this container, scroll if possible.",
+      "range": {
+        "startLine": 1413,
+        "startChar": 9,
+        "endLine": 1413,
+        "endChar": 25
+      },
+      "revId": "cd2eb94f69d935d91dbab8283486d8005fdc338c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "268c2e4f_d47dd333",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1424,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2017-12-20T14:48:38Z",
+      "side": 1,
+      "message": "nit: Can we rename this to will_remain_offscreen_after_a_scroll ?\n\nWe haven\u0027t yet scrolled anything at this point. \"after scrolling\" makes me think that we have...",
+      "range": {
+        "startLine": 1424,
+        "startChar": 20,
+        "endLine": 1424,
+        "endChar": 48
+      },
+      "revId": "cd2eb94f69d935d91dbab8283486d8005fdc338c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d43c732_40b344fb",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1438,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2017-12-20T14:48:38Z",
+      "side": 1,
+      "message": "Add a comment that explains why you need a skip list here. \n\nMy understanding: Without it, FindFocusCandidateInContainer() could return the same bad (\u003dnon-navigable container) element. \u003d\u003e So we need to jump back into the same container but check for the \"next closest\" candidate (skip this \"first choice\" because it had nothing navigable).",
+      "range": {
+        "startLine": 1438,
+        "startChar": 4,
+        "endLine": 1438,
+        "endChar": 16
+      },
+      "revId": "cd2eb94f69d935d91dbab8283486d8005fdc338c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "261857bf_7384cf03",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1462,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2017-12-20T14:48:38Z",
+      "side": 1,
+      "message": "Don\u0027t we want to finish with the current container before we dig deeper? Maybe a (de)queue would be better?",
+      "revId": "cd2eb94f69d935d91dbab8283486d8005fdc338c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ebc7154_8c93a6f1",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1501,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2017-12-20T14:48:38Z",
+      "side": 1,
+      "message": "A parent can have many children (read: many sub containers)... Now when we check the parent, we will not dig into the child we came from - but we might dig into other children, possibly deeper down, that have been visited before...",
+      "revId": "cd2eb94f69d935d91dbab8283486d8005fdc338c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8dc47080_4b010311",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2017-12-20T14:48:38Z",
+      "side": 1,
+      "message": "const ref.",
+      "range": {
+        "startLine": 129,
+        "startChar": 37,
+        "endLine": 129,
+        "endChar": 53
+      },
+      "revId": "cd2eb94f69d935d91dbab8283486d8005fdc338c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
