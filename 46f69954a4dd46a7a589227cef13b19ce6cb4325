@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "c0319c2a_3c79bccd",
+        "filename": "third_party/WebKit/Source/platform/wtf/ConstructTraits.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-12-20T22:37:32Z",
+      "side": 1,
+      "message": "They should just use the same approach (ConstructTraits). I will hold off with landing this one until I have at least a working HeapHashSet (which is using HashTable) CL including tests that shows that the approach is general enough to cover all cases.",
+      "parentUuid": "6f99cb6c_da09ccc3",
+      "revId": "46f69954a4dd46a7a589227cef13b19ce6cb4325",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e801e8dd_bb7dbb9e",
         "filename": "third_party/WebKit/Source/platform/wtf/Vector.h",
         "patchSetId": 12
