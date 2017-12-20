@@ -22,6 +22,23 @@
       "revId": "9a182b89c52b4ff61b000bd6dc8b7524a2e22ac9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7d4b1f5d_aaec8e4f",
+        "filename": "chrome/browser/resources/settings/site_settings/site_details.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-12-20T22:55:08Z",
+      "side": 1,
+      "message": "Is there a different icon we can use (so that it\u0027s not the same as UNSANDBOXED_PLUGINS)? See line 142.",
+      "revId": "9a182b89c52b4ff61b000bd6dc8b7524a2e22ac9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
