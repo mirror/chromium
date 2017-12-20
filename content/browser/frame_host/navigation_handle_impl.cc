@@ -731,6 +731,11 @@ void NavigationHandleImpl::WillFailRequest(
   RunCompleteCallback(result);
 }
 
+void NavigationHandleImpl::SetExpectedProcessForErrorPage(
+    RenderProcessHost* process) {
+  UpdateSiteURL(process);
+}
+
 void NavigationHandleImpl::WillProcessResponse(
     RenderFrameHostImpl* render_frame_host,
     scoped_refptr<net::HttpResponseHeaders> response_headers,

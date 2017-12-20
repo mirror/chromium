@@ -354,9 +354,7 @@ IN_PROC_BROWSER_TEST_F(InlineLoginUIBrowserTest, OneProcessLimit) {
   GURL test_url_1 = ui_test_utils::GetTestUrl(
       base::FilePath(base::FilePath::kCurrentDirectory),
       base::FilePath(FILE_PATH_LITERAL("title1.html")));
-  GURL test_url_2 = ui_test_utils::GetTestUrl(
-      base::FilePath(base::FilePath::kCurrentDirectory),
-      base::FilePath(FILE_PATH_LITERAL("data:text/html,Hello world!")));
+  GURL test_url_2 = GURL("data:text/html,Hello world!");
 
   // Even when the process limit is set to one, the signin process should
   // still be given its own process and storage partition.

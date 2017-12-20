@@ -903,6 +903,20 @@ void NavigationRequest::OnRequestFailedInternal(
     return;
   }
 
+  // Compute the SiteInstance to use for the error page and pass its
+  // RenderProcessHost if it has a process.
+  scoped_refptr<SiteInstance> site_instance =
+      frame_tree_node_->render_manager()->GetSiteInstanceForNavigationRequest(
+          *this);
+  // Check what the process of the SiteInstance is. It will be passed to the
+  // NavigationHandle, and informed to expect a navigation to the error page.
+  // Note: calling GetProcess on the SiteInstance can lead to the creation of a
+  // new process if it doesn't have one. In this case, it should only be called
+  // on a SiteInstance that already has a process.
+  RenderProcessHost* expected_process =
+      site_instance->HasProcess() ? site_instance->GetProcess() : nullptr;
+  navigation_handle_->SetExpectedProcessForErrorPage(expected_process);
+
   // Decide whether to leave the error page in the original process.
   // * If this was a renderer-initiated navigation, and the request is blocked
   //   because the initiating document wasn't allowed to make the request,
@@ -918,13 +932,9 @@ void NavigationRequest::OnRequestFailedInternal(
   //   URLs should be allowed to transfer away from the current process, which
   //   didn't request the navigation and may have a higher privilege level than
   //   the blocked destination.
-  RenderFrameHostImpl* render_frame_host = nullptr;
-  if (net_error == net::ERR_BLOCKED_BY_CLIENT && !browser_initiated()) {
-    render_frame_host = frame_tree_node_->current_frame_host();
-  } else {
-    render_frame_host =
-        frame_tree_node_->render_manager()->GetFrameHostForNavigation(*this);
-  }
+  RenderFrameHostImpl* render_frame_host =
+      frame_tree_node_->render_manager()->GetFrameHostForNavigation(*this);
+
   DCHECK(render_frame_host);
 
   // Don't ask the renderer to commit an URL if the browser will kill it when
