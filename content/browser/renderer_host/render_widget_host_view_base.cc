@@ -93,9 +93,10 @@ void RenderWidgetHostViewBase::SetBackgroundColorToDefault() {
 }
 
 gfx::Size RenderWidgetHostViewBase::GetPhysicalBackingSize() const {
-  return gfx::ScaleToCeiledSize(
-      GetRequestedRendererSize(),
-      ui::GetScaleFactorForNativeView(GetNativeView()));
+  gfx::Size dip_size;
+  float scale_factor = 1.f;
+  GetRequestedRendererSize(&dip_size, &scale_factor);
+  return gfx::ScaleToCeiledSize(dip_size, scale_factor);
 }
 
 bool RenderWidgetHostViewBase::DoBrowserControlsShrinkBlinkSize() const {
@@ -134,8 +135,13 @@ void RenderWidgetHostViewBase::SelectionChanged(const base::string16& text,
     GetTextInputManager()->SelectionChanged(this, text, offset, range);
 }
 
-gfx::Size RenderWidgetHostViewBase::GetRequestedRendererSize() const {
-  return GetViewBounds().size();
+void RenderWidgetHostViewBase::GetRequestedRendererSize(
+    gfx::Size* dip_size,
+    float* scale_factor) const {
+  if (dip_size)
+    *dip_size = GetViewBounds().size();
+  if (scale_factor)
+    *scale_factor = ui::GetScaleFactorForNativeView(GetNativeView());
 }
 
 ui::TextInputClient* RenderWidgetHostViewBase::GetTextInputClient() {

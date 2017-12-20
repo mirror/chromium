@@ -2676,6 +2676,7 @@ TEST_F(RenderWidgetHostViewAuraTest, DelegatedFrameGutter) {
 // Resizing is disabled due to flakiness. Commit might come before
 // DrawWaiterForTest looks for compositor frame. crbug.com/759653
 TEST_F(RenderWidgetHostViewAuraTest, DISABLED_Resize) {
+  gfx::Size requested_size_in_dip;
   gfx::Size size1(100, 100);
   gfx::Size size2(200, 200);
   gfx::Size size3(300, 300);
@@ -2700,11 +2701,13 @@ TEST_F(RenderWidgetHostViewAuraTest, DISABLED_Resize) {
       widget_host_->GetRoutingID(), update_params));
   sink_->ClearMessages();
   // Resize logic is idle (no pending resize, no pending commit).
-  EXPECT_EQ(size1.ToString(), view_->GetRequestedRendererSize().ToString());
+  view_->GetRequestedRendererSize(&requested_size_in_dip, nullptr);
+  EXPECT_EQ(size1.ToString(), requested_size_in_dip.ToString());
 
   // Resize renderer, should produce a Resize message
   view_->SetSize(size2);
-  EXPECT_EQ(size2.ToString(), view_->GetRequestedRendererSize().ToString());
+  view_->GetRequestedRendererSize(&requested_size_in_dip, nullptr);
+  EXPECT_EQ(size2.ToString(), requested_size_in_dip.ToString());
   EXPECT_EQ(1u, sink_->message_count());
   {
     const IPC::Message* msg = sink_->GetMessageAt(0);
@@ -2722,7 +2725,8 @@ TEST_F(RenderWidgetHostViewAuraTest, DISABLED_Resize) {
   // Resize renderer again, before receiving a frame. Should not produce a
   // Resize message.
   view_->SetSize(size3);
-  EXPECT_EQ(size2.ToString(), view_->GetRequestedRendererSize().ToString());
+  view_->GetRequestedRendererSize(&requested_size_in_dip, nullptr);
+  EXPECT_EQ(size2.ToString(), requested_size_in_dip.ToString());
   EXPECT_EQ(0u, sink_->message_count());
 
   // Receive a frame of the new size, should be skipped and not produce a Resize
@@ -2733,7 +2737,8 @@ TEST_F(RenderWidgetHostViewAuraTest, DISABLED_Resize) {
   view_->renderer_compositor_frame_sink_->Flush();
   // Expect the frame ack;
   EXPECT_TRUE(view_->renderer_compositor_frame_sink_->did_receive_ack());
-  EXPECT_EQ(size2.ToString(), view_->GetRequestedRendererSize().ToString());
+  view_->GetRequestedRendererSize(&requested_size_in_dip, nullptr);
+  EXPECT_EQ(size2.ToString(), requested_size_in_dip.ToString());
 
   // Receive a frame of the correct size, should not be skipped and, and should
   // produce a Resize message after the commit.
@@ -2749,7 +2754,8 @@ TEST_F(RenderWidgetHostViewAuraTest, DISABLED_Resize) {
     // Frame isn't desired size, so early ack.
     EXPECT_TRUE(view_->renderer_compositor_frame_sink_->did_receive_ack());
   }
-  EXPECT_EQ(size2.ToString(), view_->GetRequestedRendererSize().ToString());
+  view_->GetRequestedRendererSize(&requested_size_in_dip, nullptr);
+  EXPECT_EQ(size2.ToString(), requested_size_in_dip.ToString());
 
   // Wait for commit, then we should unlock the compositor and send a Resize
   // message (and a frame ack)

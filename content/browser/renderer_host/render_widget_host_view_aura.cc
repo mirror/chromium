@@ -780,7 +780,9 @@ bool RenderWidgetHostViewAura::IsMouseLocked() {
 }
 
 gfx::Size RenderWidgetHostViewAura::GetVisibleViewportSize() const {
-  gfx::Rect requested_rect(GetRequestedRendererSize());
+  gfx::Size dip_size;
+  GetRequestedRendererSize(&dip_size, nullptr);
+  gfx::Rect requested_rect(dip_size);
   requested_rect.Inset(insets_);
   return requested_rect.size();
 }
@@ -876,10 +878,13 @@ void RenderWidgetHostViewAura::UpdateScreenInfo(gfx::NativeView view) {
     delegated_frame_host_->WasResized();
 }
 
-gfx::Size RenderWidgetHostViewAura::GetRequestedRendererSize() const {
-  return delegated_frame_host_
-             ? delegated_frame_host_->GetRequestedRendererSize()
-             : RenderWidgetHostViewBase::GetRequestedRendererSize();
+void RenderWidgetHostViewAura::GetRequestedRendererSize(
+    gfx::Size* dip_size,
+    float* scale_factor) const {
+  if (delegated_frame_host_)
+    delegated_frame_host_->GetRequestedRendererSize(dip_size, scale_factor);
+  else
+    RenderWidgetHostViewBase::GetRequestedRendererSize(dip_size, scale_factor);
 }
 
 void RenderWidgetHostViewAura::CopyFromSurface(
