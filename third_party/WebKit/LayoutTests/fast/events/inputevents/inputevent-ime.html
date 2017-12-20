@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<script src="../../../resources/testharness.js"></script>
+<script src="../../../resources/testharnessreport.js"></script>
+<body>
+<script>
+  const eventLog = [];
+
+  document.addEventListener('beforeinput', function(event) {
+    const logString = 'beforeinput: isComposing=' + event.isComposing
+        + ', data="' + event.data + '"';
+    eventLog.push(logString);
+  });
+
+  document.addEventListener('textInput', function(event) {
+    const logString = 'textInput: data="' + event.data + '"';
+    eventLog.push(logString);
+  });
+
+  document.addEventListener('input', function(event) {
+    const logString = 'input: isComposing=' + event.isComposing + ', data="'
+        + event.data + '", inputType=' + event.inputType;
+    eventLog.push(logString);
+  });
+
+  document.addEventListener('compositionstart', function(event) {
+    eventLog.push('compositionstart');
+  });
+
+  document.addEventListener('compositionupdate', function(event) {
+    eventLog.push('compositionupdate');
+  });
+
+  document.addEventListener('compositionend', function(event) {
+    eventLog.push('compositionend');
+  });
+
+  function resetEventLog() {
+    eventLog.length = 0;
+  }
+
+  test(function() {
+    const input = document.createElement('input');
+    document.body.appendChild(input);
+
+    input.value = 'hello';
+    input.select();
+    input.focus();
+
+    resetEventLog();
+    textInputController.setComposition('');
+    assert_array_equals(eventLog, [
+      'input: isComposing=false, data="null", inputType=deleteContentBackward',
+    ]);
+  }, 'setComposition with no composition open, empty text replacing selection');
+
+  test(function() {
+    const input = document.createElement('input');
+    document.body.appendChild(input);
+
+    input.focus();
+
+    resetEventLog();
+    textInputController.setComposition('');
+    assert_array_equals(eventLog, []);
+  }, 'setComposition with no composition open, empty text, no selection');
+
+  test(function() {
+    const input = document.createElement('input');
+    document.body.appendChild(input);
+
+    input.focus();
+
+    resetEventLog();
+    textInputController.setComposition('hello');
+    assert_array_equals(eventLog, [
+      'compositionstart',
+      'beforeinput: isComposing=true, data="hello"',
+      'compositionupdate',
+      'input: isComposing=true, data="hello", inputType=insertCompositionText',
+    ]);
+  }, 'setComposition with no composition open, non-empty text, no selection');
+
+  test(function() {
+    const input = document.createElement('input');
+    document.body.appendChild(input);
+
+    input.focus();
+    textInputController.setComposition('hello');
+    resetEventLog();
+
+    textInputController.setComposition('');
+    assert_array_equals(eventLog, [
+      'beforeinput: isComposing=true, data=""',
+      'compositionupdate',
+      'input: isComposing=false, data="null", inputType=deleteContentBackward',
+      'textInput: data=""',
+      'compositionend',
+    ]);
+  }, 'setComposition with open composition, empty text');
+
+  test(function() {
+    const input = document.createElement('input');
+    document.body.appendChild(input);
+
+    input.focus();
+    textInputController.setComposition('hello');
+    resetEventLog();
+
+    textInputController.setComposition('hello world');
+    assert_array_equals(eventLog, [
+      'beforeinput: isComposing=true, data="hello world"',
+      'compositionupdate',
+      'input: isComposing=true, data="hello world", '
+          + 'inputType=insertCompositionText',
+    ]);
+  }, 'setComposition with open composition, non-empty text');
+
+  test(function() {
+    const input = document.createElement('input');
+    document.body.appendChild(input);
+
+    input.focus();
+    textInputController.setComposition('hello');
+    resetEventLog();
+
+    textInputController.insertText('hello world');
+    assert_array_equals(eventLog, [
+      'beforeinput: isComposing=true, data="hello world"',
+      'compositionupdate',
+      'textInput: data="hello world"',
+      'input: isComposing=true, data="hello world", '
+          + 'inputType=insertCompositionText',
+      'compositionend',
+    ]);
+  }, 'insertText with open composition, non-empty text');
+
+  test(function() {
+    const input = document.createElement('input');
+    document.body.appendChild(input);
+
+    input.focus();
+    textInputController.setComposition('hello');
+    resetEventLog();
+
+    textInputController.insertText('');
+    assert_array_equals(eventLog, [
+      'beforeinput: isComposing=true, data=""',
+      'compositionupdate',
+      'input: isComposing=false, data="null", inputType=deleteContentBackward',
+      'textInput: data=""',
+      'compositionend',
+    ]);
+  }, 'insertText with open composition, empty text');
+
+  test(function() {
+    const input = document.createElement('input');
+    document.body.appendChild(input);
+
+    input.focus();
+    resetEventLog();
+
+    textInputController.insertText('hello');
+    assert_array_equals(eventLog, [
+      'beforeinput: isComposing=false, data="hello"',
+      'textInput: data="hello"',
+      'input: isComposing=false, data="hello", inputType=insertText',
+    ]);
+  }, 'insertText without open composition, non-empty text');
+
+  test(function() {
+    const input = document.createElement('input');
+    document.body.appendChild(input);
+
+    input.focus();
+    resetEventLog();
+
+    textInputController.insertText('');
+    assert_array_equals(eventLog, [
+      'beforeinput: isComposing=false, data=""',
+      'textInput: data=""',
+    ]);
+  }, 'insertText without open composition, empty text');
+
+  test(function() {
+    const input = document.createElement('input');
+    document.body.appendChild(input);
+
+    input.focus();
+    textInputController.setComposition('hello');
+    resetEventLog();
+
+    textInputController.unmarkText();
+    assert_array_equals(eventLog, [
+      'compositionend',
+    ]);
+  }, 'unmarkText, not too long for input');
+
+  test(function() {
+    const input = document.createElement('input');
+    document.body.appendChild(input);
+
+    input.setAttribute('maxlength', 1);
+    input.focus();
+    textInputController.setComposition('hello');
+    resetEventLog();
+
+    textInputController.unmarkText();
+    assert_array_equals(eventLog, [
+      'beforeinput: isComposing=true, data="hello"',
+      'compositionupdate',
+      'textInput: data="h"',
+      'input: isComposing=true, data="h", inputType=insertCompositionText',
+      'compositionend',
+    ]);
+  }, 'unmarkText, too long for input');
+</script>
