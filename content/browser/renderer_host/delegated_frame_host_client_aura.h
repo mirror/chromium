@@ -32,11 +32,12 @@ class CONTENT_EXPORT DelegatedFrameHostClientAura
   ui::Layer* DelegatedFrameHostGetLayer() const override;
   bool DelegatedFrameHostIsVisible() const override;
   SkColor DelegatedFrameHostGetGutterColor(SkColor color) const override;
-  gfx::Size DelegatedFrameHostDesiredSizeInDIP() const override;
+  void DelegatedFrameHostGetDesiredFrameParams(
+      gfx::Size* size_in_dip,
+      viz::LocalSurfaceId* local_surface_id) override;
   bool DelegatedFrameCanCreateResizeLock() const override;
   std::unique_ptr<CompositorResizeLock> DelegatedFrameHostCreateResizeLock()
       override;
-  viz::LocalSurfaceId GetLocalSurfaceId() const override;
   void OnBeginFrame(base::TimeTicks frame_time) override;
   bool IsAutoResizeEnabled() const override;
   void OnFrameTokenChanged(uint32_t frame_token) override;
