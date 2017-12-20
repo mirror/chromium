@@ -16,6 +16,24 @@
       "revId": "6b89f25e2a421180f2cfdfea70c27b65b87c963a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bd7eb13_f3d45c3f",
+        "filename": "base/synchronization/waitable_event_watcher_mac.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-12-20T04:42:47Z",
+      "side": 1,
+      "message": "Thanks. This DCHECK meant that the task runner\u0027s sequence and the weak reference\u0027s sequence are same. |weak_this_| was an attempt to make it work with |task_runner_-\u003ePostTask| even on StartWatching sequence. I admit this was confusing.\n\nAs you said, actually the constructor and StartWatching can be called from different sequences. Probably passing task runner in the constructor might be wrong, and it seems impossible to pass a task runner for StartWatching sequence at the constructor. and the task runner should be passed at StartWatching instead IIUC.",
+      "parentUuid": "8bca9574_039d7db3",
+      "revId": "6b89f25e2a421180f2cfdfea70c27b65b87c963a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
