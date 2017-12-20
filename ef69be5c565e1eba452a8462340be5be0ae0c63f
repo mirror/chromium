@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e25f3052_99abc587",
+        "filename": "build/android/pylib/symbols/stack_symbolizer.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-12-20T02:38:14Z",
+      "side": 1,
+      "message": "You\u0027ll want info rather than debug. The bots run w/ -v.",
+      "revId": "ef69be5c565e1eba452a8462340be5be0ae0c63f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
