@@ -16,6 +16,24 @@
       "revId": "3e59012df91b4ff1aa0d095cb2de0c3814ad03a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f97724ce_a8821174",
+        "filename": "third_party/WebKit/LayoutTests/NeverFixTests",
+        "patchSetId": 7
+      },
+      "lineNbr": 1821,
+      "author": {
+        "id": 1119169
+      },
+      "writtenOn": "2017-12-20T17:50:24Z",
+      "side": 1,
+      "message": "I\u0027ve included the change to correct this behavior as part of https://chromium-review.googlesource.com/c/chromium/src/+/719775. It\u0027s about 6 assertions out of 100 that don\u0027t pass, but I thought it would be easier to just skip this test until that CL lands instead of adding in an expectation file that would just be deleted.",
+      "parentUuid": "a2f5d087_2f6366e5",
+      "revId": "3e59012df91b4ff1aa0d095cb2de0c3814ad03a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
