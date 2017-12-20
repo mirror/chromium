@@ -112,6 +112,7 @@ jumbo_source_set("blink_heap_unittests_sources") {
   ]
 
   deps = [
+    ":blink_heap_incremental_marking",
     "//base",
     "//base/test:test_support",
     "//content/test:test_support",
