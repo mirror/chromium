@@ -265,6 +265,40 @@ void RecordBandwidthMetric(const std::string& metric, int bandwidth) {
   base::UmaHistogramCustomCounts(metric, bandwidth, 1, 50 * 1000 * 1000, 50);
 }
 
+// Converts a download source to a string used as histogram suffix.
+std::string ToHistogramSuffix(DownloadSource download_source) {
+  switch (download_source) {
+    case DownloadSource::UNKNOWN:
+      return std::string("Unknown");
+    case DownloadSource::NAVIGATION:
+      return std::string("Navigation");
+    case DownloadSource::DRAG_AND_DROP:
+      return std::string("DragAndDrop");
+    case DownloadSource::MANUAL_RESUMPTION:
+      return std::string("ManualResumption");
+    case DownloadSource::AUTO_RESUMPTION:
+      return std::string("AutoResumption");
+    case DownloadSource::FROM_RENDERER:
+      return std::string("AutoResumption");
+    case DownloadSource::EXTENSION_API:
+      return std::string("ExtensionAPI");
+    case DownloadSource::EXTENSION_INSTALLER:
+      return std::string("ExtensionInstaller");
+    case DownloadSource::INTERNAL_API:
+      return std::string("InternalAPI");
+    case DownloadSource::WEB_CONTENTS_API:
+      return std::string("WebContentsAPI");
+    case DownloadSource::OFFLINE_PAGE:
+      return std::string("OfflinePage");
+    case DownloadSource::CONTEXT_MENU:
+      return std::string("ContextMenu");
+    case DownloadSource::COUNT:
+      break;
+  }
+  NOTREACHED();
+  return std::string("Unknown");
+}
+
 }  // namespace
 
 void RecordDownloadCount(DownloadCountTypes type) {
@@ -272,15 +306,20 @@ void RecordDownloadCount(DownloadCountTypes type) {
       "Download.Counts", type, DOWNLOAD_COUNT_TYPES_LAST_ENTRY);
 }
 
-void RecordDownloadSource(DownloadTriggerSource source) {
-  UMA_HISTOGRAM_ENUMERATION(
-      "Download.Sources", source, DOWNLOAD_SOURCE_LAST_ENTRY);
+void RecordDownloadCountWithSource(DownloadCountTypes type,
+                                   DownloadSource download_source) {
+  RecordDownloadCount(type);
+
+  std::string name("Download.Counts.");
+  name.append(ToHistogramSuffix(download_source));
+  base::UmaHistogramEnumeration(name, type, DOWNLOAD_COUNT_TYPES_LAST_ENTRY);
 }
 
 void RecordDownloadCompleted(const base::TimeTicks& start,
                              int64_t download_len,
-                             bool is_parallelizable) {
-  RecordDownloadCount(COMPLETED_COUNT);
+                             bool is_parallelizable,
+                             DownloadSource download_source) {
+  RecordDownloadCountWithSource(COMPLETED_COUNT, download_source);
   UMA_HISTOGRAM_LONG_TIMES("Download.Time", (base::TimeTicks::Now() - start));
   int64_t max = 1024 * 1024 * 1024;  // One Terabyte.
   download_len /= 1024;  // In Kilobytes
@@ -299,8 +338,9 @@ void RecordDownloadInterrupted(DownloadInterruptReason reason,
                                int64_t received,
                                int64_t total,
                                bool is_parallelizable,
-                               bool is_parallel_download_enabled) {
-  RecordDownloadCount(INTERRUPTED_COUNT);
+                               bool is_parallel_download_enabled,
+                               DownloadSource download_source) {
+  RecordDownloadCountWithSource(INTERRUPTED_COUNT, download_source);
   if (is_parallelizable) {
     RecordParallelizableDownloadCount(INTERRUPTED_COUNT,
                                       is_parallel_download_enabled);
@@ -311,6 +351,14 @@ void RecordDownloadInterrupted(DownloadInterruptReason reason,
           kAllInterruptReasonCodes, arraysize(kAllInterruptReasonCodes));
   UMA_HISTOGRAM_CUSTOM_ENUMERATION("Download.InterruptedReason", reason,
                                    samples);
+
+  std::string name("Download.InterruptedReason.");
+  name.append(ToHistogramSuffix(download_source));
+  base::HistogramBase* counter = nullptr;
+  counter = base::CustomHistogram::FactoryGet(
+      name, samples, base::HistogramBase::kUmaTargetedHistogramFlag);
+  counter->Add(reason);
+
   if (is_parallel_download_enabled) {
     UMA_HISTOGRAM_CUSTOM_ENUMERATION(
         "Download.InterruptedReason.ParallelDownload", reason, samples);
@@ -347,7 +395,7 @@ void RecordDownloadInterrupted(DownloadInterruptReason reason,
           kMaxKb, kBuckets);
     }
     if (delta_bytes == 0) {
-      RecordDownloadCount(INTERRUPTED_AT_END_COUNT);
+      RecordDownloadCountWithSource(INTERRUPTED_AT_END_COUNT, download_source);
       UMA_HISTOGRAM_CUSTOM_ENUMERATION("Download.InterruptedAtEndReason",
                                        reason, samples);
 

@@ -751,6 +751,9 @@ class CONTENT_EXPORT DownloadItemImpl
   // response.
   bool fetch_error_body_ = false;
 
+  // Source of the download, used in metrics.
+  DownloadSource download_source_ = DownloadSource::UNKNOWN;
+
   base::WeakPtrFactory<DownloadItemImpl> weak_ptr_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(DownloadItemImpl);
