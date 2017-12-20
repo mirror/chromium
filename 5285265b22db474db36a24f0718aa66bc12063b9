@@ -34,6 +34,24 @@
       "revId": "5285265b22db474db36a24f0718aa66bc12063b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccb2eb43_677e20eb",
+        "filename": "ios/chrome/browser/ui/main/browser_view_wrangler.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-20T22:17:54Z",
+      "side": 1,
+      "message": "The issue is \"cleanupTabsForTermination\" name. The name suggests that method should be called for termination, but it should only be called for clean exit. haltAllTabs and closeIncognitoTabs names would clearly communicate what the methods do. I can not think of a good name for method which actually does 2 different things (halting tabs and closing incognito tabs), and this is actually because the method should not really do 2 different things.\n\nI\u0027m not objecting having this method, only it\u0027s name.",
+      "parentUuid": "43dc812a_259050c0",
+      "revId": "5285265b22db474db36a24f0718aa66bc12063b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
