@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a5f32088_134cf6b8",
+        "filename": "third_party/WebKit/LayoutTests/fast/events/inputevents/inputevent-ime.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-12-20T21:32:29Z",
+      "side": 1,
+      "message": "Another interesting bug :)\n\n(double compositionend)",
+      "revId": "546e7ff0c8728b1b1278bffe8ac2f3688645f127",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
