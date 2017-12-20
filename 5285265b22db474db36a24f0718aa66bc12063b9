@@ -16,6 +16,24 @@
       "revId": "5285265b22db474db36a24f0718aa66bc12063b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43dc812a_259050c0",
+        "filename": "ios/chrome/browser/ui/main/browser_view_wrangler.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-12-20T22:10:12Z",
+      "side": 1,
+      "message": "We actually only call cleanup/termination code (from MainApplicationDelegate applicationWillTerminate:) in the \"clean exit\" situation. If the system kills the app, no callbacks are called into our app, so this should be safe.\n\nI was going to have two methods, but they need to be plummed through MainController above and since it\u0027s only called from one spot, I thought it make more sense to have a single method.\n\nExplaining why we do this could be useful. Thoughts on if I should reference the bug for full discussion from the code?",
+      "parentUuid": "5927b61d_d1d385bf",
+      "revId": "5285265b22db474db36a24f0718aa66bc12063b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
