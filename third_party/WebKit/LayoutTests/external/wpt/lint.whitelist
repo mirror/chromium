@@ -971,3 +971,6 @@ WEB-PLATFORM.TEST: webdriver/tests/cookies/add_cookie.py
 WEB-PLATFORM.TEST: webdriver/tests/cookies/get_named_cookie.py
 WEB-PLATFORM.TEST: webrtc/RTCPeerConnection-getIdentityAssertion.html
 WEB-PLATFORM.TEST: webrtc/identity-helper.js
+WEB-PLATFORM.TEST: feature-policy/feature-policy-header-policy.https.sub.html
+WEB-PLATFORM.TEST: feature-policy/resources/feature-policy-nested-subframe-policy.https.sub.html
+WEB-PLATFORM.TEST: feature-policy/feature-policy-nested-header-policy.https.sub.html
