@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "1b9d5c49_bca67e88",
+        "filename": "chrome/browser/data_saver/data_saver_util.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-12-20T20:17:05Z",
+      "side": 1,
+      "message": "I think \"data_saver\" is preferred over \"chrome_browser_data_saver\" but the global namespace is still (slightly?) preferred for //chrome directories. There were some posts in chromium-dev about this a while back. I don\u0027t feel too strongly about it though.",
+      "parentUuid": "a287ab14_dad3ae13",
+      "range": {
+        "startLine": 11,
+        "startChar": 10,
+        "endLine": 11,
+        "endChar": 16
+      },
+      "revId": "15a01131331acc2c9861e2fb15e9481b39d7a7fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a6cb1262_62736d97",
         "filename": "chrome/browser/net/predictor.cc",
         "patchSetId": 5

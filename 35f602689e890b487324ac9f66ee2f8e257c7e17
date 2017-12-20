@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ad550836_43d9b795",
+        "filename": "chrome/browser/data_saver/data_saver_util.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-12-20T20:17:05Z",
+      "side": 1,
+      "message": "#include \"url/url_constants.h\"",
+      "range": {
+        "startLine": 28,
+        "startChar": 41,
+        "endLine": 28,
+        "endChar": 57
+      },
+      "revId": "35f602689e890b487324ac9f66ee2f8e257c7e17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b5e70a8_0ea8e300",
+        "filename": "chrome/browser/net/predictor.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-12-20T20:17:05Z",
+      "side": 1,
+      "message": "fetched",
+      "revId": "35f602689e890b487324ac9f66ee2f8e257c7e17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84ead4fb_addfc2ec",
+        "filename": "chrome/browser/net/predictor_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 504,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-12-20T20:17:05Z",
+      "side": 1,
+      "message": "prefer std::make_unique",
+      "range": {
+        "startLine": 504,
+        "startChar": 35,
+        "endLine": 504,
+        "endChar": 45
+      },
+      "revId": "35f602689e890b487324ac9f66ee2f8e257c7e17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68af3fbb_0b484214",
+        "filename": "chrome/browser/net/predictor_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 819,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-12-20T20:17:05Z",
+      "side": 1,
+      "message": "just FYI, this experiment doesn\u0027t do anything and I am removing in here:\nhttps://chromium-review.googlesource.com/836826",
+      "range": {
+        "startLine": 819,
+        "startChar": 11,
+        "endLine": 819,
+        "endChar": 36
+      },
+      "revId": "35f602689e890b487324ac9f66ee2f8e257c7e17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
