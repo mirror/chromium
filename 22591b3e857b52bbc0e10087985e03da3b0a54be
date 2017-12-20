@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f5d33067_b0037153",
+        "filename": "components/arc/test/fake_timer_instance.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-12-20T00:34:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "922e2430_c8ee160d",
+      "range": {
+        "startLine": 75,
+        "startChar": 23,
+        "endLine": 75,
+        "endChar": 32
+      },
+      "revId": "22591b3e857b52bbc0e10087985e03da3b0a54be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a72d4d1_afac8a1c",
         "filename": "components/arc/test/fake_timer_instance.cc",
         "patchSetId": 25
@@ -36,6 +60,30 @@
       "writtenOn": "2017-12-19T17:29:11Z",
       "side": 1,
       "message": "nit: |responses| (or drop the alias and use |result.value()| consistently).",
+      "range": {
+        "startLine": 172,
+        "startChar": 24,
+        "endLine": 172,
+        "endChar": 38
+      },
+      "revId": "22591b3e857b52bbc0e10087985e03da3b0a54be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63091048_d684fae7",
+        "filename": "components/arc/test/fake_timer_instance.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-12-20T00:34:10Z",
+      "side": 1,
+      "message": "Well the result is a list of |response|s and we are iterating response by response. So this seems fine.",
+      "parentUuid": "9a72d4d1_afac8a1c",
       "range": {
         "startLine": 172,
         "startChar": 24,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "7d490065_b2958126",
+        "filename": "components/arc/timer/arc_timer.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-12-20T00:34:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ec827cfc_5ecef7c4",
+      "range": {
+        "startLine": 23,
+        "startChar": 6,
+        "endLine": 23,
+        "endChar": 19
+      },
+      "revId": "22591b3e857b52bbc0e10087985e03da3b0a54be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b04ce6ac_d5ec573b",
         "filename": "components/arc/timer/arc_timer_bridge.cc",
         "patchSetId": 25
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "4e95db5a_fda852d4",
+        "filename": "components/arc/timer/arc_timer_bridge.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-12-20T00:34:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b04ce6ac_d5ec573b",
+      "range": {
+        "startLine": 80,
+        "startChar": 0,
+        "endLine": 80,
+        "endChar": 43
+      },
+      "revId": "22591b3e857b52bbc0e10087985e03da3b0a54be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "655301e6_8fc53792",
         "filename": "components/arc/timer/arc_timer_bridge.cc",
         "patchSetId": 25
@@ -105,6 +201,30 @@
       "writtenOn": "2017-12-19T17:29:11Z",
       "side": 1,
       "message": "Can this be in the anonymous namespace since it\u0027s static and does not access any static members of this class?",
+      "range": {
+        "startLine": 134,
+        "startChar": 16,
+        "endLine": 134,
+        "endChar": 31
+      },
+      "revId": "22591b3e857b52bbc0e10087985e03da3b0a54be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3dba8cdd_e9455166",
+        "filename": "components/arc/timer/arc_timer_bridge.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-12-20T00:34:10Z",
+      "side": 1,
+      "message": "The reason I did this was because I\u0027d have to make TimersAndProxies a public / friend class otherwise. fdoray suggested in the other CL to make this static and hide the definition of TimersAndProxies.",
+      "parentUuid": "655301e6_8fc53792",
       "range": {
         "startLine": 134,
         "startChar": 16,
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "b89d22c4_eef729a0",
+        "filename": "components/arc/timer/arc_timer_bridge.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-12-20T00:34:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fb3cc92c_9ba07d9f",
+      "range": {
+        "startLine": 204,
+        "startChar": 0,
+        "endLine": 205,
+        "endChar": 39
+      },
+      "revId": "22591b3e857b52bbc0e10087985e03da3b0a54be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4f658904_5a0b5bc2",
         "filename": "components/arc/timer/arc_timer_bridge.h",
         "patchSetId": 25
@@ -160,6 +304,30 @@
       "revId": "22591b3e857b52bbc0e10087985e03da3b0a54be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4feacedf_f439b38f",
+        "filename": "components/arc/timer/arc_timer_bridge.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-12-20T00:34:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4f658904_5a0b5bc2",
+      "range": {
+        "startLine": 65,
+        "startChar": 9,
+        "endLine": 65,
+        "endChar": 27
+      },
+      "revId": "22591b3e857b52bbc0e10087985e03da3b0a54be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
