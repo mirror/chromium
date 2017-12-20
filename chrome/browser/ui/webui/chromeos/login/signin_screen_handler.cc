@@ -1087,9 +1087,6 @@ void SigninScreenHandler::Observe(int type,
     }
     case chrome::NOTIFICATION_AUTH_SUPPLIED:
       has_pending_auth_ui_ = false;
-      // Reload auth extension as proxy credentials are supplied.
-      if (!IsSigninScreenHiddenByError() && ui_state_ == UI_STATE_GAIA_SIGNIN)
-        ReloadGaia(true);
       update_state_closure_.Cancel();
       break;
     case chrome::NOTIFICATION_AUTH_CANCELLED: {
