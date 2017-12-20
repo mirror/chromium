@@ -14,7 +14,7 @@
 #include "base/synchronization/lock.h"
 #include "base/threading/thread_checker.h"
 #include "components/viz/common/gpu/context_provider.h"
-#include "gpu/command_buffer/common/gles2_cmd_utils.h"
+#include "gpu/command_buffer/common/context_creation_attribs.h"
 #include "gpu/ipc/common/surface_handle.h"
 #include "ui/gfx/native_widget_types.h"
 
@@ -33,7 +33,7 @@ namespace ui {
 class InProcessContextProvider : public viz::ContextProvider {
  public:
   static scoped_refptr<InProcessContextProvider> Create(
-      const gpu::gles2::ContextCreationAttribHelper& attribs,
+      const gpu::ContextCreationAttribs& attribs,
       InProcessContextProvider* shared_context,
       gpu::GpuMemoryBufferManager* gpu_memory_buffer_manager,
       gpu::ImageFactory* image_factory,
@@ -68,7 +68,7 @@ class InProcessContextProvider : public viz::ContextProvider {
 
  private:
   InProcessContextProvider(
-      const gpu::gles2::ContextCreationAttribHelper& attribs,
+      const gpu::ContextCreationAttribs& attribs,
       InProcessContextProvider* shared_context,
       gpu::GpuMemoryBufferManager* gpu_memory_buffer_manager,
       gpu::ImageFactory* image_factory,
@@ -99,7 +99,7 @@ class InProcessContextProvider : public viz::ContextProvider {
   bool bind_tried_ = false;
   gpu::ContextResult bind_result_;
 
-  gpu::gles2::ContextCreationAttribHelper attribs_;
+  gpu::ContextCreationAttribs attribs_;
   InProcessContextProvider* shared_context_;
   gpu::GpuMemoryBufferManager* gpu_memory_buffer_manager_;
   gpu::ImageFactory* image_factory_;
