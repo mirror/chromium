@@ -168,6 +168,7 @@ gpu::ContextResult GLES2CommandBufferStub::Initialize(
       this, context_group_->transfer_buffer_manager());
   decoder_.reset(gles2::GLES2Decoder::Create(
       this, command_buffer_.get(), manager->outputter(), context_group_.get()));
+  set_decoder(decoder_.get());
 
   sync_point_client_state_ =
       channel_->sync_point_manager()->CreateSyncPointClientState(

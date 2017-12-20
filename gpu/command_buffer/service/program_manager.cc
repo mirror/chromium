@@ -1306,7 +1306,7 @@ void Program::ExecuteProgramOutputBindCalls() {
 
 bool Program::Link(ShaderManager* manager,
                    Program::VaryingsPackingOption varyings_packing_option,
-                   GLES2DecoderClient* client) {
+                   DecoderClient* client) {
   ClearLinkStatus();
 
   if (!AttachedShadersExist()) {

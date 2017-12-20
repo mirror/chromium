@@ -53,6 +53,8 @@ class GPU_EXPORT GLES2CommandBufferStub
   int32_t GetRouteID() const override;
 
  private:
+  std::unique_ptr<gles2::GLES2Decoder> decoder_;
+
   base::Closure snapshot_requested_callback_;
 
   base::WeakPtrFactory<GLES2CommandBufferStub> weak_ptr_factory_;

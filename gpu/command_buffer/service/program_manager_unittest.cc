@@ -55,8 +55,7 @@ uint32_t ComputeOffset(const void* start, const void* position) {
 
 }  // namespace anonymous
 
-class ProgramManagerTestBase : public GpuServiceTest,
-                               public GLES2DecoderClient {
+class ProgramManagerTestBase : public GpuServiceTest, public DecoderClient {
  protected:
   virtual void SetupProgramManager() {
     manager_.reset(new ProgramManager(
