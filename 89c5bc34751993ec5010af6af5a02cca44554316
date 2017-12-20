@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c4c93d90_f55a00ab",
+        "filename": "components/ukm/ukm_recorder_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-12-20T15:00:08Z",
+      "side": 1,
+      "message": "if the intent is to differentiate the origin from the full URL, we should use url::Origin::Create(url).Serialize(), which doesn\u0027t retain the trailing slash here, rather than .GetOrigin().spec(), which emits the \"root URL\" for a given origin (with the trailing slash).\n\nthough it looks like maybe we are only looking up URLs here, in which case we can probably omit inserting the origin here?",
+      "revId": "89c5bc34751993ec5010af6af5a02cca44554316",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36cf8d8b_8951d393",
+        "filename": "components/ukm/ukm_recorder_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-12-20T15:00:08Z",
+      "side": 1,
+      "message": "since this might append to an existing list, maybe call it AppendWhitelistedUrls rather than BuildUrlWhitelist?",
+      "revId": "89c5bc34751993ec5010af6af5a02cca44554316",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05225c70_c882fd6d",
+        "filename": "components/ukm/ukm_recorder_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-12-20T15:00:08Z",
+      "side": 1,
+      "message": "let\u0027s add a comment here explaining why this DCHECK is valid. for example, do we strip the initial_url of non-whitelisted sources somewhere? and if we do, let\u0027s add a comment at that location in the code to explain why we do that.",
+      "revId": "89c5bc34751993ec5010af6af5a02cca44554316",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6249a9c_3947f2d1",
+        "filename": "components/ukm/ukm_recorder_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-12-20T15:00:08Z",
+      "side": 1,
+      "message": "we only insert the URL here, whereas we insert both URL and origin in BuildUrlWhitelist. Is there a reason for the difference? Maybe add a comment if so.",
+      "revId": "89c5bc34751993ec5010af6af5a02cca44554316",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
