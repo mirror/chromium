@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "7153e204_44760c66",
+        "filename": "cc/tiles/software_image_decode_cache.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-12-20T18:15:14Z",
+      "side": 1,
+      "message": "Sure, sounds good if the logic here would change to have decode to scale in the follow up patches.",
+      "parentUuid": "9afbb70c_b3400a6f",
+      "range": {
+        "startLine": 443,
+        "startChar": 6,
+        "endLine": 458,
+        "endChar": 36
+      },
+      "revId": "0316a032d276e82f4614aeea5bfe6fc1297d0ab1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1480e0b0_92fc7109",
         "filename": "cc/tiles/software_image_decode_cache.cc",
         "patchSetId": 2
