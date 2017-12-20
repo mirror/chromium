@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a6daea42_ba6b1551",
+        "filename": "chrome/browser/ui/app_list/app_list_syncable_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-20T00:47:25Z",
+      "side": 1,
+      "message": "nit: adding_item_id_.clear();\nslightly more efficient than assignment with an empty string.",
+      "range": {
+        "startLine": 240,
+        "startChar": 19,
+        "endLine": 240,
+        "endChar": 24
+      },
+      "revId": "90dd51ac02849c9010edd7f8a627aff79ac74229",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "877a6447_32aa0b7a",
+        "filename": "chrome/browser/ui/app_list/app_list_syncable_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-20T00:47:25Z",
+      "side": 1,
+      "message": "nit: Not ncessary since std::string is created with an empty string by default.",
+      "range": {
+        "startLine": 273,
+        "startChar": 29,
+        "endLine": 273,
+        "endChar": 34
+      },
+      "revId": "90dd51ac02849c9010edd7f8a627aff79ac74229",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
