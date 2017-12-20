@@ -46,6 +46,30 @@
       "revId": "fefc8db5c3a67ea8219aeb59302fd6059983a9b7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3a152d1_cf7960a5",
+        "filename": "ui/app_list/views/app_list_folder_view.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1116056
+      },
+      "writtenOn": "2017-12-20T20:39:17Z",
+      "side": 1,
+      "message": "Absolutely; old launcher is completely dead and off.",
+      "parentUuid": "e5635e6c_bb1f018c",
+      "range": {
+        "startLine": 128,
+        "startChar": 13,
+        "endLine": 128,
+        "endChar": 44
+      },
+      "revId": "fefc8db5c3a67ea8219aeb59302fd6059983a9b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
