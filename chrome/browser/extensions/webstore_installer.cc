@@ -707,6 +707,7 @@ void WebstoreInstaller::StartDownload(const std::string& extension_id,
   params->set_callback(base::Bind(&WebstoreInstaller::OnDownloadStarted,
                                   this,
                                   extension_id));
+  params->set_download_source(content::DownloadSource::EXTENSION_INSTALLER);
   download_manager->DownloadUrl(std::move(params));
 }
 
