@@ -9,15 +9,17 @@
 #include <memory>
 #include <set>
 
-#include "base/compiler_specific.h"
 #include "base/macros.h"
 #include "base/sequence_checker.h"
-#include "content/public/browser/notification_observer.h"
-#include "content/public/browser/notification_registrar.h"
+#include "printing/features/features.h"
+
+#if !BUILDFLAG(ENABLE_PRINT_PREVIEW)
+#error "Print Preview must be enabled"
+#endif
 
 namespace content {
-class WebContents;
 class BrowserContext;
+class WebContents;
 }
 
 namespace printing {
@@ -26,23 +28,23 @@ namespace printing {
 // The hidden WebContents are no longer part of any Browser / TabStripModel.
 // The WebContents started life as a ConstrainedWebDialog.
 // They get deleted when the printing finishes.
-class BackgroundPrintingManager : public content::NotificationObserver {
+class BackgroundPrintingManager {
  public:
   class Observer;
 
   BackgroundPrintingManager();
-  ~BackgroundPrintingManager() override;
+  ~BackgroundPrintingManager();
 
   // Takes ownership of |preview_dialog| and deletes it when |preview_dialog|
   // finishes printing. This removes |preview_dialog| from its ConstrainedDialog
   // and hides it from the user.
   void OwnPrintPreviewDialog(content::WebContents* preview_dialog);
 
+  // Deletes |preview_dialog| in response to failure in PrintViewManager.
+  void PrintJobReleased(content::WebContents* preview_dialog);
+
   // Returns true if |printing_contents_map_| contains |preview_dialog|.
   bool HasPrintPreviewDialog(content::WebContents* preview_dialog);
-
-  // Let others see the list of background printing contents.
-  std::set<content::WebContents*> CurrentContentSet();
 
   // Delete all preview contents that are associated with |browser_context|.
   void DeletePreviewContentsForBrowserContext(
@@ -51,11 +53,6 @@ class BackgroundPrintingManager : public content::NotificationObserver {
   void OnPrintRequestCancelled(content::WebContents* preview_dialog);
 
  private:
-  // content::NotificationObserver overrides:
-  void Observe(int type,
-               const content::NotificationSource& source,
-               const content::NotificationDetails& details) override;
-
   // Schedule deletion of |preview_contents|.
   void DeletePreviewContents(content::WebContents* preview_contents);
 
@@ -63,8 +60,6 @@ class BackgroundPrintingManager : public content::NotificationObserver {
   // BackgroundPrintingManager) to the Observers that observe them.
   std::map<content::WebContents*, std::unique_ptr<Observer>>
       printing_contents_map_;
-
-  content::NotificationRegistrar registrar_;
 
   SEQUENCE_CHECKER(sequence_checker_);
 

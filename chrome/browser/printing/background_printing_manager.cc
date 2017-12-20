@@ -9,12 +9,9 @@
 #include "base/single_thread_task_runner.h"
 #include "base/stl_util.h"
 #include "base/threading/thread_task_runner_handle.h"
-#include "chrome/browser/chrome_notification_types.h"
 #include "chrome/browser/printing/print_job.h"
 #include "chrome/browser/printing/print_preview_dialog_controller.h"
 #include "content/public/browser/browser_thread.h"
-#include "content/public/browser/notification_details.h"
-#include "content/public/browser/notification_source.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/browser/web_contents_delegate.h"
 #include "content/public/browser/web_contents_observer.h"
@@ -74,12 +71,6 @@ void BackgroundPrintingManager::OwnPrintPreviewDialog(
   printing_contents_map_[preview_dialog] =
       base::MakeUnique<Observer>(this, preview_dialog);
 
-  // Watch for print jobs finishing. Everything else is watched for by the
-  // Observer. TODO(avi, cait): finish the job of removing this last
-  // notification.
-  registrar_.Add(this, chrome::NOTIFICATION_PRINT_JOB_RELEASED,
-                 content::Source<WebContents>(preview_dialog));
-
   // Activate the initiator.
   PrintPreviewDialogController* dialog_controller =
       PrintPreviewDialogController::GetInstance();
@@ -91,12 +82,9 @@ void BackgroundPrintingManager::OwnPrintPreviewDialog(
   initiator->GetDelegate()->ActivateContents(initiator);
 }
 
-void BackgroundPrintingManager::Observe(
-    int type,
-    const content::NotificationSource& source,
-    const content::NotificationDetails& details) {
-  DCHECK_EQ(chrome::NOTIFICATION_PRINT_JOB_RELEASED, type);
-  DeletePreviewContents(content::Source<WebContents>(source).ptr());
+void BackgroundPrintingManager::PrintJobReleased(
+    content::WebContents* preview_dialog) {
+  DeletePreviewContents(preview_dialog);
 }
 
 void BackgroundPrintingManager::DeletePreviewContentsForBrowserContext(
@@ -121,31 +109,17 @@ void BackgroundPrintingManager::OnPrintRequestCancelled(
 
 void BackgroundPrintingManager::DeletePreviewContents(
     WebContents* preview_contents) {
-  auto i = printing_contents_map_.find(preview_contents);
-  if (i == printing_contents_map_.end()) {
+  size_t erased_count = printing_contents_map_.erase(preview_contents);
+  if (erased_count == 0) {
     // Everyone is racing to be the first to delete the |preview_contents|. If
     // this case is hit, someone else won the race, so there is no need to
     // continue. <http://crbug.com/100806>
     return;
   }
 
-  // Stop all observation ...
-  registrar_.Remove(this, chrome::NOTIFICATION_PRINT_JOB_RELEASED,
-                    content::Source<WebContents>(preview_contents));
-  printing_contents_map_.erase(i);
-
-  // ... and mortally wound the contents. Deletion immediately is not a good
-  // idea in case this was triggered by |preview_contents| far up the
-  // callstack. (Trace where the NOTIFICATION_PRINT_JOB_RELEASED comes from.)
+  // Mortally wound the contents. Deletion immediately is not a good idea in
+  // case this was triggered by |preview_contents| far up the callstack.
   base::ThreadTaskRunnerHandle::Get()->DeleteSoon(FROM_HERE, preview_contents);
-}
-
-std::set<content::WebContents*> BackgroundPrintingManager::CurrentContentSet() {
-  std::set<content::WebContents*> result;
-  for (const auto& entry : printing_contents_map_)
-    result.insert(entry.first);
-
-  return result;
 }
 
 bool BackgroundPrintingManager::HasPrintPreviewDialog(
