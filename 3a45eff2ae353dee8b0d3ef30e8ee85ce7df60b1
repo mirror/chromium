@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2b961386_112dc774",
+        "filename": "ui/views/controls/label_perftest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-20T10:19:28Z",
+      "side": 1,
+      "message": "\u003e \u003e What\u0027s the point of repeating 10 times within a lap? Smoother averages? Please add a comment.\n\n\u003e There are some overheads for measuring times. Also it depends what scale we want \"runs/sec\" to be reported. O(100) has some appeal, since when truncated to an integer, it should\u0027t vary much  (i.e. adding a digit would just add noise).\n\n\u003e But maybe there\u0027s also some appeal it knowing how long \"one\" lap takes, and representing that in \u003e the perf measure.\n\n\u003e \u003e O(10) or O(100) could very well reduce overhead and noise. I really don\u0027t have a strong preference or opinion here, mostly because I\u0027m not too familiar with perf tests. Maybe loop in a reviewer that knows perf tests a bit better, and maybe document the thoughts behind your overall approach; like \"Test the number of text size measurements that can be made made per second. This should surface any performance regressions in underlying text layout system, eg. failure to cache font structures.\"\n\u003e \n\u003e I gave the TEST_F a comment. I\u0027ll publish the follow-up CL to a perf person and point them here.\n\nper above - is there a benefit to outputting results at a particular scale?\n\nCurrently the output is 3200-3300 on my macpro. Not sure how the perf machine will handle it, or what kind of variance will result. Earlier this would output 320-330 since it had an inner loop with repeats.\n\nHappy to know if you have thoughts on other areas too - thanks!",
+      "revId": "3a45eff2ae353dee8b0d3ef30e8ee85ce7df60b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
