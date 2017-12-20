@@ -159,6 +159,7 @@ DOMStorageContextWrapper::~DOMStorageContextWrapper() {
 
 void DOMStorageContextWrapper::GetLocalStorageUsage(
     const GetLocalStorageUsageCallback& callback) {
+  LOG(ERROR) << "DOMStorageContextWrapper::GetLocalStorageUsage";
   DCHECK(context_.get());
   if (mojo_state_) {
     auto infos = std::make_unique<std::vector<LocalStorageUsageInfo>>();
@@ -199,6 +200,7 @@ void DOMStorageContextWrapper::GetLocalStorageUsage(
 void DOMStorageContextWrapper::GetSessionStorageUsage(
     const GetSessionStorageUsageCallback& callback) {
   DCHECK(context_.get());
+  LOG(ERROR) << "Retrieving Context";
   context_->task_runner()->PostShutdownBlockingTask(
       FROM_HERE, DOMStorageTaskRunner::PRIMARY_SEQUENCE,
       base::BindOnce(&GetSessionStorageUsageHelper,
@@ -215,6 +217,7 @@ void DOMStorageContextWrapper::DeleteLocalStorageForPhysicalOrigin(
           &DOMStorageContextImpl::DeleteLocalStorageForPhysicalOrigin, context_,
           origin));
   if (mojo_state_) {
+    LOG(ERROR) << "DOMStorageContextWrapper::DeleteLocalStorageForPhysicalOrigin";
     // base::Unretained is safe here, because the mojo_state_ won't be deleted
     // until a ShutdownAndDelete task has been ran on the mojo_task_runner_, and
     // as soon as that task is posted, mojo_state_ is set to null, preventing
@@ -234,6 +237,7 @@ void DOMStorageContextWrapper::DeleteLocalStorage(const GURL& origin) {
       base::BindOnce(&DOMStorageContextImpl::DeleteLocalStorage, context_,
                      origin));
   if (mojo_state_) {
+    LOG(ERROR) << "DOMStorageContextWrapper::DeleteLocalStorage";
     // base::Unretained is safe here, because the mojo_state_ won't be deleted
     // until a ShutdownAndDelete task has been ran on the mojo_task_runner_, and
     // as soon as that task is posted, mojo_state_ is set to null, preventing

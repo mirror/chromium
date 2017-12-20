@@ -2,6 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include "base/debug/stack_trace.h"
 #include "content/browser/dom_storage/local_storage_context_mojo.h"
 
 #include <inttypes.h>
@@ -394,16 +395,17 @@ void LocalStorageContextMojo::GetStorageUsage(
     GetStorageUsageCallback callback) {
   RunWhenConnected(
       base::BindOnce(&LocalStorageContextMojo::RetrieveStorageUsage,
-                     weak_ptr_factory_.GetWeakPtr(), std::move(callback)));
+                     weak_ptr_factory_.GetWeakPtr(), std::move(callback), "GetStorageUsage"));
 }
 
 void LocalStorageContextMojo::DeleteStorage(const url::Origin& origin) {
   if (connection_state_ != CONNECTION_FINISHED) {
+    LOG(ERROR) << "NOT CONNECTED";
     RunWhenConnected(base::BindOnce(&LocalStorageContextMojo::DeleteStorage,
                                     weak_ptr_factory_.GetWeakPtr(), origin));
     return;
   }
-
+  LOG(ERROR) << "LocalStorageContextMojo::DeleteStorage";
   auto found = level_db_wrappers_.find(origin);
   if (found != level_db_wrappers_.end()) {
     // Renderer process expects |source| to always be two newline separated
@@ -420,9 +422,14 @@ void LocalStorageContextMojo::DeleteStorage(const url::Origin& origin) {
 
 void LocalStorageContextMojo::DeleteStorageForPhysicalOrigin(
     const url::Origin& origin) {
-  GetStorageUsage(base::BindOnce(
+  LOG(ERROR) << "LocalStorageContextMojo::DeleteStorageForPhysicalOrigin";
+  auto callback = (base::BindOnce(
       &LocalStorageContextMojo::OnGotStorageUsageForDeletePhysicalOrigin,
       weak_ptr_factory_.GetWeakPtr(), origin));
+  RunWhenConnected(
+      base::BindOnce(&LocalStorageContextMojo::RetrieveStorageUsage,
+                     weak_ptr_factory_.GetWeakPtr(), std::move(callback), "DeleteStorageForPhysicalOrigin"));
+
 }
 
 void LocalStorageContextMojo::Flush() {
@@ -482,7 +489,7 @@ void LocalStorageContextMojo::ShutdownAndDelete() {
   if (has_session_only_origins) {
     RetrieveStorageUsage(
         base::BindOnce(&LocalStorageContextMojo::OnGotStorageUsageForShutdown,
-                       base::Unretained(this)));
+                       base::Unretained(this)), "shutdown");
   } else {
     OnShutdownComplete(leveldb::mojom::DatabaseError::OK);
   }
@@ -894,7 +901,8 @@ LocalStorageContextMojo::GetOrCreateDBWrapper(const url::Origin& origin) {
 }
 
 void LocalStorageContextMojo::RetrieveStorageUsage(
-    GetStorageUsageCallback callback) {
+    GetStorageUsageCallback callback, std::string s) {
+  LOG(ERROR) << "LocalStorageContextMojo::RetrieveStorageUsage (" << s << ")";
   if (!database_) {
     // If for whatever reason no leveldb database is available, no storage is
     // used, so return an array only containing the current leveldb wrappers.
@@ -964,6 +972,7 @@ void LocalStorageContextMojo::OnGotMetaData(
 void LocalStorageContextMojo::OnGotStorageUsageForDeletePhysicalOrigin(
     const url::Origin& origin,
     std::vector<LocalStorageUsageInfo> usage) {
+  LOG(ERROR) << "LocalStorageContextMojo::OnGotStorageUsageForDeletePhysicalOrigin";
   for (const auto& info : usage) {
     url::Origin origin_candidate = url::Origin::Create(info.origin);
     if (!origin_candidate.IsSameOriginWith(origin) &&

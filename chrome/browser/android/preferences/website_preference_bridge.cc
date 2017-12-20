@@ -759,6 +759,7 @@ static void JNI_WebsitePreferenceBridge_FetchLocalStorageInfo(
     const JavaParamRef<jclass>& clazz,
     const JavaParamRef<jobject>& java_callback,
     jboolean fetch_important) {
+  LOG(ERROR) << "JNI_WebsitePreferenceBridge_FetchLocalStorageInfo";
   Profile* profile = ProfileManager::GetActiveUserProfile();
   auto local_storage_helper =
       base::MakeRefCounted<BrowsingDataLocalStorageHelper>(profile);
@@ -772,6 +773,7 @@ static void JNI_WebsitePreferenceBridge_FetchStorageInfo(
     const JavaParamRef<jclass>& clazz,
     const JavaParamRef<jobject>& java_callback) {
   Profile* profile = ProfileManager::GetActiveUserProfile();
+  LOG(ERROR) << "JNI_WebsitePreferenceBridge_FetchStorageInfo";
 
   auto storage_info_fetcher = base::MakeRefCounted<StorageInfoFetcher>(profile);
   storage_info_fetcher->FetchStorageInfo(base::Bind(
@@ -782,6 +784,7 @@ static void JNI_WebsitePreferenceBridge_ClearLocalStorageData(
     JNIEnv* env,
     const JavaParamRef<jclass>& clazz,
     const JavaParamRef<jstring>& jorigin) {
+  LOG(ERROR) << "JNI_WebsitePreferenceBridge_ClearLocalStorageData";
   Profile* profile = ProfileManager::GetActiveUserProfile();
   auto local_storage_helper =
       base::MakeRefCounted<BrowsingDataLocalStorageHelper>(profile);
@@ -795,6 +798,8 @@ static void JNI_WebsitePreferenceBridge_ClearStorageData(
     const JavaParamRef<jstring>& jhost,
     jint type,
     const JavaParamRef<jobject>& java_callback) {
+  LOG(ERROR) << "JNI_WebsitePreferenceBridge_ClearStorageData";
+
   Profile* profile = ProfileManager::GetActiveUserProfile();
   std::string host = ConvertJavaStringToUTF8(env, jhost);
 
