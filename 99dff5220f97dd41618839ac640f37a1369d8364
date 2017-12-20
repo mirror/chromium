@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "fd80101d_3c3fa262",
+        "filename": "third_party/WebKit/LayoutTests/fast/events/inputevents/inputevent-ime.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-12-20T21:45:54Z",
+      "side": 1,
+      "message": "https://bugs.chromium.org/p/chromium/issues/detail?id\u003d796690\n\nI think there should also be a textInput event here.",
+      "parentUuid": "02a54e60_17d2ddbe",
+      "revId": "99dff5220f97dd41618839ac640f37a1369d8364",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c5d3ff54_bdbbe065",
         "filename": "third_party/WebKit/LayoutTests/fast/events/inputevents/inputevent-ime.html",
         "patchSetId": 2
@@ -71,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "a65c54d6_3df4cd8d",
+        "filename": "third_party/WebKit/LayoutTests/fast/events/inputevents/inputevent-ime.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-12-20T21:45:54Z",
+      "side": 1,
+      "message": "https://bugs.chromium.org/p/chromium/issues/detail?id\u003d796691",
+      "parentUuid": "c5d3ff54_bdbbe065",
+      "revId": "99dff5220f97dd41618839ac640f37a1369d8364",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "28f1966e_460b22cd",
         "filename": "third_party/WebKit/LayoutTests/fast/events/inputevents/inputevent-ime.html",
         "patchSetId": 2
@@ -85,6 +121,24 @@
       "revId": "99dff5220f97dd41618839ac640f37a1369d8364",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4dee0511_b5d97954",
+        "filename": "third_party/WebKit/LayoutTests/fast/events/inputevents/inputevent-ime.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-12-20T21:45:54Z",
+      "side": 1,
+      "message": "https://bugs.chromium.org/p/chromium/issues/detail?id\u003d796694",
+      "parentUuid": "28f1966e_460b22cd",
+      "revId": "99dff5220f97dd41618839ac640f37a1369d8364",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

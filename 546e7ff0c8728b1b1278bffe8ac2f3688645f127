@@ -16,6 +16,24 @@
       "revId": "546e7ff0c8728b1b1278bffe8ac2f3688645f127",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aaa00c7d_8d4c496d",
+        "filename": "third_party/WebKit/LayoutTests/fast/events/inputevents/inputevent-ime.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-12-20T21:45:54Z",
+      "side": 1,
+      "message": "https://bugs.chromium.org/p/chromium/issues/detail?id\u003d796695",
+      "parentUuid": "a5f32088_134cf6b8",
+      "revId": "546e7ff0c8728b1b1278bffe8ac2f3688645f127",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
