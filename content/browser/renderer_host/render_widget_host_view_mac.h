@@ -311,6 +311,8 @@ class CONTENT_EXPORT RenderWidgetHostViewMac
   void Destroy() override;
   void SetTooltipText(const base::string16& tooltip_text) override;
   void UpdateScreenInfo(gfx::NativeView view) override;
+  void GetRequestedRendererSize(gfx::Size* dip_size,
+                                float* scale_factor) const override;
   bool IsSurfaceAvailableForCopy() const override;
   void CopyFromSurface(const gfx::Rect& src_rect,
                        const gfx::Size& output_size,
