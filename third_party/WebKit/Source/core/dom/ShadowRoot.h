@@ -33,6 +33,7 @@
 #include "core/dom/ContainerNode.h"
 #include "core/dom/DocumentFragment.h"
 #include "core/dom/Element.h"
+#include "core/dom/ElementShadowV0.h"
 #include "core/dom/TreeScope.h"
 #include "platform/bindings/ScriptWrappableVisitor.h"
 #include "platform/bindings/TraceWrapperMember.h"
@@ -40,7 +41,6 @@
 namespace blink {
 
 class Document;
-class ElementShadow;
 class ExceptionState;
 class ShadowRootRareDataV0;
 class SlotAssignment;
@@ -77,7 +77,6 @@ class CORE_EXPORT ShadowRoot final : public DocumentFragment, public TreeScope {
     DCHECK(ParentOrShadowHostNode());
     return *ToElement(ParentOrShadowHostNode());
   }
-  ElementShadow* Owner() const { return host().Shadow(); }
   ShadowRootType GetType() const { return static_cast<ShadowRootType>(type_); }
   String mode() const {
     return (GetType() == ShadowRootType::V0 ||
@@ -159,6 +158,20 @@ class CORE_EXPORT ShadowRoot final : public DocumentFragment, public TreeScope {
     style_sheet_list_ = style_sheet_list;
   }
 
+  void Attach(const Node::AttachContext&);
+  void Detach(const Node::AttachContext&);
+
+  void DistributeIfNeeded();
+
+  void SetNeedsDistributionRecalcWillBeSetNeedsAssignmentRecalc();
+  void SetNeedsDistributionRecalc();
+  bool NeedsDistributionRecalc() const { return needs_distribution_recalc_; }
+
+  ElementShadowV0& V0() const {
+    DCHECK(element_shadow_v0_);
+    return *element_shadow_v0_;
+  }
+
   virtual void Trace(blink::Visitor*);
   virtual void TraceWrappers(const ScriptWrappableVisitor*) const;
 
@@ -178,19 +191,44 @@ class CORE_EXPORT ShadowRoot final : public DocumentFragment, public TreeScope {
   }
   void InvalidateDescendantInsertionPoints();
 
+  void Distribute();
+
   Member<ShadowRootRareDataV0> shadow_root_rare_data_v0_;
   TraceWrapperMember<StyleSheetList> style_sheet_list_;
   Member<SlotAssignment> slot_assignment_;
+  TraceWrapperMember<ElementShadowV0> element_shadow_v0_;
   unsigned short child_shadow_root_count_;
   unsigned short type_ : 2;
   unsigned short registered_with_parent_shadow_root_ : 1;
   unsigned short descendant_insertion_points_is_valid_ : 1;
   unsigned short delegates_focus_ : 1;
-  unsigned short unused_ : 11;
+  unsigned short needs_distribution_recalc_ : 1;
+  unsigned short unused_ : 10;
+
+  DISALLOW_COPY_AND_ASSIGN(ShadowRoot);
 };
 
 inline Element* ShadowRoot::ActiveElement() const {
   return AdjustedFocusedElement();
+}
+
+inline ShadowRoot* Node::GetShadowRoot() const {
+  if (!IsElementNode())
+    return nullptr;
+  return ToElement(this)->GetShadowRoot();
+}
+
+inline ShadowRoot* Element::ShadowRootIfV1() const {
+  ShadowRoot* root = GetShadowRoot();
+  if (root && root->IsV1())
+    return root;
+  return nullptr;
+}
+
+inline void ShadowRoot::DistributeIfNeeded() {
+  if (needs_distribution_recalc_)
+    Distribute();
+  needs_distribution_recalc_ = false;
 }
 
 DEFINE_NODE_TYPE_CASTS(ShadowRoot, IsShadowRoot());

@@ -27,7 +27,6 @@
 #include "core/dom/TreeScopeAdopter.h"
 
 #include "core/dom/Attr.h"
-#include "core/dom/ElementShadow.h"
 #include "core/dom/Node.h"
 #include "core/dom/NodeRareData.h"
 #include "core/dom/NodeTraversal.h"
