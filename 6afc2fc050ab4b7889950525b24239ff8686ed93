@@ -105,6 +105,24 @@
       "revId": "6afc2fc050ab4b7889950525b24239ff8686ed93",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8dc5a09c_385e4c10",
+        "filename": "chrome/browser/ui/app_list/chrome_app_list_item.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-20T00:19:02Z",
+      "side": 1,
+      "message": "Either public ForTest methods or having a TestAPI interface to open access works for me.",
+      "parentUuid": "c1a0da7a_a073469c",
+      "revId": "6afc2fc050ab4b7889950525b24239ff8686ed93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
