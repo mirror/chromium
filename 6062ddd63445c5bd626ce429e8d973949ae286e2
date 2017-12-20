@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a48d35b8_9925efda",
+        "filename": "chrome/browser/ui/views/autofill/save_card_bubble_views_browsertest_base.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 444,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-12-20T20:38:11Z",
+      "side": 1,
+      "message": "I like it!  I didn\u0027t think this would work because tapted@ recommended -\u003eButtonPressed() on the BubbleFrameView, but it looks like Mathieu\u0027s MouseEvent code still works with it.\n\nI\u0027m hitting a weird snag, though.  In order to call GetBubbleFrameView() I had to add to add SaveCardBubbleViewsBrowserTestBase as a friend of SaveCardBubbleViews.  However, moving the line  you suggest into the actual test class still throws the exact same \"You can\u0027t access this, it\u0027s protected\" error, *even* if I add SaveCardBubbleViewsFullFormBrowserTest as a friend of SaveCardBubbleViews.  Any idea why that might be the case?  Until then, I can\u0027t seem to get rid of ClickCloseButton() entirely...",
+      "parentUuid": "20e3d285_af98e83c",
+      "revId": "6062ddd63445c5bd626ce429e8d973949ae286e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2a36d39c_8bd86c5a",
         "filename": "components/test/data/autofill/credit_card_upload_form_address_and_cc.html",
         "patchSetId": 1
@@ -63,6 +81,30 @@
       "revId": "6062ddd63445c5bd626ce429e8d973949ae286e2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57e19d2b_73009a33",
+        "filename": "components/test/data/autofill/credit_card_upload_form_address_and_cc.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-12-20T20:38:11Z",
+      "side": 1,
+      "message": "Good point; fixed.  I\u0027m going to go fix our test site with this, too...",
+      "parentUuid": "9530c0cc_6b30f82a",
+      "range": {
+        "startLine": 75,
+        "startChar": 62,
+        "endLine": 75,
+        "endChar": 66
+      },
+      "revId": "6062ddd63445c5bd626ce429e8d973949ae286e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
