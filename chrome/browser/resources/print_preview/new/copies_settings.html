@@ -17,8 +17,8 @@
           aria-live="polite"
           hidden$="[[collateHidden_(inputString_, inputValid_)]]">
         <label>
-          <input class="collate" type="checkbox" checked
-                 aria-labelledby="copies-collate-label">
+          <input class="collate" type="checkbox" on-change="onCollateChange_"
+              aria-labelledby="copies-collate-label">
           <span id="copies-collate-label">$i18n{optionCollate}</span>
         </label>
       </div>
