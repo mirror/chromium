@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "53d20ade_555d0045",
+        "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/automation_predicate.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 502,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-12-20T03:16:57Z",
+      "side": 1,
+      "message": "Maybe, but I\u0027d still like to see a real world example of someone doing it correctly before trying to solve that one. They would have to handle all of the key commands we cover and do something to prevent their default behaviors. They would also have to capture paste, and probably other corner cases including programmatic content script access (which is I think how edit with emacs works).\n\nJaws does something more nuanced: at the end of the multiline, they exit the editable. I\u0027ll try to see if we can do that for all editables or those explicitly multiline, so that the multline distinction isn\u0027t so important. Time permitting...",
+      "parentUuid": "5f7d62ad_96233440",
+      "revId": "fac75605b7b46983457cb71af648b60706ac51ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "118241d6_cf465703",
         "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/braille_command_handler.js",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-20T01:01:47Z",
       "side": 1,
       "message": "Keep in mind that for contenteditable, current.start.node might be\na descendant of the contenteditable element. So while EDITABLE is\nset on the whole contenteditable subtree, MULTILINE is typically\nonly set on the root.",
+      "revId": "fac75605b7b46983457cb71af648b60706ac51ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69eb6e37_cf2b18fc",
+        "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/braille_command_handler.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-12-20T03:16:57Z",
+      "side": 1,
+      "message": "Good observation. That case occurs for text areas, so that the node is multline but not richly editable.\n\nIn that case, ChromeVox currently never places range on descendants of the text area.\n\nIn the case where a node is multiline and richly editable, the assumption is that richly editable is set true on all descendants, which is currently true afaik.",
+      "parentUuid": "118241d6_cf465703",
       "revId": "fac75605b7b46983457cb71af648b60706ac51ce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
