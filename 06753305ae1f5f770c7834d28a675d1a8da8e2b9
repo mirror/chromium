@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e082622f_4c297d5c",
+        "filename": "content/browser/renderer_host/pepper/pepper_tcp_socket_message_filter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 721,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2017-12-20T09:53:38Z",
+      "side": 1,
+      "message": "There is the policy to prevent installing particular or all Chrome Apps https://www.chromium.org/administrators/policy-list-3#ExtensionInstallBlacklist it allows you to block particular or all extensions/apps so one could plug this hole in a very crude way too.",
+      "range": {
+        "startLine": 721,
+        "startChar": 21,
+        "endLine": 721,
+        "endChar": 42
+      },
+      "revId": "06753305ae1f5f770c7834d28a675d1a8da8e2b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
