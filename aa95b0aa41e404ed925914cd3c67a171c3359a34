@@ -16,6 +16,24 @@
       "revId": "aa95b0aa41e404ed925914cd3c67a171c3359a34",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfb81761_8d704d61",
+        "filename": "tools/binary_size/libsupersize/archive.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 822,
+      "author": {
+        "id": 1002869
+      },
+      "writtenOn": "2017-12-20T22:58:50Z",
+      "side": 1,
+      "message": "Hmm... any ideas on how to make it testable without having a real elf?",
+      "parentUuid": "ea2817c9_578d6fb3",
+      "revId": "aa95b0aa41e404ed925914cd3c67a171c3359a34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
