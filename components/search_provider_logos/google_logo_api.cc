@@ -234,6 +234,9 @@ std::unique_ptr<EncodedLogo> ParseDoodleLogoResponse(
   logo->metadata.on_click_url = ParseUrl(*ddljson, "target_url", base_url);
   ddljson->GetString("alt_text", &logo->metadata.alt_text);
 
+  logo->metadata.cta_log_url = ParseUrl(*ddljson, "cta_log_url", base_url);
+  logo->metadata.log_url = ParseUrl(*ddljson, "log_url", base_url);
+
   ddljson->GetString("fingerprint", &logo->metadata.fingerprint);
 
   if (is_interactive) {
