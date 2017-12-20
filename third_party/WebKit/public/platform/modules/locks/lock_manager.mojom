@@ -23,6 +23,16 @@ interface LockRequest {
   Abort(string reason);
 };
 
+enum LockMode {
+  SHARED,
+  EXCLUSIVE
+};
+
+struct LockInfo {
+  string name;
+  LockMode mode;
+};
+
 // Implementation of the proposed "Web Locks API". This provides a "lock"
 // primitive for coordination of resource usage across window and worker
 // contexts in a web application. A resource is identified by an abstract
@@ -34,11 +44,6 @@ interface LockRequest {
 // Proposal: https://github.com/inexorabletash/web-locks
 
 interface LockManager {
-  enum LockMode {
-    SHARED,
-    EXCLUSIVE
-  };
-
   enum WaitMode {
     WAIT,
     NO_WAIT
@@ -48,4 +53,6 @@ interface LockManager {
               LockMode mode,
               WaitMode wait,
               LockRequest request);
+
+  QueryState() => (array<LockInfo> requested, array<LockInfo> held);
 };
