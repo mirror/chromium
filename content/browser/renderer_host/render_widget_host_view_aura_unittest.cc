@@ -3078,6 +3078,7 @@ TEST_F(RenderWidgetHostViewAuraSurfaceSynchronizationTest,
       view_->GetNativeView(), parent_view_->GetNativeView()->GetRootWindow(),
       gfx::Rect());
 
+  view_->window_->layer()->SetShowSolidColorContent();
   EXPECT_FALSE(view_->HasPrimarySurface());
   ASSERT_TRUE(view_->delegated_frame_host_);
 
@@ -3104,7 +3105,6 @@ TEST_F(RenderWidgetHostViewAuraSurfaceSynchronizationTest, SurfaceChanges) {
 
   // Prevent the DelegatedFrameHost from skipping frames.
   view_->DisableResizeLock();
-  EXPECT_FALSE(view_->HasPrimarySurface());
   ASSERT_TRUE(view_->delegated_frame_host_);
 
   view_->SetSize(gfx::Size(300, 300));
@@ -3140,7 +3140,6 @@ TEST_F(RenderWidgetHostViewAuraSurfaceSynchronizationTest,
 
   // Prevent the DelegatedFrameHost from skipping frames.
   view_->DisableResizeLock();
-  EXPECT_FALSE(view_->HasPrimarySurface());
 
   view_->SetSize(gfx::Size(300, 300));
   ASSERT_TRUE(view_->HasPrimarySurface());

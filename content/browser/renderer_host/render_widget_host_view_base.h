@@ -156,7 +156,7 @@ class CONTENT_EXPORT RenderWidgetHostViewBase : public RenderWidgetHostView,
   void DidReceiveRendererFrame();
 
   // Notification that a resize or move session ended on the native widget.
-  virtual void UpdateScreenInfo(gfx::NativeView view);
+  void UpdateScreenInfo(gfx::NativeView view);
 
   // Tells if the display property (work area/scale factor) has
   // changed since the last time.
@@ -551,6 +551,8 @@ class CONTENT_EXPORT RenderWidgetHostViewBase : public RenderWidgetHostView,
                           int embed_id,
                           const base::UnguessableToken& token);
 #endif
+
+  virtual void OnSynchronizedDisplayPropertiesChanged() {}
 
   gfx::Rect current_display_area_;
 
