@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "88b9d10f_5c3e3fa7",
+        "filename": "third_party/WebKit/public/platform/modules/locks/lock_manager.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-12-21T01:57:19Z",
+      "side": 1,
+      "message": "(A question not related to this CL.)\n\ndcheng@: I\u0027m still a bit confused about where to put mojom files. mojom::LockManager is implemented by //content/browser/, not by Blink. Then would it make more sense to have lock_manager.mojom in //content/common/ (or WebKit/common/)?",
+      "revId": "6df6b656f230b6781db6bfa9cf2368822f0e58ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
