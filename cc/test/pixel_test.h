@@ -35,20 +35,20 @@ class PixelTest : public testing::Test {
   PixelTest();
   ~PixelTest() override;
 
-  bool RunPixelTest(viz::RenderPassList* pass_list,
+  bool RunPixelTest(std::vector<viz::RenderPass*>* pass_list,
                     const base::FilePath& ref_file,
                     const PixelComparator& comparator);
 
-  bool RunPixelTest(viz::RenderPassList* pass_list,
+  bool RunPixelTest(std::vector<viz::RenderPass*>* pass_list,
                     std::vector<SkColor>* ref_pixels,
                     const PixelComparator& comparator);
 
-  bool RunPixelTestWithReadbackTarget(viz::RenderPassList* pass_list,
+  bool RunPixelTestWithReadbackTarget(std::vector<viz::RenderPass*>* pass_list,
                                       viz::RenderPass* target,
                                       const base::FilePath& ref_file,
                                       const PixelComparator& comparator);
 
-  bool RunPixelTestWithReadbackTargetAndArea(viz::RenderPassList* pass_list,
+  bool RunPixelTestWithReadbackTargetAndArea(std::vector<viz::RenderPass*>* pass_list,
                                              viz::RenderPass* target,
                                              const base::FilePath& ref_file,
                                              const PixelComparator& comparator,

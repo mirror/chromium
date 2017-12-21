@@ -40,15 +40,15 @@ PixelTest::PixelTest()
 
 PixelTest::~PixelTest() = default;
 
-bool PixelTest::RunPixelTest(viz::RenderPassList* pass_list,
+bool PixelTest::RunPixelTest(std::vector<viz::RenderPass*>* pass_list,
                              const base::FilePath& ref_file,
                              const PixelComparator& comparator) {
-  return RunPixelTestWithReadbackTarget(pass_list, pass_list->back().get(),
+  return RunPixelTestWithReadbackTarget(pass_list, pass_list->back(),
                                         ref_file, comparator);
 }
 
 bool PixelTest::RunPixelTestWithReadbackTarget(
-    viz::RenderPassList* pass_list,
+    std::vector<viz::RenderPass*>* pass_list,
     viz::RenderPass* target,
     const base::FilePath& ref_file,
     const PixelComparator& comparator) {
@@ -57,7 +57,7 @@ bool PixelTest::RunPixelTestWithReadbackTarget(
 }
 
 bool PixelTest::RunPixelTestWithReadbackTargetAndArea(
-    viz::RenderPassList* pass_list,
+    std::vector<viz::RenderPass*>* pass_list,
     viz::RenderPass* target,
     const base::FilePath& ref_file,
     const PixelComparator& comparator,
@@ -90,11 +90,11 @@ bool PixelTest::RunPixelTestWithReadbackTargetAndArea(
   return PixelsMatchReference(ref_file, comparator);
 }
 
-bool PixelTest::RunPixelTest(viz::RenderPassList* pass_list,
+bool PixelTest::RunPixelTest(std::vector<viz::RenderPass*>* pass_list,
                              std::vector<SkColor>* ref_pixels,
                              const PixelComparator& comparator) {
   base::RunLoop run_loop;
-  viz::RenderPass* target = pass_list->back().get();
+  viz::RenderPass* target = pass_list->back();
 
   std::unique_ptr<viz::CopyOutputRequest> request =
       std::make_unique<viz::CopyOutputRequest>(

@@ -131,7 +131,7 @@ DCLayerOverlayProcessor::DCLayerResult DCLayerOverlayProcessor::FromDrawQuad(
 
 void DCLayerOverlayProcessor::Process(cc::ResourceProvider* resource_provider,
                                       const gfx::RectF& display_rect,
-                                      RenderPassList* render_passes,
+                                      std::vector<RenderPass*>* render_passes,
                                       gfx::Rect* overlay_damage_rect,
                                       gfx::Rect* damage_rect,
                                       DCLayerOverlayList* ca_layer_overlays) {
@@ -139,16 +139,16 @@ void DCLayerOverlayProcessor::Process(cc::ResourceProvider* resource_provider,
   processed_overlay_in_frame_ = false;
   if (base::FeatureList::IsEnabled(
           features::kDirectCompositionNonrootOverlays)) {
-    for (auto& pass : *render_passes) {
+    for (auto* pass : *render_passes) {
       bool is_root = (pass == render_passes->back());
-      ProcessRenderPass(resource_provider, display_rect, pass.get(), is_root,
+      ProcessRenderPass(resource_provider, display_rect, pass, is_root,
                         overlay_damage_rect,
                         is_root ? damage_rect : &pass->damage_rect,
                         ca_layer_overlays);
     }
   } else {
     ProcessRenderPass(resource_provider, display_rect,
-                      render_passes->back().get(), true, overlay_damage_rect,
+                      render_passes->back(), true, overlay_damage_rect,
                       damage_rect, ca_layer_overlays);
   }
   pass_info_.clear();

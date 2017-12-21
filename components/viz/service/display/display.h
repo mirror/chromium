@@ -118,7 +118,7 @@ class VIZ_SERVICE_EXPORT Display : public DisplaySchedulerClient,
 
   void ForceImmediateDrawAndSwapIfPossible();
   void SetNeedsOneBeginFrame();
-  void RemoveOverdrawQuads(CompositorFrame* frame);
+  void RemoveOverdrawQuads(AggregatedCompositorFrame* frame);
 
  private:
   void InitializeRenderer();

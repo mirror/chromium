@@ -9,6 +9,7 @@
 #include "cc/test/fake_resource_provider.h"
 #include "cc/test/test_context_provider.h"
 #include "cc/test/test_shared_bitmap_manager.h"
+#include "components/viz/common/quads/aggregated_compositor_frame.h"
 #include "components/viz/common/quads/compositor_frame.h"
 #include "components/viz/common/quads/surface_draw_quad.h"
 #include "components/viz/common/quads/texture_draw_quad.h"
@@ -132,7 +133,7 @@ class SurfaceAggregatorPerfTest : public testing::Test {
       root_support->SubmitCompositorFrame(
           LocalSurfaceId(num_surfaces + 1, kArbitraryToken), std::move(frame));
 
-      CompositorFrame aggregated = aggregator_->Aggregate(
+      AggregatedCompositorFrame aggregated = aggregator_->Aggregate(
           SurfaceId(FrameSinkId(1, num_surfaces + 1),
                     LocalSurfaceId(num_surfaces + 1, kArbitraryToken)));
       timer_.NextLap();

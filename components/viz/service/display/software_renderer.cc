@@ -787,7 +787,7 @@ sk_sp<SkShader> SoftwareRenderer::GetBackgroundFilterShader(
 }
 
 void SoftwareRenderer::UpdateRenderPassTextures(
-    const RenderPassList& render_passes_in_draw_order,
+    const std::vector<RenderPass*>& render_passes_in_draw_order,
     const base::flat_map<RenderPassId, RenderPassRequirements>&
         render_passes_in_frame) {
   std::vector<RenderPassId> passes_to_delete;

@@ -178,28 +178,28 @@ void DirectRenderer::SetVisible(bool visible) {
 }
 
 void DirectRenderer::DecideRenderPassAllocationsForFrame(
-    const RenderPassList& render_passes_in_draw_order) {
+    const std::vector<RenderPass*>& render_passes_in_draw_order) {
   render_pass_bypass_quads_.clear();
 
-  auto& root_render_pass = render_passes_in_draw_order.back();
+  auto* root_render_pass = render_passes_in_draw_order.back();
 
   base::flat_map<RenderPassId, RenderPassRequirements> render_passes_in_frame;
-  for (const auto& pass : render_passes_in_draw_order) {
+  for (const auto* pass : render_passes_in_draw_order) {
     if (pass != root_render_pass) {
-      if (const TileDrawQuad* tile_quad = CanPassBeDrawnDirectly(pass.get())) {
+      if (const TileDrawQuad* tile_quad = CanPassBeDrawnDirectly(pass)) {
         // If the render pass is drawn directly, it will not be drawn from as
         // a render pass so it's not added to the map.
         render_pass_bypass_quads_[pass->id] = *tile_quad;
         continue;
       }
     }
-    render_passes_in_frame[pass->id] = {RenderPassTextureSize(pass.get()),
-                                        RenderPassTextureHint(pass.get())};
+    render_passes_in_frame[pass->id] = {RenderPassTextureSize(pass),
+                                        RenderPassTextureHint(pass)};
   }
   UpdateRenderPassTextures(render_passes_in_draw_order, render_passes_in_frame);
 }
 
-void DirectRenderer::DrawFrame(RenderPassList* render_passes_in_draw_order,
+void DirectRenderer::DrawFrame(std::vector<RenderPass*>* render_passes_in_draw_order,
                                float device_scale_factor,
                                const gfx::Size& device_viewport_size) {
   DCHECK(visible_);
@@ -208,7 +208,7 @@ void DirectRenderer::DrawFrame(RenderPassList* render_passes_in_draw_order,
       "Renderer4.renderPassCount",
       base::saturated_cast<int>(render_passes_in_draw_order->size()));
 
-  RenderPass* root_render_pass = render_passes_in_draw_order->back().get();
+  RenderPass* root_render_pass = render_passes_in_draw_order->back();
   DCHECK(root_render_pass);
 
   bool overdraw_tracing_enabled;
@@ -264,11 +264,11 @@ void DirectRenderer::DrawFrame(RenderPassList* render_passes_in_draw_order,
 
   BeginDrawingFrame();
 
-  for (const auto& pass : *render_passes_in_draw_order) {
+  for (auto* pass : *render_passes_in_draw_order) {
     if (!pass->filters.IsEmpty())
-      render_pass_filters_[pass->id] = &pass->filters;
+      render_pass_filters_[pass->id] = &(pass->filters);
     if (!pass->background_filters.IsEmpty())
-      render_pass_background_filters_[pass->id] = &pass->background_filters;
+      render_pass_background_filters_[pass->id] = &(pass->background_filters);
   }
 
   // Create the overlay candidate for the output surface, and mark it as
@@ -295,10 +295,10 @@ void DirectRenderer::DrawFrame(RenderPassList* render_passes_in_draw_order,
       &current_frame()->root_content_bounds);
 
   // Draw all non-root render passes except for the root render pass.
-  for (const auto& pass : *render_passes_in_draw_order) {
-    if (pass.get() == root_render_pass)
+  for (auto* pass : *render_passes_in_draw_order) {
+    if (pass == root_render_pass)
       break;
-    DrawRenderPassAndExecuteCopyRequests(pass.get());
+    DrawRenderPassAndExecuteCopyRequests(pass);
   }
 
   bool was_using_dc_layers = using_dc_layers_;

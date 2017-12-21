@@ -98,7 +98,7 @@ class VIZ_SERVICE_EXPORT GLRenderer : public DirectRenderer {
   bool CanPartialSwap() override;
   ResourceFormat BackbufferFormat() const override;
   void UpdateRenderPassTextures(
-      const RenderPassList& render_passes_in_draw_order,
+      const std::vector<RenderPass*>& render_passes_in_draw_order,
       const base::flat_map<RenderPassId, RenderPassRequirements>&
           render_passes_in_frame) override;
   void AllocateRenderPassResourceIfNeeded(

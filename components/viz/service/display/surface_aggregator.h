@@ -24,6 +24,7 @@ class DisplayResourceProvider;
 }  // namespace cc
 
 namespace viz {
+class AggregatedCompositorFrame;
 class CompositorFrame;
 class Surface;
 class SurfaceClient;
@@ -39,7 +40,7 @@ class VIZ_SERVICE_EXPORT SurfaceAggregator {
                     bool aggregate_only_damaged);
   ~SurfaceAggregator();
 
-  CompositorFrame Aggregate(const SurfaceId& surface_id);
+  AggregatedCompositorFrame Aggregate(const SurfaceId& surface_id);
   void ReleaseResources(const SurfaceId& surface_id);
   SurfaceIndexMap& previous_contained_surfaces() {
     return previous_contained_surfaces_;
@@ -236,7 +237,7 @@ class VIZ_SERVICE_EXPORT SurfaceAggregator {
   base::flat_set<SurfaceId> valid_surfaces_;
 
   // This is the pass list for the aggregated frame.
-  RenderPassList* dest_pass_list_;
+  std::vector<RenderPass*>* dest_pass_list_;
 
   // This is the set of aggregated pass ids that are affected by filters that
   // move pixels.

@@ -15,7 +15,7 @@
 #include "cc/benchmarks/benchmark_instrumentation.h"
 #include "components/viz/common/display/renderer_settings.h"
 #include "components/viz/common/frame_sinks/begin_frame_source.h"
-#include "components/viz/common/quads/compositor_frame.h"
+#include "components/viz/common/quads/aggregated_compositor_frame.h"
 #include "components/viz/common/quads/draw_quad.h"
 #include "components/viz/common/quads/shared_quad_state.h"
 #include "components/viz/service/display/direct_renderer.h"
@@ -275,7 +275,7 @@ bool Display::DrawAndSwap() {
   }
 
   base::ElapsedTimer aggregate_timer;
-  CompositorFrame frame = aggregator_->Aggregate(current_surface_id_);
+  AggregatedCompositorFrame frame = aggregator_->Aggregate(current_surface_id_);
   UMA_HISTOGRAM_COUNTS_1M("Compositing.SurfaceAggregator.AggregateUs",
                           aggregate_timer.Elapsed().InMicroseconds());
 
@@ -292,12 +292,12 @@ bool Display::DrawAndSwap() {
       surface->RunDrawCallback();
   }
 
-  frame.metadata.latency_info.insert(frame.metadata.latency_info.end(),
-                                     stored_latency_info_.begin(),
-                                     stored_latency_info_.end());
+  // frame.metadata.latency_info.insert(frame.metadata.latency_info.end(),
+  //                                    stored_latency_info_.begin(),
+  //                                    stored_latency_info_.end());
   stored_latency_info_.clear();
   bool have_copy_requests = false;
-  for (const auto& pass : frame.render_pass_list) {
+  for (const auto* pass : frame.render_pass_list) {
     have_copy_requests |= !pass->copy_requests.empty();
   }
 
@@ -329,7 +329,7 @@ bool Display::DrawAndSwap() {
     should_draw = false;
   }
 
-  client_->DisplayWillDrawAndSwap(should_draw, frame.render_pass_list);
+  // client_->DisplayWillDrawAndSwap(should_draw, frame.render_pass_list);
 
   if (should_draw) {
     if (settings_.enable_draw_occlusion) {
@@ -558,14 +558,14 @@ void Display::SetNeedsOneBeginFrame() {
     scheduler_->SetNeedsOneBeginFrame();
 }
 
-void Display::RemoveOverdrawQuads(CompositorFrame* frame) {
+void Display::RemoveOverdrawQuads(AggregatedCompositorFrame* frame) {
   if (frame->render_pass_list.empty())
     return;
 
   const SharedQuadState* last_sqs = nullptr;
   cc::SimpleEnclosedRegion occlusion_in_target_space;
   bool current_sqs_intersects_occlusion = false;
-  for (const auto& pass : frame->render_pass_list) {
+  for (auto* pass : frame->render_pass_list) {
     // TODO(yiyix): Add filter effects to draw occlusion calculation and perform
     // draw occlusion on render pass.
     if (!pass->filters.IsEmpty() || !pass->background_filters.IsEmpty())
