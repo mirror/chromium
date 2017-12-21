@@ -4,6 +4,7 @@
 
 #include "ios/chrome/browser/ui/tab_switcher/tab_switcher_transition_context.h"
 
+#import "ios/chrome/browser/snapshots/snapshot_tab_helper.h"
 #import "ios/chrome/browser/tabs/tab.h"
 #import "ios/chrome/browser/ui/browser_view_controller.h"
 #include "ios/chrome/browser/ui/tab_switcher/tab_switcher_transition_context.h"
@@ -72,7 +73,9 @@ tabSwitcherTransitionContextWithCurrent:(BrowserViewController*)currentBVC
       [[TabSwitcherTransitionContext alloc] init];
   Tab* currentTab = [[currentBVC tabModel] currentTab];
   UIImage* tabSnapshotImage =
-      [currentTab generateSnapshotWithOverlay:YES visibleFrameOnly:YES];
+      SnapshotTabHelper::FromWebState(currentTab.webState)
+          ->GenerateSnapshot(/*with_overlays=*/true,
+                             /*visible_frame_only=*/true);
   [transitionContext setTabSnapshotImage:tabSnapshotImage];
   [transitionContext
       setIncognitoContent:
