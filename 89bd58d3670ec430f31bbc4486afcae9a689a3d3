@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "b8745f98_acb76789",
+        "filename": "components/viz/service/display/scoped_render_pass_texture.h",
+        "patchSetId": 40
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-21T20:37:49Z",
+      "side": 1,
+      "message": "I mean..\n\ntexture-\u003eBindForSampling()\nbecomes\ngl-\u003eBindTexture(GL_TEXTURE_2D, texture-\u003eid())\n\nthis seems pretty straightforward to do here?",
+      "parentUuid": "3f1578cc_5ffb7dc1",
+      "revId": "89bd58d3670ec430f31bbc4486afcae9a689a3d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b04eca9c_13f6e63c",
         "filename": "components/viz/service/display/scoped_render_pass_texture.h",
         "patchSetId": 40
