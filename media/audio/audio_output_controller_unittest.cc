@@ -37,6 +37,7 @@ using ::testing::NotNull;
 using ::testing::Return;
 
 namespace media {
+namespace audio_output_controller_unittest {
 
 static const int kSampleRate = AudioParameters::kAudioCDSampleRate;
 static const int kBitsPerSample = 16;
@@ -415,4 +416,5 @@ TEST_F(AudioOutputControllerTest, DuplicateDivertInteract) {
   Close();
 }
 
+}  // namespace audio_output_controller_unittest
 }  // namespace media

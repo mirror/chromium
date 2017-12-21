@@ -21,6 +21,7 @@
 #include "third_party/WebKit/public/web/WebHeap.h"
 
 namespace content {
+namespace media_stream_video_track_unittest {
 
 const uint8_t kBlackValue = 0x00;
 const uint8_t kColorValue = 0xAB;
@@ -336,4 +337,5 @@ TEST_F(MediaStreamVideoTrackTest, GetSettingsStopped) {
   EXPECT_TRUE(settings.device_id.IsNull());
 }
 
+}  // namespace media_stream_video_track_unittest
 }  // namespace content

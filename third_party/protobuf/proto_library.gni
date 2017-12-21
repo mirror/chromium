@@ -93,6 +93,7 @@
 #    ]
 #  }
 
+import("//build/config/jumbo.gni")
 import("//build/config/sanitizers/sanitizers.gni")
 
 template("proto_library") {
@@ -320,9 +321,9 @@ template("proto_library") {
   # Option to disable building a library in component build.
   if (defined(invoker.component_build_force_source_set) &&
       invoker.component_build_force_source_set && is_component_build) {
-    link_target_type = "source_set"
+    link_target_type = "jumbo_source_set"
   } else {
-    link_target_type = "static_library"
+    link_target_type = "jumbo_static_library"
   }
 
   # Generated files may include other generated headers. These includes always

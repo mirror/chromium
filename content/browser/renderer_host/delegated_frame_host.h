@@ -51,6 +51,13 @@ class DelegatedFrameHost;
 class RenderWidgetHostViewFrameSubscriber;
 class CompositorResizeLock;
 
+namespace render_widget_host_view_aura_unittest {
+class RenderWidgetHostViewAuraCopyRequestTest;
+FORWARD_DECLARE_TEST(RenderWidgetHostViewAuraTest, SkippedDelegatedFrames);
+FORWARD_DECLARE_TEST(RenderWidgetHostViewAuraTest,
+                     DiscardDelegatedFramesWithLocking);
+}  // namespace render_widget_host_view_aura_unittest
+
 // The DelegatedFrameHostClient is the interface from the DelegatedFrameHost,
 // which manages delegated frames, and the ui::Compositor being used to
 // display them.
@@ -219,11 +226,14 @@ class CONTENT_EXPORT DelegatedFrameHost
 
  private:
   friend class DelegatedFrameHostClient;
-  friend class RenderWidgetHostViewAuraCopyRequestTest;
-  FRIEND_TEST_ALL_PREFIXES(RenderWidgetHostViewAuraTest,
-                           SkippedDelegatedFrames);
-  FRIEND_TEST_ALL_PREFIXES(RenderWidgetHostViewAuraTest,
-                           DiscardDelegatedFramesWithLocking);
+  friend class render_widget_host_view_aura_unittest::
+      RenderWidgetHostViewAuraCopyRequestTest;
+  FRIEND_TEST_ALL_PREFIXES(
+      render_widget_host_view_aura_unittest::RenderWidgetHostViewAuraTest,
+      SkippedDelegatedFrames);
+  FRIEND_TEST_ALL_PREFIXES(
+      render_widget_host_view_aura_unittest::RenderWidgetHostViewAuraTest,
+      DiscardDelegatedFramesWithLocking);
 
   RenderWidgetHostViewFrameSubscriber* frame_subscriber() const {
     return frame_subscriber_.get();

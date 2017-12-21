@@ -41,7 +41,7 @@ using storage::BlobStatus;
 using storage::DataElement;
 
 namespace content {
-namespace {
+namespace blob_transport_controller_unittest {
 
 class OtherThreadTestSimpleTaskRunner : public base::TestSimpleTaskRunner {
  public:
@@ -96,8 +96,6 @@ static DataElement MakeDataElement(const std::string& str) {
 static blink::WebThreadSafeData CreateData(const std::string& str) {
   return blink::WebThreadSafeData(str.c_str(), str.size());
 }
-
-}  // namespace
 
 class BlobTransportControllerTest : public testing::Test {
  public:
@@ -476,4 +474,5 @@ TEST_F(BlobTransportControllerTest, PublicMethods) {
   main_thread_runner_->ClearPendingTasks();
 }
 
+}  // namespace blob_transport_controller_unittest
 }  // namespace content

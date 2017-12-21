@@ -29,7 +29,7 @@
 using testing::_;
 
 namespace content {
-namespace {
+namespace background_fetch_job_controller_unittest {
 
 const char kExampleDeveloperId[] = "my-example-id";
 const char kExampleResponseData[] = "My response data";
@@ -288,5 +288,5 @@ TEST_F(BackgroundFetchJobControllerTest, Progress) {
   EXPECT_EQ(last_downloaded_, strlen(kExampleResponseData));
 }
 
-}  // namespace
+}  // namespace background_fetch_job_controller_unittest
 }  // namespace content

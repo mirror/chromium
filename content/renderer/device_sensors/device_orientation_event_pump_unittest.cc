@@ -27,17 +27,14 @@
 #include "third_party/WebKit/public/platform/modules/device_orientation/WebDeviceOrientationListener.h"
 #include "third_party/WebKit/public/platform/scheduler/test/renderer_scheduler_test_support.h"
 
-namespace {
+namespace content {
+namespace device_orientation_event_pump_unittest {
 
 constexpr uint64_t kReadingBufferSize =
     sizeof(device::SensorReadingSharedBuffer);
 
 constexpr uint64_t kSharedBufferSizeInBytes =
     kReadingBufferSize * static_cast<uint64_t>(device::mojom::SensorType::LAST);
-
-}  // namespace
-
-namespace content {
 
 class MockDeviceOrientationListener
     : public blink::WebDeviceOrientationListener {
@@ -439,4 +436,5 @@ TEST_F(DeviceOrientationEventPumpTest,
   EXPECT_TRUE(orientation_pump()->SensorSharedBuffersReady());
 }
 
+}  // namespace device_orientation_event_pump_unittest
 }  // namespace content

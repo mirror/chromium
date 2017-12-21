@@ -36,7 +36,7 @@ config("content_shell_lib_warnings") {
   }
 }
 
-static_library("content_shell_lib") {
+jumbo_static_library("content_shell_lib") {
   testonly = true
   sources = [
     "android/shell_descriptors.h",
@@ -195,6 +195,27 @@ static_library("content_shell_lib") {
     "renderer/shell_render_view_observer.h",
     "utility/shell_content_utility_client.cc",
     "utility/shell_content_utility_client.h",
+  ]
+
+  jumbo_excluded_sources = [
+    # IPC
+    "browser/layout_test/blink_test_controller.cc",
+    "browser/layout_test/layout_test_content_browser_client.cc",
+    "browser/layout_test/secondary_test_window_observer.cc",
+    "browser/shell.cc",
+    "common/layout_test/layout_test_content_client.cc",
+    "common/layout_test/layout_test_messages.cc",
+    "common/shell_messages.cc",
+    "renderer/layout_test/blink_test_runner.cc",
+    "renderer/layout_test/layout_test_render_thread_observer.cc",
+    "browser/shell_content_browser_client.cc",
+
+    # Using namespace
+    "browser/shell_devtools_bindings.cc",
+    "renderer/layout_test/test_media_stream_renderer_factory.cc",
+
+    # namespaces
+    "utility/shell_content_utility_client.cc",
   ]
 
   configs += [

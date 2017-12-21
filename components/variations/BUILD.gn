@@ -2,11 +2,13 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
+import("//build/config/jumbo.gni")
+
 if (is_android) {
   import("//build/config/android/rules.gni")
 }
 
-static_library("variations") {
+jumbo_static_library("variations") {
   sources = [
     "active_field_trials.cc",
     "active_field_trials.h",
@@ -32,10 +34,6 @@ static_library("variations") {
     "pref_names.h",
     "processed_study.cc",
     "processed_study.h",
-    "proto/client_variations.proto",
-    "proto/permuted_entropy_cache.proto",
-    "proto/study.proto",
-    "proto/variations_seed.proto",
     "study_filtering.cc",
     "study_filtering.h",
     "synthetic_trial_registry.cc",

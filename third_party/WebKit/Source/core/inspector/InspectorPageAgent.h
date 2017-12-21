@@ -214,11 +214,8 @@ class CORE_EXPORT InspectorPageAgent final
       bool is_regex,
       std::unique_ptr<SearchInResourceCallback>);
 
-  static bool DataContent(const char* data,
-                          unsigned size,
-                          const String& text_encoding_name,
-                          bool with_base64_encode,
-                          String* result);
+  static KURL UrlWithoutFragment(const KURL&);
+  static String FrameId(LocalFrame*);
 
   void PageLayoutInvalidated(bool resized);
 
