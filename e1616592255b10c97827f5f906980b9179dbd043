@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bd602e81_d4a802be",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 1
+      },
+      "lineNbr": 9491,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-12-21T02:26:17Z",
+      "side": 1,
+      "message": "Could you take some screenshots of all cases with these strings and post them on the bug? We should get all these strings reviewed by Shimi too.",
+      "revId": "e1616592255b10c97827f5f906980b9179dbd043",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5378b11d_77645755",
+        "filename": "chrome/browser/content_settings/tab_specific_content_settings.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-12-21T02:26:17Z",
+      "side": 1,
+      "message": "nit: now this looks out of date. You may just want to change it to \"only returns meaningful values for the content types below.\"",
+      "revId": "e1616592255b10c97827f5f906980b9179dbd043",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99ba4c62_9dafa380",
+        "filename": "chrome/browser/content_settings/tab_specific_content_settings.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-12-21T02:26:17Z",
+      "side": 1,
+      "message": "Is this needed to make the ContentSettingSimpleBubbleModel work properly? This code needs refactoring..",
+      "revId": "e1616592255b10c97827f5f906980b9179dbd043",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03194e31_15dd4583",
+        "filename": "chrome/browser/ui/content_settings/content_setting_image_model.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-12-21T02:26:17Z",
+      "side": 1,
+      "message": "Could this just use ContentSettingBlockedImageModel?",
+      "revId": "e1616592255b10c97827f5f906980b9179dbd043",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53b630c2_89c5df73",
+        "filename": "chrome/browser/ui/content_settings/content_setting_image_model.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-12-21T02:26:17Z",
+      "side": 1,
+      "message": "nit: could you also please update enums.xml",
+      "revId": "e1616592255b10c97827f5f906980b9179dbd043",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
