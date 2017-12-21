@@ -8,6 +8,7 @@
 #include "chrome/browser/chromeos/file_system_provider/provided_file_system_interface.h"
 #include "chrome/browser/chromeos/smb_client/smb_file_system.h"
 #include "chrome/browser/profiles/profile.h"
+#include "url/gurl.h"
 
 namespace chromeos {
 namespace smb_client {
@@ -20,7 +21,13 @@ SmbProvider::SmbProvider()
                     extensions::SOURCE_NETWORK),
       // TODO(baileyberro): Localize this string, so it shows correctly in all
       // languages. See l10n_util::GetStringUTF8.
-      name_("SMB Shares") {}
+      name_("SMB Shares") {
+  // TODO(baileyberro): Fill out with proper icons.
+  icon_set_.SetIcon(IconSet::IconSize::SIZE_16x16,
+                    GURL("chrome://resources/images/apps/button.png"));
+  icon_set_.SetIcon(IconSet::IconSize::SIZE_32x32,
+                    GURL("chrome://resources/images/2x/apps/button.png"));
+}
 
 std::unique_ptr<ProvidedFileSystemInterface>
 SmbProvider::CreateProvidedFileSystem(
@@ -40,6 +47,10 @@ const ProviderId& SmbProvider::GetId() const {
 
 const std::string& SmbProvider::GetName() const {
   return name_;
+}
+
+const IconSet& SmbProvider::GetIconSet() const {
+  return icon_set_;
 }
 
 }  // namespace smb_client

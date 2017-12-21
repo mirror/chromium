@@ -100,6 +100,10 @@ IN_PROC_BROWSER_TEST_F(FileManagerJsTest, ImportControllerTest) {
       FILE_PATH_LITERAL("foreground/js/import_controller_unittest.html")));
 }
 
+IN_PROC_BROWSER_TEST_F(FileManagerJsTest, UtilTest) {
+  RunTest(base::FilePath(FILE_PATH_LITERAL("common/js/util_unittest.html")));
+}
+
 IN_PROC_BROWSER_TEST_F(FileManagerJsTest, AsyncUtilTest) {
   RunTest(base::FilePath(
       FILE_PATH_LITERAL("common/js/async_util_unittest.html")));
