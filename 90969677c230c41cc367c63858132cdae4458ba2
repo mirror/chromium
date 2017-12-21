@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "df64dfe5_e778880b",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 34399,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-12-21T19:23:17Z",
+      "side": 1,
+      "message": "Can you add me as well please? To both.",
+      "range": {
+        "startLine": 34399,
+        "startChar": 2,
+        "endLine": 34399,
+        "endChar": 38
+      },
+      "revId": "90969677c230c41cc367c63858132cdae4458ba2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
