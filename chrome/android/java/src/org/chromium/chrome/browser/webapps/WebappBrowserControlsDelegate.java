@@ -52,6 +52,10 @@ class WebappBrowserControlsDelegate extends TabStateBrowserControlsVisibilityDel
         // Do not show browser controls when URL is not ready yet.
         if (TextUtils.isEmpty(url)) return false;
 
+        if (info.hasSplashScreenUri() && info.splashScreenUri().toString().equals(url)
+                /*&& we are showing it for screen capturing purposes.*/)
+            return false;
+
         // If this is a Trusted Web Activity that has failed verification, always show browser
         // controls independent of policy/webapp info.
         return twaVerificationFailed || shouldShowBrowserControlsForUrl(scopePolicy, info, url)

@@ -1131,6 +1131,10 @@ IPC_MESSAGE_ROUTED1(FrameHostMsg_DidFailProvisionalLoadWithError,
 // Notifies the browser that a document has been loaded.
 IPC_MESSAGE_ROUTED0(FrameHostMsg_DidFinishDocumentLoad)
 
+#if defined(OS_ANDROID)
+IPC_MESSAGE_ROUTED0(FrameHostMsg_DidSwapAfterLoad)
+#endif
+
 IPC_MESSAGE_ROUTED3(FrameHostMsg_DidFailLoadWithError,
                     GURL /* validated_url */,
                     int /* error_code */,

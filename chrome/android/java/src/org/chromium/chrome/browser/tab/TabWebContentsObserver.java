@@ -142,6 +142,11 @@ public class TabWebContentsObserver extends WebContentsObserver {
     }
 
     @Override
+    public void didSwapAfterLoad(boolean isMainFrame) {
+        if (isMainFrame) mTab.didSwapAfterLoad();
+    }
+
+    @Override
     public void didFailLoad(
             boolean isMainFrame, int errorCode, String description, String failingUrl) {
         mTab.updateThemeColorIfNeeded(true);

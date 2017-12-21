@@ -622,6 +622,7 @@ class CONTENT_EXPORT RenderFrameImpl
   void RunScriptsAtDocumentReady(bool document_is_empty) override;
   void RunScriptsAtDocumentIdle() override;
   void DidHandleOnloadEvents() override;
+  void DidSwapAfterLoadEvent();
   void DidFailLoad(const blink::WebURLError& error,
                    blink::WebHistoryCommitType commit_type) override;
   void DidFinishLoad() override;

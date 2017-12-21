@@ -85,6 +85,8 @@ public interface TabObserver {
      */
     void onPageLoadFinished(Tab tab);
 
+    void onDidSwapAfterLoad(Tab tab);
+
     /**
      * Called when a tab has failed loading a page.
      *

@@ -893,6 +893,8 @@ bool WebContentsImpl::OnMessageReceived(RenderFrameHostImpl* render_frame_host,
                         OnFindMatchRectsReply)
     IPC_MESSAGE_HANDLER(FrameHostMsg_GetNearestFindResult_Reply,
                         OnGetNearestFindResultReply)
+    IPC_MESSAGE_HANDLER(FrameHostMsg_DidSwapAfterLoad, OnDidSwapAfterLoad)
+
 #endif
     IPC_MESSAGE_UNHANDLED(handled = false)
   IPC_END_MESSAGE_MAP()
@@ -4037,6 +4039,15 @@ void WebContentsImpl::OnDocumentLoadedInFrame(RenderFrameHostImpl* source) {
   for (auto& observer : observers_)
     observer.DocumentLoadedInFrame(source);
 }
+
+#if defined(OS_ANDROID)
+void WebContentsImpl::OnDidSwapAfterLoad(RenderFrameHostImpl* source) {
+  LOG(WARNING)
+      << "[piotrs] WebContentsImpl::OnDidSwapAfterLoad on the browser side!";
+  for (auto& observer : observers_)
+    observer.DidSwapAfterLoad(source);
+}
+#endif
 
 void WebContentsImpl::OnDidFinishLoad(RenderFrameHostImpl* source,
                                       const GURL& url) {

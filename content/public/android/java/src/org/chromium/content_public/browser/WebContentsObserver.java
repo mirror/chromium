@@ -123,6 +123,8 @@ public abstract class WebContentsObserver {
      */
     public void didFinishLoad(long frameId, String validatedUrl, boolean isMainFrame) {}
 
+    public void didSwapAfterLoad(boolean isMainFrame) {}
+
     /**
      * Notifies that the document has finished loading for the given frame.
      * @param frameId A positive, non-zero integer identifying the navigating frame.

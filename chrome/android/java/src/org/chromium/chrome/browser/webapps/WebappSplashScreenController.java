@@ -5,9 +5,16 @@
 package org.chromium.chrome.browser.webapps;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
+import android.os.Build;
+import android.os.StrictMode;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -15,6 +22,8 @@ import android.widget.TextView;
 
 import org.chromium.base.ApiCompatibilityUtils;
 import org.chromium.base.ContextUtils;
+import org.chromium.base.Log;
+import org.chromium.base.StreamUtil;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.compositor.CompositorViewHolder;
@@ -23,11 +32,22 @@ import org.chromium.chrome.browser.tab.EmptyTabObserver;
 import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.chrome.browser.util.ColorUtils;
 import org.chromium.chrome.browser.webapps.WebappActivity.ActivityType;
+import org.chromium.content_public.browser.ContentBitmapCallback;
+import org.chromium.content_public.browser.LoadUrlParams;
+import org.chromium.content_public.browser.WebContents;
 import org.chromium.net.NetError;
 import org.chromium.net.NetworkChangeNotifier;
+import org.chromium.ui.UiUtils;
+import org.chromium.ui.base.PageTransition;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 /** Shows and hides splash screen. */
 class WebappSplashScreenController extends EmptyTabObserver {
+    private static final String TAG = "WebappSplashScreen";
+
     /** Used to schedule splash screen hiding. */
     private CompositorViewHolder mCompositorViewHolder;
 
@@ -40,11 +60,16 @@ class WebappSplashScreenController extends EmptyTabObserver {
     /** Whether the splash screen layout was initialized. */
     private boolean mInitializedLayout;
 
+    private WebappActivity mWebappActivity;
     private ViewGroup mSplashScreen;
     private WebappUma mWebappUma;
 
+    /** Whether we are in the process of navigating to and screenshotting the splash_screen_url */
+    private boolean mInSplashScreenCapturePhase;
+
     /** The error code of the navigation. */
     private int mErrorCode;
+    private int mLastHttpStatusCode;
 
     private WebappOfflineDialog mOfflineDialog;
 
@@ -55,13 +80,18 @@ class WebappSplashScreenController extends EmptyTabObserver {
 
     private @ActivityType int mActivityType;
 
-    public WebappSplashScreenController() {
+    public WebappSplashScreenController(WebappActivity webappActivity) {
         mWebappUma = new WebappUma();
+        mWebappActivity = webappActivity;
+    }
+
+    public boolean isInSplashScreenCapturePhase() {
+        return mInSplashScreenCapturePhase;
     }
 
     /** Shows the splash screen. */
-    public void showSplashScreen(
-            @ActivityType int activityType, ViewGroup parentView, final WebappInfo webappInfo) {
+    public void showSplashScreen(@ActivityType int activityType, ViewGroup parentView) {
+        WebappInfo webappInfo = mWebappActivity.mWebappInfo;
         mActivityType = activityType;
         mParentView = parentView;
         mAppName = webappInfo.name();
@@ -72,6 +102,14 @@ class WebappSplashScreenController extends EmptyTabObserver {
 
         mSplashScreen = new FrameLayout(context);
         mSplashScreen.setBackgroundColor(backgroundColor);
+        // Consume all touch, don't pass them to web contents.
+        mSplashScreen.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                v.performClick();
+                return true;
+            }
+        });
         mParentView.addView(mSplashScreen);
 
         mWebappUma.splashscreenVisible();
@@ -82,17 +120,22 @@ class WebappSplashScreenController extends EmptyTabObserver {
                         ? WebappUma.SPLASHSCREEN_COLOR_STATUS_CUSTOM
                         : WebappUma.SPLASHSCREEN_COLOR_STATUS_DEFAULT);
 
+        if (useHtmlSplashScreen()) {
+            initializeHtmlLayout();
+            return;
+        }
+
         WebappDataStorage storage =
                 WebappRegistry.getInstance().getWebappDataStorage(webappInfo.id());
         if (storage == null) {
-            initializeLayout(webappInfo, backgroundColor, null);
+            initializeIconLayout(webappInfo, backgroundColor, null);
             return;
         }
 
         storage.getSplashScreenImage(new WebappDataStorage.FetchCallback<Bitmap>() {
             @Override
             public void onDataRetrieved(Bitmap splashImage) {
-                initializeLayout(webappInfo, backgroundColor, splashImage);
+                initializeIconLayout(webappInfo, backgroundColor, splashImage);
             }
         });
     }
@@ -114,29 +157,38 @@ class WebappSplashScreenController extends EmptyTabObserver {
 
     @Override
     public void didFirstVisuallyNonEmptyPaint(Tab tab) {
-        if (canHideSplashScreen()) {
-            hideSplashScreenOnDrawingFinished(tab, WebappUma.SPLASHSCREEN_HIDES_REASON_PAINT);
+        // didFirstVisuallyNonEmptyPaint is not good enough for timing of splash screen capture.
+        if (!mInSplashScreenCapturePhase && canHideSplashScreen()) {
+            hideSplashScreen(tab, WebappUma.SPLASHSCREEN_HIDES_REASON_PAINT);
         }
     }
 
     @Override
     public void onPageLoadFinished(Tab tab) {
-        if (canHideSplashScreen()) {
-            hideSplashScreenOnDrawingFinished(
-                    tab, WebappUma.SPLASHSCREEN_HIDES_REASON_LOAD_FINISHED);
+        // onPageLoadFinished is not good enough for timing of splash screen capture.
+        if (!mInSplashScreenCapturePhase && canHideSplashScreen()) {
+            hideSplashScreen(tab, WebappUma.SPLASHSCREEN_HIDES_REASON_LOAD_FINISHED);
+        }
+    }
+
+    @Override
+    public void onDidSwapAfterLoad(Tab tab) {
+        // Only onDidSwapAfterLoad ensures all pixels are flushed to the screen.
+        if (mInSplashScreenCapturePhase && canHideSplashScreen()) {
+            hideSplashScreen(tab, WebappUma.SPLASHSCREEN_HIDES_REASON_LOAD_FINISHED);
         }
     }
 
     @Override
     public void onPageLoadFailed(Tab tab, int errorCode) {
         if (canHideSplashScreen()) {
-            animateHidingSplashScreen(tab, WebappUma.SPLASHSCREEN_HIDES_REASON_LOAD_FAILED);
+            hideSplashScreen(tab, WebappUma.SPLASHSCREEN_HIDES_REASON_LOAD_FAILED);
         }
     }
 
     @Override
     public void onCrash(Tab tab, boolean sadTabShown) {
-        animateHidingSplashScreen(tab, WebappUma.SPLASHSCREEN_HIDES_REASON_CRASH);
+        hideSplashScreen(tab, WebappUma.SPLASHSCREEN_HIDES_REASON_CRASH);
     }
 
     @Override
@@ -144,6 +196,7 @@ class WebappSplashScreenController extends EmptyTabObserver {
             boolean isErrorPage, boolean hasCommitted, boolean isSameDocument,
             boolean isFragmentNavigation, Integer pageTransition, int errorCode,
             int httpStatusCode) {
+        mLastHttpStatusCode = httpStatusCode;
         if (mActivityType == WebappActivity.ACTIVITY_TYPE_WEBAPP) return;
 
         mErrorCode = errorCode;
@@ -204,7 +257,8 @@ class WebappSplashScreenController extends EmptyTabObserver {
     }
 
     /** Sets the splash screen layout and sets the splash screen's title and icon. */
-    private void initializeLayout(WebappInfo webappInfo, int backgroundColor, Bitmap splashImage) {
+    private void initializeIconLayout(
+            WebappInfo webappInfo, int backgroundColor, Bitmap splashImage) {
         mInitializedLayout = true;
         Context context = ContextUtils.getApplicationContext();
         Resources resources = context.getResources();
@@ -265,39 +319,128 @@ class WebappSplashScreenController extends EmptyTabObserver {
         }
     }
 
-    /**
-     * Schedules the splash screen hiding once the compositor has finished drawing a frame.
-     *
-     * Without this callback we were seeing a short flash of white between the splash screen and
-     * the web content (crbug.com/734500).
-     * */
-    private void hideSplashScreenOnDrawingFinished(final Tab tab, final int reason) {
-        if (mSplashScreen == null) return;
-
-        if (mCompositorViewHolder == null) {
-            animateHidingSplashScreen(tab, reason);
-            return;
+    private boolean useHtmlSplashScreen() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            // Don't use HTML splash screen in multi window or picture in picture scenarios
+            // due to unpredictable size of the viewport.
+            if (mWebappActivity.isInMultiWindowMode() || mWebappActivity.isInPictureInPictureMode())
+                return false;
         }
 
-        mCompositorViewHolder.getCompositorView().surfaceRedrawNeededAsync(null, () -> {
-            animateHidingSplashScreen(tab, reason);
-        });
+        return /*ChromeFeatureList.isEnabled(ChromeFeatureList.PWA_IMPROVED_SPLASH_SCREEN)
+                &&*/ mWebappActivity.mWebappInfo.hasSplashScreenUri();
     }
 
-    /** Performs the splash screen hiding animation. */
-    private void animateHidingSplashScreen(final Tab tab, final int reason) {
+    private void initializeHtmlLayout() {
+        mInitializedLayout = true;
+
+        mWebappUma.recordSplashscreenIconType(WebappUma.SPLASHSCREEN_ICON_TYPE_NONE);
+
+        StrictMode.ThreadPolicy oldPolicy = StrictMode.allowThreadDiskReads();
+        try {
+            File splashScreenFile = getSplashScreenFile(
+                    mWebappActivity.getResources().getConfiguration().orientation);
+
+            if (!splashScreenFile.exists()) {
+                mInSplashScreenCapturePhase = true;
+                return;
+            }
+
+            Bitmap bmp = BitmapFactory.decodeFile(splashScreenFile.getAbsolutePath());
+            ImageView imageView = new ImageView(mWebappActivity);
+            imageView.setImageBitmap(bmp);
+            mSplashScreen.addView(imageView);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            StrictMode.setThreadPolicy(oldPolicy);
+        }
+    }
+
+    private void saveSplashScreenImage(final Bitmap image) {
+        new AsyncTask<Void, Void, File>() {
+            @Override
+            protected File doInBackground(Void... params) {
+                FileOutputStream fOut = null;
+                try {
+                    File splashScreenFile = getSplashScreenFile(image.getWidth() > image.getHeight()
+                                    ? Configuration.ORIENTATION_LANDSCAPE
+                                    : Configuration.ORIENTATION_PORTRAIT);
+                    File parent = splashScreenFile.getParentFile();
+                    if (parent.exists() || parent.mkdir()) {
+                        fOut = new FileOutputStream(splashScreenFile);
+                        image.compress(Bitmap.CompressFormat.JPEG, 85, fOut);
+                        return splashScreenFile;
+                    }
+                } catch (IOException e) {
+                    Log.w(TAG, "IOException while saving screenshot", e);
+                } finally {
+                    StreamUtil.closeQuietly(fOut);
+                }
+
+                return null;
+            }
+        }
+                .executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+    }
+
+    private File getSplashScreenFile(int orientation) throws IOException {
+        return new File(UiUtils.getDirectoryForImageCapture(mWebappActivity)
+                + "/webapp_splash_screen/" + mWebappActivity.mWebappInfo.id() + "_ss_"
+                + (orientation == Configuration.ORIENTATION_PORTRAIT ? "p" : "l") + ".jpg");
+    }
+
+    private void hideSplashScreen(final Tab tab, final int reason) {
         if (mSplashScreen == null) return;
 
-        mSplashScreen.animate().alpha(0f).withEndAction(new Runnable() {
-            @Override
-            public void run() {
+        if (!mInSplashScreenCapturePhase) {
+            // If we don't capture screenshot we show the webpage on first paint or load, which do
+            // not ensure frame has been swapped out of compositor. surfaceRedrawNeededAsync ensures
+            // flash of white does not happen (crbug.com/734500).
+            mCompositorViewHolder.getCompositorView().surfaceRedrawNeededAsync(null, () -> {
                 if (mSplashScreen == null) return;
                 mParentView.removeView(mSplashScreen);
                 tab.removeObserver(WebappSplashScreenController.this);
                 mSplashScreen = null;
                 mCompositorViewHolder = null;
                 mWebappUma.splashscreenHidden(reason);
+                // Clear the history in case we've been on the splash screen url for capture.
+                mWebappActivity.getActivityTab()
+                        .getWebContents()
+                        .getNavigationController()
+                        .clearHistory();
+            });
+            return;
+        }
+
+        if ((reason == WebappUma.SPLASHSCREEN_HIDES_REASON_LOAD_FAILED
+                    || reason == WebappUma.SPLASHSCREEN_HIDES_REASON_CRASH
+                    || (mLastHttpStatusCode >= 400))) {
+            // We don't capture the splash screen if the page didn't load successfully
+            // or it crashed.
+            navigateToStartUrl();
+            return;
+        }
+
+        mSplashScreen.setAlpha(0); // Using splash screen element as 'glass', blocks interactions.
+        WebContents webContents = mWebappActivity.getActivityTab().getWebContents();
+        webContents.getContentBitmapAsync(0, 0, new ContentBitmapCallback() {
+            @Override
+            public void onFinishGetBitmap(Bitmap bitmap, int response) {
+                if (bitmap != null) {
+                    saveSplashScreenImage(bitmap);
+                } else {
+                    Log.w(TAG, "Failed to capture content bitmap: " + response);
+                }
+
+                navigateToStartUrl();
             }
         });
+    }
+
+    private void navigateToStartUrl() {
+        mInSplashScreenCapturePhase = false;
+        mWebappActivity.getActivityTab().loadUrl(new LoadUrlParams(
+                mWebappActivity.mWebappInfo.uri().toString(), PageTransition.AUTO_TOPLEVEL));
     }
 }
