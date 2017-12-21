@@ -14,6 +14,7 @@ layer at (0,0) size 800x233
         LayoutText {#text} at (0,0) size 75x19
           text run at (0,0) width 75: "Second bar:"
       LayoutBlockFlow (anonymous) at (0,164) size 784x45
-        LayoutSVGRoot {svg} at (0,0) size 160x40
-          LayoutSVGRect {rect} at (0,0) size 100x100 [fill={[type=SOLID] [color=#000080]}] [x=0.00] [y=0.00] [width=100.00] [height=100.00]
         LayoutText {#text} at (0,0) size 0x0
+layer at (8,180) size 160x40
+  LayoutSVGRoot {svg} at (0,0) size 160x40
+    LayoutSVGRect {rect} at (0,0) size 100x100 [fill={[type=SOLID] [color=#000080]}] [x=0.00] [y=0.00] [width=100.00] [height=100.00]
