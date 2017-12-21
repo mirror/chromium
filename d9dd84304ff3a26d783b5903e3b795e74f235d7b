@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2d3274ba_dff2b0e6",
+        "filename": "content/renderer/media_capture_from_element/html_video_element_capturer_source.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-12-21T21:57:45Z",
+      "side": 1,
+      "message": "Why don\u0027t you just move this after base::TimeTicks current_time and initialize start_capture_time_ to current_time, so that the first current time is consistent with start_capture_time_?",
+      "revId": "d9dd84304ff3a26d783b5903e3b795e74f235d7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4b008dd_4cfd7d92",
+        "filename": "content/renderer/media_capture_from_element/html_video_element_capturer_source_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-12-21T21:57:45Z",
+      "side": 1,
+      "message": "Do we have a way of installing a fake timer for testing?",
+      "revId": "d9dd84304ff3a26d783b5903e3b795e74f235d7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
