@@ -80,10 +80,16 @@ VolumeInfo.prototype.label;
 VolumeInfo.prototype.providerId;
 
 /**
- * ID of a providing extension for this volume.
+ * Url of an icon for this volume.
  * @type {(string|undefined)}
  */
-VolumeInfo.prototype.extensionId;
+VolumeInfo.prototype.iconUrl;
+
+/**
+ * Url of an large icon for this volume.
+ * @type {(string|undefined)}
+ */
+VolumeInfo.prototype.largeIconUrl;
 
 /**
  * True if the volume contains media.

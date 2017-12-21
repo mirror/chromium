@@ -138,7 +138,7 @@ MockVolumeManager.createMockVolumeInfo = function(type, volumeId, label) {
       {isCurrentProfile: true, displayName: ''},  // profile
       label,                                      // label
       undefined,                                  // providerId
-      undefined,                                  // extensionId
+      undefined,                                  // iconUri
       false,                                      // hasMedia
       false);                                     // configurable
 
@@ -281,7 +281,7 @@ MockVolumeManagerWrapper.createMockVolumeInfo =
       {isCurrentProfile: true, displayName: ''},  // profile
       label,                                      // label
       undefined,                                  // providerId
-      undefined,                                  // extensionId
+      undefined,                                  // iconUri
       false);                                     // hasMedia
   return volumeInfo;
 };
