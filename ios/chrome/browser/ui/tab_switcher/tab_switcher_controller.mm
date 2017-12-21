@@ -21,6 +21,7 @@
 #include "ios/chrome/browser/sessions/session_util.h"
 #include "ios/chrome/browser/sessions/tab_restore_service_delegate_impl_ios.h"
 #include "ios/chrome/browser/sessions/tab_restore_service_delegate_impl_ios_factory.h"
+#import "ios/chrome/browser/snapshots/snapshot_tab_helper.h"
 #include "ios/chrome/browser/sync/ios_chrome_profile_sync_service_factory.h"
 #import "ios/chrome/browser/tabs/tab.h"
 #import "ios/chrome/browser/tabs/tab_model.h"
@@ -622,9 +623,10 @@ enum class SnapshotViewOption {
     // context
     tabScreenshotImageView.image =
         [self updateScreenshotForCellIfNeeded:selectedCell tabModel:tabModel];
-    [selectedTab retrieveSnapshot:^(UIImage* snapshot) {
-      [weakTabScreenshotImageView setImage:snapshot];
-    }];
+    SnapshotTabHelper::FromWebState(selectedTab.webState)
+        ->RetrieveColorSnapshot(^(UIImage* snapshot) {
+          [weakTabScreenshotImageView setImage:snapshot];
+        });
   }
 
   const CGSize tabScreenshotImageSize = tabScreenshotImageView.image.size;
