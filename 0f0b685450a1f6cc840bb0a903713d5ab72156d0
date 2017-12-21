@@ -1,0 +1,579 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "72ad6cd5_ed0b333f",
+        "filename": "device/u2f/attestation_statement.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-21T11:53:02Z",
+      "side": 1,
+      "message": "\u003d default and move up to match order in header file",
+      "range": {
+        "startLine": 15,
+        "startChar": 46,
+        "endLine": 15,
+        "endChar": 48
+      },
+      "revId": "0f0b685450a1f6cc840bb0a903713d5ab72156d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63503cb8_678ad5ea",
+        "filename": "device/u2f/attested_credential_data.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-21T11:53:02Z",
+      "side": 1,
+      "message": "delete",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 48
+      },
+      "revId": "0f0b685450a1f6cc840bb0a903713d5ab72156d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1f3b759_de83b46a",
+        "filename": "device/u2f/attested_credential_data.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-21T11:53:02Z",
+      "side": 1,
+      "message": "zero init is the default, credential_id_length(2) is enough",
+      "range": {
+        "startLine": 28,
+        "startChar": 45,
+        "endLine": 28,
+        "endChar": 48
+      },
+      "revId": "0f0b685450a1f6cc840bb0a903713d5ab72156d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72274f37_ff46a611",
+        "filename": "device/u2f/attested_credential_data.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-21T11:53:02Z",
+      "side": 1,
+      "message": "\u003d default. also should be moved up so that the order here matches the declaration order in the header file",
+      "range": {
+        "startLine": 65,
+        "startChar": 50,
+        "endLine": 65,
+        "endChar": 52
+      },
+      "revId": "0f0b685450a1f6cc840bb0a903713d5ab72156d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b51083df_dc22029c",
+        "filename": "device/u2f/attested_credential_data.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-21T11:53:02Z",
+      "side": 1,
+      "message": "Styleguide dictates that factory methods should be one of the first declarations, so move this above the constructor: https://google.github.io/styleguide/cppguide.html#Declaration_Order",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 45
+      },
+      "revId": "0f0b685450a1f6cc840bb0a903713d5ab72156d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6a7e190_c40ffc52",
+        "filename": "device/u2f/authenticator_data.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-21T11:53:02Z",
+      "side": 1,
+      "message": "you should be able to move this as well once the move operations are added to AttestedCredentialData",
+      "range": {
+        "startLine": 23,
+        "startChar": 65,
+        "endLine": 23,
+        "endChar": 69
+      },
+      "revId": "0f0b685450a1f6cc840bb0a903713d5ab72156d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8266c921_50c5d4e8",
+        "filename": "device/u2f/authenticator_data.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-21T11:53:02Z",
+      "side": 1,
+      "message": "same here",
+      "range": {
+        "startLine": 33,
+        "startChar": 21,
+        "endLine": 33,
+        "endChar": 25
+      },
+      "revId": "0f0b685450a1f6cc840bb0a903713d5ab72156d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "807e8f7f_7f26677c",
+        "filename": "device/u2f/authenticator_data.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-21T11:53:02Z",
+      "side": 1,
+      "message": "` \u003d default;` and move up",
+      "range": {
+        "startLine": 51,
+        "startChar": 39,
+        "endLine": 51,
+        "endChar": 42
+      },
+      "revId": "0f0b685450a1f6cc840bb0a903713d5ab72156d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b52b09fa_a1b7856a",
+        "filename": "device/u2f/ec_public_key.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-21T11:53:02Z",
+      "side": 1,
+      "message": "in case you intend to keep this this could be \n\n`return std::make_unique\u003cECPublicKey\u003e(algorithm_, x_coordinate_, y_coordinate_);`\n\nand the method should be marked const\n\nbut as I mentioned before I\u0027d simply add the move operations",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 1
+      },
+      "revId": "0f0b685450a1f6cc840bb0a903713d5ab72156d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a57ceee2_2e0d33a6",
+        "filename": "device/u2f/ec_public_key.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-21T11:53:02Z",
+      "side": 1,
+      "message": "consider using `base::span\u003cconst uint8_t\u003e` here",
+      "range": {
+        "startLine": 31,
+        "startChar": 6,
+        "endLine": 31,
+        "endChar": 33
+      },
+      "revId": "0f0b685450a1f6cc840bb0a903713d5ab72156d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b6d2300_a430ec57",
+        "filename": "device/u2f/public_key.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-21T11:53:02Z",
+      "side": 1,
+      "message": "`\u003d default;` and move up",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 26
+      },
+      "revId": "0f0b685450a1f6cc840bb0a903713d5ab72156d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a8bd3cf_d1b98f81",
+        "filename": "device/u2f/register_response_data.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-21T11:53:02Z",
+      "side": 1,
+      "message": "std::move(move) should be better",
+      "range": {
+        "startLine": 46,
+        "startChar": 32,
+        "endLine": 46,
+        "endChar": 45
+      },
+      "revId": "0f0b685450a1f6cc840bb0a903713d5ab72156d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20befcbb_cb851bcf",
+        "filename": "device/u2f/register_response_data.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-21T11:53:02Z",
+      "side": 1,
+      "message": "Do subclasses exist? If not, the desctructor doesn\u0027t need to be virtual and you can return a RegisterResponseData by value from CreateFromU2fRegisterResponse, similarly to how its done for AttestedCredentialData",
+      "range": {
+        "startLine": 28,
+        "startChar": 2,
+        "endLine": 32,
+        "endChar": 9
+      },
+      "revId": "0f0b685450a1f6cc840bb0a903713d5ab72156d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f838910c_2eb4518b",
+        "filename": "device/u2f/register_response_data.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-21T11:53:02Z",
+      "side": 1,
+      "message": "mark as const",
+      "range": {
+        "startLine": 34,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 58
+      },
+      "revId": "0f0b685450a1f6cc840bb0a903713d5ab72156d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32f2e3fd_106b8a16",
+        "filename": "device/u2f/u2f_parsing_utils.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-21T11:53:02Z",
+      "side": 1,
+      "message": "declare as extern const... and define them in a cc file",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 34
+      },
+      "revId": "0f0b685450a1f6cc840bb0a903713d5ab72156d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aec48ccc_623181ee",
+        "filename": "device/u2f/u2f_parsing_utils.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-21T11:53:02Z",
+      "side": 1,
+      "message": "could be `base::span\u003cconst uint8_t\u003e`",
+      "range": {
+        "startLine": 22,
+        "startChar": 12,
+        "endLine": 22,
+        "endChar": 39
+      },
+      "revId": "0f0b685450a1f6cc840bb0a903713d5ab72156d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6b70a97_9793920d",
+        "filename": "device/u2f/u2f_parsing_utils.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-21T11:53:02Z",
+      "side": 1,
+      "message": "could also be a span",
+      "range": {
+        "startLine": 25,
+        "startChar": 29,
+        "endLine": 25,
+        "endChar": 63
+      },
+      "revId": "0f0b685450a1f6cc840bb0a903713d5ab72156d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d095fd3e_87670425",
+        "filename": "device/u2f/u2f_register.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-21T11:53:02Z",
+      "side": 1,
+      "message": "base::Optional is probably better if RegisterResponseData does not have subclasses",
+      "range": {
+        "startLine": 26,
+        "startChar": 6,
+        "endLine": 26,
+        "endChar": 21
+      },
+      "revId": "0f0b685450a1f6cc840bb0a903713d5ab72156d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f11bd3cb_a1693d76",
+        "filename": "device/u2f/u2f_register_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-21T11:53:02Z",
+      "side": 1,
+      "message": "`data` can be inlined",
+      "range": {
+        "startLine": 35,
+        "startChar": 2,
+        "endLine": 35,
+        "endChar": 14
+      },
+      "revId": "0f0b685450a1f6cc840bb0a903713d5ab72156d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e311259_8356a863",
+        "filename": "device/u2f/u2f_register_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-21T11:53:02Z",
+      "side": 1,
+      "message": "here as well",
+      "range": {
+        "startLine": 41,
+        "startChar": 0,
+        "endLine": 53,
+        "endChar": 14
+      },
+      "revId": "0f0b685450a1f6cc840bb0a903713d5ab72156d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc0a0183_3029a550",
+        "filename": "device/u2f/u2f_register_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 479,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-21T11:53:02Z",
+      "side": 1,
+      "message": "ASSERT_TRUE(cbor);\nEXPECT_EQ(GetU2fAttestationStatementCBOR(), *cbor);",
+      "range": {
+        "startLine": 479,
+        "startChar": 2,
+        "endLine": 479,
+        "endChar": 32
+      },
+      "revId": "0f0b685450a1f6cc840bb0a903713d5ab72156d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5262e3b4_e034a57b",
+        "filename": "device/u2f/u2f_register_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 490,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-21T11:53:02Z",
+      "side": 1,
+      "message": "earlier comment regarding zero init applies here as well, you could leave it out. \n\nbut if you want to leave it in to be explicit about zero-init, that\u0027s fine too :)\n\nalso applies below",
+      "range": {
+        "startLine": 490,
+        "startChar": 37,
+        "endLine": 490,
+        "endChar": 63
+      },
+      "revId": "0f0b685450a1f6cc840bb0a903713d5ab72156d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd36fb7a_607960e4",
+        "filename": "device/u2f/u2f_request_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-21T11:53:02Z",
+      "side": 1,
+      "message": "use the same order of params as U2fRequest does, i.e. discoveries first",
+      "range": {
+        "startLine": 25,
+        "startChar": 17,
+        "endLine": 26,
+        "endChar": 56
+      },
+      "revId": "0f0b685450a1f6cc840bb0a903713d5ab72156d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc3cc553_58e00fd2",
+        "filename": "device/u2f/u2f_response_test_data.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-21T11:53:02Z",
+      "side": 1,
+      "message": "since it is likely you are including this file in multiple other files you should make these\nextern const ... []; as well and provide their definition in a cc file\n\nalso applies below",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 34
+      },
+      "revId": "0f0b685450a1f6cc840bb0a903713d5ab72156d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "498b102e_421bd317",
+        "filename": "device/u2f/u2f_sign.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-21T11:53:02Z",
+      "side": 1,
+      "message": "should be consistent with the order of U2fRequest\u0027s constructor as well, so either swap them here or change it in U2fRequest`s constructor (might be less work)",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 56
+      },
+      "revId": "0f0b685450a1f6cc840bb0a903713d5ab72156d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

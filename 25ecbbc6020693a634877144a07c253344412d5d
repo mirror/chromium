@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "bf86f5dc_65fa7992",
+        "filename": "device/u2f/attested_credential_data.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-21T11:53:02Z",
+      "side": 1,
+      "message": "As mentioned in the other comment keep this line and add a move constructor and move assignment operator.",
+      "range": {
+        "startLine": 50,
+        "startChar": 2,
+        "endLine": 50,
+        "endChar": 51
+      },
+      "revId": "25ecbbc6020693a634877144a07c253344412d5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "93c87509_64735f65",
         "filename": "device/u2f/u2f_register_unittest.cc",
         "patchSetId": 3

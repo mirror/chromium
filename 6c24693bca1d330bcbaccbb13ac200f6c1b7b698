@@ -322,6 +322,30 @@
     },
     {
       "key": {
+        "uuid": "a6bf7497_8468bd15",
+        "filename": "device/u2f/attested_credential_data.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-21T11:53:02Z",
+      "side": 1,
+      "message": "As you realized the compiler can\u0027t generate a copy constructor, because you have a unique_ptr member variable which can\u0027t be copied.\n\nThe only way to make a deep copy is for PublicKey to implement a `Clone` method or similar, that each subclass overrides. Then you could add a `Clone` method to this class, which calls\n\n  AttestedCredentialData(aaguid_, credential_id_length_, credential_id_, public_key_-\u003eClone());\n\nhowever, this seems overly complicated, and I suggest you simply add a move constructor and move assignment operator in order to get the following code to compile:\n\n  auto data \u003d AttestedCredentialData::CreateFromU2fRegisterResponse(....)",
+      "parentUuid": "6eb50c9f_a39aec6d",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 48
+      },
+      "revId": "6c24693bca1d330bcbaccbb13ac200f6c1b7b698",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cc30f252_ed34aaf3",
         "filename": "device/u2f/u2f_register.cc",
         "patchSetId": 1
