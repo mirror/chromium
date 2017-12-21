@@ -22,6 +22,30 @@
       "revId": "0c776215bfa45d0446749afba6654d092ffcdc94",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "011f3fac_7b5e2b7b",
+        "filename": "content/public/browser/storage_partition.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-12-21T20:37:20Z",
+      "side": 1,
+      "message": "Yeah, I tripped over that too.  I think the clearest thing to do is just to remove the comment (if someone tries to send this interface to a subprocess they\u0027ll fail as you say because it\u0027s a raw Foo*, so they\u0027ll have to do something else), which I\u0027ve done.  I\u0027ll land it like this based on your LGTM, but feel free to poke me if you\u0027d like the text replaced with something instead of just eliminated.",
+      "parentUuid": "20ed6fb2_5d1861e4",
+      "range": {
+        "startLine": 83,
+        "startChar": 44,
+        "endLine": 85,
+        "endChar": 24
+      },
+      "revId": "0c776215bfa45d0446749afba6654d092ffcdc94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
