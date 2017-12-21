@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8b072085_04730517",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 15252,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-12-21T00:53:15Z",
+      "side": 1,
+      "message": "nit: add \"once\" before \"when\" to be clear that only one set display mode is possible regardless of the number of displays.",
+      "range": {
+        "startLine": 15252,
+        "startChar": 12,
+        "endLine": 15252,
+        "endChar": 16
+      },
+      "revId": "24513fa22ce4f676685a94f7b826d52787a5d5a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0221d12d_d9c251d3",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 15261,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-12-21T00:53:15Z",
+      "side": 1,
+      "message": "optional nit: I think this reads  better if you omit the highlighted text.  The labels will make the \"range\" meaning clear.",
+      "range": {
+        "startLine": 15261,
+        "startChar": 8,
+        "endLine": 15261,
+        "endChar": 34
+      },
+      "revId": "24513fa22ce4f676685a94f7b826d52787a5d5a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3df9cf3_7ba375fb",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-12-21T00:53:15Z",
+      "side": 1,
+      "message": "It\u0027s a little confusing that this enum says up to 2, yes this code will only be used when it\u0027s exactly 2, and enums.xml also says this means exactly 2.\nCan you make these things consistent and clearer?",
+      "revId": "24513fa22ce4f676685a94f7b826d52787a5d5a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
