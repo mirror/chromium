@@ -112,6 +112,14 @@ void FrameContentWatcher::NotifyBrowserOfChange() {
     return;
   }
 
+  // Collect the matching selectors from all accessible frames. We send the
+  // matches for *all* frames, rather than just this frame, because the browser
+  // listens for this and just sets the matching selectors to whatever we send.
+  // As such, we need to ensure that we send the whole set to avoid removing a
+  // match from another frame.
+  // TODO(devlin): We should be able to avoid this by storing a collection of
+  // matched selectors by frame in the browser, rather than by WebContents. This
+  // would be cleaner, so we don't have to traverse the tree.
   std::set<base::StringPiece> transitive_selectors;
   for (blink::WebFrame* frame = top_frame; frame;
        frame = frame->TraverseNext()) {
@@ -130,11 +138,11 @@ void FrameContentWatcher::NotifyBrowserOfChange() {
   for (const base::StringPiece& selector : transitive_selectors)
     selector_strings.push_back(selector.as_string());
 
-  // TODO(devlin): Frame-ify this message.
-  content::RenderView* view =
-      content::RenderView::FromWebView(top_frame->View());
-  view->Send(new ExtensionHostMsg_OnWatchedPageChange(view->GetRoutingID(),
-                                                      selector_strings));
+  // Note: we send this through render_frame() (even though we checked the
+  // top-most frame) because the top frame may be remote. The browser-side
+  // listener watches for any messages from the WebContents, so this is okay.
+  render_frame()->Send(new ExtensionHostMsg_OnWatchedPageChange(
+      render_frame()->GetRoutingID(), selector_strings));
 }
 
 }  // namespace

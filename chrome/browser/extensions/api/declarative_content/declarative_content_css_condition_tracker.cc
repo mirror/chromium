@@ -114,10 +114,9 @@ OnWebContentsNavigation(content::NavigationHandle* navigation_handle) {
   request_evaluation_.Run(web_contents());
 }
 
-bool
-DeclarativeContentCssConditionTracker::PerWebContentsTracker::
-OnMessageReceived(
-    const IPC::Message& message) {
+bool DeclarativeContentCssConditionTracker::PerWebContentsTracker::
+    OnMessageReceived(const IPC::Message& message,
+                      content::RenderFrameHost* render_frame_host) {
   bool handled = true;
   IPC_BEGIN_MESSAGE_MAP(PerWebContentsTracker, message)
     IPC_MESSAGE_HANDLER(ExtensionHostMsg_OnWatchedPageChange,
