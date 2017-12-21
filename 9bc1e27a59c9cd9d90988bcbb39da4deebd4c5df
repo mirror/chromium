@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "eccb1bfb_d26bf311",
+        "filename": "third_party/WebKit/Source/core/frame/WebLocalFrameImpl.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 764,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-12-21T01:30:50Z",
+      "side": 1,
+      "message": "Thanks!",
+      "parentUuid": "7a2c36fc_e209fb7a",
+      "revId": "9bc1e27a59c9cd9d90988bcbb39da4deebd4c5df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7889450b_208791e3",
         "filename": "third_party/WebKit/Source/core/frame/WebLocalFrameImpl.cpp",
         "patchSetId": 7
@@ -142,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "f2bf78f9_663d0dc8",
+        "filename": "third_party/WebKit/Source/core/frame/WebLocalFrameImpl.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 768,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-12-21T01:30:50Z",
+      "side": 1,
+      "message": "But there is no easy way for //content/ to check the validity of the context, right?\n\nBlink hasn\u0027t (yet) exposed APIs to check the validity of the context to //content/, JavaScript etc. Alternately, Blink checks the validity when //content/, JavaScript etc calls into Blink.\n\nThat\u0027s why I thought it would make sense to have the check here.",
+      "parentUuid": "5ea0986e_6e6e0b60",
+      "revId": "9bc1e27a59c9cd9d90988bcbb39da4deebd4c5df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "08a330c1_0468863f",
         "filename": "third_party/WebKit/public/web/WebLocalFrame.h",
         "patchSetId": 7
@@ -171,6 +207,24 @@
       "side": 1,
       "message": "I think a number of callers may be interested in the result, so that they don\u0027t have to separately track the context lifetime themselves.",
       "parentUuid": "08a330c1_0468863f",
+      "revId": "9bc1e27a59c9cd9d90988bcbb39da4deebd4c5df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "df3a800b_6f90ca96",
+        "filename": "third_party/WebKit/public/web/WebLocalFrame.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-12-21T01:30:50Z",
+      "side": 1,
+      "message": "I don\u0027t have any strong opinion but, as mentioned before, Blink has not yet exposed the lifetime of Blink to //content/. So I was just wondering if this is a right way to expose it.",
+      "parentUuid": "16887269_26d5aeab",
       "revId": "9bc1e27a59c9cd9d90988bcbb39da4deebd4c5df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
