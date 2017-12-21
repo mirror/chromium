@@ -22,6 +22,30 @@
       "revId": "b9abc4f2427eac107fe4451b69550cf816bc0c37",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7291213_8db5e0c5",
+        "filename": "third_party/WebKit/Source/core/html/HTMLMetaElement.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1237911
+      },
+      "writtenOn": "2017-12-21T00:38:32Z",
+      "side": 1,
+      "message": "Hmm .. the problem is that we must compare these constraints with sizes scaled by the page zoom factor (i.e., those sizes are CSS pixels * page zoom factor). The page zoom factor contains DSF by enabling --use-zoom-for-dsf. If we do not scale these constraints here, we must scale all code that compare these constraints and those sizes (and we must also consider variables has dependencies with these constraints).\n\nAfter enabling --use-zoom-for-dsf, some values previously in CSS pixel scale becomes in CSS pixel * DSF scale (e.g., DOM elements). How about writing some comments in ViewportDescription?",
+      "parentUuid": "45731016_7676f920",
+      "range": {
+        "startLine": 443,
+        "startChar": 44,
+        "endLine": 443,
+        "endChar": 52
+      },
+      "revId": "b9abc4f2427eac107fe4451b69550cf816bc0c37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
