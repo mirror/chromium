@@ -131,6 +131,30 @@
     },
     {
       "key": {
+        "uuid": "2fd4e2fa_648de68e",
+        "filename": "chrome/browser/ssl/captive_portal_blocking_page_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-12-21T04:43:39Z",
+      "side": 1,
+      "message": "Actually, this turned out to cause test flakes, I think because committing a navigation can interfere with the interstitial showing. Changed to DEFER and updated the comment.",
+      "parentUuid": "6d64067d_c85637de",
+      "range": {
+        "startLine": 176,
+        "startChar": 17,
+        "endLine": 176,
+        "endChar": 0
+      },
+      "revId": "1c4df5a273adf8172aae83642597ed1f3b3ec709",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4e9a5723_c67cb11c",
         "filename": "chrome/browser/ssl/captive_portal_blocking_page_browsertest.cc",
         "patchSetId": 3
