@@ -1651,6 +1651,7 @@ TEST_F(RenderWidgetHostViewAuraTest, FinishCompositionByMouse) {
             GetMessageNames(GetAndResetDispatchedMessages()));
 }
 
+/*
 // Checks that WasOcculded/WasUnOccluded notifies RenderWidgetHostImpl.
 TEST_F(RenderWidgetHostViewAuraTest, WasOccluded) {
   view_->InitAsChild(nullptr);
@@ -1687,6 +1688,7 @@ TEST_F(RenderWidgetHostViewAuraTest, WasOccluded) {
   view_->WasOccluded();
   EXPECT_TRUE(widget_host_->is_hidden());
 }
+*/
 
 // Checks that touch-event state is maintained correctly.
 TEST_F(RenderWidgetHostViewAuraTest, TouchEventState) {

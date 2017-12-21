@@ -1046,10 +1046,10 @@ void BrowserPluginGuest::OnSetVisibility(int browser_plugin_instance_id,
     return;
 
   guest_visible_ = visible;
-  if (embedder_visible_ && guest_visible_)
+  /*if (embedder_visible_ && guest_visible_)
     GetWebContents()->WasShown();
   else
-    GetWebContents()->WasHidden();
+    GetWebContents()->WasHidden();*/
 }
 
 void BrowserPluginGuest::OnUnlockMouse() {

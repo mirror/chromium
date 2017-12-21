@@ -904,14 +904,13 @@ IN_PROC_BROWSER_TEST_F(WebContentsViewAuraTest,
 // Verify that hiding a parent of the renderer will hide the content too.
 IN_PROC_BROWSER_TEST_F(WebContentsViewAuraTest, HideContentOnParenHide) {
   ASSERT_NO_FATAL_FAILURE(StartTestWithPage("/title1.html"));
-  WebContentsImpl* web_contents =
-      static_cast<WebContentsImpl*>(shell()->web_contents());
+  WebContents* web_contents = shell()->web_contents();
   aura::Window* content = web_contents->GetNativeView()->parent();
-  EXPECT_TRUE(web_contents->should_normally_be_visible());
+  EXPECT_EQ(Visibility::VISIBLE, web_contents->GetVisibility());
   content->Hide();
-  EXPECT_FALSE(web_contents->should_normally_be_visible());
+  EXPECT_EQ(Visibility::HIDDEN, web_contents->GetVisibility());
   content->Show();
-  EXPECT_TRUE(web_contents->should_normally_be_visible());
+  EXPECT_EQ(Visibility::VISIBLE, web_contents->GetVisibility());
 }
 
 // Ensure that SnapToPhysicalPixelBoundary() is called on WebContentsView parent

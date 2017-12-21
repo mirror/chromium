@@ -162,10 +162,10 @@ class TestInterstitialPage : public InterstitialPageImpl {
                          error_code);
   }
 
-  bool is_showing() const {
+  bool was_shown() const {
     return static_cast<TestRenderWidgetHostView*>(
                GetMainFrame()->GetRenderViewHost()->GetWidget()->GetView())
-        ->is_showing();
+        ->was_shown();
   }
 
   void ClearStates() {
@@ -1651,12 +1651,12 @@ TEST_F(WebContentsImplTest,
   interstitial->Show();
   int interstitial_entry_id = controller().GetTransientEntry()->GetUniqueID();
   // The interstitial should not show until its navigation has committed.
-  EXPECT_FALSE(interstitial->is_showing());
+  EXPECT_FALSE(interstitial->was_shown());
   EXPECT_FALSE(contents()->ShowingInterstitialPage());
   EXPECT_EQ(nullptr, contents()->GetInterstitialPage());
   // Let's commit the interstitial navigation.
   interstitial->TestDidNavigate(interstitial_entry_id, true, url2);
-  EXPECT_TRUE(interstitial->is_showing());
+  EXPECT_TRUE(interstitial->was_shown());
   EXPECT_TRUE(contents()->ShowingInterstitialPage());
   EXPECT_TRUE(contents()->GetInterstitialPage() == interstitial);
   entry = controller().GetVisibleEntry();
@@ -1699,12 +1699,12 @@ TEST_F(WebContentsImplTest,
   interstitial->Show();
   int interstitial_entry_id = controller().GetTransientEntry()->GetUniqueID();
   // The interstitial should not show until its navigation has committed.
-  EXPECT_FALSE(interstitial->is_showing());
+  EXPECT_FALSE(interstitial->was_shown());
   EXPECT_FALSE(contents()->ShowingInterstitialPage());
   EXPECT_EQ(nullptr, contents()->GetInterstitialPage());
   // Let's commit the interstitial navigation.
   interstitial->TestDidNavigate(interstitial_entry_id, true, url2);
-  EXPECT_TRUE(interstitial->is_showing());
+  EXPECT_TRUE(interstitial->was_shown());
   EXPECT_TRUE(contents()->ShowingInterstitialPage());
   EXPECT_TRUE(contents()->GetInterstitialPage() == interstitial);
   NavigationEntry* entry = controller().GetVisibleEntry();
@@ -1744,12 +1744,12 @@ TEST_F(WebContentsImplTest, ShowInterstitialNoNewNavigationDontProceed) {
   TestInterstitialPageStateGuard state_guard(interstitial);
   interstitial->Show();
   // The interstitial should not show until its navigation has committed.
-  EXPECT_FALSE(interstitial->is_showing());
+  EXPECT_FALSE(interstitial->was_shown());
   EXPECT_FALSE(contents()->ShowingInterstitialPage());
   EXPECT_EQ(nullptr, contents()->GetInterstitialPage());
   // Let's commit the interstitial navigation.
   interstitial->TestDidNavigate(0, true, url2);
-  EXPECT_TRUE(interstitial->is_showing());
+  EXPECT_TRUE(interstitial->was_shown());
   EXPECT_TRUE(contents()->ShowingInterstitialPage());
   EXPECT_TRUE(contents()->GetInterstitialPage() == interstitial);
   NavigationEntry* entry = controller().GetVisibleEntry();
@@ -1796,12 +1796,12 @@ TEST_F(WebContentsImplTest,
   interstitial->Show();
   int interstitial_entry_id = controller().GetTransientEntry()->GetUniqueID();
   // The interstitial should not show until its navigation has committed.
-  EXPECT_FALSE(interstitial->is_showing());
+  EXPECT_FALSE(interstitial->was_shown());
   EXPECT_FALSE(contents()->ShowingInterstitialPage());
   EXPECT_EQ(nullptr, contents()->GetInterstitialPage());
   // Let's commit the interstitial navigation.
   interstitial->TestDidNavigate(interstitial_entry_id, true, url2);
-  EXPECT_TRUE(interstitial->is_showing());
+  EXPECT_TRUE(interstitial->was_shown());
   EXPECT_TRUE(contents()->ShowingInterstitialPage());
   EXPECT_TRUE(contents()->GetInterstitialPage() == interstitial);
   NavigationEntry* entry = controller().GetVisibleEntry();
@@ -1856,12 +1856,12 @@ TEST_F(WebContentsImplTest,
   interstitial->Show();
   int interstitial_entry_id = controller().GetTransientEntry()->GetUniqueID();
   // The interstitial should not show until its navigation has committed.
-  EXPECT_FALSE(interstitial->is_showing());
+  EXPECT_FALSE(interstitial->was_shown());
   EXPECT_FALSE(contents()->ShowingInterstitialPage());
   EXPECT_EQ(nullptr, contents()->GetInterstitialPage());
   // Let's commit the interstitial navigation.
   interstitial->TestDidNavigate(interstitial_entry_id, true, url2);
-  EXPECT_TRUE(interstitial->is_showing());
+  EXPECT_TRUE(interstitial->was_shown());
   EXPECT_TRUE(contents()->ShowingInterstitialPage());
   EXPECT_TRUE(contents()->GetInterstitialPage() == interstitial);
   NavigationEntry* entry = controller().GetVisibleEntry();
@@ -1913,12 +1913,12 @@ TEST_F(WebContentsImplTest, ShowInterstitialNoNewNavigationProceed) {
   TestInterstitialPageStateGuard state_guard(interstitial);
   interstitial->Show();
   // The interstitial should not show until its navigation has committed.
-  EXPECT_FALSE(interstitial->is_showing());
+  EXPECT_FALSE(interstitial->was_shown());
   EXPECT_FALSE(contents()->ShowingInterstitialPage());
   EXPECT_EQ(nullptr, contents()->GetInterstitialPage());
   // Let's commit the interstitial navigation.
   interstitial->TestDidNavigate(0, true, url2);
-  EXPECT_TRUE(interstitial->is_showing());
+  EXPECT_TRUE(interstitial->was_shown());
   EXPECT_TRUE(contents()->ShowingInterstitialPage());
   EXPECT_TRUE(contents()->GetInterstitialPage() == interstitial);
   NavigationEntry* entry = controller().GetVisibleEntry();
@@ -2155,7 +2155,7 @@ TEST_F(WebContentsImplTest, CreateInterstitialForClosingTab) {
   interstitial_rfh->InitializeRenderFrameIfNeeded();
 
   // The interstitial should not show until its navigation has committed.
-  EXPECT_FALSE(interstitial->is_showing());
+  EXPECT_FALSE(interstitial->was_shown());
   EXPECT_FALSE(contents()->ShowingInterstitialPage());
   EXPECT_EQ(nullptr, contents()->GetInterstitialPage());
 
@@ -2203,7 +2203,7 @@ TEST_F(WebContentsImplTest, TabNavigationDoesntRaceInterstitial) {
   TestInterstitialPageStateGuard state_guard(interstitial);
   interstitial->Show();
   // The interstitial should not show until its navigation has committed.
-  EXPECT_FALSE(interstitial->is_showing());
+  EXPECT_FALSE(interstitial->was_shown());
   EXPECT_FALSE(contents()->ShowingInterstitialPage());
   EXPECT_EQ(nullptr, contents()->GetInterstitialPage());
 
@@ -2395,7 +2395,7 @@ TEST_F(WebContentsImplTest, NavigateBeforeInterstitialShows) {
   const GURL url("http://www.google.com");
   controller().LoadURL(
       url, Referrer(), ui::PAGE_TRANSITION_TYPED, std::string());
-  EXPECT_FALSE(interstitial->is_showing());
+  EXPECT_FALSE(interstitial->was_shown());
   RunAllPendingInMessageLoop();
   ASSERT_FALSE(deleted);
 
@@ -2594,7 +2594,7 @@ TEST_F(WebContentsImplTest, CopyStateFromAndPruneSourceInterstitial) {
   interstitial->Show();
   int interstitial_entry_id = controller().GetTransientEntry()->GetUniqueID();
   interstitial->TestDidNavigate(interstitial_entry_id, true, url2);
-  EXPECT_TRUE(interstitial->is_showing());
+  EXPECT_TRUE(interstitial->was_shown());
   EXPECT_EQ(2, controller().GetEntryCount());
 
   // Create another NavigationController.
@@ -2645,7 +2645,7 @@ TEST_F(WebContentsImplTest, CopyStateFromAndPruneTargetInterstitial) {
   int interstitial_entry_id =
       other_controller.GetTransientEntry()->GetUniqueID();
   interstitial->TestDidNavigate(interstitial_entry_id, true, url3);
-  EXPECT_TRUE(interstitial->is_showing());
+  EXPECT_TRUE(interstitial->was_shown());
   EXPECT_EQ(2, other_controller.GetEntryCount());
 
   // Ensure that we do not allow calling CopyStateFromAndPrune when an
@@ -2757,78 +2757,112 @@ TEST_F(WebContentsImplTest, CapturerOverridesPreferredSize) {
   EXPECT_EQ(original_preferred_size, contents()->GetPreferredSize());
 }
 
-TEST_F(WebContentsImplTest, CapturerPreventsHiding) {
-  const gfx::Size original_preferred_size(1024, 768);
-  contents()->UpdatePreferredSize(original_preferred_size);
-
+TEST_F(WebContentsImplTest, OnVisibilityChanged) {
   TestRenderWidgetHostView* view = static_cast<TestRenderWidgetHostView*>(
       main_test_rfh()->GetRenderViewHost()->GetWidget()->GetView());
 
-  // With no capturers, setting and un-setting occlusion should change the
-  // view's occlusion state.
-  EXPECT_FALSE(view->is_showing());
-  contents()->WasShown();
-  EXPECT_TRUE(view->is_showing());
-  contents()->WasHidden();
-  EXPECT_FALSE(view->is_showing());
-  contents()->WasShown();
-  EXPECT_TRUE(view->is_showing());
+  // WebContents must be made visible once before it can be hidden.
+  EXPECT_FALSE(view->parent_is_hidden());
+  EXPECT_FALSE(view->was_shown());
+  contents()->OnVisibilityChanged(Visibility::VISIBLE);
+  EXPECT_FALSE(view->parent_is_hidden());
+  EXPECT_TRUE(view->was_shown());
 
-  // Add a capturer and try to hide the contents. The view will remain visible.
-  contents()->IncrementCapturerCount(gfx::Size());
-  contents()->WasHidden();
-  EXPECT_TRUE(view->is_showing());
-
-  // Remove the capturer, and the WasHidden should take effect.
-  contents()->DecrementCapturerCount();
-  EXPECT_FALSE(view->is_showing());
+  // Hiding/occluding/showing the WebContents should hide and show |view|.
+  EXPECT_FALSE(view->parent_is_hidden());
+  EXPECT_TRUE(view->was_shown());
+  contents()->OnVisibilityChanged(Visibility::HIDDEN);
+  EXPECT_TRUE(view->parent_is_hidden());
+  EXPECT_FALSE(view->was_shown());
+  contents()->OnVisibilityChanged(Visibility::VISIBLE);
+  EXPECT_FALSE(view->parent_is_hidden());
+  EXPECT_TRUE(view->was_shown());
+  contents()->OnVisibilityChanged(Visibility::OCCLUDED);
+  EXPECT_TRUE(view->parent_is_hidden());
+  EXPECT_FALSE(view->was_shown());
+  contents()->OnVisibilityChanged(Visibility::VISIBLE);
+  EXPECT_FALSE(view->parent_is_hidden());
+  EXPECT_TRUE(view->was_shown());
+  contents()->OnVisibilityChanged(Visibility::OCCLUDED);
+  EXPECT_TRUE(view->parent_is_hidden());
+  EXPECT_FALSE(view->was_shown());
+  contents()->OnVisibilityChanged(Visibility::HIDDEN);
+  EXPECT_TRUE(view->parent_is_hidden());
+  EXPECT_FALSE(view->was_shown());
 }
 
-TEST_F(WebContentsImplTest, CapturerPreventsOcclusion) {
-  const gfx::Size original_preferred_size(1024, 768);
-  contents()->UpdatePreferredSize(original_preferred_size);
-
+TEST_F(WebContentsImplTest, HideWithCapturer) {
   TestRenderWidgetHostView* view = static_cast<TestRenderWidgetHostView*>(
       main_test_rfh()->GetRenderViewHost()->GetWidget()->GetView());
 
-  // With no capturers, setting and un-setting occlusion should change the
-  // view's occlusion state.
-  EXPECT_FALSE(view->is_occluded());
-  contents()->WasOccluded();
-  EXPECT_TRUE(view->is_occluded());
-  contents()->WasUnOccluded();
-  EXPECT_FALSE(view->is_occluded());
-  contents()->WasOccluded();
-  EXPECT_TRUE(view->is_occluded());
+  // WebContents must be made visible once before it can be hidden.
+  EXPECT_FALSE(view->parent_is_hidden());
+  EXPECT_FALSE(view->was_shown());
+  contents()->OnVisibilityChanged(Visibility::VISIBLE);
+  EXPECT_FALSE(view->parent_is_hidden());
+  EXPECT_TRUE(view->was_shown());
 
-  // Adding a capturer on an occluded WebContents should cause the view to be
-  // unoccluded. Removing the capturer should cause the view to be occluded
-  // again.
+  // Add a capturer when the contents is visible and then hide the contents.
+  // |view| should remain visible.
   contents()->IncrementCapturerCount(gfx::Size());
-  EXPECT_FALSE(view->is_occluded());
+  contents()->OnVisibilityChanged(Visibility::HIDDEN);
+  EXPECT_FALSE(view->parent_is_hidden());
+  EXPECT_TRUE(view->was_shown());
 
+  // Remove the capturer when the contents is hidden. |view| should be hidden.
   contents()->DecrementCapturerCount();
-  EXPECT_TRUE(view->is_occluded());
+  EXPECT_TRUE(view->parent_is_hidden());
+  EXPECT_FALSE(view->was_shown());
 
-  // Adding a capturer on an unoccluded WebContents should not change the
-  // occlusion state of the view. Calling WasOccluded() on an unoccluded
-  // WebContents() that has a capturer should not change the occlusion state of
-  // the view. Removing the capturer should cause the view to become occluded.
-  contents()->WasUnOccluded();
-  EXPECT_FALSE(view->is_occluded());
+  // Add a capturer when the contents is visible and then hide the contents.
+  // |view| should remain visible.
+  contents()->OnVisibilityChanged(Visibility::VISIBLE);
   contents()->IncrementCapturerCount(gfx::Size());
-  EXPECT_FALSE(view->is_occluded());
+  contents()->OnVisibilityChanged(Visibility::HIDDEN);
+  EXPECT_FALSE(view->parent_is_hidden());
+  EXPECT_TRUE(view->was_shown());
 
-  contents()->WasOccluded();
-  EXPECT_FALSE(view->is_occluded());
+  // Add a capturer when the contents is hidden. |view| should become visible.
+  contents()->IncrementCapturerCount(gfx::Size());
+  EXPECT_FALSE(view->parent_is_hidden());
+  EXPECT_TRUE(view->was_shown());
+}
 
+TEST_F(WebContentsImplTest, OccludeWithCapturer) {
+  TestRenderWidgetHostView* view = static_cast<TestRenderWidgetHostView*>(
+      main_test_rfh()->GetRenderViewHost()->GetWidget()->GetView());
+
+  // WebContents must be made visible once before it can be hidden.
+  EXPECT_FALSE(view->parent_is_hidden());
+  EXPECT_FALSE(view->was_shown());
+  contents()->OnVisibilityChanged(Visibility::VISIBLE);
+  EXPECT_FALSE(view->parent_is_hidden());
+  EXPECT_TRUE(view->was_shown());
+
+  // Add a capturer when the contents is visible and then occlude the contents.
+  // |view| should remain visible.
+  contents()->IncrementCapturerCount(gfx::Size());
+  contents()->OnVisibilityChanged(Visibility::OCCLUDED);
+  EXPECT_FALSE(view->parent_is_hidden());
+  EXPECT_TRUE(view->was_shown());
+
+  // Remove the capturer when the contents is occluded. |view| should be hidden.
   contents()->DecrementCapturerCount();
-  EXPECT_TRUE(view->is_occluded());
+  EXPECT_TRUE(view->parent_is_hidden());
+  EXPECT_FALSE(view->was_shown());
 
-  // Calling WasUnoccluded() on a WebContents with no capturers should cause the
-  // view to become unoccluded.
-  contents()->WasUnOccluded();
-  EXPECT_FALSE(view->is_occluded());
+  // Add a capturer when the contents is visible and then occlude the contents.
+  // |view| should remain visible.
+  contents()->OnVisibilityChanged(Visibility::VISIBLE);
+  contents()->IncrementCapturerCount(gfx::Size());
+  contents()->OnVisibilityChanged(Visibility::OCCLUDED);
+  EXPECT_FALSE(view->parent_is_hidden());
+  EXPECT_TRUE(view->was_shown());
+
+  // Add a capturer when the contents is occluded. |view| should become visible.
+  contents()->IncrementCapturerCount(gfx::Size());
+  EXPECT_FALSE(view->parent_is_hidden());
+  EXPECT_TRUE(view->was_shown());
 }
 
 // Tests that GetLastActiveTime starts with a real, non-zero time and updates

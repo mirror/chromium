@@ -109,9 +109,9 @@ class CONTENT_EXPORT CrossProcessFrameConnector
   void ResizeDueToAutoResize(const gfx::Size& new_size,
                              uint64_t sequence_number) override;
 
-  // Set the visibility of immediate child views, i.e. views whose parent view
-  // is |view_|.
-  void SetVisibilityForChildViews(bool visible) const override;
+  // Set the hidden state of the parent for immediate child views, i.e. views
+  // whose parent view is |view_|.
+  void SetParentIsHiddenForChildViews(bool parent_is_hidden) const override;
 
   void SetRect(const gfx::Rect& frame_rect_in_pixels) override;
 
