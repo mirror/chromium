@@ -8,10 +8,12 @@ namespace memory_instrumentation {
 
 QueuedRequest::Args::Args(MemoryDumpType dump_type,
                           MemoryDumpLevelOfDetail level_of_detail,
-                          bool add_to_trace)
+                          bool add_to_trace,
+                          base::ProcessId pid)
     : dump_type(dump_type),
       level_of_detail(level_of_detail),
-      add_to_trace(add_to_trace) {}
+      add_to_trace(add_to_trace),
+      pid(pid) {}
 QueuedRequest::Args::~Args() {}
 
 QueuedRequest::Response::Response() {}
