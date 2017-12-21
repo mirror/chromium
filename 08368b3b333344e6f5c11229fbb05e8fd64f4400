@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "9fe7d3ae_e8fe7cfb",
+        "filename": "content/browser/compositor/gpu_process_transport_factory.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-12-21T00:59:47Z",
+      "side": 1,
+      "message": "We want to do something similar in viz process transport factory.",
+      "revId": "08368b3b333344e6f5c11229fbb05e8fd64f4400",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c45ec628_33723572",
         "filename": "content/browser/compositor/gpu_process_transport_factory.cc",
         "patchSetId": 2
@@ -19,6 +36,29 @@
     },
     {
       "key": {
+        "uuid": "73438127_0b3e21ec",
+        "filename": "content/browser/compositor/viz_process_transport_factory.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 494,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-12-21T00:59:47Z",
+      "side": 1,
+      "message": "The check for worker context loss should be same as CheckContextLost but with the context lock acquired. Can you do that in this CL or an immediate followup? We don\u0027t want to forget about this.",
+      "range": {
+        "startLine": 494,
+        "startChar": 12,
+        "endLine": 494,
+        "endChar": 18
+      },
+      "revId": "08368b3b333344e6f5c11229fbb05e8fd64f4400",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8751489a_cd7c1369",
         "filename": "content/browser/compositor/viz_process_transport_factory.cc",
         "patchSetId": 2
@@ -30,6 +70,40 @@
       "writtenOn": "2017-12-21T00:25:35Z",
       "side": 1,
       "message": "nit: ditto, can remove parameter.",
+      "revId": "08368b3b333344e6f5c11229fbb05e8fd64f4400",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47a411ba_439ce4a3",
+        "filename": "content/renderer/render_thread_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2129,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-12-21T00:59:47Z",
+      "side": 1,
+      "message": "nit: Don\u0027t declare a variable, instead pass nullptr to the ctor (maybe with a comment like nullptr /* share_context */) or remove the parameter as piman@ suggested.",
+      "revId": "08368b3b333344e6f5c11229fbb05e8fd64f4400",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c41255e9_f44e87f5",
+        "filename": "content/renderer/render_thread_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2439,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-12-21T00:59:47Z",
+      "side": 1,
+      "message": "nit: you can pass these directly to the ctor",
       "revId": "08368b3b333344e6f5c11229fbb05e8fd64f4400",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
