@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "40ef37c5_9748e808",
+        "filename": "chrome/browser/resources/print_preview/new/dpi_settings.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-12-21T23:01:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "41150797_06609866",
+      "range": {
+        "startLine": 71,
+        "startChar": 6,
+        "endLine": 71,
+        "endChar": 8
+      },
+      "revId": "789eaef40b90cf64ebe146b200ee4951b12cca7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1de0c657_9e9fad88",
         "filename": "chrome/browser/resources/print_preview/new/media_size_settings.js",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-12-21T21:50:19Z",
       "side": 1,
       "message": "Should there be an assertNotReached() here? Or is it OK to not find any option? Same question for other similar for loops in this CL.",
+      "range": {
+        "startLine": 29,
+        "startChar": 4,
+        "endLine": 29,
+        "endChar": 5
+      },
+      "revId": "789eaef40b90cf64ebe146b200ee4951b12cca7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3817cab9_dd7f3daa",
+        "filename": "chrome/browser/resources/print_preview/new/media_size_settings.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-12-21T23:01:25Z",
+      "side": 1,
+      "message": "I think an assertNotReached() will end up being triggered in between updates. i.e. if the user selects some new destination with different capabilities, this will run but the current media size setting may not match any of the new options. However then the media size setting will update to the default value in model.js, and that value should be found. Really this only needs to be updated when the media size setting changes, but we need to depend on capability.option or it may be undefined.",
+      "parentUuid": "1de0c657_9e9fad88",
       "range": {
         "startLine": 29,
         "startChar": 4,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "bd196c32_1e45e93a",
+        "filename": "chrome/browser/resources/print_preview/new/model.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-12-21T23:01:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "07fd31e5_7d6676f7",
+      "range": {
+        "startLine": 279,
+        "startChar": 44,
+        "endLine": 279,
+        "endChar": 50
+      },
+      "revId": "789eaef40b90cf64ebe146b200ee4951b12cca7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "07ec9472_31cf93c9",
         "filename": "chrome/browser/resources/print_preview/new/settings_select.js",
         "patchSetId": 3
@@ -82,6 +154,24 @@
       "writtenOn": "2017-12-21T21:50:19Z",
       "side": 1,
       "message": "We are currently swallowing this error. Should we surface it somehow?",
+      "revId": "789eaef40b90cf64ebe146b200ee4951b12cca7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47338107_fab33365",
+        "filename": "chrome/browser/resources/print_preview/new/settings_select.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-12-21T23:01:25Z",
+      "side": 1,
+      "message": "Thought about this and I do not think this should ever happen. The values are always populated by JSON strings made from the capability.option values. So it does not make sense for there to be a case when they cannot be parsed.",
+      "parentUuid": "07ec9472_31cf93c9",
       "revId": "789eaef40b90cf64ebe146b200ee4951b12cca7f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
