@@ -79,11 +79,13 @@ VolumeInfo.prototype.label;
  */
 VolumeInfo.prototype.providerId;
 
+// TODO(mtomasz): Replace @type with IconSet. It's defined in
+// externs/file_manager_private.js, but it doesn't compile. Why?
 /**
- * ID of a providing extension for this volume.
- * @type {(string|undefined)}
+ * Set of icons for this volume.
+ * @type {!{icon16x16Url: (string|undefined), icon32x32Url: (string|undefined)}}
  */
-VolumeInfo.prototype.extensionId;
+VolumeInfo.prototype.iconSet;
 
 /**
  * True if the volume contains media.
