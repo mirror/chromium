@@ -150,6 +150,10 @@ struct GPU_EXPORT GpuPreferences {
   // Use the Pass-through command decoder, skipping all validation and state
   // tracking.
   bool use_passthrough_cmd_decoder = false;
+
+  // Disable using a single multiplanar GpuMemoryBuffer to store multiplanar
+  // VideoFrames (e.g. NV12 or I420), see https://crbug.com/791676.
+  bool disable_multiplanar_gpu_memory_buffers_for_video_frames = false;
 };
 
 }  // namespace gpu
