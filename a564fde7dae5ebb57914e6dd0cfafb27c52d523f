@@ -22,6 +22,30 @@
       "revId": "a564fde7dae5ebb57914e6dd0cfafb27c52d523f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2a96122_c034a69f",
+        "filename": "chrome/browser/component_updater/widevine_cdm_component_installer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-12-21T18:08:27Z",
+      "side": 1,
+      "message": "Great idea. Done.",
+      "parentUuid": "41249d8d_915f96e2",
+      "range": {
+        "startLine": 229,
+        "startChar": 58,
+        "endLine": 229,
+        "endChar": 69
+      },
+      "revId": "a564fde7dae5ebb57914e6dd0cfafb27c52d523f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
