@@ -1123,11 +1123,9 @@ void ClearCrashKey(const base::StringPiece& key) {
 // InitCrashKeys().
 void InitCrashKeys() {
   crash_reporter::InitializeCrashKeys();
-  GetCrashReporterClient()->RegisterCrashKeys();
   g_use_crash_key_white_list =
       GetCrashReporterClient()->UseCrashKeysWhiteList();
   g_crash_key_white_list = GetCrashReporterClient()->GetCrashKeyWhiteList();
-  base::debug::SetCrashKeyReportingFunctions(&SetCrashKeyValue, &ClearCrashKey);
 }
 
 // Miscellaneous initialization functions to call after Breakpad has been
