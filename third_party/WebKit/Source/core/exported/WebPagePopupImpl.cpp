@@ -328,7 +328,7 @@ bool WebPagePopupImpl::InitializePage() {
   return true;
 }
 
-void WebPagePopupImpl::PostMessage(const String& message) {
+void WebPagePopupImpl::PostMessageToWorker(const String& message) {
   if (!page_)
     return;
   ScriptForbiddenScope::AllowUserAgentScript allow_script;
