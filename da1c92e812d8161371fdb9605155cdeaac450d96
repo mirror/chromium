@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "77f39b12_cf1bccdf",
+        "filename": "chrome/browser/page_load_metrics/observers/data_reduction_proxy_metrics_observer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-12-21T23:55:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1f947191_c681800b",
+      "range": {
+        "startLine": 319,
+        "startChar": 41,
+        "endLine": 319,
+        "endChar": 55
+      },
+      "revId": "da1c92e812d8161371fdb9605155cdeaac450d96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4dde4907_bfbd7cba",
         "filename": "chrome/browser/page_load_metrics/observers/data_reduction_proxy_metrics_observer.h",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "da1c92e812d8161371fdb9605155cdeaac450d96",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fb7c0ca_ba231198",
+        "filename": "chrome/browser/page_load_metrics/observers/data_reduction_proxy_metrics_observer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-12-21T23:55:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4dde4907_bfbd7cba",
+      "range": {
+        "startLine": 137,
+        "startChar": 30,
+        "endLine": 137,
+        "endChar": 0
+      },
+      "revId": "da1c92e812d8161371fdb9605155cdeaac450d96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "6becae3b_470b965f",
+        "filename": "chrome/browser/page_load_metrics/observers/data_reduction_proxy_metrics_observer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-12-21T23:55:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8659273a_adb0bb1b",
+      "range": {
+        "startLine": 138,
+        "startChar": 6,
+        "endLine": 138,
+        "endChar": 20
+      },
+      "revId": "da1c92e812d8161371fdb9605155cdeaac450d96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "64a24e33_8253501b",
         "filename": "components/data_reduction_proxy/content/browser/data_reduction_proxy_pingback_client_impl.cc",
         "patchSetId": 3
@@ -91,6 +163,30 @@
       "revId": "da1c92e812d8161371fdb9605155cdeaac450d96",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7252b8ce_57568271",
+        "filename": "components/data_reduction_proxy/content/browser/data_reduction_proxy_pingback_client_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-12-21T23:55:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "64a24e33_8253501b",
+      "range": {
+        "startLine": 174,
+        "startChar": 2,
+        "endLine": 174,
+        "endChar": 53
+      },
+      "revId": "da1c92e812d8161371fdb9605155cdeaac450d96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "efb7cf3d_86c2f0c7",
+        "filename": "components/data_reduction_proxy/content/browser/data_reduction_proxy_pingback_client_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-12-21T23:55:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b57e356_7d88f802",
+      "range": {
+        "startLine": 204,
+        "startChar": 4,
+        "endLine": 204,
+        "endChar": 24
+      },
+      "revId": "da1c92e812d8161371fdb9605155cdeaac450d96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "15d83cef_7888f30d",
         "filename": "components/data_reduction_proxy/content/browser/data_reduction_proxy_pingback_client_impl.cc",
         "patchSetId": 3
@@ -131,6 +251,24 @@
       "revId": "da1c92e812d8161371fdb9605155cdeaac450d96",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e963997_acba633b",
+        "filename": "components/data_reduction_proxy/content/browser/data_reduction_proxy_pingback_client_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-12-21T23:55:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "15d83cef_7888f30d",
+      "revId": "da1c92e812d8161371fdb9605155cdeaac450d96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -174,6 +312,48 @@
     },
     {
       "key": {
+        "uuid": "f6b5df65_82ea556a",
+        "filename": "components/data_reduction_proxy/content/browser/data_reduction_proxy_pingback_client_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-12-21T23:55:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe43ce13_feb5f709",
+      "range": {
+        "startLine": 234,
+        "startChar": 19,
+        "endLine": 234,
+        "endChar": 43
+      },
+      "revId": "da1c92e812d8161371fdb9605155cdeaac450d96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8904b99a_5b29f816",
+        "filename": "components/data_reduction_proxy/content/browser/data_reduction_proxy_pingback_client_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-12-21T23:55:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ae93fb6b_96de6ca1",
+      "revId": "da1c92e812d8161371fdb9605155cdeaac450d96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b0c1f569_cdd5eeff",
         "filename": "components/data_reduction_proxy/content/browser/data_reduction_proxy_pingback_client_impl.cc",
         "patchSetId": 3
@@ -185,6 +365,30 @@
       "writtenOn": "2017-12-21T21:26:53Z",
       "side": 1,
       "message": "Is Unretained really safe here? It seems like you might need a weak ptr.",
+      "range": {
+        "startLine": 248,
+        "startChar": 27,
+        "endLine": 248,
+        "endChar": 37
+      },
+      "revId": "da1c92e812d8161371fdb9605155cdeaac450d96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f26272ab_41987b16",
+        "filename": "components/data_reduction_proxy/content/browser/data_reduction_proxy_pingback_client_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-12-21T23:55:23Z",
+      "side": 1,
+      "message": "It should be safe as this object shares its lifetime with the KeyedService that owns it, so the ProfileImpl, which I believe if successfully created doesn\u0027t get deleted until profile_manager gets deleted. That gets deleted in BrowserProcessImpl::StartTearDown, which means the message pumps are closed. That being said, I\u0027m not 100% sure that is all true, so I\u0027m happy to add a weakptrfactory if you think it\u0027s needed.",
+      "parentUuid": "b0c1f569_cdd5eeff",
       "range": {
         "startLine": 248,
         "startChar": 27,
@@ -243,6 +447,54 @@
     },
     {
       "key": {
+        "uuid": "6bda872f_b97c2ad7",
+        "filename": "components/data_reduction_proxy/content/browser/data_reduction_proxy_pingback_client_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-12-21T23:55:23Z",
+      "side": 1,
+      "message": "I think that would likely be too late. See comment about lifetime above. But I agree, maybe we should address this via some other means. I\u0027m hoping breakpad is reasonably fast and that it more or less works in all cases. I made the UMA better at detecting discrepancies like this, and will look at that UMA to decide what the impact is. You\u0027d probably know better than me if breakpad should act relatively quickly. I think we could lower this to half a second since a user might close the app within 5 seconds.",
+      "parentUuid": "2a94105a_d51055c3",
+      "range": {
+        "startLine": 249,
+        "startChar": 23,
+        "endLine": 249,
+        "endChar": 34
+      },
+      "revId": "da1c92e812d8161371fdb9605155cdeaac450d96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "925eef4d_f841a24d",
+        "filename": "components/data_reduction_proxy/content/browser/data_reduction_proxy_pingback_client_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-12-21T23:55:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d097358b_cad82a70",
+      "range": {
+        "startLine": 249,
+        "startChar": 6,
+        "endLine": 249,
+        "endChar": 37
+      },
+      "revId": "da1c92e812d8161371fdb9605155cdeaac450d96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a9497a75_42976bac",
         "filename": "components/data_reduction_proxy/content/browser/data_reduction_proxy_pingback_client_impl.h",
         "patchSetId": 3
@@ -263,6 +515,30 @@
       "revId": "da1c92e812d8161371fdb9605155cdeaac450d96",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42d0315e_9330e54e",
+        "filename": "components/data_reduction_proxy/content/browser/data_reduction_proxy_pingback_client_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-12-21T23:55:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a9497a75_42976bac",
+      "range": {
+        "startLine": 54,
+        "startChar": 50,
+        "endLine": 54,
+        "endChar": 68
+      },
+      "revId": "da1c92e812d8161371fdb9605155cdeaac450d96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -289,6 +565,30 @@
     },
     {
       "key": {
+        "uuid": "d14189a6_92c2b6f0",
+        "filename": "components/data_reduction_proxy/content/browser/data_reduction_proxy_pingback_client_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-12-21T23:55:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c9e58b3d_dc172dd5",
+      "range": {
+        "startLine": 118,
+        "startChar": 46,
+        "endLine": 118,
+        "endChar": 70
+      },
+      "revId": "da1c92e812d8161371fdb9605155cdeaac450d96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2219e827_94b76119",
         "filename": "components/data_reduction_proxy/content/browser/data_reduction_proxy_pingback_client_impl_unittest.cc",
         "patchSetId": 3
@@ -303,6 +603,24 @@
       "revId": "da1c92e812d8161371fdb9605155cdeaac450d96",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89d72be7_b4b88696",
+        "filename": "components/data_reduction_proxy/content/browser/data_reduction_proxy_pingback_client_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-12-21T23:55:23Z",
+      "side": 1,
+      "message": "Ack. I think this is the right level of abstraction for a unit test.",
+      "parentUuid": "2219e827_94b76119",
+      "revId": "da1c92e812d8161371fdb9605155cdeaac450d96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -326,6 +644,30 @@
       "revId": "da1c92e812d8161371fdb9605155cdeaac450d96",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f7ebc55_951a78ac",
+        "filename": "components/data_reduction_proxy/proto/pageload_metrics.proto",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-12-21T23:55:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2bbe9089_97bdda79",
+      "range": {
+        "startLine": 69,
+        "startChar": 4,
+        "endLine": 69,
+        "endChar": 12
+      },
+      "revId": "da1c92e812d8161371fdb9605155cdeaac450d96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
