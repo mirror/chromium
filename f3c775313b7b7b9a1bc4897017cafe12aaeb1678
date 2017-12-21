@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9de48af8_3ce23657",
+        "filename": "components/variations/net/variations_http_headers.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-12-21T01:08:20Z",
+      "side": 1,
+      "message": "It would be more future-proof if you remove all headers in the list GetVariationHeaderNames().",
+      "range": {
+        "startLine": 125,
+        "startChar": 39,
+        "endLine": 125,
+        "endChar": 50
+      },
+      "revId": "f3c775313b7b7b9a1bc4897017cafe12aaeb1678",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ff42379_45445d5a",
+        "filename": "components/variations/net/variations_http_headers.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-12-21T01:08:20Z",
+      "side": 1,
+      "message": "nit: please comment that this is only expected to be called by the networking stack, right?  No one else should need to call it.",
+      "revId": "f3c775313b7b7b9a1bc4897017cafe12aaeb1678",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
