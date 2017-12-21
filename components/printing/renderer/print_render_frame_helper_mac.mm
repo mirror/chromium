@@ -29,8 +29,8 @@ bool PrintRenderFrameHelper::RenderPreviewPage(
       print_preview_context_.IsModifiable() && is_print_ready_metafile_sent_;
 
   if (render_to_draft) {
-    draft_metafile =
-        base::MakeUnique<PdfMetafileSkia>(print_params.printed_doc_type);
+    draft_metafile = base::MakeUnique<PdfMetafileSkia>(
+        print_params.printed_doc_type, routing_id());
     CHECK(draft_metafile->Init());
     initial_render_metafile = draft_metafile.get();
   }
