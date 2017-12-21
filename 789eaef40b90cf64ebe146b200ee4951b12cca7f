@@ -217,6 +217,24 @@
       "revId": "789eaef40b90cf64ebe146b200ee4951b12cca7f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "852da2ea_a32946f4",
+        "filename": "chrome/browser/resources/print_preview/new/settings_select.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-12-21T23:20:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1eb911cb_c14f3198",
+      "revId": "789eaef40b90cf64ebe146b200ee4951b12cca7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
