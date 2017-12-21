@@ -443,13 +443,12 @@ static bool EncodeSkPixmap(const SkPixmap& src,
     if (!copy.tryAllocPixels(opaque_info)) {
       return false;
     }
-    SkPixmap opaque_pixmap;
-    bool success = copy.peekPixels(&opaque_pixmap);
-    DCHECK(success);
+    DCHECK(copy.getPixels());
+    SkPixmap opaque_pixmap = copy.pixmap();
     // The following step does the unpremul as we set the dst alpha type to be
     // kUnpremul_SkAlphaType. Later, because opaque_pixmap has
     // kOpaque_SkAlphaType, we'll discard the transparency as required.
-    success =
+    bool success =
         src.readPixels(opaque_info.makeAlphaType(kUnpremul_SkAlphaType),
                        opaque_pixmap.writable_addr(), opaque_pixmap.rowBytes());
     DCHECK(success);
@@ -492,11 +491,10 @@ static bool EncodeSkBitmap(const SkBitmap& input,
                            bool discard_transparency,
                            std::vector<unsigned char>* output,
                            int zlib_level) {
-  SkPixmap src;
-  if (!input.peekPixels(&src)) {
+  if (!input.getPixels()) {
     return false;
   }
-  return EncodeSkPixmap(src, discard_transparency,
+  return EncodeSkPixmap(input.pixmap(), discard_transparency,
                         std::vector<PNGCodec::Comment>(), output, zlib_level);
 }
 

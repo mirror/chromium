@@ -104,9 +104,8 @@ class GLRendererCopierPixelTest
     rgba_bitmap.allocPixels(SkImageInfo::Make(bitmap.width(), bitmap.height(),
                                               kRGBA_8888_SkColorType,
                                               kPremul_SkAlphaType));
-    SkPixmap pixmap;
     const bool success =
-        bitmap.peekPixels(&pixmap) && rgba_bitmap.writePixels(pixmap, 0, 0);
+        bitmap.getPixels() && rgba_bitmap.writePixels(bitmap.pixmap(), 0, 0);
     CHECK(success);
 
     // Copy the RGBA bitmap into a raw byte array, reversing the row order and
