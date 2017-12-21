@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "19e1ebc9_091e6d91",
+        "filename": "components/viz/service/surfaces/surface_hittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1211699
+      },
+      "writtenOn": "2017-12-21T21:56:29Z",
+      "side": 1,
+      "message": "We should improve the comment explaining why this is necessary, something like:\n\n... because the DrawQuads that were hit may be ignored for hittesting.",
+      "range": {
+        "startLine": 141,
+        "startChar": 33,
+        "endLine": 141,
+        "endChar": 0
+      },
+      "revId": "da3449148d3902615afcd1c68a18caac68a7067a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f57d0ab2_c2e196cd",
+        "filename": "components/viz/service/surfaces/surface_hittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1211699
+      },
+      "writtenOn": "2017-12-21T21:56:29Z",
+      "side": 1,
+      "message": "I think this also needs a comment just like below it, to explain that we\u0027ll continue hittesting to look for occluded surfaces. It took me a while to understand this.",
+      "range": {
+        "startLine": 183,
+        "startChar": 30,
+        "endLine": 183,
+        "endChar": 54
+      },
+      "revId": "da3449148d3902615afcd1c68a18caac68a7067a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
