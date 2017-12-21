@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c247691e_564855be",
+        "filename": "media/filters/chunk_demuxer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1160,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-12-21T20:41:20Z",
+      "side": 1,
+      "message": "Good points. Done - the no-op task is now an explicit WMPI method that does the destruction timing. This change simplifies the unit/integration/fuzzer test changes, too.",
+      "parentUuid": "6085f311_a4df68a5",
+      "range": {
+        "startLine": 1160,
+        "startChar": 0,
+        "endLine": 1160,
+        "endChar": 67
+      },
+      "revId": "b567514093dadc3cde269d802bb86d193623abab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2801a137_1813cf18",
         "filename": "media/filters/chunk_demuxer.cc",
         "patchSetId": 2
@@ -93,6 +117,30 @@
       "revId": "b567514093dadc3cde269d802bb86d193623abab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b28eec6_88370d22",
+        "filename": "media/filters/chunk_demuxer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1162,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-12-21T20:41:20Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "56162e73_b09e989c",
+      "range": {
+        "startLine": 1162,
+        "startChar": 2,
+        "endLine": 1162,
+        "endChar": 28
+      },
+      "revId": "b567514093dadc3cde269d802bb86d193623abab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
