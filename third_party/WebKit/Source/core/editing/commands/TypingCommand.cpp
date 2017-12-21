@@ -438,6 +438,8 @@ void TypingCommand::InsertText(
   ABORT_EDITING_COMMAND_IF(!command->Apply());
 
   if (change_selection) {
+    // editing/inserting/insert-text-on-dom-change-crash.html reaches here.
+    ABORT_EDITING_COMMAND_IF(!current_selection.IsValidFor(document));
     const SelectionInDOMTree& current_selection_as_dom =
         current_selection.AsSelection();
     command->SetEndingSelection(
