@@ -4,6 +4,8 @@
 
 #include "ash/message_center/message_center_controller.h"
 
+#include "ash/session/session_controller.h"
+#include "ash/shell.h"
 #include "ui/message_center/message_center.h"
 #include "ui/message_center/notification_delegate.h"
 #include "ui/message_center/notifier_id.h"
@@ -14,6 +16,31 @@ using message_center::NotifierId;
 namespace ash {
 
 namespace {
+
+// Mutes all notifications.
+class BlockEverything : public message_center::NotificationBlocker {
+ public:
+  BlockEverything()
+      : message_center::NotificationBlocker(
+            message_center::MessageCenter::Get()) {
+    NotifyBlockingStateChanged();
+  }
+
+  ~BlockEverything() override {}
+
+  bool ShouldShowNotification(
+      const message_center::Notification& notification) const override {
+    return false;
+  }
+
+  bool ShouldShowNotificationAsPopup(
+      const message_center::Notification& notification) const override {
+    return false;
+  }
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(BlockEverything);
+};
 
 // This notification delegate passes actions back to the client that asked for
 // the notification (Chrome).
@@ -51,7 +78,12 @@ MessageCenterController::MessageCenterController()
     : fullscreen_notification_blocker_(MessageCenter::Get()),
       inactive_user_notification_blocker_(MessageCenter::Get()),
       login_notification_blocker_(MessageCenter::Get()),
-      binding_(this) {}
+      binding_(this) {
+  if (Shell::Get()->session_controller()->login_status() ==
+      LoginStatus::ARC_KIOSK_APP) {
+    block_everything_ = std::make_unique<BlockEverything>();
+  }
+}
 
 MessageCenterController::~MessageCenterController() = default;
 
