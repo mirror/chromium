@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3db01e89_435c0821",
+        "filename": "chrome/browser/android/contextualsearch/contextual_search_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-12-21T20:03:07Z",
+      "side": 1,
+      "message": "Perhaps even more specific than GURL, should this be a url::Origin check? What are our security/correctness goals here?",
+      "revId": "52c59f8611e802504bea60cd0b9d63306e04e366",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fb137c9_7c2eff77",
+        "filename": "chrome/browser/android/contextualsearch/contextual_search_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-12-21T20:03:07Z",
+      "side": 1,
+      "message": "Can we use a more specific type here, such as URL, URI, GURL, or similar?",
+      "revId": "52c59f8611e802504bea60cd0b9d63306e04e366",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "464a6d7e_07878042",
+        "filename": "chrome/browser/android/contextualsearch/contextual_search_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-12-21T20:03:07Z",
+      "side": 1,
+      "message": "And then a more-specific URL type here, too.\n\nIf it\u0027s not possible to harmonize semantics across C++ GURL and whichever Java URL-like type, we can (begrudgingly) stick with string and then enforce GURL correctness inside this function\u0027s implementation.",
+      "revId": "52c59f8611e802504bea60cd0b9d63306e04e366",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d8eee15_87e866e8",
+        "filename": "chrome/browser/android/contextualsearch/contextual_search_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-12-21T20:03:07Z",
+      "side": 1,
+      "message": "At this point, we should definitely be able to have a well-typed URL object, right?",
+      "revId": "52c59f8611e802504bea60cd0b9d63306e04e366",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35ae2639_a5b86b51",
+        "filename": "components/contextual_search/common/contextual_search_js_api_service.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-12-21T20:03:07Z",
+      "side": 1,
+      "message": "Nit: Trailing whitespace.",
+      "revId": "52c59f8611e802504bea60cd0b9d63306e04e366",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
