@@ -274,7 +274,8 @@ std::unique_ptr<NavigationRequest> NavigationRequest::CreateBrowserInitiated(
           blink::WebMixedContentContextType::kBlockable, is_form_submission,
           GURL() /* searchable_form_url */,
           std::string() /* searchable_form_encoding */, initiator,
-          GURL() /* client_side_redirect_url */),
+          GURL() /* client_side_redirect_url */,
+          base::nullopt /* suggested_filename */),
       request_params, browser_initiated, false /* from_begin_navigation */,
       &frame_entry, &entry));
   return navigation_request;
@@ -746,6 +747,7 @@ void NavigationRequest::OnResponseStarted(
     std::unique_ptr<NavigationData> navigation_data,
     const GlobalRequestID& request_id,
     bool is_download,
+    const base::Optional<std::string>& suggested_filename,
     bool is_stream,
     base::Optional<SubresourceLoaderParams> subresource_loader_params) {
   DCHECK(state_ == STARTED);
@@ -821,6 +823,7 @@ void NavigationRequest::OnResponseStarted(
   url_loader_client_endpoints_ = std::move(url_loader_client_endpoints);
   ssl_info_ = ssl_info;
   is_download_ = is_download;
+  suggested_filename_ = suggested_filename;
 
   subresource_loader_params_ = std::move(subresource_loader_params);
 
@@ -1165,8 +1168,9 @@ void NavigationRequest::OnWillProcessResponseChecksComplete(
           BrowserContext::GetDownloadManager(browser_context));
       download_manager->InterceptNavigation(
           std::move(resource_request), navigation_handle_->GetRedirectChain(),
-          response_, std::move(url_loader_client_endpoints_),
-          ssl_info_.cert_status, frame_tree_node_->frame_tree_node_id());
+          suggested_filename_, response_,
+          std::move(url_loader_client_endpoints_), ssl_info_.cert_status,
+          frame_tree_node_->frame_tree_node_id());
 
       OnRequestFailed(false, net::ERR_ABORTED, base::nullopt);
       return;

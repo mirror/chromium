@@ -76,7 +76,7 @@ void TestNavigationURLLoader::CallOnResponseStarted(
   delegate_->OnResponseStarted(response, mojom::URLLoaderClientEndpointsPtr(),
                                std::move(body), net::SSLInfo(),
                                std::move(navigation_data), global_id, false,
-                               false, base::nullopt);
+                               base::nullopt, false, base::nullopt);
 }
 
 TestNavigationURLLoader::~TestNavigationURLLoader() {}
