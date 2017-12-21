@@ -132,4 +132,35 @@ GURL WebViewIntTest::GetUrlForPageWithTitleAndBody(const std::string& title,
   return url;
 }
 
+void WebViewIntTest::WaitForBackgroundTasks() {
+  bool activitySeen = false;
+  base::MessageLoop* messageLoop = base::MessageLoop::current();
+  messageLoop->AddTaskObserver(this);
+  do {
+    activitySeen = false;
+
+    // Yield to the iOS message queue, e.g. [NSObject performSelector:] events.
+    if (CFRunLoopRunInMode(kCFRunLoopDefaultMode, 0, true) ==
+        kCFRunLoopRunHandledSource)
+      activitySeen = true;
+
+    // Yield to the Chromium message queue, e.g. WebThread::PostTask()
+    // events.
+    processed_a_task_ = false;
+    base::RunLoop().RunUntilIdle();
+    if (processed_a_task_)  // Set in TaskObserver method.
+      activitySeen = true;
+
+  } while (activitySeen);
+  messageLoop->RemoveTaskObserver(this);
+}
+
+void WebViewIntTest::WillProcessTask(const base::PendingTask&) {
+  // Nothing to do.
+}
+
+void WebViewIntTest::DidProcessTask(const base::PendingTask&) {
+  processed_a_task_ = true;
+}
+
 }  // namespace ios_web_view
