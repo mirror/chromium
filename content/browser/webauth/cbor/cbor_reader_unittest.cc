@@ -2,6 +2,9 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include <limits>
+#include <utility>
+
 #include "content/browser/webauth/cbor/cbor_reader.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -11,10 +14,10 @@
 namespace content {
 
 TEST(CBORReaderTest, TestReadUint) {
-  typedef struct {
-    const uint64_t value;
+  struct UintTestCase {
+    const int64_t value;
     const std::vector<uint8_t> cbor_data;
-  } UintTestCase;
+  };
 
   static const UintTestCase kUintTestCases[] = {
       {0, {0x00}},
@@ -27,18 +30,17 @@ TEST(CBORReaderTest, TestReadUint) {
       {1000, {0x19, 0x03, 0xe8}},
       {1000000, {0x1a, 0x00, 0x0f, 0x42, 0x40}},
       {0xFFFFFFFF, {0x1a, 0xff, 0xff, 0xff, 0xff}},
+      {std::numeric_limits<int64_t>::max(),
+       {0x1b, 0x7F, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF}},
   };
 
-  int test_case_index = 0;
   for (const UintTestCase& test_case : kUintTestCases) {
-    testing::Message scope_message;
-    scope_message << "testing uint at index : " << test_case_index++;
-    SCOPED_TRACE(scope_message);
+    SCOPED_TRACE(testing::Message() << "testing uint: " << test_case.value);
 
     base::Optional<CBORValue> cbor = CBORReader::Read(test_case.cbor_data);
     ASSERT_TRUE(cbor.has_value());
     ASSERT_EQ(cbor.value().type(), CBORValue::Type::UNSIGNED);
-    EXPECT_EQ(cbor.value().GetUnsigned(), test_case.value);
+    EXPECT_EQ(cbor.value().GetInteger(), test_case.value);
   }
 }
 
@@ -82,9 +84,8 @@ TEST(CBORReaderTest, TestUintEncodedWithNonMinimumByteLength) {
   int test_case_index = 0;
   CBORReader::DecoderError error_code;
   for (const auto& non_minimal_uint : non_minimal_uint_encodings) {
-    testing::Message scope_message;
-    scope_message << "testing element at index " << test_case_index++;
-    SCOPED_TRACE(scope_message);
+    SCOPED_TRACE(testing::Message()
+                 << "testing element at index : " << test_case_index++);
 
     base::Optional<CBORValue> cbor =
         CBORReader::Read(non_minimal_uint, &error_code);
@@ -93,24 +94,51 @@ TEST(CBORReaderTest, TestUintEncodedWithNonMinimumByteLength) {
   }
 }
 
+TEST(CBORReaderTest, TestReadNegativeInt) {
+  struct NegativeIntTestCase {
+    const int64_t negative_int;
+    const std::vector<uint8_t> cbor_data;
+  };
+
+  static const NegativeIntTestCase kNegativeIntTestCases[] = {
+      {-1LL, {0x20}},
+      {-24LL, {0x37}},
+      {-25LL, {0x38, 0x18}},
+      {-256LL, {0x38, 0xff}},
+      {-1000LL, {0x39, 0x03, 0xe7}},
+      {-1000000LL, {0x3a, 0x00, 0x0f, 0x42, 0x3f}},
+      {-4294967296LL, {0x3a, 0xff, 0xff, 0xff, 0xff}},
+      {std::numeric_limits<int64_t>::min(),
+       {0x3b, 0x7f, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff}}};
+
+  for (const NegativeIntTestCase& test_case : kNegativeIntTestCases) {
+    SCOPED_TRACE(testing::Message()
+                 << "testing negative int : " << test_case.negative_int);
+
+    base::Optional<CBORValue> cbor = CBORReader::Read(test_case.cbor_data);
+    ASSERT_TRUE(cbor.has_value());
+    ASSERT_EQ(cbor.value().type(), CBORValue::Type::NEGATIVE);
+    EXPECT_EQ(cbor.value().GetInteger(), test_case.negative_int);
+  }
+}
+
 TEST(CBORReaderTest, TestReadBytes) {
-  typedef struct {
+  struct ByteTestCase {
     const std::vector<uint8_t> value;
     const std::vector<uint8_t> cbor_data;
-  } ByteTestCase;
+  };
 
   static const ByteTestCase kByteStringTestCases[] = {
       // clang-format off
       {{}, {0x40}},
-      {{0x01, 0x02, 0x03, 0x04},{0x44, 0x01, 0x02, 0x03, 0x04}},
+      {{0x01, 0x02, 0x03, 0x04}, {0x44, 0x01, 0x02, 0x03, 0x04}},
       // clang-format on
   };
 
   int element_index = 0;
   for (const ByteTestCase& test_case : kByteStringTestCases) {
-    testing::Message scope_message;
-    scope_message << "testing string test case at : " << element_index++;
-    SCOPED_TRACE(scope_message);
+    SCOPED_TRACE(testing::Message()
+                 << "testing string test case at : " << element_index++);
 
     base::Optional<CBORValue> cbor = CBORReader::Read(test_case.cbor_data);
     ASSERT_TRUE(cbor.has_value());
@@ -120,10 +148,10 @@ TEST(CBORReaderTest, TestReadBytes) {
 }
 
 TEST(CBORReaderTest, TestReadString) {
-  typedef struct {
+  struct StringTestCase {
     const std::string value;
     const std::vector<uint8_t> cbor_data;
-  } StringTestCase;
+  };
 
   static const StringTestCase kStringTestCases[] = {
       {"", {0x60}},
@@ -136,9 +164,8 @@ TEST(CBORReaderTest, TestReadString) {
   };
 
   for (const StringTestCase& test_case : kStringTestCases) {
-    testing::Message scope_message;
-    scope_message << "testing string value : " << test_case.value;
-    SCOPED_TRACE(scope_message);
+    SCOPED_TRACE(testing::Message()
+                 << "testing string value : " << test_case.value);
 
     base::Optional<CBORValue> cbor = CBORReader::Read(test_case.cbor_data);
     ASSERT_TRUE(cbor.has_value());
@@ -209,13 +236,11 @@ TEST(CBORReaderTest, TestReadArray) {
 
   std::vector<CBORValue> array;
   for (int i = 0; i < 25; i++) {
-    testing::Message scope_message;
-    scope_message << "testing array element at index " << i;
-    SCOPED_TRACE(scope_message);
+    SCOPED_TRACE(testing::Message() << "testing array element at index " << i);
 
     ASSERT_EQ(cbor_array.GetArray()[i].type(), CBORValue::Type::UNSIGNED);
-    EXPECT_EQ(cbor_array.GetArray()[i].GetUnsigned(),
-              static_cast<uint64_t>(i + 1));
+    EXPECT_EQ(cbor_array.GetArray()[i].GetInteger(),
+              static_cast<int64_t>(i + 1));
   }
 }
 
@@ -341,7 +366,7 @@ TEST(CBORReaderTest, TestReadMapWithArray) {
   ASSERT_EQ(cbor_val.GetMap().count(key_a), 1u);
   ASSERT_EQ(cbor_val.GetMap().find(key_a)->second.type(),
             CBORValue::Type::UNSIGNED);
-  EXPECT_EQ(cbor_val.GetMap().find(key_a)->second.GetUnsigned(), 1u);
+  EXPECT_EQ(cbor_val.GetMap().find(key_a)->second.GetInteger(), 1u);
 
   const CBORValue key_b("b");
   ASSERT_EQ(cbor_val.GetMap().count(key_b), 1u);
@@ -352,8 +377,8 @@ TEST(CBORReaderTest, TestReadMapWithArray) {
   ASSERT_EQ(nested_array.GetArray().size(), 2u);
   for (int i = 0; i < 2; i++) {
     ASSERT_THAT(nested_array.GetArray()[i].type(), CBORValue::Type::UNSIGNED);
-    EXPECT_EQ(nested_array.GetArray()[i].GetUnsigned(),
-              static_cast<uint64_t>(i + 2));
+    EXPECT_EQ(nested_array.GetArray()[i].GetInteger(),
+              static_cast<int64_t>(i + 2));
   }
 }
 
@@ -384,7 +409,7 @@ TEST(CBORReaderTest, TestReadNestedMap) {
   ASSERT_EQ(cbor_val.GetMap().count(key_a), 1u);
   ASSERT_EQ(cbor_val.GetMap().find(key_a)->second.type(),
             CBORValue::Type::UNSIGNED);
-  EXPECT_EQ(cbor_val.GetMap().find(key_a)->second.GetUnsigned(), 1u);
+  EXPECT_EQ(cbor_val.GetMap().find(key_a)->second.GetInteger(), 1u);
 
   const CBORValue key_b("b");
   ASSERT_EQ(cbor_val.GetMap().count(key_b), 1u);
@@ -396,13 +421,49 @@ TEST(CBORReaderTest, TestReadNestedMap) {
   ASSERT_EQ(nested_map.GetMap().count(key_c), 1u);
   ASSERT_EQ(nested_map.GetMap().find(key_c)->second.type(),
             CBORValue::Type::UNSIGNED);
-  EXPECT_EQ(nested_map.GetMap().find(key_c)->second.GetUnsigned(), 2u);
+  EXPECT_EQ(nested_map.GetMap().find(key_c)->second.GetInteger(), 2u);
 
   const CBORValue key_d("d");
   ASSERT_EQ(nested_map.GetMap().count(key_d), 1u);
   ASSERT_EQ(nested_map.GetMap().find(key_d)->second.type(),
             CBORValue::Type::UNSIGNED);
-  EXPECT_EQ(nested_map.GetMap().find(key_d)->second.GetUnsigned(), 3u);
+  EXPECT_EQ(nested_map.GetMap().find(key_d)->second.GetInteger(), 3u);
+}
+
+TEST(CBORReaderTest, TestIntegerRange) {
+  static const std::vector<uint8_t> kMaxPositiveInt = {
+      0x1b, 0x7F, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF};
+  static const std::vector<uint8_t> kMinNegativeInt = {
+      0x3b, 0x7F, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF};
+
+  base::Optional<CBORValue> max_positive_int =
+      CBORReader::Read(kMaxPositiveInt);
+  ASSERT_TRUE(max_positive_int.has_value());
+  EXPECT_EQ(max_positive_int.value().GetInteger(), INT64_MAX);
+
+  base::Optional<CBORValue> min_negative_int =
+      CBORReader::Read(kMinNegativeInt);
+  ASSERT_TRUE(min_negative_int.has_value());
+  EXPECT_EQ(min_negative_int.value().GetInteger(), INT64_MIN);
+}
+
+TEST(CBORReaderTest, TestIntegerOutOfRangeError) {
+  static const std::vector<uint8_t> kOutOfRangePositiveInt = {
+      0x1b, 0x80, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
+
+  static const std::vector<uint8_t> kOutOfRangeNegativeInt = {
+      0x3b, 0x80, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
+
+  CBORReader::DecoderError error_code;
+  base::Optional<CBORValue> positive_int_out_of_range_cbor =
+      CBORReader::Read(kOutOfRangePositiveInt, &error_code);
+  EXPECT_FALSE(positive_int_out_of_range_cbor.has_value());
+  EXPECT_EQ(error_code, CBORReader::DecoderError::OUT_OF_RANGE_INTEGER_VALUE);
+
+  base::Optional<CBORValue> negative_int_out_of_range_cbor =
+      CBORReader::Read(kOutOfRangeNegativeInt, &error_code);
+  EXPECT_FALSE(negative_int_out_of_range_cbor.has_value());
+  EXPECT_EQ(error_code, CBORReader::DecoderError::OUT_OF_RANGE_INTEGER_VALUE);
 }
 
 TEST(CBORReaderTest, TestIncompleteCBORDataError) {
@@ -424,10 +485,8 @@ TEST(CBORReaderTest, TestIncompleteCBORDataError) {
 
   int test_element_index = 0;
   for (const auto& incomplete_data : incomplete_cbor_list) {
-    testing::Message scope_message;
-    scope_message << "testing incomplete data at index : "
-                  << test_element_index++;
-    SCOPED_TRACE(scope_message);
+    SCOPED_TRACE(testing::Message() << "testing incomplete data at index : "
+                                    << test_element_index++);
 
     CBORReader::DecoderError error_code;
     base::Optional<CBORValue> cbor =
@@ -472,9 +531,8 @@ TEST(CBORReaderTest, TestUnknownAdditionalInfoError) {
 
   int test_element_index = 0;
   for (const auto& incorrect_cbor : kUnknownAdditionalInfoList) {
-    testing::Message scope_message;
-    scope_message << "testing data : " << test_element_index++;
-    SCOPED_TRACE(scope_message);
+    SCOPED_TRACE(testing::Message()
+                 << "testing data at index : " << test_element_index++);
 
     CBORReader::DecoderError error_code;
     base::Optional<CBORValue> cbor =
@@ -500,10 +558,8 @@ TEST(CBORReaderTest, TestTooMuchNestingError) {
 
   int test_element_index = 0;
   for (const auto& zero_depth_data : kZeroDepthCBORList) {
-    testing::Message scope_message;
-    scope_message << "testing zero nested data : " << test_element_index++;
-    SCOPED_TRACE(scope_message);
-
+    SCOPED_TRACE(testing::Message()
+                 << "testing zero nested data : " << test_element_index++);
     CBORReader::DecoderError error_code;
     base::Optional<CBORValue> cbor =
         CBORReader::Read(zero_depth_data, &error_code, 0);
@@ -627,10 +683,8 @@ TEST(CBORReaderTest, TestIncorrectStringEncodingError) {
   int test_element_index = 0;
   CBORReader::DecoderError error_code;
   for (const auto& cbor_byte : utf8_character_encodings) {
-    testing::Message scope_message;
-    scope_message << "testing cbor data utf8 encoding : "
-                  << test_element_index++;
-    SCOPED_TRACE(scope_message);
+    SCOPED_TRACE(testing::Message() << "testing cbor data utf8 encoding : "
+                                    << test_element_index++);
 
     base::Optional<CBORValue> correctly_encoded_cbor =
         CBORReader::Read(cbor_byte, &error_code);
@@ -662,9 +716,8 @@ TEST(CBORReaderTest, TestExtraneousCBORDataError) {
 
   int test_element_index = 0;
   for (const auto& extraneous_cbor_data : zero_padded_cbor_list) {
-    testing::Message scope_message;
-    scope_message << "testing cbor extraneous data : " << test_element_index++;
-    SCOPED_TRACE(scope_message);
+    SCOPED_TRACE(testing::Message()
+                 << "testing cbor extraneous data : " << test_element_index++);
 
     CBORReader::DecoderError error_code;
     base::Optional<CBORValue> cbor =
