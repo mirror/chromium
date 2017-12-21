@@ -60,7 +60,8 @@ TEST_F(WebIDBDatabaseImplTest, ValueSizeTest) {
   EXPECT_CALL(callbacks, OnError(_)).Times(1);
 
   WebIDBDatabaseImpl database_impl(
-      nullptr, blink::scheduler::GetSingleThreadTaskRunnerForTesting());
+      nullptr, blink::scheduler::GetSingleThreadTaskRunnerForTesting(),
+      blink::scheduler::GetSingleThreadTaskRunnerForTesting());
   database_impl.max_put_value_size_ = kMaxValueSizeForTesting;
   database_impl.Put(transaction_id, object_store_id, value, web_blob_info,
                     WebIDBKey::CreateNumber(0),
@@ -87,7 +88,8 @@ TEST_F(WebIDBDatabaseImplTest, KeyAndValueSizeTest) {
   EXPECT_CALL(callbacks, OnError(_)).Times(1);
 
   WebIDBDatabaseImpl database_impl(
-      nullptr, blink::scheduler::GetSingleThreadTaskRunnerForTesting());
+      nullptr, blink::scheduler::GetSingleThreadTaskRunnerForTesting(),
+      blink::scheduler::GetSingleThreadTaskRunnerForTesting());
   database_impl.max_put_value_size_ = kMaxValueSizeForTesting;
   database_impl.Put(transaction_id, object_store_id, value, web_blob_info, key,
                     blink::kWebIDBPutModeAddOrUpdate, &callbacks,

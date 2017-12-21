@@ -163,8 +163,11 @@ class WebIDBDatabaseImpl::IOThreadHelper {
 
 WebIDBDatabaseImpl::WebIDBDatabaseImpl(
     DatabaseAssociatedPtrInfo database_info,
-    scoped_refptr<base::SingleThreadTaskRunner> io_runner)
-    : helper_(new IOThreadHelper()), io_runner_(std::move(io_runner)) {
+    scoped_refptr<base::SingleThreadTaskRunner> io_runner,
+    scoped_refptr<base::SingleThreadTaskRunner> callback_runner)
+    : helper_(new IOThreadHelper()),
+      io_runner_(std::move(io_runner)),
+      callback_runner_(std::move(callback_runner)) {
   io_runner_->PostTask(FROM_HERE, base::BindOnce(&IOThreadHelper::Bind,
                                                  base::Unretained(helper_),
                                                  base::Passed(&database_info)));
@@ -265,7 +268,8 @@ void WebIDBDatabaseImpl::Get(long long transaction_id,
       transaction_id, nullptr);
 
   auto callbacks_impl = std::make_unique<IndexedDBCallbacksImpl>(
-      base::WrapUnique(callbacks), transaction_id, nullptr, io_runner_);
+      base::WrapUnique(callbacks), transaction_id, nullptr, io_runner_,
+      callback_runner_);
   io_runner_->PostTask(
       FROM_HERE, base::BindOnce(&IOThreadHelper::Get, base::Unretained(helper_),
                                 transaction_id, object_store_id, index_id,
@@ -284,7 +288,8 @@ void WebIDBDatabaseImpl::GetAll(long long transaction_id,
       transaction_id, nullptr);
 
   auto callbacks_impl = std::make_unique<IndexedDBCallbacksImpl>(
-      base::WrapUnique(callbacks), transaction_id, nullptr, io_runner_);
+      base::WrapUnique(callbacks), transaction_id, nullptr, io_runner_,
+      callback_runner_);
   io_runner_->PostTask(
       FROM_HERE,
       base::BindOnce(&IOThreadHelper::GetAll, base::Unretained(helper_),
@@ -345,7 +350,8 @@ void WebIDBDatabaseImpl::Put(long long transaction_id,
   }
 
   auto callbacks_impl = std::make_unique<IndexedDBCallbacksImpl>(
-      base::WrapUnique(callbacks), transaction_id, nullptr, io_runner_);
+      base::WrapUnique(callbacks), transaction_id, nullptr, io_runner_,
+      callback_runner_);
   io_runner_->PostTask(
       FROM_HERE,
       base::BindOnce(&IOThreadHelper::Put, base::Unretained(helper_),
@@ -392,7 +398,8 @@ void WebIDBDatabaseImpl::OpenCursor(long long transaction_id,
       transaction_id, nullptr);
 
   auto callbacks_impl = std::make_unique<IndexedDBCallbacksImpl>(
-      base::WrapUnique(callbacks), transaction_id, nullptr, io_runner_);
+      base::WrapUnique(callbacks), transaction_id, nullptr, io_runner_,
+      callback_runner_);
   io_runner_->PostTask(
       FROM_HERE,
       base::BindOnce(&IOThreadHelper::OpenCursor, base::Unretained(helper_),
@@ -410,7 +417,8 @@ void WebIDBDatabaseImpl::Count(long long transaction_id,
       transaction_id, nullptr);
 
   auto callbacks_impl = std::make_unique<IndexedDBCallbacksImpl>(
-      base::WrapUnique(callbacks), transaction_id, nullptr, io_runner_);
+      base::WrapUnique(callbacks), transaction_id, nullptr, io_runner_,
+      callback_runner_);
   io_runner_->PostTask(
       FROM_HERE,
       base::BindOnce(&IOThreadHelper::Count, base::Unretained(helper_),
@@ -427,7 +435,8 @@ void WebIDBDatabaseImpl::DeleteRange(long long transaction_id,
       transaction_id, nullptr);
 
   auto callbacks_impl = std::make_unique<IndexedDBCallbacksImpl>(
-      base::WrapUnique(callbacks), transaction_id, nullptr, io_runner_);
+      base::WrapUnique(callbacks), transaction_id, nullptr, io_runner_,
+      callback_runner_);
   io_runner_->PostTask(
       FROM_HERE,
       base::BindOnce(&IOThreadHelper::DeleteRange, base::Unretained(helper_),
@@ -443,7 +452,8 @@ void WebIDBDatabaseImpl::Clear(long long transaction_id,
       transaction_id, nullptr);
 
   auto callbacks_impl = std::make_unique<IndexedDBCallbacksImpl>(
-      base::WrapUnique(callbacks), transaction_id, nullptr, io_runner_);
+      base::WrapUnique(callbacks), transaction_id, nullptr, io_runner_,
+      callback_runner_);
   io_runner_->PostTask(
       FROM_HERE,
       base::BindOnce(&IOThreadHelper::Clear, base::Unretained(helper_),

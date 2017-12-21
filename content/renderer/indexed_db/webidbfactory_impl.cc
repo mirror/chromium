@@ -57,9 +57,11 @@ class WebIDBFactoryImpl::IOThreadHelper {
 
 WebIDBFactoryImpl::WebIDBFactoryImpl(
     scoped_refptr<IPC::SyncMessageFilter> sync_message_filter,
-    scoped_refptr<base::SingleThreadTaskRunner> io_runner)
+    scoped_refptr<base::SingleThreadTaskRunner> io_runner,
+    scoped_refptr<base::SingleThreadTaskRunner> callback_runner)
     : io_helper_(new IOThreadHelper(std::move(sync_message_filter))),
-      io_runner_(std::move(io_runner)) {}
+      io_runner_(std::move(io_runner)),
+      callback_runner_(std::move(callback_runner)) {}
 
 WebIDBFactoryImpl::~WebIDBFactoryImpl() {
   io_runner_->DeleteSoon(FROM_HERE, io_helper_);
@@ -69,7 +71,7 @@ void WebIDBFactoryImpl::GetDatabaseNames(WebIDBCallbacks* callbacks,
                                          const WebSecurityOrigin& origin) {
   auto callbacks_impl = std::make_unique<IndexedDBCallbacksImpl>(
       base::WrapUnique(callbacks), IndexedDBCallbacksImpl::kNoTransaction,
-      nullptr, io_runner_);
+      nullptr, io_runner_, callback_runner_);
   io_runner_->PostTask(
       FROM_HERE,
       base::BindOnce(&IOThreadHelper::GetDatabaseNames,
@@ -84,7 +86,8 @@ void WebIDBFactoryImpl::Open(const WebString& name,
                              WebIDBDatabaseCallbacks* database_callbacks,
                              const WebSecurityOrigin& origin) {
   auto callbacks_impl = std::make_unique<IndexedDBCallbacksImpl>(
-      base::WrapUnique(callbacks), transaction_id, nullptr, io_runner_);
+      base::WrapUnique(callbacks), transaction_id, nullptr, io_runner_,
+      callback_runner_);
   auto database_callbacks_impl =
       std::make_unique<IndexedDBDatabaseCallbacksImpl>(
           base::WrapUnique(database_callbacks));
@@ -102,7 +105,7 @@ void WebIDBFactoryImpl::DeleteDatabase(const WebString& name,
                                        bool force_close) {
   auto callbacks_impl = std::make_unique<IndexedDBCallbacksImpl>(
       base::WrapUnique(callbacks), IndexedDBCallbacksImpl::kNoTransaction,
-      nullptr, io_runner_);
+      nullptr, io_runner_, callback_runner_);
   io_runner_->PostTask(
       FROM_HERE, base::BindOnce(&IOThreadHelper::DeleteDatabase,
                                 base::Unretained(io_helper_), name.Utf16(),
