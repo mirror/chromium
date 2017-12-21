@@ -68,3 +68,9 @@ PnaclHeaderTest.*
 PolicyCertVerifierTest.*
 ScriptContextTest.*
 SiteEngagementUiBrowserTest.*
+
+# Sending invalid FrameSinkIds crbug.com/796999
+-WebviewLoginTest.AllowNewUser
+-EnterpriseEnrollmentTest.TestAuthCodeGetsProperlyReceivedFromGaia
+-PowerPolicyLoginScreenBrowserTest.SetDevicePolicy
+-EnterpriseEnrollmentTest.TestActiveDirectoryEnrollment_Success
