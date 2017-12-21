@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e01b3a04_878ac1dd",
+        "filename": "ios/chrome/app/application_delegate/app_state.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-21T21:37:07Z",
+      "side": 1,
+      "message": "nit: OTRTabModel \n\nPer Style Guide: \"Any class, category, method, function, or variable name should use all capitals for acronyms and initialisms within the name. This follows Apple\u0027s standard of using all capitals within a name for acronyms such as URL, ID, TIFF, and EXIF\"",
+      "range": {
+        "startLine": 414,
+        "startChar": 14,
+        "endLine": 414,
+        "endChar": 25
+      },
+      "revId": "c8dbe7d1bd4685b0174cdea837109f8b1503cc52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "309daa9a_35590a1d",
+        "filename": "ios/chrome/app/application_delegate/app_state_unittest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 544,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-21T21:37:07Z",
+      "side": 1,
+      "message": "Do we actually test here that OTR tabs are closed and other tabs are halted? Would this test catch a bug if production code halt OTR tabs and close non-OTR tabs?",
+      "range": {
+        "startLine": 544,
+        "startChar": 34,
+        "endLine": 544,
+        "endChar": 46
+      },
+      "revId": "c8dbe7d1bd4685b0174cdea837109f8b1503cc52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
