@@ -22,6 +22,30 @@
       "revId": "010cc1e5e136af8bc9f57d49539f6b8cdbc3c316",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e50b551_0b5c6d51",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-12-21T00:15:16Z",
+      "side": 1,
+      "message": "Done (it\u0027s in \u003calgorithm\u003e I think)",
+      "parentUuid": "2929f2a1_22820cb6",
+      "range": {
+        "startLine": 288,
+        "startChar": 30,
+        "endLine": 288,
+        "endChar": 38
+      },
+      "revId": "010cc1e5e136af8bc9f57d49539f6b8cdbc3c316",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
