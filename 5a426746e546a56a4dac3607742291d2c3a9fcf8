@@ -22,6 +22,30 @@
       "revId": "5a426746e546a56a4dac3607742291d2c3a9fcf8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec055b4a_cb4936c7",
+        "filename": "components/drive/sync_client_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-12-21T03:10:27Z",
+      "side": 1,
+      "message": "IIUC ThreadTaskRunnerHandle::OverrideForTesting replaces the return value of ThreadTaskRunnerHandle::Get() to the given one during the lifetime of this.runner_.\nI also tried replacing base::ThereadTaskRunnerHandle::Get() with mock_task_runner_, but had the same result.",
+      "parentUuid": "cbc4a54b_c82ccc91",
+      "range": {
+        "startLine": 153,
+        "startChar": 23,
+        "endLine": 153,
+        "endChar": 64
+      },
+      "revId": "5a426746e546a56a4dac3607742291d2c3a9fcf8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
