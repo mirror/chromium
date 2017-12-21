@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "20b7e713_b44686d4",
+        "filename": "ios/chrome/browser/tabs/tab_helper_util.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-12-21T04:11:41Z",
+      "side": 1,
+      "message": "unrelated but fine, right?",
+      "revId": "6beb10732959c3faa4c5ae314de6f4cfbc39f805",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98645d82_5514ac65",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 2657,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-12-21T04:11:41Z",
+      "side": 1,
+      "message": "nit: I find putting the assignment in the if harder to reader.  It took me a moment to realize this was just {} cleanup and unrelated to the CL.  Since we are here -- if you agree it\u0027s ugly what about pulling it out?",
+      "revId": "6beb10732959c3faa4c5ae314de6f4cfbc39f805",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9d7f605_f8b2ae4e",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 4199,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-12-21T04:11:41Z",
+      "side": 1,
+      "message": "except for when we do in 24 lines.  This kind of confuses me.",
+      "revId": "6beb10732959c3faa4c5ae314de6f4cfbc39f805",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

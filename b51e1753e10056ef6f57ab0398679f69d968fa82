@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3542a83f_84e2b2b3",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 4184,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-12-21T04:11:41Z",
+      "side": 0,
+      "message": "I wonder why we tested for |oldTab| and |newTab| previously.",
+      "revId": "b51e1753e10056ef6f57ab0398679f69d968fa82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
