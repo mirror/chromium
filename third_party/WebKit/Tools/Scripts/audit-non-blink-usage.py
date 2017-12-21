@@ -56,6 +56,10 @@ _CONFIG = [
             # //base/memory/ptr_util.h.
             'base::WrapUnique',
 
+            # TODO(crbug.com/796799): Deprecate a thin wrapper defined in
+            # platform/WaitableEvent.h.
+            'base::WaitableEvent',
+
             # Debugging helpers from //base/debug are allowed everywhere.
             'base::debug::.+',
 
