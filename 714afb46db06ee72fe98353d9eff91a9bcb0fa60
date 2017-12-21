@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f6f7de39_0a4103b2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-21T18:34:07Z",
+      "side": 1,
+      "message": "Nit: no \u0027s",
+      "range": {
+        "startLine": 12,
+        "startChar": 5,
+        "endLine": 12,
+        "endChar": 7
+      },
+      "revId": "714afb46db06ee72fe98353d9eff91a9bcb0fa60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9f0bd4e_d006621b",
+        "filename": "media/mojo/interfaces/cdm_service.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-21T18:34:07Z",
+      "side": 1,
+      "message": "Nit: please mention the initialization order requirements here (the CDM must be loaded with LoadCDM prior to calling CreateInterfaceFactory). Hopefully in a followup we can just combine the two methods in one and eliminate this confusion.",
+      "revId": "714afb46db06ee72fe98353d9eff91a9bcb0fa60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
