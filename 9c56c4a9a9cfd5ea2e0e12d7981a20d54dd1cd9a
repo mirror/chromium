@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "57c48bb2_c3533a45",
+        "filename": "third_party/WebKit/Source/core/frame/WebLocalFrameImpl.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 765,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-12-21T15:52:02Z",
+      "side": 1,
+      "message": "I think I\u0027d put it on ExecutionContext or (in the hopes of avoiding clutter) a static PausableTask::Post or similar, since strictly speaking it\u0027s tied to the context more than the frame. (This distinction is kinda hidden by the WebLocalFrame API.)\n\nThe nice thing would be that it would let you make the PausableTask constructor private to make misuse harder. But it\u0027s not a big deal. :)",
+      "revId": "9c56c4a9a9cfd5ea2e0e12d7981a20d54dd1cd9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b626ca5_03297750",
+        "filename": "third_party/WebKit/Source/core/frame/WebLocalFrameImpl.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 772,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-12-21T15:52:02Z",
+      "side": 1,
+      "message": "super-nit: you can just say \"PausableTaskResult::kReady\", since WebLocalFrameImpl extends WebLocalFrame. (shrug)",
+      "revId": "9c56c4a9a9cfd5ea2e0e12d7981a20d54dd1cd9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
