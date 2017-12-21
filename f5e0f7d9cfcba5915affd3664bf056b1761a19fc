@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "239030fb_427d9ec1",
+        "filename": "components/cronet/native/BUILD.gn",
+        "patchSetId": 25
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-12-21T17:01:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7464a47_a66a53de",
+      "range": {
+        "startLine": 30,
+        "startChar": 36,
+        "endLine": 30,
+        "endChar": 42
+      },
+      "revId": "f5e0f7d9cfcba5915affd3664bf056b1761a19fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a40af43_40cb76d0",
         "filename": "components/cronet/native/buffer.cc",
         "patchSetId": 25
@@ -45,6 +69,30 @@
       "revId": "f5e0f7d9cfcba5915affd3664bf056b1761a19fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0fcdaf5_fc94bea0",
+        "filename": "components/cronet/native/buffer.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-12-21T17:01:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a40af43_40cb76d0",
+      "range": {
+        "startLine": 36,
+        "startChar": 49,
+        "endLine": 36,
+        "endChar": 0
+      },
+      "revId": "f5e0f7d9cfcba5915affd3664bf056b1761a19fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "028a6920_09d2e677",
+        "filename": "components/cronet/native/buffer.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-12-21T17:01:02Z",
+      "side": 1,
+      "message": "Great idea! Done.",
+      "parentUuid": "d877e0b4_2b7369eb",
+      "range": {
+        "startLine": 14,
+        "startChar": 48,
+        "endLine": 14,
+        "endChar": 0
+      },
+      "revId": "f5e0f7d9cfcba5915affd3664bf056b1761a19fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9525e491_958d9169",
         "filename": "components/cronet/native/buffer.h",
         "patchSetId": 25
@@ -88,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "d3c1cd4c_174f07c8",
+        "filename": "components/cronet/native/buffer.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-12-21T17:01:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9525e491_958d9169",
+      "revId": "f5e0f7d9cfcba5915affd3664bf056b1761a19fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ddfe1c7b_ea5f0ba3",
         "filename": "components/cronet/native/buffer.h",
         "patchSetId": 25
@@ -99,6 +189,30 @@
       "writtenOn": "2017-12-21T16:19:01Z",
       "side": 1,
       "message": "Should these all be const?",
+      "range": {
+        "startLine": 30,
+        "startChar": 0,
+        "endLine": 32,
+        "endChar": 47
+      },
+      "revId": "f5e0f7d9cfcba5915affd3664bf056b1761a19fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a8e89a4_7997e675",
+        "filename": "components/cronet/native/buffer.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-12-21T17:01:02Z",
+      "side": 1,
+      "message": "Not really, as they are not set in constructor, but later in InitXYZ method.",
+      "parentUuid": "ddfe1c7b_ea5f0ba3",
       "range": {
         "startLine": 30,
         "startChar": 0,
@@ -131,6 +245,30 @@
       "revId": "f5e0f7d9cfcba5915affd3664bf056b1761a19fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5dbfeaf_c286bac5",
+        "filename": "components/cronet/native/buffer.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-12-21T17:01:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "483ba0a9_2cb2edf4",
+      "range": {
+        "startLine": 33,
+        "startChar": 20,
+        "endLine": 33,
+        "endChar": 0
+      },
+      "revId": "f5e0f7d9cfcba5915affd3664bf056b1761a19fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -210,6 +348,30 @@
     },
     {
       "key": {
+        "uuid": "971b4a99_5e6774a9",
+        "filename": "components/cronet/native/generated/cronet.idl_c.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-12-21T17:01:02Z",
+      "side": 1,
+      "message": "Ack. For size_t alternative I\u0027d limit size to int32. :)\n\nI wonder whether we should auto-generate OnDestroy callbacks that app *could* provide similar to SetContext / GetContext for any object.\n\nFor example for Cronet_Buffer it would be:\n\ntypedef void (*Cronet_Buffer_OnDestroyFunc)(Cronet_BufferPtr self);\nCRONET_EXPORT void Cronet_Buffer_SetOnDestroy(Cronet_Buffer_OnDestroyFunc onDestroy);\n\nThe callback defaults to nullptr and is invoked only if set.\n\nWDYT?",
+      "parentUuid": "679e6f63_b4665207",
+      "range": {
+        "startLine": 171,
+        "startChar": 52,
+        "endLine": 171,
+        "endChar": 0
+      },
+      "revId": "f5e0f7d9cfcba5915affd3664bf056b1761a19fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1cfecf65_3e739742",
         "filename": "components/cronet/native/runnables_unittest.cc",
         "patchSetId": 25
@@ -278,6 +440,30 @@
       "revId": "f5e0f7d9cfcba5915affd3664bf056b1761a19fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a883a516_3591a2a8",
+        "filename": "components/cronet/native/runnables_unittest.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-12-21T17:01:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "967ddc5b_1a37d1bb",
+      "range": {
+        "startLine": 56,
+        "startChar": 0,
+        "endLine": 57,
+        "endChar": 38
+      },
+      "revId": "f5e0f7d9cfcba5915affd3664bf056b1761a19fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -352,6 +538,30 @@
     },
     {
       "key": {
+        "uuid": "a199f715_fa4cae87",
+        "filename": "components/cronet/native/runnables_unittest.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-12-21T17:01:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "65db0a63_35eb23dc",
+      "range": {
+        "startLine": 133,
+        "startChar": 0,
+        "endLine": 136,
+        "endChar": 52
+      },
+      "revId": "f5e0f7d9cfcba5915affd3664bf056b1761a19fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b9af9e1c_0ad72c6f",
         "filename": "components/cronet/native/test_util.cc",
         "patchSetId": 25
@@ -375,6 +585,30 @@
     },
     {
       "key": {
+        "uuid": "581810b3_8d741e48",
+        "filename": "components/cronet/native/test_util.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-12-21T17:01:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b9af9e1c_0ad72c6f",
+      "range": {
+        "startLine": 17,
+        "startChar": 68,
+        "endLine": 17,
+        "endChar": 0
+      },
+      "revId": "f5e0f7d9cfcba5915affd3664bf056b1761a19fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa36c01f_6d4f6fdb",
         "filename": "components/cronet/native/test_util.h",
         "patchSetId": 25
@@ -395,6 +629,30 @@
       "revId": "f5e0f7d9cfcba5915affd3664bf056b1761a19fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9de39462_ce8752d9",
+        "filename": "components/cronet/native/test_util.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-12-21T17:01:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa36c01f_6d4f6fdb",
+      "range": {
+        "startLine": 14,
+        "startChar": 16,
+        "endLine": 14,
+        "endChar": 0
+      },
+      "revId": "f5e0f7d9cfcba5915affd3664bf056b1761a19fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
