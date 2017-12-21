@@ -48,7 +48,7 @@ UNKNOWN_TYPE | BmlModel.DobYear | YYYY* |  | CreditCardViewModels[0].CardTypeCod
 UNKNOWN_TYPE | BmlModel.SocialSN | Last 4 digits* |  | CreditCardViewModels[0].CardTypeCode_1-default
 UNKNOWN_TYPE | BmlModel.IfBMLTermsElectronicAccepted | I agree to have the PayPal Credit terms and conditions presented electronically | true | CreditCardViewModels[0].CardTypeCode_1-default
 UNKNOWN_TYPE | BmlModel.IfBMLTermsAccepted | I agree to the PayPal Credit terms and conditions | true | CreditCardViewModels[0].CardTypeCode_1-default
-UNKNOWN_TYPE | EmailAddressList | Your email address will be used to contact you about this reservation only. |  | CreditCardViewModels[0].CardTypeCode_1-default
+UNKNOWN_TYPE | EmailAddressList |  |  | CreditCardViewModels[0].CardTypeCode_1-default
 EMAIL_ADDRESS | PurchaserEmailAddress | Email address* | homer.simpson.duffman@gmail.com | CreditCardViewModels[0].CardTypeCode_1-default
 UNKNOWN_TYPE | PhoneList |  |  | CreditCardViewModels[0].CardTypeCode_1-default
 ADDRESS_HOME_COUNTRY | PhoneCountryCode | Country | US | CreditCardViewModels[0].CardTypeCode_1-default

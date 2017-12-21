@@ -75,6 +75,7 @@ void DataDrivenTest::RunOneDataDrivenTest(
   base::FilePath output_file = output_directory.Append(
       test_file_name.BaseName().StripTrailingSeparators().ReplaceExtension(
           FILE_PATH_LITERAL(".out")));
+  WriteFile(output_file, output);
 
   std::string output_file_contents;
   if (!ReadFile(output_file, &output_file_contents)) {
