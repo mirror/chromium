@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "03ad9cec_f622032c",
+        "filename": "net/data/ssl/scripts/generate-test-certs.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 425,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-12-21T19:09:33Z",
+      "side": 1,
+      "message": "I\u0027m not sure I understand that remark - happy to file a follow-up bug, but right now, our inconsistency is largely about whether or not we need the keys or not.\n\nI didn\u0027t group these with the other test server keys because right now, the serial numbers are set implicitly and sequentially, and changing positions would flow to all other serials.",
+      "parentUuid": "12374bc4_d20e42a1",
+      "revId": "e487970ff5e80edfdbb51513bee3f534d635952a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "17e39888_e6cd2b89",
         "filename": "net/test/embedded_test_server/embedded_test_server.h",
         "patchSetId": 3
