@@ -2,10 +2,12 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include "tools/gn/scope.h"
+
 #include "testing/gtest/include/gtest/gtest.h"
 #include "tools/gn/input_file.h"
 #include "tools/gn/parse_tree.h"
-#include "tools/gn/scope.h"
+#include "tools/gn/source_file.h"
 #include "tools/gn/template.h"
 #include "tools/gn/test_with_scope.h"
 
@@ -22,7 +24,22 @@ bool HasStringValueEqualTo(const Scope* scope,
   return value->string_value() == expected_value;
 }
 
+bool ContainsRelatedFile(const Scope* scope, const SourceFile& source_file) {
+  const auto& related_files = scope->related_files();
+  return related_files.end() != related_files.find(source_file);
+}
+
 }  // namespace
+
+TEST(Scope, InheritRelatedFilesFromParent) {
+  TestWithScope setup;
+  SourceFile source_file = SourceFile("//a/BUILD.gn");
+  setup.scope()->AddRelatedFile(source_file);
+
+  Scope new_scope(setup.scope());
+  EXPECT_EQ(1U, new_scope.related_files().size());
+  EXPECT_TRUE(ContainsRelatedFile(&new_scope, source_file));
+}
 
 TEST(Scope, NonRecursiveMergeTo) {
   TestWithScope setup;
@@ -191,6 +208,24 @@ TEST(Scope, NonRecursiveMergeTo) {
     EXPECT_FALSE(err.has_error());
     EXPECT_TRUE(new_scope.CheckForUnusedVars(&err));
     EXPECT_FALSE(err.has_error());
+  }
+
+  // Related files are merged.
+  {
+    Scope from_scope(setup.settings());
+    SourceFile source_file = SourceFile("//a/BUILD.gn");
+    from_scope.AddRelatedFile(source_file);
+
+    Scope to_scope(setup.settings());
+    EXPECT_FALSE(ContainsRelatedFile(&to_scope, source_file));
+
+    Scope::MergeOptions options;
+    Err err;
+    EXPECT_TRUE(from_scope.NonRecursiveMergeTo(&to_scope, options, &assignment,
+                                               "error", &err));
+    EXPECT_FALSE(err.has_error());
+    EXPECT_EQ(1U, to_scope.related_files().size());
+    EXPECT_TRUE(ContainsRelatedFile(&to_scope, source_file));
   }
 }
 
