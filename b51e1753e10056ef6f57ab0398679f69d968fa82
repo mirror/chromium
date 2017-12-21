@@ -16,6 +16,24 @@
       "revId": "b51e1753e10056ef6f57ab0398679f69d968fa82",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b409cab8_02f74a66",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 4184,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-12-21T12:30:25Z",
+      "side": 0,
+      "message": "I think we tested this for historical reasons, but since there are DCHECK above that the two are not nil, I removed the tests as we should not handle gracefully DCHECK failures.",
+      "parentUuid": "3542a83f_84e2b2b3",
+      "revId": "b51e1753e10056ef6f57ab0398679f69d968fa82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

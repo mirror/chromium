@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "39c66c40_3a93f8ec",
+        "filename": "ios/chrome/browser/tabs/tab_helper_util.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-12-21T12:30:25Z",
+      "side": 1,
+      "message": "Unrelated, yes, but fine. I\u0027d like to completely remove uses of Tab from this file eventually. Tab -tabId is implemented this way:\n\n  - (NSString*)tabId {\n    if (!self.webState) {\n      // Tab can outlive WebState, in which case Tab is not valid anymore and\n      // tabId should be nil.\n      return nil;\n    }\n    TabIdTabHelper* tab_id_helper \u003d TabIdTabHelper::FromWebState(self.webState);\n    DCHECK(tab_id_helper);\n    return tab_id_helper-\u003etab_id();\n  }\n\nSince this code just created TabIdTabHelper and we know that WebState is not null, then change is the same.",
+      "parentUuid": "20b7e713_b44686d4",
+      "revId": "6beb10732959c3faa4c5ae314de6f4cfbc39f805",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "98645d82_5514ac65",
         "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "fb70c373_ec79bc58",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 2657,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-12-21T12:30:25Z",
+      "side": 1,
+      "message": "The PasswordTabHelper cannot be null when this method is invoked. I\u0027ll remove the check (and fix the test that failed when it was null) in a followup CL.",
+      "parentUuid": "98645d82_5514ac65",
+      "revId": "6beb10732959c3faa4c5ae314de6f4cfbc39f805",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b9d7f605_f8b2ae4e",
         "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
         "patchSetId": 2
@@ -50,6 +86,24 @@
       "revId": "6beb10732959c3faa4c5ae314de6f4cfbc39f805",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a979fb6_72fbe16f",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 4199,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-12-21T12:30:25Z",
+      "side": 1,
+      "message": "This code is not needed in fact, so I removed it.",
+      "parentUuid": "b9d7f605_f8b2ae4e",
+      "revId": "6beb10732959c3faa4c5ae314de6f4cfbc39f805",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
