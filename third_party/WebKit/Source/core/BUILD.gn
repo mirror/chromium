@@ -543,6 +543,7 @@ css_properties("make_core_generated_css_longhand_property_classes") {
   in_files = [ "css/properties/CSSPropertyMethods.json5" ]
   other_inputs = [
     "../build/scripts/core/css/properties/templates/CSSPropertySubclass.h.tmpl",
+    "../build/scripts/core/css/properties/templates/CSSPropertySubclass.cpp.tmpl",
   ]
   outputs = [
     "$blink_core_output_dir/css/properties/longhands/AlignContent.h",
