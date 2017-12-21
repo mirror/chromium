@@ -16,6 +16,24 @@
       "revId": "1b7116dcdfe82ae261a5fe5e64235cb5293e22f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c82fc499_04e7e865",
+        "filename": "chrome/common/custom_handlers/protocol_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-12-21T17:21:49Z",
+      "side": 1,
+      "message": "\u003e net::EscapePath() converts \u0027:\u0027 to %3A. So it looks we can\u0027t use it. Instead I used net::EscapeExternalHandlerValue. As you can see the test, this function can convert \u003c, \u003e, `,}, {, \\x7F.\n\u003e \n\u003e What do you think about using this one?\n\nI think it\u0027s better, thank you! And the added test coverage makes this so much less likely to regress in future.\n\nI have questions about a few more cases:\n\nHow does it handle control codes in the range \\x00 through \\x1F ? By the spec they should be %-escaped.\n\nHow does it handle %-escapes in the substituted (custom protocol) URL? For instance, custom-protocol://host/example%20with%20%25%20percent ? By the spec, those \u0027%\u0027 should not be doubly-escaped.\n\nHow does it handle Unicode outside the ASCII range? For instance, does custom-protocol://host/tears-of-joy-😂 correctly convert to custom-protocol://host/tears-of-joy-%F0%9F%98%82 during substitution?\n\nIf this spec behavior does not match an existing escape method it may be worthwhile to add a new one for it.",
+      "parentUuid": "30623233_96bcc41d",
+      "revId": "1b7116dcdfe82ae261a5fe5e64235cb5293e22f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
