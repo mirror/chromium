@@ -174,7 +174,8 @@ void WaitForMatcher(id<GREYMatcher> matcher) {
 
 // Tests that switching from a managed account to a non-managed account works
 // correctly and displays the expected warnings.
-- (void)testSignInSwitchManagedAccount {
+// TODO(crbug.com/796618): Reenable this test.
+- (void)DISABLED_testSignInSwitchManagedAccount {
   // Set up the fake identities.
   ios::FakeChromeIdentityService* identity_service =
       ios::FakeChromeIdentityService::GetInstanceFromChromeProvider();
@@ -254,7 +255,8 @@ void WaitForMatcher(id<GREYMatcher> matcher) {
 
 // Tests that signing out of a managed account from the Settings works
 // correctly.
-- (void)testSignInDisconnectFromChromeManaged {
+// TODO(crbug.com/796618): Reenable this test.
+- (void)DISABLED_testSignInDisconnectFromChromeManaged {
   ChromeIdentity* identity = [SigninEarlGreyUtils fakeManagedIdentity];
   ios::FakeChromeIdentityService::GetInstanceFromChromeProvider()->AddIdentity(
       identity);
