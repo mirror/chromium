@@ -144,7 +144,7 @@ class CORE_EXPORT LocalFrameView final
   // TODO(pilgrim) replace all instances of layoutView() with layoutViewItem()
   // https://crbug.com/499321
   LayoutView* GetLayoutView() const;
-  LayoutViewItem GetLayoutViewItem() const;
+  // LayoutViewItem GetLayoutViewItem() const;
 
   // If false, prevents scrollbars on the viewport even if web content would
   // make them appear. Also prevents user-input scrolls (but not programmatic

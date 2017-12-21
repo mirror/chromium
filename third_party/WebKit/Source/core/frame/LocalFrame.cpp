@@ -753,7 +753,7 @@ String LocalFrame::GetLayerTreeAsTextForTesting(unsigned flags) const {
   if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
     layers = View()->CompositedLayersAsJSON(static_cast<LayerTreeFlags>(flags));
   } else {
-    layers = ContentLayoutItem().Compositor()->LayerTreeAsJSON(
+    layers = ContentLayoutObject()->Compositor()->LayerTreeAsJSON(
         static_cast<LayerTreeFlags>(flags));
   }
 

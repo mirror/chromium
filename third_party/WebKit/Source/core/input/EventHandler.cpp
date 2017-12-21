@@ -344,8 +344,8 @@ void EventHandler::UpdateCursor() {
   if (!view || !view->ShouldSetCursor())
     return;
 
-  LayoutViewItem layout_view_item = view->GetLayoutViewItem();
-  if (layout_view_item.IsNull())
+  auto* layout_view = view->GetLayoutView();
+  if (!layout_view)
     return;
 
   frame_->GetDocument()->UpdateStyleAndLayout();
@@ -355,7 +355,7 @@ void EventHandler::UpdateCursor() {
   HitTestResult result(request,
                        view->RootFrameToContents(
                            mouse_event_manager_->LastKnownMousePosition()));
-  layout_view_item.HitTest(result);
+  layout_view->HitTest(result);
 
   if (LocalFrame* frame = result.InnerNodeFrame()) {
     EventHandler::OptionalCursor optional_cursor =
