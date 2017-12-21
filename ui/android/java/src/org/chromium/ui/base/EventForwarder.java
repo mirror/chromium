@@ -31,14 +31,21 @@ public class EventForwarder {
 
     private int mLastMouseButtonState;
 
+    // This display is used to get the source dip scale for input events passed to this forwarder.
+    private WindowAndroid mEventSourceWindow;
+
     @CalledByNative
-    private static EventForwarder create(long nativeEventForwarder, boolean isDragDropEnabled) {
-        return new EventForwarder(nativeEventForwarder, isDragDropEnabled);
+    private static EventForwarder create(
+            long nativeEventForwarder, boolean isDragDropEnabled, WindowAndroid eventSourceWindow) {
+        return new EventForwarder(nativeEventForwarder, isDragDropEnabled, eventSourceWindow);
     }
 
-    private EventForwarder(long nativeEventForwarder, boolean isDragDropEnabled) {
+    private EventForwarder(
+            long nativeEventForwarder, boolean isDragDropEnabled, WindowAndroid eventSourceWindow) {
         mNativeEventForwarder = nativeEventForwarder;
         mIsDragDropEnabled = isDragDropEnabled;
+
+        mEventSourceWindow = eventSourceWindow;
     }
 
     @CalledByNative
@@ -49,7 +56,7 @@ public class EventForwarder {
     // Returns the scaling being applied to the event's source. Typically only used for VR when
     // drawing Android UI to a texture.
     private float getEventSourceScaling() {
-        return nativeGetJavaWindowAndroid(mNativeEventForwarder).getDisplay().getAndroidUIScaling();
+        return mEventSourceWindow.getDisplay().getAndroidUIScaling();
     }
 
     /**
@@ -349,7 +356,6 @@ public class EventForwarder {
         return nativeOnGestureEvent(mNativeEventForwarder, type, timeMs, delta);
     }
 
-    private native WindowAndroid nativeGetJavaWindowAndroid(long nativeEventForwarder);
     // All touch events (including flings, scrolls etc) accept coordinates in physical pixels.
     private native boolean nativeOnTouchEvent(long nativeEventForwarder, MotionEvent event,
             long timeMs, int action, int pointerCount, int historySize, int actionIndex, float x0,

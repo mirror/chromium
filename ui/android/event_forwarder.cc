@@ -36,15 +36,10 @@ ScopedJavaLocalRef<jobject> EventForwarder::GetJavaObject() {
     JNIEnv* env = base::android::AttachCurrentThread();
     java_obj_.Reset(
         Java_EventForwarder_create(env, reinterpret_cast<intptr_t>(this),
-                                   switches::IsTouchDragDropEnabled()));
+                                   switches::IsTouchDragDropEnabled(),
+                                   view_->GetWindowAndroid()->GetJavaObject()));
   }
   return ScopedJavaLocalRef<jobject>(java_obj_);
-}
-
-ScopedJavaLocalRef<jobject> EventForwarder::GetJavaWindowAndroid(
-    JNIEnv* env,
-    const JavaParamRef<jobject>& obj) {
-  return view_->GetWindowAndroid()->GetJavaObject();
 }
 
 jboolean EventForwarder::OnTouchEvent(JNIEnv* env,

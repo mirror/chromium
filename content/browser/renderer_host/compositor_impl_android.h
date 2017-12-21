@@ -78,6 +78,7 @@ class CONTENT_EXPORT CompositorImpl
 
  private:
   // Compositor implementation.
+  void SetRootWindow(gfx::NativeWindow root_window) override;
   void SetRootLayer(scoped_refptr<cc::Layer> root) override;
   void SetSurface(jobject surface) override;
   void SetBackgroundColor(int color) override;

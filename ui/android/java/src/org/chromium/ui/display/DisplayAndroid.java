@@ -144,8 +144,6 @@ public class DisplayAndroid {
      * This function should only be used on the boundaries between Android UI and the rest of Chrome
      * when doing things like scaling sizes/positions.
      *
-     * Note: This function is not available through the native display::Display.
-     *
      * @return The scaling factor of Android UI in this display.
      */
     public float getAndroidUIScaling() {
