@@ -22,6 +22,30 @@
       "revId": "c8529cb79a96b090fdb1178b17ec45a5842d4fdd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96717d0a_f8f4accd",
+        "filename": "remoting/codec/webrtc_video_encoder_vpx.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-12-21T19:22:49Z",
+      "side": 1,
+      "message": "Yes, I have already added a comment in the WebrtcFrameSchedulerSimple (https://cs.chromium.org/chromium/src/remoting/protocol/webrtc_frame_scheduler_simple.cc?rcl\u003d7c3b2ef54ceb57eeb14c316fb9ef56da16bc395e\u0026l\u003d164).",
+      "parentUuid": "777a733a_2600ba8e",
+      "range": {
+        "startLine": 49,
+        "startChar": 63,
+        "endLine": 50,
+        "endChar": 8
+      },
+      "revId": "c8529cb79a96b090fdb1178b17ec45a5842d4fdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
