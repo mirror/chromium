@@ -234,6 +234,24 @@
       "revId": "1c4df5a273adf8172aae83642597ed1f3b3ec709",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "36f3e8c5_5c4fc941",
+        "filename": "chrome/browser/ssl/security_state_tab_helper_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-12-21T19:14:01Z",
+      "side": 1,
+      "message": "SGTM",
+      "parentUuid": "39fc6915_b836aae7",
+      "revId": "1c4df5a273adf8172aae83642597ed1f3b3ec709",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
