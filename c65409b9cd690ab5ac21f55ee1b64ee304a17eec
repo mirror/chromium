@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "78df7f1f_293db714",
+        "filename": "chrome/browser/policy/policy_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2585,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2017-12-21T07:57:09Z",
+      "side": 1,
+      "message": "Can you add here a navigate request to the same url and check that the redirect happens with EXPECT_EQ. The reason I am asking is that it is fairly easy to break this test by changing the title tag in the html file for example and the check below will still be true even though not because of the policy. So one will not notice a potential issue. If you however have observed the page loading correctly before that you will know what you are testing for is indeed different from the non-policy controlled state.",
+      "revId": "c65409b9cd690ab5ac21f55ee1b64ee304a17eec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
