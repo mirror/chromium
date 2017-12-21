@@ -122,7 +122,7 @@ class RenderFrameDevToolsAgentHost::FrameHostHolder {
     std::string message;
   };
 
-  class SessionHost : public mojom::DevToolsSessionHost {
+  class SessionHost : public blink::mojom::DevToolsSessionHost {
    public:
     SessionHost(FrameHostHolder* owner,
                 int session_id,
@@ -137,7 +137,7 @@ class RenderFrameDevToolsAgentHost::FrameHostHolder {
                          base::Unretained(this))) {
       if (reattach_state.has_value())
         chunk_processor_.set_state_cookie(reattach_state.value());
-      mojom::DevToolsSessionHostAssociatedPtrInfo host_ptr_info;
+      blink::mojom::DevToolsSessionHostAssociatedPtrInfo host_ptr_info;
       binding_.Bind(mojo::MakeRequest(&host_ptr_info));
       owner_->agent_ptr_->AttachDevToolsSession(
           std::move(host_ptr_info), mojo::MakeRequest(&session_ptr_),
@@ -169,9 +169,9 @@ class RenderFrameDevToolsAgentHost::FrameHostHolder {
       session_ptr_->InspectElement(gfx::Point(x, y));
     }
 
-    // mojom::DevToolsSessionHost implementation.
+    // blink::mojom::DevToolsSessionHost implementation.
     void DispatchProtocolMessage(
-        mojom::DevToolsMessageChunkPtr chunk) override {
+        blink::mojom::DevToolsMessageChunkPtr chunk) override {
       if (chunk_processor_.ProcessChunkedMessageFromAgent(std::move(chunk)))
         return;
 
@@ -211,9 +211,9 @@ class RenderFrameDevToolsAgentHost::FrameHostHolder {
    private:
     FrameHostHolder* owner_;
     int session_id_;
-    mojo::AssociatedBinding<mojom::DevToolsSessionHost> binding_;
-    mojom::DevToolsSessionAssociatedPtr session_ptr_;
-    mojom::DevToolsSessionPtr io_session_ptr_;
+    mojo::AssociatedBinding<blink::mojom::DevToolsSessionHost> binding_;
+    blink::mojom::DevToolsSessionAssociatedPtr session_ptr_;
+    blink::mojom::DevToolsSessionPtr io_session_ptr_;
     DevToolsMessageChunkProcessor chunk_processor_;
     std::vector<std::string> pending_messages_;
     using CallId = int;
@@ -225,7 +225,7 @@ class RenderFrameDevToolsAgentHost::FrameHostHolder {
 
   RenderFrameDevToolsAgentHost* agent_;
   RenderFrameHostImpl* host_;
-  mojom::DevToolsAgentAssociatedPtr agent_ptr_;
+  blink::mojom::DevToolsAgentAssociatedPtr agent_ptr_;
   base::flat_map<int, std::unique_ptr<SessionHost>> session_hosts_;
 };
 
