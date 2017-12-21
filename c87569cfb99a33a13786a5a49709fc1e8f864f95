@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2d91055b_a6339c65",
+        "filename": "chromeos/components/tether/tether_connector_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-12-21T23:52:34Z",
+      "side": 1,
+      "message": "Instead, please pass this as a parameter to the constructor as we already have a Clock field as part of SynchronousShutdownObjectContainer.\n\nYou can also eliminate the SetTestDoubles() function in favor of simply passing in a test clock for the test.",
+      "range": {
+        "startLine": 64,
+        "startChar": 6,
+        "endLine": 64,
+        "endChar": 12
+      },
+      "revId": "c87569cfb99a33a13786a5a49709fc1e8f864f95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36c94129_5f42aa32",
+        "filename": "chromeos/components/tether/tether_connector_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-12-21T23:52:34Z",
+      "side": 1,
+      "message": "nit: Technically, this time is spent only in the Wi-Fi-connecting portion of the connection attempt. Let\u0027s rename this kWifiConnectionDuration.",
+      "range": {
+        "startLine": 244,
+        "startChar": 25,
+        "endLine": 244,
+        "endChar": 43
+      },
+      "revId": "c87569cfb99a33a13786a5a49709fc1e8f864f95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "040021c1_6e7763aa",
+        "filename": "chromeos/components/tether/tether_connector_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 732,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-12-21T23:52:34Z",
+      "side": 1,
+      "message": "For this test, can you complete the second connection and verify that the duration of the second connection attempt is logged? You\u0027ll want to advance the clock some amount during the first connection attempt to ensure that the metric correctly starts timing over again once a new attempt is started.\n\nAlso, you\u0027ll want to move this assertion (that there were 0 metrics logged so far) right after the first connection attempt was canceled (below the check for kErrorConnectCanceled above), since we still want to ensure that the first attempt does not get any metrics logged.\n\nSame thing with the test below.",
+      "range": {
+        "startLine": 732,
+        "startChar": 0,
+        "endLine": 732,
+        "endChar": 1
+      },
+      "revId": "c87569cfb99a33a13786a5a49709fc1e8f864f95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
