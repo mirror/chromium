@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4c6036a7_6cd524f5",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 1405,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2017-12-21T10:12:31Z",
+      "side": 1,
+      "message": "\u003e If focused element is not offscreen, it\u0027s node rect is used.\n\nThis is not true because we always use the focused element\u0027s container\u0027s box, right? It\u0027s NodeRectInAbsoluteCoordinates(container), not NodeRectInAbsoluteCoordinates(FocusedElement()).\n\nHmm, let\u0027s skip adding this comment. The called functions had some good comments already. Renaming the variable should give enough hint.",
+      "range": {
+        "startLine": 1403,
+        "startChar": 0,
+        "endLine": 1405,
+        "endChar": 76
+      },
+      "revId": "91d428881bc3566034f1bcf407f7a433b0f8b331",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df14ad06_ce0a7935",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 1406,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2017-12-21T10:12:31Z",
+      "side": 1,
+      "message": "Let\u0027s rename to virtual_rect or even heuristic_rect? The latter might help readers understand that this is indeed heuristics (\u003d logic that might not deliver the correct result)?",
+      "range": {
+        "startLine": 1406,
+        "startChar": 15,
+        "endLine": 1406,
+        "endChar": 25
+      },
+      "revId": "91d428881bc3566034f1bcf407f7a433b0f8b331",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "029d3dd0_8d51e4a2",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 1447,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2017-12-21T10:12:31Z",
+      "side": 1,
+      "message": "// We now dig into a navigable container. Mark it |already_checked| so we\n// can skip this sub tree in case FindFocusCandidateInContainer() returns it\n// again.",
+      "range": {
+        "startLine": 1441,
+        "startChar": 0,
+        "endLine": 1447,
+        "endChar": 29
+      },
+      "revId": "91d428881bc3566034f1bcf407f7a433b0f8b331",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

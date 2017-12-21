@@ -295,6 +295,24 @@
     },
     {
       "key": {
+        "uuid": "dc506115_ad6e7c11",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1401,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2017-12-21T10:12:31Z",
+      "side": 1,
+      "message": "\u003e I suggested in other CL that condition for being container should be changed. \n\nOh, which CL do you mean again?",
+      "parentUuid": "b76bda66_9841f1b1",
+      "revId": "cd2eb94f69d935d91dbab8283486d8005fdc338c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "23116b7f_4a13cd0c",
         "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
         "patchSetId": 5
@@ -330,6 +348,30 @@
       "side": 1,
       "message": "I added a comment. Do you think added comment explains clearly?",
       "parentUuid": "23116b7f_4a13cd0c",
+      "range": {
+        "startLine": 1402,
+        "startChar": 15,
+        "endLine": 1402,
+        "endChar": 25
+      },
+      "revId": "cd2eb94f69d935d91dbab8283486d8005fdc338c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e84a8dc_406da9da",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1402,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2017-12-21T10:12:31Z",
+      "side": 1,
+      "message": "Answered in PS6.",
+      "parentUuid": "2bd9b7ba_21da1ef3",
       "range": {
         "startLine": 1402,
         "startChar": 15,
@@ -495,6 +537,30 @@
       "side": 1,
       "message": "Yes. I added a comment about that.",
       "parentUuid": "7d43c732_40b344fb",
+      "range": {
+        "startLine": 1438,
+        "startChar": 4,
+        "endLine": 1438,
+        "endChar": 16
+      },
+      "revId": "cd2eb94f69d935d91dbab8283486d8005fdc338c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c8adcfa_69d0ba9e",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1438,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2017-12-21T10:12:31Z",
+      "side": 1,
+      "message": "Answered in PS6.",
+      "parentUuid": "6552f9b3_dd99fe7b",
       "range": {
         "startLine": 1438,
         "startChar": 4,
