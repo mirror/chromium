@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8b4c562f_8b589aea",
+        "filename": "chrome/browser/resources/chromeos/chromevox/chromevox/background/background.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-12-21T19:27:32Z",
+      "side": 1,
+      "message": "iwyu: probably needs goog.require(\u0027constants\u0027);",
+      "revId": "0cbbf8d4968db645c69c885a9ebe8cbb5e068ac7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
