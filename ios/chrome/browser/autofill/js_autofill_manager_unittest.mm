@@ -7,8 +7,10 @@
 #import <Foundation/Foundation.h>
 
 #include "base/ios/ios_util.h"
+#include "base/memory/ptr_util.h"
 #import "base/test/ios/wait_util.h"
 #include "components/autofill/core/common/autofill_constants.h"
+#include "ios/chrome/browser/web/chrome_web_client.h"
 #import "ios/chrome/browser/web/chrome_web_test.h"
 #import "ios/web/public/test/js_test_util.h"
 #import "ios/web/public/web_state/js/crw_js_injection_receiver.h"
@@ -31,13 +33,15 @@ NSNumber* GetDefaultMaxLength() {
 // Text fixture to test JsAutofillManager.
 class JsAutofillManagerTest : public ChromeWebTest {
  protected:
+  JsAutofillManagerTest()
+      : ChromeWebTest(base::WrapUnique(new ChromeWebClient)) {}
+
   // Loads the given HTML and initializes the Autofill JS scripts.
   void LoadHtml(NSString* html) {
     ChromeWebTest::LoadHtml(html);
     CRWJSInjectionManager* manager = [web_state()->GetJSInjectionReceiver()
         instanceOfClass:[JsAutofillManager class]];
     manager_ = static_cast<JsAutofillManager*>(manager);
-    [manager_ inject];
   }
   // Testable autofill manager.
   JsAutofillManager* manager_;
@@ -46,7 +50,8 @@ class JsAutofillManagerTest : public ChromeWebTest {
 // Tests that |hasBeenInjected| returns YES after |inject| call.
 TEST_F(JsAutofillManagerTest, InitAndInject) {
   LoadHtml(@"<html></html>");
-  EXPECT_TRUE([manager_ hasBeenInjected]);
+  EXPECT_NSEQ(@"object",
+              web::ExecuteJavaScript(manager_, @"typeof __gCrWeb.autofill"));
 }
 
 // Tests forms extraction method

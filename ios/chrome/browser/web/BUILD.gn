@@ -97,6 +97,7 @@ source_set("unit_tests") {
 js_compile_bundle("chrome_bundle") {
   closure_entry_point = "__crWeb.chromeBundle"
   sources = [
+    "//components/autofill/ios/browser/resources/autofill_controller.js",
     "resources/chrome_bundle.js",
     "resources/print.js",
   ]
@@ -107,15 +108,15 @@ js_compile_bundle("chrome_bundle") {
   ]
 }
 
-js_compile_unchecked("payment_request") {
-  sources = [
-    "resources/payment_request.js",
-  ]
-}
-
 js_compile_checked("credential_manager") {
   sources = [
     "resources/credential_manager.js",
+  ]
+}
+
+js_compile_checked("payment_request") {
+  sources = [
+    "resources/payment_request.js",
   ]
 }
 
@@ -146,6 +147,7 @@ source_set("web_internal") {
   deps = [
     ":chrome_bundle",
     "//base",
+    "//components/autofill/core/common",
     "//components/content_settings/core/browser",
     "//components/dom_distiller/core",
     "//components/error_page/common",
@@ -225,9 +227,11 @@ source_set("unit_tests_internal") {
     ":web_internal",
     "//base",
     "//base/test:test_support",
+    "//components/autofill/core/common",
     "//components/content_settings/core/browser",
     "//components/infobars/core",
     "//components/payments/core",
+    "//components/prefs",
     "//ios/chrome/browser",
     "//ios/chrome/browser/browser_state:test_support",
     "//ios/chrome/browser/content_settings:content_settings",
