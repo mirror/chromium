@@ -434,8 +434,8 @@ void GpuProcessTransportFactory::EstablishedGpuChannel(
     }
 
     // The |context_provider| is used for both the browser compositor and the
-    // display compositor. It shares resources with the worker context, so if
-    // we failed to make a worker context, just start over and try again.
+    // display compositor. If we failed to make a worker context, just start
+    // over and try again.
     if (shared_worker_context_provider_) {
       // For mus, we create an offscreen context for a mus window, and we will
       // use CommandBufferProxyImpl::TakeFrontBuffer() to take the context's
@@ -449,7 +449,7 @@ void GpuProcessTransportFactory::EstablishedGpuChannel(
       context_provider = CreateContextCommon(
           std::move(gpu_channel_host), surface_handle, need_alpha_channel,
           support_stencil, support_locking, support_gles2_interface,
-          support_raster_interface, shared_worker_context_provider_.get(),
+          support_raster_interface, nullptr,
           ui::command_buffer_metrics::DISPLAY_COMPOSITOR_ONSCREEN_CONTEXT);
       // On Mac, GpuCommandBufferMsg_SwapBuffersCompleted must be handled in
       // a nested run loop during resize.
@@ -1103,6 +1103,9 @@ GpuProcessTransportFactory::CreateContextCommon(
     ui::command_buffer_metrics::ContextType type) {
   DCHECK(gpu_channel_host);
   DCHECK(!is_gpu_compositing_disabled_);
+
+  // TODO(vmiura): Check if we should assign separate streams here since browser
+  // is now using an async worker context.
 
   // All browser contexts get the same stream id because we don't use sync
   // tokens for browser surfaces.
