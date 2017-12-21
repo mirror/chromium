@@ -34,8 +34,18 @@ class UserActivityLoggerDelegateUkm : public UserActivityLoggerDelegate {
  private:
   ukm::UkmRecorder* ukm_recorder_;  // not owned
 
+  struct TabProperty {
+    // Whether the tab is visible.
+    bool is_visible;
+    // Whether the tab is the selected one in the last active browser that's
+    // visible.
+    bool is_active;
+    // Whether the containing browser is in focus.
+    bool is_browser_in_focus;
+  };
+
   // Source IDs of open tabs' URLs.
-  std::vector<ukm::SourceId> source_ids_;
+  std::map<ukm::SourceId, TabProperty> source_ids_;
 
   DISALLOW_COPY_AND_ASSIGN(UserActivityLoggerDelegateUkm);
 };
