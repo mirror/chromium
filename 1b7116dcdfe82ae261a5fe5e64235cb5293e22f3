@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "30623233_96bcc41d",
+        "filename": "chrome/common/custom_handlers/protocol_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1233284
+      },
+      "writtenOn": "2017-12-21T06:01:54Z",
+      "side": 1,
+      "message": "net::EscapePath() converts \u0027:\u0027 to %3A. So it looks we can\u0027t use it. Instead I used net::EscapeExternalHandlerValue. As you can see the test, this function can convert \u003c, \u003e, `,}, {, \\x7F.\n\nWhat do you think about using this one?",
+      "revId": "1b7116dcdfe82ae261a5fe5e64235cb5293e22f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
