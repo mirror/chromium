@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "64aadd64_30e86780",
+        "filename": "ash/shelf/shelf_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1955,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-21T21:34:40Z",
+      "side": 1,
+      "message": "optional nit: invert the conditional and wrap the code below in a code block.\n(if you do that, you can remove the comment above; it\u0027ll be clear that the code below is only applicable to the tablet mode animation)",
+      "revId": "0aab0da48f2af22afd78a4526e0653eb494846b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
