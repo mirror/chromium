@@ -16,6 +16,24 @@
       "revId": "e8dea9eb510eff1e2034ea57d36edfc8a6e1ae60",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f8c02d1_ae7823e7",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-12-21T17:34:55Z",
+      "side": 1,
+      "message": "The code here cannot call ukm::GetSourceIdForWebContentsDocument(web_contents), because that method is exposed via components/ukm/content/source_url_recorder.h and //content is in general not allowed to take a dependency on //components.\n\nNote that holte@ has already taken a look at the usage of ukm::UkmRecorder::GetNewSourceID and UpdateSourceURL here - see https://chromium-review.googlesource.com/c/chromium/src/+/833021/2/content/browser/loader/cross_site_document_resource_handler.cc#55",
+      "parentUuid": "406137cd_9a156583",
+      "revId": "e8dea9eb510eff1e2034ea57d36edfc8a6e1ae60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
