@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3dc3c115_7080a0f9",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_config.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 450,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-12-21T22:12:13Z",
+      "side": 1,
+      "message": "nit: switch to sequence checker? use threadchecker macros?",
+      "range": {
+        "startLine": 450,
+        "startChar": 9,
+        "endLine": 450,
+        "endChar": 24
+      },
+      "revId": "dbb54f4f95d9bf658ccb561fa04a6cfc561908b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1345e6a_9a6da500",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_config.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 662,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-12-21T22:12:13Z",
+      "side": 1,
+      "message": "nit: ProbeURL all over",
+      "range": {
+        "startLine": 662,
+        "startChar": 31,
+        "endLine": 662,
+        "endChar": 45
+      },
+      "revId": "dbb54f4f95d9bf658ccb561fa04a6cfc561908b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8af5a3fb_24f633dd",
+        "filename": "components/data_reduction_proxy/core/browser/network_properties_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-12-21T22:12:13Z",
+      "side": 1,
+      "message": "Is there exponential back off somewhere?",
+      "range": {
+        "startLine": 338,
+        "startChar": 31,
+        "endLine": 338,
+        "endChar": 51
+      },
+      "revId": "dbb54f4f95d9bf658ccb561fa04a6cfc561908b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bf51ca8_21058cf1",
+        "filename": "components/data_reduction_proxy/core/browser/network_properties_manager.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-12-21T22:12:13Z",
+      "side": 1,
+      "message": "comment",
+      "range": {
+        "startLine": 80,
+        "startChar": 7,
+        "endLine": 80,
+        "endChar": 27
+      },
+      "revId": "dbb54f4f95d9bf658ccb561fa04a6cfc561908b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2afca3bf_cf86520d",
+        "filename": "components/data_reduction_proxy/core/browser/network_properties_manager.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-12-21T22:12:13Z",
+      "side": 1,
+      "message": "comment",
+      "range": {
+        "startLine": 82,
+        "startChar": 7,
+        "endLine": 82,
+        "endChar": 29
+      },
+      "revId": "dbb54f4f95d9bf658ccb561fa04a6cfc561908b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
