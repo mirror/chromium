@@ -2,6 +2,7 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
+import("//build/config/jumbo.gni")
 import("//tools/grit/grit_rule.gni")
 
 grit("resources") {
@@ -15,7 +16,7 @@ grit("resources") {
   ]
 }
 
-component("file_manager") {
+jumbo_component("file_manager") {
   sources = [
     "file_manager_export.h",
     "file_manager_resource_util.cc",
