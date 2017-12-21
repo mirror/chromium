@@ -17,6 +17,7 @@
 #include "content/browser/service_worker/service_worker_response_info.h"
 #include "content/browser/service_worker/service_worker_url_job_wrapper.h"
 #include "content/browser/service_worker/service_worker_url_request_job.h"
+#include "content/common/navigation_subresource_loader_params.h"
 #include "content/common/service_worker/service_worker_utils.h"
 #include "content/public/browser/content_browser_client.h"
 #include "content/public/browser/render_frame_host.h"
@@ -240,6 +241,30 @@ void ServiceWorkerControlleeRequestHandler::MaybeCreateLoader(
   }
 
   // We will asynchronously continue on DidLookupRegistrationForMainResource.
+}
+
+base::Optional<SubresourceLoaderParams>
+ServiceWorkerControlleeRequestHandler::MaybeCreateSubresourceLoaderParams() {
+  // We didn't create URLLoader for this request.
+  if (!url_job_)
+    return base::nullopt;
+
+  // DidLookupRegistrationForMainResource() for the request didn't find
+  // a matching service worker for this request, and
+  // ServiceWorkerProviderHost::AssociateRegistration() was not called.
+  if (!provider_host_ || !provider_host_->controller())
+    return base::nullopt;
+
+  // Otherwise let's send the controller service worker information along
+  // with the navigation commit.
+  SubresourceLoaderParams params;
+  auto controller_info = mojom::ControllerServiceWorkerInfo::New();
+  controller_info->endpoint =
+      provider_host_->GetControllerServiceWorkerPtr().PassInterface();
+  controller_info->object_info = provider_host_->GetOrCreateServiceWorkerHandle(
+      provider_host_->controller());
+  params.controller_service_worker_info = std::move(controller_info);
+  return params;
 }
 
 void ServiceWorkerControlleeRequestHandler::PrepareForMainResource(
