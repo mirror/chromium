@@ -117,14 +117,28 @@ static void AppendItem(Vector<NGInlineItem>* items,
 }
 
 static inline bool IsCollapsibleSpace(UChar c) {
-  return c == kSpaceCharacter || c == kTabulationCharacter ||
-         c == kNewlineCharacter;
+  return c == kSpaceCharacter || c == kNewlineCharacter ||
+         c == kTabulationCharacter || c == kCarriageReturnCharacter;
 }
 
-// Characters needing a separate control item than other text items.
-// It makes the line breaker easier to handle.
+static inline bool ShouldIgnore(UChar c) {
+  // https://drafts.csswg.org/css-text-3/#white-space-processing
+  // U+000D should be ignored: https://github.com/w3c/csswg-drafts/issues/855
+  //
+  // Unicode Default_Ignorable is not included because we need some of them
+  // in the line breaker (e.g., SOFT HYPHEN,) and HarfBuzz handles them while
+  // shaping.
+  return c == kCarriageReturnCharacter || c == kFormFeedCharacter;
+}
+
+// Characters needing a separate control item than other text items for when
+// white spaces are not collapsed. It makes the line breaker easier to handle.
 static inline bool IsControlItemCharacter(UChar c) {
-  return c == kTabulationCharacter || c == kNewlineCharacter;
+  return c == kNewlineCharacter ||
+         c == kTabulationCharacter
+         // Include ignorable character here. Doing so avoids shaping/rendering
+         // these glyphs, and helps the line breaker to ignore them.
+         || ShouldIgnore(c);
 }
 
 template <typename OffsetMappingBuilder>
