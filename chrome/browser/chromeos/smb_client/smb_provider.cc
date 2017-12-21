@@ -20,7 +20,9 @@ SmbProvider::SmbProvider()
                     extensions::SOURCE_NETWORK),
       // TODO(baileyberro): Localize this string, so it shows correctly in all
       // languages. See l10n_util::GetStringUTF8.
-      name_("SMB Shares") {}
+      name_("SMB Shares") {
+  // TODO(baileyberro): Fill out icon_set_ with chrome://resources/... URLs.
+}
 
 std::unique_ptr<ProvidedFileSystemInterface>
 SmbProvider::CreateProvidedFileSystem(
@@ -40,6 +42,10 @@ const ProviderId& SmbProvider::GetId() const {
 
 const std::string& SmbProvider::GetName() const {
   return name_;
+}
+
+const IconSet& SmbProvider::GetIconSet() const {
+  return icon_set_;
 }
 
 }  // namespace smb_client

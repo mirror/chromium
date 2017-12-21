@@ -113,7 +113,7 @@ var expectedProvidedVolume = {
   configurable: true,
   watchable: false,
   providerId: 'testing-extension-id',
-  extensionId: 'testing-extension-id',
+  iconUri: 'chrome://resources/testing-extension-id.jpg',
   source: 'network',
   mountContext: 'auto',
   fileSystemId: '',

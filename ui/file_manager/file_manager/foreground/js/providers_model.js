@@ -7,7 +7,8 @@
  * An item in the model. Represents a single providing extension.
  *
  * @param {string} providerId
- * @param {string|undefined} extensionId
+ * @param {string} iconUrl
+ * @param {string} largeIconUrl
  * @param {string} name
  * @param {boolean} configurable
  * @param {boolean} watchable
@@ -17,8 +18,8 @@
  * @struct
  */
 function ProvidersModelItem(
-    providerId, extensionId, name, configurable, watchable, multipleMounts,
-    source) {
+    providerId, iconUrl, largeIconUrl, name, configurable, watchable,
+    multipleMounts, source) {
   /**
    * @private {string}
    * @const
@@ -26,10 +27,16 @@ function ProvidersModelItem(
   this.providerId_ = providerId;
 
   /**
-   * @private {string|undefined}
+   * @private {string}
    * @const
    */
-  this.extensionId_ = extensionId;
+  this.iconUrl_ = iconUrl;
+
+  /**
+   * @private {string}
+   * @const
+   */
+  this.largeIconUrl_ = largeIconUrl;
 
   /**
    * @private {string}
@@ -71,10 +78,17 @@ ProvidersModelItem.prototype = {
   },
 
   /**
-   * @return {string|undefined}
+   * @return {string}
    */
-  get extensionId() {
-    return this.extensionId_;
+  get iconUrl() {
+    return this.iconUrl_;
+  },
+
+  /**
+   * @return {string}
+   */
+  get largeIconUrl() {
+    return this.largeIconUrl_;
   },
 
   /**
@@ -143,9 +157,9 @@ ProvidersModel.prototype.getInstalledProviders = function() {
       var results = [];
       providers.forEach(function(provider) {
         results.push(new ProvidersModelItem(
-            provider.providerId, provider.extensionId, provider.name,
-            provider.configurable, provider.watchable, provider.multipleMounts,
-            provider.source));
+            provider.providerId, provider.iconUrl, provider.largeIconUrl,
+            provider.name, provider.configurable, provider.watchable,
+            provider.multipleMounts, provider.source));
       });
       fulfill(results);
     });

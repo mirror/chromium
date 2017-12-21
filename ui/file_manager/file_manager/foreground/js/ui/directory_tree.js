@@ -534,13 +534,19 @@ function VolumeItem(modelItem, tree) {
 
   // Provided volumes should delay the expansion of child nodes
   // for performance reasons.
-  item.delayExpansion = (item.volumeInfo.volumeType === 'provided');
+  var isProvided = item.volumeInfo.volumeType === 'provided';
+  item.delayExpansion = isProvided;
 
   // Set helper attribute for testing.
   if (window.IN_TEST)
     item.setAttribute('volume-type-for-testing', item.volumeInfo_.volumeType);
 
-  item.setupIcon_(item.querySelector('.icon'), item.volumeInfo_);
+  if (isProvided)
+    item.setupIcon_(
+        item.querySelector('.icon'), item.volumeInfo_,
+        item.providerInfo.iconUrl, item.providerInfo.largeIconUrl);
+  else
+    item.setupIcon_(item.querySelector('.icon'), item.volumeInfo_);
 
   // Attach a placeholder for rename input text box and the eject icon if the
   // volume is ejectable
@@ -628,16 +634,21 @@ VolumeItem.prototype.activate = function() {
  * Set up icon of this volume item.
  * @param {Element} icon Icon element to be setup.
  * @param {VolumeInfo} volumeInfo VolumeInfo determines the icon type.
+ * @param {string=} opt_iconUrl Optional icon for the volume.
+ * @param {string=} opt_largeIconUrl Optional double sized icon for the volume.
  * @private
  */
-VolumeItem.prototype.setupIcon_ = function(icon, volumeInfo) {
+VolumeItem.prototype.setupIcon_ = function(
+    icon, volumeInfo, opt_iconUrl, opt_largeIconUrl) {
   icon.classList.add('item-icon');
-  if (volumeInfo.volumeType === VolumeManagerCommon.VolumeType.PROVIDED) {
-    var backgroundImage = '-webkit-image-set(' +
-        'url(chrome://extension-icon/' + volumeInfo.extensionId +
-            '/16/1) 1x, ' +
-        'url(chrome://extension-icon/' + volumeInfo.extensionId +
-            '/32/1) 2x);';
+  if (opt_iconUrl) {
+    var backgroundImage;
+    if (opt_largeIconUrl) {
+      backgroundImage = '-webkit-image-set(' +
+          'url(' + opt_iconUrl + ') 1x, url(' + opt_largeIconUrl + ') 2x);';
+    } else {
+      backgroundImage = 'url(' + opt_iconUrl + ')';
+    }
     // The icon div is not yet added to DOM, therefore it is impossible to
     // use style.backgroundImage.
     icon.setAttribute(
@@ -662,10 +673,12 @@ VolumeItem.prototype.setupIcon_ = function(icon, volumeInfo) {
 VolumeItem.prototype.setupEjectButton_ = function(rowElement) {
   var ejectButton = cr.doc.createElement('button');
   // Block other mouse handlers.
-  ejectButton.addEventListener(
-      'mouseup', function(event) { event.stopPropagation() });
-  ejectButton.addEventListener(
-      'mousedown', function(event) { event.stopPropagation() });
+  ejectButton.addEventListener('mouseup', function(event) {
+    event.stopPropagation();
+  });
+  ejectButton.addEventListener('mousedown', function(event) {
+    event.stopPropagation();
+  });
   ejectButton.className = 'root-eject';
   ejectButton.setAttribute('aria-label', str('UNMOUNT_DEVICE_BUTTON_LABEL'));
   ejectButton.setAttribute('tabindex', '0');
@@ -1338,18 +1351,21 @@ DirectoryTree.prototype.searchAndSelectByEntry = function(entry) {
  * @param {!DirectoryModel} directoryModel Current DirectoryModel.
  * @param {!VolumeManagerWrapper} volumeManager VolumeManager of the system.
  * @param {!MetadataModel} metadataModel Shared MetadataModel instance.
+ * @param {!ProvidersModel} providersModel Model for providers.
  * @param {!FileOperationManager} fileOperationManager
  * @param {boolean} fakeEntriesVisible True if it should show the fakeEntries.
  */
 DirectoryTree.prototype.decorateDirectoryTree = function(
-    directoryModel, volumeManager, metadataModel, fileOperationManager,
-    fakeEntriesVisible) {
+    directoryModel, volumeManager, metadataModel, providersModel,
+    fileOperationManager, fakeEntriesVisible) {
   cr.ui.Tree.prototype.decorate.call(this);
 
   this.sequence_ = 0;
   this.directoryModel_ = directoryModel;
   this.volumeManager_ = volumeManager;
   this.metadataModel_ = metadataModel;
+  this.providersModel_ = providersModel;
+  this.providers_ = [];
   this.models_ = [];
 
   this.fileFilter_ = this.directoryModel_.getFileFilter();

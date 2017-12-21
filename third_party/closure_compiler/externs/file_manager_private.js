@@ -60,7 +60,7 @@ var ProfileInfo;
  * @typedef {{
  *   volumeId: string,
  *   fileSystemId: (string|undefined),
- *   extensionId: (string|undefined),
+ *   iconUrl: (string|undefined),
  *   source: string,
  *   volumeLabel: (string|undefined),
  *   profile: ProfileInfo,
@@ -204,7 +204,7 @@ var DeviceEvent;
 /**
  * @typedef {{
  *   providerId: string,
- *   extensionId: (string|undefined),
+ *   iconUrl: (string|undefined),
  *   name: string,
  *   configurable: boolean,
  *   watchable: boolean,

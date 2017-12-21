@@ -27,8 +27,6 @@
  * @param {string} label Label of the volume.
  * @param {(string|undefined)} providerId Id of the provider for this volume.
  *     Undefined for non-FSP volumes.
- * @param {(string|undefined)} extensionId Id of the providing extension, if
- *     the provider for this volume is an extension. Otherwise undefined.
  * @param {boolean} hasMedia When true the volume has been identified
  *     as containing media such as photos or videos.
  * @param {boolean} configurable When true, then the volume can be configured.
@@ -38,8 +36,8 @@
  */
 function VolumeInfoImpl(
     volumeType, volumeId, fileSystem, error, deviceType, devicePath, isReadOnly,
-    isReadOnlyRemovableDevice, profile, label, providerId, extensionId,
-    hasMedia, configurable, watchable, source, diskFileSystemType) {
+    isReadOnlyRemovableDevice, profile, label, providerId, hasMedia,
+    configurable, watchable, source, diskFileSystemType) {
   this.volumeType_ = volumeType;
   this.volumeId_ = volumeId;
   this.fileSystem_ = fileSystem;
@@ -84,7 +82,6 @@ function VolumeInfoImpl(
   this.isReadOnlyRemovableDevice_ = isReadOnlyRemovableDevice;
   this.profile_ = Object.freeze(profile);
   this.providerId_ = providerId;
-  this.extensionId_ = extensionId;
   this.hasMedia_ = hasMedia;
   this.configurable_ = configurable;
   this.watchable_ = watchable;
@@ -179,12 +176,6 @@ VolumeInfoImpl.prototype = /** @struct */ {
    */
   get providerId() {
     return this.providerId_;
-  },
-  /**
-   * @return {(string|undefined)} Id of a providing extension for this volume.
-   */
-  get extensionId() {
-    return this.extensionId_;
   },
   /**
    * @return {boolean} True if the volume contains media.

@@ -135,6 +135,7 @@ NavigationModelRecentItem.prototype = /** @struct */ {
  * @param {!VolumeManagerWrapper} volumeManager VolumeManagerWrapper instance.
  * @param {(!cr.ui.ArrayDataModel|!FolderShortcutsDataModel)} shortcutListModel
  *     The list of folder shortcut.
+ * @param {!ProvidersModel} providersModel Model for providers.
  * @param {NavigationModelMenuItem} menuModelItem Menu button at the end of the
  *     list.
  * @param {NavigationModelRecentItem} recentModelItem Recent folder below the
@@ -143,7 +144,8 @@ NavigationModelRecentItem.prototype = /** @struct */ {
  * @extends {cr.EventTarget}
  */
 function NavigationListModel(
-    volumeManager, shortcutListModel, menuModelItem, recentModelItem) {
+    volumeManager, shortcutListModel, providersModel, menuModelItem,
+    recentModelItem) {
   cr.EventTarget.call(this);
 
   /**
@@ -157,6 +159,12 @@ function NavigationListModel(
    * @const
    */
   this.shortcutListModel_ = shortcutListModel;
+
+  /**
+   * @private {!ProvidersModel}
+   * @const
+   */
+  this.providersModel_ = providersModel;
 
   /**
    * @private {NavigationModelMenuItem}
