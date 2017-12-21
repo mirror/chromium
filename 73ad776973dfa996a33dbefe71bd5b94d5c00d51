@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "adbf574f_2ff8b326",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 1158,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2017-12-21T19:11:06Z",
+      "side": 1,
+      "message": "This won\u0027t cause stick to bottom when the the user types in the prompt? Especially if there is a multiline codemirror.",
+      "revId": "73ad776973dfa996a33dbefe71bd5b94d5c00d51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
