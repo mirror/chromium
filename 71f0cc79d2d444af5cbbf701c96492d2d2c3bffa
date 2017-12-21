@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "453a2924_2e93e5c5",
+        "filename": "chrome/browser/permissions/permission_decision_auto_blocker.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-21T16:22:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cac9ff00_c7a1f6d6",
+      "revId": "71f0cc79d2d444af5cbbf701c96492d2d2c3bffa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "60141c5a_fe586aad",
         "filename": "chrome/browser/supervised_user/legacy/supervised_user_shared_settings_service.cc",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "71f0cc79d2d444af5cbbf701c96492d2d2c3bffa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "537871c7_6db65169",
+        "filename": "chrome/browser/supervised_user/legacy/supervised_user_shared_settings_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-21T16:22:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "60141c5a_fe586aad",
+      "revId": "71f0cc79d2d444af5cbbf701c96492d2d2c3bffa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "a21efad0_a87389c6",
+        "filename": "chromeos/dbus/fake_shill_device_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 521,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-21T16:22:24Z",
+      "side": 1,
+      "message": "Done, mostly reverted it to the original version to remove the double key lookup in release builds.",
+      "parentUuid": "ba0e47ec_27b89f83",
+      "revId": "71f0cc79d2d444af5cbbf701c96492d2d2c3bffa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e2760d44_1ef5d790",
         "filename": "extensions/browser/api/web_request/upload_data_presenter.cc",
         "patchSetId": 3
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "a2c3766e_31f9dcf8",
+        "filename": "extensions/browser/api/web_request/upload_data_presenter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-21T16:22:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e2760d44_1ef5d790",
+      "revId": "71f0cc79d2d444af5cbbf701c96492d2d2c3bffa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8a787538_891fddc8",
         "filename": "ui/app_list/search/history_data_store.cc",
         "patchSetId": 3
@@ -84,6 +156,24 @@
       "revId": "71f0cc79d2d444af5cbbf701c96492d2d2c3bffa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "047cb7f9_32086490",
+        "filename": "ui/app_list/search/history_data_store.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-21T16:22:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8a787538_891fddc8",
+      "revId": "71f0cc79d2d444af5cbbf701c96492d2d2c3bffa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8247b3eb_e582e959",
+        "filename": "ui/app_list/search/history_data_store.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-21T16:22:24Z",
+      "side": 1,
+      "message": "For consistency I changed this too. I removed some redundant CHECKs below, as dereferencing a nullptr crashes anyway and FindKey CHECKs for cached_dict being a dict.",
+      "range": {
+        "startLine": 188,
+        "startChar": 0,
+        "endLine": 188,
+        "endChar": 12
+      },
+      "revId": "690a22197c00a04f7a764f174f199721f65b044f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
