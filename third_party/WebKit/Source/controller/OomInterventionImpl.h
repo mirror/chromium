@@ -5,11 +5,15 @@
 #ifndef OomInterventionImpl_h
 #define OomInterventionImpl_h
 
+#include "base/memory/weak_ptr.h"
 #include "controller/ControllerExport.h"
 #include "core/page/ScopedPagePauser.h"
+#include "platform/wtf/Time.h"
 #include "public/platform/oom_intervention.mojom-blink.h"
 
 namespace blink {
+
+class OomInterventionImplTest;
 
 // Implementation of OOM intervention. This pauses all pages by using
 // ScopedPagePauser when near-OOM situation is detected.
@@ -18,11 +22,31 @@ class CONTROLLER_EXPORT OomInterventionImpl
  public:
   static void Create(mojom::blink::OomInterventionRequest);
 
-  OomInterventionImpl();
+  using MemoryWorkloadCaculator = base::RepeatingCallback<size_t()>;
+
+  OomInterventionImpl(MemoryWorkloadCaculator);
   ~OomInterventionImpl() override;
 
+  // mojom::blink::OomIntervention:
+  void StartDetection(mojom::blink::OomInterventionHostPtr,
+                      bool trigger_intervention) override;
+
  private:
-  ScopedPagePauser pauser_;
+  FRIEND_TEST_ALL_PREFIXES(OomInterventionImplTest, DetectedAndDeclined);
+
+  void Check();
+
+  // This constant is declared here for testing.
+  static const size_t kMemoryWorkloadThreshold;
+  static const uint32_t kTimeoutInSeconds;
+
+  MemoryWorkloadCaculator workload_calculator_;
+  mojom::blink::OomInterventionHostPtr host_;
+  bool trigger_intervention_ = false;
+  TimeTicks timeout_;
+  std::unique_ptr<ScopedPagePauser> pauser_;
+
+  base::WeakPtrFactory<OomInterventionImpl> weak_ptr_factory_;
 };
 
 }  // namespace blink

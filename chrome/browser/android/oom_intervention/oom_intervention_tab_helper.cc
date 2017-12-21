@@ -73,11 +73,23 @@ OomInterventionTabHelper::OomInterventionTabHelper(
     content::WebContents* web_contents)
     : content::WebContentsObserver(web_contents),
       decider_(OomInterventionDecider::GetForBrowserContext(
-          web_contents->GetBrowserContext())) {
+          web_contents->GetBrowserContext())),
+      binding_(this) {
   OutOfMemoryReporter::FromWebContents(web_contents)->AddObserver(this);
 }
 
 OomInterventionTabHelper::~OomInterventionTabHelper() = default;
+
+void OomInterventionTabHelper::NearOomDetectedOnRenderer() {
+  NearOomInfoBar::Show(web_contents(), this);
+  intervention_state_ = InterventionState::UI_SHOWN;
+  near_oom_detected_time_ = base::TimeTicks::Now();
+}
+
+void OomInterventionTabHelper::DetectionTimedOutOnRenderer() {
+  ResetInterventionState();
+  intervention_.reset();
+}
 
 void OomInterventionTabHelper::AcceptIntervention() {
   RecordInterventionUserDecision(true);
@@ -217,6 +229,9 @@ void OomInterventionTabHelper::StartMonitoringIfNeeded() {
   if (subscription_)
     return;
 
+  if (intervention_)
+    return;
+
   if (near_oom_detected_time_)
     return;
 
@@ -231,7 +246,6 @@ void OomInterventionTabHelper::StopMonitoring() {
 void OomInterventionTabHelper::OnNearOomDetected() {
   DCHECK(web_contents()->IsVisible());
   DCHECK(!near_oom_detected_time_);
-  near_oom_detected_time_ = base::TimeTicks::Now();
   subscription_.reset();
 
   bool trigger_intervention = RendererPauseIsEnabled();
@@ -241,16 +255,15 @@ void OomInterventionTabHelper::OnNearOomDetected() {
     trigger_intervention = decider_->CanTriggerIntervention(host);
   }
 
-  if (trigger_intervention) {
-    content::RenderFrameHost* main_frame = web_contents()->GetMainFrame();
-    DCHECK(main_frame);
-    content::RenderProcessHost* render_process_host = main_frame->GetProcess();
-    DCHECK(render_process_host);
-    content::BindInterface(render_process_host,
-                           mojo::MakeRequest(&intervention_));
-    NearOomInfoBar::Show(web_contents(), this);
-    intervention_state_ = InterventionState::UI_SHOWN;
-  }
+  content::RenderFrameHost* main_frame = web_contents()->GetMainFrame();
+  DCHECK(main_frame);
+  content::RenderProcessHost* render_process_host = main_frame->GetProcess();
+  DCHECK(render_process_host);
+  content::BindInterface(render_process_host,
+                         mojo::MakeRequest(&intervention_));
+  blink::mojom::OomInterventionHostPtr host;
+  binding_.Bind(mojo::MakeRequest(&host));
+  intervention_->StartDetection(std::move(host), trigger_intervention);
 }
 
 void OomInterventionTabHelper::ResetInterventionState() {

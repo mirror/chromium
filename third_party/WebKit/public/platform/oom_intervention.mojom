@@ -4,8 +4,21 @@
 
 module blink.mojom;
 
+// Browser interface for OOM intervention. This interface is used to notify
+// near-OOM detection results.
+interface OomInterventionHost {
+  // Called when a renderer detects near-OOM situation.
+  NearOomDetectedOnRenderer();
+
+  // Called when detection is timed out in a renderer.
+  DetectionTimedOutOnRenderer();
+};
+
 // Renderer interface for OOM intervention. An instance of this interface
-// will be created when NearOomMonitor detects near-OOM situation to activate
-// intervention (e.g. pausing the renderer). The instance will be destroyed
-// when the intervention is declined.
-interface OomIntervention {};
+// will be created when the browser gets a high memory pressure signal.
+// It monitors memory usage in renderer side to detect near-OOM situation.
+interface OomIntervention {
+  // Starts monitoring memory usage in renderer side.
+  StartDetection(OomInterventionHost host,
+                 bool trigger_intervention);
+};
