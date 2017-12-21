@@ -1,4 +1,5 @@
 include_rules = [
-  "+net",
+  "+components/crash/content/browser:browser"
   "+components/previews/core:core",
+  "+net",
 ]

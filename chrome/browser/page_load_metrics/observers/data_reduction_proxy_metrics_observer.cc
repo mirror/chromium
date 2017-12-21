@@ -26,7 +26,10 @@
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/navigation_data.h"
 #include "content/public/browser/navigation_handle.h"
+#include "content/public/browser/render_frame_host.h"
+#include "content/public/browser/render_process_host.h"
 #include "content/public/browser/web_contents.h"
+#include "content/public/common/child_process_host.h"
 #include "url/gurl.h"
 
 namespace data_reduction_proxy {
@@ -102,7 +105,8 @@ DataReductionProxyMetricsObserver::DataReductionProxyMetricsObserver()
       num_network_resources_(0),
       original_network_bytes_(0),
       network_bytes_proxied_(0),
-      network_bytes_(0) {}
+      network_bytes_(0),
+      child_host_id_(content::ChildProcessHost::kInvalidUniqueID) {}
 
 DataReductionProxyMetricsObserver::~DataReductionProxyMetricsObserver() {}
 
@@ -135,6 +139,11 @@ DataReductionProxyMetricsObserver::OnCommit(
   if (!data || !data->used_data_reduction_proxy())
     return STOP_OBSERVING;
   data_ = data->DeepCopy();
+  child_host_id_ = navigation_handle->GetWebContents()
+                       ->GetMainFrame()
+                       ->GetProcess()
+                       ->GetID();
+
   // DataReductionProxy page loads should only occur on HTTP navigations.
   DCHECK(!navigation_handle->GetURL().SchemeIsCryptographic());
   DCHECK_EQ(data_->request_url(), navigation_handle->GetURL());
@@ -307,12 +316,20 @@ void DataReductionProxyMetricsObserver::SendPingback(
     parse_stop = timing.parse_timing->parse_stop;
   }
 
+  // If a crash happens, report the host child_host_id_ to the pingback client.
+  // Otherwise report kInvalidUniqueID.
+  int host_id = content::ChildProcessHost::kInvalidUniqueID;
+  if (info.page_end_reason ==
+      page_load_metrics::PageEndReason::END_RENDER_PROCESS_GONE) {
+    host_id = child_host_id_;
+  }
+
   DataReductionProxyPageLoadTiming data_reduction_proxy_timing(
       timing.navigation_start, response_start, load_event_start,
       first_image_paint, first_contentful_paint,
       experimental_first_meaningful_paint,
       parse_blocked_on_script_load_duration, parse_stop, network_bytes_,
-      original_network_bytes_, app_background_occurred, opted_out_);
+      original_network_bytes_, app_background_occurred, opted_out_, host_id);
   GetPingbackClient()->SendPingback(*data_, data_reduction_proxy_timing);
 }
 

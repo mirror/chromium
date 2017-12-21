@@ -7,10 +7,13 @@
 #include <stdint.h>
 #include <string>
 
+#include "base/location.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/optional.h"
 #include "base/rand_util.h"
 #include "base/sys_info.h"
+#include "base/task_scheduler/post_task.h"
+#include "base/task_scheduler/task_traits.h"
 #include "base/time/time.h"
 #include "components/data_reduction_proxy/core/browser/data_reduction_proxy_data.h"
 #include "components/data_reduction_proxy/core/common/data_reduction_proxy_page_load_timing.h"
@@ -19,6 +22,7 @@
 #include "components/data_reduction_proxy/proto/client_config.pb.h"
 #include "components/data_use_measurement/core/data_use_user_data.h"
 #include "components/variations/net/variations_http_headers.h"
+#include "content/public/common/child_process_host.h"
 #include "net/base/load_flags.h"
 #include "net/nqe/effective_connection_type.h"
 #include "net/traffic_annotation/network_traffic_annotation.h"
@@ -40,6 +44,7 @@ static const char kHistogramAttempted[] =
 // timing and data reduction proxy state.
 void AddDataToPageloadMetrics(const DataReductionProxyData& request_data,
                               const DataReductionProxyPageLoadTiming& timing,
+                              PageloadMetrics_RendererCrashType crash_type,
                               PageloadMetrics* request) {
   request->set_session_key(request_data.session_key());
   request->set_holdback_group(params::HoldbackFieldTrialGroup());
@@ -98,6 +103,8 @@ void AddDataToPageloadMetrics(const DataReductionProxyData& request_data,
   request->set_compressed_page_size_bytes(timing.network_bytes);
   request->set_original_page_size_bytes(timing.original_network_bytes);
 
+  request->set_renderer_crash_type(crash_type);
+
   if (request_data.page_id()) {
     request->set_page_id(request_data.page_id().value());
   }
@@ -152,7 +159,17 @@ DataReductionProxyPingbackClientImpl::DataReductionProxyPingbackClientImpl(
     net::URLRequestContextGetter* url_request_context)
     : url_request_context_(url_request_context),
       pingback_url_(util::AddApiKeyToUrl(params::GetPingbackURL())),
-      pingback_reporting_fraction_(0.0) {}
+      pingback_reporting_fraction_(0.0)
+#if defined(OS_ANDROID)
+      ,
+      scoped_observer_(this) {
+  auto* crash_manager = breakpad::CrashDumpManager::GetInstance();
+  DCHECK(crash_manager);
+  scoped_observer_.Add(crash_manager);
+#else
+          {
+#endif
+}
 
 DataReductionProxyPingbackClientImpl::~DataReductionProxyPingbackClientImpl() {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
@@ -178,8 +195,73 @@ void DataReductionProxyPingbackClientImpl::SendPingback(
   if (!send_pingback)
     return;
 
+  if (timing.host_id != content::ChildProcessHost::kInvalidUniqueID) {
+#if defined(OS_ANDROID)
+    // Defer sending the report until the crash is processed.
+    AddRequestToCrashMap(request_data, timing);
+#else
+    // Don't analyze non-Android crashes.
+    CreateReport(request_data, timing,
+                 PageloadMetrics_RendererCrashType_NOT_ANALYZED);
+#endif
+    return;
+  }
+  CreateReport(request_data, timing,
+               PageloadMetrics_RendererCrashType_NO_CRASH);
+}
+
+#if defined(OS_ANDROID)
+void DataReductionProxyPingbackClientImpl::OnCrashDumpProcessed(
+    const breakpad::CrashDumpManager::CrashDumpDetails& details) {
+  auto iter = crash_map_.find(details.process_host_id);
+  if (iter == crash_map_.end())
+    return;
+  // If the crash is size 0, it is an OOM.
+  bool renderer_foreground_oom =
+      details.process_type == content::PROCESS_TYPE_RENDERER &&
+      details.termination_status == base::TERMINATION_STATUS_OOM_PROTECTED &&
+      details.file_size == 0 &&
+      details.app_state ==
+          base::android::APPLICATION_STATE_HAS_RUNNING_ACTIVITIES;
+  CreateReport(iter->second.first, iter->second.second,
+               renderer_foreground_oom
+                   ? PageloadMetrics_RendererCrashType_ANDROID_FOREGROUND_OOM
+                   : PageloadMetrics_RendererCrashType_OTHER_CRASH);
+  crash_map_.erase(details.process_host_id);
+}
+
+void DataReductionProxyPingbackClientImpl::AddRequestToCrashMap(
+    const DataReductionProxyData& request_data,
+    const DataReductionProxyPageLoadTiming& timing) {
+  crash_map_.insert(
+      std::make_pair(timing.host_id, std::make_pair(request_data, timing)));
+  // If the crash hasn't been processed in 5 seconds, send the report as if
+  // there were no OOM.
+  base::PostDelayedTaskWithTraits(
+      FROM_HERE, {base::TaskPriority::BACKGROUND},
+      base::BindOnce(&DataReductionProxyPingbackClientImpl::RemoveFromCrashMap,
+                     base::Unretained(this), timing.host_id),
+      GetCrashReportingDelay());
+}
+
+void DataReductionProxyPingbackClientImpl::RemoveFromCrashMap(
+    int process_host_id) {
+  auto iter = crash_map_.find(process_host_id);
+  if (iter == crash_map_.end())
+    return;
+  CreateReport(iter->second.first, iter->second.second,
+               PageloadMetrics_RendererCrashType_NOT_ANALYZED);
+  crash_map_.erase(process_host_id);
+}
+
+#endif
+
+void DataReductionProxyPingbackClientImpl::CreateReport(
+    const DataReductionProxyData& request_data,
+    const DataReductionProxyPageLoadTiming& timing,
+    PageloadMetrics_RendererCrashType crash_type) {
   PageloadMetrics* pageload_metrics = metrics_request_.add_pageloads();
-  AddDataToPageloadMetrics(request_data, timing, pageload_metrics);
+  AddDataToPageloadMetrics(request_data, timing, crash_type, pageload_metrics);
   if (current_fetcher_.get())
     return;
   DCHECK_EQ(1, metrics_request_.pageloads_size());
@@ -254,6 +336,11 @@ base::Time DataReductionProxyPingbackClientImpl::CurrentTime() const {
 
 float DataReductionProxyPingbackClientImpl::GenerateRandomFloat() const {
   return static_cast<float>(base::RandDouble());
+}
+
+base::TimeDelta DataReductionProxyPingbackClientImpl::GetCrashReportingDelay()
+    const {
+  return base::TimeDelta::FromSeconds(5);
 }
 
 void DataReductionProxyPingbackClientImpl::SetPingbackReportingFraction(
