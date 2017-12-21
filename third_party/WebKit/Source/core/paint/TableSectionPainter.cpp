@@ -17,6 +17,7 @@
 #include "core/paint/PaintInfo.h"
 #include "core/paint/TableCellPainter.h"
 #include "core/paint/TableRowPainter.h"
+#include "platform/graphics/paint/DisplayItemCacheSkipper.h"
 #include "platform/graphics/paint/DrawingRecorder.h"
 
 namespace blink {
@@ -33,6 +34,10 @@ void TableSectionPainter::PaintRepeatingHeaderGroup(
   // column-spanners in nested multi-col contexts.
   if (!table->IsPageLogicalHeightKnown())
     return;
+
+  // We may need to paint the header multiple times so can't uniquely identify
+  // each display item.
+  DisplayItemCacheSkipper cache_skipper(paint_info.context);
 
   LayoutPoint pagination_offset = paint_offset;
   LayoutUnit page_height = table->PageLogicalHeightForOffset(LayoutUnit());
@@ -96,6 +101,10 @@ void TableSectionPainter::PaintRepeatingFooterGroup(
   // column-spanners in nested multi-col contexts.
   if (!table->IsPageLogicalHeightKnown())
     return;
+
+  // We may need to paint the header multiple times so can't uniquely identify
+  // each display item.
+  DisplayItemCacheSkipper cache_skipper(paint_info.context);
 
   LayoutRect sections_rect(LayoutPoint(), table->Size());
   table->SubtractCaptionRect(sections_rect);

@@ -68,7 +68,8 @@ bool PaintController::UseCachedDrawingIfPossible(
     return false;
   }
 
-  size_t cached_item = FindCachedItem(DisplayItem::Id(client, type));
+  size_t cached_item =
+      FindCachedItem(DisplayItem::Id(client, type, current_fragment_));
   if (cached_item == kNotFound) {
     NOTREACHED();
     return false;
@@ -468,8 +469,7 @@ size_t PaintController::FindOutOfOrderCachedItemForward(
 
 #if DCHECK_IS_ON()
   ShowDebugData();
-  LOG(ERROR) << id.client.DebugName() << ":"
-             << DisplayItem::TypeAsDebugString(id.type);
+  LOG(ERROR) << id.client.DebugName() << " " << id.ToString();
 #endif
 
   if (RuntimeEnabledFeatures::PaintUnderInvalidationCheckingEnabled())
