@@ -127,12 +127,10 @@ void PaintController::DisplayItemListAsJSON::AppendSubsequenceAsJSON(
     const auto& chunk = *current_chunk_;
     auto json_object = JSONObject::Create();
 
-    String chunk_name = ClientName(chunk.id.client);
-    if (chunk.id.type != DisplayItem::kUninitializedType) {
-      chunk_name.append(" type: ");
-      chunk_name.append(DisplayItem::TypeAsDebugString(chunk.id.type));
-    }
-    json_object->SetString("chunk", chunk_name);
+    json_object->SetString(
+        "chunk", ClientName(chunk.id.client) + " " + chunk.id.ToString());
+    if (flags_ & DisplayItemList::kShowPaintRecords)
+      json_object->SetString("chunkData", chunk.ToString());
 
     json_object->SetArray(
         "displayItems",
