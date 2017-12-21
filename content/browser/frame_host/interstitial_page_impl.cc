@@ -277,15 +277,9 @@ void InterstitialPageImpl::Hide() {
 
   RenderWidgetHostView* old_view =
       controller_->delegate()->GetRenderViewHost()->GetWidget()->GetView();
-  if (controller_->delegate()->GetInterstitialPage() == this &&
-      old_view &&
-      !old_view->IsShowing() &&
-      !controller_->delegate()->IsHidden()) {
+  if (controller_->delegate()->GetInterstitialPage() == this && old_view) {
     // Show the original RVH since we're going away.  Note it might not exist if
     // the renderer crashed while the interstitial was showing.
-    // Note that it is important that we don't call Show() if the view is
-    // already showing. That would result in bad things (unparented HWND on
-    // Windows for example) happening.
     old_view->Show();
   }
 
@@ -520,8 +514,7 @@ void InterstitialPageImpl::DidNavigate(
   pause_throbber_ = true;
 
   // The RenderViewHost has loaded its contents, we can show it now.
-  if (!controller_->delegate()->IsHidden())
-    render_view_host_->GetWidget()->GetView()->Show();
+  render_view_host_->GetWidget()->GetView()->Show();
   controller_->delegate()->AttachInterstitialPage(this);
 
   RenderWidgetHostView* rwh_view =

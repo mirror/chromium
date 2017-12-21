@@ -690,11 +690,15 @@ void WebContentsViewMac::CloseTab() {
 
 - (void)updateWebContentsVisibility {
   WebContentsImpl* webContents = [self webContents];
-  if (!webContents || webContents->IsBeingDestroyed())
+  if (!webContents)
     return;
 
-  const bool viewVisible = [self window] && ![self isHiddenOrHasHiddenAncestor];
-  webContents->UpdateWebContentsVisibility(viewVisible);
+  if ([self isHiddenOrHasHiddenAncestor] || ![self window])
+    webContents->OnVisibilityChanged(content::Visibility::HIDDEN);
+  else if ([[self window] occlusionState] & NSWindowOcclusionStateVisible)
+    webContents->OnVisibilityChanged(content::Visibility::VISIBLE);
+  else
+    webContents->OnVisibilityChanged(content::Visibility::OCCLUDED);
 }
 
 - (void)resizeSubviewsWithOldSize:(NSSize)oldBoundsSize {
@@ -745,15 +749,7 @@ void WebContentsViewMac::CloseTab() {
 }
 
 - (void)windowChangedOcclusionState:(NSNotification*)notification {
-  NSWindow* window = [notification object];
-  WebContentsImpl* webContents = [self webContents];
-  if (window && webContents && !webContents->IsBeingDestroyed()) {
-    if ([window occlusionState] & NSWindowOcclusionStateVisible) {
-      webContents->WasUnOccluded();
-    } else {
-      webContents->WasOccluded();
-    }
-  }
+  [self updateWebContentsVisibility];
 }
 
 - (void)viewDidMoveToWindow {
