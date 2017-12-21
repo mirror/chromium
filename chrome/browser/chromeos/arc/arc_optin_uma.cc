@@ -13,8 +13,11 @@ namespace arc {
 
 namespace {
 
-std::string GetHistogramName(const std::string& base_name, bool managed) {
-  return base_name + (managed ? "Managed" : "Unmanaged");
+std::string GetHistogramName(const std::string& base_name,
+                             bool managed,
+                             bool robot_account) {
+  return base_name +
+         (robot_account ? "RobotAccount" : (managed ? "Managed" : "Unmanaged"));
 }
 
 }  // namespace
@@ -39,37 +42,44 @@ void UpdateOptInFlowResultUMA(OptInFlowResult result) {
                             static_cast<int>(OptInFlowResult::SIZE));
 }
 
-void UpdateProvisioningResultUMA(ProvisioningResult result, bool managed) {
+void UpdateProvisioningResultUMA(ProvisioningResult result,
+                                 bool managed,
+                                 bool robot_account) {
   DCHECK_NE(result, ProvisioningResult::CHROME_SERVER_COMMUNICATION_ERROR);
   base::UmaHistogramEnumeration(
-      GetHistogramName("Arc.Provisioning.Result.", managed), result,
-      ProvisioningResult::SIZE);
+      GetHistogramName("Arc.Provisioning.Result.", managed, robot_account),
+      result, ProvisioningResult::SIZE);
 }
 
 void UpdateProvisioningTiming(const base::TimeDelta& elapsed_time,
                               bool success,
-                              bool managed) {
+                              bool managed,
+                              bool robot_account) {
   std::string histogram_name = "Arc.Provisioning.TimeDelta.";
   histogram_name += success ? "Success." : "Failure.";
   // The macro UMA_HISTOGRAM_CUSTOM_TIMES expects a constant string, but since
   // this measurement happens very infrequently, we do not need to use a macro
   // here.
-  base::UmaHistogramCustomTimes(GetHistogramName(histogram_name, managed),
-                                elapsed_time, base::TimeDelta::FromSeconds(1),
-                                base::TimeDelta::FromMinutes(6), 50);
+  base::UmaHistogramCustomTimes(
+      GetHistogramName(histogram_name, managed, robot_account), elapsed_time,
+      base::TimeDelta::FromSeconds(1), base::TimeDelta::FromMinutes(6), 50);
 }
 
-void UpdateReauthorizationResultUMA(ProvisioningResult result, bool managed) {
+void UpdateReauthorizationResultUMA(ProvisioningResult result,
+                                    bool managed,
+                                    bool robot_account) {
   base::UmaHistogramEnumeration(
-      GetHistogramName("Arc.Reauthorization.Result.", managed), result,
-      ProvisioningResult::SIZE);
+      GetHistogramName("Arc.Reauthorization.Result.", managed, robot_account),
+      result, ProvisioningResult::SIZE);
 }
 
 void UpdatePlayStoreShowTime(const base::TimeDelta& elapsed_time,
-                             bool managed) {
+                             bool managed,
+                             bool robot_account) {
   base::UmaHistogramCustomTimes(
-      GetHistogramName("Arc.PlayStoreShown.TimeDelta.", managed), elapsed_time,
-      base::TimeDelta::FromSeconds(1), base::TimeDelta::FromMinutes(10), 50);
+      GetHistogramName("Arc.PlayStoreShown.TimeDelta.", managed, robot_account),
+      elapsed_time, base::TimeDelta::FromSeconds(1),
+      base::TimeDelta::FromMinutes(10), 50);
 }
 
 void UpdateAuthTiming(const char* histogram_name,
