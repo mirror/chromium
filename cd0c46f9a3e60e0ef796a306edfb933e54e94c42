@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "25dbe2ed_687b2030",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2930,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2017-12-21T23:35:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7fd4b252_e48259d5",
+      "range": {
+        "startLine": 2930,
+        "startChar": 3,
+        "endLine": 2930,
+        "endChar": 4
+      },
+      "revId": "cd0c46f9a3e60e0ef796a306edfb933e54e94c42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2c7fbc79_5e00dc9e",
         "filename": "chrome/browser/flag_descriptions.cc",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "cd0c46f9a3e60e0ef796a306edfb933e54e94c42",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d8f8b74_cda425e9",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2017-12-21T23:35:02Z",
+      "side": 1,
+      "message": "This is one flag. First string is the experiment name, second string is the description.",
+      "parentUuid": "2c7fbc79_5e00dc9e",
+      "range": {
+        "startLine": 279,
+        "startChar": 0,
+        "endLine": 279,
+        "endChar": 5
+      },
+      "revId": "cd0c46f9a3e60e0ef796a306edfb933e54e94c42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "7d1815e3_1a77f1af",
+        "filename": "components/autofill/core/browser/autofill_experiments.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2017-12-21T23:35:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "83febd2f_159fc2fe",
+      "range": {
+        "startLine": 98,
+        "startChar": 2,
+        "endLine": 98,
+        "endChar": 3
+      },
+      "revId": "cd0c46f9a3e60e0ef796a306edfb933e54e94c42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "78bb1fd7_e067a32e",
         "filename": "components/autofill_strings.grdp",
         "patchSetId": 4
@@ -91,6 +163,30 @@
       "revId": "cd0c46f9a3e60e0ef796a306edfb933e54e94c42",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4f60b21_0595c3a9",
+        "filename": "components/autofill_strings.grdp",
+        "patchSetId": 4
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2017-12-21T23:35:02Z",
+      "side": 1,
+      "message": "Yes.",
+      "parentUuid": "78bb1fd7_e067a32e",
+      "range": {
+        "startLine": 131,
+        "startChar": 2,
+        "endLine": 131,
+        "endChar": 3
+      },
+      "revId": "cd0c46f9a3e60e0ef796a306edfb933e54e94c42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
