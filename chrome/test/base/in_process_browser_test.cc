@@ -375,6 +375,9 @@ void InProcessBrowserTest::TearDown() {
   BrowserTestBase::TearDown();
   OSCryptMocker::TearDown();
   ChromeContentBrowserClient::SetDefaultQuotaSettingsForTesting(nullptr);
+#if defined(OS_MACOSX)
+  CheckHangingModifiers();
+#endif
 }
 
 void InProcessBrowserTest::CloseBrowserSynchronously(Browser* browser) {

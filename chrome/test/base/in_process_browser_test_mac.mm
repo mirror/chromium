@@ -4,6 +4,8 @@
 
 #include "chrome/test/base/in_process_browser_test.h"
 
+#include <Carbon/Carbon.h>
+
 #include "base/mac/scoped_nsautorelease_pool.h"
 #include "chrome/browser/devtools/devtools_window.h"
 #include "chrome/browser/profiles/profile.h"
@@ -74,9 +76,8 @@ Browser* InProcessBrowserTest::CreateBrowserForPopup(Profile* profile) {
   return browser;
 }
 
-Browser* InProcessBrowserTest::CreateBrowserForApp(
-    const std::string& app_name,
-    Profile* profile) {
+Browser* InProcessBrowserTest::CreateBrowserForApp(const std::string& app_name,
+                                                   Profile* profile) {
   // Making a browser window can cause AppKit to throw objects into the
   // autorelease pool. Flush the pool when this function returns.
   base::mac::ScopedNSAutoreleasePool pool;
@@ -85,4 +86,21 @@ Browser* InProcessBrowserTest::CreateBrowserForApp(
       app_name, false /* trusted_source */, gfx::Rect(), profile, true));
   AddBlankTabAndShow(browser);
   return browser;
+}
+
+void InProcessBrowserTest::CheckHangingModifiers() {
+  static constexpr std::pair<CGEventFlags, const char*> kKnownModifiers[] = {
+      {kCGEventFlagMaskCommand, "Cmd"},
+      {kCGEventFlagMaskShift, "Shift"},
+      {kCGEventFlagMaskAlternate, "Option"},
+      // Expand as needed.
+  };
+  CGEventFlags event_flags =
+      CGEventSourceFlagsState(kCGEventSourceStateCombinedSessionState);
+  for (const auto& known_modifier : kKnownModifiers) {
+    if (known_modifier.first & event_flags) {
+      ADD_FAILURE() << "This test left " << known_modifier.second
+                    << " hanging.";
+    }
+  }
 }

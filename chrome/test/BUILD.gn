@@ -4147,7 +4147,7 @@ if (is_android) {
       "../browser/permissions/permission_request_manager_test_api.h",
       "base/in_process_browser_test.cc",
       "base/in_process_browser_test.h",
-      "base/in_process_browser_test_mac.cc",
+      "base/in_process_browser_test_mac.mm",
       "base/javascript_browser_test.cc",
       "base/javascript_browser_test.h",
       "base/test_chrome_web_ui_controller_factory.cc",

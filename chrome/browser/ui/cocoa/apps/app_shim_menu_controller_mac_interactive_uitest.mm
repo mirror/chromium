@@ -91,12 +91,27 @@ class AppShimMenuControllerUITest : public extensions::PlatformAppBrowserTest {
   // Send Cmd+`. Note that it needs to go into kCGSessionEventTap, so NSEvents
   // and [NSApp sendEvent:] doesn't work.
   void CycleWindows() {
-    bool key_down = true;  // Sending a keyUp doesn't seem to be necessary.
-    base::ScopedCFTypeRef<CGEventRef> event(
-        CGEventCreateKeyboardEvent(nullptr, kVK_ANSI_Grave, key_down));
-    EXPECT_TRUE(event);
-    CGEventSetFlags(event, kCGEventFlagMaskCommand);
-    CGEventPost(kCGSessionEventTap, event);
+    const CGKeyCode key = kVK_ANSI_Grave;
+    const CGEventFlags flags = kCGEventFlagMaskCommand;
+    const CGEventTapLocation tap_location = kCGSessionEventTap;
+    const CGEventSourceRef source = nullptr;
+
+    base::ScopedCFTypeRef<CGEventRef> key_down_event(
+        CGEventCreateKeyboardEvent(source, key, true));
+    EXPECT_TRUE(key_down_event);
+    CGEventSetFlags(key_down_event, flags);
+
+    base::ScopedCFTypeRef<CGEventRef> key_up_event(
+        CGEventCreateKeyboardEvent(source, key, false));
+    EXPECT_TRUE(key_up_event);
+    CGEventSetFlags(key_up_event, flags);
+
+    CGEventPost(tap_location,
+                CGEventCreateKeyboardEvent(source, kVK_Command, true));
+    CGEventPost(tap_location, key_down_event);
+    CGEventPost(tap_location, key_up_event);
+    CGEventPost(tap_location,
+                CGEventCreateKeyboardEvent(source, kVK_Command, false));
   }
 
   AppWindow* app1_;

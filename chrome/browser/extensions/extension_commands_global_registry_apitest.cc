@@ -110,6 +110,10 @@ void SendNativeCommandShift(int key_code) {
   CGEventPost(event_tap_location, key_up);
   CGEventPost(event_tap_location, shift_up);
   CGEventPost(event_tap_location, command_up);
+  // From https://stackoverflow.com/questions/6239140
+  // Sleep for 0.1 seconds so that the system isn't overflowed with events to
+  // handle.
+  usleep(100000);
 
   CFRelease(event_source);
 }
