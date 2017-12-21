@@ -76,6 +76,12 @@ WebPointerEvent::WebPointerEvent(WebPointerProperties::PointerType type,
   SetType(WebInputEvent::Type::kPointerCausedUaAction);
 }
 
+WebPointerEvent WebPointerEvent::CreatePointerCausesUaActionEvent(
+    WebPointerProperties::PointerType type,
+    double time_stamp_seconds) {
+  return WebPointerEvent(type, time_stamp_seconds);
+}
+
 WebPointerEvent WebPointerEvent::WebPointerEventInRootFrame() const {
   WebPointerEvent transformed_event = *this;
   transformed_event.width /= frame_scale_;

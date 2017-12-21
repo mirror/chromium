@@ -84,6 +84,7 @@ class WebFrameWidgetImpl final : public WebFrameWidgetBase,
   void CompositeAndReadbackAsync(
       WebCompositeAndReadbackAsyncCallback*) override;
   void ThemeChanged() override;
+  WebInputEventResult DispatchBufferedTouchEvents() override;
   WebInputEventResult HandleInputEvent(const WebCoalescedInputEvent&) override;
   void SetCursorVisibilityState(bool is_visible) override;
 
@@ -153,6 +154,9 @@ class WebFrameWidgetImpl final : public WebFrameWidgetBase,
   friend class WebFrameWidget;  // For WebFrameWidget::create.
 
   explicit WebFrameWidgetImpl(WebWidgetClient*, WebLocalFrame*);
+
+  WebInputEventResult HandleInputEventInternal(
+      const WebCoalescedInputEvent&) override;
 
   // Perform a hit test for a point relative to the root frame of the page.
   HitTestResult HitTestResultForRootFramePos(
