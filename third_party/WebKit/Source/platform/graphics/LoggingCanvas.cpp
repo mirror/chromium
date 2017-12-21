@@ -267,15 +267,13 @@ String ColorTypeName(SkColorType color_type) {
 std::unique_ptr<JSONObject> ObjectForBitmapData(const SkBitmap& bitmap) {
   Vector<unsigned char> output;
 
-  SkPixmap src;
-  bool peekResult = bitmap.peekPixels(&src);
-  DCHECK(peekResult);
+  DCHECK(bitmap.getPixels());
 
   SkPngEncoder::Options options;
   options.fFilterFlags = SkPngEncoder::FilterFlag::kSub;
   options.fZLibLevel = 3;
   options.fUnpremulBehavior = SkTransferFunctionBehavior::kIgnore;
-  if (!ImageEncoder::Encode(&output, src, options)) {
+  if (!ImageEncoder::Encode(&output, bitmap.pixmap(), options)) {
     return nullptr;
   }
 

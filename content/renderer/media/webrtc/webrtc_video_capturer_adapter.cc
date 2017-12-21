@@ -123,9 +123,8 @@ class WebRtcVideoCapturerAdapter::TextureFrameCopier
         frame.get(), &paint_canvas,
         media::Context3D(provider_->ContextGL(), provider_->GrContext()));
 
-    SkPixmap pixmap;
-    const bool result = bitmap.peekPixels(&pixmap);
-    DCHECK(result) << "Error trying to access SkBitmap's pixels";
+    DCHECK(bitmap.getPixels()) << "Error trying to access SkBitmap's pixels";
+    SkPixmap pixmap = bitmap.pixmap();
     const uint32 source_pixel_format =
         (kN32_SkColorType == kRGBA_8888_SkColorType) ? cricket::FOURCC_ABGR
                                                      : cricket::FOURCC_ARGB;

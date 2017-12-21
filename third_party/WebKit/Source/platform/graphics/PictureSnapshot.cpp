@@ -117,17 +117,15 @@ std::unique_ptr<Vector<char>> PictureSnapshot::Replay(unsigned from_step,
   std::unique_ptr<Vector<char>> base64_data = std::make_unique<Vector<char>>();
   Vector<char> encoded_image;
 
-  SkPixmap src;
-  bool peekResult = bitmap.peekPixels(&src);
-  DCHECK(peekResult);
+  DCHECK(bitmap.getPixels());
 
   SkPngEncoder::Options options;
   options.fFilterFlags = SkPngEncoder::FilterFlag::kSub;
   options.fZLibLevel = 3;
   options.fUnpremulBehavior = SkTransferFunctionBehavior::kIgnore;
   if (!ImageEncoder::Encode(
-          reinterpret_cast<Vector<unsigned char>*>(&encoded_image), src,
-          options)) {
+          reinterpret_cast<Vector<unsigned char>*>(&encoded_image),
+          bitmap.pixmap(), options)) {
     return nullptr;
   }
 
