@@ -10,6 +10,8 @@
 #import "ios/chrome/browser/tabs/tab_model.h"
 #import "ios/chrome/browser/ui/commands/command_dispatcher.h"
 #import "ios/chrome/browser/ui/commands/history_popup_commands.h"
+#import "ios/chrome/browser/ui/fullscreen/chrome_coordinator+fullscreen_disabling.h"
+#import "ios/chrome/browser/ui/fullscreen/fullscreen_features.h"
 #import "ios/chrome/browser/ui/history_popup/requirements/tab_history_constants.h"
 #import "ios/chrome/browser/ui/history_popup/requirements/tab_history_positioner.h"
 #import "ios/chrome/browser/ui/history_popup/requirements/tab_history_presentation.h"
@@ -121,6 +123,9 @@ using base::UserMetricsAction;
       postNotificationName:kTabHistoryPopupWillShowNotification
                     object:nil];
 
+  // Disable fullscreen while the tab history popup is started.
+  [self didStartFullscreenDisablingUI];
+
   // Register to receive notification for when the App is backgrounded so we can
   // dismiss the TabHistoryPopup.
   NSNotificationCenter* defaultCenter = [NSNotificationCenter defaultCenter];
@@ -153,6 +158,9 @@ using base::UserMetricsAction;
   [[NSNotificationCenter defaultCenter]
       postNotificationName:kTabHistoryPopupWillHideNotification
                     object:nil];
+
+  // Reenable fullscreen since the popup is dismissed.
+  [self didStopFullscreenDisablingUI];
 }
 
 #pragma mark - PopupMenuDelegate
