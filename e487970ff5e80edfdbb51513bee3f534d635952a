@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "12374bc4_d20e42a1",
+        "filename": "net/data/ssl/scripts/generate-test-certs.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 425,
+      "author": {
+        "id": 1135189
+      },
+      "writtenOn": "2017-12-21T16:04:40Z",
+      "side": 1,
+      "message": "We\u0027re a bit inconsistent about cert generation/formatting, though that can probably be cleaned up in a separate pass.",
+      "revId": "e487970ff5e80edfdbb51513bee3f534d635952a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "17e39888_e6cd2b89",
+        "filename": "net/test/embedded_test_server/embedded_test_server.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1135189
+      },
+      "writtenOn": "2017-12-21T16:04:40Z",
+      "side": 1,
+      "message": "Probably just append these to the end of the list, or sort the whole list (with CERT_OK as the first element still).",
+      "range": {
+        "startLine": 103,
+        "startChar": 0,
+        "endLine": 109,
+        "endChar": 0
+      },
+      "revId": "e487970ff5e80edfdbb51513bee3f534d635952a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
