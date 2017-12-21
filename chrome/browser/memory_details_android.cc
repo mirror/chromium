@@ -63,8 +63,11 @@ void GetProcessDataMemoryInformation(
     std::unique_ptr<base::ProcessMetrics> metrics(
         base::ProcessMetrics::CreateProcessMetrics(*i));
     metrics->GetWorkingSetKBytes(&pmi.working_set);
-    // TODO(dcastagna): Compute number of open fds (pmi.num_open_fds) and soft
-    // limits (pmi.open_fds_soft_limit) on android.
+
+    // TODO(ssid): This only works for browser process. For child processes, the
+    // values need to be computed by the process itself.
+    pmi.num_open_fds = metrics->GetOpenFdCount();
+    pmi.open_fds_soft_limit = metrics->GetOpenFdSoftLimit();
 
     out->processes.push_back(pmi);
   }
