@@ -1,0 +1,136 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c5288258_885684a4",
+        "filename": "content/browser/media/capture/desktop_capture_device.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-12-21T21:19:57Z",
+      "side": 1,
+      "message": "const, and move it to the top of variable list.",
+      "range": {
+        "startLine": 147,
+        "startChar": 0,
+        "endLine": 148,
+        "endChar": 0
+      },
+      "revId": "7b5a562b4e9d163b98dbaef16ebfe61f039ad14c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1d34020_5ad0401b",
+        "filename": "content/browser/media/capture/desktop_capture_device.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-12-21T21:19:57Z",
+      "side": 1,
+      "message": "I have no much idea about the design of this feature, but should not we use a Feature* to enable and disable it through experiments?\n\n* FeatureList::IsEnabled() https://cs.chromium.org/chromium/src/base/feature_list.cc?l\u003d222\u0026gs\u003dkythe%253A%252F%252Fchromium%253Flang%253Dc%25252B%25252B%253Fpath%253Dsrc%252Fbase%252Ffeature_list.cc%2523Ioc%25252FSpEr4umqtrYidmiEqnkR9%25252BVTobUPb%25252FHVsJvt1nY%25253D\u0026gsn\u003dIsEnabled\u0026ct\u003dxref_usages\n* FeatureList::InitializeFromCommandLine() https://cs.chromium.org/chromium/src/base/feature_list.cc?l\u003d88\u0026gs\u003dkythe%253A%252F%252Fchromium%253Flang%253Dc%25252B%25252B%253Fpath%253Dsrc%252Fbase%252Ffeature_list.cc%2523Gi11ZUH68p3W5b0BD6G%25252FtTsIEf1HAgCTJ7xyLYsOU68%25253D\u0026gsn\u003dInitializeFromCommandLine\u0026ct\u003dxref_usages",
+      "range": {
+        "startLine": 180,
+        "startChar": 20,
+        "endLine": 180,
+        "endChar": 51
+      },
+      "revId": "7b5a562b4e9d163b98dbaef16ebfe61f039ad14c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7819f373_bffe0fc4",
+        "filename": "content/browser/media/capture/desktop_capture_device.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-12-21T21:19:57Z",
+      "side": 1,
+      "message": "static_cast\u003cdouble\u003e(kMicrosecondsPerSecond)\n\nhttps://cs.chromium.org/chromium/src/base/time/time.h?l\u003d324\u0026gs\u003dkythe%253A%252F%252Fchromium%253Flang%253Dc%25252B%25252B%253Fpath%253Dsrc%252Fbase%252Ftime%252Ftime.h%2523gq3c7VrfpfoccT7Lz2hE25B04TVHcqJXBRgTDAtV3%25252F8%25253D\u0026gsn\u003dkMicrosecondsPerSecond\u0026ct\u003dxref_usages",
+      "range": {
+        "startLine": 207,
+        "startChar": 6,
+        "endLine": 207,
+        "endChar": 15
+      },
+      "revId": "7b5a562b4e9d163b98dbaef16ebfe61f039ad14c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc751c8e_ab3c1db6",
+        "filename": "content/browser/media/capture/desktop_capture_device.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-12-21T21:19:57Z",
+      "side": 1,
+      "message": "Maybe more clear:\nbase::TimeDelta capture_delay;\nif (throttling_enabled_) {\n  capture_delay \u003d (last_capture_duration * 100) / kMaximumCpuConsumptionPercentage;\n  capture_delay -\u003d last_capture_duration;\n}\ncapture_delay \u003d std::max(frame_duration_, capture_delay);\n\ncapture_timer_.Start(FROM_HERE, capture_delay, this, \u0026Core::OnCaptureTimer);",
+      "revId": "7b5a562b4e9d163b98dbaef16ebfe61f039ad14c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac0f4085_72ea2e00",
+        "filename": "content/browser/media/capture/desktop_capture_device_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-12-21T21:19:57Z",
+      "side": 1,
+      "message": "Do not sleep in the test case if possible. In this case, you may use a MockTickClock [1] to set up the Timer [2].\n\n[1]: https://cs.chromium.org/chromium/src/base/test/test_mock_time_task_runner.cc?l\u003d26\u0026gs\u003dkythe%253A%252F%252Fchromium%253Flang%253Dc%25252B%25252B%253Fpath%253Dsrc%252Fbase%252Ftest%252Ftest_mock_time_task_runner.cc%2523I3WO%25252B33unWOyCr%25252BvMGDdCLJolF39CxChJUaQvAx4Vo8%25253D%2Bkythe%253A%252F%252Fchromium%253Flang%253Dc%25252B%25252B%253Fpath%253Dsrc%252Fbase%252Ftest%252Ftest_mock_time_task_runner.cc%2523NObxk4rZlKnyJ35xim8r5QAj0NIW%25252Be6r9hBN8xVbdRQ%25253D\u0026gsn\u003dMockTickClock\u0026ct\u003dxref_usages\n\n[2]: https://cs.chromium.org/chromium/src/base/timer/timer.h?l\u003d104\u0026gs\u003dkythe%253A%252F%252Fchromium%253Flang%253Dc%25252B%25252B%253Fpath%253Dsrc%252Fbase%252Ftimer%252Ftimer.h%2523vf%25252FwQw2vSQRO5E9YSOx5oLAWglEgKOLS1A%25252Btp2R%25252B7Kg%25253D\u0026gsn\u003dTimer\u0026ct\u003dxref_usages",
+      "range": {
+        "startLine": 227,
+        "startChar": 28,
+        "endLine": 227,
+        "endChar": 33
+      },
+      "revId": "7b5a562b4e9d163b98dbaef16ebfe61f039ad14c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47998b40_e2a277aa",
+        "filename": "content/public/common/content_switches.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-12-21T21:19:57Z",
+      "side": 1,
+      "message": "I think you will not use this flag out of the content/ folder, so the CONTENT_EXPORT tag is not necessary.",
+      "range": {
+        "startLine": 257,
+        "startChar": 0,
+        "endLine": 257,
+        "endChar": 14
+      },
+      "revId": "7b5a562b4e9d163b98dbaef16ebfe61f039ad14c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
