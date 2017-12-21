@@ -88,6 +88,24 @@
       "revId": "dc6c92091aa8d5b1abbe6502d54baeca7ec97e93",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67388853_52a2da5c",
+        "filename": "content/browser/renderer_host/browser_compositor_view_mac.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 541,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2017-12-21T01:13:39Z",
+      "side": 1,
+      "message": "Ah I see. Sorry for the confusion. I didn\u0027t know it was added so recently.",
+      "parentUuid": "4409de8c_771cb245",
+      "revId": "dc6c92091aa8d5b1abbe6502d54baeca7ec97e93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
