@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba597886_2b5735d0",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_layout_algorithm.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1236,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-12-21T16:21:26Z",
+      "side": 1,
+      "message": "does msvc still init un-init\u0027d things to garbage?",
+      "revId": "70ab7c971f05f19d36710b3063b0efbd6bdeb0c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76dbea1c_43fc5853",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_layout_algorithm.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-12-21T16:21:26Z",
+      "side": 1,
+      "message": ".nit fits_all_lines_? up to you.",
+      "range": {
+        "startLine": 211,
+        "startChar": 6,
+        "endLine": 211,
+        "endChar": 10
+      },
+      "revId": "70ab7c971f05f19d36710b3063b0efbd6bdeb0c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
