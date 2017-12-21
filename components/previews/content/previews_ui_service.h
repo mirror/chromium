@@ -71,6 +71,10 @@ class PreviewsUIService {
   // UI (i.e. click on the "Ignore Blacklist" button). Virtualized in testing.
   virtual void SetIgnorePreviewsBlacklistDecision(bool ignored);
 
+  // Reset the status of whether to ignored or consider PreviewsBlackList
+  // decisions in |io_data_|. Virtualized in testing.
+  virtual void UnsetIgnorePreviewsBlacklistDecision();
+
   // Notifies |logger_| whether PreviewsBlackList decisions are ignored or not.
   // This method is listening for notification from PreviewsIOData for when the
   // blacklist ignore status is changed so that |logger_| can update all

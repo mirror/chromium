@@ -165,20 +165,28 @@ class TestPreviewsIOData : public PreviewsIOData {
       const scoped_refptr<base::SingleThreadTaskRunner>& ui_task_runner,
       const scoped_refptr<base::SingleThreadTaskRunner>& io_task_runner)
       : PreviewsIOData(ui_task_runner, io_task_runner),
-        blacklist_ignored_(false) {}
+        blacklist_ignored_(false),
+        blacklist_ignored_reset_(false) {}
 
   // PreviewsIOData:
   void SetIgnorePreviewsBlacklistDecision(bool ignored) override {
     blacklist_ignored_ = ignored;
   }
+  void UnsetIgnorePreviewsBlacklistDecision() override {
+    blacklist_ignored_reset_ = true;
+  }
 
   // Exposed the status of blacklist decisions ignored for testing
   // PreviewsUIService.
   bool blacklist_ignored() const { return blacklist_ignored_; }
+  bool blacklist_ignored_reset() const { return blacklist_ignored_reset_; }
 
  private:
   // Whether the blacklist decisions are ignored or not.
   bool blacklist_ignored_;
+
+  // Whether the ignore status is reset or not.
+  bool blacklist_ignored_reset_;
 };
 
 class PreviewsUIServiceTest : public testing::Test {
@@ -348,6 +356,13 @@ TEST_F(PreviewsUIServiceTest,
   ui_service()->SetIgnorePreviewsBlacklistDecision(false /* ignored */);
   base::RunLoop().RunUntilIdle();
   EXPECT_FALSE(io_data()->blacklist_ignored());
+}
+
+TEST_F(PreviewsUIServiceTest, TestUnsetIgnorePreviewsBlacklistDecisionCalled) {
+  EXPECT_FALSE(io_data()->blacklist_ignored_reset());
+  ui_service()->UnsetIgnorePreviewsBlacklistDecision();
+  base::RunLoop().RunUntilIdle();
+  EXPECT_TRUE(io_data()->blacklist_ignored_reset());
 }
 
 TEST_F(PreviewsUIServiceTest, TestOnIgnoreBlacklistDecisionStatusChanged) {

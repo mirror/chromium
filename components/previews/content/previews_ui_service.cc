@@ -89,6 +89,14 @@ void PreviewsUIService::SetIgnorePreviewsBlacklistDecision(bool ignored) {
                             io_data_, ignored));
 }
 
+void PreviewsUIService::UnsetIgnorePreviewsBlacklistDecision() {
+  DCHECK(thread_checker_.CalledOnValidThread());
+  io_task_runner_->PostTask(
+      FROM_HERE,
+      base::BindOnce(&PreviewsIOData::UnsetIgnorePreviewsBlacklistDecision,
+                     io_data_));
+}
+
 void PreviewsUIService::OnIgnoreBlacklistDecisionStatusChanged(bool ignored) {
   DCHECK(thread_checker_.CalledOnValidThread());
   logger_->OnIgnoreBlacklistDecisionStatusChanged(ignored);

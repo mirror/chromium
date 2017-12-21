@@ -56,6 +56,8 @@ constexpr char kOfflineDesciption[] = "Offline Previews";
 
 // The HTML DOM ID used in Javascript.
 constexpr char kEctFlagHtmlId[] = "ect-flag";
+constexpr char kIgnorePreviewsBlacklistFlagHtmlId[] =
+    "ignore-previews-blacklist";
 constexpr char kNoScriptFlagHtmlId[] = "noscript-flag";
 constexpr char kOfflinePageFlagHtmlId[] = "offline-page-flag";
 
@@ -63,6 +65,8 @@ constexpr char kOfflinePageFlagHtmlId[] = "offline-page-flag";
 constexpr char kNoScriptFlagLink[] = "chrome://flags/#enable-noscript-previews";
 constexpr char kEctFlagLink[] =
     "chrome://flags/#force-effective-connection-type";
+constexpr char kIgnorePreviewsBlacklistLink[] =
+    "chrome://flags/#ignore-previews-blacklist";
 constexpr char kOfflinePageFlagLink[] =
     "chrome://flags/#enable-offline-previews";
 
@@ -230,20 +234,26 @@ class TestPreviewsUIService : public previews::PreviewsUIService {
                           nullptr, /* previews_opt_guide */
                           base::Bind(&MockedPreviewsIsEnabled),
                           std::move(logger)),
-        blacklist_ignored_(false) {}
+        blacklist_ignored_(false),
+        blacklist_ignored_unset_(false) {}
   ~TestPreviewsUIService() override {}
 
   // previews::PreviewsUIService:
   void SetIgnorePreviewsBlacklistDecision(bool ignored) override {
     blacklist_ignored_ = ignored;
   }
+  void UnsetIgnorePreviewsBlacklistDecision() override {
+    blacklist_ignored_unset_ = true;
+  }
 
   // Exposed blacklist ignored state.
   bool blacklist_ignored() const { return blacklist_ignored_; }
+  bool blacklist_ignored_unset() const { return blacklist_ignored_unset_; }
 
  private:
   // Whether the blacklist decisions are ignored or not.
   bool blacklist_ignored_;
+  bool blacklist_ignored_unset_;
 };
 
 class InterventionsInternalsPageHandlerTest : public testing::Test {
@@ -420,7 +430,7 @@ TEST_F(InterventionsInternalsPageHandlerTest, GetFlagsCount) {
   page_handler_->GetPreviewsFlagsDetails(
       base::BindOnce(&MockGetPreviewsFlagsCallback));
 
-  constexpr size_t expected = 3;
+  constexpr size_t expected = 4;
   EXPECT_EQ(expected, passed_in_flags.size());
 }
 
@@ -482,6 +492,36 @@ TEST_F(InterventionsInternalsPageHandlerTest, GetFlagsEctForceFieldtrialValue) {
             ect_flag->second->description);
   EXPECT_EQ("Fieldtrial forced " + expected_ect, ect_flag->second->value);
   EXPECT_EQ(kEctFlagLink, ect_flag->second->link);
+}
+
+TEST_F(InterventionsInternalsPageHandlerTest,
+       GetFlagsIgnorePreviewsBlacklistDisabledValue) {
+  // Disabled by default.
+  page_handler_->GetPreviewsFlagsDetails(
+      base::BindOnce(&MockGetPreviewsFlagsCallback));
+  auto ignore_previews_blacklist =
+      passed_in_flags.find(kIgnorePreviewsBlacklistFlagHtmlId);
+
+  ASSERT_NE(passed_in_flags.end(), ignore_previews_blacklist);
+  EXPECT_EQ(flag_descriptions::kIgnorePreviewsBlacklistName,
+            ignore_previews_blacklist->second->description);
+  EXPECT_EQ(kDisabledFlagValue, ignore_previews_blacklist->second->value);
+  EXPECT_EQ(kIgnorePreviewsBlacklistLink,
+            ignore_previews_blacklist->second->link);
+}
+
+TEST_F(InterventionsInternalsPageHandlerTest, GetFlagsNoScriptDisabledValue) {
+  page_handler_->GetPreviewsFlagsDetails(
+      base::BindOnce(&MockGetPreviewsFlagsCallback));
+  auto ignore_previews_blacklist =
+      passed_in_flags.find(kIgnorePreviewsBlacklistFlagHtmlId);
+
+  ASSERT_NE(passed_in_flags.end(), ignore_previews_blacklist);
+  EXPECT_EQ(flag_descriptions::kIgnorePreviewsBlacklistName,
+            ignore_previews_blacklist->second->description);
+  EXPECT_EQ(kDisabledFlagValue, ignore_previews_blacklist->second->value);
+  EXPECT_EQ(kIgnorePreviewsBlacklistLink,
+            ignore_previews_blacklist->second->link);
 }
 
 TEST_F(InterventionsInternalsPageHandlerTest, GetFlagsNoScriptDefaultValue) {
@@ -686,9 +726,10 @@ TEST_F(InterventionsInternalsPageHandlerTest,
 
 TEST_F(InterventionsInternalsPageHandlerTest,
        IgnoreBlacklistReversedOnLastObserverRemovedCalled) {
+  EXPECT_FALSE(previews_ui_service_->blacklist_ignored_unset());
   page_handler_->OnLastObserverRemove();
   base::RunLoop().RunUntilIdle();
-  EXPECT_FALSE(page_->blacklist_ignored());
+  EXPECT_TRUE(previews_ui_service_->blacklist_ignored_unset());
 }
 
 }  // namespace

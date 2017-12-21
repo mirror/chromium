@@ -24973,6 +24973,7 @@ from previous Chrome versions.
   <int value="-1433087548" label="enable-app-install-alerts"/>
   <int value="-1431563697" label="WebPaymentsMethodSectionOrderV2:enabled"/>
   <int value="-1426817842" label="BlockTabUnders:enabled"/>
+  <int value="-1426150007" label="ignore-previews-blacklist"/>
   <int value="-1426034869" label="NoCreditCardAbort:enabled"/>
   <int value="-1419788257" label="enable-experimental-hotwording"/>
   <int value="-1417122729"
@@ -33519,7 +33520,7 @@ Called by update_net_trust_anchors.py.-->
   <int value="632306545" label="PPB_FileRef;1.0"/>
   <int value="656561383" label="PPB_FlashFullscreen;1.0"/>
   <int value="657117235" label="PPB_Flash_DRM;1.0"/>
-  <int value="668624105" label="PPB_Flash_DeviceID;1.0"/>
+  <int value="668624105" label="ppb_flash_deviceid;1.0"/>
   <int value="706893509" label="PPB_ContentDecryptor_Private;0.11"/>
   <int value="714324031" label="PPB_Graphics3D;1.0"/>
   <int value="724664149" label="PPB_Flash_Menu;0.2"/>
