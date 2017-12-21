@@ -137,6 +137,11 @@ class CRWWebControllerTest : public WebTestWithWebController {
     WebTestWithWebController::TearDown();
   }
 
+  TestWebClient* GetWebClient() override {
+    return static_cast<TestWebClient*>(
+        WebTestWithWebController::GetWebClient());
+  }
+
   // The value for web view OCMock objects to expect for |-setFrame:|.
   CGRect GetExpectedWebViewFrame() const {
     CGSize container_view_size = [UIScreen mainScreen].bounds.size;
