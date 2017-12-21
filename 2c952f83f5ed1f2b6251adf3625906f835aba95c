@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "8f4a5547_e1a48a70",
+        "filename": "media/gpu/v4l2/v4l2_jpeg_decode_accelerator.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1196199
+      },
+      "writtenOn": "2017-12-21T04:00:22Z",
+      "side": 1,
+      "message": "I misunderstood. I removed LOG(ERROR).",
+      "parentUuid": "a9ccc06e_daa783f4",
+      "revId": "2c952f83f5ed1f2b6251adf3625906f835aba95c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c238d10a_bfdd4f12",
         "filename": "media/gpu/v4l2/v4l2_jpeg_decode_accelerator.cc",
         "patchSetId": 5
