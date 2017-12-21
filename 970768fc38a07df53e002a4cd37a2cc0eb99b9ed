@@ -177,6 +177,24 @@
     },
     {
       "key": {
+        "uuid": "6a7176ce_55bc389d",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-12-21T20:14:00Z",
+      "side": 1,
+      "message": "Not sure if I should add links to code which isn\u0027t open source (yet) so I\u0027ll just refer to file names and line numbers.\n\nI may be misunderstanding the flow (or it could be a semantic bug), as it does look like the \u0027CreateRoute\u0027 call is supposed to wait for the route to be fully set up before returning, but it looks like the startMirroring call is asynchronous to creating a route.\n\nThe Cast provider on line 334 of cast_provider.js in it\u0027s doCreateRoute_ method calls back to providerManagerCallbacks_ to startMirroring, but the promise returned from that is used to call \u0027updateRoute\u0027 after it starts and doesn\u0027t block or add anything to the CreateRoute promise.\n\nSo the route response will be returned very quickly and mirroring will just be starting on the extension side (and even once the capture call gets back to the browser side there is another async branch for the native capture implementation (at least for aura platforms): https://cs.chromium.org/chromium/src/content/browser/media/capture/aura_window_capture_machine.cc?l\u003d51).\n\nSo yes we could have better semantics for route startup (perhaps this will be updated in the transition from extension to native) and if it did block on the mirroring call capture would be more likely to be ready by the time the callbacks run in this file, but it would still have the possibility of a race condition due to the native capture async task until we fully implement the capture event based API.",
+      "parentUuid": "e4c6e2dc_3cd4d430",
+      "revId": "970768fc38a07df53e002a4cd37a2cc0eb99b9ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f077337a_e649f54c",
         "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
         "patchSetId": 9
@@ -396,6 +414,24 @@
       "revId": "970768fc38a07df53e002a4cd37a2cc0eb99b9ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9baa9bce_71c7ba34",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-12-21T20:14:00Z",
+      "side": 1,
+      "message": "Done. Added a boolean flag to check if a delete task was posted before calling \u0027delete this\u0027.",
+      "parentUuid": "6e7fca32_949bbc1c",
+      "revId": "970768fc38a07df53e002a4cd37a2cc0eb99b9ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -646,6 +682,24 @@
     },
     {
       "key": {
+        "uuid": "64c7efc5_a6230d3f",
+        "filename": "chrome/test/media_router/media_router_integration_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 768,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-12-21T20:14:00Z",
+      "side": 1,
+      "message": "I\u0027ll follow up with miu@, but it seems intentional to only fire the notification when the window itself goes fullscreen (and not for when it is only fullscreen-in-tab).\n\nSee https://cs.chromium.org/chromium/src/chrome/browser/ui/exclusive_access/fullscreen_controller.cc?dr\u003dCSs\u0026l\u003d120\n\nThe proper fix sounds like it would be using a specific notification for capture (ie crbug/540965) which would then allow this test to wait on that event instead (or since the underlying code wouldn\u0027t be polling anyway, this test might be able to run with no waits at all).",
+      "parentUuid": "0d9dbca7_4f2b69e5",
+      "revId": "970768fc38a07df53e002a4cd37a2cc0eb99b9ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2c13ff90_09f1bc4d",
         "filename": "chrome/test/media_router/media_router_integration_browsertest.cc",
         "patchSetId": 9
@@ -696,6 +750,24 @@
       "revId": "970768fc38a07df53e002a4cd37a2cc0eb99b9ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b0929a4_12d0cd1d",
+        "filename": "chrome/test/media_router/media_router_integration_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 787,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-12-21T20:14:00Z",
+      "side": 1,
+      "message": "I added a wait for now.  I was thinking we could maybe check with the media player to see if the file is being played (because that happens regardless of the mr route status), but even then there could still be a late start capture which could give a false positive.\n\nSo I\u0027ll stay with the wait unless someone has a better idea.",
+      "parentUuid": "db4e081d_775a0f2f",
+      "revId": "970768fc38a07df53e002a4cd37a2cc0eb99b9ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
