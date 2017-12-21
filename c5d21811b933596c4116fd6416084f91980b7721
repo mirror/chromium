@@ -22,6 +22,40 @@
       "revId": "c5d21811b933596c4116fd6416084f91980b7721",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a76879b_8ba8490b",
+        "filename": "chrome/browser/memory_details_mac.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-21T19:40:04Z",
+      "side": 1,
+      "message": "Remove?",
+      "revId": "c5d21811b933596c4116fd6416084f91980b7721",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3efaaacf_99774e3e",
+        "filename": "chrome/browser/metrics/metrics_memory_details.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-21T19:40:04Z",
+      "side": 1,
+      "message": "ditto.",
+      "revId": "c5d21811b933596c4116fd6416084f91980b7721",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
