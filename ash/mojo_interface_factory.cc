@@ -7,6 +7,7 @@
 #include <utility>
 
 #include "ash/accelerators/accelerator_controller.h"
+#include "ash/accelerators/keyboard_shortcut_viewer_controller.h"
 #include "ash/accessibility/accessibility_controller.h"
 #include "ash/cast_config_controller.h"
 #include "ash/display/ash_display_controller.h"
@@ -79,6 +80,13 @@ void BindHighlighterControllerRequestOnMainThread(
 
 void BindImeControllerRequestOnMainThread(mojom::ImeControllerRequest request) {
   Shell::Get()->ime_controller()->BindRequest(std::move(request));
+}
+
+void BindKeyboardShortcutViewerControllerRequestOnMainThread(
+    keyboard_shortcut_viewer::mojom::KeyboardShortcutViewerControllerRequest
+        request) {
+  Shell::Get()->keyboard_shortcut_viewer_controller()->BindRequest(
+      std::move(request));
 }
 
 void BindLocaleNotificationControllerOnMainThread(
@@ -178,6 +186,11 @@ void RegisterInterfaces(
       main_thread_task_runner);
   registry->AddInterface(base::Bind(&BindImeControllerRequestOnMainThread),
                          main_thread_task_runner);
+  if (switches::IsKeyboardShortcutViewerEnabled()) {
+    registry->AddInterface(
+        base::Bind(&BindKeyboardShortcutViewerControllerRequestOnMainThread),
+        main_thread_task_runner);
+  }
   registry->AddInterface(
       base::Bind(&BindLocaleNotificationControllerOnMainThread),
       main_thread_task_runner);
