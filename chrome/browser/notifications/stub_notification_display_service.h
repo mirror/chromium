@@ -59,6 +59,16 @@ class StubNotificationDisplayService : public NotificationDisplayService {
   void RemoveAllNotifications(NotificationCommon::Type notification_type,
                               bool by_user);
 
+  NotificationCommon::Operation get_last_operation() { return last_operation_; }
+  NotificationCommon::Type get_last_notification_type() {
+    return last_notification_type_;
+  }
+  GURL get_last_origin() { return last_origin_; }
+  std::string get_last_notification_id() { return last_notification_id_; }
+  base::Optional<int> get_last_action_index() { return last_action_index_; }
+  base::Optional<base::string16> get_last_reply() { return last_reply_; }
+  base::Optional<bool> get_last_by_user() { return last_by_user_; }
+
   // NotificationDisplayService implementation:
   void Display(NotificationCommon::Type notification_type,
                const message_center::Notification& notification,
@@ -66,6 +76,14 @@ class StubNotificationDisplayService : public NotificationDisplayService {
   void Close(NotificationCommon::Type notification_type,
              const std::string& notification_id) override;
   void GetDisplayed(const DisplayedNotificationsCallback& callback) override;
+  void ProcessNotificationOperation(
+      NotificationCommon::Operation operation,
+      NotificationCommon::Type notification_type,
+      const GURL& origin,
+      const std::string& notification_id,
+      const base::Optional<int>& action_index,
+      const base::Optional<base::string16>& reply,
+      const base::Optional<bool>& by_user) override;
 
  private:
   // Data to store for a notification that's being shown through this service.
@@ -86,6 +104,14 @@ class StubNotificationDisplayService : public NotificationDisplayService {
   base::RepeatingClosure notification_added_closure_;
   std::vector<NotificationData> notifications_;
   Profile* profile_;
+
+  NotificationCommon::Operation last_operation_;
+  NotificationCommon::Type last_notification_type_;
+  GURL last_origin_;
+  std::string last_notification_id_;
+  base::Optional<int> last_action_index_;
+  base::Optional<base::string16> last_reply_;
+  base::Optional<bool> last_by_user_;
 
   DISALLOW_COPY_AND_ASSIGN(StubNotificationDisplayService);
 };

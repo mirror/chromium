@@ -58,6 +58,14 @@ class NotificationDisplayServiceTester {
   // Removes all notifications of the given |type|.
   void RemoveAllNotifications(NotificationCommon::Type type, bool by_user);
 
+  bool ValidateNotificationValues(NotificationCommon::Operation operation,
+                                  NotificationCommon::Type notification_type,
+                                  const GURL& origin,
+                                  const std::string& notification_id,
+                                  const base::Optional<int>& action_index,
+                                  const base::Optional<base::string16>& reply,
+                                  const base::Optional<bool>& by_user);
+
  private:
   Profile* profile_;
   StubNotificationDisplayService* display_service_;
