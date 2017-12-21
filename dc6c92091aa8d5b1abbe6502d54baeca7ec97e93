@@ -16,6 +16,24 @@
       "revId": "dc6c92091aa8d5b1abbe6502d54baeca7ec97e93",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e1f469c_695b06bb",
+        "filename": "content/browser/renderer_host/browser_compositor_view_mac.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 541,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2017-12-21T00:10:03Z",
+      "side": 1,
+      "message": "I don\u0027t think so. I want to allocate a new ID for the renderer. The ID for ui::Compositor can remain the same.",
+      "parentUuid": "7df28731_0a1a572b",
+      "revId": "dc6c92091aa8d5b1abbe6502d54baeca7ec97e93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
