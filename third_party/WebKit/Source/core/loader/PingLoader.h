@@ -77,14 +77,18 @@ class CORE_EXPORT PingLoader {
   // The last argument is guaranteed to be set to the size of payload if
   // these method return true. If these method returns false, the value
   // shouldn't be used.
-  static bool SendBeacon(LocalFrame*, int, const KURL&, const String&, size_t&);
   static bool SendBeacon(LocalFrame*,
-                         int,
+                         size_t,
+                         const KURL&,
+                         const String&,
+                         size_t&);
+  static bool SendBeacon(LocalFrame*,
+                         size_t,
                          const KURL&,
                          DOMArrayBufferView*,
                          size_t&);
-  static bool SendBeacon(LocalFrame*, int, const KURL&, Blob*, size_t&);
-  static bool SendBeacon(LocalFrame*, int, const KURL&, FormData*, size_t&);
+  static bool SendBeacon(LocalFrame*, size_t, const KURL&, Blob*, size_t&);
+  static bool SendBeacon(LocalFrame*, size_t, const KURL&, FormData*, size_t&);
 };
 
 }  // namespace blink
