@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "817e4b38_9f007a7c",
+        "filename": "third_party/polymer/v1_0/rsync_exclude.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-12-21T21:59:36Z",
+      "side": 0,
+      "message": "Why remove the js file? Does the html imply the removal of the js?",
+      "revId": "8ec879093d434fa180ce98bf88a7738aa8bc463c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
