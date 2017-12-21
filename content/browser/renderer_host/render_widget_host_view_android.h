@@ -174,7 +174,8 @@ class CONTENT_EXPORT RenderWidgetHostViewAndroid
   viz::FrameSinkId GetFrameSinkId() override;
   viz::FrameSinkId FrameSinkIdAtPoint(viz::SurfaceHittestDelegate* delegate,
                                       const gfx::PointF& point,
-                                      gfx::PointF* transformed_point) override;
+                                      gfx::PointF* transformed_point,
+                                      bool* out_query_renderer) override;
   void ProcessMouseEvent(const blink::WebMouseEvent& event,
                          const ui::LatencyInfo& latency) override;
   void ProcessMouseWheelEvent(const blink::WebMouseWheelEvent& event,
