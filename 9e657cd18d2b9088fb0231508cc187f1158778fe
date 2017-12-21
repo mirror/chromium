@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7e9f43cd_f81febb1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/OfflinePagesDownloadManagerBridge.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-21T23:50:40Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "4976ea8b_dc240acf",
+      "range": {
+        "startLine": 19,
+        "startChar": 39,
+        "endLine": 19,
+        "endChar": 43
+      },
+      "revId": "9e657cd18d2b9088fb0231508cc187f1158778fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "11c5fb2a_dce7d10e",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/OfflinePagesDownloadManagerBridge.java",
         "patchSetId": 4
@@ -565,6 +589,30 @@
       "side": 1,
       "message": "I presume you meant that I should also document what the function does, so I did that.",
       "parentUuid": "c76437f9_af921abc",
+      "range": {
+        "startLine": 29,
+        "startChar": 2,
+        "endLine": 29,
+        "endChar": 41
+      },
+      "revId": "9e657cd18d2b9088fb0231508cc187f1158778fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5757ff7f_cc37fc1b",
+        "filename": "chrome/browser/offline_pages/android/offline_pages_download_manager_bridge.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-21T23:50:40Z",
+      "side": 1,
+      "message": "This was related to my comment in Java, where I asked you to document the return type of corresponding method and later saw that there is partial document on C++ side.",
+      "parentUuid": "f2c97bc4_376b944b",
       "range": {
         "startLine": 29,
         "startChar": 2,

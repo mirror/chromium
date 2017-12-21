@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c57a7862_63c4fd6f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/OfflinePagesDownloadManagerBridge.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-21T23:50:40Z",
+      "side": 1,
+      "message": "nit: use /** JavaDoc comments */\nApplies below.",
+      "range": {
+        "startLine": 24,
+        "startChar": 4,
+        "endLine": 24,
+        "endChar": 7
+      },
+      "revId": "394bc4b82f6aac155df64e3a8005d6316843c4f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
