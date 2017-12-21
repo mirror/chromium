@@ -84,6 +84,30 @@
     },
     {
       "key": {
+        "uuid": "ad464ec2_0d3c73c6",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-12-21T07:48:54Z",
+      "side": 1,
+      "message": "\u003e Do we ever allow/generate empty line boxes?\n\nI think we do, when doing so is easier, we don\u0027t try too hard to eliminate unnecessary line boxes.",
+      "parentUuid": "f0232bc0_fd933a4c",
+      "range": {
+        "startLine": 53,
+        "startChar": 27,
+        "endLine": 53,
+        "endChar": 36
+      },
+      "revId": "6d8bb0eb835bacefdee3f32e603f27b46706def8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9587d3ee_3d7ca57e",
         "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.cc",
         "patchSetId": 20
