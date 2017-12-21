@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "5a90352a_522dd07e",
+        "filename": "media/base/android/java/src/org/chromium/media/MediaCodecBridgeBuilder.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1160944
+      },
+      "writtenOn": "2017-12-21T18:57:38Z",
+      "side": 1,
+      "message": "Done (I think); MediaCodecBridge calls release() on itself when start() fails.",
+      "parentUuid": "855520b7_632769a4",
+      "revId": "fc415df0d2f45d85da61ce82fd53a23caca97de1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ce118a2b_33cb30a9",
         "filename": "media/base/android/media_codec_bridge_impl.cc",
         "patchSetId": 4
@@ -72,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "23dc3b2b_de8da771",
+        "filename": "media/base/android/media_codec_bridge_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1160944
+      },
+      "writtenOn": "2017-12-21T18:57:38Z",
+      "side": 1,
+      "message": "Done. New approach gives each CodecSpecificData buffer its own parameter, so now there\u0027s no need to marshal a byte[][] (followup refactoring can make this less ugly if desired)",
+      "parentUuid": "4ea564e6_aee5480b",
+      "revId": "fc415df0d2f45d85da61ce82fd53a23caca97de1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "38a1f8f9_f18d3913",
         "filename": "media/base/android/media_codec_bridge_impl.cc",
         "patchSetId": 4
@@ -101,6 +137,24 @@
       "side": 1,
       "message": "Ack",
       "parentUuid": "38a1f8f9_f18d3913",
+      "revId": "fc415df0d2f45d85da61ce82fd53a23caca97de1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1e96199c_55ed190b",
+        "filename": "media/base/android/media_codec_bridge_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1160944
+      },
+      "writtenOn": "2017-12-21T18:57:38Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "f5424cfc_a1809388",
       "revId": "fc415df0d2f45d85da61ce82fd53a23caca97de1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
