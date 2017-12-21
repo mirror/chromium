@@ -16,6 +16,24 @@
       "revId": "73ad776973dfa996a33dbefe71bd5b94d5c00d51",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed96bc09_e0402fd7",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 1158,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-12-21T20:01:17Z",
+      "side": 1,
+      "message": "During manual testing, this covered the common cases.  Typing into the prompt can still stick to bottom if you type on the last line.\n\nWhen the prompt is multiline, I think it\u0027s reasonable to not have stick to bottom when the cursor is not on the last line.  It may not be ideal when the prompt is smaller than the full viewport, but the alternative is to introduce logic such as: scroll cursor into view, but scroll all the way to the bottom if the cursor would still be in view.  This is much simpler, the bad case is rare, and users can still click+drag the scrollbar to the bottom if needed.",
+      "parentUuid": "adbf574f_2ff8b326",
+      "revId": "73ad776973dfa996a33dbefe71bd5b94d5c00d51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
