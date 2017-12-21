@@ -5,6 +5,7 @@
 #include "base/optional.h"
 
 #include <set>
+#include <string>
 
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -126,8 +127,8 @@ TEST(OptionalTest, DefaultConstructor) {
 
 TEST(OptionalTest, CopyConstructor) {
   {
-    Optional<float> first(0.1f);
-    Optional<float> other(first);
+    constexpr Optional<float> first(0.1f);
+    constexpr Optional<float> other(first);
 
     EXPECT_TRUE(other);
     EXPECT_EQ(other.value(), 0.1f);
@@ -182,8 +183,8 @@ TEST(OptionalTest, ValueConstructor) {
 
 TEST(OptionalTest, MoveConstructor) {
   {
-    Optional<float> first(0.1f);
-    Optional<float> second(std::move(first));
+    constexpr Optional<float> first(0.1f);
+    constexpr Optional<float> second(std::move(first));
 
     EXPECT_TRUE(second);
     EXPECT_EQ(second.value(), 0.1f);
