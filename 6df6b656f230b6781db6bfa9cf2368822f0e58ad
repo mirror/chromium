@@ -16,6 +16,24 @@
       "revId": "6df6b656f230b6781db6bfa9cf2368822f0e58ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99f8cad9_20fe0529",
+        "filename": "third_party/WebKit/public/platform/modules/locks/lock_manager.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-21T16:59:49Z",
+      "side": 1,
+      "message": "In the long run, I would expect this to live in WebKit/public/common. It can\u0027t be in //content, since //third_party/WebKit shouldn\u0027t depend on //content. But for now, this is fine.",
+      "parentUuid": "88b9d10f_5c3e3fa7",
+      "revId": "6df6b656f230b6781db6bfa9cf2368822f0e58ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
