@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "1f947191_c681800b",
+        "filename": "chrome/browser/page_load_metrics/observers/data_reduction_proxy_metrics_observer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-12-21T21:29:51Z",
+      "side": 1,
+      "message": "s/child_host_id_/|child_host_id_|/",
+      "range": {
+        "startLine": 319,
+        "startChar": 41,
+        "endLine": 319,
+        "endChar": 55
+      },
+      "revId": "da1c92e812d8161371fdb9605155cdeaac450d96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4dde4907_bfbd7cba",
         "filename": "chrome/browser/page_load_metrics/observers/data_reduction_proxy_metrics_observer.h",
         "patchSetId": 3
@@ -48,6 +71,52 @@
     },
     {
       "key": {
+        "uuid": "64a24e33_8253501b",
+        "filename": "components/data_reduction_proxy/content/browser/data_reduction_proxy_pingback_client_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-12-21T21:29:51Z",
+      "side": 1,
+      "message": "why is this check needed in the constructor?",
+      "range": {
+        "startLine": 174,
+        "startChar": 2,
+        "endLine": 174,
+        "endChar": 53
+      },
+      "revId": "da1c92e812d8161371fdb9605155cdeaac450d96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b57e356_7d88f802",
+        "filename": "components/data_reduction_proxy/content/browser/data_reduction_proxy_pingback_client_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-12-21T21:29:51Z",
+      "side": 1,
+      "message": "it seems that there is an assumption that AddRequestToCrashMap() is called first followed by OnCrashDumpProcessed() within 5 seconds. Is this guaranteed? Is it possible that OnCrashDumpProcessed() gets called first?",
+      "range": {
+        "startLine": 204,
+        "startChar": 4,
+        "endLine": 204,
+        "endChar": 24
+      },
+      "revId": "da1c92e812d8161371fdb9605155cdeaac450d96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "15d83cef_7888f30d",
         "filename": "components/data_reduction_proxy/content/browser/data_reduction_proxy_pingback_client_impl.cc",
         "patchSetId": 3
@@ -76,6 +145,29 @@
       "writtenOn": "2017-12-21T21:26:53Z",
       "side": 1,
       "message": "nit: You have the iterator already, no need to re-search the map with the key.\n\ncrash_map_.erase(iter) should work. Same below.",
+      "revId": "da1c92e812d8161371fdb9605155cdeaac450d96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe43ce13_feb5f709",
+        "filename": "components/data_reduction_proxy/content/browser/data_reduction_proxy_pingback_client_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-12-21T21:29:51Z",
+      "side": 1,
+      "message": "rm |iter| to save repeated extra lookup?",
+      "range": {
+        "startLine": 234,
+        "startChar": 19,
+        "endLine": 234,
+        "endChar": 43
+      },
       "revId": "da1c92e812d8161371fdb9605155cdeaac450d96",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -121,6 +213,29 @@
         "startChar": 23,
         "endLine": 249,
         "endChar": 34
+      },
+      "revId": "da1c92e812d8161371fdb9605155cdeaac450d96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d097358b_cad82a70",
+        "filename": "components/data_reduction_proxy/content/browser/data_reduction_proxy_pingback_client_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-12-21T21:29:51Z",
+      "side": 1,
+      "message": "May be add a comment to explain how 5 seconds was chosen?",
+      "range": {
+        "startLine": 249,
+        "startChar": 6,
+        "endLine": 249,
+        "endChar": 37
       },
       "revId": "da1c92e812d8161371fdb9605155cdeaac450d96",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
@@ -185,6 +300,29 @@
       "writtenOn": "2017-12-21T21:26:53Z",
       "side": 1,
       "message": "There should be a better way of doing this if you\u0027re interested. out_of_memory_reporter_unittest.cc has OOM simulations which could be pulled into a helper, which additionally exercises the CrashDumpManager -\u003e Observer connection.",
+      "revId": "da1c92e812d8161371fdb9605155cdeaac450d96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bbe9089_97bdda79",
+        "filename": "components/data_reduction_proxy/proto/pageload_metrics.proto",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-12-21T21:29:51Z",
+      "side": 1,
+      "message": "May be start with UNSPECIFIED \u003d 0;",
+      "range": {
+        "startLine": 69,
+        "startChar": 4,
+        "endLine": 69,
+        "endChar": 12
+      },
       "revId": "da1c92e812d8161371fdb9605155cdeaac450d96",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
