@@ -88,6 +88,30 @@
     },
     {
       "key": {
+        "uuid": "23035f43_81fb5bb7",
+        "filename": "chrome/test/data/webui/signin/sync_confirmation_test.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-21T23:59:34Z",
+      "side": 1,
+      "message": "FYI, this work is tracked by https://bugs.chromium.org/p/chromium/issues/detail?id\u003d792774.",
+      "parentUuid": "7df32be8_a70e35d1",
+      "range": {
+        "startLine": 9,
+        "startChar": 6,
+        "endLine": 9,
+        "endChar": 9
+      },
+      "revId": "97fbe04f3a931159f8d45f75dfe83fad83613710",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1e984d7b_d774c18c",
         "filename": "chrome/test/data/webui/signin_browsertest.cc",
         "patchSetId": 7
