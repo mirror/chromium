@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2d6866ec_52db8436",
+        "filename": "chrome/browser/chromeos/arc/arc_optin_uma.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-12-21T20:03:58Z",
+      "side": 1,
+      "message": "Added policy_util::AccountType enum with a helper function to determine the value. Did you expect something like this?\n\nHowever, now the GetAccountType() function looks bad.",
+      "parentUuid": "862d7667_b0236d6c",
+      "range": {
+        "startLine": 196,
+        "startChar": 35,
+        "endLine": 196,
+        "endChar": 48
+      },
+      "revId": "e7dc0b1113e3735cba0a206c93793777fbf28ddc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c08a979e_779100c7",
         "filename": "chrome/browser/ui/ash/launcher/arc_app_window_launcher_controller.cc",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "e7dc0b1113e3735cba0a206c93793777fbf28ddc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96f6a4a9_23231a6b",
+        "filename": "chrome/browser/ui/ash/launcher/arc_app_window_launcher_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 615,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-12-21T20:03:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c08a979e_779100c7",
+      "range": {
+        "startLine": 615,
+        "startChar": 10,
+        "endLine": 615,
+        "endChar": 35
+      },
+      "revId": "e7dc0b1113e3735cba0a206c93793777fbf28ddc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
