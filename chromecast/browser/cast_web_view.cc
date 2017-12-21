@@ -119,6 +119,10 @@ void CastWebView::Show(CastWindowManager* window_manager) {
   web_contents_->Focus();
 }
 
+void CastWebView::EnableTouchInput() {
+  window_->EnableTouchInput();
+}
+
 content::WebContents* CastWebView::OpenURLFromTab(
     content::WebContents* source,
     const content::OpenURLParams& params) {

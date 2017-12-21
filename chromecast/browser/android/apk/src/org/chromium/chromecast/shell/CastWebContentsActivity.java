@@ -50,6 +50,7 @@ public class CastWebContentsActivity extends Activity {
     private String mInstanceId;
     private BroadcastReceiver mWindowDestroyedBroadcastReceiver;
     private BroadcastReceiver mScreenOffBroadcastReceiver;
+    private BroadcastReceiver mEnableTouchInputBroadcastReceiver;
     private FrameLayout mCastWebContentsLayout;
     private CastAudioManager mAudioManager;
     private ContentViewRenderView mContentViewRenderView;
@@ -170,11 +171,27 @@ public class CastWebContentsActivity extends Activity {
         LocalBroadcastManager.getInstance(this).registerReceiver(
                 mScreenOffBroadcastReceiver, screenOffIntentFilter);
 
-        WebContents webContents = (WebContents) intent.getParcelableExtra(
-                CastWebContentsComponent.ACTION_EXTRA_WEB_CONTENTS);
         mIsTouchInputEnabled = intent.getBooleanExtra(
                 CastWebContentsComponent.ACTION_EXTRA_TOUCH_INPUT_ENABLED, false);
+        if (mEnableTouchInputBroadcastReceiver != null) {
+            LocalBroadcastManager.getInstance(this).unregisterReceiver(
+                    mEnableTouchInputBroadcastReceiver);
+        }
 
+        mEnableTouchInputBroadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                mIsTouchInputEnabled = true;
+            }
+        };
+
+        IntentFilter enableTouchInputFilter = new IntentFilter();
+        enableTouchInputFilter.addAction(CastIntents.ACTION_ENABLE_TOUCH_INPUT);
+        LocalBroadcastManager.getInstance(this).registerReceiver(
+                mEnableTouchInputBroadcastReceiver, enableTouchInputFilter);
+
+        WebContents webContents = (WebContents) intent.getParcelableExtra(
+                CastWebContentsComponent.ACTION_EXTRA_WEB_CONTENTS);
         if (webContents == null) {
             Log.e(TAG, "Received null WebContents in intent.");
             maybeFinishLater();

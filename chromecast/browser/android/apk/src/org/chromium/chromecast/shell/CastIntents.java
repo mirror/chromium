@@ -13,4 +13,6 @@ public class CastIntents {
             "com.google.android.apps.castshell.intent.action.STOP_ACTIVITY";
     public static final String ACTION_SCREEN_OFF =
             "com.google.android.apps.castshell.intent.action.ACTION_SCREEN_OFF";
+    public static final String ACTION_ENABLE_TOUCH_INPUT =
+            "com.google.android.apps.castshell.intent.action.ACTION_ENABLE_TOUCH_INPUT";
 }

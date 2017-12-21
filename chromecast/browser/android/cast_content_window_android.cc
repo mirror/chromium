@@ -63,6 +63,11 @@ void CastContentWindowAndroid::ShowWebContents(
                                                 java_web_contents);
 }
 
+void CastContentWindowAndroid::EnableTouchInput() {
+  JNIEnv* env = base::android::AttachCurrentThread();
+  Java_CastContentWindowAndroid_enableTouchInput(env, java_window_);
+}
+
 void CastContentWindowAndroid::OnActivityStopped(
     JNIEnv* env,
     const base::android::JavaParamRef<jobject>& jcaller) {

@@ -29,6 +29,7 @@ class CastContentWindowAndroid : public CastContentWindow {
   // CastContentWindow implementation:
   void ShowWebContents(content::WebContents* web_contents,
                        CastWindowManager* window_manager) override;
+  void EnableTouchInput() override;
 
   // Called through JNI.
   void OnActivityStopped(JNIEnv* env,
