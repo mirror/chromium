@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c51081fb_78c8d25f",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_line_breaker.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 788,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-12-21T16:12:04Z",
+      "side": 1,
+      "message": "?",
+      "revId": "64a5ca96b0a19f3ef00530bdcd45c686e91ea13e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
