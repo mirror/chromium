@@ -164,12 +164,8 @@ bool IsAutoConnectEnabledInPolicy(const base::DictionaryValue& policy) {
 base::Value* GetOrCreateNestedDictionary(const std::string& key1,
                                          const std::string& key2,
                                          base::Value* dict) {
-  base::Value* inner_dict =
-      dict->FindPathOfType({key1, key2}, base::Value::Type::DICTIONARY);
-  if (inner_dict)
-    return inner_dict;
-  return dict->SetPath({key1, key2},
-                       base::Value(base::Value::Type::DICTIONARY));
+  return &dict->FindOrCreatePathOfType({key1, key2},
+                                       base::Value::Type::DICTIONARY);
 }
 
 void ApplyGlobalAutoconnectPolicy(

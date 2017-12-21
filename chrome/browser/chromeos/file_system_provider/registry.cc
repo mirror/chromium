@@ -94,17 +94,9 @@ void Registry::RememberFileSystem(
 
   DictionaryPrefUpdate dict_update(pref_service,
                                    prefs::kFileSystemProviderMounted);
-
-  base::Value* file_systems_per_extension = dict_update->FindKeyOfType(
-      file_system_info.provider_id().ToString(), base::Value::Type::DICTIONARY);
-  if (!file_systems_per_extension) {
-    file_systems_per_extension =
-        dict_update->SetKey(file_system_info.provider_id().ToString(),
-                            base::Value(base::Value::Type::DICTIONARY));
-  }
-
-  file_systems_per_extension->SetKey(file_system_info.file_system_id(),
-                                     std::move(file_system));
+  dict_update->SetPath({file_system_info.provider_id().ToString(),
+                        file_system_info.file_system_id()},
+                       std::move(file_system));
 }
 
 void Registry::ForgetFileSystem(const ProviderId& provider_id,

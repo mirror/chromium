@@ -64,13 +64,10 @@ base::Value CreateNewElement(const std::string& name) {
 // necessary. Returns a ponter to |child|.
 base::Value* AddChildToElement(base::Value* element, base::Value child) {
   DCHECK(element->is_dict());
-  base::Value* children = element->FindKey(mojom::XmlParser::kChildrenKey);
-  DCHECK(!children || children->is_list());
-  if (!children)
-    children = element->SetKey(mojom::XmlParser::kChildrenKey,
-                               base::Value(base::Value::Type::LIST));
-  children->GetList().push_back(std::move(child));
-  return &children->GetList().back();
+  base::Value& children = element->FindOrCreateKeyOfType(
+      mojom::XmlParser::kChildrenKey, base::Value::Type::LIST);
+  children.GetList().push_back(std::move(child));
+  return &children.GetList().back();
 }
 
 void PopulateNamespaces(base::Value* node_value, XmlReader* xml_reader) {

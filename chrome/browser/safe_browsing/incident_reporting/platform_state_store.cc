@@ -111,15 +111,11 @@ void RestoreFromProtobuf(
         type_incidents.incidents().key_to_digest_size() == 0) {
       continue;
     }
-    std::string type_string(base::IntToString(type_incidents.type()));
-    base::Value* type_dict =
-        value_dict->FindKeyOfType(type_string, base::Value::Type::DICTIONARY);
-    if (!type_dict) {
-      type_dict = value_dict->SetKey(
-          type_string, base::Value(base::Value::Type::DICTIONARY));
-    }
+    base::Value& type_dict = value_dict->FindOrCreateKeyOfType(
+        base::IntToString(type_incidents.type()),
+        base::Value::Type::DICTIONARY);
     RestoreOfTypeFromProtobuf(type_incidents.incidents().key_to_digest(),
-                              type_dict);
+                              &type_dict);
   }
 }
 

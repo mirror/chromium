@@ -209,10 +209,10 @@ base::Value* CreateOriginDictAndReturnSessionsDict(
   DCHECK(storage_dict);
 
   // TODO(yucliu): Change to base::Value::SetKey.
-  return storage_dict
-      ->SetKey(origin, base::Value::FromUniquePtrValue(
-                           OriginData(origin_id).ToDictValue()))
-      ->SetKey(kSessions, base::Value(base::Value::Type::DICTIONARY));
+  return &storage_dict
+              ->SetKey(origin, base::Value::FromUniquePtrValue(
+                                   OriginData(origin_id).ToDictValue()))
+              .SetKey(kSessions, base::Value(base::Value::Type::DICTIONARY));
 }
 
 // Clear sessions whose creation time falls in [start, end] from

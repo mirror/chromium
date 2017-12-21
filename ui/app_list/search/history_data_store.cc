@@ -152,8 +152,7 @@ void HistoryDataStore::Load(
 
 void HistoryDataStore::SetPrimary(const std::string& query,
                                   const std::string& result) {
-  base::Value* entry_dict = GetEntryDict(query);
-  entry_dict->SetKey(kKeyPrimary, base::Value(result));
+  GetEntryDict(query).SetKey(kKeyPrimary, base::Value(result));
   if (data_store_.get())
     data_store_->ScheduleWrite();
 }
@@ -165,54 +164,36 @@ void HistoryDataStore::SetSecondary(
   for (size_t i = 0; i < results.size(); ++i)
     results_list.GetList().emplace_back(results[i]);
 
-  base::Value* entry_dict = GetEntryDict(query);
-  entry_dict->SetKey(kKeySecondary, std::move(results_list));
+  GetEntryDict(query).SetKey(kKeySecondary, std::move(results_list));
   if (data_store_.get())
     data_store_->ScheduleWrite();
 }
 
 void HistoryDataStore::SetUpdateTime(const std::string& query,
                                      const base::Time& update_time) {
-  base::Value* entry_dict = GetEntryDict(query);
   // Persist time as microseconds since Windows epoch (year 1601).
   const int64_t update_time_val = update_time.since_origin().InMicroseconds();
-  entry_dict->SetKey(kKeyUpdateTime,
-                     base::Value(base::Int64ToString(update_time_val)));
+  GetEntryDict(query).SetKey(kKeyUpdateTime,
+                             base::Value(base::Int64ToString(update_time_val)));
   if (data_store_.get())
     data_store_->ScheduleWrite();
 }
 
 void HistoryDataStore::Delete(const std::string& query) {
-  base::Value* assoc_dict = GetAssociationDict();
-  assoc_dict->RemoveKey(query);
+  GetAssociationDict().RemoveKey(query);
   if (data_store_.get())
     data_store_->ScheduleWrite();
 }
 
-base::Value* HistoryDataStore::GetAssociationDict() {
-  base::DictionaryValue* cached_dict =
+base::Value& HistoryDataStore::GetAssociationDict() {
+  base::Value* cached_dict =
       cached_dict_ ? cached_dict_.get() : data_store_->cached_dict();
-  DCHECK(cached_dict);
-
-  base::DictionaryValue* assoc_dict = NULL;
-  CHECK(cached_dict->GetDictionary(kKeyAssociations, &assoc_dict) &&
-        assoc_dict);
-
-  return assoc_dict;
+  return *cached_dict->FindKey(kKeyAssociations);
 }
 
-base::Value* HistoryDataStore::GetEntryDict(const std::string& query) {
-  base::Value* assoc_dict = GetAssociationDict();
-
-  base::Value* entry_dict =
-      assoc_dict->FindKeyOfType(query, base::Value::Type::DICTIONARY);
-  if (!entry_dict) {
-    // Creates one if none exists.
-    entry_dict =
-        assoc_dict->SetKey(query, base::Value(base::Value::Type::DICTIONARY));
-  }
-
-  return entry_dict;
+base::Value& HistoryDataStore::GetEntryDict(const std::string& query) {
+  return GetAssociationDict().FindOrCreateKeyOfType(
+      query, base::Value::Type::DICTIONARY);
 }
 
 void HistoryDataStore::OnDictionaryLoadedCallback(

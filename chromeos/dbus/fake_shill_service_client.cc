@@ -388,9 +388,7 @@ bool FakeShillServiceClient::SetServiceProperty(const std::string& service_path,
     std::string key = property;
     if (base::StartsWith(property, "Provider.", case_sensitive))
       key = property.substr(strlen("Provider."));
-    base::Value* provider = new_properties.SetKey(
-        shill::kProviderProperty, base::Value(base::Value::Type::DICTIONARY));
-    provider->SetKey(key, value.Clone());
+    new_properties.SetPath({shill::kProviderProperty, key}, value.Clone());
     changed_property = shill::kProviderProperty;
   } else if (value.is_dict()) {
     const base::DictionaryValue* new_dict = NULL;

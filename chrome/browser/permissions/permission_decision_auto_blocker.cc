@@ -71,14 +71,10 @@ std::unique_ptr<base::DictionaryValue> GetOriginDict(
   return dict;
 }
 
-base::Value* GetOrCreatePermissionDict(base::Value* origin_dict,
+base::Value& GetOrCreatePermissionDict(base::Value* origin_dict,
                                        const std::string& permission) {
-  base::Value* permission_dict =
-      origin_dict->FindKeyOfType(permission, base::Value::Type::DICTIONARY);
-  if (permission_dict)
-    return permission_dict;
-  return origin_dict->SetKey(permission,
-                             base::Value(base::Value::Type::DICTIONARY));
+  return origin_dict->FindOrCreateKeyOfType(permission,
+                                            base::Value::Type::DICTIONARY);
 }
 
 int RecordActionInWebsiteSettings(const GURL& url,
@@ -89,13 +85,13 @@ int RecordActionInWebsiteSettings(const GURL& url,
       HostContentSettingsMapFactory::GetForProfile(profile);
   std::unique_ptr<base::DictionaryValue> dict = GetOriginDict(map, url);
 
-  base::Value* permission_dict = GetOrCreatePermissionDict(
+  base::Value& permission_dict = GetOrCreatePermissionDict(
       dict.get(), PermissionUtil::GetPermissionString(permission));
 
-  base::Value* value =
-      permission_dict->FindKeyOfType(key, base::Value::Type::INTEGER);
-  int current_count = value ? value->GetInt() : 0;
-  permission_dict->SetKey(key, base::Value(++current_count));
+  int current_count =
+      permission_dict.FindOrCreateKeyOfType(key, base::Value::Type::INTEGER)
+          .GetInt();
+  permission_dict.SetKey(key, base::Value(++current_count));
 
   map->SetWebsiteSettingDefaultScope(
       url, GURL(), CONTENT_SETTINGS_TYPE_PERMISSION_AUTOBLOCKER_DATA,
@@ -111,21 +107,21 @@ int GetActionCount(const GURL& url,
   HostContentSettingsMap* map =
       HostContentSettingsMapFactory::GetForProfile(profile);
   std::unique_ptr<base::DictionaryValue> dict = GetOriginDict(map, url);
-  base::Value* permission_dict = GetOrCreatePermissionDict(
+  const base::Value& permission_dict = GetOrCreatePermissionDict(
       dict.get(), PermissionUtil::GetPermissionString(permission));
 
-  base::Value* value =
-      permission_dict->FindKeyOfType(key, base::Value::Type::INTEGER);
+  const base::Value* value =
+      permission_dict.FindKeyOfType(key, base::Value::Type::INTEGER);
   return value ? value->GetInt() : 0;
 }
 
-bool IsUnderEmbargo(base::Value* permission_dict,
+bool IsUnderEmbargo(const base::Value& permission_dict,
                     const base::Feature& feature,
                     const char* key,
                     base::Time current_time,
                     base::TimeDelta offset) {
-  base::Value* found =
-      permission_dict->FindKeyOfType(key, base::Value::Type::DOUBLE);
+  const base::Value* found =
+      permission_dict.FindKeyOfType(key, base::Value::Type::DOUBLE);
   if (found && base::FeatureList::IsEnabled(feature) &&
       current_time <
           base::Time::FromInternalValue(found->GetDouble()) + offset) {
@@ -218,7 +214,7 @@ PermissionResult PermissionDecisionAutoBlocker::GetEmbargoResult(
   DCHECK(settings_map);
   std::unique_ptr<base::DictionaryValue> dict =
       GetOriginDict(settings_map, request_origin);
-  base::Value* permission_dict = GetOrCreatePermissionDict(
+  const base::Value& permission_dict = GetOrCreatePermissionDict(
       dict.get(), PermissionUtil::GetPermissionString(permission));
 
   if (IsUnderEmbargo(permission_dict, features::kPermissionsBlacklist,
@@ -379,16 +375,16 @@ void PermissionDecisionAutoBlocker::RemoveEmbargoByUrl(
   HostContentSettingsMap* map =
       HostContentSettingsMapFactory::GetForProfile(profile_);
   std::unique_ptr<base::DictionaryValue> dict = GetOriginDict(map, url);
-  base::Value* permission_dict = GetOrCreatePermissionDict(
+  base::Value& permission_dict = GetOrCreatePermissionDict(
       dict.get(), PermissionUtil::GetPermissionString(permission));
 
   // Deleting non-existent entries will return a false value. Since it should be
   // impossible for a permission to have been embargoed for two different
   // reasons at the same time, check that exactly one deletion was successful.
   const bool dismissal_key_deleted =
-      permission_dict->RemoveKey(kPermissionDismissalEmbargoKey);
+      permission_dict.RemoveKey(kPermissionDismissalEmbargoKey);
   const bool blacklist_key_deleted =
-      permission_dict->RemoveKey(kPermissionBlacklistEmbargoKey);
+      permission_dict.RemoveKey(kPermissionBlacklistEmbargoKey);
   DCHECK(dismissal_key_deleted != blacklist_key_deleted);
 
   map->SetWebsiteSettingDefaultScope(
@@ -452,9 +448,9 @@ void PermissionDecisionAutoBlocker::PlaceUnderEmbargo(
       HostContentSettingsMapFactory::GetForProfile(profile_);
   std::unique_ptr<base::DictionaryValue> dict =
       GetOriginDict(map, request_origin);
-  base::Value* permission_dict = GetOrCreatePermissionDict(
+  base::Value& permission_dict = GetOrCreatePermissionDict(
       dict.get(), PermissionUtil::GetPermissionString(permission));
-  permission_dict->SetKey(
+  permission_dict.SetKey(
       key, base::Value(static_cast<double>(clock_->Now().ToInternalValue())));
   map->SetWebsiteSettingDefaultScope(
       request_origin, GURL(), CONTENT_SETTINGS_TYPE_PERMISSION_AUTOBLOCKER_DATA,

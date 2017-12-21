@@ -455,13 +455,9 @@ void FakeShillManagerClient::SetTechnologyInitializing(const std::string& type,
 void FakeShillManagerClient::AddGeoNetwork(
     const std::string& technology,
     const base::DictionaryValue& network) {
-  base::Value* list_value =
-      stub_geo_networks_.FindKeyOfType(technology, base::Value::Type::LIST);
-  if (!list_value) {
-    list_value = stub_geo_networks_.SetKey(
-        technology, base::Value(base::Value::Type::LIST));
-  }
-  list_value->GetList().push_back(network.Clone());
+  stub_geo_networks_.FindOrCreateKeyOfType(technology, base::Value::Type::LIST)
+      .GetList()
+      .push_back(network.Clone());
 }
 
 void FakeShillManagerClient::AddProfile(const std::string& profile_path) {
@@ -985,13 +981,8 @@ void FakeShillManagerClient::NotifyObserversPropertyChanged(
 
 base::ListValue* FakeShillManagerClient::GetListProperty(
     const std::string& property) {
-  base::Value* list_property =
-      stub_properties_.FindKeyOfType(property, base::Value::Type::LIST);
-  if (!list_property) {
-    list_property =
-        stub_properties_.SetKey(property, base::Value(base::Value::Type::LIST));
-  }
-  return static_cast<base::ListValue*>(list_property);
+  return static_cast<base::ListValue*>(&stub_properties_.FindOrCreateKeyOfType(
+      property, base::Value::Type::LIST));
 }
 
 bool FakeShillManagerClient::TechnologyEnabled(const std::string& type) const {

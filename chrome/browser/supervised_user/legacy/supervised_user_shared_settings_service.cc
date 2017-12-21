@@ -41,11 +41,8 @@ namespace {
 const char kAcknowledged[] = "acknowledged";
 const char kValue[] = "value";
 
-Value* FindOrCreateDictionary(Value* parent, const std::string& key) {
-  Value* dict = parent->FindKeyOfType(key, base::Value::Type::DICTIONARY);
-  if (dict)
-    return dict;
-  return parent->SetKey(key, base::Value(base::Value::Type::DICTIONARY));
+Value& FindOrCreateDictionary(Value* parent, const std::string& key) {
+  return parent->FindOrCreateKeyOfType(key, base::Value::Type::DICTIONARY);
 }
 
 class ScopedSupervisedUserSharedSettingsUpdate {
@@ -60,7 +57,7 @@ class ScopedSupervisedUserSharedSettingsUpdate {
     DCHECK(id.empty() || id == su_id);
   }
 
-  Value* Get() { return FindOrCreateDictionary(update_.Get(), su_id_); }
+  Value* Get() { return &FindOrCreateDictionary(update_.Get(), su_id_); }
 
  private:
   DictionaryPrefUpdate update_;
@@ -104,9 +101,10 @@ void SupervisedUserSharedSettingsService::SetValueInternal(
   Value* update_dict = update.Get();
 
   Value* dict = update_dict->FindKeyOfType(key, base::Value::Type::DICTIONARY);
-  bool has_key = static_cast<bool>(dict);
+  const bool has_key = static_cast<bool>(dict);
   if (!has_key) {
-    dict = update_dict->SetKey(key, base::Value(base::Value::Type::DICTIONARY));
+    dict =
+        &update_dict->SetKey(key, base::Value(base::Value::Type::DICTIONARY));
   }
   dict->SetKey(kValue, value.Clone());
   dict->SetKey(kAcknowledged, base::Value(acknowledged));
@@ -224,14 +222,14 @@ SupervisedUserSharedSettingsService::MergeDataAndStartSyncing(
     const std::string& su_id = supervised_user_shared_setting.mu_id();
     ScopedSupervisedUserSharedSettingsUpdate update(prefs_, su_id);
     const std::string& key = supervised_user_shared_setting.key();
-    Value* dict = FindOrCreateDictionary(update.Get(), key);
-    dict->SetKey(kValue, base::Value::FromUniquePtrValue(std::move(value)));
+    Value& dict = FindOrCreateDictionary(update.Get(), key);
+    dict.SetKey(kValue, base::Value::FromUniquePtrValue(std::move(value)));
 
     // Every setting we get from the server should have the acknowledged flag
     // set.
     DCHECK(supervised_user_shared_setting.acknowledged());
-    dict->SetKey(kAcknowledged,
-                 base::Value(supervised_user_shared_setting.acknowledged()));
+    dict.SetKey(kAcknowledged,
+                base::Value(supervised_user_shared_setting.acknowledged()));
     callbacks_.Notify(su_id, key);
 
     if (pref_seen_keys.find(su_id) == pref_seen_keys.end())
@@ -336,7 +334,7 @@ syncer::SyncError SupervisedUserSharedSettingsService::ProcessSyncChanges(
         } else {
           // Otherwise, it should be an add action.
           DCHECK_EQ(SyncChange::ACTION_ADD, sync_change.change_type());
-          dict = update_dict->SetKey(
+          dict = &update_dict->SetKey(
               key, base::Value(base::Value::Type::DICTIONARY));
         }
         dict->SetKey(kValue,

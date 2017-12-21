@@ -437,12 +437,10 @@ void TranslateONCHierarchy(const OncValueSignature& signature,
   const std::vector<std::string> path =
       GetPathToNestedShillDictionary(signature);
   const std::vector<base::StringPiece> path_pieces(path.begin(), path.end());
-  base::Value* target_shill_dictionary = shill_dictionary->FindPathOfType(
-      path_pieces, base::Value::Type::DICTIONARY);
-  if (!target_shill_dictionary) {
-    target_shill_dictionary = shill_dictionary->SetPath(
-        path_pieces, base::Value(base::Value::Type::DICTIONARY));
-  }
+  base::Value* target_shill_dictionary =
+      path_pieces.empty() ? shill_dictionary
+                          : &shill_dictionary->FindOrCreatePathOfType(
+                                path_pieces, base::Value::Type::DICTIONARY);
 
   // Translates fields of |onc_object| and writes them to
   // |target_shill_dictionary_| nested in |shill_dictionary|.

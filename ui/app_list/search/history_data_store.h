@@ -64,10 +64,10 @@ class APP_LIST_EXPORT HistoryDataStore
   void Init(base::DictionaryValue* cached_dict);
 
   // Gets the dictionary for "associations" key.
-  base::Value* GetAssociationDict();
+  base::Value& GetAssociationDict();
 
   // Gets entry dictionary for given |query|. Creates one if necessary.
-  base::Value* GetEntryDict(const std::string& query);
+  base::Value& GetEntryDict(const std::string& query);
 
   void OnDictionaryLoadedCallback(OnLoadedCallback callback,
                                   std::unique_ptr<base::DictionaryValue> dict);

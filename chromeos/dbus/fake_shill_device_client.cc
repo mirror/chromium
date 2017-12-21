@@ -473,21 +473,17 @@ void FakeShillDeviceClient::AddCellularFoundNetwork(
   }
 
   // Add a new scan result entry
-  base::Value* scan_results =
-      device_properties->FindKey(shill::kFoundNetworksProperty);
-  if (!scan_results) {
-    scan_results = device_properties->SetKey(shill::kFoundNetworksProperty,
-                                             base::ListValue());
-  }
+  base::Value& scan_results = device_properties->FindOrCreateKeyOfType(
+      shill::kFoundNetworksProperty, base::Value::Type::LIST);
   base::DictionaryValue new_result;
-  int idx = static_cast<int>(scan_results->GetList().size());
+  int idx = static_cast<int>(scan_results.GetList().size());
   new_result.SetKey(shill::kNetworkIdProperty,
                     base::Value(base::StringPrintf("network%d", idx)));
   new_result.SetKey(shill::kLongNameProperty,
                     base::Value(base::StringPrintf("Network %d", idx)));
   new_result.SetKey(shill::kTechnologyProperty, base::Value("GSM"));
   new_result.SetKey(shill::kStatusProperty, base::Value("available"));
-  scan_results->GetList().push_back(std::move(new_result));
+  scan_results.GetList().push_back(std::move(new_result));
   base::ThreadTaskRunnerHandle::Get()->PostTask(
       FROM_HERE,
       base::Bind(&FakeShillDeviceClient::NotifyObserversPropertyChanged,
@@ -522,21 +518,20 @@ void FakeShillDeviceClient::SetSimLockStatus(const std::string& device_path,
                                              const SimLockStatus& status) {
   base::Value* device_properties =
       stub_devices_.FindKeyOfType(device_path, base::Value::Type::DICTIONARY);
-
   if (!device_properties) {
-    NOTREACHED() << "Device not found: " << device_path;
+    LOG(ERROR) << "Device not found: " << device_path;
     return;
   }
 
-  base::Value* simlock_dict =
+  base::Value& simlock_dict =
       device_properties->SetKey(shill::kSIMLockStatusProperty,
                                 base::Value(base::Value::Type::DICTIONARY));
 
-  simlock_dict->SetKey(shill::kSIMLockTypeProperty, base::Value(status.type));
-  simlock_dict->SetKey(shill::kSIMLockRetriesLeftProperty,
-                       base::Value(status.retries_left));
-  simlock_dict->SetKey(shill::kSIMLockEnabledProperty,
-                       base::Value(status.lock_enabled));
+  simlock_dict.SetKey(shill::kSIMLockTypeProperty, base::Value(status.type));
+  simlock_dict.SetKey(shill::kSIMLockRetriesLeftProperty,
+                      base::Value(status.retries_left));
+  simlock_dict.SetKey(shill::kSIMLockEnabledProperty,
+                      base::Value(status.lock_enabled));
   NotifyObserversPropertyChanged(dbus::ObjectPath(device_path),
                                  shill::kSIMLockStatusProperty);
 }
@@ -640,12 +635,8 @@ void FakeShillDeviceClient::NotifyObserversPropertyChanged(
 
 base::Value* FakeShillDeviceClient::GetDeviceProperties(
     const std::string& device_path) {
-  base::Value* properties =
-      stub_devices_.FindKeyOfType(device_path, base::Value::Type::DICTIONARY);
-  if (properties)
-    return properties;
-  return stub_devices_.SetKey(device_path,
-                              base::Value(base::Value::Type::DICTIONARY));
+  return &stub_devices_.FindOrCreateKeyOfType(device_path,
+                                              base::Value::Type::DICTIONARY);
 }
 
 FakeShillDeviceClient::PropertyObserverList&
