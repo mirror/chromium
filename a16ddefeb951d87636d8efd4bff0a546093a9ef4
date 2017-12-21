@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5706f04d_f344351d",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-12-21T12:06:27Z",
+      "side": 0,
+      "message": "|document_url_| does not need to be the url stripped off {username,password,reference} fields, we can just save the original url (including {username,password,reference}) here, so that later we can get this |document_url_| to set Client.url.",
+      "range": {
+        "startLine": 318,
+        "startChar": 2,
+        "endLine": 318,
+        "endChar": 25
+      },
+      "revId": "a16ddefeb951d87636d8efd4bff0a546093a9ef4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
