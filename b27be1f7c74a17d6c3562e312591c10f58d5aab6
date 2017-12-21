@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "70ad133e_38ac5500",
+        "filename": "mojo/public/cpp/system/string_data_pipe_producer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-12-21T17:33:59Z",
+      "side": 1,
+      "message": "nit, optional: Maybe it is a little more clear for readers if the flag talks about the user\u0027s responsibility instead, for example,\nSTRING_STAYS_VALID_UNTIL_COMPLETION\nSTRING_MAY_BE_INVALIDATED_BEFORE_COMPLETION",
+      "revId": "b27be1f7c74a17d6c3562e312591c10f58d5aab6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1aea5153_622589d3",
+        "filename": "mojo/public/cpp/system/string_data_pipe_producer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-12-21T17:33:59Z",
+      "side": 1,
+      "message": "holds ?",
+      "range": {
+        "startLine": 54,
+        "startChar": 30,
+        "endLine": 54,
+        "endChar": 42
+      },
+      "revId": "b27be1f7c74a17d6c3562e312591c10f58d5aab6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
