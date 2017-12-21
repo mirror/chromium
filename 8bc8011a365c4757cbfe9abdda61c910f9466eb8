@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e133d560_33f6ab53",
+        "filename": "chrome/browser/resources/chromeos/select_to_speak/chromevox_shim.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-21T16:09:07Z",
+      "side": 1,
+      "message": "Unless I\u0027m misunderstanding how it was used, I think\nStateType.VISITED is correct and StateType.visited is not.\nIt\u0027s confusing because StateType.VISITED \u003d\u003d \"visited\".\n\nnode.state.visited is also correct, it works because it\u0027s the same as node.state[\"visited\"], which is the same as node.state[StateType.VISITED].\n\nCould you fix the offending line of code rather than fixing it in the shim?\nIt\u0027s possible you uncovered a bug.",
+      "revId": "8bc8011a365c4757cbfe9abdda61c910f9466eb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "824725db_062724d7",
+        "filename": "chrome/browser/resources/chromeos/select_to_speak/manifest.json.jinja2",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-21T16:09:07Z",
+      "side": 1,
+      "message": "sort?",
+      "revId": "8bc8011a365c4757cbfe9abdda61c910f9466eb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
