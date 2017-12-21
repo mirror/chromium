@@ -69,6 +69,24 @@
       "revId": "efe41d808a19ec2f1dc4ed73d10812b0da1252a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6adadaaa_1cc6387f",
+        "filename": "ash/wm/overview/window_selector.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-12-21T21:09:54Z",
+      "side": 1,
+      "message": "it\u0027s possible to create a window in overview mode. (could be app or using javascript) Looks like it exits the overview and activate new one, so everything looks ok.",
+      "parentUuid": "554f15c4_bc56c833",
+      "revId": "efe41d808a19ec2f1dc4ed73d10812b0da1252a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
