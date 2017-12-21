@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "66d1f6df_762d314a",
+        "filename": "chrome/browser/policy/policy_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 879,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-12-21T02:18:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a4169f2_e81a39e1",
+      "revId": "1c4df5a273adf8172aae83642597ed1f3b3ec709",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d14a20ba_e3b6bd84",
         "filename": "chrome/browser/policy/policy_browsertest.cc",
         "patchSetId": 3
@@ -39,6 +57,30 @@
       "revId": "1c4df5a273adf8172aae83642597ed1f3b3ec709",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ef016d3_4ccef403",
+        "filename": "chrome/browser/policy/policy_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 888,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-12-21T02:18:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d14a20ba_e3b6bd84",
+      "range": {
+        "startLine": 888,
+        "startChar": 8,
+        "endLine": 888,
+        "endChar": 16
+      },
+      "revId": "1c4df5a273adf8172aae83642597ed1f3b3ec709",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "6d64067d_c85637de",
+        "filename": "chrome/browser/ssl/captive_portal_blocking_page_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-12-21T02:18:35Z",
+      "side": 1,
+      "message": "Done. PROCEED here means \"proceed to fail the request as you would have done if this throttle didn\u0027t exist\". In the non-committed interstitials case, we use the throttle to trigger creating the blocking page, but we don\u0027t need to use the throttle return value to show it as we do in the committed interstitials case (line 166) because we just show the interstitial directly as an overlay by calling Show().",
+      "parentUuid": "c745bf6b_73217490",
+      "range": {
+        "startLine": 176,
+        "startChar": 17,
+        "endLine": 176,
+        "endChar": 0
+      },
+      "revId": "1c4df5a273adf8172aae83642597ed1f3b3ec709",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4e9a5723_c67cb11c",
         "filename": "chrome/browser/ssl/captive_portal_blocking_page_browsertest.cc",
         "patchSetId": 3
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "b1ed1367_de21c829",
+        "filename": "chrome/browser/ssl/captive_portal_blocking_page_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-12-21T02:18:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4e9a5723_c67cb11c",
+      "range": {
+        "startLine": 328,
+        "startChar": 16,
+        "endLine": 328,
+        "endChar": 17
+      },
+      "revId": "1c4df5a273adf8172aae83642597ed1f3b3ec709",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b06211c9_4534f26a",
         "filename": "chrome/browser/ssl/security_state_tab_helper_browsertest.cc",
         "patchSetId": 3
@@ -102,6 +192,24 @@
       "revId": "1c4df5a273adf8172aae83642597ed1f3b3ec709",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39fc6915_b836aae7",
+        "filename": "chrome/browser/ssl/security_state_tab_helper_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-12-21T02:18:35Z",
+      "side": 1,
+      "message": "I don\u0027t think it\u0027s worth it because they will get simplified when we launch committed interstitials and remove the old code path:\n- AreCommittedInterstitialsEnabled() will no longer be needed\n- WaitForInterstitial will be reduced to two lines (107-108)\n- The committed interstitials branch of IsShowingInterstitial() could be turned into a static helper testing method on SSLErrorTabHelper.",
+      "parentUuid": "b06211c9_4534f26a",
+      "revId": "1c4df5a273adf8172aae83642597ed1f3b3ec709",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
