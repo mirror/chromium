@@ -181,6 +181,7 @@
 #include "components/variations/variations_associated_data.h"
 #include "components/variations/variations_switches.h"
 #include "components/version_info/version_info.h"
+#include "components/viz/common/surfaces/frame_sink_id.h"
 #include "content/public/browser/browser_child_process_host.h"
 #include "content/public/browser/browser_main_parts.h"
 #include "content/public/browser/browser_ppapi_host.h"
@@ -3807,6 +3808,23 @@ void ChromeContentBrowserClient::CreateUsbChooserService(
   UsbTabHelper* tab_helper =
       UsbTabHelper::GetOrCreateForWebContents(web_contents);
   tab_helper->CreateChooserService(render_frame_host, std::move(request));
+}
+
+void ChromeContentBrowserClient::OnPictureInPictureStarted(
+    content::RenderFrameHost* frame_host,
+    viz::FrameSinkId frame_sink_id,
+    uint32_t parent_id,
+    base::UnguessableToken nonce) {
+  LOG(ERROR) << "OnPictureInPictureStarted";
+  // 	  WebContents* web_contents =
+  // WebContents::FromRenderFrameHost(frame_host);
+
+  // pip_window_controller_.reset(
+  //     PictureInPictureWindowController::GetOrCreateForWebContents(
+  //         web_contents));
+  // pip_window_controller_->Init();
+  // pip_window_controller_->EmbedSurface(frame_sink_id, parent_id, nonce);
+  // pip_window_controller_->Show();
 }
 
 // Static; handles rewriting Web UI URLs.

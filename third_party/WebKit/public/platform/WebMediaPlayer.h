@@ -134,6 +134,7 @@ class WebMediaPlayer {
   virtual void SetPreload(Preload) {}
   virtual WebTimeRanges Buffered() const = 0;
   virtual WebTimeRanges Seekable() const = 0;
+  virtual void StartPictureInPicture() {}
 
   // Attempts to switch the audio output device.
   // Implementations of SetSinkId take ownership of the WebSetSinkCallbacks
