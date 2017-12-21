@@ -1,0 +1,293 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b322b966_fda5c05b",
+        "filename": "build/android/pylib/local/device/local_device_instrumentation_test_run.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 806,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-12-21T06:49:09Z",
+      "side": 1,
+      "message": "This has some interesting and perhaps unintentional effects on the result_details.",
+      "revId": "14c0443799b95060bea87464482df38cef8ecd54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1659d5c3_c5e6f3e0",
+        "filename": "build/android/rebaseline_render_tests.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-12-21T06:49:09Z",
+      "side": 1,
+      "message": "Top-level //build/android probably isn\u0027t the best place for this, though where it belongs is partially a function of who or what will be calling it.",
+      "revId": "14c0443799b95060bea87464482df38cef8ecd54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5feef4af_d0cd1292",
+        "filename": "build/android/rebaseline_render_tests.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-12-21T06:49:09Z",
+      "side": 1,
+      "message": "optparse is deprecated; prefer argparse instead.",
+      "revId": "14c0443799b95060bea87464482df38cef8ecd54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f5c3c22_d8a49881",
+        "filename": "build/android/rebaseline_render_tests.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-12-21T06:49:09Z",
+      "side": 1,
+      "message": "Adding dependencies into webkitpy from build/android/ scares me a bit.\n\nThis is very interesting, though, and gets into some territory that I\u0027m less familiar with and also an area that +dpranke and I have been talking about lately regarding a home for generic python stuff in chromium. Dirk, I\u0027m curious about your thoughts on the best course of action here.\n\nAlso, nit: import modules rather than functions. It can otherwise be difficult to tell while scanning where something is.",
+      "revId": "14c0443799b95060bea87464482df38cef8ecd54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d96cdb8c_506d9475",
+        "filename": "build/android/rebaseline_render_tests.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-12-21T06:49:09Z",
+      "side": 1,
+      "message": "nit: trailing whitespace",
+      "revId": "14c0443799b95060bea87464482df38cef8ecd54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ad8e577_33cb1b4b",
+        "filename": "build/android/rebaseline_render_tests.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-12-21T06:49:09Z",
+      "side": 1,
+      "message": "https://codesearch.chromium.org/chromium/src/build/android/pylib/utils/google_storage_helper.py ?",
+      "revId": "14c0443799b95060bea87464482df38cef8ecd54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e935bae_c3dad84d",
+        "filename": "build/android/rebaseline_render_tests.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-12-21T06:49:09Z",
+      "side": 1,
+      "message": "re indentation: New scopes should be indented two spaces. Continuation lines should be indented four spaces.",
+      "revId": "14c0443799b95060bea87464482df38cef8ecd54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b8c943c_92224a3b",
+        "filename": "build/android/rebaseline_render_tests.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-12-21T06:49:09Z",
+      "side": 1,
+      "message": "nit: 2 blank lines between classes \u0026 methods at module scope.",
+      "revId": "14c0443799b95060bea87464482df38cef8ecd54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0f10541_aba5bdd2",
+        "filename": "build/android/rebaseline_render_tests.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-12-21T06:49:09Z",
+      "side": 1,
+      "message": "nit: Throughout this, docstring summary lines should be exactly one line, with a blank line separating it from a lengthier description. Here, maybe something like...\n\n  \"\"\"Construct a command to call swarming.\n\n  The command will be returned as a list suitable for passing to subprocess.call or\n  subprocess.check_call.\n  \"\"\"",
+      "revId": "14c0443799b95060bea87464482df38cef8ecd54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d620e1a_32723fa2",
+        "filename": "build/android/rebaseline_render_tests.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-12-21T06:49:09Z",
+      "side": 1,
+      "message": "Hrm, I thought that pylint would complain about spaces around \u003d within argument lists...",
+      "revId": "14c0443799b95060bea87464482df38cef8ecd54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea648b9e_42ea3323",
+        "filename": "build/android/rebaseline_render_tests.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-12-21T06:49:09Z",
+      "side": 1,
+      "message": "Having a trailing argument here, especially given the indentation level, is a bit non-intuitive. Maybe something like...\n\n  return (\n      subprocess.Popen(\n          gen_swarming_command(\n              \u0027collect\u0027,\n              [\u0027--task-output-dir\u003d%s\u0027 % dest_dir, \u0027--task-output-stdout\u003dnone\u0027, task_id])),\n      dest_dir\n  )\n\nAlternatively, you could consider multiple statements here.",
+      "revId": "14c0443799b95060bea87464482df38cef8ecd54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6441f03f_1c78a079",
+        "filename": "build/android/rebaseline_render_tests.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-12-21T06:49:09Z",
+      "side": 1,
+      "message": "nit re indentation, to some extent throughout this CL. You should either:\n\n- Have contents or arguments on the first line \u0026 indent subsequent lines to the same depth, e.g.\n\n  pull_jobs \u003d [create_pull_job(...)\n               for task_id in task_ids]\n\n- Leave the first line blank \u0026 indent everything four spaces, e.g.\n\n  pull_jobs \u003d [\n      create_pull_job(...)\n      for task_id in task_ids\n  ]",
+      "revId": "14c0443799b95060bea87464482df38cef8ecd54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ac749f9_e4c0c843",
+        "filename": "build/android/rebaseline_render_tests.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-12-21T06:49:09Z",
+      "side": 1,
+      "message": "I\u0027m curious about your reasoning behind this. It looks reminiscent of Java\u0027s exception causes.",
+      "revId": "14c0443799b95060bea87464482df38cef8ecd54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57d6b9c3_07b174b5",
+        "filename": "build/android/rebaseline_render_tests.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-12-21T06:49:09Z",
+      "side": 1,
+      "message": "I imagine multiple results would support --gtest-repeat, as you\u0027ve kinda guessed, but I\u0027m not sure.",
+      "revId": "14c0443799b95060bea87464482df38cef8ecd54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ec6e447_a04a45bd",
+        "filename": "build/android/rebaseline_render_tests.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-12-21T06:49:09Z",
+      "side": 1,
+      "message": "nit: we usually create a main() function, w/ this block being simply:\n\n  if __name__ \u003d\u003d \u0027__main__\u0027:\n    sys.exit(main())\n\nor\n\n  if __name__ \u003d\u003d \u0027__main__\u0027:\n    sys.exit(main(sys.argv[1:]))",
+      "revId": "14c0443799b95060bea87464482df38cef8ecd54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5932351_4d5e0600",
+        "filename": "build/android/rebaseline_render_tests.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-12-21T06:49:09Z",
+      "side": 1,
+      "message": "You should try to propagate failures out via a non-zero exit code. As is, this will exit w/ a non-zero exit code if you raise an exception, but otherwise will exit w/ a zero, even if one of the subprocesses fails.",
+      "revId": "14c0443799b95060bea87464482df38cef8ecd54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86f78758_c92b767c",
+        "filename": "build/android/rebaseline_render_tests.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-12-21T06:49:09Z",
+      "side": 1,
+      "message": "Oh?",
+      "revId": "14c0443799b95060bea87464482df38cef8ecd54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
