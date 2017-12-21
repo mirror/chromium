@@ -63,6 +63,20 @@ message PageloadMetrics {
     LITE_PAGE = 2;
   }
 
+  // What type of crash occured on the page.
+  enum RendererCrashType {
+    // No renderer crash happend on the page.
+    NO_CRASH = 0;
+    // A crash occured on the page, but the type is unknown. This is reported
+    // for all non-Android crashes and Android crashes that did not have their
+    // crash dump analyzed within 5 seconds of the crash.
+    NOT_ANALYZED = 1;
+    // A crash where the renderer ran out of memory on the page.
+    ANDROID_FOREGROUND_OOM = 2;
+    // Any other Android crash where the dump was succesully analyzed.
+    OTHER_CRASH = 3;
+  }
+
   // The session key used to load the page.
   optional string session_key = 1;
   // The time at which the first request of the pageload was made, according to
@@ -114,4 +128,7 @@ message PageloadMetrics {
   // The name of the finch group for the data reduction proxy holdback
   // experiment. This can be an empty string if not included in a finch group.
   optional string holdback_group = 19;
+
+  // The RendererCrashType for the page load.
+  optional RendererCrashType renderer_crash_type = 20;
 }
