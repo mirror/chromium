@@ -16,6 +16,24 @@
       "revId": "3e196896df98234a14f8c0d5cd86a08f6a7af0e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfbad64f_4f8769e0",
+        "filename": "content/browser/browser_side_navigation_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 805,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-12-21T12:33:06Z",
+      "side": 1,
+      "message": "There is a bug at one point in the reload path. It appears that DevTools is using this path. Other than that, DevTools and this regression are not really connected. So I didn\u0027t write a DevTools test, but a navigation test.\n\nI will let you decide where to put this test if you think it should go elsewhere.",
+      "parentUuid": "8bc5a87f_f77a5a14",
+      "revId": "3e196896df98234a14f8c0d5cd86a08f6a7af0e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
