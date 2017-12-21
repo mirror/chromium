@@ -456,6 +456,8 @@ StoragePartitionImpl::StoragePartitionImpl(
 StoragePartitionImpl::~StoragePartitionImpl() {
   browser_context_ = nullptr;
 
+  url_loader_factory_getter_->ClearCachedStoragePartitionPointer();
+
   if (GetDatabaseTracker()) {
     GetDatabaseTracker()->task_runner()->PostTask(
         FROM_HERE, base::BindOnce(&storage::DatabaseTracker::Shutdown,
@@ -1064,6 +1066,8 @@ void StoragePartitionImpl::FlushNetworkInterfaceForTesting() {
   network_context_.FlushForTesting();
   if (url_loader_factory_for_browser_process_)
     url_loader_factory_for_browser_process_.FlushForTesting();
+  if (url_loader_factory_getter_)
+    url_loader_factory_getter_->FlushNetworkInterfaceOnIOThreadForTesting();
 }
 
 BrowserContext* StoragePartitionImpl::browser_context() const {
