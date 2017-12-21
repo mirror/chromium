@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "221365eb_4c4da1c7",
+        "filename": "chrome/browser/ui/ash/wallpaper_controller_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-12-21T03:26:36Z",
+      "side": 1,
+      "message": "optional nit: add this as an additional parameter of SetClientAndPaths to avoid having two IPC calls in Init(). Or, only send this if |IsDeviceWallpaperPolicyEnforced()| returns true, since the default value in WallpaperController is initialized with false.",
+      "revId": "9b2c59441fcca20d9ddb0a7498bfe5328c6df3f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
