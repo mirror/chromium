@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e74ed4af_471a3755",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/OfflinePagesDownloadManagerBridge.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-12-21T00:03:21Z",
+      "side": 1,
+      "message": "Added impl",
+      "parentUuid": "bba4b5d3_950192e4",
+      "revId": "3858184839ba70c5f474dec9a5a2ceda91e1a749",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "19c6c288_a34e4132",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/OfflinePagesDownloadManagerBridge.java",
         "patchSetId": 2
@@ -30,6 +48,30 @@
       "writtenOn": "2017-12-20T04:39:14Z",
       "side": 1,
       "message": "This is not needed on C++ side, as we\u0027ll never set it.\nOur goal is to provide a minimal working API and not copy Java API to C++, here.\n\nI\u0027d also drop showNotification, and frankly any other field that we provide a constant for.",
+      "range": {
+        "startLine": 30,
+        "startChar": 20,
+        "endLine": 30,
+        "endChar": 43
+      },
+      "revId": "3858184839ba70c5f474dec9a5a2ceda91e1a749",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d8d28e3_d6762e07",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/OfflinePagesDownloadManagerBridge.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-12-21T00:03:21Z",
+      "side": 1,
+      "message": "Done.  Also removed mimeType.",
+      "parentUuid": "19c6c288_a34e4132",
       "range": {
         "startLine": 30,
         "startChar": 20,
@@ -88,6 +130,54 @@
     },
     {
       "key": {
+        "uuid": "62b9c7fd_e8c0071f",
+        "filename": "chrome/browser/offline_pages/android/offline_pages_download_manager_bridge.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-12-21T00:03:21Z",
+      "side": 1,
+      "message": "Single is more common for sure.  However, if we do have more than one (as could happen in a reconciliation task), it would be nice to avoid multiple round trips. I think this is better left as is.",
+      "parentUuid": "f8ea109e_692a3985",
+      "range": {
+        "startLine": 63,
+        "startChar": 26,
+        "endLine": 63,
+        "endChar": 54
+      },
+      "revId": "3858184839ba70c5f474dec9a5a2ceda91e1a749",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d1ec2679_b56dc515",
+        "filename": "chrome/browser/offline_pages/android/offline_pages_download_manager_bridge.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-12-21T00:03:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "060ab83f_b6ff0b5b",
+      "range": {
+        "startLine": 63,
+        "startChar": 4,
+        "endLine": 63,
+        "endChar": 7
+      },
+      "revId": "3858184839ba70c5f474dec9a5a2ceda91e1a749",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "61d479f6_2d5a4e81",
         "filename": "chrome/browser/offline_pages/android/offline_pages_download_manager_bridge.cc",
         "patchSetId": 2
@@ -108,6 +198,30 @@
       "revId": "3858184839ba70c5f474dec9a5a2ceda91e1a749",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58150294_c74ff2a8",
+        "filename": "chrome/browser/offline_pages/android/offline_pages_download_manager_bridge.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-12-21T00:03:21Z",
+      "side": 1,
+      "message": "Done.\n\nI like the extra variable approach since it makes debugging easier without making the code any larger, but changed since you asked nicely.",
+      "parentUuid": "61d479f6_2d5a4e81",
+      "range": {
+        "startLine": 69,
+        "startChar": 7,
+        "endLine": 69,
+        "endChar": 18
+      },
+      "revId": "3858184839ba70c5f474dec9a5a2ceda91e1a749",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -134,6 +248,30 @@
     },
     {
       "key": {
+        "uuid": "3dbce7fc_927d05cf",
+        "filename": "chrome/browser/offline_pages/android/offline_pages_download_manager_bridge.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-12-21T00:03:21Z",
+      "side": 1,
+      "message": "I wasn\u0027t that worried about copying a std::string, since it only copies a pointer, but since you asked nicely, changed to const ref.",
+      "parentUuid": "9830973d_fa70745d",
+      "range": {
+        "startLine": 22,
+        "startChar": 40,
+        "endLine": 22,
+        "endChar": 46
+      },
+      "revId": "3858184839ba70c5f474dec9a5a2ceda91e1a749",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fe69d19d_46cfdf69",
         "filename": "chrome/browser/offline_pages/android/offline_pages_download_manager_bridge.h",
         "patchSetId": 2
@@ -157,6 +295,30 @@
     },
     {
       "key": {
+        "uuid": "76ca6f11_b71adb7d",
+        "filename": "chrome/browser/offline_pages/android/offline_pages_download_manager_bridge.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-12-21T00:03:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe69d19d_46cfdf69",
+      "range": {
+        "startLine": 30,
+        "startChar": 47,
+        "endLine": 30,
+        "endChar": 55
+      },
+      "revId": "3858184839ba70c5f474dec9a5a2ceda91e1a749",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c66515f2_63b83a82",
         "filename": "chrome/browser/offline_pages/android/offline_pages_download_manager_bridge.h",
         "patchSetId": 2
@@ -177,6 +339,30 @@
       "revId": "3858184839ba70c5f474dec9a5a2ceda91e1a749",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce770a82_727fe161",
+        "filename": "chrome/browser/offline_pages/android/offline_pages_download_manager_bridge.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-12-21T00:03:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c66515f2_63b83a82",
+      "range": {
+        "startLine": 35,
+        "startChar": 8,
+        "endLine": 35,
+        "endChar": 9
+      },
+      "revId": "3858184839ba70c5f474dec9a5a2ceda91e1a749",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
