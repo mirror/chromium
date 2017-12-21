@@ -1,0 +1,314 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4976ea8b_dc240acf",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/OfflinePagesDownloadManagerBridge.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-21T17:59:34Z",
+      "side": 1,
+      "message": "nit: Please use spaces consistently. I recommend a single space, BTW :)",
+      "range": {
+        "startLine": 19,
+        "startChar": 39,
+        "endLine": 19,
+        "endChar": 43
+      },
+      "revId": "9e657cd18d2b9088fb0231508cc187f1158778fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11c5fb2a_dce7d10e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/OfflinePagesDownloadManagerBridge.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-21T17:59:34Z",
+      "side": 1,
+      "message": "Single line:\n\n/** @return Whether DM is installed on the phone. */",
+      "range": {
+        "startLine": 25,
+        "startChar": 7,
+        "endLine": 26,
+        "endChar": 61
+      },
+      "revId": "9e657cd18d2b9088fb0231508cc187f1158778fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c29c996e_25bf96cc",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/OfflinePagesDownloadManagerBridge.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-21T17:59:34Z",
+      "side": 1,
+      "message": "This line of comment is not necessary.",
+      "range": {
+        "startLine": 30,
+        "startChar": 19,
+        "endLine": 30,
+        "endChar": 34
+      },
+      "revId": "9e657cd18d2b9088fb0231508cc187f1158778fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8952424_326d6289",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/OfflinePagesDownloadManagerBridge.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-21T17:59:34Z",
+      "side": 1,
+      "message": "please document parameters here.\n\nAlso mention which are not going to be picked up unless API is 24.",
+      "range": {
+        "startLine": 37,
+        "startChar": 24,
+        "endLine": 37,
+        "endChar": 44
+      },
+      "revId": "9e657cd18d2b9088fb0231508cc187f1158778fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c1a6f8a_df987856",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/OfflinePagesDownloadManagerBridge.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-21T17:59:34Z",
+      "side": 1,
+      "message": "Because this are not real variables, I think we could either make them static final in the class level, or do this:\n\nreturn callAddCompletedDownload(title, description, false /* isMediaScannerScannable */,\n    \"multipart/related\", path, length, false /* showNotification */);\n\nMime type can be directly inlined.\n\nI recommend doing that inside of the specific methods, this way this function is only acting as an API level dispatcher, serving exactly one purpose.",
+      "range": {
+        "startLine": 40,
+        "startChar": 8,
+        "endLine": 40,
+        "endChar": 47
+      },
+      "revId": "9e657cd18d2b9088fb0231508cc187f1158778fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "681b5768_505ee877",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/OfflinePagesDownloadManagerBridge.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-21T17:59:34Z",
+      "side": 1,
+      "message": "should be \"multipart/related\"",
+      "range": {
+        "startLine": 43,
+        "startChar": 27,
+        "endLine": 43,
+        "endChar": 37
+      },
+      "revId": "9e657cd18d2b9088fb0231508cc187f1158778fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b9c243d_d82e6191",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/OfflinePagesDownloadManagerBridge.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-21T17:59:34Z",
+      "side": 1,
+      "message": "Simply: before API level 24.\nDM was added in API 9",
+      "revId": "9e657cd18d2b9088fb0231508cc187f1158778fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a848aed_8efebcd6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/OfflinePagesDownloadManagerBridge.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-21T17:59:34Z",
+      "side": 1,
+      "message": "Let\u0027s drop the Nougat.",
+      "range": {
+        "startLine": 67,
+        "startChar": 48,
+        "endLine": 67,
+        "endChar": 54
+      },
+      "revId": "9e657cd18d2b9088fb0231508cc187f1158778fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5e63e80_8d516994",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/OfflinePagesDownloadManagerBridge.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-21T17:59:34Z",
+      "side": 1,
+      "message": "Document this method, and specifically return type.\n\nAlso, you refer to the ADM, but don\u0027t provide a link to it.",
+      "range": {
+        "startLine": 79,
+        "startChar": 19,
+        "endLine": 79,
+        "endChar": 22
+      },
+      "revId": "9e657cd18d2b9088fb0231508cc187f1158778fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cb54876_d71a2cf7",
+        "filename": "chrome/browser/offline_pages/android/offline_pages_download_manager_bridge.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-21T17:59:34Z",
+      "side": 1,
+      "message": "1. This actually fits in 80 lines I think.\n2. It also provides a documentation for a different class, please fix.",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 14
+      },
+      "revId": "9e657cd18d2b9088fb0231508cc187f1158778fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89888be1_6fa399b1",
+        "filename": "chrome/browser/offline_pages/android/offline_pages_download_manager_bridge.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-21T17:59:34Z",
+      "side": 1,
+      "message": "Documents what the method does first.",
+      "range": {
+        "startLine": 20,
+        "startChar": 5,
+        "endLine": 20,
+        "endChar": 12
+      },
+      "revId": "9e657cd18d2b9088fb0231508cc187f1158778fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e448192f_f0096139",
+        "filename": "chrome/browser/offline_pages/android/offline_pages_download_manager_bridge.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-21T17:59:34Z",
+      "side": 1,
+      "message": "int64_t",
+      "range": {
+        "startLine": 25,
+        "startChar": 35,
+        "endLine": 25,
+        "endChar": 39
+      },
+      "revId": "9e657cd18d2b9088fb0231508cc187f1158778fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c76437f9_af921abc",
+        "filename": "chrome/browser/offline_pages/android/offline_pages_download_manager_bridge.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-21T17:59:34Z",
+      "side": 1,
+      "message": "I see you are documenting the result here.",
+      "range": {
+        "startLine": 29,
+        "startChar": 2,
+        "endLine": 29,
+        "endChar": 41
+      },
+      "revId": "9e657cd18d2b9088fb0231508cc187f1158778fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc8bbbad_9a1747fc",
+        "filename": "chrome/browser/offline_pages/android/offline_pages_download_manager_bridge.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-21T17:59:34Z",
+      "side": 1,
+      "message": "Java returns int, for which I think C++ int is more appropriate than long. (There might be a one compiler someplace...)",
+      "revId": "9e657cd18d2b9088fb0231508cc187f1158778fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
