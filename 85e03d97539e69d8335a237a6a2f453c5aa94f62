@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "7d8fcee0_07a2f5ed",
+        "filename": "chrome/browser/resources/md_extensions/code_section.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-21T18:44:15Z",
+      "side": 1,
+      "message": "(I guess the join()s would actually be join(\u0027\\n\u0027), but you get the gist :))",
+      "parentUuid": "9bd263e6_f4ca4430",
+      "revId": "85e03d97539e69d8335a237a6a2f453c5aa94f62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "af2b7c5b_220fd84f",
         "filename": "chrome/browser/resources/md_extensions/code_section.js",
         "patchSetId": 13
