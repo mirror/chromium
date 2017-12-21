@@ -302,6 +302,7 @@ class CORE_EXPORT LocalFrame final : public Frame,
 
  private:
   friend class FrameNavigationDisabler;
+  friend class LocalFrameTest;
 
   LocalFrame(LocalFrameClient*,
              Page&,
@@ -319,6 +320,10 @@ class CORE_EXPORT LocalFrame final : public Frame,
   bool CanNavigateWithoutFramebusting(const Frame&, String& error_reason);
 
   void PropagateInertToChildFrames();
+
+  bool ShouldUseClientLoFiForRequest(
+      const ResourceRequest&,
+      WebURLRequest::PreviewsState frame_previews_state) const;
 
   std::unique_ptr<WebFrameScheduler> frame_scheduler_;
 
