@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fe6a8357_8b488dfc",
+        "filename": "third_party/WebKit/Source/core/frame/MHTMLTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-21T16:55:47Z",
+      "side": 1,
+      "message": "Nit: maybe this can just be while (true) { if (...) { ... continue; } break; }",
+      "revId": "a54c75645f01f50dbe278e55b268428b3fe8edc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ea685f2_a1f19ec3",
+        "filename": "third_party/WebKit/Source/core/frame/MHTMLTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-21T16:55:47Z",
+      "side": 1,
+      "message": "Nit: rather than escaping the end of the line here, maybe just rely on the compiler to concatenate adjacent string constants like lines 301-303?",
+      "revId": "a54c75645f01f50dbe278e55b268428b3fe8edc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
