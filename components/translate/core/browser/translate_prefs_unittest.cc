@@ -10,6 +10,7 @@
 #include <vector>
 
 #include "base/json/json_reader.h"
+#include "base/strings/string_split.h"
 #include "base/test/scoped_feature_list.h"
 #include "base/values.h"
 #include "build/build_config.h"
@@ -19,6 +20,9 @@
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/base/l10n/l10n_util.h"
+
+using base::test::ScopedFeatureList;
+using ::testing::ElementsAre;
 
 namespace {
 
@@ -1023,6 +1027,71 @@ TEST_F(TranslatePrefsTest, MoveLanguageDown) {
   translate_prefs_->RearrangeLanguage("en", TranslatePrefs::kDown,
                                       {"en", "es", "zh"});
   ExpectLanguagePrefs("fr,it,es,en,zh");
+}
+
+TEST_F(TranslatePrefsTest, TestLocalesForDisplayLanguage) {
+  // 1) Get the list of display languages.
+  const std::vector<std::string>& locales = l10n_util::GetAvailableLocales();
+  //   const int len = locales.size();
+  //   LOG(INFO) << "++++++ List of UI languages (" << len << ")";
+  //   for (const auto& i : locales) {
+  //     LOG(INFO) << i;
+  //   }
+  const std::unordered_set<std::string> locale_set(locales.begin(),
+                                                   locales.end());
+
+  // 2) Get the complete list of languages.
+  const std::string app_locale = "en-US";
+  std::vector<std::string> language_codes;
+  l10n_util::GetAcceptLanguagesForLocale(app_locale, &language_codes);
+  const std::unordered_set<std::string> language_set(language_codes.begin(),
+                                                     language_codes.end());
+  //   LOG(INFO) << "++++++ List of all languages:";
+  //   for (const auto& i : language_codes) {
+  //     LOG(INFO) << i;
+  //   }
+
+  std::string missing_ui = "UI language missing: ";
+  for (const auto& s : locale_set) {
+    if (language_set.count(s) == 0) {
+      missing_ui += s + ",";
+    }
+  }
+  //  LOG(INFO) << missing_ui;
+
+  // 3) For each language, check if it's in the UI set and count.
+  //    If not, look for the same base language.
+  //    If not found, log a warning.
+  int total = language_codes.size();
+  int ui = 0;
+  int base_lang = 0;
+  int not_found = 0;
+  std::string output;
+  std::string regional = "";
+  for (const auto& s : language_codes) {
+    std::vector<base::StringPiece> chunks = base::SplitStringPiece(
+        s, "-", base::TRIM_WHITESPACE, base::SPLIT_WANT_ALL);
+    if (locale_set.count(s) > 0) {
+      ++ui;
+      continue;
+    }
+    if (chunks.size() > 1) {
+      std::string base = chunks[0].as_string();
+      if (locale_set.count(base) > 0) {
+        ++base_lang;
+        regional += s + ",";
+        continue;
+      }
+    }
+    ++not_found;
+    output += s + ",";
+  }
+
+  LOG(INFO) << "Regional languages gained: " << regional;
+  LOG(INFO) << "Total: " << total << ", UI languages: " << ui
+            << ", Base languages: " << base_lang
+            << ", Not Found: " << not_found;
+  // LOG(WARNING) << "Locale not found: " << output;
 }
 
 }  // namespace translate

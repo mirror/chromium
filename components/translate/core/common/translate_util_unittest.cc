@@ -116,3 +116,124 @@ TEST_F(TranslateUtilTest, ContainsSameBaseLanguage) {
   list = {"en-US", "fr", "es-AR", "fr-FR"};
   EXPECT_EQ(true, translate::ContainsSameBaseLanguage(list, "fr-FR"));
 }
+
+TEST_F(TranslateUtilTest, GetActualUILocale) {
+  std::string output;
+
+  //---------------------------------------------------------------------------
+  // Languages that are enabled as display UI.
+  //---------------------------------------------------------------------------
+  bool is_ui = translate::GetActualUILocale("en-US", &output);
+  EXPECT_TRUE(is_ui);
+  EXPECT_EQ("en-US", output);
+
+  is_ui = translate::GetActualUILocale("it", &output);
+  EXPECT_TRUE(is_ui);
+  EXPECT_EQ("it", output);
+
+  is_ui = translate::GetActualUILocale("fr-FR", &output);
+  EXPECT_TRUE(is_ui);
+  EXPECT_EQ("fr-FR", output);
+
+  //---------------------------------------------------------------------------
+  // Languages that are converted to their fallback version.
+  //---------------------------------------------------------------------------
+
+  // All Latin American Spanish languages fall back to "es-419".
+  is_ui = translate::GetActualUILocale("es-AR", &output);
+  EXPECT_TRUE(is_ui);
+  EXPECT_EQ("es-419", output);
+  is_ui = translate::GetActualUILocale("es-CL", &output);
+  EXPECT_TRUE(is_ui);
+  EXPECT_EQ("es-419", output);
+  is_ui = translate::GetActualUILocale("es-CO", &output);
+  EXPECT_TRUE(is_ui);
+  EXPECT_EQ("es-419", output);
+  is_ui = translate::GetActualUILocale("es-CR", &output);
+  EXPECT_TRUE(is_ui);
+  EXPECT_EQ("es-419", output);
+  is_ui = translate::GetActualUILocale("es-HN", &output);
+  EXPECT_TRUE(is_ui);
+  EXPECT_EQ("es-419", output);
+  is_ui = translate::GetActualUILocale("es-MX", &output);
+  EXPECT_TRUE(is_ui);
+  EXPECT_EQ("es-419", output);
+  is_ui = translate::GetActualUILocale("es-PE", &output);
+  EXPECT_TRUE(is_ui);
+  EXPECT_EQ("es-419", output);
+  is_ui = translate::GetActualUILocale("es-US", &output);
+  EXPECT_TRUE(is_ui);
+  EXPECT_EQ("es-419", output);
+  is_ui = translate::GetActualUILocale("es-UY", &output);
+  EXPECT_TRUE(is_ui);
+  EXPECT_EQ("es-419", output);
+  is_ui = translate::GetActualUILocale("es-VE", &output);
+  EXPECT_TRUE(is_ui);
+  EXPECT_EQ("es-419", output);
+
+  // English falls back to US.
+  is_ui = translate::GetActualUILocale("en", &output);
+  EXPECT_TRUE(is_ui);
+  EXPECT_EQ("en-US", output);
+
+  // All other regional English languages fall back to UK.
+  is_ui = translate::GetActualUILocale("en-AU", &output);
+  EXPECT_TRUE(is_ui);
+  EXPECT_EQ("en-GB", output);
+  is_ui = translate::GetActualUILocale("en-CA", &output);
+  EXPECT_TRUE(is_ui);
+  EXPECT_EQ("en-GB", output);
+  is_ui = translate::GetActualUILocale("en-IN", &output);
+  EXPECT_TRUE(is_ui);
+  EXPECT_EQ("en-GB", output);
+  is_ui = translate::GetActualUILocale("en-NZ", &output);
+  EXPECT_TRUE(is_ui);
+  EXPECT_EQ("en-GB", output);
+  is_ui = translate::GetActualUILocale("en-ZA", &output);
+  EXPECT_TRUE(is_ui);
+  EXPECT_EQ("en-GB", output);
+
+  is_ui = translate::GetActualUILocale("pt", &output);
+  EXPECT_TRUE(is_ui);
+  EXPECT_EQ("pt-PT", output);
+
+  is_ui = translate::GetActualUILocale("it-CH", &output);
+  EXPECT_TRUE(is_ui);
+  EXPECT_EQ("it", output);
+
+  is_ui = translate::GetActualUILocale("nn", &output);
+  EXPECT_TRUE(is_ui);
+  EXPECT_EQ("nb", output);
+  is_ui = translate::GetActualUILocale("no", &output);
+  EXPECT_TRUE(is_ui);
+  EXPECT_EQ("nb", output);
+
+  //---------------------------------------------------------------------------
+  // Languages that have their base language is a UI language.
+  //---------------------------------------------------------------------------
+  is_ui = translate::GetActualUILocale("it-IT", &output);
+  EXPECT_TRUE(is_ui);
+  EXPECT_EQ("it", output);
+
+  is_ui = translate::GetActualUILocale("de-DE", &output);
+  EXPECT_TRUE(is_ui);
+  EXPECT_EQ("de", output);
+
+  //---------------------------------------------------------------------------
+  // Languages that cannot be used as display UI.
+  //---------------------------------------------------------------------------
+  is_ui = translate::GetActualUILocale("af", &output);  // Afrikaans
+  EXPECT_FALSE(is_ui);
+
+  is_ui = translate::GetActualUILocale("ga", &output);  // Irish
+  EXPECT_FALSE(is_ui);
+
+  is_ui = translate::GetActualUILocale("ky", &output);  // Kyrgyz
+  EXPECT_FALSE(is_ui);
+
+  is_ui = translate::GetActualUILocale("sd", &output);  // Sindhi
+  EXPECT_FALSE(is_ui);
+
+  is_ui = translate::GetActualUILocale("zu", &output);  // Zulu
+  EXPECT_FALSE(is_ui);
+}

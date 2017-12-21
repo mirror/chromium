@@ -111,6 +111,8 @@
 #include "components/signin/core/browser/signin_pref_names.h"
 #include "components/ssl_config/ssl_config_service_manager.h"
 #include "components/sync_preferences/pref_service_syncable.h"
+#include "components/translate/core/browser/translate_prefs.h"
+#include "components/translate/core/common/translate_util.h"
 #include "components/url_formatter/url_fixer.h"
 #include "components/user_prefs/user_prefs.h"
 #include "content/public/browser/browser_thread.h"
@@ -1161,6 +1163,12 @@ void ProfileImpl::ChangeAppLocale(
   if (local_state->IsManagedPreference(prefs::kApplicationLocale))
     return;
   std::string pref_locale = GetPrefs()->GetString(prefs::kApplicationLocale);
+  if (base::FeatureList::IsEnabled(translate::kImprovedLanguageSettings)) {
+    std::string actual_locale;
+    if (translate::GetActualUILocale(pref_locale, &actual_locale)) {
+      pref_locale = actual_locale;
+    }
+  }
   bool do_update_pref = true;
   switch (via) {
     case APP_LOCALE_CHANGED_VIA_SETTINGS:
