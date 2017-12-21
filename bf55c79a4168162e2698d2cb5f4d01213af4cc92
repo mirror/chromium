@@ -16,6 +16,24 @@
       "revId": "bf55c79a4168162e2698d2cb5f4d01213af4cc92",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37744228_16c49e96",
+        "filename": "tools/binary_size/libsupersize/testdata/Archive_Elf.golden",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002869
+      },
+      "writtenOn": "2017-12-21T16:51:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ec5b358c_3205434d",
+      "revId": "bf55c79a4168162e2698d2cb5f4d01213af4cc92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
