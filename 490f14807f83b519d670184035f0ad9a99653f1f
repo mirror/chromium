@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7ce14c70_66808aa5",
+        "filename": "components/autofill/ios/browser/autofill_agent_unittests.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1139250
+      },
+      "writtenOn": "2017-12-21T10:23:15Z",
+      "side": 1,
+      "message": "With this CL, should there ever be two fields with the same id?",
+      "revId": "490f14807f83b519d670184035f0ad9a99653f1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72462a77_ed0fbf75",
+        "filename": "components/autofill/ios/browser/fake_autofill_agent.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1139250
+      },
+      "writtenOn": "2017-12-21T10:23:15Z",
+      "side": 1,
+      "message": "You renamed the field in the comment, but not in the actual function (here and above)",
+      "range": {
+        "startLine": 27,
+        "startChar": 25,
+        "endLine": 27,
+        "endChar": 40
+      },
+      "revId": "490f14807f83b519d670184035f0ad9a99653f1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "890c7c87_1bac193a",
+        "filename": "components/autofill/ios/browser/fake_autofill_agent.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1139250
+      },
+      "writtenOn": "2017-12-21T10:23:15Z",
+      "side": 1,
+      "message": "Should the suggestions be by id rather than name to correspond to the \"real\" logic?",
+      "range": {
+        "startLine": 65,
+        "startChar": 7,
+        "endLine": 66,
+        "endChar": 75
+      },
+      "revId": "490f14807f83b519d670184035f0ad9a99653f1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
