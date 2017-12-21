@@ -17,6 +17,7 @@
 #include "modules/background_fetch/BackgroundFetchOptions.h"
 #include "modules/background_fetch/BackgroundFetchRegistration.h"
 #include "modules/fetch/Request.h"
+#include "modules/serviceworkers/ServiceWorkerNetworkUtils.h"
 #include "modules/serviceworkers/ServiceWorkerRegistration.h"
 #include "platform/bindings/ScriptState.h"
 #include "platform/bindings/V8ThrowException.h"
@@ -342,12 +343,14 @@ Vector<WebServiceWorkerRequest> BackgroundFetchManager::CreateWebRequestVector(
       }
 
       DCHECK(request);
-      request->PopulateWebServiceWorkerRequest(web_requests[i]);
+      ServiceWorkerNetworkUtils::PopulateWebServiceWorkerRequest(
+          *request, web_requests[i]);
     }
   } else if (requests.IsRequest()) {
     DCHECK(requests.GetAsRequest());
     web_requests.resize(1);
-    requests.GetAsRequest()->PopulateWebServiceWorkerRequest(web_requests[0]);
+    ServiceWorkerNetworkUtils::PopulateWebServiceWorkerRequest(
+        *requests.GetAsRequest(), web_requests[0]);
   } else if (requests.IsUSVString()) {
     Request* request = Request::Create(script_state, requests.GetAsUSVString(),
                                        exception_state);
@@ -356,7 +359,8 @@ Vector<WebServiceWorkerRequest> BackgroundFetchManager::CreateWebRequestVector(
 
     DCHECK(request);
     web_requests.resize(1);
-    request->PopulateWebServiceWorkerRequest(web_requests[0]);
+    ServiceWorkerNetworkUtils::PopulateWebServiceWorkerRequest(*request,
+                                                               web_requests[0]);
   } else {
     exception_state.ThrowTypeError(kNullRequestErrorMessage);
     return Vector<WebServiceWorkerRequest>();

@@ -46,6 +46,8 @@ blink_modules_sources("serviceworkers") {
     "ServiceWorkerGlobalScopeProxy.h",
     "ServiceWorkerInstalledScriptsManager.cpp",
     "ServiceWorkerInstalledScriptsManager.h",
+    "ServiceWorkerNetworkUtils.cpp",
+    "ServiceWorkerNetworkUtils.h",
     "ServiceWorkerRegistration.cpp",
     "ServiceWorkerRegistration.h",
     "ServiceWorkerScriptCachedMetadataHandler.cpp",

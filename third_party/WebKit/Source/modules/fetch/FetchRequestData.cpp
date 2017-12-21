@@ -6,7 +6,6 @@
 
 #include "core/dom/ExecutionContext.h"
 #include "core/loader/ThreadableLoader.h"
-#include "modules/fetch/BlobBytesConsumer.h"
 #include "modules/fetch/BodyStreamBuffer.h"
 #include "modules/fetch/BytesConsumer.h"
 #include "modules/fetch/FetchHeaderList.h"
@@ -15,47 +14,11 @@
 #include "platform/loader/fetch/ResourceRequest.h"
 #include "platform/network/http_names.h"
 #include "public/platform/WebURLRequest.h"
-#include "public/platform/modules/serviceworker/WebServiceWorkerRequest.h"
-#include "third_party/WebKit/Source/modules/fetch/FormDataBytesConsumer.h"
 
 namespace blink {
 
 FetchRequestData* FetchRequestData::Create() {
   return new FetchRequestData();
-}
-
-FetchRequestData* FetchRequestData::Create(
-    ScriptState* script_state,
-    const WebServiceWorkerRequest& web_request) {
-  FetchRequestData* request = FetchRequestData::Create();
-  request->url_ = web_request.Url();
-  request->method_ = web_request.Method();
-  for (HTTPHeaderMap::const_iterator it = web_request.Headers().begin();
-       it != web_request.Headers().end(); ++it)
-    request->header_list_->Append(it->key, it->value);
-  if (scoped_refptr<EncodedFormData> body = web_request.Body()) {
-    request->SetBuffer(new BodyStreamBuffer(
-        script_state,
-        new FormDataBytesConsumer(ExecutionContext::From(script_state),
-                                  std::move(body))));
-  } else if (web_request.GetBlobDataHandle()) {
-    request->SetBuffer(new BodyStreamBuffer(
-        script_state,
-        new BlobBytesConsumer(ExecutionContext::From(script_state),
-                              web_request.GetBlobDataHandle())));
-  }
-  request->SetContext(web_request.GetRequestContext());
-  request->SetReferrer(
-      Referrer(web_request.ReferrerUrl().GetString(),
-               static_cast<ReferrerPolicy>(web_request.GetReferrerPolicy())));
-  request->SetMode(web_request.Mode());
-  request->SetCredentials(web_request.CredentialsMode());
-  request->SetCacheMode(web_request.CacheMode());
-  request->SetRedirect(web_request.RedirectMode());
-  request->SetMIMEType(request->header_list_->ExtractMIMEType());
-  request->SetIntegrity(web_request.Integrity());
-  request->SetKeepalive(web_request.Keepalive());
-  return request;
 }
 
 FetchRequestData* FetchRequestData::CloneExceptBody() {

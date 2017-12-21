@@ -16,6 +16,7 @@
 #include "modules/cachestorage/CacheStorageError.h"
 #include "modules/fetch/Request.h"
 #include "modules/fetch/Response.h"
+#include "modules/serviceworkers/ServiceWorkerNetworkUtils.h"
 #include "platform/bindings/ScriptState.h"
 #include "platform/network/http_names.h"
 #include "public/platform/modules/cache_storage/cache_storage.mojom-blink.h"
@@ -302,7 +303,8 @@ ScriptPromise CacheStorage::MatchImpl(ScriptState* script_state,
                                       const Request* request,
                                       const CacheQueryOptions& options) {
   WebServiceWorkerRequest web_request;
-  request->PopulateWebServiceWorkerRequest(web_request);
+  ServiceWorkerNetworkUtils::PopulateWebServiceWorkerRequest(*request,
+                                                             web_request);
 
   ScriptPromiseResolver* resolver = ScriptPromiseResolver::Create(script_state);
   const ScriptPromise promise = resolver->Promise();
