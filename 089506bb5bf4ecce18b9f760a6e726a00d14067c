@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a4f0cace_ccefcc81",
+        "filename": "extensions/browser/content_hash_fetcher.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-21T18:26:18Z",
+      "side": 1,
+      "message": "optional nit: I think this might be *slightly* more readable as:\n\nif (!parsed) {\n  Failed();\n  return;\n}\n\n....",
+      "revId": "089506bb5bf4ecce18b9f760a6e726a00d14067c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "814efa20_6bfecde9",
+        "filename": "extensions/browser/content_hash_fetcher.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-21T18:26:18Z",
+      "side": 1,
+      "message": "no need for outer parens",
+      "revId": "089506bb5bf4ecce18b9f760a6e726a00d14067c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c54a31d_40ff8945",
+        "filename": "extensions/browser/content_verifier/content_hash.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-21T18:26:18Z",
+      "side": 1,
+      "message": "Maybe specify that these never return null, but that verified_contents and computed_hashes may be empty if something fails?",
+      "revId": "089506bb5bf4ecce18b9f760a6e726a00d14067c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0298ce06_f2c9fa4a",
+        "filename": "extensions/browser/content_verifier/content_hash.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-21T18:26:18Z",
+      "side": 1,
+      "message": "Can this be private, since we always go through the factory methods?",
+      "revId": "089506bb5bf4ecce18b9f760a6e726a00d14067c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
