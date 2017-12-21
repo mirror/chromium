@@ -16,6 +16,24 @@
       "revId": "70ad17d7082a6d6379852b2f4a39b6e2acbb933e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4966b30a_97750b85",
+        "filename": "content/renderer/renderer_blink_platform_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-12-21T11:04:59Z",
+      "side": 1,
+      "message": "Yes, but the task type CL is still under review. I plan to replace all unappropriated task type like kUnthrottled later.",
+      "parentUuid": "94187a4e_a82691d9",
+      "revId": "70ad17d7082a6d6379852b2f4a39b6e2acbb933e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
