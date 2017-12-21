@@ -22,6 +22,23 @@
       "revId": "945878d370033f36deb5deb08fb45d8cf3bb8723",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eefd88da_ac6a8a06",
+        "filename": "chrome/browser/ui/ash/launcher/arc_app_window_launcher_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 618,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-12-21T21:15:05Z",
+      "side": 1,
+      "message": "optional: DCHECK. It\u0027d be useful if we have tests that covers this scenario.",
+      "revId": "945878d370033f36deb5deb08fb45d8cf3bb8723",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
