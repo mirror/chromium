@@ -486,4 +486,8 @@ void WebRuntimeFeatures::EnablePWAFullCodeCache(bool enable) {
   RuntimeEnabledFeatures::SetPWAFullCodeCacheEnabled(enable);
 }
 
+void WebRuntimeFeatures::EnableDoubleTapToJumpOnVideo(bool enable) {
+  RuntimeEnabledFeatures::SetDoubleTapToJumpOnVideoEnabled(enable);
+}
+
 }  // namespace blink
