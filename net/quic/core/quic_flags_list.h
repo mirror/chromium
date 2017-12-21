@@ -119,12 +119,6 @@ QUIC_FLAG(bool,
           FLAGS_quic_reloadable_flag_quic_deprecate_largest_observed,
           true)
 
-// When true, allows connection options to be sent to completely disable packet
-// conservation in QUIC BBR STARTUP or make it more aggressive.
-QUIC_FLAG(bool,
-          FLAGS_quic_reloadable_flag_quic_bbr_conservation_in_startup,
-          true)
-
 // Allows increasing the length of time ack aggregation is windowed for to 20
 // and 40 RTTs.
 QUIC_FLAG(bool,

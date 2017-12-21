@@ -226,22 +226,13 @@ void BbrSender::SetFromConfig(const QuicConfig& config,
   if (config.HasClientRequestedIndependentOption(kBBR3, perspective)) {
     fully_drain_queue_ = true;
   }
-  if (GetQuicReloadableFlag(quic_bbr_conservation_in_startup) &&
-      config.HasClientRequestedIndependentOption(kBBS1, perspective)) {
-    QUIC_FLAG_COUNT_N(quic_reloadable_flag_quic_bbr_conservation_in_startup, 1,
-                      3);
+  if (config.HasClientRequestedIndependentOption(kBBS1, perspective)) {
     rate_based_startup_ = true;
   }
-  if (GetQuicReloadableFlag(quic_bbr_conservation_in_startup) &&
-      config.HasClientRequestedIndependentOption(kBBS2, perspective)) {
-    QUIC_FLAG_COUNT_N(quic_reloadable_flag_quic_bbr_conservation_in_startup, 2,
-                      3);
+  if (config.HasClientRequestedIndependentOption(kBBS2, perspective)) {
     initial_conservation_in_startup_ = MEDIUM_GROWTH;
   }
-  if (GetQuicReloadableFlag(quic_bbr_conservation_in_startup) &&
-      config.HasClientRequestedIndependentOption(kBBS3, perspective)) {
-    QUIC_FLAG_COUNT_N(quic_reloadable_flag_quic_bbr_conservation_in_startup, 3,
-                      3);
+  if (config.HasClientRequestedIndependentOption(kBBS3, perspective)) {
     initial_conservation_in_startup_ = GROWTH;
   }
   if (GetQuicReloadableFlag(quic_bbr_ack_aggregation_window) &&

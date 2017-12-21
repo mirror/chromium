@@ -552,7 +552,6 @@ TEST_F(BbrSenderTest, StartupMediumRecoveryStates) {
   const QuicTime::Delta timeout = QuicTime::Delta::FromSeconds(10);
   bool simulator_result;
   CreateSmallBufferSetup();
-  SetQuicReloadableFlag(quic_bbr_conservation_in_startup, true);
   SetConnectionOption(kBBS2);
 
   bbr_sender_.AddBytesToTransfer(100 * 1024 * 1024);
@@ -603,7 +602,6 @@ TEST_F(BbrSenderTest, StartupGrowthRecoveryStates) {
   const QuicTime::Delta timeout = QuicTime::Delta::FromSeconds(10);
   bool simulator_result;
   CreateSmallBufferSetup();
-  SetQuicReloadableFlag(quic_bbr_conservation_in_startup, true);
   SetConnectionOption(kBBS3);
 
   bbr_sender_.AddBytesToTransfer(100 * 1024 * 1024);
@@ -1042,7 +1040,6 @@ TEST_F(BbrSenderTest, SimpleTransferSlowerStartup) {
 TEST_F(BbrSenderTest, SimpleTransferNoConservationInStartup) {
   // Adding TSO CWND causes packet loss before exiting startup.
   SetQuicReloadableFlag(quic_bbr_add_tso_cwnd, false);
-  SetQuicReloadableFlag(quic_bbr_conservation_in_startup, true);
   CreateSmallBufferSetup();
 
   SetConnectionOption(kBBS1);
