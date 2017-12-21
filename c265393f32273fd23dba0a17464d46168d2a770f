@@ -46,6 +46,30 @@
       "revId": "c265393f32273fd23dba0a17464d46168d2a770f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33bcb73b_28da6ee3",
+        "filename": "third_party/closure_compiler/externs/developer_private.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 583,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-12-21T19:03:58Z",
+      "side": 1,
+      "message": "Thanks for the feedback, updated!",
+      "parentUuid": "ca28a55d_c7c06e39",
+      "range": {
+        "startLine": 583,
+        "startChar": 45,
+        "endLine": 583,
+        "endChar": 68
+      },
+      "revId": "c265393f32273fd23dba0a17464d46168d2a770f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
