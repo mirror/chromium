@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "283bc4d0_974b3a94",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 4473,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-21T08:30:52Z",
+      "side": 1,
+      "message": "By the way you can define this in its own file in WebKit and use it everywhere, then you can deprecate the content side\u0027s definition. No need to be addressed in this CL but can be a good follow-up work.",
+      "revId": "45007b8b4a074ad428a3c25c4cfaa24c82504f38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
