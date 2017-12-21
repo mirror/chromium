@@ -25,7 +25,8 @@ ScriptModule::~ScriptModule() = default;
 
 ScriptModule ScriptModule::Compile(v8::Isolate* isolate,
                                    const String& source,
-                                   const String& file_name,
+                                   const KURL& source_url,
+                                   const KURL& base_url,
                                    const ScriptFetchOptions& options,
                                    AccessControlStatus access_control_status,
                                    const TextPosition& text_position,
@@ -33,9 +34,10 @@ ScriptModule ScriptModule::Compile(v8::Isolate* isolate,
   v8::TryCatch try_catch(isolate);
   v8::Local<v8::Module> module;
 
+  // TODO(kouhei): store base_url in ReferrerScriptInfo.
   if (!V8ScriptRunner::CompileModule(
-           isolate, source, file_name, access_control_status, text_position,
-           ReferrerScriptInfo::FromScriptFetchOptions(options))
+           isolate, source, source_url.GetString(), access_control_status,
+           text_position, ReferrerScriptInfo::FromScriptFetchOptions(options))
            .ToLocal(&module)) {
     DCHECK(try_catch.HasCaught());
     exception_state.RethrowV8Exception(try_catch.Exception());
