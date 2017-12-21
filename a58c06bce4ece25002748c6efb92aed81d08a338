@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "35256d0c_f1442c2a",
+        "filename": "extensions/renderer/content_watcher.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-21T04:15:13Z",
+      "side": 1,
+      "message": "What I\u0027m trying to figure out is: the changed frame is associated with the render frame that this FrameContentWatcher is associated with. But why do we traverse the entire frame tree then? instead of just checking the selectors associated with this particular watcher?",
+      "revId": "a58c06bce4ece25002748c6efb92aed81d08a338",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
