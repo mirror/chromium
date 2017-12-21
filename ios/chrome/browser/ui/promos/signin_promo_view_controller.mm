@@ -169,6 +169,7 @@ NSSet* GaiaIdSetWithIdentities(NSArray* identities) {
 
 + (BOOL)shouldBePresentedForBrowserState:
     (ios::ChromeBrowserState*)browserState {
+  return YES;
   if (tests_hook::DisableSigninRecallPromo())
     return NO;
 
