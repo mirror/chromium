@@ -282,8 +282,6 @@ IN_PROC_BROWSER_TEST_F(PlatformNotificationServiceBrowserTest,
   EXPECT_TRUE(default_notification.image().IsEmpty());
   EXPECT_TRUE(default_notification.icon().IsEmpty());
   EXPECT_TRUE(default_notification.small_image().IsEmpty());
-  EXPECT_FALSE(default_notification.renotify());
-  EXPECT_FALSE(default_notification.silent());
   EXPECT_FALSE(default_notification.never_timeout());
   EXPECT_EQ(0u, default_notification.buttons().size());
 
@@ -304,8 +302,6 @@ IN_PROC_BROWSER_TEST_F(PlatformNotificationServiceBrowserTest,
           icon: 'icon.png',
           badge: 'icon.png',
           timestamp: 621046800000,
-          renotify: true,
-          silent: true,
           requireInteraction: true,
           data: [
             { property: 'value' }
@@ -335,8 +331,6 @@ IN_PROC_BROWSER_TEST_F(PlatformNotificationServiceBrowserTest,
   EXPECT_EQ(kIconWidth, all_options_notification.icon().Width());
   EXPECT_EQ(kIconHeight, all_options_notification.icon().Height());
   EXPECT_TRUE(all_options_notification.small_image().IsEmpty());
-  EXPECT_TRUE(all_options_notification.renotify());
-  EXPECT_TRUE(all_options_notification.silent());
   EXPECT_TRUE(all_options_notification.never_timeout());
   EXPECT_DOUBLE_EQ(kNotificationTimestamp,
                    all_options_notification.timestamp().ToJsTime());
@@ -365,8 +359,6 @@ IN_PROC_BROWSER_TEST_F(PlatformNotificationServiceBrowserTest,
   EXPECT_TRUE(default_notification.image().IsEmpty());
   EXPECT_TRUE(default_notification.icon().IsEmpty());
   EXPECT_TRUE(default_notification.small_image().IsEmpty());
-  EXPECT_FALSE(default_notification.renotify());
-  EXPECT_FALSE(default_notification.silent());
   EXPECT_FALSE(default_notification.never_timeout());
   EXPECT_EQ(0u, default_notification.buttons().size());
 
@@ -375,6 +367,12 @@ IN_PROC_BROWSER_TEST_F(PlatformNotificationServiceBrowserTest,
   // high to avoid flakiness in the test.
   EXPECT_NEAR(default_notification.timestamp().ToJsTime(),
               base::Time::Now().ToJsTime(), 30 * 1000);
+
+  const auto* metadata = PersistentWebNotificationMetadata::From(
+      display_service_tester_->GetMetadataForNotification(
+          default_notification));
+  EXPECT_FALSE(metadata->renotify);
+  EXPECT_FALSE(metadata->silent);
 
   // Now, test the non-default values.
 
@@ -403,8 +401,6 @@ IN_PROC_BROWSER_TEST_F(PlatformNotificationServiceBrowserTest,
   EXPECT_EQ(kIconWidth, all_options_notification.icon().Width());
   EXPECT_EQ(kIconHeight, all_options_notification.icon().Height());
   EXPECT_TRUE(all_options_notification.small_image().IsEmpty());
-  EXPECT_TRUE(all_options_notification.renotify());
-  EXPECT_TRUE(all_options_notification.silent());
   EXPECT_TRUE(all_options_notification.never_timeout());
   EXPECT_DOUBLE_EQ(kNotificationTimestamp,
                    all_options_notification.timestamp().ToJsTime());
@@ -414,6 +410,12 @@ IN_PROC_BROWSER_TEST_F(PlatformNotificationServiceBrowserTest,
   EXPECT_FALSE(all_options_notification.buttons()[0].icon.IsEmpty());
   EXPECT_EQ(kIconWidth, all_options_notification.buttons()[0].icon.Width());
   EXPECT_EQ(kIconHeight, all_options_notification.buttons()[0].icon.Height());
+
+  metadata = PersistentWebNotificationMetadata::From(
+      display_service_tester_->GetMetadataForNotification(
+          all_options_notification));
+  EXPECT_TRUE(metadata->renotify);
+  EXPECT_TRUE(metadata->silent);
 }
 
 // Chrome OS shows the notification settings inline.
@@ -473,7 +475,10 @@ IN_PROC_BROWSER_TEST_F(PlatformNotificationServiceBrowserTest,
   EXPECT_EQ("Title", base::UTF16ToUTF8(notification.title()));
   EXPECT_EQ("Contents", base::UTF16ToUTF8(notification.message()));
 
-  EXPECT_THAT(notification.vibration_pattern(),
+  EXPECT_THAT(
+      PersistentWebNotificationMetadata::From(
+          display_service_tester_->GetMetadataForNotification(notification))
+          ->vibration_pattern,
       testing::ElementsAreArray(kNotificationVibrationPattern));
 }
 
@@ -572,7 +577,7 @@ IN_PROC_BROWSER_TEST_F(PlatformNotificationServiceBrowserTest,
 
   EXPECT_EQ(
       TestPageUrl(),
-      PersistentNotificationMetadata::From(
+      PersistentWebNotificationMetadata::From(
           display_service_tester_->GetMetadataForNotification(notifications[0]))
           ->service_worker_scope);
 }
@@ -1011,8 +1016,6 @@ IN_PROC_BROWSER_TEST_F(PlatformNotificationServiceMojoEnabledBrowserTest,
   EXPECT_TRUE(default_notification.image().IsEmpty());
   EXPECT_TRUE(default_notification.icon().IsEmpty());
   EXPECT_TRUE(default_notification.small_image().IsEmpty());
-  EXPECT_FALSE(default_notification.renotify());
-  EXPECT_FALSE(default_notification.silent());
   EXPECT_FALSE(default_notification.never_timeout());
   EXPECT_EQ(0u, default_notification.buttons().size());
   // TODO(https://crbug.com/595685): Test the default notification timestamp.
@@ -1036,8 +1039,6 @@ IN_PROC_BROWSER_TEST_F(PlatformNotificationServiceMojoEnabledBrowserTest,
           icon: 'icon.png',
           badge: 'icon.png',
           timestamp: 621046800000,
-          renotify: true,
-          silent: true,
           requireInteraction: true,
           data: [
             { property: 'value' }

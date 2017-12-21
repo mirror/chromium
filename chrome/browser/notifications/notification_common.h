@@ -38,13 +38,28 @@ class NotificationCommon {
 };
 
 // Metadata for PERSISTENT notifications.
-struct PersistentNotificationMetadata : public NotificationCommon::Metadata {
-  PersistentNotificationMetadata();
-  ~PersistentNotificationMetadata() override;
+struct PersistentWebNotificationMetadata : public NotificationCommon::Metadata {
+  PersistentWebNotificationMetadata();
+  ~PersistentWebNotificationMetadata() override;
 
-  static const PersistentNotificationMetadata* From(const Metadata* metadata);
+  static const PersistentWebNotificationMetadata* From(
+      const Metadata* metadata);
 
   GURL service_worker_scope;
+
+  // Vibration pattern to play when displaying the notification. There must be
+  // an odd number of entries in this pattern when it's set: numbers of
+  // milliseconds to vibrate separated by numbers of milliseconds to pause.
+  // Currently only respected on Android.
+  std::vector<int> vibration_pattern;
+
+  // Whether the vibration pattern and other applicable announcement mechanisms
+  // should be considered when updating the notification.
+  bool renotify = false;
+
+  // Whether all announcement mechansims should be suppressed when displaying
+  // the notification.
+  bool silent = false;
 };
 
 #endif  // CHROME_BROWSER_NOTIFICATIONS_NOTIFICATION_COMMON_H_

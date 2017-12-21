@@ -385,8 +385,11 @@ void PlatformNotificationServiceImpl::DisplayPersistentNotification(
   message_center::Notification notification = CreateNotificationFromData(
       profile, origin, notification_id, notification_data,
       notification_resources, nullptr /* delegate */);
-  auto metadata = std::make_unique<PersistentNotificationMetadata>();
+  auto metadata = std::make_unique<PersistentWebNotificationMetadata>();
   metadata->service_worker_scope = service_worker_scope;
+  metadata->vibration_pattern = notification_data.vibration_pattern;
+  metadata->renotify = notification_data.renotify;
+  metadata->silent = notification_data.silent;
 
   NotificationDisplayServiceFactory::GetForProfile(profile)->Display(
       NotificationHandler::Type::WEB_PERSISTENT, notification,
@@ -499,10 +502,7 @@ PlatformNotificationServiceImpl::CreateNotificationFromData(
 
   notification.set_context_message(
       DisplayNameForContextMessage(profile, origin));
-  notification.set_vibration_pattern(notification_data.vibration_pattern);
   notification.set_timestamp(notification_data.timestamp);
-  notification.set_renotify(notification_data.renotify);
-  notification.set_silent(notification_data.silent);
   if (ShouldDisplayWebNotificationOnFullScreen(profile, origin)) {
     notification.set_fullscreen_visibility(
         message_center::FullscreenVisibility::OVER_USER);

@@ -168,19 +168,6 @@ class MESSAGE_CENTER_EXPORT RichNotificationData {
   bool pinned = false;
 #endif  // defined(OS_CHROMEOS)
 
-  // Vibration pattern to play when displaying the notification. There must be
-  // an odd number of entries in this pattern when it's set: numbers of
-  // milliseconds to vibrate separated by numbers of milliseconds to pause.
-  std::vector<int> vibration_pattern;
-
-  // Whether the vibration pattern and other applicable announcement mechanisms
-  // should be considered when updating the notification.
-  bool renotify = false;
-
-  // Whether all announcement mechansims should be suppressed when displaying
-  // the notification.
-  bool silent = false;
-
   // An accessible description of the notification's contents.
   base::string16 accessible_name;
 
@@ -297,26 +284,6 @@ class MESSAGE_CENTER_EXPORT Notification {
   // Begin unpacked values from optional_fields.
   int priority() const { return optional_fields_.priority; }
   void set_priority(int priority) { optional_fields_.priority = priority; }
-
-  // This vibration_pattern property currently has no effect on
-  // non-Android platforms.
-  const std::vector<int>& vibration_pattern() const {
-    return optional_fields_.vibration_pattern;
-  }
-  void set_vibration_pattern(const std::vector<int>& vibration_pattern) {
-    optional_fields_.vibration_pattern = vibration_pattern;
-  }
-
-  // This property currently only works in platforms that support native
-  // notifications.
-  // It determines whether the sound and vibration effects should signal
-  // if the notification is replacing another notification.
-  bool renotify() const { return optional_fields_.renotify; }
-  void set_renotify(bool renotify) { optional_fields_.renotify = renotify; }
-
-  // This property currently has no effect on non-Android platforms.
-  bool silent() const { return optional_fields_.silent; }
-  void set_silent(bool silent) { optional_fields_.silent = silent; }
 
   base::Time timestamp() const { return optional_fields_.timestamp; }
   void set_timestamp(const base::Time& timestamp) {

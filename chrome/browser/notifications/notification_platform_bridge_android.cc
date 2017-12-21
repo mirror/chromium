@@ -263,8 +263,9 @@ void NotificationPlatformBridgeAndroid::Display(
   // persistent once/if non persistent notifications are ever implemented on
   // Android.
   DCHECK_EQ(notification_type, NotificationHandler::Type::WEB_PERSISTENT);
-  GURL scope_url(PersistentNotificationMetadata::From(metadata.get())
-                     ->service_worker_scope);
+  const auto* persistent_metadata =
+      PersistentWebNotificationMetadata::From(metadata.get());
+  GURL scope_url(persistent_metadata->service_worker_scope);
   if (!scope_url.is_valid())
     scope_url = origin_url;
 
@@ -303,7 +304,8 @@ void NotificationPlatformBridgeAndroid::Display(
       ConvertToJavaActionInfos(notification.buttons());
 
   ScopedJavaLocalRef<jintArray> vibration_pattern =
-      base::android::ToJavaIntArray(env, notification.vibration_pattern());
+      base::android::ToJavaIntArray(env,
+                                    persistent_metadata->vibration_pattern());
 
   ScopedJavaLocalRef<jstring> j_profile_id =
       ConvertUTF8ToJavaString(env, profile_id);
@@ -312,7 +314,7 @@ void NotificationPlatformBridgeAndroid::Display(
       env, java_object_, j_notification_id, j_origin, j_scope_url, j_profile_id,
       incognito, tag, title, body, image, notification_icon, badge,
       vibration_pattern, notification.timestamp().ToJavaTime(),
-      notification.renotify(), notification.silent(), actions);
+      persistent_metadata->renotify, persistent_metadata->silent, actions);
 
   regenerated_notification_infos_[notification.id()] =
       RegeneratedNotificationInfo(origin_url, scope_url, notification.id(),

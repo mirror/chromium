@@ -173,15 +173,9 @@ TEST_F(PlatformNotificationServiceTest,
 }
 
 TEST_F(PlatformNotificationServiceTest, DisplayNonPersistentPropertiesMatch) {
-  std::vector<int> vibration_pattern(
-      kNotificationVibrationPattern,
-      kNotificationVibrationPattern + arraysize(kNotificationVibrationPattern));
-
   PlatformNotificationData notification_data;
   notification_data.title = base::ASCIIToUTF16("My notification's title");
   notification_data.body = base::ASCIIToUTF16("Hello, world!");
-  notification_data.vibration_pattern = vibration_pattern;
-  notification_data.silent = true;
 
   service()->DisplayNotification(profile_, kNotificationId,
                                  GURL("https://chrome.com/"), notification_data,
@@ -197,11 +191,6 @@ TEST_F(PlatformNotificationServiceTest, DisplayNonPersistentPropertiesMatch) {
       base::UTF16ToUTF8(notification.title()));
   EXPECT_EQ("Hello, world!",
       base::UTF16ToUTF8(notification.message()));
-
-  EXPECT_THAT(notification.vibration_pattern(),
-      testing::ElementsAreArray(kNotificationVibrationPattern));
-
-  EXPECT_TRUE(notification.silent());
 }
 
 TEST_F(PlatformNotificationServiceTest, DisplayPersistentPropertiesMatch) {
@@ -213,6 +202,7 @@ TEST_F(PlatformNotificationServiceTest, DisplayPersistentPropertiesMatch) {
   notification_data.title = base::ASCIIToUTF16("My notification's title");
   notification_data.body = base::ASCIIToUTF16("Hello, world!");
   notification_data.vibration_pattern = vibration_pattern;
+  notification_data.renotify = true;
   notification_data.silent = true;
   notification_data.actions.resize(2);
   notification_data.actions[0].type =
@@ -239,10 +229,12 @@ TEST_F(PlatformNotificationServiceTest, DisplayPersistentPropertiesMatch) {
   EXPECT_EQ("My notification's title", base::UTF16ToUTF8(notification.title()));
   EXPECT_EQ("Hello, world!", base::UTF16ToUTF8(notification.message()));
 
-  EXPECT_THAT(notification.vibration_pattern(),
+  const auto* metadata = PersistentWebNotificationMetadata::From(
+      display_service_tester_->GetMetadataForNotification(notification));
+  EXPECT_THAT(metadata->vibration_pattern,
               testing::ElementsAreArray(kNotificationVibrationPattern));
-
-  EXPECT_TRUE(notification.silent());
+  EXPECT_TRUE(metadata->renotify);
+  EXPECT_TRUE(metadata->silent);
 
   const auto& buttons = notification.buttons();
   ASSERT_EQ(2u, buttons.size());
