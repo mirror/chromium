@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2801a137_1813cf18",
+        "filename": "media/filters/chunk_demuxer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1162,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-12-21T02:46:17Z",
+      "side": 1,
+      "message": "metrics OWNERS and robliao@: This method is running in a process which might have globals and singletons disappear due to the TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN used to schedule the task that\u0027s executing here. Is SCOPED_UMA_HISTOGRAM_TIMER graceful in those conditions? Or must we use TaskShutdownBehavior::SKIP_ON_SHUTDOWN to ensure no globals/singletons disappear in the scope of this method\u0027s execution?\n\nAlso, note that l.1163 could take a while. On Z620 Windows local release build, I anecdotally observed about 30ms recorded by this timer for each of about 40 media elements each containing about half the amount of media maximum bytes we let them have in this pipeline; this machine has tons of RAM though, so those times could become higher on constrained memory machines where disk paging might happen -- hence this approach to fix the strongly suspected cause of the renderer hangs.",
+      "range": {
+        "startLine": 1162,
+        "startChar": 2,
+        "endLine": 1162,
+        "endChar": 28
+      },
+      "revId": "b567514093dadc3cde269d802bb86d193623abab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
