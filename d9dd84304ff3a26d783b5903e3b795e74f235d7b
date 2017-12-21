@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2947387d_e796995f",
+        "filename": "content/renderer/media_capture_from_element/html_video_element_capturer_source.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-12-21T22:22:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2d3274ba_dff2b0e6",
+      "revId": "d9dd84304ff3a26d783b5903e3b795e74f235d7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d4b008dd_4cfd7d92",
         "filename": "content/renderer/media_capture_from_element/html_video_element_capturer_source_unittest.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "d9dd84304ff3a26d783b5903e3b795e74f235d7b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "045f9450_f826a881",
+        "filename": "content/renderer/media_capture_from_element/html_video_element_capturer_source_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-12-21T22:22:47Z",
+      "side": 1,
+      "message": "Not that I know of, except SimpleTestClock [1], but it\nneeds to be injected...\n\n[1] https://cs.chromium.org/chromium/src/base/test/simple_test_clock.h?type\u003dcs\u0026l\u003d18",
+      "parentUuid": "d4b008dd_4cfd7d92",
+      "revId": "d9dd84304ff3a26d783b5903e3b795e74f235d7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
