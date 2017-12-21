@@ -42,6 +42,30 @@
     },
     {
       "key": {
+        "uuid": "3cb94962_96234d4a",
+        "filename": "content/common/frame_messages.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 1650,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-12-21T23:42:53Z",
+      "side": 1,
+      "message": "We don\u0027t usually use \u0027Remote\u0027 in the content layer, where we just have the notion of RenderFrames and RenderFrameProxys (as opposed to in Blink, where it is \u0027Local\u0027 vs \u0027Remote\u0027), but I agree that \u0027Oop\u0027 seems redundant since IPC messages are by definition across processes. Simply \u0027Subframe\u0027 or \u0027ChildFrame\u0027 would be fine.",
+      "parentUuid": "a3401b2e_688f985d",
+      "range": {
+        "startLine": 1650,
+        "startChar": 38,
+        "endLine": 1650,
+        "endChar": 41
+      },
+      "revId": "7e64670080a2faaaacf08f29bfb915f2ba916a7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fbc42e06_4e6fd871",
         "filename": "third_party/WebKit/Source/core/frame/RemoteFrameClient.h",
         "patchSetId": 14
