@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "937acbf1_709c656b",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-12-21T04:35:11Z",
+      "side": 1,
+      "message": "nit: how about adding comment around the definition of topmost_frame_url() to say \"topmost_frame_url is empty if it\u0027s for service worker. Use document_url() instread.\"?",
+      "revId": "40c6387fbbcca84ac1d279e5d12e6a7da8fef03d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
