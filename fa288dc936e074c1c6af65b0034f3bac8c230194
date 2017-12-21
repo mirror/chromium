@@ -237,6 +237,30 @@
     },
     {
       "key": {
+        "uuid": "58fcc3e6_f8125926",
+        "filename": "device/ctap/ctap_make_credential_request_param.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-21T10:22:46Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "0da1522f_d5efa3b6",
+      "range": {
+        "startLine": 42,
+        "startChar": 0,
+        "endLine": 43,
+        "endChar": 48
+      },
+      "revId": "fa288dc936e074c1c6af65b0034f3bac8c230194",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d7839a54_42cdf464",
         "filename": "device/ctap/ctap_request_unittest.cc",
         "patchSetId": 13
@@ -648,6 +672,30 @@
       "side": 1,
       "message": "Since user defined move constructor deletes the implicit copy constructor, added default definition of copy constructor / copy assign operator. Please let me know if this conflicts with you comment!",
       "parentUuid": "f2c5a26e_c860b0fa",
+      "range": {
+        "startLine": 33,
+        "startChar": 0,
+        "endLine": 33,
+        "endChar": 46
+      },
+      "revId": "fa288dc936e074c1c6af65b0034f3bac8c230194",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "faf384e1_d449c811",
+        "filename": "device/ctap/public_key_credential_descriptor.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-21T10:22:46Z",
+      "side": 1,
+      "message": "Yes, that looks good. If you removed the user defined destructor you could remove all user defined copy and move operations and rely on the compiler generated ones. However, I believe the Chrome style guide won\u0027t let you, as this a treated as a complex class whose destructor and copy operations should not be inlined. So this is fine at is.",
+      "parentUuid": "7a911d26_cc5e7274",
       "range": {
         "startLine": 33,
         "startChar": 0,

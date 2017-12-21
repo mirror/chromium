@@ -1,0 +1,556 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a026f0fe_a9ed16b2",
+        "filename": "device/ctap/ctap_get_assertion_request_param.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-21T10:22:46Z",
+      "side": 1,
+      "message": "This can be `\u003d default;` as well",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 32,
+        "endChar": 1
+      },
+      "revId": "e078817f35b502e9d86d93dbfd9a738ad1faf747",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbe7ff44_bb2b92f2",
+        "filename": "device/ctap/ctap_make_credential_request_param.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-21T10:22:46Z",
+      "side": 1,
+      "message": "`if (exclude_list_)` is sufficient due to the explicit bool operator",
+      "range": {
+        "startLine": 39,
+        "startChar": 2,
+        "endLine": 39,
+        "endChar": 34
+      },
+      "revId": "e078817f35b502e9d86d93dbfd9a738ad1faf747",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9996316a_c6b28aff",
+        "filename": "device/ctap/ctap_make_credential_request_param.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-21T10:22:46Z",
+      "side": 1,
+      "message": "*exclude_list_",
+      "range": {
+        "startLine": 41,
+        "startChar": 34,
+        "endLine": 41,
+        "endChar": 55
+      },
+      "revId": "e078817f35b502e9d86d93dbfd9a738ad1faf747",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9a61091_3af6ad1b",
+        "filename": "device/ctap/ctap_make_credential_request_param.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-21T10:22:46Z",
+      "side": 1,
+      "message": "std::move(exclude_list_array)",
+      "range": {
+        "startLine": 44,
+        "startChar": 51,
+        "endLine": 44,
+        "endChar": 69
+      },
+      "revId": "e078817f35b502e9d86d93dbfd9a738ad1faf747",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61b229ee_fe114e11",
+        "filename": "device/ctap/ctap_make_credential_request_param.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-21T10:22:46Z",
+      "side": 1,
+      "message": "if (pin_auth_)",
+      "range": {
+        "startLine": 46,
+        "startChar": 6,
+        "endLine": 46,
+        "endChar": 27
+      },
+      "revId": "e078817f35b502e9d86d93dbfd9a738ad1faf747",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce9cf50c_b0ee5f1d",
+        "filename": "device/ctap/ctap_make_credential_request_param.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-21T10:22:46Z",
+      "side": 1,
+      "message": "*pin_auth",
+      "range": {
+        "startLine": 47,
+        "startChar": 51,
+        "endLine": 47,
+        "endChar": 68
+      },
+      "revId": "e078817f35b502e9d86d93dbfd9a738ad1faf747",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bdb83d8_dc323786",
+        "filename": "device/ctap/ctap_make_credential_request_param.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-21T10:22:46Z",
+      "side": 1,
+      "message": "if (pin_protocol_)",
+      "range": {
+        "startLine": 50,
+        "startChar": 6,
+        "endLine": 50,
+        "endChar": 31
+      },
+      "revId": "e078817f35b502e9d86d93dbfd9a738ad1faf747",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee322c7d_f910973e",
+        "filename": "device/ctap/ctap_make_credential_request_param.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-21T10:22:46Z",
+      "side": 1,
+      "message": "*pin_protocol_",
+      "range": {
+        "startLine": 51,
+        "startChar": 51,
+        "endLine": 51,
+        "endChar": 72
+      },
+      "revId": "e078817f35b502e9d86d93dbfd9a738ad1faf747",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5de3e1a9_87c5f49a",
+        "filename": "device/ctap/ctap_make_credential_request_param.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-21T10:22:46Z",
+      "side": 1,
+      "message": "std::move(cbor_map)",
+      "range": {
+        "startLine": 54,
+        "startChar": 66,
+        "endLine": 54,
+        "endChar": 74
+      },
+      "revId": "e078817f35b502e9d86d93dbfd9a738ad1faf747",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9658aae0_8b5313eb",
+        "filename": "device/ctap/ctap_make_credential_request_param.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-21T10:22:46Z",
+      "side": 1,
+      "message": "if (serialized_param)",
+      "range": {
+        "startLine": 55,
+        "startChar": 6,
+        "endLine": 55,
+        "endChar": 34
+      },
+      "revId": "e078817f35b502e9d86d93dbfd9a738ad1faf747",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6c8a557_afdfa2b6",
+        "filename": "device/ctap/ctap_make_credential_request_param.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-21T10:22:46Z",
+      "side": 1,
+      "message": "serialized_param-\u003ebegin()",
+      "range": {
+        "startLine": 58,
+        "startChar": 44,
+        "endLine": 58,
+        "endChar": 76
+      },
+      "revId": "e078817f35b502e9d86d93dbfd9a738ad1faf747",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7eee5b6_c12f6e3e",
+        "filename": "device/ctap/ctap_make_credential_request_param.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-21T10:22:46Z",
+      "side": 1,
+      "message": "serialized_param-\u003eend()",
+      "range": {
+        "startLine": 59,
+        "startChar": 24,
+        "endLine": 59,
+        "endChar": 54
+      },
+      "revId": "e078817f35b502e9d86d93dbfd9a738ad1faf747",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbedae7c_8d3a02db",
+        "filename": "device/ctap/ctap_response_code.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-21T10:22:46Z",
+      "side": 1,
+      "message": "Is this used anywhere? If not remove.\n\nIf yes, you should name this kResponseCodeList, and make sure it has external linkage, i.e. change this to\n\n  extern const CTAPResponseCode kResponseCodeList[];\n\nand provide the array in a .cc file, similarly to how its done here: https://codesearch.chromium.org/chromium/src/extensions/common/constants.h?l\u003d116",
+      "range": {
+        "startLine": 69,
+        "startChar": 27,
+        "endLine": 69,
+        "endChar": 45
+      },
+      "revId": "e078817f35b502e9d86d93dbfd9a738ad1faf747",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc9d141e_b66f4446",
+        "filename": "device/ctap/public_key_credential_descriptor.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-21T10:22:46Z",
+      "side": 1,
+      "message": "constexpr is better",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 5
+      },
+      "revId": "e078817f35b502e9d86d93dbfd9a738ad1faf747",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3601018_fecc1e5a",
+        "filename": "device/ctap/public_key_credential_descriptor.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-21T10:22:46Z",
+      "side": 1,
+      "message": "same here",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 5
+      },
+      "revId": "e078817f35b502e9d86d93dbfd9a738ad1faf747",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb85c930_cbf34eb8",
+        "filename": "device/ctap/public_key_credential_descriptor.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-21T10:22:46Z",
+      "side": 1,
+      "message": "I\u0027d return early in case of error, i.e. change this to\n\nif (!cbor.is_map())\n  return base::nullopt;\n\nand then follow with the rest. This reduces nesting and it usually easier to reason about.",
+      "range": {
+        "startLine": 45,
+        "startChar": 2,
+        "endLine": 45,
+        "endChar": 22
+      },
+      "revId": "e078817f35b502e9d86d93dbfd9a738ad1faf747",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb5a16d0_bece5f66",
+        "filename": "device/ctap/public_key_credential_descriptor.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-21T10:22:46Z",
+      "side": 1,
+      "message": "The styleguide suggests a different declaration order: https://google.github.io/styleguide/cppguide.html#Declaration_Order\n\nIt should be like this:\n\n  static base::Optional\u003cPublicKeyCredentialDescriptor\u003e CreateFromCBORValue(\n      const cbor::CBORValue\u0026 cbor);\n\n  PublicKeyCredentialDescriptor(std::string credential_type,\n                                std::vector\u003cuint8_t\u003e id);\n  PublicKeyCredentialDescriptor(const PublicKeyCredentialDescriptor\u0026 other);\n  PublicKeyCredentialDescriptor(PublicKeyCredentialDescriptor\u0026\u0026 other);\n  PublicKeyCredentialDescriptor\u0026 operator\u003d(\n      const PublicKeyCredentialDescriptor\u0026 other);\n  PublicKeyCredentialDescriptor\u0026 operator\u003d(\n      PublicKeyCredentialDescriptor\u0026\u0026 other);\n  ~PublicKeyCredentialDescriptor();\n\n  cbor::CBORValue ConvertToCBOR() const;\n\n  const std::string\u0026 credential_type() const { return credential_type_; }\n  const std::vector\u003cuint8_t\u003e\u0026 credential_id() const { return id_; }\n\nThe implementation in the cc file should match this order as well.",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 38,
+        "endChar": 35
+      },
+      "revId": "e078817f35b502e9d86d93dbfd9a738ad1faf747",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cec28bb_2e60ecb0",
+        "filename": "device/ctap/public_key_credential_params.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-21T10:22:46Z",
+      "side": 1,
+      "message": "earlier comment regarding declaration order also applies here",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 0
+      },
+      "revId": "e078817f35b502e9d86d93dbfd9a738ad1faf747",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef3fcb48_1c711400",
+        "filename": "device/ctap/public_key_credential_params.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-21T10:22:46Z",
+      "side": 1,
+      "message": "Just `params_`, the type shouldn\u0027t leak in the variable name",
+      "range": {
+        "startLine": 31,
+        "startChar": 64,
+        "endLine": 31,
+        "endChar": 75
+      },
+      "revId": "e078817f35b502e9d86d93dbfd9a738ad1faf747",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cadbf2cc_c0322d3b",
+        "filename": "device/ctap/public_key_credential_params.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-21T10:22:46Z",
+      "side": 1,
+      "message": "std::vector should be better, right?",
+      "range": {
+        "startLine": 31,
+        "startChar": 7,
+        "endLine": 31,
+        "endChar": 11
+      },
+      "revId": "e078817f35b502e9d86d93dbfd9a738ad1faf747",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cc8faad_8e32b277",
+        "filename": "device/ctap/public_key_credential_rp_entity.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-21T10:22:46Z",
+      "side": 1,
+      "message": "Move destructor after move assignment operator (declaration order)",
+      "range": {
+        "startLine": 23,
+        "startChar": 2,
+        "endLine": 23,
+        "endChar": 33
+      },
+      "revId": "e078817f35b502e9d86d93dbfd9a738ad1faf747",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70823486_491beda7",
+        "filename": "device/ctap/public_key_credential_user_entity.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-21T10:22:46Z",
+      "side": 1,
+      "message": "declaration order comment applies here too",
+      "range": {
+        "startLine": 24,
+        "startChar": 11,
+        "endLine": 24,
+        "endChar": 40
+      },
+      "revId": "e078817f35b502e9d86d93dbfd9a738ad1faf747",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bab97946_abf0e42f",
+        "filename": "device/ctap/public_key_credential_user_entity.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-21T10:22:46Z",
+      "side": 1,
+      "message": "While I know eisinger@ told you to use a const-ref here, the current state is inconsistent, since you take params by value for the setters of other classes. \n\nYou should make it consistent, either by making this by value as well, or change the other setters to take const-refs. Personally I prefer by value, but I don\u0027t feel too strongly about it.",
+      "range": {
+        "startLine": 33,
+        "startChar": 45,
+        "endLine": 33,
+        "endChar": 73
+      },
+      "revId": "e078817f35b502e9d86d93dbfd9a738ad1faf747",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bfe7281_9a9e6d42",
+        "filename": "device/ctap/public_key_credential_user_entity.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-21T10:22:46Z",
+      "side": 1,
+      "message": "these should be const-refs (i.e. `const base::Optional\u003c...\u003e\u0026`) as well, returning an optional by value can be expensive",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 43,
+        "endChar": 71
+      },
+      "revId": "e078817f35b502e9d86d93dbfd9a738ad1faf747",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
