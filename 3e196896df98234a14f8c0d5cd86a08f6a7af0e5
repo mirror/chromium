@@ -34,6 +34,24 @@
       "revId": "3e196896df98234a14f8c0d5cd86a08f6a7af0e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3614eb90_e338c03e",
+        "filename": "content/browser/browser_side_navigation_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 805,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-12-21T12:47:32Z",
+      "side": 1,
+      "message": "I\u0027d still be in favor of making it a DevTool test.",
+      "parentUuid": "bfbad64f_4f8769e0",
+      "revId": "3e196896df98234a14f8c0d5cd86a08f6a7af0e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
