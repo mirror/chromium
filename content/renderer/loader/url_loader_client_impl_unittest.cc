@@ -11,7 +11,6 @@
 #include "content/public/common/url_loader_factory.mojom.h"
 #include "content/renderer/loader/resource_dispatcher.h"
 #include "content/renderer/loader/test_request_peer.h"
-#include "ipc/ipc_sender.h"
 #include "mojo/public/cpp/bindings/binding.h"
 #include "mojo/public/cpp/bindings/interface_ptr.h"
 #include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
@@ -21,11 +20,10 @@
 namespace content {
 
 class URLLoaderClientImplTest : public ::testing::Test,
-                                IPC::Sender,
                                 mojom::URLLoaderFactory {
  protected:
   URLLoaderClientImplTest()
-      : dispatcher_(new ResourceDispatcher(this, message_loop_.task_runner())),
+      : dispatcher_(new ResourceDispatcher(message_loop_.task_runner())),
         mojo_binding_(this) {
     mojo_binding_.Bind(mojo::MakeRequest(&url_loader_factory_proxy_));
 
@@ -34,7 +32,6 @@ class URLLoaderClientImplTest : public ::testing::Test,
         TRAFFIC_ANNOTATION_FOR_TESTS, false,
         std::make_unique<TestRequestPeer>(dispatcher_.get(),
                                           &request_peer_context_),
-        blink::WebURLRequest::LoadingIPCType::kMojo,
         url_loader_factory_proxy_.get(),
         std::vector<std::unique_ptr<URLLoaderThrottle>>(),
         mojom::URLLoaderClientEndpointsPtr());
@@ -47,11 +44,6 @@ class URLLoaderClientImplTest : public ::testing::Test,
   void TearDown() override {
     url_loader_client_ = nullptr;
     url_loader_factory_proxy_ = nullptr;
-  }
-
-  bool Send(IPC::Message* message) override {
-    ADD_FAILURE() << "IPC::Sender::Send should not be called.";
-    return false;
   }
 
   void CreateLoaderAndStart(mojom::URLLoaderRequest request,
