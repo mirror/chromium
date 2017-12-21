@@ -30,8 +30,9 @@ class CONTENT_EXPORT ControllerServiceWorkerConnector
     virtual void OnConnectionClosed() = 0;
   };
 
-  explicit ControllerServiceWorkerConnector(
-      mojom::ServiceWorkerContainerHost* container_host);
+  ControllerServiceWorkerConnector(
+      mojom::ServiceWorkerContainerHost* container_host,
+      mojom::ControllerServiceWorkerPtr controller_ptr);
 
   // This may return nullptr if the connection to the ContainerHost (in the
   // browser process) is already terminated.
@@ -41,12 +42,11 @@ class CONTENT_EXPORT ControllerServiceWorkerConnector
   void RemoveObserver(Observer* observer);
 
   void OnContainerHostConnectionClosed();
+  void OnControllerConnectionClosed();
 
  private:
   friend class base::RefCounted<ControllerServiceWorkerConnector>;
   ~ControllerServiceWorkerConnector();
-
-  void OnControllerConnectionClosed();
 
   // Connection to the ServiceWorkerProviderHost that lives in the
   // browser process. This is used to (re-)obtain Mojo connection to
