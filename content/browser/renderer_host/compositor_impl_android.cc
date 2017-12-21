@@ -527,14 +527,27 @@ ui::ResourceManager& CompositorImpl::GetResourceManager() {
   return resource_manager_;
 }
 
+void CompositorImpl::SetRootWindow(gfx::NativeWindow root_window) {
+  root_window_->DetachCompositor();
+  root_window_->SetLayer(nullptr);
+
+  root_window_ = root_window;
+  root_window_->SetLayer(cc::Layer::Create());
+  root_window_->GetLayer()->AddChild(readback_layer_tree_);
+  root_window_->AttachCompositor(this);
+  host_->SetRootLayer(root_window_->GetLayer());
+  host_->SetPaintedDeviceScaleFactor(root_window_->GetDipScale());
+}
+
 void CompositorImpl::SetRootLayer(scoped_refptr<cc::Layer> root_layer) {
   if (subroot_layer_.get()) {
     subroot_layer_->RemoveFromParent();
-    subroot_layer_ = NULL;
+    subroot_layer_ = nullptr;
   }
   if (root_window_->GetLayer()) {
     subroot_layer_ = root_window_->GetLayer();
-    root_window_->GetLayer()->AddChild(root_layer);
+    subroot_layer_->RemoveAllChildren();
+    subroot_layer_->AddChild(root_layer);
   }
 }
 
