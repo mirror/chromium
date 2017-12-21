@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4620e6b3_66f4f319",
+        "filename": "third_party/WebKit/Source/controller/OomInterventionImpl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-12-21T11:20:07Z",
+      "side": 1,
+      "message": "Add explicit.",
+      "revId": "57e8a4131d2938ecc6075f1fa4fef19a3478ec6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d563820e_3b9e9e2d",
+        "filename": "third_party/WebKit/public/platform/oom_intervention.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-12-21T11:20:07Z",
+      "side": 1,
+      "message": "Instead of introducing bi-directional mojo interfaces, would it be simpler to let browser call PeekMemoryPressureInRenderer() periodically? The browser can get the memory pressure with the response of PeekMemoryPressureInRenderer().",
+      "revId": "57e8a4131d2938ecc6075f1fa4fef19a3478ec6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
