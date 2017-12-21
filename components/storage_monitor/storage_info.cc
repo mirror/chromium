@@ -109,7 +109,7 @@ bool StorageInfo::CrackDeviceId(const std::string& device_id,
   } else if (prefix == kMacImageCapturePrefix) {
     found_type = MAC_IMAGE_CAPTURE;
   } else {
-    NOTREACHED();
+    // Users may have legacy device IDs in their profiles, i.e. Picasa.
     return false;
   }
   if (type)
