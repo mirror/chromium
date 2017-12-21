@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4aa4d88e_25ece998",
+        "filename": "ios/chrome/browser/snapshots/fake_snapshot_generator_delegate.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-12-21T09:38:02Z",
+      "side": 1,
+      "message": "The code already has to deal with a nil delegate. As sending a message to nil will result in a nil value, the code already has to deal with -snapshotOverlaysForWebState: returning nil. Returning @[] would not improve calling code.",
+      "parentUuid": "2e970b94_df4ded9a",
+      "range": {
+        "startLine": 23,
+        "startChar": 9,
+        "endLine": 23,
+        "endChar": 12
+      },
+      "revId": "123e46d7a3fc64ab7041093e09f8d94b07753740",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "20087366_5ea63a29",
         "filename": "ios/chrome/browser/snapshots/snapshot_generator.h",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "123e46d7a3fc64ab7041093e09f8d94b07753740",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "209705f6_217d7f4e",
+        "filename": "ios/chrome/browser/snapshots/snapshot_generator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-12-21T09:38:02Z",
+      "side": 1,
+      "message": "Ack. I\u0027ll probably do in a separate CL as other methods would have to be renamed too (-retrieveSnapshot:, ...).",
+      "parentUuid": "20087366_5ea63a29",
+      "range": {
+        "startLine": 41,
+        "startChar": 8,
+        "endLine": 41,
+        "endChar": 28
+      },
+      "revId": "123e46d7a3fc64ab7041093e09f8d94b07753740",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "2522f5e0_0fd101f4",
+        "filename": "ios/chrome/browser/snapshots/snapshot_generator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-12-21T09:38:02Z",
+      "side": 1,
+      "message": "The general pattern is that delegate are optional. Moving this to the delegate would break this.",
+      "parentUuid": "2d2aaa68_931d3428",
+      "range": {
+        "startLine": 203,
+        "startChar": 18,
+        "endLine": 203,
+        "endChar": 35
+      },
+      "revId": "123e46d7a3fc64ab7041093e09f8d94b07753740",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "64f39245_e4fa543c",
         "filename": "ios/chrome/browser/snapshots/snapshot_generator.mm",
         "patchSetId": 2
@@ -91,6 +163,30 @@
       "revId": "123e46d7a3fc64ab7041093e09f8d94b07753740",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9a73052_75048def",
+        "filename": "ios/chrome/browser/snapshots/snapshot_generator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-12-21T09:38:02Z",
+      "side": 1,
+      "message": "No need for dispatch_once, initialization of static variable in function is threadsafe with C++11:\n\n\u003e Dynamic initialization of function-scope static variables is now threadsafe in Chromium (per standard C++11 behavior). Before 2017, this was thread-unsafe, and base::LazyInstance was widely used. This is no longer necessary. Background can be found in this thread and this thread.\n\n\nhttps://www.chromium.org/developers/coding-style/cpp-dos-and-donts#TOC-Static-variables",
+      "parentUuid": "64f39245_e4fa543c",
+      "range": {
+        "startLine": 248,
+        "startChar": 18,
+        "endLine": 248,
+        "endChar": 38
+      },
+      "revId": "123e46d7a3fc64ab7041093e09f8d94b07753740",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "71a01a07_f71d6c26",
+        "filename": "ios/chrome/browser/snapshots/snapshot_tab_helper.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-12-21T09:38:02Z",
+      "side": 1,
+      "message": "SnapshotGenerator is an implementation detail of SnapshotTabHelper (think of it as SnapshotGeneratorImpl). So this method is necessary as we do not want code outside of //ios/chrome/browser/snapshots to use SnapshotGenerator.",
+      "parentUuid": "818d204e_9db05648",
+      "range": {
+        "startLine": 131,
+        "startChar": 28,
+        "endLine": 131,
+        "endChar": 47
+      },
+      "revId": "123e46d7a3fc64ab7041093e09f8d94b07753740",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f651a3db_a826da32",
         "filename": "ios/chrome/browser/snapshots/snapshot_tab_helper_unittest.mm",
         "patchSetId": 2
@@ -137,6 +257,30 @@
       "revId": "123e46d7a3fc64ab7041093e09f8d94b07753740",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "779620bf_20dfd458",
+        "filename": "ios/chrome/browser/snapshots/snapshot_tab_helper_unittest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-12-21T09:38:02Z",
+      "side": 1,
+      "message": "Sure we can.\n\nI personally find it more readable with the underscore, so let me explain why:\n1. the test fixture tells me which class is tested, here SnapshotTabHelper,\n2. the underscore separate the two information the test name convey\n  2.a. everything before underscore is the method tested\n  2.b. everything after underscore is the particular set up tested\n\nI you fell strongly about dropping the underscore I\u0027ll do it.",
+      "parentUuid": "f651a3db_a826da32",
+      "range": {
+        "startLine": 179,
+        "startChar": 30,
+        "endLine": 179,
+        "endChar": 68
+      },
+      "revId": "123e46d7a3fc64ab7041093e09f8d94b07753740",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "ca658f68_9b1eb55d",
+        "filename": "ios/chrome/browser/web/page_placeholder_tab_helper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-12-21T09:38:02Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "f75bd87c_f73c3b7c",
+      "range": {
+        "startLine": 27,
+        "startChar": 5,
+        "endLine": 27,
+        "endChar": 11
+      },
+      "revId": "123e46d7a3fc64ab7041093e09f8d94b07753740",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a8547e1c_3d36613f",
         "filename": "ios/chrome/browser/web/page_placeholder_tab_helper.mm",
         "patchSetId": 2
@@ -183,6 +351,30 @@
       "revId": "123e46d7a3fc64ab7041093e09f8d94b07753740",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "364a33e2_2b27cee0",
+        "filename": "ios/chrome/browser/web/page_placeholder_tab_helper.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-12-21T09:38:02Z",
+      "side": 1,
+      "message": "Discussed with marq@ offline. I\u0027ll re-instate the delegate but move the code from Tab to BVC.",
+      "parentUuid": "a8547e1c_3d36613f",
+      "range": {
+        "startLine": 103,
+        "startChar": 22,
+        "endLine": 103,
+        "endChar": 43
+      },
+      "revId": "123e46d7a3fc64ab7041093e09f8d94b07753740",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

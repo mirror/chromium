@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "54f32f9f_e224d217",
+        "filename": "ios/chrome/browser/web/page_placeholder_tab_helper_unittest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-12-21T09:38:02Z",
+      "side": 0,
+      "message": "Because after removing the delegate it was no longer possible to which whether a placeholder was displayed. The only way was to ask PagePlaceholderTabHelper but it is owned by WebState and destroyed when web_state_.reset() was called.\n\nThis will be restored as I\u0027ll restore the delegate.",
+      "parentUuid": "785d584b_3bcea51d",
+      "range": {
+        "startLine": 103,
+        "startChar": 37,
+        "endLine": 103,
+        "endChar": 75
+      },
+      "revId": "12c416afb97b655bfeecb6181edf3d484d971bce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4f3af27a_881180d7",
         "filename": "ios/web/web_state/web_state_impl_unittest.mm",
         "patchSetId": 2
@@ -59,6 +83,30 @@
       "writtenOn": "2017-12-20T18:57:51Z",
       "side": 0,
       "message": "Sorry for asking you to write tests. I had no idea that you will remove this code in just a week.",
+      "range": {
+        "startLine": 829,
+        "startChar": 38,
+        "endLine": 829,
+        "endChar": 47
+      },
+      "revId": "12c416afb97b655bfeecb6181edf3d484d971bce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "84626e21_50c3ea15",
+        "filename": "ios/web/web_state/web_state_impl_unittest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 829,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-12-21T09:38:02Z",
+      "side": 0,
+      "message": "No problem :-) It may survive a couple of day yet!",
+      "parentUuid": "4f3af27a_881180d7",
       "range": {
         "startLine": 829,
         "startChar": 38,
