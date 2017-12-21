@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8f1bf8ac_582fcef1",
+        "filename": "ash/display/display_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3475,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-12-21T16:50:48Z",
+      "side": 1,
+      "message": "nit /*unified\u003d*/",
+      "revId": "d94be26a7758f33178f13b71014e9606fa5461f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
