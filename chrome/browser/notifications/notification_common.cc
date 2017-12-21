@@ -13,19 +13,20 @@
 
 NotificationCommon::Metadata::~Metadata() = default;
 
-PersistentNotificationMetadata::PersistentNotificationMetadata() {
+PersistentWebNotificationMetadata::PersistentWebNotificationMetadata() {
   type = NotificationHandler::Type::WEB_PERSISTENT;
 }
 
-PersistentNotificationMetadata::~PersistentNotificationMetadata() = default;
+PersistentWebNotificationMetadata::~PersistentWebNotificationMetadata() =
+    default;
 
 // static
-const PersistentNotificationMetadata* PersistentNotificationMetadata::From(
-    const Metadata* metadata) {
+const PersistentWebNotificationMetadata*
+PersistentWebNotificationMetadata::From(const Metadata* metadata) {
   if (!metadata || metadata->type != NotificationHandler::Type::WEB_PERSISTENT)
     return nullptr;
 
-  return static_cast<const PersistentNotificationMetadata*>(metadata);
+  return static_cast<const PersistentWebNotificationMetadata*>(metadata);
 }
 
 // static

@@ -173,14 +173,9 @@ TEST_F(PlatformNotificationServiceTest,
 }
 
 TEST_F(PlatformNotificationServiceTest, DisplayNonPersistentPropertiesMatch) {
-  std::vector<int> vibration_pattern(
-      kNotificationVibrationPattern,
-      kNotificationVibrationPattern + arraysize(kNotificationVibrationPattern));
-
   PlatformNotificationData notification_data;
   notification_data.title = base::ASCIIToUTF16("My notification's title");
   notification_data.body = base::ASCIIToUTF16("Hello, world!");
-  notification_data.vibration_pattern = vibration_pattern;
   notification_data.silent = true;
 
   service()->DisplayNotification(profile_, kNotificationId,
@@ -197,9 +192,6 @@ TEST_F(PlatformNotificationServiceTest, DisplayNonPersistentPropertiesMatch) {
       base::UTF16ToUTF8(notification.title()));
   EXPECT_EQ("Hello, world!",
       base::UTF16ToUTF8(notification.message()));
-
-  EXPECT_THAT(notification.vibration_pattern(),
-      testing::ElementsAreArray(kNotificationVibrationPattern));
 
   EXPECT_TRUE(notification.silent());
 }
@@ -239,8 +231,11 @@ TEST_F(PlatformNotificationServiceTest, DisplayPersistentPropertiesMatch) {
   EXPECT_EQ("My notification's title", base::UTF16ToUTF8(notification.title()));
   EXPECT_EQ("Hello, world!", base::UTF16ToUTF8(notification.message()));
 
-  EXPECT_THAT(notification.vibration_pattern(),
-              testing::ElementsAreArray(kNotificationVibrationPattern));
+  EXPECT_THAT(
+      PersistentWebNotificationMetadata::From(
+          display_service_tester_->GetMetadataForNotification(notification))
+          ->vibration_pattern,
+      testing::ElementsAreArray(kNotificationVibrationPattern));
 
   EXPECT_TRUE(notification.silent());
 
