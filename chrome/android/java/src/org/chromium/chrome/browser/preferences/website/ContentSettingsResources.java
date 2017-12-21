@@ -155,6 +155,12 @@ public class ContentSettingsResources {
             localMap.put(ContentSettingsType.CONTENT_SETTINGS_TYPE_USB_CHOOSER_DATA,
                     new ResourceItem(R.drawable.settings_usb, 0, 0, ContentSetting.ASK,
                                  ContentSetting.BLOCK, 0, 0));
+            localMap.put(ContentSettingsType.CONTENT_SETTINGS_TYPE_SENSORS,
+                    new ResourceItem(R.drawable.settings_usb, R.string.sensors_permission_title,
+                            R.string.sensors_permission_title, ContentSetting.ALLOW,
+                            ContentSetting.BLOCK,
+                            R.string.website_settings_category_sensors_allowed,
+                            R.string.website_settings_category_sensors_blocked));
             localMap.put(ContentSettingsType.CONTENT_SETTINGS_TYPE_SOUND,
                     new ResourceItem(R.drawable.ic_volume_up_grey600_24dp,
                             R.string.sound_permission_title, R.string.sound_permission_title,
