@@ -22,7 +22,8 @@ SelectToSpeakOptionsPage.prototype = {
     }.bind(this));
     this.syncSelectControlToPref_('voice', 'voice');
     this.syncSelectControlToPref_('rate', 'rate');
-    this.syncCheckboxControlToPref_('wordHighlight', 'wordHighlight');
+    this.syncCheckboxControlToPref_(
+        'wordHighlight', 'wordHighlight', 'highlightSubOption');
     this.setUpHighlightListener_();
     chrome.metricsPrivate.recordUserAction(
         'Accessibility.CrosSelectToSpeak.LoadSettings');
@@ -89,9 +90,13 @@ SelectToSpeakOptionsPage.prototype = {
   /**
    * Populate a checkbox with its current setting.
    * @param {string} checkboxId The id of the checkbox element.
+   * @param {string} pref The name for a chrome.storage pref.
+   * @param {string=} opt_subPref The ID of a preference region that
+   * should be hidden when the checkbox is disabled, and shown when
+   * it is enabled.
    * @private
    */
-  syncCheckboxControlToPref_: function(checkboxId, pref) {
+  syncCheckboxControlToPref_: function(checkboxId, pref, opt_subPref) {
     let checkbox = document.getElementById(checkboxId);
 
     function updateFromPref() {
@@ -99,6 +104,11 @@ SelectToSpeakOptionsPage.prototype = {
         let value = items[pref];
         if (value != null) {
           checkbox.checked = value;
+          if (opt_subPref) {
+            let subElement = document.getElementById(opt_subPref);
+            subElement.className =
+                checkbox.checked ? 'sub-option' : 'sub-option hidden';
+          }
         }
       });
     }
