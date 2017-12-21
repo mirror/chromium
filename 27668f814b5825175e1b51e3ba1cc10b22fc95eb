@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "91006578_6a29a82e",
+        "filename": "build/android/pylib/local/device/local_device_instrumentation_test_run.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-12-21T20:58:00Z",
+      "side": 1,
+      "message": "This only appears to be setting a single global command line file for tests that use CommandLineFlags, i.e., instrumentation tests. Telemetry runs against e.g. ChromePublic.apk w/o ChromePublicTest.apk \u0026 as such will be unaffected by this change.",
+      "parentUuid": "31af3b08_1bd0dff1",
+      "revId": "27668f814b5825175e1b51e3ba1cc10b22fc95eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e0aa1d49_75c82879",
         "filename": "chrome/test/android/javatests/src/org/chromium/chrome/test/ChromeJUnit4ClassRunner.java",
         "patchSetId": 13
