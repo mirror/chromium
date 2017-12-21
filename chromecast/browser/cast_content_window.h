@@ -49,6 +49,9 @@ class CastContentWindow {
   // |window_manager| should outlive this CastContentWindow.
   virtual void ShowWebContents(content::WebContents* web_contents,
                                CastWindowManager* window_manager) = 0;
+
+  // Enables touch input to be routed to the window's WebContents.
+  virtual void EnableTouchInput() = 0;
 };
 
 }  // namespace shell

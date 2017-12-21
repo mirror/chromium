@@ -37,5 +37,9 @@ void CastContentWindowAura::ShowWebContents(content::WebContents* web_contents,
   window->Show();
 }
 
+void CastContentWindowAura::EnableTouchInput() {
+  // TODO(halliwell): implement this
+}
+
 }  // namespace shell
 }  // namespace chromecast

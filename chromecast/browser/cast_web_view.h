@@ -70,6 +70,10 @@ class CastWebView : content::WebContentsObserver, content::WebContentsDelegate {
   // Makes the page visible to the user.
   void Show(CastWindowManager* window_manager);
 
+  // Enables touch input events to be routed to the page.  By default, touch
+  // input is not forwarded.
+  void EnableTouchInput();
+
  private:
   // WebContentsObserver implementation:
   void RenderProcessGone(base::TerminationStatus status) override;

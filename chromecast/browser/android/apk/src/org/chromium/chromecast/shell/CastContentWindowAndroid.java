@@ -61,6 +61,14 @@ public class CastContentWindowAndroid implements CastWebContentsComponent.OnComp
 
     @SuppressWarnings("unused")
     @CalledByNative
+    private void enableTouchInput() {
+        if (DEBUG) Log.d(TAG, "enableTouchInput");
+
+        mComponent.enableTouchInput(mContext);
+    }
+
+    @SuppressWarnings("unused")
+    @CalledByNative
     private void onNativeDestroyed() {
         assert mNativeCastContentWindowAndroid != 0;
         mNativeCastContentWindowAndroid = 0;

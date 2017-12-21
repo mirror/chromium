@@ -25,6 +25,7 @@ class CastContentWindowAura : public CastContentWindow {
   // CastContentWindow implementation.
   void ShowWebContents(content::WebContents* web_contents,
                        CastWindowManager* window_manager) override;
+  void EnableTouchInput() override;
 
  private:
   friend class CastContentWindow;

@@ -40,6 +40,7 @@ public class CastWebContentsComponent {
     private interface Delegate {
         void start(Context context, WebContents webContents);
         void stop(Context context);
+        void enableTouchInput(Context context);
     }
 
     private class ActivityDelegate implements Delegate {
@@ -69,6 +70,13 @@ public class CastWebContentsComponent {
             Intent intent =
                     new Intent(CastIntents.ACTION_STOP_ACTIVITY, getInstanceUri(mInstanceId));
             LocalBroadcastManager.getInstance(context).sendBroadcastSync(intent);
+        }
+
+        @Override
+        public void enableTouchInput(Context context) {
+            LocalBroadcastManager.getInstance(context).sendBroadcastSync(
+                    new Intent(CastIntents.ACTION_ENABLE_TOUCH_INPUT));
+            mEnableTouchInput = true;
         }
     }
 
@@ -103,6 +111,9 @@ public class CastWebContentsComponent {
 
             context.unbindService(mConnection);
         }
+
+        @Override
+        public void enableTouchInput(Context context) {}
     }
 
     private class Receiver extends BroadcastReceiver {
@@ -183,6 +194,11 @@ public class CastWebContentsComponent {
             mDelegate.stop(context);
             mStarted = false;
         }
+    }
+
+    public void enableTouchInput(Context context) {
+        if (DEBUG) Log.d(TAG, "enableTouchInput");
+        mDelegate.enableTouchInput(context);
     }
 
     public static void onComponentClosed(Context context, String instanceId) {
