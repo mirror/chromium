@@ -15,6 +15,7 @@
 #include "mojo/public/cpp/bindings/binding.h"
 
 namespace message_center {
+class NotificationBlocker;
 struct NotifierId;
 }
 
@@ -78,6 +79,7 @@ class ASH_EXPORT MessageCenterController
   FullscreenNotificationBlocker fullscreen_notification_blocker_;
   InactiveUserNotificationBlocker inactive_user_notification_blocker_;
   LoginStateNotificationBlocker login_notification_blocker_;
+  std::unique_ptr<message_center::NotificationBlocker> block_everything_;
 
   NotifierSettingsListener* notifier_id_ = nullptr;
 
