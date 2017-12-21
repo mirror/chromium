@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9554d325_7aa3f478",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/embedded-content/media-elements/track/track-element/text-track-cue-exceptions.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-12-21T09:03:51Z",
+      "side": 1,
+      "message": "This is like one of those tests we discussed in an earlier CL - it tests a specific format of .message on the exception - some that can\u0027t be expected to be the same in different UAs. I don\u0027t remember how we resolved those, but the same should apply here.",
+      "revId": "2d09f5ba6b4d58fddcf02837a346004355e3827a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
