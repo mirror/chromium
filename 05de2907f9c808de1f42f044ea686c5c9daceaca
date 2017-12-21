@@ -186,6 +186,30 @@
     },
     {
       "key": {
+        "uuid": "3c8358b3_36664793",
+        "filename": "chrome/renderer/chrome_render_frame_observer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-21T04:35:04Z",
+      "side": 1,
+      "message": "Hmm, looks like this can\u0027t be done since everything is on the one interface. I would actually consider splitting this particular method off the RenderFrameObserver interface and onto a separate mojom because it\u0027s Android-only. That way we can avoid having this extra interface on platforms that don\u0027t use it.",
+      "parentUuid": "818fbb59_1db96213",
+      "range": {
+        "startLine": 79,
+        "startChar": 7,
+        "endLine": 79,
+        "endChar": 33
+      },
+      "revId": "05de2907f9c808de1f42f044ea686c5c9daceaca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d345a87e_5622b8f2",
         "filename": "chrome/renderer/chrome_render_view_observer.cc",
         "patchSetId": 3
