@@ -261,17 +261,8 @@ bool IsMainFrameBeforeActivationEnabled() {
 }
 
 bool IsCheckerImagingEnabled() {
-  if (base::CommandLine::ForCurrentProcess()->HasSwitch(
-          cc::switches::kDisableCheckerImaging))
-    return false;
-
-  if (base::CommandLine::ForCurrentProcess()->HasSwitch(
-          cc::switches::kEnableCheckerImaging))
-    return true;
-
-  if (base::FeatureList::IsEnabled(features::kCheckerImaging))
-    return true;
-
+  // Disable async image decoding for now.
+  // Should be disabled only during the Splash Screen capture.
   return false;
 }
 

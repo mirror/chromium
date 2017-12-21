@@ -235,6 +235,8 @@ class CONTENT_EXPORT WebContentsObserver : public IPC::Listener {
   virtual void DidFinishLoad(RenderFrameHost* render_frame_host,
                              const GURL& validated_url) {}
 
+  virtual void DidSwapAfterLoad(RenderFrameHost* render_frame_host) {}
+
   // This method is like DidFinishLoad, but when the load failed or was
   // cancelled, e.g. window.stop() is invoked.
   virtual void DidFailLoad(RenderFrameHost* render_frame_host,

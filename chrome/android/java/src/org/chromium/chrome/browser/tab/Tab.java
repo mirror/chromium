@@ -1709,6 +1709,10 @@ public class Tab
         maybeShowDataSaverInProductHelp(tracker);
     }
 
+    public void didSwapAfterLoad() {
+        for (TabObserver observer : mObservers) observer.onDidSwapAfterLoad(this);
+    }
+
     private void maybeShowDataSaverInProductHelp(final Tracker tracker) {
         if (!tracker.shouldTriggerHelpUI(FeatureConstants.DATA_SAVER_DETAIL_FEATURE)) return;
 

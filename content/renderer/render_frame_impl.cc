@@ -42,6 +42,7 @@
 #include "base/trace_event/trace_event.h"
 #include "build/build_config.h"
 #include "cc/base/switches.h"
+#include "cc/trees/swap_promise.h"
 #include "content/common/accessibility_messages.h"
 #include "content/common/associated_interface_provider_impl.h"
 #include "content/common/associated_interfaces.mojom.h"
@@ -307,6 +308,31 @@ using blink::WebFloatRect;
 namespace content {
 
 namespace {
+
+#if defined(OS_ANDROID)
+class LoadedSwapPromise : public cc::SwapPromise {
+  scoped_refptr<base::SingleThreadTaskRunner> task_runner_;
+  base::Closure closure_;
+
+ public:
+  explicit LoadedSwapPromise(
+      scoped_refptr<base::SingleThreadTaskRunner> task_runner,
+      const base::Closure& closure)
+      : task_runner_(task_runner), closure_(closure) {}
+
+  void DidSwap() override { task_runner_->PostTask(FROM_HERE, closure_); }
+
+  SwapPromise::DidNotSwapAction DidNotSwap(DidNotSwapReason reason) override {
+    // Not sure if this is enough to ensure DidSwap() will be called.
+    return DidNotSwapAction::KEEP_ACTIVE;
+  }
+
+  void DidActivate() override {}
+  void WillSwap(viz::CompositorFrameMetadata* metadata) override {}
+
+  int64_t TraceId() const override { return 0; }
+};
+#endif
 
 const base::Feature kConsumeGestureOnNavigation = {
     "ConsumeGestureOnNavigation", base::FEATURE_DISABLED_BY_DEFAULT};
@@ -4287,6 +4313,15 @@ void RenderFrameImpl::DidFinishLoad() {
   Send(new FrameHostMsg_DidFinishLoad(routing_id_,
                                       document_loader->GetRequest().Url()));
 
+#if defined(OS_ANDROID)
+  std::unique_ptr<cc::SwapPromise> swap_promise(new LoadedSwapPromise(
+      base::ThreadTaskRunnerHandle::Get(),
+      base::Bind(
+          // base::Unretained might not be safe here, to be considered.
+          &RenderFrameImpl::DidSwapAfterLoadEvent, base::Unretained(this))));
+  GetRenderWidget()->compositor()->QueueSwapPromise(std::move(swap_promise));
+#endif
+
   ReportPeakMemoryStats();
   if (!RenderThreadImpl::current())
     return;
@@ -4303,6 +4338,12 @@ void RenderFrameImpl::DidFinishLoad() {
   RecordSuffixedRendererMemoryMetrics(
       memory_metrics, ".ServiceWorkerControlledMainFrameDidFinishLoad");
 }
+
+#if defined(OS_ANDROID)
+void RenderFrameImpl::DidSwapAfterLoadEvent() {
+  Send(new FrameHostMsg_DidSwapAfterLoad(routing_id_));
+}
+#endif
 
 void RenderFrameImpl::DidNavigateWithinPage(
     const blink::WebHistoryItem& item,

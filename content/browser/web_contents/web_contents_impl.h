@@ -1123,6 +1123,7 @@ class CONTENT_EXPORT WebContentsImpl : public WebContents,
   void OnOpenDateTimeDialog(
       RenderViewHostImpl* source,
       const ViewHostMsg_DateTimeDialogValue_Params& value);
+  void OnDidSwapAfterLoad(RenderFrameHostImpl* source);
 #endif
   void OnDomOperationResponse(RenderFrameHostImpl* source,
                               const std::string& json_string);

@@ -203,7 +203,7 @@ public class WebappActivity extends SingleTabActivity {
     public WebappActivity() {
         mWebappInfo = createWebappInfo(null);
         mDirectoryManager = new WebappDirectoryManager();
-        mSplashController = new WebappSplashScreenController();
+        mSplashController = new WebappSplashScreenController(this);
         mNotificationManager = new WebappActionsNotificationManager(this);
     }
 
@@ -241,7 +241,10 @@ public class WebappActivity extends SingleTabActivity {
         // We do not load URL when restoring from saved instance states.
         if (savedInstanceState == null) {
             getActivityTab().loadUrl(
-                    new LoadUrlParams(mWebappInfo.uri().toString(), PageTransition.AUTO_TOPLEVEL));
+                    new LoadUrlParams(mSplashController.isInSplashScreenCapturePhase()
+                                    ? mWebappInfo.splashScreenUri().toString()
+                                    : mWebappInfo.uri().toString(),
+                            PageTransition.AUTO_TOPLEVEL));
         } else {
             if (NetworkChangeNotifier.isOnline()) getActivityTab().reloadIgnoringCache();
         }
@@ -585,7 +588,7 @@ public class WebappActivity extends SingleTabActivity {
         }
 
         ViewGroup contentView = (ViewGroup) findViewById(android.R.id.content);
-        mSplashController.showSplashScreen(getActivityType(), contentView, mWebappInfo);
+        mSplashController.showSplashScreen(getActivityType(), contentView);
     }
 
     protected void updateStorage(WebappDataStorage storage) {

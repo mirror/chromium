@@ -40,6 +40,9 @@ public class EmptyTabObserver implements TabObserver {
     public void onPageLoadFinished(Tab tab) { }
 
     @Override
+    public void onDidSwapAfterLoad(Tab tab) {}
+
+    @Override
     public void onPageLoadFailed(Tab tab, int errorCode) { }
 
     @Override
