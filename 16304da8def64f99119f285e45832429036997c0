@@ -2,6 +2,75 @@
   "comments": [
     {
       "key": {
+        "uuid": "a86e1ae6_e0c59859",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-12-21T17:53:42Z",
+      "side": 1,
+      "message": "missing?",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 3
+      },
+      "revId": "16304da8def64f99119f285e45832429036997c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f7a15a6_de526103",
+        "filename": "chrome/browser/data_use_measurement/chrome_data_use_ascriber.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-12-21T17:53:42Z",
+      "side": 1,
+      "message": "can we add a comment on why this needs to be updated?",
+      "range": {
+        "startLine": 351,
+        "startChar": 6,
+        "endLine": 351,
+        "endChar": 54
+      },
+      "revId": "16304da8def64f99119f285e45832429036997c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b18dfdb_c0fcd2cf",
+        "filename": "chrome/browser/data_use_measurement/chrome_data_use_ascriber.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-12-21T17:53:42Z",
+      "side": 1,
+      "message": "s/data_use/old_data_use/",
+      "range": {
+        "startLine": 351,
+        "startChar": 15,
+        "endLine": 351,
+        "endChar": 23
+      },
+      "revId": "16304da8def64f99119f285e45832429036997c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8abcc415_aa9972d6",
         "filename": "chrome/browser/data_use_measurement/chrome_data_use_ascriber.cc",
         "patchSetId": 1
@@ -42,6 +111,29 @@
     },
     {
       "key": {
+        "uuid": "763e5507_1eff03ec",
+        "filename": "chrome/browser/data_use_measurement/chrome_data_use_ascriber.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 411,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-12-21T17:53:42Z",
+      "side": 1,
+      "message": "why |old_frame_entry|, and not |entry|?\n\nAlso, consider s/data_use/old_data_use/",
+      "range": {
+        "startLine": 411,
+        "startChar": 24,
+        "endLine": 411,
+        "endChar": 39
+      },
+      "revId": "16304da8def64f99119f285e45832429036997c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ae74cf8d_4d18bdd1",
         "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_data_use_observer.cc",
         "patchSetId": 1
@@ -58,6 +150,69 @@
         "startChar": 6,
         "endLine": 23,
         "endChar": 41
+      },
+      "revId": "16304da8def64f99119f285e45832429036997c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "caab75fe_8186d846",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_data_use_observer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-12-21T17:53:42Z",
+      "side": 1,
+      "message": "While we are here, can we add some comments to this class to explain what exactly it does?",
+      "revId": "16304da8def64f99119f285e45832429036997c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd045849_157503b5",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_data_use_observer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-12-21T17:53:42Z",
+      "side": 1,
+      "message": "can these be const?",
+      "range": {
+        "startLine": 47,
+        "startChar": 2,
+        "endLine": 48,
+        "endChar": 25
+      },
+      "revId": "16304da8def64f99119f285e45832429036997c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e7bcde2_ac466955",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_data_use_observer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-12-21T17:53:42Z",
+      "side": 1,
+      "message": "s/reinterpret_cast/static_cast/\nif possible.\n\nsimilar to:\nhttps://cs.chromium.org/chromium/src/chrome/browser/ui/tab_dialogs.cc?rcl\u003df738ff448179e8d0f18c2c78b28782952f25503b\u0026l\u003d15",
+      "range": {
+        "startLine": 80,
+        "startChar": 6,
+        "endLine": 80,
+        "endChar": 22
       },
       "revId": "16304da8def64f99119f285e45832429036997c0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",

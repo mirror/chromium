@@ -49,6 +49,29 @@
     },
     {
       "key": {
+        "uuid": "f3d1822d_1d86371b",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_compression_stats.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1173,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-12-21T17:53:42Z",
+      "side": 0,
+      "message": "This is weird. In the .h file, the order is |original_request_size| followed by |data_used|. Here, it is opposite?",
+      "range": {
+        "startLine": 1173,
+        "startChar": 12,
+        "endLine": 1173,
+        "endChar": 21
+      },
+      "revId": "987d2d9f47389f47268ab4fbfb0b33df5e37349f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b488ad64_02928438",
         "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_data_use_observer.cc",
         "patchSetId": 1
