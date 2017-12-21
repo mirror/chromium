@@ -16,6 +16,24 @@
       "revId": "f66df8b87cf32a683c5d70a5cdc2825f9e45e03c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e58e5acf_a7a70d0e",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsRotateToFullscreenDelegate.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-12-21T10:19:32Z",
+      "side": 1,
+      "message": "That\u0027s because the code in content/renderer/ is getting the RenderFrame via the v8::Context (see https://cs.chromium.org/chromium/src/content/renderer/device_sensors/device_sensor_event_pump.h?rcl\u003dbc7b0afd8a1be8cfee2164dead6f4bc3b1e1d3f4\u0026l\u003d224)\n\nI think we should fix that but when they wrote this change, the integration test was disabled and it broke the entire feature in M64 and I would like to fix this in Beta ASAP.",
+      "parentUuid": "6d199f3d_ac717977",
+      "revId": "f66df8b87cf32a683c5d70a5cdc2825f9e45e03c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
