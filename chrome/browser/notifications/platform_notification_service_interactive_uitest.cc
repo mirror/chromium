@@ -473,7 +473,10 @@ IN_PROC_BROWSER_TEST_F(PlatformNotificationServiceBrowserTest,
   EXPECT_EQ("Title", base::UTF16ToUTF8(notification.title()));
   EXPECT_EQ("Contents", base::UTF16ToUTF8(notification.message()));
 
-  EXPECT_THAT(notification.vibration_pattern(),
+  EXPECT_THAT(
+      PersistentWebNotificationMetadata::From(
+          display_service_tester_->GetMetadataForNotification(notification))
+          ->vibration_pattern,
       testing::ElementsAreArray(kNotificationVibrationPattern));
 }
 
