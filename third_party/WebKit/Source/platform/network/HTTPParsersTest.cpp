@@ -643,16 +643,26 @@ TEST(HTTPParsersTest, ParseServerTimingHeader) {
   // duplicate param names
   testServerTimingHeader("metric;dur=123.4;dur=567.8",
                          {{"metric", "123.4", ""}});
+  testServerTimingHeader("metric;dur=foo;dur=567.8", {{"metric", "0", ""}});
   testServerTimingHeader("metric;desc=description1;desc=description2",
                          {{"metric", "0", "description1"}});
-  testServerTimingHeader("metric;dur=foo;dur=567.8", {{"metric", "", ""}});
 
-  // unspecified param values
-  testServerTimingHeader("metric;dur;dur=123.4", {{"metric", "123.4", ""}});
-  testServerTimingHeader("metric;desc;desc=description",
+  // incomplete params
+  testServerTimingHeader("metric;dur=;dur=567.8;desc=description",
                          {{"metric", "0", "description"}});
+  testServerTimingHeader("metric;dur;dur=123.4;desc=description",
+                         {{"metric", "0", "description"}});
+  testServerTimingHeader("metric;desc=;desc=description;dur=123.4",
+                         {{"metric", "123.4", ""}});
+  testServerTimingHeader("metric;desc;desc=description;dur=123.4",
+                         {{"metric", "123.4", ""}});
 
-  // param name case
+  // invalid params
+  testServerTimingHeader("metric;dur=123.4 567.8", {{"metric", "123.4", ""}});
+  testServerTimingHeader("metric;desc=description1 description2",
+                         {{"metric", "0", "description1"}});
+
+  // param name case-sensitivity
   testServerTimingHeader("metric;DuR=123.4;DeSc=description",
                          {{"metric", "123.4", "description"}});
 
