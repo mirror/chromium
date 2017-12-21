@@ -297,10 +297,14 @@ class CONTENT_EXPORT RenderWidgetHostViewBase : public RenderWidgetHostView,
   // methods are invoked on the RenderWidgetHostView that should be able to
   // properly handle the event (i.e. it has focus for keyboard events, or has
   // been identified by hit testing mouse, touch or gesture events).
+  // |out_query_renderer| is set if there is low confidence in the hit test
+  // result which means that renderer process hit testing could potentially
+  // give a different result.
   virtual viz::FrameSinkId FrameSinkIdAtPoint(
       viz::SurfaceHittestDelegate* delegate,
       const gfx::PointF& point,
-      gfx::PointF* transformed_point);
+      gfx::PointF* transformed_point,
+      bool* out_query_renderer);
   virtual void ProcessKeyboardEvent(const NativeWebKeyboardEvent& event,
                                     const ui::LatencyInfo& latency) {}
   virtual void ProcessMouseEvent(const blink::WebMouseEvent& event,
