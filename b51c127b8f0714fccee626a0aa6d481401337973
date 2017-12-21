@@ -2,6 +2,74 @@
   "comments": [
     {
       "key": {
+        "uuid": "c1e7ba65_40ae5b66",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1254,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-12-21T16:35:18Z",
+      "side": 1,
+      "message": "input_target_client_ is supposed to be moved from RenderFrameHostImpl to RenderWidgetHost in a follow-up CL to when Navid landed that interface, but this is probably okay as an intermediate step.",
+      "revId": "b51c127b8f0714fccee626a0aa6d481401337973",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "826d347a_572fe19a",
+        "filename": "content/browser/renderer_host/DEPS",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-12-21T16:35:18Z",
+      "side": 1,
+      "message": "There should be an explanatory comment on why we need this exception. It might warrant a bug that we could use a better way of mapping an iframe element in the embedding renderer to its corresponding OOPIF in the browser process, although maybe we just wait for MUS to deprecate RWHIER and make it moot.",
+      "revId": "b51c127b8f0714fccee626a0aa6d481401337973",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5b117ad_66407794",
+        "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-12-21T16:35:18Z",
+      "side": 1,
+      "message": "I don\u0027t think this will work for an OOPIF, because the routing ID is actually for a RenderFrameProxyHost, not a RenderFrameHostImpl. You could call both versions of FromID(). FrameTree::FindByRoutingID() is really what you need here, but it likely makes the layering violation a lot worse because you have to get a pointer to the frame tree somehow.",
+      "revId": "b51c127b8f0714fccee626a0aa6d481401337973",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c87c5214_b97f8870",
+        "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-12-21T16:35:18Z",
+      "side": 1,
+      "message": "This doesn\u0027t appear to handle nested OOPIFs. :/",
+      "revId": "b51c127b8f0714fccee626a0aa6d481401337973",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5cca87e0_c4adb7e6",
         "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
         "patchSetId": 1
@@ -47,6 +115,23 @@
       "writtenOn": "2017-12-21T07:53:19Z",
       "side": 1,
       "message": "There is actually no reason for these to be WeakPtr\u003c\u003e. I will clean these up.",
+      "revId": "b51c127b8f0714fccee626a0aa6d481401337973",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4aa374a1_e2fff733",
+        "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-12-21T16:35:18Z",
+      "side": 1,
+      "message": "nit: It looks simpler just to DCHECK IsMouseEventType() and not use an if block.",
       "revId": "b51c127b8f0714fccee626a0aa6d481401337973",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
