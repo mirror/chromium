@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "70bb1b58_252bd233",
+        "filename": "chrome/browser/chromeos/arc/accessibility/arc_accessibility_helper_bridge.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-12-21T04:05:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9b2c7f5f_a4511c43",
+      "range": {
+        "startLine": 438,
+        "startChar": 0,
+        "endLine": 441,
+        "endChar": 59
+      },
+      "revId": "e6469f2f8b1bb816b25e0b70d797140be8fa10d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8ab9b5dc_13e85336",
         "filename": "chrome/browser/chromeos/arc/accessibility/arc_accessibility_helper_bridge.cc",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "d17dd037_cc703e81",
+        "filename": "chrome/browser/chromeos/arc/accessibility/arc_accessibility_helper_bridge.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-12-21T04:05:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8ab9b5dc_13e85336",
+      "range": {
+        "startLine": 452,
+        "startChar": 2,
+        "endLine": 452,
+        "endChar": 10
+      },
+      "revId": "e6469f2f8b1bb816b25e0b70d797140be8fa10d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "34d21a2f_0ba8c6b6",
         "filename": "chrome/browser/chromeos/arc/accessibility/arc_accessibility_helper_bridge.cc",
         "patchSetId": 4
@@ -62,6 +110,24 @@
       "revId": "e6469f2f8b1bb816b25e0b70d797140be8fa10d6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4fb8492_a5a6cc67",
+        "filename": "chrome/browser/chromeos/arc/accessibility/arc_accessibility_helper_bridge.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-12-21T04:05:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "34d21a2f_0ba8c6b6",
+      "revId": "e6469f2f8b1bb816b25e0b70d797140be8fa10d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -82,6 +148,24 @@
     },
     {
       "key": {
+        "uuid": "301ae081_7bf3fa67",
+        "filename": "chrome/browser/chromeos/arc/accessibility/arc_accessibility_helper_bridge.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 466,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-12-21T04:05:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f98a235b_b8b5f96a",
+      "revId": "e6469f2f8b1bb816b25e0b70d797140be8fa10d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9f787442_679a993b",
         "filename": "chrome/browser/chromeos/arc/accessibility/arc_accessibility_helper_bridge.cc",
         "patchSetId": 4
@@ -93,6 +177,24 @@
       "writtenOn": "2017-12-20T19:30:53Z",
       "side": 1,
       "message": "nit: these two clauses can be combined (set the property to it \u003d\u003d task_id_to_tree_.end())",
+      "revId": "e6469f2f8b1bb816b25e0b70d797140be8fa10d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4efe72e6_99cfa5e7",
+        "filename": "chrome/browser/chromeos/arc/accessibility/arc_accessibility_helper_bridge.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 491,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-12-21T04:05:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9f787442_679a993b",
       "revId": "e6469f2f8b1bb816b25e0b70d797140be8fa10d6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -122,6 +224,30 @@
     },
     {
       "key": {
+        "uuid": "5aeb4ec2_338c7d51",
+        "filename": "chrome/browser/chromeos/arc/accessibility/arc_accessibility_helper_bridge.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 507,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-12-21T04:05:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "42efb063_0231d68d",
+      "range": {
+        "startLine": 507,
+        "startChar": 35,
+        "endLine": 507,
+        "endChar": 37
+      },
+      "revId": "e6469f2f8b1bb816b25e0b70d797140be8fa10d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ebb47acd_aee7727b",
         "filename": "chrome/browser/chromeos/arc/accessibility/arc_accessibility_helper_bridge.h",
         "patchSetId": 4
@@ -133,6 +259,24 @@
       "writtenOn": "2017-12-20T19:30:53Z",
       "side": 1,
       "message": "nit: Can you move this to .cc?",
+      "revId": "e6469f2f8b1bb816b25e0b70d797140be8fa10d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4a694895_1c8d861f",
+        "filename": "chrome/browser/chromeos/arc/accessibility/arc_accessibility_helper_bridge.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-12-21T04:05:24Z",
+      "side": 1,
+      "message": "No, because we cannot use forward declaration for this.",
+      "parentUuid": "ebb47acd_aee7727b",
       "revId": "e6469f2f8b1bb816b25e0b70d797140be8fa10d6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -162,6 +306,30 @@
     },
     {
       "key": {
+        "uuid": "74c035b9_eb7d9bba",
+        "filename": "chrome/browser/chromeos/arc/accessibility/arc_accessibility_helper_bridge.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-12-21T04:05:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be5b34f7_478b3ef5",
+      "range": {
+        "startLine": 124,
+        "startChar": 7,
+        "endLine": 124,
+        "endChar": 33
+      },
+      "revId": "e6469f2f8b1bb816b25e0b70d797140be8fa10d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "813b6285_67ad77b1",
         "filename": "chrome/browser/chromeos/arc/accessibility/arc_accessibility_helper_bridge.h",
         "patchSetId": 4
@@ -173,6 +341,24 @@
       "writtenOn": "2017-12-20T19:30:53Z",
       "side": 1,
       "message": "Can this be forward declared?",
+      "revId": "e6469f2f8b1bb816b25e0b70d797140be8fa10d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fae6b53f_d5638cbf",
+        "filename": "chrome/browser/chromeos/arc/accessibility/arc_accessibility_helper_bridge.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-12-21T04:05:24Z",
+      "side": 1,
+      "message": "No, I don\u0027t think we can forward declare typedef-ed thing. It causes an error of duplicated definition.",
+      "parentUuid": "813b6285_67ad77b1",
       "revId": "e6469f2f8b1bb816b25e0b70d797140be8fa10d6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -199,6 +385,30 @@
       "revId": "e6469f2f8b1bb816b25e0b70d797140be8fa10d6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "282efcdf_445ed530",
+        "filename": "chrome/browser/chromeos/arc/accessibility/arc_accessibility_helper_bridge_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-12-21T04:05:24Z",
+      "side": 1,
+      "message": "Yes, I\u0027ve moved it to the SetUpOnMainThread.\n\nThe intention I put this in SetFakeInstance is to reproduce more realistic setting. In real setting, instance is initiated by Android side with the trigger of preference change. It means that it won\u0027t happen that instance is initiated before any accessibility option is enabled.\n\nBut it\u0027s not the main part which I wanted to test with this case. Let me move it to SetUpOnMainThread to make test code simpler.",
+      "parentUuid": "5b13afff_a4d3b628",
+      "range": {
+        "startLine": 54,
+        "startChar": 0,
+        "endLine": 61,
+        "endChar": 80
+      },
+      "revId": "e6469f2f8b1bb816b25e0b70d797140be8fa10d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -242,6 +452,48 @@
     },
     {
       "key": {
+        "uuid": "0c73ff1c_5e065238",
+        "filename": "components/arc/test/fake_accessibility_helper_instance.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-12-21T04:05:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f0ab2780_bbb2e400",
+      "range": {
+        "startLine": 10,
+        "startChar": 6,
+        "endLine": 10,
+        "endChar": 55
+      },
+      "revId": "e6469f2f8b1bb816b25e0b70d797140be8fa10d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "72180c18_01e9aae3",
+        "filename": "components/arc/test/fake_accessibility_helper_instance.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-12-21T04:05:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "437e9637_7150dbc9",
+      "revId": "e6469f2f8b1bb816b25e0b70d797140be8fa10d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e22d8b27_fe8c73cd",
         "filename": "components/arc/test/fake_accessibility_helper_instance.cc",
         "patchSetId": 4
@@ -262,6 +514,30 @@
       "revId": "e6469f2f8b1bb816b25e0b70d797140be8fa10d6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a522ffa1_5fb4f8c8",
+        "filename": "components/arc/test/fake_accessibility_helper_instance.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-12-21T04:05:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e22d8b27_fe8c73cd",
+      "range": {
+        "startLine": 14,
+        "startChar": 48,
+        "endLine": 14,
+        "endChar": 50
+      },
+      "revId": "e6469f2f8b1bb816b25e0b70d797140be8fa10d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -288,6 +564,30 @@
     },
     {
       "key": {
+        "uuid": "0e70812b_3cab3bde",
+        "filename": "components/arc/test/fake_accessibility_helper_instance.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-12-21T04:05:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "546ae586_5c78c6af",
+      "range": {
+        "startLine": 19,
+        "startChar": 7,
+        "endLine": 19,
+        "endChar": 11
+      },
+      "revId": "e6469f2f8b1bb816b25e0b70d797140be8fa10d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9caab469_02b69c02",
         "filename": "components/arc/test/fake_accessibility_helper_instance.h",
         "patchSetId": 4
@@ -308,6 +608,30 @@
       "revId": "e6469f2f8b1bb816b25e0b70d797140be8fa10d6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8c2516b_809ba86b",
+        "filename": "components/arc/test/fake_accessibility_helper_instance.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-12-21T04:05:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9caab469_02b69c02",
+      "range": {
+        "startLine": 29,
+        "startChar": 17,
+        "endLine": 29,
+        "endChar": 23
+      },
+      "revId": "e6469f2f8b1bb816b25e0b70d797140be8fa10d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
