@@ -19,14 +19,14 @@
 // (see https://tools.ietf.org/html/rfc7049#section-3.2).
 // Supported:
 //  * Major types:
-//     * 0: Unsigned integers, up to 64-bit.
+//     * 0: Unsigned integers, up to INT64_MAX.
+//     * 1: Negative integers, to INT64_MIN.
 //     * 2: Byte strings.
 //     * 3: UTF-8 strings.
 //     * 4: Arrays, with the number of elements known at the start.
 //     * 5: Maps, with the number of elements known at the start
 //              of the container.
 // Unsupported:
-//  * Negative integers.
 //  * Floating-point numbers.
 //  * Indefinite-length encodings.
 //  * Parsing.
