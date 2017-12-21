@@ -569,6 +569,7 @@ def _CreateLinkApkArgs(options):
     '--version-name', options.version_name,
     '--auto-add-overlay',
     '--no-version-vectors',
+    '--no-xml-namespaces',
     '-I', options.android_sdk_jar,
     '-o', options.apk_path,
   ]
