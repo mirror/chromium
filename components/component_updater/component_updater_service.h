@@ -160,7 +160,7 @@ class OnDemandUpdater {
   friend class ::ComponentsUI;
   friend class ::PluginObserver;
 #if defined(OS_CHROMEOS)
-  friend class CrOSComponent;
+  friend class CrOSComponentManager;
 #endif  // defined(OS_CHROMEOS)
 
   // Triggers an update check for a component. |id| is a value

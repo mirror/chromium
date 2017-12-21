@@ -7,6 +7,7 @@
 #include <utility>
 
 #include "base/bind.h"
+#include "base/files/file_path.h"
 #include "dbus/bus.h"
 #include "dbus/message.h"
 #include "third_party/cros_system_api/dbus/service_constants.h"
@@ -57,30 +58,44 @@ void ComponentUpdaterServiceProvider::LoadComponent(
     dbus::ExportedObject::ResponseSender response_sender) {
   dbus::MessageReader reader(method_call);
   std::string component_name;
-  if (reader.PopString(&component_name)) {
-    delegate_->LoadComponent(
-        component_name,
-        base::Bind(&ComponentUpdaterServiceProvider::OnLoadComponent,
-                   weak_ptr_factory_.GetWeakPtr(), method_call,
-                   response_sender));
-  } else {
+  bool mount;
+  if (!reader.PopString(&component_name)) {
     std::unique_ptr<dbus::ErrorResponse> error_response =
         dbus::ErrorResponse::FromMethodCall(
             method_call, kErrorInvalidArgs,
             "Missing component name string argument.");
     response_sender.Run(std::move(error_response));
   }
+  if (!reader.PopBool(&mount)) {
+    std::unique_ptr<dbus::ErrorResponse> error_response =
+        dbus::ErrorResponse::FromMethodCall(method_call, kErrorInvalidArgs,
+                                            "Missing mount bool argument.");
+    response_sender.Run(std::move(error_response));
+    return;
+  }
+  if (!reader.PopBool(&mount)) {
+    std::unique_ptr<dbus::ErrorResponse> error_response =
+        dbus::ErrorResponse::FromMethodCall(method_call, kErrorInvalidArgs,
+                                            "Missing mount bool argument.");
+    response_sender.Run(std::move(error_response));
+    return;
+  }
+
+  delegate_->LoadComponent(
+      component_name, mount,
+      base::Bind(&ComponentUpdaterServiceProvider::OnLoadComponent,
+                 weak_ptr_factory_.GetWeakPtr(), method_call, response_sender));
 }
 
 void ComponentUpdaterServiceProvider::OnLoadComponent(
     dbus::MethodCall* method_call,
     dbus::ExportedObject::ResponseSender response_sender,
-    const std::string& result) {
-  if (!result.empty()) {
+    base::Optional<base::FilePath> result) {
+  if (result.has_value()) {
     std::unique_ptr<dbus::Response> response =
         dbus::Response::FromMethodCall(method_call);
     dbus::MessageWriter writer(response.get());
-    writer.AppendString(result);
+    writer.AppendString(result->value());
     response_sender.Run(std::move(response));
   } else {
     std::unique_ptr<dbus::ErrorResponse> error_response =
