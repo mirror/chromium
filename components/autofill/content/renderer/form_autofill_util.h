@@ -7,6 +7,7 @@
 
 #include <stddef.h>
 
+#include <set>
 #include <vector>
 
 #include "base/macros.h"
@@ -277,6 +278,13 @@ void PreviewSuggestion(const base::string16& suggestion,
 // |innerText()|, the search depth and breadth are limited to a fixed threshold.
 // Whitespace is trimmed from text accumulated at descendant nodes.
 base::string16 FindChildText(const blink::WebNode& node);
+
+// Exposed for testing purpose
+base::string16 InferLabelFromDivTableTest(
+    const blink::WebFormControlElement& element);
+base::string16 FindChildTextWithIgnoreList(
+    const blink::WebNode& node,
+    const std::set<blink::WebNode>& divs_to_skip);
 
 }  // namespace form_util
 }  // namespace autofill
