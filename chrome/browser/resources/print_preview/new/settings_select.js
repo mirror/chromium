@@ -17,16 +17,14 @@ print_preview_new.SelectOption;
 Polymer({
   is: 'print-preview-settings-select',
 
+  behaviors: [SettingsBehavior],
+
   properties: {
     /** @type {{ option: Array<!print_preview_new.SelectOption> }} */
     capability: Object,
 
     /** @type {string} */
-    selectedValue: {
-      type: String,
-      notify: true,
-      value: '',
-    },
+    settingName: String,
   },
 
   /**
@@ -52,5 +50,16 @@ Polymer({
           assert(option.custom_display_name_localized));
     }
     return displayName || option.name || '';
+  },
+
+  /** @private */
+  onChange_: function() {
+    let value = null;
+    try {
+      value = JSON.parse(this.$$('select').value);
+    } catch (e) {
+      return;
+    }
+    this.setSetting(this.settingName, /** @type {Object} */ (value));
   },
 });

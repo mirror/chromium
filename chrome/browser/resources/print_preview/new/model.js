@@ -171,7 +171,7 @@ Polymer({
   },
 
   observers:
-      ['updateSettingsAvailable_(' +
+      ['updateSettings_(' +
        'destination.id, destination.capabilities, ' +
        'documentInfo.isModifiable, documentInfo.hasCssMediaStyles,' +
        'documentInfo.hasSelection)'],
@@ -189,10 +189,11 @@ Polymer({
   MONOCHROME_TYPES_: ['STANDARD_MONOCHROME', 'CUSTOM_MONOCHROME'],
 
   /**
-   * Updates the availability of the settings sections.
+   * Updates the availability of the settings sections and values of dpi and
+   *     media size settings.
    * @private
    */
-  updateSettingsAvailable_: function() {
+  updateSettings_: function() {
     const caps = (!!this.destination && !!this.destination.capabilities) ?
         this.destination.capabilities.printer :
         null;
@@ -235,6 +236,8 @@ Polymer({
             this.settings.selectionOnly.available ||
             this.settings.headerFooter.available ||
             this.settings.rasterize.available);
+
+    this.updateSettingValues_(caps);
   },
 
   /** @param {?print_preview.CddCapabilities} caps The printer capabilities. */
@@ -268,4 +271,30 @@ Polymer({
     });
     return hasColor && hasMonochrome;
   },
+
+  /**
+   * @param {?print_preview.CddCapabilities} caps The printer capabilities.
+   * @private
+   */
+  updateSettingValues_: function(caps) {
+    if (this.settings.mediaSize.available) {
+      for (const option of caps.media_size.option) {
+        if (option.is_default) {
+          this.set('settings.mediaSize.value', option);
+          break;
+        }
+      }
+    }
+
+    if (this.settings.dpi.available) {
+      for (const option of caps.dpi.option) {
+        if (option.is_default) {
+          this.set('settings.dpi.value', option);
+          break;
+        }
+      }
+    } else if (caps && caps.dpi && caps.dpi.option) {
+      this.set('settings.dpi.value', caps.dpi.option[0]);
+    }
+  }
 });
