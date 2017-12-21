@@ -420,6 +420,30 @@
     },
     {
       "key": {
+        "uuid": "fc381af2_9c29af90",
+        "filename": "components/cronet/native/generated/cronet.idl_c.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-12-21T18:16:20Z",
+      "side": 1,
+      "message": "I agree the performance impact probably won\u0027t ever be significant.   I just find it a bit confusing with the extra layer of abstraction.  Marking resolved as I don\u0027t see an easy solution.",
+      "parentUuid": "52ff4d40_ed66de2b",
+      "range": {
+        "startLine": 171,
+        "startChar": 52,
+        "endLine": 171,
+        "endChar": 0
+      },
+      "revId": "f5e0f7d9cfcba5915affd3664bf056b1761a19fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1cfecf65_3e739742",
         "filename": "components/cronet/native/runnables_unittest.cc",
         "patchSetId": 25
