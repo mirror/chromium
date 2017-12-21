@@ -22,6 +22,30 @@
       "revId": "180753f291a7da1512445a419323dc5d766440e9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47b3a147_dc6755a3",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 727,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-12-21T19:39:44Z",
+      "side": 1,
+      "message": "tempfile.NamedTemporaryFile() returns a file-like object that deletes the file at the end. Actually this close() call is not necessary either. Removed it. Python calls __del__() for the object before the object is garbage-collected when returning from RunFuchsia(), which deletes the file as well.\n\nI don\u0027t think there can be problems re-opening the file. The code above calls NamedTemporaryFile(), and I think that API is designed for this case and should work correctly.",
+      "parentUuid": "e10a952c_0b781110",
+      "range": {
+        "startLine": 727,
+        "startChar": 4,
+        "endLine": 727,
+        "endChar": 30
+      },
+      "revId": "180753f291a7da1512445a419323dc5d766440e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
