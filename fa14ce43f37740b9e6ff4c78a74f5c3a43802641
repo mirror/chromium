@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6f183338_fed605fe",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 1318,
+      "author": {
+        "id": 1160144
+      },
+      "writtenOn": "2017-12-21T22:14:46Z",
+      "side": 1,
+      "message": "Changed to BootContinueCodeInstallationResult.",
+      "parentUuid": "d73b5f65_3ff77f90",
+      "range": {
+        "startLine": 1318,
+        "startChar": 31,
+        "endLine": 1318,
+        "endChar": 43
+      },
+      "revId": "fa14ce43f37740b9e6ff4c78a74f5c3a43802641",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5cec2195_54d3a154",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 1
@@ -60,6 +84,24 @@
     },
     {
       "key": {
+        "uuid": "685d6f12_e23c7257",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 1320,
+      "author": {
+        "id": 1160144
+      },
+      "writtenOn": "2017-12-21T22:14:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3cba6bf8_32faa864",
+      "revId": "fa14ce43f37740b9e6ff4c78a74f5c3a43802641",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e2e2c632_d84dec21",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 1
@@ -80,6 +122,30 @@
       "revId": "fa14ce43f37740b9e6ff4c78a74f5c3a43802641",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "217bc4f7_c0549356",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 1327,
+      "author": {
+        "id": 1160144
+      },
+      "writtenOn": "2017-12-21T22:14:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e2e2c632_d84dec21",
+      "range": {
+        "startLine": 1327,
+        "startChar": 30,
+        "endLine": 1327,
+        "endChar": 40
+      },
+      "revId": "fa14ce43f37740b9e6ff4c78a74f5c3a43802641",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -136,6 +202,24 @@
     },
     {
       "key": {
+        "uuid": "3a1b414e_dc63746e",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 1332,
+      "author": {
+        "id": 1160144
+      },
+      "writtenOn": "2017-12-21T22:14:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1efd3379_87eec264",
+      "revId": "fa14ce43f37740b9e6ff4c78a74f5c3a43802641",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "22b4fcc7_ea59a3ec",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 1
@@ -150,6 +234,24 @@
       "revId": "fa14ce43f37740b9e6ff4c78a74f5c3a43802641",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06e90624_13323ca0",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 1334,
+      "author": {
+        "id": 1160144
+      },
+      "writtenOn": "2017-12-21T22:14:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "22b4fcc7_ea59a3ec",
+      "revId": "fa14ce43f37740b9e6ff4c78a74f5c3a43802641",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -185,6 +287,24 @@
       "revId": "fa14ce43f37740b9e6ff4c78a74f5c3a43802641",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38ee6be9_61a2de78",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 1336,
+      "author": {
+        "id": 1160144
+      },
+      "writtenOn": "2017-12-21T22:14:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e51ed132_f41857a7",
+      "revId": "fa14ce43f37740b9e6ff4c78a74f5c3a43802641",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -426,6 +546,48 @@
       "revId": "fa14ce43f37740b9e6ff4c78a74f5c3a43802641",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d517a62_373cc350",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 2462,
+      "author": {
+        "id": 1160144
+      },
+      "writtenOn": "2017-12-21T22:14:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4831d1c6_e0eb7e4e",
+      "range": {
+        "startLine": 2462,
+        "startChar": 30,
+        "endLine": 2462,
+        "endChar": 34
+      },
+      "revId": "fa14ce43f37740b9e6ff4c78a74f5c3a43802641",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8ee830a3_ae5625bb",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 2462,
+      "author": {
+        "id": 1160144
+      },
+      "writtenOn": "2017-12-21T22:14:46Z",
+      "side": 1,
+      "message": "Added different metrics for relocation, signing and total time.",
+      "parentUuid": "811fe89c_780310ff",
+      "revId": "fa14ce43f37740b9e6ff4c78a74f5c3a43802641",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
