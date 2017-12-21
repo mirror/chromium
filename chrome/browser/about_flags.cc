@@ -615,6 +615,8 @@ const FeatureEntry::Choice kWebVrRenderPathChoices[] = {
      "GpuFence"},
     {flag_descriptions::kWebVrRenderPathSharedBuffer, switches::kWebVrRenderPath,
      "SharedBuffer"},
+    {flag_descriptions::kWebVrRenderPathZeroCopy, switches::kWebVrRenderPath,
+     "ZeroCopy"},
 };
 #endif  // OS_ANDROID
 
