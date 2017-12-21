@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c03bdfda_6c809e33",
+        "filename": "components/offline_pages/core/model/offline_page_model_utils.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-12-21T18:20:44Z",
+      "side": 1,
+      "message": "Is there any OS or Chrome method to do this?  I remember seeing a method for Windows, so there may already be functionality to do this somewhere in Chrome.",
+      "range": {
+        "startLine": 35,
+        "startChar": 15,
+        "endLine": 35,
+        "endChar": 41
+      },
+      "revId": "c6181faa3bf891a20e9734b00c9a02ff0a24a47b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
