@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8b4b2d1a_16921ea7",
+        "filename": "gpu/command_buffer/service/context_group.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1116061
+      },
+      "writtenOn": "2017-12-21T20:43:31Z",
+      "side": 1,
+      "message": "nit: \"called by a Decoder\", or \"called by a ContextDecoder.  Same below.",
+      "revId": "ddfa5e2452d63a4674478632ded1970abe39002f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d68abad8_74785341",
+        "filename": "gpu/command_buffer/service/decoder_interface.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1116061
+      },
+      "writtenOn": "2017-12-21T20:43:31Z",
+      "side": 1,
+      "message": "As we discussed on IM, \"Context\" seems to fit this interface.  So something like \"DecoderContext\".",
+      "revId": "ddfa5e2452d63a4674478632ded1970abe39002f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd701de3_f2c14875",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1116061
+      },
+      "writtenOn": "2017-12-21T20:43:31Z",
+      "side": 1,
+      "message": "Could you put overrides together before these virtual declarations, with a comment about the class they\u0027re implementing?",
+      "revId": "ddfa5e2452d63a4674478632ded1970abe39002f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
