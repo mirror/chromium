@@ -22,6 +22,30 @@
       "revId": "a5aab71d290a1a7a34ef8b8966fcbc96fd7719bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2db527e_0fff974b",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/JavaBridgeBasicsTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 718,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-12-21T02:04:46Z",
+      "side": 1,
+      "message": "I believe we don\u0027t have to comment out other annotations. I\u0027ll land new patch.",
+      "parentUuid": "a7508bcc_5899713d",
+      "range": {
+        "startLine": 718,
+        "startChar": 8,
+        "endLine": 718,
+        "endChar": 15
+      },
+      "revId": "a5aab71d290a1a7a34ef8b8966fcbc96fd7719bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
