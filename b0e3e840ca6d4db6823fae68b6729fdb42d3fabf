@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c593fb42_7f3f3f7e",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 793,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-12-21T22:29:05Z",
+      "side": 1,
+      "message": "Could you add a comment here so we don\u0027t forget that we would want this to be startCleanup_ instead of startScanning_ eventually?",
+      "range": {
+        "startLine": 793,
+        "startChar": 49,
+        "endLine": 793,
+        "endChar": 0
+      },
+      "revId": "b0e3e840ca6d4db6823fae68b6729fdb42d3fabf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11e9eba2_f33add73",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 907,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-12-21T22:29:05Z",
+      "side": 1,
+      "message": "I really don\u0027t like this string :(\nI\u0027m guessing ~10% of the time this error will be seen because we killed the prompt. It\u0027s a pretty terrible string when that happens.",
+      "range": {
+        "startLine": 907,
+        "startChar": 71,
+        "endLine": 907,
+        "endChar": 0
+      },
+      "revId": "b0e3e840ca6d4db6823fae68b6729fdb42d3fabf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe25d054_02608ab9",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 909,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-12-21T22:29:05Z",
+      "side": 1,
+      "message": "nit: rename to TRY_SCAN_AGAIN",
+      "range": {
+        "startLine": 909,
+        "startChar": 47,
+        "endLine": 909,
+        "endChar": 48
+      },
+      "revId": "b0e3e840ca6d4db6823fae68b6729fdb42d3fabf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
