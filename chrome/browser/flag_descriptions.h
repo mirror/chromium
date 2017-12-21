@@ -198,6 +198,9 @@ extern const char kEnableAutofillCreditCardAblationExperimentDescription[];
 extern const char kEnableAutofillCreditCardBankNameDisplayName[];
 extern const char kEnableAutofillCreditCardBankNameDisplayDescription[];
 
+extern const char kEnableAutofillCreditCardGooglePayBrandingName[];
+extern const char kEnableAutofillCreditCardGooglePayBrandingDescription[];
+
 extern const char kEnableAutofillCreditCardLastUsedDateDisplayName[];
 extern const char kEnableAutofillCreditCardLastUsedDateDisplayDescription[];
 
