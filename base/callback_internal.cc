@@ -62,6 +62,10 @@ bool CallbackBase::IsCancelled() const {
   return bind_state_->IsCancelled();
 }
 
+size_t CallbackBase::EstimateMemoryUsage() const {
+  return 0;
+}
+
 bool CallbackBase::EqualsInternal(const CallbackBase& other) const {
   return bind_state_ == other.bind_state_;
 }
