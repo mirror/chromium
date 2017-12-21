@@ -415,23 +415,6 @@ void BlinkTestRunner::InspectSecondaryWindow() {
   Send(new LayoutTestHostMsg_InspectSecondaryWindow(routing_id()));
 }
 
-void BlinkTestRunner::ShowDevTools(const std::string& settings,
-                                   const std::string& frontend_url) {
-  Send(new ShellViewHostMsg_ShowDevTools(
-      routing_id(), settings, frontend_url));
-}
-
-void BlinkTestRunner::CloseDevTools() {
-  Send(new ShellViewHostMsg_CloseDevTools(routing_id()));
-  render_view()->GetMainRenderFrame()->DetachDevToolsForTest();
-}
-
-void BlinkTestRunner::EvaluateInWebInspector(int call_id,
-                                             const std::string& script) {
-  Send(new ShellViewHostMsg_EvaluateInDevTools(
-      routing_id(), call_id, script));
-}
-
 std::string BlinkTestRunner::EvaluateInWebInspectorOverlay(
     const std::string& script) {
   WebDevToolsAgent* agent =
