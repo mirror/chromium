@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e6b58728_75dbfe7f",
+        "filename": "tools/clang/value_cleanup/tests/value-get-type-expected.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-21T18:26:47Z",
+      "side": 0,
+      "message": "These tests were removed because we no longer need this functionality right?",
+      "revId": "20e3cf9d29c9abdddea9bd1519c4c9043127c6dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
