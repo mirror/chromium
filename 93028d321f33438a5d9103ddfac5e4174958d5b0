@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e57b338f_e471694b",
+        "filename": "chrome/browser/component_updater/widevine_cdm_component_installer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-12-21T00:31:02Z",
+      "side": 1,
+      "message": "nit: move this to a helper function?",
+      "revId": "93028d321f33438a5d9103ddfac5e4174958d5b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddc48e4f_eb1d55b9",
+        "filename": "chrome/common/chrome_content_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-12-21T00:31:02Z",
+      "side": 1,
+      "message": "Does it make sense to fix this TODO, then update IsWidevineAvailable() to return a unique_ptr\u003cCdmInfo\u003e directly? In the pepper case, you can calculate the adapter_path from CdmInfo.path.\n\nYou can do this in a follow up CL though.",
+      "revId": "93028d321f33438a5d9103ddfac5e4174958d5b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fbb914d_a126eac3",
+        "filename": "chrome/common/chrome_content_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-12-21T00:31:02Z",
+      "side": 1,
+      "message": "hmm, you\u0027ll remove this in your next CL? :) But that\u0027s fine since you already have this CL ready.",
+      "revId": "93028d321f33438a5d9103ddfac5e4174958d5b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
