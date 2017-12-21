@@ -15,7 +15,6 @@
 #include "platform/wtf/text/WTFString.h"
 #include "public/platform/WebURLRequest.h"
 #include "public/platform/modules/fetch/fetch_api_request.mojom-shared.h"
-#include "public/platform/modules/serviceworker/WebServiceWorkerRequest.h"
 #include "services/network/public/interfaces/fetch_api.mojom-blink.h"
 
 namespace blink {
@@ -24,7 +23,6 @@ class BodyStreamBuffer;
 class FetchHeaderList;
 class SecurityOrigin;
 class ScriptState;
-class WebServiceWorkerRequest;
 
 class FetchRequestData final
     : public GarbageCollectedFinalized<FetchRequestData> {
@@ -32,7 +30,6 @@ class FetchRequestData final
   enum Tainting { kBasicTainting, kCORSTainting, kOpaqueTainting };
 
   static FetchRequestData* Create();
-  static FetchRequestData* Create(ScriptState*, const WebServiceWorkerRequest&);
   // Call Request::refreshBody() after calling clone() or pass().
   FetchRequestData* Clone(ScriptState*);
   FetchRequestData* Pass(ScriptState*);

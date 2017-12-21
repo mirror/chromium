@@ -7,8 +7,8 @@
 #include "modules/background_fetch/BackgroundFetchFailEventInit.h"
 #include "modules/background_fetch/BackgroundFetchSettledFetch.h"
 #include "modules/event_modules_names.h"
-#include "modules/fetch/Request.h"
 #include "modules/fetch/Response.h"
+#include "modules/serviceworkers/ServiceWorkerNetworkUtils.h"
 #include "public/platform/modules/background_fetch/WebBackgroundFetchSettledFetch.h"
 
 namespace blink {
@@ -29,7 +29,7 @@ BackgroundFetchFailEvent::BackgroundFetchFailEvent(
   fetches_.ReserveInitialCapacity(fetches.size());
   for (const WebBackgroundFetchSettledFetch& fetch : fetches) {
     auto* settled_fetch = BackgroundFetchSettledFetch::Create(
-        Request::Create(script_state, fetch.request),
+        ServiceWorkerNetworkUtils::ToRequest(script_state, fetch.request),
         Response::Create(script_state, fetch.response));
 
     fetches_.push_back(settled_fetch);

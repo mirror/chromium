@@ -3,6 +3,11 @@ include_rules = [
     "-modules",
     "+modules/ModulesExport.h",
     "+modules/fetch",
+
+    # TODO(nhiroki): Remove dependency on modules/serviceworkers.
+    # (https://crbug.com/794837)
+    "+modules/serviceworkers",
+
     "+mojo/common/data_pipe_utils.h",
     "+mojo/public/cpp/bindings/binding_set.h",
     "+mojo/public/cpp/system/data_pipe.h",

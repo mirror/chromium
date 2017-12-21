@@ -49,7 +49,6 @@ class MODULES_EXPORT Request final : public Body {
                          const Dictionary&,
                          ExceptionState&);
   static Request* Create(ScriptState*, FetchRequestData*);
-  static Request* Create(ScriptState*, const WebServiceWorkerRequest&);
 
   // From Request.idl:
   String method() const;

@@ -25,6 +25,7 @@
 #include "modules/fetch/Request.h"
 #include "modules/fetch/Response.h"
 #include "modules/serviceworkers/ServiceWorkerGlobalScope.h"
+#include "modules/serviceworkers/ServiceWorkerNetworkUtils.h"
 #include "platform/Histogram.h"
 #include "platform/bindings/ScriptState.h"
 #include "platform/bindings/V8ThrowException.h"
@@ -155,9 +156,10 @@ class CacheWithRequestsCallbacks
       return;
     ScriptState::Scope scope(resolver_->GetScriptState());
     HeapVector<Member<Request>> requests;
-    for (size_t i = 0; i < web_requests.size(); ++i)
-      requests.push_back(
-          Request::Create(resolver_->GetScriptState(), web_requests[i]));
+    for (size_t i = 0; i < web_requests.size(); ++i) {
+      requests.push_back(ServiceWorkerNetworkUtils::ToRequest(
+          resolver_->GetScriptState(), web_requests[i]));
+    }
     resolver_->Resolve(requests);
     resolver_.Clear();
   }

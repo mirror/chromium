@@ -7,6 +7,7 @@
 #include <memory>
 #include "bindings/core/v8/ExceptionState.h"
 #include "bindings/core/v8/V8BindingForTesting.h"
+#include "modules/serviceworkers/ServiceWorkerNetworkUtils.h"
 #include "platform/bindings/ScriptState.h"
 #include "platform/wtf/HashMap.h"
 #include "platform/wtf/text/WTFString.h"
@@ -80,7 +81,8 @@ TEST(ServiceWorkerRequestTest, FromAndToWebRequest) {
                           WebString::FromUTF8(headers[i].value));
   web_request.SetReferrer(referrer, kReferrerPolicy);
 
-  Request* request = Request::Create(scope.GetScriptState(), web_request);
+  Request* request =
+      ServiceWorkerNetworkUtils::ToRequest(scope.GetScriptState(), web_request);
   DCHECK(request);
   EXPECT_EQ(url, request->url());
   EXPECT_EQ(method, request->method());

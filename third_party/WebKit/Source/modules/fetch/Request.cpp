@@ -458,13 +458,6 @@ Request* Request::Create(ScriptState* script_state, FetchRequestData* request) {
   return new Request(script_state, request);
 }
 
-Request* Request::Create(ScriptState* script_state,
-                         const WebServiceWorkerRequest& web_request) {
-  FetchRequestData* request =
-      FetchRequestData::Create(script_state, web_request);
-  return new Request(script_state, request);
-}
-
 Request::Request(ScriptState* script_state,
                  FetchRequestData* request,
                  Headers* headers)
