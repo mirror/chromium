@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7f0d5744_f98bf46d",
+        "filename": "ui/app_list/views/app_list_folder_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-12-21T18:55:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb6525a1_872e321c",
+      "range": {
+        "startLine": 43,
+        "startChar": 0,
+        "endLine": 43,
+        "endChar": 5
+      },
+      "revId": "005c47629dad99c145388bf92882854bd716041d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "801f4db9_2995ab5e",
         "filename": "ui/app_list/views/app_list_folder_view.cc",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "005c47629dad99c145388bf92882854bd716041d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ea7a229_3561106a",
+        "filename": "ui/app_list/views/app_list_folder_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-12-21T18:55:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "801f4db9_2995ab5e",
+      "range": {
+        "startLine": 52,
+        "startChar": 31,
+        "endLine": 52,
+        "endChar": 33
+      },
+      "revId": "005c47629dad99c145388bf92882854bd716041d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "cbb2a0a7_21685dc2",
+        "filename": "ui/app_list/views/app_list_view.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-12-21T18:55:18Z",
+      "side": 1,
+      "message": "Yes the returned view can be used to trigger non-const function, I should remove the const.",
+      "parentUuid": "2bb9e05c_62281434",
+      "range": {
+        "startLine": 287,
+        "startChar": 44,
+        "endLine": 287,
+        "endChar": 49
+      },
+      "revId": "005c47629dad99c145388bf92882854bd716041d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a86ddd58_cabd6d6e",
         "filename": "ui/app_list/views/apps_container_view.cc",
         "patchSetId": 6
@@ -82,6 +154,24 @@
       "writtenOn": "2017-12-21T18:06:36Z",
       "side": 1,
       "message": "The folder view could go beyond the boundary of the container view. Would being a child of container view work? Normally, a child would be clipped on parent view\u0027s boundary.",
+      "revId": "005c47629dad99c145388bf92882854bd716041d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "781e6efe_b9579331",
+        "filename": "ui/app_list/views/apps_container_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-12-21T18:55:18Z",
+      "side": 1,
+      "message": "Sorry, the code in L186 is test code that I forgot to remove. Maybe that makes you think the folder goes beyond the boundary. By design, the folder should not do that. The code first overlaps the folder view’s center with the closed folder’s (folder icon) center. Then it adjusts the folder view\u0027s bounds to fit inside its parent view (AppsContainerView). So the folder view should not go beyond the boundary.",
+      "parentUuid": "a86ddd58_cabd6d6e",
       "revId": "005c47629dad99c145388bf92882854bd716041d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "748926c7_45125c70",
+        "filename": "ui/app_list/views/apps_container_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-12-21T18:55:18Z",
+      "side": 1,
+      "message": "Sorry, these are test code, I forgot to remove them.",
+      "parentUuid": "f63b7550_0fdb3f95",
+      "range": {
+        "startLine": 186,
+        "startChar": 16,
+        "endLine": 186,
+        "endChar": 22
+      },
+      "revId": "005c47629dad99c145388bf92882854bd716041d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5eb89427_29ab0dbf",
         "filename": "ui/app_list/views/apps_container_view.cc",
         "patchSetId": 6
@@ -134,6 +248,30 @@
     },
     {
       "key": {
+        "uuid": "78da91d6_c10af8ab",
+        "filename": "ui/app_list/views/apps_container_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-12-21T18:55:18Z",
+      "side": 1,
+      "message": "Sorry, these are test code, I forgot to remove them.",
+      "parentUuid": "5eb89427_29ab0dbf",
+      "range": {
+        "startLine": 187,
+        "startChar": 19,
+        "endLine": 187,
+        "endChar": 29
+      },
+      "revId": "005c47629dad99c145388bf92882854bd716041d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "12096d41_b4ab459f",
         "filename": "ui/app_list/views/apps_grid_view_unittest.cc",
         "patchSetId": 6
@@ -151,6 +289,24 @@
     },
     {
       "key": {
+        "uuid": "74eca0e8_7291d8a5",
+        "filename": "ui/app_list/views/apps_grid_view_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-12-21T18:55:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "12096d41_b4ab459f",
+      "revId": "005c47629dad99c145388bf92882854bd716041d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c9a2cfa3_aacc2200",
         "filename": "ui/app_list/views/page_switcher.h",
         "patchSetId": 6
@@ -165,6 +321,24 @@
       "revId": "005c47629dad99c145388bf92882854bd716041d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8faf3eae_0c33846f",
+        "filename": "ui/app_list/views/page_switcher.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-12-21T18:55:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c9a2cfa3_aacc2200",
+      "revId": "005c47629dad99c145388bf92882854bd716041d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
