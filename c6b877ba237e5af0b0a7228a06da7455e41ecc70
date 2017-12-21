@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "442b225c_178d4430",
+        "filename": "third_party/android_deps/README.chromium",
+        "patchSetId": 15
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1103379
+      },
+      "writtenOn": "2017-12-21T22:25:51Z",
+      "side": 1,
+      "message": "Hm, this doesn\u0027t seem right. Is the idea that android_deps is a parent dir and each repository gets its own subdir with appropriate metadata? Is there a tool that requires this metadata in the parent dir?",
+      "revId": "c6b877ba237e5af0b0a7228a06da7455e41ecc70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
