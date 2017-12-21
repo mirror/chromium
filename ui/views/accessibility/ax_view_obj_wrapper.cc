@@ -51,8 +51,8 @@ void AXViewObjWrapper::Serialize(ui::AXNodeData* out_node_data) {
   out_node_data->id = GetID();
 }
 
-int32_t AXViewObjWrapper::GetID() {
-  return AXAuraObjCache::GetInstance()->GetID(view_);
+int32_t AXViewObjWrapper::GetID() const {
+  return view_->GetViewAccessibility().GetID();
 }
 
 bool AXViewObjWrapper::HandleAccessibleAction(const ui::AXActionData& action) {

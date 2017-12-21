@@ -10,6 +10,7 @@
 #include "ui/accessibility/ax_enums.h"
 #include "ui/accessibility/ax_node_data.h"
 #include "ui/accessibility/platform/aura_window_properties.h"
+#include "ui/accessibility/platform/ax_platform_unique_id.h"
 #include "ui/aura/client/focus_client.h"
 #include "ui/aura/window.h"
 #include "ui/views/accessibility/ax_aura_obj_cache.h"
@@ -20,7 +21,8 @@ namespace views {
 AXWindowObjWrapper::AXWindowObjWrapper(aura::Window* window)
     : window_(window),
       is_alert_(false),
-      is_root_window_(window->IsRootWindow()) {
+      is_root_window_(window->IsRootWindow()),
+      id_(ui::GetNextAXPlatformNodeUniqueId()) {
   window->AddObserver(this);
 
   if (is_root_window_)
@@ -92,8 +94,8 @@ void AXWindowObjWrapper::Serialize(ui::AXNodeData* out_node_data) {
   }
 }
 
-int32_t AXWindowObjWrapper::GetID() {
-  return AXAuraObjCache::GetInstance()->GetID(window_);
+int32_t AXWindowObjWrapper::GetID() const {
+  return id_;
 }
 
 void AXWindowObjWrapper::OnWindowDestroyed(aura::Window* window) {

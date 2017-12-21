@@ -17,6 +17,7 @@
 #include "content/common/accessibility_messages.h"
 #include "ui/accessibility/ax_role_properties.h"
 #include "ui/accessibility/ax_text_utils.h"
+#include "ui/accessibility/platform/ax_platform_unique_id.h"
 #include "ui/gfx/geometry/rect_conversions.h"
 #include "ui/gfx/geometry/rect_f.h"
 
@@ -30,7 +31,9 @@ BrowserAccessibility* BrowserAccessibility::Create() {
 #endif
 
 BrowserAccessibility::BrowserAccessibility()
-    : manager_(nullptr), node_(nullptr) {}
+    : manager_(nullptr),
+      node_(nullptr),
+      id_(ui::GetNextAXPlatformNodeUniqueId()) {}
 
 BrowserAccessibility::~BrowserAccessibility() {
 }
@@ -852,6 +855,13 @@ bool BrowserAccessibility::IsOffscreen() const {
   bool offscreen = false;
   RelativeToAbsoluteBounds(gfx::RectF(), false, &offscreen);
   return offscreen;
+}
+
+int32_t BrowserAccessibility::GetID() const {
+  // This is not the same as GetData().id which comes from Blink, because
+  // those ids are only unique within the Blink process. We need one that is
+  // unique for the browser process.
+  return id_;
 }
 
 gfx::NativeViewAccessible BrowserAccessibility::GetNativeViewAccessible() {

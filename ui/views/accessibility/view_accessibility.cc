@@ -5,6 +5,7 @@
 #include "ui/views/accessibility/view_accessibility.h"
 
 #include "base/strings/utf_string_conversions.h"
+#include "ui/accessibility/platform/ax_platform_unique_id.h"
 #include "ui/base/ui_features.h"
 #include "ui/views/view.h"
 #include "ui/views/widget/widget.h"
@@ -42,9 +43,14 @@ std::unique_ptr<ViewAccessibility> ViewAccessibility::Create(View* view) {
 }
 #endif
 
-ViewAccessibility::ViewAccessibility(View* view) : view_(view) {}
+ViewAccessibility::ViewAccessibility(View* view)
+    : view_(view), id_(ui::GetNextAXPlatformNodeUniqueId()) {}
 
 ViewAccessibility::~ViewAccessibility() {}
+
+int32_t ViewAccessibility::GetID() const {
+  return id_;
+}
 
 ui::AXNodeData ViewAccessibility::GetAccessibleNodeData() const {
   ui::AXNodeData data;

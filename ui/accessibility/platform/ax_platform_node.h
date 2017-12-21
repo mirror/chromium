@@ -80,6 +80,8 @@ class AX_EXPORT AXPlatformNode {
 
   static base::LazyInstance<NativeWindowHandlerCallback>::Leaky
       native_window_handler_;
+
+  DISALLOW_COPY_AND_ASSIGN(AXPlatformNode);
 };
 
 }  // namespace ui

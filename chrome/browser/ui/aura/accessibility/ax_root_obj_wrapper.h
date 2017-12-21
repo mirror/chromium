@@ -18,7 +18,7 @@ class Window;
 
 class AXRootObjWrapper : public views::AXAuraObjWrapper {
  public:
-  explicit AXRootObjWrapper(int32_t id);
+  AXRootObjWrapper();
   ~AXRootObjWrapper() override;
 
   // Returns an AXAuraObjWrapper for an alert window with title set to |text|.
@@ -32,7 +32,7 @@ class AXRootObjWrapper : public views::AXAuraObjWrapper {
   void GetChildren(
       std::vector<views::AXAuraObjWrapper*>* out_children) override;
   void Serialize(ui::AXNodeData* out_node_data) override;
-  int32_t GetID() override;
+  int32_t GetID() const override;
 
  private:
   int32_t id_;

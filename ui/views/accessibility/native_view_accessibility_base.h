@@ -36,6 +36,7 @@ class VIEWS_EXPORT NativeViewAccessibilityBase
   // NativeViewAccessibility:
   gfx::NativeViewAccessible GetNativeObject() override;
   void NotifyAccessibilityEvent(ui::AXEvent event_type) override;
+  int32_t GetId() const final;
 
   // ui::AXPlatformNodeDelegate
   const ui::AXNodeData& GetData() const override;
@@ -53,6 +54,7 @@ class VIEWS_EXPORT NativeViewAccessibilityBase
   bool AccessibilityPerformAction(const ui::AXActionData& data) override;
   bool ShouldIgnoreHoveredStateForTesting() override;
   bool IsOffscreen() const override;
+  int32_t GetID() const override;
 
  protected:
   explicit NativeViewAccessibilityBase(View* view);

@@ -134,4 +134,8 @@ bool AXSystemCaretWin::IsOffscreen() const {
   return false;
 }
 
+int32_t AXSystemCaretWin::GetID() const {
+  return -1;  // No ID
+}
+
 }  // namespace ui

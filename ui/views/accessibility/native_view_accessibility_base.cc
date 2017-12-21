@@ -37,7 +37,7 @@ ui::AXPlatformNode* FromNativeWindow(gfx::NativeWindow native_window) {
 
 NativeViewAccessibilityBase::NativeViewAccessibilityBase(View* view)
     : ViewAccessibility(view) {
-  ax_node_ = ui::AXPlatformNode::Create(this);
+  ax_node_ = ui::AXPlatformNode::Create(this, GetID());
   DCHECK(ax_node_);
 
   static bool first_time = true;
@@ -193,6 +193,10 @@ bool NativeViewAccessibilityBase::ShouldIgnoreHoveredStateForTesting() {
 bool NativeViewAccessibilityBase::IsOffscreen() const {
   // TODO: need to implement.
   return false;
+}
+
+int32_t NativeViewAccessibilityBase::GetID() const {
+  return ViewAccessibility::GetID();
 }
 
 gfx::RectF NativeViewAccessibilityBase::GetBoundsInScreen() const {
