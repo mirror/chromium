@@ -1020,15 +1020,17 @@ CustomWallpaperMap* WallpaperController::GetWallpaperCacheMap() {
   return &wallpaper_cache_map_;
 }
 
-void WallpaperController::SetClientAndPaths(
+void WallpaperController::Init(
     mojom::WallpaperControllerClientPtr client,
     const base::FilePath& user_data_path,
     const base::FilePath& chromeos_wallpapers_path,
-    const base::FilePath& chromeos_custom_wallpapers_path) {
+    const base::FilePath& chromeos_custom_wallpapers_path,
+    bool is_device_wallpaper_policy_enforced) {
   wallpaper_controller_client_ = std::move(client);
   dir_user_data_path_ = user_data_path;
   dir_chrome_os_wallpapers_path_ = chromeos_wallpapers_path;
   dir_chrome_os_custom_wallpapers_path_ = chromeos_custom_wallpapers_path;
+  SetDeviceWallpaperPolicyEnforced(is_device_wallpaper_policy_enforced);
 }
 
 void WallpaperController::SetCustomWallpaper(
@@ -1130,10 +1132,13 @@ void WallpaperController::ShowUserWallpaper(
 }
 
 void WallpaperController::ShowSigninWallpaper() {
-  // TODO(crbug.com/791654): Call |SetDeviceWallpaperIfApplicable| from here.
-  SetDefaultWallpaperImpl(EmptyAccountId(), user_manager::USER_TYPE_REGULAR,
-                          true /*show_wallpaper=*/,
-                          MovableOnDestroyCallbackHolder());
+  if (ShouldSetDevicePolicyWallpaper()) {
+    SetDevicePolicyWallpaper();
+  } else {
+    SetDefaultWallpaperImpl(EmptyAccountId(), user_manager::USER_TYPE_REGULAR,
+                            true /*show_wallpaper=*/,
+                            MovableOnDestroyCallbackHolder());
+  }
 }
 
 void WallpaperController::RemoveUserWallpaper(
@@ -1197,8 +1202,8 @@ void WallpaperController::ShowDefaultWallpaperForTesting() {
 
 void WallpaperController::SetClientForTesting(
     mojom::WallpaperControllerClientPtr client) {
-  SetClientAndPaths(std::move(client), base::FilePath(), base::FilePath(),
-                    base::FilePath());
+  Init(std::move(client), base::FilePath(), base::FilePath(), base::FilePath(),
+       false /*is_device_wallpaper_policy_enforced=*/);
 }
 
 void WallpaperController::FlushForTesting() {
