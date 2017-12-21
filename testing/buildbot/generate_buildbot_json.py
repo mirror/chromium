@@ -380,14 +380,6 @@ class BBJSONGenerator(object):
           'script': '//build/android/pylib/results/presentation/' \
             'test_results_presentation.py',
         } # pragma: no cover
-      if not tester_config.get('skip_cipd_packages', False):
-        result['swarming']['cipd_packages'] = [
-          {
-            'cipd_package': 'infra/tools/luci/logdog/butler/${platform}',
-            'location': 'bin',
-            'revision': 'git_revision:ff387eadf445b24c935f1cf7d6ddd279f8a6b04c',
-          }
-        ]
       if not tester_config.get('skip_output_links', False):
         result['swarming']['output_links'] = [
           {
