@@ -217,6 +217,11 @@ function AutomationRichEditableText(node) {
       root.anchorOffset === undefined || root.focusOffset === undefined)
     return;
 
+  var topLevelRoot = AutomationUtil.getTopLevelRoot(root);
+
+  /** @private {string|undefined} */
+  this.url_ = topLevelRoot ? topLevelRoot.url : undefined;
+
   this.anchorLine_ = new editing.EditableLine(
       root.anchorObject, root.anchorOffset, root.anchorObject,
       root.anchorOffset);
@@ -228,6 +233,12 @@ function AutomationRichEditableText(node) {
 
   this.updateIntraLineState_(this.line_);
 }
+
+/**
+ * Docs URL. Gets used to omit line output temporarily.
+ * @type {string}
+ */
+AutomationRichEditableText.DOCS_URL = 'https://docs.google.com/document/';
 
 AutomationRichEditableText.prototype = {
   __proto__: AutomationEditableText.prototype,
@@ -505,6 +516,10 @@ AutomationRichEditableText.prototype = {
    * @private
    */
   speakCurrentRichLine_: function(prevLine) {
+    if (this.url_ &&
+        this.url_.indexOf(AutomationRichEditableText.DOCS_URL) == 0)
+      return;
+
     var prev = prevLine ? prevLine.startContainer_ : this.node_;
     var lineNodes =
         /** @type {Array<!AutomationNode>} */ (
