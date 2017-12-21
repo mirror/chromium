@@ -16,6 +16,24 @@
       "revId": "b5497bfb4756f29df854ed4ff5fa64ca0d7ba733",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfe91b03_0d7dd43d",
+        "filename": "content/browser/gpu/gpu_process_host.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1121,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-12-21T15:49:44Z",
+      "side": 1,
+      "message": "Done:\n- added a new member to GpuPreferences\n- filled in in GpuDataManagerImplPrivate::UpdateGpuPreferences()\n- used it in the cmd_decoder\n- removed the FeatureInfo hack\n\nI didn\u0027t somehow think about this option bc of the\ncomment in [1]:\n  // TODO(penghuang): Replace all GPU related switches with GpuPreferences.\n\n\n[1] https://cs.chromium.org/chromium/src/content/browser/gpu/gpu_process_host.cc?q\u003dgpu_process_host.cc\u0026sq\u003dpackage:chromium\u0026dr\u0026l\u003d1095",
+      "parentUuid": "a4d4d9c4_fb59fee1",
+      "revId": "b5497bfb4756f29df854ed4ff5fa64ca0d7ba733",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
