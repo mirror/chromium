@@ -1250,7 +1250,8 @@ void RenderFrameHostImpl::SetRenderFrameCreated(bool created) {
       render_widget_host_->SetWidgetInputHandler(std::move(widget_handler),
                                                  std::move(host_request));
     }
-
+    remote_interfaces_->GetInterface(&input_target_client_);
+    render_widget_host_->SetInputTargetClient(std::move(input_target_client_));
     render_widget_host_->InitForFrame();
   }
 
@@ -3730,7 +3731,6 @@ void RenderFrameHostImpl::SetUpMojoIfNeeded() {
   } else {
     legacy_frame_input_handler_.reset(new LegacyIPCFrameInputHandler(this));
   }
-  remote_interfaces_->GetInterface(&input_target_client_);
 }
 
 void RenderFrameHostImpl::InvalidateMojoConnection() {

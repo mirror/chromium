@@ -14,6 +14,7 @@
 #include "base/containers/hash_tables.h"
 #include "base/gtest_prod_util.h"
 #include "base/macros.h"
+#include "base/memory/weak_ptr.h"
 #include "components/viz/common/surfaces/surface_id.h"
 #include "components/viz/host/hit_test/hit_test_query.h"
 #include "components/viz/service/surfaces/surface_hittest_delegate.h"
@@ -25,6 +26,7 @@ struct FrameHostMsg_HittestData_Params;
 
 namespace blink {
 class WebGestureEvent;
+class WebInputEvent;
 class WebMouseEvent;
 class WebMouseWheelEvent;
 class WebTouchEvent;
@@ -44,6 +46,7 @@ namespace content {
 class RenderWidgetHostImpl;
 class RenderWidgetHostView;
 class RenderWidgetHostViewBase;
+class RenderWidgetTargeter;
 
 // Class owned by WebContentsImpl for the purpose of directing input events
 // to the correct RenderWidgetHost on pages with multiple RenderWidgetHosts.
@@ -131,10 +134,26 @@ class CONTENT_EXPORT RenderWidgetHostInputEventRouter
   using TargetMap = std::map<uint32_t, TargetData>;
 
   void ClearAllObserverRegistrations();
-  RenderWidgetHostViewBase* FindEventTarget(
+  void FindEventTarget(RenderWidgetHostViewBase* root_view,
+                       const blink::WebInputEvent& event,
+                       gfx::PointF* transformed_point,
+                       RenderWidgetHostViewBase** out_target,
+                       bool* out_ask) const;
+
+  RenderWidgetHostViewBase* FindMouseEventTarget(
       RenderWidgetHostViewBase* root_view,
       const blink::WebMouseEvent& event,
       gfx::PointF* transformed_point) const;
+
+  void DispatchEventToTarget(base::WeakPtr<RenderWidgetHostViewBase> root_view,
+                             base::WeakPtr<RenderWidgetHostViewBase> target,
+                             const blink::WebInputEvent& event,
+                             const ui::LatencyInfo& latency);
+
+  void DispatchMouseEvent(base::WeakPtr<RenderWidgetHostViewBase> root_view,
+                          base::WeakPtr<RenderWidgetHostViewBase> target,
+                          const blink::WebMouseEvent& mouse_event,
+                          const ui::LatencyInfo& latency);
 
   RenderWidgetHostViewBase* FindViewAtLocation(
       RenderWidgetHostViewBase* root_view,
@@ -200,7 +219,10 @@ class CONTENT_EXPORT RenderWidgetHostInputEventRouter
   std::unordered_map<viz::SurfaceId, HittestData, viz::SurfaceIdHash>
       hittest_data_;
 
+  std::unique_ptr<RenderWidgetTargeter> event_targeter_;
   bool enable_viz_ = false;
+
+  base::WeakPtrFactory<RenderWidgetHostInputEventRouter> weak_ptr_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(RenderWidgetHostInputEventRouter);
   friend class RenderWidgetHostInputEventRouterTest;
