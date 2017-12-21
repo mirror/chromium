@@ -80,15 +80,17 @@ struct PdfMetafileSkiaData {
   float scale_factor_;
   SkSize size_;
   SkiaDocumentType type_;
+  int frame_id_;
 
 #if defined(OS_MACOSX)
   PdfMetafileCg pdf_cg_;
 #endif
 };
 
-PdfMetafileSkia::PdfMetafileSkia(SkiaDocumentType type)
+PdfMetafileSkia::PdfMetafileSkia(SkiaDocumentType type, int frame_id)
     : data_(std::make_unique<PdfMetafileSkiaData>()) {
   data_->type_ = type;
+  data_->frame_id_ = frame_id;
 }
 
 PdfMetafileSkia::~PdfMetafileSkia() = default;
@@ -177,7 +179,8 @@ bool PdfMetafileSkia::FinishDocument() {
       break;
     case SkiaDocumentType::MSKP:
 #if defined(EXPERIMENTAL_SKIA)
-      SkSerialProcs procs;
+      SerializationContext ctx(data_->frame_id_, data_->subframe_content_ids);
+      SkSerialProcs procs = SerializationProcs(&ctx);
       doc = SkMakeMultiPictureDocument(&stream, &procs);
 #else
       doc = SkMakeMultiPictureDocument(&stream);
@@ -209,17 +212,17 @@ bool PdfMetafileSkia::FinishFrameContent() {
   if (data_->pages_.size() != 1)
     return false;
   SkDynamicMemoryWStream stream;
-  std::vector<uint32_t> content_ids;
   sk_sp<SkPicture> pic = ToSkPicture(data_->pages_[0].content_,
                                      SkRect::MakeSize(data_->pages_[0].size_));
 #if defined(EXPERIMENTAL_SKIA)
-  SkSerialProcs procs;
+  SerializationContext ctx(data_->frame_id_, data_->subframe_content_ids);
+  SkSerialProcs procs = SerializationProcs(&ctx);
   pic->serialize(&stream, &procs);
 #else
   pic->serialize(&stream);
 #endif
+
   data_->pdf_data_ = stream.detachAsStream();
-  data_->subframe_content_ids = content_ids;
   return true;
 }
 
@@ -316,7 +319,7 @@ bool PdfMetafileSkia::SaveTo(base::File* file) const {
   return true;
 }
 
-std::vector<uint32_t> PdfMetafileSkia::GetSubframeContentIDs() const {
+std::vector<uint32_t>& PdfMetafileSkia::GetSubframeContentIDs() const {
   return data_->subframe_content_ids;
 }
 
@@ -324,7 +327,7 @@ std::unique_ptr<PdfMetafileSkia> PdfMetafileSkia::GetMetafileForCurrentPage(
     SkiaDocumentType type) {
   // If we only ever need the metafile for the last page, should we
   // only keep a handle on one PaintRecord?
-  auto metafile = std::make_unique<PdfMetafileSkia>(type);
+  auto metafile = std::make_unique<PdfMetafileSkia>(type, 0);
   if (data_->pages_.size() == 0)
     return metafile;
 
@@ -332,6 +335,8 @@ std::unique_ptr<PdfMetafileSkia> PdfMetafileSkia::GetMetafileForCurrentPage(
     return metafile;
 
   metafile->data_->pages_.push_back(data_->pages_.back());
+  metafile->data_->subframe_content_ids = data_->subframe_content_ids;
+  metafile->data_->frame_id_ = data_->frame_id_;
 
   if (!metafile->FinishDocument())  // Generate PDF.
     metafile.reset();

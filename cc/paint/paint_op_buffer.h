@@ -796,6 +796,7 @@ class CC_PAINT_EXPORT PaintOpBuffer : public SkRefCnt {
   }
 
   PaintOpBuffer();
+  PaintOpBuffer(const gfx::Rect& rect, sk_sp<SkPicture> oop_pic);
   PaintOpBuffer(PaintOpBuffer&& other);
   ~PaintOpBuffer() override;
 
@@ -1054,6 +1055,9 @@ class CC_PAINT_EXPORT PaintOpBuffer : public SkRefCnt {
 
     subrecord_bytes_used_ += op->AdditionalBytesUsed();
   }
+
+  const gfx::Rect rect_;
+  sk_sp<SkPicture> oop_pic_;
 
   std::unique_ptr<char, base::AlignedFreeDeleter> data_;
   size_t used_ = 0;

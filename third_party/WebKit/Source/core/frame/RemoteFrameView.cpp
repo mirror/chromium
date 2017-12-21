@@ -13,8 +13,27 @@
 #include "core/intersection_observer/IntersectionObserverEntry.h"
 #include "core/layout/LayoutView.h"
 #include "core/layout/api/LayoutEmbeddedContentItem.h"
+#include "platform/graphics/GraphicsContext.h"
+#include "platform/graphics/paint/CullRect.h"
+
+#include "third_party/WebKit/Source/platform/graphics/paint/DrawingRecorder.h"
+#include "third_party/skia/include/core/SkPictureRecorder.h"
+#include "third_party/skia/include/core/SkRect.h"
 
 namespace blink {
+
+static sk_sp<SkPicture> DrawPlaceHolder(IntRect rect) {
+  SkPaint paint1;
+  paint1.setColor(SK_ColorWHITE);
+  paint1.setStyle(SkPaint::kStroke_Style);
+  paint1.setStrokeWidth(1);
+  SkPictureRecorder rec;
+  SkCanvas* c = rec.beginRecording(rect.Width(), rect.Height());
+  c->save();
+  c->drawRect(rect, paint1);
+  c->restore();
+  return rec.finishRecordingAsPicture();
+}
 
 RemoteFrameView::RemoteFrameView(RemoteFrame* remote_frame)
     : remote_frame_(remote_frame), is_attached_(false) {
@@ -135,6 +154,41 @@ void RemoteFrameView::FrameRectsChanged() {
   remote_frame_->Client()->FrameRectsChanged(new_rect);
 }
 
+void RemoteFrameView::Paint(GraphicsContext& context,
+                            const GlobalPaintFlags flags,
+                            const CullRect& rect) const {
+  // Painting remote frames is only for printing.
+  if (!context.Printing())
+    return;
+
+  IntRect bound(FrameRect());
+  if (!rect.IntersectsCullRect(bound))
+    return;
+
+  DrawingRecorder drawRecorder(
+      context,
+      *(static_cast<blink::DisplayItemClient*>(GetFrame().OwnerLayoutObject())),
+      DisplayItem::kDocumentBackground);
+  DCHECK(context.Canvas());
+  sk_sp<SkPicture> place_holder_pic = DrawPlaceHolder(bound);
+  sk_sp<PaintRecord> record = sk_make_sp<PaintRecord>(bound, place_holder_pic);
+  context.Canvas()->drawPicture(record);
+
+  uint32_t content_id = place_holder_pic->uniqueID();
+  // Inform the actual frame to print.
+  Print(bound, content_id);
+
+  // Store the oop content's id.
+  static const char kOopIdsKey[] = "CrOopIds";
+  SkMetaData& metadata = context.Canvas()->getMetaData();
+  void* v;
+  if (!metadata.findPtr(kOopIdsKey, &v, nullptr) || !v)
+    return;
+
+  std::vector<uint32_t>* ids = reinterpret_cast<std::vector<uint32_t>*>(v);
+  ids->push_back(content_id);
+}
+
 void RemoteFrameView::UpdateGeometry() {
   if (LayoutEmbeddedContent* layout = remote_frame_->OwnerLayoutObject())
     layout->UpdateGeometry(*this);
@@ -218,6 +272,10 @@ bool RemoteFrameView::CanThrottleRendering() const {
   if (subtree_throttled_)
     return true;
   return hidden_for_throttling_;
+}
+
+void RemoteFrameView::Print(const IntRect& rect, uint32_t content_id) const {
+  remote_frame_->Client()->Print(rect, content_id);
 }
 
 void RemoteFrameView::Trace(blink::Visitor* visitor) {
