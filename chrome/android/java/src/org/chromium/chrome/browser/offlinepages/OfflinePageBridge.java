@@ -32,7 +32,6 @@ public class OfflinePageBridge {
     public static final String ASYNC_NAMESPACE = "async_loading";
     public static final String BOOKMARK_NAMESPACE = "bookmark";
     public static final String LAST_N_NAMESPACE = "last_n";
-    public static final String SHARE_NAMESPACE = "share";
     public static final String CCT_NAMESPACE = "custom_tabs";
     public static final String DOWNLOAD_NAMESPACE = "download";
     public static final String NTP_SUGGESTIONS_NAMESPACE = "ntp_suggestions";
