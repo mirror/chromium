@@ -5,6 +5,7 @@
 #include "chrome/browser/signin/chrome_signin_helper.h"
 
 #include <memory>
+#include <utility>
 
 #include "base/bind.h"
 #include "base/bind_helpers.h"
@@ -26,7 +27,6 @@
 #include "chrome/browser/signin/process_dice_header_delegate_impl.h"
 #include "chrome/browser/signin/signin_manager_factory.h"
 #include "chrome/browser/tab_contents/tab_util.h"
-#include "chrome/browser/ui/browser_finder.h"
 #include "chrome/browser/ui/browser_window.h"
 #include "chrome/browser/ui/webui/signin/dice_turn_sync_on_helper.h"
 #include "chrome/browser/ui/webui/signin/login_ui_service.h"
