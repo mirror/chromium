@@ -239,9 +239,10 @@ void TextInputManager::ImeCompositionRangeChanged(
 void TextInputManager::SelectionChanged(RenderWidgetHostViewBase* view,
                                         const base::string16& text,
                                         size_t offset,
-                                        const gfx::Range& range) {
+                                        const gfx::Range& range,
+                                        int word_offset) {
   DCHECK(IsRegistered(view));
-  text_selection_map_[view].SetSelection(text, offset, range);
+  text_selection_map_[view].SetSelection(text, offset, range, word_offset);
   for (auto& observer : observer_list_)
     observer.OnTextSelectionChanged(this, view);
 }
@@ -331,11 +332,13 @@ TextInputManager::TextSelection::~TextSelection() {}
 
 void TextInputManager::TextSelection::SetSelection(const base::string16& text,
                                                    size_t offset,
-                                                   const gfx::Range& range) {
+                                                   const gfx::Range& range,
+                                                   int word_offset) {
   text_ = text;
   range_.set_start(range.start());
   range_.set_end(range.end());
   offset_ = offset;
+  word_offset_ = word_offset;
 
   // Update the selected text.
   selected_text_.clear();

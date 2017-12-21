@@ -110,6 +110,10 @@ void LegacyIPCFrameInputHandler::ReplaceMisspelling(
   SendInput(std::make_unique<InputMsg_ReplaceMisspelling>(routing_id_, word));
 }
 
+void LegacyIPCFrameInputHandler::ReplaceTextAtRange(
+    const gfx::Range& range,
+    const base::string16& word) {}
+
 void LegacyIPCFrameInputHandler::Delete() {
   SendInput(std::make_unique<InputMsg_Delete>(routing_id_));
 }
