@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "957d3950_c00b1840",
+        "filename": "chrome/browser/vr/elements/toast.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-12-21T19:02:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b5e10fa9_9135d292",
+      "revId": "265e84f8a27b5e95e910403c4d399508533f84ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f2585c5b_8cf336ff",
         "filename": "chrome/browser/vr/elements/toast.cc",
         "patchSetId": 2
@@ -190,6 +208,24 @@
       "side": 1,
       "message": "Why not SetIcon/SetText?  The function isn\u0027t actually adding the icon, it\u0027s calling a bunch of other setters.  I can\u0027t see a good reason why these don\u0027t fall into the Set() naming convention.",
       "parentUuid": "332e5e7a_6081c60c",
+      "revId": "265e84f8a27b5e95e910403c4d399508533f84ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "907492d9_6b42bc13",
+        "filename": "chrome/browser/vr/elements/toast.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-12-21T19:02:12Z",
+      "side": 1,
+      "message": "Talked offline. The function now creates icon and text in the implementation. So keep the name as AddText/Icon.",
+      "parentUuid": "0d986268_a028bd80",
       "revId": "265e84f8a27b5e95e910403c4d399508533f84ab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
