@@ -77,6 +77,11 @@ class CONTENT_EXPORT ServiceWorkerControlleeRequestHandler
   void MaybeCreateLoader(const ResourceRequest& request,
                          ResourceContext* resource_context,
                          LoaderCallback callback) override;
+  // Returns params with the ControllerServiceWorkerPtr if we have found
+  // a matching controller service worker for the |request| that is given
+  // to MaybeCreateLoader(). Otherwise this returns base::nullopt.
+  base::Optional<SubresourceLoaderParams> MaybeCreateSubresourceLoaderParams()
+      override;
 
  private:
   FRIEND_TEST_ALL_PREFIXES(ServiceWorkerControlleeRequestHandlerTest,
