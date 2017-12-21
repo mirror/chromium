@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b875de7a_ef5979cb",
+        "filename": "ui/views/test/views_pixel_test.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-21T04:27:43Z",
+      "side": 1,
+      "message": "this would incorrectly classify a path found at the last index as \"found no path\" :( #shamecube. Swapped it with another `base::PathExists(path)` check since that\u0027s less error-prone.",
+      "revId": "1f5e17817c326b47551fb07a36bd71259e317a2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

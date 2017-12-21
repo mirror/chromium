@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "436c88d2_1f72b067",
+        "filename": "ui/views/test/views_pixel_test.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-21T04:27:43Z",
+      "side": 1,
+      "message": "\u003e Swarming doesn\u0027t filter anything. Possibly you were affected by the sources assignment filter in GN instead; if so, we should be able to figure out what was going on and work around it.\n\nI ran some experiments in http://crrev.com/c/838000 and found my mistake :/ (see comment below).\n\n\u003e \n\u003e I think we should try to match the naming of platform variants used by the layout tests, e.g. \"mac10.9\", \"mac10.10\", \"win7\", \"win10\".\n\nDone. I copied the names that platform_info.py produces (i.e. the folders in src/third_party/WebKit/LayoutTests/platform). On Mac, there is \u0027mac-retina\u0027, and mac-mac10.xx -- i.e. the \u0027mac\u0027 may repeat. Not sure if that\u0027s intentional, but I\u0027ve gone for consistency.",
+      "parentUuid": "1bcd06cd_65b37517",
+      "revId": "81bc04a72afdaaf122dac9487bb1bc49563a676f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b12c707d_c8e2f84c",
         "filename": "ui/views/test/views_pixel_test.cc",
         "patchSetId": 22
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-19T17:04:21Z",
       "side": 1,
       "message": "This is a single linear fallback order, rather than the layout_tests\u0027 graph, right?\n\nDo you have any idea how likely it is that linux will actually match windows, or win will match mac?",
+      "revId": "81bc04a72afdaaf122dac9487bb1bc49563a676f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9732fd95_79620d59",
+        "filename": "ui/views/test/views_pixel_test.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-21T04:27:43Z",
+      "side": 1,
+      "message": "\u003e This is a single linear fallback order, rather than the layout_tests\u0027 graph, right?\n\nyes\n\n\u003e \n\u003e Do you have any idea how likely it is that linux will actually match windows, or win will match mac?\n\nFor tests that don\u0027t involve text, it should be pretty common that platforms agree.",
+      "parentUuid": "b12c707d_c8e2f84c",
       "revId": "81bc04a72afdaaf122dac9487bb1bc49563a676f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
