@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "90557c88_9e67a4a2",
+        "filename": "extensions/renderer/bindings/js_runner.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-12-21T00:23:36Z",
+      "side": 1,
+      "message": "nit: Maybe you want to put this right before next overloaded version of RunJSFunction?",
+      "range": {
+        "startLine": 39,
+        "startChar": 18,
+        "endLine": 40,
+        "endChar": 37
+      },
+      "revId": "f8b16db4099c85f2178412da48771e415e3636f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
