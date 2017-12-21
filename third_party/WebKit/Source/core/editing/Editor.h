@@ -130,7 +130,7 @@ class CORE_EXPORT Editor final : public GarbageCollectedFinalized<Editor> {
   void ApplyParagraphStyleToSelection(CSSPropertyValueSet*,
                                       InputEvent::InputType);
 
-  void AppliedEditing(CompositeEditCommand*);
+  void AppliedEditing(CompositeEditCommand*, bool suppress_post_insert_events);
   void UnappliedEditing(UndoStep*);
   void ReappliedEditing(UndoStep*);
 

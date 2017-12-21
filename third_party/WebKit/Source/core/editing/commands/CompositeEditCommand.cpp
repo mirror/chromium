@@ -156,7 +156,7 @@ bool CompositeEditCommand::Apply() {
   // Only need to call appliedEditing for top-level commands, and TypingCommands
   // do it on their own (see TypingCommand::typingAddedToOpenCommand).
   if (!IsTypingCommand())
-    frame->GetEditor().AppliedEditing(this);
+    frame->GetEditor().AppliedEditing(this, false);
   SetShouldRetainAutocorrectionIndicator(false);
   return !editing_state.IsAborted();
 }

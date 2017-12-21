@@ -950,7 +950,8 @@ static SelectionInDOMTree CorrectedSelectionAfterCommand(
   return passed_selection.AsSelection();
 }
 
-void Editor::AppliedEditing(CompositeEditCommand* cmd) {
+void Editor::AppliedEditing(CompositeEditCommand* cmd,
+                            bool suppress_post_insert_events) {
   DCHECK(!cmd->IsCommandGroupWrapper());
   EventQueueScope scope;
 
@@ -958,11 +959,13 @@ void Editor::AppliedEditing(CompositeEditCommand* cmd) {
   DCHECK(undo_step);
   DispatchEditableContentChangedEvents(undo_step->StartingRootEditableElement(),
                                        undo_step->EndingRootEditableElement());
-  // TODO(chongz): Filter empty InputType after spec is finalized.
-  DispatchInputEventEditableContentChanged(
-      undo_step->StartingRootEditableElement(),
-      undo_step->EndingRootEditableElement(), cmd->GetInputType(),
-      cmd->TextDataForInputEvent(), IsComposingFromCommand(cmd));
+  if (!suppress_post_insert_events) {
+    // TODO(chongz): Filter empty InputType after spec is finalized.
+    DispatchInputEventEditableContentChanged(
+        undo_step->StartingRootEditableElement(),
+        undo_step->EndingRootEditableElement(), cmd->GetInputType(),
+        cmd->TextDataForInputEvent(), IsComposingFromCommand(cmd));
+  }
 
   const SelectionInDOMTree& new_selection = CorrectedSelectionAfterCommand(
       cmd->EndingSelection(), GetFrame().GetDocument());
