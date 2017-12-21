@@ -1,0 +1,237 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2a876645_53a0a337",
+        "filename": "chrome/browser/extensions/api/cryptotoken_private/cryptotoken_private_api.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-21T06:57:31Z",
+      "side": 1,
+      "message": "From an extension/app id point of view, this doesn\u0027t make sense - IDs are 32 characters of a - p, never including \u0027/\u0027.",
+      "revId": "fdcff477c36718af03cc05c889a229084461c29f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84b673f2_06cb7026",
+        "filename": "chrome/browser/extensions/api/cryptotoken_private/cryptotoken_private_api.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-21T06:57:31Z",
+      "side": 1,
+      "message": "if we\u0027re doing a strict comparison, does the \u0027/\u0027 search above buy us anything?  Seems like this whole thing could just be a std::find_if()?",
+      "revId": "fdcff477c36718af03cc05c889a229084461c29f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1803443b_0f09a9a8",
+        "filename": "chrome/browser/extensions/api/cryptotoken_private/cryptotoken_private_api.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-21T06:57:31Z",
+      "side": 1,
+      "message": "extensions don\u0027t exist on android.  This if def, I think, is equivalent to #if false.  Are you getting a compiler error otherwise?",
+      "revId": "fdcff477c36718af03cc05c889a229084461c29f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1071a0a6_238a9705",
+        "filename": "chrome/browser/extensions/api/cryptotoken_private/cryptotoken_private_api.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-21T06:57:31Z",
+      "side": 1,
+      "message": "nit: chromium style would be to not have newlines between these, e.g.:\n\n// PermissionRequest:\nbase::string16 GetMessageTextFragment() const override {\n  ...\n}\nGURL GetOrigin() const override { return app_id_; }\nvoid PermissionsGranted() override { ...",
+      "revId": "fdcff477c36718af03cc05c889a229084461c29f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ec7b512_1e763970",
+        "filename": "chrome/browser/extensions/api/cryptotoken_private/cryptotoken_private_api.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-21T06:57:31Z",
+      "side": 1,
+      "message": "Prefer using DISALLOW_COPY_AND_ASSIGN(AttestationPermissionRequest)",
+      "revId": "fdcff477c36718af03cc05c889a229084461c29f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfc51b6c_cb7eff47",
+        "filename": "chrome/browser/extensions/api/cryptotoken_private/cryptotoken_private_api.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-21T06:57:31Z",
+      "side": 1,
+      "message": "nit: prefer std::make_unique",
+      "revId": "fdcff477c36718af03cc05c889a229084461c29f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7de55b6f_fa7d0ab6",
+        "filename": "chrome/browser/extensions/api/cryptotoken_private/cryptotoken_private_api.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-21T06:57:31Z",
+      "side": 1,
+      "message": "nit: should this go before the ContainsAppId check?",
+      "revId": "fdcff477c36718af03cc05c889a229084461c29f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4983500d_0a7a02a6",
+        "filename": "chrome/browser/extensions/api/cryptotoken_private/cryptotoken_private_api.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-21T06:57:31Z",
+      "side": 1,
+      "message": "This member never seems to be used?",
+      "revId": "fdcff477c36718af03cc05c889a229084461c29f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acd6dd41_51c07eef",
+        "filename": "chrome/browser/extensions/api/cryptotoken_private/cryptotoken_private_api_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-21T06:57:31Z",
+      "side": 1,
+      "message": "nit: prefer std::make_unique or base::MakeRefCounted over \"bare\" new calls.",
+      "range": {
+        "startLine": 181,
+        "startChar": 26,
+        "endLine": 181,
+        "endChar": 29
+      },
+      "revId": "fdcff477c36718af03cc05c889a229084461c29f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e2bf350_9c4900f4",
+        "filename": "chrome/browser/extensions/api/cryptotoken_private/cryptotoken_private_api_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-21T06:57:31Z",
+      "side": 1,
+      "message": "nit: initialize these (either through a default here or through a ctor)",
+      "revId": "fdcff477c36718af03cc05c889a229084461c29f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1ac81da_7b3657c6",
+        "filename": "chrome/browser/extensions/api/cryptotoken_private/cryptotoken_private_api_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-21T06:57:31Z",
+      "side": 1,
+      "message": "nit: initialize",
+      "revId": "fdcff477c36718af03cc05c889a229084461c29f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "578992f1_2ccec711",
+        "filename": "chrome/common/extensions/api/cryptotoken_private.idl",
+        "patchSetId": 8
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-21T06:57:31Z",
+      "side": 1,
+      "message": "An \"options\"-style dictionary is frequently preferred for these types of methods, because it scales better. e.g.,\n\ndictionary CanAppIdGetAttestationOptions {\n  DOMString appId;\n  long tabId;\n};\n\nstatic void canAppIdGetAttestation(CanAppIdGetAttestationOptions options,\n                                   AppIdCallback callback);\n\nThat way, in three months when we want to add a new parameter, it\u0027s not (necessarily) a breaking change. :)",
+      "revId": "fdcff477c36718af03cc05c889a229084461c29f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f83a934_805e8a82",
+        "filename": "chrome/common/extensions/api/cryptotoken_private.idl",
+        "patchSetId": 8
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-21T06:57:31Z",
+      "side": 1,
+      "message": "This doesn\u0027t describe what appId is? (or tabId, for that matter)",
+      "range": {
+        "startLine": 34,
+        "startChar": 49,
+        "endLine": 34,
+        "endChar": 54
+      },
+      "revId": "fdcff477c36718af03cc05c889a229084461c29f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
