@@ -85,7 +85,11 @@ class CORE_EXPORT ScriptSourceCode final {
   const String source_;
   Member<CachedMetadataHandler> cache_handler_;
   Member<ScriptStreamer> streamer_;
+
+  // The URL of the source code, which is used for DevTools javascript debugger.
+  // This should not be used to calculate fetch base URL.
   const KURL url_;
+
   const String source_map_url_;
   const TextPosition start_position_;
   const ScriptSourceLocationType source_location_type_;
