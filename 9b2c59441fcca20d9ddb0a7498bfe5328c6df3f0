@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a90a0b2f_09e92c54",
+        "filename": "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 799,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-12-21T19:35:46Z",
+      "side": 1,
+      "message": "There are some workaround codes in WallpaperControllerClient::BindAndSetClient() to make it work under MASH, see https://cs.chromium.org/chromium/src/chrome/browser/ui/ash/wallpaper_controller_client.cc?rcl\u003d8ec879093d434fa180ce98bf88a7738aa8bc463c\u0026l\u003d254. Later this function will be extracted to a util file which will be placed under //ash/public/cpp.",
+      "parentUuid": "23bde948_13c76e9e",
+      "revId": "9b2c59441fcca20d9ddb0a7498bfe5328c6df3f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "221365eb_4c4da1c7",
         "filename": "chrome/browser/ui/ash/wallpaper_controller_client.cc",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "9b2c59441fcca20d9ddb0a7498bfe5328c6df3f0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bcc6f03_acfc7fbc",
+        "filename": "chrome/browser/ui/ash/wallpaper_controller_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-12-21T19:35:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "221365eb_4c4da1c7",
+      "revId": "9b2c59441fcca20d9ddb0a7498bfe5328c6df3f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
