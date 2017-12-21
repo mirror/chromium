@@ -74,3 +74,20 @@ void NotificationDisplayServiceTester::RemoveAllNotifications(
     bool by_user) {
   display_service_->RemoveAllNotifications(type, by_user);
 }
+
+bool NotificationDisplayServiceTester::ValidateNotificationValues(
+    NotificationCommon::Operation operation,
+    NotificationCommon::Type notification_type,
+    const GURL& origin,
+    const std::string& notification_id,
+    const base::Optional<int>& action_index,
+    const base::Optional<base::string16>& reply,
+    const base::Optional<bool>& by_user) {
+  return operation == display_service_->get_last_operation() &&
+         notification_type == display_service_->get_last_notification_type() &&
+         origin == display_service_->get_last_origin() &&
+         notification_id == display_service_->get_last_notification_id() &&
+         action_index == display_service_->get_last_action_index() &&
+         reply == display_service_->get_last_reply() &&
+         by_user == display_service_->get_last_by_user();
+}
