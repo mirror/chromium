@@ -243,23 +243,6 @@ base::string16 FindChildTextInner(const WebNode& node,
   return node_text;
 }
 
-// Same as FindChildText() below, but with a list of div nodes to skip.
-// TODO(thestig): See if other FindChildText() callers can benefit from this.
-base::string16 FindChildTextWithIgnoreList(
-    const WebNode& node,
-    const std::set<WebNode>& divs_to_skip) {
-  if (node.IsTextNode())
-    return node.NodeValue().Utf16();
-
-  WebNode child = node.FirstChild();
-
-  const int kChildSearchDepth = 10;
-  base::string16 node_text =
-      FindChildTextInner(child, kChildSearchDepth, divs_to_skip);
-  base::TrimWhitespace(node_text, base::TRIM_ALL, &node_text);
-  return node_text;
-}
-
 // Shared function for InferLabelFromPrevious() and InferLabelFromNext().
 base::string16 InferLabelFromSibling(const WebFormControlElement& element,
                                      bool forward) {
@@ -1814,6 +1797,29 @@ void PreviewSuggestion(const base::string16& suggestion,
   }
 
   input_element->SetSelectionRange(selection_start, suggestion.length());
+}
+
+base::string16 InferLabelForElementTest(
+    const WebFormControlElement& element,
+    const std::vector<base::char16>& stop_words) {
+  return InferLabelForElement(element, stop_words);
+}
+
+// Same as FindChildText() below, but with a list of div nodes to skip.
+// TODO(thestig): See if other FindChildText() callers can benefit from this.
+base::string16 FindChildTextWithIgnoreList(
+    const WebNode& node,
+    const std::set<WebNode>& divs_to_skip) {
+  if (node.IsTextNode())
+    return node.NodeValue().Utf16();
+
+  WebNode child = node.FirstChild();
+
+  const int kChildSearchDepth = 10;
+  base::string16 node_text =
+      FindChildTextInner(child, kChildSearchDepth, divs_to_skip);
+  base::TrimWhitespace(node_text, base::TRIM_ALL, &node_text);
+  return node_text;
 }
 
 base::string16 FindChildText(const WebNode& node) {
