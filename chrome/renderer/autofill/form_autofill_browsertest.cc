@@ -4826,6 +4826,39 @@ TEST_F(FormAutofillTest,
   EXPECT_FORM_FIELD_DATA_EQUALS(expected, fields[2]);
 }
 
+TEST_F(FormAutofillTest, WebFormCheckInferLabelForElement) {
+  LoadHTML(
+      "<form id=form>"
+      "  <label for='progress'>First Name:"
+      "  <input type='text' id='firstname' value='John'>"
+      "  </label>"
+      "  <label for='progress'>Last Name:"
+      "  <input type='text' id='lastname' value='Doe'>"
+      "  </label>"
+      "  Address:"
+      "  <input type='text' id='address' value=''>"
+      "  <div>City<span><input type='text' id='city' value=''>"
+      "  </span></div>"
+      "  <dl><dt>Some Text</dt><dd><input type='text' id='state' "
+      "value=''></dd></dl>"
+      "</form>");
+
+  WebLocalFrame* frame = GetMainFrame();
+  ASSERT_NE(nullptr, frame);
+
+  WebFormElement web_form =
+      frame->GetDocument().GetElementById("form").To<WebFormElement>();
+  ASSERT_FALSE(web_form.IsNull());
+
+  FormData form;
+  EXPECT_TRUE(WebFormElementToFormData(web_form, WebFormControlElement(),
+                                       nullptr, EXTRACT_NONE, &form, nullptr));
+
+  const std::vector<FormFieldData>& fields = form.fields;
+  ASSERT_EQ(5U, fields.size());
+  EXPECT_EQ(ASCIIToUTF16("First Name:"), fields[0].label);
+}
+
 TEST_F(FormAutofillTest,
        UnownedFormElementsAndFieldSetsToFormDataControlOutsideOfFieldset) {
   std::vector<WebElement> fieldsets;

@@ -4,7 +4,7 @@ ADDRESS_HOME_LINE1 | shippingAddressFieldGroup1-shippingAddressLine1 | *House Nu
 ADDRESS_HOME_LINE2 | shippingAddressFieldGroup1-shippingAddressLine2 | House/Building Name |  | shippingAddressFieldGroup1-shippingFirstName_1-default
 ADDRESS_HOME_CITY | shippingAddressFieldGroup1-shippingCity | *Town/City |  | shippingAddressFieldGroup1-shippingFirstName_1-default
 ADDRESS_HOME_ZIP | shippingAddressFieldGroup1-shippingPostalCode | *Zip code |  | shippingAddressFieldGroup1-shippingFirstName_1-default
-ADDRESS_HOME_STATE | shippingAddressFieldGroup1-shippingState | *First name *Last Name *House Number and Street |  | shippingAddressFieldGroup1-shippingFirstName_1-default
+ADDRESS_HOME_STATE | shippingAddressFieldGroup1-shippingState | *First name *Last Name *House Number and Street House/Building Name *Town/City *Zip code |  | shippingAddressFieldGroup1-shippingFirstName_1-default
 NAME_FIRST | shippingAddressFieldGroup2-shippingFirstName | *First name |  | shippingAddressFieldGroup2-shippingFirstName_1-default
 NAME_LAST | shippingAddressFieldGroup2-shippingLastName | *Last Name |  | shippingAddressFieldGroup2-shippingFirstName_1-default
 ADDRESS_HOME_LINE1 | shippingAddressFieldGroup2-shippingAddressLine1 | *House Number and Street |  | shippingAddressFieldGroup2-shippingFirstName_1-default

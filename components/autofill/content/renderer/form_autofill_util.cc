@@ -159,6 +159,17 @@ size_t CalculateTableCellColumnSpan(const WebElement& element) {
   return span;
 }
 
+bool IsLabelValid(base::StringPiece16 inferred_label,
+                  const std::vector<base::char16>& stop_words) {
+  // If |inferred_label| has any character other than those in |stop_words|.
+  auto* first_non_stop_word =
+      std::find_if(inferred_label.begin(), inferred_label.end(),
+                   [&stop_words](base::char16 c) {
+                     return !base::ContainsValue(stop_words, c);
+                   });
+  return first_non_stop_word != inferred_label.end();
+}
+
 // Appends |suffix| to |prefix| so that any intermediary whitespace is collapsed
 // to a single space.  If |force_whitespace| is true, then the resulting string
 // is guaranteed to have a space between |prefix| and |suffix|.  Otherwise, the
@@ -198,48 +209,51 @@ const base::string16 CombineAndCollapseWhitespace(
 // |divs_to_skip| is a list of <div> tags to ignore if encountered.
 base::string16 FindChildTextInner(const WebNode& node,
                                   int depth,
-                                  const std::set<WebNode>& divs_to_skip) {
+                                  const std::set<WebNode>& divs_to_skip,
+                                  const std::set<WebNode>& right_limits) {
   if (depth <= 0 || node.IsNull())
     return base::string16();
 
-  // Skip over comments.
-  if (node.IsCommentNode())
-    return FindChildTextInner(node.NextSibling(), depth - 1, divs_to_skip);
-
-  if (!node.IsElementNode() && !node.IsTextNode())
-    return base::string16();
-
-  // Ignore elements known not to contain inferable labels.
-  if (node.IsElementNode()) {
-    const WebElement element = node.ToConst<WebElement>();
-    if (IsOptionElement(element) || IsScriptElement(element) ||
-        IsNoScriptElement(element) ||
-        (element.IsFormControlElement() &&
-         IsAutofillableElement(element.ToConst<WebFormControlElement>()))) {
-      return base::string16();
-    }
-
-    if (element.HasHTMLTagName("div") && base::ContainsKey(divs_to_skip, node))
-      return base::string16();
+  if (node.IsTextNode()) {
+    return node.NodeValue().Utf16();
   }
 
+  if (!node.IsElementNode())
+    return base::string16();
+  //  if (node.HasHTMLTagName("label")) {
+  //    return base::UTF8ToUTF16("is in label");
+  //  }
+
+  // Ignore elements known not to contain inferable labels.
+  const WebElement element = node.ToConst<WebElement>();
+
+  if (IsOptionElement(element) || IsScriptElement(element) ||
+      IsNoScriptElement(element) ||
+      (element.IsFormControlElement() &&
+       IsAutofillableElement(element.ToConst<WebFormControlElement>()))) {
+    return base::string16();
+  }
+
+  if (element.HasHTMLTagName("div") && base::ContainsKey(divs_to_skip, node))
+    return base::string16();
+
   // Extract the text exactly at this node.
-  base::string16 node_text = node.NodeValue().Utf16();
+  base::string16 node_text;  // node.NodeValue().Utf16();
+  bool add_space = false;
 
   // Recursively compute the children's text.
   // Preserve inter-element whitespace separation.
-  base::string16 child_text =
-      FindChildTextInner(node.FirstChild(), depth - 1, divs_to_skip);
-  bool add_space = node.IsTextNode() && node_text.empty();
-  node_text = CombineAndCollapseWhitespace(node_text, child_text, add_space);
-
-  // Recursively compute the siblings' text.
-  // Again, preserve inter-element whitespace separation.
-  base::string16 sibling_text =
-      FindChildTextInner(node.NextSibling(), depth - 1, divs_to_skip);
-  add_space = node.IsTextNode() && node_text.empty();
-  node_text = CombineAndCollapseWhitespace(node_text, sibling_text, add_space);
-
+  WebNode child = node.FirstChild();
+  while (!child.IsNull()) {
+    base::string16 child_text =
+        FindChildTextInner(child, depth - 1, divs_to_skip, right_limits);
+    node_text = CombineAndCollapseWhitespace(node_text, child_text, add_space);
+    add_space = child.IsTextNode() && node_text.empty();
+    if (base::ContainsKey(right_limits, child) || depth == 0) {
+      break;
+    }
+    child = child.NextSibling();
+  }
   return node_text;
 }
 
@@ -247,15 +261,16 @@ base::string16 FindChildTextInner(const WebNode& node,
 // TODO(thestig): See if other FindChildText() callers can benefit from this.
 base::string16 FindChildTextWithIgnoreList(
     const WebNode& node,
-    const std::set<WebNode>& divs_to_skip) {
+    const std::set<WebNode>& divs_to_skip,
+    const std::set<WebNode>& right_limits) {
   if (node.IsTextNode())
     return node.NodeValue().Utf16();
 
-  WebNode child = node.FirstChild();
+  // WebNode child = node.FirstChild();
 
   const int kChildSearchDepth = 10;
   base::string16 node_text =
-      FindChildTextInner(child, kChildSearchDepth, divs_to_skip);
+      FindChildTextInner(node, kChildSearchDepth, divs_to_skip, right_limits);
   base::TrimWhitespace(node_text, base::TRIM_ALL, &node_text);
   return node_text;
 }
@@ -406,7 +421,9 @@ base::string16 InferLabelFromEnclosingLabel(
 // or   <tr><th>Some Text</th><td><input ...></td></tr>
 // or   <tr><td><b>Some Text</b></td><td><b><input ...></b></td></tr>
 // or   <tr><th><b>Some Text</b></th><td><b><input ...></b></td></tr>
-base::string16 InferLabelFromTableColumn(const WebFormControlElement& element) {
+base::string16 InferLabelFromTableColumn(
+    const WebFormControlElement& element,
+    const std::vector<base::char16>& stop_words) {
   CR_DEFINE_STATIC_LOCAL(WebString, kTableCell, ("td"));
   WebNode parent = element.ParentNode();
   while (!parent.IsNull() && parent.IsElementNode() &&
@@ -422,7 +439,7 @@ base::string16 InferLabelFromTableColumn(const WebFormControlElement& element) {
   base::string16 inferred_label;
   WebNode previous = parent.PreviousSibling();
   CR_DEFINE_STATIC_LOCAL(WebString, kTableHeader, ("th"));
-  while (inferred_label.empty() && !previous.IsNull()) {
+  while (!IsLabelValid(inferred_label, stop_words) && !previous.IsNull()) {
     if (HasTagName(previous, kTableCell) || HasTagName(previous, kTableHeader))
       inferred_label = FindChildText(previous);
 
@@ -559,21 +576,29 @@ base::string16 InferLabelFromTableRow(const WebFormControlElement& element) {
 //
 // Because this is already traversing the <div> structure, if it finds a <label>
 // sibling along the way, infer from that <label>.
-base::string16 InferLabelFromDivTable(const WebFormControlElement& element) {
+base::string16 InferLabelFromDivTable(
+    const WebFormControlElement& element,
+    const std::vector<base::char16>& stop_words) {
   WebNode node = element.ParentNode();
   bool looking_for_parent = true;
   std::set<WebNode> divs_to_skip;
+  std::set<WebNode> right_limits;
+  right_limits.insert(element);
 
   // Search the sibling and parent <div>s until we find a candidate label.
   base::string16 inferred_label;
   CR_DEFINE_STATIC_LOCAL(WebString, kDiv, ("div"));
   CR_DEFINE_STATIC_LOCAL(WebString, kLabel, ("label"));
-  while (inferred_label.empty() && !node.IsNull()) {
+  while (!IsLabelValid(inferred_label, stop_words) && !node.IsNull()) {
+    if (looking_for_parent)
+      right_limits.insert(node);
     if (HasTagName(node, kDiv)) {
-      if (looking_for_parent)
-        inferred_label = FindChildTextWithIgnoreList(node, divs_to_skip);
-      else
+      if (looking_for_parent) {
+        inferred_label =
+            FindChildTextWithIgnoreList(node, divs_to_skip, right_limits);
+      } else {
         inferred_label = FindChildText(node);
+      }
 
       // Avoid sibling DIVs that contain autofillable fields.
       if (!looking_for_parent && !inferred_label.empty()) {
@@ -649,17 +674,6 @@ std::vector<std::string> AncestorTagNames(
   return tag_names;
 }
 
-bool IsLabelValid(base::StringPiece16 inferred_label,
-    const std::vector<base::char16>& stop_words) {
-  // If |inferred_label| has any character other than those in |stop_words|.
-  auto* first_non_stop_word =
-      std::find_if(inferred_label.begin(), inferred_label.end(),
-                   [&stop_words](base::char16 c) {
-                     return !base::ContainsValue(stop_words, c);
-                   });
-  return first_non_stop_word != inferred_label.end();
-}
-
 // Infers corresponding label for |element| from surrounding context in the DOM,
 // e.g. the contents of the preceding <p> tag or text element.
 base::string16 InferLabelForElement(const WebFormControlElement& element,
@@ -693,9 +707,9 @@ base::string16 InferLabelForElement(const WebFormControlElement& element,
     if (tag_name == "LABEL") {
       inferred_label = InferLabelFromEnclosingLabel(element);
     } else if (tag_name == "DIV") {
-      inferred_label = InferLabelFromDivTable(element);
+      inferred_label = InferLabelFromDivTable(element, stop_words);
     } else if (tag_name == "TD") {
-      inferred_label = InferLabelFromTableColumn(element);
+      inferred_label = InferLabelFromTableColumn(element, stop_words);
       if (!IsLabelValid(inferred_label, stop_words))
         inferred_label = InferLabelFromTableRow(element);
     } else if (tag_name == "DD") {
@@ -1817,7 +1831,8 @@ void PreviewSuggestion(const base::string16& suggestion,
 }
 
 base::string16 FindChildText(const WebNode& node) {
-  return FindChildTextWithIgnoreList(node, std::set<WebNode>());
+  return FindChildTextWithIgnoreList(node, std::set<WebNode>(),
+                                     std::set<WebNode>());
 }
 
 }  // namespace form_util
