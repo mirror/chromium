@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "def68a30_60a15c8b",
+        "filename": "chrome/browser/chromeos/app_mode/arc/arc_kiosk_app_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-21T19:40:40Z",
+      "side": 1,
+      "message": "optional nit: It\u0027s now allowed to use std::make_unique.",
+      "range": {
+        "startLine": 193,
+        "startChar": 21,
+        "endLine": 193,
+        "endChar": 37
+      },
+      "revId": "0b89de77051a017d5e6c1237c298a71d8c067582",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca6c58bc_30cf5826",
+        "filename": "chrome/browser/chromeos/policy/device_status_collector.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1118,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-21T19:40:40Z",
+      "side": 1,
+      "message": "Please update docs in the device_management_backend.proto for the AppStatus message and for the app_id field that they can also contain information about an Android app.\nIt\u0027s also worth noting which fields are expected to be set in Chrome app/extension vs. Android app cases.",
+      "range": {
+        "startLine": 1118,
+        "startChar": 23,
+        "endLine": 1118,
+        "endChar": 33
+      },
+      "revId": "0b89de77051a017d5e6c1237c298a71d8c067582",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86d3e793_acfed4f6",
+        "filename": "chrome/browser/chromeos/policy/device_status_collector_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-21T19:40:40Z",
+      "side": 1,
+      "message": "nit: Add the missing space.",
+      "range": {
+        "startLine": 297,
+        "startChar": 62,
+        "endLine": 297,
+        "endChar": 63
+      },
+      "revId": "0b89de77051a017d5e6c1237c298a71d8c067582",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
