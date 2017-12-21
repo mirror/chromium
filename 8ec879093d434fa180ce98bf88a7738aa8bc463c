@@ -16,6 +16,24 @@
       "revId": "8ec879093d434fa180ce98bf88a7738aa8bc463c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba5dffc6_71d5a639",
+        "filename": "third_party/polymer/v1_0/rsync_exclude.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-21T22:03:15Z",
+      "side": 0,
+      "message": "There is no such file to begin with, so adding it to rsync_exclude.txt is unnecessary.",
+      "parentUuid": "817e4b38_9f007a7c",
+      "revId": "8ec879093d434fa180ce98bf88a7738aa8bc463c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

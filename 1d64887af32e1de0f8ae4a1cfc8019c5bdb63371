@@ -16,6 +16,24 @@
       "revId": "1d64887af32e1de0f8ae4a1cfc8019c5bdb63371",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "429ecc5b_7b33586a",
+        "filename": "third_party/polymer/v1_0/rsync_exclude.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-21T22:03:15Z",
+      "side": 1,
+      "message": "Fixed in patchset 3.",
+      "parentUuid": "aee7a579_7d8c9f09",
+      "revId": "1d64887af32e1de0f8ae4a1cfc8019c5bdb63371",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
