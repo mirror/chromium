@@ -153,6 +153,15 @@ void SelectFileDialogImplGTK::SelectFileImpl(
       NOTREACHED();
       return;
   }
+
+  if (type != SELECT_SAVEAS_FILE) {
+    // Mark the accept response as sensitive only after a draw and a selection
+    // change. See crbug.com/637098
+    gtk_dialog_set_response_sensitive(GTK_DIALOG(dialog), GTK_RESPONSE_ACCEPT,
+                                      FALSE);
+    g_signal_connect(dialog, "draw", G_CALLBACK(OnFileDialogDrawThunk), this);
+  }
+
   g_signal_connect(dialog, "delete-event",
                    G_CALLBACK(gtk_widget_hide_on_delete), nullptr);
   dialogs_.insert(dialog);
@@ -561,6 +570,20 @@ void SelectFileDialogImplGTK::OnUpdatePreview(GtkWidget* chooser) {
   }
   gtk_file_chooser_set_preview_widget_active(GTK_FILE_CHOOSER(chooser),
                                              pixbuf ? TRUE : FALSE);
+}
+
+gboolean SelectFileDialogImplGTK::OnFileDialogDraw(GtkWidget* dialog,
+                                                   CairoContext* cr) {
+  g_signal_handlers_disconnect_by_func(
+      dialog, reinterpret_cast<gpointer>(OnFileDialogDrawThunk), this);
+  g_signal_connect(dialog, "selection-changed",
+                   G_CALLBACK(OnFileDialogSelectionChangedThunk), this);
+  return FALSE;
+}
+
+void SelectFileDialogImplGTK::OnFileDialogSelectionChanged(GtkWidget* dialog) {
+  gtk_dialog_set_response_sensitive(GTK_DIALOG(dialog), GTK_RESPONSE_ACCEPT,
+                                    TRUE);
 }
 
 }  // namespace libgtkui

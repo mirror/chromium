@@ -10,6 +10,8 @@
 #include "chrome/browser/ui/libgtkui/gtk_util.h"
 #include "chrome/browser/ui/libgtkui/select_file_dialog_impl.h"
 
+class CairoContext;
+
 namespace libgtkui {
 
 // Implementation of SelectFileDialog that shows a Gtk common dialog for
@@ -118,6 +120,21 @@ class SelectFileDialogImplGTK : public SelectFileDialogImpl,
 
   // Callback for when we update the preview for the selection.
   CHROMEGTK_CALLBACK_0(SelectFileDialogImplGTK, void, OnUpdatePreview);
+
+  // Callback for when a dialog is first drawn. Used to connect to
+  // "selection-changed", which is sent several times before the dialog is
+  // drawn. Those pre-draw selection change signals should be ignored.
+  CHROMEGTK_CALLBACK_1(SelectFileDialogImplGTK,
+                       gboolean,
+                       OnFileDialogDraw,
+                       CairoContext*);
+
+  // Callback for when the selection changes in a dialog, whether
+  // programatically or by user action. The file or folder selection cannot be
+  // confirmed till after the selection has changed: see crbug.com/637098
+  CHROMEGTK_CALLBACK_0(SelectFileDialogImplGTK,
+                       void,
+                       OnFileDialogSelectionChanged);
 
   // A map from dialog windows to the |params| user data associated with them.
   std::map<GtkWidget*, void*> params_map_;
