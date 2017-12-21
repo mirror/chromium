@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ac4cc65d_b17c8725",
+        "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/automation_predicate.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2017-12-21T18:12:56Z",
+      "side": 1,
+      "message": "Done based on in-person discussion.",
+      "parentUuid": "58d35b8b_28963410",
+      "revId": "e74d997226a84c52a19671409697e2388b28f0b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba697d34_050985cf",
         "filename": "chrome/browser/resources/chromeos/select_to_speak/chromevox_shim.js",
         "patchSetId": 7
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-21T17:37:43Z",
       "side": 1,
       "message": "Let\u0027s properly type cvox.Point.\n\nIn constants.js, do:\n/** @typedef {{x: (number), y: (number) }} */\nconstants.Point;\n\nand replace all occurances of cvox.Point.\n\nThis will enforce typing on callers to things like AutomationUtil.hitTest and you can remove this file.",
+      "revId": "e74d997226a84c52a19671409697e2388b28f0b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5e3e4c9b_1ef37787",
+        "filename": "chrome/browser/resources/chromeos/select_to_speak/chromevox_shim.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2017-12-21T18:12:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba697d34_050985cf",
       "revId": "e74d997226a84c52a19671409697e2388b28f0b6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
