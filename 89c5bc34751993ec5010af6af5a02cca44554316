@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "86293d65_1cde9908",
+        "filename": "components/ukm/ukm_recorder_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-12-21T23:17:04Z",
+      "side": 1,
+      "message": "This is basically to cover things like \nhttps://cs.chromium.org/chromium/src/media/mojo/services/watch_time_recorder.cc?rcl\u003dced3e25960ccda4b099a1322048c538e046cbbee\u0026l\u003d248\nwhere the recording code only knows the origin.\n\nThey are still passing it to UKM as a URL, and we don\u0027t distinguish that in any way, so it makes sense to just canonicalize everything as a URL.",
+      "parentUuid": "c4c93d90_f55a00ab",
+      "revId": "89c5bc34751993ec5010af6af5a02cca44554316",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "36cf8d8b_8951d393",
         "filename": "components/ukm/ukm_recorder_impl.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "89c5bc34751993ec5010af6af5a02cca44554316",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9e86552_1e557967",
+        "filename": "components/ukm/ukm_recorder_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-12-21T23:17:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "36cf8d8b_8951d393",
+      "revId": "89c5bc34751993ec5010af6af5a02cca44554316",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "76548927_555fd9b1",
+        "filename": "components/ukm/ukm_recorder_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-12-21T23:17:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "05225c70_c882fd6d",
+      "revId": "89c5bc34751993ec5010af6af5a02cca44554316",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e6249a9c_3947f2d1",
         "filename": "components/ukm/ukm_recorder_impl.cc",
         "patchSetId": 2
@@ -67,6 +121,24 @@
       "revId": "89c5bc34751993ec5010af6af5a02cca44554316",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01fd1a89_dd1aeb14",
+        "filename": "components/ukm/ukm_recorder_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-12-21T23:17:04Z",
+      "side": 1,
+      "message": "These are non-navigation sources which have already matched re-whitelisting themselves.  If this source is an origin URL it will just re-whitelist that version of the URL.",
+      "parentUuid": "e6249a9c_3947f2d1",
+      "revId": "89c5bc34751993ec5010af6af5a02cca44554316",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
