@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "de848ee1_4384878e",
+        "filename": "chrome/browser/ui/media_router/presentation_receiver_window_controller.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-21T17:01:49Z",
+      "side": 1,
+      "message": "nit: Typically, the meaningful function comments are included in the header that defines the interface, and the implementation subclass just includes a reference back to that:\n\n  // WiredDisplayPresentationReceiver:  (or // WiredDisplayPresentationReceiver overrides.)\n  void Start(const std::string\u0026 presentation_id,\n             const GURL\u0026 start_url) override;\n  void Terminate() override;\n  void SetTitleChangeCallback(\n      base::RepeatingCallback\u003cvoid(const std::string\u0026)\u003e callback) override;\n\nYou can also include more functional implementation comments in the body of the function definition in the cc file.",
+      "revId": "035510e65bfa1ba59c09b885a6de41094ea65fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
