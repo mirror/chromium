@@ -18,6 +18,7 @@
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "base/stl_util.h"
+#include "base/trace_event/memory_usage_estimator.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -268,6 +269,10 @@ class ObserverList
     } else {
       observers_.clear();
     }
+  }
+
+  size_t EstimateMemoryUsage() const {
+    return base::trace_event::EstimateMemoryUsage(observers_);
   }
 
   bool might_have_observers() const { return !observers_.empty(); }

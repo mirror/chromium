@@ -12,6 +12,7 @@
 #include "base/compiler_specific.h"
 #include "base/logging.h"
 #include "base/macros.h"
+#include "base/trace_event/memory_usage_estimator.h"
 
 // OVERVIEW:
 //
@@ -91,6 +92,7 @@ class CallbackListBase {
           list_->removal_callback_.Run();
       }
     }
+    size_t EstimateMemoryUsage() const { return 0; }
 
    private:
     CallbackListBase<CallbackType>* list_;
@@ -118,6 +120,10 @@ class CallbackListBase {
   bool empty() {
     DCHECK_EQ(0, active_iterator_count_);
     return callbacks_.empty();
+  }
+
+  size_t EstimateMemoryUsage() const {
+    return base::trace_event::EstimateMemoryUsage(callbacks_);
   }
 
  protected:
