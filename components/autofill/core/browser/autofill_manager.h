@@ -405,7 +405,8 @@ class AutofillManager : public AutofillHandler,
   // the value of |field| and returns the labels of the matching credit cards.
   std::vector<Suggestion> GetCreditCardSuggestions(
       const FormFieldData& field,
-      const AutofillType& type) const;
+      const AutofillType& type,
+      bool* is_all_server_card) const;
 
   // Parses the forms using heuristic matching and querying the Autofill server.
   void ParseForms(const std::vector<FormData>& forms);
