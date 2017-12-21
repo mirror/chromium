@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "b7047b9b_53bcd618",
+        "filename": "chrome/browser/android/contextualsearch/contextual_search_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-12-21T23:49:37Z",
+      "side": 1,
+      "message": "Basically I was asking *are* we trying to match full URLs, or \u0027just\u0027 origins. Sounds like it\u0027s full URLs. That\u0027s OK; good for me to know.",
+      "parentUuid": "af2a6d3a_39fc6607",
+      "revId": "52c59f8611e802504bea60cd0b9d63306e04e366",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9fb137c9_7c2eff77",
         "filename": "chrome/browser/android/contextualsearch/contextual_search_manager.h",
         "patchSetId": 5
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "I don\u0027t know how to send a GURL from Java, but we\u0027ll make it a GURL once we get it from Java.",
       "parentUuid": "9fb137c9_7c2eff77",
+      "revId": "52c59f8611e802504bea60cd0b9d63306e04e366",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "97457050_44a0748b",
+        "filename": "chrome/browser/android/contextualsearch/contextual_search_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-12-21T23:49:37Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "8f4e4cff_427fd3b6",
       "revId": "52c59f8611e802504bea60cd0b9d63306e04e366",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
