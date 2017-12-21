@@ -204,6 +204,8 @@ class MockInputHandler : public cc::InputHandler {
 
   void MouseMoveAt(const gfx::Point& mouse_position) override {}
 
+  void SnapAtScrollEnd() override {}
+
   MOCK_CONST_METHOD2(IsCurrentlyScrollingLayerAt,
                      bool(const gfx::Point& point,
                           cc::InputHandler::ScrollInputType type));

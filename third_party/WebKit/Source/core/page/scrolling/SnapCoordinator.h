@@ -61,10 +61,6 @@ class CORE_EXPORT SnapCoordinator final
                        bool did_scroll_x,
                        bool did_scroll_y,
                        FloatPoint* snap_position);
-  static FloatPoint FindSnapPosition(const FloatPoint& current_position,
-                                     const SnapContainerData&,
-                                     bool should_snap_on_x,
-                                     bool should_snap_on_y);
 
 #ifndef NDEBUG
   void ShowSnapAreaMap();
