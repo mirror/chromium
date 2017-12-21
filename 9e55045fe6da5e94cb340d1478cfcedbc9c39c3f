@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4fa4ba87_61bd1116",
+        "filename": "chromeos/cryptohome/cryptohome_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-12-21T14:00:05Z",
+      "side": 1,
+      "message": "nit: Let\u0027s simplify now.\n\nfor (const auto\u0026 auth_data : key_def.authorization_data) {\n  ...\n}\n\nDitto for below.",
+      "revId": "9e55045fe6da5e94cb340d1478cfcedbc9c39c3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cae0221f_911e799a",
+        "filename": "chromeos/cryptohome/cryptohome_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-12-21T14:00:05Z",
+      "side": 1,
+      "message": "Could you avoid this so that compiler capture whether a new enum value is added, IIUC. (You can verify that behavior locally by commenting out existing \"case\" stmt.)\nDitto for below.",
+      "range": {
+        "startLine": 63,
+        "startChar": 0,
+        "endLine": 65,
+        "endChar": 14
+      },
+      "revId": "9e55045fe6da5e94cb340d1478cfcedbc9c39c3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d17ef35_00a639bf",
+        "filename": "chromeos/cryptohome/cryptohome_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-12-21T14:00:05Z",
+      "side": 1,
+      "message": "Could you reorder?\n\nCHROMEOS_EXPORT\nAuthorizationRequest CreateAuthorizationRequest(\n    const std::string\u0026 label, const std::string\u0026 secret);",
+      "revId": "9e55045fe6da5e94cb340d1478cfcedbc9c39c3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f66adfb0_0efdef58",
+        "filename": "chromeos/cryptohome/cryptohome_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-12-21T14:00:05Z",
+      "side": 1,
+      "message": "ditto.",
+      "revId": "9e55045fe6da5e94cb340d1478cfcedbc9c39c3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
