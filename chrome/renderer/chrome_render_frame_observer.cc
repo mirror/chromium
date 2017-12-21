@@ -63,6 +63,9 @@
 #include "components/printing/renderer/print_render_frame_helper.h"
 #endif
 
+#if defined(OS_ANDROID)
+using blink::WebBrowserControlsState;
+#endif
 using blink::WebDocumentLoader;
 using blink::WebElement;
 using blink::WebFrameContentDumper;
@@ -138,6 +141,11 @@ ChromeRenderFrameObserver::ChromeRenderFrameObserver(
   render_frame->GetAssociatedInterfaceRegistry()->AddInterface(
       base::Bind(&ChromeRenderFrameObserver::OnRenderFrameObserverRequest,
                  base::Unretained(this)));
+#if defined(OS_ANDROID)
+  render_frame->GetAssociatedInterfaceRegistry()->AddInterface(
+      base::Bind(&ChromeRenderFrameObserver::OnBrowserControlsStateInfoRequest,
+                 base::Unretained(this)));
+#endif
 #if defined(SAFE_BROWSING_CSD)
   const base::CommandLine& command_line =
       *base::CommandLine::ForCurrentProcess();
@@ -463,3 +471,23 @@ void ChromeRenderFrameObserver::SetWindowFeatures(
   render_frame()->GetRenderView()->GetWebView()->SetWindowFeatures(
       content::ConvertMojoWindowFeaturesToWebWindowFeatures(*window_features));
 }
+
+#if defined(OS_ANDROID)
+void ChromeRenderFrameObserver::OnBrowserControlsStateInfoRequest(
+    chrome::mojom::BrowserControlsStateInfoAssociatedRequest request) {
+  browser_controls_state_bindings_.AddBinding(this, std::move(request));
+}
+
+void ChromeRenderFrameObserver::UpdateBrowserControlsState(
+    content::BrowserControlsState constraints,
+    content::BrowserControlsState current,
+    bool animate) {
+  WebBrowserControlsState constraints_state =
+      static_cast<WebBrowserControlsState>(constraints);
+  WebBrowserControlsState current_state =
+      static_cast<WebBrowserControlsState>(current);
+
+  render_frame()->GetRenderView()->GetWebView()->UpdateBrowserControlsState(
+      constraints_state, current_state, animate);
+}
+#endif
