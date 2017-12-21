@@ -46,6 +46,30 @@
       "revId": "32560913bef9422a62d045fdd38277e1f15c746a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f7d9d22_e6412051",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/accessibility/WebContentsAccessibility.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 1241685
+      },
+      "writtenOn": "2017-12-21T20:42:41Z",
+      "side": 1,
+      "message": "No because we never call this function directly on selection node. Logic later switches to using selection node if required. \n\nAlso, the moment we start typing, a11y focus is no where in web view.. its cleared from the edit field, but its not set anywhere in the web view.. this explains why it wouldn\u0027t work. Adding a check that a11yfocused !\u003d View.NO_ID should solve the race condition as well as work for our bug.",
+      "parentUuid": "00a5c8b9_3a201bf7",
+      "range": {
+        "startLine": 432,
+        "startChar": 7,
+        "endLine": 432,
+        "endChar": 65
+      },
+      "revId": "32560913bef9422a62d045fdd38277e1f15c746a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
