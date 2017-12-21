@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1ef6bd01_f1eb1bf5",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/startup/resources/console-log-before-frame-navigation.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-12-21T00:08:07Z",
+      "side": 1,
+      "message": "Drop this altogether.",
+      "revId": "4c06f90cc2f4da71ed3b873069b0567cdd8ff166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
