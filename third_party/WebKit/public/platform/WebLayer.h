@@ -234,6 +234,12 @@ class WebLayer {
   // glow/bounce etc.
   virtual void SetOverscrollBehavior(const WebOverscrollBehavior&) = 0;
 
+  // The ScrollSnapPoints feature could enforce the scroll positions that a
+  // scroll container's scroll port may end at after a scrolling operation has
+  // completed. SnapContainerData contains the necessary information a layer
+  // needs to perform snapping.
+  virtual void SetSnapContainerData(const cc::SnapContainerData&) = 0;
+
   // Sets the cc-side layer client.
   virtual void SetLayerClient(cc::LayerClient*) = 0;
 
