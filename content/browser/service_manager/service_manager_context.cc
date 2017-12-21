@@ -77,10 +77,6 @@
 #include "jni/ContentNfcDelegate_jni.h"
 #endif
 
-#if defined(OS_WIN)
-#include "content/browser/renderer_host/dwrite_font_proxy_message_filter_win.h"
-#endif
-
 #if defined(USE_AURA)
 #include "ui/aura/env.h"
 #endif
@@ -115,10 +111,6 @@ void StartServiceInUtilityProcess(
 
   UtilityProcessHostImpl* process_host =
       new UtilityProcessHostImpl(nullptr, nullptr);
-#if defined(OS_WIN)
-  if (sandbox_type == service_manager::SANDBOX_TYPE_PDF_COMPOSITOR)
-    process_host->AddFilter(new DWriteFontProxyMessageFilter());
-#endif
   process_host->SetName(process_name);
   process_host->SetServiceIdentity(service_manager::Identity(service_name));
   process_host->SetSandboxType(sandbox_type);
