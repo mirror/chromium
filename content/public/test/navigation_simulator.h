@@ -127,6 +127,12 @@ class NavigationSimulator : public WebContentsObserver {
       const GURL& original_url,
       RenderFrameHost* render_frame_host);
 
+  // Creates a NavigationSimulator for an already-started browser initiated
+  // navigation via LoadURL / Reload / GoToOffset. Can be used to drive the
+  // navigation to completion.
+  static std::unique_ptr<NavigationSimulator> CreateFromPendingBrowserInitiated(
+      WebContents* contents);
+
   ~NavigationSimulator() override;
 
   // --------------------------------------------------------------------------
@@ -380,6 +386,10 @@ class NavigationSimulator : public WebContentsObserver {
   // Temporarily holds a closure that will be called on navigation deferral
   // until the NavigationHandle for this navigation has been created.
   base::Closure on_defer_callback_;
+
+  // True if the simulator was created to intercept an already pending
+  // navigation (e.g. from calling LoadURL).
+  bool started_from_pending_ = false;
 
   base::WeakPtrFactory<NavigationSimulator> weak_factory_;
 };
