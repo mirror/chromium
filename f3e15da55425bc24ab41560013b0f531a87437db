@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "dade8618_f60d2b84",
+        "filename": "chrome/browser/vr/model/model.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-12-21T19:43:57Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "feacfcea_504e36b1",
+      "revId": "f3e15da55425bc24ab41560013b0f531a87437db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c1beb2a1_7f6a85ed",
         "filename": "chrome/browser/vr/model/web_vr_model.h",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "f3e15da55425bc24ab41560013b0f531a87437db",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a74aaa61_a39f0f1b",
+        "filename": "chrome/browser/vr/model/web_vr_model.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-12-21T19:43:57Z",
+      "side": 1,
+      "message": "I\u0027m working on a follow-up patch that introduces the notion of ui modes. Added TODO :)",
+      "parentUuid": "c1beb2a1_7f6a85ed",
+      "revId": "f3e15da55425bc24ab41560013b0f531a87437db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "00982022_33a42df4",
+        "filename": "chrome/browser/vr/model/web_vr_model.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-12-21T19:43:57Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "65551b2b_b2f39777",
+      "revId": "f3e15da55425bc24ab41560013b0f531a87437db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "495474ac_c57f6dcf",
         "filename": "chrome/browser/vr/model/web_vr_model.h",
         "patchSetId": 3
@@ -67,6 +121,24 @@
       "revId": "f3e15da55425bc24ab41560013b0f531a87437db",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c76ac8a_b3e71de1",
+        "filename": "chrome/browser/vr/model/web_vr_model.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-12-21T19:43:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "495474ac_c57f6dcf",
+      "revId": "f3e15da55425bc24ab41560013b0f531a87437db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "10a259e0_15c62ef1",
+        "filename": "chrome/browser/vr/ui_renderer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-12-21T19:43:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9329ceb9_6f2164a3",
+      "revId": "f3e15da55425bc24ab41560013b0f531a87437db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "acba82ea_c4ef74c8",
         "filename": "chrome/browser/vr/ui_scene_creator.cc",
         "patchSetId": 3
@@ -98,6 +188,24 @@
       "writtenOn": "2017-12-21T15:56:30Z",
       "side": 1,
       "message": "Please bind a struct or pair or something here (to send back both the show-splash-screen and are-we-presenting together rather than plumbing the second value into the setter). I think there may actually be a bug here because the setter won\u0027t get called when |web_vr_model.state| changes. If that\u0027s true, can you please add a unit test to cover this case?",
+      "revId": "f3e15da55425bc24ab41560013b0f531a87437db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f9db9f0_8b48ff9d",
+        "filename": "chrome/browser/vr/ui_scene_creator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 532,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-12-21T19:43:57Z",
+      "side": 1,
+      "message": "Spoke to you offline. We don\u0027t need this at all and can directly bind signal to the webvr state.",
+      "parentUuid": "acba82ea_c4ef74c8",
       "revId": "f3e15da55425bc24ab41560013b0f531a87437db",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "2390d5c1_e1568d42",
+        "filename": "chrome/browser/vr/ui_scene_creator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1490,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-12-21T19:43:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9aeb252d_e0f7ccde",
+      "revId": "f3e15da55425bc24ab41560013b0f531a87437db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "57328598_5f594d82",
         "filename": "chrome/browser/vr/ui_scene_creator.cc",
         "patchSetId": 3
@@ -135,6 +261,24 @@
       "revId": "f3e15da55425bc24ab41560013b0f531a87437db",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f25265b5_3ffee246",
+        "filename": "chrome/browser/vr/ui_scene_creator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1503,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-12-21T19:43:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "57328598_5f594d82",
+      "revId": "f3e15da55425bc24ab41560013b0f531a87437db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
