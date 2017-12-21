@@ -36251,6 +36251,21 @@ Called by update_net_trust_anchors.py.-->
   <int value="24" label="UnspecedLoading"/>
   <int value="25" label="Unthrottled"/>
   <int value="26" label="InternalTest"/>
+  <int value="27" label="InternalBlobStorage"/>
+  <int value="28" label="InternalDevTools"/>
+  <int value="29" label="InternalGPU"/>
+  <int value="30" label="InternalIdle"/>
+  <int value="31" label="InternalIndexedDB"/>
+  <int value="32" label="InternalIPC"/>
+  <int value="33" label="InternalLoading"/>
+  <int value="34" label="InternalMedia"/>
+  <int value="35" label="InternalPlugin"/>
+  <int value="36" label="InternalRenderWidget"/>
+  <int value="37" label="InternalServiceManager"/>
+  <int value="38" label="InternalTracing"/>
+  <int value="39" label="InternalUserInteraction"/>
+  <int value="40" label="InternalWebCrypto"/>
+  <int value="41" label="InternalWorker"/>
 </enum>
 
 <enum name="RendererSchedulerThreadType">

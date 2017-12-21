@@ -136,7 +136,93 @@ enum class TaskType : unsigned {
   // Tasks for tests or mock objects.
   kInternalTest = 26,
 
-  kCount = 27,
+  // Tasks that are related to blob storage .
+  // Tasks with this task type are typically posted at:
+  // //content/renderer/blob_storage
+  kInternalBlobStorage = 27,
+
+  // Tasks that are related to dev tool e.g. dispatching protocol messages.
+  // Tasks with this task type are typically
+  // posted at:
+  // * //content/renderer/devtools
+  kInternalDevTools = 28,
+
+  // Tasks that are related to GPU like painting asynchronously. Task with this
+  // task types are typically posted at:
+  // * //components/viz/common/gpu
+  // * //content/renderer/gpu/render_widget_compositor.cc
+  // * //gpu
+  // * //services/ui/public/cpp/gpu
+  kInternalGPU = 29,
+
+  // Used for tasks posted at RenderThreadImpl::ScheduleIdleHandler
+  // (the task runner is |RenderThreadImpl::idle_timer_|).
+  kInternalIdle = 30,
+
+  // Tasks that are related to IndexedDB like calling callbacks on some events
+  // of IndexDB. Tasks with this task types are typically posted at:
+  // * //content/renderer/indexed_db
+  kInternalIndexedDB = 31,
+
+  // Tasks that are related to IPC or mojo like dispatching received data. Tasks
+  // with this task type are typically posted at:
+  // * //content/renderer/child_message_filter.cc
+  // * //content/renderer/mojo
+  // * //ipc
+  // * //mojo
+  // Note that there are other cases to use this task type e.g. //gpu/ipc.
+  kInternalIPC = 32,
+
+  // This task type should be used for implementation details of loading
+  // process, for example notifying some component that loading has been
+  // finished. This task type should not run any javascript, use kNetworking or
+  // another appropriate task source in this case. Tasks with this task type are
+  // typically posted at:
+  // * //content/renderer/loader
+  // * //WebKit/Source/core/loader
+  kInternalLoading = 33,
+
+  // Tasks that are related to media e.g. sending a frame to a decoder. Tasks
+  // with this task type are typically posted at:
+  // * //content/renderer/media
+  // * //media
+  kInternalMedia = 34,
+
+  // Tasks that are related to plugin, pepper or PPAPI and posted at
+  // * //components/plugins/renderer
+  // * //content/renderer/pepper
+  // * //ppapi
+  kInternalPlugin = 35,
+
+  // Tasks that are used for asynchronous closing of a RenderWidget.
+  kInternalRenderWidget = 36,
+
+  // Tasks that are related to ServiceManager e.g. InterfaceBinder's callbacks
+  // or calling a callback on connection lost.
+  // * //content/common/service_manager/
+  // * //services/service_manager
+  kInternalServiceManager = 37,
+
+  // Tasks that are related to trace event e.g. flushing or dispatching trace
+  // events. Tasks with this type are typically posted at:
+  kInternalTracing = 38,
+
+  // Tasks that are related to user interaction e.g. handling mojo events
+  // related to input. Tasks with this task type are typically posted at:
+  // * //content/renderer/input/
+  kInternalUserInteraction = 39,
+
+  // Tasks that are related to WebCrypto e.g. handling callbacks of WebCrypto
+  // functions. Tasks with this type are typically posted at:
+  // * //components/webcrypto
+  kInternalWebCrypto = 40,
+
+  // Tasks that are related to service workers e.g. initializing worker clients
+  // asynchronously. Tasks with this task type are typically posted at:
+  // * //content/renderer/service_worker
+  kInternalWorker = 41,
+
+  kCount = 42,
 };
 
 }  // namespace blink
