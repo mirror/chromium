@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6c04b0fd_f3988608",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-12-21T20:26:09Z",
+      "side": 1,
+      "message": "We should try to communicate what this change does in CL title.\n\n\"Disable legacy touch event APIs on desktop\" perhaps?",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 23
+      },
+      "revId": "cb17f89d501c6c259ebbb4bc1fe6ed33eb8ece21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
