@@ -36,9 +36,12 @@ bool HasValidAlgorithm(
 }
 
 webauth::mojom::PublicKeyCredentialInfoPtr CreatePublicKeyCredentialInfo(
-    std::unique_ptr<RegisterResponseData> response_data) {
+    std::unique_ptr<CollectedClientData> client_data,
+    std::unique_ptr<device::RegisterResponseData> response_data) {
   auto credential_info = webauth::mojom::PublicKeyCredentialInfo::New();
-  credential_info->client_data_json = response_data->GetClientDataJSONBytes();
+  std::string client_data_json = client_data->SerializeToJson();
+  credential_info->client_data_json =
+      std::vector<uint8_t>(client_data_json.begin(), client_data_json.end());
   credential_info->raw_id = response_data->raw_id();
   credential_info->id = response_data->GetId();
   auto response = webauth::mojom::AuthenticatorResponse::New();
@@ -115,7 +118,7 @@ void AuthenticatorImpl::MakeCredential(
 
   DCHECK(make_credential_response_callback_.is_null());
   make_credential_response_callback_ = std::move(callback);
-  client_data_ = CollectedClientData::Create(authenticator_utils::kCreateType,
+  client_data_ = CollectedClientData::Create(client_data::kCreateType,
                                              caller_origin.Serialize(),
                                              std::move(options->challenge));
 
@@ -148,8 +151,8 @@ void AuthenticatorImpl::MakeCredential(
   // The challenge parameter is the SHA-256 hash of the Client Data,
   // Among other things, the Client Data contains the challenge from the
   // relying party (hence the name of the parameter).
-  device::U2fRegister::ResponseCallback response_callback = base::Bind(
-      &AuthenticatorImpl::OnDeviceResponse, weak_factory_.GetWeakPtr());
+  device::U2fRegister::RegisterResponseCallback response_callback = base::Bind(
+      &AuthenticatorImpl::OnRegisterResponse, weak_factory_.GetWeakPtr());
 
   // Extract list of credentials to exclude.
   std::vector<std::vector<uint8_t>> registered_keys;
@@ -161,16 +164,13 @@ void AuthenticatorImpl::MakeCredential(
   // http://crbug.com/785955.
   u2f_request_ = device::U2fRegister::TryRegistration(
       registered_keys, client_data_hash, application_parameter,
-      {u2f_discovery_.get()}, response_callback);
+      relying_party_id, {u2f_discovery_.get()}, response_callback);
 }
 
-// Callback to handle the async response from a U2fDevice.
-// |data| is returned for both successful sign and register responses, whereas
-//  |key_handle| is only returned for successful sign responses.
-void AuthenticatorImpl::OnDeviceResponse(
+// Callback to handle the async registration response from a U2fDevice.
+void AuthenticatorImpl::OnRegisterResponse(
     device::U2fReturnCode status_code,
-    const std::vector<uint8_t>& u2f_register_response,
-    const std::vector<uint8_t>& key_handle) {
+    std::unique_ptr<device::RegisterResponseData> response_data) {
   timer_->Stop();
 
   switch (status_code) {
@@ -185,28 +185,26 @@ void AuthenticatorImpl::OnDeviceResponse(
           .Run(webauth::mojom::AuthenticatorStatus::UNKNOWN_ERROR, nullptr);
       break;
     case device::U2fReturnCode::SUCCESS:
-      // TODO(kpaulhamus): Add fuzzers for the response parsers.
-      // http//crbug.com/785957.
-      std::unique_ptr<RegisterResponseData> response =
-          RegisterResponseData::CreateFromU2fRegisterResponse(
-              std::move(client_data_), std::move(u2f_register_response));
+      DCHECK(response_data);
       std::move(make_credential_response_callback_)
           .Run(webauth::mojom::AuthenticatorStatus::SUCCESS,
-               CreatePublicKeyCredentialInfo(std::move(response)));
+               CreatePublicKeyCredentialInfo(std::move(client_data_),
+                                             std::move(response_data)));
       break;
   }
-
-  u2f_request_.reset();
-  u2f_discovery_.reset();
+  Cleanup();
 }
 
 void AuthenticatorImpl::OnTimeout() {
   DCHECK(make_credential_response_callback_);
-  u2f_request_.reset();
-  u2f_discovery_.reset();
-  client_data_.reset();
+  Cleanup();
   std::move(make_credential_response_callback_)
       .Run(webauth::mojom::AuthenticatorStatus::NOT_ALLOWED_ERROR, nullptr);
 }
 
+void AuthenticatorImpl::Cleanup() {
+  u2f_request_.reset();
+  u2f_discovery_.reset();
+  client_data_.reset();
+}
 }  // namespace content

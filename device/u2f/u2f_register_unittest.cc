@@ -5,18 +5,99 @@
 #include "device/u2f/u2f_register.h"
 
 #include <list>
-#include <tuple>
 #include <utility>
 
 #include "base/run_loop.h"
 #include "base/test/scoped_task_environment.h"
+#include "components/cbor/cbor_writer.h"
+#include "device/u2f/attestation_object.h"
+#include "device/u2f/attested_credential_data.h"
+#include "device/u2f/authenticator_data.h"
+#include "device/u2f/ec_public_key.h"
+#include "device/u2f/fido_attestation_statement.h"
 #include "device/u2f/mock_u2f_device.h"
 #include "device/u2f/mock_u2f_discovery.h"
+#include "device/u2f/register_response_data.h"
+#include "device/u2f/u2f_parsing_utils.h"
+#include "device/u2f/u2f_response_test_data.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace device {
 
 using ::testing::_;
+
+namespace {
+
+// Helpers for testing U2f register responses.
+std::vector<uint8_t> GetTestECPublicKeyCBOR() {
+  std::vector<uint8_t> data(std::begin(kTestECPublicKeyCBOR),
+                            std::end(kTestECPublicKeyCBOR));
+  return data;
+}
+
+std::vector<uint8_t> GetTestRegisterResponse() {
+  std::vector<uint8_t> data(std::begin(kTestU2fRegisterResponse),
+                            std::end(kTestU2fRegisterResponse));
+  return data;
+}
+
+std::vector<uint8_t> GetTestCredentialRawIdBytes() {
+  std::vector<uint8_t> data(std::begin(kTestCredentialRawIdBytes),
+                            std::end(kTestCredentialRawIdBytes));
+  return data;
+}
+
+std::vector<uint8_t> GetU2fAttestationStatementCBOR() {
+  std::vector<uint8_t> data(std::begin(kU2fAttestationStatementCBOR),
+                            std::end(kU2fAttestationStatementCBOR));
+  return data;
+}
+
+std::vector<uint8_t> GetTestAttestedCredentialDataBytes() {
+  // Combine kTestAttestedCredentialDataPrefix and kTestECPublicKeyCBOR.
+  std::vector<uint8_t> test_attested_data(
+      std::begin(kTestAttestedCredentialDataPrefix),
+      std::end(kTestAttestedCredentialDataPrefix));
+  test_attested_data.insert(test_attested_data.end(),
+                            std::begin(kTestECPublicKeyCBOR),
+                            std::end(kTestECPublicKeyCBOR));
+  return test_attested_data;
+}
+
+std::vector<uint8_t> GetTestAuthenticatorDataBytes() {
+  // Build the test authenticator data.
+  std::vector<uint8_t> test_authenticator_data(
+      std::begin(kTestAuthenticatorDataPrefix),
+      std::end(kTestAuthenticatorDataPrefix));
+  std::vector<uint8_t> test_attested_data =
+      GetTestAttestedCredentialDataBytes();
+  test_authenticator_data.insert(test_authenticator_data.end(),
+                                 test_attested_data.begin(),
+                                 test_attested_data.end());
+  return test_authenticator_data;
+}
+
+std::vector<uint8_t> GetTestAttestationObjectBytes() {
+  std::vector<uint8_t> test_authenticator_object(std::begin(kFormatFidoU2fCBOR),
+                                                 std::end(kFormatFidoU2fCBOR));
+  test_authenticator_object.insert(test_authenticator_object.end(),
+                                   std::begin(kAttStmtCBOR),
+                                   std::end(kAttStmtCBOR));
+  test_authenticator_object.insert(test_authenticator_object.end(),
+                                   std::begin(kU2fAttestationStatementCBOR),
+                                   std::end(kU2fAttestationStatementCBOR));
+  test_authenticator_object.insert(test_authenticator_object.end(),
+                                   std::begin(kAuthDataCBOR),
+                                   std::end(kAuthDataCBOR));
+  std::vector<uint8_t> test_authenticator_data =
+      GetTestAuthenticatorDataBytes();
+  test_authenticator_object.insert(test_authenticator_object.end(),
+                                   test_authenticator_data.begin(),
+                                   test_authenticator_data.end());
+  return test_authenticator_object;
+}
+
+}  // namespace
 
 class U2fRegisterTest : public testing::Test {
  public:
@@ -36,26 +117,24 @@ class TestRegisterCallback {
   ~TestRegisterCallback() = default;
 
   void ReceivedCallback(U2fReturnCode status_code,
-                        const std::vector<uint8_t>& response,
-                        const std::vector<uint8_t>& key_handle) {
-    response_ = std::make_tuple(status_code, response, key_handle);
+                        std::unique_ptr<RegisterResponseData> response_data) {
+    response_ = std::make_pair(status_code, std::move(response_data));
     closure_.Run();
   }
 
-  std::tuple<U2fReturnCode, std::vector<uint8_t>, std::vector<uint8_t>>&
+  const std::pair<U2fReturnCode, std::unique_ptr<RegisterResponseData>>&
   WaitForCallback() {
     closure_ = run_loop_.QuitClosure();
     run_loop_.Run();
     return response_;
   }
 
-  const U2fRequest::ResponseCallback& callback() { return callback_; }
+  const U2fRegister::RegisterResponseCallback& callback() { return callback_; }
 
  private:
-  std::tuple<U2fReturnCode, std::vector<uint8_t>, std::vector<uint8_t>>
-      response_;
+  std::pair<U2fReturnCode, std::unique_ptr<RegisterResponseData>> response_;
   base::Closure closure_;
-  U2fRequest::ResponseCallback callback_;
+  U2fRegister::RegisterResponseCallback callback_;
   base::RunLoop run_loop_;
 };
 
@@ -77,18 +156,13 @@ TEST_F(U2fRegisterTest, TestRegisterSuccess) {
   std::vector<std::vector<uint8_t>> registration_keys;
   std::unique_ptr<U2fRequest> request = U2fRegister::TryRegistration(
       registration_keys, std::vector<uint8_t>(32), std::vector<uint8_t>(32),
-      {&discovery}, cb.callback());
+      kTestRelyingPartyId, {&discovery}, cb.callback());
   request->Start();
   discovery.AddDevice(std::move(device));
-  std::tuple<U2fReturnCode, std::vector<uint8_t>, std::vector<uint8_t>>&
+  const std::pair<U2fReturnCode, std::unique_ptr<RegisterResponseData>>&
       response = cb.WaitForCallback();
   EXPECT_EQ(U2fReturnCode::SUCCESS, std::get<0>(response));
-  ASSERT_GE(1u, std::get<1>(response).size());
-  EXPECT_EQ(static_cast<uint8_t>(MockU2fDevice::kRegister),
-            std::get<1>(response)[0]);
-
-  // Verify that we get a blank key handle.
-  EXPECT_TRUE(std::get<2>(response).empty());
+  EXPECT_EQ(GetTestCredentialRawIdBytes(), std::get<1>(response)->raw_id());
 }
 
 TEST_F(U2fRegisterTest, TestDelayedSuccess) {
@@ -112,18 +186,13 @@ TEST_F(U2fRegisterTest, TestDelayedSuccess) {
   std::vector<std::vector<uint8_t>> registration_keys;
   std::unique_ptr<U2fRequest> request = U2fRegister::TryRegistration(
       registration_keys, std::vector<uint8_t>(32), std::vector<uint8_t>(32),
-      {&discovery}, cb.callback());
+      kTestRelyingPartyId, {&discovery}, cb.callback());
   request->Start();
   discovery.AddDevice(std::move(device));
-  std::tuple<U2fReturnCode, std::vector<uint8_t>, std::vector<uint8_t>>&
+  const std::pair<U2fReturnCode, std::unique_ptr<RegisterResponseData>>&
       response = cb.WaitForCallback();
   EXPECT_EQ(U2fReturnCode::SUCCESS, std::get<0>(response));
-  ASSERT_GE(1u, std::get<1>(response).size());
-  EXPECT_EQ(static_cast<uint8_t>(MockU2fDevice::kRegister),
-            std::get<1>(response)[0]);
-
-  // Verify that we get a blank key handle.
-  EXPECT_TRUE(std::get<2>(response).empty());
+  EXPECT_EQ(GetTestCredentialRawIdBytes(), std::get<1>(response)->raw_id());
 }
 
 TEST_F(U2fRegisterTest, TestMultipleDevices) {
@@ -153,20 +222,16 @@ TEST_F(U2fRegisterTest, TestMultipleDevices) {
   std::vector<std::vector<uint8_t>> registration_keys;
   std::unique_ptr<U2fRequest> request = U2fRegister::TryRegistration(
       registration_keys, std::vector<uint8_t>(32), std::vector<uint8_t>(32),
-      {&discovery}, cb.callback());
+      kTestRelyingPartyId, {&discovery}, cb.callback());
   request->Start();
   discovery.AddDevice(std::move(device0));
   discovery.AddDevice(std::move(device1));
-  std::tuple<U2fReturnCode, std::vector<uint8_t>, std::vector<uint8_t>>&
+  const std::pair<U2fReturnCode, std::unique_ptr<RegisterResponseData>>&
       response = cb.WaitForCallback();
 
   EXPECT_EQ(U2fReturnCode::SUCCESS, std::get<0>(response));
-  ASSERT_GE(1u, std::get<1>(response).size());
-  EXPECT_EQ(static_cast<uint8_t>(MockU2fDevice::kRegister),
-            std::get<1>(response)[0]);
-
-  // Verify that we get a blank key handle.
-  EXPECT_TRUE(std::get<2>(response).empty());
+  EXPECT_EQ(GetTestCredentialRawIdBytes(),
+            std::get<1>(response).get()->raw_id());
 }
 
 // Tests a scenario where a single device is connected and registration call
@@ -206,20 +271,15 @@ TEST_F(U2fRegisterTest, TestSingleDeviceRegistrationWithExclusionList) {
 
   TestRegisterCallback cb;
   std::unique_ptr<U2fRequest> request = U2fRegister::TryRegistration(
-      handles, std::vector<uint8_t>(32), std::vector<uint8_t>(32), {&discovery},
-      cb.callback());
+      handles, std::vector<uint8_t>(32), std::vector<uint8_t>(32),
+      kTestRelyingPartyId, {&discovery}, cb.callback());
   discovery.AddDevice(std::move(device));
 
-  std::tuple<U2fReturnCode, std::vector<uint8_t>, std::vector<uint8_t>>&
+  const std::pair<U2fReturnCode, std::unique_ptr<RegisterResponseData>>&
       response = cb.WaitForCallback();
 
   EXPECT_EQ(U2fReturnCode::SUCCESS, std::get<0>(response));
-  ASSERT_LT(static_cast<size_t>(0), std::get<1>(response).size());
-  EXPECT_EQ(static_cast<uint8_t>(MockU2fDevice::kRegister),
-            std::get<1>(response)[0]);
-
-  // Verify that we get a blank key handle.
-  EXPECT_TRUE(std::get<2>(response).empty());
+  EXPECT_EQ(GetTestCredentialRawIdBytes(), std::get<1>(response)->raw_id());
 }
 
 // Tests a scenario where two devices are connected and registration call is
@@ -273,21 +333,16 @@ TEST_F(U2fRegisterTest, TestMultipleDeviceRegistrationWithExclusionList) {
 
   TestRegisterCallback cb;
   std::unique_ptr<U2fRequest> request = U2fRegister::TryRegistration(
-      handles, std::vector<uint8_t>(32), std::vector<uint8_t>(32), {&discovery},
-      cb.callback());
+      handles, std::vector<uint8_t>(32), std::vector<uint8_t>(32),
+      kTestRelyingPartyId, {&discovery}, cb.callback());
 
   discovery.AddDevice(std::move(device0));
   discovery.AddDevice(std::move(device1));
-  std::tuple<U2fReturnCode, std::vector<uint8_t>, std::vector<uint8_t>>&
+  const std::pair<U2fReturnCode, std::unique_ptr<RegisterResponseData>>&
       response = cb.WaitForCallback();
 
   EXPECT_EQ(U2fReturnCode::SUCCESS, std::get<0>(response));
-  ASSERT_LT(static_cast<size_t>(0), std::get<1>(response).size());
-  EXPECT_EQ(static_cast<uint8_t>(MockU2fDevice::kRegister),
-            std::get<1>(response)[0]);
-
-  // Verify that we get a blank key handle.
-  EXPECT_TRUE(std::get<2>(response).empty());
+  EXPECT_EQ(GetTestCredentialRawIdBytes(), std::get<1>(response)->raw_id());
 }
 
 // Tests a scenario where single device is connected and registration is called
@@ -333,10 +388,10 @@ TEST_F(U2fRegisterTest, TestSingleDeviceRegistrationWithDuplicateHandle) {
           testing::Invoke(&discovery, &MockU2fDiscovery::StartSuccessAsync));
   TestRegisterCallback cb;
   std::unique_ptr<U2fRequest> request = U2fRegister::TryRegistration(
-      handles, std::vector<uint8_t>(32), std::vector<uint8_t>(32), {&discovery},
-      cb.callback());
+      handles, std::vector<uint8_t>(32), std::vector<uint8_t>(32),
+      kTestRelyingPartyId, {&discovery}, cb.callback());
   discovery.AddDevice(std::move(device));
-  std::tuple<U2fReturnCode, std::vector<uint8_t>, std::vector<uint8_t>>&
+  const std::pair<U2fReturnCode, std::unique_ptr<RegisterResponseData>>&
       response = cb.WaitForCallback();
   EXPECT_EQ(U2fReturnCode::CONDITIONS_NOT_SATISFIED, std::get<0>(response));
 }
@@ -396,13 +451,113 @@ TEST_F(U2fRegisterTest, TestMultipleDeviceRegistrationWithDuplicateHandle) {
           testing::Invoke(&discovery, &MockU2fDiscovery::StartSuccessAsync));
   TestRegisterCallback cb;
   std::unique_ptr<U2fRequest> request = U2fRegister::TryRegistration(
-      handles, std::vector<uint8_t>(32), std::vector<uint8_t>(32), {&discovery},
-      cb.callback());
+      handles, std::vector<uint8_t>(32), std::vector<uint8_t>(32),
+      kTestRelyingPartyId, {&discovery}, cb.callback());
   discovery.AddDevice(std::move(device0));
   discovery.AddDevice(std::move(device1));
-  std::tuple<U2fReturnCode, std::vector<uint8_t>, std::vector<uint8_t>>&
+  const std::pair<U2fReturnCode, std::unique_ptr<RegisterResponseData>>&
       response = cb.WaitForCallback();
   EXPECT_EQ(U2fReturnCode::CONDITIONS_NOT_SATISFIED, std::get<0>(response));
+}
+
+// These test the parsing of the U2F raw bytes of the registration response.
+// Test that an EC public key serializes to CBOR properly.
+TEST_F(U2fRegisterTest, TestSerializedPublicKey) {
+  std::unique_ptr<ECPublicKey> public_key =
+      ECPublicKey::ExtractFromU2fRegistrationResponse(
+          u2f_parsing_utils::kEs256, GetTestRegisterResponse());
+  EXPECT_EQ(GetTestECPublicKeyCBOR(), public_key->EncodeAsCBOR());
+}
+
+// Test that the attestation statement cbor map is constructed properly.
+TEST_F(U2fRegisterTest, TestU2fAttestationStatementCBOR) {
+  std::unique_ptr<FidoAttestationStatement> fido_attestation_statement =
+      FidoAttestationStatement::CreateFromU2fRegisterResponse(
+          GetTestRegisterResponse());
+  auto cbor = cbor::CBORWriter::Write(
+      cbor::CBORValue(fido_attestation_statement->GetAsCBORMap()));
+  ASSERT_TRUE(cbor.has_value());
+  EXPECT_EQ(GetU2fAttestationStatementCBOR(), cbor.value());
+}
+
+// Tests that well-formed attested credential data serializes properly.
+TEST_F(U2fRegisterTest, TestAttestedCredentialData) {
+  std::unique_ptr<ECPublicKey> public_key =
+      ECPublicKey::ExtractFromU2fRegistrationResponse(
+          u2f_parsing_utils::kEs256, GetTestRegisterResponse());
+  AttestedCredentialData attested_data =
+      AttestedCredentialData::CreateFromU2fRegisterResponse(
+          GetTestRegisterResponse(), std::vector<uint8_t>(16, 0) /* aaguid */,
+          std::move(public_key));
+
+  EXPECT_EQ(kTestAttestedData, attested_data.SerializeAsBytes());
+}
+
+// Tests that well-formed authenticator data serializes properly.
+TEST_F(U2fRegisterTest, TestAuthenticatorData) {
+  std::unique_ptr<ECPublicKey> public_key =
+      ECPublicKey::ExtractFromU2fRegistrationResponse(
+          u2f_parsing_utils::kEs256, GetTestRegisterResponse());
+  AttestedCredentialData attested_data =
+      AttestedCredentialData::CreateFromU2fRegisterResponse(
+          GetTestRegisterResponse(), std::vector<uint8_t>(16, 0) /* aaguid */,
+          std::move(public_key));
+
+  AuthenticatorData::Flags flags =
+      static_cast<AuthenticatorData::Flags>(
+          AuthenticatorData::Flag::TEST_OF_USER_PRESENCE) |
+      static_cast<AuthenticatorData::Flags>(
+          AuthenticatorData::Flag::ATTESTATION);
+
+  std::unique_ptr<AuthenticatorData> authenticator_data =
+      AuthenticatorData::Create(kTestRelyingPartyId, flags,
+                                std::vector<uint8_t>(4, 0) /* counter */,
+                                attested_data);
+
+  EXPECT_EQ(kTestAuthenticatorData, authenticator_data->SerializeToByteArray());
+}
+
+// Tests that a U2F attestation object serializes properly.
+TEST_F(U2fRegisterTest, TestU2fAttestationObject) {
+  std::unique_ptr<ECPublicKey> public_key =
+      ECPublicKey::ExtractFromU2fRegistrationResponse(
+          u2f_parsing_utils::kEs256, GetTestRegisterResponse());
+  AttestedCredentialData attested_data =
+      AttestedCredentialData::CreateFromU2fRegisterResponse(
+          GetTestRegisterResponse(), std::vector<uint8_t>(16, 0) /* aaguid */,
+          std::move(public_key));
+
+  AuthenticatorData::Flags flags =
+      static_cast<AuthenticatorData::Flags>(
+          AuthenticatorData::Flag::TEST_OF_USER_PRESENCE) |
+      static_cast<AuthenticatorData::Flags>(
+          AuthenticatorData::Flag::ATTESTATION);
+  std::unique_ptr<AuthenticatorData> authenticator_data =
+      AuthenticatorData::Create(kTestRelyingPartyId, flags,
+                                std::vector<uint8_t>(4, 0) /* counter */,
+                                attested_data);
+
+  // Construct the attestation statement.
+  std::unique_ptr<FidoAttestationStatement> fido_attestation_statement =
+      FidoAttestationStatement::CreateFromU2fRegisterResponse(
+          GetTestRegisterResponse());
+
+  // Construct the attestation object.
+  auto attestation_object = std::make_unique<AttestationObject>(
+      std::move(authenticator_data), std::move(fido_attestation_statement));
+
+  EXPECT_EQ(kTestAttestationObject,
+            attestation_object->SerializeToCBOREncodedBytes());
+}
+
+// Test that a U2F register response is properly parsed.
+TEST_F(U2fRegisterTest, TestRegisterResponseData) {
+  std::unique_ptr<RegisterResponseData> response =
+      RegisterResponseData::CreateFromU2fRegisterResponse(
+          kTestRelyingPartyId, GetTestRegisterResponse());
+  EXPECT_EQ(GetTestCredentialRawIdBytes(), response->raw_id());
+  EXPECT_EQ(kTestAttestationObject,
+            response->GetCBOREncodedAttestationObject());
 }
 
 }  // namespace device

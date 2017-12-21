@@ -9,10 +9,17 @@
 #include "base/base64url.h"
 #include "base/json/json_writer.h"
 #include "base/values.h"
-#include "content/browser/webauth/authenticator_utils.h"
 
 namespace content {
 
+namespace client_data {
+const char kCreateType[] = "webauthn.create";
+const char kTypeKey[] = "type";
+const char kChallengeKey[] = "challenge";
+const char kOriginKey[] = "origin";
+const char kHashAlgorithm[] = "hashAlgorithm";
+const char kTokenBindingKey[] = "tokenBinding";
+}  // namespace client_data
 // static
 std::unique_ptr<CollectedClientData> CollectedClientData::Create(
     std::string type,
@@ -47,19 +54,17 @@ CollectedClientData::CollectedClientData(std::string type,
 
 std::string CollectedClientData::SerializeToJson() {
   base::DictionaryValue client_data;
-  client_data.SetString(authenticator_utils::kTypeKey, type_);
-  client_data.SetString(authenticator_utils::kChallengeKey,
-                        base64_encoded_challenge_);
+  client_data.SetString(client_data::kTypeKey, type_);
+  client_data.SetString(client_data::kChallengeKey, base64_encoded_challenge_);
 
   // The serialization of callerOrigin.
-  client_data.SetString(authenticator_utils::kOriginKey, origin_);
+  client_data.SetString(client_data::kOriginKey, origin_);
 
   // The recognized algorithm name of the hash algorithm selected by the client
   // for generating the hash of the serialized client data.
-  client_data.SetString(authenticator_utils::kHashAlgorithm, hash_algorithm_);
+  client_data.SetString(client_data::kHashAlgorithm, hash_algorithm_);
 
-  client_data.SetString(authenticator_utils::kTokenBindingKey,
-                        token_binding_id_);
+  client_data.SetString(client_data::kTokenBindingKey, token_binding_id_);
 
   std::string json;
   base::JSONWriter::Write(client_data, &json);

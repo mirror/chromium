@@ -2,30 +2,28 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CONTENT_BROWSER_WEBAUTH_ATTESTED_CREDENTIAL_DATA_H_
-#define CONTENT_BROWSER_WEBAUTH_ATTESTED_CREDENTIAL_DATA_H_
-
-#include "content/browser/webauth/public_key.h"
+#ifndef DEVICE_U2F_ATTESTED_CREDENTIAL_DATA_H_
+#define DEVICE_U2F_ATTESTED_CREDENTIAL_DATA_H_
 
 #include <stdint.h>
 #include <memory>
 #include <vector>
 
 #include "base/macros.h"
-#include "content/common/content_export.h"
+#include "device/u2f/public_key.h"
 
-namespace content {
+namespace device {
 
 // https://www.w3.org/TR/2017/WD-webauthn-20170505/#sec-attestation-data
-class CONTENT_EXPORT AttestedCredentialData {
+class AttestedCredentialData {
  public:
   AttestedCredentialData(std::vector<uint8_t> aaguid,
                          std::vector<uint8_t> length,
                          std::vector<uint8_t> credential_id,
                          std::unique_ptr<PublicKey> public_key);
-  virtual ~AttestedCredentialData();
+  ~AttestedCredentialData();
 
-  static std::unique_ptr<AttestedCredentialData> CreateFromU2fRegisterResponse(
+  static AttestedCredentialData CreateFromU2fRegisterResponse(
       const std::vector<uint8_t>& u2f_data,
       std::vector<uint8_t> aaguid,
       std::unique_ptr<PublicKey> public_key);
@@ -37,7 +35,7 @@ class CONTENT_EXPORT AttestedCredentialData {
   // * Len (2 bytes)
   // * Credential Id (Len bytes)
   // * Credential Public Key.
-  std::vector<uint8_t> SerializeAsBytes();
+  std::vector<uint8_t> SerializeAsBytes() const;
 
  private:
   // The 16-byte AAGUID of the authenticator.
@@ -47,10 +45,8 @@ class CONTENT_EXPORT AttestedCredentialData {
   const std::vector<uint8_t> credential_id_length_;
   const std::vector<uint8_t> credential_id_;
   const std::unique_ptr<PublicKey> public_key_;
-
-  DISALLOW_COPY_AND_ASSIGN(AttestedCredentialData);
 };
 
-}  // namespace content
+}  // namespace device
 
-#endif  // CONTENT_BROWSER_WEBAUTH_ATTESTED_CREDENTIAL_DATA_H_
+#endif  // DEVICE_U2F_ATTESTED_CREDENTIAL_DATA_H_

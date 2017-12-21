@@ -2,14 +2,20 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "content/browser/webauth/ec_public_key.h"
+#include "device/u2f/ec_public_key.h"
 
 #include <utility>
 
 #include "components/cbor/cbor_writer.h"
-#include "content/browser/webauth/authenticator_utils.h"
+#include "device/u2f/u2f_parsing_utils.h"
 
-namespace content {
+namespace device {
+
+std::unique_ptr<PublicKey> ECPublicKey::Clone() {
+  auto result =
+      std::make_unique<ECPublicKey>(algorithm_, x_coordinate_, y_coordinate_);
+  return std::move(result);
+}
 
 // static
 std::unique_ptr<ECPublicKey> ECPublicKey::ExtractFromU2fRegistrationResponse(
@@ -22,9 +28,8 @@ std::unique_ptr<ECPublicKey> ECPublicKey::ExtractFromU2fRegistrationResponse(
   // - the 32-byte x coordinate
   // - the 32-byte y coordinate.
   int start = 2;  // Account for reserved byte and 0x04 prefix.
-  std::vector<uint8_t> x = authenticator_utils::Extract(u2f_data, start, 32);
-  std::vector<uint8_t> y =
-      authenticator_utils::Extract(u2f_data, start + 32, 32);
+  std::vector<uint8_t> x = u2f_parsing_utils::Extract(u2f_data, start, 32);
+  std::vector<uint8_t> y = u2f_parsing_utils::Extract(u2f_data, start + 32, 32);
   return std::make_unique<ECPublicKey>(std::move(algorithm), std::move(x),
                                        std::move(y));
 }
@@ -39,7 +44,7 @@ ECPublicKey::ECPublicKey(std::string algorithm,
   DCHECK_EQ(y_coordinate_.size(), 32u);
 }
 
-std::vector<uint8_t> ECPublicKey::EncodeAsCBOR() {
+std::vector<uint8_t> ECPublicKey::EncodeAsCBOR() const {
   cbor::CBORValue::MapValue map;
   map["alg"] = cbor::CBORValue(algorithm_.c_str());
   map["x"] = cbor::CBORValue(x_coordinate_);
@@ -51,4 +56,4 @@ std::vector<uint8_t> ECPublicKey::EncodeAsCBOR() {
 
 ECPublicKey::~ECPublicKey() {}
 
-}  // namespace content
+}  // namespace device

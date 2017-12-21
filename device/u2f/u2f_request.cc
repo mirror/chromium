@@ -13,10 +13,10 @@
 namespace device {
 
 U2fRequest::U2fRequest(std::vector<U2fDiscovery*> discoveries,
-                       ResponseCallback cb)
+                       std::string relying_party_id)
     : state_(State::INIT),
       discoveries_(std::move(discoveries)),
-      cb_(std::move(cb)),
+      relying_party_id_(relying_party_id),
       weak_factory_(this) {
   for (auto* discovery : discoveries_)
     discovery->AddObserver(this);

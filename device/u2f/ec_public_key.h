@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CONTENT_BROWSER_WEBAUTH_EC_PUBLIC_KEY_H_
-#define CONTENT_BROWSER_WEBAUTH_EC_PUBLIC_KEY_H_
+#ifndef DEVICE_U2F_EC_PUBLIC_KEY_H_
+#define DEVICE_U2F_EC_PUBLIC_KEY_H_
 
 #include <stdint.h>
 #include <memory>
@@ -11,15 +11,14 @@
 #include <vector>
 
 #include "base/macros.h"
-#include "content/browser/webauth/public_key.h"
-#include "content/common/content_export.h"
+#include "device/u2f/public_key.h"
 
-namespace content {
+namespace device {
 
 // An uncompressed ECPublicKey consisting of 64 bytes:
 // - the 32-byte x coordinate
 // - the 32-byte y coordinate.
-class CONTENT_EXPORT ECPublicKey : public PublicKey {
+class ECPublicKey : public PublicKey {
  public:
   ECPublicKey(std::string algorithm,
               std::vector<uint8_t> x,
@@ -34,7 +33,8 @@ class CONTENT_EXPORT ECPublicKey : public PublicKey {
   // Produces a CBOR-encoded public key encoded in the following format:
   // { alg: eccAlgName, x: biguint, y: biguint }
   // where eccAlgName = "ES256" / "ES384" / "ES512"
-  std::vector<uint8_t> EncodeAsCBOR() override;
+  std::vector<uint8_t> EncodeAsCBOR() const override;
+  std::unique_ptr<PublicKey> Clone() override;
 
  private:
   const std::vector<uint8_t> x_coordinate_;
@@ -43,6 +43,6 @@ class CONTENT_EXPORT ECPublicKey : public PublicKey {
   DISALLOW_COPY_AND_ASSIGN(ECPublicKey);
 };
 
-}  // namespace content
+}  // namespace device
 
-#endif  // CONTENT_BROWSER_WEBAUTH_EC_PUBLIC_KEY_H_
+#endif  // DEVICE_U2F_EC_PUBLIC_KEY_H_

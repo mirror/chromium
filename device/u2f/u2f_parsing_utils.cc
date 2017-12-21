@@ -2,12 +2,12 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "content/browser/webauth/authenticator_utils.h"
+#include "device/u2f/u2f_parsing_utils.h"
 
 #include "base/logging.h"
 
-namespace content {
-namespace authenticator_utils {
+namespace device {
+namespace u2f_parsing_utils {
 
 void Append(std::vector<uint8_t>* target,
             const std::vector<uint8_t>& in_values) {
@@ -25,5 +25,5 @@ std::vector<uint8_t> Extract(const std::vector<uint8_t>& source,
                               source.begin() + pos + length);
 }
 
-}  // namespace authenticator_utils
-}  // namespace content
+}  // namespace u2f_parsing_utils
+}  // namespace device
