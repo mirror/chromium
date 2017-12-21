@@ -189,6 +189,8 @@ void NGInlineLayoutAlgorithm::CreateLine(NGLineInfo* line_info,
   BidiReorder();
   box_states_->UpdateAfterReorder(&line_box_);
   LayoutUnit inline_size = box_states_->ComputeInlinePositions(&line_box_);
+  const NGLineHeightMetrics& line_box_metrics =
+      box_states_->LineBoxState().metrics;
 
   // Handle out-of-flow positioned objects. They need inline offsets for their
   // static positions.
@@ -196,9 +198,16 @@ void NGInlineLayoutAlgorithm::CreateLine(NGLineInfo* line_info,
   for (auto& child : line_box_) {
     if (child.out_of_flow_positioned_box) {
       NGBlockNode node(ToLayoutBox(child.out_of_flow_positioned_box));
+      NGLogicalOffset offset(child.offset.inline_offset, LayoutUnit());
+      if (!child.out_of_flow_positioned_box->StyleRef()
+               .IsOriginalDisplayInlineType()) {
+        offset.inline_offset = LayoutUnit();
+        if (!line_box_metrics.IsEmpty())
+          offset.block_offset = line_box_metrics.LineHeight();
+      }
       container_builder_.AddInlineOutOfFlowChildCandidate(
-          node, NGLogicalOffset(child.offset.inline_offset, LayoutUnit()),
-          line_info->BaseDirection(), child.out_of_flow_containing_box);
+          node, offset, line_info->BaseDirection(),
+          child.out_of_flow_containing_box);
       child.out_of_flow_positioned_box = child.out_of_flow_containing_box =
           nullptr;
     } else if (!has_fragments) {
@@ -212,8 +221,6 @@ void NGInlineLayoutAlgorithm::CreateLine(NGLineInfo* line_info,
     return;
   }
 
-  const NGLineHeightMetrics& line_box_metrics =
-      box_states_->LineBoxState().metrics;
   DCHECK(!line_box_metrics.IsEmpty());
 
   NGBfcOffset line_bfc_offset(line_info->LineBfcOffset());
