@@ -230,6 +230,10 @@ bool TestAXNodeWrapper::IsOffscreen() const {
   return false;
 }
 
+int32_t TestAXNodeWrapper::GetID() const {
+  return 1;
+}
+
 TestAXNodeWrapper::TestAXNodeWrapper(AXTree* tree, AXNode* node)
     : tree_(tree),
       node_(node),

@@ -8,12 +8,14 @@
 #include "base/strings/utf_string_conversions.h"
 #include "chrome/common/channel_info.h"
 #include "ui/accessibility/ax_node_data.h"
+#include "ui/accessibility/platform/ax_platform_unique_id.h"
 #include "ui/aura/window.h"
 #include "ui/views/accessibility/ax_aura_obj_cache.h"
 #include "ui/views/accessibility/ax_window_obj_wrapper.h"
 
-AXRootObjWrapper::AXRootObjWrapper(int32_t id)
-    : id_(id), alert_window_(new aura::Window(NULL)) {
+AXRootObjWrapper::AXRootObjWrapper()
+    : id_(ui::GetNextAXPlatformNodeUniqueId()),
+      alert_window_(new aura::Window(NULL)) {
   alert_window_->Init(ui::LAYER_NOT_DRAWN);
 }
 
@@ -58,6 +60,6 @@ void AXRootObjWrapper::Serialize(ui::AXNodeData* out_node_data) {
                                     chrome::GetChannelString());
 }
 
-int32_t AXRootObjWrapper::GetID() {
+int32_t AXRootObjWrapper::GetID() const {
   return id_;
 }

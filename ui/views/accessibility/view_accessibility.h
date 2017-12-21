@@ -51,9 +51,13 @@ class VIEWS_EXPORT ViewAccessibility {
 
   View* view() const { return view_; }
 
+  virtual int32_t GetID() const;
+
  private:
   // Weak. Owns this.
   View* const view_;
+
+  const int32_t id_;
 
   // Contains data set explicitly via SetRole, SetName, etc. that overrides
   // anything provided by GetAccessibleNodeData().

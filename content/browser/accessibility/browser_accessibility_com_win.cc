@@ -1109,7 +1109,7 @@ STDMETHODIMP BrowserAccessibilityComWin::get_nodeInfo(
   *name_space_id = 0;
   *node_value = SysAllocString(value().c_str());
   *num_children = owner()->PlatformChildCount();
-  *unique_id = -AXPlatformNodeWin::unique_id();
+  *unique_id = -AXPlatformNodeWin::GetID();
 
   if (owner()->IsDocument()) {
     *node_type = NODETYPE_DOCUMENT;

@@ -128,10 +128,7 @@ void AXAuraObjCache::FireEvent(AXAuraObjWrapper* aura_obj,
 }
 
 AXAuraObjCache::AXAuraObjCache()
-    : current_id_(1),
-      is_destroying_(false),
-      delegate_(nullptr),
-      root_window_(nullptr) {}
+    : is_destroying_(false), delegate_(nullptr), root_window_(nullptr) {}
 
 AXAuraObjCache::~AXAuraObjCache() {
   is_destroying_ = true;
@@ -206,9 +203,9 @@ AXAuraObjWrapper* AXAuraObjCache::CreateInternal(
     return Get(it->second);
 
   AXAuraObjWrapper* wrapper = new AuraViewWrapper(aura_view);
-  aura_view_to_id_map[aura_view] = current_id_;
-  cache_[current_id_] = base::WrapUnique(wrapper);
-  current_id_++;
+  int32_t id = wrapper->GetID();
+  aura_view_to_id_map[aura_view] = id;
+  cache_[id] = base::WrapUnique(wrapper);
   return wrapper;
 }
 

@@ -80,7 +80,7 @@ void BrowserAccessibilityManagerAndroid::FireFocusEvent(
 
   BrowserAccessibilityAndroid* android_node =
       static_cast<BrowserAccessibilityAndroid*>(node);
-  wcax->HandleFocusChanged(android_node->unique_id());
+  wcax->HandleFocusChanged(android_node->GetID());
 }
 
 void BrowserAccessibilityManagerAndroid::FireLocationChanged(
@@ -91,7 +91,7 @@ void BrowserAccessibilityManagerAndroid::FireLocationChanged(
 
   BrowserAccessibilityAndroid* android_node =
       static_cast<BrowserAccessibilityAndroid*>(node);
-  wcax->HandleContentChanged(android_node->unique_id());
+  wcax->HandleContentChanged(android_node->GetID());
 }
 
 void BrowserAccessibilityManagerAndroid::FireBlinkEvent(
@@ -114,10 +114,10 @@ void BrowserAccessibilityManagerAndroid::FireBlinkEvent(
       HandleHoverEvent(node);
       break;
     case ui::AX_EVENT_SCROLLED_TO_ANCHOR:
-      wcax->HandleScrolledToAnchor(android_node->unique_id());
+      wcax->HandleScrolledToAnchor(android_node->GetID());
       break;
     case ui::AX_EVENT_CLICKED:
-      wcax->HandleClicked(android_node->unique_id());
+      wcax->HandleClicked(android_node->GetID());
       break;
     default:
       break;
@@ -153,21 +153,21 @@ void BrowserAccessibilityManagerAndroid::FireGeneratedEvent(
   // Always send AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED to notify
   // the Android system that the accessibility hierarchy rooted at this
   // node has changed.
-  wcax->HandleContentChanged(android_node->unique_id());
+  wcax->HandleContentChanged(android_node->GetID());
 
   switch (event_type) {
     case Event::LOAD_COMPLETE:
       if (node->manager() == GetRootManager()) {
         auto* android_focused =
             static_cast<BrowserAccessibilityAndroid*>(GetFocus());
-        wcax->HandlePageLoaded(android_focused->unique_id());
+        wcax->HandlePageLoaded(android_focused->GetID());
       }
       break;
     case Event::CHECKED_STATE_CHANGED:
-      wcax->HandleCheckStateChanged(android_node->unique_id());
+      wcax->HandleCheckStateChanged(android_node->GetID());
       break;
     case Event::SCROLL_POSITION_CHANGED:
-      wcax->HandleScrollPositionChanged(android_node->unique_id());
+      wcax->HandleScrollPositionChanged(android_node->GetID());
       break;
     case Event::ALERT:
     // An alert is a special case of live region. Fall through to the
@@ -185,15 +185,15 @@ void BrowserAccessibilityManagerAndroid::FireGeneratedEvent(
       if (focus_object) {
         BrowserAccessibilityAndroid* android_focus_object =
             static_cast<BrowserAccessibilityAndroid*>(focus_object);
-        wcax->HandleTextSelectionChanged(android_focus_object->unique_id());
+        wcax->HandleTextSelectionChanged(android_focus_object->GetID());
       }
       break;
     }
     case Event::VALUE_CHANGED:
       if (android_node->IsEditableText() && GetFocus() == node) {
-        wcax->HandleEditableTextChanged(android_node->unique_id());
+        wcax->HandleEditableTextChanged(android_node->GetID());
       } else if (android_node->IsSlider()) {
-        wcax->HandleSliderChanged(android_node->unique_id());
+        wcax->HandleSliderChanged(android_node->GetID());
       }
       break;
     case Event::ACTIVE_DESCENDANT_CHANGED:
@@ -359,7 +359,7 @@ void BrowserAccessibilityManagerAndroid::HandleHoverEvent(
   }
 
   if (android_node)
-    wcax->HandleHover(android_node->unique_id());
+    wcax->HandleHover(android_node->GetID());
 }
 
 void BrowserAccessibilityManagerAndroid::OnAtomicUpdateFinished(
