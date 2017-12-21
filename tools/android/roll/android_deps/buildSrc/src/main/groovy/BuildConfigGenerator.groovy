@@ -117,6 +117,7 @@ class BuildConfigGenerator extends DefaultTask {
 
             if (!dependency.visible) sb.append("  visibility = [ \":*\" ]\n")
             if (!depsStr.empty) sb.append("  deps = [${depsStr}]\n")
+            addSpecialTreatment(sb, dependency.id)
 
             sb.append("}\n\n")
         }
@@ -163,6 +164,21 @@ class BuildConfigGenerator extends DefaultTask {
         }
 
         ensureFile.write(sb.toString())
+    }
+
+    private static void addSpecialTreatment(StringBuilder sb, String dependencyId) {
+        switch(dependencyId) {
+            case 'com_android_support_support_compat':
+            case 'com_android_support_support_media_compat':
+                // Target has AIDL, but we don't support it yet: http://crbug.com/644439
+                sb.append('  ignore_aidl = true\n')
+                break;
+            case 'com_android_support_transition':
+                // Not specified in the POM, compileOnly dependency not supposed to be used unless
+                // the library is present: b/70887421
+                sb.append('  deps += [":com_android_support_support_fragment_java"]')
+                break;
+        }
     }
 
     private static void updateReadmeReferenceFile(List<String> directories, String location) {
