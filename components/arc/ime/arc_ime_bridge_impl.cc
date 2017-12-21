@@ -115,12 +115,12 @@ void ArcImeBridgeImpl::SendInsertText(const base::string16& text) {
 
 void ArcImeBridgeImpl::SendOnKeyboardBoundsChanging(
     const gfx::Rect& new_bounds) {
-  auto* ime_instance = ARC_GET_INSTANCE_FOR_METHOD(bridge_service_->ime(),
-                                                   OnKeyboardBoundsChanging);
+  auto* ime_instance = ARC_GET_INSTANCE_FOR_METHOD(
+      bridge_service_->ime(), OnKeyboardBoundsChanging_Deprecated);
   if (!ime_instance)
     return;
 
-  ime_instance->OnKeyboardBoundsChanging(new_bounds);
+  ime_instance->OnKeyboardBoundsChanging_Deprecated(new_bounds);
 }
 
 void ArcImeBridgeImpl::SendExtendSelectionAndDelete(
@@ -131,6 +131,17 @@ void ArcImeBridgeImpl::SendExtendSelectionAndDelete(
     return;
 
   ime_instance->ExtendSelectionAndDelete(before, after);
+}
+
+bool ArcImeBridgeImpl::SendOnKeyboardAppearanceChanging(
+    bool is_available,
+    const gfx::Rect& new_bounds) {
+  auto* ime_instance = ARC_GET_INSTANCE_FOR_METHOD(
+      bridge_service_->ime(), OnKeyboardAppearanceChanging);
+  if (!ime_instance)
+    return false;
+  ime_instance->OnKeyboardAppearanceChanging(is_available, new_bounds);
+  return true;
 }
 
 void ArcImeBridgeImpl::OnTextInputTypeChanged(mojom::TextInputType type) {
