@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "70de0b7b_1fdfff55",
+        "filename": "third_party/WebKit/Source/platform/geometry/FloatRect.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-12-21T16:44:37Z",
+      "side": 1,
+      "message": "Nit: Please add a comment about why we can\u0027t use FlooredIntPoint CeiledIntPoint here.",
+      "revId": "e4cff5f591e244b484c94c44b2b3e58ffb651ca9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87161c0f_3fd65440",
+        "filename": "third_party/WebKit/Source/platform/geometry/FloatRect.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-12-21T16:44:37Z",
+      "side": 1,
+      "message": "Also fix this?",
+      "revId": "e4cff5f591e244b484c94c44b2b3e58ffb651ca9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
