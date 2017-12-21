@@ -50,13 +50,16 @@ LoginScreenClient* LoginScreenClient::Get() {
   return g_instance;
 }
 
-void LoginScreenClient::AuthenticateUser(const AccountId& account_id,
-                                         const std::string& hashed_password,
-                                         bool authenticated_by_pin,
-                                         AuthenticateUserCallback callback) {
+void LoginScreenClient::AuthenticateUser(
+    const AccountId& account_id,
+    const std::string& hashed_password,
+    const password_manager::SyncPasswordData& sync_password_data,
+    bool authenticated_by_pin,
+    AuthenticateUserCallback callback) {
   if (delegate_)
-    delegate_->HandleAuthenticateUser(
-        account_id, hashed_password, authenticated_by_pin, std::move(callback));
+    delegate_->HandleAuthenticateUser(account_id, hashed_password,
+                                      authenticated_by_pin,
+                                      std::move(callback));
 }
 
 void LoginScreenClient::ShowLockScreen(

@@ -7,6 +7,8 @@
 
 #include "ash/public/interfaces/login_screen.mojom.h"
 #include "base/macros.h"
+#include "components/password_manager/public/interfaces/sync_password_data.mojom.h"
+#include "components/password_manager/core/browser/hash_password_manager.h"
 #include "mojo/public/cpp/bindings/binding.h"
 #include "ui/base/ime/chromeos/input_method_manager.h"
 
@@ -49,6 +51,7 @@ class LoginScreenClient : public ash::mojom::LoginScreenClient {
   // ash::mojom::LoginScreenClient:
   void AuthenticateUser(const AccountId& account_id,
                         const std::string& hashed_password,
+                        const password_manager::SyncPasswordData& sync_password_data,
                         bool authenticated_by_pin,
                         AuthenticateUserCallback callback) override;
   void AttemptUnlock(const AccountId& account_id) override;
