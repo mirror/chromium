@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f29db71e_1574d6d0",
+        "filename": "components/viz/common/resources/resource_format_utils.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-21T19:05:22Z",
+      "side": 1,
+      "message": "I think this comment is out of date, it was changed in GLRenderer to just check for HDR and DCHECK so it can\u0027t be always false or the DCHECK would fail.\n\ncan we just DCHECK the caps in GLRenderer? like https://cs.chromium.org/chromium/src/components/viz/service/display/skia_renderer.cc?rcl\u003dcf0a72a1e09af665856d9f29828661a1f8e1de03\u0026l\u003d828\n\nGLRenderer doesn\u0027t need to check for all these other stuff, and it\u0027s just for DCHECK.. it will help keep this patch smaller",
+      "revId": "89bd58d3670ec430f31bbc4486afcae9a689a3d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
