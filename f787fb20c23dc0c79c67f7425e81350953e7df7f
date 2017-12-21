@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "277fb6a6_083b844f",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/WebVrDeviceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-12-21T00:37:25Z",
+      "side": 1,
+      "message": "Thoughts on moving this to some utility function such as setVrCoreCompatibility()? It\u0027s an exact copy of the one used in VrInstallUpdateInfoBarTest, but I don\u0027t feel like it would fit cleanly into any of the existing util files.",
+      "range": {
+        "startLine": 91,
+        "startChar": 20,
+        "endLine": 91,
+        "endChar": 41
+      },
+      "revId": "f787fb20c23dc0c79c67f7425e81350953e7df7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
