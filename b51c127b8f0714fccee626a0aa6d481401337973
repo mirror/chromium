@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "e556f4a3_92a8272c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1231224
+      },
+      "writtenOn": "2017-12-21T17:03:08Z",
+      "side": 1,
+      "message": "( minor typo )",
+      "range": {
+        "startLine": 24,
+        "startChar": 46,
+        "endLine": 24,
+        "endChar": 63
+      },
+      "revId": "b51c127b8f0714fccee626a0aa6d481401337973",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c1e7ba65_40ae5b66",
         "filename": "content/browser/frame_host/render_frame_host_impl.cc",
         "patchSetId": 1
