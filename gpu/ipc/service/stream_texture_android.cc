@@ -9,7 +9,7 @@
 #include "base/bind.h"
 #include "gpu/command_buffer/service/context_group.h"
 #include "gpu/command_buffer/service/context_state.h"
-#include "gpu/command_buffer/service/gles2_cmd_decoder.h"
+#include "gpu/command_buffer/service/decoder_context.h"
 #include "gpu/command_buffer/service/texture_manager.h"
 #include "gpu/ipc/common/android/scoped_surface_request_conduit.h"
 #include "gpu/ipc/common/gpu_messages.h"
@@ -21,7 +21,6 @@
 namespace gpu {
 
 using gles2::ContextGroup;
-using gles2::GLES2Decoder;
 using gles2::TextureManager;
 using gles2::TextureRef;
 
@@ -29,9 +28,8 @@ using gles2::TextureRef;
 bool StreamTexture::Create(CommandBufferStub* owner_stub,
                            uint32_t client_texture_id,
                            int stream_id) {
-  GLES2Decoder* decoder = owner_stub->decoder();
   TextureManager* texture_manager =
-      decoder->GetContextGroup()->texture_manager();
+      owner_stub->context_group()->texture_manager();
   TextureRef* texture = texture_manager->GetTexture(client_texture_id);
 
   if (texture && (!texture->texture()->target() ||
@@ -161,7 +159,7 @@ bool StreamTexture::CopyTexImage(unsigned target) {
   UpdateTexImage();
 
   TextureManager* texture_manager =
-      owner_stub_->decoder()->GetContextGroup()->texture_manager();
+      owner_stub_->context_group()->texture_manager();
   gles2::Texture* texture =
       texture_manager->GetTextureForServiceId(texture_id_);
   if (texture) {
