@@ -2,6 +2,295 @@
   "comments": [
     {
       "key": {
+        "uuid": "aaf77c55_7ef2c81c",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-12-21T20:17:48Z",
+      "side": 1,
+      "message": "- Is display.id() guaranteed to be non-empty?\n- Is it guaranteed to be unique among all displays?\n- Is it guaranteed to remain the same for the lifetime of the connected display?",
+      "revId": "035510e65bfa1ba59c09b885a6de41094ea65fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "560dd8b2_f0cabc07",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-12-21T20:17:48Z",
+      "side": 1,
+      "message": "Per earlier comment, std::move should not be necessary if Presentation were move-only.\n\nif there is already a presentation running on Display, it needs to be terminated first.",
+      "revId": "035510e65bfa1ba59c09b885a6de41094ea65fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d52867c_d831aaf1",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-12-21T20:17:48Z",
+      "side": 1,
+      "message": "MediaRoute has a user declared copy constructor, so std::move has no effect here (there is no move constructor).\n\nSince MediaRoute is a relatively small POD object, I don\u0027t see a big advantage to declaring it as a move-able type.",
+      "revId": "035510e65bfa1ba59c09b885a6de41094ea65fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b28e7cd1_745dc2fc",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-12-21T20:17:48Z",
+      "side": 1,
+      "message": "I wonder if we need to propagate locale information along with the text (e.g., to ensure correct LTR vs. RTL rendering).",
+      "revId": "035510e65bfa1ba59c09b885a6de41094ea65fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e459d9d6_b0a7b1f7",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-12-21T20:17:48Z",
+      "side": 1,
+      "message": "Nit: Declare binding first to reduce code duplication.",
+      "revId": "035510e65bfa1ba59c09b885a6de41094ea65fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5db3b22_30ad268f",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-12-21T20:17:48Z",
+      "side": 1,
+      "message": "Is |this| guaranteed to outlive WiredDisplayPresentationReceiver?  Why?",
+      "revId": "035510e65bfa1ba59c09b885a6de41094ea65fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58580eb9_c2863985",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-12-21T20:17:48Z",
+      "side": 1,
+      "message": "Would it make more sense to keep a set of sink ids when we get a list of displays from the display observer?  This check would be simpler.",
+      "revId": "035510e65bfa1ba59c09b885a6de41094ea65fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a90b1364_99766fee",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-12-21T20:17:48Z",
+      "side": 1,
+      "message": "Is this used?",
+      "revId": "035510e65bfa1ba59c09b885a6de41094ea65fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8974b240_90f4e1cf",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-12-21T20:17:48Z",
+      "side": 1,
+      "message": "Ditto",
+      "revId": "035510e65bfa1ba59c09b885a6de41094ea65fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1d4cf25_0897e01b",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-12-21T20:17:48Z",
+      "side": 1,
+      "message": "IWYU for WDPR and base::OnceClosure; forward declaration for gfx::Rect",
+      "revId": "035510e65bfa1ba59c09b885a6de41094ea65fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35446a74_0951743e",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-12-21T20:17:48Z",
+      "side": 1,
+      "message": "Nit: This isn\u0027t a POD assignment so move to .cc and use CamelCase.\n\nhttps://www.chromium.org/developers/coding-style/cpp-dos-and-donts on what is okay to inline",
+      "revId": "035510e65bfa1ba59c09b885a6de41094ea65fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f514c30_28ed8aad",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-12-21T20:17:48Z",
+      "side": 1,
+      "message": "This doesn\u0027t seem specific to this MRP.  Does it make more sense to track presentations in the MR itself? +imcheng",
+      "revId": "035510e65bfa1ba59c09b885a6de41094ea65fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7177fa0_1efabd47",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-12-21T20:17:48Z",
+      "side": 1,
+      "message": "MediaRoute is a mutable type with a copy constructor. Is this copy in the Presentation struct the source of truth for wired display routes?\n\nIf so, it would make more sense for this type to be move-only.",
+      "revId": "035510e65bfa1ba59c09b885a6de41094ea65fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91b37734_62624444",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-12-21T20:17:48Z",
+      "side": 1,
+      "message": "It looks like the return value is being used for a simple existence check (not an assignment to a class member, where base::Optional is more useful).  Consider just returning display::Display* here.",
+      "revId": "035510e65bfa1ba59c09b885a6de41094ea65fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83a204d0_046c46ce",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-12-21T20:17:48Z",
+      "side": 1,
+      "message": "Nit: CamelCase for setters that are not POD",
+      "revId": "035510e65bfa1ba59c09b885a6de41094ea65fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4aa7ec5a_0e00e8d8",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-12-21T20:17:48Z",
+      "side": 1,
+      "message": "The |provider_| dtor will be run after the |receiver_creator_| dtor, meaning the binding in SetUp() will become invalid. Consider changing the declaration order.",
+      "revId": "035510e65bfa1ba59c09b885a6de41094ea65fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0971d421_519568df",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-12-21T20:17:48Z",
+      "side": 1,
+      "message": "Is this necessary?",
+      "revId": "035510e65bfa1ba59c09b885a6de41094ea65fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "de848ee1_4384878e",
         "filename": "chrome/browser/ui/media_router/presentation_receiver_window_controller.h",
         "patchSetId": 6
@@ -13,6 +302,23 @@
       "writtenOn": "2017-12-21T17:01:49Z",
       "side": 1,
       "message": "nit: Typically, the meaningful function comments are included in the header that defines the interface, and the implementation subclass just includes a reference back to that:\n\n  // WiredDisplayPresentationReceiver:  (or // WiredDisplayPresentationReceiver overrides.)\n  void Start(const std::string\u0026 presentation_id,\n             const GURL\u0026 start_url) override;\n  void Terminate() override;\n  void SetTitleChangeCallback(\n      base::RepeatingCallback\u003cvoid(const std::string\u0026)\u003e callback) override;\n\nYou can also include more functional implementation comments in the body of the function definition in the cc file.",
+      "revId": "035510e65bfa1ba59c09b885a6de41094ea65fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96f2f0fa_f58445d1",
+        "filename": "chrome/browser/ui/media_router/presentation_receiver_window_controller.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-12-21T20:17:48Z",
+      "side": 1,
+      "message": "Consider a using declaration to reduce the typing (and make this easier to update in the future, e.g. to pass locale info).",
       "revId": "035510e65bfa1ba59c09b885a6de41094ea65fbf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
