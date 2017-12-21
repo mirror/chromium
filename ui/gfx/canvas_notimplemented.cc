@@ -26,12 +26,4 @@ void Canvas::DrawStringRectWithFlags(const base::string16& text,
   NOTIMPLEMENTED();
 }
 
-void Canvas::DrawFadedString(const base::string16& text,
-                             const FontList& font_list,
-                             SkColor color,
-                             const Rect& display_rect,
-                             int flags) {
-   NOTIMPLEMENTED();
-}
-
 }  // namespace gfx
