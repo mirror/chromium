@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6f8f057d_619eb3ca",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-12-21T02:20:57Z",
+      "side": 1,
+      "message": "Code removed.",
+      "parentUuid": "201ea51b_e9eb8cb0",
+      "revId": "93712b84a2c25033d0de80905d295a99ee5957b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9c5783b7_aba3d5f6",
         "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service.cc",
         "patchSetId": 8
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "fad6abd9_0e7bac2d",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-12-21T02:20:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9c5783b7_aba3d5f6",
+      "revId": "93712b84a2c25033d0de80905d295a99ee5957b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8fea0138_7205bd42",
         "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service.cc",
         "patchSetId": 8
@@ -47,6 +83,24 @@
       "writtenOn": "2017-12-19T20:59:09Z",
       "side": 1,
       "message": "Hmm... so we keep these FetcherStatus objects around after the operations are completed for last_error?\nI am a bit concerned these objects never gets removed, since ip address of the devices can change over time. I think at the least these should be removed when the associated sink is removed.\n\nAnother thought:  if we already plan to track app availability upstream (i.e. by MediaSink), then presumably the caching logic can go there, making this class cache-unaware. Also, there would be a better way to handle invalidation since we would know when the MediaSink is no longer valid.",
+      "revId": "93712b84a2c25033d0de80905d295a99ee5957b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b961de31_08945c84",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-12-21T02:20:57Z",
+      "side": 1,
+      "message": "Removed caching from this class.",
+      "parentUuid": "8fea0138_7205bd42",
       "revId": "93712b84a2c25033d0de80905d295a99ee5957b0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "429d1288_f9b021c4",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-12-21T02:20:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e75e010d_5d4d50b0",
+      "revId": "93712b84a2c25033d0de80905d295a99ee5957b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "741436d2_f3794608",
         "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service.cc",
         "patchSetId": 8
@@ -84,6 +156,24 @@
       "revId": "93712b84a2c25033d0de80905d295a99ee5957b0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6134bdad_34d3e317",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-12-21T02:20:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "741436d2_f3794608",
+      "revId": "93712b84a2c25033d0de80905d295a99ee5957b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "77b5309e_727932cc",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-12-21T02:20:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "89f673b0_a6718e5e",
+      "revId": "93712b84a2c25033d0de80905d295a99ee5957b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "053764be_c1dacbf6",
         "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service.h",
         "patchSetId": 8
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "c11f87a4_c69dc43e",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-12-21T02:20:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "053764be_c1dacbf6",
+      "revId": "93712b84a2c25033d0de80905d295a99ee5957b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "90da56e5_de09030f",
         "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service.h",
         "patchSetId": 8
@@ -135,6 +261,24 @@
       "revId": "93712b84a2c25033d0de80905d295a99ee5957b0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c8724bf_c50b698e",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-12-21T02:20:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "90da56e5_de09030f",
+      "revId": "93712b84a2c25033d0de80905d295a99ee5957b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
