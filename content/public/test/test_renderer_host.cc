@@ -211,7 +211,7 @@ RenderFrameHost* RenderViewHostTestHarness::pending_main_rfh() {
 }
 
 BrowserContext* RenderViewHostTestHarness::browser_context() {
-  return browser_context_.get();
+  return GetBrowserContext();
 }
 
 MockRenderProcessHost* RenderViewHostTestHarness::process() {
@@ -236,10 +236,10 @@ WebContents* RenderViewHostTestHarness::CreateTestWebContents() {
 #endif
 
   scoped_refptr<SiteInstance> instance =
-      SiteInstance::Create(browser_context_.get());
+      SiteInstance::Create(GetBrowserContext());
   instance->GetProcess()->Init();
 
-  return TestWebContents::Create(browser_context_.get(), std::move(instance));
+  return TestWebContents::Create(GetBrowserContext(), std::move(instance));
 }
 
 void RenderViewHostTestHarness::NavigateAndCommit(const GURL& url) {
@@ -320,6 +320,10 @@ void RenderViewHostTestHarness::TearDown() {
 
 BrowserContext* RenderViewHostTestHarness::CreateBrowserContext() {
   return new TestBrowserContext();
+}
+
+BrowserContext* RenderViewHostTestHarness::GetBrowserContext() {
+  return browser_context_.get();
 }
 
 void RenderViewHostTestHarness::SetRenderProcessHostFactory(
