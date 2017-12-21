@@ -126,6 +126,10 @@ RequestInit::RequestInit(ExecutionContext* context,
 
   v8::Isolate* isolate = ToIsolate(context);
 
+  SetUpMode(mode_, exception_state);
+  if (exception_state.HadException())
+    return;
+
   if (v8_headers.has_value()) {
     V8ByteStringSequenceSequenceOrByteStringByteStringRecord::ToImpl(
         isolate, *v8_headers, headers_, UnionTypeConversionMode::kNotNullable,
@@ -145,6 +149,17 @@ RequestInit::RequestInit(ExecutionContext* context,
     if (exception_state.HadException())
       return;
   }
+}
+
+void RequestInit::SetUpMode(const WTF::Optional<String>& mode_string,
+                            ExceptionState& exception_state) {
+  if (*mode_string == "navigate" || *mode_string == "same-origin" ||
+      *mode_string == "no-cors" || *mode_string == "cors") {
+    return;
+  }
+
+  exception_state.ThrowTypeError("Invalid mode");
+  return;
 }
 
 void RequestInit::SetUpReferrer(

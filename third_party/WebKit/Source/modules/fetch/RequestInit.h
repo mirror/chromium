@@ -51,6 +51,7 @@ class RequestInit {
   void SetUpReferrer(const WTF::Optional<String>& referrer_string,
                      const WTF::Optional<String>& referrer_policy_string,
                      ExceptionState&);
+  void SetUpMode(const WTF::Optional<String>& mode_string, ExceptionState&);
   void SetUpCredentials(ExecutionContext*,
                         v8::Isolate*,
                         v8::Local<v8::Value> v8_credentials,
