@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d782477d_728bb776",
+        "filename": "third_party/WebKit/public/platform/TaskType.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-12-21T08:59:38Z",
+      "side": 1,
+      "message": "This task task would be used only for delayed ref-counting in //content/renderer/blob_storage (e.g. https://cs.chromium.org/chromium/src/content/renderer/blob_storage/blob_transport_controller.cc?type\u003dcs\u0026q\u003dblob_transport_controller.cc:414\u0026l\u003d414), but should this be represented by another TaskType in terms of task nature?",
+      "revId": "515c16857bd85119a118eb7816ffcfd081236c94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
