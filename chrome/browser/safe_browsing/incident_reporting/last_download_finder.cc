@@ -29,6 +29,8 @@
 #include "components/history/core/browser/history_service.h"
 #include "components/prefs/pref_service.h"
 #include "components/safe_browsing/proto/csd.pb.h"
+#include "components/translate/core/browser/translate_prefs.h"
+#include "components/translate/core/common/translate_util.h"
 #include "content/public/browser/notification_details.h"
 #include "content/public/browser/notification_service.h"
 #include "content/public/browser/notification_source.h"
@@ -205,8 +207,15 @@ void PopulateDetailsFromRow(const history::DownloadRow& download,
       download.target_path.BaseName().AsUTF8Unsafe());
   download_request->set_download_type(
       download_protection_util::GetDownloadType(download.target_path));
-  download_request->set_locale(
-      g_browser_process->local_state()->GetString(prefs::kApplicationLocale));
+  std::string pref_locale =
+      g_browser_process->local_state()->GetString(prefs::kApplicationLocale);
+  if (base::FeatureList::IsEnabled(translate::kImprovedLanguageSettings)) {
+    std::string actual_locale;
+    if (translate::GetActualUILocale(pref_locale, &actual_locale)) {
+      pref_locale = actual_locale;
+    }
+  }
+  download_request->set_locale(pref_locale);
 
   details->set_download_time_msec(download.end_time.ToJavaTime());
   // Opened time is unknown for now, so use the download time if the file was

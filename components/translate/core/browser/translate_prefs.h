@@ -134,6 +134,8 @@ class TranslatePrefs {
                  const char* accept_languages_pref,
                  const char* preferred_languages_pref);
 
+  ~TranslatePrefs();
+
   // Checks if the "offer translate" (i.e. automatic translate bubble) feature
   // is enabled.
   bool IsOfferTranslateEnabled() const;

@@ -591,6 +591,7 @@ Polymer({
       return;
 
     this.languageSettingsPrivate_.enableLanguage(languageCode);
+    console.log('Language enabled: ' + languageCode);
   },
 
   /**
