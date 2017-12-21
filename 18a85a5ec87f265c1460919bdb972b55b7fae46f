@@ -16,6 +16,24 @@
       "revId": "18a85a5ec87f265c1460919bdb972b55b7fae46f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f57562f_11193186",
+        "filename": "base/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 1389,
+      "author": {
+        "id": 1001213
+      },
+      "writtenOn": "2017-12-21T22:24:54Z",
+      "side": 1,
+      "message": "Thanks for the pointer. Separated the build stuff into a new CL - that needs to land first and I\u0027ll rebase this then:\n\nhttps://chromium-review.googlesource.com/c/chromium/src/+/835270",
+      "parentUuid": "629bc0bf_eed94769",
+      "revId": "18a85a5ec87f265c1460919bdb972b55b7fae46f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
