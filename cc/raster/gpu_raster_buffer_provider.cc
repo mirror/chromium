@@ -221,8 +221,9 @@ void GpuRasterBufferProvider::Flush() {
 
 viz::ResourceFormat GpuRasterBufferProvider::GetResourceFormat(
     bool must_support_alpha) const {
-  if (resource_provider_->IsRenderBufferFormatSupported(
-          preferred_tile_format_) &&
+  if (IsRenderBufferFormatSupported(
+          preferred_tile_format_,
+          compositor_context_provider_->ContextCapabilities()) &&
       (DoesResourceFormatSupportAlpha(preferred_tile_format_) ||
        !must_support_alpha)) {
     return preferred_tile_format_;

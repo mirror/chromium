@@ -22,6 +22,7 @@ viz_component("resource_format") {
 
   deps = [
     "//base",
+    "//gpu/ipc/common:interfaces",
     "//skia",
     "//ui/gfx:buffer_types",
   ]
