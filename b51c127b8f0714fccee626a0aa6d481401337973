@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "96822851_87b034c1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-12-21T17:29:47Z",
+      "side": 1,
+      "message": "Fixed.",
+      "parentUuid": "e556f4a3_92a8272c",
+      "range": {
+        "startLine": 24,
+        "startChar": 46,
+        "endLine": 24,
+        "endChar": 63
+      },
+      "revId": "b51c127b8f0714fccee626a0aa6d481401337973",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c1e7ba65_40ae5b66",
         "filename": "content/browser/frame_host/render_frame_host_impl.cc",
         "patchSetId": 1
@@ -76,6 +100,24 @@
     },
     {
       "key": {
+        "uuid": "d78b1f82_7f4975db",
+        "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-12-21T17:29:47Z",
+      "side": 1,
+      "message": "Interesting. This is currently working in local manual testing, but I guess for oopif/nested-oopif, I would need to use RenderFrameProxyHost? Are there a set of test-pages I could use to verify events are working correctly with oopif/nested-oopif?",
+      "parentUuid": "f5b117ad_66407794",
+      "revId": "b51c127b8f0714fccee626a0aa6d481401337973",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c87c5214_b97f8870",
         "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
         "patchSetId": 1
@@ -93,6 +135,24 @@
     },
     {
       "key": {
+        "uuid": "19de4a2b_e6edc491",
+        "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-12-21T17:29:47Z",
+      "side": 1,
+      "message": "Ah yes, I have not done the nested oopif case here. My plan was to do that in FoundFrameSinkId() above, which will have an extra bool as an input, and instead of directly calling FoundTarget(), will do the same as lines 91:106.",
+      "parentUuid": "c87c5214_b97f8870",
+      "revId": "b51c127b8f0714fccee626a0aa6d481401337973",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5cca87e0_c4adb7e6",
         "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
         "patchSetId": 1
@@ -104,6 +164,24 @@
       "writtenOn": "2017-12-21T16:18:25Z",
       "side": 1,
       "message": "This looks dangerous. The struct won\u0027t be large enough. Suggest you use a ScopedWebInputEvent",
+      "revId": "b51c127b8f0714fccee626a0aa6d481401337973",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d1ecc43_ba95379f",
+        "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-12-21T17:29:47Z",
+      "side": 1,
+      "message": "Ah. I seem to remember all WebInputEvent types used to have the same size. I will update to use ScopedWebInputEvent.",
+      "parentUuid": "5cca87e0_c4adb7e6",
       "revId": "b51c127b8f0714fccee626a0aa6d481401337973",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -161,6 +239,24 @@
     },
     {
       "key": {
+        "uuid": "e21cfac2_a79a7023",
+        "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-12-21T17:29:47Z",
+      "side": 1,
+      "message": "We will use this same function for mouse-wheel, touch/gesture events too. Those cases will go in here.",
+      "parentUuid": "4aa374a1_e2fff733",
+      "revId": "b51c127b8f0714fccee626a0aa6d481401337973",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "75cbf492_4ad5a016",
         "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
         "patchSetId": 1
@@ -172,6 +268,24 @@
       "writtenOn": "2017-12-21T16:18:25Z",
       "side": 1,
       "message": "I don\u0027t think you need to take a copy here. I think SendMouseEnterOrLeaveEvents can be adjusted to take a const\u0026 instead of a * and all will be well.",
+      "revId": "b51c127b8f0714fccee626a0aa6d481401337973",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84629686_10496fcf",
+        "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 494,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-12-21T17:29:47Z",
+      "side": 1,
+      "message": "Ack. I did a copy here because this was changing the event location. Will remove.",
+      "parentUuid": "75cbf492_4ad5a016",
       "revId": "b51c127b8f0714fccee626a0aa6d481401337973",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
