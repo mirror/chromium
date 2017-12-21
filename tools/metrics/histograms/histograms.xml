@@ -69339,6 +69339,15 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="Renderer.WKWebViewCallbackAfterDestroy" enum="BooleanHit">
+  <owner>michaeldo@chromium.org</owner>
+  <summary>
+    [iOS] A boolean that is used to indicate that a WKWebView callback was
+    called after the CRWWebController was closed. This is unexpected and could
+    be the cause of many crashes. Only logged on iOS.
+  </summary>
+</histogram>
+
 <histogram name="Renderer2.FinishDocToFinish">
   <obsolete>
     Deprecated 04/2016 as doesn't have data nor owner.
