@@ -1,0 +1,170 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eb6525a1_872e321c",
+        "filename": "ui/app_list/views/app_list_folder_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-21T18:06:36Z",
+      "side": 1,
+      "message": "nit: const -\u003e constexpr",
+      "range": {
+        "startLine": 43,
+        "startChar": 0,
+        "endLine": 43,
+        "endChar": 5
+      },
+      "revId": "005c47629dad99c145388bf92882854bd716041d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "801f4db9_2995ab5e",
+        "filename": "ui/app_list/views/app_list_folder_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-21T18:06:36Z",
+      "side": 1,
+      "message": "nit: \u003d default; is preferred",
+      "range": {
+        "startLine": 52,
+        "startChar": 31,
+        "endLine": 52,
+        "endChar": 33
+      },
+      "revId": "005c47629dad99c145388bf92882854bd716041d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bb9e05c_62281434",
+        "filename": "ui/app_list/views/app_list_view.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-21T18:06:36Z",
+      "side": 1,
+      "message": "This and the two methods below should not be marked as \"const\" since they return non-const pointer.\n\nSee https://www.chromium.org/developers/coding-style/cpp-dos-and-donts#TOC-Use-const-correctly",
+      "range": {
+        "startLine": 287,
+        "startChar": 44,
+        "endLine": 287,
+        "endChar": 49
+      },
+      "revId": "005c47629dad99c145388bf92882854bd716041d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a86ddd58_cabd6d6e",
+        "filename": "ui/app_list/views/apps_container_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-21T18:06:36Z",
+      "side": 1,
+      "message": "The folder view could go beyond the boundary of the container view. Would being a child of container view work? Normally, a child would be clipped on parent view\u0027s boundary.",
+      "revId": "005c47629dad99c145388bf92882854bd716041d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f63b7550_0fdb3f95",
+        "filename": "ui/app_list/views/apps_container_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-21T18:06:36Z",
+      "side": 1,
+      "message": "nit: f_rect -\u003e folder_rect",
+      "range": {
+        "startLine": 186,
+        "startChar": 16,
+        "endLine": 186,
+        "endChar": 22
+      },
+      "revId": "005c47629dad99c145388bf92882854bd716041d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5eb89427_29ab0dbf",
+        "filename": "ui/app_list/views/apps_container_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-21T18:06:36Z",
+      "side": 1,
+      "message": "Where are those numbers come from? We should document them.",
+      "range": {
+        "startLine": 187,
+        "startChar": 19,
+        "endLine": 187,
+        "endChar": 29
+      },
+      "revId": "005c47629dad99c145388bf92882854bd716041d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12096d41_b4ab459f",
+        "filename": "ui/app_list/views/apps_grid_view_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-21T18:06:36Z",
+      "side": 1,
+      "message": "Always use double quote for chromium headers.",
+      "revId": "005c47629dad99c145388bf92882854bd716041d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9a2cfa3_aacc2200",
+        "filename": "ui/app_list/views/page_switcher.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-21T18:06:36Z",
+      "side": 1,
+      "message": "nit: const bool since we don\u0027t support dynamic orientation change.",
+      "revId": "005c47629dad99c145388bf92882854bd716041d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
