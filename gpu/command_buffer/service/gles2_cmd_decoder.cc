@@ -1263,7 +1263,8 @@ class GLES2DecoderImpl : public GLES2Decoder, public ErrorStateClient {
       GLuint service_id,
       bool client_visible) {
     return vertex_array_manager()->CreateVertexAttribManager(
-        client_id, service_id, group_->max_vertex_attribs(), client_visible);
+        client_id, service_id, group_->max_vertex_attribs(), client_visible,
+        feature_info_->IsWebGL2Context());
   }
 
   void DoBindAttribLocation(GLuint client_id,
@@ -3337,7 +3338,8 @@ gpu::ContextResult GLES2DecoderImpl::Initialize(
   // out-of-bounds buffer accesses.
   bool needs_emulation = true;
   transform_feedback_manager_.reset(new TransformFeedbackManager(
-      group_->max_transform_feedback_separate_attribs(), needs_emulation));
+      group_->max_transform_feedback_separate_attribs(), needs_emulation,
+      feature_info_->IsWebGL2Context()));
 
   if (feature_info_->IsWebGL2OrES3Context()) {
     if (!feature_info_->IsES3Capable()) {
@@ -3361,9 +3363,12 @@ gpu::ContextResult GLES2DecoderImpl::Initialize(
     api()->glBindTransformFeedbackFn(GL_TRANSFORM_FEEDBACK,
                                      default_transform_feedback);
     state_.bound_transform_feedback = state_.default_transform_feedback.get();
+    state_.bound_transform_feedback->SetIsBound(true);
   }
   state_.indexed_uniform_buffer_bindings = new IndexedBufferBindingHost(
-      group_->max_uniform_buffer_bindings(), needs_emulation);
+      group_->max_uniform_buffer_bindings(), GL_UNIFORM_BUFFER, needs_emulation,
+      feature_info_->IsWebGL2Context());
+  state_.indexed_uniform_buffer_bindings->SetIsBound(true);
 
   state_.InitGenericAttribs(group_->max_vertex_attribs());
   vertex_array_manager_.reset(new VertexArrayManager());
@@ -6182,6 +6187,9 @@ void GLES2DecoderImpl::DoBindTransformFeedback(
     return;
   }
   LogClientServiceForInfo(transform_feedback, client_id, function_name);
+  if (state_.bound_transform_feedback) {
+    state_.bound_transform_feedback->SetIsBound(false);
+  }
   transform_feedback->DoBindTransformFeedback(target);
   state_.bound_transform_feedback = transform_feedback;
 }
@@ -9379,6 +9387,7 @@ bool GLES2DecoderImpl::ValidateUniformBlockBackings(const char* func_name) {
     uint32_t index = info.binding;
     uniform_block_sizes[index] = static_cast<GLsizeiptr>(info.data_size);
   }
+
   return buffer_manager()->RequestBuffersAccess(
       state_.GetErrorState(), state_.indexed_uniform_buffer_bindings.get(),
       uniform_block_sizes, 1, func_name, "uniform buffers");
@@ -10510,12 +10519,9 @@ error::Error GLES2DecoderImpl::DoDrawArrays(
         return error::kNoError;
       }
       if (!buffer_manager()->RequestBuffersAccess(
-              state_.GetErrorState(),
-              state_.bound_transform_feedback.get(),
-              state_.current_program->GetTransformFeedbackVaryingSizes(),
-              count,
-              function_name,
-              "transformfeedback buffers")) {
+              state_.GetErrorState(), state_.bound_transform_feedback.get(),
+              state_.current_program->GetTransformFeedbackVaryingSizes(), count,
+              function_name, "transformfeedback buffers")) {
         return error::kNoError;
       }
     }
@@ -15319,6 +15325,7 @@ error::Error GLES2DecoderImpl::HandleTexSubImage3D(
           "pixel unpack buffer should not be mapped to client memory");
       return error::kNoError;
     }
+
     params = state_.GetUnpackParams(ContextState::k3D);
   } else {
     if (!pixels_shm_id && pixels_shm_offset)
@@ -16881,7 +16888,11 @@ void GLES2DecoderImpl::DoBindVertexArrayOES(GLuint client_id) {
 
   // Only set the VAO state if it's changed
   if (state_.vertex_attrib_manager.get() != vao) {
+    if (state_.vertex_attrib_manager)
+      state_.vertex_attrib_manager->SetIsBound(false);
     state_.vertex_attrib_manager = vao;
+    if (vao)
+      vao->SetIsBound(true);
     if (!features().native_vertex_array_object) {
       EmulateVertexArrayState();
     } else {
@@ -18808,7 +18819,7 @@ error::Error GLES2DecoderImpl::HandleMapBufferRange(
     if (state_.bound_transform_feedback->UsesBuffer(
             used_binding_count, buffer)) {
       LOCAL_SET_GL_ERROR(GL_INVALID_OPERATION, func_name,
-                         "active transform feedback is using this buffer");
+                         "bound transform feedback is using this buffer");
       return error::kNoError;
     }
   }

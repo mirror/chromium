@@ -5028,32 +5028,6 @@ bool WebGL2RenderingContextBase::ValidateCapability(const char* function_name,
   }
 }
 
-bool WebGL2RenderingContextBase::IsBufferBoundToTransformFeedback(
-    WebGLBuffer* buffer) {
-  DCHECK(buffer);
-  return transform_feedback_binding_->IsBufferBoundToTransformFeedback(buffer);
-}
-
-bool WebGL2RenderingContextBase::IsBufferBoundToNonTransformFeedback(
-    WebGLBuffer* buffer) {
-  DCHECK(buffer);
-
-  if (bound_array_buffer_ == buffer ||
-      bound_vertex_array_object_->BoundElementArrayBuffer() == buffer ||
-      bound_copy_read_buffer_ == buffer || bound_copy_write_buffer_ == buffer ||
-      bound_pixel_pack_buffer_ == buffer ||
-      bound_pixel_unpack_buffer_ == buffer || bound_uniform_buffer_ == buffer) {
-    return true;
-  }
-
-  for (size_t i = 0; i <= max_bound_uniform_buffer_index_; ++i) {
-    if (bound_indexed_uniform_buffers_[i] == buffer)
-      return true;
-  }
-
-  return false;
-}
-
 bool WebGL2RenderingContextBase::ValidateBufferTargetCompatibility(
     const char* function_name,
     GLenum target,
@@ -5093,20 +5067,6 @@ bool WebGL2RenderingContextBase::ValidateBufferTargetCompatibility(
       break;
     default:
       break;
-  }
-
-  if (target == GL_TRANSFORM_FEEDBACK_BUFFER) {
-    if (IsBufferBoundToNonTransformFeedback(buffer)) {
-      SynthesizeGLError(GL_INVALID_OPERATION, function_name,
-                        "a buffer bound to TRANSFORM_FEEDBACK_BUFFER can not "
-                        "be bound to any other targets");
-      return false;
-    }
-  } else if (IsBufferBoundToTransformFeedback(buffer)) {
-    SynthesizeGLError(GL_INVALID_OPERATION, function_name,
-                      "a buffer bound to TRANSFORM_FEEDBACK_BUFFER can not be "
-                      "bound to any other targets");
-    return false;
   }
 
   return true;

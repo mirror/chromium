@@ -75,16 +75,22 @@ void IndexedBufferBindingHost::IndexedBufferBinding::Reset() {
   effective_full_buffer_size = 0;
 }
 
-
-IndexedBufferBindingHost::IndexedBufferBindingHost(
-    uint32_t max_bindings, bool needs_emulation)
+IndexedBufferBindingHost::IndexedBufferBindingHost(uint32_t max_bindings,
+                                                   GLenum target,
+                                                   bool needs_emulation,
+                                                   bool do_buffer_refcounting)
     : needs_emulation_(needs_emulation),
-      max_non_null_binding_index_plus_one_(0u) {
+      is_bound_(false),
+      do_buffer_refcounting_(do_buffer_refcounting),
+      max_non_null_binding_index_plus_one_(0u),
+      target_(target) {
   DCHECK(needs_emulation);
   buffer_bindings_.resize(max_bindings);
 }
 
-IndexedBufferBindingHost::~IndexedBufferBindingHost() = default;
+IndexedBufferBindingHost::~IndexedBufferBindingHost() {
+  SetIsBound(false);
+}
 
 void IndexedBufferBindingHost::DoBindBufferBase(
     GLenum target, GLuint index, Buffer* buffer) {
@@ -92,7 +98,13 @@ void IndexedBufferBindingHost::DoBindBufferBase(
   GLuint service_id = buffer ? buffer->service_id() : 0;
   glBindBufferBase(target, index, service_id);
 
+  if (do_buffer_refcounting_ && buffer_bindings_[index].buffer && is_bound_) {
+    buffer_bindings_[index].buffer->OnUnbind(target_);
+  }
   buffer_bindings_[index].SetBindBufferBase(buffer);
+  if (do_buffer_refcounting_ && buffer && is_bound_) {
+    buffer->OnBind(target_);
+  }
   UpdateMaxNonNullBindingIndex(index);
 }
 
@@ -108,7 +120,13 @@ void IndexedBufferBindingHost::DoBindBufferRange(
     glBindBufferRange(target, index, service_id, offset, size);
   }
 
+  if (do_buffer_refcounting_ && buffer_bindings_[index].buffer && is_bound_) {
+    buffer_bindings_[index].buffer->OnUnbind(target_);
+  }
   buffer_bindings_[index].SetBindBufferRange(buffer, offset, size);
+  if (do_buffer_refcounting_ && buffer && is_bound_) {
+    buffer->OnBind(target_);
+  }
   UpdateMaxNonNullBindingIndex(index);
 }
 
@@ -140,23 +158,6 @@ void IndexedBufferBindingHost::DoAdjustedBindBufferRange(
   glBindBufferRange(target, index, service_id, offset, adjusted_size);
 }
 
-void IndexedBufferBindingHost::OnBindHost(GLenum target) {
-  if (needs_emulation_) {
-    // If some bound buffers change size since last time the transformfeedback
-    // is bound, we might need to reset the ranges.
-    for (size_t ii = 0; ii < buffer_bindings_.size(); ++ii) {
-      Buffer* buffer = buffer_bindings_[ii].buffer.get();
-      if (buffer && buffer_bindings_[ii].type == kBindBufferRange &&
-          buffer_bindings_[ii].effective_full_buffer_size != buffer->size()) {
-        DoAdjustedBindBufferRange(
-            target, ii, buffer->service_id(), buffer_bindings_[ii].offset,
-            buffer_bindings_[ii].size, buffer->size());
-        buffer_bindings_[ii].effective_full_buffer_size = buffer->size();
-      }
-    }
-  }
-}
-
 void IndexedBufferBindingHost::OnBufferData(GLenum target, Buffer* buffer) {
   DCHECK(buffer);
   if (needs_emulation_) {
@@ -181,6 +182,38 @@ void IndexedBufferBindingHost::RemoveBoundBuffer(Buffer* buffer) {
     if (buffer_bindings_[ii].buffer.get() == buffer) {
       buffer_bindings_[ii].Reset();
       UpdateMaxNonNullBindingIndex(ii);
+    }
+  }
+}
+
+void IndexedBufferBindingHost::SetIsBound(bool is_bound) {
+  if (is_bound && needs_emulation_) {
+    // If some bound buffers change size since last time the transformfeedback
+    // is bound, we might need to reset the ranges.
+    for (size_t ii = 0; ii < buffer_bindings_.size(); ++ii) {
+      Buffer* buffer = buffer_bindings_[ii].buffer.get();
+      if (buffer && buffer_bindings_[ii].type == kBindBufferRange &&
+          buffer_bindings_[ii].effective_full_buffer_size != buffer->size()) {
+        DoAdjustedBindBufferRange(target_, ii, buffer->service_id(),
+                                  buffer_bindings_[ii].offset,
+                                  buffer_bindings_[ii].size, buffer->size());
+        buffer_bindings_[ii].effective_full_buffer_size = buffer->size();
+      }
+    }
+  }
+
+  if (is_bound == is_bound_)
+    return;
+  is_bound_ = is_bound;
+  if (do_buffer_refcounting_) {
+    for (auto& bb : buffer_bindings_) {
+      if (bb.buffer) {
+        if (is_bound_) {
+          bb.buffer->OnBind(target_);
+        } else {
+          bb.buffer->OnUnbind(target_);
+        }
+      }
     }
   }
 }

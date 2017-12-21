@@ -25,7 +25,10 @@ class GPU_EXPORT IndexedBufferBindingHost :
   // In theory |needs_emulation| needs to be true on Desktop GL 4.1 or lower.
   // However, we set it to true everywhere, not to trust drivers to handle
   // out-of-bounds buffer accesses.
-  IndexedBufferBindingHost(uint32_t max_bindings, bool needs_emulation);
+  IndexedBufferBindingHost(uint32_t max_bindings,
+                           GLenum target,
+                           bool needs_emulation,
+                           bool do_buffer_refcounting);
 
   // The following two functions do state update and call the underlying GL
   // function.  All validations have been done already and the GL function is
@@ -39,10 +42,9 @@ class GPU_EXPORT IndexedBufferBindingHost :
   // size might change.
   void OnBufferData(GLenum target, Buffer* buffer);
 
-  // This is called when the host become active.
-  void OnBindHost(GLenum target);
-
   void RemoveBoundBuffer(Buffer* buffer);
+
+  void SetIsBound(bool bound);
 
   Buffer* GetBufferBinding(GLuint index) const;
   // Returns |size| set by glBindBufferRange; 0 if set by glBindBufferBase.
@@ -60,6 +62,8 @@ class GPU_EXPORT IndexedBufferBindingHost :
   // Check if |buffer| is currently bound to one of the indexed binding point
   // from 0 to |used_binding_count| - 1.
   bool UsesBuffer(size_t used_binding_count, const Buffer* buffer) const;
+
+  bool HasBoundBuffer() const { return buffer_bindings_.size() > 0; }
 
  protected:
   friend class base::RefCounted<IndexedBufferBindingHost>;
@@ -107,8 +111,18 @@ class GPU_EXPORT IndexedBufferBindingHost :
 
   bool needs_emulation_;
 
+  bool is_bound_;
+
+  // Whether or not to call Buffer::OnBind/OnUnbind whenever bindings change.
+  // This is only necessary for WebGL contexts to implement crbug.com/696345
+  bool do_buffer_refcounting_;
+
   // This is used for optimization purpose in context switching.
   size_t max_non_null_binding_index_plus_one_;
+
+  // The GL binding point that this host manages
+  // (e.g. GL_TRANSFORM_FEEDBACK_BUFFER).
+  GLenum target_;
 };
 
 }  // namespace gles2
