@@ -20,6 +20,8 @@
 #include "chrome/browser/ui/browser_commands.h"
 #include "chrome/common/pref_names.h"
 #include "components/prefs/pref_service.h"
+#include "components/translate/core/browser/translate_prefs.h"
+#include "components/translate/core/common/translate_util.h"
 #include "content/public/browser/notification_service.h"
 #include "content/public/browser/notification_source.h"
 #include "content/public/browser/web_contents.h"
@@ -141,6 +143,12 @@ void LocaleChangeGuard::OwnershipStatusChanged() {
   PrefService* prefs = profile_->GetPrefs();
   DCHECK(prefs);
   std::string owner_locale = prefs->GetString(prefs::kApplicationLocale);
+  if (base::FeatureList::IsEnabled(translate::kImprovedLanguageSettings)) {
+    std::string actual_locale;
+    if (translate::GetActualUILocale(owner_locale, &actual_locale)) {
+      owner_locale = actual_locale;
+    }
+  }
   if (!owner_locale.empty())
     local_state->SetString(prefs::kOwnerLocale, owner_locale);
 }
@@ -159,6 +167,12 @@ void LocaleChangeGuard::Check() {
   }
 
   std::string to_locale = prefs->GetString(prefs::kApplicationLocale);
+  if (base::FeatureList::IsEnabled(translate::kImprovedLanguageSettings)) {
+    std::string actual_locale;
+    if (translate::GetActualUILocale(to_locale, &actual_locale)) {
+      to_locale = actual_locale;
+    }
+  }
   if (to_locale != cur_locale) {
     // This conditional branch can occur in cases like:
     // (1) kApplicationLocale preference was modified by synchronization;

@@ -5,12 +5,16 @@
 #include "components/translate/core/common/translate_util.h"
 
 #include <stddef.h>
+#include <algorithm>
+#include <set>
+#include <vector>
 
 #include "base/command_line.h"
 #include "base/logging.h"
 #include "base/macros.h"
 #include "base/strings/string_split.h"
 #include "components/translate/core/common/translate_switches.h"
+#include "ui/base/l10n/l10n_util.h"
 #include "url/gurl.h"
 
 namespace {
@@ -30,6 +34,40 @@ void SplitIntoMainAndTail(const std::string& language,
 
   chunks[0].CopyToString(main_part);
   *tail_part = language.substr(main_part->size());
+}
+
+// Pair of locales, where the first element should fallback to the second one.
+struct LocaleUIFallbackPair {
+  const char* const chosen_locale;
+  const char* const fallback_locale;
+};
+
+// This list MUST be sorted by the first element in the pair, because we perform
+// binary search on it.
+// TODO(claudiomagni): Norvegian has a bug.
+const LocaleUIFallbackPair kLocaleUIFallbackTable[] = {
+    {"en", "en-US"},     {"en-AU", "en-GB"},  {"en-CA", "en-GB"},
+    {"en-IN", "en-GB"},  {"en-NZ", "en-GB"},  {"en-ZA", "en-GB"},
+    {"es-AR", "es-419"}, {"es-CL", "es-419"}, {"es-CO", "es-419"},
+    {"es-CR", "es-419"}, {"es-HN", "es-419"}, {"es-MX", "es-419"},
+    {"es-PE", "es-419"}, {"es-US", "es-419"}, {"es-UY", "es-419"},
+    {"es-VE", "es-419"}, {"it-CH", "it"},     {"nn", "nb"},
+    {"no", "nb"},        {"pt", "pt-PT"}};
+
+bool LocaleCompare(const LocaleUIFallbackPair& p1, const std::string& p2) {
+  return p1.chosen_locale < p2;
+}
+
+bool GetUIFallbackLocale(const std::string& input, std::string* const output) {
+  *output = input;
+  const auto* it =
+      std::lower_bound(std::begin(kLocaleUIFallbackTable),
+                       std::end(kLocaleUIFallbackTable), input, LocaleCompare);
+  if (it != std::end(kLocaleUIFallbackTable) && it->chosen_locale == input) {
+    *output = it->fallback_locale;
+    return true;
+  }
+  return false;
 }
 
 }  // namespace
@@ -162,6 +200,44 @@ bool ContainsSameBaseLanguage(const std::vector<std::string>& list,
     SplitIntoMainAndTail(item, &compare_base, &unused_str);
     if (compare_base == base_language)
       return true;
+  }
+
+  return false;
+}
+
+std::string ExtractBaseLanguage(const std::string& language_code) {
+  std::string base;
+  std::string tail;
+  SplitIntoMainAndTail(language_code, &base, &tail);
+  if (!base.empty() && !tail.empty()) {
+    return base;
+  } else {
+    return "";
+  }
+}
+
+bool GetActualUILocale(const std::string& input_locale,
+                       std::string* actual_locale) {
+  const std::vector<std::string>& ui_locales = l10n_util::GetAvailableLocales();
+  const std::set<std::string> ui_set(ui_locales.begin(), ui_locales.end());
+
+  // 1) Convert to a fallback, if available.
+  std::string fallback;
+  if (!GetUIFallbackLocale(input_locale, &fallback)) {
+    fallback = input_locale;
+  }
+
+  // 2) Check if language is part of the UI languages.
+  if (ui_set.count(fallback) > 0) {
+    *actual_locale = fallback;
+    return true;
+  }
+
+  // 3) Check if its base is part of the UI languages.
+  const std::string base = ExtractBaseLanguage(input_locale);
+  if (!base.empty() && ui_set.count(base) > 0) {
+    *actual_locale = base;
+    return true;
   }
 
   return false;

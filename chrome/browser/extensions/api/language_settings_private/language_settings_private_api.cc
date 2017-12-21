@@ -180,8 +180,7 @@ LanguageSettingsPrivateGetLanguageListFunction::Run() {
 
   // Get the list of available locales (display languages) and convert to a set.
   const std::vector<std::string>& locales = l10n_util::GetAvailableLocales();
-  const std::unordered_set<std::string> locale_set(locales.begin(),
-                                                   locales.end());
+  const std::set<std::string> locale_set(locales.begin(), locales.end());
 
   // Get the list of spell check languages and convert to a set.
   std::vector<std::string> spellcheck_languages;
@@ -199,14 +198,19 @@ LanguageSettingsPrivateGetLanguageListFunction::Run() {
     language.native_display_name = entry.native_display_name;
 
     // Set optional fields only if they differ from the default.
-    if (locale_set.count(entry.code) > 0) {
-      language.supports_ui.reset(new bool(true));
-    }
     if (spellcheck_language_set.count(entry.code) > 0) {
       language.supports_spellcheck.reset(new bool(true));
     }
     if (entry.supports_translate) {
       language.supports_translate.reset(new bool(true));
+    }
+    if (base::FeatureList::IsEnabled(translate::kImprovedLanguageSettings)) {
+      std::string unused;
+      if (translate::GetActualUILocale(entry.code, &unused)) {
+        language.supports_ui.reset(new bool(true));
+      }
+    } else if (locale_set.count(entry.code) > 0) {
+      language.supports_ui.reset(new bool(true));
     }
 
     language_list->Append(language.ToValue());

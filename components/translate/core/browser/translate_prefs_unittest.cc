@@ -10,6 +10,7 @@
 #include <vector>
 
 #include "base/json/json_reader.h"
+#include "base/strings/string_split.h"
 #include "base/test/scoped_feature_list.h"
 #include "base/values.h"
 #include "build/build_config.h"
@@ -19,6 +20,9 @@
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/base/l10n/l10n_util.h"
+
+using base::test::ScopedFeatureList;
+using ::testing::ElementsAre;
 
 namespace {
 
