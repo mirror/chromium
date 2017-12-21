@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6362ab5c_9f37c16e",
+        "filename": "components/omnibox/browser/autocomplete_input.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-12-21T15:29:05Z",
+      "side": 1,
+      "message": "For consistency with the comment paragraphs below, add a blank comment line below. i.e.:\n\n// than a search query.\n//\n// Per RFC 6761 [...]",
+      "revId": "8688b4f4313f06ece00192edc9aef1fd598ac3dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2953388b_1f492aec",
+        "filename": "components/omnibox/browser/autocomplete_input.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-12-21T15:29:05Z",
+      "side": 1,
+      "message": "Can you include a URL? Code Search will linkify it, which is helpful when browsing code. i.e.:\n\nPer https://tools.ietf.org/html/rfc6761, the .invalid TLD is considered non-navigable and thus is\n\nor\n\nPer RFC 6761 (https://tools.ietf.org/html/rfc6761), the .invalid TLD is considered non-navigable and thus is",
+      "revId": "8688b4f4313f06ece00192edc9aef1fd598ac3dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cc3cc6f_806c5ad5",
+        "filename": "components/omnibox/browser/autocomplete_input.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-12-21T15:29:05Z",
+      "side": 1,
+      "message": "Include link to RFC.",
+      "revId": "8688b4f4313f06ece00192edc9aef1fd598ac3dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e02fd577_895abad5",
+        "filename": "components/omnibox/browser/autocomplete_input_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-12-21T15:29:05Z",
+      "side": 1,
+      "message": "Include a comment here explaining that the following tests cover the special TLDs from the RFC.",
+      "revId": "8688b4f4313f06ece00192edc9aef1fd598ac3dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
