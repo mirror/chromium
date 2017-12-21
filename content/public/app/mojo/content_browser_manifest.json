@@ -9,11 +9,15 @@
           "discardable_memory::mojom::DiscardableSharedMemoryManager",
           "memory_instrumentation::mojom::Coordinator"
         ],
+        "dwrite_font_proxy": [
+          "content::mojom::DWriteFontProxy"
+        ],
         "gpu": [
           "content::mojom::FieldTrialRecorder",
           "media::mojom::AndroidOverlayProvider"
         ],
         "plugin": [
+          "content::mojom::DWriteFontProxy",
           "discardable_memory::mojom::DiscardableSharedMemoryManager",
           "ui::mojom::Gpu"
         ],
@@ -29,6 +33,7 @@
           "blink::mojom::ReportingServiceProxy",
           "blink::mojom::WebDatabaseHost",
           "content::mojom::AppCacheBackend",
+          "content::mojom::DWriteFontProxy",
           "content::mojom::FieldTrialRecorder",
           "content::mojom::FileUtilitiesHost",
           "content::mojom::FrameSinkProvider",
