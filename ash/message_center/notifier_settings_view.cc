@@ -541,7 +541,6 @@ NotifierSettingsView::NotifierSettingsView()
   AddChildView(no_notifiers_view_);
 
   SetNotifierList({});
-  Shell::Get()->message_center_controller()->SetNotifierSettingsListener(this);
 }
 
 NotifierSettingsView::~NotifierSettingsView() {
@@ -566,6 +565,14 @@ void NotifierSettingsView::SetQuietModeState(bool is_quiet_mode) {
                               message_center_style::kActionIconSize,
                               message_center_style::kInactiveButtonColor));
   }
+}
+
+void NotifierSettingsView::EnsureNotifierListLoaded() {
+  if (notifier_list_loaded_)
+    return;
+
+  Shell::Get()->message_center_controller()->SetNotifierSettingsListener(this);
+  notifier_list_loaded_ = true;
 }
 
 void NotifierSettingsView::GetAccessibleNodeData(ui::AXNodeData* node_data) {

@@ -39,6 +39,8 @@ class ASH_EXPORT NotifierSettingsView
 
   void SetQuietModeState(bool is_quiet_mode);
 
+  void EnsureNotifierListLoaded();
+
   // NotifierSettingsListener:
   void SetNotifierList(
       const std::vector<mojom::NotifierUiDataPtr>& ui_data) override;
@@ -105,6 +107,7 @@ class ASH_EXPORT NotifierSettingsView
   views::ScrollView* scroller_;
   views::View* no_notifiers_view_;
   std::set<NotifierButton*> buttons_;
+  bool notifier_list_loaded_ = false;
 
   DISALLOW_COPY_AND_ASSIGN(NotifierSettingsView);
 };

@@ -189,6 +189,8 @@ MessageCenterView::MessageCenterView(
 
   scroller_->SetVisible(false);  // Because it has no notifications at first.
   settings_view_->SetVisible(mode_ == Mode::SETTINGS);
+  if (mode_ == Mode::SETTINGS)
+    settings_view_->EnsureNotifierListLoaded();
   no_notifications_view_->SetVisible(mode_ == Mode::NO_NOTIFICATIONS);
 
   AddChildView(scroller_);
@@ -593,6 +595,10 @@ void MessageCenterView::SetVisibilityMode(Mode mode, bool animate) {
     target_view_ = nullptr;
 
   mode_ = mode;
+
+  // Load notifier list lazily.
+  if (target_view_ == settings_view_)
+    settings_view_->EnsureNotifierListLoaded();
 
   source_height_ = source_view_ ? source_view_->GetHeightForWidth(width()) : 0;
   target_height_ = target_view_ ? target_view_->GetHeightForWidth(width()) : 0;
