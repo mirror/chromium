@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3c769b9b_1a5cb5cb",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/inspector-protocol/target/wait-for-debugger.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-12-21T19:22:31Z",
+      "side": 1,
+      "message": "Let\u0027s make this test2 and check reported request headers to protocol our behavior.",
+      "range": {
+        "startLine": 20,
+        "startChar": 48,
+        "endLine": 20,
+        "endChar": 52
+      },
+      "revId": "a738616dd4d5beb869de7d0c5eaec6f521aec6bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
