@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "993adc77_9f7a9c7f",
+        "filename": "chrome/browser/resources/chromeos/login/md_login_shared.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-12-21T01:25:10Z",
+      "side": 1,
+      "message": "If it\u0027s intended for tests only, it should have \"ForTesting\" in its name: \u0027getPrimaryDisplayNameForTesting\u0027",
+      "range": {
+        "startLine": 457,
+        "startChar": 31,
+        "endLine": 457,
+        "endChar": 52
+      },
+      "revId": "1c000e985b29060bd0518a9f4cac19e17121c401",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9aab94b4_5a1cd9a3",
+        "filename": "chrome/browser/ui/webui/chromeos/login/core_oobe_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 559,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-12-21T01:25:10Z",
+      "side": 1,
+      "message": "const auto",
+      "range": {
+        "startLine": 559,
+        "startChar": 2,
+        "endLine": 559,
+        "endChar": 6
+      },
+      "revId": "1c000e985b29060bd0518a9f4cac19e17121c401",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61544287_f8c92866",
+        "filename": "chrome/browser/ui/webui/chromeos/login/core_oobe_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 563,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-12-21T01:25:10Z",
+      "side": 1,
+      "message": "const std::string",
+      "range": {
+        "startLine": 563,
+        "startChar": 2,
+        "endLine": 563,
+        "endChar": 5
+      },
+      "revId": "1c000e985b29060bd0518a9f4cac19e17121c401",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
