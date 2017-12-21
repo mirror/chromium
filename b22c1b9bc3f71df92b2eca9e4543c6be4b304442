@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d1e44885_0733bb27",
+        "filename": "components/offline_pages/core/model/offline_page_upgrade_types.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-12-21T01:08:49Z",
+      "side": 1,
+      "message": "Shouldn\u0027t these be unique pointers (or suffixed with \u0026\u0026) to make it clear that their contents will be \"consumed\" by this constructor?",
+      "range": {
+        "startLine": 16,
+        "startChar": 39,
+        "endLine": 17,
+        "endChar": 63
+      },
+      "revId": "b22c1b9bc3f71df92b2eca9e4543c6be4b304442",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a496205b_7eb65330",
+        "filename": "components/offline_pages/core/model/start_offline_page_upgrade_task.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-12-21T01:08:49Z",
+      "side": 1,
+      "message": "probably nit: This could be a DB error too. They can be told apart by calling `select_statement.Succeeded()`. But I\u0027m uncertain if it is important it to differentiate them.",
+      "range": {
+        "startLine": 39,
+        "startChar": 50,
+        "endLine": 39,
+        "endChar": 62
+      },
+      "revId": "b22c1b9bc3f71df92b2eca9e4543c6be4b304442",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf31afc7_2d5076e6",
+        "filename": "components/offline_pages/core/model/start_offline_page_upgrade_task_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-12-21T01:08:49Z",
+      "side": 1,
+      "message": "nit: Could just check for page \u003d\u003d offline_page.",
+      "range": {
+        "startLine": 125,
+        "startChar": 12,
+        "endLine": 125,
+        "endChar": 44
+      },
+      "revId": "b22c1b9bc3f71df92b2eca9e4543c6be4b304442",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b41ddeff_2d1e9740",
+        "filename": "components/offline_pages/core/model/start_offline_page_upgrade_task_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-12-21T01:08:49Z",
+      "side": 1,
+      "message": "nit: ditto.",
+      "range": {
+        "startLine": 147,
+        "startChar": 12,
+        "endLine": 147,
+        "endChar": 44
+      },
+      "revId": "b22c1b9bc3f71df92b2eca9e4543c6be4b304442",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
