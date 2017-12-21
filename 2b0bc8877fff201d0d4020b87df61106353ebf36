@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c0fe635c_49bfa778",
+        "filename": "components/arc/test/fake_timer_instance.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-12-21T18:04:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eae0c883_3bbf9a64",
+      "range": {
+        "startLine": 163,
+        "startChar": 2,
+        "endLine": 163,
+        "endChar": 41
+      },
+      "revId": "2b0bc8877fff201d0d4020b87df61106353ebf36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9d607880_237bf6ea",
         "filename": "components/arc/test/fake_timer_instance.h",
         "patchSetId": 26
@@ -130,6 +154,24 @@
     },
     {
       "key": {
+        "uuid": "bafe5b64_1c2033dd",
+        "filename": "components/arc/timer/arc_timer.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-12-21T18:04:56Z",
+      "side": 1,
+      "message": "Done in arc_timer.h and arc_timer_bridge.cc in CreateArcTimers.",
+      "parentUuid": "6b7ea610_70bbe46c",
+      "revId": "2b0bc8877fff201d0d4020b87df61106353ebf36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ead61b7f_027ef805",
         "filename": "components/arc/timer/arc_timer.cc",
         "patchSetId": 26
@@ -153,6 +195,30 @@
     },
     {
       "key": {
+        "uuid": "ff968056_cf63bdd9",
+        "filename": "components/arc/timer/arc_timer.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-12-21T18:04:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ead61b7f_027ef805",
+      "range": {
+        "startLine": 66,
+        "startChar": 44,
+        "endLine": 66,
+        "endChar": 50
+      },
+      "revId": "2b0bc8877fff201d0d4020b87df61106353ebf36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "99ee1214_7fb1e700",
         "filename": "components/arc/timer/arc_timer_bridge.h",
         "patchSetId": 26
@@ -164,6 +230,30 @@
       "writtenOn": "2017-12-20T18:44:32Z",
       "side": 1,
       "message": "nit: timer_task_runner_ (note the trailing underscore).",
+      "range": {
+        "startLine": 64,
+        "startChar": 9,
+        "endLine": 64,
+        "endChar": 26
+      },
+      "revId": "2b0bc8877fff201d0d4020b87df61106353ebf36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d19fd6e5_e5c7b6a1",
+        "filename": "components/arc/timer/arc_timer_bridge.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-12-21T18:04:56Z",
+      "side": 1,
+      "message": "This references the argument I have passed to the function. Not the member variable.",
+      "parentUuid": "99ee1214_7fb1e700",
       "range": {
         "startLine": 64,
         "startChar": 9,
