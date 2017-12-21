@@ -124,7 +124,7 @@ void SkiaRenderer::BeginDrawingFrame() {
 
   // Insert WaitSyncTokenCHROMIUM on quad resources prior to drawing the frame,
   // so that drawing can proceed without GL context switching interruptions.
-  for (const auto& pass : *current_frame()->render_passes_in_draw_order) {
+  for (auto* pass : *current_frame()->render_passes_in_draw_order) {
     for (auto* quad : pass->quad_list) {
       for (ResourceId resource_id : quad->resources)
         resource_provider_->WaitSyncToken(resource_id);
@@ -762,7 +762,7 @@ sk_sp<SkShader> SkiaRenderer::GetBackgroundFilterShader(
 }
 
 void SkiaRenderer::UpdateRenderPassTextures(
-    const RenderPassList& render_passes_in_draw_order,
+    const std::vector<RenderPass*>& render_passes_in_draw_order,
     const base::flat_map<RenderPassId, RenderPassRequirements>&
         render_passes_in_frame) {
   std::vector<RenderPassId> passes_to_delete;

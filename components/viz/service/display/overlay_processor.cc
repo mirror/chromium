@@ -91,7 +91,7 @@ bool OverlayProcessor::ProcessForCALayers(
 
 bool OverlayProcessor::ProcessForDCLayers(
     cc::DisplayResourceProvider* resource_provider,
-    RenderPassList* render_passes,
+    std::vector<RenderPass*>* render_passes,
     const OverlayProcessor::FilterOperationsMap& render_pass_filters,
     const OverlayProcessor::FilterOperationsMap& render_pass_background_filters,
     cc::OverlayCandidateList* overlay_candidates,
@@ -112,7 +112,7 @@ bool OverlayProcessor::ProcessForDCLayers(
 
 void OverlayProcessor::ProcessForOverlays(
     cc::DisplayResourceProvider* resource_provider,
-    RenderPassList* render_passes,
+    std::vector<RenderPass*>* render_passes,
     const SkMatrix44& output_color_matrix,
     const OverlayProcessor::FilterOperationsMap& render_pass_filters,
     const OverlayProcessor::FilterOperationsMap& render_pass_background_filters,
@@ -134,7 +134,7 @@ void OverlayProcessor::ProcessForOverlays(
   const gfx::Rect previous_frame_underlay_rect = previous_frame_underlay_rect_;
   previous_frame_underlay_rect_ = gfx::Rect();
 
-  RenderPass* render_pass = render_passes->back().get();
+  RenderPass* render_pass = render_passes->back();
 
   // If we have any copy requests, we can't remove any quads for overlays or
   // CALayers because the framebuffer would be missing the removed quads'
@@ -145,7 +145,7 @@ void OverlayProcessor::ProcessForOverlays(
   }
 
   // First attempt to process for CALayers.
-  if (ProcessForCALayers(resource_provider, render_passes->back().get(),
+  if (ProcessForCALayers(resource_provider, render_passes->back(),
                          render_pass_filters, render_pass_background_filters,
                          candidates, ca_layer_overlays, damage_rect)) {
     return;
@@ -160,7 +160,7 @@ void OverlayProcessor::ProcessForOverlays(
   // Only if that fails, attempt hardware overlay strategies.
   for (const auto& strategy : strategies_) {
     if (!strategy->Attempt(output_color_matrix, resource_provider,
-                           render_passes->back().get(), candidates,
+                           render_passes->back(), candidates,
                            content_bounds)) {
       continue;
     }

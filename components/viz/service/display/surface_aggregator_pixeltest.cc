@@ -5,6 +5,7 @@
 #include "build/build_config.h"
 #include "cc/test/pixel_comparator.h"
 #include "cc/test/pixel_test.h"
+#include "components/viz/common/quads/aggregated_compositor_frame.h"
 #include "components/viz/common/quads/compositor_frame.h"
 #include "components/viz/common/quads/render_pass.h"
 #include "components/viz/common/quads/solid_color_draw_quad.h"
@@ -89,11 +90,11 @@ TEST_F(SurfaceAggregatorPixelTest, DrawSimpleFrame) {
 
   SurfaceAggregator aggregator(manager_.surface_manager(),
                                resource_provider_.get(), true);
-  CompositorFrame aggregated_frame = aggregator.Aggregate(root_surface_id);
+  AggregatedCompositorFrame aggregated_frame = aggregator.Aggregate(root_surface_id);
 
   bool discard_alpha = false;
   cc::ExactPixelComparator pixel_comparator(discard_alpha);
-  RenderPassList* pass_list = &aggregated_frame.render_pass_list;
+  std::vector<RenderPass*>* pass_list = &aggregated_frame.render_pass_list;
   EXPECT_TRUE(RunPixelTest(pass_list,
                            base::FilePath(FILE_PATH_LITERAL("green.png")),
                            pixel_comparator));
@@ -161,11 +162,11 @@ TEST_F(SurfaceAggregatorPixelTest, DrawSimpleAggregatedFrame) {
 
   SurfaceAggregator aggregator(manager_.surface_manager(),
                                resource_provider_.get(), true);
-  CompositorFrame aggregated_frame = aggregator.Aggregate(root_surface_id);
+  AggregatedCompositorFrame aggregated_frame = aggregator.Aggregate(root_surface_id);
 
   bool discard_alpha = false;
   cc::ExactPixelComparator pixel_comparator(discard_alpha);
-  RenderPassList* pass_list = &aggregated_frame.render_pass_list;
+  std::vector<RenderPass*>* pass_list = &aggregated_frame.render_pass_list;
   EXPECT_TRUE(RunPixelTest(pass_list,
                            base::FilePath(FILE_PATH_LITERAL("blue_yellow.png")),
                            pixel_comparator));
@@ -289,11 +290,11 @@ TEST_F(SurfaceAggregatorPixelTest, DrawAggregatedFrameWithSurfaceTransforms) {
 
   SurfaceAggregator aggregator(manager_.surface_manager(),
                                resource_provider_.get(), true);
-  CompositorFrame aggregated_frame = aggregator.Aggregate(root_surface_id);
+  AggregatedCompositorFrame aggregated_frame = aggregator.Aggregate(root_surface_id);
 
   bool discard_alpha = false;
   cc::ExactPixelComparator pixel_comparator(discard_alpha);
-  RenderPassList* pass_list = &aggregated_frame.render_pass_list;
+  std::vector<RenderPass*>* pass_list = &aggregated_frame.render_pass_list;
   EXPECT_TRUE(RunPixelTest(
       pass_list,
       base::FilePath(FILE_PATH_LITERAL("four_blue_green_checkers.png")),

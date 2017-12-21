@@ -55,13 +55,14 @@ class VIZ_SERVICE_EXPORT DirectRenderer {
 
   void SetVisible(bool visible);
   void DecideRenderPassAllocationsForFrame(
-      const RenderPassList& render_passes_in_draw_order);
-  void DrawFrame(RenderPassList* render_passes_in_draw_order,
+      const std::vector<RenderPass*>& render_passes_in_draw_order);
+  void DrawFrame(std::vector<RenderPass*>* render_passes_in_draw_order,
                  float device_scale_factor,
                  const gfx::Size& device_viewport_size);
 
   // Public interface implemented by subclasses.
-  virtual void SwapBuffers(std::vector<ui::LatencyInfo> latency_info) = 0;
+  virtual void SwapBuffers(std::vector<ui::LatencyInfo> latency_info
+                           ) = 0;
   virtual void SwapBuffersComplete() {}
   virtual void DidReceiveTextureInUseResponses(
       const gpu::TextureInUseResponses& responses) {}
@@ -71,7 +72,7 @@ class VIZ_SERVICE_EXPORT DirectRenderer {
     DrawingFrame();
     ~DrawingFrame();
 
-    const RenderPassList* render_passes_in_draw_order = nullptr;
+    const std::vector<RenderPass*>* render_passes_in_draw_order = nullptr;
     const RenderPass* root_render_pass = nullptr;
     const RenderPass* current_render_pass = nullptr;
 
@@ -161,7 +162,7 @@ class VIZ_SERVICE_EXPORT DirectRenderer {
   virtual bool CanPartialSwap() = 0;
   virtual ResourceFormat BackbufferFormat() const = 0;
   virtual void UpdateRenderPassTextures(
-      const RenderPassList& render_passes_in_draw_order,
+      const std::vector<RenderPass*>& render_passes_in_draw_order,
       const base::flat_map<RenderPassId, RenderPassRequirements>&
           render_passes_in_frame) = 0;
   virtual void AllocateRenderPassResourceIfNeeded(

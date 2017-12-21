@@ -53,7 +53,7 @@ class VIZ_SERVICE_EXPORT OverlayProcessor {
   // or CALayers. This must be called every frame.
   void ProcessForOverlays(
       cc::DisplayResourceProvider* resource_provider,
-      RenderPassList* render_passes,
+      std::vector<RenderPass*>* render_passes,
       const SkMatrix44& output_color_matrix,
       const FilterOperationsMap& render_pass_filters,
       const FilterOperationsMap& render_pass_background_filters,
@@ -80,7 +80,7 @@ class VIZ_SERVICE_EXPORT OverlayProcessor {
       gfx::Rect* damage_rect);
   bool ProcessForDCLayers(
       cc::DisplayResourceProvider* resource_provider,
-      RenderPassList* render_passes,
+      std::vector<RenderPass*>* render_passes,
       const FilterOperationsMap& render_pass_filters,
       const FilterOperationsMap& render_pass_background_filters,
       cc::OverlayCandidateList* overlay_candidates,
