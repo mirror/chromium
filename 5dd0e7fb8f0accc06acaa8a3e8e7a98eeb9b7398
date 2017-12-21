@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "cd17619b_c6d70cf8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-12-21T23:46:49Z",
+      "side": 1,
+      "message": "\u003e 1) Is there a bug to reference?\nYes. Done.\n\u003e 2) Can you write a small blurb about in the commit message about what this is doing?\nDone.",
+      "parentUuid": "3ce0ffc6_20bb89f6",
+      "revId": "5dd0e7fb8f0accc06acaa8a3e8e7a98eeb9b7398",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "47d4cb0c_bf5b7a82",
         "filename": "build/linux/unbundle/harfbuzz-ng.gn",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "5dd0e7fb8f0accc06acaa8a3e8e7a98eeb9b7398",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bc9ebd3_9c8d8ca3",
+        "filename": "build/linux/unbundle/harfbuzz-ng.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-12-21T23:46:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "47d4cb0c_bf5b7a82",
+      "revId": "5dd0e7fb8f0accc06acaa8a3e8e7a98eeb9b7398",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -56,6 +92,30 @@
       "revId": "5dd0e7fb8f0accc06acaa8a3e8e7a98eeb9b7398",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0040a517_447f5c02",
+        "filename": "build/linux/unbundle/harfbuzz-ng.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-12-21T23:46:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "573519f2_0baabd93",
+      "range": {
+        "startLine": 8,
+        "startChar": 25,
+        "endLine": 8,
+        "endChar": 26
+      },
+      "revId": "5dd0e7fb8f0accc06acaa8a3e8e7a98eeb9b7398",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
