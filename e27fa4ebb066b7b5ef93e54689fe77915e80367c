@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "32bacbb6_d932cbb7",
+        "filename": "content/browser/gpu/gpu_data_manager_impl_private.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 773,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-12-21T18:07:16Z",
+      "side": 1,
+      "message": "nit: VideoFrames? With capital V?",
+      "revId": "e27fa4ebb066b7b5ef93e54689fe77915e80367c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91c9e7a0_4d37c097",
+        "filename": "content/browser/gpu/gpu_data_manager_impl_private.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 781,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-12-21T18:07:16Z",
+      "side": 1,
+      "message": "Why not gpu_preferences-\u003edisable_multiplanar_gpu_memory_buffers_for_video_frames \u003d !blabla?",
+      "revId": "e27fa4ebb066b7b5ef93e54689fe77915e80367c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
