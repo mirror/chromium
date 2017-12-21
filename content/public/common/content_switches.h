@@ -254,6 +254,7 @@ CONTENT_EXPORT extern const char kEnforceWebRtcIPPermissionCheck[];
 CONTENT_EXPORT extern const char kForceWebRtcIPHandlingPolicy[];
 CONTENT_EXPORT extern const char kWebRtcStunProbeTrialParameter[];
 extern const char kWebRtcMaxCaptureFramerate[];
+CONTENT_EXPORT extern const char kDisableWebRtcCaptureThrottling[];
 #endif
 
 #if defined(OS_ANDROID)

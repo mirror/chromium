@@ -11,10 +11,12 @@
 #include <string>
 #include <utility>
 
+#include "base/command_line.h"
 #include "base/macros.h"
 #include "base/synchronization/waitable_event.h"
 #include "base/test/test_timeouts.h"
 #include "base/time/time.h"
+#include "content/public/common/content_switches.h"
 #include "content/public/test/test_browser_thread_bundle.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -40,6 +42,8 @@ const int kTestFrameWidth1 = 500;
 const int kTestFrameHeight1 = 500;
 const int kTestFrameWidth2 = 400;
 const int kTestFrameHeight2 = 300;
+const int kTestFrameWidth3 = 64;
+const int kTestFrameHeight3 = 64;
 
 const int kFrameRate = 30;
 
@@ -190,10 +194,16 @@ class FakeScreenCapturer : public webrtc::DesktopCapturer {
     generate_cropped_frames_ = generate_cropped_frames;
   }
 
+  void set_min_capture_duration(base::TimeDelta min_capture_duration) {
+    min_capture_duration_ = min_capture_duration;
+  }
+
   // VideoFrameCapturer interface.
   void Start(Callback* callback) override { callback_ = callback; }
 
   void CaptureFrame() override {
+    base::TimeTicks start_time = base::TimeTicks::Now();
+
     webrtc::DesktopSize size;
     if (frame_index_ % 2 == 0) {
       size = webrtc::DesktopSize(kTestFrameWidth1, kTestFrameHeight1);
@@ -211,6 +221,10 @@ class FakeScreenCapturer : public webrtc::DesktopCapturer {
     }
     callback_->OnCaptureResult(webrtc::DesktopCapturer::Result::SUCCESS,
                                std::move(frame));
+
+    base::TimeDelta end_time = base::TimeTicks::Now() - start_time;
+    if (min_capture_duration_ > end_time)
+      base::PlatformThread::Sleep(min_capture_duration_ - end_time);
   }
 
   bool GetSourceList(SourceList* screens) override { return false; }
@@ -222,6 +236,7 @@ class FakeScreenCapturer : public webrtc::DesktopCapturer {
   int frame_index_;
   bool generate_inverted_frames_;
   bool generate_cropped_frames_;
+  base::TimeDelta min_capture_duration_;
 };
 
 // Helper used to check that only two specific frame sizes are delivered to the
@@ -562,6 +577,102 @@ TEST_F(DesktopCaptureDeviceTest, InvertedFrame) {
                output_frame_->data() + i * output_frame_->stride(),
                output_frame_->stride()));
   }
+}
+
+class DesktopCaptureDeviceThrottledTest : public DesktopCaptureDeviceTest {
+ public:
+  // Capture |nb_frames| at kFrameRate and return the total time it tooks.
+  base::TimeDelta CaptureFrames(int nb_frames) {
+    FakeScreenCapturer* mock_capturer = new FakeScreenCapturer();
+
+    // Simulate a real capture duration that exactly matches kFrameRate.
+    mock_capturer->set_min_capture_duration(
+        base::TimeDelta::FromMicroseconds(static_cast<int64_t>(
+            1000000.0 / kFrameRate + 0.5 /* round to nearest int */)));
+
+    CreateScreenCaptureDevice(
+        std::unique_ptr<webrtc::DesktopCapturer>(mock_capturer));
+
+    FormatChecker format_checker(
+        gfx::Size(kTestFrameWidth3, kTestFrameHeight3),
+        gfx::Size(kTestFrameWidth3, kTestFrameHeight3));
+    base::WaitableEvent done_event(
+        base::WaitableEvent::ResetPolicy::AUTOMATIC,
+        base::WaitableEvent::InitialState::NOT_SIGNALED);
+
+    std::unique_ptr<MockDeviceClient> client(new MockDeviceClient());
+    EXPECT_CALL(*client, OnError(_, _)).Times(0);
+    EXPECT_CALL(*client, OnStarted());
+    EXPECT_CALL(*client, OnIncomingCapturedData(_, _, _, _, _, _, _))
+        .WillRepeatedly(DoAll(
+            WithArg<2>(
+                Invoke(&format_checker, &FormatChecker::ExpectAcceptableSize)),
+            InvokeWithoutArgs(&done_event, &base::WaitableEvent::Signal)));
+
+    media::VideoCaptureParams capture_params;
+    capture_params.requested_format.frame_size.SetSize(kTestFrameWidth3,
+                                                       kTestFrameHeight3);
+    capture_params.requested_format.frame_rate = kFrameRate;
+    capture_params.requested_format.pixel_format = media::PIXEL_FORMAT_I420;
+    capture_params.resolution_change_policy =
+        media::ResolutionChangePolicy::FIXED_RESOLUTION;
+
+    capture_device_->AllocateAndStart(capture_params, std::move(client));
+
+    base::TimeTicks start_time = base::TimeTicks::Now();
+    for (int i = 0; i < nb_frames; ++i) {
+      EXPECT_TRUE(done_event.TimedWait(TestTimeouts::action_max_timeout()));
+      done_event.Reset();
+    }
+    base::TimeDelta total_capture_duration =
+        base::TimeTicks::Now() - start_time;
+
+    capture_device_->StopAndDeAllocate();
+
+    return total_capture_duration;
+  }
+};
+
+// The test verifies that the capture pipeline is throttled as defined with
+// kMaximumCpuConsumptionPercentage.
+TEST_F(DesktopCaptureDeviceThrottledTest, ThrottledOn) {
+  const int nb_frames = 15;
+  base::TimeDelta total_capture_duration = CaptureFrames(nb_frames);
+  ASSERT_TRUE(total_capture_duration.InSecondsF() > 0);
+
+  // When capturing a frame it is expected to do the actual capture for at most
+  // half of the request frame duration. I.e. the capture pipeline has to be at
+  // idle for at least 50% of the time, otherwise it will be throttled. This
+  // test makes it idle 0% of the time to force throttling.
+  const int expected_framerate = kFrameRate / 2;
+  const double actual_framerate =
+      nb_frames / total_capture_duration.InSecondsF();
+
+  // The test succeeds if the actual framerate is near the expected_framerate
+  // with an error less than 10%.
+  EXPECT_LT(fabs(actual_framerate - expected_framerate) / expected_framerate,
+            0.1);
+}
+
+// The test verifies that the capture pipeline is not throttled when passing
+// --disable-webrtc-desktop-capture-throttling.
+TEST_F(DesktopCaptureDeviceThrottledTest, ThrottledOff) {
+  base::CommandLine::ForCurrentProcess()->AppendSwitch(
+      switches::kDisableWebRtcCaptureThrottling);
+
+  const int nb_frames = 15;
+  base::TimeDelta total_capture_duration = CaptureFrames(nb_frames);
+  ASSERT_TRUE(total_capture_duration.InSecondsF() > 0);
+
+  // Throttling is disabled so the test expects the configured framerate.
+  const int expected_framerate = kFrameRate;
+  const double actual_framerate =
+      nb_frames / total_capture_duration.InSecondsF();
+
+  // The test succeeds if the actual framerate is near the expected_framerate
+  // with an error less than 10%.
+  EXPECT_LT(fabs(actual_framerate - expected_framerate) / expected_framerate,
+            0.1);
 }
 
 }  // namespace content

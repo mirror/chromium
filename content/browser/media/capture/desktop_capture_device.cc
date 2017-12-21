@@ -10,6 +10,7 @@
 #include <utility>
 
 #include "base/bind.h"
+#include "base/command_line.h"
 #include "base/location.h"
 #include "base/logging.h"
 #include "base/macros.h"
@@ -125,6 +126,9 @@ class DesktopCaptureDevice::Core : public webrtc::DesktopCapturer::Callback {
   // Requested video capture frame rate.
   float requested_frame_rate_;
 
+  // Inverse of the frame rate.
+  base::TimeDelta frame_duration_;
+
   // Size of frame most recently captured from the source.
   webrtc::DesktopSize previous_frame_size_;
 
@@ -138,6 +142,9 @@ class DesktopCaptureDevice::Core : public webrtc::DesktopCapturer::Callback {
 
   // Timer used to capture the frame.
   base::OneShotTimer capture_timer_;
+
+  // True if the capture timer is being throttled.
+  bool throttling_enabled_;
 
   // True when waiting for |desktop_capturer_| to capture current frame.
   bool capture_in_progress_;
@@ -169,6 +176,8 @@ DesktopCaptureDevice::Core::Core(
     DesktopMediaID::Type type)
     : task_runner_(task_runner),
       desktop_capturer_(std::move(capturer)),
+      throttling_enabled_(!base::CommandLine::ForCurrentProcess()->HasSwitch(
+          switches::kDisableWebRtcCaptureThrottling)),
       capture_in_progress_(false),
       first_capture_returned_(false),
       capturer_type_(type),
@@ -194,6 +203,8 @@ void DesktopCaptureDevice::Core::AllocateAndStart(
 
   client_ = std::move(client);
   requested_frame_rate_ = params.requested_format.frame_rate;
+  frame_duration_ = base::TimeDelta::FromMicroseconds(static_cast<int64_t>(
+      1000000.0 / requested_frame_rate_ + 0.5 /* round to nearest int */));
 
   // Pass the min/max resolution and fixed aspect ratio settings from |params|
   // to the CaptureResolutionChooser.
@@ -387,11 +398,12 @@ void DesktopCaptureDevice::Core::CaptureFrameAndScheduleNext() {
   DoCapture();
   base::TimeDelta last_capture_duration = base::TimeTicks::Now() - started_time;
 
-  // Limit frame-rate to reduce CPU consumption.
+  // Limit frame-rate to reduce CPU consumption if throttling is enabled.
   base::TimeDelta capture_period = std::max(
-      (last_capture_duration * 100) / kMaximumCpuConsumptionPercentage,
-      base::TimeDelta::FromMicroseconds(static_cast<int64_t>(
-          1000000.0 / requested_frame_rate_ + 0.5 /* round to nearest int */)));
+      throttling_enabled_
+          ? (last_capture_duration * 100) / kMaximumCpuConsumptionPercentage
+          : last_capture_duration,
+      frame_duration_);
 
   // Schedule a task for the next frame.
   capture_timer_.Start(FROM_HERE, capture_period - last_capture_duration,

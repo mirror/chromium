@@ -925,6 +925,10 @@ const char kWebRtcStunProbeTrialParameter[] = "webrtc-stun-probe-trial";
 // Override the maximum framerate as can be specified in calls to getUserMedia.
 // This flag expects a value.  Example: --max-gum-fps=17.5
 const char kWebRtcMaxCaptureFramerate[]     = "max-gum-fps";
+
+// Disable throttling of the desktop capture timer.
+const char kDisableWebRtcCaptureThrottling[] =
+    "disable-webrtc-desktop-capture-throttling";
 #endif
 
 #if defined(OS_ANDROID)
