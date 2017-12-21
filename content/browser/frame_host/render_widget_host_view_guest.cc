@@ -116,7 +116,7 @@ bool RenderWidgetHostViewGuest::OnMessageReceivedFromEmbedder(
   return handled;
 }
 
-void RenderWidgetHostViewGuest::Show() {
+void RenderWidgetHostViewGuest::WasShown() {
   // If the WebContents associated with us showed an interstitial page in the
   // beginning, the teardown path might call WasShown() while |host_| is in
   // the process of destruction. Avoid calling WasShown below in this case.
@@ -141,7 +141,7 @@ void RenderWidgetHostViewGuest::Show() {
   host_->WasShown(ui::LatencyInfo());
 }
 
-void RenderWidgetHostViewGuest::Hide() {
+void RenderWidgetHostViewGuest::WasHidden() {
   // |guest_| is NULL during test.
   if ((guest_ && guest_->is_in_destruction()) || host_->is_hidden())
     return;
