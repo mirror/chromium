@@ -50,6 +50,40 @@
       "revId": "202e1c44aba0c19f60d3cf868e5ef5afc61fa506",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d457364a_36c953fb",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/text-level-semantics/the-a-element/a-download-click-404-expected.txt",
+        "patchSetId": 13
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-12-21T08:11:26Z",
+      "side": 1,
+      "message": "Why does this regress?",
+      "revId": "202e1c44aba0c19f60d3cf868e5ef5afc61fa506",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41f7c65e_019d12ef",
+        "filename": "third_party/WebKit/Source/core/html/HTMLAnchorElement.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-12-21T08:11:26Z",
+      "side": 1,
+      "message": "Dropping it makes sense to me, and would clarify who\u0027s actually responsible for this work.",
+      "revId": "202e1c44aba0c19f60d3cf868e5ef5afc61fa506",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
