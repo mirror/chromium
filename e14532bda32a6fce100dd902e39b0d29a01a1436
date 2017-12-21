@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "77ed251e_77d0a7ee",
+        "filename": "base/optional.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-12-21T15:31:55Z",
+      "side": 1,
+      "message": "note: these \"constexpr\" keyword is optional, but nice to have to be consistent with the referred page.",
+      "range": {
+        "startLine": 272,
+        "startChar": 2,
+        "endLine": 272,
+        "endChar": 11
+      },
+      "revId": "e14532bda32a6fce100dd902e39b0d29a01a1436",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
