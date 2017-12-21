@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "85daa00d_89f388f6",
+        "filename": "third_party/WebKit/Source/core/script/README.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-12-21T15:54:49Z",
+      "side": 1,
+      "message": "nit: This README is a little thin.\n\nMaybe at least saying something like \"This directory contains classes which manage the loading and execution of scripts in HTML and XML documents.\" and then the link to the slides, at least?",
+      "revId": "26817c45d76de2571c886a11590da84e8a4f6ff9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
