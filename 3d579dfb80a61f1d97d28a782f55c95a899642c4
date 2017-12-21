@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "afa9c366_627e87ad",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-21T02:53:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "006f1235_1252e16c",
+      "range": {
+        "startLine": 45,
+        "startChar": 55,
+        "endLine": 45,
+        "endChar": 65
+      },
+      "revId": "3d579dfb80a61f1d97d28a782f55c95a899642c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "df3830f9_59cc9e76",
         "filename": "content/browser/webauth/cbor/cbor_reader.cc",
         "patchSetId": 19
@@ -60,6 +84,24 @@
     },
     {
       "key": {
+        "uuid": "235b715f_22c68fa2",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-21T02:53:17Z",
+      "side": 1,
+      "message": "Changed |value| to uint64_t and changed ReadVariadicLengthInteger() to invoke CheckInInt64Range() for only integer types.",
+      "parentUuid": "cd42b689_001c1b35",
+      "revId": "3d579dfb80a61f1d97d28a782f55c95a899642c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eab4fa9a_de7727db",
         "filename": "content/browser/webauth/cbor/cbor_reader.cc",
         "patchSetId": 19
@@ -74,6 +116,24 @@
       "revId": "3d579dfb80a61f1d97d28a782f55c95a899642c4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8b2f49b_c8f9da54",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-21T02:53:17Z",
+      "side": 1,
+      "message": "Deleted the CHECK since |value| is not uint64_t.",
+      "parentUuid": "eab4fa9a_de7727db",
+      "revId": "3d579dfb80a61f1d97d28a782f55c95a899642c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -112,6 +172,24 @@
     },
     {
       "key": {
+        "uuid": "64ef85aa_c2b82fb3",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-21T02:53:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "45096329_39b32eee",
+      "revId": "3d579dfb80a61f1d97d28a782f55c95a899642c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "412b6156_0fd63d64",
         "filename": "content/browser/webauth/cbor/cbor_reader.h",
         "patchSetId": 19
@@ -129,6 +207,24 @@
     },
     {
       "key": {
+        "uuid": "5b695bde_8dd9f055",
+        "filename": "content/browser/webauth/cbor/cbor_reader.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-21T02:53:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "412b6156_0fd63d64",
+      "revId": "3d579dfb80a61f1d97d28a782f55c95a899642c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b4b361c5_0f098dc6",
         "filename": "content/browser/webauth/cbor/cbor_reader_unittest.cc",
         "patchSetId": 19
@@ -143,6 +239,24 @@
       "revId": "3d579dfb80a61f1d97d28a782f55c95a899642c4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7080b601_5223f6a4",
+        "filename": "content/browser/webauth/cbor/cbor_reader_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-21T02:53:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b4b361c5_0f098dc6",
+      "revId": "3d579dfb80a61f1d97d28a782f55c95a899642c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -169,6 +283,30 @@
     },
     {
       "key": {
+        "uuid": "9dd7ea09_ccdac4ee",
+        "filename": "content/browser/webauth/cbor/cbor_reader_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-21T02:53:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d9944b0b_52f4ee13",
+      "range": {
+        "startLine": 33,
+        "startChar": 53,
+        "endLine": 33,
+        "endChar": 54
+      },
+      "revId": "3d579dfb80a61f1d97d28a782f55c95a899642c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b9e37ca9_c11e604d",
         "filename": "content/browser/webauth/cbor/cbor_reader_unittest.cc",
         "patchSetId": 19
@@ -186,6 +324,24 @@
     },
     {
       "key": {
+        "uuid": "3e9336c4_0c6ee20c",
+        "filename": "content/browser/webauth/cbor/cbor_reader_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-21T02:53:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b9e37ca9_c11e604d",
+      "revId": "3d579dfb80a61f1d97d28a782f55c95a899642c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a17c28db_be703489",
         "filename": "content/browser/webauth/cbor/cbor_reader_unittest.cc",
         "patchSetId": 19
@@ -197,6 +353,24 @@
       "writtenOn": "2017-12-20T21:07:58Z",
       "side": 1,
       "message": "Please add test cases for 64 bit integers too, at least the two extremes of the (supported) range that is represented on 64 bit.\n\nAlso, consider using numeric_limits to avoid typos in these numbers, i.e., so that a reader of the code can be immediately sure that we are using the extreme values here.",
+      "revId": "3d579dfb80a61f1d97d28a782f55c95a899642c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76e9aece_28dd81fc",
+        "filename": "content/browser/webauth/cbor/cbor_reader_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-21T02:53:17Z",
+      "side": 1,
+      "message": "Used numeric_limits in all tests for unsigned values. Since boundary values of CBOR negative integers does not match with INTX_MIN, I only used std::numeric_limits to test INT64_MIN.",
+      "parentUuid": "a17c28db_be703489",
       "revId": "3d579dfb80a61f1d97d28a782f55c95a899642c4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -223,6 +397,30 @@
       "revId": "3d579dfb80a61f1d97d28a782f55c95a899642c4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc78802f_f36d89f9",
+        "filename": "content/browser/webauth/cbor/cbor_reader_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 714,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-21T02:53:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "47649780_a0a2e256",
+      "range": {
+        "startLine": 714,
+        "startChar": 7,
+        "endLine": 714,
+        "endChar": 11
+      },
+      "revId": "3d579dfb80a61f1d97d28a782f55c95a899642c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -261,6 +459,24 @@
     },
     {
       "key": {
+        "uuid": "ab179d26_54102be7",
+        "filename": "content/browser/webauth/cbor/cbor_values.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-21T02:53:17Z",
+      "side": 1,
+      "message": "As current primary caller of CBORReader, I vouch for including in_unsigned()/is_negative(). :) In protocols that use CBOR encoding format (CTAP , for example), some parameters/response encoded in CBOR are Unsigned integers, and I think it would cleaner to check the type of CBOR value using is_unsigned()/is_negative() than to check the range of returned cbor values.",
+      "parentUuid": "322f273b_30a05633",
+      "revId": "3d579dfb80a61f1d97d28a782f55c95a899642c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e4876823_ba67d060",
         "filename": "content/browser/webauth/cbor/cbor_values_unittest.cc",
         "patchSetId": 19
@@ -284,6 +500,30 @@
     },
     {
       "key": {
+        "uuid": "ff9d5f3b_1c5fd5b3",
+        "filename": "content/browser/webauth/cbor/cbor_values_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-21T02:53:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e4876823_ba67d060",
+      "range": {
+        "startLine": 40,
+        "startChar": 19,
+        "endLine": 40,
+        "endChar": 22
+      },
+      "revId": "3d579dfb80a61f1d97d28a782f55c95a899642c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c965a47c_ac90e67b",
         "filename": "content/browser/webauth/cbor/cbor_writer.cc",
         "patchSetId": 19
@@ -295,6 +535,24 @@
       "writtenOn": "2017-12-20T21:07:58Z",
       "side": 1,
       "message": "I\u0027d argue that this CHECK should be in CBORValue::GetInteger() itself, so that all users of CBORValue can benefit.\n\nWe should also add a comment in cbor_values.h indicating this invariant. Same for unsigned value.",
+      "revId": "3d579dfb80a61f1d97d28a782f55c95a899642c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d5b857d_b8f04f39",
+        "filename": "content/browser/webauth/cbor/cbor_writer.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-21T02:53:17Z",
+      "side": 1,
+      "message": "Just to confirm that I understand correctly, by invariant do you mean \nCBOREncoder will fatally crash when it encounters Unsigned Type CBORValue with negative value and vice versa? \nPlease let me know if I\u0027m misunderstanding you comment!",
+      "parentUuid": "c965a47c_ac90e67b",
       "revId": "3d579dfb80a61f1d97d28a782f55c95a899642c4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -353,6 +611,24 @@
     },
     {
       "key": {
+        "uuid": "4ae34965_f0d7202d",
+        "filename": "content/browser/webauth/cbor/cbor_writer_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-21T02:53:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "30001034_2ac83d6d",
+      "revId": "3d579dfb80a61f1d97d28a782f55c95a899642c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e2e9df69_9bad95a9",
         "filename": "content/browser/webauth/cbor/cbor_writer_unittest.cc",
         "patchSetId": 19
@@ -376,6 +652,30 @@
     },
     {
       "key": {
+        "uuid": "15037bcd_2d6f3f09",
+        "filename": "content/browser/webauth/cbor/cbor_writer_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-21T02:53:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e2e9df69_9bad95a9",
+      "range": {
+        "startLine": 51,
+        "startChar": 15,
+        "endLine": 51,
+        "endChar": 34
+      },
+      "revId": "3d579dfb80a61f1d97d28a782f55c95a899642c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "95e6f0e9_340241fb",
         "filename": "content/browser/webauth/cbor/cbor_writer_unittest.cc",
         "patchSetId": 19
@@ -390,6 +690,24 @@
       "revId": "3d579dfb80a61f1d97d28a782f55c95a899642c4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "323ddb8b_f9fce508",
+        "filename": "content/browser/webauth/cbor/cbor_writer_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-21T02:53:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "95e6f0e9_340241fb",
+      "revId": "3d579dfb80a61f1d97d28a782f55c95a899642c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
