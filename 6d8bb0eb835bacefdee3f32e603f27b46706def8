@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c0776a1b_18caa632",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-12-21T06:59:01Z",
+      "side": 1,
+      "message": "Agree with Emil. Please add NGPhysicalTextFragent::IsLineBreak (or name up to you,) its impl could be the same as this, or you/I could add a type parameter.",
+      "parentUuid": "46f264cf_e91a4d8a",
+      "revId": "6d8bb0eb835bacefdee3f32e603f27b46706def8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "992a2106_24b61080",
         "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.cc",
         "patchSetId": 20

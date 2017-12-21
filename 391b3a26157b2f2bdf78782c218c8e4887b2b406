@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1ecc0425_5eb08793",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-12-21T06:59:01Z",
+      "side": 1,
+      "message": "I think you can know if we have a next line or not from current_line-\u003eBreakToken(), can you try that?",
+      "revId": "391b3a26157b2f2bdf78782c218c8e4887b2b406",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c576d25_fe649648",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-12-21T06:59:01Z",
+      "side": 1,
+      "message": "Is there a better naming? These days I wonder, \"anonymous\" is too widely used in several different meaning that we should be more specific what it means in each context.\n\nAlso I prefer adding this to NGPhyscicalTextFragment, unless you\u0027re strong.",
+      "revId": "391b3a26157b2f2bdf78782c218c8e4887b2b406",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7c8634b_f8d8ad72",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-12-21T06:59:01Z",
+      "side": 1,
+      "message": "Is it intentional to use \"\u003e\" to compare with EndOffset(), which is exclusive? If so, can add comments why?",
+      "revId": "391b3a26157b2f2bdf78782c218c8e4887b2b406",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c82780a_394e54f2",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-12-21T06:59:01Z",
+      "side": 1,
+      "message": "nit: s/\u003d// ?",
+      "revId": "391b3a26157b2f2bdf78782c218c8e4887b2b406",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e500b44_2867fd53",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-12-21T06:59:01Z",
+      "side": 1,
+      "message": "Why do we need to collect all line boxes, compute all of them, and pick appropriate ones? What are the case where we might have more than one candidate? This looks like expensive for a long text, no?",
+      "revId": "391b3a26157b2f2bdf78782c218c8e4887b2b406",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f72b9a26_75f32445",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-12-21T06:59:01Z",
+      "side": 1,
+      "message": "I think this isn\u0027t correct when a line box contains another line box (inside of an inline block), no? Simpler, normal recursion might be easier to read.",
+      "revId": "391b3a26157b2f2bdf78782c218c8e4887b2b406",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "610c75d4_dab34ee8",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-12-21T06:59:01Z",
+      "side": 1,
+      "message": "I noticed \"IsInlineBlock\" isn\u0027t very well designed, I think you\u0027re using it here for atomic inlines (img etc.) correct? If it\u0027s really an inline block, do you need to look into its descendants, or is this function handles inline block always as an atomic unit?",
+      "revId": "391b3a26157b2f2bdf78782c218c8e4887b2b406",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19f2ec0e_5635e30a",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-12-21T06:59:01Z",
+      "side": 1,
+      "message": "Is this a transient object? If so, nice to annotate STACK_ALLOCATED() or some appropriate ones. https://chromium.googlesource.com/chromium/src/+/master/third_party/WebKit/Source/platform/heap/BlinkGCAPIReference.md\n\nIf this isn\u0027t a transient and maybe stored somewhere, probably better to make this scoped_refptr, unless you\u0027re very sure this doesn\u0027t live longer than the fragment?",
+      "revId": "391b3a26157b2f2bdf78782c218c8e4887b2b406",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
