@@ -4,19 +4,35 @@
 
 #include "content/browser/web_contents/web_contents_view_aura.h"
 
+#include <memory>
+
 #include "base/command_line.h"
 #include "base/test/scoped_command_line.h"
 #include "content/browser/web_contents/web_contents_impl.h"
 #include "content/public/test/test_renderer_host.h"
 #include "testing/gtest/include/gtest/gtest.h"
+#include "ui/aura/test/test_windows.h"
 #include "ui/display/display_switches.h"
+#include "ui/gfx/geometry/rect.h"
 
 namespace content {
+
+namespace {
+constexpr gfx::Rect kBounds = gfx::Rect(0, 0, 20, 20);
+}  // namespace
 
 class WebContentsViewAuraTest : public RenderViewHostTestHarness {
  public:
   WebContentsViewAuraTest() = default;
   ~WebContentsViewAuraTest() override = default;
+
+  void SetUp() override {
+    RenderViewHostTestHarness::SetUp();
+    root_window()->SetBounds(kBounds);
+    web_contents()->GetNativeView()->SetBounds(kBounds);
+    web_contents()->GetNativeView()->Show();
+    root_window()->AddChild(web_contents()->GetNativeView());
+  }
 
   WebContentsViewAura* view() {
     WebContentsImpl* contents = static_cast<WebContentsImpl*>(web_contents());
@@ -39,6 +55,28 @@ TEST_F(WebContentsViewAuraTest, ScreenInfoColorDepth) {
   web_contents_view->GetScreenInfo(&screen_info);
   EXPECT_EQ(24u, screen_info.depth);
   EXPECT_EQ(8u, screen_info.depth_per_component);
+}
+
+TEST_F(WebContentsViewAuraTest, ShowHideParent) {
+  EXPECT_EQ(Visibility::VISIBLE, web_contents()->GetVisibility());
+  root_window()->Hide();
+  EXPECT_EQ(Visibility::HIDDEN, web_contents()->GetVisibility());
+  root_window()->Show();
+  EXPECT_EQ(Visibility::VISIBLE, web_contents()->GetVisibility());
+}
+
+TEST_F(WebContentsViewAuraTest, OccludeView) {
+  // |other_window| occludes |web_contents()| when it's shown.
+  std::unique_ptr<aura::Window> other_window(
+      aura::test::CreateTestWindowWithDelegateAndType(
+          nullptr, aura::client::WINDOW_TYPE_NORMAL, 0, kBounds, root_window(),
+          false));
+
+  EXPECT_EQ(Visibility::VISIBLE, web_contents()->GetVisibility());
+  other_window->Show();
+  EXPECT_EQ(Visibility::OCCLUDED, web_contents()->GetVisibility());
+  other_window->Hide();
+  EXPECT_EQ(Visibility::VISIBLE, web_contents()->GetVisibility());
 }
 
 }  // namespace content
