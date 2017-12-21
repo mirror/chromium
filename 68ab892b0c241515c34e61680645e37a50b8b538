@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "60aded6d_82eb860a",
+        "filename": "components/spellcheck/common/spellcheck_common.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1104796
+      },
+      "writtenOn": "2017-12-21T01:46:04Z",
+      "side": 1,
+      "message": "Why not a ranged for loop here as well?",
+      "range": {
+        "startLine": 131,
+        "startChar": 16,
+        "endLine": 131,
+        "endChar": 17
+      },
+      "revId": "68ab892b0c241515c34e61680645e37a50b8b538",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90c4db90_92a68b7e",
+        "filename": "components/spellcheck/common/spellcheck_common.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1104796
+      },
+      "writtenOn": "2017-12-21T01:46:04Z",
+      "side": 1,
+      "message": "Move the assignment to the top of the loop, and you can skip the if-empty check.",
+      "range": {
+        "startLine": 138,
+        "startChar": 12,
+        "endLine": 138,
+        "endChar": 13
+      },
+      "revId": "68ab892b0c241515c34e61680645e37a50b8b538",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f26c543f_283f9694",
+        "filename": "components/spellcheck/common/spellcheck_common.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1104796
+      },
+      "writtenOn": "2017-12-21T01:46:04Z",
+      "side": 1,
+      "message": "Why if/else here? (Pretty much the same question as with the assignment above)",
+      "range": {
+        "startLine": 178,
+        "startChar": 4,
+        "endLine": 178,
+        "endChar": 8
+      },
+      "revId": "68ab892b0c241515c34e61680645e37a50b8b538",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3411555_f62befbd",
+        "filename": "components/spellcheck/renderer/spellcheck_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1104796
+      },
+      "writtenOn": "2017-12-21T01:46:04Z",
+      "side": 1,
+      "message": "Both work, but why is make_unique better than reset? It would be in a world that has exceptions, but here? (I\u0027m not objecting. I\u0027m just deeply curious)",
+      "range": {
+        "startLine": 62,
+        "startChar": 17,
+        "endLine": 62,
+        "endChar": 18
+      },
+      "revId": "68ab892b0c241515c34e61680645e37a50b8b538",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cae6171d_115d7e56",
+        "filename": "components/spellcheck/renderer/spellcheck_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 472,
+      "author": {
+        "id": 1104796
+      },
+      "writtenOn": "2017-12-21T01:46:04Z",
+      "side": 1,
+      "message": "This could also be range-based, no?",
+      "range": {
+        "startLine": 472,
+        "startChar": 38,
+        "endLine": 472,
+        "endChar": 39
+      },
+      "revId": "68ab892b0c241515c34e61680645e37a50b8b538",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a2f5394_ab58f351",
+        "filename": "components/spellcheck/renderer/spellcheck_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1384,
+      "author": {
+        "id": 1104796
+      },
+      "writtenOn": "2017-12-21T01:46:04Z",
+      "side": 1,
+      "message": "Again, both could be range-based. (|test_cases_size| is simply an arraysize expression)",
+      "range": {
+        "startLine": 1384,
+        "startChar": 29,
+        "endLine": 1384,
+        "endChar": 44
+      },
+      "revId": "68ab892b0c241515c34e61680645e37a50b8b538",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
