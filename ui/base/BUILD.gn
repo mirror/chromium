@@ -663,7 +663,8 @@ static_library("test_support") {
 
   if (!is_ios) {
     sources += [
-      "test/menu_test_observer.h",
+      "test/cocoa_helper.h",
+      "test/cocoa_helper.mm",
       "test/menu_test_observer.mm",
       "test/nswindow_fullscreen_notification_waiter.h",
       "test/nswindow_fullscreen_notification_waiter.mm",
