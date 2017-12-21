@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7dc8d603_b72fabec",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/MediaViewerUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-12-21T13:45:11Z",
+      "side": 1,
+      "message": "Whether",
+      "range": {
+        "startLine": 40,
+        "startChar": 27,
+        "endLine": 40,
+        "endChar": 34
+      },
+      "revId": "a2e1a25c43d8cc00b9595f5eace41876d05d3490",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29b85e71_3c035e09",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/MediaViewerUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-12-21T13:45:11Z",
+      "side": 1,
+      "message": "If it was C++, I would recommend an enum. Last I checked (years ago), enum in Java were horrible but if you can think of a way to improve readability, at the call site it would help. Maybe add `/* showOpenWith */` next to `true` when called so the reader gets what it is?",
+      "range": {
+        "startLine": 44,
+        "startChar": 61,
+        "endLine": 44,
+        "endChar": 68
+      },
+      "revId": "a2e1a25c43d8cc00b9595f5eace41876d05d3490",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1e9febd_8959bc1f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/MediaViewerUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-12-21T13:45:11Z",
+      "side": 1,
+      "message": "I think you could just use the bug number instead of the full URL.",
+      "range": {
+        "startLine": 59,
+        "startChar": 20,
+        "endLine": 59,
+        "endChar": 44
+      },
+      "revId": "a2e1a25c43d8cc00b9595f5eace41876d05d3490",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
