@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0c13dde5_fe25b4c1",
+        "filename": "content/renderer/loader/resource_dispatcher.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-21T03:55:52Z",
+      "side": 1,
+      "message": "nit:\nthe sync request -\u003e sync requests\nsignalled -\u003e signaled\n\nAlso I\u0027d move \u0027when the worker thread is being terminated\u0027 right after \u0027from the main thread\u0027, as that\u0027s the most important part\n\n\u0027Sets |terminate_sync_load_event_| which will be signaled from the main thread\nwhen the worker thread is being terminated so that the sync requests requested on the worker thread can be aborted.\u0027",
+      "revId": "6e03b2c80a2808266e094ad09a08da7153660f15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "984f68fc_cbd42cc3",
+        "filename": "third_party/WebKit/Tools/Scripts/audit-non-blink-usage.py",
+        "patchSetId": 18
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-21T03:55:52Z",
+      "side": 1,
+      "message": "I feel it\u0027s probably just fine to allow this in third_party/WebKit/Source but with a TODO comment like \u0027deprecate a thin wrapper defined in platform/WaitableEvent.h\u0027.\n\n+haraken@ to check if it\u0027s fine. (Context: we have a thin wrapper of base::WaitableEvent in platform/WaitableEvent.h and other core/ code use it, but it adds nothing so I think we should just use the base one directly. One more context is that we can\u0027t use the wrapper version of WaitableEvent in this CL either as it\u0027s passed to/from content/, so we need something, either allowing base:: one or introducing yet another indirection)",
+      "revId": "6e03b2c80a2808266e094ad09a08da7153660f15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7365fc7_d0872f22",
+        "filename": "third_party/WebKit/public/platform/WebWorkerFetchContext.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-21T03:55:52Z",
+      "side": 1,
+      "message": "nit: ... from the main thread when the worker\u0027s GlobalScope is terminated, which will terminate sync loading requests on the worker thread.",
+      "revId": "6e03b2c80a2808266e094ad09a08da7153660f15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51b61ae3_57c0fdb4",
+        "filename": "third_party/WebKit/public/platform/WebWorkerFetchContext.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-21T03:55:52Z",
+      "side": 1,
+      "message": "(which is supposed to have the same lifetime as the worker\u0027s GlobalScope)",
+      "revId": "6e03b2c80a2808266e094ad09a08da7153660f15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
