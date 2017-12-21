@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b424a97f_058e027d",
+        "filename": "media/base/android/java/src/org/chromium/media/MediaCodecBridge.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-12-21T21:13:24Z",
+      "side": 1,
+      "message": "this might go better in the builder, as in if(!bridge.start()) { bridge.release(); return null;}\n\nthat way, it\u0027s impossible to forget to do it at the right time.\n\nplus, that lets MCB.start() mirror what MediaCodec.start() does -- it doesn\u0027t release the object.",
+      "revId": "715485a44589a8b5ec92c6d6523cb1c7aaf9aae7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d56e310_bec5f2e4",
+        "filename": "media/base/android/media_codec_bridge_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-12-21T21:13:24Z",
+      "side": 1,
+      "message": "std::move(j_bridge)",
+      "revId": "715485a44589a8b5ec92c6d6523cb1c7aaf9aae7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "daa326b5_6583f496",
+        "filename": "media/base/android/media_codec_bridge_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-12-21T21:13:24Z",
+      "side": 1,
+      "message": "might be worth splitting out the construction classes from media_codec_bridge into builder native classes, too.\n\nmostly so the native and java sides are mirrors.  i don\u0027t remember seeing one native class handling jni for two java classes elsewhere.\n\nsince this is already a big cl, i don\u0027t recommend doing it has part of this, but maybe consider it for future work.  it would just split out the various ::Create* fns into (static) methods on a builder native class.",
+      "revId": "715485a44589a8b5ec92c6d6523cb1c7aaf9aae7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c25a7999_af987e3f",
+        "filename": "media/base/android/media_codec_bridge_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-12-21T21:13:24Z",
+      "side": 1,
+      "message": "std::move(j_bridge)",
+      "revId": "715485a44589a8b5ec92c6d6523cb1c7aaf9aae7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ac1aa82_76b883d3",
+        "filename": "media/base/android/media_codec_bridge_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-12-21T21:13:24Z",
+      "side": 1,
+      "message": "std::move(j_bridge)",
+      "revId": "715485a44589a8b5ec92c6d6523cb1c7aaf9aae7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d9cb41a_272f86a1",
+        "filename": "media/base/android/media_codec_bridge_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-12-21T21:13:24Z",
+      "side": 1,
+      "message": "std::move(j_bridge).  i think that it prevents jni ref churn.",
+      "revId": "715485a44589a8b5ec92c6d6523cb1c7aaf9aae7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
