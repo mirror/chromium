@@ -16,6 +16,24 @@
       "revId": "0d8074eb4280a5f7627113b8dd4001410ea17258",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4448fa8e_4cf8e8c6",
+        "filename": "third_party/WebKit/Source/modules/beacon/NavigatorBeacon.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-12-21T00:31:47Z",
+      "side": 1,
+      "message": "Because of Jumbo builds I will never use so called file-scoped things.",
+      "parentUuid": "cf366875_65cf4711",
+      "revId": "0d8074eb4280a5f7627113b8dd4001410ea17258",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

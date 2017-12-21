@@ -16,6 +16,24 @@
       "revId": "6536523d81f97a062cd736dc56abd24939d45926",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "518c8fc0_9e26604d",
+        "filename": "third_party/WebKit/Source/modules/beacon/NavigatorBeacon.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-12-21T00:31:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "56d59739_8b63c3af",
+      "revId": "6536523d81f97a062cd736dc56abd24939d45926",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
