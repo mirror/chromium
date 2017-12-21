@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ffd6b0c8_88af678b",
+        "filename": "content/browser/service_worker/service_worker_provider_host.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-12-21T07:13:22Z",
+      "side": 1,
+      "message": "instead",
+      "range": {
+        "startLine": 218,
+        "startChar": 5,
+        "endLine": 218,
+        "endChar": 13
+      },
+      "revId": "4c8660161b4e5c855b16590654fdaca54adf3805",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c781a9d_591267d6",
+        "filename": "content/browser/service_worker/service_worker_provider_host_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 653,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-12-21T07:13:22Z",
+      "side": 1,
+      "message": "base::MakeRefCounted()?",
+      "revId": "4c8660161b4e5c855b16590654fdaca54adf3805",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
