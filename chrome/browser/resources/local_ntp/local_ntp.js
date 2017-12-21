@@ -965,9 +965,15 @@ var applyDoodleMetadata = function(metadata) {
   var logoDoodleImage = $(IDS.LOGO_DOODLE_IMAGE);
   var logoDoodleIframe = $(IDS.LOGO_DOODLE_IFRAME);
 
+  var logoStyle = window.getComputedStyle($(IDS.LOGO));
+  var logoHeight = logoStyle.getPropertyValue('--logo-height');
+  var logoMarginBottom = logoStyle.getPropertyValue('--logo-margin-bottom');
+
+  console.log(metadata);
   switch (metadata.type) {
     case LOGO_TYPE.SIMPLE:
       logoDoodleImage.title = metadata.altText;
+
       logoDoodleButton.onclick = function() {
         ntpApiHandle.logEvent(LOG_TYPE.NTP_STATIC_LOGO_CLICKED);
         window.location = metadata.onClickUrl;
@@ -976,6 +982,7 @@ var applyDoodleMetadata = function(metadata) {
 
     case LOGO_TYPE.ANIMATED:
       logoDoodleImage.title = metadata.altText;
+
       logoDoodleButton.onclick = function(e) {
         ntpApiHandle.logEvent(LOG_TYPE.NTP_CTA_LOGO_CLICKED);
         e.preventDefault();
@@ -990,6 +997,9 @@ var applyDoodleMetadata = function(metadata) {
     case LOGO_TYPE.INTERACTIVE:
       logoDoodleIframe.title = metadata.altText;
       logoDoodleIframe.src = metadata.fullPageUrl;
+      logoDoodleIframe.style.height = metadata.iframeHeightPx + 'px';
+      logoDoodleIframe.style.marginBottom = 'calc(' + logoHeight + ' + ' +
+          logoMarginBottom + ' - ' + metadata.iframeHeightPx + 'px)';
       break;
   }
 };
