@@ -10,6 +10,7 @@
 #include "chrome/browser/content_settings/host_content_settings_map_factory.h"
 #include "chrome/browser/infobars/infobar_service.h"
 #include "chrome/browser/profiles/profile.h"
+#include "chrome/browser/ui/android/infobars/popup_block_infobar.h"
 #include "chrome/browser/ui/blocked_content/popup_blocker_tab_helper.h"
 #include "chrome/grit/generated_resources.h"
 #include "chrome/grit/theme_resources.h"
@@ -20,7 +21,6 @@
 #include "components/prefs/pref_service.h"
 #include "ui/base/l10n/l10n_util.h"
 
-
 // static
 void PopupBlockedInfoBarDelegate::Create(content::WebContents* web_contents,
                                          int num_popups) {
@@ -29,12 +29,28 @@ void PopupBlockedInfoBarDelegate::Create(content::WebContents* web_contents,
       Profile::FromBrowserContext(web_contents->GetBrowserContext());
   InfoBarService* infobar_service =
       InfoBarService::FromWebContents(web_contents);
+  PopupBlockerTabHelper* tab_helper =
+      PopupBlockerTabHelper::FromWebContents(web_contents);
+  PopupBlockerTabHelper::PopupIdMap id_map =
+      tab_helper->GetBlockedPopupRequests();
+  std::vector<GURL> blocked_urls;
+  for (const auto& it : id_map)
+    blocked_urls.push_back(it.second);
+
+  auto infobar = std::make_unique<PopupBlockInfoBar>(
+      blocked_urls,
+      std::unique_ptr<ConfirmInfoBarDelegate>(new PopupBlockedInfoBarDelegate(
+          num_popups, url,
+          HostContentSettingsMapFactory::GetForProfile(profile))));
+
+  /*
   std::unique_ptr<infobars::InfoBar> infobar(
       infobar_service->CreateConfirmInfoBar(
           std::unique_ptr<ConfirmInfoBarDelegate>(
               new PopupBlockedInfoBarDelegate(
                   num_popups, url,
                   HostContentSettingsMapFactory::GetForProfile(profile)))));
+  */
 
   // See if there is an existing popup infobar already.
   // TODO(dfalcantara) When triggering more than one popup the infobar

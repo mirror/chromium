@@ -277,6 +277,23 @@ CHAR-LIMIT guidelines:
       <message name="IDS_NOTIFICATION_CATEGORY_SITES" desc="Label for notifications from websites, within a list of notification categories. [CHAR-LIMIT=32]">
         Sites
       </message>
+      <message name="IDS_BLOCKED_POPUPS_ALWAYS_SHOW" desc="Bubble info header text when a page is not allowed to display popups.  This appears above a list of popup titles.">
+        Show pop-ups on this site
+      </message>
+        <message name="IDS_POPUPS_BLOCKED_INFOBAR_BUTTON_ALWAYS_SHOW" desc="Pop-up Blocking Show Button [CHAR-LIMIT=32]">
+          Show on this site
+        </message>
+      <message name="IDS_BLOCKED_POPUPS_MESSAGE" desc="Bubble info header text when a page is not allowed to display popups.  This appears above a list of popup titles.">
+        Pop-ups blocked on this site:
+      </message>
+      <message name="IDS_BLOCKED_POPUPS_AND_MORE" desc="Bubble info header text when a page is not allowed to display popups.  This appears above a list of popup titles.[ICU SYNTAX]">
+        {NUM_EXTRA_POPUPS, plural, other {And # more}}
+      </message>
+      <message name="IDS_POPUPS_BLOCKED_INFOBAR_TEXT_PL" desc="Text to be shown next to devices indicating their received signal strength. [ICU Syntax] [CHAR-LIMIT=32]">
+        {NUM_POPUPS, plural,
+          =1 {Pop-up blocked.}
+          other {# pop-ups blocked.}}
+      </message>
 
       <!-- Sign-in preference -->
       <message name="IDS_SIGN_IN_TO_CHROME" desc="Title for the button to sign in to Chrome using one's Google account. [CHAR-LIMIT=27]">
