@@ -373,6 +373,14 @@ void WebMediaPlayerImpl::UnregisterContentsLayer(blink::WebLayer* web_layer) {
   client_->SetWebLayer(nullptr);
 }
 
+void WebMediaPlayerImpl::OnSurfaceIdUpdated(viz::FrameSinkId frame_sink_id,
+                                            uint32_t parent_id,
+                                            base::UnguessableToken nonce) {
+  frame_sink_id_ = frame_sink_id;
+  parent_id_ = parent_id;
+  nonce_ = nonce;
+}
+
 bool WebMediaPlayerImpl::SupportsOverlayFullscreenVideo() {
 #if defined(OS_ANDROID)
   return !using_media_player_renderer_ &&
@@ -962,6 +970,14 @@ blink::WebTimeRanges WebMediaPlayerImpl::Seekable() const {
   const blink::WebTimeRange seekable_range(
       0.0, force_seeks_to_zero ? 0.0 : seekable_end);
   return blink::WebTimeRanges(&seekable_range, 1);
+}
+
+void WebMediaPlayerImpl::StartPictureInPicture() {
+  LOG(ERROR) << "picture in picture";
+  in_picture_in_picture_mode_ = true;
+
+  // Creates picture in picture window, routes video there.
+  delegate_->OnPictureInPictureStart(frame_sink_id_, parent_id_, nonce_);
 }
 
 bool WebMediaPlayerImpl::IsPrerollAttemptNeeded() {

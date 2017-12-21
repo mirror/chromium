@@ -2567,6 +2567,12 @@ void HTMLMediaElement::setMuted(bool muted) {
   autoplay_policy_->StopAutoplayMutedWhenVisible();
 }
 
+void HTMLMediaElement::pictureInPicture() {
+  // DOES NOT EXIST BEFORE PLAYER LOAD. PLS PRESS PLAY.
+  if (GetWebMediaPlayer())
+    GetWebMediaPlayer()->StartPictureInPicture();
+}
+
 double HTMLMediaElement::EffectiveMediaVolume() const {
   if (muted_)
     return 0;

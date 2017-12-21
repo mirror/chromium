@@ -399,6 +399,11 @@ class ChromeContentBrowserClient : public content::ContentBrowserClient {
       content::RenderFrameHost* render_frame_host,
       device::mojom::UsbChooserServiceRequest request) override;
 
+  void OnPictureInPictureStarted(content::RenderFrameHost* frame_host,
+                                 viz::FrameSinkId frame_sink_id,
+                                 uint32_t parent_id,
+                                 base::UnguessableToken nonce) override;
+
  protected:
   static bool HandleWebUI(GURL* url, content::BrowserContext* browser_context);
   static bool HandleWebUIReverse(GURL* url,

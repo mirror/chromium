@@ -112,6 +112,9 @@ class MEDIA_BLINK_EXPORT WebMediaPlayerImpl
   void OnWebLayerUpdated() override;
   void RegisterContentsLayer(blink::WebLayer* web_layer) override;
   void UnregisterContentsLayer(blink::WebLayer* web_layer) override;
+  void OnSurfaceIdUpdated(viz::FrameSinkId frame_sink_id,
+                          uint32_t parent_id,
+                          base::UnguessableToken nonce) override;
 
   void Load(LoadType load_type,
             const blink::WebMediaPlayerSource& source,
@@ -130,6 +133,7 @@ class MEDIA_BLINK_EXPORT WebMediaPlayerImpl
   void SetPreload(blink::WebMediaPlayer::Preload preload) override;
   blink::WebTimeRanges Buffered() const override;
   blink::WebTimeRanges Seekable() const override;
+  void StartPictureInPicture() override;
 
   // paint() the current video frame into |canvas|. This is used to support
   // various APIs and functionalities, including but not limited to: <canvas>,
@@ -840,6 +844,12 @@ class MEDIA_BLINK_EXPORT WebMediaPlayerImpl
 
   base::Callback<mojom::VideoDecodeStatsRecorderPtr()>
       create_decode_stats_recorder_cb_;
+
+  bool in_picture_in_picture_mode_ = false;
+  viz::FrameSinkId frame_sink_id_;
+  uint32_t parent_id_;
+  base::UnguessableToken nonce_;
+  blink::WebLayerTreeView* layer_tree_view_;
 
   DISALLOW_COPY_AND_ASSIGN(WebMediaPlayerImpl);
 };

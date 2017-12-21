@@ -114,6 +114,10 @@ namespace storage {
 class FileSystemBackend;
 }
 
+namespace viz {
+class FrameSinkId;
+}
+
 namespace content {
 
 enum class PermissionType;
@@ -994,6 +998,11 @@ class CONTENT_EXPORT ContentBrowserClient {
   virtual void CreateUsbChooserService(
       RenderFrameHost* render_frame_host,
       device::mojom::UsbChooserServiceRequest request);
+
+  virtual void OnPictureInPictureStarted(RenderFrameHost* frame_host,
+                                         viz::FrameSinkId frame_sink_id,
+                                         uint32_t parent_id,
+                                         base::UnguessableToken nonce);
 };
 
 }  // namespace content
