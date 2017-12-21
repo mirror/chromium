@@ -34,6 +34,24 @@
       "revId": "aa95b0aa41e404ed925914cd3c67a171c3359a34",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "672ec10d_5c0806d3",
+        "filename": "tools/binary_size/libsupersize/archive.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 822,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-12-21T01:19:04Z",
+      "side": 1,
+      "message": "Hmm, tough one. For unit tests, could just mock out os.path.getsize, but for the integration tests that run archive as a subprocess, that\u0027s clearly much harder.\n\nCould maybe create a wrapper around main that tests execute instead, where all it does is mock out os.path.getsize and then call the real main()",
+      "parentUuid": "bfb81761_8d704d61",
+      "revId": "aa95b0aa41e404ed925914cd3c67a171c3359a34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
