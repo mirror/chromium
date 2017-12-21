@@ -6,8 +6,9 @@
 
 #include <memory>
 #include <string>
+#include <utility>
+#include <vector>
 
-#include "base/android/path_utils.h"
 #include "base/files/file_path.h"
 #include "base/memory/ref_counted.h"
 #include "components/cronet/android/cert/proto/cert_verification.pb.h"
