@@ -125,6 +125,23 @@ class AuraLinuxApplication
 
   bool ShouldIgnoreHoveredStateForTesting() override { return false; }
 
+  std::set<int32_t> GetReverseRelations(ui::AXIntAttribute attr,
+                                        int32_t dst_id) override {
+    return std::set<int32_t>();
+  }
+
+  std::set<int32_t> GetReverseRelations(ui::AXIntListAttribute attr,
+                                        int32_t dst_id) override {
+    return std::set<int32_t>();
+  }
+
+  // Given a node ID list attribute (one where
+  // IsNodeIdIntListAttribute is true), and a destination node ID,
+  // return a set of all source node IDs that have that relationship
+  // attribute between them and the destination.
+  virtual std::set<int32_t> GetReverseRelations(AXIntListAttribute attr,
+                                                int32_t dst_id) = 0;
+
  private:
   friend struct base::DefaultSingletonTraits<AuraLinuxApplication>;
 
