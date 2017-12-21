@@ -916,7 +916,6 @@ class MetaBuildWrapper(object):
       cmdline = [
           '../../build/android/test_wrapper/logdog_wrapper.py',
           '--target', target,
-          '--logdog-bin-cmd', '../../bin/logdog_butler',
           '--store-tombstones']
     elif is_fuchsia and test_type != 'script':
       cmdline = [os.path.join('bin', 'run_%s' % target)]
