@@ -34,6 +34,24 @@
       "revId": "609245c0394e21e5612e6988d1d436940f89cc1f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3a6d025_e7a7ad4a",
+        "filename": "components/storage_monitor/storage_info.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-21T20:13:45Z",
+      "side": 1,
+      "message": "The DCHECK is really there for the developer\u0027s benefit, so they don\u0027t end up with unhandled prefixes. If your concern is mainly about shipping more code to users, then do something like:\n\n} else {\n#if DCHECK_IS_ON()\n  // Users may have legacy device IDs in their profiles.\n  static const char kLegacyPicasaPrefix[] \u003d \"whatever:\";  // \"picasa:\" ??\n  if (prefix \u003d\u003d kLegacyPicasaPrefix)\n    return false;\n#endif\n  NOTREACHED();\n  return false;\n}",
+      "parentUuid": "9bae720a_0f097ac8",
+      "revId": "609245c0394e21e5612e6988d1d436940f89cc1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
