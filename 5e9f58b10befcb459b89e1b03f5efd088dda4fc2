@@ -19,6 +19,29 @@
     },
     {
       "key": {
+        "uuid": "575dad52_d137e8aa",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 69345,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-12-21T17:58:08Z",
+      "side": 1,
+      "message": "This isn\u0027t a boolean histogram.  You only log one possible value.  Please rephrase.",
+      "range": {
+        "startLine": 69345,
+        "startChar": 10,
+        "endLine": 69345,
+        "endChar": 19
+      },
+      "revId": "5e9f58b10befcb459b89e1b03f5efd088dda4fc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d2f85352_08d0210f",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 2
