@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "af2a6d3a_39fc6607",
+        "filename": "chrome/browser/android/contextualsearch/contextual_search_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-12-21T23:23:43Z",
+      "side": 1,
+      "message": "I don\u0027t understand - since we\u0027re checking for a full match of the URL this is more specific than just checking the origin... what are you suggesting specifically?",
+      "parentUuid": "3db01e89_435c0821",
+      "revId": "52c59f8611e802504bea60cd0b9d63306e04e366",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9fb137c9_7c2eff77",
         "filename": "chrome/browser/android/contextualsearch/contextual_search_manager.h",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "52c59f8611e802504bea60cd0b9d63306e04e366",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f4e4cff_427fd3b6",
+        "filename": "chrome/browser/android/contextualsearch/contextual_search_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-12-21T23:23:43Z",
+      "side": 1,
+      "message": "I don\u0027t know how to send a GURL from Java, but we\u0027ll make it a GURL once we get it from Java.",
+      "parentUuid": "9fb137c9_7c2eff77",
+      "revId": "52c59f8611e802504bea60cd0b9d63306e04e366",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "4e396ca7_4fdcbfeb",
+        "filename": "chrome/browser/android/contextualsearch/contextual_search_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-12-21T23:23:43Z",
+      "side": 1,
+      "message": "Made this a GURL.",
+      "parentUuid": "464a6d7e_07878042",
+      "revId": "52c59f8611e802504bea60cd0b9d63306e04e366",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9d8eee15_87e866e8",
         "filename": "chrome/browser/android/contextualsearch/contextual_search_manager.h",
         "patchSetId": 5
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "40eb0c41_7a28202b",
+        "filename": "chrome/browser/android/contextualsearch/contextual_search_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-12-21T23:23:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9d8eee15_87e866e8",
+      "revId": "52c59f8611e802504bea60cd0b9d63306e04e366",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "35ae2639_a5b86b51",
         "filename": "components/contextual_search/common/contextual_search_js_api_service.mojom",
         "patchSetId": 5
@@ -81,6 +153,47 @@
       "writtenOn": "2017-12-21T20:03:07Z",
       "side": 1,
       "message": "Nit: Trailing whitespace.",
+      "revId": "52c59f8611e802504bea60cd0b9d63306e04e366",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bc6bec4_cb493495",
+        "filename": "components/contextual_search/common/contextual_search_js_api_service.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-12-21T23:23:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "35ae2639_a5b86b51",
+      "revId": "52c59f8611e802504bea60cd0b9d63306e04e366",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "89143626_cdd32ab2",
+        "filename": "components/contextual_search/common/contextual_search_js_api_service.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-12-21T23:23:43Z",
+      "side": 1,
+      "message": "Made this a Url type.",
+      "range": {
+        "startLine": 13,
+        "startChar": 20,
+        "endLine": 13,
+        "endChar": 26
+      },
       "revId": "52c59f8611e802504bea60cd0b9d63306e04e366",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
