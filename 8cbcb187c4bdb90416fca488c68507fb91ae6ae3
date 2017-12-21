@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ebc8161c_fae3a00d",
+        "filename": "content/public/common/resource_request_body.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-21T13:32:58Z",
+      "side": 1,
+      "message": "Depending on how this code is used (sounds like we\u0027ll use this for s13n sw network fallback case) we can possibly have NOTREACHED here and above.\n\nIf we do so we should clearly document that Clone() can be called only when Network Service is enabled (and probably should have DCHECK for that).",
+      "revId": "8cbcb187c4bdb90416fca488c68507fb91ae6ae3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9cd3b08_777561af",
+        "filename": "content/public/common/resource_request_body_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-21T13:32:58Z",
+      "side": 1,
+      "message": "Can we also add tests for other types *if* we have code for them?  Otherwise I prefer just having NOTREACHED",
+      "revId": "8cbcb187c4bdb90416fca488c68507fb91ae6ae3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
