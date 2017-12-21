@@ -18,6 +18,7 @@
 #include "content/common/devtools.mojom.h"
 #include "content/public/browser/web_contents_observer.h"
 #include "net/base/net_errors.h"
+#include "third_party/WebKit/public/web/devtools_agent.mojom.h"
 
 #if defined(OS_ANDROID)
 #include "services/device/public/interfaces/wake_lock.mojom.h"
@@ -176,7 +177,7 @@ class CONTENT_EXPORT RenderFrameDevToolsAgentHost
 
   // The active host we are talking to.
   RenderFrameHostImpl* frame_host_ = nullptr;
-  mojom::DevToolsAgentAssociatedPtr agent_ptr_;
+  blink::mojom::DevToolsAgentAssociatedPtr agent_ptr_;
   base::flat_set<NavigationHandleImpl*> navigation_handles_;
   bool render_frame_alive_ = false;
 

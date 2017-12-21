@@ -460,7 +460,7 @@ bool DevToolsMessageChunkProcessor::ProcessChunkedMessageFromAgent(
 }
 
 bool DevToolsMessageChunkProcessor::ProcessChunkedMessageFromAgent(
-    mojom::DevToolsMessageChunkPtr chunk) {
+    blink::mojom::DevToolsMessageChunkPtr chunk) {
   if (chunk->is_last && !chunk->post_state.empty())
     state_cookie_ = chunk->post_state;
   if (chunk->is_last)

@@ -133,8 +133,6 @@ class WebLocalFrame : public WebFrame {
 
   virtual void SetAutofillClient(WebAutofillClient*) = 0;
   virtual WebAutofillClient* AutofillClient() = 0;
-  virtual void SetDevToolsAgentClient(WebDevToolsAgentClient*) = 0;
-  virtual WebDevToolsAgent* DevToolsAgent() = 0;
   virtual void SetSharedWorkerRepositoryClient(
       WebSharedWorkerRepositoryClient*) = 0;
 
