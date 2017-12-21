@@ -15,6 +15,11 @@
 #include "ui/views/controls/styled_label.h"
 #include "ui/views/layout/fill_layout.h"
 
+#include "base/strings/utf_string_conversions.h"
+#include "chrome/browser/ui/views/harmony/chrome_layout_provider.h"
+#include "ui/views/controls/button/md_text_button.h"
+#include "ui/views/layout/box_layout.h"
+
 BubbleSyncPromoView::BubbleSyncPromoView(BubbleSyncPromoDelegate* delegate,
                                          int link_text_resource_id,
                                          int message_text_resource_id)
@@ -48,4 +53,34 @@ void BubbleSyncPromoView::StyledLabelLinkClicked(views::StyledLabel* label,
                                                  const gfx::Range& range,
                                                  int event_flags) {
   delegate_->OnSignInLinkClicked();
+}
+
+DiceBubbleSyncPromoView::DiceBubbleSyncPromoView(
+    BubbleSyncPromoDelegate* delegate,
+    int link_text_resource_id,
+    int message_text_resource_id)
+    : View() {
+  views::BoxLayout* layout =
+      new views::BoxLayout(views::BoxLayout::kVertical, gfx::Insets(),
+                           ChromeLayoutProvider::Get()->GetDistanceMetric(
+                               views::DISTANCE_RELATED_CONTROL_VERTICAL));
+  SetLayoutManager(layout);
+
+  BubbleSyncPromoView* promo_text = new BubbleSyncPromoView(
+      delegate, link_text_resource_id, message_text_resource_id);
+  AddChildView(promo_text);
+
+  auto* signin_button = views::MdTextButton::CreateSecondaryUiBlueButton(
+      nullptr, base::ASCIIToUTF16("Sign in"));
+  auto* title = views::MdTextButton::CreateSecondaryUiBlueButton(
+      nullptr, base::ASCIIToUTF16(">>>"));
+  signin_button->AddChildView(title);
+  AddChildView(signin_button);
+}
+
+DiceBubbleSyncPromoView::~DiceBubbleSyncPromoView() {}
+
+void DiceBubbleSyncPromoView::Layout() {
+  views::View::Layout();
+  LOG(ERROR) << PrintViewGraph(true);
 }

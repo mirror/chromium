@@ -194,8 +194,8 @@ views::View* BookmarkBubbleView::CreateFootnoteView() {
   base::RecordAction(UserMetricsAction("Signin_Impression_FromBookmarkBubble"));
 
   footnote_view_ =
-      new BubbleSyncPromoView(delegate_.get(), IDS_BOOKMARK_SYNC_PROMO_LINK,
-                              IDS_BOOKMARK_SYNC_PROMO_MESSAGE);
+      new DiceBubbleSyncPromoView(delegate_.get(), IDS_BOOKMARK_SYNC_PROMO_LINK,
+                                  IDS_BOOKMARK_SYNC_PROMO_MESSAGE);
   return footnote_view_;
 }
 
