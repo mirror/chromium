@@ -612,7 +612,7 @@ bool ParamTraits<viz::FrameSinkId>::Read(const base::Pickle* m,
     return false;
 
   *p = viz::FrameSinkId(client_id, sink_id);
-  return true;
+  return p->is_valid();
 }
 
 void ParamTraits<viz::FrameSinkId>::Log(const param_type& p, std::string* l) {
@@ -646,7 +646,7 @@ bool ParamTraits<viz::LocalSurfaceId>::Read(const base::Pickle* m,
     return false;
 
   *p = viz::LocalSurfaceId(parent_id, child_sequence_number, nonce);
-  return true;
+  return p->is_valid();
 }
 
 void ParamTraits<viz::LocalSurfaceId>::Log(const param_type& p,
@@ -677,7 +677,7 @@ bool ParamTraits<viz::SurfaceId>::Read(const base::Pickle* m,
     return false;
 
   *p = viz::SurfaceId(frame_sink_id, local_surface_id);
-  return true;
+  return p->is_valid();
 }
 
 void ParamTraits<viz::SurfaceId>::Log(const param_type& p, std::string* l) {

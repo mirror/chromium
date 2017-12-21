@@ -652,5 +652,54 @@ TEST_F(CCParamTraitsTest, SurfaceInfo) {
   ASSERT_EQ(surface_info_in, surface_info_out);
 }
 
+// Verify that invalid SurfaceIds report as failed reads, and that valid ones
+// report success.
+TEST_F(CCParamTraitsTest, SurfaceId) {
+  // Invalid FrameSinkId invalidates the SurfaceId
+  IPC::Message msg_1(1, 2, IPC::Message::PRIORITY_NORMAL);
+  const viz::FrameSinkId invalid_frame_sink_id;
+  ASSERT_FALSE(invalid_frame_sink_id.is_valid());
+  const viz::LocalSurfaceId valid_local_surface_id(
+      3, base::UnguessableToken::Create());
+  ASSERT_TRUE(valid_local_surface_id.is_valid());
+  const viz::SurfaceId invalid_surface_id_1(invalid_frame_sink_id,
+                                            valid_local_surface_id);
+  IPC::ParamTraits<viz::SurfaceId>::Write(&msg_1, invalid_surface_id_1);
+
+  viz::SurfaceId surface_id_out_1;
+  base::PickleIterator iter_1(msg_1);
+  EXPECT_FALSE(IPC::ParamTraits<viz::SurfaceId>::Read(&msg_1, &iter_1,
+                                                      &surface_id_out_1));
+
+  // Invalid LoclaSurfaceId invalidates the SurfaceId
+  IPC::Message msg_2(2, 2, IPC::Message::PRIORITY_NORMAL);
+  const viz::FrameSinkId valid_frame_sink_id(42, 1337);
+  ASSERT_TRUE(valid_frame_sink_id.is_valid());
+  // Even though it is invalid it needs a nonce or else writing crashes.
+  const viz::LocalSurfaceId invalid_local_surface_id(
+      0, base::UnguessableToken::Create());
+  ASSERT_FALSE(invalid_local_surface_id.is_valid());
+  const viz::SurfaceId invalid_surface_id_2(valid_frame_sink_id,
+                                            invalid_local_surface_id);
+  IPC::ParamTraits<viz::SurfaceId>::Write(&msg_2, invalid_surface_id_2);
+
+  viz::SurfaceId surface_id_out_2;
+  base::PickleIterator iter_2(msg_2);
+  EXPECT_FALSE(IPC::ParamTraits<viz::SurfaceId>::Read(&msg_2, &iter_2,
+                                                      &surface_id_out_2));
+
+  // Valid SurfaceId
+  IPC::Message msg_3(3, 2, IPC::Message::PRIORITY_NORMAL);
+  const viz::SurfaceId valid_surface_id(valid_frame_sink_id,
+                                        valid_local_surface_id);
+  IPC::ParamTraits<viz::SurfaceId>::Write(&msg_3, valid_surface_id);
+
+  viz::SurfaceId surface_id_out_3;
+  base::PickleIterator iter_3(msg_3);
+  EXPECT_TRUE(IPC::ParamTraits<viz::SurfaceId>::Read(&msg_3, &iter_3,
+                                                     &surface_id_out_3));
+  EXPECT_EQ(valid_surface_id, surface_id_out_3);
+}
+
 }  // namespace
 }  // namespace content
