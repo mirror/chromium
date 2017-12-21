@@ -23,14 +23,16 @@
 #ifndef WTF_HashTable_h
 #define WTF_HashTable_h
 
+#include <memory>
+
 #include "platform/wtf/Alignment.h"
 #include "platform/wtf/Allocator.h"
 #include "platform/wtf/Assertions.h"
 #include "platform/wtf/ConditionalDestructor.h"
+#include "platform/wtf/ConstructTraits.h"
 #include "platform/wtf/HashTraits.h"
 #include "platform/wtf/PtrUtil.h"
 #include "platform/wtf/allocator/PartitionAllocator.h"
-#include <memory>
 
 #if !defined(DUMP_HASHTABLE_STATS)
 #define DUMP_HASHTABLE_STATS 0
@@ -526,7 +528,7 @@ struct Mover {
   STATIC_ONLY(Mover);
   static void Move(T&& from, T& to) {
     to.~T();
-    new (NotNull, &to) T(std::move(from));
+    ConstructTraits<T, Allocator>::ConstructElement(&to, std::move(from));
   }
 };
 
@@ -536,12 +538,12 @@ struct Mover<T, Allocator, true> {
   static void Move(T&& from, T& to) {
     to.~T();
     Allocator::EnterGCForbiddenScope();
-    new (NotNull, &to) T(std::move(from));
+    ConstructTraits<T, Allocator>::ConstructElement(&to, std::move(from));
     Allocator::LeaveGCForbiddenScope();
   }
 };
 
-template <typename HashFunctions>
+template <typename HashFunctions, typename Allocator>
 class IdentityHashTranslator {
   STATIC_ONLY(IdentityHashTranslator);
 
@@ -557,6 +559,7 @@ class IdentityHashTranslator {
   template <typename T, typename U, typename V>
   static void Translate(T& location, U&&, V&& value) {
     location = std::forward<V>(value);
+    ConstructTraits<T, Allocator>::ConstructElements(&location, 1);
   }
 };
 
@@ -680,7 +683,8 @@ class HashTable final
   typedef Value ValueType;
   typedef Extractor ExtractorType;
   typedef KeyTraits KeyTraitsType;
-  typedef IdentityHashTranslator<HashFunctions> IdentityTranslatorType;
+  typedef IdentityHashTranslator<HashFunctions, Allocator>
+      IdentityTranslatorType;
   typedef HashTableAddResult<HashTable, ValueType> AddResult;
 
   HashTable();
@@ -1908,6 +1912,15 @@ void HashTable<Key,
 #if DUMP_HASHTABLE_STATS_PER_TABLE
   HashTableStatsPtr<Allocator>::swap(stats_, other.stats_);
 #endif
+
+  if (table_) {
+    ConstructTraits<ValueType, Allocator>::ConstructElements(table_,
+                                                             table_size_);
+  }
+  if (other.table_) {
+    ConstructTraits<ValueType, Allocator>::ConstructElements(other.table_,
+                                                             other.table_size_);
+  }
 }
 
 template <typename Key,
