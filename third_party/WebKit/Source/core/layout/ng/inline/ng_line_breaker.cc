@@ -423,6 +423,8 @@ NGLineBreaker::LineBreakState NGLineBreaker::HandleControlItem(
       // TODO(kojii): Implement break around the tab character.
       return LineBreakState::kIsBreakable;
     }
+    case kCarriageReturnCharacter:
+    case kFormFeedCharacter:
     case kZeroWidthSpaceCharacter:
       // <wbr> tag creates break opportunities regardless of auto_wrap.
       MoveToNextOf(item);
