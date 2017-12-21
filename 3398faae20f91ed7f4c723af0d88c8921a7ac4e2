@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b091befb_fa8cbf32",
+        "filename": "components/data_reduction_proxy/core/browser/BUILD.gn",
+        "patchSetId": 7
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-12-21T21:21:19Z",
+      "side": 1,
+      "message": "I don\u0027t think you need both of these. The first should be fine.",
+      "revId": "3398faae20f91ed7f4c723af0d88c8921a7ac4e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc140caa_9bf0a9fd",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_data_use_observer.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-12-21T21:21:19Z",
+      "side": 1,
+      "message": "Should this just DCHECK https scheme and return HTTPS no matter what?",
+      "range": {
+        "startLine": 169,
+        "startChar": 64,
+        "endLine": 169,
+        "endChar": 76
+      },
+      "revId": "3398faae20f91ed7f4c723af0d88c8921a7ac4e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62fb9966_38dca723",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_data_use_observer.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-12-21T21:21:19Z",
+      "side": 1,
+      "message": "nit: I\u0027m not sure if this would work, but you might want to just define a static const void* as a private member and define it in the cc. Then no need for DataKeyForTesting since the test is friended. If you don\u0027t want to, that\u0027s fine.",
+      "revId": "3398faae20f91ed7f4c723af0d88c8921a7ac4e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5230c149_514b5436",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_data_use_observer_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-12-21T21:21:19Z",
+      "side": 1,
+      "message": "It might me more clear if this was computed from other variables. e.g. kInflationPercent, kInflationConstant and network_bytes.",
+      "range": {
+        "startLine": 129,
+        "startChar": 59,
+        "endLine": 129,
+        "endChar": 65
+      },
+      "revId": "3398faae20f91ed7f4c723af0d88c8921a7ac4e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5ebee62_0438ff9a",
+        "filename": "components/previews/core/previews_experiments.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-12-21T21:21:19Z",
+      "side": 1,
+      "message": "nit: Can you add a comment where the default values come from (like the name of a histogram if UMA was used to determine this, or \"from test comparison on whitelisted URLs\", etc)",
+      "range": {
+        "startLine": 209,
+        "startChar": 69,
+        "endLine": 209,
+        "endChar": 71
+      },
+      "revId": "3398faae20f91ed7f4c723af0d88c8921a7ac4e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
