@@ -42,6 +42,12 @@ function runTests() {
         debug('FAILURE: null != document.all should evaluate to false')
         return;
     }
+
+    // document.all should be [SameObject].
+    if (document.all != document.all) {
+        debug('FAILURE: document.all != document.all should evaluate to false')
+        return;
+    }
     
     // Try replacing document.all with something else
     document.all = { 'foo': 42}
