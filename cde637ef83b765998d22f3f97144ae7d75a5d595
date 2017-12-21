@@ -16,6 +16,24 @@
       "revId": "cde637ef83b765998d22f3f97144ae7d75a5d595",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d225132b_932bbbe1",
+        "filename": "chromeos/cryptohome/tpm_util.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1206539
+      },
+      "writtenOn": "2017-12-21T03:29:24Z",
+      "side": 1,
+      "message": "Let\u0027s move it when cryptohome is split so that TPM functions are not in cryptohome anymore.",
+      "parentUuid": "7975b10e_e4ecf6e9",
+      "revId": "cde637ef83b765998d22f3f97144ae7d75a5d595",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
