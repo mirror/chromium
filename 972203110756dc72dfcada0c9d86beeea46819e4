@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "eb805ac8_6975350e",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/SourceLocation.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1250573
+      },
+      "writtenOn": "2017-12-21T01:07:55Z",
+      "side": 1,
+      "message": "Hi, \n\nSorry for the long hiatus here.\n\nIt\u0027s a good point about WrapUnique and the GC types. I checked further on this with slangley@ and base::WrapUnique and std::make_unique have check for GC types [1].\n\nSo I reworked this CL to use base::WrapUnique where std::make_unique doesn\u0027t work due to private constructor.\n\nThe only down side is that I have to allow base/memory/ptr_util.h and base::WrapUnique within Blink.\n\n[1] - https://cs.chromium.org/chromium/src/tools/clang/blink_gc_plugin/BadPatternFinder.cpp",
+      "parentUuid": "394af597_4d119396",
+      "revId": "972203110756dc72dfcada0c9d86beeea46819e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f75fb4c6_0ff02b7f",
         "filename": "third_party/WebKit/Source/modules/fetch/DataConsumerHandleTestUtil.h",
         "patchSetId": 4
@@ -81,6 +99,30 @@
       "revId": "972203110756dc72dfcada0c9d86beeea46819e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e39c305e_2e5d0401",
+        "filename": "third_party/WebKit/Source/modules/fetch/DataConsumerHandleTestUtil.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1250573
+      },
+      "writtenOn": "2017-12-21T01:07:55Z",
+      "side": 1,
+      "message": "On this condition I\u0027m switched to base::WrapUnique instead, which also has a check for GC types.\n\nhttps://cs.chromium.org/chromium/src/tools/clang/blink_gc_plugin/BadPatternFinder.cpp",
+      "parentUuid": "05cac9ed_c0dd423d",
+      "range": {
+        "startLine": 215,
+        "startChar": 20,
+        "endLine": 215,
+        "endChar": 31
+      },
+      "revId": "972203110756dc72dfcada0c9d86beeea46819e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
