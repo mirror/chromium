@@ -146,7 +146,8 @@ void MediaControlLoadingPanelElement::UpdateDisplayState() {
     case State::kHidden:
       // If the media controls are loading metadata then we should show the
       // loading panel and insert it into the DOM.
-      if (GetMediaControls().State() == MediaControlsImpl::kLoadingMetadata) {
+      if (GetMediaControls().State() == MediaControlsImpl::kLoadingMetadata &&
+          !hidden_) {
         PopulateShadowDOM();
         SetIsWanted(true);
         SetAnimationIterationCount(kInfinite);
@@ -166,6 +167,23 @@ void MediaControlLoadingPanelElement::UpdateDisplayState() {
       // Do nothing.
       break;
   }
+}
+
+void MediaControlLoadingPanelElement::Hide() {
+  hidden_ = true;
+  SetIsWanted(false);
+
+  // If the animation is currently playing, clean it up.
+  if (state_ != State::kHidden) {
+    state_ = State::kHidden;
+    animation_count_ = 0;
+    CleanupShadowDOM();
+  }
+}
+
+void MediaControlLoadingPanelElement::MaybeShow() {
+  hidden_ = false;
+  UpdateDisplayState();
 }
 
 void MediaControlLoadingPanelElement::OnAnimationEnd() {
