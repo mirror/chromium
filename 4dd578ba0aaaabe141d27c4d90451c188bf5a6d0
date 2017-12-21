@@ -16,6 +16,24 @@
       "revId": "4dd578ba0aaaabe141d27c4d90451c188bf5a6d0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56979e97_167d6f80",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 1513,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-12-21T09:27:56Z",
+      "side": 1,
+      "message": "Thanks, fixed.",
+      "parentUuid": "05b50c5a_f332578b",
+      "revId": "4dd578ba0aaaabe141d27c4d90451c188bf5a6d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
