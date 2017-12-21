@@ -96,7 +96,8 @@ using chrome_test_util::RecentTabsMenuButton;
 
 // Tests that keyboard commands are registered when the BVC is showing without
 // modals currently presented.
-- (void)testKeyboardCommandsRegistered {
+// TODO(crbug.com/796856): Reenable this test.
+- (void)DISABLED_testKeyboardCommandsRegistered {
   [self verifyKeyboardCommandsAreRegistered];
 }
 
