@@ -22,6 +22,30 @@
       "revId": "32560913bef9422a62d045fdd38277e1f15c746a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00a5c8b9_3a201bf7",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/accessibility/WebContentsAccessibility.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-21T20:37:31Z",
+      "side": 1,
+      "message": "Shouldn\u0027t it be checking the selection node id?\n\nif (virtualViewId !\u003d mSelectionNodeId) return false;",
+      "parentUuid": "3bb6f059_3f6408a8",
+      "range": {
+        "startLine": 432,
+        "startChar": 7,
+        "endLine": 432,
+        "endChar": 65
+      },
+      "revId": "32560913bef9422a62d045fdd38277e1f15c746a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
