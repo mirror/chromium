@@ -1002,5 +1002,39 @@ TEST_F(ProtocolHandlerRegistryTest, TestMultiplePlaceholders) {
   // When URL contains multiple placeholders, only the first placeholder should
   // be changed to the given URL.
   ASSERT_EQ(translated_url,
-            GURL("http://example.com/test%3Aduplicated_placeholders/url=%s"));
+            GURL("http://example.com/test:duplicated_placeholders/url=%s"));
+}
+
+TEST_F(ProtocolHandlerRegistryTest, TestURIPercentEncoded) {
+  ProtocolHandler ph = CreateProtocolHandler(
+      "web+example", GURL("https://example.org/search?q=%s"));
+  registry()->OnAcceptRegisterProtocolHandler(ph);
+
+  GURL translated_url = ph.TranslateUrl(GURL(
+      "web+example://custom/protocol+handler/something%20else/chicken-kïwi"));
+
+  ASSERT_EQ(translated_url,
+            GURL("https://example.org/search?q=web+example://custom/"
+                 "protocol+handler/something%20else/chicken-k%C3%AFwi"));
+
+  // Test if some characters are still escaped.
+  std::vector<std::pair<std::string, std::string>> entries = {
+      // TODO(gyuyoung): We need to escape '\0', !, #, ? to percent-encoded
+      // value.
+      {"web+example://escaped_char=<",
+       "https://example.org/search?q=web+example://escaped_char=%3C"},
+      {"web+example://escaped_char=>",
+       "https://example.org/search?q=web+example://escaped_char=%3E"},
+      {"web+example://escaped_char=`",
+       "https://example.org/search?q=web+example://escaped_char=%60"},
+      {"web+example://escaped_char={",
+       "https://example.org/search?q=web+example://escaped_char=%7B"},
+      {"web+example://escaped_char=}",
+       "https://example.org/search?q=web+example://escaped_char=%7D"},
+      {"web+example://escaped_char=\x7F",
+       "https://example.org/search?q=web+example://escaped_char=%7F"},
+  };
+
+  for (const auto& entry : entries)
+    ASSERT_EQ(ph.TranslateUrl(GURL(entry.first)), entry.second);
 }
