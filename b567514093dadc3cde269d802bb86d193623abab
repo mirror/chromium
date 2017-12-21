@@ -69,6 +69,30 @@
       "revId": "b567514093dadc3cde269d802bb86d193623abab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56162e73_b09e989c",
+        "filename": "media/filters/chunk_demuxer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1162,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-12-21T20:20:09Z",
+      "side": 1,
+      "message": "I think the histogram itself should just be marked as intentionally leaked, and never destroyed, so it should be fine to use here.",
+      "parentUuid": "6b13f2c4_f616d405",
+      "range": {
+        "startLine": 1162,
+        "startChar": 2,
+        "endLine": 1162,
+        "endChar": 28
+      },
+      "revId": "b567514093dadc3cde269d802bb86d193623abab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
