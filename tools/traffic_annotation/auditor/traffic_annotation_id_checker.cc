@@ -32,6 +32,7 @@ void TrafficAnnotationIDChecker::Load(
     }
     item.file_path = instance.proto.source().file();
     item.line_number = instance.proto.source().line();
+    item.loaded_from_archive = instance.is_loaded_from_archive;
     annotations_.push_back(item);
   }
 }
@@ -83,9 +84,15 @@ void TrafficAnnotationIDChecker::CheckForHashCollisions(
   for (AnnotationItem& item : annotations_) {
     for (int i = 0; i < item.ids_count; i++) {
       if (!base::ContainsKey(collisions, item.ids[i].hash_code)) {
-        collisions.insert(
-            std::make_pair(item.ids[i].hash_code, item.ids[i].text));
+        // If item is loaded from archive, and it's the second id, do not keep
+        // the id as it's not valid.
+        if (!item.loaded_from_archive || !i) {
+          collisions.insert(
+              std::make_pair(item.ids[i].hash_code, item.ids[i].text));
+        }
       } else {
+        if (item.loaded_from_archive && i)
+          continue;
         if (item.ids[i].text != collisions[item.ids[i].hash_code]) {
           AuditorResult error(AuditorResult::Type::ERROR_HASH_CODE_COLLISION,
                               item.ids[i].text);

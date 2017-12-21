@@ -28,7 +28,6 @@ AuditorResult::AuditorResult(Type type,
          type == AuditorResult::Type::ERROR_MISSING_TAG_USED ||
          type == AuditorResult::Type::ERROR_NO_ANNOTATION ||
          type == AuditorResult::Type::ERROR_MISSING_SECOND_ID ||
-         type == AuditorResult::Type::ERROR_INCOMPLETED_ANNOTATION ||
          type == AuditorResult::Type::ERROR_DIRECT_ASSIGNMENT);
   if (!message.empty())
     details_.push_back(message);
@@ -143,8 +142,9 @@ std::string AuditorResult::ToText() const {
           details_[1].c_str(), details_[2].c_str(), details_[0].c_str());
 
     case AuditorResult::Type::ERROR_INCOMPLETED_ANNOTATION:
-      return base::StringPrintf("Annotation at '%s:%i' is never completed.",
-                                file_path_.c_str(), line_);
+      DCHECK(details_.size());
+      return base::StringPrintf("Annotation '%s' is never completed.",
+                                details_[0].c_str());
 
     case AuditorResult::Type::ERROR_DIRECT_ASSIGNMENT:
       return base::StringPrintf(
