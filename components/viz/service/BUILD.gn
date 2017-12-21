@@ -249,20 +249,20 @@ viz_source_set("unit_tests") {
   testonly = true
   sources = [
     "display/bsp_tree_unittest.cc",
-    "display/copy_output_scaling_pixeltest.cc",
+#    "display/copy_output_scaling_pixeltest.cc",
     "display/display_scheduler_unittest.cc",
-    "display/display_unittest.cc",
+#    "display/display_unittest.cc",
     "display/draw_polygon_unittest.cc",
     "display/gl_renderer_copier_pixeltest.cc",
     "display/gl_renderer_copier_unittest.cc",
-    "display/gl_renderer_unittest.cc",
+#    "display/gl_renderer_unittest.cc",
     "display/layer_quad_unittest.cc",
-    "display/overlay_unittest.cc",
-    "display/renderer_pixeltest.cc",
+#    "display/overlay_unittest.cc",
+#    "display/renderer_pixeltest.cc",
     "display/shader_unittest.cc",
-    "display/software_renderer_unittest.cc",
-    "display/surface_aggregator_pixeltest.cc",
-    "display/surface_aggregator_unittest.cc",
+#    "display/software_renderer_unittest.cc",
+#    "display/surface_aggregator_pixeltest.cc",
+#    "display/surface_aggregator_unittest.cc",
     "display/texture_deleter_unittest.cc",
     "display_embedder/buffer_queue_unittest.cc",
     "display_embedder/server_shared_bitmap_manager_unittest.cc",
@@ -332,7 +332,7 @@ viz_source_set("perf_tests") {
   testonly = true
   sources = [
     "display/bsp_tree_perftest.cc",
-    "display/display_perftest.cc",
+#    "display/display_perftest.cc",
     "display/surface_aggregator_perftest.cc",
   ]
 

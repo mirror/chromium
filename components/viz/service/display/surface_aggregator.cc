@@ -18,6 +18,7 @@
 #include "base/trace_event/trace_event.h"
 #include "cc/base/math_util.h"
 #include "cc/resources/display_resource_provider.h"
+#include "components/viz/common/quads/aggregated_compositor_frame.h"
 #include "components/viz/common/quads/compositor_frame.h"
 #include "components/viz/common/quads/draw_quad.h"
 #include "components/viz/common/quads/render_pass_draw_quad.h"
@@ -45,18 +46,18 @@ const char kUmaNoActiveFrame[] =
 const char kUmaUsingFallbackSurface[] =
     "Compositing.SurfaceAggregator.SurfaceDrawQuad.UsingFallbackSurface";
 
-void MoveMatchingRequests(
-    RenderPassId render_pass_id,
-    std::multimap<RenderPassId, std::unique_ptr<CopyOutputRequest>>*
-        copy_requests,
-    std::vector<std::unique_ptr<CopyOutputRequest>>* output_requests) {
-  auto request_range = copy_requests->equal_range(render_pass_id);
-  for (auto it = request_range.first; it != request_range.second; ++it) {
-    DCHECK(it->second);
-    output_requests->push_back(std::move(it->second));
-  }
-  copy_requests->erase(request_range.first, request_range.second);
-}
+// void MoveMatchingRequests(
+//     RenderPassId render_pass_id,
+//     std::multimap<RenderPassId, std::unique_ptr<CopyOutputRequest>>*
+//         copy_requests,
+//     std::vector<std::unique_ptr<CopyOutputRequest>>* output_requests) {
+//   auto request_range = copy_requests->equal_range(render_pass_id);
+//   for (auto it = request_range.first; it != request_range.second; ++it) {
+//     DCHECK(it->second);
+//     output_requests->push_back(std::move(it->second));
+//   }
+//   copy_requests->erase(request_range.first, request_range.second);
+// }
 
 // Returns true if the damage rect is valid.
 bool CalculateQuadSpaceDamageRect(
@@ -336,58 +337,60 @@ void SurfaceAggregator::EmitSurfaceContent(
   size_t passes_to_copy =
       merge_pass ? referenced_passes.size() - 1 : referenced_passes.size();
   for (size_t j = 0; j < passes_to_copy; ++j) {
-    const RenderPass& source = *referenced_passes[j];
+    RenderPass& source = *referenced_passes[j];
 
-    size_t sqs_size = source.shared_quad_state_list.size();
-    size_t dq_size = source.quad_list.size();
-    std::unique_ptr<RenderPass> copy_pass(
-        RenderPass::Create(sqs_size, dq_size));
+    // size_t sqs_size = source.shared_quad_state_list.size();
+    // size_t dq_size = source.quad_list.size();
+    // std::unique_ptr<RenderPass> copy_pass(
+    //     RenderPass::Create(sqs_size, dq_size));
 
     RenderPassId remapped_pass_id = RemapPassId(source.id, surface_id);
+    source.id = remapped_pass_id;
+    // copy_pass->SetAll(
+    //     remapped_pass_id, source.output_rect, source.output_rect,
+    //     source.transform_to_root_target, source.filters,
+    //     source.background_filters, blending_color_space_,
+    //     source.has_transparent_background, source.cache_render_pass,
+    //     source.has_damage_from_contributing_content, source.generate_mipmap);
 
-    copy_pass->SetAll(
-        remapped_pass_id, source.output_rect, source.output_rect,
-        source.transform_to_root_target, source.filters,
-        source.background_filters, blending_color_space_,
-        source.has_transparent_background, source.cache_render_pass,
-        source.has_damage_from_contributing_content, source.generate_mipmap);
-
-    MoveMatchingRequests(source.id, &copy_requests, &copy_pass->copy_requests);
+    // MoveMatchingRequests(source.id, &copy_requests, &copy_pass->copy_requests);
 
     // Contributing passes aggregated in to the pass list need to take the
     // transform of the surface quad into account to update their transform to
     // the root surface.
-    copy_pass->transform_to_root_target.ConcatTransform(
-        scaled_quad_to_target_transform);
-    copy_pass->transform_to_root_target.ConcatTransform(target_transform);
-    copy_pass->transform_to_root_target.ConcatTransform(
-        dest_pass->transform_to_root_target);
+    // copy_pass->transform_to_root_target.ConcatTransform(
+    //     scaled_quad_to_target_transform);
+    // copy_pass->transform_to_root_target.ConcatTransform(target_transform);
+    // copy_pass->transform_to_root_target.ConcatTransform(
+    //     dest_pass->transform_to_root_target);
 
     CopyQuadsToPass(source.quad_list, source.shared_quad_state_list,
                     surface->GetActiveFrame().device_scale_factor(),
-                    child_to_parent_map, gfx::Transform(), ClipData(),
-                    copy_pass.get(), surface_id);
+                    child_to_parent_map, gfx::Transform(), ClipData(), &source,
+                    // copy_pass.get(),
+                    surface_id);
 
     // If the render pass has copy requests, or should be cached, or has
     // moving-pixel filters, or in a moving-pixel surface, we should damage the
     // whole output rect so that we always drawn the full content. Otherwise, we
     // might have incompleted copy request, or cached patially drawn render
     // pass.
-    if (!copy_request_passes_.count(remapped_pass_id) &&
-        !copy_pass->cache_render_pass &&
-        !moved_pixel_passes_.count(remapped_pass_id)) {
-      gfx::Transform inverse_transform(gfx::Transform::kSkipInitialization);
-      if (copy_pass->transform_to_root_target.GetInverse(&inverse_transform)) {
-        gfx::Rect damage_rect_in_render_pass_space =
-            cc::MathUtil::ProjectEnclosingClippedRect(inverse_transform,
-                                                      root_damage_rect_);
-        copy_pass->damage_rect.Intersect(damage_rect_in_render_pass_space);
-      }
-    }
+    // if (!copy_request_passes_.count(remapped_pass_id) &&
+    //     !copy_pass->cache_render_pass &&
+    //     !moved_pixel_passes_.count(remapped_pass_id)) {
+    //   gfx::Transform inverse_transform(gfx::Transform::kSkipInitialization);
+    //   if (copy_pass->transform_to_root_target.GetInverse(&inverse_transform)) {
+    //     gfx::Rect damage_rect_in_render_pass_space =
+    //         cc::MathUtil::ProjectEnclosingClippedRect(inverse_transform,
+    //                                                   root_damage_rect_);
+    //     copy_pass->damage_rect.Intersect(damage_rect_in_render_pass_space);
+    //   }
+    // }
 
-    if (copy_pass->has_damage_from_contributing_content)
-      contributing_content_damaged_passes_.insert(copy_pass->id);
-    dest_pass_list_->push_back(std::move(copy_pass));
+    // if (copy_pass->has_damage_from_contributing_content)
+    //   contributing_content_damaged_passes_.insert(source.id);
+    // dest_pass_list_->push_back(std::move(copy_pass));
+    dest_pass_list_->push_back(&source);
   }
 
   gfx::Transform surface_transform = scaled_quad_to_target_transform;
@@ -401,47 +404,48 @@ void SurfaceAggregator::EmitSurfaceContent(
       !DamageRectForSurface(surface, last_pass, last_pass.output_rect)
            .IsEmpty();
 
-  if (merge_pass) {
-    // TODO(jamesr): Clean up last pass special casing.
-    const QuadList& quads = last_pass.quad_list;
+  // if (merge_pass) {
+  //   // TODO(jamesr): Clean up last pass special casing.
+  //   const QuadList& quads = last_pass.quad_list;
 
-    // Intersect the transformed visible rect and the clip rect to create a
-    // smaller cliprect for the quad.
-    ClipData surface_quad_clip_rect(
-        true, cc::MathUtil::MapEnclosingClippedRect(
-                  source_sqs->quad_to_target_transform, source_visible_rect));
-    if (source_sqs->is_clipped) {
-      surface_quad_clip_rect.rect.Intersect(source_sqs->clip_rect);
-    }
+  //   // Intersect the transformed visible rect and the clip rect to create a
+  //   // smaller cliprect for the quad.
+  //   ClipData surface_quad_clip_rect(
+  //       true, cc::MathUtil::MapEnclosingClippedRect(
+  //                 source_sqs->quad_to_target_transform, source_visible_rect));
+  //   if (source_sqs->is_clipped) {
+  //     surface_quad_clip_rect.rect.Intersect(source_sqs->clip_rect);
+  //   }
 
-    ClipData quads_clip =
-        CalculateClipRect(clip_rect, surface_quad_clip_rect, target_transform);
+  //   ClipData quads_clip =
+  //       CalculateClipRect(clip_rect, surface_quad_clip_rect, target_transform);
 
-    CopyQuadsToPass(quads, last_pass.shared_quad_state_list,
-                    surface->GetActiveFrame().device_scale_factor(),
-                    child_to_parent_map, surface_transform, quads_clip,
-                    dest_pass, surface_id);
-  } else {
-    auto* shared_quad_state = CopyAndScaleSharedQuadState(
-        source_sqs, scaled_quad_to_target_transform, target_transform,
-        clip_rect, dest_pass, layer_to_content_scale_x,
-        layer_to_content_scale_y);
+  //   CopyQuadsToPass(quads, last_pass.shared_quad_state_list,
+  //                   surface->GetActiveFrame().device_scale_factor(),
+  //                   child_to_parent_map, surface_transform, quads_clip,
+  //                   dest_pass, surface_id);
+  // } else {
+    // auto* shared_quad_state = CopyAndScaleSharedQuadState(
+    //     source_sqs, scaled_quad_to_target_transform, target_transform,
+    //     clip_rect, dest_pass, layer_to_content_scale_x,
+    //     layer_to_content_scale_y);
 
-    gfx::Rect scaled_rect(gfx::ScaleToEnclosingRect(
-        source_rect, layer_to_content_scale_x, layer_to_content_scale_y));
+    // gfx::Rect scaled_rect(gfx::ScaleToEnclosingRect(
+    //     source_rect, layer_to_content_scale_x, layer_to_content_scale_y));
 
-    gfx::Rect scaled_visible_rect(
-        gfx::ScaleToEnclosingRect(source_visible_rect, layer_to_content_scale_x,
-                                  layer_to_content_scale_y));
+    // gfx::Rect scaled_visible_rect(
+    //     gfx::ScaleToEnclosingRect(source_visible_rect, layer_to_content_scale_x,
+    //                               layer_to_content_scale_y));
 
-    auto* quad = dest_pass->CreateAndAppendDrawQuad<RenderPassDrawQuad>();
-    RenderPassId remapped_pass_id = RemapPassId(last_pass.id, surface_id);
-    quad->SetNew(shared_quad_state, scaled_rect, scaled_visible_rect,
-                 remapped_pass_id, 0, gfx::RectF(), gfx::Size(),
-                 gfx::Vector2dF(), gfx::PointF(), gfx::RectF(scaled_rect),
-                 /*force_anti_aliasing_off=*/false);
-  }
+    // auto* quad = dest_pass->CreateAndAppendDrawQuad<RenderPassDrawQuad>();
+    // RenderPassId remapped_pass_id = RemapPassId(last_pass.id, surface_id);
+    // quad->SetNew(shared_quad_state, scaled_rect, scaled_visible_rect,
+    //              remapped_pass_id, 0, gfx::RectF(), gfx::Size(),
+    //              gfx::Vector2dF(), gfx::PointF(), gfx::RectF(scaled_rect),
+    //              /*force_anti_aliasing_off=*/false);
+  // }
 
+    dest_pass_list_->push_back(render_pass_list.back().get());
   // Need to re-query since referenced_surfaces_ iterators are not stable.
   referenced_surfaces_.erase(referenced_surfaces_.find(surface_id));
 }
@@ -544,7 +548,7 @@ void SurfaceAggregator::AddColorConversionPass() {
   if (dest_pass_list_->empty())
     return;
 
-  auto* root_render_pass = dest_pass_list_->back().get();
+  auto* root_render_pass = dest_pass_list_->back();
   if (root_render_pass->color_space == output_color_space_)
     return;
 
@@ -576,7 +580,7 @@ void SurfaceAggregator::AddColorConversionPass() {
                root_render_pass->id, 0, gfx::RectF(), gfx::Size(),
                gfx::Vector2dF(), gfx::PointF(), gfx::RectF(output_rect),
                /*force_anti_aliasing_off=*/false);
-  dest_pass_list_->push_back(std::move(color_conversion_pass));
+  // dest_pass_list_->push_back(std::move(color_conversion_pass));
 }
 
 SharedQuadState* SurfaceAggregator::CopySharedQuadState(
@@ -635,6 +639,7 @@ void SurfaceAggregator::CopyQuadsToPass(
     const ClipData& clip_rect,
     RenderPass* dest_pass,
     const SurfaceId& surface_id) {
+  DCHECK(dest_pass);
   const SharedQuadState* last_copied_source_shared_quad_state = nullptr;
   // If the current frame has copy requests or cached render passes, then
   // aggregate the entire thing, as otherwise parts of the copy requests may be
@@ -676,66 +681,66 @@ void SurfaceAggregator::CopyQuadsToPass(
                         ignore_undamaged, &damage_rect_in_quad_space,
                         &damage_rect_in_quad_space_valid);
     } else {
-      if (quad->shared_quad_state != last_copied_source_shared_quad_state) {
-        const SharedQuadState* dest_shared_quad_state = CopySharedQuadState(
-            quad->shared_quad_state, target_transform, clip_rect, dest_pass);
-        last_copied_source_shared_quad_state = quad->shared_quad_state;
-        if (aggregate_only_damaged_ && !has_copy_requests_ &&
-            !has_cached_render_passes_) {
-          damage_rect_in_quad_space_valid = CalculateQuadSpaceDamageRect(
-              dest_shared_quad_state->quad_to_target_transform,
-              dest_pass->transform_to_root_target, root_damage_rect_,
-              &damage_rect_in_quad_space);
-        }
-      }
+      // if (quad->shared_quad_state != last_copied_source_shared_quad_state) {
+      //   const SharedQuadState* dest_shared_quad_state = CopySharedQuadState(
+      //       quad->shared_quad_state, target_transform, clip_rect, dest_pass);
+      //   last_copied_source_shared_quad_state = quad->shared_quad_state;
+      //   if (aggregate_only_damaged_ && !has_copy_requests_ &&
+      //       !has_cached_render_passes_) {
+      //     damage_rect_in_quad_space_valid = CalculateQuadSpaceDamageRect(
+      //         dest_shared_quad_state->quad_to_target_transform,
+      //         dest_pass->transform_to_root_target, root_damage_rect_,
+      //         &damage_rect_in_quad_space);
+      //   }
+      // }
 
-      if (ignore_undamaged) {
-        if (damage_rect_in_quad_space_valid &&
-            !damage_rect_in_quad_space.Intersects(quad->visible_rect))
-          continue;
-      }
+      // if (ignore_undamaged) {
+      //   if (damage_rect_in_quad_space_valid &&
+      //       !damage_rect_in_quad_space.Intersects(quad->visible_rect))
+      //     continue;
+      // }
 
-      DrawQuad* dest_quad;
+      // DrawQuad* dest_quad = nullptr;
       if (quad->material == DrawQuad::RENDER_PASS) {
         const auto* pass_quad = RenderPassDrawQuad::MaterialCast(quad);
         RenderPassId original_pass_id = pass_quad->render_pass_id;
         RenderPassId remapped_pass_id =
             RemapPassId(original_pass_id, surface_id);
-
+        // pass_quad->render_pass_id = remapped_pass_id;
         // If the RenderPassDrawQuad is referring to other render pass with the
         // |has_damage_from_contributing_content| set on it, then the dest_pass
         // should have the flag set on it as well.
         if (contributing_content_damaged_passes_.count(remapped_pass_id))
           dest_pass->has_damage_from_contributing_content = true;
 
-        dest_quad = dest_pass->CopyFromAndAppendRenderPassDrawQuad(
-            pass_quad, remapped_pass_id);
+        // dest_quad = dest_pass->CopyFromAndAppendRenderPassDrawQuad(
+        //     pass_quad, remapped_pass_id);
       } else if (quad->material == DrawQuad::TEXTURE_CONTENT) {
-        const auto* texture_quad = TextureDrawQuad::MaterialCast(quad);
-        if (texture_quad->secure_output_only &&
-            (!output_is_secure_ || copy_request_passes_.count(dest_pass->id))) {
-          auto* solid_color_quad =
-              dest_pass->CreateAndAppendDrawQuad<SolidColorDrawQuad>();
-          solid_color_quad->SetNew(dest_pass->shared_quad_state_list.back(),
-                                   quad->rect, quad->visible_rect,
-                                   SK_ColorBLACK, false);
-          dest_quad = solid_color_quad;
-        } else {
-          dest_quad = dest_pass->CopyFromAndAppendDrawQuad(quad);
-        }
-      } else {
-        dest_quad = dest_pass->CopyFromAndAppendDrawQuad(quad);
+      //   const auto* texture_quad = TextureDrawQuad::MaterialCast(quad);
+      //   if (texture_quad->secure_output_only &&
+      //       (!output_is_secure_ || copy_request_passes_.count(dest_pass->id))) {
+      //     auto* solid_color_quad =
+      //         dest_pass->CreateAndAppendDrawQuad<SolidColorDrawQuad>();
+      //     solid_color_quad->SetNew(dest_pass->shared_quad_state_list.back(),
+      //                              quad->rect, quad->visible_rect,
+      //                              SK_ColorBLACK, false);
+      //     dest_quad = solid_color_quad;
+      //   } else {
+      //     dest_quad = dest_pass->CopyFromAndAppendDrawQuad(quad);
+      //   }
+      // } else {
+      //   dest_quad = dest_pass->CopyFromAndAppendDrawQuad(quad);
       }
-      if (!child_to_parent_map.empty()) {
-        for (ResourceId& resource_id : dest_quad->resources) {
-          auto it = child_to_parent_map.find(resource_id);
-          DCHECK(it != child_to_parent_map.end());
+      // if (!child_to_parent_map.empty()) {
+      //   for (ResourceId& resource_id : dest_quad->resources) {
+      //     auto it = child_to_parent_map.find(resource_id);
+      //     DCHECK(it != child_to_parent_map.end());
 
-          DCHECK_EQ(it->first, resource_id);
-          ResourceId remapped_id = it->second;
-          resource_id = remapped_id;
-        }
-      }
+      //     DCHECK_EQ(it->first, resource_id);
+      //     ResourceId remapped_id = it->second;
+      //     resource_id = remapped_id;
+      //   }
+      // }
     }
   }
 }
@@ -760,49 +765,50 @@ void SurfaceAggregator::CopyPasses(const CompositorFrame& frame,
       provider_ ? provider_->GetChildToParentMap(ChildIdForSurface(surface))
                 : empty_map;
   for (size_t i = 0; i < source_pass_list.size(); ++i) {
-    const auto& source = *source_pass_list[i];
+    auto& source = *source_pass_list[i];
 
-    size_t sqs_size = source.shared_quad_state_list.size();
-    size_t dq_size = source.quad_list.size();
-    auto copy_pass = RenderPass::Create(sqs_size, dq_size);
+    // size_t sqs_size = source.shared_quad_state_list.size();
+    // size_t dq_size = source.quad_list.size();
+    // auto copy_pass = RenderPass::Create(sqs_size, dq_size);
 
-    MoveMatchingRequests(source.id, &copy_requests, &copy_pass->copy_requests);
+    // MoveMatchingRequests(source.id, &copy_requests, &copy_pass->copy_requests);
 
     RenderPassId remapped_pass_id =
         RemapPassId(source.id, surface->surface_id());
-
-    copy_pass->SetAll(
-        remapped_pass_id, source.output_rect, source.output_rect,
-        source.transform_to_root_target, source.filters,
-        source.background_filters, blending_color_space_,
-        source.has_transparent_background, source.cache_render_pass,
-        source.has_damage_from_contributing_content, source.generate_mipmap);
+    source.id = remapped_pass_id;
+    // copy_pass->SetAll(
+    //     remapped_pass_id, source.output_rect, source.output_rect,
+    //     source.transform_to_root_target, source.filters,
+    //     source.background_filters, blending_color_space_,
+    //     source.has_transparent_background, source.cache_render_pass,
+    //     source.has_damage_from_contributing_content, source.generate_mipmap);
 
     CopyQuadsToPass(source.quad_list, source.shared_quad_state_list,
                     frame.device_scale_factor(), child_to_parent_map,
-                    gfx::Transform(), ClipData(), copy_pass.get(),
+                    gfx::Transform(), ClipData(), &source,// copy_pass.get(),
                     surface->surface_id());
 
+    dest_pass_list_->push_back(&source);
     // If the render pass has copy requests, or should be cached, or has
     // moving-pixel filters, or in a moving-pixel surface, we should damage the
     // whole output rect so that we always drawn the full content. Otherwise, we
     // might have incompleted copy request, or cached patially drawn render
     // pass.
-    if (!copy_request_passes_.count(remapped_pass_id) &&
-        !copy_pass->cache_render_pass &&
-        !moved_pixel_passes_.count(remapped_pass_id)) {
-      gfx::Transform inverse_transform(gfx::Transform::kSkipInitialization);
-      if (copy_pass->transform_to_root_target.GetInverse(&inverse_transform)) {
-        gfx::Rect damage_rect_in_render_pass_space =
-            cc::MathUtil::ProjectEnclosingClippedRect(inverse_transform,
-                                                      root_damage_rect_);
-        copy_pass->damage_rect.Intersect(damage_rect_in_render_pass_space);
-      }
-    }
+    // if (!copy_request_passes_.count(remapped_pass_id) &&
+    //     !copy_pass->cache_render_pass &&
+    //     !moved_pixel_passes_.count(remapped_pass_id)) {
+    //   gfx::Transform inverse_transform(gfx::Transform::kSkipInitialization);
+    //   if (copy_pass->transform_to_root_target.GetInverse(&inverse_transform)) {
+    //     gfx::Rect damage_rect_in_render_pass_space =
+    //         cc::MathUtil::ProjectEnclosingClippedRect(inverse_transform,
+    //                                                   root_damage_rect_);
+    //     copy_pass->damage_rect.Intersect(damage_rect_in_render_pass_space);
+    //   }
+    // }
 
-    if (copy_pass->has_damage_from_contributing_content)
-      contributing_content_damaged_passes_.insert(copy_pass->id);
-    dest_pass_list_->push_back(std::move(copy_pass));
+    // if (copy_pass->has_damage_from_contributing_content)
+    //   contributing_content_damaged_passes_.insert(copy_pass->id);
+    // dest_pass_list_->push_back(std::move(copy_pass));
   }
 }
 
@@ -1126,7 +1132,7 @@ void SurfaceAggregator::PropagateCopyRequestPasses() {
   }
 }
 
-CompositorFrame SurfaceAggregator::Aggregate(const SurfaceId& surface_id) {
+AggregatedCompositorFrame SurfaceAggregator::Aggregate(const SurfaceId& surface_id) {
   uma_stats_.Reset();
 
   Surface* surface = manager_->GetSurfaceForId(surface_id);
@@ -1139,7 +1145,7 @@ CompositorFrame SurfaceAggregator::Aggregate(const SurfaceId& surface_id) {
   const CompositorFrame& root_surface_frame = surface->GetActiveFrame();
   TRACE_EVENT0("viz", "SurfaceAggregator::Aggregate");
 
-  CompositorFrame frame;
+  AggregatedCompositorFrame frame;
 
   dest_pass_list_ = &frame.render_pass_list;
 
@@ -1150,7 +1156,7 @@ CompositorFrame SurfaceAggregator::Aggregate(const SurfaceId& surface_id) {
       PrewalkTree(surface, false, 0, true /* will_draw */, &prewalk_result);
   PropagateCopyRequestPasses();
   has_copy_requests_ = !copy_request_passes_.empty();
-  frame.metadata.may_contain_video = prewalk_result.may_contain_video;
+  // frame.metadata.may_contain_video = prewalk_result.may_contain_video;
 
   CopyUndrawnSurfaces(&prewalk_result);
   referenced_surfaces_.insert(surface_id);

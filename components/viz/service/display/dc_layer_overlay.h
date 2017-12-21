@@ -98,7 +98,7 @@ class DCLayerOverlayProcessor {
 
   void Process(cc::ResourceProvider* resource_provider,
                const gfx::RectF& display_rect,
-               RenderPassList* render_passes,
+               std::vector<RenderPass*>* render_passes,
                gfx::Rect* overlay_damage_rect,
                gfx::Rect* damage_rect,
                DCLayerOverlayList* ca_layer_overlays);
