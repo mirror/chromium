@@ -8424,12 +8424,12 @@ TEST_P(ParameterizedWebFrameTest, FullscreenWithTinyViewport) {
   web_view_helper.Resize(WebSize(viewport_width, viewport_height));
   web_view_impl->UpdateAllLifecyclePhases();
 
-  LayoutViewItem layout_view_item = web_view_helper.GetWebView()
-                                        ->MainFrameImpl()
-                                        ->GetFrameView()
-                                        ->GetLayoutViewItem();
-  EXPECT_EQ(320, layout_view_item.LogicalWidth().Floor());
-  EXPECT_EQ(533, layout_view_item.LogicalHeight().Floor());
+  auto* layout_view = web_view_helper.GetWebView()
+                          ->MainFrameImpl()
+                          ->GetFrameView()
+                          ->GetLayoutView();
+  EXPECT_EQ(320, layout_view->LogicalWidth().Floor());
+  EXPECT_EQ(533, layout_view->LogicalHeight().Floor());
   EXPECT_FLOAT_EQ(1.2, web_view_impl->PageScaleFactor());
   EXPECT_FLOAT_EQ(1.2, web_view_impl->MinimumPageScaleFactor());
   EXPECT_FLOAT_EQ(5.0, web_view_impl->MaximumPageScaleFactor());
@@ -8440,16 +8440,16 @@ TEST_P(ParameterizedWebFrameTest, FullscreenWithTinyViewport) {
   Fullscreen::RequestFullscreen(*frame->GetDocument()->documentElement());
   web_view_impl->DidEnterFullscreen();
   web_view_impl->UpdateAllLifecyclePhases();
-  EXPECT_EQ(384, layout_view_item.LogicalWidth().Floor());
-  EXPECT_EQ(640, layout_view_item.LogicalHeight().Floor());
+  EXPECT_EQ(384, layout_view->LogicalWidth().Floor());
+  EXPECT_EQ(640, layout_view->LogicalHeight().Floor());
   EXPECT_FLOAT_EQ(1.0, web_view_impl->PageScaleFactor());
   EXPECT_FLOAT_EQ(1.0, web_view_impl->MinimumPageScaleFactor());
   EXPECT_FLOAT_EQ(1.0, web_view_impl->MaximumPageScaleFactor());
 
   web_view_impl->DidExitFullscreen();
   web_view_impl->UpdateAllLifecyclePhases();
-  EXPECT_EQ(320, layout_view_item.LogicalWidth().Floor());
-  EXPECT_EQ(533, layout_view_item.LogicalHeight().Floor());
+  EXPECT_EQ(320, layout_view->LogicalWidth().Floor());
+  EXPECT_EQ(533, layout_view->LogicalHeight().Floor());
   EXPECT_FLOAT_EQ(1.2, web_view_impl->PageScaleFactor());
   EXPECT_FLOAT_EQ(1.2, web_view_impl->MinimumPageScaleFactor());
   EXPECT_FLOAT_EQ(5.0, web_view_impl->MaximumPageScaleFactor());
@@ -8469,18 +8469,18 @@ TEST_P(ParameterizedWebFrameTest, FullscreenResizeWithTinyViewport) {
   web_view_helper.Resize(WebSize(viewport_width, viewport_height));
   web_view_impl->UpdateAllLifecyclePhases();
 
-  LayoutViewItem layout_view_item = web_view_helper.GetWebView()
-                                        ->MainFrameImpl()
-                                        ->GetFrameView()
-                                        ->GetLayoutViewItem();
+  auto* layout_view = web_view_helper.GetWebView()
+                          ->MainFrameImpl()
+                          ->GetFrameView()
+                          ->GetLayoutView();
   LocalFrame* frame = web_view_impl->MainFrameImpl()->GetFrame();
   std::unique_ptr<UserGestureIndicator> gesture =
       Frame::NotifyUserActivation(frame);
   Fullscreen::RequestFullscreen(*frame->GetDocument()->documentElement());
   web_view_impl->DidEnterFullscreen();
   web_view_impl->UpdateAllLifecyclePhases();
-  EXPECT_EQ(384, layout_view_item.LogicalWidth().Floor());
-  EXPECT_EQ(640, layout_view_item.LogicalHeight().Floor());
+  EXPECT_EQ(384, layout_view->LogicalWidth().Floor());
+  EXPECT_EQ(640, layout_view->LogicalHeight().Floor());
   EXPECT_FLOAT_EQ(1.0, web_view_impl->PageScaleFactor());
   EXPECT_FLOAT_EQ(1.0, web_view_impl->MinimumPageScaleFactor());
   EXPECT_FLOAT_EQ(1.0, web_view_impl->MaximumPageScaleFactor());
@@ -8491,16 +8491,16 @@ TEST_P(ParameterizedWebFrameTest, FullscreenResizeWithTinyViewport) {
   client.screen_info_.rect.height = viewport_height;
   web_view_helper.Resize(WebSize(viewport_width, viewport_height));
   web_view_impl->UpdateAllLifecyclePhases();
-  EXPECT_EQ(640, layout_view_item.LogicalWidth().Floor());
-  EXPECT_EQ(384, layout_view_item.LogicalHeight().Floor());
+  EXPECT_EQ(640, layout_view->LogicalWidth().Floor());
+  EXPECT_EQ(384, layout_view->LogicalHeight().Floor());
   EXPECT_FLOAT_EQ(1.0, web_view_impl->PageScaleFactor());
   EXPECT_FLOAT_EQ(1.0, web_view_impl->MinimumPageScaleFactor());
   EXPECT_FLOAT_EQ(1.0, web_view_impl->MaximumPageScaleFactor());
 
   web_view_impl->DidExitFullscreen();
   web_view_impl->UpdateAllLifecyclePhases();
-  EXPECT_EQ(320, layout_view_item.LogicalWidth().Floor());
-  EXPECT_EQ(192, layout_view_item.LogicalHeight().Floor());
+  EXPECT_EQ(320, layout_view->LogicalWidth().Floor());
+  EXPECT_EQ(192, layout_view->LogicalHeight().Floor());
   EXPECT_FLOAT_EQ(2, web_view_impl->PageScaleFactor());
   EXPECT_FLOAT_EQ(2, web_view_impl->MinimumPageScaleFactor());
   EXPECT_FLOAT_EQ(5.0, web_view_impl->MaximumPageScaleFactor());
@@ -8526,14 +8526,14 @@ TEST_P(ParameterizedWebFrameTest, FullscreenRestoreScaleFactorUponExiting) {
   client.screen_info_.rect.height =
       screen_size_minus_status_bars_minus_url_bar.height;
   web_view_helper.Resize(screen_size_minus_status_bars_minus_url_bar);
-  LayoutViewItem layout_view_item = web_view_helper.GetWebView()
-                                        ->MainFrameImpl()
-                                        ->GetFrameView()
-                                        ->GetLayoutViewItem();
+  auto* layout_view = web_view_helper.GetWebView()
+                          ->MainFrameImpl()
+                          ->GetFrameView()
+                          ->GetLayoutView();
   EXPECT_EQ(screen_size_minus_status_bars_minus_url_bar.width,
-            layout_view_item.LogicalWidth().Floor());
+            layout_view->LogicalWidth().Floor());
   EXPECT_EQ(screen_size_minus_status_bars_minus_url_bar.height,
-            layout_view_item.LogicalHeight().Floor());
+            layout_view->LogicalHeight().Floor());
   EXPECT_FLOAT_EQ(1.0, web_view_impl->PageScaleFactor());
   EXPECT_FLOAT_EQ(1.0, web_view_impl->MinimumPageScaleFactor());
   EXPECT_FLOAT_EQ(5.0, web_view_impl->MaximumPageScaleFactor());
@@ -8553,8 +8553,8 @@ TEST_P(ParameterizedWebFrameTest, FullscreenRestoreScaleFactorUponExiting) {
   client.screen_info_.rect.width = screen_size.width;
   client.screen_info_.rect.height = screen_size.height;
   web_view_helper.Resize(screen_size);
-  EXPECT_EQ(screen_size.width, layout_view_item.LogicalWidth().Floor());
-  EXPECT_EQ(screen_size.height, layout_view_item.LogicalHeight().Floor());
+  EXPECT_EQ(screen_size.width, layout_view->LogicalWidth().Floor());
+  EXPECT_EQ(screen_size.height, layout_view->LogicalHeight().Floor());
   EXPECT_FLOAT_EQ(1.0, web_view_impl->PageScaleFactor());
   EXPECT_FLOAT_EQ(1.0, web_view_impl->MinimumPageScaleFactor());
   EXPECT_FLOAT_EQ(1.0, web_view_impl->MaximumPageScaleFactor());
@@ -8570,9 +8570,9 @@ TEST_P(ParameterizedWebFrameTest, FullscreenRestoreScaleFactorUponExiting) {
       screen_size_minus_status_bars_minus_url_bar.height;
   web_view_helper.Resize(screen_size_minus_status_bars_minus_url_bar);
   EXPECT_EQ(screen_size_minus_status_bars_minus_url_bar.width,
-            layout_view_item.LogicalWidth().Floor());
+            layout_view->LogicalWidth().Floor());
   EXPECT_EQ(screen_size_minus_status_bars_minus_url_bar.height,
-            layout_view_item.LogicalHeight().Floor());
+            layout_view->LogicalHeight().Floor());
   EXPECT_FLOAT_EQ(1.0, web_view_impl->PageScaleFactor());
   EXPECT_FLOAT_EQ(1.0, web_view_impl->MinimumPageScaleFactor());
   EXPECT_FLOAT_EQ(5.0, web_view_impl->MaximumPageScaleFactor());
@@ -8594,10 +8594,10 @@ TEST_P(ParameterizedWebFrameTest, ClearFullscreenConstraintsOnNavigation) {
   web_view_impl->UpdateAllLifecyclePhases();
 
   // viewport-tiny.html specifies a 320px layout width.
-  LayoutViewItem layout_view_item =
-      web_view_impl->MainFrameImpl()->GetFrameView()->GetLayoutViewItem();
-  EXPECT_EQ(320, layout_view_item.LogicalWidth().Floor());
-  EXPECT_EQ(640, layout_view_item.LogicalHeight().Floor());
+  auto* layout_view =
+      web_view_impl->MainFrameImpl()->GetFrameView()->GetLayoutView();
+  EXPECT_EQ(320, layout_view->LogicalWidth().Floor());
+  EXPECT_EQ(640, layout_view->LogicalHeight().Floor());
   EXPECT_FLOAT_EQ(0.3125, web_view_impl->PageScaleFactor());
   EXPECT_FLOAT_EQ(0.3125, web_view_impl->MinimumPageScaleFactor());
   EXPECT_FLOAT_EQ(5.0, web_view_impl->MaximumPageScaleFactor());
@@ -8611,8 +8611,8 @@ TEST_P(ParameterizedWebFrameTest, ClearFullscreenConstraintsOnNavigation) {
 
   // Entering fullscreen causes layout size and page scale limits to be
   // overridden.
-  EXPECT_EQ(100, layout_view_item.LogicalWidth().Floor());
-  EXPECT_EQ(200, layout_view_item.LogicalHeight().Floor());
+  EXPECT_EQ(100, layout_view->LogicalWidth().Floor());
+  EXPECT_EQ(200, layout_view->LogicalHeight().Floor());
   EXPECT_FLOAT_EQ(1.0, web_view_impl->PageScaleFactor());
   EXPECT_FLOAT_EQ(1.0, web_view_impl->MinimumPageScaleFactor());
   EXPECT_FLOAT_EQ(1.0, web_view_impl->MaximumPageScaleFactor());
@@ -8628,10 +8628,9 @@ TEST_P(ParameterizedWebFrameTest, ClearFullscreenConstraintsOnNavigation) {
 
   // Make sure the new page's layout size and scale factor limits aren't
   // overridden.
-  layout_view_item =
-      web_view_impl->MainFrameImpl()->GetFrameView()->GetLayoutViewItem();
-  EXPECT_EQ(200, layout_view_item.LogicalWidth().Floor());
-  EXPECT_EQ(400, layout_view_item.LogicalHeight().Floor());
+  layout_view = web_view_impl->MainFrameImpl()->GetFrameView()->GetLayoutView();
+  EXPECT_EQ(200, layout_view->LogicalWidth().Floor());
+  EXPECT_EQ(400, layout_view->LogicalHeight().Floor());
   EXPECT_FLOAT_EQ(0.5, web_view_impl->MinimumPageScaleFactor());
   EXPECT_FLOAT_EQ(5.0, web_view_impl->MaximumPageScaleFactor());
 }
@@ -11263,8 +11262,7 @@ TEST_P(ParameterizedWebFrameTest, RootLayerMinimumHeight) {
 
   Document* document = web_view->MainFrameImpl()->GetFrame()->GetDocument();
   LocalFrameView* frame_view = web_view->MainFrameImpl()->GetFrameView();
-  PaintLayerCompositor* compositor =
-      frame_view->GetLayoutViewItem().Compositor();
+  PaintLayerCompositor* compositor = frame_view->GetLayoutView()->Compositor();
 
   EXPECT_EQ(kViewportHeight - kBrowserControlsHeight,
             compositor->RootLayer()->BoundingBoxForCompositing().Height());

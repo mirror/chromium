@@ -126,10 +126,10 @@ WebDisplayMode MediaValues::CalculateDisplayMode(LocalFrame* frame) {
 bool MediaValues::CalculateThreeDEnabled(LocalFrame* frame) {
   DCHECK(frame);
   DCHECK(!frame->ContentLayoutItem().IsNull());
-  DCHECK(frame->ContentLayoutItem().Compositor());
+  DCHECK(frame->ContentLayoutObject()->Compositor());
   bool three_d_enabled = false;
-  if (LayoutViewItem view = frame->ContentLayoutItem())
-    three_d_enabled = view.Compositor()->HasAcceleratedCompositing();
+  if (auto* view = frame->ContentLayoutObject())
+    three_d_enabled = view->Compositor()->HasAcceleratedCompositing();
   return three_d_enabled;
 }
 

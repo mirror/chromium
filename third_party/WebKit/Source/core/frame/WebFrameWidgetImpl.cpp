@@ -1027,7 +1027,7 @@ PaintLayerCompositor* WebFrameWidgetImpl::Compositor() const {
       frame->GetDocument()->GetLayoutViewItem().IsNull())
     return nullptr;
 
-  return frame->GetDocument()->GetLayoutViewItem().Compositor();
+  return frame->GetDocument()->GetLayoutView()->Compositor();
 }
 
 void WebFrameWidgetImpl::SetRootGraphicsLayer(GraphicsLayer* layer) {

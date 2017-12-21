@@ -220,8 +220,8 @@ void PaintLayerCompositor::UpdateIfNeededRecursiveInternal(
     // TODO(bbudge) Remove this check when trusted Pepper plugins are gone.
     if (local_frame->GetDocument()->IsActive() &&
         !local_frame->ContentLayoutItem().IsNull()) {
-      local_frame->ContentLayoutItem()
-          .Compositor()
+      local_frame->ContentLayoutObject()
+          ->Compositor()
           ->UpdateIfNeededRecursiveInternal(target_state,
                                             compositing_reasons_stats);
     }
@@ -800,8 +800,8 @@ PaintLayerCompositor* PaintLayerCompositor::FrameContentsCompositor(
   HTMLFrameOwnerElement* element =
       ToHTMLFrameOwnerElement(layout_object.GetNode());
   if (Document* content_document = element->contentDocument()) {
-    if (LayoutViewItem view = content_document->GetLayoutViewItem())
-      return view.Compositor();
+    if (auto* view = content_document->GetLayoutView())
+      return view->Compositor();
   }
   return nullptr;
 }

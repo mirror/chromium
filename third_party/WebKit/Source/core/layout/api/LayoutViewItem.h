@@ -10,8 +10,6 @@
 
 namespace blink {
 
-class PaintLayerCompositor;
-
 class LayoutViewItem : public LayoutBlockItem {
  public:
   explicit LayoutViewItem(LayoutView* layout_view)
@@ -24,10 +22,6 @@ class LayoutViewItem : public LayoutBlockItem {
   explicit LayoutViewItem(std::nullptr_t) : LayoutBlockItem(nullptr) {}
 
   LayoutViewItem() {}
-
-  bool UsesCompositing() const { return ToView()->UsesCompositing(); }
-
-  PaintLayerCompositor* Compositor() { return ToView()->Compositor(); }
 
   IntRect DocumentRect() const { return ToView()->DocumentRect(); }
 
@@ -47,9 +41,6 @@ class LayoutViewItem : public LayoutBlockItem {
   bool HitTestNoLifecycleUpdate(HitTestResult& result) {
     return ToView()->HitTestNoLifecycleUpdate(result);
   }
-
-  //    bool hitTest(HitTestResult&);
-  //    bool hitTestNoLifecycleUpdate(HitTestResult&);
 
   unsigned HitTestCount() const { return ToView()->HitTestCount(); }
 
