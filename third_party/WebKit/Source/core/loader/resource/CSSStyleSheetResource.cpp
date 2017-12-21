@@ -170,6 +170,8 @@ bool CSSStyleSheetResource::CanUseSheet(const CSSParserContext* parser_context,
     int last_dot = sheet_url.LastPathComponent().ReverseFind('.');
     if (last_dot != -1)
       extension = sheet_url.LastPathComponent().Substring(last_dot + 1);
+    else
+      extension = "";
     if (!EqualIgnoringASCIICase(
             MIMETypeRegistry::GetMIMETypeForExtension(extension), "text/css")) {
       if (parser_context) {
