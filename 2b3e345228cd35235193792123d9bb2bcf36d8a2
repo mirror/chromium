@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "31decdf1_3e5e5dfe",
+        "filename": "third_party/WebKit/Tools/Scripts/audit-non-blink-usage.py",
+        "patchSetId": 21
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-12-21T13:34:14Z",
+      "side": 1,
+      "message": "Would you move the TODO to platform/WaitableEvent.h to prevent people from using platform/WaitableEvent.h from now?",
+      "revId": "2b3e345228cd35235193792123d9bb2bcf36d8a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
