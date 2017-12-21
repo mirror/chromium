@@ -57,6 +57,9 @@ void ResourceMessageFilter::OnFilterAdded(IPC::Channel*) {
 void ResourceMessageFilter::OnChannelClosing() {
   DCHECK(io_thread_task_runner_->BelongsToCurrentThread());
 
+  if (url_loader_factory_impl_)
+    url_loader_factory_impl_ = nullptr;
+
   // Close all additional Mojo connections opened to this object so that
   // messages are not dispatched while it is being shut down.
   bindings_.CloseAllBindings();
@@ -101,6 +104,7 @@ void ResourceMessageFilter::CreateLoaderAndStart(
     const ResourceRequest& url_request,
     mojom::URLLoaderClientPtr client,
     const net::MutableNetworkTrafficAnnotationTag& traffic_annotation) {
+  LOG(ERROR) << __func__ << "; capture " << url_request.url;
   if (g_test_factory && !g_current_filter) {
     g_current_filter = this;
     g_test_factory->CreateLoaderAndStart(std::move(request), routing_id,
@@ -110,10 +114,18 @@ void ResourceMessageFilter::CreateLoaderAndStart(
     return;
   }
 
-  URLLoaderFactoryImpl::CreateLoaderAndStart(
-      requester_info_.get(), std::move(request), routing_id, request_id,
-      options, url_request, std::move(client),
-      net::NetworkTrafficAnnotationTag(traffic_annotation));
+  if (true /* for testing */) {
+    DCHECK(io_thread_task_runner_->BelongsToCurrentThread());
+    DCHECK(url_loader_factory_impl_);
+    url_loader_factory_impl_->CreateLoaderAndStart(
+        std::move(request), routing_id, request_id, options, url_request,
+        std::move(client), traffic_annotation);
+  } else {
+    URLLoaderFactoryImpl::CreateLoaderAndStart(
+        requester_info_.get(), std::move(request), routing_id, request_id,
+        options, url_request, std::move(client),
+        net::NetworkTrafficAnnotationTag(traffic_annotation));
+  }
 }
 
 void ResourceMessageFilter::Clone(mojom::URLLoaderFactoryRequest request) {
@@ -146,6 +158,12 @@ void ResourceMessageFilter::InitializeOnIOThread() {
   // The WeakPtr of the filter must be created on the IO thread. So sets the
   // WeakPtr of |requester_info_| now.
   requester_info_->set_filter(GetWeakPtr());
+
+  if (true /* for testing */) {
+    URLLoaderFactoryImpl::Create(requester_info_,
+                                 mojo::MakeRequest(&url_loader_factory_impl_),
+                                 io_thread_task_runner_);
+  }
 }
 
 }  // namespace content

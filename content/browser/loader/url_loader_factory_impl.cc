@@ -19,8 +19,10 @@ URLLoaderFactoryImpl::URLLoaderFactoryImpl(
     const scoped_refptr<base::SingleThreadTaskRunner>& io_thread_runner)
     : requester_info_(std::move(requester_info)),
       io_thread_task_runner_(io_thread_runner) {
+#if 0
   DCHECK((requester_info_->IsRenderer() && requester_info_->filter()) ||
          requester_info_->IsNavigationPreload());
+#endif
   DCHECK(io_thread_task_runner_->BelongsToCurrentThread());
   bindings_.set_connection_error_handler(base::Bind(
       &URLLoaderFactoryImpl::OnConnectionError, base::Unretained(this)));
@@ -28,20 +30,6 @@ URLLoaderFactoryImpl::URLLoaderFactoryImpl(
 
 URLLoaderFactoryImpl::~URLLoaderFactoryImpl() {
   DCHECK(io_thread_task_runner_->BelongsToCurrentThread());
-}
-
-void URLLoaderFactoryImpl::CreateLoaderAndStart(
-    mojom::URLLoaderRequest request,
-    int32_t routing_id,
-    int32_t request_id,
-    uint32_t options,
-    const ResourceRequest& url_request,
-    mojom::URLLoaderClientPtr client,
-    const net::MutableNetworkTrafficAnnotationTag& traffic_annotation) {
-  CreateLoaderAndStart(
-      requester_info_.get(), std::move(request), routing_id, request_id,
-      options, url_request, std::move(client),
-      static_cast<net::NetworkTrafficAnnotationTag>(traffic_annotation));
 }
 
 void URLLoaderFactoryImpl::Clone(mojom::URLLoaderFactoryRequest request) {
@@ -58,6 +46,10 @@ void URLLoaderFactoryImpl::CreateLoaderAndStart(
     const ResourceRequest& url_request,
     mojom::URLLoaderClientPtr client,
     const net::NetworkTrafficAnnotationTag& traffic_annotation) {
+#if 0
+  LOG(ERROR) << "/* static */ " << __func__ << "; *** WARNING ***; capture "
+             << url_request.url;
+#endif
   DCHECK(ResourceDispatcherHostImpl::Get()
              ->io_thread_task_runner()
              ->BelongsToCurrentThread());
@@ -79,6 +71,20 @@ void URLLoaderFactoryImpl::Create(
   auto* impl =
       new URLLoaderFactoryImpl(std::move(requester_info), io_thread_runner);
   impl->Clone(std::move(request));
+}
+
+void URLLoaderFactoryImpl::CreateNoCORSLoaderAndStart(
+    mojom::URLLoaderRequest request,
+    int32_t routing_id,
+    int32_t request_id,
+    uint32_t options,
+    const ResourceRequest& url_request,
+    mojom::URLLoaderClientPtr client,
+    const net::MutableNetworkTrafficAnnotationTag& traffic_annotation) {
+  CreateLoaderAndStart(
+      requester_info_.get(), std::move(request), routing_id, request_id,
+      options, url_request, std::move(client),
+      static_cast<net::NetworkTrafficAnnotationTag>(traffic_annotation));
 }
 
 void URLLoaderFactoryImpl::OnConnectionError() {

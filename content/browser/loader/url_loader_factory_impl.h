@@ -9,6 +9,7 @@
 #include "base/memory/ref_counted.h"
 #include "base/single_thread_task_runner.h"
 #include "content/common/content_export.h"
+#include "content/network/cors_enabled_url_loader_factory.h"
 #include "content/public/common/url_loader_factory.mojom.h"
 #include "mojo/public/cpp/bindings/binding_set.h"
 #include "net/traffic_annotation/network_traffic_annotation.h"
@@ -20,18 +21,9 @@ class ResourceRequesterInfo;
 // This class is an implementation of mojom::URLLoaderFactory that creates
 // a mojom::URLLoader. This class is instantiated only for Service Worker
 // navigation preload or test caseses.
-class URLLoaderFactoryImpl final : public mojom::URLLoaderFactory {
+class URLLoaderFactoryImpl final : public CORSEnabledURLLoaderFactory {
  public:
   ~URLLoaderFactoryImpl() override;
-
-  void CreateLoaderAndStart(mojom::URLLoaderRequest request,
-                            int32_t routing_id,
-                            int32_t request_id,
-                            uint32_t options,
-                            const ResourceRequest& url_request,
-                            mojom::URLLoaderClientPtr client,
-                            const net::MutableNetworkTrafficAnnotationTag&
-                                traffic_annotation) override;
   void Clone(mojom::URLLoaderFactoryRequest request) override;
 
   static void CreateLoaderAndStart(
@@ -55,6 +47,15 @@ class URLLoaderFactoryImpl final : public mojom::URLLoaderFactory {
   explicit URLLoaderFactoryImpl(
       scoped_refptr<ResourceRequesterInfo> requester_info,
       const scoped_refptr<base::SingleThreadTaskRunner>& io_thread_runner);
+
+  void CreateNoCORSLoaderAndStart(mojom::URLLoaderRequest request,
+                                  int32_t routing_id,
+                                  int32_t request_id,
+                                  uint32_t options,
+                                  const ResourceRequest& url_request,
+                                  mojom::URLLoaderClientPtr client,
+                                  const net::MutableNetworkTrafficAnnotationTag&
+                                      traffic_annotation) override;
 
   void OnConnectionError();
 
