@@ -234,6 +234,30 @@
       "revId": "c7051fde6daadaf1d18ebe5a8d30ca9c22ede4ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af88b83d_fe5bd347",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 9
+      },
+      "lineNbr": 10888,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-12-21T18:26:21Z",
+      "side": 1,
+      "message": "I don\u0027t have a strong preference - maybe Maksim will?",
+      "parentUuid": "6593b9fc_e50c7dab",
+      "range": {
+        "startLine": 10888,
+        "startChar": 41,
+        "endLine": 10888,
+        "endChar": 68
+      },
+      "revId": "c7051fde6daadaf1d18ebe5a8d30ca9c22ede4ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
