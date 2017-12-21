@@ -100,6 +100,13 @@ class EmbeddedTestServer {
     CERT_MISMATCHED_NAME,
     CERT_EXPIRED,
 
+    // A certificate that only contains a commonName, rather than also
+    // including a subjectAltName extension.
+    CERT_COMMON_NAME_ONLY,
+
+    // A certificate that is a leaf certificate signed with SHA-1.
+    CERT_SHA1_LEAF,
+
     // Causes the testserver to use a hostname that is a domain
     // instead of an IP.
     CERT_COMMON_NAME_IS_DOMAIN,
