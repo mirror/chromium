@@ -27,6 +27,21 @@
 
 #include <android/native_window_jni.h>
 
+#define EXPENSIVE_GL_ERROR_CHECKING 0
+#if EXPENSIVE_GL_ERROR_CHECKING
+#define CHECK_ERR                                            \
+  do {                                                       \
+    GLint err;                                               \
+    while ((err = gl_->GetError()) != GL_NO_ERROR) { \
+      LOG(INFO) << __FUNCTION__ << ";;; GL ERROR " << err;   \
+    }                                                        \
+  } while (0)
+#else
+#define CHECK_ERR \
+  do {            \
+  } while (0)
+#endif
+
 #define VOID_OFFSET(x) reinterpret_cast<void*>(x)
 #define SHADER(Src) #Src
 
@@ -146,6 +161,7 @@ MailboxToSurfaceBridge::MailboxToSurfaceBridge(
 }
 
 MailboxToSurfaceBridge::~MailboxToSurfaceBridge() {
+  LOG(INFO) << __FUNCTION__ << ";;;";
   if (surface_handle_) {
     // Unregister from the surface tracker to avoid a resource leak.
     gpu::GpuSurfaceTracker* tracker = gpu::GpuSurfaceTracker::Get();
@@ -158,6 +174,7 @@ MailboxToSurfaceBridge::~MailboxToSurfaceBridge() {
 void MailboxToSurfaceBridge::OnContextAvailable(
     std::unique_ptr<gl::ScopedJavaSurface> surface,
     scoped_refptr<viz::ContextProvider> provider) {
+  LOG(INFO) << __FUNCTION__ << ";;;";
   // Must save a reference to the viz::ContextProvider to keep it alive,
   // otherwise the GL context created from it becomes invalid.
   context_provider_ = std::move(provider);
@@ -303,7 +320,9 @@ void MailboxToSurfaceBridge::CreateGpuFence(
 void MailboxToSurfaceBridge::GenerateMailbox(gpu::Mailbox& out_mailbox) {
   TRACE_EVENT0("gpu", __FUNCTION__);
   DCHECK(gl_);
+  CHECK_ERR;
   gl_->GenMailboxCHROMIUM(out_mailbox.name);
+  CHECK_ERR;
 }
 
 void MailboxToSurfaceBridge::DestroySharedBuffer(GLuint image_id, GLuint texture_id) {
@@ -311,9 +330,13 @@ void MailboxToSurfaceBridge::DestroySharedBuffer(GLuint image_id, GLuint texture
   DCHECK(gl_);
 
   gl_->BindTexture(GL_TEXTURE_2D, texture_id);
+  CHECK_ERR;
   gl_->ReleaseTexImage2DCHROMIUM(GL_TEXTURE_2D, image_id);
+  CHECK_ERR;
   gl_->DeleteTextures(1, &texture_id);
+  CHECK_ERR;
   gl_->DestroyImageCHROMIUM(image_id);
+  CHECK_ERR;
 }
 
 void MailboxToSurfaceBridge::ProduceSharedBuffer(
@@ -328,35 +351,45 @@ void MailboxToSurfaceBridge::ProduceSharedBuffer(
   TRACE_EVENT0("gpu", __FUNCTION__);
   DCHECK(context_support_);
   DCHECK(gl_);
+  LOG(INFO) << __FUNCTION__ << ";;;";
+  CHECK_ERR;
   auto buffer = gpu::GpuMemoryBufferImplAndroidHardwareBuffer::CreateFromHandle(
       handle, size, format, usage,
       gpu::GpuMemoryBufferImpl::DestructionCallback());
+  CHECK_ERR;
 
   TRACE_EVENT_BEGIN0("gpu", "CreateImageCHROMIUM");
   auto img = gl_->CreateImageCHROMIUM(buffer->AsClientBuffer(), size.width(),
                                       size.height(), GL_RGBA);
   TRACE_EVENT_END0("gpu", "CreateImageCHROMIUM");
+  CHECK_ERR;
   if (image_id) *image_id = img;
 
   GLuint tex = 0;
   gl_->GenTextures(1, &tex);
+  CHECK_ERR;
   if (texture_id) *texture_id = tex;
   gl_->BindTexture(GL_TEXTURE_2D, tex);
+  CHECK_ERR;
 
   {
     TRACE_EVENT0("gpu", "BindTexImage2DCHROMIUM");
     // glEGLImageTargetTexture2DOES equivalent? Expensive?
     gl_->BindTexImage2DCHROMIUM(GL_TEXTURE_2D, img);
+    CHECK_ERR;
   }
 
   {
     TRACE_EVENT0("gpu", "ProduceTextureCHROMIUM");
     gl_->ProduceTextureDirectCHROMIUM(tex, mailbox.name);
+    CHECK_ERR;
   }
 
   {
     TRACE_EVENT0("gpu", "GenSyncTokenCHROMIUM");
     gl_->GenSyncTokenCHROMIUM(sync_token.GetData());
+    //gl_->GenUnverifiedSyncTokenCHROMIUM(fence, sync_token.GetData());
+    CHECK_ERR;
   }
 }
 
