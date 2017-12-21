@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "094b6c8e_c153ca51",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-12-21T22:05:24Z",
+      "side": 1,
+      "message": "Renamed to \"IsFragmentContinuationFromLastLine\" for better clarity.\n\nAnd I guess we should probably move it to NGPhysicalFragment, and use a less hacky implementation?",
+      "range": {
+        "startLine": 40,
+        "startChar": 5,
+        "endLine": 40,
+        "endChar": 42
+      },
+      "revId": "391b3a26157b2f2bdf78782c218c8e4887b2b406",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bc4df90_bdbaefaa",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-12-21T22:05:24Z",
+      "side": 1,
+      "message": "Renamed to \"FragmentContinuesOnNextLine\" for better clarity.\n\nAnd I guess we should probably move it to NGPhysicalFragment, and use a less hacky implementation?",
+      "range": {
+        "startLine": 58,
+        "startChar": 5,
+        "endLine": 58,
+        "endChar": 41
+      },
+      "revId": "391b3a26157b2f2bdf78782c218c8e4887b2b406",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1ecc0425_5eb08793",
         "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.cc",
         "patchSetId": 21
@@ -13,6 +59,24 @@
       "writtenOn": "2017-12-21T06:59:01Z",
       "side": 1,
       "message": "I think you can know if we have a next line or not from current_line-\u003eBreakToken(), can you try that?",
+      "revId": "391b3a26157b2f2bdf78782c218c8e4887b2b406",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce49c4b8_665525ee",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-12-21T22:05:24Z",
+      "side": 1,
+      "message": "Done. That make the implementation much less hacky!",
+      "parentUuid": "1ecc0425_5eb08793",
       "revId": "391b3a26157b2f2bdf78782c218c8e4887b2b406",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -36,6 +100,24 @@
     },
     {
       "key": {
+        "uuid": "84d99597_21126227",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-12-21T22:05:24Z",
+      "side": 1,
+      "message": "Renamed to IsGeneratedText. Or do you have a better name for \"is (possibly indirectly) from a DOM text node\"?\n\nAdded a TODO to move it to NGPhysicalTextFragment.",
+      "parentUuid": "2c576d25_fe649648",
+      "revId": "391b3a26157b2f2bdf78782c218c8e4887b2b406",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a7c8634b_f8d8ad72",
         "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.cc",
         "patchSetId": 21
@@ -47,6 +129,24 @@
       "writtenOn": "2017-12-21T06:59:01Z",
       "side": 1,
       "message": "Is it intentional to use \"\u003e\" to compare with EndOffset(), which is exclusive? If so, can add comments why?",
+      "revId": "391b3a26157b2f2bdf78782c218c8e4887b2b406",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "814f3ef6_e98599fb",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-12-21T22:05:24Z",
+      "side": 1,
+      "message": "Yes. Comments added.",
+      "parentUuid": "a7c8634b_f8d8ad72",
       "revId": "391b3a26157b2f2bdf78782c218c8e4887b2b406",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +170,24 @@
     },
     {
       "key": {
+        "uuid": "cdc22c37_c35e1dd8",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-12-21T22:05:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9c82780a_394e54f2",
+      "revId": "391b3a26157b2f2bdf78782c218c8e4887b2b406",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7e500b44_2867fd53",
         "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.cc",
         "patchSetId": 21
@@ -81,6 +199,24 @@
       "writtenOn": "2017-12-21T06:59:01Z",
       "side": 1,
       "message": "Why do we need to collect all line boxes, compute all of them, and pick appropriate ones? What are the case where we might have more than one candidate? This looks like expensive for a long text, no?",
+      "revId": "391b3a26157b2f2bdf78782c218c8e4887b2b406",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9aaf3bf7_3f9e5d91",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-12-21T22:05:24Z",
+      "side": 1,
+      "message": "Well, with the current data structure, we have to iterate over all fragments in the context, regardless of what we do...\n\nRegarding the collection of line boxes, this is because we need to know if a fragment has continuation in the last/next line. For example, if we have text:\n\nXXX\nYYY\n\nwhere the line width is 3 and there is a soft wrap between the two lines. In this case, ComputeNGCaretPosition(3, kDownstream) should return \"|YYY\" instead of \"XXX|\". So when looking at fragment \"XXX\", although \"XXX|\" matches the offset, it doesn\u0027t match the affinity; as we see that it continues on the next line (YYY), we should check YYY instead.\n\nHowever, there are some cases where we can\u0027t find an exact match and have to pick from previously found candidates. One case is the \"soft wrap with space\". For example, consider text node \"XXX YYY\" laid out as:\n\nXXX\nYYY\n\nWhen resolving (4, kUpstream), the only fragment containing offset 4 is \"YYY\", which however doesn\u0027t match the affinity. Since there is no other possible caret position, we still return \"|YYY\".",
+      "parentUuid": "7e500b44_2867fd53",
       "revId": "391b3a26157b2f2bdf78782c218c8e4887b2b406",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +240,24 @@
     },
     {
       "key": {
+        "uuid": "79329b61_3aca28b3",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-12-21T22:05:24Z",
+      "side": 1,
+      "message": "NGInlineFragmentTraversal doesn\u0027t enter block layout roots, so we should be fine here unless there can be nested line boxes in the same inline formatting context?",
+      "parentUuid": "f72b9a26_75f32445",
+      "revId": "391b3a26157b2f2bdf78782c218c8e4887b2b406",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "610c75d4_dab34ee8",
         "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.cc",
         "patchSetId": 21
@@ -121,6 +275,24 @@
     },
     {
       "key": {
+        "uuid": "b096266c_4bbfede5",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-12-21T22:05:24Z",
+      "side": 1,
+      "message": "Yes, I\u0027m using it to find atomic inlines. Should I use some other way for it?\n\nWe don\u0027t go into its descendants, as they are already in a different context. We only need to check if either of the two caret position by the box sides is the caret position we are looking for.",
+      "parentUuid": "610c75d4_dab34ee8",
+      "revId": "391b3a26157b2f2bdf78782c218c8e4887b2b406",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "19f2ec0e_5635e30a",
         "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.h",
         "patchSetId": 21
@@ -132,6 +304,24 @@
       "writtenOn": "2017-12-21T06:59:01Z",
       "side": 1,
       "message": "Is this a transient object? If so, nice to annotate STACK_ALLOCATED() or some appropriate ones. https://chromium.googlesource.com/chromium/src/+/master/third_party/WebKit/Source/platform/heap/BlinkGCAPIReference.md\n\nIf this isn\u0027t a transient and maybe stored somewhere, probably better to make this scoped_refptr, unless you\u0027re very sure this doesn\u0027t live longer than the fragment?",
+      "revId": "391b3a26157b2f2bdf78782c218c8e4887b2b406",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99a82f0f_773826e2",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_caret_rect.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-12-21T22:05:24Z",
+      "side": 1,
+      "message": "It is transient, but we can only use DISALLOW_NEW_EXCEPT_PLACEMENT_NEW here because we may store it in a (transient) vector. There can still be memory leak if someone stores the vector on heap.\n\nIn fact, the same loophole already exists in NGInlineFragmentIterator, which returns a vector of fragment pointers.\n\nMaybe we should change all of them to use scoped_refptr?",
+      "parentUuid": "19f2ec0e_5635e30a",
       "revId": "391b3a26157b2f2bdf78782c218c8e4887b2b406",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
