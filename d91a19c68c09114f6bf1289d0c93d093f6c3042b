@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ddaec499_d8e3102c",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/feature-policy/feature-policy-header-policy.https.sub.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2017-12-21T20:44:02Z",
+      "side": 1,
+      "message": "There are lint errors because you hardcoded the domain and port number in the three files:\nfeature-policy-header-policy.https.sub.html\nresources/feature-policy-nested-subframe-policy.https.sub.html\nfeature-policy-nested-header-policy.https.sub.html\n\nFor new tests, it\u0027s recommended to fix the lint errors by using templates (see my last comment) instead of whitelisting them.\n\nBesides, this hardcoded port number only works on Blink test runner, and will break in upstream.",
+      "revId": "d91a19c68c09114f6bf1289d0c93d093f6c3042b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
