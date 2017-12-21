@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "c1f451c0_bffd5372",
+        "filename": "chrome/browser/component_updater/sw_reporter_installer_win_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 707,
+      "author": {
+        "id": 1159306
+      },
+      "writtenOn": "2017-12-21T16:49:44Z",
+      "side": 1,
+      "message": "Ha. I guess that\u0027s a good reason to keep Start in a separate method... Well, this works too.",
+      "parentUuid": "8c808fa0_18f1d20c",
+      "revId": "c3bdc083eca9760df2cc21c6a5ed5d64c390c73b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fb732b6c_a7d77f3e",
         "filename": "chrome/browser/component_updater/sw_reporter_installer_win_unittest.cc",
         "patchSetId": 7
@@ -136,6 +154,24 @@
       "side": 1,
       "message": "Not that I can think of at the moment. OnDemandUpdate eventually resulting in OnComponentReady is a component_updater implementation detail.",
       "parentUuid": "fb732b6c_a7d77f3e",
+      "revId": "c3bdc083eca9760df2cc21c6a5ed5d64c390c73b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78fc7277_a9772476",
+        "filename": "chrome/browser/component_updater/sw_reporter_installer_win_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 754,
+      "author": {
+        "id": 1159306
+      },
+      "writtenOn": "2017-12-21T16:49:44Z",
+      "side": 1,
+      "message": "It\u0027s an implementation detail we depend on, though, so I think it should be tested. It can be added as a followup though.",
+      "parentUuid": "5d56f8d7_3d5b7bc9",
       "revId": "c3bdc083eca9760df2cc21c6a5ed5d64c390c73b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
