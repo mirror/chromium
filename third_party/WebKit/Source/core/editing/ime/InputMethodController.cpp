@@ -44,6 +44,7 @@
 #include "core/editing/state_machines/BackwardCodePointStateMachine.h"
 #include "core/editing/state_machines/ForwardCodePointStateMachine.h"
 #include "core/events/CompositionEvent.h"
+#include "core/events/TextEvent.h"
 #include "core/frame/LocalFrame.h"
 #include "core/html/forms/HTMLInputElement.h"
 #include "core/html/forms/HTMLTextAreaElement.h"
@@ -106,6 +107,32 @@ void DispatchBeforeInputFromComposition(EventTarget* target,
   target->DispatchEvent(before_input_event);
 }
 
+void DispatchInputEvent(LocalFrame& frame,
+                        InputEvent::InputType input_type,
+                        const String& data,
+                        InputEvent::EventIsComposing is_composing) {
+  Element* target = frame.GetDocument()->FocusedElement();
+  if (!target)
+    return;
+
+  // TODO(chongz): Pass appreciate |ranges| after it's defined on spec.
+  // http://w3c.github.io/editing/input-events.html#dom-inputevent-inputtype
+  InputEvent* input_event =
+      InputEvent::CreateInput(input_type, data, is_composing, nullptr);
+  target->DispatchScopedEvent(input_event);
+}
+
+void DispatchTextInputEvent(LocalFrame& frame, const String& text) {
+  Element* target = frame.GetDocument()->FocusedElement();
+  if (!target)
+    return;
+
+  TextEvent* event = TextEvent::Create(frame.DomWindow(), text,
+                                       kTextEventInputIncrementalInsertion);
+  event->SetUnderlyingEvent(nullptr);
+  target->DispatchEvent(event);
+}
+
 // Used to insert/replace text during composition update and confirm
 // composition.
 // Procedure:
@@ -113,7 +140,6 @@ void DispatchBeforeInputFromComposition(EventTarget* target,
 //      inserted text
 //   2. Fire 'compositionupdate' event
 //   3. Fire TextEvent and modify DOM
-//   TODO(chongz): 4. Fire 'input' event
 void InsertTextDuringCompositionWithEvents(
     LocalFrame& frame,
     const String& text,
@@ -159,8 +185,10 @@ void InsertTextDuringCompositionWithEvents(
       // Calling |TypingCommand::insertText()| with empty text will result in an
       // incorrect ending selection. We need to delete selection first.
       // https://crbug.com/693481
-      if (text.IsEmpty())
-        TypingCommand::DeleteSelection(*frame.GetDocument(), 0);
+      if (text.IsEmpty()) {
+        TypingCommand::DeleteSelection(*frame.GetDocument(),
+                                       TypingCommand::kSuppressInputEvent);
+      }
       frame.GetDocument()->UpdateStyleAndLayoutIgnorePendingStylesheets();
       TypingCommand::InsertText(*frame.GetDocument(), text, options,
                                 composition_type, is_incremental_insertion);
@@ -398,11 +426,15 @@ bool InputMethodController::FinishComposingText(
     Editor::RevealSelectionScope reveal_selection_scope(&GetEditor());
 
     if (is_too_long) {
-      ReplaceComposition(ComposingText());
+      ReplaceComposition(ComposingText(), false);
     } else {
       Clear();
-      DispatchCompositionEndEvent(GetFrame(), composing);
     }
+
+    DispatchCompositionEndEvent(GetFrame(), composing);
+    // Event handler might destroy document.
+    if (!IsAvailable())
+      return false;
 
     // TODO(editing-dev): Use of updateStyleAndLayoutIgnorePendingStylesheets
     // needs to be audited. see http://crbug.com/590369 for more details.
@@ -430,7 +462,7 @@ bool InputMethodController::FinishComposingText(
     return false;
 
   if (is_too_long) {
-    ReplaceComposition(ComposingText());
+    ReplaceComposition(ComposingText(), false);
   } else {
     Clear();
   }
@@ -454,7 +486,8 @@ bool InputMethodController::CommitText(
   return InsertTextAndMoveCaret(text, relative_caret_position, ime_text_spans);
 }
 
-bool InputMethodController::ReplaceComposition(const String& text) {
+bool InputMethodController::ReplaceComposition(const String& text,
+                                               bool suppress_input_event) {
   if (!HasComposition())
     return false;
 
@@ -473,14 +506,12 @@ bool InputMethodController::ReplaceComposition(const String& text) {
   Clear();
 
   InsertTextDuringCompositionWithEvents(
-      GetFrame(), text, 0,
+      GetFrame(), text,
+      suppress_input_event ? TypingCommand::kSuppressInputEvent : 0,
       TypingCommand::TextCompositionType::kTextCompositionConfirm);
   // Event handler might destroy document.
   if (!IsAvailable())
     return false;
-
-  // No DOM update after 'compositionend'.
-  DispatchCompositionEndEvent(GetFrame(), text);
 
   return true;
 }
@@ -565,7 +596,7 @@ bool InputMethodController::ReplaceCompositionAndMoveCaret(
     return false;
   int text_start = composition_range.Start();
 
-  if (!ReplaceComposition(text))
+  if (!ReplaceComposition(text, true))
     return false;
 
   // TODO(editing-dev): The use of updateStyleAndLayoutIgnorePendingStylesheets
@@ -576,14 +607,39 @@ bool InputMethodController::ReplaceCompositionAndMoveCaret(
 
   int absolute_caret_position = ComputeAbsoluteCaretPosition(
       text_start, text.length(), relative_caret_position);
-  return MoveCaret(absolute_caret_position);
+  const bool result = MoveCaret(absolute_caret_position);
+
+  if (text.IsEmpty()) {
+    // String() maps to JavaScript's null value
+    DispatchInputEvent(GetFrame(),
+                       InputEvent::InputType::kDeleteContentBackward, String(),
+                       InputEvent::EventIsComposing::kNotComposing);
+  } else {
+    DispatchInputEvent(GetFrame(),
+                       InputEvent::InputType::kInsertCompositionText, text,
+                       InputEvent::EventIsComposing::kIsComposing);
+  }
+  // Event handler might destroy document.
+  if (!IsAvailable())
+    return false;
+
+  DispatchTextInputEvent(GetFrame(), text);
+  // Event handler might destroy document.
+  if (!IsAvailable())
+    return false;
+
+  DispatchCompositionEndEvent(GetFrame(), text);
+  return result;
 }
 
 bool InputMethodController::InsertText(const String& text) {
   if (DispatchBeforeInputInsertText(GetDocument().FocusedElement(), text) !=
       DispatchEventResult::kNotCanceled)
     return false;
-  GetEditor().InsertText(text, nullptr);
+  GetDocument().UpdateStyleAndLayoutIgnorePendingStylesheets();
+  TypingCommand::InsertText(
+      GetDocument(), text, TypingCommand::kSuppressInputEvent,
+      TypingCommand::TextCompositionType::kTextCompositionNone, false);
   return true;
 }
 
@@ -609,7 +665,20 @@ bool InputMethodController::InsertTextAndMoveCaret(
 
   int absolute_caret_position = ComputeAbsoluteCaretPosition(
       text_start, text.length(), relative_caret_position);
-  return MoveCaret(absolute_caret_position);
+  const bool result = MoveCaret(absolute_caret_position);
+
+  DispatchTextInputEvent(GetFrame(), text);
+
+  if (!text.IsEmpty()) {
+    // Event handler might have destroyed document.
+    if (!IsAvailable())
+      return false;
+
+    DispatchInputEvent(GetFrame(), InputEvent::InputType::kInsertText, text,
+                       InputEvent::EventIsComposing::kNotComposing);
+  }
+
+  return result;
 }
 
 void InputMethodController::CancelComposition() {
@@ -690,20 +759,48 @@ void InputMethodController::SetComposition(
   if (text.IsEmpty()) {
     if (HasComposition()) {
       Editor::RevealSelectionScope reveal_selection_scope(&GetEditor());
-      ReplaceComposition(g_empty_string);
+      ReplaceComposition(g_empty_string, true);
+      SetEditableSelectionOffsets(selected_range);
+      // String() maps to JavaScript's null value
+      DispatchInputEvent(GetFrame(),
+                         InputEvent::InputType::kDeleteContentBackward,
+                         String(), InputEvent::EventIsComposing::kNotComposing);
+      // Event handler might destroy document.
+      if (!IsAvailable())
+        return;
+
+      DispatchTextInputEvent(GetFrame(), text);
+      // Event handler might destroy document.
+      if (!IsAvailable())
+        return;
+
+      DispatchCompositionEndEvent(GetFrame(), g_empty_string);
     } else {
       // It's weird to call |setComposition()| with empty text outside
       // composition, however some IME (e.g. Japanese IBus-Anthy) did this, so
       // we simply delete selection without sending extra events.
+
+      const SelectionInDOMTree& selection =
+          GetFrame().Selection().GetSelectionInDOMTree();
+      if (!selection.IsRange()) {
+        // No text to delete, so we don't fire any events associated with
+        // deleting text, but we do still do the selection move.
+        SetEditableSelectionOffsets(selected_range);
+        return;
+      }
+
       TypingCommand::DeleteSelection(GetDocument(),
-                                     TypingCommand::kPreventSpellChecking);
+                                     TypingCommand::kPreventSpellChecking |
+                                         TypingCommand::kSuppressInputEvent);
+
+      GetDocument().UpdateStyleAndLayoutIgnorePendingStylesheets();
+
+      SetEditableSelectionOffsets(selected_range);
+      // String() maps to JavaScript's null value
+      DispatchInputEvent(GetFrame(),
+                         InputEvent::InputType::kDeleteContentBackward,
+                         String(), InputEvent::EventIsComposing::kNotComposing);
     }
-
-    // TODO(editing-dev): Use of updateStyleAndLayoutIgnorePendingStylesheets
-    // needs to be audited. see http://crbug.com/590369 for more details.
-    GetDocument().UpdateStyleAndLayoutIgnorePendingStylesheets();
-
-    SetEditableSelectionOffsets(selected_range);
     return;
   }
 
@@ -724,7 +821,9 @@ void InputMethodController::SetComposition(
 
   InsertTextDuringCompositionWithEvents(
       GetFrame(), text,
-      TypingCommand::kSelectInsertedText | TypingCommand::kPreventSpellChecking,
+      TypingCommand::kSelectInsertedText |
+          TypingCommand::kPreventSpellChecking |
+          TypingCommand::kSuppressInputEvent,
       TypingCommand::kTextCompositionUpdate);
   // Event handlers might destroy document.
   if (!IsAvailable())
@@ -804,7 +903,6 @@ void InputMethodController::SetComposition(
         CompositionEphemeralRange(), Color::kBlack,
         StyleableMarker::Thickness::kThin,
         LayoutTheme::GetTheme().PlatformDefaultCompositionBackgroundColor());
-    return;
   }
 
   const std::pair<ContainerNode*, PlainTextRange>&
@@ -812,6 +910,9 @@ void InputMethodController::SetComposition(
           PlainTextRangeForEphemeralRange(CompositionEphemeralRange());
   AddImeTextSpans(ime_text_spans, root_element_and_plain_text_range.first,
                   root_element_and_plain_text_range.second.Start());
+
+  DispatchInputEvent(GetFrame(), InputEvent::InputType::kInsertCompositionText,
+                     text, InputEvent::EventIsComposing::kIsComposing);
 }
 
 PlainTextRange InputMethodController::CreateSelectionRangeForSetComposition(

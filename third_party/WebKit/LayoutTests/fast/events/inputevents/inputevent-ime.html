@@ -129,9 +129,9 @@
     assert_array_equals(eventLog, [
       'beforeinput: isComposing=true, data="hello world"',
       'compositionupdate: data="hello world"',
-      'textInput: data="hello world"',
       'input: isComposing=true, data="hello world", '
           + 'inputType=insertCompositionText',
+      'textInput: data="hello world"',
       'compositionend: data="hello world"',
     ]);
   }, 'insertText with open composition, non-empty text');
@@ -245,7 +245,6 @@
       'compositionupdate: data="hello"',
       'textInput: data="h"',
       'input: isComposing=true, data="h", inputType=insertCompositionText',
-      'compositionend: data="hello"',
       'compositionend: data="hello"',
     ]);
   }, 'unmarkAndUnselectText, too long for input');

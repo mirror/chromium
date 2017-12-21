@@ -55,7 +55,8 @@ class CORE_EXPORT TypingCommand final : public CompositeEditCommand {
     kKillRing = 1 << 1,
     kRetainAutocorrectionIndicator = 1 << 2,
     kPreventSpellChecking = 1 << 3,
-    kSmartDelete = 1 << 4
+    kSmartDelete = 1 << 4,
+    kSuppressInputEvent = 1 << 5,
   };
   typedef unsigned Options;
 
@@ -202,6 +203,7 @@ class CORE_EXPORT TypingCommand final : public CompositeEditCommand {
 
   bool should_retain_autocorrection_indicator_;
   bool should_prevent_spell_checking_;
+  bool suppress_post_insert_events_;
 
   bool is_incremental_insertion_;
   size_t selection_start_;

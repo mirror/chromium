@@ -180,7 +180,8 @@ TypingCommand::TypingCommand(Document& document,
       opened_by_backward_delete_(false),
       should_retain_autocorrection_indicator_(options &
                                               kRetainAutocorrectionIndicator),
-      should_prevent_spell_checking_(options & kPreventSpellChecking) {
+      should_prevent_spell_checking_(options & kPreventSpellChecking),
+      suppress_post_insert_events_(options & kSuppressInputEvent) {
   UpdatePreservesTypingStyle(command_type_);
 }
 
@@ -367,16 +368,18 @@ void TypingCommand::InsertText(
       return;
   }
 
-  if (composition_type == kTextCompositionConfirm) {
-    if (DispatchTextInputEvent(frame, new_text, editing_state) !=
-        DispatchEventResult::kNotCanceled)
-      return;
-    // event handler might destroy document.
-    if (editing_state->IsAborted())
-      return;
-    // editing/inserting/insert-text-nodes-disconnect-on-textinput-event.html
-    // hits true for ABORT_EDITING_COMMAND_IF macro.
-    ABORT_EDITING_COMMAND_IF(!selection_for_insertion.IsValidFor(document));
+  if (!(options & kSuppressInputEvent)) {
+    if (composition_type == kTextCompositionConfirm) {
+      if (DispatchTextInputEvent(frame, new_text, editing_state) !=
+          DispatchEventResult::kNotCanceled)
+        return;
+      // event handler might destroy document.
+      if (editing_state->IsAborted())
+        return;
+      // editing/inserting/insert-text-nodes-disconnect-on-textinput-event.html
+      // hits true for ABORT_EDITING_COMMAND_IF macro.
+      ABORT_EDITING_COMMAND_IF(!selection_for_insertion.IsValidFor(document));
+    }
   }
 
   // Do nothing if no need to delete and insert.
@@ -587,7 +590,7 @@ void TypingCommand::TypingAddedToOpenCommand(
   UpdatePreservesTypingStyle(command_type_for_added_typing);
   UpdateCommandTypeOfOpenCommand(command_type_for_added_typing);
 
-  frame->GetEditor().AppliedEditing(this);
+  frame->GetEditor().AppliedEditing(this, suppress_post_insert_events_);
 }
 
 void TypingCommand::InsertText(const String& text,
