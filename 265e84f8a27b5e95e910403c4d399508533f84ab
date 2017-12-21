@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "b5e10fa9_9135d292",
+        "filename": "chrome/browser/vr/elements/toast.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-12-21T13:50:28Z",
+      "side": 1,
+      "message": "Sounds good.  Could be just \"width_pixels\" too, as \"maximum\" only applies to text elements that dynamically size themselves.",
+      "parentUuid": "4598a009_c576cacb",
+      "revId": "265e84f8a27b5e95e910403c4d399508533f84ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f2585c5b_8cf336ff",
         "filename": "chrome/browser/vr/elements/toast.cc",
         "patchSetId": 2
@@ -69,6 +87,24 @@
       "revId": "265e84f8a27b5e95e910403c4d399508533f84ab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "839908fd_e241c368",
+        "filename": "chrome/browser/vr/elements/toast.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-12-21T13:50:28Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "21879452_6ffaff2b",
+      "revId": "265e84f8a27b5e95e910403c4d399508533f84ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -142,6 +178,24 @@
     },
     {
       "key": {
+        "uuid": "0d986268_a028bd80",
+        "filename": "chrome/browser/vr/elements/toast.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-12-21T13:50:28Z",
+      "side": 1,
+      "message": "Why not SetIcon/SetText?  The function isn\u0027t actually adding the icon, it\u0027s calling a bunch of other setters.  I can\u0027t see a good reason why these don\u0027t fall into the Set() naming convention.",
+      "parentUuid": "332e5e7a_6081c60c",
+      "revId": "265e84f8a27b5e95e910403c4d399508533f84ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "30471e79_2ed3c7ab",
         "filename": "chrome/browser/vr/ui_scene_constants.h",
         "patchSetId": 2
@@ -186,6 +240,30 @@
       "revId": "265e84f8a27b5e95e910403c4d399508533f84ab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d43aac06_9b17d5bf",
+        "filename": "chrome/browser/vr/ui_scene_constants.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-12-21T13:50:28Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ed7280ae_0c322884",
+      "range": {
+        "startLine": 69,
+        "startChar": 52,
+        "endLine": 69,
+        "endChar": 56
+      },
+      "revId": "265e84f8a27b5e95e910403c4d399508533f84ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
