@@ -9,6 +9,7 @@
 #include <string>
 
 #import "base/mac/scoped_nsobject.h"
+#include "base/message_loop/message_loop.h"
 #include "testing/platform_test.h"
 
 namespace net {
@@ -26,7 +27,8 @@ namespace ios_web_view {
 // A test fixture for testing CWVWebView. A test server is also created to
 // support loading content. The server supports the urls returned by the GetUrl*
 // methods below.
-class WebViewIntTest : public PlatformTest {
+class WebViewIntTest : public PlatformTest,
+                       public base::MessageLoop::TaskObserver {
  protected:
   WebViewIntTest();
   ~WebViewIntTest() override;
@@ -52,6 +54,16 @@ class WebViewIntTest : public PlatformTest {
   // Embedded server for handling requests sent to the URLs returned by the
   // GetURL* methods.
   std::unique_ptr<net::test_server::EmbeddedTestServer> test_server_;
+
+  void WaitForBackgroundTasks();
+
+ private:
+  // base::MessageLoop::TaskObserver overrides.
+  void WillProcessTask(const base::PendingTask& pending_task) override;
+  void DidProcessTask(const base::PendingTask& pending_task) override;
+
+  // true if a task has been processed.
+  bool processed_a_task_;
 };
 
 }  // namespace ios_web_view

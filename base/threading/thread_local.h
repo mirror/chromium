@@ -58,8 +58,10 @@ namespace base {
 template <typename Type>
 class ThreadLocalPointer {
  public:
-  ThreadLocalPointer() = default;
-  ~ThreadLocalPointer() = default;
+  ThreadLocalPointer() {
+  };
+  ~ThreadLocalPointer() {
+  };
 
   Type* Get() {
     return static_cast<Type*>(slot_.Get());
