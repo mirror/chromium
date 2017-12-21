@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "49730c47_56f30405",
+        "filename": "chrome/browser/android/tab_android.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1249510
+      },
+      "writtenOn": "2017-12-21T05:06:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "adc6ce06_1aaacd5f",
+      "range": {
+        "startLine": 49,
+        "startChar": 24,
+        "endLine": 49,
+        "endChar": 39
+      },
+      "revId": "05de2907f9c808de1f42f044ea686c5c9daceaca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "afb12838_bc55cf30",
         "filename": "chrome/browser/android/tab_android.cc",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "05de2907f9c808de1f42f044ea686c5c9daceaca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a584591_583d44a0",
+        "filename": "chrome/browser/android/tab_android.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 724,
+      "author": {
+        "id": 1249510
+      },
+      "writtenOn": "2017-12-21T05:06:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "afb12838_bc55cf30",
+      "range": {
+        "startLine": 724,
+        "startChar": 22,
+        "endLine": 724,
+        "endChar": 37
+      },
+      "revId": "05de2907f9c808de1f42f044ea686c5c9daceaca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "8fd94edf_1f2010ee",
+        "filename": "chrome/browser/android/tab_android.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 726,
+      "author": {
+        "id": 1249510
+      },
+      "writtenOn": "2017-12-21T05:06:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "db3b9e33_62c51808",
+      "range": {
+        "startLine": 726,
+        "startChar": 2,
+        "endLine": 726,
+        "endChar": 77
+      },
+      "revId": "05de2907f9c808de1f42f044ea686c5c9daceaca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8d3a046b_27f66668",
         "filename": "chrome/browser/android/tab_android.cc",
         "patchSetId": 3
@@ -91,6 +163,30 @@
       "revId": "05de2907f9c808de1f42f044ea686c5c9daceaca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99b32def_7c372e4e",
+        "filename": "chrome/browser/android/tab_android.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 735,
+      "author": {
+        "id": 1249510
+      },
+      "writtenOn": "2017-12-21T05:06:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8d3a046b_27f66668",
+      "range": {
+        "startLine": 734,
+        "startChar": 3,
+        "endLine": 735,
+        "endChar": 32
+      },
+      "revId": "05de2907f9c808de1f42f044ea686c5c9daceaca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "1008b8a6_32e70e1d",
+        "filename": "chrome/common/chrome_render_frame.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1249510
+      },
+      "writtenOn": "2017-12-21T05:06:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b5c494b9_fb4f53ba",
+      "range": {
+        "startLine": 54,
+        "startChar": 1,
+        "endLine": 54,
+        "endChar": 2
+      },
+      "revId": "05de2907f9c808de1f42f044ea686c5c9daceaca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "be2732c2_b0fc0bbf",
         "filename": "chrome/common/chrome_render_frame.mojom",
         "patchSetId": 3
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "0d33c1aa_6e17ac5a",
+        "filename": "chrome/common/chrome_render_frame.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1249510
+      },
+      "writtenOn": "2017-12-21T05:06:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be2732c2_b0fc0bbf",
+      "range": {
+        "startLine": 58,
+        "startChar": 59,
+        "endLine": 58,
+        "endChar": 63
+      },
+      "revId": "05de2907f9c808de1f42f044ea686c5c9daceaca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b5896549_1af4b305",
         "filename": "chrome/renderer/chrome_render_frame_observer.cc",
         "patchSetId": 3
@@ -151,6 +295,30 @@
       "writtenOn": "2017-12-20T22:42:41Z",
       "side": 1,
       "message": "I think this should just be render_frame()-\u003eGetRenderView()-\u003eUpdateBrowserControlsState(...), which appears to be what the code is doing before this CL.\n\nThen you can get rid of the previous static_casts.\n\nAlso, this whole method should be #if defined, not just within the method body.",
+      "range": {
+        "startLine": 480,
+        "startChar": 2,
+        "endLine": 480,
+        "endChar": 47
+      },
+      "revId": "05de2907f9c808de1f42f044ea686c5c9daceaca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3292554f_d5cba185",
+        "filename": "chrome/renderer/chrome_render_frame_observer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 1249510
+      },
+      "writtenOn": "2017-12-21T05:06:06Z",
+      "side": 1,
+      "message": "UpdateBrowserControlState function is defined in WebView as below.\nWebViewImpl::UpdateBrowserControlsState\n\nrender_frame()-\u003eGetRenderView()-\u003eUpdateBrowserControlsState(...) \u003d\u003d\u003egives build error.\n\nAs of now we dont have any attribute to add conditiona interface. I shall submit follow up patch once its available. See https://crbug.com/676224",
+      "parentUuid": "b5896549_1af4b305",
       "range": {
         "startLine": 480,
         "startChar": 2,
@@ -210,6 +378,30 @@
     },
     {
       "key": {
+        "uuid": "bde028e1_0751bbda",
+        "filename": "chrome/renderer/chrome_render_frame_observer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1249510
+      },
+      "writtenOn": "2017-12-21T05:06:06Z",
+      "side": 1,
+      "message": "We can add conditional flag once \"EnabledIf\" attribute is supported in mojom files. See https://crbug.com/676224\n\nDo you want me to create new mojom file? or continue similar to below change\nhttps://codereview.chromium.org/2477283002/",
+      "parentUuid": "3c8358b3_36664793",
+      "range": {
+        "startLine": 79,
+        "startChar": 7,
+        "endLine": 79,
+        "endChar": 33
+      },
+      "revId": "05de2907f9c808de1f42f044ea686c5c9daceaca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d345a87e_5622b8f2",
         "filename": "chrome/renderer/chrome_render_view_observer.cc",
         "patchSetId": 3
@@ -230,6 +422,30 @@
       "revId": "05de2907f9c808de1f42f044ea686c5c9daceaca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9138439_55d9f7c1",
+        "filename": "chrome/renderer/chrome_render_view_observer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1249510
+      },
+      "writtenOn": "2017-12-21T05:06:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d345a87e_5622b8f2",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 55
+      },
+      "revId": "05de2907f9c808de1f42f044ea686c5c9daceaca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -256,6 +472,30 @@
     },
     {
       "key": {
+        "uuid": "a0f3c549_a7f6f09b",
+        "filename": "chrome/renderer/chrome_render_view_observer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1249510
+      },
+      "writtenOn": "2017-12-21T05:06:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d3fcc6df_af6a8ba9",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 40,
+        "endChar": 31
+      },
+      "revId": "05de2907f9c808de1f42f044ea686c5c9daceaca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9d32f6f6_1818d49b",
         "filename": "chrome/renderer/chrome_render_view_observer.h",
         "patchSetId": 3
@@ -276,6 +516,30 @@
       "revId": "05de2907f9c808de1f42f044ea686c5c9daceaca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a40a4bb_2f7a78e3",
+        "filename": "chrome/renderer/chrome_render_view_observer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1249510
+      },
+      "writtenOn": "2017-12-21T05:06:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9d32f6f6_1818d49b",
+      "range": {
+        "startLine": 8,
+        "startChar": 10,
+        "endLine": 8,
+        "endChar": 13
+      },
+      "revId": "05de2907f9c808de1f42f044ea686c5c9daceaca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -302,6 +566,30 @@
     },
     {
       "key": {
+        "uuid": "b4aceb09_e0679f17",
+        "filename": "chrome/renderer/chrome_render_view_observer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1249510
+      },
+      "writtenOn": "2017-12-21T05:06:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "04bf45b6_bf32e882",
+      "range": {
+        "startLine": 10,
+        "startChar": 10,
+        "endLine": 10,
+        "endChar": 16
+      },
+      "revId": "05de2907f9c808de1f42f044ea686c5c9daceaca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f306de86_e3ca8d3a",
         "filename": "chrome/renderer/chrome_render_view_observer.h",
         "patchSetId": 3
@@ -325,6 +613,30 @@
     },
     {
       "key": {
+        "uuid": "e8d08296_04b313ef",
+        "filename": "chrome/renderer/chrome_render_view_observer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1249510
+      },
+      "writtenOn": "2017-12-21T05:06:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f306de86_e3ca8d3a",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 31
+      },
+      "revId": "05de2907f9c808de1f42f044ea686c5c9daceaca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0b5f03c1_817bd4b6",
         "filename": "chrome/renderer/chrome_render_view_observer.h",
         "patchSetId": 3
@@ -345,6 +657,30 @@
       "revId": "05de2907f9c808de1f42f044ea686c5c9daceaca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73180f85_f7fab263",
+        "filename": "chrome/renderer/chrome_render_view_observer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1249510
+      },
+      "writtenOn": "2017-12-21T05:06:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b5f03c1_817bd4b6",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 41
+      },
+      "revId": "05de2907f9c808de1f42f044ea686c5c9daceaca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
