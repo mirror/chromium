@@ -132,6 +132,17 @@ gfx::ImageSkia* ThemeService::BrowserThemeProvider::GetImageSkiaNamed(
 }
 
 SkColor ThemeService::BrowserThemeProvider::GetColor(int id) const {
+  // The incognito NTP directly uses ThemeProperties::GetDefaultColor (i.e.
+  // doesn't go through ThemeService) to query its background color, unless
+  // there is a custom NTP background image. To avoid a flash when opening an
+  // incognito NTP with a theme that sets a background color (but not image),
+  // we have to duplicate that logic here. See also
+  // NTPResourceCache::CreateNewTabIncognitoCSS and
+  // https://crbug.com/21798#c114.
+  if (id == ThemeProperties::COLOR_NTP_BACKGROUND && incognito_ &&
+      !HasCustomImage(IDR_THEME_NTP_BACKGROUND)) {
+    return ThemeProperties::GetDefaultColor(id, incognito_);
+  }
   return theme_service_.GetColor(id, incognito_);
 }
 
