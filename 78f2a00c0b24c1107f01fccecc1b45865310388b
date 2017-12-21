@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e2fdc1ff_0a6e6406",
+        "filename": "components/storage_monitor/storage_info.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-21T01:28:39Z",
+      "side": 1,
+      "message": "1) crash keys are typically named-like-this.\n2) \"device_id\" could mean anything. How about \"storage-monitor-device-id\" ?\n\nThere are good examples in crash_key.h to follow.",
+      "revId": "78f2a00c0b24c1107f01fccecc1b45865310388b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7a93291_dbc311e2",
+        "filename": "components/storage_monitor/storage_info.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-21T01:28:39Z",
+      "side": 1,
+      "message": "Variables are also named_like_this.",
+      "range": {
+        "startLine": 115,
+        "startChar": 41,
+        "endLine": 115,
+        "endChar": 50
+      },
+      "revId": "78f2a00c0b24c1107f01fccecc1b45865310388b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
