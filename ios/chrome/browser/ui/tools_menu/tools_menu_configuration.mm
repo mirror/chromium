@@ -26,6 +26,7 @@
 @synthesize displayView = _displayView;
 @synthesize toolsMenuButton = _toolsMenuButton;
 @synthesize readingListMenuNotifier = _readingListMenuNotifier;
+@synthesize settingsDelegate = _settingsDelegate;
 
 - (instancetype)initWithDisplayView:(UIView*)displayView
                  baseViewController:(UIViewController*)baseViewController {

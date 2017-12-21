@@ -529,12 +529,8 @@ TEST_F(AppStateWithThreadTest, willTerminate) {
       browserViewInformation];
   [[[browserViewInformation stub] andReturn:browserViewController] currentBVC];
 
-  id settingsNavigationController =
-      [OCMockObject mockForClass:[SettingsNavigationController class]];
-
   id appNavigation = [OCMockObject mockForProtocol:@protocol(AppNavigation)];
-  [[[appNavigation stub] andReturn:settingsNavigationController]
-      settingsNavigationController];
+
   [[appNavigation expect] closeSettingsAnimated:NO completion:nil];
 
   [[browserViewInformation expect] cleanDeviceSharingManager];

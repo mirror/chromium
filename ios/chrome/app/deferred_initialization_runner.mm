@@ -13,6 +13,9 @@
 #error "This file requires ARC support."
 #endif
 
+// Constant for deferred initialization of preferences observer.
+NSString* const kPrefObserverInit = @"PrefObserverInit";
+
 // An object encapsulating the deferred execution of a block of initialization
 // code.
 @interface DeferredInitializationBlock : NSObject
