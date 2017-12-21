@@ -180,8 +180,10 @@ HoverButton::HoverButton(views::ButtonListener* button_listener,
     grid_layout->SkipColumns(1);
     grid_layout->AddView(subtitle_);
   }
-  SetTooltipAndAccessibleName(this, title_, subtitle_, GetLocalBounds(),
-                              taken_width_);
+  if (auto_compute_tooltip_) {
+    SetTooltipAndAccessibleName(this, title_, subtitle_, GetLocalBounds(),
+                                taken_width_);
+  }
 
   // Since this constructor doesn't use the |LabelButton|'s image / label Views,
   // make sure the minimum size is correct according to the |grid_layout|.
@@ -207,8 +209,10 @@ void HoverButton::SetTitleTextWithHintRange(const base::string16& title_text,
     title_->AddStyleRange(range, style_info);
   }
   title_->SizeToFit(0);
-  SetTooltipAndAccessibleName(this, title_, subtitle_, GetLocalBounds(),
-                              taken_width_);
+  if (auto_compute_tooltip_) {
+    SetTooltipAndAccessibleName(this, title_, subtitle_, GetLocalBounds(),
+                                taken_width_);
+  }
 }
 
 views::Button::KeyClickAction HoverButton::GetKeyClickActionForEvent(
@@ -280,7 +284,7 @@ views::View* HoverButton::GetTooltipHandlerForPoint(const gfx::Point& point) {
 }
 
 void HoverButton::OnBoundsChanged(const gfx::Rect& previous_bounds) {
-  if (title_) {
+  if (title_ && auto_compute_tooltip_) {
     SetTooltipAndAccessibleName(this, title_, subtitle_, GetLocalBounds(),
                                 taken_width_);
   }
