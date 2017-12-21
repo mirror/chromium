@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "07ca9ad5_0a3a0ce4",
+        "filename": "components/offline_pages/core/model/offline_page_upgrade_types.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-21T19:25:34Z",
+      "side": 1,
+      "message": "switching to const \u0026 as that is the most common pattern in chromium.",
+      "parentUuid": "d1e44885_0733bb27",
+      "range": {
+        "startLine": 16,
+        "startChar": 39,
+        "endLine": 17,
+        "endChar": 63
+      },
+      "revId": "b22c1b9bc3f71df92b2eca9e4543c6be4b304442",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a496205b_7eb65330",
         "filename": "components/offline_pages/core/model/start_offline_page_upgrade_task.cc",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "b22c1b9bc3f71df92b2eca9e4543c6be4b304442",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aaf3f2bf_1210ae7e",
+        "filename": "components/offline_pages/core/model/start_offline_page_upgrade_task.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-21T19:25:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a496205b_7eb65330",
+      "range": {
+        "startLine": 39,
+        "startChar": 50,
+        "endLine": 39,
+        "endChar": 62
+      },
+      "revId": "b22c1b9bc3f71df92b2eca9e4543c6be4b304442",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "6e15509e_f598d0b5",
+        "filename": "components/offline_pages/core/model/start_offline_page_upgrade_task_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-21T19:25:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bf31afc7_2d5076e6",
+      "range": {
+        "startLine": 125,
+        "startChar": 12,
+        "endLine": 125,
+        "endChar": 44
+      },
+      "revId": "b22c1b9bc3f71df92b2eca9e4543c6be4b304442",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b41ddeff_2d1e9740",
         "filename": "components/offline_pages/core/model/start_offline_page_upgrade_task_unittest.cc",
         "patchSetId": 5
@@ -91,6 +163,30 @@
       "revId": "b22c1b9bc3f71df92b2eca9e4543c6be4b304442",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7757d8f1_50320a67",
+        "filename": "components/offline_pages/core/model/start_offline_page_upgrade_task_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-21T19:25:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b41ddeff_2d1e9740",
+      "range": {
+        "startLine": 147,
+        "startChar": 12,
+        "endLine": 147,
+        "endChar": 44
+      },
+      "revId": "b22c1b9bc3f71df92b2eca9e4543c6be4b304442",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
