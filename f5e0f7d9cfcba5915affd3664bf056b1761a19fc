@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b58648cb_9e2b52df",
+        "filename": "components/cronet/native/buffer_test.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-12-21T15:04:51Z",
+      "side": 1,
+      "message": "The difference is that *_test uses public API and doesn\u0027t link to static library, while *_unittest uses private API and has to link to static library. \n\nThey go into different apps as well - cronet_test vs cronet_unittest.",
+      "parentUuid": "043f4fff_affdf554",
+      "revId": "f5e0f7d9cfcba5915affd3664bf056b1761a19fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1cfecf65_3e739742",
         "filename": "components/cronet/native/runnables_unittest.cc",
         "patchSetId": 25
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "bf213ba3_e15642f0",
+        "filename": "components/cronet/native/runnables_unittest.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-12-21T15:04:51Z",
+      "side": 1,
+      "message": "They capture values to be used in \u0027Run\u0027 call below when it is invoked on executor.",
+      "parentUuid": "1cfecf65_3e739742",
+      "range": {
+        "startLine": 56,
+        "startChar": 0,
+        "endLine": 57,
+        "endChar": 38
+      },
+      "revId": "f5e0f7d9cfcba5915affd3664bf056b1761a19fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a7035b5e_ff8d58f7",
         "filename": "components/cronet/native/runnables_unittest.cc",
         "patchSetId": 25
@@ -53,6 +95,30 @@
       "writtenOn": "2017-12-21T13:21:14Z",
       "side": 1,
       "message": "what\u0027s the motivation for this code?  can we just pass nullptr to the call?",
+      "range": {
+        "startLine": 133,
+        "startChar": 0,
+        "endLine": 136,
+        "endChar": 52
+      },
+      "revId": "f5e0f7d9cfcba5915affd3664bf056b1761a19fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "632bda0f_d9d2db06",
+        "filename": "components/cronet/native/runnables_unittest.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-12-21T15:04:51Z",
+      "side": 1,
+      "message": "Sure. I was thinking that this will make parameters a little clearer, but I\u0027ll be happy to just pass nullptr.",
+      "parentUuid": "a7035b5e_ff8d58f7",
       "range": {
         "startLine": 133,
         "startChar": 0,
