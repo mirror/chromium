@@ -12,7 +12,6 @@
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "chrome/browser/ui/app_icon_loader.h"
-#include "ui/message_center/notification_delegate.h"
 
 class Profile;
 
@@ -34,9 +33,7 @@ class Notification;
 }  // namespace message_center
 
 // Shows notifications for the chrome.fileSystem.requestFileSystem() API.
-class RequestFileSystemNotification
-    : public message_center::NotificationDelegate,
-      public AppIconLoaderDelegate {
+class RequestFileSystemNotification : public AppIconLoaderDelegate {
  public:
   // Shows a notification about automatically granted access to a file system.
   static void ShowAutoGrantedNotification(
@@ -46,17 +43,23 @@ class RequestFileSystemNotification
       bool writable);
 
  private:
-  RequestFileSystemNotification(Profile* profile,
-                                const extensions::Extension& extension);
+  // This class owns and deletes itself after showing the notification.
+  RequestFileSystemNotification();
   ~RequestFileSystemNotification() override;
 
-  // Shows the notification. Can be called only once.
-  void Show(std::unique_ptr<message_center::Notification> notification);
+  void InitAndShow(Profile* profile,
+                   const extensions::Extension& extension,
+                   std::unique_ptr<message_center::Notification> notification);
 
   // AppIconLoaderDelegate overrides:
   void OnAppImageUpdated(const std::string& id,
                          const gfx::ImageSkia& image) override;
 
+  // Shows the notification as long as the icon and |pending_notification_| are
+  // both ready, and deletes |this|.
+  void ShowIfReady();
+
+  Profile* profile_;
   std::unique_ptr<AppIconLoader> icon_loader_;
   std::unique_ptr<gfx::Image> extension_icon_;
   std::unique_ptr<message_center::Notification> pending_notification_;
