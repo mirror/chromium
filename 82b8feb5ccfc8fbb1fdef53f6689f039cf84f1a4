@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "125df559_64f918ba",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 557,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-12-21T20:22:59Z",
+      "side": 1,
+      "message": "Is this true?",
+      "range": {
+        "startLine": 556,
+        "startChar": 35,
+        "endLine": 557,
+        "endChar": 42
+      },
+      "revId": "82b8feb5ccfc8fbb1fdef53f6689f039cf84f1a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb9319f9_15fdc788",
+        "filename": "ui/latency/latency_tracker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-12-21T20:22:59Z",
+      "side": 1,
+      "message": "Should we make this a DCHECK?",
+      "range": {
+        "startLine": 248,
+        "startChar": 14,
+        "endLine": 248,
+        "endChar": 29
+      },
+      "revId": "82b8feb5ccfc8fbb1fdef53f6689f039cf84f1a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
