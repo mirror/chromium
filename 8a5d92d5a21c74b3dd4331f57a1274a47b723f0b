@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a08b5681_adcb0dea",
+        "filename": "chrome/browser/media/router/providers/cast/dual_media_sink_service.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-12-21T22:19:21Z",
+      "side": 1,
+      "message": "- My understanding is that this is always leaky since this is allocated with \"new\".\n- According to https://groups.google.com/a/chromium.org/forum/#!topic/cxx/j5rFewBzSBQ/discussion we should use function local statics in new code when possible.",
+      "parentUuid": "ec83bc6f_2fe3619b",
+      "revId": "8a5d92d5a21c74b3dd4331f57a1274a47b723f0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4929faab_d9abec0e",
         "filename": "chrome/browser/media/router/providers/cast/dual_media_sink_service.cc",
         "patchSetId": 9
@@ -33,6 +51,24 @@
       "revId": "8a5d92d5a21c74b3dd4331f57a1274a47b723f0b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f5066f5_7d6b493c",
+        "filename": "chrome/browser/media/router/providers/cast/dual_media_sink_service.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-12-21T22:19:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4929faab_d9abec0e",
+      "revId": "8a5d92d5a21c74b3dd4331f57a1274a47b723f0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "7efecbd0_8e46168f",
+        "filename": "chrome/browser/media/router/providers/cast/dual_media_sink_service.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-12-21T22:19:21Z",
+      "side": 1,
+      "message": "Yeah. This patch changes DMSS/CMSS so that the call from IO goes to DMSS/CMSS first (bound with WeakPtr).",
+      "parentUuid": "25b5b1a6_d7f8bae5",
+      "revId": "8a5d92d5a21c74b3dd4331f57a1274a47b723f0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7f2012e1_40610842",
         "filename": "chrome/browser/media/router/providers/cast/dual_media_sink_service.cc",
         "patchSetId": 9
@@ -67,6 +121,24 @@
       "revId": "8a5d92d5a21c74b3dd4331f57a1274a47b723f0b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "759daba7_c772cf58",
+        "filename": "chrome/browser/media/router/providers/cast/dual_media_sink_service.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-12-21T22:19:21Z",
+      "side": 1,
+      "message": "ditto",
+      "parentUuid": "7f2012e1_40610842",
+      "revId": "8a5d92d5a21c74b3dd4331f57a1274a47b723f0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "2ef964f7_7d90364d",
+        "filename": "chrome/browser/media/router/providers/cast/dual_media_sink_service.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-12-21T22:19:21Z",
+      "side": 1,
+      "message": "Good catch, thanks.",
+      "parentUuid": "6fdc5599_fc25948a",
+      "revId": "8a5d92d5a21c74b3dd4331f57a1274a47b723f0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "35b52c2b_afa541f8",
         "filename": "chrome/browser/media/router/providers/cast/dual_media_sink_service.h",
         "patchSetId": 9
@@ -98,6 +188,24 @@
       "writtenOn": "2017-12-21T20:50:35Z",
       "side": 1,
       "message": "Why?  I see no dependency on UI state (Profile, etc.)",
+      "revId": "8a5d92d5a21c74b3dd4331f57a1274a47b723f0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e728bdcf_345756ad",
+        "filename": "chrome/browser/media/router/providers/cast/dual_media_sink_service.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-12-21T22:19:21Z",
+      "side": 1,
+      "message": "Couple of reasons:\ng_browser_process (used in constructor) can only be accessed on UI thread.\nThis class interacts with MediaRouterDesktop which runs on UI thread.",
+      "parentUuid": "35b52c2b_afa541f8",
       "revId": "8a5d92d5a21c74b3dd4331f57a1274a47b723f0b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "a60a7ff1_8f8e538b",
+        "filename": "chrome/browser/media/router/providers/cast/dual_media_sink_service.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-12-21T22:19:21Z",
+      "side": 1,
+      "message": "I am not sure what that means. Subscription objects are part of the base::CallbackList API, which is what I am using to let multiple MediaRouter instances subscribe to DualMediaSinkService.",
+      "parentUuid": "0cb3d60a_2438f6f9",
+      "revId": "8a5d92d5a21c74b3dd4331f57a1274a47b723f0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c234e40f_b2818b05",
         "filename": "chrome/browser/media/router/providers/cast/dual_media_sink_service.h",
         "patchSetId": 9
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "94dc1e1e_b73d8ef8",
+        "filename": "chrome/browser/media/router/providers/cast/dual_media_sink_service.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-12-21T22:19:21Z",
+      "side": 1,
+      "message": "Because DualMediaSinkService is leaky, dtor shouldn\u0027t be invoked by anyone. Made it private.",
+      "parentUuid": "c234e40f_b2818b05",
+      "revId": "8a5d92d5a21c74b3dd4331f57a1274a47b723f0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2d701e9f_04d60fc1",
         "filename": "chrome/browser/media/router/providers/cast/dual_media_sink_service.h",
         "patchSetId": 9
@@ -149,6 +293,24 @@
       "writtenOn": "2017-12-21T20:50:35Z",
       "side": 1,
       "message": "current_sinks_ isn\u0027t POD; please define in .cc and use CamelCase (e.g. GetCurrentSinks)",
+      "revId": "8a5d92d5a21c74b3dd4331f57a1274a47b723f0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95dbbca7_c664ecca",
+        "filename": "chrome/browser/media/router/providers/cast/dual_media_sink_service.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-12-21T22:19:21Z",
+      "side": 1,
+      "message": "I couldn\u0027t find rules that says the rule applies to PODs only?",
+      "parentUuid": "2d701e9f_04d60fc1",
       "revId": "8a5d92d5a21c74b3dd4331f57a1274a47b723f0b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
