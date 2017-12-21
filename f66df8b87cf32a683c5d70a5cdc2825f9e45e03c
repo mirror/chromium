@@ -34,6 +34,24 @@
       "revId": "f66df8b87cf32a683c5d70a5cdc2825f9e45e03c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a8f20b3_de21f1cd",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsRotateToFullscreenDelegate.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-12-21T10:41:59Z",
+      "side": 1,
+      "message": "As discussed offline and replied to the bug (https://bugs.chromium.org/p/chromium/issues/detail?id\u003d795286), using the current context in DeviceOrientationEventPump is wrong.\n\nGiven the urgency, I\u0027m okay with using the main world and land this fix (using the main world is wrong, but using the current context is already wrong, so it won\u0027t make a big difference...)\n\nConsider removing the current context after landing this fix.",
+      "parentUuid": "e58e5acf_a7a70d0e",
+      "revId": "f66df8b87cf32a683c5d70a5cdc2825f9e45e03c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
