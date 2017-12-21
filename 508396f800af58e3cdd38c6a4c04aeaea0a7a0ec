@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "715ca1ff_09c26efb",
+        "filename": "cc/paint/paint_op_buffer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2129,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-12-21T18:06:49Z",
+      "side": 1,
+      "message": "nit: can you please move this if outside the op_count check?\n\nif (oop_pic_) {\n  ...\n  return;\n}\n\nif (!op_count_)\n  return;\n\nAgain, I\u0027m working on the assumption that PaintOpBuffer can either be painted with ops or have a pic, but not both.",
+      "range": {
+        "startLine": 2129,
+        "startChar": 4,
+        "endLine": 2129,
+        "endChar": 19
+      },
+      "revId": "508396f800af58e3cdd38c6a4c04aeaea0a7a0ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d951c5a1_33bfbaef",
+        "filename": "cc/paint/paint_op_buffer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2132,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-12-21T18:06:49Z",
+      "side": 1,
+      "message": "nit: MakeTrans is static, so you can just do\n\nSkMatrix matrix \u003d SkMatrix::MakeTrans(rect_.x(), rect_.y());",
+      "range": {
+        "startLine": 2131,
+        "startChar": 6,
+        "endLine": 2132,
+        "endChar": 54
+      },
+      "revId": "508396f800af58e3cdd38c6a4c04aeaea0a7a0ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae0fd34c_bb824479",
+        "filename": "cc/paint/paint_op_buffer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 841,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-12-21T18:06:49Z",
+      "side": 1,
+      "message": "Should we DCHECK in this function that |oop_pic_| isn\u0027t set? It would be weird if we set the picture but then try to paint into the buffer anyway. I\u0027m assuming that isn\u0027t current possible, right?",
+      "revId": "508396f800af58e3cdd38c6a4c04aeaea0a7a0ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5643095_b9019a75",
+        "filename": "cc/paint/paint_op_buffer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 1060,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-12-21T18:06:49Z",
+      "side": 1,
+      "message": "nit: maybe just picture_? I\u0027m a little weary about naming this \"oop\" since although it is out of process, it conflicts with out of process rasterization naming which we\u0027re working on. Maybe just leave a comment here explaining when this would be used?",
+      "range": {
+        "startLine": 1060,
+        "startChar": 19,
+        "endLine": 1060,
+        "endChar": 27
+      },
+      "revId": "508396f800af58e3cdd38c6a4c04aeaea0a7a0ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
