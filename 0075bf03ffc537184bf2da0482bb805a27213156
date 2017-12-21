@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "ebaf42cc_9bce37bb",
+        "filename": "chrome/browser/android/vr_shell/vr_gl_thread.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-12-21T18:11:51Z",
+      "side": 1,
+      "message": "I move the asset load initiation out of VrShellGl.  It doesn\u0027t seem related to the GL context or rendering at all, and it seems more at home here.",
+      "revId": "0075bf03ffc537184bf2da0482bb805a27213156",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7820b5b2_706c856f",
         "filename": "chrome/browser/android/vr_shell/vr_gl_thread.cc",
         "patchSetId": 2
@@ -19,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "2fab3268_54d2d45d",
+        "filename": "chrome/browser/android/vr_shell/vr_gl_thread.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-12-21T18:11:51Z",
+      "side": 1,
+      "message": "Filed crbug.com/796933, linked to the component umbrella bug, and assigned to me.",
+      "parentUuid": "7820b5b2_706c856f",
+      "revId": "0075bf03ffc537184bf2da0482bb805a27213156",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6b6a0933_00b95061",
         "filename": "chrome/browser/vr/elements/background.cc",
         "patchSetId": 2
@@ -30,6 +65,24 @@
       "writtenOn": "2017-12-20T22:26:29Z",
       "side": 1,
       "message": "why not gl_FragColor \u003d color?",
+      "revId": "0075bf03ffc537184bf2da0482bb805a27213156",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "587f9aa8_fa031a1c",
+        "filename": "chrome/browser/vr/elements/background.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-12-21T18:11:51Z",
+      "side": 1,
+      "message": "Good catch! This was left over from the brightness demo hack, and should have been removed.",
+      "parentUuid": "6b6a0933_00b95061",
       "revId": "0075bf03ffc537184bf2da0482bb805a27213156",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
