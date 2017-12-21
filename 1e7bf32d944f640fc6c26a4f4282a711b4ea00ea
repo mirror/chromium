@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4241ade2_cc0621b4",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/cookies/http-state/resources/cookie-setter.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-12-21T10:03:14Z",
+      "side": 1,
+      "message": "You might have forgotten to upload this file?",
+      "revId": "1e7bf32d944f640fc6c26a4f4282a711b4ea00ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
