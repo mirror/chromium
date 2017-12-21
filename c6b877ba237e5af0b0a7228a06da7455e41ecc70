@@ -16,6 +16,24 @@
       "revId": "c6b877ba237e5af0b0a7228a06da7455e41ecc70",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2bc2383_729cca7a",
+        "filename": "third_party/android_deps/README.chromium",
+        "patchSetId": 15
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-12-21T22:45:28Z",
+      "side": 1,
+      "message": "Exactly, the parent CL[1] adds the capability to pull license information from the subdirectories by looking at the additional_readme_paths.json file. In the follow up CL[2] you can see how it looks like when there are subdirectories. The README and LICENSE files are currently shipped inside of the CIPD package that will be downloaded when gclient hooks run.\n\n\n[1]: https://chromium-review.googlesource.com/c/chromium/src/+/822612\n[2]: https://chromium-review.googlesource.com/c/chromium/src/+/837189",
+      "parentUuid": "442b225c_178d4430",
+      "revId": "c6b877ba237e5af0b0a7228a06da7455e41ecc70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
