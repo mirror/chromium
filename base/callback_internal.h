@@ -128,6 +128,8 @@ class BASE_EXPORT CallbackBase {
   // Returns the Callback into an uninitialized state.
   void Reset();
 
+  size_t EstimateMemoryUsage() const;
+
  protected:
   using InvokeFuncStorage = BindStateBase::InvokeFuncStorage;
 
