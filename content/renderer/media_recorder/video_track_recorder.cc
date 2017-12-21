@@ -295,11 +295,11 @@ void VideoTrackRecorder::Encoder::RetrieveFrameOnMainThread(
                           media::Context3D(context_provider->ContextGL(),
                                            context_provider->GrContext()));
 
-    SkPixmap pixmap;
-    if (!bitmap_.peekPixels(&pixmap)) {
+    if (!bitmap_.getPixels()) {
       DLOG(ERROR) << "Error trying to map PaintSurface's pixels";
       return;
     }
+    SkPixmap pixmap = bitmap_.pixmap();
 
     const uint32 source_pixel_format =
         (kN32_SkColorType == kRGBA_8888_SkColorType) ? libyuv::FOURCC_ABGR

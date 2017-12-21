@@ -67,9 +67,8 @@ scoped_refptr<media::VideoFrame> CopyFrame(
         frame.get(), &paint_canvas,
         media::Context3D(provider->ContextGL(), provider->GrContext()));
 
-    SkPixmap pixmap;
-    const bool result = bitmap.peekPixels(&pixmap);
-    DCHECK(result) << "Error trying to access SkBitmap's pixels";
+    SkPixmap pixmap = bitmap.pixmap();
+    DCHECK(bitmap.getPixels()) << "Error trying to access SkBitmap's pixels";
 
     const uint32 source_pixel_format =
         (kN32_SkColorType == kRGBA_8888_SkColorType) ? libyuv::FOURCC_ABGR
