@@ -52,6 +52,24 @@
       "revId": "4dfd0e3cc82cef5af65f1afebbd29f360152f116",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf456709_c66f9cbb",
+        "filename": "chrome/browser/memory_details_android.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-12-21T20:10:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "410f0202_98997f1b",
+      "revId": "4dfd0e3cc82cef5af65f1afebbd29f360152f116",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
