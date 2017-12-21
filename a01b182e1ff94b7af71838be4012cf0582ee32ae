@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c8c57e9b_f6f62110",
+        "filename": "cc/layers/picture_layer_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 891,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-12-21T00:29:08Z",
+      "side": 1,
+      "message": "maybe just (default_tile_width + 1) / 2? with a comment explaining that it\u0027s rounding",
+      "range": {
+        "startLine": 891,
+        "startChar": 10,
+        "endLine": 891,
+        "endChar": 63
+      },
+      "revId": "a01b182e1ff94b7af71838be4012cf0582ee32ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
