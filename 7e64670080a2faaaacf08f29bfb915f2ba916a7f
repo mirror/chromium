@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2cc2d0e8_8f659490",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 14
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-21T23:37:07Z",
+      "side": 1,
+      "message": "You may want to mention the IPC receiver is going to be implemented in https://crrev.com/c/822155.",
+      "revId": "7e64670080a2faaaacf08f29bfb915f2ba916a7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3401b2e_688f985d",
+        "filename": "content/common/frame_messages.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 1650,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-21T23:37:07Z",
+      "side": 1,
+      "message": "Is \"Remote\" a better name?",
+      "range": {
+        "startLine": 1650,
+        "startChar": 38,
+        "endLine": 1650,
+        "endChar": 41
+      },
+      "revId": "7e64670080a2faaaacf08f29bfb915f2ba916a7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbc42e06_4e6fd871",
+        "filename": "third_party/WebKit/Source/core/frame/RemoteFrameClient.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-21T23:37:07Z",
+      "side": 1,
+      "message": "nit: blank line above, like all the other methods.",
+      "revId": "7e64670080a2faaaacf08f29bfb915f2ba916a7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
