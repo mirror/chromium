@@ -1950,6 +1950,11 @@ void ShelfView::OnBoundsAnimatorProgressed(views::BoundsAnimator* animator) {
   shelf_->NotifyShelfIconPositionsChanged();
   PreferredSizeChanged();
 
+  // Only alter the back button opacity if the bounds animation is triggered by
+  // entering or exiting tablet mode.
+  if (!shelf_->is_tablet_mode_animation_running())
+    return;
+
   float opacity = 0.f;
   const gfx::SlideAnimation* animation =
       bounds_animator_->GetAnimationForView(GetBackButton());
