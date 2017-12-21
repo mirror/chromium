@@ -4,13 +4,14 @@
 
 #include <utility>
 
-#include "content/browser/webauth/cbor/cbor_reader.h"
+#include "components/cbor/cbor_reader.h"
+
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 /* Leveraging RFC 7049 examples from
    https://github.com/cbor/test-vectors/blob/master/appendix_a.json. */
-namespace content {
+namespace cbor {
 
 TEST(CBORReaderTest, TestReadUint) {
   typedef struct {
@@ -766,4 +767,4 @@ TEST(CBORReaderTest, TestUnsupportedSimplevalue) {
   }
 }
 
-}  // namespace content
+}  // namespace cbor
