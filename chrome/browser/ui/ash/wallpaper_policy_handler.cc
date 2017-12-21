@@ -42,12 +42,15 @@ bool CheckWallpaperFileMatchHash(const base::FilePath& device_wallpaper_file,
 WallpaperPolicyHandler::WallpaperPolicyHandler(Delegate* delegate)
     : delegate_(delegate), weak_factory_(this) {
   DCHECK(delegate_);
-  device_wallpaper_image_subscription_ =
-      CrosSettings::Get()->AddSettingsObserver(
-          chromeos::kDeviceWallpaperImage,
-          base::BindRepeating(
-              &WallpaperPolicyHandler::DeviceWallpaperPolicyChanged,
-              weak_factory_.GetWeakPtr()));
+  // CrosSettings::Get() can be nullptr in tests.
+  if (CrosSettings::Get()) {
+    device_wallpaper_image_subscription_ =
+        CrosSettings::Get()->AddSettingsObserver(
+            chromeos::kDeviceWallpaperImage,
+            base::BindRepeating(
+                &WallpaperPolicyHandler::DeviceWallpaperPolicyChanged,
+                weak_factory_.GetWeakPtr()));
+  }
 }
 
 WallpaperPolicyHandler::~WallpaperPolicyHandler() {
@@ -69,7 +72,8 @@ bool WallpaperPolicyHandler::GetDeviceWallpaperPolicyStrings(
     std::string* url,
     std::string* hash) {
   const base::DictionaryValue* dict = nullptr;
-  if (!CrosSettings::Get()->GetDictionary(chromeos::kDeviceWallpaperImage,
+  if (!CrosSettings::Get() ||
+      !CrosSettings::Get()->GetDictionary(chromeos::kDeviceWallpaperImage,
                                           &dict) ||
       !dict->GetStringWithoutPathExpansion("url", url) ||
       !dict->GetStringWithoutPathExpansion("hash", hash)) {
