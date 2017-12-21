@@ -8898,7 +8898,6 @@ interface XRCoordinateSystem
     method getTransformTo
 interface XRDevice : EventTarget
     attribute @@toStringTag
-    getter deviceName
     getter external
     method constructor
     method requestSession
