@@ -16,6 +16,24 @@
       "revId": "77c640714e168e9ea53aa7884e5a87f6af41c38f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "292b9287_31e7ca8f",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 7364,
+      "author": {
+        "id": 1119605
+      },
+      "writtenOn": "2017-12-21T19:19:00Z",
+      "side": 1,
+      "message": "Per coalesce operation. Fixed.",
+      "parentUuid": "a1b10bb4_aa26bd90",
+      "revId": "77c640714e168e9ea53aa7884e5a87f6af41c38f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
