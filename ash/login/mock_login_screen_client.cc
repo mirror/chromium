@@ -25,6 +25,7 @@ void MockLoginScreenClient::AuthenticateUser(
     const AccountId& account_id,
     const std::string& password,
     bool authenticated_by_pin,
+    const password_manager::SyncPasswordData& sync_password_data_unused,
     AuthenticateUserCallback callback) {
   AuthenticateUser_(account_id, password, authenticated_by_pin, callback);
   if (authenticate_user_callback_storage_)

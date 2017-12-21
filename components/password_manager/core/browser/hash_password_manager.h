@@ -14,8 +14,10 @@ class PrefService;
 namespace password_manager {
 
 struct SyncPasswordData {
-  SyncPasswordData() = default;
+  SyncPasswordData();
   SyncPasswordData(const base::string16& password, bool force_update);
+  SyncPasswordData(const SyncPasswordData& other) = default;
+  ~SyncPasswordData() {}
   bool MatchesPassword(const base::string16& password);
 
   size_t length;
