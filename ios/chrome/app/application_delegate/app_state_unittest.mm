@@ -538,7 +538,15 @@ TEST_F(AppStateWithThreadTest, willTerminate) {
   [[appNavigation expect] closeSettingsAnimated:NO completion:nil];
 
   [[browserViewInformation expect] cleanDeviceSharingManager];
-  [[browserViewInformation expect] haltAllTabs];
+  [[browserViewInformation expect] mainTabModel];
+  [[browserViewInformation expect] otrTabModel];
+
+  id mainTabModel = [OCMockObject mockForClass:[TabModel class]];
+  [[mainTabModel expect] haltAllTabs];
+
+  id otrTabModel = [OCMockObject mockForClass:[TabModel class]];
+  [[otrTabModel expect] closeAllTabs];
+  [[otrTabModel expect] saveSessionImmediately:YES];
 
   id startupInformation =
       [OCMockObject mockForProtocol:@protocol(StartupInformation)];
