@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "213d715e_0e821c45",
+        "filename": "cc/paint/paint_op_buffer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2129,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2017-12-21T21:44:58Z",
+      "side": 1,
+      "message": "Correct, that is our assumption. Done.",
+      "parentUuid": "715ca1ff_09c26efb",
+      "range": {
+        "startLine": 2129,
+        "startChar": 4,
+        "endLine": 2129,
+        "endChar": 19
+      },
+      "revId": "508396f800af58e3cdd38c6a4c04aeaea0a7a0ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d951c5a1_33bfbaef",
         "filename": "cc/paint/paint_op_buffer.cc",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "2666f4ab_666ce643",
+        "filename": "cc/paint/paint_op_buffer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2132,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2017-12-21T21:44:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d951c5a1_33bfbaef",
+      "range": {
+        "startLine": 2131,
+        "startChar": 6,
+        "endLine": 2132,
+        "endChar": 54
+      },
+      "revId": "508396f800af58e3cdd38c6a4c04aeaea0a7a0ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ae0fd34c_bb824479",
         "filename": "cc/paint/paint_op_buffer.h",
         "patchSetId": 4
@@ -62,6 +110,24 @@
       "revId": "508396f800af58e3cdd38c6a4c04aeaea0a7a0ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79ff18d1_579aeb23",
+        "filename": "cc/paint/paint_op_buffer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 841,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2017-12-21T21:44:58Z",
+      "side": 1,
+      "message": "Right, that sounds reasonable. Done.",
+      "parentUuid": "ae0fd34c_bb824479",
+      "revId": "508396f800af58e3cdd38c6a4c04aeaea0a7a0ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -85,6 +151,30 @@
       "revId": "508396f800af58e3cdd38c6a4c04aeaea0a7a0ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2941d69d_0d31d1bb",
+        "filename": "cc/paint/paint_op_buffer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 1060,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2017-12-21T21:44:58Z",
+      "side": 1,
+      "message": "Ok, added comments to make that clear.",
+      "parentUuid": "b5643095_b9019a75",
+      "range": {
+        "startLine": 1060,
+        "startChar": 19,
+        "endLine": 1060,
+        "endChar": 27
+      },
+      "revId": "508396f800af58e3cdd38c6a4c04aeaea0a7a0ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
