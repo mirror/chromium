@@ -1,0 +1,136 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a25f804_7b956363",
+        "filename": "chrome/test/data/webui/signin/signin_browsertest.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-21T23:56:32Z",
+      "side": 1,
+      "message": "Can we use ES6 syntax, similar to https://cs.chromium.org/chromium/src/chrome/test/data/webui/extensions/cr_extensions_browsertest.js?l\u003d21 ?",
+      "range": {
+        "startLine": 22,
+        "startChar": 1,
+        "endLine": 22,
+        "endChar": 40
+      },
+      "revId": "97fbe04f3a931159f8d45f75dfe83fad83613710",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc7eb3ab_62aa5fa5",
+        "filename": "chrome/test/data/webui/signin/signin_browsertest.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-21T23:56:32Z",
+      "side": 1,
+      "message": "Since this is the only case, why not call this from the constructor in the C++ test class instead?",
+      "range": {
+        "startLine": 30,
+        "startChar": 2,
+        "endLine": 30,
+        "endChar": 27
+      },
+      "revId": "97fbe04f3a931159f8d45f75dfe83fad83613710",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b73ea1d1_8974631d",
+        "filename": "chrome/test/data/webui/signin/sync_confirmation_test.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-21T23:56:32Z",
+      "side": 1,
+      "message": "Can we call PolymerTest.clearBody() like we do everywhere else?",
+      "revId": "97fbe04f3a931159f8d45f75dfe83fad83613710",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7df32be8_a70e35d1",
+        "filename": "chrome/test/data/webui/signin/sync_confirmation_test.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-21T23:56:32Z",
+      "side": 1,
+      "message": "Nit: Since this is a new file and folder, can we use let/const where possible? Also let\u0027s add an eslint file to enforce this similar to https://cs.chromium.org/chromium/src/chrome/test/data/webui/print_preview/.eslintrc.js?l\u003d7",
+      "range": {
+        "startLine": 9,
+        "startChar": 6,
+        "endLine": 9,
+        "endChar": 9
+      },
+      "revId": "97fbe04f3a931159f8d45f75dfe83fad83613710",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e984d7b_d774c18c",
+        "filename": "chrome/test/data/webui/signin_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-21T23:56:32Z",
+      "side": 1,
+      "message": "Update",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "97fbe04f3a931159f8d45f75dfe83fad83613710",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb1a9506_e0879870",
+        "filename": "chrome/test/data/webui/signin_browsertest.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-21T23:56:32Z",
+      "side": 1,
+      "message": "Update",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "97fbe04f3a931159f8d45f75dfe83fad83613710",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
