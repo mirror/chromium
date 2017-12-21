@@ -239,12 +239,10 @@ void AwBrowserContext::InitUserPrefService() {
   pref_registry->RegisterBooleanPref(autofill::prefs::kAutofillEnabled, false);
   policy::URLBlacklistManager::RegisterProfilePrefs(pref_registry);
 
-  pref_registry->RegisterStringPref(prefs::kAuthServerWhitelist, std::string());
-  pref_registry->RegisterStringPref(prefs::kAuthAndroidNegotiateAccountType,
-                                    std::string());
   pref_registry->RegisterStringPref(prefs::kWebRestrictionsAuthority,
                                     std::string());
 
+  AwURLRequestContextGetter::RegisterPrefs(pref_registry);
   metrics::MetricsService::RegisterPrefs(pref_registry);
   safe_browsing::RegisterProfilePrefs(pref_registry);
 
