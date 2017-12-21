@@ -111,6 +111,28 @@ def get_url_link(name, bucket, authenticated_link=True):
   return os.path.join(url_template % bucket, name)
 
 
+def download(name, dest, bucket, gs_args=None, command_args=None):
+  """Downloads data from Google Storage.
+
+  Args:
+    name: Name of the file on Google Storage.
+    dest: Path to file you want to be downloaded to.
+    bucket: Bucket to upload file to.
+  Returns:
+    Whether the download was successful.
+  """
+
+  bucket = _format_bucket_name(bucket)
+  gs_path = 'gs://%s/%s' % (bucket, name)
+  logging.info('Downloading %s to %s', gs_path, dest)
+
+  cmd = [_GSUTIL_PATH, '-q']
+  cmd.extend(gs_args or [])
+  cmd.extend(['cp'] + (command_args or []) + [gs_path, dest])
+
+  return cmd_helper.RunCmd(cmd)
+
+
 def _format_bucket_name(bucket):
   if bucket.startswith('gs://'):
     bucket = bucket[len('gs://'):]
