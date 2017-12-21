@@ -57,6 +57,9 @@ Bug(none) http/tests/appcache/foreign-fallback.html [ Pass Timeout ]
 Bug(none) http/tests/appcache/main-resource-redirect.html [ Pass Timeout ]
 Bug(none) http/tests/appcache/reload.html [ Pass Timeout ]
 
+# Due to not calling SetCounter (which updates the use counter) after Navigation
+Bug(none) http/tests/serviceworker/chromium/usecounter.html [ Timeout ]
+
 # NetworkService won't support Foreign Fetch.
 
 # Passes on NetworkService and fails on non-NetworkService because
