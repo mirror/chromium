@@ -281,10 +281,12 @@ base::string16 FindChildText(const blink::WebNode& node);
 
 // Exposed for testing purpose
 base::string16 InferLabelFromDivTableTest(
-    const blink::WebFormControlElement& element);
+    const blink::WebFormControlElement& element,
+    const std::vector<base::char16>& stop_words);
 base::string16 FindChildTextWithIgnoreList(
     const blink::WebNode& node,
-    const std::set<blink::WebNode>& divs_to_skip);
+    const std::set<blink::WebNode>& divs_to_skip,
+    const std::set<blink::WebNode>& right_limits);
 
 }  // namespace form_util
 }  // namespace autofill
