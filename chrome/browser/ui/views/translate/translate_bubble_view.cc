@@ -76,6 +76,17 @@ bool Use2016Q2UI() {
   return base::FeatureList::IsEnabled(translate::kTranslateUI2016Q2);
 }
 
+// When the text on the "Translate"/"Done" button changes a layout is required.
+class AdvancedViewContainer : public views::View {
+ public:
+  AdvancedViewContainer() {}
+
+  void ChildPreferredSizeChanged(views::View* child) override { Layout(); }
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(AdvancedViewContainer);
+};
+
 }  // namespace
 
 // static
@@ -915,7 +926,7 @@ views::View* TranslateBubbleView::CreateViewAdvanced() {
     advanced_always_translate_checkbox_->set_listener(this);
   }
 
-  views::View* view = new views::View();
+  views::View* view = new AdvancedViewContainer();
   views::GridLayout* layout =
       view->SetLayoutManager(std::make_unique<views::GridLayout>(view));
 
