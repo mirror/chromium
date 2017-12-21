@@ -104,6 +104,17 @@ class IndexedRulesetMatcher {
       url_pattern_index::proto::ElementType element_type,
       bool disable_generic_rules) const;
 
+  // Returns a UrlRule (randomly selected if multiple rules match) that matches
+  // the |url| of |element_type| initiated by |document_origin|. If nothing (or
+  // only a whitelist rule) matches, nullptr is returned. If both blacklist rule
+  // and whitelist rule match, then a whitelist rule is returned. If only a
+  // blacklist rule matches, a blacklist rule is returned.
+  const url_pattern_index::flat::UrlRule* MatchedUrlRule(
+      const GURL& url,
+      const FirstPartyOrigin& first_party,
+      url_pattern_index::proto::ElementType element_type,
+      bool disable_generic_rules) const;
+
  private:
   const flat::IndexedRuleset* root_;
 
