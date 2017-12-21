@@ -410,6 +410,15 @@ public class LaunchIntentDispatcher implements IntentHandler.IntentHandlerDelega
 
             String url = IntentHandler.getUrlFromIntent(newIntent);
             assert url != null;
+
+            // If |uri| is a content:// URI, we want to propagate the URI permissions. This can't be
+            // achieved by simply adding the FLAG_GRANT_READ_URI_PERMISSION to the Intent, since the
+            // data URI on the Intent isn't |uri|, it just has |uri| as a query parameter.
+            if (uri != null && UrlConstants.CONTENT_SCHEME.equals(uri.getScheme())) {
+                context.grantUriPermission(
+                        context.getPackageName(), uri, Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            }
+
             newIntent.setData(new Uri.Builder()
                                       .scheme(UrlConstants.CUSTOM_TAB_SCHEME)
                                       .authority(uuid)
