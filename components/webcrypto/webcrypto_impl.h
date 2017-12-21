@@ -11,6 +11,10 @@
 #include "third_party/WebKit/public/platform/WebCryptoAlgorithm.h"
 #include "third_party/WebKit/public/platform/WebVector.h"
 
+namespace base {
+class SingleThreadTaskRunner;
+}  // namespace base
+
 namespace webcrypto {
 
 // Wrapper around the Blink WebCrypto asynchronous interface, which forwards to
@@ -21,7 +25,8 @@ namespace webcrypto {
 // EnsureInit() must be called prior to using methods on WebCryptoImpl().
 class WebCryptoImpl : public blink::WebCrypto {
  public:
-  WebCryptoImpl();
+  explicit WebCryptoImpl(
+      scoped_refptr<base::SingleThreadTaskRunner> task_runner);
 
   ~WebCryptoImpl() override;
 
@@ -105,6 +110,8 @@ class WebCryptoImpl : public blink::WebCrypto {
 
  private:
   DISALLOW_COPY_AND_ASSIGN(WebCryptoImpl);
+
+  scoped_refptr<base::SingleThreadTaskRunner> task_runner_;
 };
 
 }  // namespace webcrypto

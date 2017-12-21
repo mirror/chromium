@@ -320,7 +320,8 @@ BlinkPlatformImpl::BlinkPlatformImpl(
     scoped_refptr<base::SingleThreadTaskRunner> main_thread_task_runner,
     scoped_refptr<base::SingleThreadTaskRunner> io_thread_task_runner)
     : main_thread_task_runner_(std::move(main_thread_task_runner)),
-      io_thread_task_runner_(std::move(io_thread_task_runner)) {}
+      io_thread_task_runner_(std::move(io_thread_task_runner)),
+      web_crypto_(main_thread_task_runner_) {}
 
 void BlinkPlatformImpl::WaitUntilWebThreadTLSUpdate(
     blink::scheduler::WebThreadBase* thread) {
