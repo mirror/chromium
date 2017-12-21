@@ -22,6 +22,30 @@
       "revId": "2a6dd68abebb4677c9b919fc85b71a7397fd34f9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79f7f372_8b4851b8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/LaunchIntentDispatcher.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 415,
+      "author": {
+        "id": 1231235
+      },
+      "writtenOn": "2017-12-21T16:26:20Z",
+      "side": 1,
+      "message": "The reason I had this inside the if is because this is where the uri is set as a query param instead of being the data uri directly. Outside of this if statement, the usual setting of FLAG_GRANT_READ_URI_PERMISSION on the Intent should work fine, and the caller should have set that flag on the given Intent if needed.",
+      "parentUuid": "f0ca4ae3_1b9d1132",
+      "range": {
+        "startLine": 415,
+        "startChar": 15,
+        "endLine": 415,
+        "endChar": 23
+      },
+      "revId": "2a6dd68abebb4677c9b919fc85b71a7397fd34f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
