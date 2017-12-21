@@ -16,6 +16,24 @@
       "revId": "a58c06bce4ece25002748c6efb92aed81d08a338",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f7ed1e2_ce00d56f",
+        "filename": "extensions/renderer/content_watcher.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-21T19:16:21Z",
+      "side": 1,
+      "message": "Great question!  The reason here is because \"That\u0027s how it always was\" :P But I did some digging into this code, and I think I found the real reason:\nThis message is sent to the browser, and then the browser updates the matched selectors for the *WebContents* to be whatever we send.  As such, if the top frame matches selector 1, and then later an (accessible) iframe matches selector 2, then we need to notify the browser.  But the browser basically just says \"matched_selectors \u003d new_matched_selectors\", so we need to send selector 1 and selector 2, rather than just selector 2.  This requires traversing the frame tree.\n\nI think we *should* be able to update this on the browser side to e.g. store matched selectors by frame, and then just clear out the frame\u0027s selector.  This should be much easier once this is frame-ified, too, since we\u0027ll know which render frame had which selectors modified.  But it will still be a significant-ish change on the browser side, and I\u0027d prefer to not tackle that in this CL.\n\nI\u0027ve updated a comment here explaining *why* we send all matching selectors, as well as added a TODO to clean this up on the browser side to obviate the need for the traversal.",
+      "parentUuid": "35256d0c_f1442c2a",
+      "revId": "a58c06bce4ece25002748c6efb92aed81d08a338",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
