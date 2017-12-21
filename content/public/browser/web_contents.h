@@ -34,6 +34,7 @@
 #include "ui/base/window_open_disposition.h"
 #include "ui/gfx/geometry/rect.h"
 #include "ui/gfx/native_widget_types.h"
+#include "ui/gfx/range/range.h"
 
 #if defined(OS_ANDROID)
 #include "base/android/scoped_java_ref.h"
@@ -77,6 +78,18 @@ struct Manifest;
 struct MHTMLGenerationParams;
 struct PageImportanceSignals;
 struct RendererPreferences;
+
+#if defined(OS_MACOSX)
+
+struct TextSuggestionInfo {
+  base::string16 text;
+  base::string16 text_for_suggestion;
+  int start;
+  int offsetFromCursor;
+  int end;
+};
+
+#endif
 
 // WebContents is the core class in content/. A WebContents renders web content
 // (usually HTML) in a rectangular area.
@@ -512,6 +525,9 @@ class WebContents : public PageNavigator,
   // Replaces the misspelling in the current selection.
   virtual void ReplaceMisspelling(const base::string16& word) = 0;
 
+  virtual void ReplaceTextAtRange(const gfx::Range& range,
+                                  const base::string16& word) = 0;
+
   // Let the renderer know that the menu has been closed.
   virtual void NotifyContextMenuClosed(
       const CustomContextMenuContext& context) = 0;
@@ -823,6 +839,8 @@ class WebContents : public PageNavigator,
 
   // Returns true if the WebContents has completed its first meaningful paint.
   virtual bool CompletedFirstVisuallyNonEmptyPaint() const = 0;
+
+  virtual TextSuggestionInfo GetTextSuggestionInfo() = 0;
 #endif  // OS_ANDROID
 
  private:

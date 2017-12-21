@@ -550,7 +550,8 @@ class WebLocalFrame : public WebFrame {
   // the current base, this function will do nothing.
   virtual void MoveRangeSelectionExtent(const WebPoint&) = 0;
   // Replaces the selection with the input string.
-  virtual void ReplaceSelection(const WebString&) = 0;
+  virtual void ReplaceSelection(const WebString&,
+                                bool smart_replace = true) = 0;
   // Deletes text before and after the current cursor position, excluding the
   // selection. The lengths are supplied in UTF-16 Code Unit, not in code points
   // or in glyphs.

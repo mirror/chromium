@@ -292,7 +292,7 @@ class CORE_EXPORT WebLocalFrameImpl final
   WebSandboxFlags EffectiveSandboxFlags() const override;
   void DidCallAddSearchProvider() override;
   void DidCallIsSearchProviderInstalled() override;
-  void ReplaceSelection(const WebString&) override;
+  void ReplaceSelection(const WebString&, bool smart_replace = true) override;
   void RequestFind(int identifier,
                    const WebString& search_text,
                    const WebFindOptions&) override;

@@ -302,6 +302,8 @@ interface FrameInputHandler {
   // specified string.
   Replace(mojo.common.mojom.String16 word);
 
+  ReplaceTextAtRange(gfx.mojom.Range range, mojo.common.mojom.String16 word);
+
   // Replaces the misspelling in the selected region with the specified string.
   ReplaceMisspelling(mojo.common.mojom.String16 word);
 
