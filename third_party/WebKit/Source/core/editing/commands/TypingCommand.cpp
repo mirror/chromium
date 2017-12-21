@@ -180,7 +180,8 @@ TypingCommand::TypingCommand(Document& document,
       opened_by_backward_delete_(false),
       should_retain_autocorrection_indicator_(options &
                                               kRetainAutocorrectionIndicator),
-      should_prevent_spell_checking_(options & kPreventSpellChecking) {
+      should_prevent_spell_checking_(options & kPreventSpellChecking),
+      suppress_post_insert_events_(options & kSuppressInputEvent) {
   UpdatePreservesTypingStyle(command_type_);
 }
 
@@ -587,7 +588,7 @@ void TypingCommand::TypingAddedToOpenCommand(
   UpdatePreservesTypingStyle(command_type_for_added_typing);
   UpdateCommandTypeOfOpenCommand(command_type_for_added_typing);
 
-  frame->GetEditor().AppliedEditing(this);
+  frame->GetEditor().AppliedEditing(this, suppress_post_insert_events_);
 }
 
 void TypingCommand::InsertText(const String& text,
