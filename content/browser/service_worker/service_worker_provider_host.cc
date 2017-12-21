@@ -442,7 +442,8 @@ void ServiceWorkerProviderHost::RemoveServiceWorkerRegistrationObjectHost(
 
 bool ServiceWorkerProviderHost::AllowServiceWorker(const GURL& scope) {
   return GetContentClient()->browser()->AllowServiceWorker(
-      scope, topmost_frame_url(), dispatcher_host_->resource_context(),
+      scope, IsProviderForClient() ? topmost_frame_url() : document_url(),
+      dispatcher_host_->resource_context(),
       base::Bind(&WebContentsImpl::FromRenderFrameHostID, render_process_id_,
                  frame_id()));
 }
