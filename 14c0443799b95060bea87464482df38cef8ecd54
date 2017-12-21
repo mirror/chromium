@@ -106,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "c6a521a1_e610ba62",
+        "filename": "build/android/rebaseline_render_tests.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-12-21T20:16:10Z",
+      "side": 1,
+      "message": "I think this is fine for now. I agree that it\u0027d be good to have this in a more common location and shareable, but we still haven\u0027t really worked out the best way to do this.",
+      "parentUuid": "6f5c3c22_d8a49881",
+      "revId": "14c0443799b95060bea87464482df38cef8ecd54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d96cdb8c_506d9475",
         "filename": "build/android/rebaseline_render_tests.py",
         "patchSetId": 6
