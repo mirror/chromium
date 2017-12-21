@@ -779,4 +779,292 @@ IN_PROC_BROWSER_TEST_F(NavigationMojoResponseBrowserTest, FailedNavigation) {
   }
 }
 
+IN_PROC_BROWSER_TEST_F(BrowserSideNavigationBaseBrowserTest,
+                       CookiesOn302Redirect) {
+  // Handler for /a
+  embedded_test_server()->RegisterRequestHandler(base::BindRepeating(
+      [](const net::test_server::HttpRequest& request)
+          -> std::unique_ptr<net::test_server::HttpResponse> {
+        if (request.relative_url != "/a")
+          return nullptr;
+
+        auto http_response =
+            std::make_unique<net::test_server::BasicHttpResponse>();
+
+        // 302 redirect
+        http_response->set_code(net::HTTP_FOUND);
+        http_response->AddCustomHeader("Location", "./b");
+
+        // Add a cookie
+        http_response->AddCustomHeader("Set-Cookie", "a=a;path=/;HttpOnly");
+        return http_response;
+      }));
+
+  // Handler for /b
+  embedded_test_server()->RegisterRequestHandler(base::BindRepeating(
+      [](const net::test_server::HttpRequest& request)
+          -> std::unique_ptr<net::test_server::HttpResponse> {
+        if (request.relative_url != "/b")
+          return nullptr;
+
+        // Check that the cookie `a=a` was sent.
+        auto cookie_header = request.headers.find("Cookie");
+        EXPECT_NE(request.headers.end(), cookie_header);
+        EXPECT_EQ("a=a", cookie_header->second);
+
+        // Return a basic response to end the test.
+        auto http_response =
+            std::make_unique<net::test_server::BasicHttpResponse>();
+        http_response->set_content_type("text/plain");
+        http_response->set_content("OK");
+        return http_response;
+      }));
+
+  ASSERT_TRUE(embedded_test_server()->Start());
+
+  GURL url_a(embedded_test_server()->GetURL("/a"));
+  EXPECT_FALSE(NavigateToURL(shell(), url_a));
+}
+
+IN_PROC_BROWSER_TEST_F(BrowserSideNavigationBaseBrowserTest,
+                       CookiesOn302RedirectIframe) {
+  // Handler for /main_frame
+  embedded_test_server()->RegisterRequestHandler(base::BindRepeating(
+      [](const net::test_server::HttpRequest& request)
+          -> std::unique_ptr<net::test_server::HttpResponse> {
+        LOG(ERROR) << request.relative_url;
+        if (request.relative_url != "/main_frame")
+          return nullptr;
+
+        auto http_response =
+            std::make_unique<net::test_server::BasicHttpResponse>();
+
+        http_response->set_content_type("text/html");
+        http_response->set_content("<iframe src='./iframe_a'></iframe>");
+
+        // Add a cookie
+        // http_response->AddCustomHeader("Set-Cookie", "a=a");
+        return http_response;
+      }));
+
+  // Handler for /iframe_a
+  embedded_test_server()->RegisterRequestHandler(base::BindRepeating(
+      [](const net::test_server::HttpRequest& request)
+          -> std::unique_ptr<net::test_server::HttpResponse> {
+        if (request.relative_url != "/iframe_a")
+          return nullptr;
+
+        auto http_response =
+            std::make_unique<net::test_server::BasicHttpResponse>();
+
+        // 302 redirect
+        http_response->set_code(net::HTTP_FOUND);
+        http_response->AddCustomHeader("Location", "./iframe_b");
+
+        // Add a cookie
+        http_response->AddCustomHeader(
+            "Set-Cookie", "a=a; HttpOnly; SameSite=Strict; Path=/");
+        return http_response;
+      }));
+
+  // Handler for /iframe_b
+  embedded_test_server()->RegisterRequestHandler(base::BindRepeating(
+      [](const net::test_server::HttpRequest& request)
+          -> std::unique_ptr<net::test_server::HttpResponse> {
+        if (request.relative_url != "/iframe_b")
+          return nullptr;
+
+        // Check that the cookie `a=a` was sent.
+        auto cookie_header = request.headers.find("Cookie");
+        EXPECT_NE(request.headers.end(), cookie_header);
+        EXPECT_EQ("a=a", cookie_header->second);
+
+        // Return a basic response to end the test.
+        auto http_response =
+            std::make_unique<net::test_server::BasicHttpResponse>();
+        http_response->set_content_type("text/plain");
+        http_response->set_content("OK");
+        return http_response;
+      }));
+
+  ASSERT_TRUE(embedded_test_server()->Start());
+
+  GURL main_frame_url(embedded_test_server()->GetURL("/main_frame"));
+  EXPECT_TRUE(NavigateToURL(shell(), main_frame_url));
+}
+
+IN_PROC_BROWSER_TEST_F(BrowserSideNavigationBaseBrowserTest,
+                       CookiesOn302RedirectIframeCrossOrigin) {
+  // Handler for /main_frame
+  embedded_test_server()->RegisterRequestHandler(base::BindRepeating(
+      [](const net::test_server::HttpRequest& request)
+          -> std::unique_ptr<net::test_server::HttpResponse> {
+        LOG(ERROR) << request.relative_url;
+        if (request.relative_url != "/main_frame")
+          return nullptr;
+
+        auto http_response =
+            std::make_unique<net::test_server::BasicHttpResponse>();
+
+        // Add a cross-origin iframe.
+        GURL::Replacements set_iframe_component;
+        set_iframe_component.SetHostStr("cross-site.com");
+        set_iframe_component.SetPathStr("/iframe_a");
+        GURL iframe_a_url =
+            request.base_url.ReplaceComponents(set_iframe_component);
+        http_response->set_content_type("text/html");
+        http_response->set_content("<iframe src='" + iframe_a_url.spec() +
+                                   "'></iframe>");
+
+        // Add a cookie
+        // http_response->AddCustomHeader("Set-Cookie", "a=a");
+        return http_response;
+      }));
+
+  // Handler for /iframe_a
+  embedded_test_server()->RegisterRequestHandler(base::BindRepeating(
+      [](const net::test_server::HttpRequest& request)
+          -> std::unique_ptr<net::test_server::HttpResponse> {
+        if (request.relative_url != "/iframe_a")
+          return nullptr;
+
+        auto http_response =
+            std::make_unique<net::test_server::BasicHttpResponse>();
+
+        // 302 redirect
+        http_response->set_code(net::HTTP_FOUND);
+        http_response->AddCustomHeader("Location", "./iframe_b");
+
+        // Add a cookie
+        http_response->AddCustomHeader(
+            "Set-Cookie", "a=a; HttpOnly; SameSite=Strict; Path=/");
+        return http_response;
+      }));
+
+  // Handler for /iframe_b
+  embedded_test_server()->RegisterRequestHandler(base::BindRepeating(
+      [](const net::test_server::HttpRequest& request)
+          -> std::unique_ptr<net::test_server::HttpResponse> {
+        if (request.relative_url != "/iframe_b")
+          return nullptr;
+
+        // Check that the cookie `a=a` was sent.
+        auto cookie_header = request.headers.find("Cookie");
+        EXPECT_NE(request.headers.end(), cookie_header);
+        EXPECT_EQ("a=a", cookie_header->second);
+
+        // Return a basic response to end the test.
+        auto http_response =
+            std::make_unique<net::test_server::BasicHttpResponse>();
+        http_response->set_content_type("text/plain");
+        http_response->set_content("OK");
+        return http_response;
+      }));
+
+  ASSERT_TRUE(embedded_test_server()->Start());
+
+  GURL main_frame_url = embedded_test_server()->GetURL("a.com", "/main_frame");
+  EXPECT_TRUE(NavigateToURL(shell(), main_frame_url));
+  EXPECT_TRUE(WaitForLoadStop(shell()->web_contents()));
+}
+
+// This test reproduce
+// https://bugs.chromium.org/p/chromium/issues/detail?id=696204#c1
+IN_PROC_BROWSER_TEST_F(BrowserSideNavigationBaseBrowserTest,
+                       CookiesOn302RedirectSpecial) {
+  // Handler for /
+  embedded_test_server()->RegisterRequestHandler(base::BindRepeating(
+      [](const net::test_server::HttpRequest& request)
+          -> std::unique_ptr<net::test_server::HttpResponse> {
+        LOG(ERROR) << request.base_url << " " << request.relative_url;
+        if (request.relative_url != "/")
+          return nullptr;
+
+        auto http_response =
+            std::make_unique<net::test_server::BasicHttpResponse>();
+
+        http_response->AddCustomHeader(
+            "Cache-Control", "max-age=0, no-cache, no-store, must-revalidate");
+        http_response->set_content_type("text/html; charset=UTF-8");
+
+        // Redirect to http://cross-site.com/cookiewhere
+        GURL::Replacements replacement;
+        replacement.SetHostStr("cross-site.com");
+        replacement.SetPathStr("/cookiewhere");
+        GURL location_url = request.base_url.ReplaceComponents(replacement);
+        LOG(ERROR) << "location = " << location_url;
+        http_response->set_code(net::HTTP_FOUND);
+        http_response->AddCustomHeader("Location", location_url.spec());
+        return http_response;
+      }));
+
+  // Handler for /cookiewhere
+  embedded_test_server()->RegisterRequestHandler(base::BindRepeating(
+      [](const net::test_server::HttpRequest& request)
+          -> std::unique_ptr<net::test_server::HttpResponse> {
+        if (request.relative_url != "/cookiewhere")
+          return nullptr;
+
+        auto http_response =
+            std::make_unique<net::test_server::BasicHttpResponse>();
+        http_response->AddCustomHeader("cache-control", "none");
+        http_response->AddCustomHeader("Content-Length", "0");
+        http_response->AddCustomHeader("Pragma", "No-Cache");
+        http_response->AddCustomHeader("Set-Cookie", "a=a; HttpOnly; Path=/");
+        http_response->set_code(net::HTTP_FOUND);
+        http_response->AddCustomHeader("Location", "/anywhere");
+        return http_response;
+      }));
+
+  // Handler for /anywhere
+  embedded_test_server()->RegisterRequestHandler(base::BindRepeating(
+      [](const net::test_server::HttpRequest& request)
+          -> std::unique_ptr<net::test_server::HttpResponse> {
+        if (request.relative_url != "/anywhere")
+          return nullptr;
+
+        auto http_response =
+            std::make_unique<net::test_server::BasicHttpResponse>();
+
+        http_response->AddCustomHeader("cache-control", "none");
+        http_response->AddCustomHeader("Content-Length", "0");
+        http_response->AddCustomHeader("Location", "/somewhere");
+        http_response->AddCustomHeader("Pragma", "No-Cache");
+        http_response->AddCustomHeader(
+            "Set-Cookie",
+            "bell-custom=; Max-Age=0; Expires=Thu, 01 Jan 1970 00:00:00 GMT; "
+            "HttpOnly; Path=/");
+        http_response->AddCustomHeader(
+            "Set-Cookie", "a=b; HttpOnly; SameSite=Strict; Path=/");
+        http_response->set_code(net::HTTP_FOUND);
+        http_response->AddCustomHeader("Location", "/somewhere");
+        return http_response;
+      }));
+
+  // Handler for /somewhere
+  embedded_test_server()->RegisterRequestHandler(base::BindRepeating(
+      [](const net::test_server::HttpRequest& request)
+          -> std::unique_ptr<net::test_server::HttpResponse> {
+        if (request.relative_url != "/somewhere")
+          return nullptr;
+
+        // Check that the cookie `a=a` was sent.
+        auto cookie_header = request.headers.find("Cookie");
+        EXPECT_NE(request.headers.end(), cookie_header);
+        EXPECT_EQ("a=b", cookie_header->second);
+
+        // Return a basic response to end the test.
+        auto http_response =
+            std::make_unique<net::test_server::BasicHttpResponse>();
+        http_response->set_content_type("text/plain");
+        http_response->set_content("OK");
+        return http_response;
+      }));
+
+  ASSERT_TRUE(embedded_test_server()->Start());
+
+  GURL main_frame_url = embedded_test_server()->GetURL("a.com", "/");
+  EXPECT_FALSE(NavigateToURL(shell(), main_frame_url));
+}
+
 }  // namespace content
