@@ -3,6 +3,7 @@ include_rules = [
   "+components/data_use_measurement/core",
   "+components/network_session_configurator/common",
   "+components/prefs",
+  "+components/translate/core",
   "+components/version_info",
   "+mojo/edk/embedder",
   "+sandbox/win/src",
