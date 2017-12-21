@@ -36,8 +36,6 @@ def CommandParser():
   parser = argparse.ArgumentParser()
   parser.add_argument('--target', required=True,
                       help='The test target to be run.')
-  parser.add_argument('--logdog-bin-cmd', required=True,
-                      help='The logdog bin cmd.')
   return parser
 
 
@@ -62,6 +60,23 @@ def NoLeakingProcesses(popen):
                         str(popen.pid))
 
 
+def lookpath(target):
+  """Returns the path to `target` in $PATH, or None if `target` is not
+  available.
+
+  On windows this checks for .exe and .bat, so you should always specify the
+  target as `foo` (instead of `foo.exe` or `foo.bat`).
+  """
+  targets = [target]
+  if sys.platform.startswith('win'):
+    targets = [target+'.exe', target+'.bat']
+  for base in os.getenv("PATH").split(os.pathsep):
+    for t in targets:
+      if os.path.isfile(os.path.join(base, t)):
+        return True
+  return False
+
+
 def main():
   parser = CommandParser()
   args, extra_cmd_args = parser.parse_known_args(sys.argv[1:])
@@ -76,7 +91,9 @@ def main():
 
   with tempfile_ext.NamedTemporaryDirectory(
       prefix='tmp_android_logdog_wrapper') as temp_directory:
-    if not os.path.exists(args.logdog_bin_cmd):
+
+    butler = lookpath('logdog_butler')
+    if butler is not None:
       logging.error(
           'Logdog binary %s unavailable. Unable to create logdog client',
           args.logdog_bin_cmd)
@@ -87,7 +104,7 @@ def main():
                             os.environ.get('SWARMING_TASK_ID'))
 
       logdog_cmd = [
-          args.logdog_bin_cmd,
+          butler,
           '-project', PROJECT,
           '-output', OUTPUT,
           '-prefix', prefix,
