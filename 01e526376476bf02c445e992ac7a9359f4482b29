@@ -22,6 +22,30 @@
       "revId": "01e526376476bf02c445e992ac7a9359f4482b29",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5069015e_7e16e93d",
+        "filename": "components/cbor/cbor_reader.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-21T19:39:39Z",
+      "side": 0,
+      "message": "Added component export to CBORValues/CBORWriter/CBORReader. Thanks for the catch!",
+      "parentUuid": "df529e76_7e41fbb1",
+      "range": {
+        "startLine": 47,
+        "startChar": 6,
+        "endLine": 47,
+        "endChar": 20
+      },
+      "revId": "01e526376476bf02c445e992ac7a9359f4482b29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

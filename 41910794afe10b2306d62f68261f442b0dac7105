@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f3f749ca_db82c2e1",
+        "filename": "components/cbor/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-21T19:39:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b8a87060_e8a6e8b2",
+      "revId": "41910794afe10b2306d62f68261f442b0dac7105",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ff156832_aafcc948",
         "filename": "components/cbor/OWNERS",
         "patchSetId": 4
