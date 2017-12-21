@@ -235,16 +235,10 @@ void BbrSender::SetFromConfig(const QuicConfig& config,
   if (config.HasClientRequestedIndependentOption(kBBS3, perspective)) {
     initial_conservation_in_startup_ = GROWTH;
   }
-  if (GetQuicReloadableFlag(quic_bbr_ack_aggregation_window) &&
-      config.HasClientRequestedIndependentOption(kBBR4, perspective)) {
-    QUIC_FLAG_COUNT_N(quic_reloadable_flag_quic_bbr_ack_aggregation_window, 1,
-                      2);
+  if (config.HasClientRequestedIndependentOption(kBBR4, perspective)) {
     max_ack_height_.SetWindowLength(2 * kBandwidthWindowSize);
   }
-  if (GetQuicReloadableFlag(quic_bbr_ack_aggregation_window) &&
-      config.HasClientRequestedIndependentOption(kBBR5, perspective)) {
-    QUIC_FLAG_COUNT_N(quic_reloadable_flag_quic_bbr_ack_aggregation_window, 2,
-                      2);
+  if (config.HasClientRequestedIndependentOption(kBBR5, perspective)) {
     max_ack_height_.SetWindowLength(4 * kBandwidthWindowSize);
   }
   if (GetQuicReloadableFlag(quic_bbr_less_probe_rtt) &&

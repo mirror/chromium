@@ -428,7 +428,6 @@ TEST_F(BbrSenderTest, SimpleTransferAckDecimation4) {
 // Test a simple long data transfer with 2 rtts of aggregation.
 TEST_F(BbrSenderTest, SimpleTransfer2RTTAggregationBytes20RTTWindow) {
   SetQuicReloadableFlag(quic_bbr_add_tso_cwnd, false);
-  SetQuicReloadableFlag(quic_bbr_ack_aggregation_window, true);
   CreateDefaultSetup();
   SetConnectionOption(kBBR4);
   // 2 RTTs of aggregation, with a max of 10kb.
@@ -455,7 +454,6 @@ TEST_F(BbrSenderTest, SimpleTransfer2RTTAggregationBytes20RTTWindow) {
 // Test a simple long data transfer with 2 rtts of aggregation.
 TEST_F(BbrSenderTest, SimpleTransfer2RTTAggregationBytes40RTTWindow) {
   SetQuicReloadableFlag(quic_bbr_add_tso_cwnd, false);
-  SetQuicReloadableFlag(quic_bbr_ack_aggregation_window, true);
   CreateDefaultSetup();
   SetConnectionOption(kBBR5);
   // 2 RTTs of aggregation, with a max of 10kb.

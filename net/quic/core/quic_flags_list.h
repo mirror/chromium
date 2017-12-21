@@ -119,12 +119,6 @@ QUIC_FLAG(bool,
           FLAGS_quic_reloadable_flag_quic_deprecate_largest_observed,
           true)
 
-// Allows increasing the length of time ack aggregation is windowed for to 20
-// and 40 RTTs.
-QUIC_FLAG(bool,
-          FLAGS_quic_reloadable_flag_quic_bbr_ack_aggregation_window,
-          true)
-
 // Explicitly send a connection close if the TLP count is greater than 0 when
 // idle timeout occurs.
 QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_explicit_close_after_tlp, true)
