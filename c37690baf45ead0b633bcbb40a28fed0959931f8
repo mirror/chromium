@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "db464ddd_c64ea946",
+        "filename": "ui/views/test/views_pixel_test.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-21T17:16:09Z",
+      "side": 1,
+      "message": "Should this comment go with the loops below, not before the common path is tried?\n\nI also think other approaches might make more sense. Why match against another platform if there\u0027s no common file? (but I do get matching against another version of the same platform, or maybe chromeos matching against linux...) I also wonder if we\u0027d ever want Win10 to match Common instead of Win7, etc. There\u0027s no clear answer and it\u0027s not worth lots of effort right now, since we just have the one test, but I think ultimately a graph/tree or set per platform might make more sense.",
+      "revId": "c37690baf45ead0b633bcbb40a28fed0959931f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
