@@ -90,15 +90,24 @@ _VERSION_SPECIFIC_FILTER['HEAD'] = [
 ]
 
 _VERSION_SPECIFIC_FILTER['64'] = [
+    # These tests are not implemented for the old versions of Chrome
+    'HeadlessInvalidCertificateTest.*',
     # https://bugs.chromium.org/p/chromedriver/issues/detail?id=2025
     'ChromeDriverTest.testDoesntHangOnFragmentNavigation',
 ]
 
 _VERSION_SPECIFIC_FILTER['63'] = [
+    # These tests are not implemented for the old versions of Chrome
+    'HeadlessInvalidCertificateTest.*',
     # https://bugs.chromium.org/p/chromedriver/issues/detail?id=2025
     'ChromeDriverTest.testDoesntHangOnFragmentNavigation',
     'ChromeDriverPageLoadTimeoutTest.testHistoryNavigationWithPageLoadTimeout',
     'ChromeDriverPageLoadTimeoutTest.testRefreshWithPageLoadTimeout',
+]
+
+_VERSION_SPECIFIC_FILTER['62'] = [
+    # These tests are not implemented for the old versions of Chrome
+    'HeadlessInvalidCertificateTest.*',
 ]
 
 _OS_SPECIFIC_FILTER = {}
@@ -148,6 +157,8 @@ def _GetDesktopNegativeFilter(version_name):
 _ANDROID_NEGATIVE_FILTER = {}
 _ANDROID_NEGATIVE_FILTER['chrome'] = (
     _NEGATIVE_FILTER + [
+        # These tests are not implemented for Android
+        'HeadlessInvalidCertificateTest.*',
         # TODO(chrisgao): fix hang of tab crash test on android.
         'ChromeDriverTest.testTabCrash',
         # Android doesn't support switches and extensions.
