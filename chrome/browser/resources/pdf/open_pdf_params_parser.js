@@ -177,10 +177,24 @@ OpenPDFParamsParser.prototype = {
    * @param {number} pageNumber The page corresponding to the named destination
    *    requested.
    */
-  onNamedDestinationReceived: function(pageNumber) {
+  onNamedDestinationReceived: function(namedDestination) {
     var outstandingRequest = this.outstandingRequests_.shift();
-    if (pageNumber != -1)
-      outstandingRequest.params.page = pageNumber;
+    if (namedDestination.pageNumber != -1) {
+      outstandingRequest.params.page = namedDestination.pageNumber;
+      // if (namedDestination.viewType) {
+      //   var viewTypeLower = namedDestination.viewType.toLowerCase();
+      //   if (viewTypeLower == 'fitv') {
+      //     outstandingRequest.params.view = FittingType.FIT_TO_HEIGHT;
+      //   } else if (viewTypeLower == 'fith') {
+      //     outstandingRequest.params.view = FittingType.FIT_TO_WIDTH;
+      //   } else if (viewTypeLower == 'fit') {
+      //     outstandingRequest.params.view = FittingType.FIT_TO_PAGE;
+      //   }
+      // }
+    }
+    Object.assign(
+        outstandingRequest.params,
+        this.parseViewParam_(namedDestination.viewType));
     outstandingRequest.callback(outstandingRequest.params);
   },
 };

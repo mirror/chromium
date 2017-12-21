@@ -710,7 +710,8 @@ PDFViewer.prototype = {
           this.toolbar_.docTitle = document.title;
         break;
       case 'getNamedDestinationReply':
-        this.paramsParser_.onNamedDestinationReceived(message.data.pageNumber);
+        console.log(message.data);
+        this.paramsParser_.onNamedDestinationReceived(message.data);
         break;
       case 'formFocusChange':
         this.isFormFieldFocused_ = message.data.focused;
