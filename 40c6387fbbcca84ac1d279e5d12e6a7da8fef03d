@@ -16,6 +16,24 @@
       "revId": "40c6387fbbcca84ac1d279e5d12e6a7da8fef03d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fbe1128_6fac159d",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-21T04:56:23Z",
+      "side": 1,
+      "message": "Would it make sense to actually DCHECK(!IsProviderForClient()) in topmost_frame_url?",
+      "parentUuid": "937acbf1_709c656b",
+      "revId": "40c6387fbbcca84ac1d279e5d12e6a7da8fef03d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
