@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "155639ce_c37ed12a",
+        "filename": "third_party/WebKit/Source/platform/network/HTTPParsersTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 661,
+      "author": {
+        "id": 1115449
+      },
+      "writtenOn": "2017-12-21T19:25:16Z",
+      "side": 1,
+      "message": "Can you add `description` here as well to test if parsing halts or continues over invalid chars?",
+      "range": {
+        "startLine": 661,
+        "startChar": 36,
+        "endLine": 661,
+        "endChar": 37
+      },
+      "revId": "52d5b1fe5cd0a8958ffeda12df3b34bf527c07e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
