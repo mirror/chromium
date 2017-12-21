@@ -2562,13 +2562,6 @@ def generate_gtest(waterfall, tester_name, tester_config, test, test_config):
     if is_android(tester_config):
       # Integrate with the unified logcat system.
       result['swarming'].update({
-        'cipd_packages': [
-          {
-            'cipd_package': 'infra/tools/luci/logdog/butler/${platform}',
-            'location': 'bin',
-            'revision': 'git_revision:ff387eadf445b24c935f1cf7d6ddd279f8a6b04c'
-          }
-        ],
         'output_links': [
           {
             'link': [

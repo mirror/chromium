@@ -405,7 +405,6 @@
       },
       'Lollipop Low-end Tester': {
         'os_type': 'android',
-        'skip_cipd_packages': True,
         'skip_output_links': True,
         'swarming': {
           'dimension_sets': [
@@ -494,7 +493,6 @@
           ],
         },
         'os_type': 'android',
-        'skip_cipd_packages': True,
         'skip_output_links': True,
         'test_suites': {
           'gtest_tests': 'chromium_android_clang_and_gl_gtests',
@@ -509,7 +507,6 @@
           ],
         },
         'os_type': 'android',
-        'skip_cipd_packages': True,
         'skip_output_links': True,
         'test_suites': {
           'gtest_tests': 'chromium_android_gtests',
