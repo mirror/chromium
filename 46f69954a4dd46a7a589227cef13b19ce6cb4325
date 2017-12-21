@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "09dd0d41_1837be22",
+        "filename": "third_party/WebKit/Source/platform/wtf/ConstructTraits.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-12-21T07:24:01Z",
+      "side": 1,
+      "message": "I like the idea of dispatching an incremental marking only at the end of the event loop.\n\nHowever, in that case, doing an eager tracing here would be not safe at least potentially. What would happen if the eager tracing traces a not-fully constructed object?\n\nI think we should stick to the principle that an incremental marking does not run during an event loop.\n\ni.e., instead of tracing into the vector, we should add a write barrier to the backing store of the HeapVector.",
+      "parentUuid": "c0319c2a_3c79bccd",
+      "revId": "46f69954a4dd46a7a589227cef13b19ce6cb4325",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e801e8dd_bb7dbb9e",
         "filename": "third_party/WebKit/Source/platform/wtf/Vector.h",
         "patchSetId": 12
