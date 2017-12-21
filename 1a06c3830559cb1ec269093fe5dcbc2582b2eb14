@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "71b55dd5_2eeffaa0",
+        "filename": "third_party/WebKit/Source/core/paint/PaintInfo.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-12-21T19:48:32Z",
+      "side": 1,
+      "message": "This technique is a little fragile, but I can\u0027t see a better solution for now. Please add a \nTODO(chrishtr): to improve this in the future.",
+      "revId": "1a06c3830559cb1ec269093fe5dcbc2582b2eb14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d882cd76_cb07eaf4",
+        "filename": "third_party/WebKit/Source/core/paint/PaintInfo.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-12-21T19:48:32Z",
+      "side": 1,
+      "message": "You could also just put the pagination offset, since that is all that is ever queried.",
+      "revId": "1a06c3830559cb1ec269093fe5dcbc2582b2eb14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
