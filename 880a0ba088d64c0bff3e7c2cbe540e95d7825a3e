@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3c9b523f_2c79ca46",
+        "filename": "net/http/http_stream_factory_impl_job.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-12-21T01:49:18Z",
+      "side": 1,
+      "message": "nice comment!",
+      "range": {
+        "startLine": 323,
+        "startChar": 58,
+        "endLine": 323,
+        "endChar": 0
+      },
+      "revId": "880a0ba088d64c0bff3e7c2cbe540e95d7825a3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6da6aebd_1f641107",
+        "filename": "net/quic/chromium/quic_stream_factory.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-12-21T01:49:18Z",
+      "side": 1,
+      "message": "nice.",
+      "range": {
+        "startLine": 166,
+        "startChar": 29,
+        "endLine": 166,
+        "endChar": 0
+      },
+      "revId": "880a0ba088d64c0bff3e7c2cbe540e95d7825a3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}

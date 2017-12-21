@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "b916644b_9ec1e18f",
+        "filename": "net/http/http_stream_factory_impl_job.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 926,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-12-21T01:49:18Z",
+      "side": 1,
+      "message": "Sorry, what I mean is, could we only call WaitForResultAfterHostResolution when rv \u003d\u003d ERR_IO_PENDING. For example:\n\n    if (rv \u003d\u003d OK) {\n      using_existing_quic_session_ \u003d true;\n    } else {\n      // There\u0027s no available QUIC session. Inform the delegate how long to\n      // delay the main job.\n      if (rv \u003d\u003d ERR_IO_PENDING) {\n        delegate_-\u003eMaybeSetWaitTimeForMainJob(\n            quic_request_.GetTimeDelayForWaitingJob());\n        expect_quic_host_resolution_ \u003d\n            quic_request_.WaitForResultAfterHostResolution(base::BindRepeating(\n                \u0026Job::OnResultAfterQuicHostResolution, base::Unretained(this)));\n      }\n    }\n\nor removing a redundant else\n\n    if (rv \u003d\u003d OK) {\n      using_existing_quic_session_ \u003d true;\n    } else if (rv \u003d\u003d ERR_IO_PENDING) {\n      // There\u0027s no available QUIC session. Inform the delegate how long to\n      // delay the main job.\n      delegate_-\u003eMaybeSetWaitTimeForMainJob(\n          quic_request_.GetTimeDelayForWaitingJob());\n      expect_quic_host_resolution_ \u003d\n          quic_request_.WaitForResultAfterHostResolution(base::BindRepeating(\n              \u0026Job::OnResultAfterQuicHostResolution, base::Unretained(this)));\n    }",
+      "parentUuid": "8d642526_685ec82a",
+      "range": {
+        "startLine": 926,
+        "startChar": 34,
+        "endLine": 926,
+        "endChar": 0
+      },
+      "revId": "5419cd1ccec9010850252d154e02468d8c982d18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "da9427f6_41e72edc",
         "filename": "net/http/http_stream_factory_impl_job.cc",
         "patchSetId": 23
@@ -160,6 +184,24 @@
       "side": 1,
       "message": "I agree with the name suggestion and will change it. On the other hand, I wasn\u0027t aware that QUIC host resolution always happens? Couldn\u0027t an active session for that server_id already exist?",
       "parentUuid": "c94bd8c4_003f7424",
+      "revId": "5419cd1ccec9010850252d154e02468d8c982d18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "687fef39_60eb1d87",
+        "filename": "net/http/http_stream_factory_impl_job.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 473,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-12-21T01:49:18Z",
+      "side": 1,
+      "message": "Heh. Good point.",
+      "parentUuid": "81522531_8937b367",
       "revId": "5419cd1ccec9010850252d154e02468d8c982d18",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
