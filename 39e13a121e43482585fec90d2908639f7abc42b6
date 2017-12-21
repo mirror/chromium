@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "635c9e84_e97e6873",
+        "filename": "build/android/test_wrapper/logdog_wrapper.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-12-21T03:57:40Z",
+      "side": 1,
+      "message": "nit: LookPath or Lookpath, again for consistency.",
+      "revId": "39e13a121e43482585fec90d2908639f7abc42b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f9c1c1c1_5d525489",
         "filename": "build/android/test_wrapper/logdog_wrapper.py",
         "patchSetId": 2
@@ -13,6 +30,41 @@
       "writtenOn": "2017-12-21T03:52:13Z",
       "side": 1,
       "message": "I suspect this isn\u0027t necessary, because I don\u0027t think this is run on windows. However, just to be thorough...",
+      "revId": "39e13a121e43482585fec90d2908639f7abc42b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3a6ca22_d7d9479c",
+        "filename": "build/android/test_wrapper/logdog_wrapper.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-12-21T03:57:40Z",
+      "side": 1,
+      "message": "Correct, we don\u0027t have a win_android bot in chromium/src.\n\nsuper nit: if you\u0027re going to keep this, please do \u0027%s.exe\u0027 % target etc for consistency within //build/android.",
+      "parentUuid": "f9c1c1c1_5d525489",
+      "revId": "39e13a121e43482585fec90d2908639f7abc42b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "46a19917_2c3c2471",
+        "filename": "build/android/test_wrapper/logdog_wrapper.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-12-21T03:57:40Z",
+      "side": 1,
+      "message": "super nit: \u0027PATH\u0027",
       "revId": "39e13a121e43482585fec90d2908639f7abc42b6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
