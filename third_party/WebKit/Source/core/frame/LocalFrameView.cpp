@@ -2218,6 +2218,16 @@ void LocalFrameView::HandleLoadCompleted() {
   if (auto_size_info_)
     auto_size_info_->AutoSizeIfNeeded();
 
+  if (!DidFirstLayout() && !NeedsLayout()) {
+    if (LayoutView* layout_view = GetLayoutView()) {
+      if (!layout_view->FirstChild()) {
+        // Make sure an empty LayoutView gets an initial layout.
+        layout_view->SetNeedsLayout(LayoutInvalidationReason::kAddedToLayout,
+                                    kMarkOnlyThis);
+      }
+    }
+  }
+
   // If there is a pending layout, the fragment anchor will be cleared when it
   // finishes.
   if (!NeedsLayout())
