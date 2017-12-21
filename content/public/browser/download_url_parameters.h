@@ -30,6 +30,7 @@ namespace content {
 
 class DownloadItem;
 class WebContents;
+class ResourceRequestBody;
 
 // Pass an instance of DownloadUrlParameters to DownloadManager::DownloadUrl()
 // to download the content at |url|. All parameters with setters are optional.
@@ -141,7 +142,7 @@ class CONTENT_EXPORT DownloadUrlParameters {
   }
 
   // Body of the HTTP POST request.
-  void set_post_body(const std::string& post_body) {
+  void set_post_body(scoped_refptr<ResourceRequestBody> post_body) {
     post_body_ = post_body;
   }
 
@@ -256,7 +257,7 @@ class CONTENT_EXPORT DownloadUrlParameters {
   const std::string& etag() const { return etag_; }
   bool use_if_range() const { return use_if_range_; }
   const std::string& method() const { return method_; }
-  const std::string& post_body() const { return post_body_; }
+  scoped_refptr<ResourceRequestBody> post_body() { return post_body_; }
   int64_t post_id() const { return post_id_; }
   bool prefer_cache() const { return prefer_cache_; }
   const Referrer& referrer() const { return referrer_; }
@@ -317,7 +318,7 @@ class CONTENT_EXPORT DownloadUrlParameters {
   std::string etag_;
   bool use_if_range_;
   std::string method_;
-  std::string post_body_;
+  scoped_refptr<ResourceRequestBody> post_body_;
   int64_t post_id_;
   bool prefer_cache_;
   Referrer referrer_;

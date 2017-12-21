@@ -70,6 +70,7 @@
 #include "content/public/browser/render_widget_host_view.h"
 #include "content/public/browser/storage_partition.h"
 #include "content/public/browser/web_contents.h"
+#include "content/public/common/resource_request_body.h"
 #include "extensions/browser/event_router.h"
 #include "extensions/browser/extension_function_dispatcher.h"
 #include "extensions/browser/extension_prefs.h"
@@ -1082,8 +1083,12 @@ bool DownloadsDownloadFunction::RunAsync() {
       downloads::ToString(options.method);
   if (!method_string.empty())
     download_params->set_method(method_string);
-  if (options.body.get())
-    download_params->set_post_body(*options.body);
+  if (options.body.get()) {
+    download_params->set_post_body(
+        content::ResourceRequestBody::CreateFromBytes(options.body->data(),
+                                                      options.body->size()));
+  }
+
   download_params->set_callback(base::Bind(
       &DownloadsDownloadFunction::OnStarted, this,
       creator_suggested_filename, options.conflict_action));

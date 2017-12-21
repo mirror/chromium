@@ -33,5 +33,10 @@ bool EmptyClient::CanServiceRemoveDownloadedFile(const std::string& guid,
   return true;
 }
 
+void EmptyClient::GetUploadData(const std::string& guid,
+                                GetUploadDataCallback callback) {
+  std::move(callback).Run(std::string());
+}
+
 }  // namespace test
 }  // namespace download

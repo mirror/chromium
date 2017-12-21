@@ -8,6 +8,7 @@
 #include <string>
 #include <vector>
 
+#include "base/callback.h"
 #include "base/files/file_path.h"
 #include "net/http/http_response_headers.h"
 #include "url/gurl.h"
@@ -16,6 +17,8 @@ namespace download {
 
 struct CompletionInfo;
 struct DownloadMetaData;
+
+using GetUploadDataCallback = base::OnceCallback<void(const std::string&)>;
 
 // The Client interface required by any feature that wants to start a download
 // through the DownloadService.  Should be registered immediately at startup
@@ -116,6 +119,12 @@ class Client {
   // the outcome of this function.
   virtual bool CanServiceRemoveDownloadedFile(const std::string& guid,
                                               bool force_delete) = 0;
+
+  // Called by the service to ask the client to provide the upload data, if any.
+  // The client should run the callback with an empty string if there is no data
+  // to be uploaded.
+  virtual void GetUploadData(const std::string& guid,
+                             GetUploadDataCallback callback) = 0;
 };
 
 }  // namespace download

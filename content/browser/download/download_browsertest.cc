@@ -632,6 +632,16 @@ net::EmbeddedTestServer::HandleRequestCallback CreateBasicResponseHandler(
                     headers, content_type, body);
 }
 
+// A request handler that takes the content of the request and sends it back on
+// the response.
+std::unique_ptr<net::test_server::HttpResponse> HandleUploadRequest(
+    const net::test_server::HttpRequest& request) {
+  std::unique_ptr<net::test_server::BasicHttpResponse> response(
+      (new net::test_server::BasicHttpResponse()));
+  response->set_content(request.content);
+  return std::move(response);
+}
+
 // Helper class to "flatten" handling of
 // TestDownloadHttpResponse::OnPauseHandler.
 class TestRequestPauseHandler {
@@ -3049,6 +3059,41 @@ IN_PROC_BROWSER_TEST_F(DownloadContentTest, FetchErrorResponseBody) {
     ASSERT_TRUE(
         base::ReadFileToString(items[0]->GetTargetFilePath(), &file_content));
     EXPECT_EQ(kNotFoundResponseBody, file_content);
+  }
+}
+
+// Verify that the upload body of a request is received correctly by the server.
+IN_PROC_BROWSER_TEST_F(DownloadContentTest, Upload) {
+  net::EmbeddedTestServer server;
+  const std::string kUploadURL = "/upload";
+  std::string kUploadString = "Test upload body";
+
+  server.RegisterRequestHandler(base::Bind(&HandleUploadRequest));
+  ASSERT_TRUE(server.Start());
+  GURL url = server.GetURL(kUploadURL);
+
+  std::unique_ptr<DownloadUrlParameters> download_parameters(
+      DownloadUrlParameters::CreateForWebContentsMainFrame(
+          shell()->web_contents(), url, TRAFFIC_ANNOTATION_FOR_TESTS));
+
+  download_parameters->set_post_body(ResourceRequestBody::CreateFromBytes(
+      kUploadString.data(), kUploadString.size()));
+
+  DownloadManager* download_manager = DownloadManagerForShell(shell());
+  std::unique_ptr<DownloadTestObserver> observer(CreateWaiter(shell(), 1));
+  download_manager->DownloadUrl(std::move(download_parameters));
+  observer->WaitForFinished();
+  std::vector<DownloadItem*> items;
+  download_manager->GetAllDownloads(&items);
+  EXPECT_EQ(1u, items.size());
+
+  // Verify the response body in the file. It should match the request content.
+  {
+    base::ScopedAllowBlockingForTesting allow_blocking;
+    std::string file_content;
+    ASSERT_TRUE(
+        base::ReadFileToString(items[0]->GetTargetFilePath(), &file_content));
+    EXPECT_EQ(kUploadString, file_content);
   }
 }
 

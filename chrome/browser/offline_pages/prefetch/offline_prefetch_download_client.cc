@@ -99,6 +99,12 @@ bool OfflinePrefetchDownloadClient::CanServiceRemoveDownloadedFile(
   return true;
 }
 
+void OfflinePrefetchDownloadClient::GetUploadData(
+    const std::string& guid,
+    download::GetUploadDataCallback callback) {
+  std::move(callback).Run(std::string());
+}
+
 PrefetchDownloader* OfflinePrefetchDownloadClient::GetPrefetchDownloader()
     const {
   PrefetchService* prefetch_service =

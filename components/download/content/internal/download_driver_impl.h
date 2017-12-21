@@ -62,6 +62,10 @@ class DownloadDriverImpl : public DownloadDriver,
 
   void OnHardRecoverComplete(bool success);
 
+  void OnUploadDataReceived(
+      std::unique_ptr<content::DownloadUrlParameters> download_url_params,
+      const std::string& blob_uuid);
+
   // Remove the download, used to be posted to the task queue.
   void DoRemoveDownload(const std::string& guid);
 

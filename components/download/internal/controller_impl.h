@@ -88,6 +88,8 @@ class ControllerImpl : public Controller,
   void OnDownloadSucceeded(const DriverEntry& download) override;
   void OnDownloadUpdated(const DriverEntry& download) override;
   bool IsTrackingDownload(const std::string& guid) const override;
+  void GetUploadData(const std::string& guid,
+                     GetUploadDataCallback callback) const override;
 
   // Model::Client implementation.
   void OnModelReady(bool success) override;

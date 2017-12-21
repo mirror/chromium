@@ -477,6 +477,15 @@ bool ControllerImpl::IsTrackingDownload(const std::string& guid) const {
   return !!model_->Get(guid);
 }
 
+void ControllerImpl::GetUploadData(const std::string& guid,
+                                   GetUploadDataCallback callback) const {
+  auto* entry = model_->Get(guid);
+  DCHECK(entry);
+  auto* client = clients_->GetClient(entry->client);
+  DCHECK(client);
+  client->GetUploadData(guid, std::move(callback));
+}
+
 void ControllerImpl::OnFileMonitorReady(bool success) {
   DCHECK(!startup_status_.file_monitor_ok.has_value());
   startup_status_.file_monitor_ok = success;

@@ -84,3 +84,9 @@ bool BackgroundFetchDownloadClient::CanServiceRemoveDownloadedFile(
   // TODO(delphick): Return false if the background fetch hasn't finished yet
   return true;
 }
+
+void BackgroundFetchDownloadClient::GetUploadData(
+    const std::string& guid,
+    download::GetUploadDataCallback callback) {
+  std::move(callback).Run(std::string());
+}

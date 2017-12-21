@@ -168,8 +168,14 @@ void DownloadDriverImpl::Start(
   download_url_params->set_file_path(file_path);
   if (request_params.fetch_error_body)
     download_url_params->set_fetch_error_body(true);
-
-  download_manager_->DownloadUrl(std::move(download_url_params));
+  if (request_params.method == "POST") {
+    client_->GetUploadData(
+        guid, base::BindOnce(&DownloadDriverImpl::OnUploadDataReceived,
+                             weak_ptr_factory_.GetWeakPtr(),
+                             std::move(download_url_params)));
+  } else {
+    download_manager_->DownloadUrl(std::move(download_url_params));
+  }
 }
 
 void DownloadDriverImpl::Remove(const std::string& guid) {
@@ -190,6 +196,17 @@ void DownloadDriverImpl::DoRemoveDownload(const std::string& guid) {
   if (item) {
     item->Remove();
   }
+}
+
+void DownloadDriverImpl::OnUploadDataReceived(
+    std::unique_ptr<content::DownloadUrlParameters> download_url_params,
+    const std::string& blob_uuid) {
+  scoped_refptr<content::ResourceRequestBody> request_body =
+      new content::ResourceRequestBody;
+  request_body->AppendBlob(blob_uuid);
+  download_url_params->set_post_body(request_body);
+
+  download_manager_->DownloadUrl(std::move(download_url_params));
 }
 
 void DownloadDriverImpl::Pause(const std::string& guid) {

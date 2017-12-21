@@ -37,4 +37,9 @@ bool DebuggingClient::CanServiceRemoveDownloadedFile(const std::string& guid,
   return true;
 }
 
+void DebuggingClient::GetUploadData(const std::string& guid,
+                                    GetUploadDataCallback callback) {
+  std::move(callback).Run(std::string());
+}
+
 }  // namespace download

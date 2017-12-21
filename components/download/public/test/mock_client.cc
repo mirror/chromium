@@ -10,5 +10,10 @@ namespace test {
 MockClient::MockClient() = default;
 MockClient::~MockClient() = default;
 
+void MockClient::GetUploadData(const std::string& guid,
+                               GetUploadDataCallback callback) {
+  std::move(callback).Run(std::string());
+}
+
 }  // namespace test
 }  // namespace download

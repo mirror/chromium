@@ -10,6 +10,7 @@
 
 #include "base/optional.h"
 #include "components/download/internal/driver_entry.h"
+#include "components/download/public/client.h"
 #include "net/traffic_annotation/network_traffic_annotation.h"
 
 namespace base {
@@ -62,6 +63,10 @@ class DownloadDriver {
 
     // Returns whether the client is tracking the download with |guid|.
     virtual bool IsTrackingDownload(const std::string& guid) const = 0;
+
+    // Returns the UUID of the blob to be uploaded, if any.
+    virtual void GetUploadData(const std::string& guid,
+                               GetUploadDataCallback callback) const = 0;
   };
 
   virtual ~DownloadDriver() = default;
