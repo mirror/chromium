@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f3411a30_eb74523b",
+        "filename": "components/offline_pages/core/model/complete_offline_page_upgrade_task.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-12-21T06:05:34Z",
+      "side": 1,
+      "message": "nit: I\u0027d suggest: \"This status might require special handling as the new file was renamed its final name but store item was not updated accordingly\".",
+      "revId": "065d81a03d1efbdd96fd61c2d18dd52caed7fa82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

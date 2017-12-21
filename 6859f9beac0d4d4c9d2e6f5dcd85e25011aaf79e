@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "d05fcebe_db13beaf",
+        "filename": "components/offline_pages/core/model/complete_offline_page_upgrade_task.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-12-21T06:05:34Z",
+      "side": 1,
+      "message": "SGTM.",
+      "parentUuid": "a7d5a143_9b124afe",
+      "range": {
+        "startLine": 37,
+        "startChar": 14,
+        "endLine": 37,
+        "endChar": 23
+      },
+      "revId": "6859f9beac0d4d4c9d2e6f5dcd85e25011aaf79e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cfb701b2_4286f29c",
         "filename": "components/offline_pages/core/model/complete_offline_page_upgrade_task.cc",
         "patchSetId": 1
@@ -190,6 +214,30 @@
     },
     {
       "key": {
+        "uuid": "f99fc3e9_61a507e4",
+        "filename": "components/offline_pages/core/model/complete_offline_page_upgrade_task.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-12-21T06:05:34Z",
+      "side": 1,
+      "message": "Oh, yes, that\u0027s what returns do! :)\nMy bad.",
+      "parentUuid": "0d7c8ad6_4928e776",
+      "range": {
+        "startLine": 80,
+        "startChar": 8,
+        "endLine": 80,
+        "endChar": 18
+      },
+      "revId": "6859f9beac0d4d4c9d2e6f5dcd85e25011aaf79e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "364e6256_b75b7cc5",
         "filename": "components/offline_pages/core/model/complete_offline_page_upgrade_task.h",
         "patchSetId": 1
@@ -234,6 +282,30 @@
       "revId": "6859f9beac0d4d4c9d2e6f5dcd85e25011aaf79e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "373780fd_bcb7b892",
+        "filename": "components/offline_pages/core/model/complete_offline_page_upgrade_task.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-12-21T06:05:34Z",
+      "side": 1,
+      "message": "SGTM.",
+      "parentUuid": "2b73affb_f6134259",
+      "range": {
+        "startLine": 27,
+        "startChar": 55,
+        "endLine": 27,
+        "endChar": 71
+      },
+      "revId": "6859f9beac0d4d4c9d2e6f5dcd85e25011aaf79e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -448,6 +520,24 @@
     },
     {
       "key": {
+        "uuid": "cd3ab596_d0a41673",
+        "filename": "components/offline_pages/core/model/complete_offline_page_upgrade_task_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-12-21T06:05:34Z",
+      "side": 1,
+      "message": "Still missing (a slighter safer version of):\nEXPECT_EQ(original_page, *(store_test_util()-\u003eGetPageByOfflineId(original_page.offline_id));",
+      "parentUuid": "3973ad46_8056b82c",
+      "revId": "6859f9beac0d4d4c9d2e6f5dcd85e25011aaf79e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "04327806_2fdb9978",
         "filename": "components/offline_pages/core/model/complete_offline_page_upgrade_task_unittest.cc",
         "patchSetId": 1
@@ -624,6 +714,24 @@
     },
     {
       "key": {
+        "uuid": "a40e2bcf_1ddf8ee4",
+        "filename": "components/offline_pages/core/model/complete_offline_page_upgrade_task_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-12-21T06:05:34Z",
+      "side": 1,
+      "message": "nit: You decided renaming the constant and the TODO comment were not needed?",
+      "parentUuid": "d0a4ccd1_00f76b7e",
+      "revId": "6859f9beac0d4d4c9d2e6f5dcd85e25011aaf79e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0f6f1c06_ef8207fb",
         "filename": "components/offline_pages/core/model/complete_offline_page_upgrade_task_unittest.cc",
         "patchSetId": 1
@@ -656,6 +764,24 @@
       "revId": "6859f9beac0d4d4c9d2e6f5dcd85e25011aaf79e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a71f9fa7_77381a00",
+        "filename": "components/offline_pages/core/model/complete_offline_page_upgrade_task_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-12-21T06:05:34Z",
+      "side": 1,
+      "message": "Still missing (a slighter safer version of):\nEXPECT_EQ(original_page, *(store_test_util()-\u003eGetPageByOfflineId(original_page.offline_id));",
+      "parentUuid": "e68a10a3_9934e104",
+      "revId": "6859f9beac0d4d4c9d2e6f5dcd85e25011aaf79e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
