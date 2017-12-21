@@ -377,6 +377,24 @@
     },
     {
       "key": {
+        "uuid": "be311f93_0c3368a8",
+        "filename": "content/browser/webauth/cbor/cbor_reader_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-21T09:59:14Z",
+      "side": 1,
+      "message": "Yep, sounds good.",
+      "parentUuid": "76e9aece_28dd81fc",
+      "revId": "3d579dfb80a61f1d97d28a782f55c95a899642c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "47649780_a0a2e256",
         "filename": "content/browser/webauth/cbor/cbor_reader_unittest.cc",
         "patchSetId": 19
@@ -477,6 +495,24 @@
     },
     {
       "key": {
+        "uuid": "2fbd8318_14a962c0",
+        "filename": "content/browser/webauth/cbor/cbor_values.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-21T09:59:14Z",
+      "side": 1,
+      "message": "SGTM!\n\nIn that case, I think it\u0027d make sense to have is_XYZs with matching GetXYZs, so let\u0027s have GetInteger, GetUnsigned, GetNegative, and is_integer, is_unsigned, is_negative.\n\nMy feeling is that the cleanest would be to make GetUnsigned CHECK that value is \u003e\u003d0, make GetNegative CHECK that value is \u003c0, and make GetInteger don\u0027t care?\n\nOnce we have these specialized getter, maybe we don\u0027t need the CHECK anymore in CBORWriter?\n\nWhat do you guys think?",
+      "parentUuid": "ab179d26_54102be7",
+      "revId": "3d579dfb80a61f1d97d28a782f55c95a899642c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e4876823_ba67d060",
         "filename": "content/browser/webauth/cbor/cbor_values_unittest.cc",
         "patchSetId": 19
@@ -559,6 +595,24 @@
     },
     {
       "key": {
+        "uuid": "c43f8fbf_f4f4f48d",
+        "filename": "content/browser/webauth/cbor/cbor_writer.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-21T09:59:14Z",
+      "side": 1,
+      "message": "Please see my comment above.",
+      "parentUuid": "5d5b857d_b8f04f39",
+      "revId": "3d579dfb80a61f1d97d28a782f55c95a899642c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ccce4b54_2c058ea7",
         "filename": "content/browser/webauth/cbor/cbor_writer.cc",
         "patchSetId": 19
@@ -588,6 +642,24 @@
       "side": 1,
       "message": "It doesn\u0027t seem to hurt to have extra checked_cast\u003c\u003es, especially if the CHECK moves from the previous line to another file.",
       "parentUuid": "ccce4b54_2c058ea7",
+      "revId": "3d579dfb80a61f1d97d28a782f55c95a899642c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b42708e6_ec790e6b",
+        "filename": "content/browser/webauth/cbor/cbor_writer.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-21T09:59:14Z",
+      "side": 1,
+      "message": "And how about calling not GetInteger, but a GetNegative here? Would you be more comfortable omitting the checked_cast here in that case?",
+      "parentUuid": "b38c2263_b56811b6",
       "revId": "3d579dfb80a61f1d97d28a782f55c95a899642c4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -705,6 +777,24 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "95e6f0e9_340241fb",
+      "revId": "3d579dfb80a61f1d97d28a782f55c95a899642c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f2cc9d91_f5b0eaaf",
+        "filename": "content/browser/webauth/cbor/cbor_writer_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-21T09:59:14Z",
+      "side": 1,
+      "message": "Really cool, thank you! :-)",
+      "parentUuid": "323ddb8b_f9fce508",
       "revId": "3d579dfb80a61f1d97d28a782f55c95a899642c4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false

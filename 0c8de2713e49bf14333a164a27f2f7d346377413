@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b1aad076_19319092",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-21T09:59:14Z",
+      "side": 1,
+      "message": "nit: To better encapsulate such conversions and corresponding error handling, what do you think about splitting CheckInInt64Range into two (unsigned, negative), and making these parts responsible not only for checking / setting the error code, but also for doing the conversion as well if everything checks out. So something like:\n\nbase::Optional\u003cCBORValue\u003e DecodeValueToNegative(uint64_t value) {\n  auto negative_value \u003d -base::CheckedNumeric\u003cint64_t\u003e(value) - 1;\n  if (!negative_value.IsValid()) {\n    error_code_ \u003d DecoderError::OUT_OF_RANGE_INTEGER_VALUE;\n    return nullopt;\n  }\n  return CBORValue(negative_value.ValueOrDie());\n}\n\nbase::Optional\u003cCBORValue\u003e DecodeValueToUnsigned(uint64_t value) { ... }",
+      "revId": "0c8de2713e49bf14333a164a27f2f7d346377413",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4d35560_71437ba6",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-21T09:59:14Z",
+      "side": 1,
+      "message": "nit: To reduce the cyclomatic complexity of this, let\u0027s make this function solely responsible for reading a minimally encoded varint -- and let\u0027s do any type-specific checks outside of this function. See my comment above.",
+      "range": {
+        "startLine": 145,
+        "startChar": 1,
+        "endLine": 149,
+        "endChar": 3
+      },
+      "revId": "0c8de2713e49bf14333a164a27f2f7d346377413",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "455db6fc_a0d371a7",
+        "filename": "content/browser/webauth/cbor/cbor_values.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-21T09:59:14Z",
+      "side": 1,
+      "message": "I think this will still need to be strict greater-than.",
+      "range": {
+        "startLine": 54,
+        "startChar": 32,
+        "endLine": 54,
+        "endChar": 34
+      },
+      "revId": "0c8de2713e49bf14333a164a27f2f7d346377413",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8d55a36_65704c9e",
+        "filename": "content/browser/webauth/cbor/cbor_values.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-21T09:59:14Z",
+      "side": 1,
+      "message": "This is so great and readable, thank you! :)",
+      "revId": "0c8de2713e49bf14333a164a27f2f7d346377413",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
