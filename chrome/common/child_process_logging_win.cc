@@ -8,13 +8,11 @@
 
 #include <memory>
 
-#include "base/debug/crash_logging.h"
-#include "base/strings/utf_string_conversions.h"
-#include "chrome/common/chrome_constants.h"
 #include "chrome/common/crash_keys.h"
 #include "chrome/installer/util/google_update_settings.h"
 #include "chrome_elf/chrome_elf_main.h"
 #include "components/crash/content/app/crash_export_thunks.h"
+#include "components/crash/core/common/crash_keys.h"
 #include "components/metrics/client_info.h"
 
 namespace child_process_logging {
@@ -34,8 +32,6 @@ void ClearCrashKeyValueTrampoline(const base::StringPiece& key) {
 }  // namespace
 
 void Init() {
-  base::debug::SetCrashKeyReportingFunctions(&SetCrashKeyValueTrampoline,
-                                             &ClearCrashKeyValueTrampoline);
   // This would be handled by BreakpadClient::SetCrashClientIdFromGUID(), but
   // because of the aforementioned issue, crash keys aren't ready yet at the
   // time of Breakpad initialization, load the client id backed up in Google
@@ -44,10 +40,6 @@ void Init() {
   // into chrome_elf to pass in the client id.
   std::unique_ptr<metrics::ClientInfo> client_info =
       GoogleUpdateSettings::LoadMetricsClientInfo();
-
-#if !defined(COMPONENT_BUILD)
-  crash_keys::RegisterChromeCrashKeys();
-#endif
 
   // Set the client id chrome_elf (in tests this is stubbed).
   SetMetricsClientId(client_info ? client_info->client_id.c_str() : nullptr);
