@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "993be97d_69db9558",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/internet_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1128430
+      },
+      "writtenOn": "2017-12-21T01:42:39Z",
+      "side": 1,
+      "message": "Should we be clearing the list in this case?",
+      "range": {
+        "startLine": 264,
+        "startChar": 4,
+        "endLine": 264,
+        "endChar": 11
+      },
+      "revId": "4a2258bbdd070494deb5d24aef031fabddb2f28b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
