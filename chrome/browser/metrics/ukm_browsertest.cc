@@ -21,6 +21,7 @@
 #include "content/public/browser/browsing_data_remover.h"
 #include "content/public/common/content_switches.h"
 #include "content/public/test/browsing_data_remover_test_util.h"
+#include "content/public/test/test_utils.h"
 #include "services/metrics/public/cpp/ukm_recorder.h"
 
 #if defined(OS_CHROMEOS)
@@ -42,6 +43,8 @@ void ClearBrowsingData(Profile* profile) {
       ChromeBrowsingDataRemoverDelegate::DATA_TYPE_HISTORY,
       content::BrowsingDataRemover::ORIGIN_TYPE_UNPROTECTED_WEB, &observer);
   observer.BlockUntilCompletion();
+  // Make sure HistoryServiceObservers have a chance to be notified.
+  content::RunAllPendingInMessageLoop();
 }
 
 }  // namespace
