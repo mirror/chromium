@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "65ce7c08_a4719bfe",
+        "filename": "components/autofill/content/renderer/form_autofill_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1810,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-12-21T20:04:32Z",
+      "side": 1,
+      "message": "nit: Since it\u0027s very similar to FindChildText() can you put it right after it?\n\nAlso super nit, can you make sure they are in the same order as in the .h?\n\nThanks a bunch :)",
+      "range": {
+        "startLine": 1810,
+        "startChar": 15,
+        "endLine": 1810,
+        "endChar": 42
+      },
+      "revId": "5a671d984b80fa3576936dd4247be50077aab761",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e58905d4_cf793900",
+        "filename": "components/autofill/content/renderer/form_autofill_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-12-21T20:04:32Z",
+      "side": 1,
+      "message": "Can you use the *ForTesting suffix? That way the \"test onlyness\" will be checked at presubmit time. Thanks!",
+      "range": {
+        "startLine": 283,
+        "startChar": 15,
+        "endLine": 283,
+        "endChar": 39
+      },
+      "revId": "5a671d984b80fa3576936dd4247be50077aab761",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
