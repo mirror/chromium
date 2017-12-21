@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ca43e859_4c9fb881",
+        "filename": "cc/test/render_pass_test_utils.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 467,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-21T17:03:07Z",
+      "side": 1,
+      "message": "This function is a good helper for these tests, but I think it can just go in SoftwareRendererTest? It\u0027s not really a fit for render_pass_test_utils, as it is not about manipulating renderpasses..",
+      "revId": "3568569260cc78289cae6c4a05ad25f97e35f884",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e599a976_69b92aa5",
+        "filename": "cc/test/render_pass_test_utils.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 487,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-21T17:03:07Z",
+      "side": 1,
+      "message": "you can `SendResourceAndGetChildToParentMap({resource}, resource_provider, child_resource_provider);`\n\nie don\u0027t need to make that array above, can just make an initializer list. at which point this method is a method call and a map lookup, so maybe just drop it and do that work directly?",
+      "revId": "3568569260cc78289cae6c4a05ad25f97e35f884",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f62fbd5_56435431",
+        "filename": "components/viz/service/display/software_renderer_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-21T17:03:07Z",
+      "side": 1,
+      "message": "we can {resource_yellow, resource_cyan} here instaed of explicitly building an array",
+      "revId": "3568569260cc78289cae6c4a05ad25f97e35f884",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a391f6c_73e7acd0",
+        "filename": "components/viz/service/display/software_renderer_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-21T17:03:07Z",
+      "side": 1,
+      "message": "This can SendResourceAndGetChildToParentMap({resource_cyan}, ...), then use the map below. ie can share the same helper, i think this 2nd helper is mostly just building a vector which we can skip with an initializer list",
+      "revId": "3568569260cc78289cae6c4a05ad25f97e35f884",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
