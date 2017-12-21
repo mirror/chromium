@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e10a952c_0b781110",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 727,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-12-21T19:25:53Z",
+      "side": 1,
+      "message": "This will close the temporary file, but not delete it; preferably we should also unlink() it here, rather than relying on OS /tmp sweeping to clean it up.\n\nAlso, you\u0027re relying on the ability to re-open() an already-open temporary file, which isn\u0027t supported, in general, on all platforms. In practice it will work under Windows and Linux, but perhaps we should just close(), getresults, unlink() for consistency?",
+      "range": {
+        "startLine": 727,
+        "startChar": 4,
+        "endLine": 727,
+        "endChar": 30
+      },
+      "revId": "180753f291a7da1512445a419323dc5d766440e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
