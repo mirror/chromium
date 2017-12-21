@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "1bfe2376_610ed192",
+        "filename": "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 799,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-21T22:37:15Z",
+      "side": 1,
+      "message": "Brain dead today and did not see that exact line is setting the variable.\n\nThen it is okay.",
+      "parentUuid": "349ce8ca_b11ce0ed",
+      "revId": "9b2c59441fcca20d9ddb0a7498bfe5328c6df3f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "221365eb_4c4da1c7",
         "filename": "chrome/browser/ui/ash/wallpaper_controller_client.cc",
         "patchSetId": 3
