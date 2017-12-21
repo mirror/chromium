@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c468e7ec_99f54f06",
+        "filename": "chrome/browser/resources/print_preview/new/dpi_settings.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-21T00:55:51Z",
+      "side": 1,
+      "message": "Nit (optional): Could we format this to look more like a function call? Or does git cl format mess with it?\n\n[\n  \u0027onDpiSettingChange_(\u0027 +\n      \u0027settings.dpi.value, capabilityWithLabels_.option)\u0027\n]",
+      "range": {
+        "startLine": 32,
+        "startChar": 5,
+        "endLine": 33,
+        "endChar": 40
+      },
+      "revId": "7a2c8942db9a40f7288568a2372c9626571dc637",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9be34772_930256a3",
+        "filename": "chrome/browser/resources/print_preview/new/dpi_settings.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-21T00:55:51Z",
+      "side": 1,
+      "message": "Let\u0027s move this outside the loop.",
+      "range": {
+        "startLine": 70,
+        "startChar": 4,
+        "endLine": 70,
+        "endChar": 74
+      },
+      "revId": "7a2c8942db9a40f7288568a2372c9626571dc637",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f21a931_d63412ad",
+        "filename": "chrome/browser/resources/print_preview/new/dpi_settings.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-21T00:55:51Z",
+      "side": 1,
+      "message": "There is a PRESUBMIT that should disallow this (reaching into a sub-components Shadow  DOM). If we need that value, let\u0027s add a public getter for it.",
+      "range": {
+        "startLine": 74,
+        "startChar": 8,
+        "endLine": 74,
+        "endChar": 61
+      },
+      "revId": "7a2c8942db9a40f7288568a2372c9626571dc637",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54f7e52a_100163ac",
+        "filename": "chrome/browser/resources/print_preview/new/model.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-21T00:55:51Z",
+      "side": 1,
+      "message": "Would it make sense to split the updates into two high-level buckets?\n\nupdateSettings_: function() {\n  this.updateSettingsAvailability_(caps);  // Move lines 200-238 in here\n  this.updateSettingsValues_(caps);\n},",
+      "revId": "7a2c8942db9a40f7288568a2372c9626571dc637",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
