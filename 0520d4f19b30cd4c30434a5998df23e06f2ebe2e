@@ -22,6 +22,57 @@
       "revId": "0520d4f19b30cd4c30434a5998df23e06f2ebe2e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "716664b8_0625d528",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-21T04:53:19Z",
+      "side": 1,
+      "message": "nit question: do we have any data for this?",
+      "revId": "0520d4f19b30cd4c30434a5998df23e06f2ebe2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14add4d1_fb65f908",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/Resource.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-21T04:53:19Z",
+      "side": 1,
+      "message": "nit: is ensured by -\u003e is solely checked by",
+      "revId": "0520d4f19b30cd4c30434a5998df23e06f2ebe2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f486ed3a_c50da104",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/Resource.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-21T04:53:19Z",
+      "side": 1,
+      "message": "Could also elaborate what stale means here too?",
+      "revId": "0520d4f19b30cd4c30434a5998df23e06f2ebe2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
