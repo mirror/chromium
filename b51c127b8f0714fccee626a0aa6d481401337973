@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "5cca87e0_c4adb7e6",
+        "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-12-21T16:18:25Z",
+      "side": 1,
+      "message": "This looks dangerous. The struct won\u0027t be large enough. Suggest you use a ScopedWebInputEvent",
+      "revId": "b51c127b8f0714fccee626a0aa6d481401337973",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "adb3db57_464bfa95",
         "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
         "patchSetId": 1
@@ -30,6 +47,23 @@
       "writtenOn": "2017-12-21T07:53:19Z",
       "side": 1,
       "message": "There is actually no reason for these to be WeakPtr\u003c\u003e. I will clean these up.",
+      "revId": "b51c127b8f0714fccee626a0aa6d481401337973",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75cbf492_4ad5a016",
+        "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 494,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-12-21T16:18:25Z",
+      "side": 1,
+      "message": "I don\u0027t think you need to take a copy here. I think SendMouseEnterOrLeaveEvents can be adjusted to take a const\u0026 instead of a * and all will be well.",
       "revId": "b51c127b8f0714fccee626a0aa6d481401337973",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
