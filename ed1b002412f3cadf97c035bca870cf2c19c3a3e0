@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fc5849e2_f18a3ee4",
+        "filename": "build/android/gyp/lint.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1178079
+      },
+      "writtenOn": "2017-12-21T20:20:35Z",
+      "side": 1,
+      "message": "This should go in input_strings as well.",
+      "range": {
+        "startLine": 392,
+        "startChar": 50,
+        "endLine": 392,
+        "endChar": 77
+      },
+      "revId": "ed1b002412f3cadf97c035bca870cf2c19c3a3e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bac35ac_58b479e3",
+        "filename": "build/config/android/internal_rules.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 837,
+      "author": {
+        "id": 1178079
+      },
+      "writtenOn": "2017-12-21T20:20:35Z",
+      "side": 1,
+      "message": "Optional nit: Might make more sense to a TODO in lint.py where the argument is defined instead?",
+      "range": {
+        "startLine": 837,
+        "startChar": 14,
+        "endLine": 837,
+        "endChar": 23
+      },
+      "revId": "ed1b002412f3cadf97c035bca870cf2c19c3a3e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
