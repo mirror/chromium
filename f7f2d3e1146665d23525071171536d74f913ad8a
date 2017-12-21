@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "58e76c98_fec31b1f",
+        "filename": "net/dns/dns_transaction_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 465,
+      "author": {
+        "id": 1160910
+      },
+      "writtenOn": "2017-12-21T15:28:18Z",
+      "side": 1,
+      "message": "Hmm. Would be nicer if there was a ResetScopedTaskEnvironment() call.",
+      "revId": "f7f2d3e1146665d23525071171536d74f913ad8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
