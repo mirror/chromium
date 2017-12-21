@@ -48,6 +48,23 @@
     },
     {
       "key": {
+        "uuid": "2af7b049_23620986",
+        "filename": "chrome/browser/ui/webui/chromeos/login/core_oobe_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 561,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-12-21T01:41:00Z",
+      "side": 1,
+      "message": "constant pointer please.\n\nTo make it constant, you also need to make DisplayManager::GetDisplayNameForId() constant method. I just talked to oshima@, and he agreed with that. Please, make this method constant and add oshima@ as reviewer.",
+      "revId": "1c000e985b29060bd0518a9f4cac19e17121c401",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "61544287_f8c92866",
         "filename": "chrome/browser/ui/webui/chromeos/login/core_oobe_handler.cc",
         "patchSetId": 2
