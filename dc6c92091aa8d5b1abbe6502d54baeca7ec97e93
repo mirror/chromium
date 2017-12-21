@@ -70,6 +70,24 @@
       "revId": "dc6c92091aa8d5b1abbe6502d54baeca7ec97e93",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4409de8c_771cb245",
+        "filename": "content/browser/renderer_host/browser_compositor_view_mac.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 541,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-12-21T01:01:34Z",
+      "side": 1,
+      "message": "I see. It just got added, and your patch isn\u0027t rebased on top of that, so it makes it hard to review.",
+      "parentUuid": "97d7a73c_8ea9695b",
+      "revId": "dc6c92091aa8d5b1abbe6502d54baeca7ec97e93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
