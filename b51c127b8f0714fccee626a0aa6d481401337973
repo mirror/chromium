@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "adb3db57_464bfa95",
+        "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-12-21T07:53:19Z",
+      "side": 1,
+      "message": "This always sets the ask flag. crbug.com/796648 will give the correct flag.",
+      "revId": "b51c127b8f0714fccee626a0aa6d481401337973",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12569cee_f743567f",
+        "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-12-21T07:53:19Z",
+      "side": 1,
+      "message": "There is actually no reason for these to be WeakPtr\u003c\u003e. I will clean these up.",
+      "revId": "b51c127b8f0714fccee626a0aa6d481401337973",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
