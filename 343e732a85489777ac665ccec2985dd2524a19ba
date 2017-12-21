@@ -94,6 +94,30 @@
     },
     {
       "key": {
+        "uuid": "9ba5067f_821a7589",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 470,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-12-21T16:37:24Z",
+      "side": 1,
+      "message": "Actually, looking at this more, it seems that this argument should be derived by the\nmethod itself and be kept as an internal implementation details. e.g.:\n\n\n\nFindSnapOffset(data, current, did_y, did_x)\n  -\u003eFindSnapOffsetRecursive(data, current, did_x, did_y, rect(data.min_offset, data.max_offset))\n     -\u003e (potentially) FindSnapOffsetRecursive(data, new_current, did_x, did_y, a_new_region)",
+      "parentUuid": "ae80de00_b7711ef8",
+      "range": {
+        "startLine": 470,
+        "startChar": 6,
+        "endLine": 470,
+        "endChar": 79
+      },
+      "revId": "343e732a85489777ac665ccec2985dd2524a19ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "28622526_ca9e4786",
         "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.h",
         "patchSetId": 8
