@@ -141,14 +141,22 @@ AbortCallback SmbFileSystem::ReadDirectory(
 AbortCallback SmbFileSystem::OpenFile(const base::FilePath& file_path,
                                       file_system_provider::OpenFileMode mode,
                                       const OpenFileCallback& callback) {
-  NOTIMPLEMENTED();
+  bool writeable =
+      mode == file_system_provider::OPEN_FILE_MODE_WRITE ? true : false;
+  GetSmbProviderClient()->OpenFile(
+      GetMountId(), file_path, writeable,
+      base::BindOnce(&SmbFileSystem::HandleRequestOpenFileCallback,
+                     weak_ptr_factory_.GetWeakPtr(), callback));
   return AbortCallback();
 }
 
 AbortCallback SmbFileSystem::CloseFile(
     int file_handle,
     const storage::AsyncFileUtil::StatusCallback& callback) {
-  NOTIMPLEMENTED();
+  GetSmbProviderClient()->CloseFile(
+      file_handle,
+      base::BindOnce(&SmbFileSystem::HandleRequestCloseFileCallback,
+                     weak_ptr_factory_.GetWeakPtr(), callback));
   return AbortCallback();
 }
 
