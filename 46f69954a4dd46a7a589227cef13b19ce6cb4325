@@ -91,6 +91,24 @@
     },
     {
       "key": {
+        "uuid": "7c2de6c5_1a2674ae",
+        "filename": "third_party/WebKit/Source/platform/wtf/ConstructTraits.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-12-21T08:42:18Z",
+      "side": 1,
+      "message": "We are not tracing eagerly during construction here, we are only tracing after constructing an object in the container.\n\nFor in-place constructed objects that have no mark bits we need to do this as the other alternative would be adding the vector backing + index of the element to the marking deque. This  look completely ad hoc and non-uniform which is why I\u0027d like to avoid it.",
+      "parentUuid": "09dd0d41_1837be22",
+      "revId": "46f69954a4dd46a7a589227cef13b19ce6cb4325",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e801e8dd_bb7dbb9e",
         "filename": "third_party/WebKit/Source/platform/wtf/Vector.h",
         "patchSetId": 12
