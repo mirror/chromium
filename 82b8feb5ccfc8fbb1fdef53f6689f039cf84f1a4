@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "a26a0d48_4e87a4b9",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 557,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-12-21T20:30:29Z",
+      "side": 1,
+      "message": "Don\u0027t mind me, looks like it\u0027s correct.",
+      "parentUuid": "88f1c686_9a6779f0",
+      "range": {
+        "startLine": 556,
+        "startChar": 35,
+        "endLine": 557,
+        "endChar": 42
+      },
+      "revId": "82b8feb5ccfc8fbb1fdef53f6689f039cf84f1a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bb9319f9_15fdc788",
         "filename": "ui/latency/latency_tracker.cc",
         "patchSetId": 1
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "There is already a DCHECK a few lines above. I just added the comment here to make it clear.",
       "parentUuid": "bb9319f9_15fdc788",
+      "range": {
+        "startLine": 248,
+        "startChar": 14,
+        "endLine": 248,
+        "endChar": 29
+      },
+      "revId": "82b8feb5ccfc8fbb1fdef53f6689f039cf84f1a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1e9af454_e8b39124",
+        "filename": "ui/latency/latency_tracker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-12-21T20:30:29Z",
+      "side": 1,
+      "message": "I have a mild preference for repeating DCHECKs over comments, but it doesn\u0027t really matter.",
+      "parentUuid": "5813750b_5882a16f",
       "range": {
         "startLine": 248,
         "startChar": 14,
