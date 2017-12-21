@@ -75,6 +75,7 @@ class WebMouseEvent;
 class WebSpeechRecognizer;
 class WebTappedInfo;
 class WebURLRequest;
+class WebWorkerEventQueue;
 struct WebDateTimeChooserParams;
 struct WebMediaPlayerAction;
 struct WebPluginAction;
@@ -329,6 +330,9 @@ class CONTENT_EXPORT RenderViewImpl : public RenderWidget,
                            blink::WebDateTimeChooserCompletion*) override;
   virtual void didScrollWithKeyboard(const blink::WebSize& delta);
 #endif
+
+  void AddWorkerEventQueue(blink::WebWorkerEventQueue*) override;
+  void RemoveWorkerEventQueue(blink::WebWorkerEventQueue*) override;
 
   // RenderView implementation -------------------------------------------------
 

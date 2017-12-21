@@ -10,24 +10,15 @@
 #include "base/single_thread_task_runner.h"
 #include "cc/input/touch_action.h"
 #include "content/common/content_export.h"
-#include "content/common/input/input_event_dispatch_type.h"
 #include "content/public/common/content_features.h"
-#include "content/public/common/input_event_ack_state.h"
+#include "content/renderer/input/input_event_queue.h"
 #include "content/renderer/input/main_thread_event_queue_task_list.h"
 #include "content/renderer/input/scoped_web_input_event_with_latency_info.h"
 #include "third_party/WebKit/public/platform/WebInputEvent.h"
 #include "third_party/WebKit/public/platform/scheduler/renderer/renderer_scheduler.h"
-#include "ui/events/blink/did_overscroll_params.h"
 #include "ui/events/blink/web_input_event_traits.h"
-#include "ui/latency/latency_info.h"
 
 namespace content {
-
-using HandledEventCallback =
-    base::OnceCallback<void(InputEventAckState ack_state,
-                            const ui::LatencyInfo& latency_info,
-                            std::unique_ptr<ui::DidOverscrollParams>,
-                            base::Optional<cc::TouchAction>)>;
 
 // All interaction with the MainThreadEventQueueClient will occur
 // on the main thread.
@@ -78,8 +69,7 @@ class CONTENT_EXPORT MainThreadEventQueueClient {
 //                  (deque)
 //   <-------(ACK)------
 //
-class CONTENT_EXPORT MainThreadEventQueue
-    : public base::RefCountedThreadSafe<MainThreadEventQueue> {
+class CONTENT_EXPORT MainThreadEventQueue : public InputEventQueue {
  public:
   MainThreadEventQueue(
       MainThreadEventQueueClient* client,
@@ -87,16 +77,16 @@ class CONTENT_EXPORT MainThreadEventQueue
       blink::scheduler::RendererScheduler* renderer_scheduler,
       bool allow_raf_aligned_input);
 
-  // Called once the compositor has handled |event| and indicated that it is
-  // a non-blocking event to be queued to the main thread.
+  // InputEventQueue methods:
   void HandleEvent(ui::WebScopedInputEvent event,
                    const ui::LatencyInfo& latency,
                    InputEventDispatchType dispatch_type,
                    InputEventAckState ack_result,
-                   HandledEventCallback handled_callback);
-  void DispatchRafAlignedInput(base::TimeTicks frame_time);
-  void QueueClosure(base::OnceClosure closure);
+                   HandledEventCallback handled_callback) override;
+  void QueueClosure(base::OnceClosure closure) override;
+  bool IsMainThreadQueue() override;
 
+  void DispatchRafAlignedInput(base::TimeTicks frame_time);
   void ClearClient();
   void SetNeedsLowLatency(bool low_latency);
 
@@ -104,8 +94,7 @@ class CONTENT_EXPORT MainThreadEventQueue
   void RequestUnbufferedInputEvents();
 
  protected:
-  friend class base::RefCountedThreadSafe<MainThreadEventQueue>;
-  virtual ~MainThreadEventQueue();
+  ~MainThreadEventQueue() override;
   void QueueEvent(std::unique_ptr<MainThreadEventQueueTask> event);
   void PostTaskToMainThread();
   void DispatchEvents();

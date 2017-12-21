@@ -14,13 +14,17 @@
 #include "ui/events/blink/input_handler_proxy_client.h"
 
 namespace blink {
+
+class WebWorkerEventQueue;
+
 namespace scheduler {
 class RendererScheduler;
 };  // namespace scheduler
+
 };  // namespace blink
 
 namespace content {
-class MainThreadEventQueue;
+class InputEventQueue;
 
 // This class maintains the compositor InputHandlerProxy and is
 // responsible for passing input events on the compositor and main threads.
@@ -39,6 +43,9 @@ class CONTENT_EXPORT WidgetInputHandlerManager
 
   void AddInterface(mojom::WidgetInputHandlerRequest interface_request,
                     mojom::WidgetInputHandlerHostPtr host);
+
+  void AddSupplementalEventQueue(blink::WebWorkerEventQueue*);
+  void RemoveSupplementalEventQueue(blink::WebWorkerEventQueue*);
 
   // InputHandlerProxyClient overrides.
   void WillShutdown() override;
@@ -132,7 +139,7 @@ class CONTENT_EXPORT WidgetInputHandlerManager
   WidgetInputHandlerHost associated_host_;
 
   // Any thread can access these variables.
-  scoped_refptr<MainThreadEventQueue> input_event_queue_;
+  std::vector<scoped_refptr<InputEventQueue>> input_event_queues_;
   scoped_refptr<base::SingleThreadTaskRunner> main_thread_task_runner_;
   scoped_refptr<base::SingleThreadTaskRunner> compositor_task_runner_;
 

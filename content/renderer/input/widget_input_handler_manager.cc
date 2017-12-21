@@ -13,13 +13,13 @@
 #include "content/renderer/ime_event_guard.h"
 #include "content/renderer/input/input_handler_manager.h"
 #include "content/renderer/input/widget_input_handler_impl.h"
+#include "content/renderer/input/worker_event_queue.h"
 #include "content/renderer/render_thread_impl.h"
 #include "content/renderer/render_widget.h"
 #include "third_party/WebKit/public/platform/Platform.h"
 #include "third_party/WebKit/public/platform/WebCoalescedInputEvent.h"
 #include "third_party/WebKit/public/platform/WebKeyboardEvent.h"
 #include "third_party/WebKit/public/platform/scheduler/renderer/renderer_scheduler.h"
-#include "third_party/WebKit/public/web/WebLocalFrame.h"
 #include "ui/events/base_event_utils.h"
 
 namespace content {
@@ -57,9 +57,9 @@ WidgetInputHandlerManager::WidgetInputHandlerManager(
     blink::scheduler::RendererScheduler* renderer_scheduler)
     : render_widget_(render_widget),
       renderer_scheduler_(renderer_scheduler),
-      input_event_queue_(render_widget->GetInputEventQueue()),
       main_thread_task_runner_(base::ThreadTaskRunnerHandle::Get()),
       compositor_task_runner_(compositor_task_runner) {
+  input_event_queues_.push_back(render_widget->GetInputEventQueue());
 }
 
 void WidgetInputHandlerManager::Init() {
@@ -121,10 +121,16 @@ void WidgetInputHandlerManager::WillShutdown() {
 void WidgetInputHandlerManager::DispatchNonBlockingEventToMainThread(
     ui::WebScopedInputEvent event,
     const ui::LatencyInfo& latency_info) {
-  DCHECK(input_event_queue_);
-  input_event_queue_->HandleEvent(
-      std::move(event), latency_info, DISPATCH_TYPE_NON_BLOCKING,
-      INPUT_EVENT_ACK_STATE_SET_NON_BLOCKING, HandledEventCallback());
+  DCHECK(input_event_queues_.size() == 1);
+
+  for (auto input_event_queue : input_event_queues_) {
+    if (input_event_queue->IsMainThreadQueue()) {
+      input_event_queue->HandleEvent(
+          std::move(event), latency_info, DISPATCH_TYPE_NON_BLOCKING,
+          INPUT_EVENT_ACK_STATE_SET_NON_BLOCKING, HandledEventCallback());
+    }
+    // TODO(mustaq): else pass on copy of the event w/o a callback
+  }
 }
 
 std::unique_ptr<blink::WebGestureCurve>
@@ -283,11 +289,12 @@ void WidgetInputHandlerManager::BindAssociatedChannel(
     mojom::WidgetInputHandlerAssociatedRequest request) {
   if (!request.is_pending())
     return;
-  // Don't pass the |input_event_queue_| on if we don't have a
+  // Don't pass on the input event queue if we don't have a
   // |compositor_task_runner_| as events might get out of order.
   WidgetInputHandlerImpl* handler = new WidgetInputHandlerImpl(
       this, main_thread_task_runner_,
-      compositor_task_runner_ ? input_event_queue_ : nullptr, render_widget_);
+      compositor_task_runner_ ? input_event_queues_.front() : nullptr,
+      render_widget_);
   handler->SetAssociatedBinding(std::move(request));
 }
 
@@ -295,11 +302,12 @@ void WidgetInputHandlerManager::BindChannel(
     mojom::WidgetInputHandlerRequest request) {
   if (!request.is_pending())
     return;
-  // Don't pass the |input_event_queue_| on if we don't have a
+  // Don't pass on the input event queue if we don't have a
   // |compositor_task_runner_| as events might get out of order.
   WidgetInputHandlerImpl* handler = new WidgetInputHandlerImpl(
       this, main_thread_task_runner_,
-      compositor_task_runner_ ? input_event_queue_ : nullptr, render_widget_);
+      compositor_task_runner_ ? input_event_queues_.front() : nullptr,
+      render_widget_);
   handler->SetBinding(std::move(request));
 }
 
@@ -356,9 +364,11 @@ void WidgetInputHandlerManager::DidHandleInputEventAndOverscroll(
     HandledEventCallback handled_event =
         base::BindOnce(&WidgetInputHandlerManager::HandledInputEvent, this,
                        std::move(callback));
-    input_event_queue_->HandleEvent(std::move(input_event), latency_info,
-                                    dispatch_type, ack_state,
-                                    std::move(handled_event));
+    // TODO(mustaq): Do we care about worker events here?
+    DCHECK(input_event_queues_.front()->IsMainThreadQueue());
+    input_event_queues_.front()->HandleEvent(
+        std::move(input_event), latency_info, dispatch_type, ack_state,
+        std::move(handled_event));
     return;
   }
   if (callback) {
@@ -412,6 +422,19 @@ void WidgetInputHandlerManager::ObserveGestureEventOnCompositorThread(
   DCHECK(input_handler_proxy_->scroll_elasticity_controller());
   input_handler_proxy_->scroll_elasticity_controller()
       ->ObserveGestureEventAndResult(gesture_event, scroll_result);
+}
+
+void WidgetInputHandlerManager::AddSupplementalEventQueue(
+    blink::WebWorkerEventQueue* worker_event_queue) {
+  // input_event_queues_.push_back(new WorkerEventQueue(worker_event_queue));
+  // TODO: s/*/WeakPtr/ all the way here
+  LOG(ERROR) << "======= mDebug " << __FUNCTION__;
+}
+
+void WidgetInputHandlerManager::RemoveSupplementalEventQueue(
+    blink::WebWorkerEventQueue* worker_event_queue) {
+  // Remove from input_event_queues_: needs a map!
+  LOG(ERROR) << "======= mDebug " << __FUNCTION__;
 }
 
 }  // namespace content

@@ -45,6 +45,7 @@
 #include "platform/wtf/Functional.h"
 #include "platform/wtf/Optional.h"
 #include "public/platform/WebThread.h"
+#include "public/web/WebWorkerEventQueue.h"
 #include "v8/include/v8.h"
 
 namespace blink {
@@ -72,7 +73,8 @@ struct GlobalScopeCreationParams;
 //    If the running task is for debugger, it's guaranteed to finish without
 //    any interruptions.
 //  - Queued tasks never run.
-class CORE_EXPORT WorkerThread : public WebThread::TaskObserver {
+class CORE_EXPORT WorkerThread : public WebThread::TaskObserver,
+                                 public WebWorkerEventQueue {
  public:
   // Represents how this thread is terminated. Used for UMA. Append only.
   enum class ExitCode {
@@ -119,9 +121,12 @@ class CORE_EXPORT WorkerThread : public WebThread::TaskObserver {
   // empty handles and it may cause crashes.
   static void TerminateAllWorkersForTesting();
 
-  // WebThread::TaskObserver.
+  // WebThread::TaskObserver methods:
   void WillProcessTask() override;
   void DidProcessTask() override;
+
+  // WebWorkerEventQueue methods:
+  void HandleInputEvent() override;
 
   virtual WorkerBackingThread& GetWorkerBackingThread() = 0;
   virtual void ClearWorkerBackingThread() = 0;

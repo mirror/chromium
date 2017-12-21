@@ -78,6 +78,7 @@
 #include "content/renderer/idle_user_detector.h"
 #include "content/renderer/ime_event_guard.h"
 #include "content/renderer/input/input_handler_manager.h"
+#include "content/renderer/input/widget_input_handler_manager.h"
 #include "content/renderer/internal_document_state_data.h"
 #include "content/renderer/loader/request_extra_data.h"
 #include "content/renderer/media/audio_device_factory.h"
@@ -2502,6 +2503,17 @@ void RenderViewImpl::HandleInputEvent(
   idle_user_detector_->ActivityDetected();
   RenderWidget::HandleInputEvent(input_event, latency_info,
                                  std::move(callback));
+}
+
+void RenderViewImpl::AddWorkerEventQueue(
+    blink::WebWorkerEventQueue* worker_event_queue) {
+  widget_input_handler_manager()->AddSupplementalEventQueue(worker_event_queue);
+}
+
+void RenderViewImpl::RemoveWorkerEventQueue(
+    blink::WebWorkerEventQueue* worker_event_queue) {
+  widget_input_handler_manager()->RemoveSupplementalEventQueue(
+      worker_event_queue);
 }
 
 }  // namespace content

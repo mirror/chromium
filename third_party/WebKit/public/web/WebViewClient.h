@@ -49,6 +49,7 @@ class WebURL;
 class WebURLRequest;
 class WebView;
 class WebWidget;
+class WebWorkerEventQueue;
 enum class WebSandboxFlags;
 struct WebDateTimeChooserParams;
 struct WebRect;
@@ -217,6 +218,11 @@ class WebViewClient : protected WebWidgetClient {
   // Gestures -------------------------------------------------------------
 
   virtual bool CanHandleGestureEvent() { return false; }
+
+  // Workers --------------------------------------------------------------
+
+  virtual void AddWorkerEventQueue(WebWorkerEventQueue*) {}
+  virtual void RemoveWorkerEventQueue(WebWorkerEventQueue*) {}
 
   // TODO(lfg): These methods are only exposed through WebViewClient while we
   // refactor WebView to not inherit from WebWidget.
