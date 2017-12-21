@@ -908,6 +908,8 @@ CommandHandler.COMMANDS_['paste-into-folder'] = /** @type {Command} */ ({
    */
   canExecute: function(event, fileManager) {
     var entries = CommandUtil.getCommandEntries(event.target);
+    if (entries.length == 0)
+      entries = fileManager.getSelection().entries;
 
     // Show this item only when one directory is selected.
     if (entries.length !== 1 || !entries[0].isDirectory ||
