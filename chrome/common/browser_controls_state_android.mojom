@@ -1,0 +1,22 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+module chrome.mojom;
+
+
+// TODO(cm.sanchi): Merge this file with chrome_render_frame.mojom once EnabledIf
+// attribute is supported in mojom files. See https://crbug.com/676224
+
+[Native]
+enum BrowserControlsState;
+
+// Messages sent from chrome to the render frame.
+interface BrowserControlsStateInfo {
+  // Notifies the renderer whether hiding/showing the browser controls is
+  // enabled, what the current state should be, and whether or not to
+  // animate to the proper state.
+  UpdateBrowserControlsState(BrowserControlsState constraints,
+                             BrowserControlsState current,
+                             bool animate);
+};

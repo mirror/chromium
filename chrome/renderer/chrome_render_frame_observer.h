@@ -15,6 +15,10 @@
 #include "mojo/public/cpp/bindings/binding_set.h"
 #include "services/service_manager/public/cpp/binder_registry.h"
 
+#if defined(OS_ANDROID)
+#include "chrome/common/browser_controls_state_android.mojom.h"
+#endif
+
 namespace gfx {
 class Size;
 }
@@ -29,9 +33,13 @@ class TranslateHelper;
 
 // This class holds the Chrome specific parts of RenderFrame, and has the same
 // lifetime.
-class ChromeRenderFrameObserver
-    : public content::RenderFrameObserver,
-      public chrome::mojom::ChromeRenderFrame {
+class ChromeRenderFrameObserver : public content::RenderFrameObserver,
+                                  public chrome::mojom::ChromeRenderFrame
+#if defined(OS_ANDROID)
+    ,
+                                  public chrome::mojom::BrowserControlsStateInfo
+#endif
+{
  public:
   explicit ChromeRenderFrameObserver(content::RenderFrame* render_frame);
   ~ChromeRenderFrameObserver() override;
@@ -63,6 +71,15 @@ class ChromeRenderFrameObserver
   void OnPrintNodeUnderContextMenu();
   void OnSetClientSidePhishingDetection(bool enable_phishing_detection);
 
+#if defined(OS_ANDROID)
+  // chrome::mojom::BrowserControlsStateInfo:
+  void UpdateBrowserControlsState(content::BrowserControlsState constraints,
+                                  content::BrowserControlsState current,
+                                  bool animate) override;
+
+  void OnBrowserControlsStateInfoRequest(
+      chrome::mojom::BrowserControlsStateInfoAssociatedRequest request);
+#endif
   // chrome::mojom::ChromeRenderFrame:
   void SetWindowFeatures(
       blink::mojom::WindowFeaturesPtr window_features) override;

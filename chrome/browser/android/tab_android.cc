@@ -45,8 +45,8 @@
 #include "chrome/browser/ui/blocked_content/popup_blocker_tab_helper.h"
 #include "chrome/browser/ui/tab_contents/core_tab_helper.h"
 #include "chrome/browser/ui/tab_helpers.h"
+#include "chrome/common/browser_controls_state_android.mojom.h"
 #include "chrome/common/chrome_render_frame.mojom.h"
-#include "chrome/common/render_messages.h"
 #include "chrome/common/url_constants.h"
 #include "components/bookmarks/browser/bookmark_model.h"
 #include "components/bookmarks/browser/bookmark_node.h"
@@ -71,7 +71,6 @@
 #include "content/public/browser/render_process_host.h"
 #include "content/public/browser/render_view_host.h"
 #include "content/public/browser/web_contents.h"
-#include "content/public/common/browser_controls_state.h"
 #include "content/public/common/resource_request_body.h"
 #include "jni/Tab_jni.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
@@ -720,19 +719,23 @@ void TabAndroid::UpdateBrowserControlsState(JNIEnv* env,
       static_cast<content::BrowserControlsState>(constraints);
   content::BrowserControlsState current_state =
       static_cast<content::BrowserControlsState>(current);
-  content::RenderViewHost* sender = web_contents()->GetRenderViewHost();
-  sender->Send(new ChromeViewMsg_UpdateBrowserControlsState(
-      sender->GetRoutingID(), constraints_state, current_state, animate));
+
+  chrome::mojom::BrowserControlsStateInfoAssociatedPtr browser_controls_state;
+  web_contents()->GetMainFrame()->GetRemoteAssociatedInterfaces()->GetInterface(
+      &browser_controls_state);
+  browser_controls_state->UpdateBrowserControlsState(constraints_state,
+                                                     current_state, animate);
 
   if (web_contents()->ShowingInterstitialPage()) {
-    content::RenderViewHost* interstitial_view_host =
-        web_contents()
-            ->GetInterstitialPage()
-            ->GetMainFrame()
-            ->GetRenderViewHost();
-    interstitial_view_host->Send(new ChromeViewMsg_UpdateBrowserControlsState(
-        interstitial_view_host->GetRoutingID(), constraints_state,
-        current_state, animate));
+    chrome::mojom::BrowserControlsStateInfoAssociatedPtr
+        interstitial_browser_controls_state;
+    web_contents()
+        ->GetInterstitialPage()
+        ->GetMainFrame()
+        ->GetRemoteAssociatedInterfaces()
+        ->GetInterface(&interstitial_browser_controls_state);
+    interstitial_browser_controls_state->UpdateBrowserControlsState(
+        constraints_state, current_state, animate);
   }
 }
 
