@@ -458,7 +458,12 @@ void NTPResourceCache::CreateNewTabIncognitoCSS() {
   const ui::ThemeProvider& tp =
       ThemeService::GetThemeProviderForProfile(profile_);
 
-  // Get our theme colors
+  // Get our theme colors.
+  // Note: This rather weird logic (use theme background color only if there's
+  // a background image) is duplicated in ThemeService::BrowserThemeProvider.
+  // Otherwise there'd be a flash when opening an incognito NTP with a theme
+  // that sets a background color but no background image. See
+  // https://crbug.com/21798#c114.
   SkColor color_background =
       tp.HasCustomImage(IDR_THEME_NTP_BACKGROUND)
           ? GetThemeColor(tp, ThemeProperties::COLOR_NTP_BACKGROUND)
