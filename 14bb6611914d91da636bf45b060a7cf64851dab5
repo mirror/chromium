@@ -42,6 +42,24 @@
     },
     {
       "key": {
+        "uuid": "93628c99_32484081",
+        "filename": "components/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 409,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-21T22:22:58Z",
+      "side": 1,
+      "message": "Yeah, we have a couple of accessibility tests there already.\nThis particular test needs to run in the Renderer process\nand poke at PdfAccessibilityTree directly, so I think it has\nto be here.\n\nI guess it\u0027d be legal in chrome/renderer but that wouldn\u0027t\nmake any more sense.",
+      "parentUuid": "e96a7229_6b932e0b",
+      "revId": "14bb6611914d91da636bf45b060a7cf64851dab5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "556404d8_9b14805c",
         "filename": "components/pdf/renderer/pdf_accessibility_tree.cc",
         "patchSetId": 1
@@ -65,6 +83,30 @@
     },
     {
       "key": {
+        "uuid": "34baa333_9f95834b",
+        "filename": "components/pdf/renderer/pdf_accessibility_tree.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-21T22:22:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "556404d8_9b14805c",
+      "range": {
+        "startLine": 298,
+        "startChar": 2,
+        "endLine": 298,
+        "endChar": 4
+      },
+      "revId": "14bb6611914d91da636bf45b060a7cf64851dab5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "652144bc_819d75d3",
         "filename": "components/pdf/renderer/pdf_accessibility_tree.cc",
         "patchSetId": 1
@@ -76,6 +118,30 @@
       "writtenOn": "2017-12-21T21:25:36Z",
       "side": 1,
       "message": "Is 0 allowed? i.e. should this be \"\u003c 0\" ?",
+      "range": {
+        "startLine": 310,
+        "startChar": 43,
+        "endLine": 310,
+        "endChar": 47
+      },
+      "revId": "14bb6611914d91da636bf45b060a7cf64851dab5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85e9c4bf_7e087b3a",
+        "filename": "components/pdf/renderer/pdf_accessibility_tree.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-21T22:22:58Z",
+      "side": 1,
+      "message": "Currently 0 would not be returned, so this is correct.",
+      "parentUuid": "652144bc_819d75d3",
       "range": {
         "startLine": 310,
         "startChar": 43,
@@ -105,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "28974067_837452ac",
+        "filename": "components/pdf/renderer/pdf_accessibility_tree_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-21T22:22:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b593506c_f8d72200",
+      "revId": "14bb6611914d91da636bf45b060a7cf64851dab5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5b5b706a_72702eb9",
         "filename": "components/pdf/renderer/pdf_accessibility_tree_browsertest.cc",
         "patchSetId": 1
@@ -125,6 +209,30 @@
       "revId": "14bb6611914d91da636bf45b060a7cf64851dab5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f18a5b4_9257c662",
+        "filename": "components/pdf/renderer/pdf_accessibility_tree_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-21T22:22:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5b5b706a_72702eb9",
+      "range": {
+        "startLine": 118,
+        "startChar": 52,
+        "endLine": 118,
+        "endChar": 63
+      },
+      "revId": "14bb6611914d91da636bf45b060a7cf64851dab5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
