@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "725c42a1_d82d5c7d",
+        "filename": "ui/ozone/platform/drm/common/drm_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-21T22:26:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bac40c13_b4d223ab",
+      "revId": "7275a74b5c754ae74f27aa4e4ae7892dfa28c387",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a030602d_4b56fafb",
         "filename": "ui/ozone/platform/drm/common/drm_util.cc",
         "patchSetId": 1
@@ -50,6 +68,24 @@
       "revId": "7275a74b5c754ae74f27aa4e4ae7892dfa28c387",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "348c93e6_c6fc117f",
+        "filename": "ui/ozone/platform/drm/common/drm_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-21T22:26:30Z",
+      "side": 1,
+      "message": "Yes, I just wanted to be consistent with the way it was declared everywhere else in this function. Thanks for suggesting! I changed them all.",
+      "parentUuid": "a030602d_4b56fafb",
+      "revId": "7275a74b5c754ae74f27aa4e4ae7892dfa28c387",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
