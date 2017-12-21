@@ -260,9 +260,9 @@ void ServiceWorkerControlleeRequestHandler::PrepareForMainResource(
   // registration while we're finding an existing registration.
   provider_host_->SetAllowAssociation(false);
 
-  stripped_url_ = net::SimplifyUrlForRequest(url);
-  provider_host_->SetDocumentUrl(stripped_url_);
+  provider_host_->SetDocumentUrl(url);
   provider_host_->SetTopmostFrameUrl(site_for_cookies);
+  stripped_url_ = net::SimplifyUrlForRequest(url);
   context_->storage()->FindRegistrationForDocument(
       stripped_url_, base::Bind(&self::DidLookupRegistrationForMainResource,
                                 weak_factory_.GetWeakPtr()));

@@ -83,8 +83,7 @@ class ServiceWorkerURLTrackingRequestHandler
     // |provider_host_| may have been deleted when the request is resumed.
     if (!provider_host_)
       return nullptr;
-    const GURL stripped_url = net::SimplifyUrlForRequest(request->url());
-    provider_host_->SetDocumentUrl(stripped_url);
+    provider_host_->SetDocumentUrl(request->url());
     provider_host_->SetTopmostFrameUrl(request->site_for_cookies());
     return nullptr;
   }
@@ -95,8 +94,7 @@ class ServiceWorkerURLTrackingRequestHandler
     // |provider_host_| may have been deleted when the request is resumed.
     if (!provider_host_)
       return;
-    const GURL stripped_url = net::SimplifyUrlForRequest(resource_request.url);
-    provider_host_->SetDocumentUrl(stripped_url);
+    provider_host_->SetDocumentUrl(resource_request.url);
     provider_host_->SetTopmostFrameUrl(resource_request.site_for_cookies);
     // Fall back to network.
     std::move(callback).Run(StartLoaderCallback());
@@ -315,7 +313,6 @@ void ServiceWorkerProviderHost::OnSkippedWaiting(
 }
 
 void ServiceWorkerProviderHost::SetDocumentUrl(const GURL& url) {
-  DCHECK(!url.has_ref());
   document_url_ = url;
   if (IsProviderForClient())
     SyncMatchingRegistrations();
@@ -398,8 +395,8 @@ void ServiceWorkerProviderHost::DisassociateRegistration() {
 
 void ServiceWorkerProviderHost::AddMatchingRegistration(
     ServiceWorkerRegistration* registration) {
-  DCHECK(
-      ServiceWorkerUtils::ScopeMatches(registration->pattern(), document_url_));
+  DCHECK(ServiceWorkerUtils::ScopeMatches(
+      registration->pattern(), net::SimplifyUrlForRequest(document_url_)));
   if (!IsContextSecureForServiceWorker())
     return;
   size_t key = registration->pattern().spec().size();
@@ -777,8 +774,8 @@ void ServiceWorkerProviderHost::SyncMatchingRegistrations() {
   for (const auto& key_registration : registrations) {
     ServiceWorkerRegistration* registration = key_registration.second;
     if (!registration->is_uninstalled() &&
-        ServiceWorkerUtils::ScopeMatches(registration->pattern(),
-                                         document_url_))
+        ServiceWorkerUtils::ScopeMatches(
+            registration->pattern(), net::SimplifyUrlForRequest(document_url_)))
       AddMatchingRegistration(registration);
   }
 }
