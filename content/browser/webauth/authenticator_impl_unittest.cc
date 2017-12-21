@@ -538,7 +538,7 @@ TEST_F(AuthenticatorImplTest, MakeCredentialOpaqueOrigin) {
             response.first);
 }
 
-// Test that service returns NOT_SUPPORTED_ERROR if no parameters contain
+// Test that service returns NOT_IMPLEMENTED_ERROR if no parameters contain
 // a supported algorithm.
 TEST_F(AuthenticatorImplTest, MakeCredentialNoSupportedAlgorithm) {
   SimulateNavigation(GURL(kTestOrigin1));
@@ -553,7 +553,7 @@ TEST_F(AuthenticatorImplTest, MakeCredentialNoSupportedAlgorithm) {
   std::pair<webauth::mojom::AuthenticatorStatus,
             webauth::mojom::PublicKeyCredentialInfoPtr>& response =
       cb.WaitForCallback();
-  EXPECT_EQ(webauth::mojom::AuthenticatorStatus::NOT_SUPPORTED_ERROR,
+  EXPECT_EQ(webauth::mojom::AuthenticatorStatus::NOT_IMPLEMENTED,
             response.first);
 }
 
