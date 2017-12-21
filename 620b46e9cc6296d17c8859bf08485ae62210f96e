@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "271a5b37_02b1cfd7",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_mediator.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-12-21T18:09:09Z",
+      "side": 1,
+      "message": "BTW, I think that in the future we should update these calls to change the specific properties that might be updated rather than just having one master |-updateConsumer| method.  This is kinda similar to the |-tabChanged:| notification that makes it kinda difficult to debug stuff because it can be triggered for any number of reasons.",
+      "revId": "620b46e9cc6296d17c8859bf08485ae62210f96e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
